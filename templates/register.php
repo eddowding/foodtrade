@@ -36,6 +36,8 @@
                             <label class="btn btn-default">
                               <input type="radio" name="options" id="option1"> Individual
                             </label>
+
+                            <!-- on click show the BUSIENSS TYPE field -->
                             <label class="btn btn-default">
                               <input type="radio" name="options" id="option2"> Food Business
                             </label>
@@ -47,12 +49,27 @@
                         </div>
                     </div>
 
+
+                    <!-- if they click FOOD BUSINESS, SHOW THIS 
+                            AUTOCOMPLETE / TYPEAHEAD ON BUSINESS TYPE TAGS
+                            -->
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-3 control-label">
+                            Type</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" id="business_type" placeholder="Farm, wholesaler, restaurant, bakery..." required>
+                        </div>
+                    </div>
+
+
+
+
                     <div class="form-group">
                         <label for="inputEmail3" class="col-sm-3 control-label">
                             Address</label>
                         <div class="col-sm-9">
 
-                            <!-- autocomplete frorm 
+                            <!-- autocomplete from google-->
                             <input type="text" class="form-control" id="location" placeholder="Address" required>
                         </div>
                     </div>
@@ -65,6 +82,7 @@
                             <input type="email" class="form-control" id="inputEmail3" placeholder="Email" required>
                         </div>
                     </div>
+
                     <div class="form-group">
                         <label for="inputPassword3" class="col-sm-3 control-label">
                             Password</label>

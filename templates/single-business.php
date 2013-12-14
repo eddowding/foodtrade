@@ -17,12 +17,22 @@
       <div class="col-md-7">
          <h1><a href="#">Smales Farm</a></h1>
  
-         <span class="label label-default">Mixed Farm</span>
+         <span class="label label-default">Livestock Farm</span>
          <span class="label label-default">Butcher</span>
+         <span class="label label-default">Wholesaler</span>
+         <span class="label label-default">Distribution</span>
          <span class="label label-default">Farm Shop</span>
+ 
 
          <hr />
          <p>Nullam quis risus eget urna mollis ornare vel eu leo. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nullam id dolor id nibh ultricies vehicula.</p>        
+
+          <div class="tags">  
+           <a href="/tag/TAG">Box Scheme</a>
+           <a href="/tag/TAG">Butcher</a>
+           <a href="/tag/TAG">family</a>
+           <a href="/tag/TAG">organic</a> 
+          </div>
          <hr /> 
      
          <div class="meta small text-muted">
@@ -34,7 +44,7 @@
             <!--  // if logged in or you've allows html5 browser location -->
   
          </div> <!-- meta -->
-
+  
       </div><!-- end header middle -->
 
       <div id="contact_info" class="col-md-3">
@@ -73,8 +83,59 @@
       <!-- if not logged in show login prompt -->
       <button class="btn btn-primary btn-block">Login to see contact info</button>
 
+ 
 
-      <button class="btn btn-default btn-block"><i class="fa fa-share-square-o text-muted"></i> Share</button>
+      <button class="btn btn-default btn-block" data-toggle="modal" data-target="#sharer">
+        <i class="fa fa-share-square-o text-muted"></i> Share
+      </button>
+
+      <!-- Modal -->
+      <div class="modal fade" id="sharer" tabindex="-1" role="dialog" aria-labelledby="sharer" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-body"> 
+
+              <a href="#" class="btn btn-block  btn-social btn-facebook" onclick="window.open(
+                    'https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent('URL') +'&amp;t=' + encodeURIComponent('TITLE'), 
+                    'facebook-share-dialog', 
+                    'width=626,height=436,top='+((screen.height - 436) / 2)+',left='+((screen.width - 626)/2 )); 
+                  return false;">
+                <i class="fa fa-facebook"></i>  Share on Facebook
+              </a>
+
+              <a href="#" class="btn btn-block  btn-social btn-twitter" onclick="window.open(
+                    'https://twitter.com/share?url='+encodeURIComponent('URL')+'&amp;text='+encodeURIComponent('@THEIRNAME on @foodtradeHQ') + '&amp;count=none/', 
+                    'twitter-share-dialog', 
+                    'width=626,height=436,top='+((screen.height - 436) / 2)+',left='+((screen.width - 626)/2 )); 
+                  return false;">
+                <i class="fa fa-twitter"></i>  Share on Twitter
+              </a>
+  
+              <a class="btn  btn-block  btn-social btn-pinterest" href="http://pinterest.com/pin/create/button/?url={URI-encoded URL of the page to pin}&media={URI-encoded URL of the image to pin}&description={optional URI-encoded description}" class="pin-it-button" count-layout="horizontal">
+                <i class="fa fa-pinterest"></i>
+                Share on Pinterest
+              </a>
+
+              <a  class="btn btn-social btn-block btn-google-plus" href="https://plus.google.com/share?url=myline">
+                <i class="fa fa-google-plus"></i>
+                Share on Google+
+              </a>
+
+              <a  class="btn btn-block btn-social btn-tumblr" href="http://www.tumblr.com/share" title="Share on Tumblr">
+                <i class="fa fa-tumblr"></i>
+                Share on Tumblr
+              </a>
+                 
+              <a  class="btn btn-block  btn-social btn-bitbucket" href="http://www.linkedin.com/shareArticle?mini=true&url=THEURL&title=TITLE&summary=SUMMARY&source=">
+                <i class="fa fa-linkedin"></i>
+                Share on LinkedIn
+              </a>
+              <script type="text/javascript" src="http://platform.tumblr.com/v1/share.js"></script>
+
+            </div> 
+          </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+      </div><!-- /.modal -->
 
       <div class="icons text-center" style="font-size:25px">
         <a href="#"><i class="fa fa-facebook-square"></i></a>
@@ -83,6 +144,7 @@
         <a href="#"><i class="fa fa-rss-square"></i></a> 
         <a href="#"><i class="fa fa-envelope"></i></a> 
         <a href="#"><i class="fa fa-globe"></i></a> 
+        <a href="#"><i class="fa fa-youtube"></i></a> 
         <a href="#"><i class="fa fa-linkedin-square"></i></a> 
       </div> 
 
@@ -148,14 +210,14 @@
     <div class="row" style="margin-top: -1px;">
      <div class="col-md-12">
         <ul class="nav nav-tabs nav-justified">
-          <li class="active"><a href="#">Home</a></li>
-          <li><a href="#">Produce</a></li>
-          <li><a href="#">Organisation</a></li>
-          <li><a href="#">Customers</a></li>
-          <li><a href="#">Activity</a></li>
-          <li><a href="#">Reputation</a></li>
-          <li><a href="#">Connections</a></li>
-          <li><a href="#">People</a></li>
+
+          <li class="active"><a href="#home" data-toggle="tab">Home</a></li>
+          <li><a href="#produce" data-toggle="tab">Produce</a></li>
+          <li><a href="#organisations" data-toggle="tab">Organisation</a></li>
+          <li><a href="#customers" data-toggle="tab">Customers</a></li>
+          <li><a href="#activity" data-toggle="tab">Activity</a></li> 
+          <li><a href="#connections" data-toggle="tab">Connections</a></li>
+          <li><a href="#people" data-toggle="tab">People</a></li>
         </ul>
      </div>
     </div>
@@ -165,22 +227,61 @@
         
         <div class="container-responsive clearfix">
 
-          <h2>Customers</h2>
-           
-          <?php include 'card_business.php';?> 
-          <?php include 'card_individual.php';?> 
+        <div class="tab-content hidden">
+          <div class="tab-pane active fade in " id="home">.ADD FSA..</div>
+          <div class="tab-pane fade" id="produce">.d..</div>
+          <div class="tab-pane fade" id="organisations">.d.d.</div>
+          <div class="tab-pane fade" id="customers">.d.dg.</div>
+        </div>
+
+
+  
+
+
+ We sell the following produce
+MEAT
+Beef Chicken Lamb Pork
+EGGS
+
+          <div class="clearfix">  
+          <h2>Tags </h2>
+           <a href="/tag/TAG">Box Scheme</a>
+           <a href="/tag/TAG">Butcher</a>
+           <a href="/tag/TAG">family</a>
+           <a href="/tag/TAG">organic</a> 
+          </div>
+
+
+          <div class="clearfix">  
+          <h2>Organisations </h2>
+          
           <?php include 'card_organisation.php';?> 
-          <?php include 'card_business.php';?> 
-          <?php include 'card_business.php';?> 
-          <?php include 'card_business.php';?> 
+          <?php include 'card_organisation.php';?> 
+          <?php include 'card_organisation.php';?> 
+          <?php include 'card_organisation.php';?> 
+          <?php include 'card_organisation.php';?> 
+          <?php include 'card_organisation.php';?> 
+          <?php include 'card_organisation.php';?> 
+          </div>
 
+          <div class="clearfix">
+          <h2>Customers</h2>
+          <?php include 'card_individual.php';?> 
+          <?php include 'card_individual.php';?> 
+          <?php include 'card_individual.php';?> 
+          <?php include 'card_individual.php';?> 
+          <?php include 'card_individual.php';?> 
+          <?php include 'card_individual.php';?>  
+          </div> 
 
-          <h2>Organisations</h2>
+          <div class="clearfix">
+          <h2>Businesses</h2>
           <?php include 'card_business.php';?> 
           <?php include 'card_business.php';?> 
           <?php include 'card_business.php';?> 
           <?php include 'card_business.php';?> 
           <?php include 'card_business.php';?> 
+          </div>
      
         </div><!-- container responsive -->
   

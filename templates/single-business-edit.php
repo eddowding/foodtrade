@@ -175,7 +175,6 @@
           <?php include 'card_business.php';?> 
 
 
-          <h2>Organisations</h2>
           <?php include 'card_business.php';?> 
           <?php include 'card_business.php';?> 
           <?php include 'card_business.php';?> 
