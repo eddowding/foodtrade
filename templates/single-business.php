@@ -18,10 +18,14 @@
      
       <div class="col-md-7">
          <h1><a href="#">Smales Farm</a></h1>
-
+ 
          <span class="label label-default">Mixed Farm</span>
          <span class="label label-default">Butcher</span>
          <span class="label label-default">Farm Shop</span>
+
+         <hr />
+         <p>Nullam quis risus eget urna mollis ornare vel eu leo. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nullam id dolor id nibh ultricies vehicula.</p>        
+         <hr /> 
      
          <div class="meta small text-muted">
             
@@ -30,24 +34,9 @@
             <!-- if logged in or you've allows html5 browser location -->
             <i class="fa fa-location-arrow" style="margin-left: 20px;"></i> 87.2 miles  
             <!--  // if logged in or you've allows html5 browser location -->
- 
-            <i class="fa fa-star"></i> 
+  
          </div> <!-- meta -->
 
-         <hr />
-         <p>Nullam quis risus eget urna mollis ornare vel eu leo. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nullam id dolor id nibh ultricies vehicula.</p>
-         
-         <hr />
-
-          <div class="icons">
-            <a href="#"><i class="fa fa-facebook-square"></i></a>
-            <a href="#"><i class="fa fa-twitter-square"></i></a> 
-            <a href="#"><i class="fa fa-phone-square"></i></a> 
-            <a href="#"><i class="fa fa-rss-square"></i></a> 
-            <a href="#"><i class="fa fa-envelope"></i></a> 
-            <a href="#"><i class="fa fa-globe"></i></a> 
-            <a href="#"><i class="fa fa-linkedin-square"></i></a> 
-          </div> 
       </div>
 
       <div id="contact_info" class="col-md-3">
@@ -56,17 +45,17 @@
       <button class="btn btn-primary btn-block">Invite to connect</button>
 
 
+      <!-- if logged in users = individual -->
+      <button class="btn btn-default btn-block"><i class="fa fa-shopping-cart text-muted"></i> I am a customer</button>
+
+
       <!-- if they have an account --> 
       <div class="btn-group  btn-block ">
         <button type="button" class="btn btn-default btn-block dropdown-toggle" data-toggle="dropdown">
-          <i class="fa fa-link"></i>
-          Connect <span class="caret"></span>
+          <i class="fa fa-link text-muted"></i>
+          We trade with them <span class="caret"></span>
         </button> 
-        <ul class="dropdown-menu" role="menu">
-          <li><a href="#" class="text-muted small">IF LOGGED IN = INDIVIDUAL</a></li>
-          <li><a href="#"><i class="fa fa-shopping-cart text-muted pull-right"></i> I shop here</a></li>
-          <li class="divider"></li>
-
+        <ul class="dropdown-menu" role="menu">  
           <li><a href="#" class="text-muted small">IF LOGGED IN = BUSINESS</a></li>
           <li><a href="#"><i class="fa fa-sign-in text-muted pull-right"></i> LOGGEDINNAME buys from them</a></li>
           <li><a href="#"><i class="fa fa-sign-out text-muted pull-right"></i> LOGGEDINNAME sells to them</a></li> 
@@ -85,6 +74,19 @@
 
       <!-- if not logged in show login prompt -->
       <button class="btn btn-primary btn-block">Login to see contact info</button>
+
+
+      <button class="btn btn-default btn-block"><i class="fa fa-share-square-o text-muted"></i> Share</button>
+
+      <div class="icons text-center" style="font-size:25px">
+        <a href="#"><i class="fa fa-facebook-square"></i></a>
+        <a href="#"><i class="fa fa-twitter-square"></i></a> 
+        <a href="#"><i class="fa fa-phone-square"></i></a> 
+        <a href="#"><i class="fa fa-rss-square"></i></a> 
+        <a href="#"><i class="fa fa-envelope"></i></a> 
+        <a href="#"><i class="fa fa-globe"></i></a> 
+        <a href="#"><i class="fa fa-linkedin-square"></i></a> 
+      </div> 
 
 
          <!-- Modal -->
@@ -118,9 +120,9 @@
                       <div class="col-xs-6 col-md-6 form-group">
                         <input class="form-control" id="email" name="email" placeholder="Email (prefill if reg'd)" type="email" required />
                       </div>
-                    </div>
-                    <textarea class="form-control" id="message" name="message" placeholder="Message" rows="5"></textarea>
-                     
+                    </div> 
+                    <textarea class="form-control counted" name="message" placeholder="Type in your message" rows="5"></textarea>
+                    <h6 class="pull-right" id="counter">320 characters remaining</h6>
                      
                   </form>
                 </div>
@@ -158,6 +160,31 @@
       </div> 
     </div>
 
+   
+
+
+    <div class="container-responsive clearfix">
+     
+    <?php include 'card_business.php';?> 
+    <?php include 'card_business.php';?> 
+    <?php include 'card_business.php';?> 
+    <?php include 'card_business.php';?> 
+    <?php include 'card_business.php';?> 
+    <?php include 'card_business.php';?> 
+    <?php include 'card_business.php';?> 
+    <?php include 'card_business.php';?> 
+    <?php include 'card_business.php';?> 
+    <?php include 'card_business.php';?> 
+    <?php include 'card_business.php';?> 
+
+   
+ 
+    </div><!-- container responsive -->
+
+
+    
+ 
+
     <ul>
     <li>Tags</li>
     <li>How many shop here</li>
@@ -170,6 +197,11 @@
     <li>Share</li>
     <li>Links (all, mebedly)</li>
     </ul>
+
+    <a class="twitter-timeline" href="https://twitter.com/foodtradeHQ" data-widget-id="411852499260145664">Tweets by @foodtradeHQ</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+
+
   
   <div class="btn-toolbar">
     <div class="btn-group">

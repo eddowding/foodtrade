@@ -88,18 +88,7 @@ article .content h4 {
 .meta {
 	margin-top: 10px;
 }
-
-/*  replace this */
-
-.foodtrade-sidebar .foodtrade-tag-list {
-list-style: none;
-font-size: 12px;
-font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
-font-size: 14px;
-margin: 15px 0 15px 0;
-padding-right: 10px;
-}
-
+ 
 .dropdown-menu  li  a .fa.pull-right  {
 	margin-left: 60px;
 }
@@ -125,6 +114,56 @@ padding-right: 10px;
 	border-left: 1px solid #ccc;
 	background-image: url(http://www.stripegenerator.com/generators/generate_stripes.php?fore=dddddd&h=30&w=1&p=9&back1=ffffff&back2=ff0000&gt=0&d=0&shadow=0&);
 	padding: 20px;
+}
+
+
+
+/********************************/
+/**  ROLES                     **/
+/********************************/
+
+.card {
+	width: 30%;
+	float: left;
+	margin-right: 2%;
+	border: 1px solid #ccc;
+	margin-top: 15px;
+}
+
+.card .content {
+	padding: 5px;
+}
+
+.card h5 {
+	margin: 0;
+	font-size: 13px;
+}
+
+.card h5 a {
+	color: #444;
+}
+ 
+.card .text {
+	margin-left: 45px;
+}
+
+.card p {
+	margin: 0;
+}
+
+.card p.small {
+	font-size: 12px;
+	color: rgb(153,153,153);
+	line-height: 19.5px;
+}
+
+.card .numbers {
+	background: #eee;
+	padding: 2px 0;
+}
+
+.card hr {
+	margin: 5px 0;
 }
 
 /********************************/
