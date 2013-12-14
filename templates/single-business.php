@@ -215,7 +215,7 @@
           <li><a href="#organisations" data-toggle="tab">Organisation</a></li>
           <li><a href="#customers" data-toggle="tab">Customers <span class="badge pull-right">4</span></a> </li>
           <li><a href="#activity" data-toggle="tab">Updates  <span class="badge pull-right">5</span></a></li> 
-          <li><a href="#people" data-toggle="tab">People <span class="badge pull-right">2</span></a></li>
+          <li><a href="#team" data-toggle="tab">Team <span class="badge pull-right">2</span></a></li>
         </ul>
      </div>
     </div>
@@ -322,7 +322,7 @@
 
 
           <div class="clearfix">
-          <h2>People</h2>
+          <h2>Team</h2>
           <?php include 'card_individual.php';?> 
           <?php include 'card_individual.php';?> 
           <?php include 'card_individual.php';?> 
@@ -347,8 +347,16 @@
 
 
       <div class="col-md-4">
-        Map showing customers as clusters / dots, and trade connections as lines
         <img src="map.png" style="width: 100%;" />
+
+        <div class="alert alert-warning">
+          <p>This map shows 
+          Customers as points
+          Stockist as organge lines and 
+          Supplieras as purple lines</p>
+
+          <p>There are radius lines at 15, 30, and 100 miles.</p>
+        </div>
 
 
       </div><!-- end col4 -->

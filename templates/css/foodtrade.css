@@ -26,6 +26,25 @@ h2 {
 	margin-right: 7px;
 }
 
+
+.tags-biztype a {
+	font-size: 11px;
+	padding: 2px 3px;
+	border-radius: 3px; 
+	color: #999;
+	margin: 0 !important;
+	border: 1px solid #ccc;
+	background: #fff;
+}
+
+
+.tags a {
+	font-size: 12px;
+	padding-top: 1px; 
+	color: #999;
+	margin-right: 7px;
+}
+
 .ftstrip {
 	position: relative;
 	height: 0.5em;
@@ -178,8 +197,9 @@ h2 {
 }
 
 .card h5 {
-	margin: 0;
+	margin: 0 0 2px 0;
 	font-size: 13px;
+	font-weight: bold;
 }
 
 .card h5 a {
@@ -187,7 +207,7 @@ h2 {
 }
  
 .card .text {
-	margin-left: 45px;
+	margin-left: 55px;
 }
 
 .card p {
@@ -197,12 +217,17 @@ h2 {
 .card p.small {
 	font-size: 12px;
 	color: rgb(153,153,153);
-	line-height: 19.5px;
+	line-height: 15px;
 }
 
 .card .numbers {
 	background: #eee;
-	padding: 2px 0;
+	padding: 2px 5px;
+}
+
+.card .numbers a {
+	margin-left: 8px;
+	color: #999;
 }
 
 .card hr {
