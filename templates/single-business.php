@@ -77,27 +77,17 @@
           <li><a href="#"><i class="fa fa-twitter text-muted pull-right"></i> Like on facebook</a></li>
         </ul>
       </div> <!-- /btn group --> 
- 
-
-      <!-- if logged in show contact info -->
-      <div class="btn-group  btn-block ">
-        <button type="button" class="btn btn-primary btn-block dropdown-toggle" data-toggle="dropdown">
-          Contact <span class="caret"></span>
-        </button> 
-        <ul class="dropdown-menu" role="menu"> 
-          <li><a href="mailto:mail@smalesfarm.com" target="_blank"><i class="fa fa-envelope text-muted"></i> mail@smalesfarm.com </a></a></li>
-          <li><a href="#"><i class="fa fa-twitter text-muted"></i>  Tweet @smalesfarm</a></li>
-          <li><a href="callto:0131 476 5333"><i class="fa fa-phone text-muted"></i> Call  0131 476 5333</a></li>
-        </ul>
-      </div> <!-- /btn group -->
-
-
+   
       <!-- Button trigger modal -->
-      <button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
-        Launch demo modal
-      </button>
+      <button class="btn btn-primary btn-block" data-toggle="modal" data-target="#myModal">
+        Contact
+      </button>  
 
-      <!-- Modal -->
+      <!-- if not logged in show login prompt -->
+      <button class="btn btn-primary btn-block">Login to see contact info</button>
+
+
+         <!-- Modal -->
       <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog">
           <div class="modal-content">
@@ -110,11 +100,12 @@
             <div class="container-responsive">
               <div class="row">
                 <div class="col-sm-4">
-                  <h3>Drop me a line!</h3>
-                  <hr>
+             
                   <address>
-                    <strong>Email:</strong> <a href="mailto:#"> name@domain.com</a><br><br>
-                    <strong>Phone:</strong> (555)123-4567
+                    
+          <a href="mailto:mail@smalesfarm.com" target="_blank"><i class="fa fa-envelope text-muted"></i> mail@smalesfarm.com </a><br />
+          <a href="#"><i class="fa fa-twitter text-muted"></i> @smalesfarm</a><br />
+          <a href="callto:0131 476 5333"><i class="fa fa-phone text-muted"></i> 0131 476 5333</a>
                   </address>
                 </div>
                 
@@ -122,44 +113,32 @@
                   <form id="contact" method="post" class="form" role="form">
                     <div class="row">
                       <div class="col-xs-6 col-md-6 form-group">
-                        <input class="form-control" id="name" name="name" placeholder="Name" type="text" required autofocus />
+                        <input class="form-control" id="name" name="name" placeholder="Name (prefill if reg'd)" type="text" required autofocus />
                       </div>
                       <div class="col-xs-6 col-md-6 form-group">
-                        <input class="form-control" id="email" name="email" placeholder="Email" type="email" required />
+                        <input class="form-control" id="email" name="email" placeholder="Email (prefill if reg'd)" type="email" required />
                       </div>
                     </div>
                     <textarea class="form-control" id="message" name="message" placeholder="Message" rows="5"></textarea>
-                    <br />
-                    <div class="row">
-                      <div class="col-xs-12 col-md-12 form-group">
-                        <button class="btn btn-primary pull-right" type="submit">Submit</button>
+                     
+                     
                   </form>
                 </div>
               </div>
             </div>
-            </div>
-            </div>
-
-
-
-  
+ 
    
 
             </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-primary">Save changes</button>
+            <div class="modal-footer"> 
+              <button type="button" class="btn btn-primary">Tweet it</button>
+              <button type="button" class="btn btn-primary">Email it</button>
             </div>
           </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
       </div><!-- /.modal -->
+
  
-
-      <!-- if not logged in show login prompt -->
-      <button class="btn btn-primary btn-block">Login to see contact info</button>
-
-
-
       </div>
 
     </div>
