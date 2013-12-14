@@ -144,8 +144,9 @@
     </div>
     </div>
 
-    <div class="row" style="margin-top: 50px;">
-      <div class="col-md-12">
+
+    <div class="row" style="margin-top: -1px;">
+     <div class="col-md-12">
         <ul class="nav nav-tabs nav-justified">
           <li class="active"><a href="#">Home</a></li>
           <li><a href="#">Produce</a></li>
@@ -156,70 +157,78 @@
           <li><a href="#">Connections</a></li>
           <li><a href="#">People</a></li>
         </ul>
-      </div> 
+     </div>
     </div>
 
-   
+    <div class="row">
+      <div class="col-md-8">
+        
+        <div class="container-responsive clearfix">
+
+          <h2>Customers</h2>
+           
+          <?php include 'card_business.php';?> 
+          <?php include 'card_business.php';?> 
+          <?php include 'card_business.php';?> 
+          <?php include 'card_business.php';?> 
+          <?php include 'card_business.php';?> 
+          <?php include 'card_business.php';?> 
 
 
-    <div class="container-responsive clearfix">
-
-    <h2>Customers</h2>
+          <h2>Organisations</h2>
+          <?php include 'card_business.php';?> 
+          <?php include 'card_business.php';?> 
+          <?php include 'card_business.php';?> 
+          <?php include 'card_business.php';?> 
+          <?php include 'card_business.php';?> 
      
-    <?php include 'card_business.php';?> 
-    <?php include 'card_business.php';?> 
-    <?php include 'card_business.php';?> 
-    <?php include 'card_business.php';?> 
-    <?php include 'card_business.php';?> 
-    <?php include 'card_business.php';?> 
+        </div><!-- container responsive -->
+  
+        <ul>
+          <li>Tags</li>
+          <li>How many shop here</li>
+          <li>Whats nearby</li>
+          <li>Message</li>
+          <li>Login to see details</li>
+          <li>Add tags</li>
+          <li>Add private notes</li>
+          <li>Opentable</li>
+          <li>Share</li>
+          <li>Links (all, mebedly)</li>
+        </ul>
+
+        <a class="twitter-timeline" href="https://twitter.com/foodtradeHQ" data-widget-id="411852499260145664">Tweets by @foodtradeHQ</a>
+        <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
 
 
-    <h2>Organisations</h2>
-    <?php include 'card_business.php';?> 
-    <?php include 'card_business.php';?> 
-    <?php include 'card_business.php';?> 
-    <?php include 'card_business.php';?> 
-    <?php include 'card_business.php';?> 
+        <div class="btn-toolbar">
+          <div class="btn-group">
+              <a href="#" class="btn btn-inverse disabled"><i class="fa-white fa-thumbs-up"></i></a>
+              <a href="#" class="btn btn-inverse disabled"><i class="fa-white fa-heart"></i></a>
+              <a href="#" class="btn btn-inverse disabled"><i class="fa-white fa-share-alt"></i></a>
+          </div>
+          <div class="btn-group">
+              <a href="#" class="btn btn-inverse disabled"><i class="fa-white fa-trash"></i></a>
+          </div>
+        </div>
+
+        <img src="http://maps.googleapis.com/maps/api/staticmap?zoom=15&size=320x240&maptype=roadmap&center=51.4583%2C-2.61156&sensor=false&client=gme-marktplaats&signature=AtzemkXpFWiPluPmUG_72gGAMxw=" width="100%">
+ 
+   
+      </div><!-- end col8 --> 
+
+
+      <div class="col-md-4">
+        Map showing customers as clusters / dots, and trade connections as lines
+        <img src="map.png" style="width: 100%;" />
+
+
+      </div><!-- end col4 -->
+
+    </div><!-- row -->
 
    
- 
-    </div><!-- container responsive -->
 
-
-    
- 
-
-    <ul>
-    <li>Tags</li>
-    <li>How many shop here</li>
-    <li>Whats nearby</li>
-    <li>Message</li>
-    <li>Login to see details</li>
-    <li>Add tags</li>
-    <li>Add private notes</li>
-    <li>Opentable</li>
-    <li>Share</li>
-    <li>Links (all, mebedly)</li>
-    </ul>
-
-    <a class="twitter-timeline" href="https://twitter.com/foodtradeHQ" data-widget-id="411852499260145664">Tweets by @foodtradeHQ</a>
-<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
-
-
-  
-  <div class="btn-toolbar">
-    <div class="btn-group">
-        <a href="#" class="btn btn-inverse disabled"><i class="fa-white fa-thumbs-up"></i></a>
-        <a href="#" class="btn btn-inverse disabled"><i class="fa-white fa-heart"></i></a>
-        <a href="#" class="btn btn-inverse disabled"><i class="fa-white fa-share-alt"></i></a>
-    </div>
-    <div class="btn-group">
-        <a href="#" class="btn btn-inverse disabled"><i class="fa-white fa-trash"></i></a>
-    </div>
-  </div>
-
-           <img src="http://maps.googleapis.com/maps/api/staticmap?zoom=15&size=320x240&maptype=roadmap&center=51.4583%2C-2.61156&sensor=false&client=gme-marktplaats&signature=AtzemkXpFWiPluPmUG_72gGAMxw=" width="100%">
- 
 
         
 
