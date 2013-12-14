@@ -1,0 +1,250 @@
+.ftstrip {
+position: relative;
+height: 0.5em;
+background-color: #e75239;
+background: -webkit-gradient(linear, 0% 50%, 100% 50%, color-stop(0%, #e75239), color-stop(12.5%, #e75239), color-stop(12.5%, #ff961c), color-stop(25%, #ff961c), color-stop(25%, #ffcc27), color-stop(37.5%, #ffcc27), color-stop(37.5%, #fce62f), color-stop(50%, #fce62f), color-stop(50%, #cde35b), color-stop(62.5%, #cde35b), color-stop(62.5%, #82cc33), color-stop(75%, #82cc33), color-stop(75%, #ff961c), color-st../Terso/page-find.phpop(87.5%, #ff961c), color-stop(87.5%, #e75239), color-stop(100%, #e75239));
+background: -webkit-linear-gradient(left, #e75239 0%,#e75239 12.5%,#ff961c 12.5%,#ff961c 25%,#ffcc27 25%,#ffcc27 37.5%,#fce62f 37.5%,#fce62f 50%,#cde35b 50%,#cde35b 62.5%,#82cc33 62.5%,#82cc33 75%,#ff961c 75%,#ff961c 87.5%,#e75239 87.5%,#e75239 100%);
+background: -moz-linear-gradient(left, #e75239 0%,#e75239 12.5%,#ff961c 12.5%,#ff961c 25%,#ffcc27 25%,#ffcc27 37.5%,#fce62f 37.5%,#fce62f 50%,#cde35b 50%,#cde35b 62.5%,#82cc33 62.5%,#82cc33 75%,#ff961c 75%,#ff961c 87.5%,#e75239 87.5%,#e75239 100%);
+background: -o-linear-gradient(left, #e75239 0%,#e75239 12.5%,#ff961c 12.5%,#ff961c 25%,#ffcc27 25%,#ffcc27 37.5%,#fce62f 37.5%,#fce62f 50%,#cde35b 50%,#cde35b 62.5%,#82cc33 62.5%,#82cc33 75%,#ff961c 75%,#ff961c 87.5%,#e75239 87.5%,#e75239 100%);
+-pie-background: linear-gradient(left, #e75239 0%,#e75239 12.5%,#ff961c 12.5%,#ff961c 25%,#ffcc27 25%,#ffcc27 37.5%,#fce62f 37.5%,#fce62f 50%,#cde35b 50%,#cde35b 62.5%,#82cc33 62.5%,#82cc33 75%,#ff961c 75%,#ff961c 87.5%,#e75239 87.5%,#e75239 100%);
+background: linear-gradient(left, #e75239 0%,#e75239 12.5%,#ff961c 12.5%,#ff961c 25%,#ffcc27 25%,#ffcc27 37.5%,#fce62f 37.5%,#fce62f 50%,#cde35b 50%,#cde35b 62.5%,#82cc33 62.5%,#82cc33 75%,#ff961c 75%,#ff961c 87.5%,#e75239 87.5%,#e75239 100%);
+background-position: 50% 0;
+-webkit-box-shadow: 0 1px 2px rgba(0,0,0,0.25) inset;
+-moz-box-shadow: 0 1px 2px rgba(0,0,0,0.25) inset;
+box-shadow: 0 1px 2px rgba(0,0,0,0.25) inset;
+}
+
+.ftstrip-mini {
+	height: 1px
+}
+
+.sidebar {
+	border-right: 1px solid #ccc;
+}
+
+.sidebar .alert {
+	padding: 5px
+}
+
+#account_info h4 {
+	margin: 0;
+} 
+
+#account_info .content {
+	margin-left: 40px;
+}
+
+a.btn {color: #fff !important;}
+
+h4 a,
+.meta a {
+	color: #A30012 !Important;
+}
+
+article {
+	border-bottom: 1px solid #ccc;
+	padding: 20px 5px;
+}
+
+article:hover {
+	background: #fafafa;
+}
+
+article .content {
+	margin-left: 50px;
+}
+
+article .content h4 {
+	margin-top: 0;
+}
+
+.icons a {
+	color: #ccc;
+	font-size: 18px;
+}
+
+.icons a:hover {
+	color: #F08119; 
+}
+
+
+.meta {
+	margin-top: 10px;
+}
+
+/*  replace this */
+
+.foodtrade-sidebar .foodtrade-tag-list {
+list-style: none;
+font-size: 12px;
+font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+font-size: 14px;
+margin: 15px 0 15px 0;
+padding-right: 10px;
+}
+ 
+.foodtrade-toolbar.fixed{position:fixed;z-index:1050;padding-top:10px;width:940px;top:0}
+.foodtrade-toolbar-body{border-bottom:1px solid #ccc;padding-bottom:18px;padding-top:10px;}
+.foodtrade-toolbar-body .foodtrade-search{-webkit-border-radius:4px;border-radius:4px;width:50%}
+.foodtrade-toolbar-body .foodtrade-sort-title{float:right;padding-right:8px;padding-top:9px}
+.foodtrade-toolbar-body .foodtrade-sort{float:right;width:15%;min-width:90px;height:38px}
+.foodtrade-toolbar-body .foodtrade-partners{width:400px;float:right;text-align:right;font-size:14px;margin-top:16px;margin-right:10px} 
+.foodtrade-sidebar .foodtrade-tag-list{list-style:none;font-size:12px;font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;font-size:14px;margin:15px 0 15px 0; padding:0;}
+.foodtrade-tag-text{padding-left:18px;padding-right:26px}
+.foodtrade-tag-checkbox-column{float:left;}
+.foodtrade-tag-checkbox-column .foodtrade-tag-checkbox{margin-top:-1px}
+.foodtrade-tag{position:relative;font-size:12px;padding-left:3px;cursor:pointer;line-height:17px;margin-bottom:5px}
+.foodtrade-tag-all .foodtrade-tag-text{font-weight:bold}
+.foodtrade-tag-count{position:absolute;top:0;right:0}
+.foodtrade-tag-showmore{position:relative;color:#0367b0;cursor:pointer;font-size:11px;padding-left:22px;}
+.foodtrade-tag-showmore .foodtrade-tag-count{position:absolute;top:0;right:0}
+.foodtrade-sidebar .select2-container{width:200px}
+.foodtrade-load-more-box{border-width:0 0 1px 1px;border-color:#ccc;border-style:solid;padding:10px;}
+.foodtrade-load-more-box:hover{cursor:pointer;border-right:1px solid #ccc;background-color:rgba(0,0,0,0.05)}
+.foodtrade-listings-statesystems-container h2{margin:10px}
+.foodtrade-listings-statesystems-container .foodtrade-listings-statesystems{border-top:1px solid #ccc}
+.foodtrade-listings,.foodtrade-listings-statesystems{border-left:1px solid #ccc;}
+.foodtrade-listings .foodtrade-course-listing-box,.foodtrade-listings-statesystems .foodtrade-course-listing-box{border-bottom:1px solid #ccc;padding:10px;position:relative;}
+.foodtrade-listings .foodtrade-course-listing-box:hover,.foodtrade-listings-statesystems .foodtrade-course-listing-box:hover{background-color:rgba(0,0,0,0.05);border-right:1px solid #ccc;margin-right:-1px}
+.foodtrade-listings .foodtrade-course-listing-box .foodtrade-listing-thumbnail,.foodtrade-listings-statesystems .foodtrade-course-listing-box .foodtrade-listing-thumbnail{float:left;max-width:120px;margin-right:12px;-webkit-box-shadow:0 0 2px 0 rgba(0,0,0,0.45);box-shadow:0 0 2px 0 rgba(0,0,0,0.45)}
+.foodtrade-listings .foodtrade-course-listing-box .foodtrade-listing-text,.foodtrade-listings-statesystems .foodtrade-course-listing-box .foodtrade-listing-text{margin:-12px 0 -6px 20px;}
+.foodtrade-listings .foodtrade-course-listing-box .foodtrade-listing-text .foodtrade-listing-primary,.foodtrade-listings-statesystems .foodtrade-course-listing-box .foodtrade-listing-text .foodtrade-listing-primary{margin:-3px 0 0 0;}
+.foodtrade-listings .foodtrade-course-listing-box .foodtrade-listing-text .foodtrade-listing-primary .foodtrade-listing-university,.foodtrade-listings-statesystems .foodtrade-course-listing-box .foodtrade-listing-text .foodtrade-listing-primary .foodtrade-listing-university{font-family:"sofiapro-light",Arial,sans-serif;font-size:14px;display:block;margin-bottom:3px;margin-top:10.5px;white-space:nowrap;overflow:hidden;-o-text-overflow:ellipsis;text-overflow:ellipsis}
+.foodtrade-listings .foodtrade-course-listing-box .foodtrade-listing-text .foodtrade-listing-primary .foodtrade-listing-coursename,.foodtrade-listings-statesystems .foodtrade-course-listing-box .foodtrade-listing-text .foodtrade-listing-primary .foodtrade-listing-coursename{font-family:"sofiapro-light",Arial,sans-serif;font-size:16px;display:block;line-height:1.3em;margin:3px 0 3px 0;color:#0367b0;letter-spacing:0;}
+.foodtrade-listings .foodtrade-course-listing-box .foodtrade-listing-text .foodtrade-listing-primary .foodtrade-listing-coursename .foodtrade-listing-course-link-box,.foodtrade-listings-statesystems .foodtrade-course-listing-box .foodtrade-listing-text .foodtrade-listing-primary .foodtrade-listing-coursename .foodtrade-listing-course-link-box{position:absolute;top:0;left:0;width:100%;height:100%;z-index:1}
+.foodtrade-listings .foodtrade-course-listing-box .foodtrade-listing-text .foodtrade-listing-primary .foodtrade-listing-instructor,.foodtrade-listings-statesystems .foodtrade-course-listing-box .foodtrade-listing-text .foodtrade-listing-primary .foodtrade-listing-instructor{font-family:"sofiapro-light",Arial,sans-serif;font-size:14px;display:block;margin:0 0;color:#555}
+.foodtrade-listings .foodtrade-course-listing-box .foodtrade-listing-secondary,.foodtrade-listings-statesystems .foodtrade-course-listing-box .foodtrade-listing-secondary{float:right;min-width:105px;max-width:100%;}
+.foodtrade-listings .foodtrade-course-listing-box .foodtrade-listing-secondary .foodtrade-listing-secondary-item,.foodtrade-listings-statesystems .foodtrade-course-listing-box .foodtrade-listing-secondary .foodtrade-listing-secondary-item{font-family:"sofiapro-light",Arial,sans-serif;display:block;font-size:14px;text-align:right;position:relative;z-index:2}
+.foodtrade-listings .foodtrade-course-listing-box .foodtrade-listing-secondary .foodtrade-listing-secondary-inactive,.foodtrade-listings-statesystems .foodtrade-course-listing-box .foodtrade-listing-secondary .foodtrade-listing-secondary-inactive{color:#ccc}
+.foodtrade-listings .foodtrade-course-listing-box .foodtrade-listing-secondary .foodtrade-list-secondary-sigtrack,.foodtrade-listings-statesystems .foodtrade-course-listing-box .foodtrade-listing-secondary .foodtrade-list-secondary-sigtrack,.foodtrade-listings .foodtrade-course-listing-box .foodtrade-listing-secondary .foodtrade-listing-secondary-inline-enroll-button,.foodtrade-listings-statesystems .foodtrade-course-listing-box .foodtrade-listing-secondary .foodtrade-listing-secondary-inline-enroll-button{padding:1px 4px;color:#fff;margin-left:-10px;-webkit-border-radius:4px;border-radius:4px;cursor:pointer;text-align:center}
+.foodtrade-listings .foodtrade-course-listing-box .foodtrade-listing-secondary .foodtrade-listing-secondary-sigtrack-open,.foodtrade-listings-statesystems .foodtrade-course-listing-box .foodtrade-listing-secondary .foodtrade-listing-secondary-sigtrack-open{background-color:#a9a9a9;}
+.foodtrade-listings .foodtrade-course-listing-box .foodtrade-listing-secondary .foodtrade-listing-secondary-sigtrack-open:hover,.foodtrade-listings-statesystems .foodtrade-course-listing-box .foodtrade-listing-secondary .foodtrade-listing-secondary-sigtrack-open:hover{background-color:#ddc000}
+.foodtrade-listings .foodtrade-course-listing-box .foodtrade-listing-secondary .foodtrade-listing-secondary-sigtrack-not-open,.foodtrade-listings-statesystems .foodtrade-course-listing-box .foodtrade-listing-secondary .foodtrade-listing-secondary-sigtrack-not-open{background-color:#cbcbcb;}
+.foodtrade-listings .foodtrade-course-listing-box .foodtrade-listing-secondary .foodtrade-listing-secondary-sigtrack-not-open:hover,.foodtrade-listings-statesystems .foodtrade-course-listing-box .foodtrade-listing-secondary .foodtrade-listing-secondary-sigtrack-not-open:hover{color:#f7f7f7;background-color:#a9a9a9}
+.foodtrade-listings .foodtrade-course-listing-box .foodtrade-listing-secondary .foodtrade-listing-secondary-inline-enroll-button,.foodtrade-listings-statesystems .foodtrade-course-listing-box .foodtrade-listing-secondary .foodtrade-listing-secondary-inline-enroll-button{text-align:center;margin-top:2px;margin-bottom:2px;border-width:1px;border-style:solid;overflow:hidden}
+.foodtrade-listing-secondary-link{position:relative;z-index:2;color:#0367b0;}
+.foodtrade-listing-secondary-link .foodtrade-listing-secondary-link-target{position:absolute;top:-30%;left:-10%;height:160%;width:120%}
+.foodtrade-loading-box,.foodtrade-noresults-box,.foodtrade-show-more-results-box,.foodtrade-errox-box{margin-top:30px;margin-bottom:30px;text-align:center;font-size:20px;text-color:#808080}
+.foodtrade-sigtrack-modal .modal-header,.foodtrade-sigtrack-modal-disabled .modal-header{position:relative;height:70px;background-image:url("https://d2wvvaown1ul17.cloudfront.net/site-static/pages/home/account/debut_light.png");background-repeat:repeat;border-bottom:1px solid #ccc;padding:0;-webkit-border-radius:6px 6px 0 0;border-radius:6px 6px 0 0;}
+.foodtrade-sigtrack-modal .modal-header img,.foodtrade-sigtrack-modal-disabled .modal-header img{width:42px;position:absolute;left:20px}
+.foodtrade-sigtrack-modal .modal-header h2,.foodtrade-sigtrack-modal-disabled .modal-header h2{margin-top:0;margin-left:80px;padding-top:20px}
+.foodtrade-sigtrack-modal .modal-header .coursera-signature-modal-ribbon,.foodtrade-sigtrack-modal-disabled .modal-header .coursera-signature-modal-ribbon{top:-2px}
+.foodtrade-sigtrack-modal .modal-body img,.foodtrade-sigtrack-modal-disabled .modal-body img{float:left;margin-right:10px}
+.foodtrade-partners-link{color:#838383;}
+.foodtrade-partners-link.active{color:#2c2c2c}
+.coursera-dashboard-section-header{margin:0;padding:15px 0 10px 0;}
+.coursera-dashboard-section-header .coursera-dashboard-section-header-title{text-transform:uppercase;font-family:"sofiapro-bold",Arial,sans-serif;text-align:left;font-size:17px}
+.coursera-dashboard-section-header .coursera-dashboard-section-header-link{text-align:right;font-family:"sofiapro-light",Arial,sans-serif;float:right}
+.form-errors{color:#bb3636;margin-left:10px;font-size:12px}
+.help-inline{font-family:"enriqueta",Garamond,serif}
+.coursera-settings input,.coursera-settings button{margin-right:10px}
+.coursera-profile-button-unenroll{margin-top:30px}
+.coursera-faq-answer{margin-left:25px}
+.coursera-faq-question{margin-top:25px;margin-left:15px}
+div#coursera-course-listing-options{background:#fff;border:solid #d9d9d9 1px;}
+div#coursera-course-listing-options a{padding:10px;display:block;color:#000;}
+div#coursera-course-listing-options ahover{background:#d9d9d9}
+#coursera-promo-cs-job{float:right;margin-bottom:0;font-size:12px;padding-top:5px;padding-bottom:5px;font-family:"sofiapro-light",Arial,sans-serif}
+.coursera-records-course-listing-box .coursera-course-listing-meta{position:relative;font-size:16px;}
+.coursera-records-course-listing-box .coursera-course-listing-meta .coursera-signature-track-listing-link{font-size:12px}
+.coursera-records-course-listing-box .coursera-course-listing-meta .btn-primary{margin-top:6px}
+.coursera-records-course-listing-box .coursera-course-listing-main{width:690px}
+.coursera-records-modal-grading .modal-body p{white-space:pre-line}
+.coursera-front-main-section{width:640px}
+.coursera-front-sidebar-section{margin-left:0;width:298px}
+.coursera-dashboard-enrollments-loading{display:block;margin-bottom:24px}
+.coursera-front-courselist-container{border-right:1px solid #ccc;border-bottom:1px solid #ccc}
+.coursera-dashboard-course-listing-box{border-top:1px solid #ccc;padding:30px 20px 30px 0;}
+.coursera-dashboard-course-listing-box .coursera-dashboard-course-listing-box-icon-container{float:left;width:35%;margin-right:2.5%}
+.coursera-dashboard-course-listing-box .coursera-dashboard-course-listing-box-main{width:62.5%;float:left;}
+.coursera-dashboard-course-listing-box .coursera-dashboard-course-listing-box-main .coursera-dashboard-course-listing-box-university{font-size:14px;font-family:"sofiapro-light",Arial,sans-serif;}
+.coursera-dashboard-course-listing-box .coursera-dashboard-course-listing-box-main .coursera-dashboard-course-listing-box-university a{margin-right:10px}
+.coursera-dashboard-course-listing-box .coursera-dashboard-course-listing-box-main .coursera-dashboard-course-listing-box-name{font-family:"sofiapro-light",Arial,sans-serif;font-size:18px}
+.coursera-dashboard-course-listing-box .coursera-dashboard-course-listing-box-main .coursera-dashboard-course-listing-box-sigtrack-flag{font-size:14px;font-family:"sofiapro-light",Arial,sans-serif;color:#999;}
+.coursera-dashboard-course-listing-box .coursera-dashboard-course-listing-box-main .coursera-dashboard-course-listing-box-sigtrack-flag >span{position:relative;top:2px;left:6px}
+.coursera-dashboard-course-listing-box .coursera-dashboard-course-listing-box-main .coursera-dashboard-course-listing-box-ended-display{margin-top:2px;font-size:14px;font-family:"sofiapro-light",Arial,sans-serif;color:#999}
+.coursera-dashboard-course-listing-box .coursera-dashboard-course-listing-box-main .coursera-dashboard-course-listing-box-links{font-family:"sofiapro-light",Arial,sans-serif;font-size:14px;padding:4px 0}
+.coursera-dashboard-course-listing-box .coursera-dashboard-course-listing-box-main .coursera-dashboard-course-listing-box-go-button{float:right;font-size:13px;padding:4px 0;width:130px}
+.coursera-dashboard-course-listing-box .coursera-dashboard-course-listing-box-main .coursera-dashboard-course-listing-box-progress{font-family:"sofiapro-light",Arial,sans-serif;height:28px;position:relative;margin-top:8px;}
+.coursera-dashboard-course-listing-box .coursera-dashboard-course-listing-box-main .coursera-dashboard-course-listing-box-progress .progress-label{position:absolute}
+.coursera-dashboard-course-listing-box .coursera-dashboard-course-listing-box-main .coursera-dashboard-course-listing-box-progress .progress-line{background-color:#a4a4a4;-webkit-box-shadow:inset 0 1px 0 #ccc;box-shadow:inset 0 1px 0 #ccc;position:relative;top:20px;width:100%;height:8px;-webkit-border-radius:4px;border-radius:4px}
+.coursera-dashboard-course-listing-box .coursera-dashboard-course-listing-box-main .coursera-dashboard-course-listing-box-progress .progress-marker{position:absolute;top:18px;height:12px;width:2px}
+.coursera-dashboard-course-listing-box .coursera-dashboard-course-listing-box-main .coursera-dashboard-course-listing-box-progress .progress-bar{position:absolute;top:20px;height:8px;-webkit-border-radius:4px;border-radius:4px}
+.coursera-dashboard-course-listing-box .coursera-dashboard-course-listing-box-main .coursera-dashboard-course-listing-box-progress .progress-bar{background-color:#30302f;}
+.coursera-dashboard-course-listing-box .coursera-dashboard-course-listing-box-main .coursera-dashboard-course-listing-box-bottom{margin-top:20px}
+.coursera-dashboard-help-link{padding-top:6px;font-size:14px;color:#999}
+.coursera-dashboard-subscriptions-section .coursera-course-card{margin-right:0;width:50%}
+#coursera-profile-editor-form .control-label,#coursera-placement-form .control-label{font-family:"sofiapro-light",Arial,sans-serif}
+#coursera-profile-editor-form .controls input,#coursera-placement-form .controls input,#coursera-profile-editor-form .controls p,#coursera-placement-form .controls p,#coursera-profile-editor-form .controls span,#coursera-placement-form .controls span{font-family:"sofiapro-light",Arial,sans-serif}
+#coursera-profile-editor-form .controls .help-inline,#coursera-placement-form .controls .help-inline{color:#999}
+#coursera-profile-editor-form .input-prepend,#coursera-placement-form .input-prepend{margin-bottom:10px;}
+#coursera-profile-editor-form .input-prepend .add-on,#coursera-placement-form .input-prepend .add-on{height:34px;padding:5px;text-align:right;width:200px;font-size:12px;}
+#coursera-profile-editor-form .input-prepend .add-on img,#coursera-placement-form .input-prepend .add-on img{float:left;vertical-align:middle;margin-right:5px;width:24px}
+#coursera-profile-editor-form .input-prepend .small,#coursera-placement-form .input-prepend .small{width:25px}
+#coursera-profile-editor-form .input-prepend input,#coursera-placement-form .input-prepend input{height:34px;padding:5px;width:150px}
+#coursera-profile-editor-form .coursera-profile-editor-birthday select,#coursera-placement-form .coursera-profile-editor-birthday select{margin-right:10px}
+#coursera-profile-editor-form .coursera-profile-editor-privacy,#coursera-placement-form .coursera-profile-editor-privacy{font-family:"enriqueta",Garamond,serif;font-size:16px}
+#coursera-profile-editor-form .coursera-profile-editor-education-highest-level,#coursera-placement-form .coursera-profile-editor-education-highest-level{font-family:"enriqueta",Garamond,serif;font-size:16px}
+#coursera-profile-editor-form .coursera-profile-editor-website,#coursera-placement-form .coursera-profile-editor-website{margin-right:10px;opacity:1;-ms-filter:none;filter:none;}
+#coursera-profile-editor-form .coursera-profile-editor-website.faded,#coursera-placement-form .coursera-profile-editor-website.faded{opacity:.5;-ms-filter:progid:DXImageTransform.Microsoft.Alpha(Opacity=50);filter:alpha(opacity=50)}
+#coursera-profile-editor-form .coursera-profile-editor-website.url-input-focus .add-on,#coursera-placement-form .coursera-profile-editor-website.url-input-focus .add-on{width:35px}
+#coursera-profile-editor-form .coursera-profile-editor-website.url-input-focus input,#coursera-placement-form .coursera-profile-editor-website.url-input-focus input{width:315px}
+#coursera-profile-editor-form .coursera-profile-editor-website.url-input-focus span.text,#coursera-placement-form .coursera-profile-editor-website.url-input-focus span.text{display:none}
+#coursera-profile-editor-form .coursera-profile-editor-course,#coursera-placement-form .coursera-profile-editor-course{color:#676767;}
+#coursera-profile-editor-form .coursera-profile-editor-course img,#coursera-placement-form .coursera-profile-editor-course img{width:84px;height:auto;border:1px solid #ccc;margin-right:10px}
+#coursera-profile-editor-form .coursera-profile-editor-course span,#coursera-placement-form .coursera-profile-editor-course span{vertical-align:top;font-size:14px;line-height:17px;font-family:"sofiapro-light",Arial,sans-serif}
+.pac-container{font-family:"sofiapro-light",Arial,sans-serif;font-size:12px}
+.image-selector-controls .image-selector-image{width:120px;height:120px;float:left;border:1px solid #ccc}
+.image-selector-controls .image-selector-error{color:#bb3636;font-size:12px}
+.image-selector-controls .image-selector-side{margin-left:130px;max-width:260px;position:relative;margin-bottom:5px;}
+.image-selector-controls .image-selector-side .image-selector-progress{float:right;width:125px;margin-top:7px}
+.image-selector-controls .image-selector-side .image-selector-inputs{position:absolute;top:0;left:0;z-index:10;height:100%;width:100%;overflow:hidden;cursor:pointer;}
+.image-selector-controls .image-selector-side .image-selector-inputs .image-selector-input{position:absolute;top:0;right:0;z-index:10;width:100%;height:100%;font-size:50px;cursor:pointer;opacity:0;-ms-filter:progid:DXImageTransform.Microsoft.Alpha(Opacity=0);filter:alpha(opacity=0)}
+.image-selector-controls .image-selector-side .image-selector-help{color:#999;font-size:12px}
+.uploader-controls .uploader-preview{display:inline-block;font-size:12px}
+.uploader-controls .uploader-preview img{width:120px;border:1px solid #ccc;vertical-align:top}
+.uploader-controls .uploader-error{color:#bb3636;font-size:12px}
+.uploader-controls .uploader-side{max-width:220px;position:relative;margin-bottom:5px}
+.uploader-controls .uploader-side .uploader-progress{float:right;width:100px;margin-top:7px;margin-bottom:5px}
+.uploader-controls .uploader-side .uploader-help{margin-top:5px;color:#999;font-size:12px}
+.uploader-controls .uploader-side .uploader-file-input{position:absolute;top:0;left:0;z-index:10;height:100%;width:100%;overflow:hidden;cursor:pointer}
+.uploader-controls .uploader-side .uploader-file-input input[type="file"]{position:absolute;top:0;right:0;z-index:10;width:100%;height:100%;font-size:50px;cursor:pointer;opacity:0;-ms-filter:progid:DXImageTransform.Microsoft.Alpha(Opacity=0);filter:alpha(opacity=0)}
+.uploader-controls .uploader-input{padding-top:10px;clear:left}
+.coursera-profile-section{clear:left;margin-top:20px;padding-top:10px;border-top:1px solid #ccc;}
+.coursera-profile-section h3{margin-bottom:15px}
+.coursera-profile-basics{padding-bottom:10px;}
+.coursera-profile-basics .coursera-profile-photo{width:122px;height:122px;float:left;margin-right:20px;margin-bottom:20px;border:1px solid #ccc}
+.coursera-profile-basics .coursera-profile-top{width:480px;height:122px;float:left;position:relative;}
+.coursera-profile-basics .coursera-profile-top > div{position:absolute;bottom:0}
+.coursera-profile-basics .coursera-profile-name{margin-bottom:15px}
+.coursera-profile-basics .coursera-profile-tagline,.coursera-profile-basics .coursera-profile-location{font-family:"sofiapro-light",Arial,sans-serif;font-size:13px;color:#676767;margin-right:15px;}
+.coursera-profile-basics .coursera-profile-tagline img,.coursera-profile-basics .coursera-profile-location img{vertical-align:middle;display:inline-block;margin-right:5px}
+.coursera-profile-basics .coursera-profile-bio{color:#343434;font-size:16px;clear:both}
+.coursera-profile-websites{margin-top:10px;}
+.coursera-profile-websites li{margin-bottom:6px;}
+.coursera-profile-websites li a img{margin-right:10px;vertical-align:text-top;display:inline-block;width:16px;height:16px;padding-top:2px}
+.coursera-profile-courses-box{padding:0;}
+.coursera-profile-courses-box a:nth-child(odd) div{margin-right:20px}
+.coursera-profile-courses-box .coursera-profile-course-listing-box{width:460px;height:120px;-webkit-box-shadow:0 2px 4px #aaa;box-shadow:0 2px 4px #aaa;border:1px solid #bcbec0;margin-bottom:20px;float:left;}
+.coursera-profile-courses-box .coursera-profile-course-listing-box div{padding:0 6px;}
+.coursera-profile-courses-box .coursera-profile-course-listing-box div h4{font-family:"sofiapro-bold",Arial,sans-serif}
+.coursera-profile-courses-box .coursera-profile-course-listing-box div span{font-family:"sofiapro-light",Arial,sans-serif;font-size:10px;color:#6d6e71}
+.coursera-profile-courses-box .coursera-profile-course-listing-box img{width:178px;height:100%;float:left;margin-right:10px}
+.coursera-placement-share li select{width:120px;margin-left:10px}
+.coursera-course-my-listing-more{position:absolute;left:292px;top:125px}
+.coursera-signature-modal .modal-header{position:relative;height:70px;background-image:url("https://d2wvvaown1ul17.cloudfront.net/site-static/pages/home/account/debut_light.png");background-repeat:repeat;border-bottom:1px solid #ccc;padding:0;-webkit-border-radius:6px 6px 0 0;border-radius:6px 6px 0 0;}
+.coursera-signature-modal .modal-header img{width:42px;position:absolute;left:20px}
+.coursera-signature-modal .modal-header h2{margin-top:0;margin-left:80px;padding-top:20px}
+.coursera-signature-modal .modal-header .coursera-signature-modal-ribbon{top:-2px}
+.coursera-help-link{font-size:12px;margin:0;float:right;display:inline-block}
+.coursera-signature-track-profile-alert{margin-top:10px;font-size:16px}
+.coursera-sigtrack-accounts-profile-info h5{display:inline-block;font-size:16px;margin:3px}
+.coursera-sigtrack-account-body .inner-info{margin-left:15px}
+.coursera-sigtrack-account-body table{width:80%}
+.coursera-sigtrack-unenroll-options-both .option-title{font-weight:bold}
+.coursera-sigtrack-unenroll-options-both .option-explanation{line-height:16px;text-align:left}
+.coursera-signature-unenroll-reason{width:90%;resize:none;margin-left:10px;margin-top:10px}
+.modal-body-unenroll-response{margin:10px 0 20px 70px}
+.coursera-sigtrack-unenroll-modal .help-text{font-size:smaller;text-align:center;line-height:10px;margin-top:10px}
+.coursera-sigtrack-unenroll-modal .coursera-signature-modal-close{margin-left:10px;text-decoration:underline}
+.coursera-signature-track-profile-complete{margin-left:5px;font-size:10px;border:1px solid #000;-webkit-border-radius:4px;border-radius:4px;padding:1px;vertical-align:bottom}
