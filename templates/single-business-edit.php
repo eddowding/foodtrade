@@ -168,8 +168,8 @@
           <h2>Customers</h2>
            
           <?php include 'card_business.php';?> 
-          <?php include 'card_individual.php';?> 
-          <?php include 'card_organisation.php';?> 
+          <?php include 'card_business.php';?> 
+          <?php include 'card_business.php';?> 
           <?php include 'card_business.php';?> 
           <?php include 'card_business.php';?> 
           <?php include 'card_business.php';?> 

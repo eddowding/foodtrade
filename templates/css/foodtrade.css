@@ -136,11 +136,21 @@ h2 {
 /********************************/
 
 .card {
-	width: 30%;
+	width: 48%;
 	float: left;
 	margin-right: 2%;
 	border: 1px solid #ccc;
 	margin-top: 15px;
+	min-height: 52px;
+}
+
+.card-business { 
+}
+
+.card-organisation { 
+}
+
+.card-individual { 
 }
 
 .card .content {

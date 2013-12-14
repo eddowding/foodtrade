@@ -1,12 +1,18 @@
 
-    <div class="card">
+    <div class="card card-business">
       <div class="content">
-        <img src="https://s3.amazonaws.com/photos.angel.co/users/191261-medium_jpg?1351590055" alt="THEIRNAME"
-        class="img-rounded img-responsive pull-left" style="width:40px;" />
+
+        <div class=" pull-left">
+          <img src="https://s3.amazonaws.com/photos.angel.co/users/191261-medium_jpg?1351590055" alt="THEIRNAME"
+          class="img-rounded img-responsive" style="width:40px;" /> 
+
+          <span class="label label-warning text-center">Biz</span>
+        </div>
 
         <div class="text">
-          <h5><a href="#THEIRPROFILEPAGE">Hrair Mekhsian</a></h5>
-          <span class="label label-default">Mixed Farm</span>
+          <h5><a href="#THEIRPROFILEPAGE">Hrair Mekhsian</a>
+          <span class="label label-default pull-right">Mixed Farm</span>
+          </h5>
           <span class="label label-default">Butcher</span>
           <p class="small">Sardis parturient montes, nascetur ridiculus mus. Nullam id dolor id nibh ultricies vehicula.</p>
         </div>
