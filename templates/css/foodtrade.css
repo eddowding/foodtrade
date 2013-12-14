@@ -1,0 +1,144 @@
+@font-face {
+    font-family: 'tradegothicbold';
+    src: url('http://foodtrade.com/wp-content/themes/Terso-Child/font_trade/trade_gothic_bold_condensed_no._20-webfont.eot');
+    src: url('http://foodtrade.com/wp-content/themes/Terso-Child/font_trade/trade_gothic_bold_condensed_no._20-webfont.eot?#iefix') format('embedded-opentype'),
+         url('http://foodtrade.com/wp-content/themes/Terso-Child/font_trade/trade_gothic_bold_condensed_no._20-webfont.woff') format('woff'),
+         url('http://foodtrade.com/wp-content/themes/Terso-Child/font_trade/trade_gothic_bold_condensed_no._20-webfont.ttf') format('truetype'),
+         url('http://foodtrade.com/wp-content/themes/Terso-Child/font_trade/trade_gothic_bold_condensed_no._20-webfont.svg#tradegothicbold') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+h1 {
+	font-family: "tradegothicbold"!important;
+	font-size: 3em;
+}
+
+.ftstrip {
+	position: relative;
+	height: 0.5em;
+	background-color: #e75239;
+	background: -webkit-gradient(linear, 0% 50%, 100% 50%, color-stop(0%, #e75239), color-stop(12.5%, #e75239), color-stop(12.5%, #ff961c), color-stop(25%, #ff961c), color-stop(25%, #ffcc27), color-stop(37.5%, #ffcc27), color-stop(37.5%, #fce62f), color-stop(50%, #fce62f), color-stop(50%, #cde35b), color-stop(62.5%, #cde35b), color-stop(62.5%, #82cc33), color-stop(75%, #82cc33), color-stop(75%, #ff961c), color-st../Terso/page-find.phpop(87.5%, #ff961c), color-stop(87.5%, #e75239), color-stop(100%, #e75239));
+	background: -webkit-linear-gradient(left, #e75239 0%,#e75239 12.5%,#ff961c 12.5%,#ff961c 25%,#ffcc27 25%,#ffcc27 37.5%,#fce62f 37.5%,#fce62f 50%,#cde35b 50%,#cde35b 62.5%,#82cc33 62.5%,#82cc33 75%,#ff961c 75%,#ff961c 87.5%,#e75239 87.5%,#e75239 100%);
+	background: -moz-linear-gradient(left, #e75239 0%,#e75239 12.5%,#ff961c 12.5%,#ff961c 25%,#ffcc27 25%,#ffcc27 37.5%,#fce62f 37.5%,#fce62f 50%,#cde35b 50%,#cde35b 62.5%,#82cc33 62.5%,#82cc33 75%,#ff961c 75%,#ff961c 87.5%,#e75239 87.5%,#e75239 100%);
+	background: -o-linear-gradient(left, #e75239 0%,#e75239 12.5%,#ff961c 12.5%,#ff961c 25%,#ffcc27 25%,#ffcc27 37.5%,#fce62f 37.5%,#fce62f 50%,#cde35b 50%,#cde35b 62.5%,#82cc33 62.5%,#82cc33 75%,#ff961c 75%,#ff961c 87.5%,#e75239 87.5%,#e75239 100%);
+	-pie-background: linear-gradient(left, #e75239 0%,#e75239 12.5%,#ff961c 12.5%,#ff961c 25%,#ffcc27 25%,#ffcc27 37.5%,#fce62f 37.5%,#fce62f 50%,#cde35b 50%,#cde35b 62.5%,#82cc33 62.5%,#82cc33 75%,#ff961c 75%,#ff961c 87.5%,#e75239 87.5%,#e75239 100%);
+	background: linear-gradient(left, #e75239 0%,#e75239 12.5%,#ff961c 12.5%,#ff961c 25%,#ffcc27 25%,#ffcc27 37.5%,#fce62f 37.5%,#fce62f 50%,#cde35b 50%,#cde35b 62.5%,#82cc33 62.5%,#82cc33 75%,#ff961c 75%,#ff961c 87.5%,#e75239 87.5%,#e75239 100%);
+	background-position: 50% 0;
+	-webkit-box-shadow: 0 1px 2px rgba(0,0,0,0.25) inset;
+	-moz-box-shadow: 0 1px 2px rgba(0,0,0,0.25) inset;
+	box-shadow: 0 1px 2px rgba(0,0,0,0.25) inset;
+}
+
+.ftstrip-mini {
+	height: 1px
+}
+
+.sidebar {
+	border-right: 1px solid #ccc;
+	background-image: url(http://www.stripegenerator.com/generators/generate_stripes.php?fore=f9f9f9&h=30&w=1&p=3&back1=ffffff&back2=ff0000&gt=0&d=0&shadow=0&);
+}
+
+.sidebar .alert {
+	padding: 5px
+}
+
+#account_info h4 {
+	margin: 0;
+} 
+
+#account_info .content {
+	margin-left: 40px;
+}
+
+a.btn {color: #fff !important;}
+
+h4 a,
+.meta a {
+	color: #A30012 !Important;
+}
+
+article {
+	border-bottom: 1px solid #ccc;
+	padding: 20px 5px;
+}
+
+article:hover {
+	background: #fafafa;
+}
+
+article .content {
+	margin-left: 50px;
+}
+
+article .content h4 {
+	margin-top: 0;
+}
+
+.icons a {
+	color: #ccc;
+	font-size: 18px;
+}
+
+.icons a:hover {
+	color: #F08119; 
+}
+
+
+.meta {
+	margin-top: 10px;
+}
+
+/*  replace this */
+
+.foodtrade-sidebar .foodtrade-tag-list {
+list-style: none;
+font-size: 12px;
+font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+font-size: 14px;
+margin: 15px 0 15px 0;
+padding-right: 10px;
+}
+
+.dropdown-menu  li  a .fa.pull-right  {
+	margin-left: 60px;
+}
+
+/********************************/
+/**  SINGLE VIEW               **/
+/********************************/
+
+#single h1,
+#single h1 a {
+	margin-top:0;
+	color: #444; 
+}
+
+#header_box {
+	margin-top: 50px;
+}
+
+#header_box #avatar { 
+}
+
+#contact_info {
+	border-left: 1px solid #ccc;
+	background-image: url(http://www.stripegenerator.com/generators/generate_stripes.php?fore=dddddd&h=30&w=1&p=9&back1=ffffff&back2=ff0000&gt=0&d=0&shadow=0&);
+	padding: 20px;
+}
+
+/********************************/
+/**  SIDEBAR                   **/
+/********************************/
+
+   
+.foodtrade-sidebar .foodtrade-tag-list{list-style:none;  margin:15px 0 15px 0; padding:0;}
+.foodtrade-tag-text{padding-left:18px;padding-right:26px}
+.foodtrade-tag-checkbox-column{float:left;}
+.foodtrade-tag-checkbox-column .foodtrade-tag-checkbox{margin-top:-1px}
+.foodtrade-tag{position:relative;font-size:12px;padding-left:3px;cursor:pointer;line-height:17px;margin-bottom:5px}
+.foodtrade-tag-all .foodtrade-tag-text{font-weight:bold}
+.foodtrade-tag-count{position:absolute;top:0;right:0}
+.foodtrade-tag-showmore{position:relative;color:#0367b0;cursor:pointer;font-size:11px;padding-left:22px;}
+.foodtrade-tag-showmore .foodtrade-tag-count{position:absolute;top:0;right:0}
+ 
