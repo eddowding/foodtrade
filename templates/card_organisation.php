@@ -11,6 +11,7 @@
         <div class="text">
           <h5><a href="#THEIRPROFILEPAGE">Slow Food UK</a> <span class="label label-danger pull-right">2457</span></a></h5> 
           <p class="small">Making GOOD, CLEAN and FAIR food happen. Join us!</p>
+          <a href="#remove" class="danger">Remove</a>
         </div>
       </div>
     </div> 

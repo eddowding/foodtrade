@@ -110,7 +110,15 @@ article .content h4 {
 	margin-left: 60px;
 }
 
+h2 a .fa {
+	color: green;
+}
 
+.danger {
+	color: red;
+}
+
+ 
 
 /********************************/
 /**  SINGLE VIEW               **/

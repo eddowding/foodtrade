@@ -210,21 +210,18 @@
     <div class="row" style="margin-top: -1px;">
      <div class="col-md-12">
         <ul class="nav nav-tabs nav-justified">
-
-          <li class="active"><a href="#home" data-toggle="tab">Home</a></li>
-          <li><a href="#produce" data-toggle="tab">Produce</a></li>
+          <li class="active"><a href="#produce" data-toggle="tab">Foods <span class="badge pull-right">42</span></a></li>
+          <li><a href="#connections" data-toggle="tab">Connections<span class="badge pull-right">28</span></a> </li>
           <li><a href="#organisations" data-toggle="tab">Organisation</a></li>
-          <li><a href="#customers" data-toggle="tab">Customers</a></li>
-          <li><a href="#activity" data-toggle="tab">Activity</a></li> 
-          <li><a href="#connections" data-toggle="tab">Connections</a></li>
-          <li><a href="#people" data-toggle="tab">People</a></li>
+          <li><a href="#customers" data-toggle="tab">Customers <span class="badge pull-right">4</span></a> </li>
+          <li><a href="#activity" data-toggle="tab">Updates  <span class="badge pull-right">5</span></a></li> 
+          <li><a href="#people" data-toggle="tab">People <span class="badge pull-right">2</span></a></li>
         </ul>
      </div>
     </div>
 
     <div class="row">
       <div class="col-md-8">
-        
         <div class="container-responsive clearfix">
 
         <div class="tab-content hidden">
@@ -235,30 +232,79 @@
         </div>
 
 
-  
+  <a id="produce"></a>
+  <h2><strong>We sell</strong> 
+    <a href="#edit_produce" class="pull-right"><i class="fa fa-edit"></i></a>
+  </h2>
+  <hr />
 
 
- We sell the following produce
-MEAT
-Beef Chicken Lamb Pork
-EGGS
+<div class="container-responsive">
+  <div class="row"> 
+    <div class="col-md-12">
+      <form action="#" method="get">
+          <div class="input-group">
 
-          <div class="clearfix">  
-          <h2>Tags </h2>
-           <a href="/tag/TAG">Box Scheme</a>
-           <a href="/tag/TAG">Butcher</a>
-           <a href="/tag/TAG">family</a>
-           <a href="/tag/TAG">organic</a> 
+              <input class="form-control" id="system-search" name="q" placeholder="Search for" required>
+              <span class="input-group-btn">
+                  <button type="submit" class="btn btn-default"><i class="glyphicon glyphicon-search"></i></button>
+              </span>
           </div>
+      </form>
+       <table class="table table-list-search">
+          <tbody>
+              <tr>
+                  <td>Meat / <a href="/produce/beef">Beef</a></td>  
+                  <td> 
+                   <a href="#" class="pull-right"><i class="fa fa-thumbs-o-up text-muted" title="Vouch for this"></i></a> 
+                  </td> 
+              </tr> 
+              <tr>
+                  <td>Meat / <a href="/produce/beef">Chicken</a></td> 
+                  
+                  <td> 
+                   <a href="#" class="pull-right"><i class="fa fa-thumbs-o-up text-muted" title="Vouch for this"></i></a> 
+                  </td>  
+              </tr>
+          </tbody>
+          <tfoot>
+              <tr>
+                  <td>Fruit / <a href="/produce/beef">Blackberries</a></td> 
+                  <td> 
+                   <a href="#" class="pull-right"><i class="fa fa-thumbs-o-up text-muted" title="Vouch for this"></i></a> 
+                  </td> 
+              </tr> 
+          </tfoot>
+      </table>   
+    </div>
+  </div>
+</div>
 
+
+          <div class="clearfix">
+          <h2>Connections</h2>
+          <?php include 'card_business.php';?> 
+          <?php include 'card_business.php';?> 
+          <?php include 'card_business.php';?> 
+          <?php include 'card_business.php';?> 
+          <?php include 'card_business.php';?> 
+          <?php include 'card_business.php';?> 
+          <?php include 'card_business.php';?> 
+          <?php include 'card_business.php';?> 
+          <?php include 'card_business.php';?> 
+          <?php include 'card_business.php';?> 
+          <?php include 'card_business.php';?> 
+          <?php include 'card_business.php';?> 
+          <?php include 'card_business.php';?> 
+          <?php include 'card_business.php';?> 
+          <?php include 'card_business.php';?> 
+          </div>
+ 
 
           <div class="clearfix">  
           <h2>Organisations </h2>
           
-          <?php include 'card_organisation.php';?> 
-          <?php include 'card_organisation.php';?> 
-          <?php include 'card_organisation.php';?> 
-          <?php include 'card_organisation.php';?> 
+          <?php include 'card_organisation.php';?>  
           <?php include 'card_organisation.php';?> 
           <?php include 'card_organisation.php';?> 
           <?php include 'card_organisation.php';?> 
@@ -274,44 +320,27 @@ EGGS
           <?php include 'card_individual.php';?>  
           </div> 
 
+
           <div class="clearfix">
-          <h2>Businesses</h2>
-          <?php include 'card_business.php';?> 
-          <?php include 'card_business.php';?> 
-          <?php include 'card_business.php';?> 
-          <?php include 'card_business.php';?> 
-          <?php include 'card_business.php';?> 
-          </div>
+          <h2>People</h2>
+          <?php include 'card_individual.php';?> 
+          <?php include 'card_individual.php';?> 
+          <?php include 'card_individual.php';?> 
+          <?php include 'card_individual.php';?> 
+          <?php include 'card_individual.php';?> 
+          <?php include 'card_individual.php';?>  
+          </div> 
+
      
-        </div><!-- container responsive -->
-  
-        <ul>
-          <li>Tags</li>
-          <li>How many shop here</li>
-          <li>Whats nearby</li>
-          <li>Message</li>
-          <li>Login to see details</li>
-          <li>Add tags</li>
-          <li>Add private notes</li>
-          <li>Opentable</li>
-          <li>Share</li>
-          <li>Links (all, mebedly)</li>
-        </ul>
+        <h2>Updates</h2>
 
         <a class="twitter-timeline" href="https://twitter.com/foodtradeHQ" data-widget-id="411852499260145664">Tweets by @foodtradeHQ</a>
         <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
 
-
-        <div class="btn-toolbar">
-          <div class="btn-group">
-              <a href="#" class="btn btn-inverse disabled"><i class="fa-white fa-thumbs-up"></i></a>
-              <a href="#" class="btn btn-inverse disabled"><i class="fa-white fa-heart"></i></a>
-              <a href="#" class="btn btn-inverse disabled"><i class="fa-white fa-share-alt"></i></a>
-          </div>
-          <div class="btn-group">
-              <a href="#" class="btn btn-inverse disabled"><i class="fa-white fa-trash"></i></a>
-          </div>
-        </div>
+ 
+        </div><!-- container responsive -->
+  
+      
  
    
       </div><!-- end col8 --> 
@@ -333,4 +362,6 @@ EGGS
 
 
     </div><!-- col10 --> 
+
+   
  <?php include '_footer.php';?>
