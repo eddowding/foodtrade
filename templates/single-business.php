@@ -8,12 +8,10 @@
 
     <div class="col-md-10" id="single">
 
-
-    <div id="header_box" class="row">
+    <div class="container-responsive">
+    <div id="header_box" class="clearfix">
       <div class="col-md-2" id="avatar">
-
-        <img class="img-thumbnail   center-block" src="http://a0.twimg.com/profile_images/2596092158/afpecvf41m8f0juql78p_bigger.png"  />
-
+        <img class="img-thumbnail center-block" src="http://a0.twimg.com/profile_images/2596092158/afpecvf41m8f0juql78p_bigger.png"  />
       </div>
      
       <div class="col-md-7">
@@ -37,7 +35,7 @@
   
          </div> <!-- meta -->
 
-      </div>
+      </div><!-- end header middle -->
 
       <div id="contact_info" class="col-md-3">
 
@@ -141,8 +139,9 @@
       </div><!-- /.modal -->
 
  
-      </div>
+      </div><!-- end header last -->
 
+    </div>
     </div>
 
     <div class="row" style="margin-top: 50px;">
@@ -164,6 +163,8 @@
 
 
     <div class="container-responsive clearfix">
+
+    <h2>Customers</h2>
      
     <?php include 'card_business.php';?> 
     <?php include 'card_business.php';?> 
@@ -171,6 +172,9 @@
     <?php include 'card_business.php';?> 
     <?php include 'card_business.php';?> 
     <?php include 'card_business.php';?> 
+
+
+    <h2>Organisations</h2>
     <?php include 'card_business.php';?> 
     <?php include 'card_business.php';?> 
     <?php include 'card_business.php';?> 
