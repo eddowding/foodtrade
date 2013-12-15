@@ -115,15 +115,7 @@
     </div>
 
     <div class="col-md-5">
-
-      <!-- new item -->
  
-          <input class="form-control input-lg" type="text" placeholder="Want to #buy #apples? Or #sell 30 tonnes #oats? "> 
-        <hr />
-
-
-      <!-- /new item -->
-
 
       <article class="activity clearfix">
 

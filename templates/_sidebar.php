@@ -1,5 +1,5 @@
-  <div class="col-md-2 sidebar" >
-
+  <div class="col-md-2 sidebar hidden-phone">
+     
         <!-- show the logged in users account --> 
         <div id="account_info">
         

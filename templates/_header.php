@@ -76,6 +76,11 @@
               </div><!-- /.modal-content -->
             </div><!-- /.modal-dialog -->
           </div><!-- /.modal -->
+
+
+         <ul class="nav navbar-nav navbar-center">
+          <li><a href="/">Activity</a></li>
+         </ul>
  
          <ul class="nav navbar-nav navbar-right">
                   <li><a href="#">Sign Up</a></li>

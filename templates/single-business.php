@@ -1,6 +1,6 @@
 <?php include '_header.php';?>
 
-    <div class="container">
+    <div  class="container">
 
     <?php include '_sidebar.php';?>
 
@@ -53,30 +53,24 @@
       <button class="btn btn-primary btn-block">Invite to connect</button>
 
 
-      <!-- if logged in users = individual -->
-      <button class="btn btn-default btn-block"><i class="fa fa-shopping-cart text-muted"></i> I am a customer</button>
+      <!-- if logged in users = individual --> 
+      <button class="btn btn-default btn-block" data-toggle="modal" data-target="#modal_customer">
+        <i class="fa fa-shopping-cart text-muted"></i> I am a customer
+      </button> 
 
+      <!-- if logged in users = business --> 
+      <div class="btn-group btn-block" data-toggle="buttons">
+        <label class="btn btn-default" style="width:50%;">
+          <input type="checkbox"> Buy from
+        </label>
+        <label class="btn btn-default" style="width:50%;">
+          <input type="checkbox"> Sell to
+        </label> 
+      </div>
+ 
 
-      <!-- if they have an account --> 
-      <div class="btn-group  btn-block ">
-        <button type="button" class="btn btn-default btn-block dropdown-toggle" data-toggle="dropdown">
-          <i class="fa fa-link text-muted"></i>
-          We trade with them <span class="caret"></span>
-        </button> 
-        <ul class="dropdown-menu" role="menu">  
-          <li><a href="#" class="text-muted small">IF LOGGED IN = BUSINESS</a></li>
-          <li><a href="#"><i class="fa fa-sign-in text-muted pull-right"></i> LOGGEDINNAME buys from them</a></li>
-          <li><a href="#"><i class="fa fa-sign-out text-muted pull-right"></i> LOGGEDINNAME sells to them</a></li> 
-      
-          <li class="divider"></li>
-          <li><a href="#"><i class="fa fa-envelope text-muted pull-right"></i> Contact</a></li>
-          <li><a href="#"><i class="fa fa-facebook text-muted pull-right"></i>  Follow on twitter</a></li>
-          <li><a href="#"><i class="fa fa-twitter text-muted pull-right"></i> Like on facebook</a></li>
-        </ul>
-      </div> <!-- /btn group --> 
-   
       <!-- Button trigger modal -->
-      <button class="btn btn-primary btn-block" data-toggle="modal" data-target="#myModal">
+      <button class="btn btn-primary btn-block" data-toggle="modal" data-target="#modal_contact">
         Contact
       </button>  
 
@@ -89,11 +83,17 @@
         <i class="fa fa-share-square-o text-muted"></i> Share
       </button>
 
-      <!-- Modal -->
+      <!--SHARER  Modal -->
       <div class="modal fade" id="sharer" tabindex="-1" role="dialog" aria-labelledby="sharer" aria-hidden="true">
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-body"> 
+
+
+
+        <div class="container-responsive">
+          <div class="row">
+            <div class="col-sm-6">
 
               <a href="#" class="btn btn-block  btn-social btn-facebook" onclick="window.open(
                     'https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent('URL') +'&amp;t=' + encodeURIComponent('TITLE'), 
@@ -115,7 +115,8 @@
                 <i class="fa fa-pinterest"></i>
                 Share on Pinterest
               </a>
-
+            </div>
+            <div class="col-sm-6">
               <a  class="btn btn-social btn-block btn-google-plus" href="https://plus.google.com/share?url=myline">
                 <i class="fa fa-google-plus"></i>
                 Share on Google+
@@ -130,6 +131,9 @@
                 <i class="fa fa-linkedin"></i>
                 Share on LinkedIn
               </a>
+            </div>
+            </div>
+            </div>
               <script type="text/javascript" src="http://platform.tumblr.com/v1/share.js"></script>
 
             </div> 
@@ -149,8 +153,8 @@
       </div> 
 
 
-         <!-- Modal -->
-      <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+     <!-- modal_contact -->
+      <div class="modal fade" id="modal_contact" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
@@ -200,6 +204,31 @@
         </div><!-- /.modal-dialog -->
       </div><!-- /.modal -->
 
+      <!-- modal_customer -->
+      <div class="modal fade" id="modal_customer" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+              <h4 class="modal-title" id="myModalLabel">You're a customer of Smales Farm?</h4>
+            </div>
+            <div class="modal-body">
+ 
+            <p><strong>Thanks!</strong> Knowing where customers are is a win-win. BUSINESS NAME understands how it can better serve you, and in time we'll help them keep you informed about special local offers. </p> 
+            <p>Examples might include home deliveries from your local shops, later opening hours, or working together with other local business to make things better. </p>
+            <p>We'll show you as being a customer and put a small dot on the map near your location.</p>
+   
+
+            </div>
+            <div class="modal-footer"> 
+              <button type="button" class="btn btn-default">Cancel</button>
+              <button type="button" class="btn btn-primary">Yes, I'm a happy customer!</button>
+            </div>
+          </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+      </div><!-- /.modal -->
+
+
  
       </div><!-- end header last -->
 
@@ -207,7 +236,7 @@
     </div>
 
 
-    <div class="row" style="margin-top: -1px;">
+    <div class="row" style="margin-top: 30px;">
      <div class="col-md-12">
         <ul class="nav nav-tabs nav-justified">
           <li class="active"><a href="#produce" data-toggle="tab">Foods <span class="badge pull-right">42</span></a></li>
@@ -232,20 +261,15 @@
         </div>
 
 
-  <a id="produce"></a>
-  <h2><strong>We sell</strong> 
-    <a href="#edit_produce" class="pull-right"><i class="fa fa-edit"></i></a>
-  </h2>
-  <hr />
-
+   
 
 <div class="container-responsive">
   <div class="row"> 
     <div class="col-md-12">
       <form action="#" method="get">
-          <div class="input-group">
+          <div class="input-group well well-sm">
 
-              <input class="form-control" id="system-search" name="q" placeholder="Search for" required>
+              <input class="form-control" id="system-search" name="q" placeholder="Search foods..." required>
               <span class="input-group-btn">
                   <button type="submit" class="btn btn-default"><i class="glyphicon glyphicon-search"></i></button>
               </span>
@@ -322,21 +346,73 @@
 
 
           <div class="clearfix">
-          <h2>Team</h2>
-          <?php include 'card_individual.php';?> 
-          <?php include 'card_individual.php';?> 
-          <?php include 'card_individual.php';?> 
-          <?php include 'card_individual.php';?> 
-          <?php include 'card_individual.php';?> 
-          <?php include 'card_individual.php';?>  
+          <h2>Team</h2> 
+          <?php include 'card_team.php';?> 
+          <?php include 'card_team.php';?> 
+          <?php include 'card_team.php';?> 
+          <?php include 'card_team.php';?> 
+          <?php include 'card_team.php';?>  
           </div> 
 
      
         <h2>Updates</h2>
 
-        <a class="twitter-timeline" href="https://twitter.com/foodtradeHQ" data-widget-id="411852499260145664">Tweets by @foodtradeHQ</a>
-        <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+        <div class="container-responsive">
+          <div class="row">
+              <div class="col-md-12">
+                  <div class="panel panel-default">
 
+                      <!-- if this is the profile of the logged in user -->
+                      <div class="panel-footer">
+                          <div class="input-group">
+                              <input id="btn-input" type="text" class="form-control input-sm" placeholder="That food's not going to trade itself..." />
+                              <span class="input-group-btn">
+                                  <button class="btn btn-warning btn-sm" id="btn-chat">
+                                      Send</button>
+                              </span>
+                          </div>
+                      </div>
+                      <!-- // if this is the profile of the logged in user -->
+
+                      <div class="panel-body">
+                          <ul class="chat">
+                              <li class="left clearfix"><span class="chat-img pull-left">
+                                  <img src="https://pbs.twimg.com/profile_images/378800000141996074/6a363e3c4f2a84a956c3cb27c50b2ca0_normal.png" alt="User Avatar" class="img-thumbnail" />
+                              </span>
+                                  <div class="chat-body clearfix">
+                                      <div class="header">
+                                          <strong class="primary-font">Smales Farm</strong> <small class="pull-right text-muted">
+                                              <span class="glyphicon glyphicon-time"></span>12 mins ago</small>
+                                      </div>
+                                      <p>
+                                          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur bibendum ornare
+                                          dolor, quis ullamcorper ligula sodales.
+                                      </p>
+                                  </div>
+                              </li>
+                              
+                              <li class="left clearfix"><span class="chat-img pull-left">
+                              <img src="https://pbs.twimg.com/profile_images/378800000141996074/6a363e3c4f2a84a956c3cb27c50b2ca0_normal.png" alt="User Avatar" class="img-thumbnail" />
+                              </span>
+                                  <div class="chat-body clearfix">
+                                      <div class="header">
+                                          <strong class="primary-font">Smales Farm</strong> <small class="pull-right text-muted">
+                                              <span class="glyphicon glyphicon-time"></span>14 mins ago</small>
+                                      </div>
+                                      <p>
+                                          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur bibendum ornare
+                                          dolor, quis ullamcorper ligula sodales.
+                                      </p>
+                                  </div>
+                              </li>
+                               
+                          </ul>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+ 
  
         </div><!-- container responsive -->
   
