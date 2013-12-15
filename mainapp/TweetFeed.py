@@ -10,10 +10,7 @@ class TweetFeed():
 
     # def select_db(self, db_name):
     #   self.db = self.client[db_name]
-   	def insert_tweet(self, value):
-   		self.table_name.insert_one(self.table_name, valu)
-   		pass
-
+   	
     def get_tweet_by_id(self,tweet_id):
         return self.db_object.get_one(self.table_name,{'tweet_id':tweet_id, 'deleted':0})
 
@@ -28,6 +25,7 @@ class TweetFeed():
 
 
     def insert_tweet(self, value):
+        value['deleted'] =0
     	value['time_stamp'] = int(time.time())
         self.db_object.insert_one(self.table_name,value)
 
@@ -37,3 +35,6 @@ class TweetFeed():
 # # print tweet.delete_tweet('52ad41d3df1d2d0f0e7e7da5')
 # # tweet.insert_tweet({'parent_tweet_id':0, 'tweet_message':"nepal", 'time_stamp':datetime.now(), 'deleted':0})
 # print tweet.get_tweet_by_parent_id(0)
+# tweet_feed = TweetFeed()
+# tweet_feed.insert_tweet({'parent_tweet_id': 2, 'user_id': 3, 'tweet_message': 'Hello there'})
+# print tweet_feed.get_tweet_by_parent_id(2)
