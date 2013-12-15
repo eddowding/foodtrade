@@ -18,6 +18,7 @@
      <li><a href="home.php">home.php</a></li>
      <li>signup in header -> twitter authoriation -> <a href="register.php">register.php</a></li>
         
+      <li><a href="single-loggedout.php">single-view or biz / org when logged out.php</a></li>  
      <li>
       Unknown type
         <ul>
@@ -126,6 +127,7 @@ fix new message modal - showing as shaded - blue botton on header bar
 when you mouseover the cards / maps, make the other highlight 
 After a customer has signed up, prompt them to tweet about it 
 make active state of default buttons be the 'success' style
+single-business.php shows two distances: first is distance to its location from yours; second (bullseye) is the distance between you and its nearest trade point
 crowdtag produce
 
 

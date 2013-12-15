@@ -40,7 +40,11 @@
             
             <!-- if logged in or you've allows html5 browser location -->
             <a href="http://maps.google.com/maps?saddr=current+location&daddr=Sydney+Opera+House,+Sydney+Opera+House,+Bennelong+Point,+Sydney+NSW+2000,+Australia" target="_blank" data-placement="top" data-toggle="tooltip" title="Get directions" class="text-muted">
-            <i class="fa fa-location-arrow" style="margin-left: 20px;"></i> 87.2 miles</a>  
+            <i class="fa fa-location-arrow" style="margin-left: 20px;"></i> 87.2 miles</a> 
+
+            
+            <i class="fa fa-bullseye" style="margin-left: 20px;"></i> 20.1 miles
+   
             <!--  // if logged in or you've allows html5 browser location -->
   
          </div> <!-- meta -->

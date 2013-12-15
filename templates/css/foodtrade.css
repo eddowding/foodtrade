@@ -162,7 +162,7 @@ article .content h4 {
 } 
 
 #header_box div[class*='col-']  { 
-	min-height: 250px;
+	min-height: 300px;
 }
 
 #header_box #avatar {

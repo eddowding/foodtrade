@@ -39,13 +39,7 @@
             
             <i class="fa fa-map-marker"></i> <a href="http://maps.google.com/maps?saddr=current+location&daddr=Sydney+Opera+House,+Sydney+Opera+House,+Bennelong+Point,+Sydney+NSW+2000,+Australia" target="_blank" data-placement="top" data-toggle="tooltip" title="Get directions" class="text-muted">78 Example Street, Test Town</a>  
             
-            <!-- if logged in or you've allows html5 browser location -->
-            <i class="fa fa-location-arrow" style="margin-left: 20px;"></i> 87.2 miles  
-            <!--  // if logged in or you've allows html5 browser location -->
-
-
-            <i class="fa fa-bullseye" style="margin-left: 20px;"></i> 20.1 miles
-  
+             
          </div> <!-- meta -->
   
       </div><!-- end header middle -->
@@ -53,35 +47,17 @@
       <div id="contact_info" class="col-md-3">
 
       <!-- if they dont't have an account yet -->
-      <button class="btn btn-primary btn-block">Invite to connect</button>
+      <button class="btn btn-info btn-block">Sign in</button>
 
 
-      <!-- if logged in users = individual --> 
-      <button class="btn btn-default btn-block" data-toggle="modal" data-target="#modal_customer">
-        <i class="fa fa-smile-o text-muted"></i> I am a customer
-      </button> 
-
-      <!-- if logged in users = business --> 
-      <div class="btn-group btn-block" data-toggle="buttons">
-        <label class="btn btn-default" style="width:50%;" title="LOGGEDINUSER buys from PROFILENAME">
-          <input type="checkbox"> Buy from
-        </label>
-        <!-- showing active mode if button is selected -->
-        <label class="btn btn-success" style="width:50%;" title="LOGGEDINUSER sells to PROFILENAME">
-          <input type="checkbox"> Sell to
-        </label> 
-      </div>
- 
+      
 
       <!-- Button trigger modal -->
-      <button class="btn btn-primary btn-block" data-toggle="modal" data-target="#modal_contact">
+      <button class="btn btn-default btn-block" disabled="disabled" data-toggle="modal" data-target="#modal_contact">
         Contact
       </button>  
 
-      <!-- if not logged in show login prompt -->
-      <button class="btn btn-primary btn-block">Login for more</button>
-
- 
+       
 
       <button class="btn btn-default btn-block" data-toggle="modal" data-target="#sharer">
         <i class="fa fa-share-square-o text-muted"></i> Share
@@ -144,69 +120,7 @@
           </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
       </div><!-- /.modal -->
-
-      <div class="icons text-center" style="font-size:25px">
-        <a href="#"><i class="fa fa-facebook-square"></i></a>
-        <a href="#"><i class="fa fa-twitter-square"></i></a> 
-        <a href="#"><i class="fa fa-phone-square"></i></a> 
-        <a href="#"><i class="fa fa-rss-square"></i></a> 
-        <a href="#"><i class="fa fa-envelope"></i></a> 
-        <a href="#"><i class="fa fa-globe"></i></a> 
-        <a href="#"><i class="fa fa-youtube"></i></a> 
-        <a href="#"><i class="fa fa-linkedin-square"></i></a> 
-      </div> 
-
-
-     <!-- modal_contact -->
-      <div class="modal fade" id="modal_contact" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-              <h4 class="modal-title" id="myModalLabel">Contact Smales Farm</h4>
-            </div>
-            <div class="modal-body">
-
-            <div class="container-responsive">
-              <div class="row">
-                <div class="col-sm-4">
-             
-                  <address>
-                    
-          <a href="mailto:mail@smalesfarm.com" target="_blank"><i class="fa fa-envelope text-muted"></i> mail@smalesfarm.com </a><br />
-          <a href="#"><i class="fa fa-twitter text-muted"></i> @smalesfarm</a><br />
-          <a href="callto:0131 476 5333"><i class="fa fa-phone text-muted"></i> 0131 476 5333</a>
-                  </address>
-                </div>
-                
-                <div class="col-sm-8 contact-form">
-                  <form id="contact" method="post" class="form" role="form">
-                    <div class="row">
-                      <div class="col-xs-6 col-md-6 form-group">
-                        <input class="form-control" id="name" name="name" placeholder="Name (prefill if reg'd)" type="text" required autofocus />
-                      </div>
-                      <div class="col-xs-6 col-md-6 form-group">
-                        <input class="form-control" id="email" name="email" placeholder="Email (prefill if reg'd)" type="email" required />
-                      </div>
-                    </div> 
-                    <textarea class="form-control counted" name="message" placeholder="Type in your message" rows="5"></textarea>
-                    <h6 class="pull-right" id="counter">320 characters remaining</h6>
-                     
-                  </form>
-                </div>
-              </div>
-            </div>
- 
-   
-
-            </div>
-            <div class="modal-footer"> 
-              <button type="button" class="btn btn-primary">Tweet it</button>
-              <button type="button" class="btn btn-primary">Email it</button>
-            </div>
-          </div><!-- /.modal-content -->
-        </div><!-- /.modal-dialog -->
-      </div><!-- /.modal -->
+  
 
       <!-- modal_customer -->
       <div class="modal fade" id="modal_customer" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -369,11 +283,19 @@
               <button type="submit" class="btn btn-success">Add</button>
             </form>
           </div> 
-           <p class=""><a href="single-organisation.php">Show all</a></p>
           <?php include 'card_business.php';?> 
           <?php include 'card_business.php';?> 
-          <?php include 'card_business.php';?>  
-          <?php include 'card_business.php';?>  
+          <?php include 'card_business.php';?> 
+          <?php include 'card_business.php';?> 
+          <?php include 'card_business.php';?> 
+          <?php include 'card_business.php';?> 
+          <?php include 'card_business.php';?> 
+          <?php include 'card_business.php';?> 
+          <?php include 'card_business.php';?> 
+          <?php include 'card_business.php';?> 
+          <?php include 'card_business.php';?> 
+          <?php include 'card_business.php';?> 
+          <?php include 'card_business.php';?> 
           <?php include 'card_business.php';?> 
           <?php include 'card_business.php';?> 
           </div>
@@ -414,10 +336,56 @@
 
         <div class="container-responsive">
           <div class="row">
-              <div class="col-md-12"> 
-              <div id="activity"> 
-           <?php include 'card_activity.php';?>  
-          </div> 
+              <div class="col-md-12">
+                  <div class="panel panel-default">
+
+                      <!-- if this is the profile of the logged in user -->
+                      <div class="panel-footer">
+                          <div class="input-group">
+                              <input id="btn-input" type="text" class="form-control input-sm" placeholder="That food's not going to trade itself..." />
+                              <span class="input-group-btn">
+                                  <button class="btn btn-warning btn-sm" id="btn-chat">
+                                      Send</button>
+                              </span>
+                          </div>
+                      </div>
+                      <!-- // if this is the profile of the logged in user -->
+
+                      <div class="panel-body">
+                          <ul class="chat">
+                              <li class="left clearfix"><span class="chat-img pull-left">
+                                  <img src="https://pbs.twimg.com/profile_images/378800000141996074/6a363e3c4f2a84a956c3cb27c50b2ca0_normal.png" alt="User Avatar" class="img-thumbnail" />
+                              </span>
+                                  <div class="chat-body clearfix">
+                                      <div class="header">
+                                          <strong class="primary-font">Smales Farm</strong> <small class="pull-right text-muted">
+                                              <span class="glyphicon glyphicon-time"></span>12 mins ago</small>
+                                      </div>
+                                      <p>
+                                          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur bibendum ornare
+                                          dolor, quis ullamcorper ligula sodales.
+                                      </p>
+                                  </div>
+                              </li>
+                              
+                              <li class="left clearfix"><span class="chat-img pull-left">
+                              <img src="https://pbs.twimg.com/profile_images/378800000141996074/6a363e3c4f2a84a956c3cb27c50b2ca0_normal.png" alt="User Avatar" class="img-thumbnail" />
+                              </span>
+                                  <div class="chat-body clearfix">
+                                      <div class="header">
+                                          <strong class="primary-font">Smales Farm</strong> <small class="pull-right text-muted">
+                                              <span class="glyphicon glyphicon-time"></span>14 mins ago</small>
+                                      </div>
+                                      <p>
+                                          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur bibendum ornare
+                                          dolor, quis ullamcorper ligula sodales.
+                                      </p>
+                                  </div>
+                              </li>
+                               
+                          </ul>
+                      </div>
+                  </div>
               </div>
           </div>
       </div>
