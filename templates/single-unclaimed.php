@@ -59,24 +59,15 @@
 
 
       <!-- if logged in users = individual --> 
-      <button class="btn btn-default btn-block" data-toggle="modal" data-target="#modal_customer">
-        <i class="fa fa-smile-o text-muted"></i> I am a supporter
+      <button class="btn btn-success btn-block" data-toggle="modal" data-target="#modal_customer">
+        <i class="fa fa-check"></i> I am a supporter
       </button> 
- 
-
-      <!-- Button trigger modal -->
-      <button class="btn btn-primary btn-block" data-toggle="modal" data-target="#modal_contact">
-        Contact
-      </button>  
-
-      <!-- if not logged in show login prompt -->
-      <button class="btn btn-primary btn-block">Login to see contact info</button>
-
- 
+  
 
       <button class="btn btn-default btn-block" data-toggle="modal" data-target="#sharer">
         <i class="fa fa-share-square-o text-muted"></i> Share
       </button>
+ 
 
       <!--SHARER  Modal -->
       <div class="modal fade" id="sharer" tabindex="-1" role="dialog" aria-labelledby="sharer" aria-hidden="true">
@@ -146,6 +137,8 @@
         <a href="#"><i class="fa fa-youtube"></i></a> 
         <a href="#"><i class="fa fa-linkedin-square"></i></a> 
       </div> 
+
+      <p class="text-center text-muted small" style="margin-top: 20px;">Is this your business? Sign in!</p>
 
 
      <!-- modal_contact -->

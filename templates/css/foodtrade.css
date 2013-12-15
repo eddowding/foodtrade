@@ -163,10 +163,10 @@ h2 a .fa {
 	margin-top: 20px;
 	border: 1px solid #ccc;
 	 
-}
+} 
 
-.cell { 
-	min-height: 220px;
+#header_box div[class*='col-']  { 
+	min-height: 250px;
 }
 
 #header_box #avatar {
