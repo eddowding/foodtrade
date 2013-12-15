@@ -240,221 +240,75 @@
     <div class="row">
      <div class="col-md-12">
         <ul class="nav nav-tabs nav-justified">
-          <li class="active"><a href="#produce" data-toggle="tab">Foods <span class="badge">42</span></a></li>
-          <li><a href="#connections" data-toggle="tab">Connections <span class="badge">28</span></a> </li>
-          <li><a href="#organisations" data-toggle="tab">Organisation</a> <span class="badge"></span></li>
-          <li><a href="#customers" data-toggle="tab">Customers <span class="badge">4</span></a> </li>
-          <li><a href="#activity" data-toggle="tab">Updates  <span class="badge">5</span></a></li> 
-          <li><a href="#team" data-toggle="tab">Team <span class="badge">2</span></a></li>
+          <li class="active"><a href="#produce" data-toggle="tab">Foods </a></li>
+          <li><a href="#connections" data-toggle="tab">Connections </a>  </li>
+          <li><a href="#organisations" data-toggle="tab">Organisation</a> </li>
+          <li><a href="#customers" data-toggle="tab">Customers</a> </li>
+          <li><a href="#activity" data-toggle="tab">Updates  </a></li> 
+          <li><a href="#team" data-toggle="tab">Team </a></li>
         </ul>
      </div>
     </div>
 
     <div class="row">
       <div class="col-md-8">
-        <div class="container-responsive clearfix">
+         
+      <!-- USER MUST BE LOGGED IN TO BE ADD INFORMATION -->
+      <!-- SHOW THE FORMS BUT ON:FOCUS SHOW THE LOGIN MODAL -->
+        
 
-      
+          <h2>Foods</h2> 
+          <div class="well well-sm">
+            <form action="#" method="get">
+                <div class="input-group"> 
+                  <input class="form-control" name="q"  placeholder="Add foods you can buy here.">
+                  <span class="input-group-btn">
+                      <button type="submit" class="btn btn-success"> Add</button>
+                  </span>
+                </div>
+                <span class="help-block">Eg. We have 300kg #surplus conference pears for #sale or #donation // I want to  #buy organic honey for my farm shop </span>
+            </form>
+          </div> 
 
-   
-
-<div class="container-responsive">
-  <div class="row"> 
-    <div class="col-md-12">
-      <form action="#" method="get">
-          <div class="input-group well well-sm">
-
-              <input class="form-control" id="system-search" name="q" placeholder="Search their foods..." required>
-              <span class="input-group-btn">
-                  <button type="submit" class="btn btn-default"><i class="glyphicon glyphicon-search"></i></button>
-              </span>
-          </div>
-      </form>
-       <table class="table table-list-search">
-          <tbody>
-              <tr>
-                  <td>Meat / <a href="/produce/beef">Beef</a></td>  
-                  
-                  <td> 
-                  <div class="pull-right">
-
-                   <!-- hide if user has edit rights -->
-                   <a href="#"><i class="fa fa-thumbs-o-up text-muted" title="Vouch for this"></i></a> 
-
-                   <!-- if user has edit rights -->
-                   <a href="#"><i class="fa fa-trash-o text-muted" title="Delete"></i></a> 
-                   </div>
-                  </td>  
-              </tr> 
-              <tr>
-                  <td>Meat / <a href="/produce/beef">Chicken</a></td> 
-                  
-                  <td> 
-                  <div class="pull-right">
-
-                   <!-- hide if user has edit rights -->
-                   <a href="#"><i class="fa fa-thumbs-o-up text-muted" title="Vouch for this"></i></a> 
-
-                   <!-- if user has edit rights -->
-                   <a href="#"><i class="fa fa-trash-o text-muted" title="Delete"></i></a> 
-                   </div>
-                  </td>  
-              </tr>
-              <tr>
-                  <td>Fruit / <a href="/produce/beef">Blackberries</a></td> 
-                  
-                  <td> 
-                  <div class="pull-right">
-
-                   <!-- hide if user has edit rights -->
-                   <a href="#"><i class="fa fa-thumbs-o-up text-muted" title="Vouch for this"></i></a> 
-
-                   <!-- if user has edit rights -->
-                   <a href="#"><i class="fa fa-trash-o text-muted" title="Delete"></i></a> 
-                   </div>
-                  </td>  
-              </tr> 
-          </tbody>
-          <tfoot style="background: #eee;">
-              <tr>
-                  <td colspan="2">
-
-                  <form action="#" method="get">
-                      <div class="input-group">
-                      <!-- link this to open food facts --> 
-                            <input class="form-control" name="q" style="width:400px;" placeholder="Add foods you can buy here.">
-                            <span class="input-group-btn">
-                                <button type="submit" class="btn btn-success"> Add</button>
-                            </span>
-                          </div>
-                      </div>
-                  </form>
-              </td> 
-                  
-              </tr> 
-          </tfoot>
-      </table>    
-
-    </div>
-  </div>
-</div>
-
-
-          <div class="clearfix">
-          <h2>Connections</h2>
-          <?php include 'card_business.php';?> 
-          <?php include 'card_business.php';?> 
-          <?php include 'card_business.php';?> 
-          <?php include 'card_business.php';?> 
-          <?php include 'card_business.php';?> 
-          <?php include 'card_business.php';?> 
-          <?php include 'card_business.php';?> 
-          <?php include 'card_business.php';?> 
-          <?php include 'card_business.php';?> 
-          <?php include 'card_business.php';?> 
-          <?php include 'card_business.php';?> 
-          <?php include 'card_business.php';?> 
-          <?php include 'card_business.php';?> 
-          <?php include 'card_business.php';?> 
-          <?php include 'card_business.php';?> 
-          </div>
+          <h2>Connections</h2> 
+          <div class="well well-sm">
+            <form action="#" method="get">
+                <div class="input-group"> 
+                  <input class="form-control" name="q"  placeholder="Add foods you can buy here.">
+                  <span class="input-group-btn">
+                      <button type="submit" class="btn btn-success"> Add</button>
+                  </span>
+                </div>
+                <span class="help-block">Eg. We have 300kg #surplus conference pears for #sale or #donation // I want to  #buy organic honey for my farm shop </span>
+            </form>
+          </div> 
  
 
-          <div class="clearfix">  
-          <h2>Organisations</h2>
-           <p class=""><a href="single-organisation.php">Show all</a></p>
-          
-          <?php include 'card_organisation.php';?>  
-          <?php include 'card_organisation.php';?> 
-          <?php include 'card_organisation.php';?> 
-          <?php include 'card_organisation.php';?> 
-          </div>
+            
+          <h2>Organisations</h2>  
+          <p class="alert">You have to be logged in as this profile to add organisation memberships.</p>
 
-          <div class="clearfix">
-          <h2>Customers</h2>
-          <?php include 'card_individual.php';?> 
-          <?php include 'card_individual.php';?> 
-          <?php include 'card_individual.php';?> 
-          <?php include 'card_individual.php';?> 
-          <?php include 'card_individual.php';?> 
-          <?php include 'card_individual.php';?>  
-          </div> 
-
-
-          <div class="clearfix">
-          <h2>Team</h2> 
-          <?php include 'card_team.php';?> 
-          <?php include 'card_team.php';?> 
-          <?php include 'card_team.php';?> 
-          <?php include 'card_team.php';?> 
-          <?php include 'card_team.php';?>  
-          </div> 
+          <h2>Customers</h2>    
+          <h2>Team</h2>   
 
      
-        <h2>Updates</h2>
-
-        <div class="container-responsive">
-          <div class="row">
-              <div class="col-md-12">
-                  <div class="panel panel-default">
-
-                      <!-- if this is the profile of the logged in user -->
-                      <div class="panel-footer">
-                          <div class="input-group">
-                              <input id="btn-input" type="text" class="form-control input-sm" placeholder="That food's not going to trade itself..." />
-                              <span class="input-group-btn">
-                                  <button class="btn btn-warning btn-sm" id="btn-chat">
-                                      Send</button>
-                              </span>
-                          </div>
-                      </div>
-                      <!-- // if this is the profile of the logged in user -->
-
-                      <div class="panel-body">
-                          <ul class="chat">
-                              <li class="left clearfix"><span class="chat-img pull-left">
-                                  <img src="https://pbs.twimg.com/profile_images/378800000141996074/6a363e3c4f2a84a956c3cb27c50b2ca0_normal.png" alt="User Avatar" class="img-thumbnail" />
-                              </span>
-                                  <div class="chat-body clearfix">
-                                      <div class="header">
-                                          <strong class="primary-font">Smales Farm</strong> <small class="pull-right text-muted">
-                                              <span class="glyphicon glyphicon-time"></span>12 mins ago</small>
-                                      </div>
-                                      <p>
-                                          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur bibendum ornare
-                                          dolor, quis ullamcorper ligula sodales.
-                                      </p>
-                                  </div>
-                              </li>
-                              
-                              <li class="left clearfix"><span class="chat-img pull-left">
-                              <img src="https://pbs.twimg.com/profile_images/378800000141996074/6a363e3c4f2a84a956c3cb27c50b2ca0_normal.png" alt="User Avatar" class="img-thumbnail" />
-                              </span>
-                                  <div class="chat-body clearfix">
-                                      <div class="header">
-                                          <strong class="primary-font">Smales Farm</strong> <small class="pull-right text-muted">
-                                              <span class="glyphicon glyphicon-time"></span>14 mins ago</small>
-                                      </div>
-                                      <p>
-                                          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur bibendum ornare
-                                          dolor, quis ullamcorper ligula sodales.
-                                      </p>
-                                  </div>
-                              </li>
-                               
-                          </ul>
-                      </div>
-                  </div>
+        <h2>Updates</h2> 
+        <div class="well well-sm">
+          <form action="#" method="get">
+              <div class="input-group"> 
+                <input class="form-control" name="q"  placeholder="Someone out there has the answer. Ask the question.">
+                <span class="input-group-btn">
+                    <button type="submit" class="btn btn-success"> Send</button>
+                </span>
               </div>
-          </div>
-      </div>
- 
- 
-        </div><!-- container responsive -->
-  
-      
- 
-   
+              <span class="help-block">Eg. We have 300kg #surplus conference pears for #sale or #donation // I want to  #buy organic honey for my farm shop </span>
+          </form>
+        </div> 
+
+
+     
+                     
+       
       </div><!-- end col8 --> 
 
 

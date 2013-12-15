@@ -51,18 +51,14 @@
       <!-- if they dont't have an account yet -->
       <button class="btn btn-primary btn-block">Invite to connect</button>
 
+     <button class="btn btn-default btn-block" data-toggle="modal" data-target="#modal_customer">
+        <i class="fa fa-smile-o text-muted"></i> I'm a member
+      </button> 
+      <!-- if selected -->
+     <button class="btn btn-success btn-block" data-toggle="modal" data-target="#modal_customer">
+        <i class="fa fa-check "></i> I'm a member
+      </button> 
  
-      <!-- if logged in users = business --> 
-      <button class="btn btn-default btn-block" data-toggle="modal" data-target="#modal_customer">
-        <i class="fa fa-smile-o text-muted"></i> I am a member
-      </button> 
-
-
-      <!-- if logged in users = individual --> 
-      <button class="btn btn-success btn-block" data-toggle="modal" data-target="#modal_customer">
-        <i class="fa fa-check"></i> I am a supporter
-      </button> 
-  
 
       <button class="btn btn-default btn-block" data-toggle="modal" data-target="#sharer">
         <i class="fa fa-share-square-o text-muted"></i> Share
@@ -224,12 +220,11 @@
     </div>
 
 
-    <div class="row" style="margin-top: 30px;">
+    <div class="row" >
      <div class="col-md-12">
         <ul class="nav nav-tabs ">
           <li class="active"><a href="#members" data-toggle="tab">Members <span class="badge ">2457</span></a></li>
           <li><a href="#foods" data-toggle="tab">Foods  <span class="badge">54556</span></a></li> 
-          <li><a href="#supporters" data-toggle="tab">Supporters  <span class="badge">54347</span></a></li> 
           <li><a href="#team" data-toggle="tab">Team <span class="badge ">25</span></a></li> 
         </ul>
      </div>
@@ -266,7 +261,7 @@
                   <form action="#" method="get">
                       <div class="input-group well well-sm">
 
-                          <input class="form-control" id="system-search" name="q" placeholder="Search foods..." required>
+                          <input class="form-control" id="system-search" name="q" placeholder="Search foods from Slow Food UK members..." required>
                           <span class="input-group-btn">
                               <button type="submit" class="btn btn-default"><i class="glyphicon glyphicon-search"></i></button>
                           </span>
@@ -301,18 +296,13 @@
               </div>
             </div>
           </div>
-          <div class="tab-pane fade" id="supporters">
-            <div class="clearfix"> 
-              <?php include 'card_individual.php';?> 
-              <?php include 'card_individual.php';?> 
-              <?php include 'card_individual.php';?> 
-              <?php include 'card_individual.php';?> 
-              <?php include 'card_individual.php';?> 
-              <?php include 'card_individual.php';?>  
-            </div> 
-          </div>
+          
 
           <div class="tab-pane fade" id="team">
+
+           <button class="btn btn-default">
+              <i class="fa fa-smile-o "></i> I work here
+            </button> 
             <div class="clearfix">
               <?php include 'card_team.php';?> 
               <?php include 'card_team.php';?> 

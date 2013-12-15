@@ -53,16 +53,12 @@
          Invite to connect
       </button> 
 
- 
-      <!-- if logged in users = business --> 
+  
       <button class="btn btn-default btn-block" data-toggle="modal" data-target="#modal_customer">
-        <i class="fa fa-smile-o text-muted"></i> I am a member
+        <i class="fa fa-smile-o text-muted"></i> I'm a member
       </button> 
-
-
-      <!-- if logged in users = individual --> 
-      <button class="btn btn-default btn-block" data-toggle="modal" data-target="#modal_customer">
-        <i class="fa fa-smile-o text-muted"></i> I am a supporter
+      <button class="btn btn-success btn-block">
+        <i class="fa fa-check "></i> I'm a member
       </button> 
  
 
@@ -235,13 +231,12 @@
     </div>
 
 
-    <div class="row" style="margin-top: 30px;">
+    <div class="row">
      <div class="col-md-12">
         <ul class="nav nav-tabs ">
           <li class="active"><a href="#members" data-toggle="tab">Members <span class="badge ">2457</span></a></li>
           <li><a href="#foods" data-toggle="tab">Foods  <span class="badge">54556</span></a></li> 
-          <li><a href="#supporters" data-toggle="tab">Supporters  <span class="badge">54347</span></a></li> 
-          <li><a href="#team" data-toggle="tab">Team <span class="badge ">25</span></a></li>
+          <li><a href="#people" data-toggle="tab">People <span class="badge ">25</span></a></li>
           <li><a href="#updates" data-toggle="tab">Updates <span class="badge ">25</span></a></li>
         </ul>
      </div>
@@ -253,6 +248,12 @@
 
         <div class="tab-content">
           <div class="tab-pane active fade in " id="members">
+           <button class="btn btn-default">
+              <i class="fa fa-smile-o "></i> Are you a member?
+            </button> 
+            <button class="btn btn-success">
+              <i class="fa fa-check "></i> I'm a member
+            </button> 
             <div class="clearfix"> 
               <?php include 'card_business.php';?> 
               <?php include 'card_business.php';?> 
@@ -278,7 +279,7 @@
                   <form action="#" method="get">
                       <div class="input-group well well-sm">
 
-                          <input class="form-control" id="system-search" name="q" placeholder="Search foods..." required>
+                          <input class="form-control" id="system-search" name="q" placeholder="Search foods from Slow Food UK members..."  required>
                           <span class="input-group-btn">
                               <button type="submit" class="btn btn-default"><i class="glyphicon glyphicon-search"></i></button>
                           </span>
@@ -312,19 +313,18 @@
                 </div>
               </div>
             </div>
-          </div>
-          <div class="tab-pane fade" id="supporters">
-            <div class="clearfix"> 
-              <?php include 'card_individual.php';?> 
-              <?php include 'card_individual.php';?> 
-              <?php include 'card_individual.php';?> 
-              <?php include 'card_individual.php';?> 
-              <?php include 'card_individual.php';?> 
-              <?php include 'card_individual.php';?>  
-            </div> 
-          </div>
+          </div> 
 
-          <div class="tab-pane fade" id="team">
+          <div class="tab-pane fade" id="people">
+
+           <button class="btn btn-default">
+              <i class="fa fa-smile-o "></i> Do you work here?
+            </button> 
+
+            <button class="btn btn-success">
+              <i class="fa fa-check "></i> I work here
+            </button> 
+
             <div class="clearfix">
               <?php include 'card_team.php';?> 
               <?php include 'card_team.php';?> 
@@ -339,12 +339,12 @@
           <div class="container-responsive">
           <div class="row">
               <div class="col-md-12">
-                  <div class="panel panel-default">
+                  <div class="">
 
                       <!-- if this is the profile of the logged in user -->
-                      <div class="panel-footer">
+                      <div class="well well-sm">
                           <div class="input-group">
-                              <input id="btn-input" type="text" class="form-control input-sm" placeholder="That food's not going to trade itself..." />
+                              <input id="btn-input" type="text" class="form-control input-sm" placeholder="Send an update..." />
                               <span class="input-group-btn">
                                   <button class="btn btn-warning btn-sm" id="btn-chat">
                                       Send</button>
@@ -353,7 +353,7 @@
                       </div>
                       <!-- // if this is the profile of the logged in user -->
 
-                      <div class="panel-body">
+                      <div class="">
                           <ul class="chat">
                               <li class="left clearfix"><span class="chat-img pull-left">
                                   <img src="https://pbs.twimg.com/profile_images/378800000141996074/6a363e3c4f2a84a956c3cb27c50b2ca0_normal.png" alt="User Avatar" class="img-thumbnail" />
