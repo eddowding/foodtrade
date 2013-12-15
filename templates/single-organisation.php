@@ -48,24 +48,22 @@
 
       <div id="contact_info" class="col-md-3">
 
-      <!-- if they dont't have an account yet -->
-      <button class="btn btn-primary btn-block">Invite to connect</button>
+      <!-- if they dont't have an account yet --> 
+      <button class="btn btn-primary btn-block" data-toggle="modal" data-target="#modal_invite">
+         Invite to connect
+      </button> 
+
+ 
+      <!-- if logged in users = business --> 
+      <button class="btn btn-default btn-block" data-toggle="modal" data-target="#modal_customer">
+        <i class="fa fa-smile-o text-muted"></i> I am a member
+      </button> 
 
 
       <!-- if logged in users = individual --> 
       <button class="btn btn-default btn-block" data-toggle="modal" data-target="#modal_customer">
-        <i class="fa fa-shopping-cart text-muted"></i> I am a customer
+        <i class="fa fa-smile-o text-muted"></i> I am a supporter
       </button> 
-
-      <!-- if logged in users = business --> 
-      <div class="btn-group btn-block" data-toggle="buttons">
-        <label class="btn btn-default" style="width:50%;">
-          <input type="checkbox"> Buy from
-        </label>
-        <label class="btn btn-default" style="width:50%;">
-          <input type="checkbox"> Sell to
-        </label> 
-      </div>
  
 
       <!-- Button trigger modal -->
@@ -74,7 +72,7 @@
       </button>  
 
       <!-- if not logged in show login prompt -->
-      <button class="btn btn-primary btn-block">Login to see contact info</button>
+      <button class="btn btn-primary btn-block">Login for more</button>
 
  
 
@@ -151,6 +149,8 @@
         <a href="#"><i class="fa fa-linkedin-square"></i></a> 
       </div> 
 
+
+      <?php include 'modal_invite.php';?>
 
      <!-- modal_contact -->
       <div class="modal fade" id="modal_contact" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">

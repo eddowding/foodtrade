@@ -80,6 +80,8 @@
 
          <ul class="nav navbar-nav navbar-center">
           <li><a href="/">Activity</a></li>
+          <li><a href="/">Pricing</a></li>
+          <li><a href="/">About us</a></li>
          </ul>
  
          <ul class="nav navbar-nav navbar-right">

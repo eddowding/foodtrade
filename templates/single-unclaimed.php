@@ -2,7 +2,7 @@
 
     <div  class="container">
 
-    <?php include '_sidebar.php';?>
+    <?php include '_sidebar_search.php';?>
 
    
 
@@ -11,21 +11,20 @@
     <div class="container-responsive">
     <div id="header_box" class="clearfix">
       <div class="col-md-2" id="avatar">
-        <img class="img-thumbnail center-block" src="http://a0.twimg.com/profile_images/2596092158/afpecvf41m8f0juql78p_bigger.png"  />
+        <img class="img-thumbnail center-block" src="https://pbs.twimg.com/profile_images/1690823879/Screen_shot_2011-12-13_at_12.21.20_bigger.png"  />
       </div>
      
       <div class="col-md-7">
-         <h1><a href="#">Smales Farm</a></h1>
+         <h1><a href="#">Slow Food UK</a></h1>
  
          <span class="label label-default">Livestock Farm</span>
          <span class="label label-default">Butcher</span>
          <span class="label label-default">Wholesaler</span>
          <span class="label label-default">Distribution</span>
          <span class="label label-default">Farm Shop</span>
- 
-
+    
          <hr />
-         <p>Nullam quis risus eget urna mollis ornare vel eu leo. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nullam id dolor id nibh ultricies vehicula.</p>        
+         <p>Making GOOD, CLEAN and FAIR food happen. Join us!</p>        
 
           <div class="tags">  
            <a href="/tag/TAG">Box Scheme</a>
@@ -52,21 +51,17 @@
       <!-- if they dont't have an account yet -->
       <button class="btn btn-primary btn-block">Invite to connect</button>
 
+ 
+      <!-- if logged in users = business --> 
+      <button class="btn btn-default btn-block" data-toggle="modal" data-target="#modal_customer">
+        <i class="fa fa-smile-o text-muted"></i> I am a member
+      </button> 
+
 
       <!-- if logged in users = individual --> 
       <button class="btn btn-default btn-block" data-toggle="modal" data-target="#modal_customer">
-        <i class="fa fa-shopping-cart text-muted"></i> I am a customer
+        <i class="fa fa-smile-o text-muted"></i> I am a supporter
       </button> 
-
-      <!-- if logged in users = business --> 
-      <div class="btn-group btn-block" data-toggle="buttons">
-        <label class="btn btn-default" style="width:50%;">
-          <input type="checkbox"> Buy from
-        </label>
-        <label class="btn btn-default" style="width:50%;">
-          <input type="checkbox"> Sell to
-        </label> 
-      </div>
  
 
       <!-- Button trigger modal -->
@@ -75,7 +70,7 @@
       </button>  
 
       <!-- if not logged in show login prompt -->
-      <button class="btn btn-primary btn-block">Login for more</button>
+      <button class="btn btn-primary btn-block">Login to see contact info</button>
 
  
 
@@ -238,13 +233,11 @@
 
     <div class="row" style="margin-top: 30px;">
      <div class="col-md-12">
-        <ul class="nav nav-tabs nav-justified">
-          <li class="active"><a href="#produce" data-toggle="tab">Foods <span class="badge">42</span></a></li>
-          <li><a href="#connections" data-toggle="tab">Connections <span class="badge">28</span></a> </li>
-          <li><a href="#organisations" data-toggle="tab">Organisation</a> <span class="badge"></span></li>
-          <li><a href="#customers" data-toggle="tab">Customers <span class="badge">4</span></a> </li>
-          <li><a href="#activity" data-toggle="tab">Updates  <span class="badge">5</span></a></li> 
-          <li><a href="#team" data-toggle="tab">Team <span class="badge">2</span></a></li>
+        <ul class="nav nav-tabs ">
+          <li class="active"><a href="#members" data-toggle="tab">Members <span class="badge ">2457</span></a></li>
+          <li><a href="#foods" data-toggle="tab">Foods  <span class="badge">54556</span></a></li> 
+          <li><a href="#supporters" data-toggle="tab">Supporters  <span class="badge">54347</span></a></li> 
+          <li><a href="#team" data-toggle="tab">Team <span class="badge ">25</span></a></li> 
         </ul>
      </div>
     </div>
@@ -253,199 +246,95 @@
       <div class="col-md-8">
         <div class="container-responsive clearfix">
 
-      
-
-   
-
-<div class="container-responsive">
-  <div class="row"> 
-    <div class="col-md-12">
-      <form action="#" method="get">
-          <div class="input-group well well-sm">
-
-              <input class="form-control" id="system-search" name="q" placeholder="Search their foods..." required>
-              <span class="input-group-btn">
-                  <button type="submit" class="btn btn-default"><i class="glyphicon glyphicon-search"></i></button>
-              </span>
+        <div class="tab-content">
+          <div class="tab-pane active fade in " id="members">
+            <div class="clearfix"> 
+              <?php include 'card_business.php';?> 
+              <?php include 'card_business.php';?> 
+              <?php include 'card_business.php';?> 
+              <?php include 'card_business.php';?> 
+              <?php include 'card_business.php';?> 
+              <?php include 'card_business.php';?> 
+              <?php include 'card_business.php';?> 
+              <?php include 'card_business.php';?> 
+              <?php include 'card_business.php';?> 
+              <?php include 'card_business.php';?> 
+              <?php include 'card_business.php';?> 
+              <?php include 'card_business.php';?> 
+              <?php include 'card_business.php';?> 
+              <?php include 'card_business.php';?> 
+              <?php include 'card_business.php';?> 
+            </div>
           </div>
-      </form>
-       <table class="table table-list-search">
-          <tbody>
-              <tr>
-                  <td>Meat / <a href="/produce/beef">Beef</a></td>  
-                  
-                  <td> 
-                  <div class="pull-right">
-
-                   <!-- hide if user has edit rights -->
-                   <a href="#"><i class="fa fa-thumbs-o-up text-muted" title="Vouch for this"></i></a> 
-
-                   <!-- if user has edit rights -->
-                   <a href="#"><i class="fa fa-trash-o text-muted" title="Delete"></i></a> 
-                   </div>
-                  </td>  
-              </tr> 
-              <tr>
-                  <td>Meat / <a href="/produce/beef">Chicken</a></td> 
-                  
-                  <td> 
-                  <div class="pull-right">
-
-                   <!-- hide if user has edit rights -->
-                   <a href="#"><i class="fa fa-thumbs-o-up text-muted" title="Vouch for this"></i></a> 
-
-                   <!-- if user has edit rights -->
-                   <a href="#"><i class="fa fa-trash-o text-muted" title="Delete"></i></a> 
-                   </div>
-                  </td>  
-              </tr>
-              <tr>
-                  <td>Fruit / <a href="/produce/beef">Blackberries</a></td> 
-                  
-                  <td> 
-                  <div class="pull-right">
-
-                   <!-- hide if user has edit rights -->
-                   <a href="#"><i class="fa fa-thumbs-o-up text-muted" title="Vouch for this"></i></a> 
-
-                   <!-- if user has edit rights -->
-                   <a href="#"><i class="fa fa-trash-o text-muted" title="Delete"></i></a> 
-                   </div>
-                  </td>  
-              </tr> 
-          </tbody>
-          <tfoot style="background: #eee;">
-              <tr>
-                  <td colspan="2">
-
+          <div class="tab-pane fade" id="foods">
+            <div class="container-responsive">
+              <div class="row"> 
+                <div class="col-md-12">
                   <form action="#" method="get">
-                      <div class="input-group">
-                      <!-- link this to open food facts --> 
-                            <input class="form-control" name="q" style="width:400px;" placeholder="Add foods you can buy here.">
-                            <span class="input-group-btn">
-                                <button type="submit" class="btn btn-success"> Add</button>
-                            </span>
-                          </div>
+                      <div class="input-group well well-sm">
+
+                          <input class="form-control" id="system-search" name="q" placeholder="Search foods..." required>
+                          <span class="input-group-btn">
+                              <button type="submit" class="btn btn-default"><i class="glyphicon glyphicon-search"></i></button>
+                          </span>
                       </div>
                   </form>
-              </td> 
-                  
-              </tr> 
-          </tfoot>
-      </table>    
-
-    </div>
-  </div>
-</div>
-
-
-          <div class="clearfix">
-          <h2>Connections</h2>
-          <?php include 'card_business.php';?> 
-          <?php include 'card_business.php';?> 
-          <?php include 'card_business.php';?> 
-          <?php include 'card_business.php';?> 
-          <?php include 'card_business.php';?> 
-          <?php include 'card_business.php';?> 
-          <?php include 'card_business.php';?> 
-          <?php include 'card_business.php';?> 
-          <?php include 'card_business.php';?> 
-          <?php include 'card_business.php';?> 
-          <?php include 'card_business.php';?> 
-          <?php include 'card_business.php';?> 
-          <?php include 'card_business.php';?> 
-          <?php include 'card_business.php';?> 
-          <?php include 'card_business.php';?> 
+                   <table class="table table-list-search">
+                      <tbody>
+                          <tr>
+                              <td>Meat / <a href="/produce/beef">Beef</a></td>  
+                              <td> 
+                               <a href="#" class="pull-right"><i class="fa fa-thumbs-o-up text-muted" title="Vouch for this"></i></a> 
+                              </td> 
+                          </tr> 
+                          <tr>
+                              <td>Meat / <a href="/produce/beef">Chicken</a></td> 
+                              
+                              <td> 
+                               <a href="#" class="pull-right"><i class="fa fa-thumbs-o-up text-muted" title="Vouch for this"></i></a> 
+                              </td>  
+                          </tr>
+                      </tbody>
+                      <tfoot>
+                          <tr>
+                              <td>Fruit / <a href="/produce/beef">Blackberries</a></td> 
+                              <td> 
+                               <a href="#" class="pull-right"><i class="fa fa-thumbs-o-up text-muted" title="Vouch for this"></i></a> 
+                              </td> 
+                          </tr> 
+                      </tfoot>
+                  </table>   
+                </div>
+              </div>
+            </div>
           </div>
- 
-
-          <div class="clearfix">  
-          <h2>Organisations</h2>
-           <p class=""><a href="single-organisation.php">Show all</a></p>
-          
-          <?php include 'card_organisation.php';?>  
-          <?php include 'card_organisation.php';?> 
-          <?php include 'card_organisation.php';?> 
-          <?php include 'card_organisation.php';?> 
+          <div class="tab-pane fade" id="supporters">
+            <div class="clearfix"> 
+              <?php include 'card_individual.php';?> 
+              <?php include 'card_individual.php';?> 
+              <?php include 'card_individual.php';?> 
+              <?php include 'card_individual.php';?> 
+              <?php include 'card_individual.php';?> 
+              <?php include 'card_individual.php';?>  
+            </div> 
           </div>
 
-          <div class="clearfix">
-          <h2>Customers</h2>
-          <?php include 'card_individual.php';?> 
-          <?php include 'card_individual.php';?> 
-          <?php include 'card_individual.php';?> 
-          <?php include 'card_individual.php';?> 
-          <?php include 'card_individual.php';?> 
-          <?php include 'card_individual.php';?>  
-          </div> 
+          <div class="tab-pane fade" id="team">
+            <div class="clearfix">
+              <?php include 'card_team.php';?> 
+              <?php include 'card_team.php';?> 
+              <?php include 'card_team.php';?> 
+              <?php include 'card_team.php';?> 
+              <?php include 'card_team.php';?>  
+            </div> 
+          </div>
 
+           
 
-          <div class="clearfix">
-          <h2>Team</h2> 
-          <?php include 'card_team.php';?> 
-          <?php include 'card_team.php';?> 
-          <?php include 'card_team.php';?> 
-          <?php include 'card_team.php';?> 
-          <?php include 'card_team.php';?>  
-          </div> 
 
      
-        <h2>Updates</h2>
 
-        <div class="container-responsive">
-          <div class="row">
-              <div class="col-md-12">
-                  <div class="panel panel-default">
-
-                      <!-- if this is the profile of the logged in user -->
-                      <div class="panel-footer">
-                          <div class="input-group">
-                              <input id="btn-input" type="text" class="form-control input-sm" placeholder="That food's not going to trade itself..." />
-                              <span class="input-group-btn">
-                                  <button class="btn btn-warning btn-sm" id="btn-chat">
-                                      Send</button>
-                              </span>
-                          </div>
-                      </div>
-                      <!-- // if this is the profile of the logged in user -->
-
-                      <div class="panel-body">
-                          <ul class="chat">
-                              <li class="left clearfix"><span class="chat-img pull-left">
-                                  <img src="https://pbs.twimg.com/profile_images/378800000141996074/6a363e3c4f2a84a956c3cb27c50b2ca0_normal.png" alt="User Avatar" class="img-thumbnail" />
-                              </span>
-                                  <div class="chat-body clearfix">
-                                      <div class="header">
-                                          <strong class="primary-font">Smales Farm</strong> <small class="pull-right text-muted">
-                                              <span class="glyphicon glyphicon-time"></span>12 mins ago</small>
-                                      </div>
-                                      <p>
-                                          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur bibendum ornare
-                                          dolor, quis ullamcorper ligula sodales.
-                                      </p>
-                                  </div>
-                              </li>
-                              
-                              <li class="left clearfix"><span class="chat-img pull-left">
-                              <img src="https://pbs.twimg.com/profile_images/378800000141996074/6a363e3c4f2a84a956c3cb27c50b2ca0_normal.png" alt="User Avatar" class="img-thumbnail" />
-                              </span>
-                                  <div class="chat-body clearfix">
-                                      <div class="header">
-                                          <strong class="primary-font">Smales Farm</strong> <small class="pull-right text-muted">
-                                              <span class="glyphicon glyphicon-time"></span>14 mins ago</small>
-                                      </div>
-                                      <p>
-                                          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur bibendum ornare
-                                          dolor, quis ullamcorper ligula sodales.
-                                      </p>
-                                  </div>
-                              </li>
-                               
-                          </ul>
-                      </div>
-                  </div>
-              </div>
-          </div>
+        
       </div>
  
  

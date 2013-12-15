@@ -1,4 +1,4 @@
-  <div class="col-md-2 sidebar hidden-phone">
+  <div class="col-md-2 sidebar hidden-xs">
      
         <!-- show the logged in users account --> 
         <div id="account_info">

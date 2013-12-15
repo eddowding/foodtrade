@@ -65,6 +65,10 @@ h2 {
 	height: 1px
 }
 
+.help-block {
+	font-style: italic;;
+}
+
 .nav-tabs  {
 	background: #eee;
 }
@@ -77,6 +81,8 @@ html,body
 	border-right: 1px solid #ccc;
 	background-image: url(http://www.stripegenerator.com/generators/generate_stripes.php?fore=e1e1e1&h=30&w=1&p=3&back1=ffffff&back2=ff0000&gt=0&d=0&shadow=0&);
 	min-height: 2000px;
+	padding-top: 30px;
+	margin-top: -10px;
 }
 
 .sidebar .alert {
@@ -156,6 +162,11 @@ h2 a .fa {
 #header_box {
 	margin-top: 20px;
 	border: 1px solid #ccc;
+	 
+}
+
+.cell { 
+	min-height: 220px;
 }
 
 #header_box #avatar {
