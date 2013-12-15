@@ -1,0 +1,16 @@
+{% if user.is_authenticated %}
+{{ user.username }}
+
+<a href="/accounts/logout">Logout</a>
+
+{% for each in tweet_list %}
+<span>{{each}}</span>
+<br/>
+<br/>
+
+
+{% endfor %}
+
+{% else %}
+<a href="/accounts/login">Login or Register</a>
+{% endif %}
