@@ -17,12 +17,12 @@
       <div class="col-md-7">
          <h1><a href="#">Smales Farm</a></h1>
  
-         <span class="label label-default">Livestock Farm</span>
-         <span class="label label-default">Butcher</span>
-         <span class="label label-default">Wholesaler</span>
-         <span class="label label-default">Distribution</span>
-         <span class="label label-default">Farm Shop</span>
- 
+          <div class="tags tags-biztype  ">  
+           <a href="/type/livestock-farm">Bakery</a>
+           <a href="/type/buther">Wholesale</a>  
+           <a href="/type/buther">Distribution</a>  
+           <a href="/type/buther">Livestock Farm</a>  
+          </div> 
 
          <hr />
          <p>Nullam quis risus eget urna mollis ornare vel eu leo. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nullam id dolor id nibh ultricies vehicula.</p>        
@@ -55,7 +55,7 @@
 
       <!-- if logged in users = individual --> 
       <button class="btn btn-default btn-block" data-toggle="modal" data-target="#modal_customer">
-        <i class="fa fa-shopping-cart text-muted"></i> I am a customer
+        <i class="fa fa-smile-o text-muted"></i> I am a customer
       </button> 
 
       <!-- if logged in users = business --> 
@@ -342,6 +342,30 @@
 
           <div class="clearfix">
           <h2>Connections</h2>
+
+          <div class="well well-sm">  
+            <form class="form-inline" role="form">
+              <div class="form-group">
+                 <img class="img-rounded" 
+                 style="width: 35px; margin-right: 5px;" 
+                 src="http://a0.twimg.com/profile_images/2596092158/afpecvf41m8f0juql78p_bigger.png"  />
+      
+                <div class="btn-group" data-toggle="buttons">
+                  <label class="btn btn-success active">
+                    <input type="checkbox" name="options" id="option1"> Buys from 
+                  </label> 
+                  <label class="btn btn-default">
+                    <input type="checkbox" name="options" id="option2"> Sells to
+                  </label> 
+                </div> 
+              </div> 
+              <div class="form-group">
+                <label class="sr-only" for="exampleInputEmail2">Trade partnter</label>
+                <input type="email" class="form-control" style="min-width:250px;" id="trade" placeholder="Type business...">
+              </div>
+              <button type="submit" class="btn btn-success">Add</button>
+            </form>
+          </div> 
           <?php include 'card_business.php';?> 
           <?php include 'card_business.php';?> 
           <?php include 'card_business.php';?> 

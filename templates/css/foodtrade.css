@@ -37,6 +37,10 @@ h2 {
 	background: #fff;
 }
 
+.chat .tags-biztype a {
+	top: -2px;
+	position: relative;
+}
 
 .tags a {
 	font-size: 12px;
@@ -100,9 +104,8 @@ html,body
 
 a.btn {color: #fff !important;}
 
-h4 a,
-.meta a {
-	color: #A30012 !Important;
+.meta a:hover { 
+	color: #444;
 }
 
 article {
@@ -134,15 +137,7 @@ article .content h4 {
 
 .meta {
 	margin-top: 10px;
-}
- 
-.dropdown-menu  li  a .fa.pull-right  {
-	margin-left: 60px;
-}
-
-h2 a .fa {
-	color: green;
-}
+} 
 
 .danger {
 	color: red;
@@ -249,6 +244,41 @@ h2 {
 .card hr {
 	margin: 5px 0;
 }
+
+
+/********************************/
+/**  ACTIVITY                  **/
+/********************************/
+
+#activity { 
+}
+
+#activity .chat li {
+	border: 0
+}
+
+#activity .chat .dropdown-menu li {
+	margin: 0;
+	padding: 0;
+}
+ 
+
+#activity .well-sm {
+	margin-top: 5px !Important;
+	padding: 3px;
+	border-radius: 0px; 
+}
+ 
+#activity_single hr {
+	margin: 5px 0;
+}
+
+#activity_single h1 {
+	font-size: 25px; 
+margin-top: 10px;
+}
+
+
 
 /********************************/
 /**  SIDEBAR                   **/

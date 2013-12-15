@@ -236,7 +236,7 @@
         <ul class="nav nav-tabs ">
           <li class="active"><a href="#members" data-toggle="tab">Members <span class="badge ">2457</span></a></li>
           <li><a href="#foods" data-toggle="tab">Foods  <span class="badge">54556</span></a></li> 
-          <li><a href="#people" data-toggle="tab">People <span class="badge ">25</span></a></li>
+          <li><a href="#people" data-toggle="tab">Team <span class="badge ">25</span></a></li>
           <li><a href="#updates" data-toggle="tab">Updates <span class="badge ">25</span></a></li>
         </ul>
      </div>

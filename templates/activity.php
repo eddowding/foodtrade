@@ -114,234 +114,52 @@
     </div>
 
     <div class="col-md-5">
-
-      <!-- new item -->
  
-          <input class="form-control input-lg" type="text" placeholder="Want to #buy #apples? Or #sell 30 tonnes #oats? "> 
-        <hr />
+ 
+ 
 
-
-      <!-- /new item -->
-
-
-      <article class="activity clearfix">
-
-        <img class="pull-left img-rounded" style="width:40px" src="http://a0.twimg.com/profile_images/2596092158/afpecvf41m8f0juql78p_normal.png"  />
-        
-        <div class="content">
-  
-         <div class="btn-group pull-right">
-            <button type="button" class="btn btn-default dropdown-toggle btn-xs pull-left" data-toggle="dropdown">
-              <i class="fa fa-link"></i>
-              Connect <span class="caret"></span>
-            </button> 
-            <ul class="dropdown-menu" role="menu">
-              <li><a href="#">I buy from</a></li>
-              <li><a href="#">I sell to</a></li> 
-              <li class="divider"></li>
-              <li><a href="#">Follow on twitter</a></li>
-              <li><a href="#">Like on facebook</a></li>
-            </ul>
-          </div> 
-
-
-
-          <h4><a href="#">Smales Farm</a></h4>
-
-          <p>Nullam quis risus eget urna mollis ornare vel eu leo. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nullam id dolor id nibh ultricies vehicula.</p>
-          
-
-          <div class="meta small muted">
-            <!-- if logged in or you've allows html5 browser location -->
-            <i class="fa fa-location-arrow"></i> 87.2 miles  &middot;
-            <!--  // if logged in or you've allows html5 browser location -->
-
-            <a href="http://maps.google.com/maps?saddr=current+location&daddr=Sydney+Opera+House,+Sydney+Opera+House,+Bennelong+Point,+Sydney+NSW+2000,+Australia" target="_blank" data-placement="top" data-toggle="tooltip" title="Get directions">78 Example Street, Test Town</a>  
-
-
-            <i class="fa fa-flag"></i>
-            <a class="pull-right" href="single_update.php">21m</a> 
-          </div> 
-
-          <div style="margin-top: 10px;"> 
-            <a href="#" class="btn btn-primary btn-xs pull-left" style="margin-right: 5px;"><i class="fa fa-reply"></i> Reply</a>
-
-            <!-- admin only!! --> 
-            <a href="#" class="btn btn-danger btn-xs pull-left" style="margin-right: 5px;"><i class="fa fa-trash-o"></i></a> 
-            <!-- // admin only!! --> 
-        
-            
-          <div class="icons pull-right">
-            <a href="#"><i class="fa fa-facebook-square"></i></a>
-            <a href="#"><i class="fa fa-twitter-square"></i></a> 
-            <a href="#"><i class="fa fa-phone-square"></i></a> 
-            <a href="#"><i class="fa fa-rss-square"></i></a> 
-            <a href="#"><i class="fa fa-envelope"></i></a> 
-            <a href="#"><i class="fa fa-globe"></i></a> 
-            <a href="#"><i class="fa fa-linkedin-square"></i></a> 
-          </div> 
-            
-          </div> 
-         
-
-        </div><!-- content -->
-
-        
-
-      </article>
-
-      <article class="activity clearfix">
-
-        <img class="pull-left img-rounded" style="width:40px" src="http://a0.twimg.com/profile_images/2596092158/afpecvf41m8f0juql78p_normal.png"  />
-        
-        <div class="content">
-  
-         <div class="btn-group pull-right">
-            <button type="button" class="btn btn-default dropdown-toggle btn-xs pull-left" data-toggle="dropdown">
-              <i class="fa fa-link"></i>
-              Connect <span class="caret"></span>
-            </button> 
-            <ul class="dropdown-menu" role="menu">
-              <li><a href="#">I buy from</a></li>
-              <li><a href="#">I sell to</a></li> 
-              <li class="divider"></li>
-              <li><a href="#">Follow on twitter</a></li>
-              <li><a href="#">Like on facebook</a></li>
-            </ul>
-          </div> 
-
-
-
-          <h4><a href="#">Smales Farm</a></h4>
-
-          <p>Nullam quis risus eget urna mollis ornare vel eu leo. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nullam id dolor id nibh ultricies vehicula.</p>
-          
-
-          <div class="meta small muted">
-            <!-- if logged in or you've allows html5 browser location -->
-            <i class="fa fa-location-arrow"></i> 87.2 miles  &middot;
-            <!--  // if logged in or you've allows html5 browser location -->
-
-            <a href="http://maps.google.com/maps?saddr=current+location&daddr=Sydney+Opera+House,+Sydney+Opera+House,+Bennelong+Point,+Sydney+NSW+2000,+Australia" target="_blank" data-placement="top" data-toggle="tooltip" title="Get directions">78 Example Street, Test Town</a>  
-
-
-            <i class="fa fa-flag"></i>
-            <a class="pull-right" href="single_update.php">21m</a> 
-          </div> 
-
-          <div style="margin-top: 10px;"> 
-            <a href="#" class="btn btn-primary btn-xs pull-left" style="margin-right: 5px;"><i class="fa fa-reply"></i> Reply</a>
-
-            <!-- admin only!! --> 
-            <a href="#" class="btn btn-danger btn-xs pull-left" style="margin-right: 5px;"><i class="fa fa-trash-o"></i></a> 
-            <!-- // admin only!! --> 
-        
-            
-          <div class="icons pull-right">
-            <a href="#"><i class="fa fa-facebook-square"></i></a>
-            <a href="#"><i class="fa fa-twitter-square"></i></a> 
-            <a href="#"><i class="fa fa-phone-square"></i></a> 
-            <a href="#"><i class="fa fa-rss-square"></i></a> 
-            <a href="#"><i class="fa fa-envelope"></i></a> 
-            <a href="#"><i class="fa fa-globe"></i></a> 
-            <a href="#"><i class="fa fa-linkedin-square"></i></a> 
-          </div> 
-            
-          </div> 
-         
-
-        </div><!-- content -->
-
-        
-
-      </article>
-
-      <!-- write in the well below the article when the Reply button is clicked -->
-
-        <div class="well well-sm"> 
-          <input class="form-control input-sm" type="text" placeholder="Reply to @smalesfarm">
+  <div id="update" class="well well-sm">
+    <form action="#" method="get">
+        <div class="input-group"> 
+          <input class="form-control" name="q"  placeholder="Someone out there has the answer. Ask the question.">
+          <span class="input-group-btn">
+              <button type="submit" class="btn btn-success"> Post</button>
+          </span>
         </div>
-
-      <article class="business clearfix"> 
-
-        <img class="pull-left img-rounded" style="width:40px" src="http://a0.twimg.com/profile_images/2596092158/afpecvf41m8f0juql78p_normal.png"  />
-        
-        <div class="content">
-  
-         <div class="btn-group pull-right">
-            <button type="button" class="btn btn-default dropdown-toggle btn-xs pull-left" data-toggle="dropdown">
-              <i class="fa fa-link"></i>
-              Connect <span class="caret"></span>
-            </button> 
-            <ul class="dropdown-menu" role="menu">
-              <li><a href="#">I buy from</a></li>
-              <li><a href="#">I sell to</a></li> 
-              <li class="divider"></li>
-              <li><a href="#">Follow on twitter</a></li>
-              <li><a href="#">Like on facebook</a></li>
-            </ul>
-          </div> 
-
-
-
-          <h4><a href="#">Smales Farm</a></h4>
-
-          <p>Nullam quis risus eget urna mollis ornare vel eu leo. </p>
-          
-
-          <div class="meta small muted">
-            <!-- if logged in or you've allows html5 browser location -->
-            <i class="fa fa-location-arrow"></i> 87.2 miles  &middot;
-            <!--  // if logged in or you've allows html5 browser location -->
-
-            <a href="http://maps.google.com/maps?saddr=current+location&daddr=Sydney+Opera+House,+Sydney+Opera+House,+Bennelong+Point,+Sydney+NSW+2000,+Australia" target="_blank" data-placement="top" data-toggle="tooltip" title="Get directions">78 Example Street, Test Town</a>  
-
-
-            <i class="fa fa-flag"></i>
-            <a class="pull-right" href="single_update.php">21m</a> 
-          </div> 
-
-          <div style="margin-top: 10px;"> 
-            <a href="#" class="btn btn-primary btn-xs pull-left" style="margin-right: 5px;"><i class="fa fa-reply"></i> Reply</a>
-
-            <!-- admin only!! --> 
-            <a href="#" class="btn btn-danger btn-xs pull-left" style="margin-right: 5px;"><i class="fa fa-trash-o"></i></a> 
-            <!-- // admin only!! --> 
-        
-            
-          <div class="icons pull-right">
-            <a href="#"><i class="fa fa-facebook-square"></i></a>
-            <a href="#"><i class="fa fa-twitter-square"></i></a> 
-            <a href="#"><i class="fa fa-phone-square"></i></a> 
-            <a href="#"><i class="fa fa-rss-square"></i></a> 
-            <a href="#"><i class="fa fa-envelope"></i></a> 
-            <a href="#"><i class="fa fa-globe"></i></a> 
-            <a href="#"><i class="fa fa-linkedin-square"></i></a> 
-          </div> 
-            
-          </div> 
-         
-
-        </div><!-- content -->
-
-        
-
-      </article>
-
-
-      <article class="organisation">
-        
-      </article> 
-      <article class="individual">
-        
-      </article>
+    </form>
+    <div class="help-block small">
+    <ul>
+    <li>300kg #surplus conference pears for #sale or #donation</li>
+    <li>I want to  #buy organic honey for my farm shop.</li>
     </div>
+  </div> 
+
+ 
+  <div id="activity"> 
+         <?php include 'card_activity.php';?>  
+  </div>
+
+
+
+     
+    </div><!-- closes 5 -->
 
     <div class="col-md-5">
 
     <!-- FIX THE MAP POSITION SO IT DOES NOT SCROLL --> 
-      <div style="width:100%; height: 1000px; background: #34B9D4; padding:20px"  data-spy="affix" data-offset-top="30">
-        <h1>Map</h1>
+      <div style="width:100%; height: 1000px; "  data-spy="affix" data-offset-top="30">
+        
+        <img src="map.png" style="width: 100%;" />
+
+        <div class="alert alert-warning">
+          <p>This map shows 
+          Customers as points
+          Stockist as organge lines and 
+          Supplieras as purple lines</p>
+
+          <p>There are radius lines at 15, 30, and 100 miles.</p>
+        </div>
+
       </div>
     </div>
 

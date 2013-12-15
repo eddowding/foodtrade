@@ -55,7 +55,7 @@
 
       <!-- if logged in users = individual --> 
       <button class="btn btn-default btn-block" data-toggle="modal" data-target="#modal_customer">
-        <i class="fa fa-shopping-cart text-muted"></i> I am a customer
+        <i class="fa fa-smile-o text-muted"></i> I am a customer
       </button> 
 
       <!-- if logged in users = business --> 
@@ -266,30 +266,61 @@
                       <button type="submit" class="btn btn-success"> Add</button>
                   </span>
                 </div>
-                <span class="help-block">Eg. We have 300kg #surplus conference pears for #sale or #donation // I want to  #buy organic honey for my farm shop </span>
             </form>
           </div> 
 
           <h2>Connections</h2> 
-          <div class="well well-sm">
-            <form action="#" method="get">
-                <div class="input-group"> 
-                  <input class="form-control" name="q"  placeholder="Add foods you can buy here.">
-                  <span class="input-group-btn">
-                      <button type="submit" class="btn btn-success"> Add</button>
-                  </span>
-                </div>
-                <span class="help-block">Eg. We have 300kg #surplus conference pears for #sale or #donation // I want to  #buy organic honey for my farm shop </span>
+          <div class="well well-sm">  
+            <form class="form-inline" role="form">
+              <div class="form-group">
+                 <img class="img-rounded" 
+                 style="width: 35px; margin-right: 5px;" 
+                 src="http://a0.twimg.com/profile_images/2596092158/afpecvf41m8f0juql78p_bigger.png"  />
+      
+                <div class="btn-group" data-toggle="buttons">
+                  <label class="btn btn-success active">
+                    <input type="checkbox" name="options" id="option1"> Buys from 
+                  </label> 
+                  <label class="btn btn-default">
+                    <input type="checkbox" name="options" id="option2"> Sells to
+                  </label> 
+                </div> 
+              </div> 
+              <div class="form-group">
+                <label class="sr-only" for="exampleInputEmail2">Trade partnter</label>
+                <input type="email" class="form-control" style="min-width:250px;" id="trade" placeholder="Type business...">
+              </div>
+              <button type="submit" class="btn btn-success">Add</button>
             </form>
           </div> 
  
 
             
           <h2>Organisations</h2>  
-          <p class="alert">You have to be logged in as this profile to add organisation memberships.</p>
+          <p class="alert alert-info">You have to be logged in as this profile to add organisation memberships.</p>
 
+
+          <div class="clearfix"></div>
           <h2>Customers</h2>    
+           <button class="btn btn-default">
+              <i class="fa fa-smile-o "></i> Are you a customer?
+            </button> 
+            <button class="btn btn-success">
+              <i class="fa fa-check "></i> I'm a customer
+            </button> 
+          <div class="clearfix"></div>
+              <?php include 'card_individual.php';?> 
+
+          <div class="clearfix"></div>
           <h2>Team</h2>   
+
+           <button class="btn btn-default">
+              <i class="fa fa-smile-o "></i> Do you work here?
+            </button> 
+
+            <button class="btn btn-success">
+              <i class="fa fa-check "></i> I work here
+            </button> 
 
      
         <h2>Updates</h2> 
