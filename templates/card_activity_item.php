@@ -55,7 +55,7 @@
                 <!--  // if logged in or you've allows html5 browser location -->
 
                 <span class="pull-right">
-                   <a href="single_update.php" class="text-muted"><i class="fa fa-clock-o"></i> 21m</a> 
+                   <a href="activity_single.php" class="text-muted"><i class="fa fa-clock-o"></i> 21m</a> 
                 </span>
               </div> 
 

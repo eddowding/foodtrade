@@ -43,8 +43,8 @@
      <li>
       Activity
         <ul>
-           <li><a href="">single view</a></li>
-           <li><a href="">search results</a></li>
+           <li><a href="activity_single.php">single view</a></li>
+           <li><a href="activity.php">home / search results</a></li>
 
         </ul>
       </li>
