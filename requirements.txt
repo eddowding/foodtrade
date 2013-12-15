@@ -1,2 +1,5 @@
 django
 django-allauth
+twython
+pyyaml
+pymongo
