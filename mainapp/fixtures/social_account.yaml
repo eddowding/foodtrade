@@ -1,0 +1,8 @@
+- model: socialaccount.socialapp
+  pk: 1
+  fields:
+    provider: twitter
+    name: Twitter
+    client_id: seqGJEiDVNPxde7jmrk6dQ
+    secret: sI2BsZHPk86SYB7nRtKy0nQpZX3NP5j5dLfcNiP14
+    sites: [1]
