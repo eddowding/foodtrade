@@ -55,7 +55,34 @@
           </form>
 
         
-          <button type="button" class="btn btn-primary navbar-btn pull-right" style="margin-left: 20px;"><i class="fa fa-edit"></i></button>
+          <button type="button" class="btn btn-primary navbar-btn pull-right" style="margin-left: 20px;"  data-toggle="modal" data-target="#newpost">
+            <i class="fa fa-edit"></i>
+          </button>
+  
+          <!-- New post Modal -->
+          <div class="modal fade" id="newpost" tabindex="-1" role="dialog" aria-labelledby="newpost" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content"> 
+                <div class="modal-body">               
+                  <form accept-charset="UTF-8" action="" method="POST">
+                      <textarea class="form-control counted" name="message" placeholder="Type in your message" rows="5" ></textarea>
+                  </form> 
+                </div>
+                <div class="modal-footer">
+                  <h6 class="pull-left" id="counter">320 characters remaining</h6> 
+                  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                  <button type="button" class="btn btn-primary">Post update</button>
+                </div>
+              </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+          </div><!-- /.modal -->
+
+
+         <ul class="nav navbar-nav navbar-center">
+          <li><a href="/">Activity</a></li>
+          <li><a href="/">Pricing</a></li>
+          <li><a href="/">About us</a></li>
+         </ul>
  
          <ul class="nav navbar-nav navbar-right">
                   <li><a href="#">Sign Up</a></li>

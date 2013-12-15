@@ -1,6 +1,6 @@
 <?php include '_header.php';?>
 
-    <div class="container">
+    <div  class="container">
 
     <?php include '_sidebar.php';?>
 
@@ -8,20 +8,32 @@
 
     <div class="col-md-10" id="single">
 
-
-    <div id="header_box" class="row">
+    <div class="container-responsive">
+    <div id="header_box" class="clearfix">
       <div class="col-md-2" id="avatar">
-
-        <img class="img-thumbnail   center-block" src="http://a0.twimg.com/profile_images/2596092158/afpecvf41m8f0juql78p_bigger.png"  />
-
+        <img class="img-thumbnail center-block" src="http://a0.twimg.com/profile_images/2596092158/afpecvf41m8f0juql78p_bigger.png"  />
       </div>
      
       <div class="col-md-7">
          <h1><a href="#">Smales Farm</a></h1>
-
-         <span class="label label-default">Mixed Farm</span>
+ 
+         <span class="label label-default">Livestock Farm</span>
          <span class="label label-default">Butcher</span>
+         <span class="label label-default">Wholesaler</span>
+         <span class="label label-default">Distribution</span>
          <span class="label label-default">Farm Shop</span>
+ 
+
+         <hr />
+         <p>Nullam quis risus eget urna mollis ornare vel eu leo. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nullam id dolor id nibh ultricies vehicula.</p>        
+
+          <div class="tags">  
+           <a href="/tag/TAG">Box Scheme</a>
+           <a href="/tag/TAG">Butcher</a>
+           <a href="/tag/TAG">family</a>
+           <a href="/tag/TAG">organic</a> 
+          </div>
+         <hr /> 
      
          <div class="meta small text-muted">
             
@@ -30,25 +42,10 @@
             <!-- if logged in or you've allows html5 browser location -->
             <i class="fa fa-location-arrow" style="margin-left: 20px;"></i> 87.2 miles  
             <!--  // if logged in or you've allows html5 browser location -->
- 
-            <i class="fa fa-star"></i> 
+  
          </div> <!-- meta -->
-
-         <hr />
-         <p>Nullam quis risus eget urna mollis ornare vel eu leo. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nullam id dolor id nibh ultricies vehicula.</p>
-         
-         <hr />
-
-          <div class="icons">
-            <a href="#"><i class="fa fa-facebook-square"></i></a>
-            <a href="#"><i class="fa fa-twitter-square"></i></a> 
-            <a href="#"><i class="fa fa-phone-square"></i></a> 
-            <a href="#"><i class="fa fa-rss-square"></i></a> 
-            <a href="#"><i class="fa fa-envelope"></i></a> 
-            <a href="#"><i class="fa fa-globe"></i></a> 
-            <a href="#"><i class="fa fa-linkedin-square"></i></a> 
-          </div> 
-      </div>
+  
+      </div><!-- end header middle -->
 
       <div id="contact_info" class="col-md-3">
 
@@ -56,39 +53,108 @@
       <button class="btn btn-primary btn-block">Invite to connect</button>
 
 
-      <!-- if they have an account --> 
-      <div class="btn-group  btn-block ">
-        <button type="button" class="btn btn-default btn-block dropdown-toggle" data-toggle="dropdown">
-          <i class="fa fa-link"></i>
-          Connect <span class="caret"></span>
-        </button> 
-        <ul class="dropdown-menu" role="menu">
-          <li><a href="#" class="text-muted small">IF LOGGED IN = INDIVIDUAL</a></li>
-          <li><a href="#"><i class="fa fa-shopping-cart text-muted pull-right"></i> I shop here</a></li>
-          <li class="divider"></li>
+      <!-- if logged in users = individual --> 
+      <button class="btn btn-default btn-block" data-toggle="modal" data-target="#modal_customer">
+        <i class="fa fa-shopping-cart text-muted"></i> I am a customer
+      </button> 
 
-          <li><a href="#" class="text-muted small">IF LOGGED IN = BUSINESS</a></li>
-          <li><a href="#"><i class="fa fa-sign-in text-muted pull-right"></i> LOGGEDINNAME buys from them</a></li>
-          <li><a href="#"><i class="fa fa-sign-out text-muted pull-right"></i> LOGGEDINNAME sells to them</a></li> 
-      
-          <li class="divider"></li>
-          <li><a href="#"><i class="fa fa-envelope text-muted pull-right"></i> Contact</a></li>
-          <li><a href="#"><i class="fa fa-facebook text-muted pull-right"></i>  Follow on twitter</a></li>
-          <li><a href="#"><i class="fa fa-twitter text-muted pull-right"></i> Like on facebook</a></li>
-        </ul>
-      </div> <!-- /btn group --> 
-   
+      <!-- if logged in users = business --> 
+      <div class="btn-group btn-block" data-toggle="buttons">
+        <label class="btn btn-default" style="width:50%;">
+          <input type="checkbox"> Buy from
+        </label>
+        <label class="btn btn-default" style="width:50%;">
+          <input type="checkbox"> Sell to
+        </label> 
+      </div>
+ 
+
       <!-- Button trigger modal -->
-      <button class="btn btn-primary btn-block" data-toggle="modal" data-target="#myModal">
+      <button class="btn btn-primary btn-block" data-toggle="modal" data-target="#modal_contact">
         Contact
       </button>  
 
       <!-- if not logged in show login prompt -->
-      <button class="btn btn-primary btn-block">Login to see contact info</button>
+      <button class="btn btn-primary btn-block">Login for more</button>
+
+ 
+
+      <button class="btn btn-default btn-block" data-toggle="modal" data-target="#sharer">
+        <i class="fa fa-share-square-o text-muted"></i> Share
+      </button>
+
+      <!--SHARER  Modal -->
+      <div class="modal fade" id="sharer" tabindex="-1" role="dialog" aria-labelledby="sharer" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-body"> 
 
 
-         <!-- Modal -->
-      <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+
+        <div class="container-responsive">
+          <div class="row">
+            <div class="col-sm-6">
+
+              <a href="#" class="btn btn-block  btn-social btn-facebook" onclick="window.open(
+                    'https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent('URL') +'&amp;t=' + encodeURIComponent('TITLE'), 
+                    'facebook-share-dialog', 
+                    'width=626,height=436,top='+((screen.height - 436) / 2)+',left='+((screen.width - 626)/2 )); 
+                  return false;">
+                <i class="fa fa-facebook"></i>  Share on Facebook
+              </a>
+
+              <a href="#" class="btn btn-block  btn-social btn-twitter" onclick="window.open(
+                    'https://twitter.com/share?url='+encodeURIComponent('URL')+'&amp;text='+encodeURIComponent('@THEIRNAME on @foodtradeHQ') + '&amp;count=none/', 
+                    'twitter-share-dialog', 
+                    'width=626,height=436,top='+((screen.height - 436) / 2)+',left='+((screen.width - 626)/2 )); 
+                  return false;">
+                <i class="fa fa-twitter"></i>  Share on Twitter
+              </a>
+  
+              <a class="btn  btn-block  btn-social btn-pinterest" href="http://pinterest.com/pin/create/button/?url={URI-encoded URL of the page to pin}&media={URI-encoded URL of the image to pin}&description={optional URI-encoded description}" class="pin-it-button" count-layout="horizontal">
+                <i class="fa fa-pinterest"></i>
+                Share on Pinterest
+              </a>
+            </div>
+            <div class="col-sm-6">
+              <a  class="btn btn-social btn-block btn-google-plus" href="https://plus.google.com/share?url=myline">
+                <i class="fa fa-google-plus"></i>
+                Share on Google+
+              </a>
+
+              <a  class="btn btn-block btn-social btn-tumblr" href="http://www.tumblr.com/share" title="Share on Tumblr">
+                <i class="fa fa-tumblr"></i>
+                Share on Tumblr
+              </a>
+                 
+              <a  class="btn btn-block  btn-social btn-bitbucket" href="http://www.linkedin.com/shareArticle?mini=true&url=THEURL&title=TITLE&summary=SUMMARY&source=">
+                <i class="fa fa-linkedin"></i>
+                Share on LinkedIn
+              </a>
+            </div>
+            </div>
+            </div>
+              <script type="text/javascript" src="http://platform.tumblr.com/v1/share.js"></script>
+
+            </div> 
+          </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+      </div><!-- /.modal -->
+
+      <div class="icons text-center" style="font-size:25px">
+        <a href="#"><i class="fa fa-facebook-square"></i></a>
+        <a href="#"><i class="fa fa-twitter-square"></i></a> 
+        <a href="#"><i class="fa fa-phone-square"></i></a> 
+        <a href="#"><i class="fa fa-rss-square"></i></a> 
+        <a href="#"><i class="fa fa-envelope"></i></a> 
+        <a href="#"><i class="fa fa-globe"></i></a> 
+        <a href="#"><i class="fa fa-youtube"></i></a> 
+        <a href="#"><i class="fa fa-linkedin-square"></i></a> 
+      </div> 
+
+
+     <!-- modal_contact -->
+      <div class="modal fade" id="modal_contact" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
@@ -118,9 +184,9 @@
                       <div class="col-xs-6 col-md-6 form-group">
                         <input class="form-control" id="email" name="email" placeholder="Email (prefill if reg'd)" type="email" required />
                       </div>
-                    </div>
-                    <textarea class="form-control" id="message" name="message" placeholder="Message" rows="5"></textarea>
-                     
+                    </div> 
+                    <textarea class="form-control counted" name="message" placeholder="Type in your message" rows="5"></textarea>
+                    <h6 class="pull-right" id="counter">320 characters remaining</h6>
                      
                   </form>
                 </div>
@@ -138,55 +204,283 @@
         </div><!-- /.modal-dialog -->
       </div><!-- /.modal -->
 
+      <!-- modal_customer -->
+      <div class="modal fade" id="modal_customer" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+              <h4 class="modal-title" id="myModalLabel">You're a customer of Smales Farm?</h4>
+            </div>
+            <div class="modal-body">
  
-      </div>
+            <p><strong>Thanks!</strong> Knowing where customers are is a win-win. BUSINESS NAME understands how it can better serve you, and in time we'll help them keep you informed about special local offers. </p> 
+            <p>Examples might include home deliveries from your local shops, later opening hours, or working together with other local business to make things better. </p>
+            <p>We'll show you as being a customer and put a small dot on the map near your location.</p>
+   
+
+            </div>
+            <div class="modal-footer"> 
+              <button type="button" class="btn btn-default">Cancel</button>
+              <button type="button" class="btn btn-primary">Yes, I'm a happy customer!</button>
+            </div>
+          </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+      </div><!-- /.modal -->
+
+
+ 
+      </div><!-- end header last -->
 
     </div>
+    </div>
 
-    <div class="row" style="margin-top: 50px;">
-      <div class="col-md-12">
+
+    <div class="row" style="margin-top: 30px;">
+     <div class="col-md-12">
         <ul class="nav nav-tabs nav-justified">
-          <li class="active"><a href="#">Home</a></li>
-          <li><a href="#">Produce</a></li>
-          <li><a href="#">Organisation</a></li>
-          <li><a href="#">Customers</a></li>
-          <li><a href="#">Activity</a></li>
-          <li><a href="#">Reputation</a></li>
-          <li><a href="#">Connections</a></li>
-          <li><a href="#">People</a></li>
+          <li class="active"><a href="#produce" data-toggle="tab">Foods <span class="badge">42</span></a></li>
+          <li><a href="#connections" data-toggle="tab">Connections <span class="badge">28</span></a> </li>
+          <li><a href="#organisations" data-toggle="tab">Organisation</a> <span class="badge"></span></li>
+          <li><a href="#customers" data-toggle="tab">Customers <span class="badge">4</span></a> </li>
+          <li><a href="#activity" data-toggle="tab">Updates  <span class="badge">5</span></a></li> 
+          <li><a href="#team" data-toggle="tab">Team <span class="badge">2</span></a></li>
         </ul>
-      </div> 
+     </div>
     </div>
 
-    <ul>
-    <li>Tags</li>
-    <li>How many shop here</li>
-    <li>Whats nearby</li>
-    <li>Message</li>
-    <li>Login to see details</li>
-    <li>Add tags</li>
-    <li>Add private notes</li>
-    <li>Opentable</li>
-    <li>Share</li>
-    <li>Links (all, mebedly)</li>
-    </ul>
-  
-  <div class="btn-toolbar">
-    <div class="btn-group">
-        <a href="#" class="btn btn-inverse disabled"><i class="fa-white fa-thumbs-up"></i></a>
-        <a href="#" class="btn btn-inverse disabled"><i class="fa-white fa-heart"></i></a>
-        <a href="#" class="btn btn-inverse disabled"><i class="fa-white fa-share-alt"></i></a>
-    </div>
-    <div class="btn-group">
-        <a href="#" class="btn btn-inverse disabled"><i class="fa-white fa-trash"></i></a>
+    <div class="row">
+      <div class="col-md-8">
+        <div class="container-responsive clearfix">
+
+      
+
+   
+
+<div class="container-responsive">
+  <div class="row"> 
+    <div class="col-md-12">
+      <form action="#" method="get">
+          <div class="input-group well well-sm">
+
+              <input class="form-control" id="system-search" name="q" placeholder="Search their foods..." required>
+              <span class="input-group-btn">
+                  <button type="submit" class="btn btn-default"><i class="glyphicon glyphicon-search"></i></button>
+              </span>
+          </div>
+      </form>
+       <table class="table table-list-search">
+          <tbody>
+              <tr>
+                  <td>Meat / <a href="/produce/beef">Beef</a></td>  
+                  
+                  <td> 
+                  <div class="pull-right">
+
+                   <!-- hide if user has edit rights -->
+                   <a href="#"><i class="fa fa-thumbs-o-up text-muted" title="Vouch for this"></i></a> 
+
+                   <!-- if user has edit rights -->
+                   <a href="#"><i class="fa fa-trash-o text-muted" title="Delete"></i></a> 
+                   </div>
+                  </td>  
+              </tr> 
+              <tr>
+                  <td>Meat / <a href="/produce/beef">Chicken</a></td> 
+                  
+                  <td> 
+                  <div class="pull-right">
+
+                   <!-- hide if user has edit rights -->
+                   <a href="#"><i class="fa fa-thumbs-o-up text-muted" title="Vouch for this"></i></a> 
+
+                   <!-- if user has edit rights -->
+                   <a href="#"><i class="fa fa-trash-o text-muted" title="Delete"></i></a> 
+                   </div>
+                  </td>  
+              </tr>
+              <tr>
+                  <td>Fruit / <a href="/produce/beef">Blackberries</a></td> 
+                  
+                  <td> 
+                  <div class="pull-right">
+
+                   <!-- hide if user has edit rights -->
+                   <a href="#"><i class="fa fa-thumbs-o-up text-muted" title="Vouch for this"></i></a> 
+
+                   <!-- if user has edit rights -->
+                   <a href="#"><i class="fa fa-trash-o text-muted" title="Delete"></i></a> 
+                   </div>
+                  </td>  
+              </tr> 
+          </tbody>
+          <tfoot style="background: #eee;">
+              <tr>
+                  <td colspan="2">
+
+                  <form action="#" method="get">
+                      <div class="input-group">
+                      <!-- link this to open food facts --> 
+                            <input class="form-control" name="q" style="width:400px;" placeholder="Add foods you can buy here.">
+                            <span class="input-group-btn">
+                                <button type="submit" class="btn btn-success"> Add</button>
+                            </span>
+                          </div>
+                      </div>
+                  </form>
+              </td> 
+                  
+              </tr> 
+          </tfoot>
+      </table>    
+
     </div>
   </div>
+</div>
 
-           <img src="http://maps.googleapis.com/maps/api/staticmap?zoom=15&size=320x240&maptype=roadmap&center=51.4583%2C-2.61156&sensor=false&client=gme-marktplaats&signature=AtzemkXpFWiPluPmUG_72gGAMxw=" width="100%">
+
+          <div class="clearfix">
+          <h2>Connections</h2>
+          <?php include 'card_business.php';?> 
+          <?php include 'card_business.php';?> 
+          <?php include 'card_business.php';?> 
+          <?php include 'card_business.php';?> 
+          <?php include 'card_business.php';?> 
+          <?php include 'card_business.php';?> 
+          <?php include 'card_business.php';?> 
+          <?php include 'card_business.php';?> 
+          <?php include 'card_business.php';?> 
+          <?php include 'card_business.php';?> 
+          <?php include 'card_business.php';?> 
+          <?php include 'card_business.php';?> 
+          <?php include 'card_business.php';?> 
+          <?php include 'card_business.php';?> 
+          <?php include 'card_business.php';?> 
+          </div>
  
+
+          <div class="clearfix">  
+          <h2>Organisations</h2>
+           <p class=""><a href="single-organisation.php">Show all</a></p>
+          
+          <?php include 'card_organisation.php';?>  
+          <?php include 'card_organisation.php';?> 
+          <?php include 'card_organisation.php';?> 
+          <?php include 'card_organisation.php';?> 
+          </div>
+
+          <div class="clearfix">
+          <h2>Customers</h2>
+          <?php include 'card_individual.php';?> 
+          <?php include 'card_individual.php';?> 
+          <?php include 'card_individual.php';?> 
+          <?php include 'card_individual.php';?> 
+          <?php include 'card_individual.php';?> 
+          <?php include 'card_individual.php';?>  
+          </div> 
+
+
+          <div class="clearfix">
+          <h2>Team</h2> 
+          <?php include 'card_team.php';?> 
+          <?php include 'card_team.php';?> 
+          <?php include 'card_team.php';?> 
+          <?php include 'card_team.php';?> 
+          <?php include 'card_team.php';?>  
+          </div> 
+
+     
+        <h2>Updates</h2>
+
+        <div class="container-responsive">
+          <div class="row">
+              <div class="col-md-12">
+                  <div class="panel panel-default">
+
+                      <!-- if this is the profile of the logged in user -->
+                      <div class="panel-footer">
+                          <div class="input-group">
+                              <input id="btn-input" type="text" class="form-control input-sm" placeholder="That food's not going to trade itself..." />
+                              <span class="input-group-btn">
+                                  <button class="btn btn-warning btn-sm" id="btn-chat">
+                                      Send</button>
+                              </span>
+                          </div>
+                      </div>
+                      <!-- // if this is the profile of the logged in user -->
+
+                      <div class="panel-body">
+                          <ul class="chat">
+                              <li class="left clearfix"><span class="chat-img pull-left">
+                                  <img src="https://pbs.twimg.com/profile_images/378800000141996074/6a363e3c4f2a84a956c3cb27c50b2ca0_normal.png" alt="User Avatar" class="img-thumbnail" />
+                              </span>
+                                  <div class="chat-body clearfix">
+                                      <div class="header">
+                                          <strong class="primary-font">Smales Farm</strong> <small class="pull-right text-muted">
+                                              <span class="glyphicon glyphicon-time"></span>12 mins ago</small>
+                                      </div>
+                                      <p>
+                                          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur bibendum ornare
+                                          dolor, quis ullamcorper ligula sodales.
+                                      </p>
+                                  </div>
+                              </li>
+                              
+                              <li class="left clearfix"><span class="chat-img pull-left">
+                              <img src="https://pbs.twimg.com/profile_images/378800000141996074/6a363e3c4f2a84a956c3cb27c50b2ca0_normal.png" alt="User Avatar" class="img-thumbnail" />
+                              </span>
+                                  <div class="chat-body clearfix">
+                                      <div class="header">
+                                          <strong class="primary-font">Smales Farm</strong> <small class="pull-right text-muted">
+                                              <span class="glyphicon glyphicon-time"></span>14 mins ago</small>
+                                      </div>
+                                      <p>
+                                          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur bibendum ornare
+                                          dolor, quis ullamcorper ligula sodales.
+                                      </p>
+                                  </div>
+                              </li>
+                               
+                          </ul>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+ 
+ 
+        </div><!-- container responsive -->
+  
+      
+ 
+   
+      </div><!-- end col8 --> 
+
+
+      <div class="col-md-4">
+        <img src="map.png" style="width: 100%;" />
+
+        <div class="alert alert-warning">
+          <p>This map shows 
+          Customers as points
+          Stockist as organge lines and 
+          Supplieras as purple lines</p>
+
+          <p>There are radius lines at 15, 30, and 100 miles.</p>
+        </div>
+
+
+      </div><!-- end col4 -->
+
+    </div><!-- row -->
+
+   
+
 
         
 
 
     </div><!-- col10 --> 
+
+   
  <?php include '_footer.php';?>
