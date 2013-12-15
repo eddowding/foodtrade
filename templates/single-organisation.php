@@ -2,7 +2,7 @@
 
     <div  class="container">
 
-    <?php include '_sidebar.php';?>
+    <?php include '_sidebar_search.php';?>
 
    
 
@@ -11,21 +11,20 @@
     <div class="container-responsive">
     <div id="header_box" class="clearfix">
       <div class="col-md-2" id="avatar">
-        <img class="img-thumbnail center-block" src="http://a0.twimg.com/profile_images/2596092158/afpecvf41m8f0juql78p_bigger.png"  />
+        <img class="img-thumbnail center-block" src="https://pbs.twimg.com/profile_images/1690823879/Screen_shot_2011-12-13_at_12.21.20_bigger.png"  />
       </div>
      
       <div class="col-md-7">
-         <h1><a href="#">Smales Farm</a></h1>
+         <h1><a href="#">Slow Food UK</a></h1>
  
          <span class="label label-default">Livestock Farm</span>
          <span class="label label-default">Butcher</span>
          <span class="label label-default">Wholesaler</span>
          <span class="label label-default">Distribution</span>
          <span class="label label-default">Farm Shop</span>
- 
-
+    
          <hr />
-         <p>Nullam quis risus eget urna mollis ornare vel eu leo. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nullam id dolor id nibh ultricies vehicula.</p>        
+         <p>Making GOOD, CLEAN and FAIR food happen. Join us!</p>        
 
           <div class="tags">  
            <a href="/tag/TAG">Box Scheme</a>
@@ -238,13 +237,12 @@
 
     <div class="row" style="margin-top: 30px;">
      <div class="col-md-12">
-        <ul class="nav nav-tabs nav-justified">
-          <li class="active"><a href="#produce" data-toggle="tab">Foods <span class="badge">42</span></a></li>
-          <li><a href="#connections" data-toggle="tab">Connections <span class="badge">28</span></a> </li>
-          <li><a href="#organisations" data-toggle="tab">Organisation</a> <span class="badge"></span></li>
-          <li><a href="#customers" data-toggle="tab">Customers <span class="badge">4</span></a> </li>
-          <li><a href="#activity" data-toggle="tab">Updates  <span class="badge">5</span></a></li> 
-          <li><a href="#team" data-toggle="tab">Team <span class="badge">2</span></a></li>
+        <ul class="nav nav-tabs ">
+          <li class="active"><a href="#members" data-toggle="tab">Members <span class="badge ">2457</span></a></li>
+          <li><a href="#foods" data-toggle="tab">Foods  <span class="badge">54556</span></a></li> 
+          <li><a href="#supporters" data-toggle="tab">Supporters  <span class="badge">54347</span></a></li> 
+          <li><a href="#team" data-toggle="tab">Team <span class="badge ">25</span></a></li>
+          <li><a href="#updates" data-toggle="tab">Updates <span class="badge ">25</span></a></li>
         </ul>
      </div>
     </div>
@@ -253,112 +251,92 @@
       <div class="col-md-8">
         <div class="container-responsive clearfix">
 
-        <div class="tab-content hidden">
-          <div class="tab-pane active fade in " id="home">.ADD FSA..</div>
-          <div class="tab-pane fade" id="produce">.d..</div>
-          <div class="tab-pane fade" id="organisations">.d.d.</div>
-          <div class="tab-pane fade" id="customers">.d.dg.</div>
-        </div>
-
-
-   
-
-<div class="container-responsive">
-  <div class="row"> 
-    <div class="col-md-12">
-      <form action="#" method="get">
-          <div class="input-group well well-sm">
-
-              <input class="form-control" id="system-search" name="q" placeholder="Search foods..." required>
-              <span class="input-group-btn">
-                  <button type="submit" class="btn btn-default"><i class="glyphicon glyphicon-search"></i></button>
-              </span>
+        <div class="tab-content">
+          <div class="tab-pane active fade in " id="members">
+            <div class="clearfix"> 
+              <?php include 'card_business.php';?> 
+              <?php include 'card_business.php';?> 
+              <?php include 'card_business.php';?> 
+              <?php include 'card_business.php';?> 
+              <?php include 'card_business.php';?> 
+              <?php include 'card_business.php';?> 
+              <?php include 'card_business.php';?> 
+              <?php include 'card_business.php';?> 
+              <?php include 'card_business.php';?> 
+              <?php include 'card_business.php';?> 
+              <?php include 'card_business.php';?> 
+              <?php include 'card_business.php';?> 
+              <?php include 'card_business.php';?> 
+              <?php include 'card_business.php';?> 
+              <?php include 'card_business.php';?> 
+            </div>
           </div>
-      </form>
-       <table class="table table-list-search">
-          <tbody>
-              <tr>
-                  <td>Meat / <a href="/produce/beef">Beef</a></td>  
-                  <td> 
-                   <a href="#" class="pull-right"><i class="fa fa-thumbs-o-up text-muted" title="Vouch for this"></i></a> 
-                  </td> 
-              </tr> 
-              <tr>
-                  <td>Meat / <a href="/produce/beef">Chicken</a></td> 
-                  
-                  <td> 
-                   <a href="#" class="pull-right"><i class="fa fa-thumbs-o-up text-muted" title="Vouch for this"></i></a> 
-                  </td>  
-              </tr>
-          </tbody>
-          <tfoot>
-              <tr>
-                  <td>Fruit / <a href="/produce/beef">Blackberries</a></td> 
-                  <td> 
-                   <a href="#" class="pull-right"><i class="fa fa-thumbs-o-up text-muted" title="Vouch for this"></i></a> 
-                  </td> 
-              </tr> 
-          </tfoot>
-      </table>   
-    </div>
-  </div>
-</div>
+          <div class="tab-pane fade" id="foods">
+            <div class="container-responsive">
+              <div class="row"> 
+                <div class="col-md-12">
+                  <form action="#" method="get">
+                      <div class="input-group well well-sm">
 
-
-          <div class="clearfix">
-          <h2>Connections</h2>
-          <?php include 'card_business.php';?> 
-          <?php include 'card_business.php';?> 
-          <?php include 'card_business.php';?> 
-          <?php include 'card_business.php';?> 
-          <?php include 'card_business.php';?> 
-          <?php include 'card_business.php';?> 
-          <?php include 'card_business.php';?> 
-          <?php include 'card_business.php';?> 
-          <?php include 'card_business.php';?> 
-          <?php include 'card_business.php';?> 
-          <?php include 'card_business.php';?> 
-          <?php include 'card_business.php';?> 
-          <?php include 'card_business.php';?> 
-          <?php include 'card_business.php';?> 
-          <?php include 'card_business.php';?> 
+                          <input class="form-control" id="system-search" name="q" placeholder="Search foods..." required>
+                          <span class="input-group-btn">
+                              <button type="submit" class="btn btn-default"><i class="glyphicon glyphicon-search"></i></button>
+                          </span>
+                      </div>
+                  </form>
+                   <table class="table table-list-search">
+                      <tbody>
+                          <tr>
+                              <td>Meat / <a href="/produce/beef">Beef</a></td>  
+                              <td> 
+                               <a href="#" class="pull-right"><i class="fa fa-thumbs-o-up text-muted" title="Vouch for this"></i></a> 
+                              </td> 
+                          </tr> 
+                          <tr>
+                              <td>Meat / <a href="/produce/beef">Chicken</a></td> 
+                              
+                              <td> 
+                               <a href="#" class="pull-right"><i class="fa fa-thumbs-o-up text-muted" title="Vouch for this"></i></a> 
+                              </td>  
+                          </tr>
+                      </tbody>
+                      <tfoot>
+                          <tr>
+                              <td>Fruit / <a href="/produce/beef">Blackberries</a></td> 
+                              <td> 
+                               <a href="#" class="pull-right"><i class="fa fa-thumbs-o-up text-muted" title="Vouch for this"></i></a> 
+                              </td> 
+                          </tr> 
+                      </tfoot>
+                  </table>   
+                </div>
+              </div>
+            </div>
           </div>
- 
-
-          <div class="clearfix">  
-          <h2>Organisations</h2>
-           <p class=""><a href="single-organisation.php">Show all</a></p>
-          
-          <?php include 'card_organisation.php';?>  
-          <?php include 'card_organisation.php';?> 
-          <?php include 'card_organisation.php';?> 
-          <?php include 'card_organisation.php';?> 
+          <div class="tab-pane fade" id="supporters">
+            <div class="clearfix"> 
+              <?php include 'card_individual.php';?> 
+              <?php include 'card_individual.php';?> 
+              <?php include 'card_individual.php';?> 
+              <?php include 'card_individual.php';?> 
+              <?php include 'card_individual.php';?> 
+              <?php include 'card_individual.php';?>  
+            </div> 
           </div>
 
-          <div class="clearfix">
-          <h2>Customers</h2>
-          <?php include 'card_individual.php';?> 
-          <?php include 'card_individual.php';?> 
-          <?php include 'card_individual.php';?> 
-          <?php include 'card_individual.php';?> 
-          <?php include 'card_individual.php';?> 
-          <?php include 'card_individual.php';?>  
-          </div> 
+          <div class="tab-pane fade" id="team">
+            <div class="clearfix">
+              <?php include 'card_team.php';?> 
+              <?php include 'card_team.php';?> 
+              <?php include 'card_team.php';?> 
+              <?php include 'card_team.php';?> 
+              <?php include 'card_team.php';?>  
+            </div> 
+          </div>
 
+          <div class="tab-pane fade" id="updates">
 
-          <div class="clearfix">
-          <h2>Team</h2> 
-          <?php include 'card_team.php';?> 
-          <?php include 'card_team.php';?> 
-          <?php include 'card_team.php';?> 
-          <?php include 'card_team.php';?> 
-          <?php include 'card_team.php';?>  
-          </div> 
-
-     
-        <h2>Updates</h2>
-
-        <div class="container-responsive">
+          <div class="container-responsive">
           <div class="row">
               <div class="col-md-12">
                   <div class="panel panel-default">
@@ -412,6 +390,14 @@
                   </div>
               </div>
           </div>
+
+          </div>
+        </div>
+
+
+     
+
+        
       </div>
  
  

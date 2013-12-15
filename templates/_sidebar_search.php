@@ -12,43 +12,15 @@
             <h4 style="margin:0;">Sujit Maharjan</h4>
             <small><a href="#" class="text-muted">Edit your profile</a></small>
           </div>
-        </div>
-         
-        <p><a href="#">Trade connections <span class="badge pull-right">42</span></a></p>
-        <p><a href="#">Foods <span class="badge pull-right">35</span></a></p>
-        <p><a href="#">Organisations <span class="badge pull-right">4</span></a></p> 
-        
-          
-          <!-- PUT EMPTY ONES AT THE BOTTOM OF THE LIST -->
-          <!-- if ZERO ON ANY OF THESE -->
-        
-        <div class="alert alert-info small"> 
-          <p><b>Want a great profile?</b></p> 
-         
-            <a href="#">Add Foods </a>
-            <br />
-            <a href="#">Add Organisations</a>
-        </div>
+        </div> 
          
         </div><!-- /account_info -->
- 
- 
-    <hr /> 
-
-      <h4>Who's nearby</h4>
- 
-
-        <p><a href="#">Individuals <span class="badge pull-right">273</span></a></p>
-        <p><a href="#">Businesses <span class="badge pull-right">38</span></a></p> 
-
-    
+     
     
     <div class="foodtrade-sidebar">
 
     <hr />
-
-    <div class="alert alert-success">If a search term is set, then show the filters below, and remove everything above up until "Edit your profile"</div>
-    <hr>
+ 
      
     <!-- consider using this for search filter http://harvesthq.github.io/chosen/ -->
     <form role="form">
