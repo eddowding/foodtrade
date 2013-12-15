@@ -1,10 +1,9 @@
-{% extends "base.html" %}
-{% load staticfiles %}
+<?php include '_header.php';?>
 
-      <div class="container">
-{% block content %}
+    <div class="container">
+
     <div class="col-md-2 sidebar" >
-        
+
         <!-- show the logged in users account --> 
         <div id="account_info">
         
@@ -12,14 +11,13 @@
           <!-- twitter 78px image - 'large' -->
           <!--https://dev.twitter.com/docs/user-profile-images-and-banners -->
           <img class="pull-left img-rounded" style="margin:0 8px 0 0; width:30px"  src="http://a0.twimg.com/profile_images/2596092158/afpecvf41m8f0juql78p_normal.png"  />
-          
-          <div class="content">
 
-            <h4 style="margin:0;">user.username</h4>
+          <div class="content">
+            <h4 style="margin:0;">Sujit Maharjan</h4>
             <small><a href="#" class="text-muted">Edit your profile</a></small>
           </div>
         </div>
-        
+         
         <p><a href="#">Trade connections <span class="badge pull-right">42</span></a></p>
         <p><a href="#">Foods <span class="badge pull-right">35</span></a></p>
         <p><a href="#">Organisations <span class="badge pull-right">4</span></a></p>
@@ -48,7 +46,6 @@
         <p><a href="#">Individuals <span class="badge pull-right">273</span></a></p>
         <p><a href="#">Businesses <span class="badge pull-right">38</span></a></p> 
 
-
      <!--    <div class="clearfix"> 
           <img class="pull-left img-rounded" style="margin:0 8px 0 0; width:30px"  src="https://pbs.twimg.com/profile_images/378800000006142190/2892beb0a4ee730cb98173e5d8660816_normal.jpeg" />
           <div class="content">
@@ -65,7 +62,7 @@
           </div>
         </div>
  -->
-
+    
     <div class="foodtrade-sidebar">
 
     <hr />
@@ -82,14 +79,8 @@
 
 
     <ul class="foodtrade-tag-list">
-        <li data-id="ALL" class="foodtrade-tag foodtrade-tag-click foodtrade-tag-all"><div class="foodtrade-tag-checkbox-column"><input type="checkbox" checked="checked" aria-label="All Partners" class="foodtrade-tag-checkbox"></div><div class="foodtrade-tag-text">All food</div><div class="foodtrade-tag-count">{{total_food_count}}</div></li>
-
-        {% for eachfood in food %}
-        <li data-id="{{eachfood.id}}" class="foodtrade-tag foodtrade-tag-click "><div class="foodtrade-tag-checkbox-column"><input type="checkbox" aria-label="Johns Hopkins " class="foodtrade-tag-checkbox"></div><div class="foodtrade-tag-text">{{eachfood.name}} </div><div class="foodtrade-tag-count">{{eachfood.tagcount}}</div></li>
-        {% endfor %}
-
-        <li class="foodtrade-tag-showmore">show more</li>
-        </ul>
+    <li data-id="ALL" class="foodtrade-tag foodtrade-tag-click foodtrade-tag-all"><div class="foodtrade-tag-checkbox-column"><input type="checkbox" checked="checked" aria-label="All Partners" class="foodtrade-tag-checkbox"></div><div class="foodtrade-tag-text">All Foods</div><div class="foodtrade-tag-count">51</div></li><li data-id="8" class="foodtrade-tag foodtrade-tag-click "><div class="foodtrade-tag-checkbox-column"><input type="checkbox" aria-label="Johns Hopkins " class="foodtrade-tag-checkbox"></div><div class="foodtrade-tag-text">Bread </div><div class="foodtrade-tag-count">6</div></li><li data-id="1" class="foodtrade-tag foodtrade-tag-click "><div class="foodtrade-tag-checkbox-column"><input type="checkbox" aria-label="Stanford University" class="foodtrade-tag-checkbox"></div><div class="foodtrade-tag-text">Cheese</div><div class="foodtrade-tag-count">5</div></li><li data-id="16" class="foodtrade-tag foodtrade-tag-click "><div class="foodtrade-tag-checkbox-column"><input type="checkbox" aria-label="École Polytechnique Fédérale de Lausanne" class="foodtrade-tag-checkbox"></div><div class="foodtrade-tag-text">Vegetables </div><div class="foodtrade-tag-count">4</div></li><li data-id="4" class="foodtrade-tag foodtrade-tag-click "><div class="foodtrade-tag-checkbox-column"><input type="checkbox" aria-label="Princeton University" class="foodtrade-tag-checkbox"></div><div class="foodtrade-tag-text">Ham</div><div class="foodtrade-tag-count">3</div></li><li data-id="15" class="foodtrade-tag foodtrade-tag-click "><div class="foodtrade-tag-checkbox-column"><input type="checkbox" aria-label="University of Washington" class="foodtrade-tag-checkbox"></div><div class="foodtrade-tag-text"> Milk</div><div class="foodtrade-tag-count">3</div></li><li class="foodtrade-tag-showmore">show more</li>
+    </ul>
 
      <hr>
  
@@ -102,13 +93,7 @@
 
 
     <ul class="foodtrade-tag-list">
-        <li data-id="ALL" class="foodtrade-tag foodtrade-tag-click foodtrade-tag-all"><div class="foodtrade-tag-checkbox-column"><input type="checkbox" checked="checked" aria-label="All Partners" class="foodtrade-tag-checkbox"></div><div class="foodtrade-tag-text">All Businesses</div><div class="foodtrade-tag-count">{{total_business_count}}</div></li>
-
-        {% for eachbusiness in business %}
-        <li data-id="{{eachbusiness.id}}" class="foodtrade-tag foodtrade-tag-click "><div class="foodtrade-tag-checkbox-column"><input type="checkbox" aria-label="Johns Hopkins " class="foodtrade-tag-checkbox"></div><div class="foodtrade-tag-text">{{eachbusiness.name}} </div><div class="foodtrade-tag-count">{{eachbusiness.tagcount}}</div></li>
-        {% endfor %}
-
-        <li class="foodtrade-tag-showmore">show more</li>
+    <li data-id="ALL" class="foodtrade-tag foodtrade-tag-click foodtrade-tag-all"><div class="foodtrade-tag-checkbox-column"><input type="checkbox" checked="checked" aria-label="All Partners" class="foodtrade-tag-checkbox"></div><div class="foodtrade-tag-text">All Businesses</div><div class="foodtrade-tag-count">51</div></li><li data-id="8" class="foodtrade-tag foodtrade-tag-click "><div class="foodtrade-tag-checkbox-column"><input type="checkbox" aria-label="Johns Hopkins " class="foodtrade-tag-checkbox"></div><div class="foodtrade-tag-text">Wholesaler </div><div class="foodtrade-tag-count">6</div></li><li data-id="1" class="foodtrade-tag foodtrade-tag-click "><div class="foodtrade-tag-checkbox-column"><input type="checkbox" aria-label="Stanford University" class="foodtrade-tag-checkbox"></div><div class="foodtrade-tag-text">Farmer</div><div class="foodtrade-tag-count">5</div></li><li data-id="16" class="foodtrade-tag foodtrade-tag-click "><div class="foodtrade-tag-checkbox-column"><input type="checkbox" aria-label="École Polytechnique Fédérale de Lausanne" class="foodtrade-tag-checkbox"></div><div class="foodtrade-tag-text">Caterer </div><div class="foodtrade-tag-count">4</div></li><li data-id="4" class="foodtrade-tag foodtrade-tag-click "><div class="foodtrade-tag-checkbox-column"><input type="checkbox" aria-label="Princeton University" class="foodtrade-tag-checkbox"></div><div class="foodtrade-tag-text">University</div><div class="foodtrade-tag-count">3</div></li><li data-id="15" class="foodtrade-tag foodtrade-tag-click "><div class="foodtrade-tag-checkbox-column"><input type="checkbox" aria-label="University of Washington" class="foodtrade-tag-checkbox"></div><div class="foodtrade-tag-text">Abbatoir</div><div class="foodtrade-tag-count">3</div></li><li class="foodtrade-tag-showmore">show more</li>
     </ul>
 
     <hr />
@@ -122,24 +107,16 @@
 
 
     <ul class="foodtrade-tag-list">
-        <li data-id="ALL" class="foodtrade-tag foodtrade-tag-click foodtrade-tag-all"><div class="foodtrade-tag-checkbox-column"><input type="checkbox" checked="checked" aria-label="All Partners" class="foodtrade-tag-checkbox"></div><div class="foodtrade-tag-text">All Organisations</div><div class="foodtrade-tag-count">{{total_organisation_count}}</div></li>
-
-        {% for eachorganisation in organisation %}
-        <li data-id="{{ eachorganisation.id }}" class="foodtrade-tag foodtrade-tag-click "><div class="foodtrade-tag-checkbox-column"><input type="checkbox" aria-label="Johns Hopkins " class="foodtrade-tag-checkbox"></div><div class="foodtrade-tag-text">{{ eachorganisation.name }} </div><div class="foodtrade-tag-count">{{ eachorganisation.tagcount }}</div></li>
-        {% endfor %}
-        
-        <li class="foodtrade-tag-showmore">show more</li>
+    <li data-id="ALL" class="foodtrade-tag foodtrade-tag-click foodtrade-tag-all"><div class="foodtrade-tag-checkbox-column"><input type="checkbox" checked="checked" aria-label="All Partners" class="foodtrade-tag-checkbox"></div><div class="foodtrade-tag-text">All Organisations</div><div class="foodtrade-tag-count">51</div></li><li data-id="8" class="foodtrade-tag foodtrade-tag-click "><div class="foodtrade-tag-checkbox-column"><input type="checkbox" aria-label="Johns Hopkins " class="foodtrade-tag-checkbox"></div><div class="foodtrade-tag-text">Soil Association </div><div class="foodtrade-tag-count">6</div></li><li data-id="1" class="foodtrade-tag foodtrade-tag-click "><div class="foodtrade-tag-checkbox-column"><input type="checkbox" aria-label="Stanford University" class="foodtrade-tag-checkbox"></div><div class="foodtrade-tag-text">NFU</div><div class="foodtrade-tag-count">5</div></li><li data-id="16" class="foodtrade-tag foodtrade-tag-click "><div class="foodtrade-tag-checkbox-column"><input type="checkbox" aria-label="École Polytechnique Fédérale de Lausanne" class="foodtrade-tag-checkbox"></div><div class="foodtrade-tag-text">Plunkett Foundation </div><div class="foodtrade-tag-count">4</div></li><li data-id="4" class="foodtrade-tag foodtrade-tag-click "><div class="foodtrade-tag-checkbox-column"><input type="checkbox" aria-label="Princeton University" class="foodtrade-tag-checkbox"></div><div class="foodtrade-tag-text">Organic institute</div><div class="foodtrade-tag-count">3</div></li><li data-id="15" class="foodtrade-tag foodtrade-tag-click "><div class="foodtrade-tag-checkbox-column"><input type="checkbox" aria-label="University of Washington" class="foodtrade-tag-checkbox"></div><div class="foodtrade-tag-text"> Slow Food</div><div class="foodtrade-tag-count">3</div></li><li class="foodtrade-tag-showmore">show more</li>
     </ul>
 
     </div>
     </div>
 
-
-
     <div class="col-md-5">
 
       <!-- new item -->
-          
+ 
           <input class="form-control input-lg" type="text" placeholder="Want to #buy #apples? Or #sell 30 tonnes #oats? "> 
         <hr />
 
@@ -358,10 +335,7 @@
       <article class="individual">
         
       </article>
-
     </div>
-
-
 
     <div class="col-md-5">
 
@@ -373,5 +347,5 @@
 
     </div>
 
-{% endblock %}
- 
+
+ <?php include '_footer.php';?>

@@ -3,6 +3,7 @@ from django.shortcuts import render_to_response
 from django.http import HttpResponse, HttpResponseRedirect
 from allauth.socialaccount.models import SocialToken, SocialAccount
 from twython import Twython
+import json
 
 consumer_key = 'seqGJEiDVNPxde7jmrk6dQ'
 consumer_secret = 'sI2BsZHPk86SYB7nRtKy0nQpZX3NP5j5dLfcNiP14'
@@ -10,6 +11,17 @@ access_token = ''
 access_token_secret =''
 
 def home(request):
+    parameters={}
+    parameters['user'] = request.user
+    parameters['total_food_count'] = 2
+    parameters['food'] = [{'name': 'Cauliflowers', 'tagcount': 7},{'name': 'Mutton', 'tagcount': 5}]
+    parameters['total_business_count'] = 2
+    parameters['business'] = [{'name': 'FoodSupply Pvt. Ltd.', 'tagcount': 7},{'name': 'Nina and Hager Meat Industry', 'tagcount': 5}]
+    parameters['total_organization_count'] = 2
+    parameters['organization'] = [{'name': 'Onion Export', 'tagcount': 7},{'name': 'Bajeko Sekuwa', 'tagcount': 5}]
+    return render_to_response('index.html', parameters)
+
+def tweets(request):
     parameters = {}
     if not request.user.is_authenticated():
         return HttpResponseRedirect('/accounts/login/')
@@ -29,11 +41,23 @@ def home(request):
     # twitter.update_status(status = tweet)
     # twitter.get_home_timeline()
     
-    user_tweets = twitter.get_user_timeline(user_id=uid, count = 200,
-                                        include_rts=True)
-    tweet_list = []
-    for tweet in user_tweets:
-        # tweet_list.append(Twython.html_for_tweet(tweet))
-        tweet_list.append(tweet)
-    parameters['tweet_list'] = tweet_list
+    # user_tweets = twitter.get_user_timeline(user_id=uid, count = 200,
+    #                                     include_rts=True)
+    mentions = twitter.get_mentions_timeline(count = 200, contributer_details = True)
+    # tweet_list = []
+    # for tweet in mentions:
+    #     tweet_list.append(Twython.html_for_tweet(tweet))
+        # tweet_list.append(tweet)
+    print json.dumps(mentions[0:2], sort_keys = True, indent = 4)
+    parameters['tweet_list'] = mentions
+    final_list = []
+    # since_id should be mentions[0]['id']
+    for each in mentions:
+        final_list.append({'created_at': each['created_at'],
+            'tweet_id': each['id'],
+            'parent_id': each['in_reply_to_status_id'],
+            'text': each['text'],
+            'twitter_uid': each['user']['id']
+            })
+
     return render_to_response('home.html', parameters)
