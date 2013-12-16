@@ -2,7 +2,7 @@
 
     <div  class="container">
 
-    <?php include '_sidebar_search.php';?>
+    <?php include '_sidebar.php';?>
 
    
 
@@ -11,20 +11,21 @@
     <div class="container-responsive">
     <div id="header_box" class="clearfix">
       <div class="col-md-2" id="avatar">
-        <img class="img-thumbnail center-block" src="https://pbs.twimg.com/profile_images/1690823879/Screen_shot_2011-12-13_at_12.21.20_bigger.png"  />
+        <img class="img-thumbnail center-block" src="http://a0.twimg.com/profile_images/2596092158/afpecvf41m8f0juql78p_bigger.png"  />
       </div>
      
       <div class="col-md-7">
-         <h1><a href="#">Slow Food UK</a></h1>
+         <h1><a href="#">Smales Farm</a></h1>
  
          <span class="label label-default">Livestock Farm</span>
          <span class="label label-default">Butcher</span>
          <span class="label label-default">Wholesaler</span>
          <span class="label label-default">Distribution</span>
          <span class="label label-default">Farm Shop</span>
-    
+ 
+
          <hr />
-         <p>Making GOOD, CLEAN and FAIR food happen. Join us!</p>        
+         <p>Nullam quis risus eget urna mollis ornare vel eu leo. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nullam id dolor id nibh ultricies vehicula.</p>        
 
           <div class="tags">  
            <a href="/tag/TAG">Box Scheme</a>
@@ -51,23 +52,37 @@
       <!-- if they dont't have an account yet -->
       <button class="btn btn-primary btn-block">Invite to connect</button>
 
- 
-      <!-- if logged in users = business --> 
-      <button class="btn btn-default btn-block" data-toggle="modal" data-target="#modal_customer">
-        <i class="fa fa-smile-o text-muted"></i> I am a member
-      </button> 
-
 
       <!-- if logged in users = individual --> 
-      <button class="btn btn-success btn-block" data-toggle="modal" data-target="#modal_customer">
-        <i class="fa fa-check"></i> I am a supporter
+      <button class="btn btn-default btn-block" data-toggle="modal" data-target="#modal_customer">
+        <i class="fa fa-smile-o text-muted"></i> I am a customer
       </button> 
-  
+
+      <!-- if logged in users = business --> 
+      <div class="btn-group btn-block" data-toggle="buttons">
+        <label class="btn btn-default" style="width:50%;" title="LOGGEDINUSER buys from PROFILENAME">
+          <input type="checkbox"> Buy from
+        </label>
+        <!-- showing active mode if button is selected -->
+        <label class="btn btn-success" style="width:50%;" title="LOGGEDINUSER sells to PROFILENAME">
+          <input type="checkbox"> Sell to
+        </label> 
+      </div>
+ 
+
+      <!-- Button trigger modal -->
+      <button class="btn btn-primary btn-block" data-toggle="modal" data-target="#modal_contact">
+        Contact
+      </button>  
+
+      <!-- if not logged in show login prompt -->
+      <button class="btn btn-primary btn-block">Login for more</button>
+
+ 
 
       <button class="btn btn-default btn-block" data-toggle="modal" data-target="#sharer">
         <i class="fa fa-share-square-o text-muted"></i> Share
       </button>
- 
 
       <!--SHARER  Modal -->
       <div class="modal fade" id="sharer" tabindex="-1" role="dialog" aria-labelledby="sharer" aria-hidden="true">
@@ -137,8 +152,6 @@
         <a href="#"><i class="fa fa-youtube"></i></a> 
         <a href="#"><i class="fa fa-linkedin-square"></i></a> 
       </div> 
-
-      <p class="text-center text-muted small" style="margin-top: 20px;">Is this your business? Sign in!</p>
 
 
      <!-- modal_contact -->
@@ -224,118 +237,109 @@
     </div>
 
 
-    <div class="row" style="margin-top: 30px;">
+    <div class="row">
      <div class="col-md-12">
-        <ul class="nav nav-tabs ">
-          <li class="active"><a href="#members" data-toggle="tab">Members <span class="badge ">2457</span></a></li>
-          <li><a href="#foods" data-toggle="tab">Foods  <span class="badge">54556</span></a></li> 
-          <li><a href="#supporters" data-toggle="tab">Supporters  <span class="badge">54347</span></a></li> 
-          <li><a href="#team" data-toggle="tab">Team <span class="badge ">25</span></a></li> 
+        <ul class="nav nav-tabs nav-justified">
+          <li class="active"><a href="#produce" data-toggle="tab">Foods </a></li>
+          <li><a href="#connections" data-toggle="tab">Connections </a>  </li>
+          <li><a href="#organisations" data-toggle="tab">Organisation</a> </li>
+          <li><a href="#customers" data-toggle="tab">Customers</a> </li>
+          <li><a href="#activity" data-toggle="tab">Updates  </a></li> 
+          <li><a href="#team" data-toggle="tab">Team </a></li>
         </ul>
      </div>
     </div>
 
     <div class="row">
       <div class="col-md-8">
-        <div class="container-responsive clearfix">
+         
+      <!-- USER MUST BE LOGGED IN TO BE ADD INFORMATION -->
+      <!-- SHOW THE FORMS BUT ON:FOCUS SHOW THE LOGIN MODAL -->
+        
 
-        <div class="tab-content">
-          <div class="tab-pane active fade in " id="members">
-            <div class="clearfix"> 
-              <?php include 'card_business.php';?> 
-              <?php include 'card_business.php';?> 
-              <?php include 'card_business.php';?> 
-              <?php include 'card_business.php';?> 
-              <?php include 'card_business.php';?> 
-              <?php include 'card_business.php';?> 
-              <?php include 'card_business.php';?> 
-              <?php include 'card_business.php';?> 
-              <?php include 'card_business.php';?> 
-              <?php include 'card_business.php';?> 
-              <?php include 'card_business.php';?> 
-              <?php include 'card_business.php';?> 
-              <?php include 'card_business.php';?> 
-              <?php include 'card_business.php';?> 
-              <?php include 'card_business.php';?> 
-            </div>
-          </div>
-          <div class="tab-pane fade" id="foods">
-            <div class="container-responsive">
-              <div class="row"> 
-                <div class="col-md-12">
-                  <form action="#" method="get">
-                      <div class="input-group well well-sm">
-
-                          <input class="form-control" id="system-search" name="q" placeholder="Search foods..." required>
-                          <span class="input-group-btn">
-                              <button type="submit" class="btn btn-default"><i class="glyphicon glyphicon-search"></i></button>
-                          </span>
-                      </div>
-                  </form>
-                   <table class="table table-list-search">
-                      <tbody>
-                          <tr>
-                              <td>Meat / <a href="/produce/beef">Beef</a></td>  
-                              <td> 
-                               <a href="#" class="pull-right"><i class="fa fa-thumbs-o-up text-muted" title="Vouch for this"></i></a> 
-                              </td> 
-                          </tr> 
-                          <tr>
-                              <td>Meat / <a href="/produce/beef">Chicken</a></td> 
-                              
-                              <td> 
-                               <a href="#" class="pull-right"><i class="fa fa-thumbs-o-up text-muted" title="Vouch for this"></i></a> 
-                              </td>  
-                          </tr>
-                      </tbody>
-                      <tfoot>
-                          <tr>
-                              <td>Fruit / <a href="/produce/beef">Blackberries</a></td> 
-                              <td> 
-                               <a href="#" class="pull-right"><i class="fa fa-thumbs-o-up text-muted" title="Vouch for this"></i></a> 
-                              </td> 
-                          </tr> 
-                      </tfoot>
-                  </table>   
+          <h2>Foods</h2> 
+          <div class="well well-sm">
+            <form action="#" method="get">
+                <div class="input-group"> 
+                  <input class="form-control" name="q"  placeholder="Add foods you can buy here.">
+                  <span class="input-group-btn">
+                      <button type="submit" class="btn btn-success"> Add</button>
+                  </span>
                 </div>
+            </form>
+          </div> 
+
+          <h2>Connections</h2> 
+          <div class="well well-sm">  
+            <form class="form-inline" role="form">
+              <div class="form-group">
+                 <img class="img-rounded" 
+                 style="width: 35px; margin-right: 5px;" 
+                 src="http://a0.twimg.com/profile_images/2596092158/afpecvf41m8f0juql78p_bigger.png"  />
+      
+                <div class="btn-group" data-toggle="buttons">
+                  <label class="btn btn-success active">
+                    <input type="checkbox" name="options" id="option1"> Buys from 
+                  </label> 
+                  <label class="btn btn-default">
+                    <input type="checkbox" name="options" id="option2"> Sells to
+                  </label> 
+                </div> 
+              </div> 
+              <div class="form-group">
+                <label class="sr-only" for="exampleInputEmail2">Trade partnter</label>
+                <input type="email" class="form-control" style="min-width:250px;" id="trade" placeholder="Type business...">
               </div>
-            </div>
-          </div>
-          <div class="tab-pane fade" id="supporters">
-            <div class="clearfix"> 
-              <?php include 'card_individual.php';?> 
-              <?php include 'card_individual.php';?> 
-              <?php include 'card_individual.php';?> 
-              <?php include 'card_individual.php';?> 
-              <?php include 'card_individual.php';?> 
-              <?php include 'card_individual.php';?>  
-            </div> 
-          </div>
+              <button type="submit" class="btn btn-success">Add</button>
+            </form>
+          </div> 
+ 
 
-          <div class="tab-pane fade" id="team">
-            <div class="clearfix">
-              <?php include 'card_team.php';?> 
-              <?php include 'card_team.php';?> 
-              <?php include 'card_team.php';?> 
-              <?php include 'card_team.php';?> 
-              <?php include 'card_team.php';?>  
-            </div> 
-          </div>
+            
+          <h2>Organisations</h2>  
+          <p class="alert alert-info">You have to be logged in as this profile to add organisation memberships.</p>
 
-           
+
+          <div class="clearfix"></div>
+          <h2>Customers</h2>    
+           <button class="btn btn-default">
+              <i class="fa fa-smile-o "></i> Are you a customer?
+            </button> 
+            <button class="btn btn-success">
+              <i class="fa fa-check "></i> I'm a customer
+            </button> 
+          <div class="clearfix"></div>
+              <?php include 'card_individual.php';?> 
+
+          <div class="clearfix"></div>
+          <h2>Team</h2>   
+
+           <button class="btn btn-default">
+              <i class="fa fa-smile-o "></i> Do you work here?
+            </button> 
+
+            <button class="btn btn-success">
+              <i class="fa fa-check "></i> I work here
+            </button> 
+
+     
+        <h2>Updates</h2> 
+        <div class="well well-sm">
+          <form action="#" method="get">
+              <div class="input-group"> 
+                <input class="form-control" name="q"  placeholder="Someone out there has the answer. Ask the question.">
+                <span class="input-group-btn">
+                    <button type="submit" class="btn btn-success"> Send</button>
+                </span>
+              </div>
+              <span class="help-block">Eg. We have 300kg #surplus conference pears for #sale or #donation // I want to  #buy organic honey for my farm shop </span>
+          </form>
+        </div> 
 
 
      
-
-        
-      </div>
- 
- 
-        </div><!-- container responsive -->
-  
-      
- 
-   
+                     
+       
       </div><!-- end col8 --> 
 
 

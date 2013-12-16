@@ -16,7 +16,7 @@
      
       <div class="col-md-7">
          <h1><a href="#">Slow Food UK</a></h1>
-     
+  
          <hr />
          <p>Making GOOD, CLEAN and FAIR food happen. Join us!</p>        
 
@@ -42,33 +42,22 @@
 
       <div id="contact_info" class="col-md-3">
 
-      <!-- if they dont't have an account yet --> 
-      <button class="btn btn-primary btn-block" data-toggle="modal" data-target="#modal_invite">
-         Invite to connect
-      </button> 
+      <!-- if they dont't have an account yet -->
+      <button class="btn btn-primary btn-block">Invite to connect</button>
 
-  
-      <button class="btn btn-default btn-block" data-toggle="modal" data-target="#modal_customer">
+     <button class="btn btn-default btn-block" data-toggle="modal" data-target="#modal_customer">
         <i class="fa fa-smile-o text-muted"></i> I'm a member
       </button> 
-      <button class="btn btn-success btn-block">
+      <!-- if selected -->
+     <button class="btn btn-success btn-block" data-toggle="modal" data-target="#modal_customer">
         <i class="fa fa-check "></i> I'm a member
       </button> 
- 
-
-      <!-- Button trigger modal -->
-      <button class="btn btn-primary btn-block" data-toggle="modal" data-target="#modal_contact">
-        Contact
-      </button>  
-
-      <!-- if not logged in show login prompt -->
-      <button class="btn btn-primary btn-block">Login for more</button>
-
  
 
       <button class="btn btn-default btn-block" data-toggle="modal" data-target="#sharer">
         <i class="fa fa-share-square-o text-muted"></i> Share
       </button>
+ 
 
       <!--SHARER  Modal -->
       <div class="modal fade" id="sharer" tabindex="-1" role="dialog" aria-labelledby="sharer" aria-hidden="true">
@@ -139,8 +128,8 @@
         <a href="#"><i class="fa fa-linkedin-square"></i></a> 
       </div> 
 
+      <p class="text-center text-muted small" style="margin-top: 20px;">Is this your business? Sign in!</p>
 
-      <?php include 'modal_invite.php';?>
 
      <!-- modal_contact -->
       <div class="modal fade" id="modal_contact" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -225,13 +214,12 @@
     </div>
 
 
-    <div class="row">
+    <div class="row" >
      <div class="col-md-12">
         <ul class="nav nav-tabs ">
           <li class="active"><a href="#members" data-toggle="tab">Members <span class="badge ">2457</span></a></li>
           <li><a href="#foods" data-toggle="tab">Foods  <span class="badge">54556</span></a></li> 
-          <li><a href="#people" data-toggle="tab">Team <span class="badge ">25</span></a></li>
-          <li><a href="#updates" data-toggle="tab">Updates <span class="badge ">25</span></a></li>
+          <li><a href="#team" data-toggle="tab">Team <span class="badge ">25</span></a></li> 
         </ul>
      </div>
     </div>
@@ -242,12 +230,6 @@
 
         <div class="tab-content">
           <div class="tab-pane active fade in " id="members">
-           <button class="btn btn-default">
-              <i class="fa fa-smile-o "></i> Are you a member?
-            </button> 
-            <button class="btn btn-success">
-              <i class="fa fa-check "></i> I'm a member
-            </button> 
             <div class="clearfix"> 
               <?php include 'card_business.php';?> 
               <?php include 'card_business.php';?> 
@@ -273,7 +255,7 @@
                   <form action="#" method="get">
                       <div class="input-group well well-sm">
 
-                          <input class="form-control" id="system-search" name="q" placeholder="Search foods from Slow Food UK members..."  required>
+                          <input class="form-control" id="system-search" name="q" placeholder="Search foods from Slow Food UK members..." required>
                           <span class="input-group-btn">
                               <button type="submit" class="btn btn-default"><i class="glyphicon glyphicon-search"></i></button>
                           </span>
@@ -307,18 +289,14 @@
                 </div>
               </div>
             </div>
-          </div> 
+          </div>
+          
 
-          <div class="tab-pane fade" id="people">
+          <div class="tab-pane fade" id="team">
 
            <button class="btn btn-default">
-              <i class="fa fa-smile-o "></i> Do you work here?
+              <i class="fa fa-smile-o "></i> I work here
             </button> 
-
-            <button class="btn btn-success">
-              <i class="fa fa-check "></i> I work here
-            </button> 
-
             <div class="clearfix">
               <?php include 'card_team.php';?> 
               <?php include 'card_team.php';?> 
@@ -328,65 +306,7 @@
             </div> 
           </div>
 
-          <div class="tab-pane fade" id="updates">
-
-          <div class="container-responsive">
-          <div class="row">
-              <div class="col-md-12">
-                  <div class="">
-
-                      <!-- if this is the profile of the logged in user -->
-                      <div class="well well-sm">
-                          <div class="input-group">
-                              <input id="btn-input" type="text" class="form-control input-sm" placeholder="Send an update..." />
-                              <span class="input-group-btn">
-                                  <button class="btn btn-warning btn-sm" id="btn-chat">
-                                      Send</button>
-                              </span>
-                          </div>
-                      </div>
-                      <!-- // if this is the profile of the logged in user -->
-
-                      <div class="">
-                          <ul class="chat">
-                              <li class="left clearfix"><span class="chat-img pull-left">
-                                  <img src="https://pbs.twimg.com/profile_images/378800000141996074/6a363e3c4f2a84a956c3cb27c50b2ca0_normal.png" alt="User Avatar" class="img-thumbnail" />
-                              </span>
-                                  <div class="chat-body clearfix">
-                                      <div class="header">
-                                          <strong class="primary-font">Smales Farm</strong> <small class="pull-right text-muted">
-                                              <span class="glyphicon glyphicon-time"></span>12 mins ago</small>
-                                      </div>
-                                      <p>
-                                          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur bibendum ornare
-                                          dolor, quis ullamcorper ligula sodales.
-                                      </p>
-                                  </div>
-                              </li>
-                              
-                              <li class="left clearfix"><span class="chat-img pull-left">
-                              <img src="https://pbs.twimg.com/profile_images/378800000141996074/6a363e3c4f2a84a956c3cb27c50b2ca0_normal.png" alt="User Avatar" class="img-thumbnail" />
-                              </span>
-                                  <div class="chat-body clearfix">
-                                      <div class="header">
-                                          <strong class="primary-font">Smales Farm</strong> <small class="pull-right text-muted">
-                                              <span class="glyphicon glyphicon-time"></span>14 mins ago</small>
-                                      </div>
-                                      <p>
-                                          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur bibendum ornare
-                                          dolor, quis ullamcorper ligula sodales.
-                                      </p>
-                                  </div>
-                              </li>
-                               
-                          </ul>
-                      </div>
-                  </div>
-              </div>
-          </div>
-
-          </div>
-        </div>
+           
 
 
      
