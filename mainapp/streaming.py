@@ -12,6 +12,3 @@ class MyStreamer(TwythonStreamer):
         # Uncomment the next line!
         # self.disconnect()
 
-stream = MyStreamer(APP_KEY, APP_SECRET,
-                    OAUTH_TOKEN, OAUTH_TOKEN_SECRET)
-stream.statuses.filter(track='twitter')
