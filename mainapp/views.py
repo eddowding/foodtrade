@@ -6,11 +6,16 @@ from twython import Twython
 import json
 from TweetFeed import TweetFeed
 from search import search_general
+from streaming import MyStreamer
+from models import MaxTweetId
 
 consumer_key = 'seqGJEiDVNPxde7jmrk6dQ'
 consumer_secret = 'sI2BsZHPk86SYB7nRtKy0nQpZX3NP5j5dLfcNiP14'
 access_token = ''
 access_token_secret =''
+
+admin_access_token = '2248425234-EgPSi3nDAZ1VXjzRpPGMChkQab5P0V4ZeG1d7KN'
+admin_access_token_secret = 'ST8W9TWqqHpyskMADDSpZ5r9hl7ND6sEfaLvhcqNfk1v4'
 
 def home(request):
     parameters={}
@@ -29,30 +34,61 @@ def tweets(request):
         return HttpResponseRedirect('/accounts/login/')
     parameters['user'] = request.user
     user_id = request.user.id
+    print user_id
     st = SocialToken.objects.get(account__user__id=user_id)
     access_token = st.token
     access_token_secret = st.token_secret
-    print access_token
-    print access_token_secret
     twitter = Twython(
         app_key = consumer_key,
         app_secret = consumer_secret,
         oauth_token = access_token,
         oauth_token_secret = access_token_secret
     )
-    uid = SocialAccount.objects.get(user__id=user_id).uid
-    # tweet = 'Hello !!'
-    # twitter.update_status(status = tweet)
-    # twitter.get_home_timeline()
-    
-    # user_tweets = twitter.get_user_timeline(user_id=uid, count = 200,
-    #                                     include_rts=True)
-    mentions = twitter.get_mentions_timeline(count = 200, contributer_details = True)
-    # tweet_list = []
-    # for tweet in mentions:
-    #     tweet_list.append(Twython.html_for_tweet(tweet))
+    # uid = SocialAccount.objects.get(user__id=user_id).uid
+    admin_twitter = Twython(
+        app_key = consumer_key,
+        app_secret = consumer_secret,
+        oauth_token = admin_access_token,
+        oauth_token_secret = admin_access_token_secret
+        )
+    max_id = MaxTweetId.objects.all()[0]
+    max_tweet_id = int(max_id.max_tweet_id)
+    print type(max_tweet_id), max_tweet_id
+    mentions = admin_twitter.get_mentions_timeline(count = 200, contributer_details = True, since_id = max_tweet_id)
+    print len(mentions)
+    tweet_list = []
+    tweet_feed = TweetFeed()
+    for tweet in mentions:
+        try:
+            usr = SocialAccount.objects.get(uid = tweet['user']['id'])
+            pic_url_list = []
+            if tweet['entities'].get('media')!= None:
+                for each in tweet['entities'].get('media'):
+                    pic_url_list.append(each['media_url'])
+            data = {'tweet_id': tweet['id'],
+                    'parent_tweet_id': 0 if tweet['in_reply_to_status_id'] == None else tweet['in_reply_to_status_id'],
+                    'tweet_message': tweet['text'],
+                    'picture': pic_url_list
+            }
+            tweet_list.append(tweet['id'])
+            tweet_feed.insert_tweet(data)
+        except:
+            print "Inside except"
+            text = "@" + tweet['user']['screen_name'] + " Thanks! Please confirm your post by clicking this link [link]. You'll only have to do this once."
+            print text    
+            try:
+                admin_twitter.update_status(status = text)
+            except:
+                pass
+    max_id.max_tweet_id = max(tweet_list)
+    max_id.save()
+
+    ''' kaam chhaina '''
+        # print json.dumps(data, sort_keys = True, indent = 4)
+        # tweet_list.append(Twython.html_for_tweet(tweet))
         # tweet_list.append(tweet)
-    # print json.dumps(mentions[0:2], sort_keys = True, indent = 4)
+    # print tweet_list
+    # print json.dumps(mentions[0], sort_keys = True, indent = 4)
     # parameters['tweet_list'] = mentions
     # final_list = []
     # # since_id should be mentions[0]['id']
@@ -71,11 +107,14 @@ def tweets(request):
     # print search_results
     # print json.dumps(search_results, sort_keys = True, indent = 4)
     # search_results = search_general(twitter, hashtags = ['#Nepal'])
-    search_results = twitter.search(q = '@SantoshGhimire ')
+    # search_results = twitter.search(q = '@SantoshGhimire ')
     # print json.dumps(search_results, sort_keys = True, indent = 4)
-    for result in search_results:
-        print result['text']
-        # print json.dumps(result, sort_keys = True, indent = 4)
-    print len(search_results['statuses'])
-    parameters['tweet_list'] = search_results
+    # for result in search_results:
+    #     print result['text']
+    #     # print json.dumps(result, sort_keys = True, indent = 4)
+    # print len(search_results['statuses'])
+    # search_results = []
+    parameters['tweet_list'] = mentions
+
     return render_to_response('home.html', parameters)
+
