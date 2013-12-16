@@ -16,13 +16,7 @@
      
       <div class="col-md-7">
          <h1><a href="#">Slow Food UK</a></h1>
- 
-         <span class="label label-default">Livestock Farm</span>
-         <span class="label label-default">Butcher</span>
-         <span class="label label-default">Wholesaler</span>
-         <span class="label label-default">Distribution</span>
-         <span class="label label-default">Farm Shop</span>
-    
+  
          <hr />
          <p>Making GOOD, CLEAN and FAIR food happen. Join us!</p>        
 

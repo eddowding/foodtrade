@@ -1,12 +1,9 @@
 <?php include '_header.php';?>
 
     <div  class="container">
+ 
 
-    <?php include '_sidebar.php';?>
-
-   
-
-    <div class="col-md-10" id="single">
+    <div class="col-md-12" id="single">
 
     <div class="container-responsive">
     <div id="header_box" class="clearfix">
@@ -259,52 +256,19 @@
 
           <div class="clearfix">
           <h2>Connections</h2>
+            
+            <p>You must 
+              <a class="btn btn-info" href="#">
+                sign in 
+              </a> 
+              to see the connections. It's free, don't worry.</p>
 
-          <div class="well well-sm">  
-            <form class="form-inline" role="form">
-              <div class="form-group">
-                 <img class="img-rounded" 
-                 style="width: 35px; margin-right: 5px;" 
-                 src="http://a0.twimg.com/profile_images/2596092158/afpecvf41m8f0juql78p_bigger.png"  />
-      
-                <div class="btn-group" data-toggle="buttons">
-                  <label class="btn btn-success active">
-                    <input type="checkbox" name="options" id="option1"> Buys from 
-                  </label> 
-                  <label class="btn btn-default">
-                    <input type="checkbox" name="options" id="option2"> Sells to
-                  </label> 
-                </div> 
-              </div> 
-              <div class="form-group">
-                <label class="sr-only" for="exampleInputEmail2">Trade partnter</label>
-                <input type="email" class="form-control" style="min-width:250px;" id="trade" placeholder="Type business...">
-              </div>
-              <button type="submit" class="btn btn-success">Add</button>
-            </form>
-          </div> 
-          <?php include 'card_business.php';?> 
-          <?php include 'card_business.php';?> 
-          <?php include 'card_business.php';?> 
-          <?php include 'card_business.php';?> 
-          <?php include 'card_business.php';?> 
-          <?php include 'card_business.php';?> 
-          <?php include 'card_business.php';?> 
-          <?php include 'card_business.php';?> 
-          <?php include 'card_business.php';?> 
-          <?php include 'card_business.php';?> 
-          <?php include 'card_business.php';?> 
-          <?php include 'card_business.php';?> 
-          <?php include 'card_business.php';?> 
-          <?php include 'card_business.php';?> 
-          <?php include 'card_business.php';?> 
           </div>
  
 
           <div class="clearfix">  
           <h2>Organisations</h2>
-           <p class=""><a href="single-organisation.php">Show all</a></p>
-          
+
           <?php include 'card_organisation.php';?>  
           <?php include 'card_organisation.php';?> 
           <?php include 'card_organisation.php';?> 
@@ -324,71 +288,19 @@
 
           <div class="clearfix">
           <h2>Team</h2> 
-          <?php include 'card_team.php';?> 
-          <?php include 'card_team.php';?> 
-          <?php include 'card_team.php';?> 
-          <?php include 'card_team.php';?> 
-          <?php include 'card_team.php';?>  
+            <p>You must 
+              <a class="btn btn-info" href="#">
+                sign in 
+              </a> 
+              to see the who works here. It's free, don't worry.</p>
           </div> 
 
      
         <h2>Updates</h2>
 
-        <div class="container-responsive">
-          <div class="row">
-              <div class="col-md-12">
-                  <div class="panel panel-default">
 
-                      <!-- if this is the profile of the logged in user -->
-                      <div class="panel-footer">
-                          <div class="input-group">
-                              <input id="btn-input" type="text" class="form-control input-sm" placeholder="That food's not going to trade itself..." />
-                              <span class="input-group-btn">
-                                  <button class="btn btn-warning btn-sm" id="btn-chat">
-                                      Send</button>
-                              </span>
-                          </div>
-                      </div>
-                      <!-- // if this is the profile of the logged in user -->
-
-                      <div class="panel-body">
-                          <ul class="chat">
-                              <li class="left clearfix"><span class="chat-img pull-left">
-                                  <img src="https://pbs.twimg.com/profile_images/378800000141996074/6a363e3c4f2a84a956c3cb27c50b2ca0_normal.png" alt="User Avatar" class="img-thumbnail" />
-                              </span>
-                                  <div class="chat-body clearfix">
-                                      <div class="header">
-                                          <strong class="primary-font">Smales Farm</strong> <small class="pull-right text-muted">
-                                              <span class="glyphicon glyphicon-time"></span>12 mins ago</small>
-                                      </div>
-                                      <p>
-                                          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur bibendum ornare
-                                          dolor, quis ullamcorper ligula sodales.
-                                      </p>
-                                  </div>
-                              </li>
-                              
-                              <li class="left clearfix"><span class="chat-img pull-left">
-                              <img src="https://pbs.twimg.com/profile_images/378800000141996074/6a363e3c4f2a84a956c3cb27c50b2ca0_normal.png" alt="User Avatar" class="img-thumbnail" />
-                              </span>
-                                  <div class="chat-body clearfix">
-                                      <div class="header">
-                                          <strong class="primary-font">Smales Farm</strong> <small class="pull-right text-muted">
-                                              <span class="glyphicon glyphicon-time"></span>14 mins ago</small>
-                                      </div>
-                                      <p>
-                                          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur bibendum ornare
-                                          dolor, quis ullamcorper ligula sodales.
-                                      </p>
-                                  </div>
-                              </li>
-                               
-                          </ul>
-                      </div>
-                  </div>
-              </div>
-          </div>
-      </div>
+           <?php include 'card_activity.php';?> 
+ 
  
  
         </div><!-- container responsive -->
