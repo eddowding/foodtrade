@@ -105,21 +105,24 @@ Organisations
      <pre>
 
 ED DOWDING
-----------
-do activity page solo
+---------- 
 setup footer
-- about us / pricing
+- about us 
+- pricing
+- blog
+- facebook / twitter
 change header logo to ours
 add like on twitter / facebook to header
+add activity feed card style for org / individial 
 
-
- <article class="organisation">
-        
-      </article> 
-      <article class="individual">
-        
-      </article>
-
+about us page
+- pricing
+- basic info
+- data: odi, godan
+- mission
+- link to blog
+- international
+- funding
 
 PHUNKA 
 -------

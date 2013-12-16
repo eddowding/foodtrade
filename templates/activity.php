@@ -131,6 +131,7 @@
     <ul>
     <li>300kg #surplus conference pears for #sale or #donation</li>
     <li>I want to  #buy organic honey for my farm shop.</li>
+    </ul>
     </div>
   </div> 
 
