@@ -18,15 +18,15 @@ admin_access_token = '2248425234-EgPSi3nDAZ1VXjzRpPGMChkQab5P0V4ZeG1d7KN'
 admin_access_token_secret = 'ST8W9TWqqHpyskMADDSpZ5r9hl7ND6sEfaLvhcqNfk1v4'
 
 def home(request):
-    parameters={}
-    parameters['user'] = request.user
-    parameters['total_food_count'] = 2
-    parameters['food'] = [{'name': 'Cauliflowers', 'tagcount': 7},{'name': 'Mutton', 'tagcount': 5}]
-    parameters['total_business_count'] = 2
-    parameters['business'] = [{'name': 'FoodSupply Pvt. Ltd.', 'tagcount': 7},{'name': 'Nina and Hager Meat Industry', 'tagcount': 5}]
-    parameters['total_organization_count'] = 2
-    parameters['organization'] = [{'name': 'Onion Export', 'tagcount': 7},{'name': 'Bajeko Sekuwa', 'tagcount': 5}]
-    return render_to_response('index.html', parameters)
+    # parameters={}
+    # parameters['user'] = request.user
+    # parameters['total_food_count'] = 2
+    # parameters['food'] = [{'name': 'Cauliflowers', 'tagcount': 7},{'name': 'Mutton', 'tagcount': 5}]
+    # parameters['total_business_count'] = 2
+    # parameters['business'] = [{'name': 'FoodSupply Pvt. Ltd.', 'tagcount': 7},{'name': 'Nina and Hager Meat Industry', 'tagcount': 5}]
+    # parameters['total_organization_count'] = 2
+    # parameters['organization'] = [{'name': 'Onion Export', 'tagcount': 7},{'name': 'Bajeko Sekuwa', 'tagcount': 5}]
+    return render_to_response('thome.html')
 
 def tweets(request):
     parameters = {}
