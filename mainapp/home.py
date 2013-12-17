@@ -17,6 +17,31 @@ access_token_secret =''
 admin_access_token = '2248425234-EgPSi3nDAZ1VXjzRpPGMChkQab5P0V4ZeG1d7KN'
 admin_access_token_secret = 'ST8W9TWqqHpyskMADDSpZ5r9hl7ND6sEfaLvhcqNfk1v4'
 
+
+
+
+def get_user_data(request):
+
+    user_info = {}
+    if request.user.is_authenticated():
+
+        return HttpResponseRedirect('/accounts/login/')
+    user_id = request.user.id
+    twitter_user = SocialAccount.objects.get(user__id = user_id)
+    user_info['name_full'] = twitter_user.extra_data.name
+    user_info['username'] = twitter_user.extra_data.screen_name
+    user_info['tweeter_user_id'] = twitter_user.extra_data.uid
+    user_connection =  UserConnections(user_info['tweeter_user_id'])
+    user_info['trade_connections'] = get_trade_connections(user_info['tweeter_user_id'])
+    user_info 
+
+
+    user_id = request.user.id
+    print user_id
+    st = SocialToken.objects.get(account__user__id=user_id)
+    access_token = st.token
+    access_token_secret = st.token_secret
+
 def home(request):
     # parameters={}
     # parameters['user'] = request.user
