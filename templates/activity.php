@@ -121,7 +121,7 @@
   <div id="update" class="well well-sm">
     <form action="#" method="get">
         <div class="input-group"> 
-          <input class="form-control" name="q"  placeholder="Someone out there has the answer. Ask the question.">
+          <input class="form-control" name="q"  placeholder="What #food do you have to #buy, #sell, or #surplus?">
           <span class="input-group-btn">
               <button type="submit" class="btn btn-success"> Post</button>
           </span>
@@ -129,8 +129,8 @@
     </form>
     <div class="help-block small">
     <ul>
-    <li>300kg #surplus conference pears for #sale or #donation</li>
-    <li>I want to  #buy organic honey for my farm shop.</li>
+    <li>300kg #surplus conference #pears for #sale or #surplus</li>
+    <li>I want to  #buy organic #honey for my farm shop.</li>
     </ul>
     </div>
   </div> 
