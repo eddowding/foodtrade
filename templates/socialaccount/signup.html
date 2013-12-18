@@ -1,0 +1,119 @@
+{% extends "socialaccount/base.html" %}
+{% load url from future %}
+
+{% load i18n %}
+
+{% block head_title %}{% trans "Signup" %}{% endblock %}
+
+{% block content %}
+
+
+<style typ="text/css">
+  body { 
+    background: url(http://upload.wikimedia.org/wikipedia/commons/5/5a/Milan_Vegetable_Market.jpg) no-repeat center center fixed; 
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+  }
+
+  .panel-default {
+  opacity: 0.95;
+  margin-top:30px;
+  }
+  .form-group.last { margin-bottom:0px; }
+</style>
+
+    <div class="container">
+    <div class="row">
+        <div class="col-md-5 col-md-offset-3">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <span class="glyphicon glyphicon-lock"></span> Login</div>
+                <div class="panel-body">
+                    <form class="signup form-horizontal" id="signup_form" method="post" action="{% url 'socialaccount_signup' %}" role="form">
+                      {% csrf_token %}
+                      <!-- {{ form.as_p }} -->
+
+                        <div class="form-group">
+                        <label for="id_sign_up_as" class="col-sm-3 control-label">
+                             Sign up as</label>
+
+
+                        <div class="col-sm-9">
+                            {{form.sign_up_as}}
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="id_type_user" class="col-sm-3 control-label">
+                            Type</label>
+                        <div class="col-sm-9">
+                            {{form.type_user}}
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="id_username" class="col-sm-3 control-label">
+                            Username</label>
+                        <div class="col-sm-9">
+                            {{form.username}}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="id_email" class="col-sm-3 control-label">
+                            Email</label>
+                        <div class="col-sm-9">
+                            {{form.email}}
+                        </div>
+                    </div>
+                    {{form.longitude.as_hidden}}
+                    {{form.latitude.as_hidden}}
+                               
+                    <div class="form-group last">
+                        <div class="col-sm-offset-3 col-sm-9">
+                                {% if redirect_field_value %}
+                          <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+                          {% endif %}
+                          <button type="submit" class="btn btn-success btn-sm">
+                                    {% trans "Sign Up" %} &raquo;</button>
+                                     <button type="reset" class="btn btn-default btn-sm">
+                                    Reset</button>
+                        </div>
+                    </div>
+                    </form>
+                </div>
+                <div class="panel-footer">
+                    Not Registred? <a href="#">Register here</a></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+    </div><!-- col10 --> 
+    <script type="text/javascript">
+window.onload=function() {
+    function success(position) {
+
+document.getElementsByName('longitude')[0].value = (position.coords.longitude);
+document.getElementsByName('latitude')[0].value =(position.coords.latitude);
+
+}
+
+function error(msg) {
+  var s = document.querySelector('#status');
+  s.innerHTML = typeof msg == 'string' ? msg : "failed";
+  s.className = 'fail';
+
+  // console.log(arguments);
+}
+
+if (navigator.geolocation) {
+  navigator.geolocation.getCurrentPosition(success, error);
+} else {
+  error('not supported');
+}
+}
+</script>
+{% endblock %}

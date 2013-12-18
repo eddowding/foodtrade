@@ -1,5 +1,6 @@
-<?php include '_header.php';?>
-
+{% extends 'tbase.html' %}
+{% load staticfiles %}
+{% block content %}
 <style typ="text/css">
   body { 
     background: url(http://upload.wikimedia.org/wikipedia/commons/5/5a/Milan_Vegetable_Market.jpg) no-repeat center center fixed; 
@@ -119,4 +120,4 @@
 
 
     </div><!-- col10 --> 
- <?php include '_footer.php';?>
+{% endblock %}
