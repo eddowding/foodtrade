@@ -1,5 +1,3 @@
-
-
 # Create your views here.
 from django.shortcuts import render_to_response
 from django.http import HttpResponse, HttpResponseRedirect
@@ -10,8 +8,6 @@ from TweetFeed import TweetFeed
 from search import search_general
 from streaming import MyStreamer
 from models import MaxTweetId
-
-
 
 from MongoConnection import MongoConnection
 from datetime import datetime
@@ -26,6 +22,7 @@ class UserConnections():
         self.table_name = 'user_connections'
         self.db_object.create_table(self.table_name,'_id')
         self.twitter_user_id = twitter_user_id
+        
     def insert_connection():
         pass
 

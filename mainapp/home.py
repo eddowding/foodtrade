@@ -19,28 +19,7 @@ admin_access_token_secret = 'ST8W9TWqqHpyskMADDSpZ5r9hl7ND6sEfaLvhcqNfk1v4'
 
 
 
-
-def get_user_data(request):
-
-    user_info = {}
-    if request.user.is_authenticated():
-
-        return HttpResponseRedirect('/accounts/login/')
-    user_id = request.user.id
-    twitter_user = SocialAccount.objects.get(user__id = user_id)
-    user_info['name_full'] = twitter_user.extra_data.name
-    user_info['username'] = twitter_user.extra_data.screen_name
-    user_info['tweeter_user_id'] = twitter_user.extra_data.uid
-    user_connection =  UserConnections(user_info['tweeter_user_id'])
-    user_info['trade_connections'] = get_trade_connections(user_info['tweeter_user_id'])
-    user_info 
-
-
-    user_id = request.user.id
-    print user_id
-    st = SocialToken.objects.get(account__user__id=user_id)
-    access_token = st.token
-    access_token_secret = st.token_secret
+from django.template import RequestContext
 
 def home(request):
     # parameters={}
@@ -51,7 +30,7 @@ def home(request):
     # parameters['business'] = [{'name': 'FoodSupply Pvt. Ltd.', 'tagcount': 7},{'name': 'Nina and Hager Meat Industry', 'tagcount': 5}]
     # parameters['total_organization_count'] = 2
     # parameters['organization'] = [{'name': 'Onion Export', 'tagcount': 7},{'name': 'Bajeko Sekuwa', 'tagcount': 5}]
-    return render_to_response('thome.html')
+    return render_to_response('thome.html',context_instance=RequestContext(request))
 
 def tweets(request):
     parameters = {}
