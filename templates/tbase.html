@@ -15,6 +15,10 @@
     <!-- CSS -->
     <link href="{% static "css/bootstrap.css" %}" rel="stylesheet">
     <link href="{% static "css/foodtrade.css" %}" rel="stylesheet">
+    <link href="{% static "css/custom-design.css" %}" rel="stylesheet">
+
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places"></script>
+
     <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
  
 
@@ -50,7 +54,7 @@
               <input type="text" class="form-control" placeholder="What?"> 
             </div>
             <div class="form-group" style="margin-right:5px;">
-              <input type="text" class="form-control" placeholder="Where?">
+              <input type="text" id="pac-input" class="form-control" placeholder="Where?">
             </div>
             <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
 
@@ -183,6 +187,7 @@
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
     <script src="{% static "js/bootstrap.min.js" %}"></script>
+    <script src="{% static "js/foodtrade.js" %}"></script>
      <script type="text/javascript">
 $(document).ready(function() {
     var activeSystemClass = $('.list-group-item.active');
@@ -333,6 +338,8 @@ $(document).ready(function() {
 $(function() {
     $(".counted").charCounter(320,{container: "#counter"});
 });
+
+
 
     </script>
   </body>
