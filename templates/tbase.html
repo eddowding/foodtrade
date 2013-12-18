@@ -60,37 +60,13 @@
 
           </form>
 
-        {% if user.is_authenticated %}
-
-         <button type="button" class="btn btn-primary navbar-btn pull-right" style="margin-left: 20px;"  data-toggle="modal" data-target="#newtwitterpost">
+        
+          <button type="button" class="btn btn-primary navbar-btn pull-right" style="margin-left: 20px;"  data-toggle="modal" data-target="#newpost">
             <i class="fa fa-edit"></i>
           </button>
- {% endif %}
-          
   
-       
-
-         <ul class="nav navbar-nav navbar-center">
-          <li><a href="/">Activity</a></li>
-          <li><a href="pricing.php">Pricing</a></li> 
-         </ul>
- 
-         {% if not user.is_authenticated %}
-
-         <ul class="nav navbar-nav navbar-right">
-         <li><a href="register.php">Sign Up</a></li>
-         <li><a href="#" data-toggle="modal" data-target="#modal_login">Sign In</a></li>
-               </ul>
- {% endif %}
-        </div><!--/.nav-collapse -->
-      </div>
-    <div class="ftstrip ftstrip-mini"></div>
-    </div>
-
-
-
-       <!-- New post Modal -->
-          <div class="modal fade" id="newtwitterpost" tabindex="-1" role="dialog" aria-labelledby="newtwitterpost" aria-hidden="true">
+          <!-- New post Modal -->
+          <div class="modal fade" id="newpost" tabindex="-1" role="dialog" aria-labelledby="newpost" aria-hidden="true">
             <div class="modal-dialog">
               <div class="modal-content"> 
                 <div class="modal-body">               
@@ -108,8 +84,24 @@
           </div><!-- /.modal -->
 
 
+         <ul class="nav navbar-nav navbar-center">
+          <li><a href="/">Activity</a></li>
+          <li><a href="pricing.php">Pricing</a></li> 
+         </ul>
+ 
+
+         <ul class="nav navbar-nav navbar-right">
+                  <li><a href="register.php">Sign Up</a></li>
+                  <li><a href="#" data-toggle="modal" data-target="#modal_login">Sign In</a></li>
+               </ul>
+ 
+        </div><!--/.nav-collapse -->
+      </div>
+    <div class="ftstrip ftstrip-mini"></div>
+    </div>
+
 <!-- modal_invite -->
-<div class="modal fade" id="modal_login" tabindex="-2" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal fade" id="modal_login" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
    
