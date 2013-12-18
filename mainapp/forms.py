@@ -2,6 +2,8 @@ from django import forms
 from django.contrib.auth.models import User
 from mainapp.TweetFeed import UserProfile
 from allauth.socialaccount.models import SocialToken, SocialAccount
+from django.http import HttpResponse, HttpResponseRedirect
+
 
 class SignupForm(forms.Form):
     # first_name = forms.CharField(max_length=30, label='First Name')
@@ -34,3 +36,4 @@ class SignupForm(forms.Form):
         }
         userprofile.create_profile(data)
         print "saved"
+        return HttpResponseRedirect('/?next=/?new_user=True')
