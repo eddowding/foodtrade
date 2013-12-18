@@ -1,4 +1,5 @@
 function ajax_request(s_handler, c_handler, input_data)
+{
    $.ajax({
     type: "POST",
     url: "/ajax-handler/"+s_handler,
@@ -9,5 +10,18 @@ function ajax_request(s_handler, c_handler, input_data)
 });
 }
 
+function UpdateStatus()
+{
+	message = $('#tweetMessage').val();
+	if(message=="")
+	{
+		alert("You can't post empty status.");
+		return;
+	}
+	ajax_request("post_tweet", 'CloseNewPostModal', {message: message});	
+}
 
-
+function CloseNewPostModal()
+{
+	$('#newtwitterpost').modal('hide');
+}

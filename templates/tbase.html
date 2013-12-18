@@ -1,4 +1,10 @@
 {% load staticfiles %}
+{% load staticfiles %}  
+{% load socialaccount %}
+{% load url from future %}
+{% load i18n %}
+{% include "socialaccount/snippets/login_extra.html" %}
+{% load account %}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -95,13 +101,13 @@
               <div class="modal-content"> 
                 <div class="modal-body">               
                   <form accept-charset="UTF-8" action="" method="POST">
-                      <textarea class="form-control counted" name="message" placeholder="Type in your message" rows="5" ></textarea>
+                      <textarea id="tweetMessage" class="form-control counted" name="message" placeholder="Type in your message" rows="5" ></textarea>
                   </form> 
                 </div>
                 <div class="modal-footer">
                   <h6 class="pull-left" id="counter">320 characters remaining</h6> 
                   <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                  <button type="button" class="btn btn-primary">Post update</button>
+                  <button type="button" class="btn btn-primary" onclick="UpdateStatus()">Post update</button>
                 </div>
               </div><!-- /.modal-content -->
             </div><!-- /.modal-dialog -->
@@ -123,7 +129,7 @@
  
       <div class="row">  
         <div class="col-md-12 text-center">
-          <a href="#" class="btn btn-lg btn-info btn-block"><i class="fa fa-twitter"></i> Sign in with Twitter</a>
+          <a href="{% provider_login_url "twitter" process="login" %}" class="btn btn-lg btn-info btn-block"><i class="fa fa-twitter"></i> Sign in with Twitter</a>
         </div> 
 
 <!-- USE THIS LATER!! 
@@ -196,6 +202,7 @@
     <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
     <script src="{% static "js/bootstrap.min.js" %}"></script>
     <script src="{% static "js/foodtrade.js" %}"></script>
+     <script src="{% static "js/ajax-handle.js" %}"></script>
      <script type="text/javascript">
 $(document).ready(function() {
     var activeSystemClass = $('.list-group-item.active');
