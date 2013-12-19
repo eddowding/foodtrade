@@ -18,6 +18,8 @@ function initialize() {
   google.maps.event.addListener(searchBox, 'places_changed', function() {
   var places = searchBox.getPlaces();
     placeCord = places[0].geometry.location;
+    $("#lon").val(placeCord.lng());
+    $("#lat").val(placeCord.lat());
   });
 }
 google.maps.event.addDomListener(window, 'load', initialize);
