@@ -1,6 +1,5 @@
 
 
-var connections = [];
 var map = L.map('map').setView([map_lat,map_lon], 6);
 
 		L.tileLayer('http://{s}.tile.cloudmade.com/BC9A493B41014CAABB98F0471D759707/997/256/{z}/{x}/{y}.png', {
@@ -18,18 +17,15 @@ L.circle([map_lat,map_lon], 482803, {
 L.circle([map_lat,map_lon], 160934, {
 			color: '#333333',
 		}).addTo(map);
-		// for(i=0;i<connections.length;i++)
-		// {
-		// 	var con = connections[i];
-		// 	var first_name = con.firstname;
-		// 	var last_name =  con.lastname;
-		// 	var blood_group = con.blood_group;
-		// 	var twitter = con.twitter;
-
+		for(i=0;i<connections.length;i++)
+		{
+			var con = connections[i];
+			var name = con.user.name;
+			var last_name =  con.status;
 			
 			
-		// 	L.marker([parseFloat(con.lat), parseFloat(con.lon)]).addTo(map).bindPopup("<b>Name: </b>"+first_name + " "+last_name +"<br /><b>Twitter: </b>"+twitter+"<br /><b>Blood Group: </b>"+blood_group);
+			L.marker([parseFloat(con.location.coordinates[0]), parseFloat(con.location.coordinates[1])]).addTo(map).bindPopup("<b>"+name + "</b> <br /><b>"+status+"</b><br />");
 			
 			
-		// }
+		}
 

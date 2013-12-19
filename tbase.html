@@ -209,6 +209,9 @@
     <script src="{% static "js/bootstrap.min.js" %}"></script>
     <script src="{% static "js/foodtrade.js" %}"></script>
      <script src="{% static "js/ajax-handle.js" %}"></script>
+
+     {% block footer %}
+     {% endblock %}
      <script type="text/javascript">
 $(document).ready(function() {
     var activeSystemClass = $('.list-group-item.active');
