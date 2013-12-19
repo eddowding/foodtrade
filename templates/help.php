@@ -30,6 +30,7 @@
         <ul>
            <li><a href="single-business-empty.php">single-business-empty.php</a></li>
            <li><a href="single-business.php">single-business.php</a></li>
+           <li><a href="single-business_edit.php">single-business-edit.php</a></li>
 
         </ul>
       </li>
