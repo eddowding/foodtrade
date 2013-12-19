@@ -31,6 +31,11 @@ def ajax_request(request, func_name):
     ajax_handle = AjaxHandle()
     return getattr(ajax_handle,func_name)(request)
 
+
+
+def admin_tags(request):
+    return render_to_response('admin_tags.html',context_instance=RequestContext(request))
+
 def home(request):
     # parameters={}
     # parameters['user'] = request.user

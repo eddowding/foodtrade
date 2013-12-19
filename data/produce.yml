@@ -1,0 +1,957 @@
+Meat:
+  - Beef
+  - Bison
+  - Buffalo
+  - Chicken
+  - Duck
+  - Geese / goose
+  - Lamb
+  - Mutton
+  - Ostrich
+  - Pork
+  - Turkey
+  - Veal
+  - Game:
+    - Partridge
+    - Pheasant
+    - Rabbit
+    - Hare / levret
+    - Venison
+  - Processed meat:
+    - Bacon
+    - Burgers
+    - Cured meat
+    - Gelatins 
+    - Haggis 
+    - Ham 
+    - Lunch meat
+    - Meat Pies
+    - Meatballs / Faggots
+    - Mincemeat
+    - Pasties
+    - Pate
+    - Pork Pies
+    - Sausages
+    - Scotch Eggs
+    - Smoked Duck / Chicken
+    - Spiced Chicken
+Fish:
+  - Bass
+  - Bream
+  - Cod
+  - Haddock
+  - Mackerel
+  - Salmon
+  - Trout
+  - Salmon
+  - Mackerel
+  - Trout
+  - American Shad
+  - American Sole
+  - Anchovy
+  - Antarctic Cod
+  - Arrowtooth Eel
+  - Asian Carps
+  - Atka Mackerel
+  - Atlantic Bonito
+  - Atlantic Cod
+  - Atlantic Eel
+  - Atlantic Herring
+  - Atlantic Salmon
+  - Atlantic Trout
+  - Australasian Salmon
+  - Bar Jack
+  - Bat Fish
+  - Barramundi
+  - Basa Fish
+  - Black Mackerel
+  - Blue Cod
+  - Bluegill
+  - Bluefish
+  - Bombay Duck
+  - Brook Trout
+  - Butterfish
+  - California Halibut
+  - California Sheephead
+  - Capelin
+  - Carp
+  - Catfish
+  - Cherry Salmon
+  - Chinook Salmon
+  - Chum Salmon
+  - Cobia
+  - Cod
+  - Coho Salmon
+  - Coley
+  - Common Carp
+  - Crappie
+  - Crawfish
+  - Dory
+  - Discus
+  - Drum
+  - Dino
+  - Eel
+  - European Eel
+  - European Flounder
+  - Flathead
+  - Flatfish
+  - Flounder
+  - Freshwater Eel
+  - Freshwater Herring
+  - Flying Fish
+  - Giant Gourami
+  - Gilt-head Bream
+  - Golden Dorado
+  - Groundfish
+  - Grouper
+  - Gar
+  - Haddock
+  - Hake
+  - Halibut
+  - Harvestfish
+  - Herring
+  - Hilsa
+  - Hoki
+  - Iridescent Shark / Basa Fish
+  - Japanese Butterfish
+  - John Dory
+  - Kapenta
+  - Kingklip
+  - Lemon Sole
+  - Largemouth Bass
+  - Mackerel
+  - Maori Cod
+  - Mahi-mahi
+  - Marlin
+  - Milkfish
+  - Monkfish
+  - Mullet
+  - Mullus Surmuletus
+  - Northern Anchovy
+  - Northern Pike
+  - Northern Snakehead
+  - Norwegian Atlantic Salmon
+  - Orange Roughy
+  - Oscar
+  - Pacific Herring
+  - Pacific Salmon
+  - Pacific Saury
+  - Pacific Trout
+  - Panfish
+  - Pangasius
+  - Patagonian Toothfish
+  - Pelagic Cod
+  - Perch
+  - Pink Salmon
+  - Pollock
+  - Pomfret
+  - Pilchard
+  - Paddlefish
+  - Plaice
+  - Pacific Cod
+  - Quoy Fish
+  - Rainbow Trout
+  - Redfish
+  - Red Snapper
+  - Rock Fish
+  - Round Herring
+  - Salmon
+  - Sardine
+  - Saury
+  - Scrod
+  - Sea Bass
+  - Seer Fish
+  - Shad
+  - Shrimpfish
+  - Silver Carp
+  - Skipjack Tuna
+  - Slender Rainbow Sardine
+  - Sole
+  - Snakeskin Gourami
+  - Snapper
+  - Snook
+  - Snoek
+  - Spanish Mackerel
+  - Surf Sardine
+  - Swamp-eel
+  - Swordfish
+  - Skate
+  - Sunfish  - Bluegill
+  - Smallmouth Bass
+  - Spoonbill / Paddlefish
+  - Thresher Shark
+  - Tilapia
+  - Tilefish
+  - Trout
+  - Tuna
+  - Turbot
+  - Yellowfin Tuna
+  - Zander 
+  - Caviar
+  - Roe (cod)
+  - Processed Fish:
+    - Fishcakes
+    - Fishpie
+    - Fishfingers
+    - Sushi
+Shellfish:
+  - Prawns
+  - Oysters
+  - Lobster
+  - Clams
+  - Crabs 
+  - Shrimp
+  - Cockles
+  - Mussels
+  - Scallops
+  - Whelks
+  - Winkles
+Dairy:
+  - Butter
+  - Cream:
+    - Clotted cream
+    - Single cream
+    - Double cream
+  - Milk:
+    - Cow's milk
+    - Goat's milk
+  - Cheese:
+    - Chedder
+    - Goat
+    - Brie
+    - Stilton
+    - Blue Cheese:
+      - Bath Blue cheese
+      - Barkham Blue cheese
+      - Blue Monday cheese
+      - Buxton Blue cheese
+      - Cheshire Blue cheese
+      - Devon Blue cheese
+      - Dorset Blue Vinney cheese
+      - Dovedale cheese
+      - Exmoor Blue cheese
+      - Harbourne Blue cheese
+      - Lanark Blue  cheese
+      - Oxford Blue cheese
+      - Shropshire Blue cheese
+      - Stichelton cheese
+      - Stilton cheese
+      - Blue Wensleydale cheese
+      - Yorkshire Blue cheese
+    - Appledore cheese
+    - Berkswell cheese
+    - Bonchester cheese
+    - Brie cheese
+    - Somerset Brie
+    - Cornish Brie cheese
+    - Brinkburn cheese
+    - Caithness cheese
+    - Caboc cheese
+    - Caerphilly cheese
+    - Cheddar cheese
+    - West Country Farmhouse Cheddar cheese
+    - Applewood cheese
+    - Coleraine Cheddar cheese
+    - Cheshire cheese
+    - Appleby Cheshire cheese
+    - Chevington cheese
+    - Coquetdale cheese
+    - Cornish Pepper cheese
+    - Cotherstone cheese
+    - Cotswold cheese
+    - Coverdale cheese
+    - Croglin cheese
+    - Crowdie cheese
+    - Derby cheese
+    - Double Gloucester cheese
+    - Goosnargh Gold cheese
+    - Dorstone cheese
+    - Dovedale cheese
+    - Farmhouse Llanboidy cheese
+    - Fine Fettle Yorkshire cheese
+    - Black Eyed Susan cheese
+    - Golden Cross cheese
+    - Gruth Dhu cheese
+    - Harlech cheese
+    - Hereford Hop cheese
+    - Huntsman cheese
+    - Ilchester cheese
+    - Innkeepers Choice cheese
+    - Isle Of Mull cheese
+    - Lancashire cheese
+    - Beacon Fell Traditional Lancashire cheese
+    - Lincolnshire Poacher cheese
+    - Little Wallop cheese
+    - Katy's White Lavender cheese
+    - Kidderton Ash cheese
+    - Lord Of The Hundreds cheese
+    - Lowerdale Goats Cheese cheese
+    - Pantysgawn cheese
+    - Red Devil cheese
+    - Red Dragon cheese
+    - Red Leicester cheese
+    - Rothbury Red cheese
+    - Red Windsor cheese
+    - Sage Derby cheese
+    - Single Gloucester cheese
+    - Stinking Bishop cheese
+    - Sussex Slipcote cheese
+    - Swaledale cheese
+    - Teviotdale  cheese
+    - Tintern cheese
+    - Waterloo cheese
+    - Wensleydale cheese
+    - White Stilton cheese
+    - Suffolk Gold cheese
+    - Whitehaven cheese
+    - Yarg cheese
+    - Wild Garlic Yarg cheese
+    - Wiltshire Loaf
+    - Woolsery Goats cheese
+    - Village Green Goat
+    - Y Fenni cheese
+  - Ice Cream/ Sorbets
+  - Yoghurt
+Eggs:
+  - Chicken
+  - Duck
+  - Quails
+  - Goose / geese
+  - Turkey
+Fruit:
+  - Apples   
+  - Apricots
+  - Bananas
+  - Bilberry
+  - Blackberries
+  - Blackcurrants
+  - Blueberries
+  - Cherimoya
+  - Cherries
+  - Clementine
+  - Coconuts
+  - Cranberries
+  - Currant
+  - Damson
+  - Dates
+  - Dragon fruit
+  - Durians 
+  - Elderberry
+  - Feijoa
+  - Fig
+  - Gooseberries
+  - Gooseberry
+  - Grape
+  - Grapefruit
+  - Grapes
+  - Guava
+  - Honeydew melon
+  - Huckleberry
+  - Jack fruit 
+  - Jambul
+  - Kiwi fruit
+  - Kumquat
+  - Legume
+  - Lemon  
+  - Limes
+  - Lychee
+  - Mandarine
+  - Mango  
+  - Mangostine
+  - Medlar
+  - Melon / cantaloupe
+  - Nectarines
+  - Oranges
+  - Papaya
+  - Peach
+  - Pears
+  - Physalis
+  - Pineapple
+  - Pitaya
+  - Plum, prune
+  - Pomegranates
+  - Prunes
+  - Quince 
+  - Raisins
+  - Rambutan
+  - Raspberries 
+  - Redcurrants
+  - Rhubarb
+  - Salal berry
+  - Satsuma
+  - Star fruit
+  - Strawberries 
+  - Tangerines
+  - Ugli fruit 
+  - Watermelon  
+  - Processed fruits:
+    - Canned fruit
+    - Frozen fruit
+    - Fruit sauces
+    - Jam
+    - Pie fillings
+Vegetables:  
+  - Artichokes:
+    - Jerusalem
+    - Globe 
+  - Aubergine
+  - Alfalfa sprouts
+  - Anise
+  - Artichoke
+  - Arugula
+  - Asparagus
+  - Aubergine, Eggplant
+  - Avocados 
+  - Beansprouts
+  - Bell pepper
+  - Beetroot, Beet
+  - Breadfruit
+  - Broccoflower 
+  - Broccoli:
+    - Purple Sprouting Broccoli
+  - Brussels sprouts
+  - Cabbage:
+    - Red
+    - White
+    - Green 
+  - Calabrese 
+  - Celeriac
+  - Chinese leaves, Bok choy
+  - Collard greens
+  - Corn salad
+  - Carrots
+  - Cauliflflower
+  - Celery
+  - Chard 
+  - Cucumbers 
+  - Crimini
+  - Daikon
+  - Endive
+  - Fennel 
+  - Fiddlehead fern
+  - Frisee leaves
+  - Garlic
+  - Jicama
+  - Kale:
+    - Curly kale
+    - Mixed kale
+  - Kohlrabi
+  - Leeks
+  - Lettuce:
+    - Romaine
+    - Iceberg
+  - Marrow
+  - Mushrooms:
+    - Shiitake mushrooms
+    - Truffles
+    - Boletus mushrooms
+    - Oyster mushrooms
+    - Wild mushrooms
+    - Button mushrooms
+  - Mustard greens
+  - Nettles 
+  - Okra
+  - Olives
+  - Onions
+  - Pakchoi
+  - Parsnips
+  - Potatoes:
+    - Charlotte potatoes
+    - King Edward potatoes
+    - Estima potatoes
+    - Maris Piper potatoes
+    - Desiree potatoes
+    - Marfona potatoes
+    - Anya potatoes
+    - Nicola potatoes
+    - Rooster potatoes
+    - Sante potatoes
+    - Accord potatoes
+    - Carlingford potatoes
+    - Romano potatoes
+    - Sweet potatoes, yams
+  - Rocket
+  - Radicchio
+  - Radish
+  - Rhubarb
+  - Salad
+  - Salad Packs
+  - Salsify 
+  - Savoy Cabbage
+  - Sea Vegetables 
+  - Shallots
+  - Skirret 
+  - Spinach
+  - Spring Greens 
+  - Spring onions, Green onion, Scallion
+  - Sprouted Seeds 
+  - Squashes:
+    - Acorn squash
+    - Butternut squash
+    - Courgette, Zucchini
+    - Cucumber 
+    - Gem squash
+    - Marrow, Squash
+    - Pumpkin
+    - Spaghetti squash
+  - Swede, Rutabaga
+  - Sweetcorn, maize, corn
+  - Swiss Chard
+  - Taro 
+  - Tat soi
+  - Tomatoes
+  - Turnips
+  - Turnip Greens 
+  - Watercress  
+  - Wasabi
+  - Water chestnut
+  - White radish
+  - Processed vegetables:
+    - Canned vegetables
+    - Frozen vegetables
+    - French fries
+Beans & Legumes:
+  - Azuki beans, Adzuki beans
+  - Bean sprouts 
+  - Black beans
+  - Black-eyed peas
+  - Borlotti beans
+  - Broad beans 
+  - Butter Beans   
+  - Chickpeas, Garbanzo beans, Ceci beans
+  - Dried Peas
+  - Green beans 
+  - Kidney beans
+  - Lentils 
+  - Lima bean, Butter bean
+  - Miso
+  - Mung beans 
+  - Navy beans
+  - Peas:
+    - Mangetout, Sugar snap peas
+  - Pinto beans
+  - Runner beans
+  - Soy beans
+  - Soybeans
+  - Tempeh
+  - Tofu
+  - Vigna Beans
+Nuts, Seeds & Oils:
+  - Almonds
+  - Apricot Kernels
+  - Betel Nuts
+  - Brazil Nuts 
+  - Cashews
+  - Chestnuts
+  - Flaxseeds
+  - Ginkgo Nuts
+  - Hazelnuts
+  - Macadamia Nuts
+  - Melon Seeds
+  - Olive Oil 
+  - Peanuts 
+  - Pecan Nuts
+  - Pine Nuts
+  - Pistachio Nuts 
+  - Pumpkin Seeds
+  - Sesame Seeds
+  - Sunflower Kernels
+  - Sunflower Seeds
+  - Walnuts
+Herbs & Spices: 
+  - Ajwain, carom seeds
+  - Akudjura 
+  - Alexanders   
+  - Allspice   
+  - Angelica  
+  - Anise  
+  - Aniseed myrtle 
+  - Annatto 
+  - Apple mint   
+  - Arrowroot starch
+  - Avocado leaf  
+  - Barberry  
+  - Basil 
+  - Bay leaf  
+  - Black cardamom   
+  - Boldo  
+  - Borage    
+  - Calendula, pot marigold
+  - Camphor laurel  
+  - Caraway
+  - Cardamom
+  - Carob 
+  - Cassia 
+  - Catnip 
+  - Celery seed  
+  - Chervil
+  - Chicory
+  - Chili powder
+  - Chives 
+  - Cicely 
+  - Cilantro, coriander greens, coriander herb
+  - Cinnamon 
+  - Cinnamon myrtle   
+  - Clary, Clary sage
+  - Cloves
+  - Coriander
+  - Coriander seed   
+  - Costmary  
+  - Cream of tartar 
+  - Cudweed   
+  - Cumin 
+  - Cumin Seeds 
+  - Curry leaf 
+  - Curry plant 
+  - Curry powder
+  - Dill 
+  - Dill seed  
+  - Elderflower 
+  - Epazote 
+  - Fennel 
+  - Fennel seeds
+  - Fenugreek 
+  - Filé powder, gumbo filé
+  - Fingerroot, krachai, temu kuntji
+  - Five-spice powder 
+  - Galingale 
+  - Garlic:
+    - Garlic powder
+    - Elephant garlic 
+  - Garlic chives   
+  - Ginger   
+  - Golpar, Persian hogweed
+  - Grains of paradise  
+  - Horseradish 
+  - Houttuynia cordata 
+  - Huacatay, Mexican marigold, mint marigold
+  - Hyssop  
+  - Jasmine flowers 
+  - Jimbu  
+  - Juniper berry 
+  - Kaffir lime leaves, Makrud lime leaves
+  - Kala zeera , black cumin
+  - Kawakawa seeds  
+  - Keluak, kluwak, kepayang
+  - Kencur, galangal, kentjur
+  - Kokam seed  
+  - Korarima, Ethiopian cardamom, false cardamon
+  - Koseret leaves  
+  - Lavender 
+  - Lemon balm 
+  - Lemon ironbark  
+  - Lemon myrtle  
+  - Lemon verbena 
+  - Lemongrass 
+  - Leptotes bicolor 
+  - Lesser calamint , nipitella, nepitella
+  - Licorice, liquorice
+  - Lime flower, linden flower
+  - Lovage  
+  - Mace 
+  - Mahlab, St. Lucie cherry
+  - Malabathrum, tejpat
+  - Marjoram  
+  - Marsh mallow 
+  - Mastic 
+  - Mint
+  - Mountain horopito  
+  - Musk mallow, abelmosk
+  - Mustard:
+    - Black mustard
+    - Brown mustard
+    - Yellow mustard
+    - White mustard
+    - Mustard seeds
+  - Nasturtium 
+  - Nigella, kalonji, black caraway, black onion seed
+  - Njangsa, djansang
+  - Nutmeg
+  - Nutmeg  
+  - Olida  
+  - Onion powder
+  - Oregano 
+  - Orris root  
+  - Pandan flower, kewra
+  - Pandan leaf, screwpine
+  - Pandanus amaryllifolius
+  - Paprika  
+  - Paracress  
+  - Parsley 
+  - Pepper:   
+    - Black pepper 
+    - Chili pepper:
+      - Jalapeno pepper
+      - Habanero pepper
+      - Paprika pepper
+      - Tabasco pepper
+      - Cayenne pepper
+    - Cubeb pepper
+    - Green pepper
+    - Kani pepper
+    - Peruvian pepper
+    - Pink pepper
+    - Red pepper
+    - Szechuan pepper
+    - White pepper
+  - Peppercorns
+  - Peppermint
+  - Perilla, shiso
+  - Poppy seeds
+  - Quassia  
+  - Ramsons, wood garlic
+  - Rice paddy herb  
+  - Rosemary 
+  - Rue 
+  - Safflower 
+  - Saffron 
+  - Sage 
+  - Saigon cinnamon 
+  - Salad burnet 
+  - Salep 
+  - Salt
+  - Sassafras  
+  - Sesame seeds
+  - Silphium, silphion, laser, laserpicium, lasarpicium
+  - Sorrel
+  - Spearmint 
+  - Spikenard 
+  - Star anise 
+  - Sumac 
+  - Sweet woodruff  
+  - Tarragon  
+  - Thyme 
+  - Turmeric
+  - Turmeric
+  - Turmeric 
+  - Vanilla 
+  - Vanilla extract
+  - Wasabi  
+  - Watercress 
+  - Wattleseed  
+  - Wild betel  
+  - Wild thyme 
+  - Willow herb 
+  - Winter savory 
+  - Wintergreen 
+  - Wood avens, herb bennet
+  - Woodruff 
+  - Wormwood, absinthe
+  - Yerba buena
+  - Za'atar 
+  - Zedoary 
+Cereal Grains:
+  - Rice:
+    - Basmati Rice 
+    - Black Rice
+    - Broken Rice 
+    - Brown Rice
+    - Jasmine Rice
+    - Organic Rice 
+    - White Corn
+    - Wild rice
+    - Yellow Corn 
+  - Amaranth
+  - Bamboo shoots
+  - Barley 
+  - Barleygrass
+  - Breadnut   
+  - Buckwheat 
+  - Bulgur wheat
+  - Cattail
+  - Chia
+  - Cornbread
+  - Cornmeal
+  - Couscous 
+  - Crackers
+  - Durum wheat
+  - Farro, Emmer
+  - Flax
+  - Flaxseed 
+  - Fonio 
+  - Grano
+  - Grits
+  - Kamut grain
+  - Kañiwa
+  - Lemongrass, citronella
+  - Millet
+  - Molasses
+  - Muesli, Breakfast cereal, Granola
+  - Noodles 
+  - Oatmeal
+  - Oats 
+  - Other Grain
+  - Palmer's grass
+  - Pearl Millet
+  - Pitseed Goosefoot 
+  - Popcorn
+  - Quinoa 
+  - Rapadura
+  - Rye
+  - Semolina wheat
+  - Sorghum
+  - Spelt 
+  - Teff
+  - Triticale
+  - Wattleseed, Acacia seed
+  - Wheat 
+  - Wheat Berries
+  - Wheatgrass 
+  - Flour:
+    - White flour
+    - Brown flour
+    - Rye flour
+    - Spelt flour
+    - Barley flour
+Pasta: 
+  - Minute pasta
+  - Long Noodles
+  - Ribbon-Cut Noodles
+  - Decorative Shaped Pasta
+  - Stuffed pasta
+Drinks:
+  - Juice:
+    - Apple juice
+    - Orange juice
+    - Pear juice
+    - Grape juice
+  - Soft drinks: 
+    - Ginger Beer
+    - Lemonade
+  - Alcoholic drinks:
+    - Beer:
+      - Ale:
+        - Barleywine
+        - Bitter ale
+        - Mild ale
+        - Pale ale
+        - Porter:
+          - Stout
+        - Cask ale
+        - Stock ale
+      - Fruit Beer
+      - Lager beer:
+        - Bock
+        - Dry beer
+        - Maerzen/Oktoberfest Beer
+        - Pilsener
+        - Schwarzbier
+      - Sahti
+      - Small beer
+      - Wheat beer:
+        - Witbier White Beer
+        - Hefeweizen
+    - Cauim
+    - Chicha
+    - Cider   
+    - Mead
+    - Palm wine
+    - Perry  
+    - Sake    
+    - Wine:
+      - Fruit wine
+      - Table wine
+      - Sangria
+      - Sparkling wine:
+        - Champagne
+      - Fortified wine:
+        - Port
+        - Madeira
+        - Marsala
+        - Sherry
+        - Vermouth
+        - Vinsanto
+    - Spirits:
+      - Absinthe
+      - Akvavit
+      - Arak
+      - Arrack
+      - Baijiu
+      - Cachaça
+      - Gin:
+        - Damson gin
+        - Sloe gin
+      - Gulu
+      - Horilka
+      - Kaoliang
+      - Maotai
+      - Mezcal
+      - Neutral grain spirit
+      - Ogogoro
+      - Ouzo
+      - Palinka
+      - Pisco 
+      - Rum
+      - Soju
+      - Tequila
+      - Vodka
+      - Metaxa
+      - Whisky:
+        - Bourbon
+        - Scotch
+        - Tennessee whiskey
+      - Brandy:
+        - Armagnac
+        - Cognac
+        - Fruit brandy, Eau-de-vie, Schnapps
+        - Kirsch
+  - Tea:
+    - Green
+    - Black
+    - Herbal
+  - Coffee 
+Convenience foods, processed foods:
+  - Baby Food  
+  - Crisps
+  - Energy bars
+  - Ready meals
+  - Soup 
+Sweeteners, confection:
+  - Agave nectar 
+  - Barley malt syrup 
+  - Birch syrup
+  - Brown sugar
+  - Cane sugar 
+  - Chocolate
+  - Honey 
+  - Maple syrup 
+  - Marshmallows
+  - Molasses
+  - Palm sugar 
+  - Shredded coconut
+  - Sorghum Syrup
+  - Sugar (beet)
+  - Sugar (cane)  
+  - Sugar substitutes
+  - Syrup
+  - White sugar
+Baked goods:
+  - Biscuits, cookies
+  - Breads:
+    - Flatbreads
+    - Sourdough bread
+    - Rye bread
+    - Spelt bread
+    - Granary bread
+  - Cakes:
+    - Cake mixes
+  - Pastry
+  - Pies
+  - Twice-baked goods:
+    - Biscotti
+    - Rusk
+    - Zweiback
+Processed fats and oils:
+  - Refined oils
+  - Cooking spray
+  - Margarine
+  - Salad dressing
+  - BBQ sauce
+  - Mustard
+  - Ketchup
+  - Mayonnaise
+  - Peanut butter
+Preserves:
+  - Chutneys, Pickles
+  - Jam, Marmaladae
+  - Pesto

@@ -26,7 +26,7 @@ class Search():
             query_string['status'] = {"$regex": keyword_like, '$options': '-i'}
 
         if(self.lon != "" and self.lat != ""):
-            query_string['location'] = {"$near":{"$geometry":{"type":"Point", "coordinates":[float(self.lon), float(self.lat)]}, "$maxDistance":500000}}
+            query_string['location'] = {"$near":{"$geometry":{"type":"Point", "coordinates":[float(self.lon), float(self.lat)]}, "$maxDistance":160934}}
 
         tweet_search_object = TweetFeed()
         search_results = tweet_search_object.search_tweets(query_string)
