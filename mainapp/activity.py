@@ -46,13 +46,10 @@ from django.views.decorators.csrf import csrf_exempt
 @csrf_exempt
 def home(request):
     keyword = request.GET.get('q',"")
-    lon = request.GET.get('lon',"")
-    lat = request.GET.get('lat',"")
+    my_lon = float(request.GET.get('lon',85.33333330000005))
+    my_lat = float(request.GET.get('lat',27.7))
     location = request.GET.get('location',"")
 
-
-    my_lon = 22
-    my_lat = 22
 
     tweet_doc = {
         'tweet_id':543654,
@@ -93,7 +90,7 @@ def home(request):
 
     parameters = {}
     parameters['results'] = results
-    parameters['search'] = {'query':keyword, 'place':location, 'lon':lon, 'lat':lat}
+    parameters['search'] = {'query':keyword, 'place':location, 'lon':my_lon, 'lat':my_lat}
 
 
 
