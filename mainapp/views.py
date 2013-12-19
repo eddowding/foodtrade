@@ -33,6 +33,9 @@ def register(request):
     parameters['user'] = request.user
     return render_to_response('register.html', parameters)
 
+def multiselect(request):
+    return render_to_response('multi-select.html')
+
 def tweets(request):
     parameters = {}
     if not request.user.is_authenticated():
