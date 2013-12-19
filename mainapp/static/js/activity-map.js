@@ -26,3 +26,8 @@ var map = L.map('map').setView([map_lat,map_lon], 12);
 		}
 
 
+L.circle([map_lat,map_lon], 500, {
+			color: 'red',
+			fillColor: '#f03',
+			fillOpacity: 0.5
+		}).addTo(map).bindPopup("I am a circle.");
