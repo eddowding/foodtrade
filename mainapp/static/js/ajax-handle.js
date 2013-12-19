@@ -10,9 +10,9 @@ function ajax_request(s_handler, c_handler, input_data)
 });
 }
 
-function UpdateStatus()
+function UpdateStatus(id_name)
 {
-	message = $('#tweetMessage').val();
+	message = $('#'+id_name).val();
 	if(message=="")
 	{
 		alert("You can't post empty status.");

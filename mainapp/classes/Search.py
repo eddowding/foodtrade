@@ -1,6 +1,9 @@
 import re
 
 from TweetFeed import TweetFeed
+
+
+
 class Search():
 
     """docstring for UserConnections"""
@@ -27,26 +30,4 @@ class Search():
 
         tweet_search_object = TweetFeed()
         search_results = tweet_search_object.search_tweets(query_string)
-        print search_results
-
-
-
-tweet_handler = TweetFeed()
-tweet_doc = {
-    'tweet_id':543654,
-    'parent_tweet_id':0,
-    'status':"I want to #sell 5 kg of #tomatoes",    
-    'location':{"type": "Point", "coordinates": [102.0, 0.5]},
-    'user':{
-    'name': "David Villa",
-    'Description':"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod"
-    }
-}
-from pymongo import Connection
-c = Connection()
-c.drop_database('foodtrade')
-tweet_handler.insert_tweet(tweet_doc)
-
-search_handle = Search("#to", 102.0, 4.5, "nepal")
-search_handle.search()
-
+        return search_results

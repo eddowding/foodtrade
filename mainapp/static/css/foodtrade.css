@@ -1,25 +1,100 @@
+@font-face {
+    font-family: 'tradegothicbold';
+    src: url('http://foodtrade.com/wp-content/themes/Terso-Child/font_trade/trade_gothic_bold_condensed_no._20-webfont.eot');
+    src: url('http://foodtrade.com/wp-content/themes/Terso-Child/font_trade/trade_gothic_bold_condensed_no._20-webfont.eot?#iefix') format('embedded-opentype'),
+         url('http://foodtrade.com/wp-content/themes/Terso-Child/font_trade/trade_gothic_bold_condensed_no._20-webfont.woff') format('woff'),
+         url('http://foodtrade.com/wp-content/themes/Terso-Child/font_trade/trade_gothic_bold_condensed_no._20-webfont.ttf') format('truetype'),
+         url('http://foodtrade.com/wp-content/themes/Terso-Child/font_trade/trade_gothic_bold_condensed_no._20-webfont.svg#tradegothicbold') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+h1 {
+	font-family: "tradegothicbold"!important;
+	text-transform: uppercase;
+}
+
+h2 {
+	font-family: "tradegothicbold"!important;
+	text-transform: uppercase;
+}
+
+.navbar-brand {
+	padding: 0 15px;
+	margin-top: 8px;
+	padding-left: 32px;
+	padding-right: 50px;
+}
+
+.tags a {
+	font-size: 12px;
+	padding-top: 1px; 
+	color: #999;
+	margin-right: 7px;
+}
+
+
+.tags-biztype a {
+	font-size: 11px;
+	padding: 2px 3px;
+	border-radius: 3px; 
+	color: #999;
+	margin: 0 !important;
+	border: 1px solid #ccc;
+	background: #fff;
+}
+
+.chat .tags-biztype a {
+	top: -2px;
+	position: relative;
+}
+
+.tags a {
+	font-size: 12px;
+	padding-top: 1px; 
+	color: #999;
+	margin-right: 7px;
+}
+
 .ftstrip {
-position: relative;
-height: 0.5em;
-background-color: #e75239;
-background: -webkit-gradient(linear, 0% 50%, 100% 50%, color-stop(0%, #e75239), color-stop(12.5%, #e75239), color-stop(12.5%, #ff961c), color-stop(25%, #ff961c), color-stop(25%, #ffcc27), color-stop(37.5%, #ffcc27), color-stop(37.5%, #fce62f), color-stop(50%, #fce62f), color-stop(50%, #cde35b), color-stop(62.5%, #cde35b), color-stop(62.5%, #82cc33), color-stop(75%, #82cc33), color-stop(75%, #ff961c), color-st../Terso/page-find.phpop(87.5%, #ff961c), color-stop(87.5%, #e75239), color-stop(100%, #e75239));
-background: -webkit-linear-gradient(left, #e75239 0%,#e75239 12.5%,#ff961c 12.5%,#ff961c 25%,#ffcc27 25%,#ffcc27 37.5%,#fce62f 37.5%,#fce62f 50%,#cde35b 50%,#cde35b 62.5%,#82cc33 62.5%,#82cc33 75%,#ff961c 75%,#ff961c 87.5%,#e75239 87.5%,#e75239 100%);
-background: -moz-linear-gradient(left, #e75239 0%,#e75239 12.5%,#ff961c 12.5%,#ff961c 25%,#ffcc27 25%,#ffcc27 37.5%,#fce62f 37.5%,#fce62f 50%,#cde35b 50%,#cde35b 62.5%,#82cc33 62.5%,#82cc33 75%,#ff961c 75%,#ff961c 87.5%,#e75239 87.5%,#e75239 100%);
-background: -o-linear-gradient(left, #e75239 0%,#e75239 12.5%,#ff961c 12.5%,#ff961c 25%,#ffcc27 25%,#ffcc27 37.5%,#fce62f 37.5%,#fce62f 50%,#cde35b 50%,#cde35b 62.5%,#82cc33 62.5%,#82cc33 75%,#ff961c 75%,#ff961c 87.5%,#e75239 87.5%,#e75239 100%);
--pie-background: linear-gradient(left, #e75239 0%,#e75239 12.5%,#ff961c 12.5%,#ff961c 25%,#ffcc27 25%,#ffcc27 37.5%,#fce62f 37.5%,#fce62f 50%,#cde35b 50%,#cde35b 62.5%,#82cc33 62.5%,#82cc33 75%,#ff961c 75%,#ff961c 87.5%,#e75239 87.5%,#e75239 100%);
-background: linear-gradient(left, #e75239 0%,#e75239 12.5%,#ff961c 12.5%,#ff961c 25%,#ffcc27 25%,#ffcc27 37.5%,#fce62f 37.5%,#fce62f 50%,#cde35b 50%,#cde35b 62.5%,#82cc33 62.5%,#82cc33 75%,#ff961c 75%,#ff961c 87.5%,#e75239 87.5%,#e75239 100%);
-background-position: 50% 0;
--webkit-box-shadow: 0 1px 2px rgba(0,0,0,0.25) inset;
--moz-box-shadow: 0 1px 2px rgba(0,0,0,0.25) inset;
-box-shadow: 0 1px 2px rgba(0,0,0,0.25) inset;
+	position: relative;
+	height: 0.5em;
+	background-color: #e75239;
+	background: -webkit-gradient(linear, 0% 50%, 100% 50%, color-stop(0%, #e75239), color-stop(12.5%, #e75239), color-stop(12.5%, #ff961c), color-stop(25%, #ff961c), color-stop(25%, #ffcc27), color-stop(37.5%, #ffcc27), color-stop(37.5%, #fce62f), color-stop(50%, #fce62f), color-stop(50%, #cde35b), color-stop(62.5%, #cde35b), color-stop(62.5%, #82cc33), color-stop(75%, #82cc33), color-stop(75%, #ff961c), color-st../Terso/page-find.phpop(87.5%, #ff961c), color-stop(87.5%, #e75239), color-stop(100%, #e75239));
+	background: -webkit-linear-gradient(left, #e75239 0%,#e75239 12.5%,#ff961c 12.5%,#ff961c 25%,#ffcc27 25%,#ffcc27 37.5%,#fce62f 37.5%,#fce62f 50%,#cde35b 50%,#cde35b 62.5%,#82cc33 62.5%,#82cc33 75%,#ff961c 75%,#ff961c 87.5%,#e75239 87.5%,#e75239 100%);
+	background: -moz-linear-gradient(left, #e75239 0%,#e75239 12.5%,#ff961c 12.5%,#ff961c 25%,#ffcc27 25%,#ffcc27 37.5%,#fce62f 37.5%,#fce62f 50%,#cde35b 50%,#cde35b 62.5%,#82cc33 62.5%,#82cc33 75%,#ff961c 75%,#ff961c 87.5%,#e75239 87.5%,#e75239 100%);
+	background: -o-linear-gradient(left, #e75239 0%,#e75239 12.5%,#ff961c 12.5%,#ff961c 25%,#ffcc27 25%,#ffcc27 37.5%,#fce62f 37.5%,#fce62f 50%,#cde35b 50%,#cde35b 62.5%,#82cc33 62.5%,#82cc33 75%,#ff961c 75%,#ff961c 87.5%,#e75239 87.5%,#e75239 100%);
+	-pie-background: linear-gradient(left, #e75239 0%,#e75239 12.5%,#ff961c 12.5%,#ff961c 25%,#ffcc27 25%,#ffcc27 37.5%,#fce62f 37.5%,#fce62f 50%,#cde35b 50%,#cde35b 62.5%,#82cc33 62.5%,#82cc33 75%,#ff961c 75%,#ff961c 87.5%,#e75239 87.5%,#e75239 100%);
+	background: linear-gradient(left, #e75239 0%,#e75239 12.5%,#ff961c 12.5%,#ff961c 25%,#ffcc27 25%,#ffcc27 37.5%,#fce62f 37.5%,#fce62f 50%,#cde35b 50%,#cde35b 62.5%,#82cc33 62.5%,#82cc33 75%,#ff961c 75%,#ff961c 87.5%,#e75239 87.5%,#e75239 100%);
+	background-position: 50% 0;
+	-webkit-box-shadow: 0 1px 2px rgba(0,0,0,0.25) inset;
+	-moz-box-shadow: 0 1px 2px rgba(0,0,0,0.25) inset;
+	box-shadow: 0 1px 2px rgba(0,0,0,0.25) inset;
 }
 
 .ftstrip-mini {
 	height: 1px
 }
 
+.help-block {
+	font-style: italic;;
+}
+
+.nav-tabs  {
+	background: #fff;
+	margin:40px 0 20px 0;
+}
+
+html,body
+{
+  height: 100%;
+}
 .sidebar {
 	border-right: 1px solid #ccc;
+	background-image: url(http://www.stripegenerator.com/generators/generate_stripes.php?fore=e1e1e1&h=30&w=1&p=3&back1=ffffff&back2=ff0000&gt=0&d=0&shadow=0&);
+	min-height: 2000px;
+	padding-top: 30px;
+	margin-top: -10px;
 }
 
 .sidebar .alert {
@@ -36,9 +111,8 @@ box-shadow: 0 1px 2px rgba(0,0,0,0.25) inset;
 
 a.btn {color: #fff !important;}
 
-h4 a,
-.meta a {
-	color: #A30012 !Important;
+.meta a:hover { 
+	color: #444;
 }
 
 article {
@@ -70,26 +144,155 @@ article .content h4 {
 
 .meta {
 	margin-top: 10px;
+} 
+
+.danger {
+	color: red;
 }
 
-/*  replace this */
+ 
 
-.foodtrade-sidebar .foodtrade-tag-list {
-list-style: none;
-font-size: 12px;
-font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
-font-size: 14px;
-margin: 15px 0 15px 0;
-padding-right: 10px;
+/********************************/
+/**  SINGLE VIEW               **/
+/********************************/
+
+#single h1,
+#single h1 a {
+	margin-top:20px;
+	color: #444; 
+}
+
+#header_box {
+	margin-top: 20px;
+	border: 1px solid #ccc;
+	 
+} 
+
+#header_box div[class*='col-']  { 
+	min-height: 300px;
+}
+
+#header_box #avatar {
+	padding-top: 20px; 
+}
+
+#contact_info {
+	border-left: 1px solid #ccc;
+	background-image: url(http://www.stripegenerator.com/generators/generate_stripes.php?fore=dddddd&h=30&w=1&p=9&back1=ffffff&back2=ff0000&gt=0&d=0&shadow=0&);
+	padding: 20px;
+}
+
+h2 {
+	font-size: 20px;
+	color: #444;
+}
+
+
+/********************************/
+/**  ROLES                     **/
+/********************************/
+
+.card {
+	width: 48%;
+	float: left;
+	margin-right: 2%;
+	border: 1px solid #ccc;
+	margin-top: 15px;
+	min-height: 52px;
+}
+
+.card-business { 
+}
+
+.card-organisation { 
+}
+
+.card-individual { 
+}
+
+.card .content {
+	padding: 5px;
+}
+
+.card h5 {
+	margin: 0 0 2px 0;
+	font-size: 13px;
+	font-weight: bold;
+}
+
+.card h5 a {
+	color: #444;
 }
  
-.foodtrade-toolbar.fixed{position:fixed;z-index:1050;padding-top:10px;width:940px;top:0}
-.foodtrade-toolbar-body{border-bottom:1px solid #ccc;padding-bottom:18px;padding-top:10px;}
-.foodtrade-toolbar-body .foodtrade-search{-webkit-border-radius:4px;border-radius:4px;width:50%}
-.foodtrade-toolbar-body .foodtrade-sort-title{float:right;padding-right:8px;padding-top:9px}
-.foodtrade-toolbar-body .foodtrade-sort{float:right;width:15%;min-width:90px;height:38px}
-.foodtrade-toolbar-body .foodtrade-partners{width:400px;float:right;text-align:right;font-size:14px;margin-top:16px;margin-right:10px} 
-.foodtrade-sidebar .foodtrade-tag-list{list-style:none;font-size:12px;font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;font-size:14px;margin:15px 0 15px 0; padding:0;}
+.card .text {
+	margin-left: 55px;
+}
+
+.card p {
+	margin: 0;
+}
+
+.card p.small {
+	font-size: 12px;
+	color: rgb(153,153,153);
+	line-height: 15px;
+}
+
+.card .numbers {
+	background: #eee;
+	padding: 2px 5px;
+}
+
+.card .numbers a {
+	margin-left: 8px;
+	color: #999;
+}
+
+.card hr {
+	margin: 5px 0;
+}
+
+
+/********************************/
+/**  ACTIVITY                  **/
+/********************************/
+
+#activity { 
+}
+
+#activity .chat li {
+	border: 0
+}
+
+#activity .chat .dropdown-menu li {
+	margin: 0;
+	padding: 0;
+}
+ 
+
+#activity .well-sm {
+	margin-top: 5px !Important;
+	padding: 3px;
+	border-radius: 0px; 
+}
+ 
+#activity_single hr {
+	margin: 5px 0;
+}
+
+#activity_single h1 {
+	font-size: 25px; 
+margin-top: 10px;
+}
+
+
+
+/********************************/
+/**  SIDEBAR                   **/
+/********************************/
+
+   
+.foodtrade-sidebar .foodtrade-tag-list{list-style:none;  margin:15px 0 15px 0; padding:0;}
 .foodtrade-tag-text{padding-left:18px;padding-right:26px}
 .foodtrade-tag-checkbox-column{float:left;}
 .foodtrade-tag-checkbox-column .foodtrade-tag-checkbox{margin-top:-1px}
@@ -98,153 +301,170 @@ padding-right: 10px;
 .foodtrade-tag-count{position:absolute;top:0;right:0}
 .foodtrade-tag-showmore{position:relative;color:#0367b0;cursor:pointer;font-size:11px;padding-left:22px;}
 .foodtrade-tag-showmore .foodtrade-tag-count{position:absolute;top:0;right:0}
-.foodtrade-sidebar .select2-container{width:200px}
-.foodtrade-load-more-box{border-width:0 0 1px 1px;border-color:#ccc;border-style:solid;padding:10px;}
-.foodtrade-load-more-box:hover{cursor:pointer;border-right:1px solid #ccc;background-color:rgba(0,0,0,0.05)}
-.foodtrade-listings-statesystems-container h2{margin:10px}
-.foodtrade-listings-statesystems-container .foodtrade-listings-statesystems{border-top:1px solid #ccc}
-.foodtrade-listings,.foodtrade-listings-statesystems{border-left:1px solid #ccc;}
-.foodtrade-listings .foodtrade-course-listing-box,.foodtrade-listings-statesystems .foodtrade-course-listing-box{border-bottom:1px solid #ccc;padding:10px;position:relative;}
-.foodtrade-listings .foodtrade-course-listing-box:hover,.foodtrade-listings-statesystems .foodtrade-course-listing-box:hover{background-color:rgba(0,0,0,0.05);border-right:1px solid #ccc;margin-right:-1px}
-.foodtrade-listings .foodtrade-course-listing-box .foodtrade-listing-thumbnail,.foodtrade-listings-statesystems .foodtrade-course-listing-box .foodtrade-listing-thumbnail{float:left;max-width:120px;margin-right:12px;-webkit-box-shadow:0 0 2px 0 rgba(0,0,0,0.45);box-shadow:0 0 2px 0 rgba(0,0,0,0.45)}
-.foodtrade-listings .foodtrade-course-listing-box .foodtrade-listing-text,.foodtrade-listings-statesystems .foodtrade-course-listing-box .foodtrade-listing-text{margin:-12px 0 -6px 20px;}
-.foodtrade-listings .foodtrade-course-listing-box .foodtrade-listing-text .foodtrade-listing-primary,.foodtrade-listings-statesystems .foodtrade-course-listing-box .foodtrade-listing-text .foodtrade-listing-primary{margin:-3px 0 0 0;}
-.foodtrade-listings .foodtrade-course-listing-box .foodtrade-listing-text .foodtrade-listing-primary .foodtrade-listing-university,.foodtrade-listings-statesystems .foodtrade-course-listing-box .foodtrade-listing-text .foodtrade-listing-primary .foodtrade-listing-university{font-family:"sofiapro-light",Arial,sans-serif;font-size:14px;display:block;margin-bottom:3px;margin-top:10.5px;white-space:nowrap;overflow:hidden;-o-text-overflow:ellipsis;text-overflow:ellipsis}
-.foodtrade-listings .foodtrade-course-listing-box .foodtrade-listing-text .foodtrade-listing-primary .foodtrade-listing-coursename,.foodtrade-listings-statesystems .foodtrade-course-listing-box .foodtrade-listing-text .foodtrade-listing-primary .foodtrade-listing-coursename{font-family:"sofiapro-light",Arial,sans-serif;font-size:16px;display:block;line-height:1.3em;margin:3px 0 3px 0;color:#0367b0;letter-spacing:0;}
-.foodtrade-listings .foodtrade-course-listing-box .foodtrade-listing-text .foodtrade-listing-primary .foodtrade-listing-coursename .foodtrade-listing-course-link-box,.foodtrade-listings-statesystems .foodtrade-course-listing-box .foodtrade-listing-text .foodtrade-listing-primary .foodtrade-listing-coursename .foodtrade-listing-course-link-box{position:absolute;top:0;left:0;width:100%;height:100%;z-index:1}
-.foodtrade-listings .foodtrade-course-listing-box .foodtrade-listing-text .foodtrade-listing-primary .foodtrade-listing-instructor,.foodtrade-listings-statesystems .foodtrade-course-listing-box .foodtrade-listing-text .foodtrade-listing-primary .foodtrade-listing-instructor{font-family:"sofiapro-light",Arial,sans-serif;font-size:14px;display:block;margin:0 0;color:#555}
-.foodtrade-listings .foodtrade-course-listing-box .foodtrade-listing-secondary,.foodtrade-listings-statesystems .foodtrade-course-listing-box .foodtrade-listing-secondary{float:right;min-width:105px;max-width:100%;}
-.foodtrade-listings .foodtrade-course-listing-box .foodtrade-listing-secondary .foodtrade-listing-secondary-item,.foodtrade-listings-statesystems .foodtrade-course-listing-box .foodtrade-listing-secondary .foodtrade-listing-secondary-item{font-family:"sofiapro-light",Arial,sans-serif;display:block;font-size:14px;text-align:right;position:relative;z-index:2}
-.foodtrade-listings .foodtrade-course-listing-box .foodtrade-listing-secondary .foodtrade-listing-secondary-inactive,.foodtrade-listings-statesystems .foodtrade-course-listing-box .foodtrade-listing-secondary .foodtrade-listing-secondary-inactive{color:#ccc}
-.foodtrade-listings .foodtrade-course-listing-box .foodtrade-listing-secondary .foodtrade-list-secondary-sigtrack,.foodtrade-listings-statesystems .foodtrade-course-listing-box .foodtrade-listing-secondary .foodtrade-list-secondary-sigtrack,.foodtrade-listings .foodtrade-course-listing-box .foodtrade-listing-secondary .foodtrade-listing-secondary-inline-enroll-button,.foodtrade-listings-statesystems .foodtrade-course-listing-box .foodtrade-listing-secondary .foodtrade-listing-secondary-inline-enroll-button{padding:1px 4px;color:#fff;margin-left:-10px;-webkit-border-radius:4px;border-radius:4px;cursor:pointer;text-align:center}
-.foodtrade-listings .foodtrade-course-listing-box .foodtrade-listing-secondary .foodtrade-listing-secondary-sigtrack-open,.foodtrade-listings-statesystems .foodtrade-course-listing-box .foodtrade-listing-secondary .foodtrade-listing-secondary-sigtrack-open{background-color:#a9a9a9;}
-.foodtrade-listings .foodtrade-course-listing-box .foodtrade-listing-secondary .foodtrade-listing-secondary-sigtrack-open:hover,.foodtrade-listings-statesystems .foodtrade-course-listing-box .foodtrade-listing-secondary .foodtrade-listing-secondary-sigtrack-open:hover{background-color:#ddc000}
-.foodtrade-listings .foodtrade-course-listing-box .foodtrade-listing-secondary .foodtrade-listing-secondary-sigtrack-not-open,.foodtrade-listings-statesystems .foodtrade-course-listing-box .foodtrade-listing-secondary .foodtrade-listing-secondary-sigtrack-not-open{background-color:#cbcbcb;}
-.foodtrade-listings .foodtrade-course-listing-box .foodtrade-listing-secondary .foodtrade-listing-secondary-sigtrack-not-open:hover,.foodtrade-listings-statesystems .foodtrade-course-listing-box .foodtrade-listing-secondary .foodtrade-listing-secondary-sigtrack-not-open:hover{color:#f7f7f7;background-color:#a9a9a9}
-.foodtrade-listings .foodtrade-course-listing-box .foodtrade-listing-secondary .foodtrade-listing-secondary-inline-enroll-button,.foodtrade-listings-statesystems .foodtrade-course-listing-box .foodtrade-listing-secondary .foodtrade-listing-secondary-inline-enroll-button{text-align:center;margin-top:2px;margin-bottom:2px;border-width:1px;border-style:solid;overflow:hidden}
-.foodtrade-listing-secondary-link{position:relative;z-index:2;color:#0367b0;}
-.foodtrade-listing-secondary-link .foodtrade-listing-secondary-link-target{position:absolute;top:-30%;left:-10%;height:160%;width:120%}
-.foodtrade-loading-box,.foodtrade-noresults-box,.foodtrade-show-more-results-box,.foodtrade-errox-box{margin-top:30px;margin-bottom:30px;text-align:center;font-size:20px;text-color:#808080}
-.foodtrade-sigtrack-modal .modal-header,.foodtrade-sigtrack-modal-disabled .modal-header{position:relative;height:70px;background-image:url("https://d2wvvaown1ul17.cloudfront.net/site-static/pages/home/account/debut_light.png");background-repeat:repeat;border-bottom:1px solid #ccc;padding:0;-webkit-border-radius:6px 6px 0 0;border-radius:6px 6px 0 0;}
-.foodtrade-sigtrack-modal .modal-header img,.foodtrade-sigtrack-modal-disabled .modal-header img{width:42px;position:absolute;left:20px}
-.foodtrade-sigtrack-modal .modal-header h2,.foodtrade-sigtrack-modal-disabled .modal-header h2{margin-top:0;margin-left:80px;padding-top:20px}
-.foodtrade-sigtrack-modal .modal-header .coursera-signature-modal-ribbon,.foodtrade-sigtrack-modal-disabled .modal-header .coursera-signature-modal-ribbon{top:-2px}
-.foodtrade-sigtrack-modal .modal-body img,.foodtrade-sigtrack-modal-disabled .modal-body img{float:left;margin-right:10px}
-.foodtrade-partners-link{color:#838383;}
-.foodtrade-partners-link.active{color:#2c2c2c}
-.coursera-dashboard-section-header{margin:0;padding:15px 0 10px 0;}
-.coursera-dashboard-section-header .coursera-dashboard-section-header-title{text-transform:uppercase;font-family:"sofiapro-bold",Arial,sans-serif;text-align:left;font-size:17px}
-.coursera-dashboard-section-header .coursera-dashboard-section-header-link{text-align:right;font-family:"sofiapro-light",Arial,sans-serif;float:right}
-.form-errors{color:#bb3636;margin-left:10px;font-size:12px}
-.help-inline{font-family:"enriqueta",Garamond,serif}
-.coursera-settings input,.coursera-settings button{margin-right:10px}
-.coursera-profile-button-unenroll{margin-top:30px}
-.coursera-faq-answer{margin-left:25px}
-.coursera-faq-question{margin-top:25px;margin-left:15px}
-div#coursera-course-listing-options{background:#fff;border:solid #d9d9d9 1px;}
-div#coursera-course-listing-options a{padding:10px;display:block;color:#000;}
-div#coursera-course-listing-options ahover{background:#d9d9d9}
-#coursera-promo-cs-job{float:right;margin-bottom:0;font-size:12px;padding-top:5px;padding-bottom:5px;font-family:"sofiapro-light",Arial,sans-serif}
-.coursera-records-course-listing-box .coursera-course-listing-meta{position:relative;font-size:16px;}
-.coursera-records-course-listing-box .coursera-course-listing-meta .coursera-signature-track-listing-link{font-size:12px}
-.coursera-records-course-listing-box .coursera-course-listing-meta .btn-primary{margin-top:6px}
-.coursera-records-course-listing-box .coursera-course-listing-main{width:690px}
-.coursera-records-modal-grading .modal-body p{white-space:pre-line}
-.coursera-front-main-section{width:640px}
-.coursera-front-sidebar-section{margin-left:0;width:298px}
-.coursera-dashboard-enrollments-loading{display:block;margin-bottom:24px}
-.coursera-front-courselist-container{border-right:1px solid #ccc;border-bottom:1px solid #ccc}
-.coursera-dashboard-course-listing-box{border-top:1px solid #ccc;padding:30px 20px 30px 0;}
-.coursera-dashboard-course-listing-box .coursera-dashboard-course-listing-box-icon-container{float:left;width:35%;margin-right:2.5%}
-.coursera-dashboard-course-listing-box .coursera-dashboard-course-listing-box-main{width:62.5%;float:left;}
-.coursera-dashboard-course-listing-box .coursera-dashboard-course-listing-box-main .coursera-dashboard-course-listing-box-university{font-size:14px;font-family:"sofiapro-light",Arial,sans-serif;}
-.coursera-dashboard-course-listing-box .coursera-dashboard-course-listing-box-main .coursera-dashboard-course-listing-box-university a{margin-right:10px}
-.coursera-dashboard-course-listing-box .coursera-dashboard-course-listing-box-main .coursera-dashboard-course-listing-box-name{font-family:"sofiapro-light",Arial,sans-serif;font-size:18px}
-.coursera-dashboard-course-listing-box .coursera-dashboard-course-listing-box-main .coursera-dashboard-course-listing-box-sigtrack-flag{font-size:14px;font-family:"sofiapro-light",Arial,sans-serif;color:#999;}
-.coursera-dashboard-course-listing-box .coursera-dashboard-course-listing-box-main .coursera-dashboard-course-listing-box-sigtrack-flag >span{position:relative;top:2px;left:6px}
-.coursera-dashboard-course-listing-box .coursera-dashboard-course-listing-box-main .coursera-dashboard-course-listing-box-ended-display{margin-top:2px;font-size:14px;font-family:"sofiapro-light",Arial,sans-serif;color:#999}
-.coursera-dashboard-course-listing-box .coursera-dashboard-course-listing-box-main .coursera-dashboard-course-listing-box-links{font-family:"sofiapro-light",Arial,sans-serif;font-size:14px;padding:4px 0}
-.coursera-dashboard-course-listing-box .coursera-dashboard-course-listing-box-main .coursera-dashboard-course-listing-box-go-button{float:right;font-size:13px;padding:4px 0;width:130px}
-.coursera-dashboard-course-listing-box .coursera-dashboard-course-listing-box-main .coursera-dashboard-course-listing-box-progress{font-family:"sofiapro-light",Arial,sans-serif;height:28px;position:relative;margin-top:8px;}
-.coursera-dashboard-course-listing-box .coursera-dashboard-course-listing-box-main .coursera-dashboard-course-listing-box-progress .progress-label{position:absolute}
-.coursera-dashboard-course-listing-box .coursera-dashboard-course-listing-box-main .coursera-dashboard-course-listing-box-progress .progress-line{background-color:#a4a4a4;-webkit-box-shadow:inset 0 1px 0 #ccc;box-shadow:inset 0 1px 0 #ccc;position:relative;top:20px;width:100%;height:8px;-webkit-border-radius:4px;border-radius:4px}
-.coursera-dashboard-course-listing-box .coursera-dashboard-course-listing-box-main .coursera-dashboard-course-listing-box-progress .progress-marker{position:absolute;top:18px;height:12px;width:2px}
-.coursera-dashboard-course-listing-box .coursera-dashboard-course-listing-box-main .coursera-dashboard-course-listing-box-progress .progress-bar{position:absolute;top:20px;height:8px;-webkit-border-radius:4px;border-radius:4px}
-.coursera-dashboard-course-listing-box .coursera-dashboard-course-listing-box-main .coursera-dashboard-course-listing-box-progress .progress-bar{background-color:#30302f;}
-.coursera-dashboard-course-listing-box .coursera-dashboard-course-listing-box-main .coursera-dashboard-course-listing-box-bottom{margin-top:20px}
-.coursera-dashboard-help-link{padding-top:6px;font-size:14px;color:#999}
-.coursera-dashboard-subscriptions-section .coursera-course-card{margin-right:0;width:50%}
-#coursera-profile-editor-form .control-label,#coursera-placement-form .control-label{font-family:"sofiapro-light",Arial,sans-serif}
-#coursera-profile-editor-form .controls input,#coursera-placement-form .controls input,#coursera-profile-editor-form .controls p,#coursera-placement-form .controls p,#coursera-profile-editor-form .controls span,#coursera-placement-form .controls span{font-family:"sofiapro-light",Arial,sans-serif}
-#coursera-profile-editor-form .controls .help-inline,#coursera-placement-form .controls .help-inline{color:#999}
-#coursera-profile-editor-form .input-prepend,#coursera-placement-form .input-prepend{margin-bottom:10px;}
-#coursera-profile-editor-form .input-prepend .add-on,#coursera-placement-form .input-prepend .add-on{height:34px;padding:5px;text-align:right;width:200px;font-size:12px;}
-#coursera-profile-editor-form .input-prepend .add-on img,#coursera-placement-form .input-prepend .add-on img{float:left;vertical-align:middle;margin-right:5px;width:24px}
-#coursera-profile-editor-form .input-prepend .small,#coursera-placement-form .input-prepend .small{width:25px}
-#coursera-profile-editor-form .input-prepend input,#coursera-placement-form .input-prepend input{height:34px;padding:5px;width:150px}
-#coursera-profile-editor-form .coursera-profile-editor-birthday select,#coursera-placement-form .coursera-profile-editor-birthday select{margin-right:10px}
-#coursera-profile-editor-form .coursera-profile-editor-privacy,#coursera-placement-form .coursera-profile-editor-privacy{font-family:"enriqueta",Garamond,serif;font-size:16px}
-#coursera-profile-editor-form .coursera-profile-editor-education-highest-level,#coursera-placement-form .coursera-profile-editor-education-highest-level{font-family:"enriqueta",Garamond,serif;font-size:16px}
-#coursera-profile-editor-form .coursera-profile-editor-website,#coursera-placement-form .coursera-profile-editor-website{margin-right:10px;opacity:1;-ms-filter:none;filter:none;}
-#coursera-profile-editor-form .coursera-profile-editor-website.faded,#coursera-placement-form .coursera-profile-editor-website.faded{opacity:.5;-ms-filter:progid:DXImageTransform.Microsoft.Alpha(Opacity=50);filter:alpha(opacity=50)}
-#coursera-profile-editor-form .coursera-profile-editor-website.url-input-focus .add-on,#coursera-placement-form .coursera-profile-editor-website.url-input-focus .add-on{width:35px}
-#coursera-profile-editor-form .coursera-profile-editor-website.url-input-focus input,#coursera-placement-form .coursera-profile-editor-website.url-input-focus input{width:315px}
-#coursera-profile-editor-form .coursera-profile-editor-website.url-input-focus span.text,#coursera-placement-form .coursera-profile-editor-website.url-input-focus span.text{display:none}
-#coursera-profile-editor-form .coursera-profile-editor-course,#coursera-placement-form .coursera-profile-editor-course{color:#676767;}
-#coursera-profile-editor-form .coursera-profile-editor-course img,#coursera-placement-form .coursera-profile-editor-course img{width:84px;height:auto;border:1px solid #ccc;margin-right:10px}
-#coursera-profile-editor-form .coursera-profile-editor-course span,#coursera-placement-form .coursera-profile-editor-course span{vertical-align:top;font-size:14px;line-height:17px;font-family:"sofiapro-light",Arial,sans-serif}
-.pac-container{font-family:"sofiapro-light",Arial,sans-serif;font-size:12px}
-.image-selector-controls .image-selector-image{width:120px;height:120px;float:left;border:1px solid #ccc}
-.image-selector-controls .image-selector-error{color:#bb3636;font-size:12px}
-.image-selector-controls .image-selector-side{margin-left:130px;max-width:260px;position:relative;margin-bottom:5px;}
-.image-selector-controls .image-selector-side .image-selector-progress{float:right;width:125px;margin-top:7px}
-.image-selector-controls .image-selector-side .image-selector-inputs{position:absolute;top:0;left:0;z-index:10;height:100%;width:100%;overflow:hidden;cursor:pointer;}
-.image-selector-controls .image-selector-side .image-selector-inputs .image-selector-input{position:absolute;top:0;right:0;z-index:10;width:100%;height:100%;font-size:50px;cursor:pointer;opacity:0;-ms-filter:progid:DXImageTransform.Microsoft.Alpha(Opacity=0);filter:alpha(opacity=0)}
-.image-selector-controls .image-selector-side .image-selector-help{color:#999;font-size:12px}
-.uploader-controls .uploader-preview{display:inline-block;font-size:12px}
-.uploader-controls .uploader-preview img{width:120px;border:1px solid #ccc;vertical-align:top}
-.uploader-controls .uploader-error{color:#bb3636;font-size:12px}
-.uploader-controls .uploader-side{max-width:220px;position:relative;margin-bottom:5px}
-.uploader-controls .uploader-side .uploader-progress{float:right;width:100px;margin-top:7px;margin-bottom:5px}
-.uploader-controls .uploader-side .uploader-help{margin-top:5px;color:#999;font-size:12px}
-.uploader-controls .uploader-side .uploader-file-input{position:absolute;top:0;left:0;z-index:10;height:100%;width:100%;overflow:hidden;cursor:pointer}
-.uploader-controls .uploader-side .uploader-file-input input[type="file"]{position:absolute;top:0;right:0;z-index:10;width:100%;height:100%;font-size:50px;cursor:pointer;opacity:0;-ms-filter:progid:DXImageTransform.Microsoft.Alpha(Opacity=0);filter:alpha(opacity=0)}
-.uploader-controls .uploader-input{padding-top:10px;clear:left}
-.coursera-profile-section{clear:left;margin-top:20px;padding-top:10px;border-top:1px solid #ccc;}
-.coursera-profile-section h3{margin-bottom:15px}
-.coursera-profile-basics{padding-bottom:10px;}
-.coursera-profile-basics .coursera-profile-photo{width:122px;height:122px;float:left;margin-right:20px;margin-bottom:20px;border:1px solid #ccc}
-.coursera-profile-basics .coursera-profile-top{width:480px;height:122px;float:left;position:relative;}
-.coursera-profile-basics .coursera-profile-top > div{position:absolute;bottom:0}
-.coursera-profile-basics .coursera-profile-name{margin-bottom:15px}
-.coursera-profile-basics .coursera-profile-tagline,.coursera-profile-basics .coursera-profile-location{font-family:"sofiapro-light",Arial,sans-serif;font-size:13px;color:#676767;margin-right:15px;}
-.coursera-profile-basics .coursera-profile-tagline img,.coursera-profile-basics .coursera-profile-location img{vertical-align:middle;display:inline-block;margin-right:5px}
-.coursera-profile-basics .coursera-profile-bio{color:#343434;font-size:16px;clear:both}
-.coursera-profile-websites{margin-top:10px;}
-.coursera-profile-websites li{margin-bottom:6px;}
-.coursera-profile-websites li a img{margin-right:10px;vertical-align:text-top;display:inline-block;width:16px;height:16px;padding-top:2px}
-.coursera-profile-courses-box{padding:0;}
-.coursera-profile-courses-box a:nth-child(odd) div{margin-right:20px}
-.coursera-profile-courses-box .coursera-profile-course-listing-box{width:460px;height:120px;-webkit-box-shadow:0 2px 4px #aaa;box-shadow:0 2px 4px #aaa;border:1px solid #bcbec0;margin-bottom:20px;float:left;}
-.coursera-profile-courses-box .coursera-profile-course-listing-box div{padding:0 6px;}
-.coursera-profile-courses-box .coursera-profile-course-listing-box div h4{font-family:"sofiapro-bold",Arial,sans-serif}
-.coursera-profile-courses-box .coursera-profile-course-listing-box div span{font-family:"sofiapro-light",Arial,sans-serif;font-size:10px;color:#6d6e71}
-.coursera-profile-courses-box .coursera-profile-course-listing-box img{width:178px;height:100%;float:left;margin-right:10px}
-.coursera-placement-share li select{width:120px;margin-left:10px}
-.coursera-course-my-listing-more{position:absolute;left:292px;top:125px}
-.coursera-signature-modal .modal-header{position:relative;height:70px;background-image:url("https://d2wvvaown1ul17.cloudfront.net/site-static/pages/home/account/debut_light.png");background-repeat:repeat;border-bottom:1px solid #ccc;padding:0;-webkit-border-radius:6px 6px 0 0;border-radius:6px 6px 0 0;}
-.coursera-signature-modal .modal-header img{width:42px;position:absolute;left:20px}
-.coursera-signature-modal .modal-header h2{margin-top:0;margin-left:80px;padding-top:20px}
-.coursera-signature-modal .modal-header .coursera-signature-modal-ribbon{top:-2px}
-.coursera-help-link{font-size:12px;margin:0;float:right;display:inline-block}
-.coursera-signature-track-profile-alert{margin-top:10px;font-size:16px}
-.coursera-sigtrack-accounts-profile-info h5{display:inline-block;font-size:16px;margin:3px}
-.coursera-sigtrack-account-body .inner-info{margin-left:15px}
-.coursera-sigtrack-account-body table{width:80%}
-.coursera-sigtrack-unenroll-options-both .option-title{font-weight:bold}
-.coursera-sigtrack-unenroll-options-both .option-explanation{line-height:16px;text-align:left}
-.coursera-signature-unenroll-reason{width:90%;resize:none;margin-left:10px;margin-top:10px}
-.modal-body-unenroll-response{margin:10px 0 20px 70px}
-.coursera-sigtrack-unenroll-modal .help-text{font-size:smaller;text-align:center;line-height:10px;margin-top:10px}
-.coursera-sigtrack-unenroll-modal .coursera-signature-modal-close{margin-left:10px;text-decoration:underline}
-.coursera-signature-track-profile-complete{margin-left:5px;font-size:10px;border:1px solid #000;-webkit-border-radius:4px;border-radius:4px;padding:1px;vertical-align:bottom}
+ 
+
+
+
+ /*
+ * Social Buttons for Bootstrap
+ *
+ * Copyright 2013 Panayiotis Lipiridis
+ * Licensed under the MIT License
+ *
+ * https://github.com/lipis/bootstrap-social
+ */
+
+.btn-social{position:relative;padding-left:44px;text-align:left;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.btn-social :first-child{position:absolute;left:0;top:0;bottom:0;width:32px;line-height:34px;font-size:1.6em;text-align:center;border-right:1px solid rgba(0,0,0,0.2)}
+.btn-social.btn-lg{padding-left:61px}.btn-social.btn-lg :first-child{line-height:45px;width:45px;font-size:1.8em}
+.btn-social.btn-sm{padding-left:38px}.btn-social.btn-sm :first-child{line-height:28px;width:28px;font-size:1.4em}
+.btn-social.btn-xs{padding-left:30px}.btn-social.btn-xs :first-child{line-height:20px;width:20px;font-size:1.2em}
+.btn-social-icon{position:relative;padding-left:44px;text-align:left;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;height:34px;width:34px;padding-left:0;padding-right:0}.btn-social-icon :first-child{position:absolute;left:0;top:0;bottom:0;width:32px;line-height:34px;font-size:1.6em;text-align:center;border-right:1px solid rgba(0,0,0,0.2)}
+.btn-social-icon.btn-lg{padding-left:61px}.btn-social-icon.btn-lg :first-child{line-height:45px;width:45px;font-size:1.8em}
+.btn-social-icon.btn-sm{padding-left:38px}.btn-social-icon.btn-sm :first-child{line-height:28px;width:28px;font-size:1.4em}
+.btn-social-icon.btn-xs{padding-left:30px}.btn-social-icon.btn-xs :first-child{line-height:20px;width:20px;font-size:1.2em}
+.btn-social-icon :first-child{border:none;text-align:center;width:100% !important}
+.btn-social-icon.btn-lg{height:45px;width:45px;padding-left:0;padding-right:0}
+.btn-social-icon.btn-sm{height:30px;width:30px;padding-left:0;padding-right:0}
+.btn-social-icon.btn-xs{height:22px;width:22px;padding-left:0;padding-right:0}
+.btn-bitbucket{color:#fff;background-color:#205081;border-color:rgba(0,0,0,0.2)}.btn-bitbucket:hover,.btn-bitbucket:focus,.btn-bitbucket:active,.btn-bitbucket.active,.open .dropdown-toggle.btn-bitbucket{color:#fff;background-color:#183c60;border-color:rgba(0,0,0,0.2)}
+.btn-bitbucket:active,.btn-bitbucket.active,.open .dropdown-toggle.btn-bitbucket{background-image:none}
+.btn-bitbucket.disabled,.btn-bitbucket[disabled],fieldset[disabled] .btn-bitbucket,.btn-bitbucket.disabled:hover,.btn-bitbucket[disabled]:hover,fieldset[disabled] .btn-bitbucket:hover,.btn-bitbucket.disabled:focus,.btn-bitbucket[disabled]:focus,fieldset[disabled] .btn-bitbucket:focus,.btn-bitbucket.disabled:active,.btn-bitbucket[disabled]:active,fieldset[disabled] .btn-bitbucket:active,.btn-bitbucket.disabled.active,.btn-bitbucket[disabled].active,fieldset[disabled] .btn-bitbucket.active{background-color:#205081;border-color:rgba(0,0,0,0.2)}
+.btn-dropbox{color:#fff;background-color:#1087dd;border-color:rgba(0,0,0,0.2)}.btn-dropbox:hover,.btn-dropbox:focus,.btn-dropbox:active,.btn-dropbox.active,.open .dropdown-toggle.btn-dropbox{color:#fff;background-color:#0d70b7;border-color:rgba(0,0,0,0.2)}
+.btn-dropbox:active,.btn-dropbox.active,.open .dropdown-toggle.btn-dropbox{background-image:none}
+.btn-dropbox.disabled,.btn-dropbox[disabled],fieldset[disabled] .btn-dropbox,.btn-dropbox.disabled:hover,.btn-dropbox[disabled]:hover,fieldset[disabled] .btn-dropbox:hover,.btn-dropbox.disabled:focus,.btn-dropbox[disabled]:focus,fieldset[disabled] .btn-dropbox:focus,.btn-dropbox.disabled:active,.btn-dropbox[disabled]:active,fieldset[disabled] .btn-dropbox:active,.btn-dropbox.disabled.active,.btn-dropbox[disabled].active,fieldset[disabled] .btn-dropbox.active{background-color:#1087dd;border-color:rgba(0,0,0,0.2)}
+.btn-facebook{color:#fff;background-color:#3b5998;border-color:rgba(0,0,0,0.2)}.btn-facebook:hover,.btn-facebook:focus,.btn-facebook:active,.btn-facebook.active,.open .dropdown-toggle.btn-facebook{color:#fff;background-color:#30487b;border-color:rgba(0,0,0,0.2)}
+.btn-facebook:active,.btn-facebook.active,.open .dropdown-toggle.btn-facebook{background-image:none}
+.btn-facebook.disabled,.btn-facebook[disabled],fieldset[disabled] .btn-facebook,.btn-facebook.disabled:hover,.btn-facebook[disabled]:hover,fieldset[disabled] .btn-facebook:hover,.btn-facebook.disabled:focus,.btn-facebook[disabled]:focus,fieldset[disabled] .btn-facebook:focus,.btn-facebook.disabled:active,.btn-facebook[disabled]:active,fieldset[disabled] .btn-facebook:active,.btn-facebook.disabled.active,.btn-facebook[disabled].active,fieldset[disabled] .btn-facebook.active{background-color:#3b5998;border-color:rgba(0,0,0,0.2)}
+.btn-flickr{color:#fff;background-color:#ff0084;border-color:rgba(0,0,0,0.2)}.btn-flickr:hover,.btn-flickr:focus,.btn-flickr:active,.btn-flickr.active,.open .dropdown-toggle.btn-flickr{color:#fff;background-color:#d6006f;border-color:rgba(0,0,0,0.2)}
+.btn-flickr:active,.btn-flickr.active,.open .dropdown-toggle.btn-flickr{background-image:none}
+.btn-flickr.disabled,.btn-flickr[disabled],fieldset[disabled] .btn-flickr,.btn-flickr.disabled:hover,.btn-flickr[disabled]:hover,fieldset[disabled] .btn-flickr:hover,.btn-flickr.disabled:focus,.btn-flickr[disabled]:focus,fieldset[disabled] .btn-flickr:focus,.btn-flickr.disabled:active,.btn-flickr[disabled]:active,fieldset[disabled] .btn-flickr:active,.btn-flickr.disabled.active,.btn-flickr[disabled].active,fieldset[disabled] .btn-flickr.active{background-color:#ff0084;border-color:rgba(0,0,0,0.2)}
+.btn-github{color:#fff;background-color:#444;border-color:rgba(0,0,0,0.2)}.btn-github:hover,.btn-github:focus,.btn-github:active,.btn-github.active,.open .dropdown-toggle.btn-github{color:#fff;background-color:#303030;border-color:rgba(0,0,0,0.2)}
+.btn-github:active,.btn-github.active,.open .dropdown-toggle.btn-github{background-image:none}
+.btn-github.disabled,.btn-github[disabled],fieldset[disabled] .btn-github,.btn-github.disabled:hover,.btn-github[disabled]:hover,fieldset[disabled] .btn-github:hover,.btn-github.disabled:focus,.btn-github[disabled]:focus,fieldset[disabled] .btn-github:focus,.btn-github.disabled:active,.btn-github[disabled]:active,fieldset[disabled] .btn-github:active,.btn-github.disabled.active,.btn-github[disabled].active,fieldset[disabled] .btn-github.active{background-color:#444;border-color:rgba(0,0,0,0.2)}
+.btn-google-plus{color:#fff;background-color:#dd4b39;border-color:rgba(0,0,0,0.2)}.btn-google-plus:hover,.btn-google-plus:focus,.btn-google-plus:active,.btn-google-plus.active,.open .dropdown-toggle.btn-google-plus{color:#fff;background-color:#ca3523;border-color:rgba(0,0,0,0.2)}
+.btn-google-plus:active,.btn-google-plus.active,.open .dropdown-toggle.btn-google-plus{background-image:none}
+.btn-google-plus.disabled,.btn-google-plus[disabled],fieldset[disabled] .btn-google-plus,.btn-google-plus.disabled:hover,.btn-google-plus[disabled]:hover,fieldset[disabled] .btn-google-plus:hover,.btn-google-plus.disabled:focus,.btn-google-plus[disabled]:focus,fieldset[disabled] .btn-google-plus:focus,.btn-google-plus.disabled:active,.btn-google-plus[disabled]:active,fieldset[disabled] .btn-google-plus:active,.btn-google-plus.disabled.active,.btn-google-plus[disabled].active,fieldset[disabled] .btn-google-plus.active{background-color:#dd4b39;border-color:rgba(0,0,0,0.2)}
+.btn-instagram{color:#fff;background-color:#517fa4;border-color:rgba(0,0,0,0.2)}.btn-instagram:hover,.btn-instagram:focus,.btn-instagram:active,.btn-instagram.active,.open .dropdown-toggle.btn-instagram{color:#fff;background-color:#446a89;border-color:rgba(0,0,0,0.2)}
+.btn-instagram:active,.btn-instagram.active,.open .dropdown-toggle.btn-instagram{background-image:none}
+.btn-instagram.disabled,.btn-instagram[disabled],fieldset[disabled] .btn-instagram,.btn-instagram.disabled:hover,.btn-instagram[disabled]:hover,fieldset[disabled] .btn-instagram:hover,.btn-instagram.disabled:focus,.btn-instagram[disabled]:focus,fieldset[disabled] .btn-instagram:focus,.btn-instagram.disabled:active,.btn-instagram[disabled]:active,fieldset[disabled] .btn-instagram:active,.btn-instagram.disabled.active,.btn-instagram[disabled].active,fieldset[disabled] .btn-instagram.active{background-color:#517fa4;border-color:rgba(0,0,0,0.2)}
+.btn-linkedin{color:#fff;background-color:#007bb6;border-color:rgba(0,0,0,0.2)}.btn-linkedin:hover,.btn-linkedin:focus,.btn-linkedin:active,.btn-linkedin.active,.open .dropdown-toggle.btn-linkedin{color:#fff;background-color:#005f8d;border-color:rgba(0,0,0,0.2)}
+.btn-linkedin:active,.btn-linkedin.active,.open .dropdown-toggle.btn-linkedin{background-image:none}
+.btn-linkedin.disabled,.btn-linkedin[disabled],fieldset[disabled] .btn-linkedin,.btn-linkedin.disabled:hover,.btn-linkedin[disabled]:hover,fieldset[disabled] .btn-linkedin:hover,.btn-linkedin.disabled:focus,.btn-linkedin[disabled]:focus,fieldset[disabled] .btn-linkedin:focus,.btn-linkedin.disabled:active,.btn-linkedin[disabled]:active,fieldset[disabled] .btn-linkedin:active,.btn-linkedin.disabled.active,.btn-linkedin[disabled].active,fieldset[disabled] .btn-linkedin.active{background-color:#007bb6;border-color:rgba(0,0,0,0.2)}
+.btn-pinterest{color:#fff;background-color:#cb2027;border-color:rgba(0,0,0,0.2)}.btn-pinterest:hover,.btn-pinterest:focus,.btn-pinterest:active,.btn-pinterest.active,.open .dropdown-toggle.btn-pinterest{color:#fff;background-color:#a81a20;border-color:rgba(0,0,0,0.2)}
+.btn-pinterest:active,.btn-pinterest.active,.open .dropdown-toggle.btn-pinterest{background-image:none}
+.btn-pinterest.disabled,.btn-pinterest[disabled],fieldset[disabled] .btn-pinterest,.btn-pinterest.disabled:hover,.btn-pinterest[disabled]:hover,fieldset[disabled] .btn-pinterest:hover,.btn-pinterest.disabled:focus,.btn-pinterest[disabled]:focus,fieldset[disabled] .btn-pinterest:focus,.btn-pinterest.disabled:active,.btn-pinterest[disabled]:active,fieldset[disabled] .btn-pinterest:active,.btn-pinterest.disabled.active,.btn-pinterest[disabled].active,fieldset[disabled] .btn-pinterest.active{background-color:#cb2027;border-color:rgba(0,0,0,0.2)}
+.btn-tumblr{color:#fff;background-color:#2c4762;border-color:rgba(0,0,0,0.2)}.btn-tumblr:hover,.btn-tumblr:focus,.btn-tumblr:active,.btn-tumblr.active,.open .dropdown-toggle.btn-tumblr{color:#fff;background-color:#1f3346;border-color:rgba(0,0,0,0.2)}
+.btn-tumblr:active,.btn-tumblr.active,.open .dropdown-toggle.btn-tumblr{background-image:none}
+.btn-tumblr.disabled,.btn-tumblr[disabled],fieldset[disabled] .btn-tumblr,.btn-tumblr.disabled:hover,.btn-tumblr[disabled]:hover,fieldset[disabled] .btn-tumblr:hover,.btn-tumblr.disabled:focus,.btn-tumblr[disabled]:focus,fieldset[disabled] .btn-tumblr:focus,.btn-tumblr.disabled:active,.btn-tumblr[disabled]:active,fieldset[disabled] .btn-tumblr:active,.btn-tumblr.disabled.active,.btn-tumblr[disabled].active,fieldset[disabled] .btn-tumblr.active{background-color:#2c4762;border-color:rgba(0,0,0,0.2)}
+.btn-twitter{color:#fff;background-color:#2ba9e1;border-color:rgba(0,0,0,0.2)}.btn-twitter:hover,.btn-twitter:focus,.btn-twitter:active,.btn-twitter.active,.open .dropdown-toggle.btn-twitter{color:#fff;background-color:#1c92c7;border-color:rgba(0,0,0,0.2)}
+.btn-twitter:active,.btn-twitter.active,.open .dropdown-toggle.btn-twitter{background-image:none}
+.btn-twitter.disabled,.btn-twitter[disabled],fieldset[disabled] .btn-twitter,.btn-twitter.disabled:hover,.btn-twitter[disabled]:hover,fieldset[disabled] .btn-twitter:hover,.btn-twitter.disabled:focus,.btn-twitter[disabled]:focus,fieldset[disabled] .btn-twitter:focus,.btn-twitter.disabled:active,.btn-twitter[disabled]:active,fieldset[disabled] .btn-twitter:active,.btn-twitter.disabled.active,.btn-twitter[disabled].active,fieldset[disabled] .btn-twitter.active{background-color:#2ba9e1;border-color:rgba(0,0,0,0.2)}
+.btn-vk{color:#fff;background-color:#587ea3;border-color:rgba(0,0,0,0.2)}.btn-vk:hover,.btn-vk:focus,.btn-vk:active,.btn-vk.active,.open .dropdown-toggle.btn-vk{color:#fff;background-color:#4a6a89;border-color:rgba(0,0,0,0.2)}
+.btn-vk:active,.btn-vk.active,.open .dropdown-toggle.btn-vk{background-image:none}
+.btn-vk.disabled,.btn-vk[disabled],fieldset[disabled] .btn-vk,.btn-vk.disabled:hover,.btn-vk[disabled]:hover,fieldset[disabled] .btn-vk:hover,.btn-vk.disabled:focus,.btn-vk[disabled]:focus,fieldset[disabled] .btn-vk:focus,.btn-vk.disabled:active,.btn-vk[disabled]:active,fieldset[disabled] .btn-vk:active,.btn-vk.disabled.active,.btn-vk[disabled].active,fieldset[disabled] .btn-vk.active{background-color:#587ea3;border-color:rgba(0,0,0,0.2)}
+
+
+
+
+
+/********************************/
+/**  UPDATES                   **/
+/********************************/
+
+
+.chat
+{
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.chat li
+{
+    margin-bottom: 10px;
+    padding-bottom: 5px;
+    border-bottom: 1px dotted #B3A9A9;
+}
+
+.chat li.left .chat-body
+{
+    margin-left: 70px;
+}
+
+.chat li.right .chat-body
+{
+    margin-right: 70px;
+}
+
+
+.chat li .chat-body p
+{
+    margin: 0;
+    color: #777777;
+}
+
+.panel .slidedown .glyphicon, .chat .glyphicon
+{
+    margin-right: 5px;
+}
+
+ 
+
+::-webkit-scrollbar-track
+{
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    background-color: #F5F5F5;
+}
+
+::-webkit-scrollbar
+{
+    width: 12px;
+    background-color: #F5F5F5;
+}
+
+::-webkit-scrollbar-thumb
+{
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+    background-color: #555;
+}
+
+
+
+
+/********************************/
+/**  LOGIN                     **/
+/********************************/
+
+.main {
+max-width: 320px;
+margin: 0 auto;
+}
+.login-or {
+position: relative;
+font-size: 18px;
+color: #aaa;
+margin-top: 10px;
+        margin-bottom: 10px;
+padding-top: 10px;
+padding-bottom: 10px;
+}
+.span-or {
+display: block;
+position: absolute;
+left: 50%;
+top: -2px;
+margin-left: -25px;
+background-color: #fff;
+width: 50px;
+text-align: center;
+}
+.hr-or {
+background-color: #cdcdcd;
+height: 1px;
+margin-top: 0px !important;
+margin-bottom: 0px !important;
+}
+.main h3 {
+	text-align: center;
+	margin-bottom: 20px;
+}
