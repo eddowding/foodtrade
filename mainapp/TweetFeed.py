@@ -46,5 +46,5 @@ class UserProfile():
         self.db_object.insert_one(self.table_name,value)
 
 
-userprofile = UserProfile()
-print userprofile.get_profile_by_id(17)
+# userprofile = UserProfile()
+# print userprofile.get_profile_by_id(21)
