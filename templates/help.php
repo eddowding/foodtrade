@@ -122,11 +122,6 @@ crowdtag produce
 
 ED DOWDING
 ---------- 
-setup footer
-- about us 
-- pricing
-- blog
-- facebook / twitter 
 add like on twitter / facebook to header
 add activity feed card style for org / individial 
 

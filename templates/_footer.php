@@ -1,3 +1,73 @@
+</div>
+
+
+
+setup footer
+- about us 
+- pricing
+- blog
+- facebook / twitter 
+
+
+<div class="container" id="footer">    
+
+  <div class="row">
+    <div class="col-lg-12">
+        <div class="ftstrip"></div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-12" id="footer_container">
+      <div class="col-md-3">
+        <ul class="list-unstyled">
+          <li>GitHub<li>
+          <li><a href="/about.html">About us</a></li>
+          <li><a href="http://digest.foodtrade.com/" target="_blank">Blog</a></li>
+          <li><a href="/contact.html">Contact & support</a></li>
+         </ul>
+      </div>
+      <div class="col-md-3">
+        <ul class="list-unstyled">
+          <li>Applications<li>
+          <li><a href="#">Product for Mac</a></li>
+          <li><a href="#">Product for Windows</a></li>
+          <li><a href="#">Product for Eclipse</a></li>
+          <li><a href="#">Product mobile apps</a></li>              
+        </ul>
+      </div>
+      <div class="col-md-3">
+        <ul class="list-unstyled">
+          <li>Services<li>
+          <li><a href="#">Web analytics</a></li>
+          <li><a href="#">Presentations</a></li>
+          <li><a href="#">Code snippets</a></li>
+          <li><a href="#">Job board</a></li>              
+        </ul>
+      </div>
+      <div class="col-md-3">
+        <ul class="list-unstyled">
+          <li>Stay connected<li>
+          <li><a href="http://www.facebook.com/foodtradeHQ"><i class="fa fa-facebook"></i></a> <a href="http://www.twitter.com/foodtradeHQ"><i class="fa fa-twitter"></i></a></li>
+          <li><a href="#">Product Markdown</a></li>
+          <li><a href="#">Product Pages</a></li>              
+        </ul>
+      </div>  
+    </div>
+  </div>
+  <hr>
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="col-md-8">
+        <a href="/terms">Terms of Service</a>    
+        <a href="/privacy">Privacy</a>  
+      </div>
+      <div class="col-md-4">
+        <p class="muted pull-right">&copy; 2013 Foodtrade. All rights reserved</p>
+      </div>
+    </div>
+  </div>
+</div>
+
 
 <!-- UserVoice JavaScript SDK (only needed once on a page) -->
 <script>(function(){var uv=document.createElement('script');uv.type='text/javascript';uv.async=true;uv.src='//widget.uservoice.com/HloB2aRxdk7fbhWMOI5AlQ.js';var s=document.getElementsByTagName('script')[0];s.parentNode.insertBefore(uv,s)})()</script>
