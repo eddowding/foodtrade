@@ -9,7 +9,7 @@
           <img class="pull-left img-rounded" style="margin:0 8px 0 0; width:30px"  src="http://a0.twimg.com/profile_images/2596092158/afpecvf41m8f0juql78p_normal.png"  />
 
           <div class="content">
-            <h4 style="margin:0;">Sujit Maharjan</h4>
+            <h4 style="margin:0;">Fonz Fonzarelli</h4>
             <small><a href="#" class="text-muted">Edit your profile</a></small>
           </div>
         </div>
