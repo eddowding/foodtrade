@@ -49,7 +49,7 @@ def home(request):
     my_lon = float(request.GET.get('lon',85.33333330000005))
     my_lat = float(request.GET.get('lat',27.7))
     location = request.GET.get('location',"")
-    if my_lon = "" or my_lat=="":
+    if my_lon == "" or my_lat=="":
         my_lon = 85.33333330000005
         my_lat = 27.7
 
