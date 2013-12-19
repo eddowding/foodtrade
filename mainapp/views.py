@@ -34,8 +34,8 @@ def register(request):
     parameters['user'] = request.user
     return render_to_response('register.html', parameters)
 
-def multiselect(request):
-    return render_to_response('multi-select.html')
+def singlebusiness(request):
+    return render_to_response('singlebusiness.html')
 
 def tweets(request):
     parameters = {}

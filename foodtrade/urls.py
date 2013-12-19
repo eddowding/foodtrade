@@ -11,8 +11,7 @@ urlpatterns = patterns('',
     url(r'^tweets/$', 'mainapp.views.tweets', name='home'),
     url(r'^activity/$', 'mainapp.activity.home', name='home'),
     url(r'^register/$', 'mainapp.views.register', name='register'),
-    url(r'^multiselect/$', 'mainapp.views.multiselect', name='multiselect'),
-
+    url(r'^singlebusiness/$', 'mainapp.views.singlebusiness', name='singlebusiness'),
     # url(r'^foodtrade/', include('foodtrade.foo.urls')),
     url(r'^accounts/', include('allauth.urls')),
     # Uncomment the admin/doc line below to enable admin documentation:
