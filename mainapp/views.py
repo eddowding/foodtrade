@@ -4,10 +4,11 @@ from django.http import HttpResponse, HttpResponseRedirect
 from allauth.socialaccount.models import SocialToken, SocialAccount
 from twython import Twython
 import json
-from TweetFeed import TweetFeed
+from TweetFeed import TweetFeed, UserProfile
 from search import search_general
 from streaming import MyStreamer
 from models import MaxTweetId
+from geolocation import get_addr_from_ip
 
 consumer_key = 'seqGJEiDVNPxde7jmrk6dQ'
 consumer_secret = 'sI2BsZHPk86SYB7nRtKy0nQpZX3NP5j5dLfcNiP14'
@@ -66,6 +67,8 @@ def tweets(request):
     print len(mentions)
     tweet_list = []
     tweet_feed = TweetFeed()
+    user_profile = UserProfile()
+    
     for tweet in mentions:
         try:
             usr = SocialAccount.objects.get(uid = tweet['user']['id'])
@@ -73,11 +76,31 @@ def tweets(request):
             if tweet['entities'].get('media')!= None:
                 for each in tweet['entities'].get('media'):
                     pic_url_list.append(each['media_url'])
+            
+            profile = user_profile.get_profile_by_id(usr.user.id)
+            my_lat = profile['latitude']
+            my_lon = profile['longitude']
             data = {'tweet_id': tweet['id'],
                     'parent_tweet_id': 0 if tweet['in_reply_to_status_id'] == None else tweet['in_reply_to_status_id'],
-                    'tweet_message': tweet['text'],
-                    'picture': pic_url_list
+                    'status': tweet['text'],
+                    'picture': pic_url_list,
+                    'user':{
+                    'username':tweet['user']['screen_name'],
+                    'name': tweet['user']['name'],
+                    'profile_img':tweet['user']['profile_image_url'],
+                    'Description':tweet['user']['description'],
+                    'place':tweet['user']['location'],
+                    }
             }
+            if my_lon == '' and my_lat == '':
+                data['location'] = {"type": "Point", "coordinates": [float(my_lon), float(my_lat)]}
+            else:                
+                # get ip address
+                ip_addr = get_client_ip(request)
+                print ip_addr
+                #get lat, long and address of user
+                ip_location = get_addr_from_ip(ip_addr)
+                data['location'] = {"type": "Point", "coordinates": [float(ip_location['longitude']), float(ip_location['latitude'])]},
             tweet_list.append(tweet['id'])
             tweet_feed.insert_tweet(data)
         except:
@@ -88,7 +111,8 @@ def tweets(request):
                 admin_twitter.update_status(status = text)
             except:
                 pass
-    max_id.max_tweet_id = max(tweet_list)
+
+    max_id.max_tweet_id = 12345 if len(tweet_list) == 0 else max(tweet_list)
     max_id.save()
 
     ''' kaam chhaina '''
@@ -126,3 +150,10 @@ def tweets(request):
 
     return render_to_response('home.html', parameters)
 
+def get_client_ip(request):
+    x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+    if x_forwarded_for:
+        ip = x_forwarded_for.split(',')[0]
+    else:
+        ip = request.META.get('REMOTE_ADDR')
+    return ip
