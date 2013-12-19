@@ -48,7 +48,6 @@ function ShowReply(reply_id, mentions)
 	{
 	$('#'+reply_id).val(mentions+" ");
 	}
-	alert(reply_id);
 }
 
 
