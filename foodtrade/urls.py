@@ -10,6 +10,9 @@ urlpatterns = patterns('',
     url(r'^ajax-handler/(?P<func_name>\w{1,40})$', 'mainapp.home.ajax_request', name='ajax_handle'),
     url(r'^tweets/$', 'mainapp.views.tweets', name='home'),
     url(r'^activity/$', 'mainapp.activity.home', name='home'),
+    url(r'^register/$', 'mainapp.views.register', name='register'),
+    url(r'^multiselect/$', 'mainapp.views.multiselect', name='multiselect'),
+
     # url(r'^foodtrade/', include('foodtrade.foo.urls')),
     url(r'^accounts/', include('allauth.urls')),
     # Uncomment the admin/doc line below to enable admin documentation:
@@ -18,4 +21,3 @@ urlpatterns = patterns('',
     # Uncomment the next line to enable the admin:
     url(r'^admin/', include(admin.site.urls)),
 )
-

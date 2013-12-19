@@ -28,6 +28,14 @@ def home(request):
     parameters['organization'] = [{'name': 'Onion Export', 'tagcount': 7},{'name': 'Bajeko Sekuwa', 'tagcount': 5}]
     return render_to_response('index.html', parameters)
 
+def register(request):
+    parameters={}
+    parameters['user'] = request.user
+    return render_to_response('register.html', parameters)
+
+def multiselect(request):
+    return render_to_response('multi-select.html')
+
 def tweets(request):
     parameters = {}
     if not request.user.is_authenticated():
