@@ -50,8 +50,12 @@
         </ul>
       </li>
      
-     <li><a href="">xxxx</a></li>
-     <li><a href="">xxxx</a></li> 
+     <li>
+      ADMIN
+        <ul>
+           <li><a href="admin_tags.php">Tags</a></li>  
+        </ul>
+      </li>
      </ul>
 
 
@@ -104,14 +108,24 @@ Organisations
 
      <pre>
 
+PHUNKA 
+-------
+change sign up / sign in -> My account
+fix new message modal - showing as shaded - blue botton on header bar
+when you mouseover the cards / maps, make the other highlight 
+After a customer has signed up, prompt them to tweet about it 
+make active state of default buttons be the 'success' style
+single-business.php shows two distances: first is distance to its location from yours; second (bullseye) is the distance between you and its nearest trade point
+crowdtag produce
+
+
 ED DOWDING
 ---------- 
 setup footer
 - about us 
 - pricing
 - blog
-- facebook / twitter
-change header logo to ours
+- facebook / twitter 
 add like on twitter / facebook to header
 add activity feed card style for org / individial 
 
@@ -121,17 +135,8 @@ about us page
 - data: odi, godan
 - mission
 - link to blog
-- international
+- international: africa / gsm
 - funding
-
-PHUNKA 
--------
-fix new message modal - showing as shaded - blue botton on header bar
-when you mouseover the cards / maps, make the other highlight 
-After a customer has signed up, prompt them to tweet about it 
-make active state of default buttons be the 'success' style
-single-business.php shows two distances: first is distance to its location from yours; second (bullseye) is the distance between you and its nearest trade point
-crowdtag produce
 
 
 

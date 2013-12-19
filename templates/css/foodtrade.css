@@ -56,6 +56,30 @@ h2 {
 	margin-right: 7px;
 }
 
+.tag_admin { 
+	padding: 0;
+}
+
+
+.tag_admin ul { 
+	padding-left: 17px;
+}
+
+.tag_admin li {
+	list-style: none;
+}
+
+.tag_admin li.tag_item_admin {
+	border: 1px solid #eee;
+	padding: 1px 5px;
+	background: #fafafa;
+	margin: 4px 0;
+}
+
+.tag_admin li form {
+	margin-top: 10px;
+}
+
 .ftstrip {
 	position: relative;
 	height: 0.5em;
@@ -285,7 +309,34 @@ h2 {
 margin-top: 10px;
 }
 
+#activity ul.chat ul {
+	margin-left: 30px;
+}
 
+#activity ul.chat ul li .chat-body {
+	margin-left: 50px;
+}
+
+#activity ul.chat ul li .img-thumbnail {
+	padding: 1px;
+}
+
+.activity_reply {
+	list-style: none;
+}
+
+#activity .input-sm {
+	padding: 0 5px;
+	height: auto;
+}
+
+.activity_reply{
+	list-style: none;
+}
+
+.activity_reply img {
+	width: 40px;
+}
 
 /********************************/
 /**  SIDEBAR                   **/
