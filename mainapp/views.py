@@ -55,15 +55,17 @@ def tweets(request):
         oauth_token = admin_access_token,
         oauth_token_secret = admin_access_token_secret
         )
-    max_id = MaxTweetId.objects.all()[0]
-    max_tweet_id = int(max_id.max_tweet_id)
-    print type(max_tweet_id), max_tweet_id
+    try:
+        max_id = MaxTweetId.objects.all()[0]
+        max_tweet_id = int(max_id.max_tweet_id)
+    except:
+        max_tweet_id = 12345
     mentions = admin_twitter.get_mentions_timeline(count = 200, contributer_details = True, since_id = max_tweet_id)
     print len(mentions)
     tweet_list = []
     tweet_feed = TweetFeed()
     user_profile = UserProfile()
-    
+    display_tweets = []    
     for tweet in mentions:
         try:
             usr = SocialAccount.objects.get(uid = tweet['user']['id'])
@@ -98,12 +100,12 @@ def tweets(request):
                 data['location'] = {"type": "Point", "coordinates": [float(ip_location['longitude']), float(ip_location['latitude'])]},
             tweet_list.append(tweet['id'])
             tweet_feed.insert_tweet(data)
+            display_tweets.append(data)
         except:
-            print "Inside except"
             text = "@" + tweet['user']['screen_name'] + " Thanks! Please confirm your post by clicking this link [link]. You'll only have to do this once."
             print text    
             try:
-                admin_twitter.update_status(status = text)
+                admin_twitter.update_status(status = text, in_reply_to_status_id = tweet['id'])
             except:
                 pass
 
@@ -141,7 +143,7 @@ def tweets(request):
     #     # print json.dumps(result, sort_keys = True, indent = 4)
     # print len(search_results['statuses'])
     # search_results = []
-    parameters['tweet_list'] = mentions
+    parameters['tweet_list'] = display_tweets
 
     return render_to_response('home.html', parameters)
 
