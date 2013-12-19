@@ -1,0 +1,130 @@
+
+
+
+
+
+Agricultural Suppliers
+Agricultural Suppliers/Animal Feed
+Agricultural Suppliers/Compost
+Agricultural Suppliers/Livestock Breeder
+Agricultural Suppliers/Nursery
+Agricultural Suppliers/Seeds
+Food service
+Food service/Art_gallery
+Food service/Bar
+Food service/Cafe
+Food service/Catering Contractor
+Food service/Food Stall
+Food service/Home Cooking Service
+Food service/Hostel
+Food service/Hotel
+Food service/Lodging
+Food service/Museum
+Food service/Pub
+Food service/Public sector
+Food service/Restaurant
+Food service/School \/ University
+Food service/Take Away Food Shops
+Meal_delivery
+Processing and Manufacture
+Processing and Manufacture/Drink
+Processing and Manufacture/Drink/Brewery
+Processing and Manufacture/Drink/Cider Maker
+Processing and Manufacture/Drink/Coffee Importer
+Processing and Manufacture/Drink/Distillery
+Processing and Manufacture/Drink/Tea Importer
+Processing and Manufacture/Drink/Winery
+Processing and Manufacture/Food
+Processing and Manufacture/Food/Bakery
+Processing and Manufacture/Food/Butcher
+Processing and Manufacture/Food/Cheesemaker
+Processing and Manufacture/Food/Confectioner
+Processing and Manufacture/Food/Pasta & Noodles
+Processing and Manufacture/Food/Piemaker
+Processing and Manufacture/Processing
+Processing and Manufacture/Processing/Abbatoir
+Processing and Manufacture/Processing/Bottling
+Processing and Manufacture/Processing/Canning
+Processing and Manufacture/Processing/Dairy
+Processing and Manufacture/Processing/Frozen foods
+Processing and Manufacture/Processing/Kitchen
+Processing and Manufacture/Processing/Mill
+Processing and Manufacture/Processing/Smokery
+Processing and Manufacture/Waste disposal
+Production
+Production/Arable Farm
+Production/Bee keeping
+Production/Box Scheme
+Production/Community Supported Agriculture (CSA)
+Production/Dairy
+Production/Fish
+Production/Forager
+Production/Horticulture
+Production/Livestock Farm
+Production/Market garden
+Production/Mixed farm
+Production/Orchard
+Production/Other
+Production/Smallholder
+Production/Vineyard
+Real_estate_agency
+Retail
+Retail/Baker
+Retail/Butcher
+Retail/Cheese Shop
+Retail/Chocolatier
+Retail/Confectioner
+Retail/Convenience Store
+Retail/Delicatessen
+Retail/Farm Shop
+Retail/Fishmonger
+Retail/Fruitseller
+Retail/Greengrocer
+Retail/Health food
+Retail/Market
+Retail/Newsagent
+Retail/Off licence
+Retail/Supermarket
+Rickmansworth
+Wholesale and Distribution
+Wholesale and Distribution/Cash and Carry
+Wholesale and Distribution/Community food group
+Wholesale and Distribution/Wholesale Market
+Wholesale and Distribution/Wholesaler
+Wholesale and Distribution/Wine Merchant
+z_do_not_use
+z_do_not_use/Administrative_area_level_2
+z_do_not_use/Bank
+z_do_not_use/Bicycle_store
+z_do_not_use/Blog
+z_do_not_use/Car_repair
+z_do_not_use/Clothing_store
+z_do_not_use/Convenience_store
+z_do_not_use/Department_store
+z_do_not_use/Electrician
+z_do_not_use/Electronics_store
+z_do_not_use/Establishment
+z_do_not_use/Finance
+z_do_not_use/Florist
+z_do_not_use/Grocery_or_supermarket
+z_do_not_use/Gym
+z_do_not_use/Health
+z_do_not_use/Home_goods_store
+z_do_not_use/Liquor_store
+z_do_not_use/Locality
+z_do_not_use/Meal_takeaway
+z_do_not_use/Movie_theater
+z_do_not_use/Neighborhood
+z_do_not_use/Night_club
+z_do_not_use/Park
+z_do_not_use/Pet_store
+z_do_not_use/Political
+z_do_not_use/Post_office
+z_do_not_use/Premise
+z_do_not_use/Route
+z_do_not_use/Rv_park
+z_do_not_use/Shopping_mall
+z_do_not_use/Spa
+z_do_not_use/Store
+z_do_not_use/Street_address
+z_do_not_use/Sublocality
