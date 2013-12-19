@@ -21,6 +21,16 @@ admin_access_token_secret = 'ST8W9TWqqHpyskMADDSpZ5r9hl7ND6sEfaLvhcqNfk1v4'
 
 from django.template import RequestContext
 
+
+from mainapp.classes.AjaxHandle import AjaxHandle
+
+
+from django.views.decorators.csrf import csrf_exempt
+@csrf_exempt
+def ajax_request(request, func_name):
+    ajax_handle = AjaxHandle()
+    return getattr(ajax_handle,func_name)(request)
+
 def home(request):
     # parameters={}
     # parameters['user'] = request.user

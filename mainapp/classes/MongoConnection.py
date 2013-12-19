@@ -12,6 +12,9 @@ class MongoConnection():
         self.client = MongoClient(self.host, self.port)
         self.db = self.client[db_name]
 
+    def ensure_index(self, table_name, index=None):
+        self.db[table_name].ensure_index([(index,pymongo.GEOSPHERE)])
+    
     def create_table(self, table_name, index=None):
         self.db[table_name].create_index( [(index, pymongo.DESCENDING), ('unique',True)] )
 
