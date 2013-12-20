@@ -1,5 +1,11 @@
 import urllib2
+import time
 
 def run_daemon():
-	baseurl = "foodtradelite.cloudapp.net/tweets/"
-    response = urllib2.urlopen(baseurl)
+	baseurl = "http://localhost:8000/tweets/"
+	while True:
+	    response = urllib2.urlopen(baseurl)
+	    print response.read()
+	    time.sleep(120)
+
+run_daemon()

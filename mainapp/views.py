@@ -34,20 +34,20 @@ def singlebusiness(request):
 
 def tweets(request):
     parameters = {}
-    if not request.user.is_authenticated():
-        return HttpResponseRedirect('/accounts/login/')
-    parameters['user'] = request.user
-    user_id = request.user.id
-    print user_id
-    st = SocialToken.objects.get(account__user__id=user_id)
-    access_token = st.token
-    access_token_secret = st.token_secret
-    twitter = Twython(
-        app_key = consumer_key,
-        app_secret = consumer_secret,
-        oauth_token = access_token,
-        oauth_token_secret = access_token_secret
-    )
+    # if not request.user.is_authenticated():
+    #     return HttpResponseRedirect('/accounts/login/')
+    # parameters['user'] = request.user
+    # user_id = request.user.id
+    # print user_id
+    # st = SocialToken.objects.get(account__user__id=user_id)
+    # access_token = st.token
+    # access_token_secret = st.token_secret
+    # twitter = Twython(
+    #     app_key = consumer_key,
+    #     app_secret = consumer_secret,
+    #     oauth_token = access_token,
+    #     oauth_token_secret = access_token_secret
+    # )
     # uid = SocialAccount.objects.get(user__id=user_id).uid
     admin_twitter = Twython(
         app_key = consumer_key,
@@ -61,53 +61,52 @@ def tweets(request):
     except:
         max_tweet_id = 12345
     mentions = admin_twitter.get_mentions_timeline(count = 200, contributer_details = True, since_id = max_tweet_id)
-    print len(mentions)
     tweet_list = []
     tweet_feed = TweetFeed()
     user_profile = UserProfile()
     display_tweets = []    
     for tweet in mentions:
-        try:
-            usr = SocialAccount.objects.get(uid = tweet['user']['id'])
-            pic_url_list = []
-            if tweet['entities'].get('media')!= None:
-                for each in tweet['entities'].get('media'):
-                    pic_url_list.append(each['media_url'])
-            
-            profile = user_profile.get_profile_by_id(usr.user.id)
-            my_lat = profile['latitude']
-            my_lon = profile['longitude']
-            data = {'tweet_id': tweet['id'],
-                    'parent_tweet_id': 0 if tweet['in_reply_to_status_id'] == None else tweet['in_reply_to_status_id'],
-                    'status': tweet['text'],
-                    'picture': pic_url_list,
-                    'user':{
-                    'username':tweet['user']['screen_name'],
-                    'name': tweet['user']['name'],
-                    'profile_img':tweet['user']['profile_image_url'],
-                    'Description':tweet['user']['description'],
-                    'place':tweet['user']['location'],
-                    }
-            }
-            if my_lon == '' and my_lat == '':
-                data['location'] = {"type": "Point", "coordinates": [float(my_lon), float(my_lat)]}
-            else:                
-                # get ip address
-                ip_addr = get_client_ip(request)
-                print ip_addr
-                #get lat, long and address of user
-                ip_location = get_addr_from_ip(ip_addr)
-                data['location'] = {"type": "Point", "coordinates": [float(ip_location['longitude']), float(ip_location['latitude'])]},
-            tweet_list.append(tweet['id'])
-            tweet_feed.insert_tweet(data)
-            display_tweets.append(data)
-        except:
-            text = "@" + tweet['user']['screen_name'] + " Thanks! Please confirm your post by clicking this link [link]. You'll only have to do this once."
-            print text    
-            try:
-                admin_twitter.update_status(status = text, in_reply_to_status_id = tweet['id'])
-            except:
-                pass
+        # try:
+        usr = SocialAccount.objects.get(uid = tweet['user']['id'])
+        print usr.uid
+        pic_url_list = []
+        if tweet['entities'].get('media')!= None:
+            for each in tweet['entities'].get('media'):
+                pic_url_list.append(each['media_url'])
+        
+        profile = user_profile.get_profile_by_id(usr.user.id)
+        my_lat = profile['latitude']
+        my_lon = profile['longitude']
+        data = {'tweet_id': tweet['id'],
+                'parent_tweet_id': 0 if tweet['in_reply_to_status_id'] == None else tweet['in_reply_to_status_id'],
+                'status': tweet['text'],
+                'picture': pic_url_list,
+                'user':{
+                'username':tweet['user']['screen_name'],
+                'name': tweet['user']['name'],
+                'profile_img':tweet['user']['profile_image_url'],
+                'Description':tweet['user']['description'],
+                'place':tweet['user']['location'],
+                }
+        }
+        if my_lon == '' and my_lat == '':
+            data['location'] = {"type": "Point", "coordinates": [float(my_lon), float(my_lat)]}
+        else:                
+            # get ip address
+            ip_addr = get_client_ip(request)
+            print ip_addr
+            #get lat, long and address of user
+            ip_location = get_addr_from_ip(ip_addr)
+            data['location'] = {"type": "Point", "coordinates": [float(ip_location['longitude']), float(ip_location['latitude'])]},
+        tweet_list.append(tweet['id'])
+        tweet_feed.insert_tweet(data)
+        display_tweets.append(data)
+        # except:
+        #     text = "@" + tweet['user']['screen_name'] + " Thanks! Please confirm your post by clicking this http://foodtradelite.cloudapp.net/?" + tweet['id_str'] + "You'll only have to do this once."
+        #     try:
+        #         admin_twitter.update_status(status = text, in_reply_to_status_id = tweet['id'])
+        #     except:
+        #         pass
 
     max_id.max_tweet_id = 12345 if len(tweet_list) == 0 else max(tweet_list)
     max_id.save()
@@ -143,6 +142,7 @@ def tweets(request):
     #     # print json.dumps(result, sort_keys = True, indent = 4)
     # print len(search_results['statuses'])
     # search_results = []
+    print display_tweets
     parameters['tweet_list'] = display_tweets
 
     return render_to_response('home.html', parameters)
