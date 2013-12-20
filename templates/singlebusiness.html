@@ -1,7 +1,9 @@
 {% extends 'tbase.html' %}
+
+{% block content %}
 <div  class="container">
 
-    {% include '_sidebar.php' %}
+    {% include 'sidebar.html' %}
 
    
 
@@ -86,7 +88,7 @@
         <i class="fa fa-share-square-o text-muted"></i> Share
       </button>
 
-      <?php include 'modal_share.php';?>
+      {% include 'modal_share.php' %}
 
       <div class="icons text-center" style="font-size:25px">
         <a href="#"><i class="fa fa-facebook-square"></i></a>
@@ -313,12 +315,12 @@
             </form>
           </div> 
            <p class=""><a href="single-organisation.php">Show all</a></p>
-          <?php include 'card_business.php';?> 
-          <?php include 'card_business.php';?> 
-          <?php include 'card_business.php';?>  
-          <?php include 'card_business.php';?>  
-          <?php include 'card_business.php';?> 
-          <?php include 'card_business.php';?> 
+          {% include 'card_business.php' %}
+          {% include 'card_business.php' %}
+          {% include 'card_business.php' %}
+          {% include 'card_business.php' %}
+          {% include 'card_business.php' %}
+          {% include 'card_business.php' %}
           </div>
  
 
@@ -326,30 +328,30 @@
           <h2>Organisations</h2>
            <p class=""><a href="single-organisation.php">Show all</a></p>
           
-          <?php include 'card_organisation.php';?>  
-          <?php include 'card_organisation.php';?> 
-          <?php include 'card_organisation.php';?> 
-          <?php include 'card_organisation.php';?> 
+          {% include 'card_organisation.php' %}
+          {% include 'card_organisation.php' %}
+          {% include 'card_organisation.php' %}
+          {% include 'card_organisation.php' %}
           </div>
 
           <div class="clearfix">
           <h2>Customers</h2>
-          <?php include 'card_individual.php';?> 
-          <?php include 'card_individual.php';?> 
-          <?php include 'card_individual.php';?> 
-          <?php include 'card_individual.php';?> 
-          <?php include 'card_individual.php';?> 
-          <?php include 'card_individual.php';?>  
+          {% include 'card_individual.php' %}
+          {% include 'card_individual.php' %}
+          {% include 'card_individual.php' %}
+          {% include 'card_individual.php' %}
+          {% include 'card_individual.php' %}
+          {% include 'card_individual.php' %}
           </div> 
 
 
           <div class="clearfix">
           <h2>Team</h2> 
-          <?php include 'card_team.php';?> 
-          <?php include 'card_team.php';?> 
-          <?php include 'card_team.php';?> 
-          <?php include 'card_team.php';?> 
-          <?php include 'card_team.php';?>  
+          {% include 'card_team.php' %}
+          {% include 'card_team.php' %}
+          {% include 'card_team.php' %}
+          {% include 'card_team.php' %}
+          {% include 'card_team.php' %}
           </div> 
 
      
@@ -359,7 +361,7 @@
           <div class="row">
               <div class="col-md-12"> 
               <div id="activity"> 
-           <?php include 'card_activity.php';?>  
+           {% include 'card_activity.php' %}
           </div> 
               </div>
           </div>
@@ -399,4 +401,4 @@
 
     </div><!-- col10 --> 
 
-   
+   {% endblock %}
