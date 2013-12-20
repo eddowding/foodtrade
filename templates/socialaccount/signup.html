@@ -1,4 +1,4 @@
-{% extends "tbase.html" %}
+{% extends "base.html" %}
 {% load url from future %}
 
 {% load i18n %}
@@ -23,7 +23,7 @@
     -o-background-size: cover;
     background-size: cover;
   }
-
+  
   .panel-default {
   opacity: 0.95;
   margin-top:30px;
@@ -31,7 +31,7 @@
   .form-group.last { margin-bottom:0px; }
 </style>
 
-    <div class="container">
+    <div class="signup-container">
     <div class="row">
         <div class="col-md-5 col-md-offset-3">
             <div class="panel panel-default">
@@ -126,7 +126,13 @@
 
                         </div>
                     </div>
-
+                    <div class="form-group">
+                        <label for="id_zip_code" class="col-sm-3 control-label">
+                            Zip Code</label>
+                        <div class="col-sm-9">
+                            {{form.zip_code}}
+                        </div>
+                    </div>
 
                     <div class="form-group">
                         <label for="id_username" class="col-sm-3 control-label">

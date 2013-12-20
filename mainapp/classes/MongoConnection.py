@@ -33,7 +33,7 @@ class MongoConnection():
         json_doc = json.dumps(list(all_doc),default=json_util.default)
         json_doc = json_doc.replace("$oid", "id")
         json_doc = json_doc.replace("_id", "uid")
-        return json.loads(json_doc)
+        return json.loads(str(json_doc))
 
 
     def insert_one(self, table_name, value):

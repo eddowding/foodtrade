@@ -245,6 +245,11 @@
     <script type="text/javascript">
     map_lat={{ search.lat }};
     map_lon = {{ search.lon }};
+
+
+{% if results %}
+connections = {{json_data | safe}};
+    {% endif %}
     </script>
      <script src="{% static "js/activity-map.js" %}"></script>
   {% endblock %}
