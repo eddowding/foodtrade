@@ -15,6 +15,8 @@ class SignupForm(forms.Form):
     sign_up_as = forms.CharField(widget=forms.TextInput(attrs={'placeholder': u'Sign up as',
      'class' : 'form-control'}))
     # type_user = forms.CharField(max_length=30, label='Type')
+    zip_code = forms.CharField(widget=forms.TextInput(attrs={'placeholder': u'Zip Code',
+     'class' : 'form-control'}))
     type_user = forms.CharField(widget=forms.TextInput(attrs={'placeholder': u'Farm, wholesaler, restaurant, bakery...',
      'class' : 'form-control'}))
     latitude = forms.CharField(widget=forms.TextInput(attrs={'placeholder': u'Farm, wholesaler, restaurant, bakery...',
@@ -30,6 +32,7 @@ class SignupForm(forms.Form):
         addr = social_account.extra_data['location']
         data = {'useruid': str(user.id), 'sign_up_as': self.cleaned_data['sign_up_as'],
         		'type_user': self.cleaned_data['type_user'], 
+                'zip_code': self.cleaned_data['zip_code'],
         		'latitude': self.cleaned_data['latitude'],
         		'longitude': self.cleaned_data['longitude'],
         		'address': addr
