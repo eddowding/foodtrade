@@ -9,6 +9,7 @@ from search import search_general
 from streaming import MyStreamer
 from models import MaxTweetId
 from geolocation import get_addr_from_ip
+from django.template import RequestContext
 
 consumer_key = 'seqGJEiDVNPxde7jmrk6dQ'
 consumer_secret = 'sI2BsZHPk86SYB7nRtKy0nQpZX3NP5j5dLfcNiP14'
@@ -30,7 +31,7 @@ def home(request):
     return render_to_response('index.html', parameters)
 
 def singlebusiness(request):
-    return render_to_response('singlebusiness.html')
+    return render_to_response('singlebusiness.html',context_instance=RequestContext(request))
 
 def tweets(request):
     parameters = {}
@@ -59,6 +60,8 @@ def tweets(request):
         max_id = MaxTweetId.objects.all()[0]
         max_tweet_id = int(max_id.max_tweet_id)
     except:
+        max_id = MaxTweetId(max_tweet_id = 12345)
+        max_id.save()
         max_tweet_id = 12345
     print 'max_tweet_id', max_tweet_id
     mentions = admin_twitter.get_mentions_timeline(count = 200, contributer_details = True, since_id = max_tweet_id)

@@ -2,7 +2,7 @@ import urllib2
 import time
 
 def run_daemon():
-	baseurl = "http://localhost:8000/tweets/"
+	baseurl = "http://foodtradelite.cloudapp.net/tweets/"
 	while True:
 	    response = urllib2.urlopen(baseurl)
 	    print response.read()
