@@ -57,6 +57,16 @@
            <li><a href="admin_tags.php">Tags</a></li>  
         </ul>
       </li>
+     <li>
+      STATIC
+        <ul>
+           <li><a href="pricing.php">Pricing</a></li>  
+           <li><a href="about.php">About</a></li>  
+           <li><a href="contact.php">Contact</a></li> 
+           <li><a href="contact.php">Terms</a></li> 
+           <li><a href="contact.php">Privacy</a></li>  
+        </ul>
+      </li>
      </ul>
 
 
@@ -111,6 +121,7 @@ Organisations
 
 PHUNKA 
 -------
+make static pages work
 change sign up / sign in -> My account
 fix new message modal - showing as shaded - blue botton on header bar
 when you mouseover the cards / maps, make the other highlight 

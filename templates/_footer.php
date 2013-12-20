@@ -1,13 +1,7 @@
 </div>
 
 
-
-setup footer
-- about us 
-- pricing
-- blog
-- facebook / twitter 
-
+ 
 
 <div class="container" id="footer">    
 
@@ -19,37 +13,66 @@ setup footer
   <div class="row">
     <div class="col-lg-12" id="footer_container">
       <div class="col-md-3">
-        <ul class="list-unstyled">
-          <li>GitHub<li>
+        <ul class="list-unstyled"><!-- 
+          <li>FoodTrade<li> -->
           <li><a href="/about.html">About us</a></li>
           <li><a href="http://digest.foodtrade.com/" target="_blank">Blog</a></li>
           <li><a href="/contact.html">Contact & support</a></li>
          </ul>
       </div>
       <div class="col-md-3">
+      <!-- 
+			developers
+			timeline
+
         <ul class="list-unstyled">
           <li>Applications<li>
           <li><a href="#">Product for Mac</a></li>
           <li><a href="#">Product for Windows</a></li>
           <li><a href="#">Product for Eclipse</a></li>
           <li><a href="#">Product mobile apps</a></li>              
-        </ul>
+        </ul> -->
       </div>
       <div class="col-md-3">
-        <ul class="list-unstyled">
+       <!--  <ul class="list-unstyled">
           <li>Services<li>
           <li><a href="#">Web analytics</a></li>
           <li><a href="#">Presentations</a></li>
           <li><a href="#">Code snippets</a></li>
           <li><a href="#">Job board</a></li>              
-        </ul>
+        </ul> -->
       </div>
       <div class="col-md-3">
-        <ul class="list-unstyled">
-          <li>Stay connected<li>
-          <li><a href="http://www.facebook.com/foodtradeHQ"><i class="fa fa-facebook"></i></a> <a href="http://www.twitter.com/foodtradeHQ"><i class="fa fa-twitter"></i></a></li>
-          <li><a href="#">Product Markdown</a></li>
-          <li><a href="#">Product Pages</a></li>              
+        <ul class="list-unstyled"><!-- 
+          <li>Stay connected<li> -->
+          <li>
+          	<a href="http://www.facebook.com/foodtradeHQ"><i class="fa fa-facebook-square fa-2x"></i></a> 
+          	<a href="http://www.twitter.com/foodtradeHQ"><i class="fa fa-twitter-square fa-2x"></i></a></li>
+           </li>
+           <!-- Begin MailChimp Signup Form -->
+<div id="mc_embed_signup">
+
+<form action="http://sustaination.us2.list-manage1.com/subscribe/post?u=79e1467c02512dbd83bddab5f&amp;id=eeea3ac4c6" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+    <div class="input-group"> 
+      <input type="email" value="" name="EMAIL"  class="form-control required" name="q"  id="mce-EMAIL"  placeholder="Email Address">
+      <span class="input-group-btn">
+          <button type="submit" class="btn btn-success"> Subscribe</button>
+      </span>
+    </div>
+    	<div id="mce-responses" class="clear">
+		<div class="response" id="mce-error-response" style="display:none"></div>
+		<div class="response" id="mce-success-response" style="display:none"></div>
+		<div style="position: absolute; left: -5000px;"><input type="text" name="b_79e1467c02512dbd83bddab5f_eeea3ac4c6" value=""></div>
+	</div>    <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
+
+
+
+</form>
+
+ 
+  
+      
+<!--End mc_embed_signup-->     
         </ul>
       </div>  
     </div>
@@ -58,7 +81,7 @@ setup footer
   <div class="row">
     <div class="col-lg-12">
       <div class="col-md-8">
-        <a href="/terms">Terms of Service</a>    
+        <a href="/terms">Terms of Service</a>    | 
         <a href="/privacy">Privacy</a>  
       </div>
       <div class="col-md-4">
