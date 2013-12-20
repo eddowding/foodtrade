@@ -28,12 +28,12 @@ class SignupForm(forms.Form):
         userprofile = UserProfile()
         social_account = SocialAccount.objects.get(user__id = user.id)
         addr = social_account.extra_data['location']
-        data = {'useruid': user.id, 'sign_up_as': self.cleaned_data['sign_up_as'],
+        data = {'useruid': str(user.id), 'sign_up_as': self.cleaned_data['sign_up_as'],
         		'type_user': self.cleaned_data['type_user'], 
         		'latitude': self.cleaned_data['latitude'],
         		'longitude': self.cleaned_data['longitude'],
         		'address': addr
         }
         userprofile.create_profile(data)
-        print "saved"
+        print "saved", data
         return HttpResponseRedirect('/?next=/?new_user=True')

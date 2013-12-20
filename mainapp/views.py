@@ -60,53 +60,52 @@ def tweets(request):
         max_tweet_id = int(max_id.max_tweet_id)
     except:
         max_tweet_id = 12345
+    print 'max_tweet_id', max_tweet_id
     mentions = admin_twitter.get_mentions_timeline(count = 200, contributer_details = True, since_id = max_tweet_id)
     tweet_list = []
     tweet_feed = TweetFeed()
     user_profile = UserProfile()
     display_tweets = []    
     for tweet in mentions:
-        # try:
-        usr = SocialAccount.objects.get(uid = tweet['user']['id'])
-        print usr.uid
-        pic_url_list = []
-        if tweet['entities'].get('media')!= None:
-            for each in tweet['entities'].get('media'):
-                pic_url_list.append(each['media_url'])
-        
-        profile = user_profile.get_profile_by_id(usr.user.id)
-        my_lat = profile['latitude']
-        my_lon = profile['longitude']
-        data = {'tweet_id': tweet['id'],
-                'parent_tweet_id': 0 if tweet['in_reply_to_status_id'] == None else tweet['in_reply_to_status_id'],
-                'status': tweet['text'],
-                'picture': pic_url_list,
-                'user':{
-                'username':tweet['user']['screen_name'],
-                'name': tweet['user']['name'],
-                'profile_img':tweet['user']['profile_image_url'],
-                'Description':tweet['user']['description'],
-                'place':tweet['user']['location'],
-                }
-        }
-        if my_lon == '' and my_lat == '':
-            data['location'] = {"type": "Point", "coordinates": [float(my_lon), float(my_lat)]}
-        else:                
-            # get ip address
-            ip_addr = get_client_ip(request)
-            print ip_addr
-            #get lat, long and address of user
-            ip_location = get_addr_from_ip(ip_addr)
-            data['location'] = {"type": "Point", "coordinates": [float(ip_location['longitude']), float(ip_location['latitude'])]},
-        tweet_list.append(tweet['id'])
-        tweet_feed.insert_tweet(data)
-        display_tweets.append(data)
-        # except:
-        #     text = "@" + tweet['user']['screen_name'] + " Thanks! Please confirm your post by clicking this http://foodtradelite.cloudapp.net/?" + tweet['id_str'] + "You'll only have to do this once."
-        #     try:
-        #         admin_twitter.update_status(status = text, in_reply_to_status_id = tweet['id'])
-        #     except:
-        #         pass
+        try:
+            usr = SocialAccount.objects.get(uid = tweet['user']['id'])
+            pic_url_list = []
+            if tweet['entities'].get('media')!= None:
+                for each in tweet['entities'].get('media'):
+                    pic_url_list.append(each['media_url'])
+            
+            profile = user_profile.get_profile_by_id(str(usr.user.id))
+            my_lat = profile['latitude']
+            my_lon = profile['longitude']
+            data = {'tweet_id': tweet['id'],
+                    'parent_tweet_id': 0 if tweet['in_reply_to_status_id'] == None else tweet['in_reply_to_status_id'],
+                    'status': tweet['text'],
+                    'picture': pic_url_list,
+                    'user':{
+                    'username':tweet['user']['screen_name'],
+                    'name': tweet['user']['name'],
+                    'profile_img':tweet['user']['profile_image_url'],
+                    'Description':tweet['user']['description'],
+                    'place':tweet['user']['location'],
+                    }
+            }
+            if my_lon == '' and my_lat == '':
+                # get ip address
+                ip_addr = get_client_ip(request)
+                #get lat, long and address of user
+                ip_location = get_addr_from_ip(ip_addr)
+                data['location'] = {"type": "Point", "coordinates": [float(ip_location['longitude']), float(ip_location['latitude'])]},
+            else:                
+                data['location'] = {"type": "Point", "coordinates": [float(my_lon), float(my_lat)]}
+            tweet_list.append(tweet['id'])
+            tweet_feed.insert_tweet(data)
+            display_tweets.append(data)
+        except:
+            text = "@" + tweet['user']['screen_name'] + " Thanks! Please confirm your post by clicking this http://foodtradelite.cloudapp.net/?" + tweet['id_str'] + " You'll only have to do this once."
+            try:
+                admin_twitter.update_status(status = text, in_reply_to_status_id = tweet['id'])
+            except:
+                pass
 
     max_id.max_tweet_id = 12345 if len(tweet_list) == 0 else max(tweet_list)
     max_id.save()

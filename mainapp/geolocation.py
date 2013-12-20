@@ -2,7 +2,7 @@ import urllib2, json
 
 apikey = 'ce2c79057b1cc11dc76bf76102911316147723edc4ed58717ec9c398fe048046'
 def get_addr_from_ip(ip):
-    baseurl = 'http://api.ipinfodb.com/v3/ip-city/?key=' + str(apikey) + '&ip=' + ip_addr
+    baseurl = 'http://api.ipinfodb.com/v3/ip-city/?key=' + str(apikey) + '&ip=' + ip
     response = urllib2.urlopen(baseurl)
     data = response.read()
     response.close()
