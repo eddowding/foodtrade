@@ -69,10 +69,10 @@ We'll add merge tags later, I'm just adding the icon since I'm here.
         <div class="col-md-6">
 
           <div class="form-group"> 
-            <input type="text" class="form-control" id="tag1"  value="Fish">
+            <input type="text" class="form-control" id="termInput"  placeholder="Terms">
           </div> 
 
-  <button type="submit" class="btn btn-sm btn-success">Add term</button>
+  <button type="button" class="btn btn-sm btn-success" onclick="AddTerm()">Add term</button>
 
         </div><!-- col md 5 -->
         <div class="col-md-6">
@@ -89,180 +89,13 @@ We'll add merge tags later, I'm just adding the icon since I'm here.
 </form>
    
  
-
-<h3>All tags</h3>
-<ol class='example'>
-  <li>First</li>
-  <li>Second</li>
-  <li>Third</li>
-</ol>
 <hr > 
    <ol class="tag_admin">
 
 
    <!-- tag item --> 
-    <li class="tag_item_admin">
-      <i class="fa fa-arrows text-muted"></i>
-      <input type="checkbox"> 
-      <span>Fish</span>
-      <span class="pull-right">
-        <i class="fa fa-edit"></i>
-        <i class="fa fa-trash-o"></i>
-        <i class="fa fa-compress" title="Merge selected"></i>
-      </span>
-      <!-- show this form on edit --> 
-      <div class="hidden">
-
-        <form role="form">
-          <div class="form-group"> 
-            <input type="text" class="form-control" id="tag1" value="Fish">
-          </div>
-          <div class="form-group"> 
-            <textarea class="form-control" rows="3" placeholder="Description" disabled="disabled"></textarea> 
-          </div> 
-          <div class="form-group"> 
-            <input type="text" class="form-control" id="tag1" disabled="disabled" placeholder="http://www.link.com">
-          </div> 
-          <div class="form-group">
-            <label for="image">Image</label>
-            <input type="file" class="form-control" disabled="disabled" id="file">
-          </div>
-
-          <button type="submit" class="btn btn-sm btn-success">Save</button>
-        </form> 
-
-      </div><!-- hidden-->
-    </li>
 
 
-
-
-
-    <li class="tag_item_admin">
-      <i class="fa fa-arrows text-muted"></i>
-      <input type="checkbox"> 
-      <span>Fish</span>
-      <span class="pull-right">
-        <i class="fa fa-edit"></i>
-        <i class="fa fa-trash-o"></i>
-        <i class="fa fa-compress" title="Merge selected"></i>
-      </span>
-      <!-- show this form on edit --> 
-      <div class="hidden">
-
-        <form role="form">
-          <div class="form-group"> 
-            <input type="text" class="form-control" id="tag1" value="Fish">
-          </div>
-          <div class="form-group"> 
-            <textarea class="form-control" rows="3" placeholder="Description" disabled="disabled"></textarea> 
-          </div> 
-          <div class="form-group"> 
-            <input type="text" class="form-control" id="tag1" disabled="disabled" placeholder="http://www.link.com">
-          </div> 
-          <div class="form-group">
-            <label for="image">Image</label>
-            <input type="file" class="form-control" disabled="disabled" id="file">
-          </div>
-
-          <button type="submit" class="btn btn-sm btn-success">Save</button>
-        </form> 
-
-      </div><!-- hidden-->
-    </li><li class="tag_item_admin">
-      <i class="fa fa-arrows text-muted"></i>
-      <input type="checkbox"> 
-      <span>Fish</span>
-      <span class="pull-right">
-        <i class="fa fa-edit"></i>
-        <i class="fa fa-trash-o"></i>
-        <i class="fa fa-compress" title="Merge selected"></i>
-      </span>
-      <!-- show this form on edit --> 
-      <div class="hidden">
-
-        <form role="form">
-          <div class="form-group"> 
-            <input type="text" class="form-control" id="tag1" value="Fish">
-          </div>
-          <div class="form-group"> 
-            <textarea class="form-control" rows="3" placeholder="Description" disabled="disabled"></textarea> 
-          </div> 
-          <div class="form-group"> 
-            <input type="text" class="form-control" id="tag1" disabled="disabled" placeholder="http://www.link.com">
-          </div> 
-          <div class="form-group">
-            <label for="image">Image</label>
-            <input type="file" class="form-control" disabled="disabled" id="file">
-          </div>
-
-          <button type="submit" class="btn btn-sm btn-success">Save</button>
-        </form> 
-
-      </div><!-- hidden-->
-    </li><li class="tag_item_admin">
-      <i class="fa fa-arrows text-muted"></i>
-      <input type="checkbox"> 
-      <span>Fish</span>
-      <span class="pull-right">
-        <i class="fa fa-edit"></i>
-        <i class="fa fa-trash-o"></i>
-        <i class="fa fa-compress" title="Merge selected"></i>
-      </span>
-      <!-- show this form on edit --> 
-      <div class="hidden">
-
-        <form role="form">
-          <div class="form-group"> 
-            <input type="text" class="form-control" id="tag1" value="Fish">
-          </div>
-          <div class="form-group"> 
-            <textarea class="form-control" rows="3" placeholder="Description" disabled="disabled"></textarea> 
-          </div> 
-          <div class="form-group"> 
-            <input type="text" class="form-control" id="tag1" disabled="disabled" placeholder="http://www.link.com">
-          </div> 
-          <div class="form-group">
-            <label for="image">Image</label>
-            <input type="file" class="form-control" disabled="disabled" id="file">
-          </div>
-
-          <button type="submit" class="btn btn-sm btn-success">Save</button>
-        </form> 
-
-      </div><!-- hidden-->
-    </li><li class="tag_item_admin">
-      <i class="fa fa-arrows text-muted"></i>
-      <input type="checkbox"> 
-      <span>Fish</span>
-      <span class="pull-right">
-        <i class="fa fa-edit"></i>
-        <i class="fa fa-trash-o"></i>
-        <i class="fa fa-compress" title="Merge selected"></i>
-      </span>
-      <!-- show this form on edit --> 
-      <div class="hidden">
-
-        <form role="form">
-          <div class="form-group"> 
-            <input type="text" class="form-control" id="tag1" value="Fish">
-          </div>
-          <div class="form-group"> 
-            <textarea class="form-control" rows="3" placeholder="Description" disabled="disabled"></textarea> 
-          </div> 
-          <div class="form-group"> 
-            <input type="text" class="form-control" id="tag1" disabled="disabled" placeholder="http://www.link.com">
-          </div> 
-          <div class="form-group">
-            <label for="image">Image</label>
-            <input type="file" class="form-control" disabled="disabled" id="file">
-          </div>
-
-          <button type="submit" class="btn btn-sm btn-success">Save</button>
-        </form> 
-
-      </div><!-- hidden-->
-    </li>
 
 
 
@@ -274,37 +107,6 @@ We'll add merge tags later, I'm just adding the icon since I'm here.
     <ul>
 
     <li class="tag_item_admin">
-      <i class="fa fa-arrows text-muted"></i>
-      <input type="checkbox"> 
-      <span>Fish</span>
-      <span class="pull-right">
-        <i class="fa fa-edit"></i>
-        <i class="fa fa-trash-o"></i>
-        <i class="fa fa-compress" title="Merge selected"></i>
-      </span>
-      <!-- show this form on edit --> 
-      <div class="hidden">
-
-        <form role="form">
-          <div class="form-group"> 
-            <input type="text" class="form-control" id="tag1" value="Fish">
-          </div>
-          <div class="form-group"> 
-            <textarea class="form-control" rows="3" placeholder="Description" disabled="disabled"></textarea> 
-          </div> 
-          <div class="form-group"> 
-            <input type="text" class="form-control" id="tag1" disabled="disabled" placeholder="http://www.link.com">
-          </div> 
-          <div class="form-group">
-            <label for="image">Image</label>
-            <input type="file" class="form-control" disabled="disabled" id="file">
-          </div>
-
-          <button type="submit" class="btn btn-sm btn-success">Save</button>
-        </form> 
-
-      </div><!-- hidden-->
-    </li><li class="tag_item_admin">
       <i class="fa fa-arrows text-muted"></i>
       <input type="checkbox"> 
       <span>Fish</span>
@@ -382,12 +184,56 @@ We'll add merge tags later, I'm just adding the icon since I'm here.
 
     
   {% endblock %}
+
+
+
+
+
   {% block footer %}
       <script src="{% static "js/jquery-sortable.js" %}"></script>
   <script type="text/javascript">
 
-$(function  () {
-  $("ul.example").sortable();
+
+var oldContainer
+$("ol.tag_admin").sortable({
+  group: 'nested',
+  afterMove: function (placeholder, container) {
+    if(oldContainer != container){
+      if(oldContainer)
+        oldContainer.el.removeClass("active")
+      container.el.addClass("active")
+      
+      oldContainer = container
+    }
+  },
+  onDrop: function (item, container, _super) {
+    container.el.removeClass("active")
+    _super(item)
+  }
 })
+
+
+function AddTerm()
+{
+  input_val = $("#termInput").val();
+  if(input_val=="")
+  {
+    alert("You cannot add an empty term");
+    return;
+  }
+
+  list_input = '<li class="tag_item_admin"><i class="fa fa-arrows text-muted"></i><input type="checkbox">';
+  list_input += '<span>'+input_val+'</span><span class="pull-right"><i class="fa fa-edit"></i><i class="fa fa-trash-o"></i><i class="fa fa-compress" title="Merge selected"></i></span><!-- show this form on edit --> <div class="hidden"><form role="form"><div class="form-group"> <input type="text" class="form-control" id="tag1" value="Fish"></div> <div class="form-group"> <textarea class="form-control" rows="3" placeholder="Description" disabled="disabled"></textarea> </div> <div class="form-group"> <input type="text" class="form-control" id="tag1" disabled="disabled" placeholder="http://www.link.com"> </div>  <div class="form-group"> <label for="image">Image</label> <input type="file" class="form-control" disabled="disabled" id="file"> </div><button type="submit" class="btn btn-sm btn-success">Save</button></form> </div></li>';
+    $("ol.tag_admin").prepend(list_input);
+
+  // $("ol.tag_admin").
+
+
+}
+
+// $(".switch-container").on("click", ".switch", function  (e) {
+//   var method = $(this).hasClass("active") ? "enable" : "disable"
+//   $(e.delegateTarget).next().sortable(method)
+// })
      </script>
      {% endblock %}
