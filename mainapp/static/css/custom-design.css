@@ -20,9 +20,7 @@
     #pac-input {
       /*background-color: #fff;*/
       padding: 0 11px 0 13px;
-      width: 400px;
-      font-family: Roboto;
-      font-size: 15px;
+      width: 200px; 
       font-weight: 300;
       text-overflow: ellipsis;
     }
@@ -31,16 +29,15 @@
       border-color: #4d90fe;
       margin-left: -1px;
       padding-left: 14px;  /* Regular padding-left + 1. */
-      width: 401px;
+      width: 300px;
     }
     #keyword:focus {
       border-color: #4d90fe;
       margin-left: -1px;
       padding-left: 14px;  /* Regular padding-left + 1. */
-      width: 401px;
+      
     }
-    .pac-container {
-      font-family: Roboto;
+    .pac-container { 
     }
 
     #type-selector {
@@ -49,9 +46,7 @@
       padding: 5px 11px 0px 11px;
     }
 
-    #type-selector label {
-      font-family: Roboto;
-      font-size: 13px;
+    #type-selector label { 
       font-weight: 300;
     }
 
