@@ -29,5 +29,6 @@ class Search():
             query_string['location'] = {"$near":{"$geometry":{"type":"Point", "coordinates":[float(self.lon), float(self.lat)]}, "$maxDistance":160934}}
 
         tweet_search_object = TweetFeed()
+        print query_string
         search_results = tweet_search_object.search_tweets(query_string)
         return search_results

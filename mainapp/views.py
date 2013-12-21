@@ -56,11 +56,11 @@ def tweets(request):
         oauth_token = admin_access_token,
         oauth_token_secret = admin_access_token_secret
         )
-    # try:
-    max_id = MaxTweetId.objects.all()[0]
-    max_tweet_id = int(max_id.max_tweet_id)
-    # except:
-        # max_tweet_id = 12345
+    try:
+        max_id = MaxTweetId.objects.all()[0]
+        max_tweet_id = int(max_id.max_tweet_id)
+    except:
+        max_tweet_id = 12345
     print 'max_tweet_id', max_tweet_id
     mentions = admin_twitter.get_mentions_timeline(count = 200, contributer_details = True, since_id = max_tweet_id)
     tweet_list = []

@@ -172,9 +172,18 @@ function SaveTagAdmin()
 
 function GetTags(tags, parentid)
 {
+  items_list
   for(i=0;i<tags.length;i++)
   {
-    tag_value = tags[i].children[2].innerHTML;
+    tag_children = tags[i].children;
+    tag_value = tag_children[0].innerHTML;
+    tags_sub_children = tag_children[tag_children.length-1].children;
+    if(tags_sub_children.length>0)
+    {
+
+    }
+
+
   }
 }
 
