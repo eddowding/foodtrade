@@ -10,13 +10,54 @@ function ajax_request(s_handler, c_handler, input_data)
 });
 }
 
+function conn_handler(value, prof_id)
+{
+	if (value == 'buy_from'){
+		var buy = document.getElementById('buy_from').checked
+		if (buy==true){
+			// create connection of logged in user and profile user
+			ajax_request("add_connection", 'create_conn', {conn_data: "{'prof_id': " +prof_id +", 'status': 'buy_from'}"});
+		}
+		else{
+			// delete connection
+			ajax_request("del_connection", 'create_conn', {conn_data: "{'prof_id': " +prof_id +", 'status': 'buy_from'}"})
+		}
+	}
+	else
+	{
+		var sell = document.getElementById('sell_to').checked
+		if (sell==true){
+			// create connection of logged in user and profile user
+			ajax_request("add_connection", 'create_conn', {conn_data: "{'prof_id': " +prof_id +", 'status': 'sell_to'}"});
+		}
+		else{
+			// delete connection
+			ajax_request("del_connection", 'create_conn', {conn_data: "{'prof_id': " +prof_id +",'status': 'sell_to'}"});
+		}
+
+	}
+
+	console.log("function called");
+}
+
+function create_conn(){
+	
+}
 
 function PostStatus(status_val)
 {
 	ajax_request("post_tweet", 'CloseNewPostModal', {message: status_val});
 }
 
+// function CreateConnection(b_useruid, c_useruid)
+// {
+// 	ajax_request("add_connection", 'create_conn', {conn_data: {'b_useruid'; b_useruid, 'c_useruid': c_useruid}});
+// }
 
+// function DeleteConnection(b_useruid, c_useruid)
+// {
+// 	ajax_request("del_connection", 'del_conn', {conn_data: {'b_useruid'; b_useruid, 'c_useruid': c_useruid}});
+// }
 
 function UpdateStatus(id_name)
 {
