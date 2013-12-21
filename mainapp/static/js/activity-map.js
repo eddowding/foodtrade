@@ -2,10 +2,18 @@
 
 var map = L.map('map').setView([map_lat,map_lon], 7);
 
-		L.tileLayer('http://{s}.tile.cloudmade.com/BC9A493B41014CAABB98F0471D759707/997/256/{z}/{x}/{y}.png', {
+		L.tileLayer('http://{s}.tile.cloudmade.com/0c670d97b5984ce79b34deb902915b3e/110167/256/{z}/{x}/{y}.png', {
 			maxZoom: 18,
 			attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://cloudmade.com">CloudMade</a>'
 		}).addTo(map);
+
+
+		L.icon({
+			iconUrl:'http://foodtrade.com/wp-content/uploads/2013/09/favi21.png',
+			iconSize:[18,18],
+			iconAnchor:[9,18],
+			popupAnchor:[0,-18]
+		});
 
 L.circle([map_lat,map_lon], 24140.2, {
 			color: '#333333',
