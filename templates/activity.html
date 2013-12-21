@@ -181,8 +181,8 @@
                 <strong class="pull-left" style="margin-right: 10px;">{{result.user.name}}</strong> 
 
                 <div class="tags tags-biztype">  
-                  <a href="/type/livestock-farm">Bakery</a>
-                  <a href="/type/buther">Wholesale</a>  
+                  <a href="/type/Bakery">Bakery</a>
+                  <a href="/type/Wholesale">Wholesale</a>  
                 </div>
             </div>
 
@@ -196,11 +196,11 @@
 
                  <!-- if logged in or you've allows html5 browser location -->
 
-                 <a href="http://maps.google.com/maps?saddr=current+location&daddr=Sydney+Opera+House,+Sydney+Opera+House,+Bennelong+Point,+Sydney+NSW+2000,+Australia" 
+                 <a href="http://maps.google.com/maps?saddr=current+location&daddr={{result.user.place}}" 
                     target="_blank" data-placement="top" data-toggle="tooltip" 
                     class="text-muted" 
                     title="Get directions"> 
-                 <i class="fa fa-location-arrow"></i> {{result.distance_text}}  
+                 <i class="fa fa-location-arrow"></i> {{result.distance_text|floatformat}}  
                  </a>
                 <!--  // if logged in or you've allows html5 browser location -->
 
