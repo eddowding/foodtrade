@@ -10,63 +10,44 @@
             <div class="panel panel-primary">
                 <div class="panel-heading">
                     <h3 class="panel-title">
-                        Bronze</h3>
+                        Free forever</h3>
                 </div>
                 <div class="panel-body">
                     <div class="the-price">
                         <h1>
-                            $10<span class="subscript">/mo</span></h1>
-                        <small>1 month FREE trial</small>
+                            FREE</h1>
+                      
                     </div>
                     <table class="table">
                         <tr>
                             <td>
-                                1 Account
+                                30 mile search limit
                             </td>
                         </tr>
                         <tr class="active">
                             <td>
-                                1 Project
+                                20 results per search
                             </td>
                         </tr>
-                        <tr>
-                            <td>
-                                100K API Access
-                            </td>
-                        </tr>
-                        <tr class="active">
-                            <td>
-                                100MB Storage
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                Custom Cloud Services
-                            </td>
-                        </tr>
-                        <tr class="active">
-                            <td>
-                                Weekly Reports
-                            </td>
-                        </tr>
+                         
                     </table>
                 </div>
                 <div class="panel-footer">
-                    <a href="http://www.jquery2dotnet.com" class="btn btn-success" role="button">Sign Up</a>
-                    1 month FREE trial</div>
+                  <a href="{% provider_login_url "twitter" process="login" %}" class="btn btn-success" role="button">Sign Up</a>
+                </div>
             </div>
         </div>
         <div class="col-xs-12 col-md-3">
             <div class="panel panel-primary">
                 <div class="panel-heading">
                     <h3 class="panel-title">
-                        Bronze</h3>
+                        Basic</h3>
                 </div>
                 <div class="panel-body">
                     <div class="the-price">
                         <h1>
-                            $10<span class="subscript">/mo</span></h1>
-                        <small>1 month FREE trial</small>
+                            &pound;2<span class="subscript">/mo</span></h1>
+                        <small>Less than a cup of coffee</small>
                     </div>
                     <table class="table">
                         <tr>
@@ -209,12 +190,18 @@
                     </table>
                 </div>
                 <div class="panel-footer">
-                    <a href="http://www.jquery2dotnet.com" class="btn btn-success" role="button">Sign Up</a> 1 month FREE trial</div>
+                    <a href="{% provider_login_url "twitter" process="login" %}" class="btn btn-success" role="button">Sign Up</a> 1 month FREE trial</div>
             </div>
         </div>
     </div>
 </div>
 
+    <div class="row">
+        <div class="col-md-12">
+            <p>We also have bespoke and enterprise solutions available. Please <a href="/contact">contact us</a> with an outline of your needs. 
+            </p>
+        </div><!-- div -->
+    </div><!-- row -->
 
 <div class="row">
 
