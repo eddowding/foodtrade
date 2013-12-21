@@ -21,10 +21,10 @@ L.circle([map_lat,map_lon], 160934, {
 		{
 			var con = connections[i];
 			var name = con.user.name;
-			var last_name =  con.status;
+			var status =  con.status;
 			
 			
-			L.marker([parseFloat(con.location.coordinates[1]), parseFloat(con.location.coordinates[0])]).addTo(map).bindPopup("<b>"+name + "</b> <br /><b>"+status+"</b><br />");
+			L.marker([parseFloat(con.location.coordinates[1]), parseFloat(con.location.coordinates[0])]).addTo(map).bindPopup("<b>"+name + "</b> <br />"+status+"<br />");
 			
 			
 		}

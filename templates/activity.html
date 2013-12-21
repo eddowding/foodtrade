@@ -11,16 +11,18 @@
         <div class="clearfix" style="margin-bottom: 10px;">
           <!-- twitter 78px image - 'large' -->
           <!--https://dev.twitter.com/docs/user-profile-images-and-banners -->
-          <img class="pull-left img-rounded" style="margin:0 8px 0 0; width:30px"  src="http://a0.twimg.com/profile_images/2596092158/afpecvf41m8f0juql78p_normal.png"  />
+          <img class="pull-left img-rounded" style="margin:0 8px 0 0; width:30px"  src="{{userinfo.profileimg}}"  />
 
           <div class="content">
-            <h4 style="margin:0;">Sujit Maharjan</h4>
-            <small><a href="#" class="text-muted">Edit your profile</a></small>
+            <h4 style="margin:0;">{{userinfo.full_name}}</h4>
+            <small><a href="/profile/{{userinfo.username}}" class="text-muted">Edit your profile</a></small>
           </div>
         </div>
+
+         {% if search.query == "" %}
          
         <p><a href="#">Trade connections <span class="badge pull-right">{{userinfo.trade_connections_no}}</span></a></p>
-        <p><a href="#">Foods <span class="badge pull-right">35</span></a></p>
+        <p><a href="#">Foods <span class="badge pull-right">{{userinfo.food_no}}</span></a></p>
         <p><a href="#">Organisations <span class="badge pull-right">4</span></a></p>
         <p><a href="#">Awards <span class="badge pull-right">42</span></a></p>
         
@@ -35,18 +37,20 @@
             <br />
             <a href="#">Add Organisations</a>
         </div>
-         
-        </div><!-- /account_info -->
 
+        {% endif %}
+        </div><!-- /account_info -->
+{% if search.query == "" %}
     <hr /> 
-    {% endif %}
+   
 
       <h4>Who's nearby</h4>
  
 
         <p><a href="#">Individuals <span class="badge pull-right">273</span></a></p>
         <p><a href="#">Businesses <span class="badge pull-right">38</span></a></p> 
-
+         {% endif %}
+ {% endif %}
      <!--    <div class="clearfix"> 
           <img class="pull-left img-rounded" style="margin:0 8px 0 0; width:30px"  src="https://pbs.twimg.com/profile_images/378800000006142190/2892beb0a4ee730cb98173e5d8660816_normal.jpeg" />
           <div class="content">
@@ -66,9 +70,7 @@
     
     <div class="foodtrade-sidebar">
 
-    <hr />
-
-    <div class="alert alert-success">If a search term is set, then show the filters below, and remove everything above up until "Edit your profile"</div>
+    
     <hr>
      
     <!-- consider using this for search filter http://harvesthq.github.io/chosen/ -->
@@ -124,7 +126,7 @@
         <div class="input-group"> 
           <input class="form-control" name="q" id="newstatus"  placeholder="What #food do you have to #buy, #sell, or #surplus?">
           <span class="input-group-btn">
-              <button type="button" class="btn btn-success" onclick="UpdateStatus('newstatus');"> Post</button>
+              <button type="button" class="btn btn-success" onclick="UpdateActivity('newstatus');"> Post</button>
           </span>
         </div>
     </form>
@@ -253,4 +255,76 @@ connections = {{json_data | safe}};
     {% endif %}
     </script>
      <script src="{% static "js/activity-map.js" %}"></script>
+
+<span id="status_template" style="visibility: hidden;">
+  <li class="left clearfix"><span class="chat-img pull-left">
+    <img src="{{userinfo.profileimg}}" alt="{{result.user.name}}" class="img-thumbnail" />
+    </span>
+        <div class="chat-body clearfix">
+ 
+
+        <div class="btn-group pull-right" style="margin-left: 5px;">
+            <button type="button" class="btn btn-default dropdown-toggle btn-xs pull-left" data-toggle="dropdown">
+              <i class="fa fa-link fa-large text-muted"></i>
+                <span class="caret text-muted"></span>
+            </button> 
+            <ul class="dropdown-menu" role="menu">
+              <li><a href="#">I buy from</a></li>
+              <li><a href="#">I sell to</a></li> 
+              <li class="divider"></li>
+              <li><a href="#">I'm a member</a></li>
+              <li><a href="#">I'm a customer</a></li>
+              <li class="divider"></li>
+              <li><a href="#">Delete</a></li>
+              <li><a href="#">Flag as spam</a></li>
+              <li><a href="#">dsf</a></li> 
+              <li><a href="#">Follow on Twitter</a></li>
+              <li><a href="#">View full profile</a></li> 
+            </ul>
+          </div>  
+
+
+            <div class="header">
+                <strong class="pull-left" style="margin-right: 10px;">{{userinfo.full_name}}</strong> 
+
+                <div class="tags tags-biztype">  
+                  <a href="/type/livestock-farm">Bakery</a>
+                  <a href="/type/buther">Wholesale</a>  
+                </div>
+            </div>
+
+            <p>
+                ===status===
+            </p>
+
+              <div class="meta small text-muted">
+               <i class="fa fa-map-marker"></i>
+               London, UK 
+
+                 <!-- if logged in or you've allows html5 browser location -->
+
+                 <a href="http://maps.google.com/maps?saddr=current+location&daddr=Sydney+Opera+House,+Sydney+Opera+House,+Bennelong+Point,+Sydney+NSW+2000,+Australia" 
+                    target="_blank" data-placement="top" data-toggle="tooltip" 
+                    class="text-muted" 
+                    title="Get directions"> 
+                 <i class="fa fa-location-arrow"></i> 0m  
+                 </a>
+                <!--  // if logged in or you've allows html5 browser location -->
+
+                <span class="pull-right">
+                   <a href="activity_single.php" class="text-muted"><i class="fa fa-clock-o"></i> 21m</a> 
+                </span>
+              </div> 
+
+        </div>
+
+        <div class="reply well well-sm" style="margin:0;"> 
+          <input class="form-control input-sm enterhandler" type="text" id="replyid_{{forloop.counter}}" placeholder="Reply to @{{result.user.username}}" onfocus="ShowReply('replyid_{{forloop.counter}}', '@{{result.user.username}}')" onblur="BlurReply('replyid_{{forloop.counter}}', '@{{result.user.username}}')">
+        </div>
+    </li>
+
+</span>
+
+
+
   {% endblock %}

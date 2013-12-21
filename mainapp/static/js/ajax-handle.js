@@ -71,6 +71,25 @@ function UpdateStatus(id_name)
 }
 
 
+function UpdateActivity(id_name)
+{
+	message = $('#'+id_name).val();
+	if(message=="")
+	{
+		alert("You can't post empty status.");
+		return;
+	}
+	ajax_request("post_tweet", 'update_activity', {message: message});	
+}
+
+function update_activity(status_id)
+{
+	message = $('#newstatus').val();
+	activity_html = $('#status_template').html();
+	activity_html = activity_html.replace('===status===',message);
+	$('ul.chat').prepend(activity_html);
+	$('#newstatus').val("");
+}
 
 
 
