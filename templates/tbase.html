@@ -81,6 +81,15 @@
          <button type="button" class="btn btn-primary navbar-btn pull-right" style="margin-left: 20px;"  data-toggle="modal" data-target="#newtwitterpost">
             <i class="fa fa-edit"></i>
           </button>
+          <a src = "/accounts/logout" onclick="logout()" class="btn btn-primary navbar-btn pull-right" style="margin-left: 20px;">
+            Logout
+          </a>
+          <script type="text/javascript">
+          function logout()
+          {
+            window.location = '/accounts/logout';
+          }
+          </script>
         {% endif %}
 
 
