@@ -47,4 +47,4 @@ class UserProfile():
 
 
 userprofile = UserProfile()
-print userprofile.get_profile_by_id(21)
+print userprofile.get_profile_by_id("3")

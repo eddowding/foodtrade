@@ -9,7 +9,10 @@ from classes.Search import Search
 from search import search_general
 from streaming import MyStreamer
 from models import MaxTweetId
+from TweetFeed import UserProfile
+from geolocation import get_addr_from_ip
 
+from classes.DataConnector import UserInfo
 
 consumer_key = 'seqGJEiDVNPxde7jmrk6dQ'
 consumer_secret = 'sI2BsZHPk86SYB7nRtKy0nQpZX3NP5j5dLfcNiP14'
@@ -45,41 +48,46 @@ from mainapp.classes.AjaxHandle import AjaxHandle
 from django.views.decorators.csrf import csrf_exempt
 @csrf_exempt
 def home(request):
+    parameters = {}
+
+    if request.user.is_authenticated():
+        # parameters['user'] = request.user
+        user_id = request.user.id
+        user_profile_obj = UserProfile()
+        user_profile = user_profile_obj.get_profile_by_id(str(user_id))
+
+        default_lon = float(user_profile['longitude'])
+        default_lat = float(user_profile['latitude'])
+        user_info = UserInfo(user_id)
+        parameters['userinfo'] = user_info
+
+
+
+    else:
+        x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+        if x_forwarded_for:
+            ip = x_forwarded_for.split(',')[0]
+        else:
+            ip = request.META.get('REMOTE_ADDR')
+        location_info = get_addr_from_ip(ip)
+        default_lon = float(location_info['longitude'])
+        default_lat = float(location_info['latitude'])
+        
+
+
     keyword = request.GET.get('q',"")
-    my_lon = float(request.GET.get('lon',85.33333330000005))
-    my_lat = float(request.GET.get('lat',27.7))
+    my_lon = request.GET.get('lon',"")
+    my_lat = request.GET.get('lat',"")
     location = request.GET.get('location',"")
     if my_lon == "" or my_lat=="":
-        my_lon = 85.33333330000005
-        my_lat = 27.7
+        my_lon = default_lon
+        my_lat = default_lat
+
+    else:
+        my_lat = float(my_lat)
+        my_lon = float(my_lon)
 
 
-
-    # tweet_doc = {
-    #     'tweet_id':543654,
-    #     'parent_tweet_id':0,
-    #     'status':" Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur bibendum ornare dolor, quis ullamcorper ligula sodales.",    
-    #     'location':{"type": "Point", "coordinates": [float(my_lon), float(my_lat)]},
-    #     'user':{
-    #     'username':"david",
-    #     'name': "David Villa",
-    #     'profile_img':"https://pbs.twimg.com/profile_images/378800000141996074/6a363e3c4f2a84a956c3cb27c50b2ca0_normal.png",
-    #     'Description':"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod",
-    #     'place':"78 Example Street, Test Town"
-    #     }
-    # }
-
-   
-
-
-
-    # print len(tweets_list)
-    # from pymongo import Connection
-    # c = Connection()
-    # c.drop_database('foodtrade')
-    # tweet_handler = TweetFeed() 
-    # for tweet_doc in tweets_list:
-    #     tweet_handler.insert_tweet(tweet_doc)
 
     search_handle = Search(keyword, my_lon, my_lat, "nepal")
     results = search_handle.search()
@@ -98,7 +106,7 @@ def home(request):
         results[i]['distance_text'] = distance_text
 
 
-    parameters = {}
+    
     parameters['results'] = results
     parameters['json_data'] = json.dumps(results)
     parameters['search'] = {'query':keyword, 'place':location, 'lon':my_lon, 'lat':my_lat}
