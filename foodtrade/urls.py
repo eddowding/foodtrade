@@ -7,9 +7,6 @@ admin.autodiscover()
 urlpatterns = patterns('',
     # Examples:
     url(r'^$', 'mainapp.home.home', name='home'),
-    url(r'^contact$', 'mainapp.contact.home', name='contact'),
-    url(r'^pricing$', 'mainapp.contact.home', name='pricing'),
-    url(r'^about$', 'mainapp.contact.home', name='about'),
     url(r'^admin-tags$', 'mainapp.home.admin_tags', name='home'),
     url(r'^ajax-handler/(?P<func_name>\w{1,40})$', 'mainapp.home.ajax_request', name='ajax_handle'),
     url(r'^tweets/$', 'mainapp.views.tweets', name='home'),
