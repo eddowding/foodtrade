@@ -1,4 +1,6 @@
-<?php include '_header.php';?>
+{% extends 'tbase.html' %}
+
+{% block content %}
 
     <div  class="container">
  
@@ -8,21 +10,24 @@
     <div class="container-responsive">
     <div id="header_box" class="clearfix">
       <div class="col-md-2" id="avatar">
-        <img class="img-thumbnail center-block" src="http://a0.twimg.com/profile_images/2596092158/afpecvf41m8f0juql78p_bigger.png"  />
+        <img class="img-thumbnail center-block" src={{pic_url}}  />
       </div>
      
       <div class="col-md-7">
-         <h1><a href="#">Smales Farm</a></h1>
+         <h1><a href="#">{{name}}</a></h1>
  
           <div class="tags tags-biztype  ">  
-           <a href="/type/livestock-farm">Bakery</a>
+           {% for eachtype in type_user %}
+           <a href="/type/livestock-farm">{{eachtype}}</a>
+           {% endfor %}
+           <!-- <a href="/type/livestock-farm">Bakery</a>
            <a href="/type/buther">Wholesale</a>  
            <a href="/type/buther">Distribution</a>  
-           <a href="/type/buther">Livestock Farm</a>  
+           <a href="/type/buther">Livestock Farm</a>   -->
           </div> 
 
          <hr />
-         <p>Nullam quis risus eget urna mollis ornare vel eu leo. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nullam id dolor id nibh ultricies vehicula.</p>        
+         <p>{{description}}</p>        
 
           <div class="tags">  
            <a href="/tag/TAG">Box Scheme</a>
@@ -34,7 +39,7 @@
      
          <div class="meta small text-muted">
             
-            <i class="fa fa-map-marker"></i> <a href="http://maps.google.com/maps?saddr=current+location&daddr=Sydney+Opera+House,+Sydney+Opera+House,+Bennelong+Point,+Sydney+NSW+2000,+Australia" target="_blank" data-placement="top" data-toggle="tooltip" title="Get directions" class="text-muted">78 Example Street, Test Town</a>  
+            <i class="fa fa-map-marker"></i> <a href="http://maps.google.com/maps?saddr=current+location&daddr=Sydney+Opera+House,+Sydney+Opera+House,+Bennelong+Point,+Sydney+NSW+2000,+Australia" target="_blank" data-placement="top" data-toggle="tooltip" title="Get directions" class="text-muted">{{address}}</a>  
             
              
          </div> <!-- meta -->
@@ -269,20 +274,20 @@
           <div class="clearfix">  
           <h2>Organisations</h2>
 
-          <?php include 'card_organisation.php';?>  
-          <?php include 'card_organisation.php';?> 
-          <?php include 'card_organisation.php';?> 
-          <?php include 'card_organisation.php';?> 
+          {% include 'card_organisation.php' %}
+          {% include 'card_organisation.php' %}
+          {% include 'card_organisation.php' %}
+          {% include 'card_organisation.php' %}
           </div>
 
           <div class="clearfix">
           <h2>Customers</h2>
-          <?php include 'card_individual.php';?> 
-          <?php include 'card_individual.php';?> 
-          <?php include 'card_individual.php';?> 
-          <?php include 'card_individual.php';?> 
-          <?php include 'card_individual.php';?> 
-          <?php include 'card_individual.php';?>  
+          {% include 'card_individual.php' %}
+          {% include 'card_individual.php' %}
+          {% include 'card_individual.php' %}
+          {% include 'card_individual.php' %}
+          {% include 'card_individual.php' %}
+          {% include 'card_individual.php' %}
           </div> 
 
 
@@ -337,4 +342,4 @@
     </div><!-- col10 --> 
 
    
- <?php include '_footer.php';?>
+{% endblock %}
