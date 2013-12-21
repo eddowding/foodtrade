@@ -6,6 +6,8 @@ from allauth.socialaccount.models import SocialToken, SocialAccount
 from twython import Twython
 import json
 from TweetFeed import TweetFeed
+from mainapp.TweetFeed import TradeConnection
+
 consumer_key = 'seqGJEiDVNPxde7jmrk6dQ'
 consumer_secret = 'sI2BsZHPk86SYB7nRtKy0nQpZX3NP5j5dLfcNiP14'
 access_token = ''
@@ -48,7 +50,28 @@ class AjaxHandle():
         else:
             return HttpResponse("{'status':0}")
 
+    def add_connection(self, request):
+        trade_conn = TradeConnection()
+        print request.POST.get('conn_data')
+        data = eval(request.POST.get('conn_data'))
+        if data !=None and data !="":
+            if data['status'] == 'buy_from':
+                trade_conn.create_connection({'b_useruid': int(data['prof_id']), 'c_useruid': request.user.id});
+            else:
+                trade_conn.create_connection({'b_useruid': request.user.id, 'c_useruid': int(data['prof_id'])});
+            return HttpResponse("{'status':1}")
+        else:
+            return HttpResponse("{'status':0}")
 
-
-    
-        
+    def del_connection(self, request):
+        trade_conn = TradeConnection()
+        print request.POST.get('conn_data')
+        data = eval(request.POST.get('conn_data'))
+        if data !=None and data !="":
+            if data['status'] == 'buy_from':
+                trade_conn.delete_connection(b_useruid = int(data['prof_id']), c_useruid = request.user.id)
+            else:
+                trade_conn.delete_connection(b_useruid = request.user.id, c_useruid = int(data['prof_id']))
+            return HttpResponse("{'status':1}")
+        else:
+            return HttpResponse("{'status':0}")
