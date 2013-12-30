@@ -1,3 +1,9 @@
+body {
+  min-height: 2000px;
+  padding-top: 70px;
+}
+
+
 @font-face {
     font-family: 'tradegothicbold';
     src: url('http://foodtrade.com/wp-content/themes/Terso-Child/font_trade/trade_gothic_bold_condensed_no._20-webfont.eot');
