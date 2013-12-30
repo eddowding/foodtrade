@@ -20,14 +20,14 @@
                         <th>Small biz
                         <a class="btn btn-info" href="#"><i class="fa fa-shopping-cart icon-white"></i> &pound;12 / month »</a> </th>
                         <th>Enterprise
-                        <a class="btn btn-success" disabled href="#"><i class="fa fa-shopping-cart icon-white"></i> &pound;1200 / year »</a></th>
+                        <a class="btn btn-success" disabled href="#"><i class="fa fa-shopping-cart icon-white"></i> &pound;TBC</a></th>
                     </tr>
                 </thead>
                 <tbody> 
                     <tr>
                         <td class="text-left"><strong>Buy or sell just by sending a tweet</strong></td>
                         <td> <i class="fa fa-times"></i></td>
-                        <td>1 / month</td>
+                        <td>5 / month</td>
                         <td>20 / month</td>
                         <td>100 / month</td>
                     </tr>
@@ -37,6 +37,13 @@
                         <td><i class="fa fa-check"></i> 1</td>
                         <td><i class="fa fa-check"></i> 5</td>
                         <td><i class="fa fa-check"></i> 20</td>
+                    </tr>
+                    <tr>
+                        <td class="text-left"><strong>Search radius</strong></td>
+                        <td>15 miles</td> 
+                        <td>50 miles</td> 
+                        <td>150 miles</td> 
+                        <td>Global</td> 
                     </tr>
                     <tr>
                         <td class="text-left">Business profile with contact details, map, description, and tags</td>
@@ -133,7 +140,7 @@
                             <a class="btn btn-success" href="#"><i class="fa fa-shopping-cart icon-white"></i> &pound;120 / year »</a>
                         </td> 
                         <td> 
-                            <a class="btn btn-success" disabled href="#"><i class="fa fa-shopping-cart icon-white"></i> &pound;1200 / year »</a>
+                            <a class="btn btn-success" disabled href="#">Not yet available</a>
                         </td> 
                     </tr>
                 </tbody>
@@ -148,6 +155,10 @@
             <div class="alert alert-info">      
                 <h3>Help us create more</h3>
                 <p class="lead">Sign up to a paid account and you'll be helping us add features to help you work smarter and better. We're building user numbers and revenue so we can create area analysis to unlock regional potential by highlighting local opportunities to develop and grow the market. </p>
+            </div> 
+            <div class="alert alert-info">      
+                <h3>We're not transactional</h3>
+                <p class="lead">Sig tures to help you work smarter and better. We're building user numbers and revenue so we can create area analysis to unlock regional potential by highlighting local opportunities to develop and grow the market. </p>
             </div> 
         </div><!-- div -->
     </div><!-- row -->
