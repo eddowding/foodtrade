@@ -65,5 +65,5 @@ class TradeConnection():
         self.db_object.update(self.table_name,{'b_useruid': b_useruid, 'c_useruid': c_useruid}, {'deleted':1})
 
 # trade_conn = TradeConnection()
-# trade_conn.create_connection({'b_useruid': 2, 'c_useruid': 3})
-# print trade_conn.get_connection_by_customer(3)
+# trade_conn.create_connection({'b_useruid': 23, 'c_useruid': 20})
+# print trade_conn.get_connection_by_customer(23)

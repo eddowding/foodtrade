@@ -148,8 +148,6 @@
                             {{form.email}}
                         </div>
                     </div>
-                    {{form.longitude.as_hidden}}
-                    {{form.latitude.as_hidden}}
                                
                     <div class="form-group last">
                         <div class="col-sm-offset-3 col-sm-9">
@@ -180,7 +178,7 @@
 function dataradio(value){
     // var result_val = $("input[name=options]:checked").val();
     document.getElementById('id_sign_up_as').value = value;
-    console.log(value);
+    // console.log(value);
 }
   function copydata(){
 var all_values = '';
@@ -208,29 +206,4 @@ var elements = document.getElementsByClassName('search-choice');
       $(selector).chosen(config[selector]);
     }
   </script>
-
-    <script type="text/javascript">
-window.onload=function() {
-    function success(position) {
-
-document.getElementsByName('longitude')[0].value = (position.coords.longitude);
-document.getElementsByName('latitude')[0].value =(position.coords.latitude);
-
-}
-
-function error(msg) {
-  var s = document.querySelector('#status');
-  s.innerHTML = typeof msg == 'string' ? msg : "failed";
-  s.className = 'fail';
-
-  // console.log(arguments);
-}
-
-if (navigator.geolocation) {
-  navigator.geolocation.getCurrentPosition(success, error);
-} else {
-  error('not supported');
-}
-}
-</script>
 {% endblock %}
