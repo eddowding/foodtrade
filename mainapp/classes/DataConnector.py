@@ -51,6 +51,7 @@ class UserInfo():
         self.full_name = twitter_user.extra_data['name']
         self.username = twitter_user.extra_data['screen_name']
         self.profileimg = twitter_user.extra_data['profile_image_url_https']
+        print 'hello'+twitter_user.extra_data['profile_image_url_https']
         self.trade_connections_no = user_connection.get_trade_connection_no()
         self.food_no = user_connection.get_food_connection_no()
         self.nearby_businesses_no = user_connection.get_nearby_businesses_no()
