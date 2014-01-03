@@ -9,7 +9,7 @@ from MongoConnection import MongoConnection
 from datetime import datetime
 from bson.objectid import ObjectId
 import time
-
+from mainapp.TweetFeed import TradeConnection
 class UserConnections():
 
     """docstring for UserConnections"""
@@ -23,8 +23,11 @@ class UserConnections():
         pass
 
     def get_trade_connection_no(self):
-        
-        return 480
+        trade_conn = TradeConnection()
+        b_conn = trade_conn.get_connection_by_business(23)
+        c_conn = trade_conn.get_connection_by_customer(23)
+        total_conn = len(b_conn) + len(c_conn)
+        return total_conn
         # return self.db_object.get_all_count(self.table_name,{"$or":[{'buyer':self.twitter_user_id},{'seller':self.twitter_user_id}]}, 'time_stamp')
     def get_food_connection_no(self):
         return 65

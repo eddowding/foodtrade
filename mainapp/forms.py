@@ -19,10 +19,6 @@ class SignupForm(forms.Form):
      'class' : 'form-control'}))
     type_user = forms.CharField(widget=forms.TextInput(attrs={'placeholder': u'Farm, wholesaler, restaurant, bakery...',
      'class' : 'form-control'}))
-    latitude = forms.CharField(widget=forms.TextInput(attrs={'placeholder': u'Farm, wholesaler, restaurant, bakery...',
-     'class' : 'form-control'}))
-    longitude = forms.CharField(widget=forms.TextInput(attrs={'placeholder': u'Farm, wholesaler, restaurant, bakery...',
-     'class' : 'form-control'}))
 
 
     def save(self, user):
@@ -33,8 +29,6 @@ class SignupForm(forms.Form):
         data = {'useruid': str(user.id), 'sign_up_as': self.cleaned_data['sign_up_as'],
         		'type_user': self.cleaned_data['type_user'], 
                 'zip_code': self.cleaned_data['zip_code'],
-        		'latitude': self.cleaned_data['latitude'],
-        		'longitude': self.cleaned_data['longitude'],
         		'address': addr
         }
         userprofile.create_profile(data)
