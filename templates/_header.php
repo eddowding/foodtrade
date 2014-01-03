@@ -13,12 +13,10 @@
     <!-- CSS -->
     <link href="css/bootstrap.css" rel="stylesheet">
     <link href="css/foodtrade.css" rel="stylesheet">
-    <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+    <link href="css/font-awesome.css" rel="stylesheet">
  
 
-    <!-- Custom styles for this template -->
-    <link href="http://getbootstrap.com/examples/navbar-fixed-top/navbar-fixed-top.css" rel="stylesheet">
- 
+    
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>

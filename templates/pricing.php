@@ -5,219 +5,166 @@
 
 
 <div class="container-responsive">
+
     <div class="row">
-        <div class="col-xs-12 col-md-3">
-            <div class="panel panel-primary">
-                <div class="panel-heading">
-                    <h3 class="panel-title">
-                        Bronze</h3>
-                </div>
-                <div class="panel-body">
-                    <div class="the-price">
-                        <h1>
-                            $10<span class="subscript">/mo</span></h1>
-                        <small>1 month FREE trial</small>
-                    </div>
-                    <table class="table">
-                        <tr>
-                            <td>
-                                1 Account
-                            </td>
-                        </tr>
-                        <tr class="active">
-                            <td>
-                                1 Project
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                100K API Access
-                            </td>
-                        </tr>
-                        <tr class="active">
-                            <td>
-                                100MB Storage
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                Custom Cloud Services
-                            </td>
-                        </tr>
-                        <tr class="active">
-                            <td>
-                                Weekly Reports
-                            </td>
-                        </tr>
-                    </table>
-                </div>
-                <div class="panel-footer">
-                    <a href="http://www.jquery2dotnet.com" class="btn btn-success" role="button">Sign Up</a>
-                    1 month FREE trial</div>
-            </div>
-        </div>
-        <div class="col-xs-12 col-md-3">
-            <div class="panel panel-primary">
-                <div class="panel-heading">
-                    <h3 class="panel-title">
-                        Bronze</h3>
-                </div>
-                <div class="panel-body">
-                    <div class="the-price">
-                        <h1>
-                            $10<span class="subscript">/mo</span></h1>
-                        <small>1 month FREE trial</small>
-                    </div>
-                    <table class="table">
-                        <tr>
-                            <td>
-                                1 Account
-                            </td>
-                        </tr>
-                        <tr class="active">
-                            <td>
-                                1 Project
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                100K API Access
-                            </td>
-                        </tr>
-                        <tr class="active">
-                            <td>
-                                100MB Storage
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                Custom Cloud Services
-                            </td>
-                        </tr>
-                        <tr class="active">
-                            <td>
-                                Weekly Reports
-                            </td>
-                        </tr>
-                    </table>
-                </div>
-                <div class="panel-footer">
-                    <a href="http://www.jquery2dotnet.com" class="btn btn-success" role="button">Sign Up</a>
-                    1 month FREE trial</div>
-            </div>
-        </div>
-        <div class="col-xs-12 col-md-3">
-            <div class="panel panel-success">
-                <div class="cnrflash">
-                    <div class="cnrflash-inner">
-                        <span class="cnrflash-label">BEST
-                            <br>
-                            VALUE</span>
-                    </div>
-                </div>
-                <div class="panel-heading">
-                    <h3 class="panel-title">
-                        Silver</h3>
-                </div>
-                <div class="panel-body">
-                    <div class="the-price">
-                        <h1>
-                            $20<span class="subscript">/mo</span></h1>
-                        <small>1 month FREE trial</small>
-                    </div>
-                    <table class="table">
-                        <tr>
-                            <td>
-                                2 Account
-                            </td>
-                        </tr>
-                        <tr class="active">
-                            <td>
-                                5 Project
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                100K API Access
-                            </td>
-                        </tr>
-                        <tr class="active">
-                            <td>
-                                200MB Storage
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                Custom Cloud Services
-                            </td>
-                        </tr>
-                        <tr class="active">
-                            <td>
-                                Weekly Reports
-                            </td>
-                        </tr>
-                    </table>
-                </div>
-                <div class="panel-footer">
-                    <a href="http://www.jquery2dotnet.com" class="btn btn-success" role="button">Sign Up</a>
-                    1 month FREE trial</div>
-            </div>
-        </div>
-        <div class="col-xs-12 col-md-3">
-            <div class="panel panel-info">
-                <div class="panel-heading">
-                    <h3 class="panel-title">
-                        Gold</h3>
-                </div>
-                <div class="panel-body">
-                    <div class="the-price">
-                        <h1>
-                            $35<span class="subscript">/mo</span></h1>
-                        <small>1 month FREE trial</small>
-                    </div>
-                    <table class="table">
-                        <tr>
-                            <td>
-                                5 Account
-                            </td>
-                        </tr>
-                        <tr class="active">
-                            <td>
-                                20 Project
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                300K API Access
-                            </td>
-                        </tr>
-                        <tr class="active">
-                            <td>
-                                500MB Storage
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                Custom Cloud Services
-                            </td>
-                        </tr>
-                        <tr class="active">
-                            <td>
-                                Weekly Reports
-                            </td>
-                        </tr>
-                    </table>
-                </div>
-                <div class="panel-footer">
-                    <a href="http://www.jquery2dotnet.com" class="btn btn-success" role="button">Sign Up</a> 1 month FREE trial</div>
-            </div>
+        <div class="span12">
+            <table id="pricing" class="table table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th> </th>
+                        <th>
+                        Free forever
+                        <a class="btn btn-info" href="#">Sign up Free</a> </th>
+                        <th>Independent
+                        <a class="btn btn-info" href="#"><i class="fa fa-shopping-cart icon-white"></i> &pound;2 / month »</a> </th>
+                        <th>Small biz
+                        <a class="btn btn-info" href="#"><i class="fa fa-shopping-cart icon-white"></i> &pound;12 / month »</a> </th>
+                        <th>Enterprise
+                        <a class="btn btn-success" disabled href="#"><i class="fa fa-shopping-cart icon-white"></i> &pound;TBC</a></th>
+                    </tr>
+                </thead>
+                <tbody> 
+                    <tr>
+                        <td class="text-left"><strong>Buy or sell just by sending a tweet</strong></td>
+                        <td> <i class="fa fa-times"></i></td>
+                        <td>5 / month</td>
+                        <td>20 / month</td>
+                        <td>100 / month</td>
+                    </tr>
+                    <tr>
+                        <td class="text-left">Keyword alerts (e.g. #publicsector / #apples / near:Bristol)</td>
+                        <td><i class="fa fa-times"></i></td>
+                        <td><i class="fa fa-check"></i> 1</td>
+                        <td><i class="fa fa-check"></i> 5</td>
+                        <td><i class="fa fa-check"></i> 20</td>
+                    </tr>
+                    <tr>
+                        <td class="text-left"><strong>Search radius</strong></td>
+                        <td>15 miles</td> 
+                        <td>50 miles</td> 
+                        <td>150 miles</td> 
+                        <td>Global</td> 
+                    </tr>
+                    <tr>
+                        <td class="text-left">Business profile with contact details, map, description, and tags</td>
+                        <td><i class="fa fa-check"></i></td>
+                        <td><i class="fa fa-check"></i></td>
+                        <td><i class="fa fa-check"></i></td>
+                        <td><i class="fa fa-check"></i></td>
+                    </tr>
+                    <tr>
+                        <td class="text-left">Showcase your stockists and suppliers, awards, and memberships</td>
+                        <td>  20</td>
+                        <td><i class="fa fa-check"></i>  </td>
+                        <td><i class="fa fa-check"></i>  </td>
+                        <td><i class="fa fa-check"></i>  </td>
+                    </tr>
+                    <tr>
+                        <td class="text-left">Show products and purchase requests</td>
+                        <td>  3</td>
+                        <td> 10 </td>
+                        <td><i class="fa fa-check"></i>  </td>
+                        <td><i class="fa fa-check"></i>  </td>
+                    </tr>
+                    <tr>
+                        <td class="text-left">Results per search</td>
+                        <td> 10</td>
+                        <td> 30</td>
+                        <td><i class="fa fa-check"></i> unlimited</td>
+                        <td><i class="fa fa-check"></i> unlimited</td>
+                    </tr>
+                    <tr>
+                        <td class="text-left">See emails and phone numbers</td>
+                        <td>Pay with a tweet</td>
+                        <td><i class="fa fa-check"></i></td>
+                        <td><i class="fa fa-check"></i></td>
+                        <td><i class="fa fa-check"></i></td>
+                    </tr>
+                    <tr>
+                        <td class="text-left">'Verified' status </td>
+                        <td></td>
+                        <td><i class="fa fa-check"></i></td>
+                        <td><i class="fa fa-check"></i></td>
+                        <td><i class="fa fa-check"></i></td>
+                    </tr>
+                    <tr>
+                        <td class="text-left">Push your data to mobile apps,  search engines etc</td>
+                        <td></td>
+                        <td><i class="fa fa-check"></i></td>
+                        <td><i class="fa fa-check"></i></td>
+                        <td><i class="fa fa-check"></i></td>
+                    </tr>
+                    <tr>
+                        <td class="text-left">Advanced search filters</td>
+                        <td></td>
+                        <td><i class="fa fa-check"></i></td>
+                        <td><i class="fa fa-check"></i></td>
+                        <td><i class="fa fa-check"></i></td>
+                    </tr> 
+                    <tr>
+                        <td class="text-left">Create customised lists and add personal notes</td>
+                        <td> </td>
+                        <td> </td>
+                        <td><i class="fa fa-check"></i></td>
+                        <td><i class="fa fa-check"></i></td>
+                    </tr>
+                    <tr>
+                        <td class="text-left">Extra photos and fields</td>
+                        <td></td>
+                        <td></td> 
+                        <td><i class="fa fa-check"></i></td>
+                        <td><i class="fa fa-check"></i></td>
+                    </tr>
+                    <tr>
+                        <td class="text-left">Map your customers</td>
+                        <td> </td>
+                        <td></td>
+                        <td><i class="fa fa-check"></i></td>
+                        <td><i class="fa fa-check"></i></td>
+                    </tr> 
+                    <tr>
+                        <td class="text-left">Advanced reports</td>
+                        <td> </td>
+                        <td></td>
+                        <td> </td>
+                        <td><i class="fa fa-check"></i> coming soon</td>
+                    </tr> 
+                    <tr>
+                        <td></td>
+                        <td><a class="btn btn-info" href="#">Sign up Free</a> 
+                         </td>
+                        <td><a class="btn btn-info" href="#"><i class="fa fa-shopping-cart icon-white"></i> &pound;2 / month »</a> 
+                            <a class="btn btn-success" href="#"><i class="fa fa-shopping-cart icon-white"></i> &pound;20 / year »</a>
+                        </td>
+                        <td><a class="btn btn-info" href="#"><i class="fa fa-shopping-cart icon-white"></i> &pound;12 / month »</a> 
+                            <a class="btn btn-success" href="#"><i class="fa fa-shopping-cart icon-white"></i> &pound;120 / year »</a>
+                        </td> 
+                        <td> 
+                            <a class="btn btn-success" disabled href="#">Not yet available</a>
+                        </td> 
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </div>
-</div>
 
+ 
+
+    <div class="row">
+        <div class="col-md-12"> 
+            <div class="alert alert-info">      
+                <h3>Help us create more</h3>
+                <p class="lead">Sign up to a paid account and you'll be helping us add features to help you work smarter and better. We're building user numbers and revenue so we can create area analysis to unlock regional potential by highlighting local opportunities to develop and grow the market. </p>
+            </div> 
+            <div class="alert alert-info">      
+                <h3>We're not transactional</h3>
+                <p class="lead">Sig tures to help you work smarter and better. We're building user numbers and revenue so we can create area analysis to unlock regional potential by highlighting local opportunities to develop and grow the market. </p>
+            </div> 
+        </div><!-- div -->
+    </div><!-- row -->
 
 <div class="row">
-
+<h1>Organisations</h1>
   <div class="col-md-6">
   <pre>
 

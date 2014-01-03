@@ -19,6 +19,7 @@ admin_access_token_secret = 'ST8W9TWqqHpyskMADDSpZ5r9hl7ND6sEfaLvhcqNfk1v4'
 
 
 
+from classes.DataConnector import UserInfo
 from django.template import RequestContext
 
 
@@ -37,6 +38,14 @@ def admin_tags(request):
     return render_to_response('admin_tags.html',context_instance=RequestContext(request))
 
 def home(request):
+    parameters = {}
+
+    if request.user.is_authenticated():
+        # parameters['user'] = request.user
+        user_id = request.user.id
+       
+        user_info = UserInfo(user_id)
+        parameters['userinfo'] = user_info
     # parameters={}
     # parameters['user'] = request.user
     # parameters['total_food_count'] = 2
@@ -45,7 +54,7 @@ def home(request):
     # parameters['business'] = [{'name': 'FoodSupply Pvt. Ltd.', 'tagcount': 7},{'name': 'Nina and Hager Meat Industry', 'tagcount': 5}]
     # parameters['total_organization_count'] = 2
     # parameters['organization'] = [{'name': 'Onion Export', 'tagcount': 7},{'name': 'Bajeko Sekuwa', 'tagcount': 5}]
-    return render_to_response('thome.html',context_instance=RequestContext(request))
+    return render_to_response('thome.html',parameters,context_instance=RequestContext(request))
 
 def tweets(request):
     parameters = {}

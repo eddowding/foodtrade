@@ -22,9 +22,7 @@
     #pac-input {
       /*background-color: #fff;*/
       padding: 0 11px 0 13px;
-      width: 400px;
-      font-family: Roboto;
-      font-size: 15px;
+      width: 200px;  
       font-weight: 300;
       text-overflow: ellipsis;
       z-index: 1000000;
@@ -34,18 +32,17 @@
       border-color: #4d90fe;
       margin-left: -1px;
       padding-left: 14px;  /* Regular padding-left + 1. */
-      width: 401px;
+      width: 300px;
       z-index: 1000000;
     }
     #keyword:focus {
       border-color: #4d90fe;
       margin-left: -1px;
       padding-left: 14px;  /* Regular padding-left + 1. */
-      width: 401px;
+       
       z-index: 1000000;
     }
-    .pac-container {
-      font-family: Roboto;
+    .pac-container { 
     }
 
     #type-selector {
@@ -55,7 +52,7 @@
     }
 
     #type-selector label {
-      font-family: Roboto;
+      
       font-size: 13px;
       font-weight: 300;
     }
