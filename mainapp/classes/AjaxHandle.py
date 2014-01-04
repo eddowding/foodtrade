@@ -6,6 +6,7 @@ from allauth.socialaccount.models import SocialToken, SocialAccount
 from twython import Twython
 import json
 from TweetFeed import TweetFeed
+from Tags import Tags
 from mainapp.TweetFeed import TradeConnection, UserProfile
 
 consumer_key = 'seqGJEiDVNPxde7jmrk6dQ'
@@ -111,3 +112,19 @@ class AjaxHandle():
             return HttpResponse("{'status':1}")
         else:
             return HttpResponse("{'status':0}")
+
+    def save_tags(self, request):
+        if request.user.is_authenticated():
+            tags = request.POST.get('tags')
+            json_tags = json.loads(tags)
+            insert_val = {'parent':1, 'tags':json_tags}
+            mytag = Tags()
+            mytag.set_tags(insert_val)
+            print mytag.get_tags()
+            return HttpResponse("1")
+        else:
+            return HttpResponse('0')
+
+
+
+
