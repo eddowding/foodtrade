@@ -1,3 +1,4 @@
+global_this = '';
 function ajax_request(s_handler, c_handler, input_data)
 {
    $.ajax({
@@ -42,6 +43,23 @@ function conn_handler(value, prof_id)
 
 function create_conn(){
 	
+}
+
+function add_food(prof_id){
+	var food = document.getElementById('addfood_id').value;
+	var data = {useruid: prof_id, food_name: food};
+	ajax_request("addfood", 'create_conn', {data: JSON.stringify(data)});
+	document.getElementById('addfood_id').value = '';
+	var append_data = '<tr><td>'+food+'</td><td><div class="pull-right"><a href="#"><i class="fa fa-thumbs-o-up text-muted" title="Vouch for this"></i></a><a href="#"><i class="fa fa-trash-o text-muted" title="Delete"></i></a></div></td></tr>';
+	$("#food_tbody").prepend(append_data);
+}
+
+function delete_food(prof_id, food_name, my_this){
+	var data = {useruid: prof_id, food_name: food_name};
+	ajax_request("deletefood", 'create_conn', {data: JSON.stringify(data)});
+	global_this = my_this;
+	var del_id = global_this.parentElement.parentElement.parentElement.parentElement.getAttribute('id');
+	$('#'+del_id).remove();
 }
 
 function PostStatus(status_val)

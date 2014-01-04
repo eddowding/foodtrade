@@ -64,6 +64,22 @@ class TradeConnection():
     def delete_connection(self, b_useruid, c_useruid):
         self.db_object.update(self.table_name,{'b_useruid': b_useruid, 'c_useruid': c_useruid}, {'deleted':1})
 
-# trade_conn = TradeConnection()
-# trade_conn.create_connection({'b_useruid': 2, 'c_useruid': 3})
-# print trade_conn.get_connection_by_customer(3)
+class Food():
+    """docstring for Connection"""
+    def __init__(self):
+        self.db_object = MongoConnection("localhost",27017,'foodtrade')
+        self.table_name = 'food'
+        self.db_object.create_table(self.table_name,'useruid')
+    def get_foods_by_userid(self,useruid):
+        return self.db_object.get_all(self.table_name,{'useruid': useruid, 'deleted': 0})
+
+    def create_food (self, value):
+        value['deleted'] =0
+        self.db_object.insert_one(self.table_name,value)
+
+    def delete_food(self, useruid, food_name):
+        self.db_object.update(self.table_name,{'useruid': useruid, 'food_name': food_name}, {'deleted':1})
+
+# foo = Food()
+# foo.create_food({'useruid': 26, 'food_name': 'Meat/Chicken'})
+# print foo.get_foods_by_userid(26)
