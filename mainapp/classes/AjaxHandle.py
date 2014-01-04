@@ -116,6 +116,7 @@ class AjaxHandle():
     def save_tags(self, request):
         if request.user.is_authenticated():
             tags = request.POST.get('tags')
+            print tags
             json_tags = json.loads(tags)
             insert_val = {'parent':1, 'tags':json_tags}
             mytag = Tags()
