@@ -7,7 +7,7 @@ class Tags():
     def __init__ (self):
         self.db_object = MongoConnection("localhost",27017,'foodtrade')
         self.table_name = 'tags'
-   	
+    
     def get_tags(self):
         try:
             return self.db_object.get_one(self.table_name,{})['tags']
@@ -16,8 +16,10 @@ class Tags():
 
     def set_tags(self,tags):
         try:
-    	   return self.db_object.update(self.table_name,{'parent':1}, {'tags':tags['tags']})
+            print "first"
+            return self.db_object.update(self.table_name,{'parent':1}, {'tags':tags['tags']})
         except:
+            print "second"
             return self.db_object.insert_one(self.table_name,tags)
         
 
