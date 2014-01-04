@@ -22,7 +22,7 @@ class Search():
 
         query_string = {}
         if self.keyword !="":
-            keyword_like = re.compile(self.keyword + '+')
+            keyword_like = re.compile(self.keyword + '+', re.IGNORECASE)
             query_string['status'] = {"$regex": keyword_like, '$options': '-i'}
 
         if(self.lon != "" and self.lat != ""):

@@ -9,6 +9,8 @@ from search import search_general
 from streaming import MyStreamer
 from models import MaxTweetId
 
+from mainapp.classes.Tags import Tags
+
 consumer_key = 'seqGJEiDVNPxde7jmrk6dQ'
 consumer_secret = 'sI2BsZHPk86SYB7nRtKy0nQpZX3NP5j5dLfcNiP14'
 access_token = ''
@@ -35,7 +37,18 @@ def ajax_request(request, func_name):
 
 
 def admin_tags(request):
-    return render_to_response('admin_tags.html',context_instance=RequestContext(request))
+    parameters = {}
+    if request.user.is_authenticated():
+        # parameters['user'] = request.user
+        user_id = request.user.id
+       
+        user_info = UserInfo(user_id)
+        parameters['userinfo'] = user_info
+    mytag = Tags()
+    tags = mytag.get_tags()
+    parameters['tags'] = json.dumps(tags)
+
+    return render_to_response('admin_tags.html', parameters, context_instance=RequestContext(request))
 
 def home(request):
     parameters = {}

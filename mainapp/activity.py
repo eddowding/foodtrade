@@ -101,7 +101,7 @@ def home(request):
         else:
             distance_text = str(lonlat_distance*1000) + " m"
         # except:
-            pass
+        #    pass
 
         results[i]['distance_text'] = distance_text
 
