@@ -6,7 +6,7 @@ from allauth.socialaccount.models import SocialToken, SocialAccount
 from twython import Twython
 import json
 from TweetFeed import TweetFeed
-from mainapp.TweetFeed import TradeConnection, UserProfile
+from mainapp.TweetFeed import TradeConnection, UserProfile, Food
 
 consumer_key = 'seqGJEiDVNPxde7jmrk6dQ'
 consumer_secret = 'sI2BsZHPk86SYB7nRtKy0nQpZX3NP5j5dLfcNiP14'
@@ -111,3 +111,23 @@ class AjaxHandle():
             return HttpResponse("{'status':1}")
         else:
             return HttpResponse("{'status':0}")
+
+    def addfood(self, request):
+        foo = Food()
+        print request.POST.get('data')
+        data = eval(request.POST.get('data'))
+        if data !=None and data !="":
+            foo.create_food(data)
+            return HttpResponse("{'status':1}")
+        else:
+            return HttpResponse("{'status':0}")
+
+    def deletefood(self, request):
+        foo = Food()
+        print request.POST.get('data')
+        data = eval(request.POST.get('data'))
+        if data !=None and data !="":
+            foo.delete_food(useruid = data['useruid'], food_name = data['food_name']);
+            return HttpResponse("{'status':1}")
+        else:
+            return HttpResponse("{'status':0}")    

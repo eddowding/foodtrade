@@ -8,13 +8,13 @@ from django.contrib.auth.models import User
 
 from geolocation import get_addr_from_ip
 from classes.DataConnector import UserInfo
+from mainapp.TweetFeed import Food, TradeConnection
 def display_profile(request, username):
     parameters = {}
     user_profile = UserProfile()
     usr = User.objects.get(username = username)
     account = SocialAccount.objects.get(user__id = usr.id)
     userprof = user_profile.get_profile_by_id(str(usr.id))
-    print userprof
     parameters['profile_id'] = usr.id
     parameters['sign_up_as'] = userprof['sign_up_as']
     parameters['address'] = userprof['address']
@@ -35,7 +35,10 @@ def display_profile(request, username):
         parameters['userinfo'] = user_info
 
 
-
+    # getting foods
+    foo = Food()
+    all_foods = foo.get_foods_by_userid(usr.id)
+    parameters['all_foods'] = all_foods
     # else:
     x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
     if x_forwarded_for:
