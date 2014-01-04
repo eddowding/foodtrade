@@ -13,6 +13,7 @@ urlpatterns = patterns('',
     url(r'^activity/$', 'mainapp.activity.home', name='home'),
     url(r'^profile/(?P<username>[-\w]+)/$', 'mainapp.profilepage.display_profile', name='profile'),
     # url(r'^foodtrade/', include('foodtrade.foo.urls')),
+    url(r'^accounts/social/signup/', 'mainapp.signup_views.signup_view', name = 'account_signup'),
     url(r'^accounts/', include('allauth.urls')),
     # Uncomment the admin/doc line below to enable admin documentation:
     url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
