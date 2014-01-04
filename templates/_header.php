@@ -101,7 +101,7 @@
 
 
 <div class="container-responsive">
-  <div class="row">
+  <div class="row ">
 
     <div class="main">
  

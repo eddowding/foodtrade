@@ -1,5 +1,5 @@
-body {
-  min-height: 2000px;
+body { 
+  
   padding-top: 70px;
 }
 
@@ -24,6 +24,68 @@ h2 {
 	font-family: "tradegothicbold"!important;
 	text-transform: uppercase;
 }
+
+
+  
+ 
+/*
+ * Off Canvas
+ * --------------------------------------------------
+ */
+
+html,
+body {
+  overflow-x: hidden; /* Prevent scroll on narrow devices */
+}
+body {
+  padding-top: 70px;
+}
+footer {
+  padding: 30px 0;
+}
+
+
+@media screen and (max-width: 767px) {
+  .row-offcanvas {
+    position: relative;
+    -webkit-transition: all 0.25s ease-out;
+    -moz-transition: all 0.25s ease-out;
+    transition: all 0.25s ease-out;
+  }
+
+  .row-offcanvas-right
+  .sidebar-offcanvas {
+    right: -50%; /* 6 columns */
+  }
+
+  .row-offcanvas-left
+  .sidebar-offcanvas {
+    left: -50%; /* 6 columns */
+  }
+
+  .row-offcanvas-right.active {
+    right: 50%; /* 6 columns */
+  }
+
+  .row-offcanvas-left.active {
+    left: 50%; /* 6 columns */
+  }
+
+  .sidebar-offcanvas {
+    position: absolute;
+    top: 0;
+    width: 50%; /* 6 columns */
+  }
+}
+
+
+
+
+
+
+
+
+/********************************/
 
 .navbar-brand {
 	padding: 0 15px;
@@ -119,15 +181,16 @@ html,body
 {
   height: 100%;
 }
-.sidebar {
+#sidebar {
 	border-right: 1px solid #ccc;
-	background-image: url(http://www.stripegenerator.com/generators/generate_stripes.php?fore=e1e1e1&h=30&w=1&p=3&back1=ffffff&back2=ff0000&gt=0&d=0&shadow=0&);
+	background-image: url(../images/double_stripe.png);
+	background-repeat: repeat;
 	min-height: 1000px;
 	padding-top: 30px;
 	margin-top: -10px;
 }
 
-.sidebar .alert {
+#sidebar .alert {
 	padding: 5px
 }
 
@@ -220,7 +283,7 @@ article .content h4 {
 
 #contact_info {
 	border-left: 1px solid #ccc;
-	background-image: url(http://www.stripegenerator.com/generators/generate_stripes.php?fore=dddddd&h=30&w=1&p=9&back1=ffffff&back2=ff0000&gt=0&d=0&shadow=0&);
+	background-image: url(../images/single_stripe.png);
 	padding: 20px;
 }
 
@@ -231,7 +294,7 @@ article .content h4 {
 	color: #fff;
 	padding: 20px 20px 20px 10px;
 	border-radius: 10px;
-	background-image: url(http://www.stripegenerator.com/generators/generate_stripes.php?fore=222222&h=30&w=1&p=3&back1=000000&back2=ff0000&gt=0&d=0&shadow=0&);
+	background-image: url(../images/single_stripe.png);
 }
 
 h2 {
