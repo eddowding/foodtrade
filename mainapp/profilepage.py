@@ -6,6 +6,7 @@ from mainapp.TweetFeed import UserProfile
 from allauth.socialaccount.models import SocialToken, SocialAccount
 from django.contrib.auth.models import User
 
+from geolocation import get_addr_from_ip
 from classes.DataConnector import UserInfo
 def display_profile(request, username):
     parameters = {}
@@ -13,6 +14,7 @@ def display_profile(request, username):
     usr = User.objects.get(username = username)
     account = SocialAccount.objects.get(user__id = usr.id)
     userprof = user_profile.get_profile_by_id(str(usr.id))
+    print userprof
     parameters['profile_id'] = usr.id
     parameters['sign_up_as'] = userprof['sign_up_as']
     parameters['address'] = userprof['address']
@@ -27,22 +29,22 @@ def display_profile(request, username):
         user_profile_obj = UserProfile()
         user_profile = user_profile_obj.get_profile_by_id(str(user_id))
 
-        default_lon = float(user_profile['longitude'])
-        default_lat = float(user_profile['latitude'])
+        # default_lon = float(user_profile['longitude'])
+        # default_lat = float(user_profile['latitude'])
         user_info = UserInfo(user_id)
         parameters['userinfo'] = user_info
 
 
 
+    # else:
+    x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+    if x_forwarded_for:
+        ip = x_forwarded_for.split(',')[0]
     else:
-        x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
-        if x_forwarded_for:
-            ip = x_forwarded_for.split(',')[0]
-        else:
-            ip = request.META.get('REMOTE_ADDR')
-        location_info = get_addr_from_ip(ip)
-        default_lon = float(location_info['longitude'])
-        default_lat = float(location_info['latitude'])
+        ip = request.META.get('REMOTE_ADDR')
+    location_info = get_addr_from_ip(ip)
+    default_lon = float(location_info['longitude'])
+    default_lat = float(location_info['latitude'])
 
     parameters['loc'] = {'lat':default_lat, 'lon':default_lon}
     if request.user.is_authenticated():
