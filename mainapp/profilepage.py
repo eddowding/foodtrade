@@ -14,6 +14,7 @@ def display_profile(request, username):
     usr = User.objects.get(username = username)
     account = SocialAccount.objects.get(user__id = usr.id)
     userprof = user_profile.get_profile_by_id(str(usr.id))
+    print userprof
     parameters['profile_id'] = usr.id
     parameters['sign_up_as'] = userprof['sign_up_as']
     parameters['address'] = userprof['address']

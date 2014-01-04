@@ -17,15 +17,15 @@ class UserConnections():
         self.db_object = MongoConnection("localhost",27017,'foodtrade')
         self.table_name = 'user_connections'
         self.db_object.create_table(self.table_name,'_id')
-        self.twitter_user_id = user_id
+        self.user_id = user_id
         
     def insert_connection(self):
         pass
 
     def get_trade_connection_no(self):
         trade_conn = TradeConnection()
-        b_conn = trade_conn.get_connection_by_business(23)
-        c_conn = trade_conn.get_connection_by_customer(23)
+        b_conn = trade_conn.get_connection_by_business(self.user_id)
+        c_conn = trade_conn.get_connection_by_customer(self.user_id)
         total_conn = len(b_conn) + len(c_conn)
         return total_conn
         # return self.db_object.get_all_count(self.table_name,{"$or":[{'buyer':self.twitter_user_id},{'seller':self.twitter_user_id}]}, 'time_stamp')
