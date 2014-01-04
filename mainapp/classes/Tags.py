@@ -9,7 +9,10 @@ class Tags():
         self.table_name = 'tags'
    	
     def get_tags(self):
-        return self.db_object.get_one(self.table_name,{})['tags']
+        try:
+            return self.db_object.get_one(self.table_name,{})['tags']
+        except:
+            return []
 
     def set_tags(self,tags):
         try:
