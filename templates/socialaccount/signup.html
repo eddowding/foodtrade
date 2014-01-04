@@ -64,8 +64,6 @@
 
                         </div>
                     </div>
-
-
                     <div class="form-group">
                         <label for="id_type_user" class="col-sm-3 control-label">
                             Type</label>
@@ -73,13 +71,16 @@
                         <div class="col-sm-9">
 <select data-placeholder="Farm, wholesaler, restaurant, bakery..." style="width:250px;" class="chosen-select" multiple tabindex="6">
             <option value=""></option>
-            <optgroup label="NFC EAST">
-              <option>Dallas Cowboys</option>
-              <option>New York Giants</option>
-              <option>Philadelphia Eagles</option>
-              <option>Washington Redskins</option>
+            {% for each in all_tags %}
+            <optgroup label={{each.node}}>
+              {% ifnotequal each.childrens|length 0 %}
+                {% for eachchild in each.childrens %}
+                <option>{{eachchild.node}}</option>
+                {% endfor %}
+              {% endifnotequal %}
             </optgroup>
-            <optgroup label="NFC NORTH">
+            {% endfor %}
+            <!-- <optgroup label="NFC NORTH">
               <option>Chicago Bears</option>
               <option>Detroit Lions</option>
               <option>Green Bay Packers</option>
@@ -120,7 +121,7 @@
               <option>Kansas City Chiefs</option>
               <option>Oakland Raiders</option>
               <option>San Diego Chargers</option>
-            </optgroup>
+            </optgroup> -->
           </select>
 
 
