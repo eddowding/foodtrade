@@ -16,10 +16,9 @@ class Tags():
 
     def set_tags(self,tags):
         try:
-            print "first"
+            val = self.db_object.get_one(self.table_name,{})['tags']
             return self.db_object.update(self.table_name,{'parent':1}, {'tags':tags['tags']})
         except:
-            print "second"
             return self.db_object.insert_one(self.table_name,tags)
         
 
