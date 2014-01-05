@@ -73,11 +73,13 @@
             <option value=""></option>
             {% for each in all_tags %}
             <optgroup label={{each.node}}>
-              {% ifnotequal each.childrens|length 0 %}
+              {% if each.childrens %}
                 {% for eachchild in each.childrens %}
                 <option>{{eachchild.node}}</option>
                 {% endfor %}
-              {% endifnotequal %}
+              {% else %}
+              <option>{{each.node}}</option>
+              {% endif %}
             </optgroup>
             {% endfor %}
             <!-- <optgroup label="NFC NORTH">
