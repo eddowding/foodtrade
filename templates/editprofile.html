@@ -1,0 +1,130 @@
+{% extends 'tbase.html' %}
+{% load staticfiles %}
+
+{% block content %}
+
+
+  <div class="row" style="margin-left:3%;">
+    <p><h3>Profile</h3></p>
+  <form class="form-horizontal" role="form" style="width:50%; margin-left:18%;" method="POST" action=".">
+  {% csrf_token %}
+    <div class="form-group">
+        <p><label for="user_fname_txt">First Name</label>
+        <input type="text" id="user_fname_txt" style="width:60%;" class="form-control" placeholder="Text input" value="{{first_name}}" name="first_name"></p>
+        <p><label for="user_lname_txt">Last Name</label>
+        <input type="text" style="width:60%;" id="user_lname_txt" class="form-control" placeholder="Text input" value="{{last_name}}" name="last_name"></p>
+        <p><label for="user_desc_txt">Description</label>
+        <textarea class="form-control" style="width:60%;" id="user_desc_txt" name="description" rows="5">{{description}}</textarea></p>
+
+         <p>
+          <label for="zipcode">Zip Code</label>
+          <input type="text" style="width:60%;" name="zip_code" id="zip_code" value="{{ zip_code }}" id="user_location_txt" class="form-control" placeholder="Zip Code" >
+        </p>
+        <p>
+            <label for="id_sign_up_as">
+                 Sign up as</label></br>
+                <label class="btn btn-default">
+                  {% ifequal sign_up_as 'Individual' %}
+                    <input type="radio" name="sign_up_as" checked="true" id="option1" onchange="dataradio('Individual')"> Individual
+                    {% else %} 
+                    <input type="radio" name="sign_up_as" id="option1" onchange="dataradio('Individual')"> Individual
+                  {% endifequal %}
+
+                </label>
+                <label class="btn btn-default">
+                  {% ifequal sign_up_as 'Food Business' %}
+                    <input type="radio" name="sign_up_as" checked="true" id="option2" onchange="dataradio('Food Business')"> Food Business
+                    {% else %} 
+                    <input type="radio" name="sign_up_as"  id="option2" onchange="dataradio('Food Business')"> Food Business
+                  {% endifequal %}
+                </label>
+
+                <label class="btn btn-default">
+                  {% ifequal sign_up_as 'Organisation' %}
+                    <input type="radio" name="sign_up_as" checked="true" id="option3" onchange="dataradio('Organisation')"> Organisation
+                    {% else %} 
+                    <input type="radio" name="sign_up_as" id="option3" onchange="dataradio('Organisation')"> Organisation
+                  {% endifequal %}
+                </label>
+        </p>
+        <p>
+          <label for="id_type_user">Type</label><br/>
+          <select id= "dropdown3" name = 'type' data-placeholder="Farm, wholesaler, restaurant, bakery..." multiple style="width:60%;height:25px;" class="chosen-select" tabindex="6" >
+            <option value=""></option>
+            <optgroup label="NFC EAST">
+              <option>Dallas Cowboys</option>
+              <option>New York Giants</option>
+              <option>Philadelphia Eagles</option>
+              <option>Washington Redskins</option>
+            </optgroup>
+            <optgroup label="NFC NORTH">
+              <option>Chicago Bears</option>
+              <option>Detroit Lions</option>
+              <option>Green Bay Packers</option>
+              <option>Minnesota Vikings</option>
+            </optgroup>
+            <optgroup label="NFC SOUTH">
+              <option>Atlanta Falcons</option>
+              <option>Carolina Panthers</option>
+              <option>New Orleans Saints</option>
+              <option>Tampa Bay Buccaneers</option>
+            </optgroup>
+            <optgroup label="NFC WEST">
+              <option>Arizona Cardinals</option>
+              <option>St. Louis Rams</option>
+              <option>San Francisco 49ers</option>
+              <option>Seattle Seahawks</option>
+            </optgroup>
+            <optgroup label="AFC EAST">
+              <option>Buffalo Bills</option>
+              <option>Miami Dolphins</option>
+              <option>New England Patriots</option>
+              <option>New York Jets</option>
+            </optgroup>
+            <optgroup label="AFC NORTH">
+              <option>Baltimore Ravens</option>
+              <option>Cincinnati Bengals</option>
+              <option>Cleveland Browns</option>
+              <option>Pittsburgh Steelers</option>
+            </optgroup>
+            <optgroup label="AFC SOUTH">
+              <option>Houston Texans</option>
+              <option>Indianapolis Colts</option>
+              <option>Jacksonville Jaguars</option>
+              <option>Tennessee Titans</option>
+            </optgroup>
+            <optgroup label="AFC WEST">
+              <option>Denver Broncos</option>
+              <option>Kansas City Chiefs</option>
+              <option>Oakland Raiders</option>
+              <option>San Diego Chargers</option>
+            </optgroup>
+          </select>
+        </p>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </div>
+  </form>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js" type="text/javascript"></script>
+  <script src="/static/js/chosen.jquery.min.js" type="text/javascript"></script>
+  <script src="/static/css/docsupport/prism.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+  var selVal = String('{{type_user}}');
+  $("select optgroup option").filter(function() {
+        // alert("Roshan");
+        return $(this).text() == selVal;
+    }).prop('selected', true);  
+</script>
+<script type="text/javascript">
+    var config = {
+      '.chosen-select'           : {},
+      '.chosen-select-deselect'  : {allow_single_deselect:true},
+      '.chosen-select-no-single' : {disable_search_threshold:10},
+      '.chosen-select-no-results': {no_results_text:'Oops, nothing found!'},
+      '.chosen-select-width'     : {width:"95%"}
+    }
+    for (var selector in config) {
+      $(selector).chosen(config[selector]);
+    }
+  </script>
+{% endblock %}

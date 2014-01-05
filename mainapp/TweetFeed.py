@@ -2,6 +2,7 @@ from MongoConnection import MongoConnection
 from datetime import datetime
 from bson.objectid import ObjectId
 import time
+#from pyzipcode import ZipCodeDatabase
 
 class TweetFeed():
     def __init__ (self):
@@ -24,11 +25,25 @@ class TweetFeed():
     def get_tweet_by_user_id(self, user_id):
         return self.db_object.get_all(self.table_name,{'user_id':tweet_id, 'deleted':0}, 'time_stamp')
 
-
     def insert_tweet(self, value):
         value['deleted'] =0
     	value['time_stamp'] = int(time.time())
         self.db_object.insert_one(self.table_name,value)
+
+    def update_tweets(self, username, first_name, last_name, description, zip_code):
+        zcdb = ZipCodeDatabase()
+        try:
+            zipcode = zcdb[zip_code]
+        except:
+            zipcode = zcdb[06320]
+
+        return self.db_object.update(
+            {'user.username':username}, 
+            {
+                'user.name':str(first_name + ' ' + last_name),
+                'user.Description':description, 
+                'location.coordinates':[zipcode.latitude, zipcode.longitude]
+            })
 
 class UserProfile():
     def __init__ (self):
@@ -44,6 +59,16 @@ class UserProfile():
 
     def create_profile (self, value):
         self.db_object.insert_one(self.table_name,value)
+
+    def update_profile(self, userid, zipcode, type_usr, sign_up_as):
+        return self.db_object.update(self.table_name,
+            {'useruid':userid}, 
+            {
+                        'type_user':type_usr,
+                        'sign_up_as':sign_up_as, 
+                        'zip_code':zipcode                        
+                       
+            })
 
 class TradeConnection():
     """docstring for Connection"""

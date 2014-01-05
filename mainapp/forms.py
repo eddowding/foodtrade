@@ -5,6 +5,7 @@ from allauth.socialaccount.models import SocialToken, SocialAccount
 from django.http import HttpResponse, HttpResponseRedirect
 
 
+
 class SignupForm(forms.Form):
     # first_name = forms.CharField(max_length=30, label='First Name')
     # last_name = forms.CharField(max_length=30, label='Last Name')
