@@ -186,12 +186,12 @@
     <div class="row">
      <div class="col-md-12">
         <ul class="nav nav-tabs nav-justified">
-          <li class="active"><a href="#produce" data-toggle="tab">Foods <span class="badge">42</span></a></li>
-          <li><a href="#connections" data-toggle="tab">Connections <span class="badge">28</span></a> </li>
+          <li class="active"><a href="#produce" data-toggle="tab">Foods <span class="badge">{{userinfo.food_no}}</span></a></li>
+          <li><a href="#connections" data-toggle="tab">Connections <span class="badge">{{userinfo.trade_connections_no}}</span></a> </li>
           <li><a href="#organisations" data-toggle="tab">Organisation</a> <span class="badge"></span></li>
-          <li><a href="#customers" data-toggle="tab">Customers <span class="badge">4</span></a> </li>
-          <li><a href="#activity" data-toggle="tab">Updates  <span class="badge">5</span></a></li> 
-          <li><a href="#team" data-toggle="tab">Team <span class="badge">2</span></a></li>
+          <li><a href="#customers" data-toggle="tab">Customers <span class="badge">{{userinfo.trade_connections_no}}</span></a> </li>
+          <li><a href="#activity" data-toggle="tab">Updates  <span class="badge">{{userinfo.trade_connections_no}}</span></a></li> 
+          <li><a href="#team" data-toggle="tab">Team <span class="badge">{{userinfo.trade_connections_no}}</span></a></li>
         </ul>
      </div>
     </div>
@@ -217,9 +217,10 @@
           </div>
       </form>
        <table class="table table-list-search">
-          <tbody>
-              <tr>
-                  <td>Meat / <a href="/produce/beef">Beef</a></td>  
+          <tbody id="food_tbody">
+            {% for eachfood in all_foods %}
+              <tr id="row{{forloop.counter}}">
+                  <td>{{eachfood.food_name}}</td>  
                   
                   <td> 
                   <div class="pull-right">
@@ -228,53 +229,26 @@
                    <a href="#"><i class="fa fa-thumbs-o-up text-muted" title="Vouch for this"></i></a> 
 
                    <!-- if user has edit rights -->
-                   <a href="#"><i class="fa fa-trash-o text-muted" title="Delete"></i></a> 
+                   <a href="#"><i class="fa fa-trash-o text-muted" title="Delete" onClick="delete_food({{profile_id}}, '{{eachfood.food_name}}', this)"></i></a>
                    </div>
                   </td>  
               </tr> 
-              <tr>
-                  <td>Meat / <a href="/produce/beef">Chicken</a></td> 
-                  
-                  <td> 
-                  <div class="pull-right">
-
-                   <!-- hide if user has edit rights -->
-                   <a href="#"><i class="fa fa-thumbs-o-up text-muted" title="Vouch for this"></i></a> 
-
-                   <!-- if user has edit rights -->
-                   <a href="#"><i class="fa fa-trash-o text-muted" title="Delete"></i></a> 
-                   </div>
-                  </td>  
-              </tr>
-              <tr>
-                  <td>Fruit / <a href="/produce/beef">Blackberries</a></td> 
-                  
-                  <td> 
-                  <div class="pull-right">
-
-                   <!-- hide if user has edit rights -->
-                   <a href="#"><i class="fa fa-thumbs-o-up text-muted" title="Vouch for this"></i></a> 
-
-                   <!-- if user has edit rights -->
-                   <a href="#"><i class="fa fa-trash-o text-muted" title="Delete"></i></a> 
-                   </div>
-                  </td>  
-              </tr> 
+              {% endfor %}
           </tbody>
           <tfoot style="background: #eee;">
               <tr>
                   <td colspan="2">
 
-                  <form action="#" method="get">
+                  
                       <div class="input-group">
                       <!-- link this to open food facts --> 
-                            <input class="form-control" name="q" style="width:400px;" placeholder="Add foods you can buy here.">
+                            <input class="form-control" name="addfood" id = "addfood_id" style="width:400px;" placeholder="Add foods you can buy here.">
                             <span class="input-group-btn">
-                                <button type="submit" class="btn btn-success"> Add</button>
+                                <button class="btn btn-success" onClick="add_food({{profile_id}})"> Add</button>
                             </span>
                           </div>
                       </div>
-                  </form>
+                  
               </td> 
                   
               </tr> 

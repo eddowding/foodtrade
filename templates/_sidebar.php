@@ -1,4 +1,5 @@
-  <div class="col-md-2 sidebar hidden-xs">
+  <div id="sidebar" class=" 
+              col-xs-6 col-sm-2 sidebar-offcanvas" role="navigation">
      
         <!-- show the logged in users account --> 
         <div id="account_info">

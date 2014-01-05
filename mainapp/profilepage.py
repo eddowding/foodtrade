@@ -11,6 +11,8 @@ from mainapp.TweetFeed import TweetFeed
 from geolocation import get_addr_from_ip
 from classes.DataConnector import UserInfo
 
+from mainapp.TweetFeed import Food, TradeConnection
+
 def display_profile(request, username):
     parameters = {}
     user_profile = UserProfile()
@@ -31,6 +33,10 @@ def display_profile(request, username):
         user_profile = user_profile_obj.get_profile_by_id(str(user_id))
         user_info = UserInfo(user_id)
         parameters['userinfo'] = user_info
+
+    foo = Food()
+    all_foods = foo.get_foods_by_userid(usr.id)
+    parameters['all_foods'] = all_foods
 
     x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
     if x_forwarded_for:
@@ -84,8 +90,8 @@ def edit_profile(request, username):
         sign_up_as = request.POST['sign_up_as']
         usr_type = request.POST['type']
         
-        #tweetFeedObj = TweetFeed()
-        #tweetFeedObj.update_tweets(username, first_name, last_name, description, zip_code)
+        tweetFeedObj = TweetFeed()
+        tweetFeedObj.update_tweets(username, first_name, last_name, description, zip_code)
 
         user_profile_obj = UserProfile()
         user_profile_obj.update_profile(request.user.id, zip_code, usr_type, sign_up_as)
