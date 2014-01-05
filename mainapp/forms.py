@@ -4,8 +4,7 @@ from mainapp.TweetFeed import UserProfile
 from allauth.socialaccount.models import SocialToken, SocialAccount
 from django.http import HttpResponse, HttpResponseRedirect
 from classes.Tags import Tags
-from pyzipcode import ZipCodeDatabase
-
+from pygeocoder import Geocoder
 
 class SignupForm(forms.Form):
     username = forms.CharField(widget=forms.TextInput(attrs={'placeholder': u'Username',
@@ -24,11 +23,16 @@ class SignupForm(forms.Form):
         # code to save form fields to mongodb
         # convert zip code to longitude and latitude
         zip_code = self.cleaned_data['zip_code']
-        zcdb = ZipCodeDatabase()
+        
+        
         try:
-            zipcode = zcdb[zip_code]
+            results = Geocoder.geocode(zip_code)
+            lon = results[0].longitude
+            lat = results[0].latitude
         except:
-            zipcode = zcdb[06320]
+            results = Geocoder.geocode('sp5 1nr')
+            lon = results[0].longitude
+            lat = results[0].latitude
         userprofile = UserProfile()
         social_account = SocialAccount.objects.get(user__id = user.id)
         addr = social_account.extra_data['location']
@@ -36,8 +40,8 @@ class SignupForm(forms.Form):
         		'type_user': self.cleaned_data['type_user'], 
                 'zip_code': self.cleaned_data['zip_code'],
         		'address': addr,
-                'latitude': zipcode.latitude,
-                'longitude': zipcode.longitude
+                'latitude': lat,
+                'longitude': lon
         }
         userprofile.create_profile(data)
         print "saved", data

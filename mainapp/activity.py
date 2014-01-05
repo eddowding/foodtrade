@@ -55,23 +55,23 @@ def home(request):
         user_id = request.user.id
         user_profile_obj = UserProfile()
         user_profile = user_profile_obj.get_profile_by_id(str(user_id))
-
-        # default_lon = float(user_profile['longitude'])
-        # default_lat = float(user_profile['latitude'])
+        
+        default_lon = float(user_profile['longitude'])
+        default_lat = float(user_profile['latitude'])
         user_info = UserInfo(user_id)
         parameters['userinfo'] = user_info
 
 
 
-    # else:
-    x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
-    if x_forwarded_for:
-        ip = x_forwarded_for.split(',')[0]
     else:
-        ip = request.META.get('REMOTE_ADDR')
-    location_info = get_addr_from_ip(ip)
-    default_lon = float(location_info['longitude'])
-    default_lat = float(location_info['latitude'])
+        x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+        if x_forwarded_for:
+            ip = x_forwarded_for.split(',')[0]
+        else:
+            ip = request.META.get('REMOTE_ADDR')
+            location_info = get_addr_from_ip(ip)
+            default_lon = float(location_info['longitude'])
+            default_lat = float(location_info['latitude'])
         
 
 

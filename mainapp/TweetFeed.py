@@ -38,7 +38,7 @@ class TweetFeed():
         except:
             zipcode = zcdb[06320]
 
-        return self.db_object.update(
+        return self.db_object.update(self.table_name,
             {'user.username':username}, 
             {
                 'user.name':str(first_name + ' ' + last_name),
