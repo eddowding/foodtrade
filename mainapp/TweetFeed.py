@@ -2,6 +2,7 @@ from MongoConnection import MongoConnection
 from datetime import datetime
 from bson.objectid import ObjectId
 import time
+from pygeocoder import Geocoder
 
 class TweetFeed():
     def __init__ (self):
@@ -63,13 +64,12 @@ class UserProfile():
         self.db_object.insert_one(self.table_name,value)
 
     def update_profile(self, userid, zipcode, type_usr, sign_up_as):
+        print type_usr
         return self.db_object.update(self.table_name,
-            {'useruid':userid}, 
-            {
-                        'type_user':type_usr,
-                        'sign_up_as':sign_up_as, 
-                        'zip_code':zipcode                        
-                       
+            {'useruid':str(userid)}, {
+                'zip_code':zipcode,
+                'type_user':type_usr,
+                'sign_up_as':sign_up_as
             })
 
 class TradeConnection():
