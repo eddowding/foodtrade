@@ -2,6 +2,7 @@ from MongoConnection import MongoConnection
 from datetime import datetime
 from bson.objectid import ObjectId
 import time
+#from pyzipcode import ZipCodeDatabase
 
 
 class TweetFeed():
@@ -25,11 +26,25 @@ class TweetFeed():
     def get_tweet_by_user_id(self, user_id):
         return self.db_object.get_all(self.table_name,{'user_id':tweet_id, 'deleted':0}, 'time_stamp')
 
-
     def insert_tweet(self, value):
         value['deleted'] =0
     	value['time_stamp'] = int(time.time())
         self.db_object.insert_one(self.table_name,value)
+
+    def update_tweets(self, username, first_name, last_name, description, zip_code):
+        zcdb = ZipCodeDatabase()
+        try:
+            zipcode = zcdb[zip_code]
+        except:
+            zipcode = zcdb[06320]
+
+        return self.db_object.update(
+            {'user.username':username}, 
+            {
+                'user.name':str(first_name + ' ' + last_name),
+                'user.Description':description, 
+                'location.coordinates':[zipcode.latitude, zipcode.longitude]
+            })
 
 class UserProfile():
     def __init__ (self):
@@ -45,6 +60,16 @@ class UserProfile():
 
     def create_profile (self, value):
         self.db_object.insert_one(self.table_name,value)
+
+    def update_profile(self, userid, zipcode, type_usr, sign_up_as):
+        return self.db_object.update(self.table_name,
+            {'useruid':userid}, 
+            {
+                        'type_user':type_usr,
+                        'sign_up_as':sign_up_as, 
+                        'zip_code':zipcode                        
+                       
+            })
 
 class TradeConnection():
     """docstring for Connection"""
@@ -65,22 +90,25 @@ class TradeConnection():
     def delete_connection(self, b_useruid, c_useruid):
         self.db_object.update(self.table_name,{'b_useruid': b_useruid, 'c_useruid': c_useruid}, {'deleted':1})
 
-class Food():
+class TradeConnection():
     """docstring for Connection"""
     def __init__(self):
         self.db_object = MongoConnection("localhost",27017,'foodtrade')
-        self.table_name = 'food'
-        self.db_object.create_table(self.table_name,'useruid')
-    def get_foods_by_userid(self,useruid):
-        return self.db_object.get_all(self.table_name,{'useruid': useruid, 'deleted': 0})
+        self.table_name = 'tradeconnection'
+        self.db_object.create_table(self.table_name,'b_useruid')
+    def get_connection_by_business(self,b_useruid):
+        return self.db_object.get_all(self.table_name,{'b_useruid': b_useruid, 'deleted': 0})
 
-    def create_food (self, value):
+    def get_connection_by_customer(self, c_useruid):
+        return self.db_object.get_all(self.table_name,{'c_useruid':c_useruid, 'deleted': 0})
+
+    def create_connection (self, value):
         value['deleted'] =0
         self.db_object.insert_one(self.table_name,value)
 
-    def delete_food(self, useruid, food_name):
-        self.db_object.update(self.table_name,{'useruid': useruid, 'food_name': food_name}, {'deleted':1})
-
-# foo = Food()
-# foo.create_food({'useruid': 26, 'food_name': 'Meat/Chicken'})
-# print foo.get_foods_by_userid(26)
+    def delete_connection(self, b_useruid, c_useruid):
+        self.db_object.update(self.table_name,{'b_useruid': b_useruid, 'c_useruid': c_useruid}, {'deleted':1})
+        
+# trade_conn = TradeConnection()
+# trade_conn.create_connection({'b_useruid': 23, 'c_useruid': 20})
+# print trade_conn.get_connection_by_customer(23)
