@@ -1,6 +1,11 @@
 <?php include '_header.php';?>
 
     <div  class="container">
+    <div class="row row-offcanvas row-offcanvas-left">
+
+    <p class="pull-left visible-xs">
+      <button type="button" class="btn btn-primary btn-xs" data-toggle="offcanvas">Toggle nav</button>
+    </p>
 
     <?php include '_sidebar.php';?>
 
@@ -10,11 +15,14 @@
 
     <div class="container-responsive">
     <div id="header_box" class="clearfix">
-      <div class="col-md-2" id="avatar">
+      <div class="col-md-2 hidden-xs hidden-sm" id="avatar">
         <img class="img-thumbnail center-block" src="http://a0.twimg.com/profile_images/2596092158/afpecvf41m8f0juql78p_bigger.png"  />
       </div>
      
-      <div class="col-md-7">
+      <div class="col-md-7 col-xs-6">
+         <div class="visible-xs visible-sm pull-right">
+         <img class="img-thumbnail center-block" src="http://a0.twimg.com/profile_images/2596092158/afpecvf41m8f0juql78p_bigger.png"  />
+         </div>
          <h1><a href="#">Smales Farm</a></h1>
  
           <div class="tags tags-biztype  ">  
@@ -50,25 +58,25 @@
   
       </div><!-- end header middle -->
 
-      <div id="contact_info" class="col-md-3">
+      <div id="contact_info" class="col-md-3 col-xs-4">
 
       <!-- if they dont't have an account yet -->
-      <button class="btn btn-primary btn-block">Invite to connect</button>
+      <button class="btn btn-primary btn-block"><span class="hidden-xs">Invite to</span> connect</button>
 
 
       <!-- if logged in users = individual --> 
       <button class="btn btn-default btn-block" data-toggle="modal" data-target="#modal_customer">
-        <i class="fa fa-smile-o text-muted"></i> I am a customer
+        <i class="fa fa-smile-o text-muted"></i> <span class="hidden-xs">I am a</span> customer
       </button> 
 
       <!-- if logged in users = business --> 
       <div class="btn-group btn-block" data-toggle="buttons">
         <label class="btn btn-default" style="width:50%;" title="LOGGEDINUSER buys from PROFILENAME">
-          <input type="checkbox"> Buy from
+          <input type="checkbox"> Buy <span class="hidden-xs">from</span>
         </label>
         <!-- showing active mode if button is selected -->
         <label class="btn btn-success" style="width:50%;" title="LOGGEDINUSER sells to PROFILENAME">
-          <input type="checkbox"> Sell to
+          <input type="checkbox"> Sell <span class="hidden-xs">to</span>
         </label> 
       </div>
  
@@ -79,7 +87,7 @@
       </button>  
 
       <!-- if not logged in show login prompt -->
-      <button class="btn btn-primary btn-block">Login for more</button>
+      <button class="btn btn-primary btn-block">Login <span class="hidden-xs">for more</span></button>
 
  
 
@@ -400,5 +408,5 @@
 
     </div><!-- col10 --> 
 
-   
+   </div>
  <?php include '_footer.php';?>
