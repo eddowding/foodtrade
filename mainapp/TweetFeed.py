@@ -2,8 +2,6 @@ from MongoConnection import MongoConnection
 from datetime import datetime
 from bson.objectid import ObjectId
 import time
-from pyzipcode import ZipCodeDatabase
-
 
 class TweetFeed():
     def __init__ (self):
@@ -32,18 +30,21 @@ class TweetFeed():
         self.db_object.insert_one(self.table_name,value)
 
     def update_tweets(self, username, first_name, last_name, description, zip_code):
-        zcdb = ZipCodeDatabase()
         try:
-            zipcode = zcdb[zip_code]
+            results = Geocoder.geocode(zip_code)
+            lon = results[0].longitude
+            lat = results[0].latitude
         except:
-            zipcode = zcdb[06320]
+            results = Geocoder.geocode('sp5 1nr')
+            lon = results[0].longitude
+            lat = results[0].latitude
 
         return self.db_object.update(self.table_name,
             {'user.username':username}, 
             {
                 'user.name':str(first_name + ' ' + last_name),
                 'user.Description':description, 
-                'location.coordinates':[zipcode.latitude, zipcode.longitude]
+                'location.coordinates':[lat, lon]
             })
 
 class UserProfile():

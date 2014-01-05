@@ -6,12 +6,12 @@ from mainapp.TweetFeed import UserProfile
 from django.contrib.auth.models import User
 from django.core.context_processors import csrf
 from mainapp.TweetFeed import TweetFeed
-
 from geolocation import get_addr_from_ip
 from classes.DataConnector import UserInfo
-
 from mainapp.TweetFeed import Food, TradeConnection
 from mainapp.classes.Tags import Tags
+from pygeocoder import Geocoder
+
 def display_profile(request, username):
     parameters = {}
     user_profile = UserProfile()
@@ -65,19 +65,18 @@ def edit_profile(request, username):
         parameters['all_tags'] = tags.get_tags()
         if request.user.is_authenticated():
             user_profile = UserProfile()
-            usr = User.objects.get(username = username)
-            account = SocialAccount.objects.get(user__id = usr.id)
-            userprof = user_profile.get_profile_by_id(str(usr.id))
-            parameters['profile_id'] = usr.id
+            account = SocialAccount.objects.get(user__id = request.user.id)
+            userprof = user_profile.get_profile_by_id(str(request.user.id))
+            parameters['profile_id'] = request.user.id
             parameters['sign_up_as'] = userprof['sign_up_as']
             parameters['zip_code'] = userprof['zip_code']
             parameters['address'] = userprof['address']
             parameters['type_user'] = str(userprof['type_user'])
-            parameters['first_name'] = usr.first_name
-            parameters['last_name']  = usr.last_name
+            parameters['first_name'] = account.extra_data['name'].split(' ')[0]
+            parameters['last_name']  = account.extra_data['name'].split(' ')[1]
             parameters['description'] = account.extra_data['description']
             parameters.update(csrf(request))
-            user_info = UserInfo(usr.id)
+            user_info = UserInfo(request.user.id)
             parameters['userinfo'] = user_info
             return render_to_response ('editprofile.html', parameters, context_instance=RequestContext(request))
         else:
