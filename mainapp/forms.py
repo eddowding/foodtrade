@@ -6,6 +6,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from classes.Tags import Tags
 from pyzipcode import ZipCodeDatabase
 
+
 class SignupForm(forms.Form):
     username = forms.CharField(widget=forms.TextInput(attrs={'placeholder': u'Username',
      'class' : 'form-control'}))

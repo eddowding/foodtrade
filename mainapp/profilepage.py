@@ -3,12 +3,12 @@ from django.http import HttpResponse, HttpResponseRedirect
 from allauth.socialaccount.models import SocialToken, SocialAccount
 from django.template import RequestContext
 from mainapp.TweetFeed import UserProfile
-from allauth.socialaccount.models import SocialToken, SocialAccount
 from django.contrib.auth.models import User
 
 from geolocation import get_addr_from_ip
 from classes.DataConnector import UserInfo
 from mainapp.TweetFeed import Food, TradeConnection
+
 def display_profile(request, username):
     parameters = {}
     user_profile = UserProfile()

@@ -3,6 +3,7 @@ from datetime import datetime
 from bson.objectid import ObjectId
 import time
 
+
 class TweetFeed():
     def __init__ (self):
         self.db_object = MongoConnection("localhost",27017,'foodtrade')
