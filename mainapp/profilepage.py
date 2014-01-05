@@ -3,7 +3,6 @@ from django.http import HttpResponse, HttpResponseRedirect
 from allauth.socialaccount.models import SocialToken, SocialAccount
 from django.template import RequestContext
 from mainapp.TweetFeed import UserProfile
-from allauth.socialaccount.models import SocialToken, SocialAccount
 from django.contrib.auth.models import User
 from django.core.context_processors import csrf
 from mainapp.TweetFeed import TweetFeed
