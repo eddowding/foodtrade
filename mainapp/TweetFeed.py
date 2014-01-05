@@ -38,7 +38,7 @@ class TweetFeed():
         except:
             zipcode = zcdb[06320]
 
-        return self.db_object.update(
+        return self.db_object.update(self.table_name,
             {'user.username':username}, 
             {
                 'user.name':str(first_name + ' ' + last_name),
@@ -91,7 +91,7 @@ class TradeConnection():
         self.db_object.update(self.table_name,{'b_useruid': b_useruid, 'c_useruid': c_useruid}, {'deleted':1})
 
 class Food():
-     """docstring for Connection"""
+    """docstring for Connection"""
     def __init__(self):
         self.db_object = MongoConnection("localhost",27017,'foodtrade')
         self.table_name = 'food'
