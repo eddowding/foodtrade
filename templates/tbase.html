@@ -24,20 +24,15 @@
     <link href="{% static "css/custom-design.css" %}" rel="stylesheet">
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places"></script>
     <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
- 
+ {% block head %}
+
+
+{% endblock %}
 
 
 
  <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.1/leaflet.css" />
 <script src="http://cdn.leafletjs.com/leaflet-0.7.1/leaflet.js?2"></script>
-<link rel="stylesheet" href="/static/css/docsupport/style.css">
-<link rel="stylesheet" href="/static/css/docsupport/prism.css">
-<link rel="stylesheet" href="/static/css/chosen.min.css">
-
-<style type="text/css" media="all">
-    /* fix rtl for demo */
-    .chosen-rtl .chosen-drop { left: -9000px; }
-  </style>
 
     <!-- Custom styles for this template -->
     <link href="http://getbootstrap.com/examples/navbar-fixed-top/navbar-fixed-top.css" rel="stylesheet">
