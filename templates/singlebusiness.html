@@ -382,4 +382,10 @@ connections = [];
     {% endif %}
     </script>
      <script src="{% static "js/activity-map.js" %}"></script>
+     <script type="text/javascript">
+     $('#addfood_id').typeahead({                                                                                        
+  prefetch: '/static/produce.json',                                         
+  limit: 10                                                                   
+});
+     </script>
    {% endblock %}

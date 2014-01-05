@@ -3,7 +3,6 @@ from django.http import HttpResponse, HttpResponseRedirect
 from allauth.socialaccount.models import SocialToken, SocialAccount
 from django.template import RequestContext
 from mainapp.TweetFeed import UserProfile
-from allauth.socialaccount.models import SocialToken, SocialAccount
 from django.contrib.auth.models import User
 from django.core.context_processors import csrf
 from mainapp.TweetFeed import TweetFeed
@@ -12,7 +11,7 @@ from geolocation import get_addr_from_ip
 from classes.DataConnector import UserInfo
 
 from mainapp.TweetFeed import Food, TradeConnection
-
+from mainapp.classes.Tags import Tags
 def display_profile(request, username):
     parameters = {}
     user_profile = UserProfile()
@@ -62,6 +61,8 @@ def display_profile(request, username):
 def edit_profile(request, username):
     if request.method == 'GET':
         parameters = {}
+        tags = Tags()
+        parameters['all_tags'] = tags.get_tags()
         if request.user.is_authenticated():
             user_profile = UserProfile()
             usr = User.objects.get(username = username)
@@ -88,6 +89,7 @@ def edit_profile(request, username):
         description = request.POST['description']
         zip_code = request.POST['zip_code']
         sign_up_as = request.POST['sign_up_as']
+
         usr_type = request.POST['type']
         
         # tweetFeedObj = TweetFeed()
@@ -103,6 +105,7 @@ def edit_profile(request, username):
 
         twitter_user = SocialAccount.objects.get(user__id = request.user.id)
         twitter_user.extra_data['name'] = first_name + ' ' + last_name
+        twitter_user.extra_data['description'] = description
         twitter_user.save()
 
         return HttpResponseRedirect('/')
