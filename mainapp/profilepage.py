@@ -91,7 +91,6 @@ def edit_profile(request, username):
         
         tweetFeedObj = TweetFeed()
         tweetFeedObj.update_tweets(username, first_name, last_name, description, zip_code)
-
         user_profile_obj = UserProfile()
         user_profile_obj.update_profile(request.user.id, zip_code, usr_type, sign_up_as)
 
