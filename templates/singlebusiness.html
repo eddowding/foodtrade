@@ -16,7 +16,7 @@
  
           <div class="tags tags-biztype  ">  
             {% for eachtype in type_user %}
-           <a href="/type/livestock-farm">{{eachtype}}</a>
+           <a href="/activity/?q={{eachtype}}">{{eachtype}}</a>
            {% endfor %}
            <!-- <a href="/type/buther">Wholesale</a>  
            <a href="/type/buther">Distribution</a>  
@@ -233,7 +233,10 @@
                    <a href="#"><i class="fa fa-thumbs-o-up text-muted" title="Vouch for this"></i></a> 
 
                    <!-- if user has edit rights -->
+                   {% ifequal profile_id user_id %}
+                    
                    <a href="#"><i class="fa fa-trash-o text-muted" title="Delete" onClick="delete_food({{profile_id}}, '{{eachfood.food_name}}', this)"></i></a>
+                   {% endifequal %}
                    </div>
                   </td>  
               </tr> 
@@ -291,12 +294,40 @@
             </form>
           </div> 
            <p class=""><a href="single-organisation.php">Show all</a></p>
-          {% include 'card_business.php' %}
-          {% include 'card_business.php' %}
-          {% include 'card_business.php' %}
-          {% include 'card_business.php' %}
-          {% include 'card_business.php' %}
-          {% include 'card_business.php' %}
+          {% for each in connections %}
+                  <div class="card card-business">
+                    <div class="content">
+
+                      <div class="pull-left">
+                        <img src="{{each.photo}}" alt="{{each.name}}"
+                        class="img-rounded img-responsive" style="width:40px;" /> 
+                
+                      </div>
+
+                      <div class="text">
+                      <button type="button" class="close" aria-hidden="true">&times;</button>
+                        <h5><a href="/profile/{{username}}">{{name}}</a> 
+                        </h5>  
+                        <p class="small">{{description}}</p>
+                      </div>
+                    </div>
+                    <div class="numbers clearfix">
+
+                      <div class="tags tags-biztype pull-left">  
+                        {% for e in each.type %}
+                       <a href="/activity/?q={{e}}">{{e}}</a>
+                       {% endfor %}
+                      </div>
+
+                      <p class="small pull-right">
+                        <a href="#" title="{{each.food_no}} Foods"><i class="fa fa-leaf"></i> {{each.food_no}}</a>
+                        <a href="#" title="{{each.trade_conn_no}} conn"><i class="fa fa-link"></i> {{each.trade_conn_no}}</a>
+                        <a href="#" title="{{each.org_conn_no}} Organisations"><i class="fa fa-group"></i> {{each.org_conn_no}}</a> 
+                      </p>
+                    </div>
+                  </div> 
+                  {% endfor %}
+
           </div>
  
 
@@ -312,15 +343,24 @@
 
           <div class="clearfix">
           <h2>Customers</h2>
-          {% include 'card_individual.php' %}
-          {% include 'card_individual.php' %}
-          {% include 'card_individual.php' %}
-          {% include 'card_individual.php' %}
-          {% include 'card_individual.php' %}
-          {% include 'card_individual.php' %}
-          </div> 
+          {% for each in customers %}
+              <div class="card card-individual">
+                <div class="content">
+                  <img src="{{each.photo}}" alt="{{each.name}}"
+                  class="img-rounded img-responsive pull-left" style="width:40px;" />
 
+                  <div class="text">
+                    <h5><a href="/profile/{{each.username}}">{{each.name}}</a> <span class="label label-info pull-right">27</span></a></h5> 
+                    <p class="small">
+                    {{each.description}}
+                  </div>
+                </div>
+               
+              </div> 
 
+          </div>
+
+          {% endfor %}
           <div class="clearfix">
           <h2>Team</h2> 
           {% include 'card_team.php' %}

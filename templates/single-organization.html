@@ -260,7 +260,7 @@
                   <form action="#" method="get">
                       <div class="input-group well well-sm">
 
-                          <input class="form-control" id="system-search" name="q" placeholder="Search foods from Slow Food UK members..."  required>
+                          <input class="form-control" id="system-search" name="q" placeholder="Search foods from {{name}} members..."  required>
                           <span class="input-group-btn">
                               <button type="submit" class="btn btn-default"><i class="glyphicon glyphicon-search"></i></button>
                           </span>
@@ -269,27 +269,15 @@
                    <table class="table table-list-search">
                       <tbody>
                           <tr>
-                              <td>Meat / <a href="/produce/beef">Beef</a></td>  
+                              {% for eachfood in all_foods %}
+                              <td>{{eachfood.food_name}}</td>  
                               <td> 
                                <a href="#" class="pull-right"><i class="fa fa-thumbs-o-up text-muted" title="Vouch for this"></i></a> 
                               </td> 
+                              {% endfor %}
                           </tr> 
-                          <tr>
-                              <td>Meat / <a href="/produce/beef">Chicken</a></td> 
-                              
-                              <td> 
-                               <a href="#" class="pull-right"><i class="fa fa-thumbs-o-up text-muted" title="Vouch for this"></i></a> 
-                              </td>  
-                          </tr>
                       </tbody>
-                      <tfoot>
-                          <tr>
-                              <td>Fruit / <a href="/produce/beef">Blackberries</a></td> 
-                              <td> 
-                               <a href="#" class="pull-right"><i class="fa fa-thumbs-o-up text-muted" title="Vouch for this"></i></a> 
-                              </td> 
-                          </tr> 
-                      </tfoot>
+                      
                   </table>   
                 </div>
               </div>

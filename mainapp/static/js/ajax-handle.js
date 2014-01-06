@@ -63,7 +63,7 @@ function delete_food(prof_id, food_name, my_this){
 }
 
 function add_customer(prof_id, c_id){
-	var data = {useruid: prof_id, customer_id: c_id};
+	var data = {useruid: prof_id, customeruid: c_id};
 	ajax_request("addcustomer", 'create_conn', {data: JSON.stringify(data)});
 }
 
