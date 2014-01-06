@@ -42,6 +42,7 @@
   
       </div><!-- end header middle -->
       <div id="contact_info" class="col-md-3">
+      {% ifnotequal profile_id user_id %}
       <!-- if they dont't have an account yet -->
       <button class="btn btn-primary btn-block">Invite to connect</button>
       <!-- if logged in users = individual --> 
@@ -65,7 +66,7 @@
       </button>  
       <!-- if not logged in show login prompt -->
       <button class="btn btn-primary btn-block">Login for more</button>
- 
+      {% endifnotequal %}
       <button class="btn btn-default btn-block" data-toggle="modal" data-target="#sharer">
         <i class="fa fa-share-square-o text-muted"></i> Share
       </button>
@@ -212,7 +213,7 @@
                   
                       <div class="input-group">
                       <!-- link this to open food facts --> 
-                            <input class="typeahead form-control" name="addfood" data-source='' data-provide="typeahead" autocomplete="off" id = "addfoo_id" style="width:400px;" placeholder="Add foods you can buy here.">
+                            <input class="typeahead form-control" name="addfood" data-source='' data-provide="typeahead" autocomplete="off" id = "addfood_id" style="width:400px;" placeholder="Add foods you can buy here.">
                             <span class="input-group-btn">
                                 <button class="btn btn-success" onClick="add_food({{profile_id}})"> Add</button>
                             </span>
