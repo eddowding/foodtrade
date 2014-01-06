@@ -10,7 +10,7 @@ from classes.DataConnector import UserInfo
 from mainapp.TweetFeed import Food, TradeConnection, Customer, TradeConnection, UserProfile, Organisation
 from mainapp.classes.Tags import Tags
 from pygeocoder import Geocoder
-
+import json
 def display_profile(request, username):
     parameters = {}
     user_profile = UserProfile()
@@ -50,6 +50,7 @@ def display_profile(request, username):
     parameters['customers'] = get_customers(usr.id)
     #get all connections
     parameters['connections'] = get_connections(usr.id)
+    parameters['connections_str'] = json.dumps(parameters['connections'])
     # get all organisations
     parameters['organisations'] = get_organisations(usr.id)
 

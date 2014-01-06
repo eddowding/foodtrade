@@ -1,10 +1,7 @@
 {% extends 'tbase.html' %}
 {% load staticfiles %}
 {% block content %}
-
-
     <div class="col-md-10" id="single">
-
     <div class="container-responsive">
     <div id="header_box" class="clearfix">
       <div class="col-md-2" id="avatar">
@@ -22,10 +19,8 @@
            <a href="/type/buther">Distribution</a>  
            <a href="/type/buther">Livestock Farm</a>   -->
           </div> 
-
          <hr />
          <p>{{description}}</p>        
-
           <div class="tags">  
            <a href="/tag/TAG">Box Scheme</a>
            <a href="/tag/TAG">Butcher</a>
@@ -41,25 +36,18 @@
             <!-- if logged in or you've allows html5 browser location -->
             <i class="fa fa-location-arrow" style="margin-left: 20px;"></i> 87.2 miles  
             <!--  // if logged in or you've allows html5 browser location -->
-
-
             <i class="fa fa-bullseye" style="margin-left: 20px;"></i> 20.1 miles
   
          </div> <!-- meta -->
   
       </div><!-- end header middle -->
-
       <div id="contact_info" class="col-md-3">
-
       <!-- if they dont't have an account yet -->
       <button class="btn btn-primary btn-block">Invite to connect</button>
-
-
       <!-- if logged in users = individual --> 
       <button class="btn btn-default btn-block" data-toggle="modal" data-target="#modal_customer">
         <i class="fa fa-smile-o text-muted"></i> I am a customer
       </button> 
-
       <!-- if logged in users = business --> 
       <div class="btn-group btn-block" data-toggle="buttons">
         <label class="btn btn-default" style="width:50%;" title="LOGGEDINUSER buys from PROFILENAME">
@@ -71,23 +59,17 @@
         </label> 
       </div>
  
-
       <!-- Button trigger modal -->
       <button class="btn btn-primary btn-block" data-toggle="modal" data-target="#modal_contact">
         Contact
       </button>  
-
       <!-- if not logged in show login prompt -->
       <button class="btn btn-primary btn-block">Login for more</button>
-
  
-
       <button class="btn btn-default btn-block" data-toggle="modal" data-target="#sharer">
         <i class="fa fa-share-square-o text-muted"></i> Share
       </button>
-
       {% include 'modal_share.php' %}
-
       <div class="icons text-center" style="font-size:25px">
         <a href="#"><i class="fa fa-facebook-square"></i></a>
         <a href="#"><i class="fa fa-twitter-square"></i></a> 
@@ -98,8 +80,6 @@
         <a href="#"><i class="fa fa-youtube"></i></a> 
         <a href="#"><i class="fa fa-linkedin-square"></i></a> 
       </div> 
-
-
      <!-- modal_contact -->
       <div class="modal fade" id="modal_contact" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -109,7 +89,6 @@
               <h4 class="modal-title" id="myModalLabel">Contact Smales Farm</h4>
             </div>
             <div class="modal-body">
-
             <div class="container-responsive">
               <div class="row">
                 <div class="col-sm-4">
@@ -141,7 +120,6 @@
             </div>
  
    
-
             </div>
             <div class="modal-footer"> 
               <button type="button" class="btn btn-primary">Tweet it</button>
@@ -150,7 +128,6 @@
           </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
       </div><!-- /.modal -->
-
       <!-- modal_customer -->
       <div class="modal fade" id="modal_customer" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -165,7 +142,6 @@
             <p>Examples might include home deliveries from your local shops, later opening hours, or working together with other local business to make things better. </p>
             <p>We'll show you as being a customer and put a small dot on the map near your location.</p>
    
-
             </div>
             <div class="modal-footer"> 
               <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
@@ -178,15 +154,10 @@
           </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
       </div><!-- /.modal -->
-
-
  
       </div><!-- end header last -->
-
     </div>
     </div>
-
-
     <div class="row">
      <div class="col-md-12">
         <ul class="nav nav-tabs nav-justified">
@@ -199,21 +170,16 @@
         </ul>
      </div>
     </div>
-
     <div class="row">
       <div class="col-md-8">
         <div class="container-responsive clearfix">
-
       
-
    
-
 <div class="container-responsive">
   <div class="row"> 
     <div class="col-md-12">
       <form action="#" method="get">
           <div class="input-group well well-sm">
-
               <input class="form-control" id="system-search" name="q" placeholder="Search their foods..." required>
               <span class="input-group-btn">
                   <button type="submit" class="btn btn-default"><i class="glyphicon glyphicon-search"></i></button>
@@ -228,10 +194,8 @@
                   
                   <td> 
                   <div class="pull-right">
-
                    <!-- hide if user has edit rights -->
                    <a href="#"><i class="fa fa-thumbs-o-up text-muted" title="Vouch for this"></i></a> 
-
                    <!-- if user has edit rights -->
                    {% ifequal profile_id user_id %}
                     
@@ -245,7 +209,6 @@
           <tfoot style="background: #eee;">
               <tr>
                   <td colspan="2">
-
                   
                       <div class="input-group">
                       <!-- link this to open food facts --> 
@@ -261,15 +224,11 @@
               </tr> 
           </tfoot>
       </table>    
-
     </div>
   </div>
 </div>
-
-
           <div class="clearfix">
           <h2>Connections</h2>
-
           <div class="well well-sm">  
             <form class="form-inline" role="form">
               <div class="form-group">
@@ -297,13 +256,11 @@
           {% for each in connections %}
                   <div class="card card-business">
                     <div class="content">
-
                       <div class="pull-left">
                         <img src="{{each.photo}}" alt="{{each.name}}"
                         class="img-rounded img-responsive" style="width:40px;" /> 
                 
                       </div>
-
                       <div class="text">
                       <button type="button" class="close" aria-hidden="true">&times;</button>
                         <h5><a href="/profile/{{username}}">{{each.name}}</a> 
@@ -312,13 +269,11 @@
                       </div>
                     </div>
                     <div class="numbers clearfix">
-
                       <div class="tags tags-biztype pull-left">  
                         {% for e in each.type %}
                        <a href="/activity/?q={{e}}">{{e}}</a>
                        {% endfor %}
                       </div>
-
                       <p class="small pull-right">
                         <a href="#" title="{{each.food_no}} Foods"><i class="fa fa-leaf"></i> {{each.food_no}}</a>
                         <a href="#" title="{{each.trade_conn_no}} conn"><i class="fa fa-link"></i> {{each.trade_conn_no}}</a>
@@ -327,10 +282,8 @@
                     </div>
                   </div> 
                   {% endfor %}
-
           </div>
  
-
           <div class="clearfix">  
           <h2>Organisations</h2>
            <p class=""><a href="single-organisation.php">Show all</a></p>
@@ -353,7 +306,6 @@
                 </div> 
                 {% endfor %}
           </div>
-
           <div class="clearfix">
           <h2>Customers</h2>
           {% for each in customers %}
@@ -361,7 +313,6 @@
                 <div class="content">
                   <img src="{{each.photo}}" alt="{{each.name}}"
                   class="img-rounded img-responsive pull-left" style="width:40px;" />
-
                   <div class="text">
                     <h5><a href="/profile/{{each.username}}">{{each.name}}</a> <span class="label label-info pull-right">27</span></a></h5> 
                     <p class="small">
@@ -370,9 +321,7 @@
                 </div>
                
               </div> 
-
           </div>
-
           {% endfor %}
           <div class="clearfix">
           <h2>Team</h2> 
@@ -382,10 +331,8 @@
           {% include 'card_team.php' %}
           {% include 'card_team.php' %}
           </div> 
-
      
         <h2>Updates</h2>
-
         <div class="container-responsive">
           <div class="row">
               <div class="col-md-12"> 
@@ -403,48 +350,30 @@
  
    
       </div><!-- end col8 --> 
-
-
       <div class="col-md-4">
         <div style="width:100%; height: 1000px; " id="map"  data-spy="affix" data-offset-top="30">
-
         <div class="alert alert-warning">
           <p>This map shows 
           Customers as points
           Stockist as organge lines and 
           Supplieras as purple lines</p>
-
           <p>There are radius lines at 15, 30, and 100 miles.</p>
         </div>
-
-
       </div><!-- end col4 -->
-
     </div><!-- row -->
-
    
-
-
         
-
-
     </div><!-- col10 --> 
-
         <script type="text/javascript">
     map_lat={{ loc.lat }};
     map_lon = {{ loc.lon }};
-
-
 {% if results %}
 connections = [];
     {% endif %}
     </script>
-
      <script src="{% static "js/activity-map.js" %}"></script>
-
      
    {% endblock %}
-
    {% block footer %}
 <script type="text/javascript">
      $('#addfood_id').typeahead({
@@ -453,5 +382,4 @@ connections = [];
       limit: 10                                                                   
 });
      </script>
-
  {% endblock %}
