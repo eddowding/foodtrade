@@ -91,7 +91,6 @@ def home(request):
     search_handle = Search(keyword, my_lon, my_lat, "nepal")
     results = search_handle.search()
     for i in range(len(results)):
-        print results[i]
         distance_text = ""
         # try:
         lonlat_distance = results[i]['distance'] * 0.621371 #distance(my_lon, my_lat, results[i]['location']['coordinates'][0],results[i]['location']['coordinates'][1])

@@ -228,7 +228,7 @@ def loadsampledata():
                                         'coordinates': [float("{0:.5f}".format(random.uniform(-1, 1) * 180)), float("{0:.5f}".format(random.uniform(-1, 1) * 90))]
                                         },
                            'user': {'username': name_text[user_rand].split(" ")[0],
-                                    'sign_up_as':
+                                    'sign_up_as': 'business',
                                     'name': name_text[user_rand] +" "+ name_text[random.randrange(0, len(name_text))],
                                     'profile_img': "https://pbs.twimg.com/profile_images/378800000141996074/6a363e3c4f2a84a956c3cb27c50b2ca0_normal.png",
                                     'Description': "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod",
