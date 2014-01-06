@@ -145,7 +145,10 @@ def get_connections(user_id):
          'type': usr_pr['type_user'].split(','),
          'trade_conn_no': user_info.trade_connections_no,
          'food_no': user_info.food_no,
-         'org_conn_no': user_info.organisation_connection_no
+         'org_conn_no': user_info.organisation_connection_no,
+         'latitude': usr_pr['latitude'],
+         'longitude': usr_pr['longitude'],
+         'relation': 'buyer'
          })
     for each in c_conn:
         account = SocialAccount.objects.get(user__id = each['b_useruid'])
@@ -159,7 +162,10 @@ def get_connections(user_id):
          'type': usr_pr['type_user'].split(','),
          'trade_conn_no': user_info.trade_connections_no,
          'food_no': user_info.food_no,
-         'org_conn_no': user_info.organisation_connection_no
+         'org_conn_no': user_info.organisation_connection_no,
+         'latitude': usr_pr['latitude'],
+         'longitude': usr_pr['longitude'],
+         'relation': 'seller'
          }
         if data not in final_connections:
             final_connections.append(data)
@@ -183,7 +189,9 @@ def get_members(user_id):
          'type': usr_pr['type_user'].split(','),
          'trade_conn_no': user_info.trade_connections_no,
          'food_no': user_info.food_no,
-         'org_conn_no': user_info.organisation_connection_no
+         'org_conn_no': user_info.organisation_connection_no,
+         'latitude': usr_pr['latitude'],
+         'longitude': usr_pr['longitude']
          })
     return final_members
 
