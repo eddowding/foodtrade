@@ -44,12 +44,12 @@ class Search():
                                     # "includeLocs": "location.coordinates",
                                     "uniqueDocs": True,  
                                     "spherical":True,
-                                    "limit":1,
+                                    "limit":20,
                                     "distanceMultiplier":6371                          
                                   }
                       },
                       { '$match':query_string},
-                      {"$sort": SON([("distance", -1), ("_id", -1)])}
+                      {"$sort": SON([("distance", 1), ("_id", -1)])}
                       ]
         tweet_search_object = TweetFeed()
         search_results = tweet_search_object.aggregrate(aggregate_query)
