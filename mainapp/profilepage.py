@@ -2,13 +2,11 @@ from django.shortcuts import render_to_response
 from django.http import HttpResponse, HttpResponseRedirect
 from allauth.socialaccount.models import SocialToken, SocialAccount
 from django.template import RequestContext
-from mainapp.TweetFeed import UserProfile
+from mainapp.classes.TweetFeed import UserProfile, TweetFeed, Food, TradeConnection
 from django.contrib.auth.models import User
 from django.core.context_processors import csrf
-from mainapp.TweetFeed import TweetFeed
 from geolocation import get_addr_from_ip
 from classes.DataConnector import UserInfo
-from mainapp.TweetFeed import Food, TradeConnection
 from mainapp.classes.Tags import Tags
 from pygeocoder import Geocoder
 

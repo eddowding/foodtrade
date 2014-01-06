@@ -1,6 +1,6 @@
 import re
 
-from TweetFeed import TweetFeed
+from mainapp.classes.TweetFeed import TweetFeed
 
 
 

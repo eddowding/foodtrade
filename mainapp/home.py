@@ -4,7 +4,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from allauth.socialaccount.models import SocialToken, SocialAccount
 from twython import Twython
 import json
-from TweetFeed import TweetFeed
+from mainapp.classes.TweetFeed import TweetFeed
 from search import search_general
 from streaming import MyStreamer
 from models import MaxTweetId

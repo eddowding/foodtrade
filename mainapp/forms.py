@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.models import User
-from mainapp.TweetFeed import UserProfile
+from mainapp.classes.TweetFeed import UserProfile
 from allauth.socialaccount.models import SocialToken, SocialAccount
 from django.http import HttpResponse, HttpResponseRedirect
 from classes.Tags import Tags

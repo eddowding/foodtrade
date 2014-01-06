@@ -5,7 +5,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from allauth.socialaccount.models import SocialToken, SocialAccount
 from twython import Twython
 import json
-from TweetFeed import TweetFeed
+from mainapp.classes.TweetFeed import TweetFeed
 from Tags import Tags
 from mainapp.TweetFeed import TradeConnection, UserProfile, Food, Customer
 

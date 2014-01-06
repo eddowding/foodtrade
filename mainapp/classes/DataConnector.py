@@ -9,7 +9,7 @@ from MongoConnection import MongoConnection
 from datetime import datetime
 from bson.objectid import ObjectId
 import time
-from mainapp.TweetFeed import TradeConnection, Food
+from mainapp.classes.TweetFeed import TradeConnection, Food
 class UserConnections():
 
     """docstring for UserConnections"""
@@ -41,11 +41,6 @@ class UserConnections():
 
     def get_nearby_businesses_no(self):
         return 79
-
-
-
-        
-
 
 class UserInfo():
     def __init__ (self,user_id):
