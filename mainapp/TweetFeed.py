@@ -64,7 +64,6 @@ class UserProfile():
         self.db_object.insert_one(self.table_name,value)
 
     def update_profile(self, userid, zipcode, type_usr, sign_up_as):
-        print type_usr
         return self.db_object.update(self.table_name,
             {'useruid':str(userid)}, {
                 'zip_code':zipcode,
@@ -106,6 +105,23 @@ class Food():
 
     def delete_food(self, useruid, food_name):
         self.db_object.update(self.table_name,{'useruid': useruid, 'food_name': food_name}, {'deleted':1})
+
+class Customer():
+    """docstring for Connection"""
+    def __init__(self):
+        self.db_object = MongoConnection("localhost",27017,'foodtrade')
+        self.table_name = 'customer'
+        self.db_object.create_table(self.table_name,'useruid')
+
+    def get_customers_by_userid(self,useruid):
+        return self.db_object.get_all(self.table_name,{'useruid': useruid, 'deleted': 0})
+
+    def create_customer (self, value):
+        value['deleted'] =0
+        self.db_object.insert_one(self.table_name,value)
+
+    def delete_customer(self, useruid, customer_id):
+        self.db_object.update(self.table_name,{'useruid': useruid, 'customer_id': customer_id}, {'deleted':1})
 
 # trade_conn = TradeConnection()
 # trade_conn.create_connection({'b_useruid': 23, 'c_useruid': 20})

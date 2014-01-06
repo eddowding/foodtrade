@@ -32,6 +32,7 @@ def display_profile(request, username):
         user_profile = user_profile_obj.get_profile_by_id(str(user_id))
         user_info = UserInfo(user_id)
         parameters['userinfo'] = user_info
+        parameters['user_id'] = request.user.id
 
     foo = Food()
     all_foods = foo.get_foods_by_userid(usr.id)
@@ -92,7 +93,6 @@ def edit_profile(request, username):
         usr_type = request.POST['type']
         tweetFeedObj = TweetFeed()
         tweetFeedObj.update_tweets(username, first_name, last_name, description, zip_code)
-
         user_profile_obj = UserProfile()
         user_profile_obj.update_profile(request.user.id, zip_code, usr_type, sign_up_as)
 

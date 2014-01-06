@@ -7,7 +7,7 @@ from twython import Twython
 import json
 from TweetFeed import TweetFeed
 from Tags import Tags
-from mainapp.TweetFeed import TradeConnection, UserProfile, Food
+from mainapp.TweetFeed import TradeConnection, UserProfile, Food, Customer
 
 consumer_key = 'seqGJEiDVNPxde7jmrk6dQ'
 consumer_secret = 'sI2BsZHPk86SYB7nRtKy0nQpZX3NP5j5dLfcNiP14'
@@ -146,3 +146,12 @@ class AjaxHandle():
         else:
             return HttpResponse('0')
 
+    def addcustomer(self, request):
+        customer = Customer()
+        print request.POST.get('data')
+        data = eval(request.POST.get('data'))
+        if data !=None and data !="":
+            customer.create_customer(data)
+            return HttpResponse("{'status':1}")
+        else:
+            return HttpResponse("{'status':0}")
