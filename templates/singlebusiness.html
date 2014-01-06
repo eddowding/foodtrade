@@ -376,6 +376,7 @@
 
 
     </div><!-- col10 --> 
+
         <script type="text/javascript">
     map_lat={{ loc.lat }};
     map_lon = {{ loc.lon }};
@@ -385,12 +386,19 @@
 connections = [];
     {% endif %}
     </script>
+
      <script src="{% static "js/activity-map.js" %}"></script>
 
-     <script type="text/javascript">
-     $('#addfood_id .typeahead').typeahead({                                                                                        
-  prefetch: '/static/produce.json',                                         
-  limit: 10                                                                   
+     
+   {% endblock %}
+
+   {% block footer %}
+<script type="text/javascript">
+     $('#addfood_id').typeahead({
+     prefetch: '/static/produce.json',
+  // remote: '/static/produce.json',                                         
+      limit: 10                                                                   
 });
      </script>
-   {% endblock %}
+
+ {% endblock %}
