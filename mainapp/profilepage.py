@@ -7,7 +7,7 @@ from django.core.context_processors import csrf
 from mainapp.TweetFeed import TweetFeed
 from geolocation import get_addr_from_ip
 from classes.DataConnector import UserInfo
-from mainapp.TweetFeed import Food, TradeConnection, Customer, TradeConnection, UserProfile
+from mainapp.TweetFeed import Food, TradeConnection, Customer, TradeConnection, UserProfile, Organisation
 from mainapp.classes.Tags import Tags
 from pygeocoder import Geocoder
 
@@ -56,6 +56,7 @@ def display_profile(request, username):
         if parameters['sign_up_as'] == 'Food Business':
             return render_to_response('singlebusiness.html', parameters, context_instance=RequestContext(request))
         elif parameters['sign_up_as'] == 'Organisation':
+            parameters['members'] = get_members(usr.id)
             return render_to_response('single-organization.html', parameters, context_instance=RequestContext(request))
         else:
             return render_to_response('singlebusiness.html', parameters, context_instance=RequestContext(request))           
@@ -163,3 +164,28 @@ def get_connections(user_id):
         if data not in final_connections:
             final_connections.append(data)
     return final_connections[:10]
+
+def get_members(user_id):
+    org = Organisation()
+    members = org.get_members_by_orgid(user_id)
+    userprof = UserProfile()
+    final_members = []
+    for each in members:
+        print each['memberuid']
+        account = SocialAccount.objects.get(user__id = each['memberuid'])
+        usr_pr = userprof.get_profile_by_id(str(each['memberuid']))
+        user_info = UserInfo(each['memberuid'])
+        final_members.append({'id': each['memberuid'],
+         'name': account.extra_data['name'],
+         'description': account.extra_data['description'],
+         'photo': account.extra_data['profile_image_url'],
+         'username' : account.extra_data['screen_name'],
+         'type': usr_pr['type_user'].split(','),
+         'trade_conn_no': user_info.trade_connections_no,
+         'food_no': user_info.food_no,
+         'org_conn_no': user_info.organisation_connection_no
+         })
+    return final_members
+
+def get_organisations(user_id):
+    pass

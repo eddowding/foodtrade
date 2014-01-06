@@ -67,6 +67,11 @@ function add_customer(prof_id, c_id){
 	ajax_request("addcustomer", 'create_conn', {data: JSON.stringify(data)});
 }
 
+function add_member(org_id, mem_id){
+	var data = {orguid: org_id, memberuid: mem_id};
+	ajax_request("addmember", 'create_conn', {data: JSON.stringify(data)});
+}
+
 function PostStatus(status_val)
 {
 	ajax_request("post_tweet", 'CloseNewPostModal', {message: status_val});

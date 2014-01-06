@@ -195,7 +195,7 @@
           <div class="modal-content">
             <div class="modal-header">
               <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-              <h4 class="modal-title" id="myModalLabel">You're a customer of Smales Farm?</h4>
+              <h4 class="modal-title" id="myModalLabel">You're a member of {{name}}?</h4>
             </div>
             <div class="modal-body">
  
@@ -206,8 +206,8 @@
 
             </div>
             <div class="modal-footer"> 
-              <button type="button" class="btn btn-default">Cancel</button>
-              <button type="button" class="btn btn-primary">Yes, I'm a happy customer!</button>
+              <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+              <button type="button" class="btn btn-primary" onClick="add_member({{profile_id}}, {{user_id}})" data-dismiss="modal">Yes, I'm a happy member!</button>
             </div>
           </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
@@ -241,16 +241,43 @@
            <button class="btn btn-default">
               <i class="fa fa-smile-o "></i> Are you a member?
             </button> 
-            <button class="btn btn-success">
+            <button class="btn btn-success" onClick="add_member({{profile_id}}, {{user_id}})">
               <i class="fa fa-check "></i> I'm a member
             </button> 
             <div class="clearfix"> 
-              {% include 'card_business.php' %}
-          {% include 'card_business.php' %}
-          {% include 'card_business.php' %}
-          {% include 'card_business.php' %}
-          {% include 'card_business.php' %}
-          {% include 'card_business.php' %}
+                    {% for each_mem in members %}
+                        <div class="card card-business">
+                          <div class="content">
+
+                            <div class="pull-left">
+                              <img src="{{each_mem.photo}}" alt="{{each_mem.name}}"
+                              class="img-rounded img-responsive" style="width:40px;" /> 
+                      
+                            </div>
+
+                            <div class="text">
+                            <button type="button" class="close" aria-hidden="true">&times;</button>
+                              <h5><a href="/profile/{{username}}">{{each_mem.name}}</a> 
+                              </h5>  
+                              <p class="small">{{each_mem.description}}</p>
+                            </div>
+                          </div>
+                          <div class="numbers clearfix">
+
+                            <div class="tags tags-biztype pull-left">  
+                              {% for e in each_mem.type %}
+                             <a href="/activity/?q={{e}}">{{e}}</a>
+                             {% endfor %}
+                            </div>
+
+                            <p class="small pull-right">
+                              <a href="#" title="{{each_mem.food_no}} Foods"><i class="fa fa-leaf"></i> {{each_mem.food_no}}</a>
+                              <a href="#" title="{{each_mem.trade_conn_no}} conn"><i class="fa fa-link"></i> {{each_mem.trade_conn_no}}</a>
+                              <a href="#" title="{{each_mem.org_conn_no}} Organisations"><i class="fa fa-group"></i> {{each_mem.org_conn_no}}</a> 
+                            </p>
+                          </div>
+                        </div> 
+                        {% endfor %}
             </div>
           </div>
           <div class="tab-pane fade" id="foods">
