@@ -36,25 +36,25 @@
                  Sign up as</label></br>
                 <label class="btn btn-default">
                   {% ifequal sign_up_as 'Individual' %}
-                    <input type="radio" name="sign_up_as" checked="true" id="option1" onchange="dataradio('Individual')"> Individual
+                    <input type="radio" name="sign_up_as" checked="true" id="option1" value="Individual"> Individual
                     {% else %} 
-                    <input type="radio" name="sign_up_as" id="option1" onchange="dataradio('Individual')"> Individual
+                    <input type="radio" name="sign_up_as" id="option1" value="Individual"> Individual
                   {% endifequal %}
 
                 </label>
                 <label class="btn btn-default">
                   {% ifequal sign_up_as 'Food Business' %}
-                    <input type="radio" name="sign_up_as" checked="true" id="option2" onchange="dataradio('Food Business')"> Food Business
+                    <input type="radio" name="sign_up_as" checked="true" id="option2" value="Food Business"> Food Business
                     {% else %} 
-                    <input type="radio" name="sign_up_as"  id="option2" onchange="dataradio('Food Business')"> Food Business
+                    <input type="radio" name="sign_up_as"  id="option2" value="Food Business"> Food Business
                   {% endifequal %}
                 </label>
 
                 <label class="btn btn-default">
                   {% ifequal sign_up_as 'Organisation' %}
-                    <input type="radio" name="sign_up_as" checked="true" id="option3" onchange="dataradio('Organisation')"> Organisation
+                    <input type="radio" name="sign_up_as" checked="true" id="option3" value="Organisation"> Organisation
                     {% else %} 
-                    <input type="radio" name="sign_up_as" id="option3" onchange="dataradio('Organisation')"> Organisation
+                    <input type="radio" name="sign_up_as" id="option3" value="Organisation"> Organisation
                   {% endifequal %}
                 </label>
         </p>

@@ -22,8 +22,7 @@ class SignupView(RedirectAuthenticatedUserMixin, CloseableSignupMixin,
     template_name = 'socialaccount/signup.html'
 
     def dispatch(self, request, *args, **kwargs):
-        self.sociallogin = SocialLogin \
-            .deserialize(request.session.get('socialaccount_sociallogin'))
+        self.sociallogin = SocialLogin.deserialize(request.session.get('socialaccount_sociallogin'))
         if not self.sociallogin:
             return HttpResponseRedirect(reverse('account_login'))
         return super(SignupView, self).dispatch(request, *args, **kwargs)
