@@ -36,33 +36,32 @@
                  Sign up as</label></br>
                 <label class="btn btn-default">
                   {% ifequal sign_up_as 'Individual' %}
-                    <input type="radio" name="sign_up_as" checked="true" id="option1" onchange="dataradio('Individual')"> Individual
+                    <input type="radio" name="sign_up_as" checked="true" id="option1" value="Individual"> Individual
                     {% else %} 
-                    <input type="radio" name="sign_up_as" id="option1" onchange="dataradio('Individual')"> Individual
+                    <input type="radio" name="sign_up_as" id="option1" value="Individual"> Individual
                   {% endifequal %}
 
                 </label>
                 <label class="btn btn-default">
                   {% ifequal sign_up_as 'Food Business' %}
-                    <input type="radio" name="sign_up_as" checked="true" id="option2" onchange="dataradio('Food Business')"> Food Business
+                    <input type="radio" name="sign_up_as" checked="true" id="option2" value="Food Business"> Food Business
                     {% else %} 
-                    <input type="radio" name="sign_up_as"  id="option2" onchange="dataradio('Food Business')"> Food Business
+                    <input type="radio" name="sign_up_as"  id="option2" value="Food Business"> Food Business
                   {% endifequal %}
                 </label>
 
                 <label class="btn btn-default">
                   {% ifequal sign_up_as 'Organisation' %}
-                    <input type="radio" name="sign_up_as" checked="true" id="option3" onchange="dataradio('Organisation')"> Organisation
+                    <input type="radio" name="sign_up_as" checked="true" id="option3" value="Organisation"> Organisation
                     {% else %} 
-                    <input type="radio" name="sign_up_as" id="option3" onchange="dataradio('Organisation')"> Organisation
+                    <input type="radio" name="sign_up_as" id="option3" value="Organisation"> Organisation
                   {% endifequal %}
                 </label>
         </p>
+        <p><input type="hidden" id= "hidden_type" name="type"></p>
         <p>
           <label for="id_type_user">Type</label><br/>
-          <select id= "dropdown3" name = 'type' data-placeholder="Farm, wholesaler, restaurant, bakery..." multiple style="width:60%;height:25px;" class="chosen-select" tabindex="6" >
-           
-
+          <select id= "dropdown3" data-placeholder="Farm, wholesaler, restaurant, bakery..." multiple style="width:60%;height:25px;" class="chosen-select" tabindex="6" >
             <option value=""></option>
             {% for each in all_tags %}
             <optgroup label={{each.node}}>
@@ -80,7 +79,7 @@
 
 
         </p>
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="submit" class="btn btn-primary" onclick="copydata()">Submit</button>
     </div>
   </form>
 </div>
@@ -88,13 +87,28 @@
   <script src="/static/js/chosen.jquery.min.js" type="text/javascript"></script>
   <script src="/static/css/docsupport/prism.js" type="text/javascript" charset="utf-8"></script>
 <script type="text/javascript">
-  var selVal = String('{{type_user}}');
-  $("select optgroup option").filter(function() {
-        // alert("Roshan");
-        return $(this).text() == selVal;
-    }).prop('selected', true);  
+  var selVals = String('{{type_user}}').split(',');
+  for (var i=0; i < selVals.length; i++){
+    $("select optgroup option").filter(function() {
+        return $(this).text() == selVals[i];
+    }).prop('selected', true);
+  }
 </script>
 <script type="text/javascript">
+  function copydata(){
+    var all_values = '';
+    var elements = document.getElementsByClassName('search-choice');
+      for(i=0;i<elements.length;i++){
+        if(all_values==''){
+          all_values = all_values + elements[i].children[0].innerHTML;  
+        }
+        else{
+        all_values = all_values + ',' + elements[i].children[0].innerHTML;
+        }
+      }
+      document.getElementById('hidden_type').value = all_values;
+    }
+
     var config = {
       '.chosen-select'           : {},
       '.chosen-select-deselect'  : {allow_single_deselect:true},

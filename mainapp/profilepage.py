@@ -2,16 +2,15 @@ from django.shortcuts import render_to_response
 from django.http import HttpResponse, HttpResponseRedirect
 from allauth.socialaccount.models import SocialToken, SocialAccount
 from django.template import RequestContext
-from mainapp.TweetFeed import UserProfile
 from django.contrib.auth.models import User
 from django.core.context_processors import csrf
 from mainapp.TweetFeed import TweetFeed
-
 from geolocation import get_addr_from_ip
 from classes.DataConnector import UserInfo
-
-from mainapp.TweetFeed import Food, TradeConnection
+from mainapp.TweetFeed import Food, TradeConnection, Customer, TradeConnection, UserProfile
 from mainapp.classes.Tags import Tags
+from pygeocoder import Geocoder
+
 def display_profile(request, username):
     parameters = {}
     user_profile = UserProfile()
@@ -32,6 +31,7 @@ def display_profile(request, username):
         user_profile = user_profile_obj.get_profile_by_id(str(user_id))
         user_info = UserInfo(user_id)
         parameters['userinfo'] = user_info
+        parameters['user_id'] = request.user.id
 
     foo = Food()
     all_foods = foo.get_foods_by_userid(usr.id)
@@ -46,11 +46,16 @@ def display_profile(request, username):
     default_lon = float(location_info['longitude'])
     default_lat = float(location_info['latitude'])
 
+    #get all customers
+    parameters['customers'] = get_customers(usr.id)
+    #get all connections
+    parameters['connections'] = get_connections(usr.id)
+
     parameters['loc'] = {'lat':default_lat, 'lon':default_lon}
     if request.user.is_authenticated():
         if parameters['sign_up_as'] == 'Food Business':
             return render_to_response('singlebusiness.html', parameters, context_instance=RequestContext(request))
-        elif parameters['sign_up_as'] == 'Organization':
+        elif parameters['sign_up_as'] == 'Organisation':
             return render_to_response('single-organization.html', parameters, context_instance=RequestContext(request))
         else:
             return render_to_response('singlebusiness.html', parameters, context_instance=RequestContext(request))           
@@ -65,19 +70,18 @@ def edit_profile(request, username):
         parameters['all_tags'] = tags.get_tags()
         if request.user.is_authenticated():
             user_profile = UserProfile()
-            usr = User.objects.get(username = username)
-            account = SocialAccount.objects.get(user__id = usr.id)
-            userprof = user_profile.get_profile_by_id(str(usr.id))
-            parameters['profile_id'] = usr.id
+            account = SocialAccount.objects.get(user__id = request.user.id)
+            userprof = user_profile.get_profile_by_id(str(request.user.id))
+            parameters['profile_id'] = request.user.id
             parameters['sign_up_as'] = userprof['sign_up_as']
             parameters['zip_code'] = userprof['zip_code']
             parameters['address'] = userprof['address']
             parameters['type_user'] = str(userprof['type_user'])
-            parameters['first_name'] = usr.first_name
-            parameters['last_name']  = usr.last_name
+            parameters['first_name'] = account.extra_data['name'].split(' ')[0]
+            parameters['last_name']  = account.extra_data['name'].split(' ')[1]
             parameters['description'] = account.extra_data['description']
             parameters.update(csrf(request))
-            user_info = UserInfo(usr.id)
+            user_info = UserInfo(request.user.id)
             parameters['userinfo'] = user_info
             return render_to_response ('editprofile.html', parameters, context_instance=RequestContext(request))
         else:
@@ -91,10 +95,8 @@ def edit_profile(request, username):
         sign_up_as = request.POST['sign_up_as']
 
         usr_type = request.POST['type']
-        
         tweetFeedObj = TweetFeed()
         tweetFeedObj.update_tweets(username, first_name, last_name, description, zip_code)
-
         user_profile_obj = UserProfile()
         user_profile_obj.update_profile(request.user.id, zip_code, usr_type, sign_up_as)
 
@@ -110,14 +112,54 @@ def edit_profile(request, username):
 
         return HttpResponseRedirect('/')
 
+def get_customers(user_id):
+    cust = Customer()
+    all_customers = cust.get_customers_by_userid(user_id)
+    final_customers = []
+    for each in all_customers:
+        account = SocialAccount.objects.get(user__id = each['customeruid'])
+        final_customers.append({'id': each['customeruid'],
+         'name': account.extra_data['name'],
+         'description': account.extra_data['description'],
+         'photo': account.extra_data['profile_image_url'],
+         'username' : account.extra_data['screen_name']
+         })
+    return final_customers[:10]
 
-
-
-
-
-
-
-
-
-
-
+def get_connections(user_id):
+    trade_conn = TradeConnection()
+    userprof = UserProfile()
+    b_conn = trade_conn.get_connection_by_business(user_id)
+    c_conn = trade_conn.get_connection_by_customer(user_id)
+    final_connections = []
+    for each in b_conn:
+        account = SocialAccount.objects.get(user__id = each['c_useruid'])
+        usr_pr = userprof.get_profile_by_id(str(each['c_useruid']))
+        user_info = UserInfo(each['c_useruid'])
+        final_connections.append({'id': each['c_useruid'],
+         'name': account.extra_data['name'],
+         'description': account.extra_data['description'],
+         'photo': account.extra_data['profile_image_url'],
+         'username' : account.extra_data['screen_name'],
+         'type': usr_pr['type_user'].split(','),
+         'trade_conn_no': user_info.trade_connections_no,
+         'food_no': user_info.food_no,
+         'org_conn_no': user_info.organisation_connection_no
+         })
+    for each in c_conn:
+        account = SocialAccount.objects.get(user__id = each['b_useruid'])
+        usr_pr = userprof.get_profile_by_id(str(each['b_useruid']))
+        user_info = UserInfo(each['b_useruid'])
+        data = {'id': each['b_useruid'],
+         'name': account.extra_data['name'],
+         'description': account.extra_data['description'],
+         'photo': account.extra_data['profile_image_url'],
+         'username' : account.extra_data['screen_name'],
+         'type': usr_pr['type_user'].split(','),
+         'trade_conn_no': user_info.trade_connections_no,
+         'food_no': user_info.food_no,
+         'org_conn_no': user_info.organisation_connection_no
+         }
+        if data not in final_connections:
+            final_connections.append(data)
+    return final_connections[:10]
