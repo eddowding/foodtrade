@@ -2,14 +2,14 @@ from django.shortcuts import render_to_response
 from django.http import HttpResponse, HttpResponseRedirect
 from allauth.socialaccount.models import SocialToken, SocialAccount
 from django.template import RequestContext
-from mainapp.classes.TweetFeed import UserProfile, TweetFeed, Food, TradeConnection
+from mainapp.classes.TweetFeed import Food, TradeConnection, Customer, TradeConnection, UserProfile, Organisation
 from django.contrib.auth.models import User
 from django.core.context_processors import csrf
 from geolocation import get_addr_from_ip
 from classes.DataConnector import UserInfo
 from mainapp.classes.Tags import Tags
 from pygeocoder import Geocoder
-
+import json
 def display_profile(request, username):
     parameters = {}
     user_profile = UserProfile()
@@ -45,11 +45,20 @@ def display_profile(request, username):
     default_lon = float(location_info['longitude'])
     default_lat = float(location_info['latitude'])
 
+    #get all customers
+    parameters['customers'] = get_customers(usr.id)
+    #get all connections
+    parameters['connections'] = get_connections(usr.id)
+    parameters['connections_str'] = json.dumps(parameters['connections'])
+    # get all organisations
+    parameters['organisations'] = get_organisations(usr.id)
+
     parameters['loc'] = {'lat':default_lat, 'lon':default_lon}
     if request.user.is_authenticated():
         if parameters['sign_up_as'] == 'Food Business':
             return render_to_response('singlebusiness.html', parameters, context_instance=RequestContext(request))
-        elif parameters['sign_up_as'] == 'Organization':
+        elif parameters['sign_up_as'] == 'Organisation':
+            parameters['members'] = get_members(usr.id)
             return render_to_response('single-organization.html', parameters, context_instance=RequestContext(request))
         else:
             return render_to_response('singlebusiness.html', parameters, context_instance=RequestContext(request))           
@@ -106,14 +115,98 @@ def edit_profile(request, username):
 
         return HttpResponseRedirect('/')
 
+def get_customers(user_id):
+    cust = Customer()
+    all_customers = cust.get_customers_by_userid(user_id)
+    final_customers = []
+    for each in all_customers:
+        account = SocialAccount.objects.get(user__id = each['customeruid'])
+        final_customers.append({'id': each['customeruid'],
+         'name': account.extra_data['name'],
+         'description': account.extra_data['description'],
+         'photo': account.extra_data['profile_image_url'],
+         'username' : account.extra_data['screen_name']
+         })
+    return final_customers[:10]
 
+def get_connections(user_id):
+    trade_conn = TradeConnection()
+    userprof = UserProfile()
+    b_conn = trade_conn.get_connection_by_business(user_id)
+    c_conn = trade_conn.get_connection_by_customer(user_id)
+    final_connections = []
+    for each in b_conn:
+        account = SocialAccount.objects.get(user__id = each['c_useruid'])
+        usr_pr = userprof.get_profile_by_id(str(each['c_useruid']))
+        user_info = UserInfo(each['c_useruid'])
+        final_connections.append({'id': each['c_useruid'],
+         'name': account.extra_data['name'],
+         'description': account.extra_data['description'],
+         'photo': account.extra_data['profile_image_url'],
+         'username' : account.extra_data['screen_name'],
+         'type': usr_pr['type_user'].split(','),
+         'trade_conn_no': user_info.trade_connections_no,
+         'food_no': user_info.food_no,
+         'org_conn_no': user_info.organisation_connection_no,
+         'latitude': usr_pr['latitude'],
+         'longitude': usr_pr['longitude'],
+         'relation': 'buyer'
+         })
+    for each in c_conn:
+        account = SocialAccount.objects.get(user__id = each['b_useruid'])
+        usr_pr = userprof.get_profile_by_id(str(each['b_useruid']))
+        user_info = UserInfo(each['b_useruid'])
+        data = {'id': each['b_useruid'],
+         'name': account.extra_data['name'],
+         'description': account.extra_data['description'],
+         'photo': account.extra_data['profile_image_url'],
+         'username' : account.extra_data['screen_name'],
+         'type': usr_pr['type_user'].split(','),
+         'trade_conn_no': user_info.trade_connections_no,
+         'food_no': user_info.food_no,
+         'org_conn_no': user_info.organisation_connection_no,
+         'latitude': usr_pr['latitude'],
+         'longitude': usr_pr['longitude'],
+         'relation': 'seller'
+         }
+        if data not in final_connections:
+            final_connections.append(data)
+    return final_connections[:10]
 
+def get_members(user_id):
+    org = Organisation()
+    members = org.get_members_by_orgid(user_id)
+    userprof = UserProfile()
+    final_members = []
+    for each in members:
+        print each['memberuid']
+        account = SocialAccount.objects.get(user__id = each['memberuid'])
+        usr_pr = userprof.get_profile_by_id(str(each['memberuid']))
+        user_info = UserInfo(each['memberuid'])
+        final_members.append({'id': each['memberuid'],
+         'name': account.extra_data['name'],
+         'description': account.extra_data['description'],
+         'photo': account.extra_data['profile_image_url'],
+         'username' : account.extra_data['screen_name'],
+         'type': usr_pr['type_user'].split(','),
+         'trade_conn_no': user_info.trade_connections_no,
+         'food_no': user_info.food_no,
+         'org_conn_no': user_info.organisation_connection_no,
+         'latitude': usr_pr['latitude'],
+         'longitude': usr_pr['longitude']
+         })
+    return final_members
 
-
-
-
-
-
-
-
-
+def get_organisations(user_id):
+    org = Organisation()
+    organisations = org.get_organisations_by_mem_id(user_id)
+    final_orgs = []
+    for each in organisations:
+        account = SocialAccount.objects.get(user__id = each['orguid'])
+        final_orgs.append({'id': each['orguid'],
+         'name': account.extra_data['name'],
+         'description': account.extra_data['description'],
+         'photo': account.extra_data['profile_image_url'],
+         'username' : account.extra_data['screen_name']
+         })
+    return final_orgs[:10]

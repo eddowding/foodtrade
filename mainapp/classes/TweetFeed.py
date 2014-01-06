@@ -61,6 +61,9 @@ class TweetFeed():
         return self.db_object.map_reduce(self.table_name, mapper, reducer, query = { 'time_stamp':{'$gte': start_time_stamp,'$lte': end_time_stamp}})
         
 
+    def aggregrate(self, conditions):
+        return self.db_object.aggregrate_all(self.table_name,conditions)
+
 
     def update_tweets(self, username, first_name, last_name, description, zip_code):
         try:

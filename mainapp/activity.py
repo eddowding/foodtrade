@@ -10,7 +10,7 @@ from search import search_general
 from streaming import MyStreamer
 from models import MaxTweetId
 from geolocation import get_addr_from_ip
-
+import time
 from classes.DataConnector import UserInfo
 
 consumer_key = 'seqGJEiDVNPxde7jmrk6dQ'
@@ -91,18 +91,37 @@ def home(request):
     search_handle = Search(keyword, my_lon, my_lat, "nepal")
     results = search_handle.search()
     for i in range(len(results)):
-        
+        print results[i]
         distance_text = ""
         # try:
-        lonlat_distance = distance(my_lon, my_lat, results[i]['location']['coordinates'][0],results[i]['location']['coordinates'][1])
-        if lonlat_distance>1:
-            distance_text = str(lonlat_distance) +" Km"
+        lonlat_distance = results[i]['distance'] * 0.621371 #distance(my_lon, my_lat, results[i]['location']['coordinates'][0],results[i]['location']['coordinates'][1])
+        # if lonlat_distance>1:
+        #     distance_text = str(lonlat_distance) +" Km"
+        # else:
+        #     distance_text = str(lonlat_distance*1000) + " m"
+        distance_text = str("{:10.2f}".format(lonlat_distance)) + " miles"
+        print lonlat_distance
+        time_elapsed = int(time.time()) - results[i]['time_stamp']
+        if time_elapsed<60:
+            time_text = str(time_elapsed) + 'seconds'
+        elif time_elapsed < 3600:
+            minutes = time_elapsed/60
+            time_text = str(minutes) + 'minutes'
+        elif time_elapsed < 3600*24:
+            hours = time_elapsed/3600
+            time_text = str(hours) + 'hours'
+        elif time_elapsed < 3600*24*365:
+            days = time_elapsed/3600/24
+            time_text = str(days) + 'days'
         else:
-            distance_text = str(lonlat_distance*1000) + " m"
+            years = time_elapsed/3600/24/365
+            time_text = str(years) + 'years'
+
         # except:
         #    pass
 
         results[i]['distance_text'] = distance_text
+        results[i]['time_elapsed'] = time_text
 
 
     

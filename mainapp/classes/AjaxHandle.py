@@ -7,7 +7,7 @@ from twython import Twython
 import json
 from mainapp.classes.TweetFeed import TweetFeed
 from Tags import Tags
-from mainapp.TweetFeed import TradeConnection, UserProfile, Food, Customer
+from mainapp.TweetFeed import TradeConnection, UserProfile, Food, Customer, Organisation
 
 consumer_key = 'seqGJEiDVNPxde7jmrk6dQ'
 consumer_secret = 'sI2BsZHPk86SYB7nRtKy0nQpZX3NP5j5dLfcNiP14'
@@ -136,7 +136,7 @@ class AjaxHandle():
     def save_tags(self, request):
         if request.user.is_authenticated():
             tags = request.POST.get('tags')
-            print tags
+            tags = '[{"node": "Agricultural Suppliers", "childrens": [{"node": "Animal Feed"}, {"node": "Compost"}, {"node": "Livestock Breeder"}, {"node": "Nursery"}, {"node": "Seeds"}]}, {"node": "Food service", "childrens": [{"node": "Art_gallery"}, {"node": "Bar"}, {"node": "Cafe"}, {"node": "Catering Contractor"}, {"node": "Food Stall"}, {"node": "Home Cooking Service"}, {"node": "Hostel"}, {"node": "Hotel"}, {"node": "Lodging"}, {"node": "Museum"}, {"node": "Pub"}, {"node": "Public sector"}, {"node": "Restaurant"}, {"node": "School  University"}, {"node": "Take Away Food Shops"}]}, {"node": "Meal_delivery"}, {"node": "Processing and Manufacture", "childrens": [{"node": "Drink"}, {"node": "Food"}, {"node": "Processing"}, {"node": "Waste disposal"}]}, {"node": "Production", "childrens": [{"node": "Arable Farm"}, {"node": "Bee keeping"}, {"node": "Box Scheme"}, {"node": "Community Supported Agriculture (CSA)"}, {"node": "Dairy"}, {"node": "Fish"}, {"node": "Forager"}, {"node": "Horticulture"}, {"node": "Livestock Farm"}, {"node": "Market garden"}, {"node": "Mixed farm"}, {"node": "Orchard"}, {"node": "Other"}, {"node": "Smallholder"}, {"node": "Vineyard"}]}, {"node": "Real_estate_agency"}, {"node": "Retail", "childrens": [{"node": "Baker"}, {"node": "Butcher"}, {"node": "Cheese Shop"}, {"node": "Chocolatier"}, {"node": "Confectioner"}, {"node": "Convenience Store"}, {"node": "Delicatessen"}, {"node": "Farm Shop"}, {"node": "Fishmonger"}, {"node": "Fruitseller"}, {"node": "Greengrocer"}, {"node": "Health food"}, {"node": "Market"}, {"node": "Newsagent"}, {"node": "Off licence"}, {"node": "Supermarket"}]}, {"node": "Rickmansworth"}, {"node": "Wholesale and Distribution", "childrens": [{"node": "Cash and Carry"}, {"node": "Community food group"}, {"node": "Wholesale Market"}, {"node": "Wholesaler"}, {"node": "Wine Merchant"}]}]'
             json_tags = json.loads(tags)
             insert_val = {'parent':1, 'tags':json_tags}
             mytag = Tags()
@@ -152,6 +152,16 @@ class AjaxHandle():
         data = eval(request.POST.get('data'))
         if data !=None and data !="":
             customer.create_customer(data)
+            return HttpResponse("{'status':1}")
+        else:
+            return HttpResponse("{'status':0}")
+
+    def addmember(self, request):
+        org = Organisation()
+        print request.POST.get('data')
+        data = eval(request.POST.get('data'))
+        if data !=None and data !="":
+            org.create_member(data)
             return HttpResponse("{'status':1}")
         else:
             return HttpResponse("{'status':0}")
