@@ -90,7 +90,6 @@ def edit_profile(request, username):
         sign_up_as = request.POST['sign_up_as']
 
         usr_type = request.POST['type']
-        print usr_type
         tweetFeedObj = TweetFeed()
         tweetFeedObj.update_tweets(username, first_name, last_name, description, zip_code)
 
