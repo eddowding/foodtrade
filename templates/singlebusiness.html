@@ -157,7 +157,7 @@
           <div class="modal-content">
             <div class="modal-header">
               <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-              <h4 class="modal-title" id="myModalLabel">You're a customer of Smales Farm?</h4>
+              <h4 class="modal-title" id="myModalLabel">You're a customer of {{name}}?</h4>
             </div>
             <div class="modal-body">
  
@@ -168,8 +168,12 @@
 
             </div>
             <div class="modal-footer"> 
-              <button type="button" class="btn btn-default">Cancel</button>
-              <button type="button" class="btn btn-primary">Yes, I'm a happy customer!</button>
+              <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+              {% if user.is_authenticated %}
+              <button type="button" class="btn btn-primary" onClick="add_customer({{profile_id}}, {{user_id}})" data-dismiss="modal">Yes, I'm a happy customer!</button>
+              {% else %}
+              <button type="button" class="btn btn-primary" data-dismiss="modal">Yes, I'm a happy customer!</button>
+              {% endif %}
             </div>
           </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
@@ -382,8 +386,9 @@ connections = [];
     {% endif %}
     </script>
      <script src="{% static "js/activity-map.js" %}"></script>
+
      <script type="text/javascript">
-     $('#addfood_id').typeahead({                                                                                        
+     $('#addfood_id .typeahead').typeahead({                                                                                        
   prefetch: '/static/produce.json',                                         
   limit: 10                                                                   
 });

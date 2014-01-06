@@ -2,7 +2,7 @@ from MongoConnection import MongoConnection
 from datetime import datetime
 from bson.objectid import ObjectId
 import time
-from pyzipcode import ZipCodeDatabase
+# from pyzipcode import ZipCodeDatabase
 
 
 class TweetFeed():
@@ -32,19 +32,20 @@ class TweetFeed():
         self.db_object.insert_one(self.table_name,value)
 
     def update_tweets(self, username, first_name, last_name, description, zip_code):
-        zcdb = ZipCodeDatabase()
-        try:
-            zipcode = zcdb[zip_code]
-        except:
-            zipcode = zcdb[06320]
+        pass
+        # zcdb = ZipCodeDatabase()
+        # try:
+        #     zipcode = zcdb[zip_code]
+        # except:
+        #     zipcode = zcdb[06320]
 
-        return self.db_object.update(self.table_name,
-            {'user.username':username}, 
-            {
-                'user.name':str(first_name + ' ' + last_name),
-                'user.Description':description, 
-                'location.coordinates':[zipcode.latitude, zipcode.longitude]
-            })
+        # return self.db_object.update(self.table_name,
+        #     {'user.username':username}, 
+        #     {
+        #         'user.name':str(first_name + ' ' + last_name),
+        #         'user.Description':description, 
+        #         'location.coordinates':[zipcode.latitude, zipcode.longitude]
+        #     })
 
 class UserProfile():
     def __init__ (self):
@@ -105,6 +106,23 @@ class Food():
 
     def delete_food(self, useruid, food_name):
         self.db_object.update(self.table_name,{'useruid': useruid, 'food_name': food_name}, {'deleted':1})
+
+class Customer():
+    """docstring for Connection"""
+    def __init__(self):
+        self.db_object = MongoConnection("localhost",27017,'foodtrade')
+        self.table_name = 'customer'
+        self.db_object.create_table(self.table_name,'useruid')
+
+    def get_customers_by_userid(self,useruid):
+        return self.db_object.get_all(self.table_name,{'useruid': useruid, 'deleted': 0})
+
+    def create_customer (self, value):
+        value['deleted'] =0
+        self.db_object.insert_one(self.table_name,value)
+
+    def delete_customer(self, useruid, customer_id):
+        self.db_object.update(self.table_name,{'useruid': useruid, 'customer_id': customer_id}, {'deleted':1})
 
 # trade_conn = TradeConnection()
 # trade_conn.create_connection({'b_useruid': 23, 'c_useruid': 20})
