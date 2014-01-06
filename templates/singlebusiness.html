@@ -249,7 +249,7 @@
                   
                       <div class="input-group">
                       <!-- link this to open food facts --> 
-                            <input class="form-control" name="addfood" id = "addfood_id" style="width:400px;" placeholder="Add foods you can buy here.">
+                            <input class="typeahead form-control" name="addfood" data-source='' data-provide="typeahead" autocomplete="off" id = "addfoo_id" style="width:400px;" placeholder="Add foods you can buy here.">
                             <span class="input-group-btn">
                                 <button class="btn btn-success" onClick="add_food({{profile_id}})"> Add</button>
                             </span>
