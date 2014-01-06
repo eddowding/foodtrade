@@ -368,11 +368,10 @@
         <script type="text/javascript">
     map_lat={{ loc.lat }};
     map_lon = {{ loc.lon }};
-{% if results %}
-connections = [];
-    {% endif %}
+
+connections = {{connections_str}};
     </script>
-     <script src="{% static "js/activity-map.js" %}"></script>
+     <script src="{% static "js/business-map.js" %}"></script>
      
    {% endblock %}
    {% block footer %}
