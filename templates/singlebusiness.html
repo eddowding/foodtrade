@@ -370,7 +370,7 @@
     map_lat={{ loc.lat }};
     map_lon = {{ loc.lon }};
 
-connections = {{connections_str}};
+connections = {{connections_str | safe}};
     </script>
      <script src="{% static "js/business-map.js" %}"></script>
      
