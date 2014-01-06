@@ -43,6 +43,7 @@ class MongoConnection():
     def update_upsert(self, table_name, where, what):
         self.db[table_name].update(where,{"$set":what},upsert=True)
 
+<<<<<<< HEAD
     def map_reduce(self, table_name, mapper, reducer,query):
         myresult = self.db[table_name].map_reduce(mapper,reducer,'results', query)
         results = self.db['results'].find().sort("value", pymongo.DESCENDING)
@@ -50,7 +51,7 @@ class MongoConnection():
         json_doc = json_doc.replace("$oid", "id")
         json_doc = json_doc.replace("_id", "uid")
         return json.loads(str(json_doc))
-
+=======
     def aggregrate_all(self,table_name,conditions={}):
         all_doc = self.db[table_name].aggregate(conditions)['result']
         json_doc = json.dumps(list(all_doc),default=json_util.default)
@@ -58,7 +59,7 @@ class MongoConnection():
         json_doc = json_doc.replace("_id", "uid")
         return json.loads(str(json_doc))
 
-
+>>>>>>> 49c6be85d3c3ff66b983f9bf0d05c3fe1bb47422
 
 
     

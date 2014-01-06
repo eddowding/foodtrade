@@ -163,6 +163,7 @@ Simon
 Kasper
 Daniel"""
 
+
 name_text = ["roshan bhandari", "sujit maharjan", "sijan bhandari", "subit raj", "santosh ghimire", "sudip kafle", "umanga bista", "sarvagya pant", "astha pant", "rasana manandhar", "ange acharya"]
 name_text = popular_names.split("\n")
 
@@ -173,7 +174,7 @@ def loadsampledata():
 
     from twython import Twython
     import json
-    from classes.TweetFeed import TweetFeed
+    from mainapp.classes.TweetFeed import TweetFeed
 
 
 
@@ -222,7 +223,7 @@ def loadsampledata():
         try:
             tweet_handler.insert_tweet({'tweet_id': random.randrange(10000, 1000000),
                            'parent_tweet_id': 0,
-                           'status': status_text[start: start + random.randrange(0, 140)],
+                           'status': '#' + name_text[user_rand] + " " + status_text[start: start + random.randrange(0, 140)],
                            'location': {'type': "Point",
                                         'coordinates': [float("{0:.5f}".format(random.uniform(-1, 1) * 180)), float("{0:.5f}".format(random.uniform(-1, 1) * 90))]
                                         },

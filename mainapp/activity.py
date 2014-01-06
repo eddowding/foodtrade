@@ -4,12 +4,11 @@ from django.http import HttpResponse, HttpResponseRedirect
 from allauth.socialaccount.models import SocialToken, SocialAccount
 from twython import Twython
 import json
-from classes.TweetFeed import TweetFeed
+from classes.TweetFeed import TweetFeed, UserProfile
 from classes.Search import Search
 from search import search_general
 from streaming import MyStreamer
 from models import MaxTweetId
-from TweetFeed import UserProfile
 from geolocation import get_addr_from_ip
 import time
 from classes.DataConnector import UserInfo

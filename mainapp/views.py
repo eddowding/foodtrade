@@ -4,12 +4,18 @@ from django.http import HttpResponse, HttpResponseRedirect
 from allauth.socialaccount.models import SocialToken, SocialAccount
 from twython import Twython
 import json
-from TweetFeed import TweetFeed, UserProfile
+from mainapp.classes.TweetFeed import TweetFeed, UserProfile
 from search import search_general
 from streaming import MyStreamer
 from models import MaxTweetId
 from geolocation import get_addr_from_ip
 from django.template import RequestContext
+import datetime
+from django.core.context_processors import csrf
+import time
+from mainapp.classes.DataConnector import UserInfo
+
+
 
 consumer_key = 'seqGJEiDVNPxde7jmrk6dQ'
 consumer_secret = 'sI2BsZHPk86SYB7nRtKy0nQpZX3NP5j5dLfcNiP14'
@@ -35,21 +41,6 @@ def singlebusiness(request):
 
 def tweets(request):
     parameters = {}
-    # if not request.user.is_authenticated():
-    #     return HttpResponseRedirect('/accounts/login/')
-    # parameters['user'] = request.user
-    # user_id = request.user.id
-    # print user_id
-    # st = SocialToken.objects.get(account__user__id=user_id)
-    # access_token = st.token
-    # access_token_secret = st.token_secret
-    # twitter = Twython(
-    #     app_key = consumer_key,
-    #     app_secret = consumer_secret,
-    #     oauth_token = access_token,
-    #     oauth_token_secret = access_token_secret
-    # )
-    # uid = SocialAccount.objects.get(user__id=user_id).uid
     admin_twitter = Twython(
         app_key = consumer_key,
         app_secret = consumer_secret,
@@ -108,42 +99,11 @@ def tweets(request):
             except:
                 pass
 
-    # max_id.max_tweet_id = 12345 if len(tweet_list) == 0 else max(tweet_list)
     if len(tweet_list)!=0:
         max_id.max_tweet_id = max(tweet_list)
         max_id.save()
 
-    ''' kaam chhaina '''
-        # print json.dumps(data, sort_keys = True, indent = 4)
-        # tweet_list.append(Twython.html_for_tweet(tweet))
-        # tweet_list.append(tweet)
-    # print tweet_list
-    # print json.dumps(mentions[0], sort_keys = True, indent = 4)
-    # parameters['tweet_list'] = mentions
-    # final_list = []
-    # # since_id should be mentions[0]['id']
-    # for each in mentions:
-    #     final_list.append({'created_at': each['created_at'],
-    #         'tweet_id': each['id'],
-    #         'parent_tweet_id': each['in_reply_to_status_id'],
-    #         'tweet_message': each['text'],
-    #         'twitter_uid': each['user']['id']
-    #         })
-    # tweet_feed = TweetFeed()
-    # # tweet_feed.insert_tweet({'parent_tweet_id': 2, 'user_id': 3, 'tweet_message': 'Hello there'})
-    # print tweet_feed.get_tweet_by_parent_id(2)
 
-    # search_results = twitter.search(q="#nepal")
-    # print search_results
-    # print json.dumps(search_results, sort_keys = True, indent = 4)
-    # search_results = search_general(twitter, hashtags = ['#Nepal'])
-    # search_results = twitter.search(q = '@SantoshGhimire ')
-    # print json.dumps(search_results, sort_keys = True, indent = 4)
-    # for result in search_results:
-    #     print result['text']
-    #     # print json.dumps(result, sort_keys = True, indent = 4)
-    # print len(search_results['statuses'])
-    # search_results = []
     print display_tweets
     parameters['tweet_list'] = display_tweets
 
@@ -156,3 +116,42 @@ def get_client_ip(request):
     else:
         ip = request.META.get('REMOTE_ADDR')
     return ip
+
+def trends(request):
+    parameters = {}
+    t_feed_obj = TweetFeed()
+
+    if request.method == 'GET':
+        start_time = datetime.date.today() - datetime.timedelta(7)
+        end_time = datetime.date.today() 
+
+    else:
+        if request.POST['start_time'] != '':
+            start_time = datetime.datetime.strptime(request.POST['start_time'], '%Y-%m-%d')
+        else:
+            start_time = datetime.date.today() - datetime.timedelta(7)
+        if request.POST['end_time'] != '':
+            end_time = datetime.datetime.strptime(request.POST['end_time'], '%Y-%m-%d')
+        else:
+            end_time = datetime.date.today() 
+
+    start_time = time.mktime(start_time.timetuple())
+    end_time = time.mktime(end_time.timetuple())
+    results = t_feed_obj.get_trending_hashtags(start_time, end_time)
+    new_results = []
+    for sub in results:
+        sub['value'] = int(sub['value'])
+        new_results.append(sub)
+
+    parameters['results'] = new_results[0:20]
+    parameters.update(csrf(request))
+
+    if request.user.is_authenticated():        
+        user_id = request.user.id
+        user_profile_obj = UserProfile()
+        user_profile = user_profile_obj.get_profile_by_id(str(user_id))
+        user_info = UserInfo(user_id)
+        parameters['userinfo'] = user_info
+        parameters['user_id'] = request.user.id
+
+    return render_to_response('trends.html', parameters, context_instance=RequestContext(request))

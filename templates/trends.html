@@ -1,0 +1,56 @@
+{% extends 'tbase.html' %}
+{% load staticfiles %}
+{% block content %}
+
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css">
+<script src="{% static "js/jquery.js" %}"></script>
+<script src="{% static "js/jquerynine.js" %}"></script>
+<script src="{% static "js/jquery-ui.js" %}"></script>
+
+<div class="row">
+    <h2 style="margin-left:10%;">Select Date</h2>
+    <div style="margin-left:10%;">
+        <form action="." method="POST">{% csrf_token %}
+        	From:<input type="text" name="start_time" id="ipFrom" placeholder="2012-10-13">
+        	&nbsp;&nbsp;&nbsp;
+        	&nbsp;&nbsp;&nbsp;
+        	&nbsp;&nbsp;&nbsp;
+        	To:<input type="text" name="end_time" id="ipTo" placeholder="2014-01-01">
+        	&nbsp;&nbsp;&nbsp;
+        	&nbsp;&nbsp;&nbsp;      	
+			<button type="submit" class="btn btn-primary">View</button>
+        </form>
+    </div>
+    <div id="results">
+	<table class="table table-bordered" style="width:40%;margin-left:25%;margin-top:2%;">
+		<tr>
+			<td>SN</td>
+			<td>HashTag</td>
+			<td>Count</td>
+		</tr>
+		{% for eachVal in results %}		
+			<tr>
+				<td>{{ forloop.counter }}</td>
+				<td>{{ eachVal.uid }}</td>
+				<td>{{ eachVal.value }}</td>
+			</tr>
+		{% endfor %}
+	</table>
+	</div>
+</div>
+
+<script type="text/javascript">
+  $(function() {
+    $("#ipFrom").datepicker();
+    $("#ipFrom").datepicker( "option", "dateFormat", "yy-mm-dd" );
+    $("#ipTo").datepicker();
+    $("#ipTo").datepicker( "option", "dateFormat", "yy-mm-dd" );
+  });
+
+  var d = new Date();
+  $(document).ready(function(){
+	$("#ipFrom").val( String(d.getFullYear())+ '-' + String(d.getMonth()) + '-' + String(d.getDate()+2))
+	$("#ipTo").val(String(d.getFullYear())+ '-' + String(d.getMonth()+1) + '-' + String(d.getDate()))
+	});   
+</script>
+{% endblock %}

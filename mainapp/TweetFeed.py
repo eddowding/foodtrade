@@ -3,15 +3,17 @@ from datetime import datetime
 from bson.objectid import ObjectId
 import time
 from pygeocoder import Geocoder
+from bson.code import Code
+from bson import BSON
+from bson import json_util
+
 
 class TweetFeed():
     def __init__ (self):
         self.db_object = MongoConnection("localhost",27017,'foodtrade')
         self.table_name = 'tweets'
         self.db_object.create_table(self.table_name,'parent_tweet_id')
-
-    # def select_db(self, db_name):
-    #   self.db = self.client[db_name]
+        self.db_object.ensure_index(self.table_name,'location')
    	
     def get_tweet_by_id(self,tweet_id):
         return self.db_object.get_one(self.table_name,{'tweet_id':tweet_id, 'deleted':0})
@@ -25,10 +27,39 @@ class TweetFeed():
     def get_tweet_by_user_id(self, user_id):
         return self.db_object.get_all(self.table_name,{'user_id':tweet_id, 'deleted':0}, 'time_stamp')
 
+    def search_tweets(self, query):
+        return self.db_object.get_all(self.table_name, query, 'time_stamp')
+
     def insert_tweet(self, value):
         value['deleted'] =0
     	value['time_stamp'] = int(time.time())
         self.db_object.insert_one(self.table_name,value)
+
+    def get_tweet_by_user_ids(self, user_ids):
+        return self.db_object.get_all(self.table_name,{"user_id": {"$in": user_ids},'deleted':0}, 'time_stamp')    
+
+    def get_trending_hashtags(self, start_time_stamp, end_time_stamp):
+        mapper = Code("""
+            function () {
+             items = this.status.split(' ');
+             for(i=0;i<items.length;i++){ 
+                if(items[i].indexOf('#')!=-1){
+                        emit(items[i], 1); 
+                        }
+                    }
+            }
+            """)
+        reducer = Code("""
+            function (key, values) { 
+             var sum = 0;
+             for (var i =0; i<values.length; i++){
+                    sum = sum + parseInt(values[i]);
+             }
+             return sum;
+            }
+            """)
+        return self.db_object.map_reduce(self.table_name, mapper, reducer, query = { 'time_stamp':{'$gte': start_time_stamp,'$lte': end_time_stamp}})
+        
 
     def update_tweets(self, username, first_name, last_name, description, zip_code):
         try:

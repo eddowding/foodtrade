@@ -9,8 +9,11 @@ from MongoConnection import MongoConnection
 from datetime import datetime
 from bson.objectid import ObjectId
 import time
-from mainapp.classes.TweetFeed import TradeConnection, Food, Organisation
-
+<<<<<<< HEAD
+from mainapp.classes.TweetFeed import TradeConnection, Food
+=======
+from mainapp.TweetFeed import TradeConnection, Food, Organisation
+>>>>>>> 49c6be85d3c3ff66b983f9bf0d05c3fe1bb47422
 class UserConnections():
 
     """docstring for UserConnections"""

@@ -4,10 +4,10 @@ from allauth.socialaccount.models import SocialToken, SocialAccount
 from django.template import RequestContext
 from django.contrib.auth.models import User
 from django.core.context_processors import csrf
-from mainapp.TweetFeed import TweetFeed
+from mainapp.classes.TweetFeed import TweetFeed
 from geolocation import get_addr_from_ip
 from classes.DataConnector import UserInfo
-from mainapp.TweetFeed import Food, TradeConnection, Customer, TradeConnection, UserProfile, Organisation
+from mainapp.classes.TweetFeed import Food, TradeConnection, Customer, TradeConnection, UserProfile, Organisation
 from mainapp.classes.Tags import Tags
 from pygeocoder import Geocoder
 import json
