@@ -38,6 +38,9 @@ class TweetFeed():
         return self.db_object.get_all(self.table_name,{"user_id": {"$in": user_ids},'deleted':0}, 'time_stamp')
 
 
+    def aggregrate(self, conditions):
+        return self.db_object.aggregrate_all(self.table_name,conditions)
+
 
 
 

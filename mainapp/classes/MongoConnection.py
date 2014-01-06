@@ -43,6 +43,13 @@ class MongoConnection():
     def update_upsert(self, table_name, where, what):
         self.db[table_name].update(where,{"$set":what},upsert=True)
 
+    def aggregrate_all(self,table_name,conditions={}):
+        all_doc = self.db[table_name].aggregate(conditions)['result']
+        json_doc = json.dumps(list(all_doc),default=json_util.default)
+        json_doc = json_doc.replace("$oid", "id")
+        json_doc = json_doc.replace("_id", "uid")
+        return json.loads(str(json_doc))
+
 
 # mydb = MongoConnection()
 # # mydb.select_db('indexer')

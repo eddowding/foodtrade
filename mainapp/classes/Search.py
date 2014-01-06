@@ -2,7 +2,7 @@ import re
 
 from TweetFeed import TweetFeed
 
-
+from bson.son import SON
 
 class Search():
 
@@ -25,7 +25,7 @@ class Search():
             query_string['$or'] = [{'status':{"$regex": keyword_like, '$options': '-i'}},{'user.name':{"$regex": keyword_like, '$options': '-i'}}]
             
         if(self.lon != "" and self.lat != ""):
-            query_string['location'] = {"$near":{"$geometry":{"type":"Point", "coordinates":[float(self.lon), float(self.lat)]}, "$maxDistance":160934}}
+            # query_string['location'] = {"$near":{"$geometry":{"type":"Point", "coordinates":[float(self.lon), float(self.lat)]}, "$maxDistance":160934}}
             pass
         # print query_string
         if(self.foods!="-1"):
@@ -36,6 +36,22 @@ class Search():
             pass
 
 
+        aggregate_query = [{
+                        "$geoNear": {"near": [float(self.lon), float(self.lat)],
+                                    "distanceField": "distance",
+                                    "maxDistance": 160.934,
+                                    # "query": query_string,
+                                    # "includeLocs": "location.coordinates",
+                                    "uniqueDocs": True,  
+                                    "spherical":True,
+                                    "limit":1,
+                                    "distanceMultiplier":6371                          
+                                  }
+                      },
+                      { '$match':query_string},
+                      {"$sort": SON([("distance", -1), ("_id", -1)])}
+                      ]
         tweet_search_object = TweetFeed()
-        search_results = tweet_search_object.search_tweets(query_string)
+        search_results = tweet_search_object.aggregrate(aggregate_query)
+        # search_results = tweet_search_object.search_tweets(query_string)
         return search_results
