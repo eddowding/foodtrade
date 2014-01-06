@@ -48,8 +48,10 @@ def display_profile(request, username):
 
     #get all customers
     parameters['customers'] = get_customers(usr.id)
+
     #get all connections
     parameters['connections'] = get_connections(usr.id)
+    parameters['connections_str'] = json.dumps(parameters['connections'])
 
     parameters['loc'] = {'lat':default_lat, 'lon':default_lon}
     if request.user.is_authenticated():

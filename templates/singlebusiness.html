@@ -427,7 +427,7 @@ connections = [];
     {% endif %}
     </script>
 
-     <script src="{% static "js/activity-map.js" %}"></script>
+ 
 
      
    {% endblock %}
@@ -439,6 +439,12 @@ connections = [];
   // remote: '/static/produce.json',                                         
       limit: 10                                                                   
 });
+
+
+
+
+     var connections = {{connections_str}};
      </script>
+         <script src="{% static "js/business-map.js" %}"></script>
 
  {% endblock %}
