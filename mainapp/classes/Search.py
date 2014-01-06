@@ -44,7 +44,7 @@ class Search():
                                     # "includeLocs": "location.coordinates",
                                     "uniqueDocs": True,  
                                     "spherical":True,
-                                    "limit":1,
+                                    "limit":20,
                                     "distanceMultiplier":6371                          
                                   }
                       },
