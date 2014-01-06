@@ -10,7 +10,7 @@ from classes.DataConnector import UserInfo
 from mainapp.TweetFeed import Food, TradeConnection, Customer, TradeConnection, UserProfile, Organisation
 from mainapp.classes.Tags import Tags
 from pygeocoder import Geocoder
-
+import json
 def display_profile(request, username):
     parameters = {}
     user_profile = UserProfile()
