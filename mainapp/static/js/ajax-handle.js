@@ -72,6 +72,11 @@ function add_member(org_id, mem_id){
 	ajax_request("addmember", 'create_conn', {data: JSON.stringify(data)});
 }
 
+function add_team(org_id, team_id){
+	var data = {orguid: org_id, memberuid: team_id};
+	ajax_request("addteam", 'create_conn', {data: JSON.stringify(data)});
+}
+
 function PostStatus(status_val)
 {
 	ajax_request("post_tweet", 'CloseNewPostModal', {message: status_val});

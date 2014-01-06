@@ -317,17 +317,27 @@
               <i class="fa fa-smile-o "></i> Do you work here?
             </button> 
 
-            <button class="btn btn-success">
+            <button class="btn btn-success" onClick="add_team({{profile_id}}, {{user_id}})">
               <i class="fa fa-check "></i> I work here
             </button> 
 
             <div class="clearfix">
-          {% include 'card_team.php' %}
-          {% include 'card_team.php' %}
-          {% include 'card_team.php' %}
-          {% include 'card_team.php' %}
-          {% include 'card_team.php' %}
-            </div> 
+          {% for each in teams %}
+                <div class="card card-individual">
+                  <div class="content">
+                    <img src="{{each.photo}}" alt="{{each.name}}"
+                    class="img-rounded img-responsive pull-left" style="width:40px;" />
+
+                    <div class="text">
+                      <h5><a href="/profile/{{each.username}}">{{each.name}}</a> <span class="label label-success pull-right">Role</span></a></h5> 
+                      <p class="small">
+                      {{each.description}}
+                    </div>
+                  </div>
+                 
+                </div> 
+                {% endfor %}
+            </div> <!-- end clearfix  -->
           </div>
 
           <div class="tab-pane fade" id="updates">

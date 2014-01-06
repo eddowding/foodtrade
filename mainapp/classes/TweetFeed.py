@@ -178,6 +178,23 @@ class Organisation():
     def get_organisations_by_mem_id(self, member_id):
         return self.db_object.get_all(self.table_name,{'memberuid': member_id, 'deleted': 0})
 
+class Team():
+    """docstring for Connection"""
+    def __init__(self):
+        self.db_object = MongoConnection("localhost",27017,'foodtrade')
+        self.table_name = 'team'
+        self.db_object.create_table(self.table_name,'orguid')
+
+    def get_members_by_orgid(self,orguid):
+        return self.db_object.get_all(self.table_name,{'orguid': orguid, 'deleted': 0})
+
+    def create_member (self, value):
+        value['deleted'] =0
+        self.db_object.insert_one(self.table_name,value)
+
+    def delete_member(self, orguid, member_id):
+        self.db_object.update(self.table_name,{'orguid': orguid, 'memberuid': member_id}, {'deleted':1})
+
 # trade_conn = TradeConnection()
 # trade_conn.create_connection({'b_useruid': 23, 'c_useruid': 20})
 # print trade_conn.get_connection_by_customer(23)

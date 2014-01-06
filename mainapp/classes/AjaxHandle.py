@@ -1,4 +1,3 @@
-
 # Create your views here.
 from django.shortcuts import render_to_response
 from django.http import HttpResponse, HttpResponseRedirect
@@ -7,7 +6,7 @@ from twython import Twython
 import json
 from mainapp.classes.TweetFeed import TweetFeed
 from Tags import Tags
-from mainapp.TweetFeed import TradeConnection, UserProfile, Food, Customer, Organisation
+from mainapp.classes.TweetFeed import TradeConnection, UserProfile, Food, Customer, Organisation, Team
 
 consumer_key = 'seqGJEiDVNPxde7jmrk6dQ'
 consumer_secret = 'sI2BsZHPk86SYB7nRtKy0nQpZX3NP5j5dLfcNiP14'
@@ -162,6 +161,16 @@ class AjaxHandle():
         data = eval(request.POST.get('data'))
         if data !=None and data !="":
             org.create_member(data)
+            return HttpResponse("{'status':1}")
+        else:
+            return HttpResponse("{'status':0}")
+
+    def addteam(self, request):
+        team = Team()
+        print request.POST.get('data')
+        data = eval(request.POST.get('data'))
+        if data !=None and data !="":
+            team.create_member(data)
             return HttpResponse("{'status':1}")
         else:
             return HttpResponse("{'status':0}")
