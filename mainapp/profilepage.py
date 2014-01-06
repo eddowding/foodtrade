@@ -50,6 +50,8 @@ def display_profile(request, username):
     parameters['customers'] = get_customers(usr.id)
     #get all connections
     parameters['connections'] = get_connections(usr.id)
+    # get all organisations
+    parameters['organisations'] = get_organisations(usr.id)
 
     parameters['loc'] = {'lat':default_lat, 'lon':default_lon}
     if request.user.is_authenticated():
@@ -196,4 +198,15 @@ def get_members(user_id):
     return final_members
 
 def get_organisations(user_id):
-    pass
+    org = Organisation()
+    organisations = org.get_organisations_by_mem_id(user_id)
+    final_orgs = []
+    for each in organisations:
+        account = SocialAccount.objects.get(user__id = each['orguid'])
+        final_orgs.append({'id': each['orguid'],
+         'name': account.extra_data['name'],
+         'description': account.extra_data['description'],
+         'photo': account.extra_data['profile_image_url'],
+         'username' : account.extra_data['screen_name']
+         })
+    return final_orgs[:10]

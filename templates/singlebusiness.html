@@ -334,11 +334,24 @@
           <div class="clearfix">  
           <h2>Organisations</h2>
            <p class=""><a href="single-organisation.php">Show all</a></p>
-          
-          {% include 'card_organisation.php' %}
-          {% include 'card_organisation.php' %}
-          {% include 'card_organisation.php' %}
-          {% include 'card_organisation.php' %}
+          {% for each in organisations %}
+                <div class="card card-organisation">
+                  <div class="content">
+                    <div class=" pull-left">
+                      <img src="{{each.photo}}" alt="{{each.name}}"
+                      class="img-rounded img-responsive" style="width:40px;" /> 
+
+                      <span class="label label-danger text-center">Org</span>
+                    </div>
+
+                    <div class="text">
+                      <h5><a href="/profile/{{each.username}}">{{each.name}}</a> <span class="label label-danger pull-right">2457</span></a></h5> 
+                      <p class="small">{{each.description}}</p>
+                      <a href="#remove" class="danger">Remove</a>
+                    </div>
+                  </div>
+                </div> 
+                {% endfor %}
           </div>
 
           <div class="clearfix">

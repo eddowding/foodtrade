@@ -9,7 +9,7 @@ from MongoConnection import MongoConnection
 from datetime import datetime
 from bson.objectid import ObjectId
 import time
-from mainapp.TweetFeed import TradeConnection, Food
+from mainapp.TweetFeed import TradeConnection, Food, Organisation
 class UserConnections():
 
     """docstring for UserConnections"""
@@ -35,7 +35,10 @@ class UserConnections():
         return len(foods)
 
     def get_organisation_connection_no(self):
-        return 435
+        org = Organisation()
+        organisations = org.get_organisations_by_mem_id(self.user_id)
+        return len(organisations)
+
     def get_nearby_individuals_no(self):
         return 78
 

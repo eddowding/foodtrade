@@ -138,7 +138,10 @@ class Organisation():
         self.db_object.insert_one(self.table_name,value)
 
     def delete_member(self, orguid, member_id):
-        self.db_object.update(self.table_name,{'orguid': orguid, 'customeruid': memberuid}, {'deleted':1})
+        self.db_object.update(self.table_name,{'orguid': orguid, 'memberuid': member_id}, {'deleted':1})
+
+    def get_organisations_by_mem_id(self, member_id):
+        return self.db_object.get_all(self.table_name,{'memberuid': member_id, 'deleted': 0})
 
 # trade_conn = TradeConnection()
 # trade_conn.create_connection({'b_useruid': 23, 'c_useruid': 20})
