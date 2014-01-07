@@ -45,8 +45,6 @@ L.marker([parseFloat(map_lat), parseFloat(map_lon)]).addTo(map);
 			var latitude =  con.latitude;
          	var longitude =  con.longitude;
 
-			
-			alert('gone');
 			color = 'red';
 			if(relation=="buyer")
 			{
