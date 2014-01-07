@@ -46,10 +46,11 @@ function create_conn(){
 }
 
 function add_food(prof_id){
-	var food = document.getElementById('addfood_id').value;
+	// var food = document.getElementById('addfood_id').value;
+	var food = document.getElementsByClassName('chosen-single')[0].children[0].innerHTML;
 	var data = {useruid: prof_id, food_name: food};
 	ajax_request("addfood", 'create_conn', {data: JSON.stringify(data)});
-	document.getElementById('addfood_id').value = '';
+	document.getElementsByClassName('chosen-single')[0].children[0].innerHTML = '';
 	var append_data = '<tr><td>'+food+'</td><td><div class="pull-right"><a href="#"><i class="fa fa-thumbs-o-up text-muted" title="Vouch for this"></i></a><a href="#"><i class="fa fa-trash-o text-muted" title="Delete"></i></a></div></td></tr>';
 	$("#food_tbody").prepend(append_data);
 }
