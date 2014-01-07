@@ -225,7 +225,7 @@ def loadsampledata():
                                     'sign_up_as': 'business',
                                     'name': name_text[user_rand] +" "+ name_text[random.randrange(0, len(name_text))],
                                     'profile_img': "https://pbs.twimg.com/profile_images/378800000141996074/6a363e3c4f2a84a956c3cb27c50b2ca0_normal.png",
-                                    'Description': "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod",
+                                    'description': "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod",
                                     'place': "78 Example Street, Test Town"
                                     },
                            }
