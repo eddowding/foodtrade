@@ -59,15 +59,15 @@ def display_profile(request, username):
 
     parameters['loc'] = {'lat':default_lat, 'lon':default_lon}
     if request.user.is_authenticated():
-        if parameters['sign_up_as'] == 'Food Business':
+        if parameters['sign_up_as'] == 'Business':
             return render_to_response('singlebusiness.html', parameters, context_instance=RequestContext(request))
         elif parameters['sign_up_as'] == 'Organisation':
             parameters['members'] = get_members(usr.id)
             parameters['teams'] = get_team(usr.id)
             parameters['members_foods'] = get_foods_from_org_members(usr.id)
             return render_to_response('single-organization.html', parameters, context_instance=RequestContext(request))
-        else:
-            return render_to_response('singlebusiness.html', parameters, context_instance=RequestContext(request))           
+        elif parameters['sign_up_as'] == 'Individual':
+            return render_to_response('individual.html', parameters, context_instance=RequestContext(request))           
     else:
         return render_to_response('single-loggedout.php', parameters, context_instance=RequestContext(request))
         
