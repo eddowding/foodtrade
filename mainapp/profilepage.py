@@ -89,6 +89,10 @@ def edit_profile(request, username):
             parameters['first_name'] = account.extra_data['name'].split(' ')[0]
             parameters['last_name']  = account.extra_data['name'].split(' ')[1]
             parameters['description'] = account.extra_data['description']
+            try:
+                parameters['phone'] = userprof['phone_number']
+            except:
+                parameters['phone'] = ''
             parameters.update(csrf(request))
             user_info = UserInfo(request.user.id)
             parameters['userinfo'] = user_info
@@ -102,12 +106,13 @@ def edit_profile(request, username):
         description = request.POST['description']
         zip_code = request.POST['zip_code']
         sign_up_as = request.POST['sign_up_as']
+        phone = request.POST['phone']
 
         usr_type = request.POST['type']
         tweetFeedObj = TweetFeed()
         tweetFeedObj.update_tweets(username, first_name, last_name, description, zip_code)
         user_profile_obj = UserProfile()
-        user_profile_obj.update_profile(request.user.id, zip_code, usr_type, sign_up_as)
+        user_profile_obj.update_profile(request.user.id, zip_code, usr_type, sign_up_as, phone)
 
         usr = User.objects.get(username=username)
         usr.first_name = first_name

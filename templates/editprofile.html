@@ -1,7 +1,7 @@
 {% extends 'tbase.html' %}
 {% load staticfiles %}
 {% block head %}
-<link rel="stylesheet" href="/static/css/docsupport/style.css">
+
 <link rel="stylesheet" href="/static/css/docsupport/prism.css">
 <link rel="stylesheet" href="/static/css/chosen.min.css">
 
@@ -17,7 +17,7 @@
 
   <div class="row" style="margin-left:3%;">
     <p><h3>Profile</h3></p>
-  <form class="form-horizontal" role="form" style="width:50%; margin-left:18%;" method="POST" action=".">
+  <form class="form-horizontal" name="myform" role="form" style="width:50%; margin-left:18%;" onsubmit=" return validateFeedback();" method="POST" action=".">
   {% csrf_token %}
     <div class="form-group">
         <p><label for="user_fname_txt">First Name</label>
@@ -28,8 +28,13 @@
         <textarea class="form-control" style="width:60%;" id="user_desc_txt" name="description" rows="5">{{description}}</textarea></p>
 
          <p>
+          <label for="phone">Phone</label>
+          <input type="text" style="width:60%;" name="phone" id="phone" value="{{ phone }}" class="form-control" placeholder="phone" onblur="validateFeedback()" >
+        </p>
+
+         <p>
           <label for="zipcode">Zip Code</label>
-          <input type="text" style="width:60%;" name="zip_code" id="zip_code" value="{{ zip_code }}" id="user_location_txt" class="form-control" placeholder="Zip Code" >
+          <input type="text" style="width:60%;" name="zip_code" id="zip_code" value="{{ zip_code }}"  class="form-control" placeholder="Zip Code" >
         </p>
         <p>
             <label for="id_sign_up_as">
@@ -43,10 +48,10 @@
 
                 </label>
                 <label class="btn btn-default">
-                  {% ifequal sign_up_as 'Food Business' %}
-                    <input type="radio" name="sign_up_as" checked="true" id="option2" value="Food Business"> Food Business
+                  {% ifequal sign_up_as 'Business' %}
+                    <input type="radio" name="sign_up_as" checked="true" id="option2" value="Business">Business
                     {% else %} 
-                    <input type="radio" name="sign_up_as"  id="option2" value="Food Business"> Food Business
+                    <input type="radio" name="sign_up_as"  id="option2" value="Business"> Business
                   {% endifequal %}
                 </label>
 
@@ -95,6 +100,17 @@
   }
 </script>
 <script type="text/javascript">
+function validateFeedback(){
+    var phone = document.getElementById("phone");
+    var RE = /^[\d\.\-]+$/;
+    if(!RE.test(phone.value))
+    {
+        alert("You have entered an invalid phone number");
+        return false;
+    }
+    return true;
+}
+
   function copydata(){
     var all_values = '';
     var elements = document.getElementsByClassName('search-choice');
