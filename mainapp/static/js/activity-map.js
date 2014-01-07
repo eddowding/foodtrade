@@ -14,16 +14,21 @@ var map = L.map('map').setView([map_lat,map_lon], 7);
 			iconAnchor:[9,18],
 			popupAnchor:[0,-18]
 		});
-
 L.circle([map_lat,map_lon], 24140.2, {
 			color: '#333333',
+			opacity:0,
+			weight:2,
 		}).addTo(map);
 L.circle([map_lat,map_lon], 48280.3, {
 			color: '#333333',
+			opacity:0,
+			weight:2,
 		}).addTo(map);
 	
 L.circle([map_lat,map_lon], 160934, {
 			color: '#333333',
+			opacity:0,
+			weight:2,
 		}).addTo(map);
 		for(i=0;i<connections.length;i++)
 		{

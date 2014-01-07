@@ -54,16 +54,16 @@ def gen_socialaccount(social_pk, user_pk, user, name, description):
     social_pk += 1
     return socialaccount_socialaccount
 
-def gen_tradeconnection_userprofile(third_pk, user, name, description, new_location):
+def gen_tradeconnection_userprofile(third_pk, userid, user, name, description, new_location):
     '''Status: Need to generate location, lat and long'''
 
-    sign_up_types = ["Individual", "Food Business", "Organization"]
+    sign_up_types = ["Individual", "Business", "Organisation"]
     random.shuffle(sign_up_types)
     type_user = get_unique_types()
     global tweet_id
-    print user
 
-    tradeconnection_userprofile_fields = {"useruid": user, "sign_up_as": sign_up_types[0],
+
+    tradeconnection_userprofile_fields = {"useruid": str(userid), "sign_up_as": sign_up_types[0],
                                           "type_user":type_user,
                                             "zip_code": new_location[0], "address": new_location[3],
                                            "latitude": float(new_location[1]), "longitude": float(new_location[2]), 
@@ -131,7 +131,7 @@ def main(total_data, tweets_per_user):
             social_pk += 1
 
             new_location = gen_unique_address()
-            tradeconnection_userprofile = gen_tradeconnection_userprofile(third_pk, username, name, description, new_location)
+            tradeconnection_userprofile = gen_tradeconnection_userprofile(third_pk, user_pk-1, username, name, description, new_location)
             third_pk += 1
             
             my_range = range(tweets_per_user[0], tweets_per_user[1])

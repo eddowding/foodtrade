@@ -24,7 +24,7 @@ def display_profile(request, username):
     parameters['name'] = account.extra_data['name']
     parameters['description'] = account.extra_data['description']
     parameters['pic_url'] = account.extra_data['profile_image_url']
-
+    parameters['loc'] = {'lat':userprof['latitude'], 'lon':userprof['longitude']}
     if request.user.is_authenticated():
         user_id = request.user.id
         user_profile_obj = UserProfile()
@@ -37,14 +37,6 @@ def display_profile(request, username):
     all_foods = foo.get_foods_by_userid(usr.id)
     parameters['all_foods'] = all_foods
 
-    x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
-    if x_forwarded_for:
-        ip = x_forwarded_for.split(',')[0]
-    else:
-        ip = request.META.get('REMOTE_ADDR')
-    location_info = get_addr_from_ip(ip)
-    default_lon = float(location_info['longitude'])
-    default_lat = float(location_info['latitude'])
 
     #get all customers
     parameters['customers'] = get_customers(usr.id)
@@ -54,7 +46,7 @@ def display_profile(request, username):
     # get all organisations
     parameters['organisations'] = get_organisations(usr.id)
 
-    parameters['loc'] = {'lat':default_lat, 'lon':default_lon}
+    
     if request.user.is_authenticated():
         if parameters['sign_up_as'] == 'Food Business':
             return render_to_response('singlebusiness.html', parameters, context_instance=RequestContext(request))

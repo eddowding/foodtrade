@@ -39,11 +39,7 @@ def distance(lon1, lat1, lon2, lat2):
 
 
 from django.template import RequestContext
-
-
 from mainapp.classes.AjaxHandle import AjaxHandle
-
-
 from django.views.decorators.csrf import csrf_exempt
 @csrf_exempt
 def home(request):
@@ -66,11 +62,13 @@ def home(request):
         x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
         if x_forwarded_for:
             ip = x_forwarded_for.split(',')[0]
+
         else:
             ip = request.META.get('REMOTE_ADDR')
-            location_info = get_addr_from_ip(ip)
-            default_lon = float(location_info['longitude'])
-            default_lat = float(location_info['latitude'])
+        location_info = get_addr_from_ip(ip)
+        default_lon = float(location_info['longitude'])
+        default_lat = float(location_info['latitude'])
+
         
 
 

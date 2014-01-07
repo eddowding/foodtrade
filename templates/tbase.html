@@ -24,7 +24,7 @@
  {% block head %}
 {% endblock %}
  <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.1/leaflet.css" />
-<script src="http://cdn.leafletjs.com/leaflet-0.7.1/leaflet.js?2"></script>
+<script src="{% static "js/leaflet.js" %}"></script>
     <!-- Custom styles for this template -->
     <link href="http://getbootstrap.com/examples/navbar-fixed-top/navbar-fixed-top.css" rel="stylesheet">
     <style type="text/css">
@@ -172,6 +172,9 @@ background: #eee;
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 <div class="container">
+
+
+ {% if user.is_authenticated or search.query %}
 <div class="col-md-2 sidebar" >
  {% if user.is_authenticated %}
         <!-- show the logged in users account --> 
@@ -270,6 +273,7 @@ background: #eee;
     </div>
     {% endif %}
     </div>
+       {% endif %}
  {% block content %}
  {% endblock %}  
 </div>

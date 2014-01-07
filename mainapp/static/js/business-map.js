@@ -17,19 +17,24 @@ var map = L.map('map').setView([map_lat,map_lon], 7);
 
 L.circle([map_lat,map_lon], 24140.2, {
 			color: '#333333',
+			opacity:0,
+			weight:2,
 		}).addTo(map);
 L.circle([map_lat,map_lon], 48280.3, {
 			color: '#333333',
+			opacity:0,
+			weight:2,
 		}).addTo(map);
 	
 L.circle([map_lat,map_lon], 160934, {
 			color: '#333333',
+			opacity:0,
+			weight:2,
 		}).addTo(map);
-L.marker([parseFloat(map_lat), parseFloat(map_lon)]).addTo(map).bindPopup("<b>Name: </b>"+name+"<br /><b>Business Type: </b>"+business_type+"<br /> <b>Email: </b>"+ email+"<br/><b>Rating: </b>"+rating+"<br/><b>Address: </b>"+address+"<br /><b>Type: </b>"+type);
+L.marker([parseFloat(map_lat), parseFloat(map_lon)]).addTo(map);
 
-		for(i=0;i<connections.length;i++)
+		for(var i=0;i<connections.length;i++)
 		{
-			
 			var con = connections[i];
 			var name = con.name;
 			var description = con.description;
@@ -41,7 +46,7 @@ L.marker([parseFloat(map_lat), parseFloat(map_lon)]).addTo(map).bindPopup("<b>Na
          	var longitude =  con.longitude;
 
 			
-			
+			alert('gone');
 			color = 'red';
 			if(relation=="buyer")
 			{
