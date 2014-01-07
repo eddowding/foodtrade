@@ -7,13 +7,15 @@ from django.core.context_processors import csrf
 from mainapp.classes.TweetFeed import TweetFeed
 from geolocation import get_addr_from_ip
 from classes.DataConnector import UserInfo
-from mainapp.classes.TweetFeed import Food, TradeConnection, Customer, TradeConnection, UserProfile, Organisation
+from mainapp.classes.TweetFeed import Food, TradeConnection, Customer, TradeConnection, UserProfile, Organisation, Team
 from mainapp.classes.Tags import Tags
 from pygeocoder import Geocoder
 import json
+from mainapp.produce import *
 
 def display_profile(request, username):
     parameters = {}
+    parameters['food_list'] = final_foods
     user_profile = UserProfile()
     usr = User.objects.get(username = username)
     account = SocialAccount.objects.get(user__id = usr.id)
@@ -57,14 +59,15 @@ def display_profile(request, username):
 
     parameters['loc'] = {'lat':default_lat, 'lon':default_lon}
     if request.user.is_authenticated():
-        if parameters['sign_up_as'] == 'Food Business':
+        if parameters['sign_up_as'] == 'Business':
             return render_to_response('singlebusiness.html', parameters, context_instance=RequestContext(request))
         elif parameters['sign_up_as'] == 'Organisation':
             parameters['members'] = get_members(usr.id)
+            parameters['teams'] = get_team(usr.id)
             parameters['members_foods'] = get_foods_from_org_members(usr.id)
             return render_to_response('single-organization.html', parameters, context_instance=RequestContext(request))
-        else:
-            return render_to_response('singlebusiness.html', parameters, context_instance=RequestContext(request))           
+        elif parameters['sign_up_as'] == 'Individual':
+            return render_to_response('individual.html', parameters, context_instance=RequestContext(request))           
     else:
         return render_to_response('single-loggedout.php', parameters, context_instance=RequestContext(request))
         
@@ -227,5 +230,20 @@ def get_foods_from_org_members(user_id):
     for each in members:
         mem_foods = foo.get_foods_by_userid(each['memberuid'])
         all_foods.extend(mem_foods)
-    print all_foods
     return all_foods
+
+def get_team(user_id):
+    team = Team()
+    teams = team.get_members_by_orgid(user_id)
+    final_teams = []
+    for each in teams:
+        account = SocialAccount.objects.get(user__id = each['memberuid'])
+        final_teams.append({'id': each['memberuid'],
+         'name': account.extra_data['name'],
+         'description': account.extra_data['description'],
+         'photo': account.extra_data['profile_image_url'],
+         'username' : account.extra_data['screen_name']
+         })
+    print final_teams
+    return final_teams[:10]
+

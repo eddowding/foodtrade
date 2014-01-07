@@ -60,7 +60,7 @@
 
                             <!-- on click show the BUSIENSS TYPE field -->
                             <label class="btn btn-default">
-                              <input type="radio" name="options" id="option2" onchange="dataradio('Food Business')"> Food Business
+                              <input type="radio" name="options" id="option2" onchange="dataradio('Business')"> Business
                             </label>
                             <label class="btn btn-default">
                               <input type="radio" name="options" id="option3" onchange="dataradio('Organisation')"> Organisation
@@ -74,7 +74,7 @@
                             Type</label>
                             {{form.type_user.as_hidden}}
                         <div class="col-sm-9">
-<select data-placeholder="Farm, wholesaler, restaurant, bakery..." style="width:250px;" class="chosen-select" multiple tabindex="6">
+<select data-placeholder="Farm, wholesaler, restaurant, bakery..." style="width:100%;height:30px;" class="chosen-select" multiple>
             <option value=""></option>
             {% for each in all_tags %}
             <optgroup label={{each.node}}>

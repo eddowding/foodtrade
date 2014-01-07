@@ -176,6 +176,9 @@ class Organisation():
         self.db_object.update(self.table_name,{'orguid': orguid, 'memberuid': member_id}, {'deleted':1})
 
     def get_organisations_by_mem_id(self, member_id):
+<<<<<<< HEAD
+        return self.db_object.get_all(self.table_name,{'memberuid': member_id, 'deleted': 0})
+=======
         return self.db_object.get_all(self.table_name,{'memberuid': member_id, 'deleted': 0})
 
 class Team():
@@ -194,3 +197,8 @@ class Team():
 
     def delete_member(self, orguid, member_id):
         self.db_object.update(self.table_name,{'orguid': orguid, 'memberuid': member_id}, {'deleted':1})
+
+# trade_conn = TradeConnection()
+# trade_conn.create_connection({'b_useruid': 23, 'c_useruid': 20})
+# print trade_conn.get_connection_by_customer(23)
+>>>>>>> 49990c07a01e56b9c03aa82a4aebbae945ebb9c3
