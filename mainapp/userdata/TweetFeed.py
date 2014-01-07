@@ -113,7 +113,6 @@ class TradeConnection():
         return self.db_object.get_all(self.table_name,{'c_useruid':c_useruid, 'deleted': 0})
 
     def create_connection (self, value):
-        value['deleted'] =0
         self.db_object.insert_one(self.table_name,value)
 
     def delete_connection(self, b_useruid, c_useruid):

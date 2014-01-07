@@ -19,18 +19,9 @@ def gen_unique_sentence(no_words):
     return " ".join(words[0:no_words-1])
 
 def gen_unique_address():
-    random_list = range(42000)
-    random.shuffle(random_list)
-    num = random_list[0]
-    with open('zip_code.csv', 'rb') as csvfile:
-        spamreader = csv.reader(csvfile, delimiter=',', quotechar='"')
-        cnt = 0
-        for row in spamreader:
-            data = row
-            if cnt-1 >= num:
-                break
-            cnt += 1
-    data = [data[0], data[1], data[2], ", ".join(data[3:])]
+    rand_no = int(random.randrange(0, 41000))
+    
+    data = [str(rand_no), str("{0:.5f}".format(random.uniform(-1, 1) * 90)), str("{0:.5f}".format(random.uniform(-1, 1) * 180)), "location "+ str(rand_no)]
     return data #lat 1 lon -2 
 
 
@@ -43,13 +34,17 @@ def gen_auth_user(user_pk, username):
 
 def gen_socialaccount(social_pk, user_pk, user, name, description):
     '''Status: Complete'''
-    
-    socialaccount_fields = {"user": user_pk, "provider":"1",
-                            "last_login": "2013-11-22 11:11:11",
-                            "date_joined": "2013-11-22 11:11:11",
-                             "uid": user, 
-                             "extra_data": generate([description, name, user]).encode('utf8')
-                            } # make user from above, uid unique, extra_data is complex 
+    extra_data = generate([description, name, user])
+    try:
+        socialaccount_fields = {"user": user_pk, "provider":"1",
+                                "last_login": "2013-11-22 11:11:11",
+                                "date_joined": "2013-11-22 11:11:11",
+                                 "uid": user, 
+                                 "extra_data": extra_data
+                                } # make user from above, uid unique, extra_data is complex 
+    except:
+        print extra_data
+        exit()
     socialaccount_socialaccount = {"model":"socialaccount.socialaccount","pk": social_pk, "fields": socialaccount_fields} #second model
     social_pk += 1
     return socialaccount_socialaccount
@@ -61,6 +56,18 @@ def gen_tradeconnection_userprofile(third_pk, userid, user, name, description, n
     random.shuffle(sign_up_types)
     type_user = get_unique_types()
     global tweet_id
+    if sign_up_types[0] == "Business":
+        trade_connections = TradeConnection()
+        for i in range(int(random.randrange(1,5))):
+            rand_no = int(random.randrange(2,488))
+            if rand_no != userid:
+                ids = [rand_no, userid]
+                random.shuffle(ids)
+                con = { "deleted" : 0, "c_useruid" : ids[0], "b_useruid" : ids[1] }
+                trade_connections.create_connection(con)
+
+
+
 
 
     tradeconnection_userprofile_fields = {"useruid": str(userid), "sign_up_as": sign_up_types[0],
@@ -131,6 +138,8 @@ def main(total_data, tweets_per_user):
             social_pk += 1
 
             new_location = gen_unique_address()
+            
+
             tradeconnection_userprofile = gen_tradeconnection_userprofile(third_pk, user_pk-1, username, name, description, new_location)
             third_pk += 1
             
@@ -147,4 +156,6 @@ def main(total_data, tweets_per_user):
             if i!=total_data-2:
                 fp.write(',')
         fp.write(']')
-main(10, [1, 10]  ) # first fields is the total no of users and second is tweets_per_user with [min, max]
+
+
+main(499, [1, 10]  ) # first fields is the total no of users and second is tweets_per_user with [min, max]
