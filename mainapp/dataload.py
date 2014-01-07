@@ -168,15 +168,9 @@ name_text = ["roshan bhandari", "sujit maharjan", "sijan bhandari", "subit raj",
 name_text = popular_names.split("\n")
 
 def loadsampledata():
-
-
-
-
     from twython import Twython
     import json
-    from mainapp.classes.TweetFeed import TweetFeed
-
-
+    from classes.TweetFeed import TweetFeed
 
     consumer_key = 'seqGJEiDVNPxde7jmrk6dQ'
     consumer_secret = 'sI2BsZHPk86SYB7nRtKy0nQpZX3NP5j5dLfcNiP14'
