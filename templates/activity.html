@@ -66,7 +66,7 @@
 
 
             <div class="header">
-                <strong class="pull-left" style="margin-right: 10px;"><a href="/profile/{{result.user.username}}">{{result.user.username}}</a></strong> 
+                <strong class="pull-left" style="margin-right: 10px;"><a href="/profile/{{result.user.username}}">{{result.user.name}}</a></strong> 
 
                 <div class="tags tags-biztype">  
                   <a href="/type/Bakery">Bakery</a>
@@ -93,7 +93,7 @@
                 <!--  // if logged in or you've allows html5 browser location -->
 
                 <span class="pull-right">
-                   <a href="activity_single.php" class="text-muted"><i class="fa fa-clock-o"></i> {{result.time_elapsed}}</a> 
+                   <a href="/profile/{{result.user.username}}/" class="text-muted"><i class="fa fa-clock-o"></i> {{result.time_elapsed}}</a> 
                 </span>
               </div> 
 
