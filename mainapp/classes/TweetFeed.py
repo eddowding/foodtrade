@@ -136,7 +136,8 @@ class Food():
 
     def create_food (self, value):
         value['deleted'] =0
-        self.db_object.insert_one(self.table_name,value)
+        # self.db_object.insert_one(self.table_name,value)
+        self.db_object.update_upsert(self.table_name, {'food_name': value['food_name']}, {'deleted': 0, 'useruid': value['useruid']})
 
     def delete_food(self, useruid, food_name):
         self.db_object.update(self.table_name,{'useruid': useruid, 'food_name': food_name}, {'deleted':1})
