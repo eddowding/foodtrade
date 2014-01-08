@@ -7,7 +7,7 @@ from django.core.context_processors import csrf
 from mainapp.classes.TweetFeed import TweetFeed
 from geolocation import get_addr_from_ip
 from classes.DataConnector import UserInfo
-from mainapp.classes.TweetFeed import Food, TradeConnection, Customer, TradeConnection, UserProfile, Organisation, Team
+from mainapp.classes.TweetFeed import Food, TradeConnection, Customer, TradeConnection, UserProfile, Organisation, Team, RecommendFood
 from mainapp.classes.Tags import Tags
 from pygeocoder import Geocoder
 import json
@@ -41,12 +41,9 @@ def display_profile(request, username):
         user_info = UserInfo(user_id)
         parameters['userinfo'] = user_info
         parameters['user_id'] = request.user.id
-        #get contact_form data
-        parameters['contact_form_data'] = get_contact_form_data(usr.id, request.user.id)
         if parameters['sign_up_as'] == 'Business':
-            foo = Food()
-            all_foods = foo.get_foods_by_userid(usr.id)
-            parameters['all_foods'] = all_foods
+            
+            parameters['all_foods'] = get_all_foods(usr.id)
             #get all customers
             parameters['customers'] = get_customers(usr.id)
             #get all connections
@@ -120,6 +117,17 @@ def edit_profile(request, username):
         twitter_user.save()
 
         return HttpResponseRedirect('/')
+
+def get_all_foods(user_id):
+    foo = Food()
+    all_foods = foo.get_foods_by_userid(user_id)
+    recomm = RecommendFood()
+    final_foods = []
+    for each in all_foods:
+        all_rec = recomm.get_recomm(user_id, each['food_name'])
+        data = {'food_name': each['food_name'], 'vouch_count': len(all_rec)}
+        final_foods.append(data)
+    return final_foods
 
 def get_customers(user_id):
     cust = Customer()
@@ -251,7 +259,3 @@ def get_team(user_id):
          })
     print final_teams
     return final_teams[:10]
-
-def get_contact_form_data(prof_id, user_id):
-    
-    pass

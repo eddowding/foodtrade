@@ -200,3 +200,21 @@ class Team():
 
     def delete_member(self, orguid, member_id):
         self.db_object.update(self.table_name,{'orguid': orguid, 'memberuid': member_id}, {'deleted':1})
+
+class RecommendFood():
+    """docstring for Connection"""
+    def __init__(self):
+        self.db_object = MongoConnection("localhost",27017,'foodtrade')
+        self.table_name = 'recommendfood'
+        self.db_object.create_table(self.table_name,'food_name')
+
+    def get_recomm(self,business_id, food_name):
+        return self.db_object.get_all(self.table_name,{'food_name': food_name, 'business_id': business_id, 'deleted': 0})
+
+    def create_recomm(self, value):
+        value['deleted'] =0
+        # self.db_object.insert_one(self.table_name,value)
+        self.db_object.update_upsert(self.table_name, {'food_name': value['food_name'], 'business_id': value['business_id']}, {'deleted': 0, 'recommender_id': value['recommender_id']})
+
+    def delete_recomm(self, business_id, food_name, recommender_id):
+        self.db_object.update(self.table_name,{'business_id': business_id, 'food_name': food_name, 'recommender_id': recommender_id}, {'deleted':1})

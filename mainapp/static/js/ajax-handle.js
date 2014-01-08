@@ -43,14 +43,25 @@ function create_conn(){
 	
 }
 
+function invite_connect(prof_username, logged_username){
+	var message = "Hey, "+ prof_username + " - you may like @foodtradeHQ - the 'dating site for food businesses' #realfood. We're there [http://foodtrade.com/profile/"+logged_username+"]";
+	ajax_request("post_tweet_admin", 'create_conn', {message: message});
+}
+
 function add_food(prof_id){
 	// var food = document.getElementById('addfood_id').value;
 	var food = document.getElementsByClassName('chosen-single')[0].children[0].innerHTML;
 	var data = {useruid: prof_id, food_name: food};
 	ajax_request("addfood", 'create_conn', {data: JSON.stringify(data)});
 	document.getElementsByClassName('chosen-single')[0].children[0].innerHTML = '';
-	var append_data = '<tr><td>'+food+'</td><td><div class="pull-right"><a href="#"><i class="fa fa-thumbs-o-up text-muted" title="Vouch for this"></i></a><a href="#"><i class="fa fa-trash-o text-muted" title="Delete"></i></a></div></td></tr>';
+	var append_data = '<tr><td>'+food+'</td><td><div class="pull-right"><a href="#"><i class="fa fa-thumbs-o-up text-muted" title="Vouch for this"></i></a></div></td></tr>';
 	$("#food_tbody").prepend(append_data);
+}
+
+function recommend_food(logged_in_id, food_name, prof_id){
+	var data = {recommender_id: logged_in_id, food_name: food_name, business_id: prof_id}
+	ajax_request("vouch_for_food", 'create_conn', {data: JSON.stringify(data)});
+
 }
 
 function delete_food(prof_id, food_name, my_this){
