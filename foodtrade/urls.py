@@ -20,5 +20,7 @@ urlpatterns = patterns('',
     # Uncomment the next line to enable the admin:
     url(r'^admin/', include(admin.site.urls)),
     url(r'^trends/', 'mainapp.views.trends'),
-    url(r'^pricing/', 'mainapp.pricing.home')
+    url(r'^pricing/', 'mainapp.pricing.home'),
+    # url(r'^privacy/', 'mainapp.privacy.home'),
+    # url(r'^terms/', 'mainapp.terms.home')
 )
