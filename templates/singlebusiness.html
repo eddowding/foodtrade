@@ -54,7 +54,7 @@
       <div id="contact_info" class="col-md-3">
       {% ifnotequal profile_id user_id %}
       <!-- if they dont't have an account yet -->
-      <button class="btn btn-primary btn-block">Invite to connect</button>
+      <button class="btn btn-primary btn-block" onclick="invite_connect({{screen_name}}, {{user_info.username}})">Invite to connect</button>
       <!-- if logged in users = individual --> 
       <button class="btn btn-default btn-block" data-toggle="modal" data-target="#modal_customer">
         <i class="fa fa-smile-o text-muted"></i> I am a customer
@@ -226,7 +226,7 @@
                   <td> 
                   <div class="pull-right">
                    <!-- hide if user has edit rights -->
-                   <a href="#"><i class="fa fa-thumbs-o-up text-muted" title="Vouch for this"></i></a> 
+                   <i id="vouchfood_id">{{eachfood.vouch_count}} </i> <a href="#produce"><i class="fa fa-thumbs-o-up text-muted" title="Recommend this to others" onclick="recommend_food({{user_id}}, '{{eachfood.food_name}}', {{profile_id}})"></i></a> 
                    <!-- if user has edit rights -->
                    {% ifequal profile_id user_id %}
                     
@@ -538,5 +538,6 @@ function post_contact_tweet()
  
   $('#modal_contact').modal('hide');
 }
+
      </script>
  {% endblock %}
