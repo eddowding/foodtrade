@@ -106,7 +106,7 @@ def gen_tradeconnection_userprofile(third_pk, userid, user, name, description, n
         if rand_no>90:
             parent_tweet_id = item_no = int(random.randrange(previous_tweet_id,tweet_id))
 
-        tradeconnection_tweets_fields = {"status":status,  "parent_tweet_id":parent_tweet_id,  "deleted":0, 
+        tradeconnection_tweets_fields = {"status":status, "sign_up_as": sign_up_types[0], "parent_tweet_id":parent_tweet_id,  "deleted":0, 
                                          "tweet_id":tweet_id, "user": tradeconnection_tweets_fields_user, "time_stamp":tweet_time,
                                           "location": tradeconnection_tweets_fields_location }  
 

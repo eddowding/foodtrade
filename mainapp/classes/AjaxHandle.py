@@ -167,9 +167,22 @@ class AjaxHandle():
     def addteam(self, request):
         team = Team()
         print request.POST.get('data')
-        data = eval(request.POST.get('data'))
+        
+
         if data !=None and data !="":
             team.create_member(data)
             return HttpResponse("{'status':1}")
         else:
             return HttpResponse("{'status':0}")
+
+    def send_email(self, request):        
+        sender_name = request.POST.get('name')
+        receiver_email = request.POST.get('receiver')
+        sender_email = request.POST.get('sender')
+        message = request.POST.get('message')
+        if sender_name!="" and receiver_email != "" and sender_email != "" and message != "":
+            body = message +'\r\n'+sender_name +'\r\n' +sender_email
+            email = Email()
+            return email.send(receiver, subject, body)
+        return 0
+

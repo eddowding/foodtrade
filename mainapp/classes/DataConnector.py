@@ -9,7 +9,7 @@ from MongoConnection import MongoConnection
 from datetime import datetime
 from bson.objectid import ObjectId
 import time
-from mainapp.classes.TweetFeed import TradeConnection, Food, Organisation
+from mainapp.classes.TweetFeed import TweetFeed, Food, TradeConnection, Customer, TradeConnection, UserProfile, Organisation, Team
 
 class UserConnections():
 
@@ -40,16 +40,45 @@ class UserConnections():
         organisations = org.get_organisations_by_mem_id(self.user_id)
         return len(organisations)
 
-    def get_nearby_individuals_no(self):
-        return 78
+    def get_nearby_individuals_no(self, lon, lat):
+        query_string = {}
+        
+        query_string['location'] = {"$near":{"$geometry":{"type":"Point", "coordinates":[float(lon), float(lat)]}, "$maxDistance":160934}}
 
-    def get_nearby_businesses_no(self):
-        return 79
+        query_string['sign_up_as'] ='Individual'
+       
+        tweet_search_object = TweetFeed()
+        count = tweet_search_object.get_near_people(query_string)
+
+        return count
+
+    def get_nearby_businesses_no(self, lon, lat):
+        query_string = {}
+        
+        query_string['location'] = {"$near":{"$geometry":{"type":"Point", "coordinates":[float(lon), float(lat)]}, "$maxDistance":160934}}
+
+        query_string['sign_up_as'] ='Business'
+       
+        tweet_search_object = TweetFeed()
+        count = tweet_search_object.get_near_people(query_string)
+
+        return count
+
+    def get_award_no(self):
+        
+
+        return 0
 
 class UserInfo():
     def __init__ (self,user_id):
         self.user_id = user_id
         twitter_user = SocialAccount.objects.get(user__id = user_id)
+        user_profile = UserProfile()
+        userprof = user_profile.get_profile_by_id(str(user_id))
+        lon = userprof['longitude']
+        lat = userprof['latitude']
+
+
         user_connection =  UserConnections(user_id)
 
         self.full_name = twitter_user.extra_data['name']
@@ -58,8 +87,9 @@ class UserInfo():
         # print 'hello'+twitter_user.extra_data['profile_image_url_https']
         self.trade_connections_no = user_connection.get_trade_connection_no()
         self.food_no = user_connection.get_food_connection_no()
-        self.nearby_businesses_no = user_connection.get_nearby_businesses_no()
-        self.nearby_individuals_no = user_connection.get_nearby_individuals_no()
+        self.nearby_businesses_no = user_connection.get_nearby_businesses_no(lon,lat)
+        self.nearby_individuals_no = user_connection.get_nearby_individuals_no(lon,lat)
         self.organisation_connection_no = user_connection.get_organisation_connection_no()
+        self.award_no = user_connection.get_award_no()
 
 

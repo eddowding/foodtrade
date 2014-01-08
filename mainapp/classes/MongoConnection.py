@@ -58,7 +58,11 @@ class MongoConnection():
         json_doc = json_doc.replace("_id", "uid")
         return json.loads(str(json_doc))
 
-
-
-
-    
+    def get_distinct(self,table_name, distinct_val, query):
+        all_doc = self.db[table_name].find(query).distinct(distinct_val)
+        count = len(all_doc)
+        
+        parameter = {}
+        parameter['count'] = count
+        parameter['results'] = all_doc
+        return parameter
