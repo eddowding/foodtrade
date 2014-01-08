@@ -62,11 +62,30 @@
       <!-- if logged in users = business --> 
       <div class="btn-group btn-block" data-toggle="buttons">
         <label class="btn btn-default" style="width:50%;" title="LOGGEDINUSER buys from PROFILENAME">
+          {% ifequal logged_conn "buyer" %}
+          bbb
+          <input type="checkbox" checked id="buy_from" onchange="conn_handler('buy_from', {{profile_id}})"> Buy from
+          {% else %}
           <input type="checkbox" id="buy_from" onchange="conn_handler('buy_from', {{profile_id}})"> Buy from
+          {% endifequal %}
+          {% comment %}
+          
+          <input type="checkbox" id="buy_from" onchange="conn_handler('buy_from', {{profile_id}})"> Buy from
+          {% endcomment %}
+
         </label>
         <!-- showing active mode if button is selected -->
         <label class="btn btn-default" style="width:50%;" title="LOGGEDINUSER sells to PROFILENAME" >
+          {% ifequal logged_conn "seller" %}
+          sss
+          <input type="checkbox" checked id="sell_to" onchange="conn_handler('sell_to', {{profile_id}})"> Sell to
+          {% else %}
           <input type="checkbox" id="sell_to" onchange="conn_handler('sell_to', {{profile_id}})"> Sell to
+          {% endifequal %}
+          {% comment %}
+          <input type="checkbox" id="sell_to" onchange="conn_handler('sell_to', {{profile_id}})"> Sell to
+          {% endcomment %}
+
         </label> 
       </div>
  
@@ -97,7 +116,7 @@
           <div class="modal-content">
             <div class="modal-header">
               <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-              <h4 class="modal-title" id="myModalLabel">Contact Smales Farm</h4>
+              <h4 class="modal-title" id="myModalLabel">Contact {{name}}</h4>
             </div>
             <div class="modal-body">
             <div class="container-responsive">
@@ -106,9 +125,9 @@
              
                   <address>
                     
-          <a href="mailto:mail@smalesfarm.com" target="_blank"><i class="fa fa-envelope text-muted"></i> mail@smalesfarm.com </a><br />
-          <a href="#"><i class="fa fa-twitter text-muted"></i> @smalesfarm</a><br />
-          <a href="callto:0131 476 5333"><i class="fa fa-phone text-muted"></i> 0131 476 5333</a>
+          <a href="mailto:mail@smalesfarm.com" target="_blank"><i class="fa fa-envelope text-muted"></i> {{email}} </a><br />
+          <a href="#"><i class="fa fa-twitter text-muted"></i> {{screen_name}}</a><br />
+          <a href="callto:0131 476 5333"><i class="fa fa-phone text-muted"></i> {{phone_number}}</a>
                   </address>
                 </div>
                 
@@ -116,10 +135,10 @@
                   <form id="contact" method="post" class="form" role="form">
                     <div class="row">
                       <div class="col-xs-6 col-md-6 form-group">
-                        <input class="form-control" id="sender_name" name="name" placeholder="Name (prefill if reg'd)" type="text" required autofocus />
+                        <input class="form-control" id="sender_name" name="name" placeholder="Name" type="text" required autofocus value = "{{userinfo.full_name}}"/>
                       </div>
                       <div class="col-xs-6 col-md-6 form-group">
-                        <input class="form-control" id="sender_email" name="email" placeholder="Email (prefill if reg'd)" type="email" required />
+                        <input class="form-control" id="sender_email" name="email" placeholder="Email" type="email" required value = "{{userinfo.email}}" />
                       </div>
                     </div> 
                     <textarea class="form-control counted" id="email_message" placeholder="Type in your message" rows="5"></textarea>
@@ -175,7 +194,7 @@
           <li class="active"><a href="#produce" data-toggle="tab">Foods <span class="badge">{{userinfo.food_no}}</span></a></li>
           <li><a href="#connections" data-toggle="tab">Connections <span class="badge">{{userinfo.trade_connections_no}}</span></a> </li>
           <li><a href="#organisations" data-toggle="tab">Organisation</a> <span class="badge"></span></li>
-          <li><a href="#customers" data-toggle="tab">Customers <span class="badge">{{userinfo.trade_connections_no}}</span></a> </li>
+          <li><a href="#customers" data-toggle="tab">Customers <span class="badge">{{customers|length}}</span></a> </li>
           <li><a href="#activity" data-toggle="tab">Updates  <span class="badge">{{userinfo.trade_connections_no}}</span></a></li> 
           <li><a href="#team" data-toggle="tab">Team <span class="badge">{{userinfo.trade_connections_no}}</span></a></li>
         </ul>
