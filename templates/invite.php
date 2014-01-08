@@ -96,6 +96,21 @@ class=" img-responsive pull-left" style="width:20px; margin-right: 5px;" />
       
       <!-- only show this if checkbox selected --> 
       <div class="pull-right">
+
+
+        <div class="btn-group pull-left" data-toggle="buttons" style="margin-right: 20px;">
+          <label class="btn btn-default">
+            <input type="checkbox"> Individual
+          </label>
+          <label class="btn btn-default">
+            <input type="checkbox"> Business
+          </label> 
+          <label class="btn btn-default">
+            <input type="checkbox"> Organisation
+          </label> 
+        </div>
+
+
            <img src="https://pbs.twimg.com/profile_images/137269542/twitter_bigger.jpg" alt="THEIRNAME" class=" img-responsive  pull-left " style="width:33px; margin:  0 5px;" />
   
         <div class="btn-group pull-left" data-toggle="buttons">
@@ -114,6 +129,36 @@ class=" img-responsive pull-left" style="width:20px; margin-right: 5px;" />
 
       <div class="checkbox">
         <input type="checkbox" checked="" id="checkbox" />
+        <label for="checkbox">
+          <img src="https://pbs.twimg.com/profile_images/137269542/twitter_bigger.jpg" alt="THEIRNAME"
+class=" img-responsive pull-left" style="width:20px; margin-right: 5px;" /> 
+          Ed Dowding <span class="text-muted small">@eddowding</span>
+        </label>
+      </div>
+    </li>
+
+    <li class="list-group-item">
+      
+      <!-- only show this if checkbox selected --> 
+      <div class="pull-right">
+          
+        <div class="btn-group pull-left" data-toggle="buttons">
+          <label class="btn btn-default">
+            <input type="checkbox"> Individual
+          </label>
+          <label class="btn btn-default">
+            <input type="checkbox"> Business
+          </label> 
+          <label class="btn btn-default">
+            <input type="checkbox"> Organisation
+          </label> 
+        </div>
+
+       
+      </div>
+
+      <div class="checkbox">
+        <input type="checkbox" id="checkbox" />
         <label for="checkbox">
           <img src="https://pbs.twimg.com/profile_images/137269542/twitter_bigger.jpg" alt="THEIRNAME"
 class=" img-responsive pull-left" style="width:20px; margin-right: 5px;" /> 
