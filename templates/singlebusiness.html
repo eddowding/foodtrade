@@ -188,11 +188,13 @@
       </div><!-- end header last -->
     </div>
     </div>
+
     <div class="row">
      <div class="col-md-12">
         <ul class="nav nav-tabs nav-justified">
           <li class="active"><a href="#produce" data-toggle="tab">Foods <span class="badge">{{userinfo.food_no}}</span></a></li>
           <li><a href="#connections" data-toggle="tab">Connections <span class="badge">{{userinfo.trade_connections_no}}</span></a> </li>
+
           <li><a href="#organisations" data-toggle="tab">Organisation</a> <span class="badge"></span></li>
           <li><a href="#customers" data-toggle="tab">Customers <span class="badge">{{customers|length}}</span></a> </li>
           <li><a href="#activity" data-toggle="tab">Updates  <span class="badge">{{userinfo.trade_connections_no}}</span></a></li> 
@@ -200,15 +202,14 @@
         </ul>
      </div>
     </div>
+
     <div class="row">
       <div class="col-md-8">
         <div class="container-responsive clearfix">
-      
-   
-<div class="container-responsive">
-  <div class="row"> 
-    <div class="col-md-12">
-      <form action="#" method="get">
+
+        <div class="tab-content">
+          <div class="tab-pane active fade in " id="produce">
+           <form action="#" method="get">
           <div class="input-group well well-sm">
               <input class="form-control" id="system-search" name="q" placeholder="Search their foods..." required>
               <span class="input-group-btn">
@@ -216,7 +217,7 @@
               </span>
           </div>
       </form>
-       <table class="table table-list-search">
+      <table class="table table-list-search">
           <tbody id="food_tbody">
             {% for eachfood in all_foods %}
               <tr id="row{{forloop.counter}}">
@@ -272,12 +273,12 @@
               </tr> 
           </tfoot>
       </table>    
-    </div>
-  </div>
-</div>
-          <div class="clearfix">
-          <h2>Connections</h2>
-          <div class="well well-sm">  
+
+
+          </div> <!-- end produce -->
+
+          <div class="tab-pane fade" id="connections">
+            <div class="well well-sm">  
             <form class="form-inline" role="form">
               <div class="form-group">
                  <img class="img-rounded" 
@@ -330,11 +331,10 @@
                     </div>
                   </div> 
                   {% endfor %}
-          </div>
- 
-          <div class="clearfix">  
-          <h2>Organisations</h2>
-           <p class=""><a href="single-organisation.php">Show all</a></p>
+          </div> <!--  end connections -->
+
+          <div class="tab-pane fade" id="organisations">
+<p class=""><a href="single-organisation.php">Show all</a></p>
           {% for each in organisations %}
                 <div class="card card-organisation">
                   <div class="content">
@@ -353,10 +353,11 @@
                   </div>
                 </div> 
                 {% endfor %}
-          </div>
-          <div class="clearfix">
-          <h2>Customers</h2>
-          {% for each in customers %}
+          </div> <!-- end organisations -->
+
+          <div class="tab-pane fade" id="customers">
+
+           {% for each in customers %}
               <div class="card card-individual">
                 <div class="content">
                   <img src="{{each.photo}}" alt="{{each.name}}"
@@ -364,31 +365,86 @@
                   <div class="text">
                     <h5><a href="/profile/{{each.username}}">{{each.name}}</a> <span class="label label-info pull-right">27</span></a></h5> 
                     <p class="small">
-                    {{each.description}}
+                    {{each.description}}</p>
                   </div>
                 </div>
                
-              </div> 
           </div>
           {% endfor %}
-          <div class="clearfix">
-          <h2>Team</h2> 
-          {% include 'card_team.php' %}
-          {% include 'card_team.php' %}
-          {% include 'card_team.php' %}
-          {% include 'card_team.php' %}
-          {% include 'card_team.php' %}
-          </div> 
-     
-        <h2>Updates</h2>
-        <div class="container-responsive">
+
+          </div> <!-- end customers -->
+
+          <div class="tab-pane fade" id="activity">
+
+          <div class="container-responsive">
           <div class="row">
-              <div class="col-md-12"> 
-              <div id="activity"> 
-           {% include 'card_activity.php' %}
-          </div> 
+              <div class="col-md-12">
+                  <div class="">
+
+                      <!-- if this is the profile of the logged in user -->
+                      <div class="well well-sm">
+                          <div class="input-group">
+                              <input id="btn-input" type="text" class="form-control input-sm" placeholder="Send an update..." />
+                              <span class="input-group-btn">
+                                  <button class="btn btn-warning btn-sm" id="btn-chat">
+                                      Send</button>
+                              </span>
+                          </div>
+                      </div>
+                      <!-- // if this is the profile of the logged in user -->
+
+                      <div class="">
+                          <ul class="chat">
+                              <li class="left clearfix"><span class="chat-img pull-left">
+                                  <img src="https://pbs.twimg.com/profile_images/378800000141996074/6a363e3c4f2a84a956c3cb27c50b2ca0_normal.png" alt="User Avatar" class="img-thumbnail" />
+                              </span>
+                                  <div class="chat-body clearfix">
+                                      <div class="header">
+                                          <strong class="primary-font">Smales Farm</strong> <small class="pull-right text-muted">
+                                              <span class="glyphicon glyphicon-time"></span>12 mins ago</small>
+                                      </div>
+                                      <p>
+                                          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur bibendum ornare
+                                          dolor, quis ullamcorper ligula sodales.
+                                      </p>
+                                  </div>
+                              </li>
+                              
+                              <li class="left clearfix"><span class="chat-img pull-left">
+                              <img src="https://pbs.twimg.com/profile_images/378800000141996074/6a363e3c4f2a84a956c3cb27c50b2ca0_normal.png" alt="User Avatar" class="img-thumbnail" />
+                              </span>
+                                  <div class="chat-body clearfix">
+                                      <div class="header">
+                                          <strong class="primary-font">Smales Farm</strong> <small class="pull-right text-muted">
+                                              <span class="glyphicon glyphicon-time"></span>14 mins ago</small>
+                                      </div>
+                                      <p>
+                                          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur bibendum ornare
+                                          dolor, quis ullamcorper ligula sodales.
+                                      </p>
+                                  </div>
+                              </li>
+                               
+                          </ul>
+                      </div>
+                  </div>
               </div>
           </div>
+
+          </div>
+        </div>
+
+
+     <div class="tab-pane fade" id="team">
+          {% include 'card_team.php' %}
+          {% include 'card_team.php' %}
+          {% include 'card_team.php' %}
+          {% include 'card_team.php' %}
+          {% include 'card_team.php' %}
+          </div>
+
+
+        
       </div>
  
  
@@ -398,7 +454,8 @@
  
    
       </div><!-- end col8 --> 
-      </div>
+
+
       <div class="col-md-4">
         <div style="width:100%; height: 1000px; " id="map"  data-spy="affix" data-offset-top="30">
         <div class="alert alert-warning">
@@ -410,8 +467,8 @@
         </div>
       </div><!-- end col4 -->
     </div><!-- row -->
+
    
-        
     </div><!-- col10 --> 
 
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js" type="text/javascript"></script>
