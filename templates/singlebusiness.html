@@ -116,13 +116,13 @@
                   <form id="contact" method="post" class="form" role="form">
                     <div class="row">
                       <div class="col-xs-6 col-md-6 form-group">
-                        <input class="form-control" id="name" name="name" placeholder="Name (prefill if reg'd)" type="text" required autofocus />
+                        <input class="form-control" id="sender_name" name="name" placeholder="Name (prefill if reg'd)" type="text" required autofocus />
                       </div>
                       <div class="col-xs-6 col-md-6 form-group">
-                        <input class="form-control" id="email" name="email" placeholder="Email (prefill if reg'd)" type="email" required />
+                        <input class="form-control" id="sender_email" name="email" placeholder="Email (prefill if reg'd)" type="email" required />
                       </div>
                     </div> 
-                    <textarea class="form-control counted" name="message" placeholder="Type in your message" rows="5"></textarea>
+                    <textarea class="form-control counted" id="email_message" placeholder="Type in your message" rows="5"></textarea>
                     <h6 class="pull-right" id="counter">320 characters remaining</h6>
                      
                   </form>
@@ -133,8 +133,8 @@
    
             </div>
             <div class="modal-footer"> 
-              <button type="button" class="btn btn-primary">Tweet it</button>
-              <button type="button" class="btn btn-primary">Email it</button>
+              <button type="button" class="btn btn-primary" onclick="post_contact_tweet()">Tweet it</button>
+              <button type="button" class="btn btn-primary" onclick="send_email()">Email it</button>
             </div>
           </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
@@ -428,5 +428,39 @@ connections = {{connections_str | safe}};
   // remote: '/static/produce.json',                                         
       limit: 10                                                                   
 });
+
+
+
+     function send_email()
+     {
+      var sender_name = $("#sender_name").val();
+      var sender_email = $("#sender_email").val();
+      var receiver_email = "sujitmhj@gmail.com";
+      var message = $("#email_message").val();
+
+
+
+  ajax_request("send_email", 'close_contact_model', {name:sender_name, receiver:receiver_email, sender:sender_email, message:message});  
+
+     }
+
+
+
+     
+function post_contact_tweet()
+{  
+  var sender_name = $("#sender_name").val();
+      var sender_email = $("#sender_email").val();
+      var receiver_email = "sujitmhj@gmail.com";
+      var message = "@sujitmhj " + $("#email_message").val();
+ 
+  ajax_request("post_tweet_admin", 'close_contact_model', {message: message});
+}
+
+     function close_contact_model(data)
+{
+ 
+  $('#modal_contact').modal('hide');
+}
      </script>
  {% endblock %}

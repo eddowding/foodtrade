@@ -101,5 +101,5 @@ def get_unique_types():
 	random.shuffle(data)
 	item_no = int(random.randrange(1, 7))
 	user_types = data[:item_no]
-	return ','.join(user_types)
+	return user_types
 
