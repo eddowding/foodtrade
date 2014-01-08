@@ -68,9 +68,10 @@
             <div class="header">
                 <strong class="pull-left" style="margin-right: 10px;"><a href="/profile/{{result.user.username}}">{{result.user.name}}</a></strong> 
 
-                <div class="tags tags-biztype">  
-                  <a href="/type/Bakery">Bakery</a>
-                  <a href="/type/Wholesale">Wholesale</a>  
+                <div class="tags tags-biztype">
+                {% for tag in result.type_user  %}
+                  <a href="/activity/?q={{tag}}">{{tag}}</a>
+                  {% endfor %}
                 </div>
             </div>
 

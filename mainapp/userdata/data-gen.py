@@ -1,7 +1,7 @@
 import json
 from gen_extra_data2 import generate
 from unique_name import unique_name
-from user_types import get_unique_types
+from user_types import get_unique_types, get_unique_foods
 import uuid
 import random
 import csv
@@ -55,6 +55,7 @@ def gen_tradeconnection_userprofile(third_pk, userid, user, name, description, n
     sign_up_types = ["Individual", "Business", "Organisation"]
     random.shuffle(sign_up_types)
     type_user = get_unique_types()
+    foods = get_unique_foods()
     global tweet_id
     if sign_up_types[0] == "Business":
         trade_connections = TradeConnection()
@@ -66,12 +67,8 @@ def gen_tradeconnection_userprofile(third_pk, userid, user, name, description, n
                 con = { "deleted" : 0, "c_useruid" : ids[0], "b_useruid" : ids[1] }
                 trade_connections.create_connection(con)
 
-
-
-
-
     tradeconnection_userprofile_fields = {"useruid": str(userid), "sign_up_as": sign_up_types[0],
-                                          "type_user":type_user,
+                                          "type_user":','.join(type_user),
                                             "zip_code": new_location[0], "address": new_location[3],
                                            "latitude": float(new_location[1]), "longitude": float(new_location[2]), 
                                            }
@@ -107,7 +104,7 @@ def gen_tradeconnection_userprofile(third_pk, userid, user, name, description, n
             parent_tweet_id = item_no = int(random.randrange(previous_tweet_id,tweet_id))
 
         tradeconnection_tweets_fields = {"status":status, "useruid": str(userid), "sign_up_as": sign_up_types[0],
-                                          "type_user":type_user, "parent_tweet_id":parent_tweet_id,  "deleted":0, 
+                                            "foods": foods, "type_user":type_user, "parent_tweet_id":parent_tweet_id,  "deleted":0, 
                                          "tweet_id":tweet_id, "user": tradeconnection_tweets_fields_user, "time_stamp":tweet_time,
                                           "location": tradeconnection_tweets_fields_location }  
 
