@@ -52,14 +52,18 @@ L.marker([parseFloat(map_lat), parseFloat(map_lon)]).addTo(map);
 			var latitude =  con.latitude;
          	var longitude =  con.longitude;
 
-			color = 'red';
+			color = '#890D2F';
 			if(relation=="buyer")
 			{
-				color = "orange";
+				color = "#FC8628";
 			}
 			var polyline = L.polyline([
 			[parseFloat(map_lat), parseFloat(map_lon)],
 			[parseFloat(latitude), parseFloat(longitude)]
-			],{color: color}).addTo(map)
+			],{
+				color: color,
+				weight: 2,
+				opacity: 0.8
+			}).addTo(map)
 		}
 
