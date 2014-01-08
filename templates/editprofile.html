@@ -14,80 +14,120 @@
 
 {% block content %}
 
+<div class="col-md-10">
 
-  <div class="row" style="margin-left:3%;">
-    <p ><h3 style="margin-left:16.5%;">Profile</h3></p>
-  <form class="form-horizontal" name="myform" role="form" style="width:50%; margin-left:18%;"  method="POST" action=".">
+
+<h2>Your Profile</h2>
+  
+   
+  <form class="form-horizontal" name="myform" role="form"  method="POST" action=".">
   {% csrf_token %}
+    
     <div class="form-group">
-        <p><label for="user_fname_txt">First Name</label>
-        <input type="text" id="user_fname_txt" style="width:60%;" class="form-control" placeholder="Text input" value="{{first_name}}" name="first_name"></p>
-        <p><label for="user_lname_txt">Last Name</label>
-        <input type="text" style="width:60%;" id="user_lname_txt" class="form-control" placeholder="Text input" value="{{last_name}}" name="last_name"></p>
-        <p><label for="user_desc_txt">Description</label>
-        <textarea class="form-control" style="width:60%;" id="user_desc_txt" name="description" rows="5">{{description}}</textarea></p>
-
-         <p>
-          <label for="phone">Phone</label>
-          <input type="text" style="width:60%;" name="phone" id="phone" value="{{ phone }}" class="form-control" placeholder="phone" onblur="validateFeedback()" >
-        </p>
-
-         <p>
-          <label for="zipcode">Zip Code</label>
-          <input type="text" style="width:60%;" name="zip_code" id="zip_code" value="{{ zip_code }}"  class="form-control" placeholder="Zip Code" >
-        </p>
-        <p>
-            <label for="id_sign_up_as">
-                 Sign up as</label></br>
-                <label class="btn btn-default">
-                  {% ifequal sign_up_as 'Individual' %}
-                    <input type="radio" name="sign_up_as" checked="true" id="option1" value="Individual"> Individual
-                    {% else %} 
-                    <input type="radio" name="sign_up_as" id="option1" value="Individual"> Individual
-                  {% endifequal %}
-
-                </label>
-                <label class="btn btn-default">
-                  {% ifequal sign_up_as 'Business' %}
-                    <input type="radio" name="sign_up_as" checked="true" id="option2" value="Business">Business
-                    {% else %} 
-                    <input type="radio" name="sign_up_as"  id="option2" value="Business"> Business
-                  {% endifequal %}
-                </label>
-
-                <label class="btn btn-default">
-                  {% ifequal sign_up_as 'Organisation' %}
-                    <input type="radio" name="sign_up_as" checked="true" id="option3" value="Organisation"> Organisation
-                    {% else %} 
-                    <input type="radio" name="sign_up_as" id="option3" value="Organisation"> Organisation
-                  {% endifequal %}
-                </label>
-        </p>
-        <p><input type="hidden" id= "hidden_type" name="type"></p>
-        <p>
-          <label for="id_type_user">Type</label><br/>
-          <select id= "dropdown3" data-placeholder="Farm, wholesaler, restaurant, bakery..." multiple style="width:60%;height:25px;" class="chosen-select" tabindex="6" >
-            <option value=""></option>
-            {% for each in all_tags %}
-            <optgroup label={{each.node}}>
-              {% if each.childrens %}
-                {% for eachchild in each.childrens %}
-                <option>{{eachchild.node}}</option>
-                {% endfor %}
-              {% else %}
-              <option>{{each.node}}</option>
-              {% endif %}
-            </optgroup>
-            {% endfor %}
-
-          </select>
-
-
-        </p>
-        <button type="submit" class="btn btn-primary" onclick="copydata()">Submit</button>
+      <label for="user_fname_txt" class="col-sm-2 control-label">First Name</label>
+      <div class="col-sm-10">
+        <input type="text" id="user_fname_txt" class="form-control" placeholder="First name" value="{{first_name}}" name="first_name">
+      </div>
     </div>
+
+    <div class="form-group">
+      <label for="user_lname_txt" class="col-sm-2 control-label">Last Name</label>
+      <div class="col-sm-10">
+        <input type="text" id="user_lname_txt" class="form-control" placeholder="Last name" value="{{last_name}}" name="last_name">
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="user_desc_txt" class="col-sm-2 control-label">Description</label>
+      <div class="col-sm-10">
+        <textarea class="form-control" id="user_desc_txt" name="description" rows="5">{{description}}</textarea>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="phone" class="col-sm-2 control-label">Phone</label>
+      <div class="col-sm-10">
+        <input type="text" id="phone" class="form-control" placeholder="Phone number" value="{{phone}}" name="phone"  onblur="validateFeedback()" >
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="zip_code" class="col-sm-2 control-label">Address</label>
+      <div class="col-sm-10">
+        <input type="text" id="zip_code" class="form-control" placeholder="Enter your address" value="{{zipcode}}" name="zipcode">
+      </div>
+    </div>
+
+
+    <div class="form-group">
+      <label for="id_sign_up_as" class="col-sm-2 control-label">Sign up as</label>
+        {{form.sign_up_as.as_hidden}}
+      <div class="col-sm-10">
+
+        <div class="btn-group" data-toggle="buttons">
+          <label class="btn btn-default">
+            {% ifequal sign_up_as 'Individual' %}
+              <input type="radio" name="sign_up_as" checked="true" id="option1" value="Individual"> Individual
+              {% else %} 
+              <input type="radio" name="sign_up_as" id="option1" value="Individual"> Individual
+            {% endifequal %}
+          </label> 
+          <label class="btn btn-default">
+            {% ifequal sign_up_as 'Business' %}
+              <input type="radio" name="sign_up_as" checked="true" id="option2" value="Business">Business
+              {% else %} 
+              <input type="radio" name="sign_up_as"  id="option2" value="Business"> Business
+            {% endifequal %}
+          </label>
+          <label class="btn btn-default">
+            {% ifequal sign_up_as 'Organisation' %}
+              <input type="radio" name="sign_up_as" checked="true" id="option3" value="Organisation"> Organisation
+              {% else %} 
+              <input type="radio" name="sign_up_as" id="option3" value="Organisation"> Organisation
+            {% endifequal %}
+          </label>
+        </div>
+
+        <input type="hidden" id= "hidden_type" name="type">
+
+      </div>
+
+      </div>
+
+      
+      <div class="form-group"> 
+        <label for="id_type_user" class="col-sm-2 control-label">Type</label>
+        <div class="col-sm-10">
+          <select id= "dropdown3" data-placeholder="Farm, wholesaler, restaurant, bakery..." multiple  class="chosen-select" tabindex="6" >
+              <option value=""></option>
+              {% for each in all_tags %}
+              <optgroup label={{each.node}}>
+                {% if each.childrens %}
+                  {% for eachchild in each.childrens %}
+                  <option>{{eachchild.node}}</option>
+                  {% endfor %}
+                {% else %}
+                <option>{{each.node}}</option>
+                {% endif %}
+              </optgroup>
+              {% endfor %}
+            </select>
+        </div>
+      </div>
+
+  
+  
+
+      <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+          <button type="submit" class="btn btn-primary" onclick="copydata()">Update</button>
+        </div>
+      </div> 
+
   </form>
-</div>
+</div> 
+
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js" type="text/javascript"></script>
   <script src="/static/js/chosen.jquery.min.js" type="text/javascript"></script>
   <script src="/static/css/docsupport/prism.js" type="text/javascript" charset="utf-8"></script>

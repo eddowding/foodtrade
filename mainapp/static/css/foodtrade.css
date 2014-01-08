@@ -26,6 +26,10 @@ h2 {
 	padding-right: 50px;
 }
 
+ul.nav li {
+	margin-bottom: 0
+}
+
 .tags a {
 	font-size: 12px;
 	padding-top: 1px; 
@@ -150,6 +154,15 @@ article .content h4 {
 	color: red;
 }
 
+
+
+/********************************/
+/**  REGISTRATION              **/
+/********************************/
+
+.signup-container .panel-default {
+	margin-top: 100px;
+}
  
 
 /********************************/
