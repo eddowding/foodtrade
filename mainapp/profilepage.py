@@ -28,6 +28,11 @@ def display_profile(request, username):
     parameters['description'] = account.extra_data['description']
     parameters['pic_url'] = account.extra_data['profile_image_url']
     parameters['loc'] = {'lat':userprof['latitude'], 'lon':userprof['longitude']}
+    parameters['email'] = usr.email
+    parameters['screen_name'] = "@" + account.extra_data['screen_name']
+    pno = userprof.get('phone_number')
+    if pno == 'None':
+        parameters['phone_number'] = ''
    
     if request.user.is_authenticated():
         user_id = request.user.id
@@ -36,6 +41,8 @@ def display_profile(request, username):
         user_info = UserInfo(user_id)
         parameters['userinfo'] = user_info
         parameters['user_id'] = request.user.id
+        #get contact_form data
+        parameters['contact_form_data'] = get_contact_form_data(usr.id, request.user.id)
         if parameters['sign_up_as'] == 'Business':
             foo = Food()
             all_foods = foo.get_foods_by_userid(usr.id)
@@ -245,3 +252,6 @@ def get_team(user_id):
     print final_teams
     return final_teams[:10]
 
+def get_contact_form_data(prof_id, user_id):
+    
+    pass

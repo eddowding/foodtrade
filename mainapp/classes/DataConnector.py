@@ -4,6 +4,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from allauth.socialaccount.models import SocialToken, SocialAccount
 from twython import Twython
 import json
+from django.contrib.auth.models import User
 
 from MongoConnection import MongoConnection
 from datetime import datetime
@@ -43,7 +44,7 @@ class UserConnections():
     def get_nearby_individuals_no(self, lon, lat):
         query_string = {}
         
-        query_string['location'] = {"$near":{"$geometry":{"type":"Point", "coordinates":[float(lon), float(lat)]}, "$maxDistance":160934}}
+        query_string['location'] = {"$near":{"$geometry":{"type":"Point", "coordinates":[float(lon), float(lat)]}, "$maxDistance":160934000000}}
 
         query_string['sign_up_as'] ='Individual'
        
@@ -55,7 +56,7 @@ class UserConnections():
     def get_nearby_businesses_no(self, lon, lat):
         query_string = {}
         
-        query_string['location'] = {"$near":{"$geometry":{"type":"Point", "coordinates":[float(lon), float(lat)]}, "$maxDistance":160934}}
+        query_string['location'] = {"$near":{"$geometry":{"type":"Point", "coordinates":[float(lon), float(lat)]}, "$maxDistance":16093400000000}}
 
         query_string['sign_up_as'] ='Business'
        
@@ -72,6 +73,7 @@ class UserConnections():
 class UserInfo():
     def __init__ (self,user_id):
         self.user_id = user_id
+        self.email = User.objects.get(id = user_id).email
         twitter_user = SocialAccount.objects.get(user__id = user_id)
         user_profile = UserProfile()
         userprof = user_profile.get_profile_by_id(str(user_id))
