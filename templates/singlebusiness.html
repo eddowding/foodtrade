@@ -62,11 +62,30 @@
       <!-- if logged in users = business --> 
       <div class="btn-group btn-block" data-toggle="buttons">
         <label class="btn btn-default" style="width:50%;" title="LOGGEDINUSER buys from PROFILENAME">
+          {% ifequal logged_conn "buyer" %}
+          bbb
+          <input type="checkbox" checked id="buy_from" onchange="conn_handler('buy_from', {{profile_id}})"> Buy from
+          {% else %}
           <input type="checkbox" id="buy_from" onchange="conn_handler('buy_from', {{profile_id}})"> Buy from
+          {% endifequal %}
+          {% comment %}
+          
+          <input type="checkbox" id="buy_from" onchange="conn_handler('buy_from', {{profile_id}})"> Buy from
+          {% endcomment %}
+
         </label>
         <!-- showing active mode if button is selected -->
         <label class="btn btn-default" style="width:50%;" title="LOGGEDINUSER sells to PROFILENAME" >
+          {% ifequal logged_conn "seller" %}
+          sss
+          <input type="checkbox" checked id="sell_to" onchange="conn_handler('sell_to', {{profile_id}})"> Sell to
+          {% else %}
           <input type="checkbox" id="sell_to" onchange="conn_handler('sell_to', {{profile_id}})"> Sell to
+          {% endifequal %}
+          {% comment %}
+          <input type="checkbox" id="sell_to" onchange="conn_handler('sell_to', {{profile_id}})"> Sell to
+          {% endcomment %}
+
         </label> 
       </div>
  
@@ -175,7 +194,7 @@
           <li class="active"><a href="#produce" data-toggle="tab">Foods <span class="badge">{{userinfo.food_no}}</span></a></li>
           <li><a href="#connections" data-toggle="tab">Connections <span class="badge">{{userinfo.trade_connections_no}}</span></a> </li>
           <li><a href="#organisations" data-toggle="tab">Organisation</a> <span class="badge"></span></li>
-          <li><a href="#customers" data-toggle="tab">Customers <span class="badge">{{userinfo.trade_connections_no}}</span></a> </li>
+          <li><a href="#customers" data-toggle="tab">Customers <span class="badge">{{customers|length}}</span></a> </li>
           <li><a href="#activity" data-toggle="tab">Updates  <span class="badge">{{userinfo.trade_connections_no}}</span></a></li> 
           <li><a href="#team" data-toggle="tab">Team <span class="badge">{{userinfo.trade_connections_no}}</span></a></li>
         </ul>

@@ -37,8 +37,6 @@ function conn_handler(value, prof_id)
 		}
 
 	}
-
-	console.log("function called");
 }
 
 function create_conn(){
