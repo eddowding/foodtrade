@@ -66,7 +66,7 @@ class TweetFeed():
         return self.db_object.aggregrate_all(self.table_name,conditions)
 
     def get_near_people(self, query):
-        return self.db_object.get_distinct(self.table_name,'sign_up_as',query)['count']
+        return self.db_object.get_distinct(self.table_name,'user.username',query)['count']
 
 
     def update_tweets(self, username, first_name, last_name, description, zip_code):
@@ -86,6 +86,8 @@ class TweetFeed():
                 'user.Description':description, 
                 'location.coordinates':[lat, lon]
             })
+    def get_followers(self, twitter_id):
+        pass
 
 class UserProfile():
     def __init__ (self):
