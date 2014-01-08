@@ -89,7 +89,7 @@ class UserInfo():
         # print 'hello'+twitter_user.extra_data['profile_image_url_https']
         self.trade_connections_no = user_connection.get_trade_connection_no()
         self.food_no = user_connection.get_food_connection_no()
-        self.nearby_businesses_no = user_connection.get_nearby_businesses_no(lon,lat)
+        self.nearby_businesses_no = 0 #user_connection.get_nearby_businesses_no(lon,lat)
         self.nearby_individuals_no = 0 #user_connection.get_nearby_individuals_no(lon,lat)
         self.organisation_connection_no = 0 # user_connection.get_organisation_connection_no()
         self.award_no = user_connection.get_award_no()
