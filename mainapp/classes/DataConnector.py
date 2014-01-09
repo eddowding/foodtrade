@@ -93,5 +93,3 @@ class UserInfo():
         self.nearby_individuals_no = 0 #user_connection.get_nearby_individuals_no(lon,lat)
         self.organisation_connection_no = 0 # user_connection.get_organisation_connection_no()
         self.award_no = user_connection.get_award_no()
-
-

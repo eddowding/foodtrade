@@ -15,9 +15,7 @@
 {% block content %}
 
 <div class="col-md-10">
-
-
-<h2>Your Profile</h2>
+ 
   
    
   <form class="form-horizontal" name="myform" role="form"  method="POST" action=".">
@@ -54,7 +52,7 @@
     <div class="form-group">
       <label for="zip_code" class="col-sm-2 control-label">Address</label>
       <div class="col-sm-10">
-        <input type="text" id="zip_code" class="form-control" placeholder="Enter your address" value="{{zipcode}}" name="zipcode">
+        <input type="text" id="zip_code" class="form-control" placeholder="Enter your address" value="{{zip_code}}" name="zip_code">
       </div>
     </div>
 
@@ -65,26 +63,14 @@
       <div class="col-sm-10">
 
         <div class="btn-group" data-toggle="buttons">
-          <label class="btn btn-default">
-            {% ifequal sign_up_as 'Individual' %}
-              <input type="radio" name="sign_up_as" checked="true" id="option1" value="Individual"> Individual
-              {% else %} 
-              <input type="radio" name="sign_up_as" id="option1" value="Individual"> Individual
-            {% endifequal %}
+          <label class="btn btn-default {% ifequal sign_up_as 'Individual' %}active{% endifequal %}"> 
+              <input type="radio" name="sign_up_as" id="option1" value="Individual"> Individual 
           </label> 
-          <label class="btn btn-default">
-            {% ifequal sign_up_as 'Business' %}
-              <input type="radio" name="sign_up_as" checked="true" id="option2" value="Business">Business
-              {% else %} 
-              <input type="radio" name="sign_up_as"  id="option2" value="Business"> Business
-            {% endifequal %}
+          <label class="btn btn-default {% ifequal sign_up_as 'Business' %}active{% endifequal %}">  
+              <input type="radio" name="sign_up_as"  id="option2" value="Business"> Business 
           </label>
-          <label class="btn btn-default">
-            {% ifequal sign_up_as 'Organisation' %}
-              <input type="radio" name="sign_up_as" checked="true" id="option3" value="Organisation"> Organisation
-              {% else %} 
+          <label class="btn btn-default {% ifequal sign_up_as 'Organisation' %}active{% endifequal %}">
               <input type="radio" name="sign_up_as" id="option3" value="Organisation"> Organisation
-            {% endifequal %}
           </label>
         </div>
 
@@ -96,7 +82,7 @@
 
       
       <div class="form-group"> 
-        <label for="id_type_user" class="col-sm-2 control-label">Type</label>
+        <label for="id_type_user" class="col-sm-2 control-label">Business type</label>
         <div class="col-sm-10">
           <select id= "dropdown3" data-placeholder="Farm, wholesaler, restaurant, bakery..." multiple  class="chosen-select" tabindex="6" >
               <option value=""></option>

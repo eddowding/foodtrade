@@ -31,6 +31,7 @@ class Search():
         if(self.foods!="-1"):
             pass
         if(self.business!="-1"):
+            
             pass
         if(self.organisation!="-1"):
             pass

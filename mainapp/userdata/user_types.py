@@ -691,7 +691,7 @@ Herbs & Spices/Epazote
 Herbs & Spices/Fennel
 Herbs & Spices/Fennel seeds
 Herbs & Spices/Fenugreek
-Herbs & Spices/Filé powder, gumbo filé
+Herbs & Spices/File powder, gumbo file
 Herbs & Spices/Fingerroot, krachai, temu kuntji
 Herbs & Spices/Five-spice powder 
 Herbs & Spices/Galingale
@@ -846,7 +846,7 @@ Cereal Grains/Fonio
 Cereal Grains/Grano
 Cereal Grains/Grits
 Cereal Grains/Kamut grain
-Cereal Grains/Kañiwa
+Cereal Grains/Kaniwa
 Cereal Grains/Lemongrass, citronella
 Cereal Grains/Millet
 Cereal Grains/Molasses
@@ -926,7 +926,7 @@ Drinks/Alcoholic drinks/Spirits/Akvavit
 Drinks/Alcoholic drinks/Spirits/Arak
 Drinks/Alcoholic drinks/Spirits/Arrack
 Drinks/Alcoholic drinks/Spirits/Baijiu
-Drinks/Alcoholic drinks/Spirits/Cachaça
+Drinks/Alcoholic drinks/Spirits/Cachaca
 Drinks/Alcoholic drinks/Spirits/Gin/Damson gin
 Drinks/Alcoholic drinks/Spirits/Gin/Sloe gin
 Drinks/Alcoholic drinks/Spirits/Gulu
