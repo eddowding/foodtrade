@@ -215,16 +215,28 @@
 
 <div class="container-responsive">
   <div class="row"> 
-    <div class="col-md-12">
+    <div class="col-md-6">
       <form action="#" method="get">
-          <div class="input-group well well-sm">
-
+          <div class="input-group well well-sm"> 
               <input class="form-control" id="system-search" name="q" placeholder="Search their foods..." required>
               <span class="input-group-btn">
                   <button type="submit" class="btn btn-default"><i class="glyphicon glyphicon-search"></i></button>
               </span>
           </div>
       </form>
+    <div class="col-md-6">
+      <form action="#" method="get">
+          <div class="input-group well well-sm"> 
+              <input class="form-control" id="system-search" name="q" placeholder="Search their foods..." required>
+              <span class="input-group-btn">
+                  <button type="submit" class="btn btn-default"><i class="glyphicon glyphicon-search"></i></button>
+              </span>
+          </div>
+      </form>
+    </div>
+  </div>
+    <div class="row"> 
+      <div class="col-md-12">
        <table class="table table-list-search">
           <tbody>
               <tr>
