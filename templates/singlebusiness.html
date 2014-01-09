@@ -54,7 +54,7 @@
       <div id="contact_info" class="col-md-3">
       {% ifnotequal profile_id user_id %}
       <!-- if they dont't have an account yet -->
-      <button class="btn btn-primary btn-block" onclick="invite_connect({{screen_name}}, {{user_info.username}})">Invite to connect</button>
+      <button class="btn btn-primary btn-block" onclick="invite_connect('{{screen_name}}', '{{userinfo.username}}')">Invite to connect</button>
       <!-- if logged in users = individual --> 
       <button class="btn btn-default btn-block" data-toggle="modal" data-target="#modal_customer">
         <i class="fa fa-smile-o text-muted"></i> I am a customer
