@@ -436,8 +436,12 @@ $(document).ready(function() {
       $('.tip').tooltip()
 
       $('[data-toggle=offcanvas]').click(function() {
-    $('.row-offcanvas').toggleClass('active');
-  });
+        $('.row-offcanvas').toggleClass('active');
+      });
+
+       $('#media').carousel({
+          interval: 20000,
+        });
       /**
  *
  * jquery.charcounter.js version 1.2
