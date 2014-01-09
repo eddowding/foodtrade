@@ -14,7 +14,7 @@ import datetime
 from django.core.context_processors import csrf
 import time
 from mainapp.classes.DataConnector import UserInfo
-
+next_cursor = -1
 
 
 consumer_key = 'seqGJEiDVNPxde7jmrk6dQ'
@@ -134,6 +134,7 @@ def trends(request):
             end_time = datetime.datetime.strptime(request.POST['end_time'], '%Y-%m-%d')
         else:
             end_time = datetime.date.today() 
+    
 
     start_time = time.mktime(start_time.timetuple())
     end_time = time.mktime(end_time.timetuple())
@@ -155,3 +156,18 @@ def trends(request):
         parameters['user_id'] = request.user.id
 
     return render_to_response('trends.html', parameters, context_instance=RequestContext(request))
+
+def invite(request):
+    parameters = {}
+    tweetfeed_obj = TweetFeed()
+
+    if request.user.is_authenticated():        
+        user_id = request.user.id
+        user_profile_obj = UserProfile()
+        user_profile = user_profile_obj.get_profile_by_id(str(user_id))
+        user_info = UserInfo(user_id)
+        parameters['userinfo'] = user_info
+        parameters['user_id'] = request.user.id    
+        
+    print tweetfeed_obj.get_followers(request.user.id, -1)
+    return render_to_response('invites.html', parameters, context_instance=RequestContext(request))
