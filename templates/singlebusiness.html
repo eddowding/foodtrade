@@ -116,7 +116,7 @@
           <div class="modal-content">
             <div class="modal-header">
               <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-              <h4 class="modal-title" id="myModalLabel">Contact {{name}}</h4>
+              <h4 class="modal-title" id="myModalLabel">Contact {{userinfo.name}}</h4>
             </div>
             <div class="modal-body">
             <div class="container-responsive">
@@ -125,9 +125,9 @@
              
                   <address>
                     
-          <a href="mailto:mail@smalesfarm.com" target="_blank"><i class="fa fa-envelope text-muted"></i> {{email}} </a><br />
-          <a href="#"><i class="fa fa-twitter text-muted"></i> {{screen_name}}</a><br />
-          <a href="callto:0131 476 5333"><i class="fa fa-phone text-muted"></i> {{phone_number}}</a>
+          <a href="mailto:{{email}}" target="_blank"><i class="fa fa-envelope text-muted"></i> {{email}} </a><br />
+          <a href="http://twitter.com/{{screen_name}}"  target="_blank"><i class="fa fa-twitter text-muted"></i> {{screen_name}}</a><br />
+          <a href="callto:{{phone_number}}"><i class="fa fa-phone text-muted"></i> {{phone_number}}</a>
                   </address>
                 </div>
                 
@@ -152,8 +152,8 @@
    
             </div>
             <div class="modal-footer"> 
-              <button type="button" class="btn btn-primary" onclick="post_contact_tweet()">Tweet it</button>
-              <button type="button" class="btn btn-primary" onclick="send_email()">Email it</button>
+              <button type="button" class="btn btn-primary" onclick="post_contact_tweet('{{screen_name}}')">Tweet it</button>
+              <button type="button" class="btn btn-primary" onclick="send_email('{{email}}')">Email it</button>
             </div>
           </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
@@ -507,11 +507,11 @@ connections = {{connections_str | safe}};
 
 
 
-     function send_email()
+     function send_email(receiver)
      {
       var sender_name = $("#sender_name").val();
       var sender_email = $("#sender_email").val();
-      var receiver_email = "sujitmhj@gmail.com";
+      var receiver_email = receiver;
       var message = $("#email_message").val();
 
 
@@ -523,12 +523,12 @@ connections = {{connections_str | safe}};
 
 
      
-function post_contact_tweet()
+function post_contact_tweet(mention)
 {  
   var sender_name = $("#sender_name").val();
       var sender_email = $("#sender_email").val();
       var receiver_email = "sujitmhj@gmail.com";
-      var message = "@sujitmhj " + $("#email_message").val();
+      var message = mention+" " + $("#email_message").val();
  
   ajax_request("post_tweet_admin", 'close_contact_model', {message: message});
 }
