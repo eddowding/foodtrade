@@ -14,6 +14,7 @@ import datetime
 from django.core.context_processors import csrf
 import time
 from mainapp.classes.DataConnector import UserInfo
+import pprint
 next_cursor = -1
 
 
@@ -168,6 +169,7 @@ def invite(request):
         user_info = UserInfo(user_id)
         parameters['userinfo'] = user_info
         parameters['user_id'] = request.user.id    
-        
-    print tweetfeed_obj.get_followers(request.user.id, -1)
+    followers = tweetfeed_obj.get_followers(request.user.id, -1)
+    pprint.pprint(followers)
+    parameters['followers'] = followers
     return render_to_response('invites.html', parameters, context_instance=RequestContext(request))

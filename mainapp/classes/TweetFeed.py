@@ -105,7 +105,7 @@ class TweetFeed():
         oauth_token = access_token,
         oauth_token_secret = access_token_secret
         )
-        followers = twitter.get_followers_list(screen_name = screen_name, count=1, cursor = next_cursor)
+        followers = twitter.get_followers_list(screen_name = screen_name, count=10, cursor = next_cursor)
         return followers
 
 class UserProfile():
