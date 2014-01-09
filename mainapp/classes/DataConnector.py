@@ -79,6 +79,7 @@ class UserInfo():
         userprof = user_profile.get_profile_by_id(str(user_id))
         lon = userprof['longitude']
         lat = userprof['latitude']
+        self.user_type = userprof['sign_up_as']
 
 
         user_connection =  UserConnections(user_id)
