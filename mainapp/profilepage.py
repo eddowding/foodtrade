@@ -7,7 +7,7 @@ from django.core.context_processors import csrf
 from mainapp.classes.TweetFeed import TweetFeed
 from geolocation import get_addr_from_ip
 from classes.DataConnector import UserInfo
-from mainapp.classes.TweetFeed import Food, TradeConnection, Customer, TradeConnection, UserProfile, Organisation, Team
+from mainapp.classes.TweetFeed import Food, TradeConnection, Customer, TradeConnection, UserProfile, Organisation, Team, RecommendFood
 from mainapp.classes.Tags import Tags
 from pygeocoder import Geocoder
 import json
@@ -28,6 +28,12 @@ def display_profile(request, username):
     parameters['description'] = account.extra_data['description']
     parameters['pic_url'] = account.extra_data['profile_image_url']
     parameters['loc'] = {'lat':userprof['latitude'], 'lon':userprof['longitude']}
+    parameters['email'] = usr.email
+    parameters['screen_name'] = "@" + account.extra_data['screen_name']
+    pno = userprof.get('phone_number')
+    if pno == 'None':
+        parameters['phone_number'] = ''
+   
     if request.user.is_authenticated():
         user_id = request.user.id
         user_profile_obj = UserProfile()
@@ -35,23 +41,17 @@ def display_profile(request, username):
         user_info = UserInfo(user_id)
         parameters['userinfo'] = user_info
         parameters['user_id'] = request.user.id
-
-    foo = Food()
-    all_foods = foo.get_foods_by_userid(usr.id)
-    parameters['all_foods'] = all_foods
-
-
-    #get all customers
-    parameters['customers'] = get_customers(usr.id)
-    #get all connections
-    parameters['connections'] = get_connections(usr.id)
-    parameters['connections_str'] = json.dumps(parameters['connections'])
-    # get all organisations
-    parameters['organisations'] = get_organisations(usr.id)
-
-    
-    if request.user.is_authenticated():
         if parameters['sign_up_as'] == 'Business':
+            
+            parameters['all_foods'] = get_all_foods(usr.id)
+            #get all customers
+            parameters['customers'] = get_customers(usr.id)
+            #get all connections
+            parameters['connections'], parameters['logged_conn'] = get_connections(usr.id, request.user.id)
+            parameters['connections_str'] = json.dumps(parameters['connections'])
+            # get all organisations
+            parameters['organisations'] = get_organisations(usr.id)
+
             return render_to_response('singlebusiness.html', parameters, context_instance=RequestContext(request))
         elif parameters['sign_up_as'] == 'Organisation':
             parameters['members'] = get_members(usr.id)
@@ -118,6 +118,17 @@ def edit_profile(request, username):
 
         return HttpResponseRedirect('/')
 
+def get_all_foods(user_id):
+    foo = Food()
+    all_foods = foo.get_foods_by_userid(user_id)
+    recomm = RecommendFood()
+    final_foods = []
+    for each in all_foods:
+        all_rec = recomm.get_recomm(user_id, each['food_name'])
+        data = {'food_name': each['food_name'], 'vouch_count': len(all_rec)}
+        final_foods.append(data)
+    return final_foods
+
 def get_customers(user_id):
     cust = Customer()
     all_customers = cust.get_customers_by_userid(user_id)
@@ -132,16 +143,19 @@ def get_customers(user_id):
          })
     return final_customers[:10]
 
-def get_connections(user_id):
+def get_connections(user_id, logged_in_id):
     trade_conn = TradeConnection()
     userprof = UserProfile()
     b_conn = trade_conn.get_connection_by_business(user_id)
     c_conn = trade_conn.get_connection_by_customer(user_id)
     final_connections = []
+    logged_conn = 'none'
     for each in b_conn:
         account = SocialAccount.objects.get(user__id = each['c_useruid'])
         usr_pr = userprof.get_profile_by_id(str(each['c_useruid']))
         user_info = UserInfo(each['c_useruid'])
+        if each['c_useruid'] == logged_in_id:
+            logged_conn = 'buyer'
         final_connections.append({'id': each['c_useruid'],
          'name': account.extra_data['name'],
          'description': account.extra_data['description'],
@@ -159,6 +173,8 @@ def get_connections(user_id):
         account = SocialAccount.objects.get(user__id = each['b_useruid'])
         usr_pr = userprof.get_profile_by_id(str(each['b_useruid']))
         user_info = UserInfo(each['b_useruid'])
+        if each['b_useruid'] == logged_in_id:
+            logged_conn = 'seller'
         data = {'id': each['b_useruid'],
          'name': account.extra_data['name'],
          'description': account.extra_data['description'],
@@ -170,11 +186,16 @@ def get_connections(user_id):
          'org_conn_no': user_info.organisation_connection_no,
          'latitude': usr_pr['latitude'],
          'longitude': usr_pr['longitude'],
-         'relation': 'seller'
+         'relation': 'buyer'
          }
         if data not in final_connections:
+            data['relation'] = 'seller'
             final_connections.append(data)
-    return final_connections[:10]
+        else:
+            index = final_connections.index(data)
+            final_connections[index]['relation'] = 'both'
+    print 'logged_conn', logged_conn
+    return final_connections[:10], logged_conn
 
 def get_members(user_id):
     org = Organisation()
@@ -238,4 +259,3 @@ def get_team(user_id):
          })
     print final_teams
     return final_teams[:10]
-

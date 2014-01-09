@@ -5,8 +5,9 @@ from allauth.socialaccount.models import SocialToken, SocialAccount
 from twython import Twython
 import json
 from mainapp.classes.TweetFeed import TweetFeed
+from mainapp.classes.Email import Email
 from Tags import Tags
-from mainapp.classes.TweetFeed import TradeConnection, UserProfile, Food, Customer, Organisation, Team
+from mainapp.classes.TweetFeed import TradeConnection, UserProfile, Food, Customer, Organisation, Team, RecommendFood
 
 consumer_key = 'seqGJEiDVNPxde7jmrk6dQ'
 consumer_secret = 'sI2BsZHPk86SYB7nRtKy0nQpZX3NP5j5dLfcNiP14'
@@ -85,6 +86,38 @@ class AjaxHandle():
         else:
             return HttpResponse("{'status':0}")
             
+
+    def post_tweet_admin(self, request):
+        message = request.POST.get('message')
+        if not request.user.is_authenticated():
+            admin_twitter = Twython(
+            app_key = consumer_key,
+            app_secret = consumer_secret,
+            oauth_token = admin_access_token,
+            oauth_token_secret = admin_access_token_secret
+            )
+            if message != None and message != "":
+                admin_twitter.update_status(status=message)
+
+                return HttpResponse("{'status':1}")
+            
+        # uid = SocialAccount.objects.get(user__id=user_id).uid
+        
+        if request.user.is_authenticated():
+            user_id = request.user.id
+            st = SocialToken.objects.get(account__user__id=user_id)
+            access_token = st.token
+            access_token_secret = st.token_secret
+            twitter = Twython(
+                app_key = consumer_key,
+                app_secret = consumer_secret,
+                oauth_token = access_token,
+                oauth_token_secret = access_token_secret
+            )
+            if message != None and message != "":
+                tweet = twitter.update_status(status = message)       
+                return HttpResponse("{'status':1}")
+        return HttpResponse("{'status':0}")
 
     def add_connection(self, request):
         trade_conn = TradeConnection()
@@ -170,6 +203,30 @@ class AjaxHandle():
         data = eval(request.POST.get('data'))
         if data !=None and data !="":
             team.create_member(data)
+            return HttpResponse("{'status':1}")
+        else:
+            return HttpResponse("{'status':0}")
+
+    def send_email(self, request):        
+        sender_name = request.POST.get('name')
+        receiver_email = request.POST.get('receiver')
+        sender_email = request.POST.get('sender')
+        message = request.POST.get('message')
+        subject = sender_name + " has contacted you"
+        if sender_name!="" and receiver_email != "" and sender_email != "" and message != "":
+            body = "Hi!" +'\r\n\r\n' + message +'\r\n\r\n'+sender_name +'\r\n' +sender_email
+            email = Email()
+            if email.send_mail(receiver_email, subject, body):
+                return HttpResponse("{'status':1}")
+        
+        return HttpResponse("{'status':0}")
+
+    def vouch_for_food(self, request):
+        recomm = RecommendFood()
+        print request.POST.get('data')
+        data = eval(request.POST.get('data'))
+        if data !=None and data !="":
+            recomm.create_recomm(data)
             return HttpResponse("{'status':1}")
         else:
             return HttpResponse("{'status':0}")
