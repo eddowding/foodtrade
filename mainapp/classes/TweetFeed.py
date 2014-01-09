@@ -6,7 +6,13 @@ from pygeocoder import Geocoder
 from bson.code import Code
 from bson import BSON
 from bson import json_util
+from twython import Twython
+from allauth.socialaccount.models import SocialToken, SocialAccount
 
+consumer_key = 'seqGJEiDVNPxde7jmrk6dQ'
+consumer_secret = 'sI2BsZHPk86SYB7nRtKy0nQpZX3NP5j5dLfcNiP14'
+access_token = ''
+access_token_secret =''
 
 class TweetFeed():
     def __init__ (self):
@@ -43,7 +49,7 @@ class TweetFeed():
             function () {
              items = this.status.split(' ');
              for(i=0;i<items.length;i++){ 
-                if(items[i].indexOf('#')!=-1){
+                if(items[i].indexOf('#')!=0){
                         emit(items[i], 1); 
                         }
                     }
@@ -68,6 +74,31 @@ class TweetFeed():
     def get_near_people(self, query):
         return self.db_object.get_distinct(self.table_name,'user.username',query)['count']
 
+    def get_search_results(self, keyword, ):
+        mapper = Code("""
+            function () {
+            var flag = true;
+             foods = this.foods;
+             user_types = this.type_user;
+             for(i=0;i<foods.length;i++){ 
+             var res = foods[i].match(/"""+keyword+"""/gi);
+               
+                    }
+            }
+            """)
+
+        reducer = Code("""
+            function (key, values) { 
+             var sum = 0;
+             for (var i =0; i<values.length; i++){
+                    sum = sum + parseInt(values[i]);
+             }
+             return sum;
+            }
+            """)
+        return self.db_object.map_reduce(self.table_name, mapper, reducer, query = { 'time_stamp':{'$gte': start_time_stamp,'$lte': end_time_stamp}})
+        
+
 
     def update_tweets(self, username, first_name, last_name, description, zip_code):
         try:
@@ -86,8 +117,21 @@ class TweetFeed():
                 'user.Description':description, 
                 'location.coordinates':[lat, lon]
             })
-    def get_followers(self, twitter_id):
-        pass
+        
+    def get_followers(self, user_id, next_cursor):
+        st = SocialToken.objects.get(account__user__id=user_id)
+        access_token = st.token
+        access_token_secret = st.token_secret        
+        sa = SocialAccount.objects.get(user__id = user_id)
+        screen_name = sa.extra_data['screen_name']
+        twitter = Twython(
+        app_key = consumer_key,
+        app_secret = consumer_secret,
+        oauth_token = access_token,
+        oauth_token_secret = access_token_secret
+        )
+        followers = twitter.get_followers_list(screen_name = screen_name, count=10, cursor = next_cursor)
+        return followers
 
 class UserProfile():
     def __init__ (self):
