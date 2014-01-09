@@ -43,7 +43,7 @@ class TweetFeed():
             function () {
              items = this.status.split(' ');
              for(i=0;i<items.length;i++){ 
-                if(items[i].indexOf('#')!=-1){
+                if(items[i].indexOf('#')!=0){
                         emit(items[i], 1); 
                         }
                     }
@@ -67,6 +67,31 @@ class TweetFeed():
 
     def get_near_people(self, query):
         return self.db_object.get_distinct(self.table_name,'user.username',query)['count']
+
+    def get_search_results(self, keyword, ):
+        mapper = Code("""
+            function () {
+            var flag = true;
+             foods = this.foods;
+             user_types = this.type_user;
+             for(i=0;i<foods.length;i++){ 
+             var res = foods[i].match(/"""+keyword+"""/gi);
+               
+                    }
+            }
+            """)
+
+        reducer = Code("""
+            function (key, values) { 
+             var sum = 0;
+             for (var i =0; i<values.length; i++){
+                    sum = sum + parseInt(values[i]);
+             }
+             return sum;
+            }
+            """)
+        return self.db_object.map_reduce(self.table_name, mapper, reducer, query = { 'time_stamp':{'$gte': start_time_stamp,'$lte': end_time_stamp}})
+        
 
 
     def update_tweets(self, username, first_name, last_name, description, zip_code):
