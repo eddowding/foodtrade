@@ -97,7 +97,6 @@ def home(request):
         # else:
         #     distance_text = str(lonlat_distance*1000) + " m"
         distance_text = str("{:10.2f}".format(lonlat_distance)) + " miles"
-        print lonlat_distance
         time_elapsed = int(time.time()) - results[i]['time_stamp']
         if time_elapsed<60:
             time_text = str(time_elapsed) + 'seconds'

@@ -4,6 +4,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from allauth.socialaccount.models import SocialToken, SocialAccount
 from twython import Twython
 import json
+from django.contrib.auth.models import User
 
 from MongoConnection import MongoConnection
 from datetime import datetime
@@ -72,6 +73,7 @@ class UserConnections():
 class UserInfo():
     def __init__ (self,user_id):
         self.user_id = user_id
+        self.email = User.objects.get(id = user_id).email
         twitter_user = SocialAccount.objects.get(user__id = user_id)
         user_profile = UserProfile()
         userprof = user_profile.get_profile_by_id(str(user_id))
@@ -87,9 +89,7 @@ class UserInfo():
         # print 'hello'+twitter_user.extra_data['profile_image_url_https']
         self.trade_connections_no = user_connection.get_trade_connection_no()
         self.food_no = user_connection.get_food_connection_no()
-        self.nearby_businesses_no = user_connection.get_nearby_businesses_no(lon,lat)
-        self.nearby_individuals_no = user_connection.get_nearby_individuals_no(lon,lat)
-        self.organisation_connection_no = user_connection.get_organisation_connection_no()
+        self.nearby_businesses_no = 0 #user_connection.get_nearby_businesses_no(lon,lat)
+        self.nearby_individuals_no = 0 #user_connection.get_nearby_individuals_no(lon,lat)
+        self.organisation_connection_no = 0 # user_connection.get_organisation_connection_no()
         self.award_no = user_connection.get_award_no()
-
-

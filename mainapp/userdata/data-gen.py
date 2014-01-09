@@ -1,7 +1,7 @@
 import json
 from gen_extra_data2 import generate
 from unique_name import unique_name
-from user_types import get_unique_types
+from user_types import get_unique_types, get_unique_foods
 import uuid
 import random
 import csv
@@ -35,16 +35,14 @@ def gen_auth_user(user_pk, username):
 def gen_socialaccount(social_pk, user_pk, user, name, description):
     '''Status: Complete'''
     extra_data = generate([description, name, user])
-    try:
-        socialaccount_fields = {"user": user_pk, "provider":"1",
-                                "last_login": "2013-11-22 11:11:11",
-                                "date_joined": "2013-11-22 11:11:11",
-                                 "uid": user, 
-                                 "extra_data": extra_data
-                                } # make user from above, uid unique, extra_data is complex 
-    except:
-        print extra_data
-        exit()
+
+    socialaccount_fields = {"user": user_pk, "provider":"1",
+                            "last_login": "2013-11-22 11:11:11",
+                            "date_joined": "2013-11-22 11:11:11",
+                             "uid": user, 
+                             "extra_data": extra_data
+                            } # make user from above, uid unique, extra_data is complex 
+
     socialaccount_socialaccount = {"model":"socialaccount.socialaccount","pk": social_pk, "fields": socialaccount_fields} #second model
     social_pk += 1
     return socialaccount_socialaccount
@@ -54,7 +52,13 @@ def gen_tradeconnection_userprofile(third_pk, userid, user, name, description, n
 
     sign_up_types = ["Individual", "Business", "Organisation"]
     random.shuffle(sign_up_types)
-    type_user = get_unique_types()
+    if sign_up_types[0] == "Business":
+
+        type_user = get_unique_types()
+        foods = get_unique_foods()
+    else:
+        type_user = []
+        foods = []
     global tweet_id
     if sign_up_types[0] == "Business":
         trade_connections = TradeConnection()
@@ -66,20 +70,13 @@ def gen_tradeconnection_userprofile(third_pk, userid, user, name, description, n
                 con = { "deleted" : 0, "c_useruid" : ids[0], "b_useruid" : ids[1] }
                 trade_connections.create_connection(con)
 
-
-
-
-
     tradeconnection_userprofile_fields = {"useruid": str(userid), "sign_up_as": sign_up_types[0],
-                                          "type_user":type_user,
+                                          "type_user":str(','.join(type_user)),
                                             "zip_code": new_location[0], "address": new_location[3],
                                            "latitude": float(new_location[1]), "longitude": float(new_location[2]), 
                                            }
                                           #userid from above, sign_up_as is string = Individual, or Food Business or Organization,
                                           # zip ode random, lat and lon from zip code.
-
-                                        
-    
     userprofile = UserProfile()
     userprofile.create_profile(tradeconnection_userprofile_fields)
 
@@ -106,7 +103,8 @@ def gen_tradeconnection_userprofile(third_pk, userid, user, name, description, n
         if rand_no>90:
             parent_tweet_id = item_no = int(random.randrange(previous_tweet_id,tweet_id))
 
-        tradeconnection_tweets_fields = {"status":status, "sign_up_as": sign_up_types[0], "parent_tweet_id":parent_tweet_id,  "deleted":0, 
+        tradeconnection_tweets_fields = {"status":status, "useruid": str(userid), "sign_up_as": sign_up_types[0],
+                                            "foods": foods, "type_user":type_user, "parent_tweet_id":parent_tweet_id,  "deleted":0, 
                                          "tweet_id":tweet_id, "user": tradeconnection_tweets_fields_user, "time_stamp":tweet_time,
                                           "location": tradeconnection_tweets_fields_location }  
 
