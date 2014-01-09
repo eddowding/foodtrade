@@ -55,7 +55,7 @@
 }
 .media-carousel img
 {
-  width: 100%;
+  width: auto;
   height: 120px
 }
 /* End carousel */
@@ -67,9 +67,10 @@
 	-moz-background-size: cover;
 	-o-background-size: cover;
 	background-size: cover;
-  padding: 100px 15px;
-  box-shadow: 0 0 350px #000 inset;
+  padding: 60px 15px;
+  box-shadow: 0 0 450px #000 inset;
   color: #fff;
+  text-shadow: 1px 1px 2px #000;
 }
 
 .slide {
@@ -82,6 +83,27 @@
 }
 
 
+.slide .tags a {
+  font-size: 11px;
+  border: 1px solid #ddd;
+  border-radius: 1px;
+  padding: 1px;
+}
+
+.slide .tags a:hover {
+  background: green;
+  color: #fff;
+  text-decoration: none;
+}
+
+.slide p {
+  margin-bottom: 0;
+}
+
+.thumbnail a:hover {
+  text-decoration: none;
+}
+
 </style>
 
 
@@ -93,7 +115,12 @@
   <div class='col-md-12' id="hero">
   	 
   	<h1>What would you like to eat?</h1>
-  	<input type="text" class="form-control input-lg" placeholder="What food or business are you looking for?"> 
+    <div class="well well-sm" style="background: rgba(255,255,255,0.4); border: 0;">
+      <div class="input-group">
+        <input type="text" class="form-control input-lg" placeholder="What food or business are you looking for?"> 
+        <span class="input-group-addon"><span class="glyphicon glyphicon-search"></span></span>
+      </div> 
+    </div>
     <h3>Search 8,785 foods listings<br/>
     from 7,823 businesses and 327 organisations.</h3>
   </div>
@@ -108,24 +135,24 @@
           <div class="item  active">
             <div class="row">
               <div class="col-md-4">
-                <a class="text-center thumbnail" href="#">
-                <strong>Individuals</strong>
+                <a class="text-center thumbnail" href="#signup">
+                <h4>For Individuals &raquo;</h4>
                 <img alt="" class="img-thumbnail center" src="https://fbcdn-profile-a.akamaihd.net/hprofile-ak-prn1/c41.41.518.518/s160x160/15202_10152750860890051_592474866_n.jpg">
                 <p>I use FoodTrade to find great local food and support my area</p>
                 </a>
               </div>
               <div class="col-md-4">
                 <a class="text-center thumbnail" href="#">
-                <strong>Businesses</strong>
-                <img alt="" class="img-thumbnail center" src="https://fbcdn-profile-a.akamaihd.net/hprofile-ak-prn1/c41.41.518.518/s160x160/15202_10152750860890051_592474866_n.jpg">
+                <h4>For Businesses &raquo;</h4>
+                <img alt="" class="img-thumbnail center" src="http://foodtrade.com/wp-content/uploads/2013/10/the-organic-fresh-food-company.jpg">
                 <p>We just send a tweet to @myfoodtrade and BOOM! It gets sold!</p>
                 </a>
               </div>
               <div class="col-md-4">
                 <a class="text-center thumbnail" href="#">
-                <strong>Organisations</strong>
-                <img alt="" class="img-thumbnail center" src="https://fbcdn-profile-a.akamaihd.net/hprofile-ak-prn1/c41.41.518.518/s160x160/15202_10152750860890051_592474866_n.jpg">
-                <p>We use FoodTrade to promote our members and their work.</p>
+                <h4>For Organisations &raquo;</h4>
+                <img alt="" class="img-thumbnail center" src="http://foodtrade.com/wp-content/uploads/2013/10/Real-Bread-Campaign--150x150.png">
+                <p>We use FoodTrade to promote our members and their produce.</p>
                 </a>
               </div>       
             </div>
@@ -137,21 +164,21 @@
                 <a class="text-center thumbnail" href="#">
                 <strong>Individuals</strong>
                 <img alt="" class="img-thumbnail center" src="https://fbcdn-profile-a.akamaihd.net/hprofile-ak-prn1/c41.41.518.518/s160x160/15202_10152750860890051_592474866_n.jpg">
-                <p>I use FoodTrade to find great local food and support my area</p>
+                <p>I use FoodTrade to map my local food system for our community group.</p>
                 </a>
               </div>
               <div class="col-md-4">
                 <a class="text-center thumbnail" href="#">
                 <strong>Businesses</strong>
                 <img alt="" class="img-thumbnail center" src="https://fbcdn-profile-a.akamaihd.net/hprofile-ak-prn1/c41.41.518.518/s160x160/15202_10152750860890051_592474866_n.jpg">
-                <p>We just send a tweet to @myfoodtrade and BOOM! It gets sold!</p>
+                <p>We use FoodTrade show customers where they can find our meats</p>
                 </a>
               </div>
               <div class="col-md-4">
                 <a class="text-center thumbnail" href="#">
                 <strong>Organisations</strong>
                 <img alt="" class="img-thumbnail center" src="https://fbcdn-profile-a.akamaihd.net/hprofile-ak-prn1/c41.41.518.518/s160x160/15202_10152750860890051_592474866_n.jpg">
-                <p>We use FoodTrade to promote our members and their work.</p>
+                <p>FoodTrade makes it easy for people us to understand our reach.</p>
                 </a>
               </div>       
             </div>
@@ -188,7 +215,254 @@
     </div>
   </div>
 </div>
+
+<div class="row">
+  <div class="col-md-12">
+    <a href="#login" class="btn btn-primary btn-block">Show what's going on near you &raquo;</a>
+  </div>
+</div>
+ 
+  <div class='row'>
+    <div class='col-md-12'>
+      <div class="carousel slide media-carousel" id="media">
+        <div class="carousel-inner">
+          <div class="item  active">
+            <div class="row">
+            <h3>Businesses <small><a href="#">Show all 7,830 &raquo;</a></small></h3>
+            <hr />
+            </div>
+            <div class="row">
+
+
+              <div class="col-md-2 clearfix">
+                <div class="text-center thumbnail">
+                <a href="#profile">
+                  <img alt="" class="img-thumbnail center" src="https://fbcdn-profile-a.akamaihd.net/hprofile-ak-prn1/c41.41.518.518/s160x160/15202_10152750860890051_592474866_n.jpg">
+                  <strong>Ed Dowding</strong>
+                  <p class="small">This is their description from twitter</p>
+                </a>
+                  <div class="tags tags-biztype  ">  
+                   <a href="/type/livestock-farm">Bakery</a>
+                   <a href="/type/buther">Wholesale</a>   
+                  </div> 
+                </div>
+              </div>
+
+              <div class="col-md-2 clearfix">
+                <div class="text-center thumbnail">
+                <a href="#profile">
+                  <img alt="" class="img-thumbnail center" src="https://fbcdn-profile-a.akamaihd.net/hprofile-ak-prn1/c41.41.518.518/s160x160/15202_10152750860890051_592474866_n.jpg">
+                  <strong>Ed Dowding</strong>
+                  <p class="small">This is their description from twitter</p>
+                </a>
+                  <div class="tags tags-biztype  ">  
+                   <a href="/type/livestock-farm">Bakery</a>
+                   <a href="/type/buther">Wholesale</a>   
+                  </div> 
+                </div>
+              </div>
+
+              <div class="col-md-2 clearfix">
+                <div class="text-center thumbnail">
+                <a href="#profile">
+                  <img alt="" class="img-thumbnail center" src="http://foodtrade.com/wp-content/uploads/2013/10/the-organic-fresh-food-company.jpg">
+                  <strong>Ed Dowding</strong>
+                  <p class="small">This is their description from twitter</p>
+                </a>
+                  <div class="tags tags-biztype  ">  
+                   <a href="/type/livestock-farm">Bakery</a>
+                   <a href="/type/buther">Wholesale</a>   
+                  </div> 
+                </div>
+              </div>
+
+              <div class="col-md-2 clearfix">
+                <div class="text-center thumbnail">
+                <a href="#profile">
+                  <img alt="" class="img-thumbnail center" src="https://fbcdn-profile-a.akamaihd.net/hprofile-ak-prn1/c41.41.518.518/s160x160/15202_10152750860890051_592474866_n.jpg">
+                  <strong>Ed Dowding</strong>
+                  <p class="small">This is their description from twitter</p>
+                </a>
+                  <div class="tags tags-biztype  ">  
+                   <a href="/type/livestock-farm">Bakery</a>
+                   <a href="/type/buther">Wholesale</a>   
+                  </div> 
+                </div>
+              </div>
+
+              <div class="col-md-2 clearfix">
+                <div class="text-center thumbnail">
+                <a href="#profile">
+                  <img alt="" class="img-thumbnail center" src="http://foodtrade.com/wp-content/uploads/2013/10/the-organic-fresh-food-company.jpg">
+                  <strong>Ed Dowding</strong>
+                  <p class="small">This is their description from twitter</p>
+                </a>
+                  <div class="tags tags-biztype  ">  
+                   <a href="/type/livestock-farm">Bakery</a>
+                   <a href="/type/buther">Wholesale</a>   
+                  </div> 
+                </div>
+              </div>
+
+              <div class="col-md-2 clearfix">
+                <div class="text-center thumbnail">
+                <a href="#profile">
+                  <img alt="" class="img-thumbnail center" src="http://foodtrade.com/wp-content/uploads/2013/10/Real-Bread-Campaign--150x150.png">
+                  <strong>Ed Dowding</strong>
+                  <p class="small">This is their description from twitter</p>
+                </a>
+                  <div class="tags tags-biztype  ">  
+                   <a href="/type/livestock-farm">Bakery</a>
+                   <a href="/type/buther">Wholesale</a>   
+                  </div> 
+                </div>
+              </div>
+
+            </div>
+          </div> 
  
 
+        </div> 
+      </div>                          
+    </div>
+  </div>
+
+
+<div class='row'>
+  <div class='col-md-12'>
+    <div class="well">
+    "This technology could transform
+    the way food networks operate."
+    — HRH Prince Charles
+    </div>
+  </div>
+</div>
+
+
+<div class='row'>
+    <div class='col-md-12'>
+      <div class="carousel slide media-carousel" id="media">
+        <div class="carousel-inner">
+          <div class="item  active">
+            <div class="row">
+            <h3>Organisations <small><a href="#">Show all 235 &raquo;</a></small></h3>
+            <hr />
+            </div>
+            <div class="row">
+
+
+              <div class="col-md-2 clearfix">
+                <div class="text-center thumbnail">
+                <a href="#profile">
+                  <img alt="" class="img-thumbnail center" src="https://fbcdn-profile-a.akamaihd.net/hprofile-ak-prn1/c41.41.518.518/s160x160/15202_10152750860890051_592474866_n.jpg">
+                  <strong>Ed Dowding</strong>
+                  <p class="small">This is their description from twitter</p>
+                </a>
+                  <div class="tags tags-biztype  ">  
+                   <a href="/type/livestock-farm">Bakery</a>
+                   <a href="/type/buther">Wholesale</a>   
+                  </div> 
+                </div>
+              </div>
+
+              <div class="col-md-2 clearfix">
+                <div class="text-center thumbnail">
+                <a href="#profile">
+                  <img alt="" class="img-thumbnail center" src="https://fbcdn-profile-a.akamaihd.net/hprofile-ak-prn1/c41.41.518.518/s160x160/15202_10152750860890051_592474866_n.jpg">
+                  <strong>Ed Dowding</strong>
+                  <p class="small">This is their description from twitter</p>
+                </a>
+                  <div class="tags tags-biztype  ">  
+                   <a href="/type/livestock-farm">Bakery</a>
+                   <a href="/type/buther">Wholesale</a>   
+                  </div> 
+                </div>
+              </div>
+
+              <div class="col-md-2 clearfix">
+                <div class="text-center thumbnail">
+                <a href="#profile">
+                  <img alt="" class="img-thumbnail center" src="http://foodtrade.com/wp-content/uploads/2013/10/the-organic-fresh-food-company.jpg">
+                  <strong>Ed Dowding</strong>
+                  <p class="small">This is their description from twitter</p>
+                </a>
+                  <div class="tags tags-biztype  ">  
+                   <a href="/type/livestock-farm">Bakery</a>
+                   <a href="/type/buther">Wholesale</a>   
+                  </div> 
+                </div>
+              </div>
+
+              <div class="col-md-2 clearfix">
+                <div class="text-center thumbnail">
+                <a href="#profile">
+                  <img alt="" class="img-thumbnail center" src="https://fbcdn-profile-a.akamaihd.net/hprofile-ak-prn1/c41.41.518.518/s160x160/15202_10152750860890051_592474866_n.jpg">
+                  <strong>Ed Dowding</strong>
+                  <p class="small">This is their description from twitter</p>
+                </a>
+                  <div class="tags tags-biztype  ">  
+                   <a href="/type/livestock-farm">Bakery</a>
+                   <a href="/type/buther">Wholesale</a>   
+                  </div> 
+                </div>
+              </div>
+
+              <div class="col-md-2 clearfix">
+                <div class="text-center thumbnail">
+                <a href="#profile">
+                  <img alt="" class="img-thumbnail center" src="http://foodtrade.com/wp-content/uploads/2013/10/the-organic-fresh-food-company.jpg">
+                  <strong>Ed Dowding</strong>
+                  <p class="small">This is their description from twitter</p>
+                </a>
+                  <div class="tags tags-biztype  ">  
+                   <a href="/type/livestock-farm">Bakery</a>
+                   <a href="/type/buther">Wholesale</a>   
+                  </div> 
+                </div>
+              </div>
+
+              <div class="col-md-2 clearfix">
+                <div class="text-center thumbnail">
+                <a href="#profile">
+                  <img alt="" class="img-thumbnail center" src="http://foodtrade.com/wp-content/uploads/2013/10/Real-Bread-Campaign--150x150.png">
+                  <strong>Ed Dowding</strong>
+                  <p class="small">This is their description from twitter</p>
+                </a>
+                  <div class="tags tags-biztype  ">  
+                   <a href="/type/livestock-farm">Bakery</a>
+                   <a href="/type/buther">Wholesale</a>   
+                  </div> 
+                </div>
+              </div>
+               
+            </div>
+          </div> 
+ 
+
+        </div> 
+      </div>                          
+    </div>
+  </div>
+
+
+
+<div class='row'>
+  <div class='col-md-12'>
+    <div class="well">
+    As featured in 
+    grocer
+    wired
+    bbc
+    modrern farmer
+    fast company
+    financial times
+    vigin unite
+    huffpost
+
+    </div>
+  </div>
+</div>
+
+</div>
 
 </div><!-- col10 --> {% endblock %}
