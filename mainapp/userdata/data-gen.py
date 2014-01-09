@@ -35,16 +35,14 @@ def gen_auth_user(user_pk, username):
 def gen_socialaccount(social_pk, user_pk, user, name, description):
     '''Status: Complete'''
     extra_data = generate([description, name, user])
-    try:
-        socialaccount_fields = {"user": user_pk, "provider":"1",
-                                "last_login": "2013-11-22 11:11:11",
-                                "date_joined": "2013-11-22 11:11:11",
-                                 "uid": user, 
-                                 "extra_data": extra_data
-                                } # make user from above, uid unique, extra_data is complex 
-    except:
-        print extra_data
-        exit()
+
+    socialaccount_fields = {"user": user_pk, "provider":"1",
+                            "last_login": "2013-11-22 11:11:11",
+                            "date_joined": "2013-11-22 11:11:11",
+                             "uid": user, 
+                             "extra_data": extra_data
+                            } # make user from above, uid unique, extra_data is complex 
+
     socialaccount_socialaccount = {"model":"socialaccount.socialaccount","pk": social_pk, "fields": socialaccount_fields} #second model
     social_pk += 1
     return socialaccount_socialaccount
@@ -54,8 +52,13 @@ def gen_tradeconnection_userprofile(third_pk, userid, user, name, description, n
 
     sign_up_types = ["Individual", "Business", "Organisation"]
     random.shuffle(sign_up_types)
-    type_user = get_unique_types()
-    foods = get_unique_foods()
+    if sign_up_types[0] == "Business":
+
+        type_user = get_unique_types()
+        foods = get_unique_foods()
+    else:
+        type_user = []
+        foods = []
     global tweet_id
     if sign_up_types[0] == "Business":
         trade_connections = TradeConnection()
@@ -68,15 +71,12 @@ def gen_tradeconnection_userprofile(third_pk, userid, user, name, description, n
                 trade_connections.create_connection(con)
 
     tradeconnection_userprofile_fields = {"useruid": str(userid), "sign_up_as": sign_up_types[0],
-                                          "type_user":','.join(type_user),
+                                          "type_user":str(','.join(type_user)),
                                             "zip_code": new_location[0], "address": new_location[3],
                                            "latitude": float(new_location[1]), "longitude": float(new_location[2]), 
                                            }
                                           #userid from above, sign_up_as is string = Individual, or Food Business or Organization,
                                           # zip ode random, lat and lon from zip code.
-
-                                        
-    
     userprofile = UserProfile()
     userprofile.create_profile(tradeconnection_userprofile_fields)
 
