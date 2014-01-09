@@ -1,0 +1,43 @@
+{% extends 'tbase.html' %}
+{% load staticfiles %}
+{% block head %}
+{% endblock %}
+{% block content %}
+		<p><h3 style="margin-left:19%;">Invite your Followers who are not in FoodTrade</h3></p>
+		{% for each in followers.users %}
+                  <div class="card card-business" id="div_close_{{forloop.counter}}" style="margin-left:2%;width:25%;">
+                    <div class="content">
+                      <div class="pull-left">
+                        <img src="{{each.profile_image_url}}" alt="{{each.screen_name}}"
+                        class="img-rounded img-responsive" style="width:40px;" /> 
+                
+                      </div>
+                      <div class="text" style="height:100px;">
+                      <button type="button" class="close"  onclick="hide_btn('{{forloop.counter}}')" aria-hidden="true">&times;</button>
+                        <h5>{{each.name}}</h5>  
+                        {% if each.description %}
+                        	<p class="small">{{each.description}}<br/><br/></p>
+	                    {% else %}
+                        	<p class="small"><br/><br/></p>
+                        {% endif %}
+                      </div>
+                    </div>
+                    <div class="numbers clearfix">
+                      <div class="tags  pull-left">  
+                       	<a  class="btn btn-primary" onclick="invite_by_message()">By Message</a>
+                       	<a  class="btn btn-primary" onclick="invite_by_tweet()">By Tweet</a>
+                      </div>
+
+                    </div>
+                  </div> 
+        {% endfor %}
+<script type="text/javascript">
+	function hide_btn (argument) {
+		$('#div_close_' + argument).hide();
+	}
+	function invite_by_tweet (argument) {
+	}
+	function invite_by_message (argument) {
+	}
+</script>        
+{% endblock %}

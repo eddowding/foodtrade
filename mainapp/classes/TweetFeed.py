@@ -6,7 +6,13 @@ from pygeocoder import Geocoder
 from bson.code import Code
 from bson import BSON
 from bson import json_util
+from twython import Twython
+from allauth.socialaccount.models import SocialToken, SocialAccount
 
+consumer_key = 'seqGJEiDVNPxde7jmrk6dQ'
+consumer_secret = 'sI2BsZHPk86SYB7nRtKy0nQpZX3NP5j5dLfcNiP14'
+access_token = ''
+access_token_secret =''
 
 class TweetFeed():
     def __init__ (self):
@@ -111,8 +117,21 @@ class TweetFeed():
                 'user.Description':description, 
                 'location.coordinates':[lat, lon]
             })
-    def get_followers(self, twitter_id):
-        pass
+        
+    def get_followers(self, user_id, next_cursor):
+        st = SocialToken.objects.get(account__user__id=user_id)
+        access_token = st.token
+        access_token_secret = st.token_secret        
+        sa = SocialAccount.objects.get(user__id = user_id)
+        screen_name = sa.extra_data['screen_name']
+        twitter = Twython(
+        app_key = consumer_key,
+        app_secret = consumer_secret,
+        oauth_token = access_token,
+        oauth_token_secret = access_token_secret
+        )
+        followers = twitter.get_followers_list(screen_name = screen_name, count=10, cursor = next_cursor)
+        return followers
 
 class UserProfile():
     def __init__ (self):
