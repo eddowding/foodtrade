@@ -209,14 +209,57 @@
 
         <div class="tab-content">
           <div class="tab-pane active fade in " id="produce">
-           <form action="#" method="get">
-          <div class="input-group well well-sm">
-              <input class="form-control" id="system-search" name="q" placeholder="Search their foods..." required>
-              <span class="input-group-btn">
-                  <button type="submit" class="btn btn-default"><i class="glyphicon glyphicon-search"></i></button>
-              </span>
+ 
+          <div class="row">
+          <div class="col-md-12 ">
+          <div class=" well well-sm clearfix">
+<div class="row">
+            <div class="col-md-8">
+            
+                      <div class="input-group">
+                      <!-- link this to open food facts --> 
+                            <!-- <input class="typeahead form-control" name="addfood" data-source='' data-provide="typeahead" autocomplete="off" id = "addfood_id" style="width:400px;" placeholder="Add foods you can buy here."> -->
+
+                            <select data-placeholder="Add foods you can buy here." style="height:30px; width: 100%" class="chosen-select">
+                                <option value=""></option>
+                                {% for each in food_list %}
+                                <optgroup label={{each.node}}>
+                                  {% if each.children %}
+                                    {% for eachchild in each.children %}
+                                    <option>{{eachchild}}</option>
+                                    {% endfor %}
+                                  {% else %}
+                                  <option>{{each.node}}</option>
+                                  {% endif %}
+                                </optgroup>
+                                {% endfor %}
+
+                              </select>
+
+
+                            <span class="input-group-btn">
+                                <button class="btn btn-success" onClick="add_food({{profile_id}})"> Add</button>
+                            </span>
+                          </div> 
+            </div>
+
+            <div class="col-md-4">
+             <form action="#" method="get">
+              <div class="input-group">
+                  <input class="form-control" id="system-search" name="q" placeholder="Search foods..." required>
+                  <span class="input-group-btn">
+                      <button type="submit" class="btn btn-default"><i class="glyphicon glyphicon-search"></i></button>
+                  </span>
+              </div>
+             </form>
+            </div>
+            </div>
+
           </div>
-      </form>
+          </div>
+          </div>
+
+
       <table class="table table-list-search">
           <tbody id="food_tbody">
             {% for eachfood in all_foods %}
@@ -237,41 +280,7 @@
               </tr> 
               {% endfor %}
           </tbody>
-          <tfoot style="background: #eee;">
-              <tr>
-                  <td colspan="2">
-                  
-                      <div class="input-group">
-                      <!-- link this to open food facts --> 
-                            <!-- <input class="typeahead form-control" name="addfood" data-source='' data-provide="typeahead" autocomplete="off" id = "addfood_id" style="width:400px;" placeholder="Add foods you can buy here."> -->
-
-                            <select data-placeholder="Add foods you can buy here." style="width:100%;height:30px;" class="chosen-select">
-                                <option value=""></option>
-                                {% for each in food_list %}
-                                <optgroup label={{each.node}}>
-                                  {% if each.children %}
-                                    {% for eachchild in each.children %}
-                                    <option>{{eachchild}}</option>
-                                    {% endfor %}
-                                  {% else %}
-                                  <option>{{each.node}}</option>
-                                  {% endif %}
-                                </optgroup>
-                                {% endfor %}
-
-                              </select>
-
-
-                            <span class="input-group-btn">
-                                <button class="btn btn-success" onClick="add_food({{profile_id}})"> Add</button>
-                            </span>
-                          </div>
-                      </div>
-                  
-              </td> 
-                  
-              </tr> 
-          </tfoot>
+          
       </table>    
 
 
