@@ -121,7 +121,7 @@ class TweetFeed():
                 scope_string += this.user.description;
                 scope_string = scope_string.toLowerCase();
                
-               if(scope_string.indexOf(keyword) !=-1)
+               if(scope_string.indexOf(keyword.toLowerCase()) !=-1)
                {
                      
                     flag = true;
