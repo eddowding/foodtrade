@@ -71,7 +71,7 @@ background: #eee;
               <input type="text" name="q" class="form-control pac-input" value="{{ search.query }}" placeholder="What?"> 
             </div> 
             <div class="form-group" style="margin-right:5px;">
-              <input type="text" name="location" value="{{ search.place }}" class="pac-input form-control hidden-xs hidden-sm" placeholder="Where?">
+              <input type="text" name="location" id="pac-input" value="{{ search.place }}" class="pac-input form-control hidden-xs hidden-sm" placeholder="Where?">
             </div>
             <input type="hidden" name="lon" id="lon" value="{{search.lon}}"/>
             <input type="hidden" name="lat" id="lat" value="{{search.lat}}"/>
@@ -545,7 +545,7 @@ var placeCord = '';
 function initialize() {
   // Create the search box and link it to the UI element.
   var input = /** @type {HTMLInputElement} */(
-      document.getElementById('ip-loc'));
+      document.getElementById('pac-input'));
   var searchBox = new google.maps.places.SearchBox(
     /** @type {HTMLInputElement} */(input));
   // [START region_getplaces]
