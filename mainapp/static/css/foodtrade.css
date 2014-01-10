@@ -158,6 +158,16 @@ article .content h4 {
 	color: red;
 }
 
+ul.tick_green {
+	list-style: none;
+}
+ul.tick_green li:before {    
+    font-family: 'FontAwesome';
+    content: '\f046';
+    color: green;
+    list-style: none;
+    margin:0 5px 0 -25px;
+}
 
  
 /********************************/
