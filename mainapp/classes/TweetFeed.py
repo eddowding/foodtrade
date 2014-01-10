@@ -71,7 +71,6 @@ class TweetFeed():
     def get_search_results(self, keyword, lon, lat, food_filter, type_filter, organisation_filter, query):
         mapper = Code("""
             function () {
-
             var foods = this.foods;
             var user_types = this.type_user;
             var filtered = true;
@@ -111,8 +110,10 @@ class TweetFeed():
             {
                 flag = false;
                 var scope_string ='';
+                if(this.sign_up_as == 'Business'){
                 scope_string = foods.join();
                 scope_string += user_types.join();
+                }
                 scope_string += this.user.username;
                 scope_string += this.user.name;
                 scope_string += this.sign_up_as;
