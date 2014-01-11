@@ -133,8 +133,23 @@ def home(request):
     parameters['results'] = results
     parameters['json_data'] = json.dumps(results)
     parameters['search'] = {'query':keyword, 'place':location, 'lon':my_lon, 'lat':my_lat}
-    parameters['foods_filter'] = json.dumps(search_handle.get_food_filters())
 
+    # For food Filters
+    food_filters = search_handle.get_food_filters()
+    food_filters_count = 0
+    for f in food_filters:
+        food_filters_count = food_filters_count + f['value']
+    parameters['foods_filter'] = json.dumps(food_filters)
+    parameters['food_count'] = int(food_filters_count)
+
+
+    # For business Filter
+    business_filters = search_handle.get_business_filters()
+    business_filters_count = 0
+    for f in business_filters:
+        business_filters_count = business_filters_count + f['value']
+    parameters['business_filter'] = json.dumps(business_filters)
+    parameters['business_count'] = int(business_filters_count)
 
 
 

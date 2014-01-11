@@ -82,8 +82,24 @@ class TweetFeed():
     def get_search_results(self, keyword, lon, lat, food_filter, type_filter, organisation_filter, query):
         mapper = Code("""
             function () {
+            if(this.foods)
+            {
             var foods = this.foods;
+            }
+            else
+            {
+            var foods = [];
+            }
+            if(this.type_user)
+            {
             var user_types = this.type_user;
+            }
+            else
+            {
+            var user_types = [];
+            }
+            
+            
             var filtered = false;
             var food_filter = """+json.dumps(food_filter)+""";
             var type_filter = """+json.dumps(type_filter)+""";
@@ -97,7 +113,7 @@ class TweetFeed():
                 {
 
                     food_filtered = true;
-                    break;
+                   
                 }
             }
             var business_filtered = true;
@@ -107,7 +123,7 @@ class TweetFeed():
                 if(user_types.indexOf(type_filter[i])>-1)
                 {
                     business_filtered = true;
-                    break;
+                    
                 }
             }
 
@@ -191,117 +207,7 @@ class TweetFeed():
             var foods = this.foods;
             var user_types = this.type_user;
             var filtered = true;
-            var food_filter = """+json.dumps(food_filter)+""";
-            var type_filter = """+json.dumps(type_filter)+""";
-            var organisation_filter = """+json.dumps(organisation_filter)+""";
-            for(var i=0;i<food_filter.length && filtered;i++)
-            {
-                if(foods.indexOf(food_filter[i])<0)
-                {
-                    filtered = false;
-                }
-            }
             
-            for(var i=0;i<type_filter.length && filtered;i++)
-            {
-                if(user_types.indexOf(type_filter[i])<0)
-                {
-                    filtered = false;
-                }
-            }
-
-
-
-            for(var i=0;i<organisation_filter.length && filtered;i++)
-            {
-                if(user_types.indexOf(organisation_filter[i])<0)
-                {
-                    filtered = false;
-                }
-            }
-
-            var flag = true;
-            var keyword = '"""+keyword+"""';
-
-            if(keyword != '')
-            {
-                flag = false;
-                var scope_string ='';
-                
-                scope_string += this.user.username;
-                scope_string += this.user.name;
-                scope_string += this.sign_up_as;
-                scope_string += this.status;
-                scope_string += this.user.description;
-                scope_string = scope_string.toLowerCase();
-               
-               if(scope_string.indexOf(keyword.toLowerCase()) !=-1)
-               {
-                     
-                    flag = true;
-
-                }
-               }
-
-               if(filtered && flag)
-               {
-               for(var i =0; i<foods.length;i++)
-               {
-                    emit(foods[i], 1);
-               }
-               
-              }
-                           
-
-
-            }
-            """)
-
-        reducer = Code("""
-            function (key, values) { 
-            var  sum = 0
-             for(var i=0;i<values.length;i++)
-             { sum += 1;}
-             return sum;
-            }
-            """)
-        return self.db_object.map_reduce(self.table_name, mapper, reducer, query, 1)
-
-
-    def get_all_foods(self, keyword, lon, lat, food_filter, type_filter, organisation_filter, query):
-        mapper = Code("""
-            function () {
-            var foods = this.foods;
-            var user_types = this.type_user;
-            var filtered = true;
-            var food_filter = """+json.dumps(food_filter)+""";
-            var type_filter = """+json.dumps(type_filter)+""";
-            var organisation_filter = """+json.dumps(organisation_filter)+""";
-            for(var i=0;i<food_filter.length && filtered;i++)
-            {
-                if(foods.indexOf(food_filter[i])<0)
-                {
-                    filtered = false;
-                }
-            }
-            
-            for(var i=0;i<type_filter.length && filtered;i++)
-            {
-                if(user_types.indexOf(type_filter[i])<0)
-                {
-                    filtered = false;
-                }
-            }
-
-
-
-            for(var i=0;i<organisation_filter.length && filtered;i++)
-            {
-                if(user_types.indexOf(organisation_filter[i])<0)
-                {
-                    filtered = false;
-                }
-            }
 
             var flag = true;
             var keyword = '"""+keyword+"""';
@@ -348,7 +254,145 @@ class TweetFeed():
              return sum;
             }
             """)
-        return self.db_object.map_reduce(self.table_name, mapper, reducer, query, 1)
+        return self.db_object.map_reduce(self.table_name, mapper, reducer, query, -1)
+
+    def get_all_businesses(self, keyword, lon, lat, food_filter, type_filter, organisation_filter, query):
+        mapper = Code("""
+            function () {
+            var foods = this.foods;
+            var user_types = this.type_user;
+            var filtered = true;
+            
+
+            var flag = true;
+            var keyword = '"""+keyword+"""';
+
+            if(keyword != '')
+            {
+                flag = false;
+                var scope_string ='';
+                
+                scope_string += this.user.username;
+                scope_string += this.user.name;
+                scope_string += this.sign_up_as;
+                scope_string += this.status;
+                scope_string += this.user.description;
+                scope_string = scope_string.toLowerCase();
+               
+               if(scope_string.indexOf(keyword.toLowerCase()) !=-1)
+               {
+                     
+                    flag = true;
+
+                }
+               }
+
+               if(filtered && flag && user_types)
+               {
+               for(var i =0; i<user_types.length;i++)
+               {
+                    emit(user_types[i], 1);
+               }
+               
+              }
+                           
+
+
+            }
+            """)
+
+        reducer = Code("""
+            function (key, values) { 
+            var  sum = 0
+             for(var i=0;i<values.length;i++)
+             { sum += 1;}
+             return sum;
+            }
+            """)
+        return self.db_object.map_reduce(self.table_name, mapper, reducer, query, -1)
+
+
+    # def get_all_foods(self, keyword, lon, lat, food_filter, type_filter, organisation_filter, query):
+    #     mapper = Code("""
+    #         function () {
+    #         var foods = this.foods;
+    #         var user_types = this.type_user;
+    #         var filtered = true;
+    #         var food_filter = """+json.dumps(food_filter)+""";
+    #         var type_filter = """+json.dumps(type_filter)+""";
+    #         var organisation_filter = """+json.dumps(organisation_filter)+""";
+    #         for(var i=0;i<food_filter.length && filtered;i++)
+    #         {
+    #             if(foods.indexOf(food_filter[i])<0)
+    #             {
+    #                 filtered = false;
+    #             }
+    #         }
+            
+    #         for(var i=0;i<type_filter.length && filtered;i++)
+    #         {
+    #             if(user_types.indexOf(type_filter[i])<0)
+    #             {
+    #                 filtered = false;
+    #             }
+    #         }
+
+
+
+    #         for(var i=0;i<organisation_filter.length && filtered;i++)
+    #         {
+    #             if(user_types.indexOf(organisation_filter[i])<0)
+    #             {
+    #                 filtered = false;
+    #             }
+    #         }
+
+    #         var flag = true;
+    #         var keyword = '"""+keyword+"""';
+
+    #         if(keyword != '')
+    #         {
+    #             flag = false;
+    #             var scope_string ='';
+                
+    #             scope_string += this.user.username;
+    #             scope_string += this.user.name;
+    #             scope_string += this.sign_up_as;
+    #             scope_string += this.status;
+    #             scope_string += this.user.description;
+    #             scope_string = scope_string.toLowerCase();
+               
+    #            if(scope_string.indexOf(keyword.toLowerCase()) !=-1)
+    #            {
+                     
+    #                 flag = true;
+
+    #             }
+    #            }
+
+    #            if(filtered && flag && foods)
+    #            {
+    #            for(var i =0; i<foods.length;i++)
+    #            {
+    #                 emit(foods[i], 1);
+    #            }
+               
+    #           }
+                           
+
+
+    #         }
+    #         """)
+
+    #     reducer = Code("""
+    #         function (key, values) { 
+    #         var  sum = 0
+    #          for(var i=0;i<values.length;i++)
+    #          { sum += 1;}
+    #          return sum;
+    #         }
+    #         """)
+    #     return self.db_object.map_reduce(self.table_name, mapper, reducer, query, 1)
 
     def update_tweets(self, username, first_name, last_name, description, zip_code):
         try:
