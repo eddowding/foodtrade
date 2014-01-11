@@ -34,3 +34,6 @@ def home(request):
     parameters = { }
     return render_to_response('pricing.html',parameters,context_instance=RequestContext(request))
 
+def pages(request, page_name):
+    parameters = { }
+    return render_to_response(page_name+'.html',parameters,context_instance=RequestContext(request))

@@ -15,8 +15,6 @@ class MongoConnection():
     def create_table(self, table_name, index=None):
         self.db[table_name].create_index( [(index, pymongo.DESCENDING), ('unique',True)] )
 
-    # def select_db(self, db_name):
-    #   self.db = self.client[db_name]
 
     def get_one(self,table_name,conditions={}):
         single_doc = self.db[table_name].find_one(conditions)
@@ -31,18 +29,12 @@ class MongoConnection():
         json_doc = json_doc.replace("$oid", "id")
         json_doc = json_doc.replace("_id", "uid")
         return json.loads(json_doc)
-
-
+        
     def insert_one(self, table_name, value):
         self.db[table_name].insert(value)
 
     def update(self, table_name, where, what):
         self.db[table_name].update(where,{"$set":what},upsert=False)
 
-
-
-# mydb = MongoConnection()
-# # mydb.select_db('indexer')
-# print mydb.get_all('urlfilter',{'word':'intramurals'})
 
     

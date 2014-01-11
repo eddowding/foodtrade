@@ -27,7 +27,7 @@ def gen_unique_address():
 
 def gen_auth_user(user_pk, username):
     '''Status: Completed'''
-    auth_user = {"model":"auth.user", "pk": user_pk, "fields": {"username": username}} #first model- make pk, username as unique
+    auth_user = {"model":"auth.user", "pk": user_pk, "fields": {"username": username, "email":"sujitmhj@gmail.com"}} #first model- make pk, username as unique
     return auth_user
 
 

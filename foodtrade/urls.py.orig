@@ -5,23 +5,31 @@ from django.contrib import admin
 admin.autodiscover()
 
 urlpatterns = patterns('',
-    # Examples:
     url(r'^$', 'mainapp.home.home', name='home'),
+    url(r'^admin-tags$', 'mainapp.home.admin_tags', name='home'),
     url(r'^ajax-handler/(?P<func_name>\w{1,40})$', 'mainapp.home.ajax_request', name='ajax_handle'),
     url(r'^tweets/$', 'mainapp.views.tweets', name='home'),
-<<<<<<< HEAD
-    url(r'^register/$', 'mainapp.views.register', name='register'),
-    url(r'^multiselect/$', 'mainapp.views.multiselect', name='multiselect'),
-
-=======
     url(r'^activity/$', 'mainapp.activity.home', name='home'),
->>>>>>> f3069a02e39dd973715be353e96bca98b3af0e6d
+    url(r'^profile/(?P<username>[-\w]+)/$', 'mainapp.profilepage.display_profile', name='profile'),
     # url(r'^foodtrade/', include('foodtrade.foo.urls')),
+    url(r'^accounts/social/signup/', 'mainapp.signup_views.signup_view', name = 'account_signup'),
     url(r'^accounts/', include('allauth.urls')),
     # Uncomment the admin/doc line below to enable admin documentation:
     url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
-
+    url(r'^editprofile/(?P<username>[-\w]+)/$','mainapp.profilepage.edit_profile'),
     # Uncomment the next line to enable the admin:
     url(r'^admin/', include(admin.site.urls)),
-)
+    url(r'^trends/', 'mainapp.views.trends'),
 
+    url(r'^pricing/', 'mainapp.pricing.home'),
+    url(r'^pages/(?P<page_name>\w{1,40})$', 'mainapp.pricing.pages'),
+    # url(r'^privacy/', 'mainapp.privacy.home'),
+    # url(r'^terms/', 'mainapp.terms.home')
+
+    url(r'^invite/', 'mainapp.views.invite'),
+<<<<<<< HEAD
+    url(r'^pricing/', 'mainapp.pricing.home'),
+    url(r'^signupreferal/(?P<username>[-\w]+)/$', 'mainapp.pricing.home')
+=======
+>>>>>>> 7a815459166f619374bf3232b71c97d6e3f583bd
+)

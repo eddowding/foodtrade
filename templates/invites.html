@@ -1,0 +1,97 @@
+{% extends 'tbase.html' %}
+{% load staticfiles %}
+{% block head %}
+	<style type="text/css">    
+	    .panel-body input[type=checkbox]:checked + label { 
+	        color: #c00; 
+	    } 
+	</style>
+{% endblock %}
+
+{% block content %}
+ 	<div class="panel-body" style="margin-left: 16%;">
+	<ul class="list-group">
+	    <li  class="list-group-item" style="background: #eee;padding-bottom:5%;">
+	    <button id="btnSendTweet1" onclick="send_invite()" class="btn btn-primary pull-right">Send invites</button>
+			<form action="#" method="get" class="col-md-6">
+	          <div class="input-group">
+	            <!-- USE TWITTER TYPEAHEAD JSON WITH API TO SEARCH -->
+	            <input class="form-control" id="system-search" name="q" placeholder="Search for" required>
+	            <span class="input-group-btn">
+	                <button  type="submit" class="btn btn-default"><i class="glyphicon glyphicon-search"></i></button>
+	            </span>
+	          </div>
+	        </form>
+	    </li>
+	   
+	   {% for each in friend %}
+	    <li id= "li{{forloop.counter}}" class="list-group-item">
+	      <!-- only show this if checkbox selected --> 
+	      <div class="checkbox">
+	        <input type="checkbox" id="checkbox{{forloop.counter}}" onclick="validate_tweets('{{each.friends.screen_name}}', {{forloop.counter}})" />
+	        <label for="checkbox">
+	          <img src="{{each.friends.profile_image_url}}" alt="THEIRNAME" class="img-responsive pull-left" style="width:20px; margin-right: 5px;" /> 
+	          {{each.friends.name}} <span class="text-muted small">@{{each.friends.screen_name}}</span>
+	          </label>
+	      </div>
+	    </li>   
+	    {% endfor %}
+
+	  <li class="list-group-item clearfix" style="background: #eee;">
+        <button id="btnSendTweet2" onclick="send_invite()" class="btn btn-primary pull-right">Send invites</button>
+      </li>
+	  </ul>
+	</div>
+<script type="text/javascript">
+var tweet = 'Nice Application. Please sign up. http://localhost:8000/signup?referer={{user.username}}';
+var countVal = 0;
+var send_list = [];
+var users = [];
+function validate_tweets (argument, count) {
+	var len = tweet.length;
+	var chkbx_status = document.getElementById('checkbox' + String(count)).checked;
+	if(chkbx_status == false){
+			tweet = tweet.replace('@' + String(argument),'');
+			send_list.pop(count);
+			users.pop('@' + argument);
+			countVal = countVal - 1;
+			$('#btnSendTweet1').html("Send " + String(countVal) + ' invites');
+			$('#btnSendTweet2').html("Send " + String(countVal) + ' invites');
+	}
+	else{
+		if (argument.length + len < 140 ) {
+			tweet = '@' + String(argument) + ' ' + tweet;
+			countVal = countVal + 1;
+			send_list.push(count);
+			users.push('@' + argument);
+			$('#btnSendTweet1').html("Send " + String(countVal) + ' invites');
+			$('#btnSendTweet2').html("Send " + String(countVal) + ' invites');
+		}
+		else{
+			alert('Character Length 140 of Tweets exceeded');
+			document.getElementById('checkbox' + String(count)).checked = false;
+		}		
+	}
+}
+function invites_handler (data) {
+	data = jQuery.parseJSON(data);
+	if(data['status'] == '1'){
+		for (var val in send_list){
+			$('#li' + String(send_list[val])).hide();
+			tweet = tweet.replace(users[val], '');
+			$('#btnSendTweet1').html("Send invites");
+			$('#btnSendTweet2').html("Send invites");			
+		}
+	}
+}
+function send_invite () {
+	if (countVal == 0){
+		alert('Please select someone to invite');
+	}
+	else{
+		countVal = 0;
+		ajax_request('post_tweet','invites_handler',{'message':tweet, 'invite':'true', 'to':String(users)})
+	}
+}
+</script>
+{% endblock %}
