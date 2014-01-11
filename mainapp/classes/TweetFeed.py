@@ -303,7 +303,7 @@ class TweetFeed():
                 }
                }
 
-               if(filtered && flag & foods)
+               if(filtered && flag && foods)
                {
                for(var i =0; i<foods.length;i++)
                {
