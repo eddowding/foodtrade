@@ -103,7 +103,7 @@ class TweetFeed():
                 }
             }
 
-            var flag = false;
+            var flag = true;
             var keyword = '"""+keyword+"""';
 
             if(keyword != '')
@@ -162,6 +162,170 @@ class TweetFeed():
         return self.db_object.map_reduce(self.table_name, mapper, reducer, query, 1)
         
 
+    def get_all_foods(self, keyword, lon, lat, food_filter, type_filter, organisation_filter, query):
+        mapper = Code("""
+            function () {
+            var foods = this.foods;
+            var user_types = this.type_user;
+            var filtered = true;
+            var food_filter = """+json.dumps(food_filter)+""";
+            var type_filter = """+json.dumps(type_filter)+""";
+            var organisation_filter = """+json.dumps(organisation_filter)+""";
+            for(var i=0;i<food_filter.length && filtered;i++)
+            {
+                if(foods.indexOf(food_filter[i])<0)
+                {
+                    filtered = false;
+                }
+            }
+            
+            for(var i=0;i<type_filter.length && filtered;i++)
+            {
+                if(user_types.indexOf(type_filter[i])<0)
+                {
+                    filtered = false;
+                }
+            }
+
+
+
+            for(var i=0;i<organisation_filter.length && filtered;i++)
+            {
+                if(user_types.indexOf(organisation_filter[i])<0)
+                {
+                    filtered = false;
+                }
+            }
+
+            var flag = true;
+            var keyword = '"""+keyword+"""';
+
+            if(keyword != '')
+            {
+                flag = false;
+                var scope_string ='';
+                
+                scope_string += this.user.username;
+                scope_string += this.user.name;
+                scope_string += this.sign_up_as;
+                scope_string += this.status;
+                scope_string += this.user.description;
+                scope_string = scope_string.toLowerCase();
+               
+               if(scope_string.indexOf(keyword.toLowerCase()) !=-1)
+               {
+                     
+                    flag = true;
+
+                }
+               }
+
+               if(filtered && flag)
+               {
+               for(var i =0; i<foods.length;i++)
+               {
+                    emit(foods[i], 1);
+               }
+               
+              }
+                           
+
+
+            }
+            """)
+
+        reducer = Code("""
+            function (key, values) { 
+            var  sum = 0
+             for(var i=0;i<values.length;i++)
+             { sum += 1;}
+             return sum;
+            }
+            """)
+        return self.db_object.map_reduce(self.table_name, mapper, reducer, query, 1)
+
+
+    def get_all_foods(self, keyword, lon, lat, food_filter, type_filter, organisation_filter, query):
+        mapper = Code("""
+            function () {
+            var foods = this.foods;
+            var user_types = this.type_user;
+            var filtered = true;
+            var food_filter = """+json.dumps(food_filter)+""";
+            var type_filter = """+json.dumps(type_filter)+""";
+            var organisation_filter = """+json.dumps(organisation_filter)+""";
+            for(var i=0;i<food_filter.length && filtered;i++)
+            {
+                if(foods.indexOf(food_filter[i])<0)
+                {
+                    filtered = false;
+                }
+            }
+            
+            for(var i=0;i<type_filter.length && filtered;i++)
+            {
+                if(user_types.indexOf(type_filter[i])<0)
+                {
+                    filtered = false;
+                }
+            }
+
+
+
+            for(var i=0;i<organisation_filter.length && filtered;i++)
+            {
+                if(user_types.indexOf(organisation_filter[i])<0)
+                {
+                    filtered = false;
+                }
+            }
+
+            var flag = true;
+            var keyword = '"""+keyword+"""';
+
+            if(keyword != '')
+            {
+                flag = false;
+                var scope_string ='';
+                
+                scope_string += this.user.username;
+                scope_string += this.user.name;
+                scope_string += this.sign_up_as;
+                scope_string += this.status;
+                scope_string += this.user.description;
+                scope_string = scope_string.toLowerCase();
+               
+               if(scope_string.indexOf(keyword.toLowerCase()) !=-1)
+               {
+                     
+                    flag = true;
+
+                }
+               }
+
+               if(filtered && flag)
+               {
+               for(var i =0; i<user_types.length;i++)
+               {
+                    emit(user_types[i], 1);
+               }
+               
+              }
+                           
+
+
+            }
+            """)
+
+        reducer = Code("""
+            function (key, values) { 
+            var  sum = 0
+             for(var i=0;i<values.length;i++)
+             { sum += 1;}
+             return sum;
+            }
+            """)
+        return self.db_object.map_reduce(self.table_name, mapper, reducer, query, 1)
 
     def update_tweets(self, username, first_name, last_name, description, zip_code):
         try:
@@ -229,9 +393,13 @@ class Food():
     def __init__(self):
         self.db_object = MongoConnection("localhost",27017,'foodtrade')
         self.table_name = 'food'
-        self.db_object.create_table(self.table_name,'useruid')
+        self.db_object.create_table(self.table_name,'food_name')
     def get_foods_by_userid(self,useruid):
         return self.db_object.get_all(self.table_name,{'useruid': useruid, 'deleted': 0})
+
+    def get_all_foods(self, key, condition, initial, reducer):
+        return self.db_object.group(self.table_name,key, condition, initial, reducer)
+
 
     def create_food (self, value):
         value['deleted'] =0
@@ -301,6 +469,7 @@ class RecommendFood():
         self.db_object = MongoConnection("localhost",27017,'foodtrade')
         self.table_name = 'recommendfood'
         self.db_object.create_table(self.table_name,'food_name')
+
 
     def get_recomm(self,business_id, food_name):
         return self.db_object.get_all(self.table_name,{'food_name': food_name, 'business_id': business_id, 'deleted': 0})
