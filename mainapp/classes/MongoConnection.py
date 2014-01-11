@@ -16,7 +16,7 @@ class MongoConnection():
         self.db[table_name].ensure_index([(index,pymongo.GEOSPHERE)])
     
     def create_table(self, table_name, index=None):
-        self.db[table_name].create_index( [(index, pymongo.DESCENDING), ('unique',True)] )
+        self.db[table_name].create_index( [(index, pymongo.DESCENDING)] )
 
 
     def get_one(self,table_name,conditions={}):
@@ -43,9 +43,13 @@ class MongoConnection():
     def update_upsert(self, table_name, where, what):
         self.db[table_name].update(where,{"$set":what},upsert=True)
 
-    def map_reduce(self, table_name, mapper, reducer,query):
+    def map_reduce(self, table_name, mapper, reducer,query, sort = -1):
+        if sort == 1:
+            sort_direction = pymongo.ASCENDING
+        else:
+            sort_direction = pymongo.DESCENDING
         myresult = self.db[table_name].map_reduce(mapper,reducer,'results', query)
-        results = self.db['results'].find().sort("value", pymongo.DESCENDING)
+        results = self.db['results'].find().sort("value", sort_direction).limit(20)
         json_doc = json.dumps(list(results),default=json_util.default)
         json_doc = json_doc.replace("$oid", "id")
         json_doc = json_doc.replace("_id", "uid")
@@ -53,6 +57,12 @@ class MongoConnection():
 
     def aggregrate_all(self,table_name,conditions={}):
         all_doc = self.db[table_name].aggregate(conditions)['result']
+        json_doc = json.dumps(list(all_doc),default=json_util.default)
+        json_doc = json_doc.replace("$oid", "id")
+        json_doc = json_doc.replace("_id", "uid")
+        return json.loads(str(json_doc))
+    def group(self,table_name,key, condition, initial, reducer):
+        all_doc = self.db[table_name].group(key=key, condition=condition, initial=initial, reduce=reducer)
         json_doc = json.dumps(list(all_doc),default=json_util.default)
         json_doc = json_doc.replace("$oid", "id")
         json_doc = json_doc.replace("_id", "uid")

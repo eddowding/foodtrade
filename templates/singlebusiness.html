@@ -116,7 +116,7 @@
           <div class="modal-content">
             <div class="modal-header">
               <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-              <h4 class="modal-title" id="myModalLabel">Contact {{name}}</h4>
+              <h4 class="modal-title" id="myModalLabel">Contact {{userinfo.name}}</h4>
             </div>
             <div class="modal-body">
             <div class="container-responsive">
@@ -125,9 +125,9 @@
              
                   <address>
                     
-          <a href="mailto:mail@smalesfarm.com" target="_blank"><i class="fa fa-envelope text-muted"></i> {{email}} </a><br />
-          <a href="#"><i class="fa fa-twitter text-muted"></i> {{screen_name}}</a><br />
-          <a href="callto:0131 476 5333"><i class="fa fa-phone text-muted"></i> {{phone_number}}</a>
+          <a href="mailto:{{email}}" target="_blank"><i class="fa fa-envelope text-muted"></i> {{email}} </a><br />
+          <a href="http://twitter.com/{{screen_name}}"  target="_blank"><i class="fa fa-twitter text-muted"></i> {{screen_name}}</a><br />
+          <a href="callto:{{phone_number}}"><i class="fa fa-phone text-muted"></i> {{phone_number}}</a>
                   </address>
                 </div>
                 
@@ -152,8 +152,8 @@
    
             </div>
             <div class="modal-footer"> 
-              <button type="button" class="btn btn-primary" onclick="post_contact_tweet()">Tweet it</button>
-              <button type="button" class="btn btn-primary" onclick="send_email()">Email it</button>
+              <button type="button" class="btn btn-primary" onclick="post_contact_tweet('{{screen_name}}')">Tweet it</button>
+              <button type="button" class="btn btn-primary" onclick="send_email('{{email}}')">Email it</button>
             </div>
           </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
@@ -209,43 +209,18 @@
 
         <div class="tab-content">
           <div class="tab-pane active fade in " id="produce">
-           <form action="#" method="get">
-          <div class="input-group well well-sm">
-              <input class="form-control" id="system-search" name="q" placeholder="Search their foods..." required>
-              <span class="input-group-btn">
-                  <button type="submit" class="btn btn-default"><i class="glyphicon glyphicon-search"></i></button>
-              </span>
-          </div>
-      </form>
-      <table class="table table-list-search">
-          <tbody id="food_tbody">
-            {% for eachfood in all_foods %}
-              <tr id="row{{forloop.counter}}">
-                  <td>{{eachfood.food_name}}</td>  
-                  
-                  <td> 
-                  <div class="pull-right">
-                   <!-- hide if user has edit rights -->
-                   <i id="vouchfood_id">{{eachfood.vouch_count}} </i> <a href="#produce"><i class="fa fa-thumbs-o-up text-muted" title="Recommend this to others" onclick="recommend_food({{user_id}}, '{{eachfood.food_name}}', {{profile_id}})"></i></a> 
-                   <!-- if user has edit rights -->
-                   {% ifequal profile_id user_id %}
-                    
-                   <a href="#"><i class="fa fa-trash-o text-muted" title="Delete" onClick="delete_food({{profile_id}}, '{{eachfood.food_name}}', this)"></i></a>
-                   {% endifequal %}
-                   </div>
-                  </td>  
-              </tr> 
-              {% endfor %}
-          </tbody>
-          <tfoot style="background: #eee;">
-              <tr>
-                  <td colspan="2">
-                  
+ 
+          <div class="row">
+          <div class="col-md-12 ">
+          <div class=" well well-sm clearfix">
+<div class="row">
+            <div class="col-md-8">
+            
                       <div class="input-group">
                       <!-- link this to open food facts --> 
                             <!-- <input class="typeahead form-control" name="addfood" data-source='' data-provide="typeahead" autocomplete="off" id = "addfood_id" style="width:400px;" placeholder="Add foods you can buy here."> -->
 
-                            <select data-placeholder="Add foods you can buy here." style="width:100%;height:30px;" class="chosen-select">
+                            <select data-placeholder="Add foods you can buy here." style="height:30px; width: 100%" class="chosen-select">
                                 <option value=""></option>
                                 {% for each in food_list %}
                                 <optgroup label={{each.node}}>
@@ -265,13 +240,47 @@
                             <span class="input-group-btn">
                                 <button class="btn btn-success" onClick="add_food({{profile_id}})"> Add</button>
                             </span>
-                          </div>
-                      </div>
+                          </div> 
+            </div>
+
+            <div class="col-md-4">
+             <form action="#" method="get">
+              <div class="input-group">
+                  <input class="form-control" id="system-search" name="q" placeholder="Search foods..." required>
+                  <span class="input-group-btn">
+                      <button type="submit" class="btn btn-default"><i class="glyphicon glyphicon-search"></i></button>
+                  </span>
+              </div>
+             </form>
+            </div>
+            </div>
+
+          </div>
+          </div>
+          </div>
+
+
+      <table class="table table-list-search">
+          <tbody id="food_tbody">
+            {% for eachfood in all_foods %}
+              <tr id="row{{forloop.counter}}">
+                  <td>{{eachfood.food_name}}</td>  
                   
-              </td> 
-                  
+                  <td> 
+                  <div class="pull-right">
+                   <!-- hide if user has edit rights -->
+                   <small id="vouchfood_id">{{eachfood.vouch_count}} </small> <a href="#" class="btn btn-default btn-sm"><i class="fa fa-heart-o" title="Recommend this to others" onclick="recommend_food({{user_id}}, '{{eachfood.food_name}}', {{profile_id}}); return null;"></i></a> 
+                   <!-- if user has edit rights -->
+                   {% ifequal profile_id user_id %}
+                    
+                   <a href="#"  class="btn btn-danger btn-sm"><i class="fa fa-trash-o" title="Delete" onClick="delete_food({{profile_id}}, '{{eachfood.food_name}}', this)"></i></a>
+                   {% endifequal %}
+                   </div>
+                  </td>  
               </tr> 
-          </tfoot>
+              {% endfor %}
+          </tbody>
+          
       </table>    
 
 
@@ -507,11 +516,11 @@ connections = {{connections_str | safe}};
 
 
 
-     function send_email()
+     function send_email(receiver)
      {
       var sender_name = $("#sender_name").val();
       var sender_email = $("#sender_email").val();
-      var receiver_email = "sujitmhj@gmail.com";
+      var receiver_email = receiver;
       var message = $("#email_message").val();
 
 
@@ -523,12 +532,12 @@ connections = {{connections_str | safe}};
 
 
      
-function post_contact_tweet()
+function post_contact_tweet(mention)
 {  
   var sender_name = $("#sender_name").val();
       var sender_email = $("#sender_email").val();
       var receiver_email = "sujitmhj@gmail.com";
-      var message = "@sujitmhj " + $("#email_message").val();
+      var message = mention+" " + $("#email_message").val();
  
   ajax_request("post_tweet_admin", 'close_contact_model', {message: message});
 }

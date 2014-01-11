@@ -20,11 +20,16 @@ urlpatterns = patterns('',
     # Uncomment the next line to enable the admin:
     url(r'^admin/', include(admin.site.urls)),
     url(r'^trends/', 'mainapp.views.trends'),
-<<<<<<< HEAD
-    url(r'^invite/', 'mainapp.views.invite')
-=======
+
     url(r'^pricing/', 'mainapp.pricing.home'),
+    url(r'^pages/(?P<page_name>\w{1,40})$', 'mainapp.pricing.pages'),
     # url(r'^privacy/', 'mainapp.privacy.home'),
     # url(r'^terms/', 'mainapp.terms.home')
->>>>>>> 23d63719cf86d3d38bb70c81c3ce9e89513b2b71
+
+    url(r'^invite/', 'mainapp.views.invite'),
+<<<<<<< HEAD
+    url(r'^pricing/', 'mainapp.pricing.home'),
+    url(r'^signupreferal/(?P<username>[-\w]+)/$', 'mainapp.pricing.home')
+=======
+>>>>>>> 7a815459166f619374bf3232b71c97d6e3f583bd
 )

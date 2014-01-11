@@ -84,9 +84,18 @@ def home(request):
         my_lat = float(my_lat)
         my_lon = float(my_lon)
 
+    organisations =request.GET.get('organisations',"")
+    foods = request.GET.get('foods',"")
+    businesses =request.GET.get('businesses',"")
+    if organisations == "":
+        organisations = []
+    if businesses == "":
+        businesses = []
+    if foods == "":
+        foods = []
 
 
-    search_handle = Search(keyword, my_lon, my_lat, "nepal")
+    search_handle = Search(keyword=keyword, lon = my_lon, lat =my_lat, place = location, foods=foods, business=businesses, organisation=organisations)
     results = search_handle.search()
     for i in range(len(results)):
         distance_text = ""
@@ -124,6 +133,7 @@ def home(request):
     parameters['results'] = results
     parameters['json_data'] = json.dumps(results)
     parameters['search'] = {'query':keyword, 'place':location, 'lon':my_lon, 'lat':my_lat}
+    parameters['foods_filter'] = json.dumps(search_handle.get_food_filters())
 
 
 

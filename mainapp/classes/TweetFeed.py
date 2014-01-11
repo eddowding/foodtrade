@@ -6,6 +6,7 @@ from pygeocoder import Geocoder
 from bson.code import Code
 from bson import BSON
 from bson import json_util
+
 from twython import Twython
 from allauth.socialaccount.models import SocialToken, SocialAccount
 import json
@@ -16,6 +17,8 @@ consumer_secret = 'sI2BsZHPk86SYB7nRtKy0nQpZX3NP5j5dLfcNiP14'
 access_token = ''
 access_token_secret =''
 
+
+import json
 class TweetFeed():
     def __init__ (self):
         self.db_object = MongoConnection("localhost",27017,'foodtrade')
@@ -51,7 +54,7 @@ class TweetFeed():
             function () {
              items = this.status.split(' ');
              for(i=0;i<items.length;i++){ 
-                if(items[i].indexOf('#')!=-1){
+                if(items[i].indexOf('#')!=0){
                         emit(items[i], 1); 
                         }
                     }
@@ -76,6 +79,264 @@ class TweetFeed():
     def get_near_people(self, query):
         return self.db_object.get_distinct(self.table_name,'user.username',query)['count']
 
+    def get_search_results(self, keyword, lon, lat, food_filter, type_filter, organisation_filter, query):
+        mapper = Code("""
+            function () {
+            var foods = this.foods;
+            var user_types = this.type_user;
+            var filtered = true;
+            var food_filter = """+json.dumps(food_filter)+""";
+            var type_filter = """+json.dumps(type_filter)+""";
+            var organisation_filter = """+json.dumps(organisation_filter)+""";
+            for(var i=0;i<food_filter.length && filtered;i++)
+            {
+                if(foods.indexOf(food_filter[i])<0)
+                {
+                    filtered = false;
+                }
+            }
+            
+            for(var i=0;i<type_filter.length && filtered;i++)
+            {
+                if(user_types.indexOf(type_filter[i])<0)
+                {
+                    filtered = false;
+                }
+            }
+
+
+
+            for(var i=0;i<organisation_filter.length && filtered;i++)
+            {
+                if(user_types.indexOf(organisation_filter[i])<0)
+                {
+                    filtered = false;
+                }
+            }
+
+            var flag = true;
+            var keyword = '"""+keyword+"""';
+
+            if(keyword != '')
+            {
+                flag = false;
+                var scope_string ='';
+                if(this.sign_up_as == 'Business'){
+                scope_string = foods.join();
+                scope_string += user_types.join();
+                }
+                scope_string += this.user.username;
+                scope_string += this.user.name;
+                scope_string += this.sign_up_as;
+                scope_string += this.status;
+                scope_string += this.user.description;
+                scope_string = scope_string.toLowerCase();
+               
+               if(scope_string.indexOf(keyword.toLowerCase()) !=-1)
+               {
+                     
+                    flag = true;
+
+                }
+               }
+
+               if(filtered && flag)
+               {
+               var lon1 = parseFloat("""+str(lon)+""");
+               var lat1 = parseFloat("""+str(lat)+""");
+               var lon2 = this.location.coordinates[0];
+               var lat2 = this.location.coordinates[1];
+               var R = 6371; // Radius of the earth in km
+              var dLat = (lat2-lat1)* (Math.PI/180);  // deg2rad below
+              var dLon = (lon2-lon1)* (Math.PI/180); 
+              var a = 
+                Math.sin(dLat/2) * Math.sin(dLat/2) +
+                Math.cos((lat1)* (Math.PI/180)) * Math.cos((lat2)* (Math.PI/180)) * 
+                Math.sin(dLon/2) * Math.sin(dLon/2)
+                ; 
+              var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
+              var d = R * c; // Distance in km
+              emit(this._id, d);
+              }
+                           
+
+
+            }
+            """)
+
+        reducer = Code("""
+            function (key, values) { 
+             
+             return values[0];
+            }
+            """)
+        return self.db_object.map_reduce(self.table_name, mapper, reducer, query, 1)
+        
+
+    def get_all_foods(self, keyword, lon, lat, food_filter, type_filter, organisation_filter, query):
+        mapper = Code("""
+            function () {
+            var foods = this.foods;
+            var user_types = this.type_user;
+            var filtered = true;
+            var food_filter = """+json.dumps(food_filter)+""";
+            var type_filter = """+json.dumps(type_filter)+""";
+            var organisation_filter = """+json.dumps(organisation_filter)+""";
+            for(var i=0;i<food_filter.length && filtered;i++)
+            {
+                if(foods.indexOf(food_filter[i])<0)
+                {
+                    filtered = false;
+                }
+            }
+            
+            for(var i=0;i<type_filter.length && filtered;i++)
+            {
+                if(user_types.indexOf(type_filter[i])<0)
+                {
+                    filtered = false;
+                }
+            }
+
+
+
+            for(var i=0;i<organisation_filter.length && filtered;i++)
+            {
+                if(user_types.indexOf(organisation_filter[i])<0)
+                {
+                    filtered = false;
+                }
+            }
+
+            var flag = true;
+            var keyword = '"""+keyword+"""';
+
+            if(keyword != '')
+            {
+                flag = false;
+                var scope_string ='';
+                
+                scope_string += this.user.username;
+                scope_string += this.user.name;
+                scope_string += this.sign_up_as;
+                scope_string += this.status;
+                scope_string += this.user.description;
+                scope_string = scope_string.toLowerCase();
+               
+               if(scope_string.indexOf(keyword.toLowerCase()) !=-1)
+               {
+                     
+                    flag = true;
+
+                }
+               }
+
+               if(filtered && flag)
+               {
+               for(var i =0; i<foods.length;i++)
+               {
+                    emit(foods[i], 1);
+               }
+               
+              }
+                           
+
+
+            }
+            """)
+
+        reducer = Code("""
+            function (key, values) { 
+            var  sum = 0
+             for(var i=0;i<values.length;i++)
+             { sum += 1;}
+             return sum;
+            }
+            """)
+        return self.db_object.map_reduce(self.table_name, mapper, reducer, query, 1)
+
+
+    def get_all_foods(self, keyword, lon, lat, food_filter, type_filter, organisation_filter, query):
+        mapper = Code("""
+            function () {
+            var foods = this.foods;
+            var user_types = this.type_user;
+            var filtered = true;
+            var food_filter = """+json.dumps(food_filter)+""";
+            var type_filter = """+json.dumps(type_filter)+""";
+            var organisation_filter = """+json.dumps(organisation_filter)+""";
+            for(var i=0;i<food_filter.length && filtered;i++)
+            {
+                if(foods.indexOf(food_filter[i])<0)
+                {
+                    filtered = false;
+                }
+            }
+            
+            for(var i=0;i<type_filter.length && filtered;i++)
+            {
+                if(user_types.indexOf(type_filter[i])<0)
+                {
+                    filtered = false;
+                }
+            }
+
+
+
+            for(var i=0;i<organisation_filter.length && filtered;i++)
+            {
+                if(user_types.indexOf(organisation_filter[i])<0)
+                {
+                    filtered = false;
+                }
+            }
+
+            var flag = true;
+            var keyword = '"""+keyword+"""';
+
+            if(keyword != '')
+            {
+                flag = false;
+                var scope_string ='';
+                
+                scope_string += this.user.username;
+                scope_string += this.user.name;
+                scope_string += this.sign_up_as;
+                scope_string += this.status;
+                scope_string += this.user.description;
+                scope_string = scope_string.toLowerCase();
+               
+               if(scope_string.indexOf(keyword.toLowerCase()) !=-1)
+               {
+                     
+                    flag = true;
+
+                }
+               }
+
+               if(filtered && flag && foods)
+               {
+               for(var i =0; i<foods.length;i++)
+               {
+                    emit(foods[i], 1);
+               }
+               
+              }
+                           
+
+
+            }
+            """)
+
+        reducer = Code("""
+            function (key, values) { 
+            var  sum = 0
+             for(var i=0;i<values.length;i++)
+             { sum += 1;}
+             return sum;
+            }
+            """)
+        return self.db_object.map_reduce(self.table_name, mapper, reducer, query, 1)
 
     def update_tweets(self, username, first_name, last_name, description, zip_code):
         try:
@@ -94,6 +355,7 @@ class TweetFeed():
                 'user.Description':description, 
                 'location.coordinates':[lat, lon]
             })
+
         
     def get_friends(self, user_id, next_cursor):
         st = SocialToken.objects.get(account__user__id=user_id)
@@ -109,6 +371,10 @@ class TweetFeed():
         )
         friends = twitter.get_friends_list(screen_name = screen_name, count=200, cursor = next_cursor)
         return friends
+
+    def get_followers(self, twitter_id):
+        pass
+
 
 class UserProfile():
     def __init__ (self):
@@ -157,9 +423,13 @@ class Food():
     def __init__(self):
         self.db_object = MongoConnection("localhost",27017,'foodtrade')
         self.table_name = 'food'
-        self.db_object.create_table(self.table_name,'useruid')
+        self.db_object.create_table(self.table_name,'food_name')
     def get_foods_by_userid(self,useruid):
         return self.db_object.get_all(self.table_name,{'useruid': useruid, 'deleted': 0})
+
+    def get_all_foods(self, key, condition, initial, reducer):
+        return self.db_object.group(self.table_name,key, condition, initial, reducer)
+
 
     def create_food (self, value):
         value['deleted'] =0
@@ -229,6 +499,7 @@ class RecommendFood():
         self.db_object = MongoConnection("localhost",27017,'foodtrade')
         self.table_name = 'recommendfood'
         self.db_object.create_table(self.table_name,'food_name')
+
 
     def get_recomm(self,business_id, food_name):
         return self.db_object.get_all(self.table_name,{'food_name': food_name, 'business_id': business_id, 'deleted': 0})
