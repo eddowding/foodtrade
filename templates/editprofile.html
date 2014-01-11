@@ -8,6 +8,9 @@
 <style type="text/css" media="all">
     /* fix rtl for demo */
     .chosen-rtl .chosen-drop { left: -9000px; }
+    .typeempty{
+  display:none;
+}
   </style>
 
 {% endblock %}
@@ -61,13 +64,13 @@
 
         <div class="btn-group" data-toggle="buttons">
           <label class="btn btn-default {% ifequal sign_up_as 'Individual' %}active{% endifequal %}"> 
-              <input type="radio" name="sign_up_as" id="option1" value="Individual"> Individual 
+              <input type="radio" name="sign_up_as" id="option1" value="Individual" onchange="dataradio('Individual')"> Individual 
           </label> 
           <label class="btn btn-default {% ifequal sign_up_as 'Business' %}active{% endifequal %}">  
-              <input type="radio" name="sign_up_as"  id="option2" value="Business"> Business 
+              <input type="radio" name="sign_up_as"  id="option2" value="Business" onchange="dataradio('Business')"> Business 
           </label>
           <label class="btn btn-default {% ifequal sign_up_as 'Organisation' %}active{% endifequal %}">
-              <input type="radio" name="sign_up_as" id="option3" value="Organisation"> Organisation
+              <input type="radio" name="sign_up_as" id="option3" value="Organisation" onchange="dataradio('Organisation')"> Organisation
           </label>
         </div>
 
@@ -78,7 +81,7 @@
       </div>
 
       
-      <div class="form-group"> 
+      <div class="form-group" id="type_user_id"> 
         <label for="id_type_user" class="col-sm-2 control-label">Business type</label>
         <div class="col-sm-10">
           <select id= "dropdown3" data-placeholder="Farm, wholesaler, restaurant, bakery..." multiple  class="chosen-select" tabindex="6" >
@@ -119,6 +122,29 @@
   }
 </script>
 <script type="text/javascript">
+$( document ).ready(function() {
+  if({{sign_up_as}}!="Business"){
+    $('#type_user_id').toggleClass('typeempty');
+    }
+});
+
+function dataradio(value){
+    // var result_val = $("input[name=options]:checked").val();
+    if (value == "Business"){
+        if ( $('#type_user_id').hasClass('typeempty') ){
+          $('#type_user_id').removeClass('typeempty');
+        }
+    }
+    else{
+        if ( $('#type_user_id').hasClass('typeempty') ){
+          }
+        else{
+            $('#type_user_id').addClass('typeempty');
+        }
+    }
+}
+
+
 function validateFeedback(){
     var phone = document.getElementById("phone");
     var RE = /^[\d\.\-]+$/;
