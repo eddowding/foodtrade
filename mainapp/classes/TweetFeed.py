@@ -103,7 +103,7 @@ class TweetFeed():
                 }
             }
 
-            var flag = true;
+            var flag = false;
             var keyword = '"""+keyword+"""';
 
             if(keyword != '')
