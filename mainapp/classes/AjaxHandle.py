@@ -80,11 +80,9 @@ class AjaxHandle():
             else:                
                 data['location'] = {"type": "Point", "coordinates": [float(my_lon), float(my_lat)]}
             tweet_feed.insert_tweet(data)
-
-
-            return HttpResponse("{'status':1}")
+            return HttpResponse(json.dumps({'status':1}))
         else:
-            return HttpResponse("{'status':0}")
+            return HttpResponse(json.dumps({'status':1}))
             
 
     def post_tweet_admin(self, request):

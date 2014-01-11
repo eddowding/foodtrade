@@ -66,3 +66,10 @@ class MongoConnection():
         parameter['count'] = count
         parameter['results'] = all_doc
         return parameter
+        
+    def get_all_vals(self,table_name,conditions={}, sort_index ='_id'):
+        all_doc = self.db[table_name].find(conditions).sort(sort_index, pymongo.DESCENDING)
+        json_doc = json.dumps(list(all_doc),default=json_util.default)
+        json_doc = json_doc.replace("$oid", "id")
+        json_doc = json_doc.replace("_id", "uid")
+        return json.loads(json_doc)
