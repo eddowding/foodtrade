@@ -7,6 +7,17 @@ from bson.code import Code
 from bson import BSON
 from bson import json_util
 
+from twython import Twython
+from allauth.socialaccount.models import SocialToken, SocialAccount
+import json
+from pymongo import Connection
+
+consumer_key = 'seqGJEiDVNPxde7jmrk6dQ'
+consumer_secret = 'sI2BsZHPk86SYB7nRtKy0nQpZX3NP5j5dLfcNiP14'
+access_token = ''
+access_token_secret =''
+
+
 import json
 class TweetFeed():
     def __init__ (self):
@@ -356,8 +367,26 @@ class TweetFeed():
                 'user.Description':description, 
                 'location.coordinates':[lat, lon]
             })
+
+        
+    def get_friends(self, user_id, next_cursor):
+        st = SocialToken.objects.get(account__user__id=user_id)
+        access_token = st.token
+        access_token_secret = st.token_secret        
+        sa = SocialAccount.objects.get(user__id = user_id)
+        screen_name = sa.extra_data['screen_name']
+        twitter = Twython(
+        app_key = consumer_key,
+        app_secret = consumer_secret,
+        oauth_token = access_token,
+        oauth_token_secret = access_token_secret
+        )
+        friends = twitter.get_friends_list(screen_name = screen_name, count=200, cursor = next_cursor)
+        return friends
+
     def get_followers(self, twitter_id):
         pass
+
 
 class UserProfile():
     def __init__ (self):
@@ -380,6 +409,7 @@ class UserProfile():
              {'useruid':str(userid)},
              {'zip_code':zipcode,'type_user':type_usr,'sign_up_as':sign_up_as, 'phone_number':str(phone)}
              )
+
 
 class TradeConnection():
     """docstring for Connection"""
@@ -493,3 +523,26 @@ class RecommendFood():
 
     def delete_recomm(self, business_id, food_name, recommender_id):
         self.db_object.update(self.table_name,{'business_id': business_id, 'food_name': food_name, 'recommender_id': recommender_id}, {'deleted':1})
+
+class Friends():
+    def __init__ (self):
+        self.db_object = MongoConnection("localhost",27017,'foodtrade')
+        self.table_name = 'friends'
+        self.db_object.create_table(self.table_name,'username')
+
+    def save_friends(self,doc):
+        return self.db_object.insert_one(self.table_name,doc)
+
+    def get_friends(self, username):    
+        all_doc = self.db_object.get_all_vals(self.table_name,{'username':str(username)})
+        return all_doc
+
+class Invites():
+    def __init__ (self):
+        self.db_object = MongoConnection("localhost",27017,'foodtrade')
+        self.table_name = 'invites'
+        self.db_object.create_table(self.table_name,'username')
+
+    def save_invites(self,doc):
+        return self.db_object.insert_one(self.table_name,doc)
+

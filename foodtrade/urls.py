@@ -27,4 +27,5 @@ urlpatterns = patterns('',
     # url(r'^terms/', 'mainapp.terms.home')
 
     url(r'^invite/', 'mainapp.views.invite'),
+    url(r'^pricing/', 'mainapp.pricing.home'),
 )

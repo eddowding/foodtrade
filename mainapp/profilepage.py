@@ -78,8 +78,12 @@ def edit_profile(request, username):
             parameters['zip_code'] = userprof['zip_code']
             parameters['address'] = userprof['address']
             parameters['type_user'] = str(userprof['type_user'])
-            parameters['first_name'] = account.extra_data['name'].split(' ')[0]
-            parameters['last_name']  = account.extra_data['name'].split(' ')[1]
+            try:
+                parameters['first_name'] = account.extra_data['name'].split(' ')[0]
+                parameters['last_name']  = account.extra_data['name'].split(' ')[1]
+            except:
+                parameters['first_name']  = account.extra_data['name']
+                parameters['last_name']  = ''
             parameters['description'] = account.extra_data['description']
             try:
                 parameters['phone'] = userprof['phone_number']
@@ -257,5 +261,5 @@ def get_team(user_id):
          'photo': account.extra_data['profile_image_url'],
          'username' : account.extra_data['screen_name']
          })
-    print final_teams
+    #print final_teams
     return final_teams[:10]

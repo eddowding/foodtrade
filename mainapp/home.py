@@ -4,11 +4,13 @@ from django.http import HttpResponse, HttpResponseRedirect
 from allauth.socialaccount.models import SocialToken, SocialAccount
 from twython import Twython
 import json
-from mainapp.classes.TweetFeed import TweetFeed
+from mainapp.classes.TweetFeed import TweetFeed, Invites
 from search import search_general
 from streaming import MyStreamer
 from models import MaxTweetId
-
+import datetime
+import time
+import json
 from mainapp.classes.Tags import Tags
 
 consumer_key = 'seqGJEiDVNPxde7jmrk6dQ'
@@ -19,20 +21,23 @@ access_token_secret =''
 admin_access_token = '2248425234-EgPSi3nDAZ1VXjzRpPGMChkQab5P0V4ZeG1d7KN'
 admin_access_token_secret = 'ST8W9TWqqHpyskMADDSpZ5r9hl7ND6sEfaLvhcqNfk1v4'
 
-
-
 from classes.DataConnector import UserInfo
 from django.template import RequestContext
-
-
 from mainapp.classes.AjaxHandle import AjaxHandle
-
-
 from django.views.decorators.csrf import csrf_exempt
+
 @csrf_exempt
 def ajax_request(request, func_name):
     ajax_handle = AjaxHandle()
-    return getattr(ajax_handle,func_name)(request)
+    return_msg = getattr(ajax_handle,func_name)(request)
+    if func_name == 'post_tweet' and 'invite' in request.POST and json.loads(return_msg.content)['status'] == 1:
+        invite_obj = Invites()
+        invitees = str(request.POST['to']).split(',')
+        now = datetime.datetime.now()
+        sent_time  = time.mktime(now.timetuple())
+        for eachInvitee in invitees:
+            invite_obj.save_invites({'from':request.user.username, 'to':eachInvitee, 'sent_time':sent_time})
+    return return_msg
 
 
 
