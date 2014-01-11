@@ -82,7 +82,7 @@ class TweetFeed():
     def get_search_results(self, keyword, lon, lat, food_filter, type_filter, organisation_filter, query):
         mapper = Code("""
             function () {
-            if(this.food)
+            if(this.foods)
             {
             var foods = this.foods;
             }
