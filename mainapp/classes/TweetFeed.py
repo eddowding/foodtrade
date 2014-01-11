@@ -73,36 +73,48 @@ class TweetFeed():
             function () {
             var foods = this.foods;
             var user_types = this.type_user;
-            var filtered = true;
+            var filtered = false;
             var food_filter = """+json.dumps(food_filter)+""";
             var type_filter = """+json.dumps(type_filter)+""";
             var organisation_filter = """+json.dumps(organisation_filter)+""";
-            for(var i=0;i<food_filter.length && filtered;i++)
-            {
-                if(foods.indexOf(food_filter[i])<0)
+            var food_filtered = true;
+            var filtered = false;
+            for(var i=0;i<food_filter.length;i++)
+            {   
+                food_filtered = false;
+                if(foods.indexOf(food_filter[i])>-1)
                 {
-                    filtered = false;
+
+                    food_filtered = true;
+                    break;
                 }
             }
-            
-            for(var i=0;i<type_filter.length && filtered;i++)
+            var business_filtered = true;
+            for(var i=0;i<type_filter.length; i++)
             {
-                if(user_types.indexOf(type_filter[i])<0)
+                business_filtered =false;
+                if(user_types.indexOf(type_filter[i])>-1)
                 {
-                    filtered = false;
-                }
-            }
-
-
-
-            for(var i=0;i<organisation_filter.length && filtered;i++)
-            {
-                if(user_types.indexOf(organisation_filter[i])<0)
-                {
-                    filtered = false;
+                    business_filtered = true;
+                    break;
                 }
             }
 
+            var organisation_filtered = true;
+
+            for(var i=0;i<organisation_filter.length;i++)
+            {
+                organisation_filtered = false;
+                if(user_types.indexOf(organisation_filter[i])>-1)
+                {
+                   organisation_filtered = true;
+                   break;
+                }
+            }
+            if(organisation_filtered && business_filtered && food_filtered)
+            {
+                filtered = true;
+            }
             var flag = true;
             var keyword = '"""+keyword+"""';
 
