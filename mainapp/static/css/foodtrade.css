@@ -117,7 +117,7 @@ html,body
 	margin-left: 40px;
 }
 
-a.btn {color: #fff !important;}
+/*a.btn {color: #fff !important;}*/
 
 .meta a:hover { 
 	color: #444;
@@ -156,17 +156,6 @@ article .content h4 {
 
 .danger {
 	color: red;
-}
-
-ul.tick_green {
-	list-style: none;
-}
-ul.tick_green li:before {    
-    font-family: 'FontAwesome';
-    content: '\f046';
-    color: green;
-    list-style: none;
-    margin:0 5px 0 -25px;
 }
 
  

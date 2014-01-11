@@ -269,11 +269,11 @@
                   <td> 
                   <div class="pull-right">
                    <!-- hide if user has edit rights -->
-                   <i id="vouchfood_id">{{eachfood.vouch_count}} </i> <a href="#produce"><i class="fa fa-thumbs-o-up text-muted" title="Recommend this to others" onclick="recommend_food({{user_id}}, '{{eachfood.food_name}}', {{profile_id}})"></i></a> 
+                   <small id="vouchfood_id">{{eachfood.vouch_count}} </small> <a href="#" class="btn btn-default btn-sm"><i class="fa fa-heart-o" title="Recommend this to others" onclick="recommend_food({{user_id}}, '{{eachfood.food_name}}', {{profile_id}}); return null;"></i></a> 
                    <!-- if user has edit rights -->
                    {% ifequal profile_id user_id %}
                     
-                   <a href="#"><i class="fa fa-trash-o text-muted" title="Delete" onClick="delete_food({{profile_id}}, '{{eachfood.food_name}}', this)"></i></a>
+                   <a href="#"  class="btn btn-danger btn-sm"><i class="fa fa-trash-o" title="Delete" onClick="delete_food({{profile_id}}, '{{eachfood.food_name}}', this)"></i></a>
                    {% endifequal %}
                    </div>
                   </td>  
