@@ -4,7 +4,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from allauth.socialaccount.models import SocialToken, SocialAccount
 from twython import Twython
 import json
-from mainapp.classes.TweetFeed import TweetFeed, UserProfile
+from mainapp.classes.TweetFeed import TweetFeed, UserProfile, Friends
 from search import search_general
 from streaming import MyStreamer
 from models import MaxTweetId
@@ -168,8 +168,35 @@ def invite(request):
         user_profile = user_profile_obj.get_profile_by_id(str(user_id))
         user_info = UserInfo(user_id)
         parameters['userinfo'] = user_info
-        parameters['user_id'] = request.user.id    
-    followers = tweetfeed_obj.get_followers(request.user.id, -1)
-    pprint.pprint(followers)
-    parameters['followers'] = followers
+        parameters['user_id'] = request.user.id   
+
+    try:
+        friends_obj = Friends()
+        #if request.META['HTTP_REFERER'] == 'http://localhost:8000/account/signup' and request.method == 'GET':
+        if request.META['HTTP_REFERER'] == 'http://localhost:8000/editprofile/' + str(request.user.username) + '/'  and request.method == 'GET':
+            friends = tweetfeed_obj.get_friends(request.user.id, -1)
+            next_cursor = friends['next_cursor_str']
+            print next_cursor
+            try:
+                count = 0
+                while(friends['next_cursor_str']!='0'):
+                    friends_obj = Friends()
+                    count = count + 1
+                    for eachFriend in friends['users']:
+                        friends_obj.save_friends({'username':request.user.username,'friends':eachFriend})
+
+                    friends = tweetfeed_obj.get_friends(request.user.id, next_cursor)
+                    next_cursor = friends['next_cursor_str']
+                    #print count
+                if next_cursor == '0':
+                    for eachFriend in friends['users']:
+                        friends_obj.save_friends({'username':request.user.username,'friends':eachFriend})        
+                friends = friends_obj.get_friends(request.user.username)    
+            except:
+                friends = friends_obj.get_friends(request.user.username)    
+        else:
+            friends = friends_obj.get_friends(request.user.username)
+    except:
+        friends = friends_obj.get_friends(request.user.username)
+    parameters['friend'] = friends
     return render_to_response('invites.html', parameters, context_instance=RequestContext(request))

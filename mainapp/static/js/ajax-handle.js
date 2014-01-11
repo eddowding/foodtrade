@@ -141,10 +141,6 @@ function CloseNewPostModal()
 	$('#newtwitterpost').modal('hide');
 }
 
-
-
-
-
 function ShowReply(reply_id, mentions)
 {
 	if($('#'+reply_id).val()=="")
