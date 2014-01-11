@@ -113,7 +113,7 @@ class TweetFeed():
                 {
 
                     food_filtered = true;
-                    break;
+                   
                 }
             }
             var business_filtered = true;
@@ -123,7 +123,7 @@ class TweetFeed():
                 if(user_types.indexOf(type_filter[i])>-1)
                 {
                     business_filtered = true;
-                    break;
+                    
                 }
             }
 
