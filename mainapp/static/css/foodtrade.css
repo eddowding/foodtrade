@@ -162,9 +162,7 @@ article .content h4 {
 /********************************/
 /**  OFF CANVAS                **/
 /********************************/
-
-
-
+ 
 @media screen and (max-width: 767px) {
   .row-offcanvas {
     position: relative;
@@ -505,6 +503,11 @@ h2 {
 	color: #444;
 }
 
+
+
+.table > tbody#food_tbody > tr > td {
+	vertical-align: middle;
+}
 
 /********************************/
 /**  ROLES                     **/
