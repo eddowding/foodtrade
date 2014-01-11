@@ -16,7 +16,7 @@ class SignupForm(forms.Form):
     # type_user = forms.CharField(max_length=30, label='Type')
     zip_code = forms.CharField(widget=forms.TextInput(attrs={'placeholder': u'Zip Code',
      'class' : 'form-control'}))
-    type_user = forms.CharField(widget=forms.TextInput(attrs={'placeholder': u'Farm, wholesaler, restaurant, bakery...',
+    type_user = forms.CharField(required=False, widget=forms.TextInput(attrs={'placeholder': u'Farm, wholesaler, restaurant, bakery...',
      'class' : 'form-control'}))
 
     def save(self, user):
