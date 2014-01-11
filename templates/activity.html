@@ -226,9 +226,12 @@ connections = {{json_data | safe}};
           {% block footer %}
 <script type="text/javascript">
           food_filters = {{foods_filter |safe}};
-          $('#food_filter').keyup( function() {
-            var results = [];
-       var query = $(this).val().toLowerCase();
+          
+
+          function food_value_changed(more_no)
+          {
+                   var results = [];
+       var query = $("#food_filter").val().toLowerCase();
         for(var i = 0; i < food_filters.length;i++)
         {
           var element  = food_filters[i].uid.toLowerCase();
@@ -238,13 +241,19 @@ connections = {{json_data | safe}};
           }
         }
 
-            show_filters(results);
-        });
+            show_food_filters(results,more_no);
+          }
 
-          function show_filters(filters)
+          function show_food_filters(filters, more_no)
           {
+            if(more_no == 0){
             $('#food_filter_results').html('');
-            for(var i = 0;i<filters.length; i++)
+            }
+            else
+            {
+              $("#food_more_"+(more_no-5)).remove();
+            }
+            for(var i = more_no;i<filters.length && i<(more_no+5); i++)
             {
               var checked = '';
               if(filters[i].prev)
@@ -253,8 +262,13 @@ connections = {{json_data | safe}};
               }
 
             var row = '<li data-id="15" class="foodtrade-tag foodtrade-tag-click "><div class="foodtrade-tag-checkbox-column"><input type="checkbox" '+checked+' onClick="foods_changed(this,\''+filters[i].uid+'\')" aria-label="University of Washington" class="foodtrade-tag-checkbox"></div><div class="foodtrade-tag-text"> '+filters[i].uid+'</div><div class="foodtrade-tag-count">'+filters[i].value+'</div></li>';
-            $('#food_filter_results').prepend(row);
+            $('#food_filter_results').append(row);
+           
           }
+           if(filters.length>more_no+5)
+            {
+              $('#food_filter_results').append('<li class="foodtrade-tag-showmore" id="food_more_'+more_no+'" onClick="food_value_changed('+(more_no+5)+')">show more</li>');
+            }
           }
 
 
@@ -275,6 +289,96 @@ for(var i = 0; i < food_filters.length;i++){
         }
 
 
+
+
+
+
+
+
+business_filters = {{business_filter |safe}};
+          
+
+          function business_value_changed(more_no)
+          {
+                   var results = [];
+       var query = $("#business_filter").val().toLowerCase();
+        for(var i = 0; i < business_filters.length;i++)
+        {
+          var element  = business_filters[i].uid.toLowerCase();
+          if(element.indexOf(query)>-1)
+          {
+            results.push(business_filters[i]);
+          }
+        }
+
+            show_business_filters(results,more_no);
+          }
+
+          function show_business_filters(filters, more_no)
+          {
+            if(more_no == 0){
+            $('#business_filter_results').html('');
+            }
+            else
+            {
+              $("#business_more_"+(more_no-5)).remove();
+            }
+            for(var i = more_no;i<filters.length && i<(more_no+5); i++)
+            {
+              var checked = '';
+              if(filters[i].prev)
+              {
+                checked = "checked='checked'";
+              }
+
+            var row = '<li data-id="15" class="foodtrade-tag foodtrade-tag-click "><div class="foodtrade-tag-checkbox-column"><input type="checkbox" '+checked+' onClick="business_changed(this,\''+filters[i].uid+'\')" aria-label="University of Washington" class="foodtrade-tag-checkbox"></div><div class="foodtrade-tag-text"> '+filters[i].uid+'</div><div class="foodtrade-tag-count">'+filters[i].value+'</div></li>';
+            $('#business_filter_results').append(row);
+           
+          }
+           if(filters.length>more_no+5)
+            {
+              $('#business_filter_results').append('<li class="foodtrade-tag-showmore" id="business_more_'+more_no+'" onClick="business_value_changed('+(more_no+5)+')">show more</li>');
+            }
+          }
+
+
+
+
+
+            function business_changed(ref,business)
+          {
+for(var i = 0; i < business_filters.length;i++){
+          if(business_filters[i].uid==business)
+          {
+            var status = ref.checked;
+            //console.log(status);
+            business_filters[i].prev = status;
+          }
+          }
+          make_search();
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
        function make_search()
        {
         var foods = [];
@@ -284,18 +388,39 @@ for(var i = 0; i < food_filters.length;i++){
             foods.push(food_filters[i].uid);
           }
           }
+
+          var businesses = [];
+          for(var i = 0; i < business_filters.length;i++){
+          if(business_filters[i].prev)
+          {
+            businesses.push(business_filters[i].uid);
+          }
+          }
           var keyword = $("#keyword").val();
           var s_lon = $("#lon").val();
           var s_lat = $("#lat").val();
 
-           ajax_request("ajax_search", 'show_ajax_results', {q:keyword, lon:s_lon, lat:s_lat, foods:JSON.stringify(foods)});
+           ajax_request("ajax_search", 'show_ajax_results', {q:keyword, lon:s_lon, lat:s_lat, foods:JSON.stringify(foods), businesses:JSON.stringify(businesses)});
        }
+
 
        function show_ajax_results(data)
        {
          $('#activity').html(data);
 
        }
+$('#food_filter').keyup( function() {
+            food_value_changed(0);
+        });
+
+
+$('#business_filter').keyup( function() {
+            business_value_changed(0);
+        });
+
+
+         show_food_filters(food_filters, 0);
+         show_business_filters(business_filters, 0);
         </script>
 
  {% endblock %}

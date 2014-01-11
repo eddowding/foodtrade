@@ -30,6 +30,17 @@ L.circle([map_lat,map_lon], 160934, {
 			opacity:0,
 			weight:2,
 		}).addTo(map);
+var map_controls = [];
+
+
+
+function reload_controls()
+{
+	for(var i = 0;i<map_controls.length;i++)
+	{
+		map.removeLayer(map_controls[i]);
+	}
+	map_controls =[];
 		for(i=0;i<connections.length;i++)
 		{
 			var con = connections[i];
@@ -37,8 +48,11 @@ L.circle([map_lat,map_lon], 160934, {
 			var status =  con.status;
 			
 			
-			L.marker([parseFloat(con.location.coordinates[1]), parseFloat(con.location.coordinates[0])]).addTo(map).bindPopup("<b>"+name + "</b> <br />"+status+"<br />");
+			var ctrl = L.marker([parseFloat(con.location.coordinates[1]), parseFloat(con.location.coordinates[0])]).addTo(map).bindPopup("<b>"+name + "</b> <br />"+status+"<br />");
 			
-			
+			map_controls.push(ctrl);
 		}
 
+}
+
+reload_controls();
