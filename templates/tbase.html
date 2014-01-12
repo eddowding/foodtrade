@@ -70,7 +70,8 @@ background: #eee;
         </div>
         <div class="navbar-collapse collapse">
           
-          <form action="/activity" class="navbar-form navbar-left nav-justified" role="search"  data-intro="Search for anything, anywhere" data-position="bottom">
+          <form action="/activity" class="navbar-form navbar-left nav-justified" role="search">
+          <div data-intro="Search for anything, anywhere" data-position="bottom">
             <div class="form-group" style="margin-right:5px;"> 
               <input type="text" name="q" id="keyword" class="form-control pac-input" value="{{ search.query }}" placeholder="What?"> 
             </div> 
@@ -80,6 +81,7 @@ background: #eee;
             <input type="hidden" name="lon" id="lon" value="{{search.lon}}"/>
             <input type="hidden" name="lat" id="lat" value="{{search.lat}}"/>
             <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+          </div>
           </form>
 
 
@@ -114,6 +116,7 @@ background: #eee;
                     <ul class="dropdown-menu">
                         <li><a href="/editprofile/{{userinfo.username}}"><i class="fa fa-user fa-fw"></i> Edit profile</a></li>
                         <li><a href="/invite/"><i class="fa fa-twitter fa-fw"></i> Invite friends</a></li>
+                        <li><a href="#" id="help"><i class="fa fa-question-circle fa-fw"></i> Show help</a></li>
                         <li class="divider"></li>
                         <li>
                           <a src = "/accounts/logout" onclick="logout()" >
@@ -248,7 +251,7 @@ background: #eee;
 {% if user.is_authenticated or search.query %}
  {% if user.is_authenticated %}
         <!-- show the logged in users account --> 
-        <div id="account_info"  data-intro="Just start typing to search for specific foods, business type, or filter by organisation membership" data-position="right">
+        <div id="account_info">
         
         <div class="clearfix" style="margin-bottom: 10px;">
           <!-- twitter 78px image - 'large' -->
@@ -448,9 +451,9 @@ background: #eee;
      <script type="text/javascript">
 $(document).ready(function() {
 
-
-$(".chardinjs-show-element").css('position','absolute');
-$('b o d y').chardinJs('start')
+    $( "#help" ).click(function() {
+      $('body').chardinJs('start');
+    });
 
     var activeSystemClass = $('.list-group-item.active');
     //something is entered in search form
