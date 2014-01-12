@@ -105,36 +105,36 @@ class TweetFeed():
             var type_filter = """+json.dumps(type_filter)+""";
             var organisation_filter = """+json.dumps(organisation_filter)+""";
             var food_filtered = true;
-            var filtered = false;
+            var filtered = true;
             for(var i=0;i<food_filter.length;i++)
             {   
-                food_filtered = false;
-                if(foods.indexOf(food_filter[i])>-1)
+                if(foods.indexOf(food_filter[i])==-1)
                 {
 
-                    food_filtered = true;
+                    food_filtered = false;
+                    break;
                    
                 }
             }
             var business_filtered = true;
             for(var i=0;i<type_filter.length; i++)
             {
-                business_filtered =false;
-                if(user_types.indexOf(type_filter[i])>-1)
+                if(user_types.indexOf(type_filter[i])==-1)
                 {
-                    business_filtered = true;
+                    business_filtered = false;
+                    break;
                     
                 }
+
             }
 
             var organisation_filtered = true;
 
             for(var i=0;i<organisation_filter.length;i++)
             {
-                organisation_filtered = false;
-                if(user_types.indexOf(organisation_filter[i])>-1)
+                if(user_types.indexOf(organisation_filter[i])==-1)
                 {
-                   organisation_filtered = true;
+                   organisation_filtered = false;
                    break;
                 }
             }
