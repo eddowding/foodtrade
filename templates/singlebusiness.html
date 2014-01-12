@@ -61,14 +61,17 @@
 
       
       <!-- if logged in users = individual --> 
+      {% ifequal loggedin_signupas "Individual" %}
       <button class="btn btn-default btn-block" data-toggle="modal" data-target="#modal_customer">
         <i class="fa fa-smile-o text-muted"></i> I am a customer
       </button> 
+      {% endifequal %}
       <!-- if logged in users = business --> 
+      {% ifequal loggedin_signupas "Business" %}
       <div class="btn-group btn-block" data-toggle="buttons">
         <label class="btn btn-default" style="width:50%;" title="LOGGEDINUSER buys from PROFILENAME">
           {% ifequal logged_conn "buyer" %}
-          bbb
+          
           <input type="checkbox" checked id="buy_from" onchange="conn_handler('buy_from', {{profile_id}})"> Buy from
           {% else %}
           <input type="checkbox" id="buy_from" onchange="conn_handler('buy_from', {{profile_id}})"> Buy from
@@ -93,13 +96,14 @@
 
         </label> 
       </div>
+      {% endifequal %}
  
       <!-- Button trigger modal -->
       <button class="btn btn-primary btn-block" data-toggle="modal" data-target="#modal_contact">
         Contact
       </button>  
       <!-- if not logged in show login prompt -->
-      <button class="btn btn-primary btn-block">Login for more</button>
+      <!-- <button class="btn btn-primary btn-block">Login for more</button> -->
       {% endifnotequal %}
       <button class="btn btn-default btn-block" data-toggle="modal" data-target="#sharer">
         <i class="fa fa-share-square-o text-muted"></i> Share
@@ -283,12 +287,12 @@
                   </div>
                  {% endfor %}
                  <div class="pull-right">
-                  <span class="badge badge-default" style="margin:6px 4px 0 0;">{{eachfood.vouch_count}}</span>
+                  <span class="badge badge-default" style="margin:6px 4px 0 4px;">{{eachfood.vouch_count}}</span>
                 </div>
                    <!-- if user has edit rights -->
                    {% ifequal profile_id user_id %}
                   <div class="pull-right">  
-                   <a href="#"  class="btn btn-danger btn-sm"><i class="fa fa-trash-o" title="Delete" onClick="delete_food({{profile_id}}, '{{eachfood.food_name}}', this)"></i></a>
+                   <a class="btn btn-danger btn-sm"><i class="fa fa-trash-o" title="Delete" onClick="delete_food({{profile_id}}, '{{eachfood.food_name}}', this)"></i></a>
                    {% endifequal %}
                        </div>
                    </div>
