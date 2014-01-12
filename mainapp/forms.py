@@ -18,7 +18,7 @@ class SignupForm(forms.Form):
     # type_user = forms.CharField(max_length=30, label='Type')
     zip_code = forms.CharField(widget=forms.TextInput(attrs={'placeholder': u'Zip Code',
      'class' : 'form-control'}))
-    type_user = forms.CharField(widget=forms.TextInput(attrs={'placeholder': u'Farm, wholesaler, restaurant, bakery...',
+    type_user = forms.CharField(required=False, widget=forms.TextInput(attrs={'placeholder': u'Farm, wholesaler, restaurant, bakery...',
      'class' : 'form-control'}))
 
     def save(self, user):
@@ -49,17 +49,18 @@ class SignupForm(forms.Form):
         invites_obj = Invites()
 
         twitter_username = social_account.extra_data['screen_name']
-        invitees_for_this_user = invites_obj.check_invitees() 
+        invitees_for_this_user = invites_obj.check_invitees(twitter_username) 
         now = datetime.datetime.now()
         notification_time  = time.mktime(now.timetuple())
         if(len(invitees_for_this_user)>0):
             for eachInvitees in invitees_for_this_user:
                 notification_obj.save_notification({
-                    'notification_to':eachInvitees.from_username, 
+                    'notification_to':eachInvitees['from_username'], 
                     'notification_message':'@' + str(twitter_username) + ' has accepted your invitation and joined FoodTrade. You can connect and add him to your contacts.', 
                     'notification_time':notification_time,
                     'notification_type':'Invitation Accept',
-                    'notification_view_status':'false'
+                    'notification_view_status':'false',
+                    'notifying_user':str(twitter_username)
                     })
         print "saved", data
         return HttpResponseRedirect('/?next=/?new_user=True')

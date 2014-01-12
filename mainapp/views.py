@@ -161,6 +161,8 @@ def trends(request):
 def invite(request):
     parameters = {}
     tweetfeed_obj = TweetFeed()
+    if not request.user.is_authenticated():
+        return HttpResponseRedirect('/') 
 
     if request.user.is_authenticated():        
         user_id = request.user.id
@@ -173,10 +175,9 @@ def invite(request):
     try:
         friends_obj = Friends()
         #if request.META['HTTP_REFERER'] == 'http://localhost:8000/account/signup' and request.method == 'GET':
-        if request.META['HTTP_REFERER'] == 'http://localhost:8000/editprofile/' + str(request.user.username) + '/'  and request.method == 'GET':
+        if request.method == 'GET':
             friends = tweetfeed_obj.get_friends(request.user.id, -1)
             next_cursor = friends['next_cursor_str']
-            print next_cursor
             try:
                 count = 0
                 while(friends['next_cursor_str']!='0'):

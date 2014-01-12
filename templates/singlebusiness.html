@@ -46,7 +46,8 @@
             <!-- if logged in or you've allows html5 browser location -->
             <i class="fa fa-location-arrow" style="margin-left: 20px;"></i> 87.2 miles  
             <!--  // if logged in or you've allows html5 browser location -->
-            <i class="fa fa-bullseye" style="margin-left: 20px;"></i> 20.1 miles
+            <!-- DISTANCE TO NEAREST TRADER
+             <i class="fa fa-bullseye" style="margin-left: 20px;"></i> 20.1 miles -->
   
          </div> <!-- meta -->
   
@@ -54,7 +55,7 @@
       <div id="contact_info" class="col-md-3">
       {% ifnotequal profile_id user_id %}
       <!-- if they dont't have an account yet -->
-      <button class="btn btn-primary btn-block" onclick="invite_connect({{screen_name}}, {{user_info.username}})">Invite to connect</button>
+      <button class="btn btn-primary btn-block" onclick="invite_connect('{{screen_name}}', '{{userinfo.username}}')">Invite to connect</button>
       <!-- if logged in users = individual --> 
       <button class="btn btn-default btn-block" data-toggle="modal" data-target="#modal_customer">
         <i class="fa fa-smile-o text-muted"></i> I am a customer
@@ -191,7 +192,7 @@
 
     <div class="row">
      <div class="col-md-12">
-        <ul class="nav nav-tabs nav-justified">
+        <ul class="nav nav-tabs">
           <li class="active"><a href="#produce" data-toggle="tab">Foods <span class="badge">{{userinfo.food_no}}</span></a></li>
           <li><a href="#connections" data-toggle="tab">Connections <span class="badge">{{userinfo.trade_connections_no}}</span></a> </li>
 
@@ -260,7 +261,7 @@
           </div>
 
 
-      <table class="table table-list-search">
+      <table class="table table-list-search table-condensed">
           <tbody id="food_tbody">
             {% for eachfood in all_foods %}
               <tr id="row{{forloop.counter}}">
@@ -290,9 +291,11 @@
             <div class="well well-sm">  
             <form class="form-inline" role="form">
               <div class="form-group">
-                 <img class="img-rounded" 
+                 
+
+                 <img 
                  style="width: 35px; margin-right: 5px;" 
-                 src="http://a0.twimg.com/profile_images/2596092158/afpecvf41m8f0juql78p_bigger.png"  />
+                 class="" src={{pic_url}}  />
       
                 <div class="btn-group" data-toggle="buttons">
                   <label class="btn btn-default active">
@@ -310,7 +313,7 @@
               <button type="submit" class="btn btn-success">Add</button>
             </form>
           </div> 
-           <p class=""><a href="single-organisation.php">Show all</a></p>
+           <p class=""><a href="">Show all</a></p>
           {% for each in connections %}
                   <div class="card card-business">
                     <div class="content">
@@ -466,7 +469,7 @@
 
 
       <div class="col-md-4">
-        <div style="width:100%; height: 1000px; " id="map"  data-spy="affix" data-offset-top="30">
+        <div style="width:100%; height: 200px; " id="map"  data-spy="affix" data-offset-top="30">
         <div class="alert alert-warning">
           <p>This map shows 
           Customers as points

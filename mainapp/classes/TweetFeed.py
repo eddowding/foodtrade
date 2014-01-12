@@ -83,38 +83,66 @@ class TweetFeed():
     def get_search_results(self, keyword, lon, lat, food_filter, type_filter, organisation_filter, query):
         mapper = Code("""
             function () {
+            if(this.foods)
+            {
             var foods = this.foods;
+            }
+            else
+            {
+            var foods = [];
+            }
+            if(this.type_user)
+            {
             var user_types = this.type_user;
-            var filtered = true;
+            }
+            else
+            {
+            var user_types = [];
+            }
+            
+            
+            var filtered = false;
             var food_filter = """+json.dumps(food_filter)+""";
             var type_filter = """+json.dumps(type_filter)+""";
             var organisation_filter = """+json.dumps(organisation_filter)+""";
-            for(var i=0;i<food_filter.length && filtered;i++)
-            {
-                if(foods.indexOf(food_filter[i])<0)
+            var food_filtered = true;
+            var filtered = false;
+            for(var i=0;i<food_filter.length;i++)
+            {   
+                food_filtered = false;
+                if(foods.indexOf(food_filter[i])>-1)
                 {
-                    filtered = false;
+
+                    food_filtered = true;
+                   
                 }
             }
-            
-            for(var i=0;i<type_filter.length && filtered;i++)
+            var business_filtered = true;
+            for(var i=0;i<type_filter.length; i++)
             {
-                if(user_types.indexOf(type_filter[i])<0)
+                business_filtered =false;
+                if(user_types.indexOf(type_filter[i])>-1)
                 {
-                    filtered = false;
-                }
-            }
-
-
-
-            for(var i=0;i<organisation_filter.length && filtered;i++)
-            {
-                if(user_types.indexOf(organisation_filter[i])<0)
-                {
-                    filtered = false;
+                    business_filtered = true;
+                    
                 }
             }
 
+            var organisation_filtered = true;
+
+            for(var i=0;i<organisation_filter.length;i++)
+            {
+                organisation_filtered = false;
+                if(user_types.indexOf(organisation_filter[i])>-1)
+                {
+                   organisation_filtered = true;
+                   break;
+                }
+            }
+            if(organisation_filtered && business_filtered && food_filtered)
+            {
+                filtered = true;
+            }
             var flag = true;
             var keyword = '"""+keyword+"""';
 
@@ -180,117 +208,7 @@ class TweetFeed():
             var foods = this.foods;
             var user_types = this.type_user;
             var filtered = true;
-            var food_filter = """+json.dumps(food_filter)+""";
-            var type_filter = """+json.dumps(type_filter)+""";
-            var organisation_filter = """+json.dumps(organisation_filter)+""";
-            for(var i=0;i<food_filter.length && filtered;i++)
-            {
-                if(foods.indexOf(food_filter[i])<0)
-                {
-                    filtered = false;
-                }
-            }
             
-            for(var i=0;i<type_filter.length && filtered;i++)
-            {
-                if(user_types.indexOf(type_filter[i])<0)
-                {
-                    filtered = false;
-                }
-            }
-
-
-
-            for(var i=0;i<organisation_filter.length && filtered;i++)
-            {
-                if(user_types.indexOf(organisation_filter[i])<0)
-                {
-                    filtered = false;
-                }
-            }
-
-            var flag = true;
-            var keyword = '"""+keyword+"""';
-
-            if(keyword != '')
-            {
-                flag = false;
-                var scope_string ='';
-                
-                scope_string += this.user.username;
-                scope_string += this.user.name;
-                scope_string += this.sign_up_as;
-                scope_string += this.status;
-                scope_string += this.user.description;
-                scope_string = scope_string.toLowerCase();
-               
-               if(scope_string.indexOf(keyword.toLowerCase()) !=-1)
-               {
-                     
-                    flag = true;
-
-                }
-               }
-
-               if(filtered && flag)
-               {
-               for(var i =0; i<foods.length;i++)
-               {
-                    emit(foods[i], 1);
-               }
-               
-              }
-                           
-
-
-            }
-            """)
-
-        reducer = Code("""
-            function (key, values) { 
-            var  sum = 0
-             for(var i=0;i<values.length;i++)
-             { sum += 1;}
-             return sum;
-            }
-            """)
-        return self.db_object.map_reduce(self.table_name, mapper, reducer, query, 1)
-
-
-    def get_all_foods(self, keyword, lon, lat, food_filter, type_filter, organisation_filter, query):
-        mapper = Code("""
-            function () {
-            var foods = this.foods;
-            var user_types = this.type_user;
-            var filtered = true;
-            var food_filter = """+json.dumps(food_filter)+""";
-            var type_filter = """+json.dumps(type_filter)+""";
-            var organisation_filter = """+json.dumps(organisation_filter)+""";
-            for(var i=0;i<food_filter.length && filtered;i++)
-            {
-                if(foods.indexOf(food_filter[i])<0)
-                {
-                    filtered = false;
-                }
-            }
-            
-            for(var i=0;i<type_filter.length && filtered;i++)
-            {
-                if(user_types.indexOf(type_filter[i])<0)
-                {
-                    filtered = false;
-                }
-            }
-
-
-
-            for(var i=0;i<organisation_filter.length && filtered;i++)
-            {
-                if(user_types.indexOf(organisation_filter[i])<0)
-                {
-                    filtered = false;
-                }
-            }
 
             var flag = true;
             var keyword = '"""+keyword+"""';
@@ -337,7 +255,145 @@ class TweetFeed():
              return sum;
             }
             """)
-        return self.db_object.map_reduce(self.table_name, mapper, reducer, query, 1)
+        return self.db_object.map_reduce(self.table_name, mapper, reducer, query, -1)
+
+    def get_all_businesses(self, keyword, lon, lat, food_filter, type_filter, organisation_filter, query):
+        mapper = Code("""
+            function () {
+            var foods = this.foods;
+            var user_types = this.type_user;
+            var filtered = true;
+            
+
+            var flag = true;
+            var keyword = '"""+keyword+"""';
+
+            if(keyword != '')
+            {
+                flag = false;
+                var scope_string ='';
+                
+                scope_string += this.user.username;
+                scope_string += this.user.name;
+                scope_string += this.sign_up_as;
+                scope_string += this.status;
+                scope_string += this.user.description;
+                scope_string = scope_string.toLowerCase();
+               
+               if(scope_string.indexOf(keyword.toLowerCase()) !=-1)
+               {
+                     
+                    flag = true;
+
+                }
+               }
+
+               if(filtered && flag && user_types)
+               {
+               for(var i =0; i<user_types.length;i++)
+               {
+                    emit(user_types[i], 1);
+               }
+               
+              }
+                           
+
+
+            }
+            """)
+
+        reducer = Code("""
+            function (key, values) { 
+            var  sum = 0
+             for(var i=0;i<values.length;i++)
+             { sum += 1;}
+             return sum;
+            }
+            """)
+        return self.db_object.map_reduce(self.table_name, mapper, reducer, query, -1)
+
+
+    # def get_all_foods(self, keyword, lon, lat, food_filter, type_filter, organisation_filter, query):
+    #     mapper = Code("""
+    #         function () {
+    #         var foods = this.foods;
+    #         var user_types = this.type_user;
+    #         var filtered = true;
+    #         var food_filter = """+json.dumps(food_filter)+""";
+    #         var type_filter = """+json.dumps(type_filter)+""";
+    #         var organisation_filter = """+json.dumps(organisation_filter)+""";
+    #         for(var i=0;i<food_filter.length && filtered;i++)
+    #         {
+    #             if(foods.indexOf(food_filter[i])<0)
+    #             {
+    #                 filtered = false;
+    #             }
+    #         }
+            
+    #         for(var i=0;i<type_filter.length && filtered;i++)
+    #         {
+    #             if(user_types.indexOf(type_filter[i])<0)
+    #             {
+    #                 filtered = false;
+    #             }
+    #         }
+
+
+
+    #         for(var i=0;i<organisation_filter.length && filtered;i++)
+    #         {
+    #             if(user_types.indexOf(organisation_filter[i])<0)
+    #             {
+    #                 filtered = false;
+    #             }
+    #         }
+
+    #         var flag = true;
+    #         var keyword = '"""+keyword+"""';
+
+    #         if(keyword != '')
+    #         {
+    #             flag = false;
+    #             var scope_string ='';
+                
+    #             scope_string += this.user.username;
+    #             scope_string += this.user.name;
+    #             scope_string += this.sign_up_as;
+    #             scope_string += this.status;
+    #             scope_string += this.user.description;
+    #             scope_string = scope_string.toLowerCase();
+               
+    #            if(scope_string.indexOf(keyword.toLowerCase()) !=-1)
+    #            {
+                     
+    #                 flag = true;
+
+    #             }
+    #            }
+
+    #            if(filtered && flag && foods)
+    #            {
+    #            for(var i =0; i<foods.length;i++)
+    #            {
+    #                 emit(foods[i], 1);
+    #            }
+               
+    #           }
+                           
+
+
+    #         }
+    #         """)
+
+    #     reducer = Code("""
+    #         function (key, values) { 
+    #         var  sum = 0
+    #          for(var i=0;i<values.length;i++)
+    #          { sum += 1;}
+    #          return sum;
+    #         }
+    #         """)
+    #     return self.db_object.map_reduce(self.table_name, mapper, reducer, query, 1)
 
     def update_tweets(self, username, first_name, last_name, description, zip_code):
         try:
@@ -547,16 +603,27 @@ class Notification():
     def save_notification(self,doc):
         return self.db_object.insert_one(self.table_name,doc)
 
-    def change_notification_status(self, notification_id):
+    def change_notification_status(self, notification_to):
         return self.db_object.update(self.table_name, 
-            {'_id':notification_id}, 
+            {'notification_to':notification_to}, 
             {'notification_view_status':'true'})
 
     def get_notification(self,username):
         notification_count = len(self.db_object.get_all_vals(self.table_name,
-            {'notification_to':username}))
+            {'notification_to':username, 'notification_view_status':'false'}))
         return HttpResponse(json.dumps({'notification_count':notification_count, 
             'notifications':self.db_object.get_all_vals(self.table_name,
-            {'notification_to':username})}))
+            {'notification_to':username,'notification_view_status':'false'})}))
 
 
+class TwitterError():
+    def __init__ (self):
+        self.db_object = MongoConnection("localhost",27017,'foodtrade')
+        self.table_name = 'twittererror'
+        self.db_object.create_table(self.table_name,'screen_name')    
+
+    def save_error(self, doc):
+        return self.db_object.insert_one(self.table_name,doc)
+
+    def get_error(self, screen_name):
+        return self.db_object.get_all_vals(self.table_name,{'screen_name':screen_name, 'error_solve_stat':'false'})        

@@ -8,11 +8,15 @@
 	</style>
 {% endblock %}
 
+
+
 {% block content %}
- 	<div class="panel-body" style="margin-left: 16%;">
-	<ul class="list-group">
-	    <li  class="list-group-item" style="background: #eee;padding-bottom:5%;">
-	    <button id="btnSendTweet1" onclick="send_invite()" class="btn btn-primary pull-right">Send invites</button>
+
+
+<div class="col-md-10" >
+	<div class="panel panel-default">
+	<div class="panel-heading clearfix">
+	<button id="btnSendTweet1" onclick="send_invite()" class="btn btn-primary pull-right">Send invites</button>
 			<form action="#" method="get" class="col-md-6">
 	          <div class="input-group">
 	            <!-- USE TWITTER TYPEAHEAD JSON WITH API TO SEARCH -->
@@ -22,8 +26,18 @@
 	            </span>
 	          </div>
 	        </form>
-	    </li>
-	   
+    </div>
+
+ 	<div class="panel-body">
+
+    <div class="form-group"> 
+ 	<textarea id="tweetMessage1"  onkeyup="check_limit()" class="form-control counted" name="message" placeholder="Type in your message" rows="3" ></textarea>
+ 	</div>
+ 	<button id="btnSendTweet2" onclick="send_invite()" class="btn btn-primary pull-right">Send invites</button>
+      <h6 id="charsRem" class="pull-left" id="counter">140 characters remaining</h6> 
+ 	</div>
+
+	<ul class="list-group"> 
 	   {% for each in friend %}
 	    <li id= "li{{forloop.counter}}" class="list-group-item">
 	      <!-- only show this if checkbox selected --> 
@@ -38,25 +52,30 @@
 	    {% endfor %}
 
 	  <li class="list-group-item clearfix" style="background: #eee;">
-        <button id="btnSendTweet2" onclick="send_invite()" class="btn btn-primary pull-right">Send invites</button>
+        <button id="btnSendTweet3" onclick="send_invite()" class="btn btn-primary pull-right">Send invites</button>
       </li>
-	  </ul>
-	</div>
+	  </ul> 
+</div>
+</div>
 <script type="text/javascript">
-var tweet = 'Nice Application. Please sign up. http://localhost:8000/signup?referer={{user.username}}';
+var tweet = '';
 var countVal = 0;
 var send_list = [];
 var users = [];
 function validate_tweets (argument, count) {
+	tweet = $('#tweetMessage1').val();
 	var len = tweet.length;
 	var chkbx_status = document.getElementById('checkbox' + String(count)).checked;
 	if(chkbx_status == false){
-			tweet = tweet.replace('@' + String(argument),'');
+			tweet = tweet.replace('@' + String(argument)+' ','');
 			send_list.pop(count);
 			users.pop('@' + argument);
+			$('#tweetMessage1').val(tweet);
 			countVal = countVal - 1;
 			$('#btnSendTweet1').html("Send " + String(countVal) + ' invites');
 			$('#btnSendTweet2').html("Send " + String(countVal) + ' invites');
+			$('#btnSendTweet3').html("Send " + String(countVal) + ' invites');
+			$('#charsRem').html(String(140-tweet.length) + ' characters remaining.')
 	}
 	else{
 		if (argument.length + len < 140 ) {
@@ -64,8 +83,11 @@ function validate_tweets (argument, count) {
 			countVal = countVal + 1;
 			send_list.push(count);
 			users.push('@' + argument);
+			$('#tweetMessage1').val(tweet);
 			$('#btnSendTweet1').html("Send " + String(countVal) + ' invites');
 			$('#btnSendTweet2').html("Send " + String(countVal) + ' invites');
+			$('#btnSendTweet3').html("Send " + String(countVal) + ' invites');
+			$('#charsRem').html(String(140-tweet.length) + ' characters remaining.')			
 		}
 		else{
 			alert('Character Length 140 of Tweets exceeded');
@@ -81,6 +103,9 @@ function invites_handler (data) {
 			tweet = tweet.replace(users[val], '');
 			$('#btnSendTweet1').html("Send invites");
 			$('#btnSendTweet2').html("Send invites");			
+			$('#btnSendTweet3').html("Send invites");
+			$('#btnSendTweet1').html('');
+			$('#charsRem').html(String(140) + ' characters remaining.');
 		}
 	}
 }
@@ -91,6 +116,15 @@ function send_invite () {
 	else{
 		countVal = 0;
 		ajax_request('post_tweet','invites_handler',{'message':tweet, 'invite':'true', 'to':String(users)})
+	}
+}
+function check_limit(){
+	tweet = $('#tweetMessage1').val();
+	if(tweet.len > 140){
+		$('#charsRem').html( 'Max of 140 characters exceeded.');
+	}
+	else{
+		$('#charsRem').html(String(140-tweet.length) + ' characters remaining.');
 	}
 }
 </script>

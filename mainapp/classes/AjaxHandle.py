@@ -8,6 +8,7 @@ from mainapp.classes.TweetFeed import TweetFeed
 from mainapp.classes.Email import Email
 from Tags import Tags
 from mainapp.classes.TweetFeed import TradeConnection, UserProfile, Food, Customer, Organisation, Team, RecommendFood, Notification
+from AjaxSearch import AjaxSearch
 
 consumer_key = 'seqGJEiDVNPxde7jmrk6dQ'
 consumer_secret = 'sI2BsZHPk86SYB7nRtKy0nQpZX3NP5j5dLfcNiP14'
@@ -19,8 +20,7 @@ admin_access_token_secret = 'ST8W9TWqqHpyskMADDSpZ5r9hl7ND6sEfaLvhcqNfk1v4'
 
 
 
-
-class AjaxHandle():
+class AjaxHandle(AjaxSearch):
     """docstring for AjaxHandle"""
     def __init__(self):
         pass
@@ -233,3 +233,7 @@ class AjaxHandle():
         username = request.user.username
         notification_obj  = Notification()
         return notification_obj.get_notification(username)
+
+    def change_notification_status(self, request):
+        notification_obj = Notification()
+        return notification_obj.change_notification_status(request.user.username)
