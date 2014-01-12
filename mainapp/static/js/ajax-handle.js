@@ -54,7 +54,7 @@ function add_food(prof_id){
 	var data = {useruid: prof_id, food_name: food};
 	ajax_request("addfood", 'create_conn', {data: JSON.stringify(data)});
 	document.getElementsByClassName('chosen-single')[0].children[0].innerHTML = '';
-	var append_data = '<tr><td>'+food+'</td><td><div class="pull-right"><a href="#"><i class="fa fa-thumbs-o-up text-muted" title="Vouch for this"></i></a></div></td></tr>';
+	var append_data = '<tr><td>'+food+'</td><td><div class="pull-right"><a href="#"><i class="fa fa-heart-o" title="Vouch for this"></i></a></div></td></tr>';
 	$("#food_tbody").prepend(append_data);
 }
 

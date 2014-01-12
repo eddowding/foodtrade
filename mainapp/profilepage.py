@@ -131,6 +131,7 @@ def get_all_foods(user_id):
         all_rec = recomm.get_recomm(user_id, each['food_name'])
         data = {'food_name': each['food_name'], 'vouch_count': len(all_rec)}
         final_foods.append(data)
+    print final_foods
     return final_foods
 
 def get_customers(user_id):

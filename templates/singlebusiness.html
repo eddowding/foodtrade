@@ -56,6 +56,8 @@
       {% ifnotequal profile_id user_id %}
       <!-- if they dont't have an account yet -->
       <button class="btn btn-primary btn-block" onclick="invite_connect('{{screen_name}}', '{{userinfo.username}}')">Invite to connect</button>
+
+      
       <!-- if logged in users = individual --> 
       <button class="btn btn-default btn-block" data-toggle="modal" data-target="#modal_customer">
         <i class="fa fa-smile-o text-muted"></i> I am a customer
@@ -270,7 +272,7 @@
                   <td> 
                   <div class="pull-right">
                    <!-- hide if user has edit rights -->
-                   <small id="vouchfood_id">{{eachfood.vouch_count}} </small> <a href="#" class="btn btn-default btn-sm"><i class="fa fa-heart-o" title="Recommend this to others" onclick="recommend_food({{user_id}}, '{{eachfood.food_name}}', {{profile_id}}); return null;"></i></a> 
+                   <small id="vouchfood_id">{{eachfood.vouch_count}} </small> <a href="#produce" class="btn btn-default btn-sm"><i class="fa fa-heart-o" title="Recommend this to others" onclick="recommend_food({{user_id}}, '{{eachfood.food_name}}', {{profile_id}}); return null;"></i></a> 
                    <!-- if user has edit rights -->
                    {% ifequal profile_id user_id %}
                     
