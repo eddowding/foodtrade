@@ -8,28 +8,40 @@ var map = L.map('map').setView([map_lat,map_lon], 7);
 		}).addTo(map);
 
 
-		L.icon({
-			iconUrl:'http://foodtrade.com/wp-content/uploads/2013/09/favi21.png',
-			iconSize:[18,18],
-			iconAnchor:[9,18],
-			popupAnchor:[0,-18]
+ 
+
+	L.icon({
+			iconUrl:'/images/map_marker.png',
+			iconRetinaUrl:'/images/map_marker.png',
+			iconSize:[18, 18],
+			iconAnchor:[9, 18],
+			popupAnchor:[0, -18]
 		});
+
 L.circle([map_lat,map_lon], 24140.2, {
-			color: '#333333',
-			opacity:0,
+			stroke: 1,
+			color: '#00cc00',
+			opacity:0.5,
 			weight:2,
+			fill: 0,
 		}).addTo(map);
 L.circle([map_lat,map_lon], 48280.3, {
-			color: '#333333',
-			opacity:0,
+			stroke: 1,
+			color: '#ff9900',
+			opacity:0.5,
 			weight:2,
+			fill: 0,
 		}).addTo(map);
 	
 L.circle([map_lat,map_lon], 160934, {
-			color: '#333333',
-			opacity:0,
-			weight:2,
+			stroke: 1,
+			color: '#999',
+			opacity:0.9,
+			weight: 1,
+			fill: 0,
 		}).addTo(map);
+
+
 var map_controls = [];
 
 
