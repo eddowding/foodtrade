@@ -12,6 +12,7 @@ from mainapp.classes.Tags import Tags
 from pygeocoder import Geocoder
 import json
 from mainapp.produce import *
+import random
 
 def display_profile(request, username):
     parameters = {}
@@ -137,9 +138,9 @@ def get_all_foods(user_id):
                 'name': account.extra_data['name'],
                 'screen_name': account.extra_data['screen_name'],
                 'photo': account.extra_data['profile_image_url']})
-        data = {'food_name': each['food_name'], 'vouch_count': len(all_rec), 'recomm_details': recomm_details}
+        random.shuffle(recomm_details)
+        data = {'food_name': each['food_name'], 'vouch_count': len(all_rec), 'recomm_details': recomm_details[:8]}
         final_foods.append(data)
-    print final_foods
     return final_foods
 
 def get_customers(user_id):
