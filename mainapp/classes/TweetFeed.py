@@ -626,4 +626,7 @@ class TwitterError():
         return self.db_object.insert_one(self.table_name,doc)
 
     def get_error(self, screen_name):
-        return self.db_object.get_all_vals(self.table_name,{'screen_name':screen_name, 'error_solve_stat':'false'})        
+        return self.db_object.get_all_vals(self.table_name,{'screen_name':screen_name, 'error_solve_stat':'false'})   
+
+    def change_error_status(self, screen_name):
+        return self.db_object.update(self.table_name, {'screen_name':screen_name}, {'error_solve_stat':'true'})

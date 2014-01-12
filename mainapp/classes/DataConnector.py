@@ -13,7 +13,6 @@ import time
 from mainapp.classes.TweetFeed import TweetFeed, Food, TradeConnection, Customer, TradeConnection, UserProfile, Organisation, Team
 
 class UserConnections():
-
     """docstring for UserConnections"""
     def __init__(self, user_id):
         self.db_object = MongoConnection("localhost",27017,'foodtrade')
