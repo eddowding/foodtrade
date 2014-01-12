@@ -23,35 +23,35 @@
     
     <div class="form-group">
       <label for="user_fname_txt" class="col-sm-2 control-label">First Name</label>
-      <div class="col-sm-10">
+      <div class="col-sm-5">
         <input type="text" id="user_fname_txt" class="form-control" placeholder="First name" value="{{first_name}}" name="first_name">
       </div>
     </div>
 
     <div class="form-group">
       <label for="user_lname_txt" class="col-sm-2 control-label">Last Name</label>
-      <div class="col-sm-10">
+      <div class="col-sm-5">
         <input type="text" id="user_lname_txt" class="form-control" placeholder="Last name" value="{{last_name}}" name="last_name">
       </div>
     </div>
 
     <div class="form-group">
       <label for="user_desc_txt" class="col-sm-2 control-label">Description</label>
-      <div class="col-sm-10">
+      <div class="col-sm-5">
         <textarea class="form-control" id="user_desc_txt" name="description" rows="5">{{description}}</textarea>
       </div>
     </div>
 
     <div class="form-group">
       <label for="phone" class="col-sm-2 control-label">Phone</label>
-      <div class="col-sm-10">
+      <div class="col-sm-5">
         <input type="text" id="phone" class="form-control" placeholder="Phone number" value="{{phone}}" name="phone"  onblur="validateFeedback()" >
       </div>
     </div>
 
     <div class="form-group">
       <label for="zip_code" class="col-sm-2 control-label">Address</label>
-      <div class="col-sm-10">
+      <div class="col-sm-5">
         <input type="text" id="zip_code" class="form-control" placeholder="Enter your address" value="{{zip_code}}" name="zip_code">
       </div>
     </div>
@@ -60,7 +60,7 @@
     <div class="form-group">
       <label for="id_sign_up_as" class="col-sm-2 control-label">Sign up as</label>
         {{form.sign_up_as.as_hidden}}
-      <div class="col-sm-10">
+      <div class="col-sm-5">
 
         <div class="btn-group" data-toggle="buttons">
           <label class="btn btn-default {% ifequal sign_up_as 'Individual' %}active{% endifequal %}"> 
@@ -83,7 +83,7 @@
       
       <div class="form-group" id="type_user_id"> 
         <label for="id_type_user" class="col-sm-2 control-label">Business type</label>
-        <div class="col-sm-10">
+        <div class="col-sm-5">
           <select id= "dropdown3" data-placeholder="Farm, wholesaler, restaurant, bakery..." multiple  class="chosen-select" tabindex="6" >
               <option value=""></option>
               {% for each in all_tags %}
@@ -101,7 +101,7 @@
         </div>
       </div>
       <div class="form-group">
-        <div class="col-sm-offset-2 col-sm-10">
+        <div class="col-sm-offset-2 col-sm-5">
           <button type="submit" class="btn btn-primary" onclick="copydata()">Update</button>
         </div>
       </div> 

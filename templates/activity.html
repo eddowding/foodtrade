@@ -4,9 +4,17 @@
 {% block content %}
 
 
-    <div class="col-md-5">
+
+    <div class="col-md-5" id="activity_switcher">
  
  
+<ul class="nav nav-tabs">
+  <li class="active"><a href="#activity" data-toggle="tab">Activity <span class="badge">43</span></a></li>
+  <li><a href="#biz" data-toggle="tab">Businesses <span class="badge">432</span></a></li> 
+</ul>
+
+<div class="tab-content">
+  <div class="tab-pane active" id="activity">
  
 
   <div id="update" class="well well-sm">
@@ -118,6 +126,13 @@
 
 
 
+</div><!-- tab pane activity -->
+  <div class="tab-pane" id="biz">
+    biz
+  </div> 
+</div><!-- tabs -->
+
+
      
     </div><!-- closes 5 -->
 
@@ -217,6 +232,8 @@ connections = {{json_data | safe}};
     </li>
 
 </span>
+
+
 
 
 
