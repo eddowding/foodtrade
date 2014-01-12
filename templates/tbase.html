@@ -19,6 +19,7 @@
     <link href="{% static "css/bootstrap.css" %}" rel="stylesheet">
     <link href="{% static "css/foodtrade.css" %}" rel="stylesheet">
     <link href="{% static "css/custom-design.css" %}" rel="stylesheet">
+    <link href="{% static "css/chardinjs.css" %}" rel="stylesheet">
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places"></script>
     <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
  {% block head %}
@@ -46,7 +47,7 @@ background: #eee;
     <!-- Fixed navbar -->
     <div class="navbar navbar-default navbar-fixed-top" role="navigation">
       <div class="ftstrip"></div>
-      <div class="container">
+      <div class="container-responsive">
         <div class="navbar-header">
           <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
             <span class="sr-only">Toggle navigation</span>
@@ -56,17 +57,20 @@ background: #eee;
           </button>
 
         <div class="pull-left visible-xs">
-          <button type="button" class="navbar-toggle" data-toggle="offcanvas">
+          <button type="button" class="navbar-toggle" data-toggle="offcanvas" style="margin-left: 5px">
                 <span class="sr-only">Toggle navigation</span>
-                <i class="fa fa-user"></i>
+                <i class="fa fa-user fa-fw fa-lg" ></i>
               </button>
         </div>
 
-          <a href="/" class="navbar-brand"><img src="{% static "images/logo.png" %}"  alt="FoodTrade logo" /></a>
+          <a href="/" class="navbar-brand">
+          <img src="{% static "images/logo.png" %}"  class="hidden-xs" alt="FoodTrade logo"   />
+          <img src="{% static "images/logo_icon.png" %}"  class="visible-xs" alt="FoodTrade logo"  />
+          </a>
         </div>
         <div class="navbar-collapse collapse">
           
-          <form action="/activity" class="navbar-form navbar-left nav-justified" role="search">
+          <form action="/activity" class="navbar-form navbar-left nav-justified" role="search"  data-intro="Search for anything, anywhere" data-position="bottom">
             <div class="form-group" style="margin-right:5px;"> 
               <input type="text" name="q" id="keyword" class="form-control pac-input" value="{{ search.query }}" placeholder="What?"> 
             </div> 
@@ -77,19 +81,55 @@ background: #eee;
             <input type="hidden" name="lat" id="lat" value="{{search.lat}}"/>
             <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
           </form>
+
+
         {% if user.is_authenticated %}
-         <button type="button" class="btn btn-primary navbar-btn pull-right" style="margin-left: 20px;"  data-toggle="modal" data-target="#newtwitterpost">
-            <i class="fa fa-edit"></i>
-          </button>
-          <a src = "/accounts/logout" onclick="logout()" class="btn btn-primary navbar-btn pull-right hidden-xs hidden-sm" style="margin-left: 20px;">
-            Logout
-          </a>
+
+          <ul class="nav navbar-nav navbar-right">
+
+
+               <!--  <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><span
+                    class="glyphicon glyphicon-envelope"></span>Inbox <span class="label label-info">32</span>
+                </a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#"><span class="label label-warning">4:00 AM</span>Favourites Snippet</a></li>
+                        <li><a href="#"><span class="label label-warning">4:30 AM</span>Email marketing</a></li>
+                        <li><a href="#"><span class="label label-warning">5:00 AM</span>Subscriber focused email
+                            design</a></li>
+                        <li class="divider"></li>
+                        <li><a href="#" class="text-center">View All</a></li>
+                    </ul>
+                </li> -->
+
+                <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                <i class="fa fa-user fa-fw"></i> {{userinfo.full_name}} <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="/editprofile/{{userinfo.username}}"><i class="fa fa-user fa-fw"></i> Edit profile</a></li>
+                        <li><a href="/invite"><i class="fa fa-twitter fa-fw"></i> Invite friends</a></li>
+                        <li class="divider"></li>
+                        <li>
+                          <a src = "/accounts/logout" onclick="logout()" >
+                        <i class="fa fa-power-off fa-fw"></i> Logout</a></li>
+                    </ul>
+                </li>
+            </ul> 
+             
           <script type="text/javascript">
           function logout()
           {
             window.location = '/accounts/logout';
           }
           </script>
+
+
+         <button type="button" class="btn btn-default navbar-btn navbar-right visible-sm" style="margin-left: 20px;"  data-toggle="modal" data-target="#newtwitterpost">
+            <i class="fa fa-edit fa-fw"></i>  
+          </button>
+
+          <button data-intro="Post an update from any screen." data-position="left"  type="button" class="btn btn-default navbar-btn navbar-right hidden-sm" style="margin-left: 20px;"  data-toggle="modal" data-target="#newtwitterpost">
+            <i class="fa fa-edit fa-fw"></i> Post update
+          </button>
         {% endif %}
         
          <ul class="nav navbar-nav navbar-center visible-md visible-lg">
@@ -97,11 +137,12 @@ background: #eee;
           <li><a href="/pricing">Pricing</a></li> 
          </ul>
  
-         {% if not user.is_authenticated %}
-         <ul class="nav navbar-nav navbar-right">
-         <li><a href="{% provider_login_url "twitter" process="login" %}"><strong>Login</strong> or <strong>Sign up</strong></a></li> 
-               </ul>
- {% endif %}
+         {% if not user.is_authenticated %} 
+         <a type="button" class="btn btn-success navbar-btn navbar-right" href="{% provider_login_url "twitter" process="login" %}" style="margin-right: 15px;">
+            <i class="fa fa-user fa-fw"></i> <strong>Login</strong> or <strong>Sign up</strong>
+          </a>
+         {% endif %}
+         
         </div><!--/.nav-collapse -->
       </div>
     <div class="ftstrip ftstrip-mini"></div>
@@ -180,15 +221,25 @@ background: #eee;
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
-<div class="container">
+<div class="container-responsive">
  
 <div class="row row-offcanvas row-offcanvas-left">
  
- {% if user.is_authenticated or search.query %}
+ 
 <div id="sidebar" class="col-xs-6 col-sm-2 sidebar sidebar-offcanvas" role="navigation">
+
+{% if not user.is_authenticated %} 
+<div class="alert alert-info  ">
+<a type="button" href="{% provider_login_url "twitter" process="login" %}"  class="btn text-center btn-primary btn-lg btn-block" style="  margin-top: 1em;"><i class="fa fa-twitter fa-fw"></i> Sign in</a>
+</a>
+</div>
+{% endif %}
+
+
+{% if user.is_authenticated or search.query %}
  {% if user.is_authenticated %}
         <!-- show the logged in users account --> 
-        <div id="account_info">
+        <div id="account_info"  data-intro="Just start typing to search for specific foods, business type, or filter by organisation membership" data-position="right">
         
         <div class="clearfix" style="margin-bottom: 10px;">
           <!-- twitter 78px image - 'large' -->
@@ -204,58 +255,44 @@ background: #eee;
         <p><a href="#">Trade connections <span class="badge pull-right">{{userinfo.trade_connections_no}}</span></a></p>
         <p><a href="#">Foods <span class="badge pull-right">{{userinfo.food_no}}</span></a></p>
         <p><a href="#">Organisations <span class="badge pull-right">{{userinfo.organisation_connection_no}}</span></a></p>
+
+        <!-- 
+        ADD IN AWARDS FUNCTIONALITY
         <p><a href="#">Awards <span class="badge pull-right">{{userinfo.organisation_connection_no}}</span></a></p>
-        
+         -->
           
           <!-- PUT EMPTY ONES AT THE BOTTOM OF THE LIST -->
           <!-- if ZERO ON ANY OF THESE -->
         
-        <div class="alert alert-info small"> 
-          <p><b>Want a great profile?</b></p> 
-         
-            <a href="#">Add Awards</a>
-            <br />
-            <a href="#">Add Organisations</a>
-        </div>
+       <!--  <div class="alert alert-info small"> 
+          <a class="close" data-dismiss="alert" href="#" aria-hidden="true">&times;</a>
+          <p><b>Want a great profile?</b></p>  
+        </div> -->
         {% endif %}
         </div><!-- /account_info -->
-{% if search.query == "" or not search.query %}
+<!-- {% if search.query == "" or not search.query %}
     <hr /> 
    
       <h4>Who's nearby</h4>
  
         <p><a href="#">Individuals <span class="badge pull-right">{{userinfo.nearby_individuals_no}}</span></a></p>
         <p><a href="#">Businesses <span class="badge pull-right">{{userinfo.nearby_businesses_no}}</span></a></p> 
-         {% endif %}
+         {% endif %} -->
  {% endif %}
-     <!--    <div class="clearfix"> 
-          <img class="pull-left img-rounded" style="margin:0 8px 0 0; width:30px"  src="https://pbs.twimg.com/profile_images/378800000006142190/2892beb0a4ee730cb98173e5d8660816_normal.jpeg" />
-          <div class="content">
-            <h6 style="margin:0;">Marriott Hotels</h6>
-            <button type="button" class="btn btn-default btn-xs">Connect</button>
-          </div>
-        </div>
-<hr />
-        <div class="clearfix"> 
-          <img class="pull-left img-rounded" style="margin:0 8px 0 0; width:30px"  src="https://pbs.twimg.com/profile_images/1241297538/C-square_normal.gif" />
-          <div class="content">
-            <h5 style="">City Chef</h5>
-            <button type="button" class="btn btn-default btn-xs">Connect</button>
-          </div>
-        </div>
- -->
+ 
     {% if search %}
     <div class="foodtrade-sidebar">
     
     <hr>
      
-    <!-- consider using this for search filter http://harvesthq.github.io/chosen/ -->
-    <form role="form">
+    <div data-intro="Just start typing to search for specific foods, business type, or filter by organisation membership" data-position="right">
+    <form role="form" >
       <div class="form-group"> 
         <input type="text" class="form-control" id="food_filter" placeholder="Filter by food">
       </div>
     </form>
- <ul class="foodtrade-tag-list">
+    
+    <ul class="foodtrade-tag-list">
     <li data-id="ALL" class="foodtrade-tag foodtrade-tag-click foodtrade-tag-all"><div class="foodtrade-tag-checkbox-column"><input type="checkbox" checked="checked" aria-label="All Partners" class="foodtrade-tag-checkbox"></div><div class="foodtrade-tag-text">All Foods</div><div class="foodtrade-tag-count">{{food_count}}</div></li>
     </ul>
 
@@ -264,7 +301,7 @@ background: #eee;
     </ul>
      <hr>
  
-    <!-- consider using this for search filter http://harvesthq.github.io/chosen/ -->
+    
     <form role="form">
       <div class="form-group"> 
         <input type="email" class="form-control" id="business_filter" placeholder="Filter Business Type">
@@ -276,10 +313,10 @@ background: #eee;
 
 <ul class="foodtrade-tag-list" id="business_filter_results">
     </ul>
+    </div><!-- charding overlay -->
     <hr />
      
-    <!-- consider using this for search filter http://harvesthq.github.io/chosen/ -->
-    <form role="form">
+     <form role="form">
       <div class="form-group"> 
         <input type="email" class="form-control" id="filter_organisation" placeholder="Filter organisation">
       </div>
@@ -289,17 +326,18 @@ background: #eee;
     <ul class="foodtrade-tag-list">
     <li data-id="ALL" class="foodtrade-tag foodtrade-tag-click foodtrade-tag-all"><div class="foodtrade-tag-checkbox-column"><input type="checkbox" checked="checked" aria-label="All Partners" class="foodtrade-tag-checkbox"></div><div class="foodtrade-tag-text">All Organisations</div><div class="foodtrade-tag-count">51</div></li><li data-id="8" class="foodtrade-tag foodtrade-tag-click "><div class="foodtrade-tag-checkbox-column"><input type="checkbox" aria-label="Johns Hopkins " class="foodtrade-tag-checkbox"></div><div class="foodtrade-tag-text">Soil Association </div><div class="foodtrade-tag-count">6</div></li><li data-id="1" class="foodtrade-tag foodtrade-tag-click "><div class="foodtrade-tag-checkbox-column"><input type="checkbox" aria-label="Stanford University" class="foodtrade-tag-checkbox"></div><div class="foodtrade-tag-text">NFU</div><div class="foodtrade-tag-count">5</div></li><li data-id="16" class="foodtrade-tag foodtrade-tag-click "><div class="foodtrade-tag-checkbox-column"><input type="checkbox" aria-label="École Polytechnique Fédérale de Lausanne" class="foodtrade-tag-checkbox"></div><div class="foodtrade-tag-text">Plunkett Foundation </div><div class="foodtrade-tag-count">4</div></li><li data-id="4" class="foodtrade-tag foodtrade-tag-click "><div class="foodtrade-tag-checkbox-column"><input type="checkbox" aria-label="Princeton University" class="foodtrade-tag-checkbox"></div><div class="foodtrade-tag-text">Organic institute</div><div class="foodtrade-tag-count">3</div></li><li data-id="15" class="foodtrade-tag foodtrade-tag-click "><div class="foodtrade-tag-checkbox-column"><input type="checkbox" aria-label="University of Washington" class="foodtrade-tag-checkbox"></div><div class="foodtrade-tag-text"> Slow Food</div><div class="foodtrade-tag-count">3</div></li><li class="foodtrade-tag-showmore">show more</li>
     </ul>
-    </div>
     {% endif %}
-    </div>
+
+    </div><!--sidebar-->
        {% endif %}
+    </div>
  {% block content %}
  {% endblock %}  
 </div>
 </div>
 
 <!-- FOOTER --> 
-<div class="container" id="footer">    
+<div class="container-responsive" id="footer">    
   <div class="row">
     <div class="col-lg-12">
         <div class="ftstrip"></div>
@@ -379,6 +417,7 @@ background: #eee;
     </div>
   </div>
 </div>
+
 <!-- UserVoice JavaScript SDK (only needed once on a page) -->
 <script>(function(){var uv=document.createElement('script');uv.type='text/javascript';uv.async=true;uv.src='//widget.uservoice.com/HloB2aRxdk7fbhWMOI5AlQ.js';var s=document.getElementsByTagName('script')[0];s.parentNode.insertBefore(uv,s)})()</script>
 <!-- A tab to launch the Classic Widget -->
@@ -392,12 +431,18 @@ background: #eee;
      <script src="{% static "js/ajax-handle.js" %}"></script>
      <script src="{% static "js/typeahead.min.js" %}"></script>
      <script src="{% static "js/typeahead.js" %}"></script>
+     <script src="{% static "js/chardinjs.min.js" %}"></script>
      
  <script src="http://getbootstrap.com/2.3.2/assets/js/bootstrap-typeahead.js"></script>
          {% block footer %}
  {% endblock %}
      <script type="text/javascript">
 $(document).ready(function() {
+
+
+$(".chardinjs-show-element").css('position','absolute');
+$('body').chardinJs('start')
+
     var activeSystemClass = $('.list-group-item.active');
     //something is entered in search form
     $('#system-search').keyup( function() {
