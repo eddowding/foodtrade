@@ -72,7 +72,7 @@ def home(request):
     # parameters['business'] = [{'name': 'FoodSupply Pvt. Ltd.', 'tagcount': 7},{'name': 'Nina and Hager Meat Industry', 'tagcount': 5}]
     # parameters['total_organization_count'] = 2
     # parameters['organization'] = [{'name': 'Onion Export', 'tagcount': 7},{'name': 'Bajeko Sekuwa', 'tagcount': 5}]
-    return render_to_response('thome.html',parameters,context_instance=RequestContext(request))
+    return render_to_response('front.html',parameters,context_instance=RequestContext(request))
 
 def tweets(request):
     parameters = {}
