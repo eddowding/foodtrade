@@ -106,36 +106,36 @@ class TweetFeed():
             var type_filter = """+json.dumps(type_filter)+""";
             var organisation_filter = """+json.dumps(organisation_filter)+""";
             var food_filtered = true;
-            var filtered = false;
+            var filtered = true;
             for(var i=0;i<food_filter.length;i++)
             {   
-                food_filtered = false;
-                if(foods.indexOf(food_filter[i])>-1)
+                if(foods.indexOf(food_filter[i])==-1)
                 {
 
-                    food_filtered = true;
+                    food_filtered = false;
+                    break;
                    
                 }
             }
             var business_filtered = true;
             for(var i=0;i<type_filter.length; i++)
             {
-                business_filtered =false;
-                if(user_types.indexOf(type_filter[i])>-1)
+                if(user_types.indexOf(type_filter[i])==-1)
                 {
-                    business_filtered = true;
+                    business_filtered = false;
+                    break;
                     
                 }
+
             }
 
             var organisation_filtered = true;
 
             for(var i=0;i<organisation_filter.length;i++)
             {
-                organisation_filtered = false;
-                if(user_types.indexOf(organisation_filter[i])>-1)
+                if(user_types.indexOf(organisation_filter[i])==-1)
                 {
-                   organisation_filtered = true;
+                   organisation_filtered = false;
                    break;
                 }
             }
@@ -564,7 +564,7 @@ class RecommendFood():
     def create_recomm(self, value):
         value['deleted'] =0
         # self.db_object.insert_one(self.table_name,value)
-        self.db_object.update_upsert(self.table_name, {'food_name': value['food_name'], 'business_id': value['business_id']}, {'deleted': 0, 'recommender_id': value['recommender_id']})
+        self.db_object.update_upsert(self.table_name, {'food_name': value['food_name'], 'business_id': value['business_id'], 'recommender_id': value['recommender_id']}, {'deleted': 0})
 
     def delete_recomm(self, business_id, food_name, recommender_id):
         self.db_object.update(self.table_name,{'business_id': business_id, 'food_name': food_name, 'recommender_id': recommender_id}, {'deleted':1})

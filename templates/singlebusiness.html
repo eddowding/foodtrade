@@ -56,6 +56,10 @@
       {% ifnotequal profile_id user_id %}
       <!-- if they dont't have an account yet -->
       <button class="btn btn-primary btn-block" onclick="invite_connect('{{screen_name}}', '{{userinfo.username}}')">Invite to connect</button>
+<!--       <button class="btn btn-primary btn-block alert-message" id="testalert" onclick="createAutoClosingAlert(".alert-message", 2000)">Test Alert</button> -->
+
+
+      
       <!-- if logged in users = individual --> 
       <button class="btn btn-default btn-block" data-toggle="modal" data-target="#modal_customer">
         <i class="fa fa-smile-o text-muted"></i> I am a customer
@@ -270,12 +274,23 @@
                   <td> 
                   <div class="pull-right">
                    <!-- hide if user has edit rights -->
-                   <small id="vouchfood_id">{{eachfood.vouch_count}} </small> <a href="#" class="btn btn-default btn-sm"><i class="fa fa-heart-o" title="Recommend this to others" onclick="recommend_food({{user_id}}, '{{eachfood.food_name}}', {{profile_id}}); return null;"></i></a> 
+                   <div class="pull-right">
+                    <a class="btn btn-default btn-sm"><i class="fa fa-heart-o tltip" title="Recommend this to others" onclick="recommend_food({{user_id}}, '{{eachfood.food_name}}', {{profile_id}}); return null;">
+                 </i></a> </div>
+                 <div class="pull-right">
+                  <span class="badge" style="margin:0 4px 0 0;">{{eachfood.vouch_count}}</span>
+                </div>
+                   {% for eachdet in eachfood.recomm_details %}
+                 <div class="pull-right">
+                           <img class="pull-left img-rounded tltip" style="margin:0 4px 0 0; width:25px" src={{eachdet.photo}} title="{{eachdet.name}}"/>
+                  </div>
+                 {% endfor %}
                    <!-- if user has edit rights -->
                    {% ifequal profile_id user_id %}
-                    
+                  <div class="pull-right">  
                    <a href="#"  class="btn btn-danger btn-sm"><i class="fa fa-trash-o" title="Delete" onClick="delete_food({{profile_id}}, '{{eachfood.food_name}}', this)"></i></a>
                    {% endifequal %}
+                       </div>
                    </div>
                   </td>  
               </tr> 
@@ -488,6 +503,18 @@
   <script src="/static/css/docsupport/prism.js" type="text/javascript" charset="utf-8"></script>
 
   <script type="text/javascript">
+$( document ).ready(function() {
+  
+    $('.tltip').tooltip();
+});
+
+function createAutoClosingAlert(selector, delay) {
+  alert(selector);
+   var alert = $(selector).alert();
+   window.setTimeout(function() { alert.alert('close') }, delay);
+}
+
+
     var config = {
       '.chosen-select'           : {},
       '.chosen-select-deselect'  : {allow_single_deselect:true},
