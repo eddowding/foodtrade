@@ -4,7 +4,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from allauth.socialaccount.models import SocialToken, SocialAccount
 from twython import Twython
 import json
-from mainapp.classes.TweetFeed import TweetFeed, Invites
+from mainapp.classes.TweetFeed import TweetFeed, Invites, Notification
 from search import search_general
 from streaming import MyStreamer
 from models import MaxTweetId
@@ -36,10 +36,12 @@ def ajax_request(request, func_name):
         now = datetime.datetime.now()
         sent_time  = time.mktime(now.timetuple())
         for eachInvitee in invitees:
-            invite_obj.save_invites({'from':request.user.username, 'to':eachInvitee, 'sent_time':sent_time})
+            invite_obj.save_invites({
+                'from_username':request.user.username, 
+                'to':eachInvitee, 
+                'sent_time':sent_time
+                })
     return return_msg
-
-
 
 def admin_tags(request):
     parameters = {}
@@ -64,6 +66,9 @@ def home(request):
        
         user_info = UserInfo(user_id)
         parameters['userinfo'] = user_info
+        notification_obj = Notification()
+        notification = notification_obj.get_notification(request.user.username)
+        parameters['notification'] = json.loads(notification.content)
     # parameters={}
     # parameters['user'] = request.user
     # parameters['total_food_count'] = 2

@@ -7,7 +7,7 @@ import json
 from mainapp.classes.TweetFeed import TweetFeed
 from mainapp.classes.Email import Email
 from Tags import Tags
-from mainapp.classes.TweetFeed import TradeConnection, UserProfile, Food, Customer, Organisation, Team, RecommendFood
+from mainapp.classes.TweetFeed import TradeConnection, UserProfile, Food, Customer, Organisation, Team, RecommendFood, Notification
 
 consumer_key = 'seqGJEiDVNPxde7jmrk6dQ'
 consumer_secret = 'sI2BsZHPk86SYB7nRtKy0nQpZX3NP5j5dLfcNiP14'
@@ -221,10 +221,15 @@ class AjaxHandle():
 
     def vouch_for_food(self, request):
         recomm = RecommendFood()
-        print request.POST.get('data')
+        #print request.POST.get('data')
         data = eval(request.POST.get('data'))
         if data !=None and data !="":
             recomm.create_recomm(data)
             return HttpResponse("{'status':1}")
         else:
             return HttpResponse("{'status':0}")
+
+    def getnotification(self, request):
+        username = request.user.username
+        notification_obj  = Notification()
+        return notification_obj.get_notification(username)

@@ -61,6 +61,7 @@ class MongoConnection():
         json_doc = json_doc.replace("$oid", "id")
         json_doc = json_doc.replace("_id", "uid")
         return json.loads(str(json_doc))
+        
     def group(self,table_name,key, condition, initial, reducer):
         all_doc = self.db[table_name].group(key=key, condition=condition, initial=initial, reduce=reducer)
         json_doc = json.dumps(list(all_doc),default=json_util.default)

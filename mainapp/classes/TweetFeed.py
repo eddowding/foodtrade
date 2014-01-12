@@ -9,6 +9,7 @@ from bson import json_util
 
 from twython import Twython
 from allauth.socialaccount.models import SocialToken, SocialAccount
+from django.http import HttpResponse, HttpResponseRedirect
 import json
 from pymongo import Connection
 
@@ -533,4 +534,29 @@ class Invites():
 
     def save_invites(self,doc):
         return self.db_object.insert_one(self.table_name,doc)
+
+    def check_invitees(self, screen_name):
+        return self.db_object.get_all(self.table_name, {'to':'@'+screen_name})
+
+class Notification():
+    def __init__ (self):
+        self.db_object = MongoConnection("localhost",27017,'foodtrade')
+        self.table_name = 'notification'
+        self.db_object.create_table(self.table_name,'to_username')
+
+    def save_notification(self,doc):
+        return self.db_object.insert_one(self.table_name,doc)
+
+    def change_notification_status(self, notification_id):
+        return self.db_object.update(self.table_name, 
+            {'_id':notification_id}, 
+            {'notification_view_status':'true'})
+
+    def get_notification(self,username):
+        notification_count = len(self.db_object.get_all_vals(self.table_name,
+            {'notification_to':username}))
+        return HttpResponse(json.dumps({'notification_count':notification_count, 
+            'notifications':self.db_object.get_all_vals(self.table_name,
+            {'notification_to':username})}))
+
 
