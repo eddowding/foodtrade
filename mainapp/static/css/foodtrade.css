@@ -112,6 +112,7 @@ html,body
 
 #map {
 	margin-top: -12px;
+	position: fixed;
 }
 
 #account_info h4 {
