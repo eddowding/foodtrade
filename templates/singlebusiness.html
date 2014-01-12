@@ -56,6 +56,7 @@
       {% ifnotequal profile_id user_id %}
       <!-- if they dont't have an account yet -->
       <button class="btn btn-primary btn-block" onclick="invite_connect('{{screen_name}}', '{{userinfo.username}}')">Invite to connect</button>
+<!--       <button class="btn btn-primary btn-block" id="testalert" onclick="createAutoClosingAlert("#testalert", 2000)";>Test Alert</button> -->
 
       
       <!-- if logged in users = individual --> 
@@ -490,6 +491,13 @@
   <script src="/static/css/docsupport/prism.js" type="text/javascript" charset="utf-8"></script>
 
   <script type="text/javascript">
+
+function createAutoClosingAlert(selector, delay) {
+   var alert = $(selector).alert();
+   window.setTimeout(function() { alert.alert('close') }, delay);
+}
+
+
     var config = {
       '.chosen-select'           : {},
       '.chosen-select-deselect'  : {allow_single_deselect:true},
