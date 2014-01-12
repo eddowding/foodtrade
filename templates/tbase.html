@@ -19,6 +19,7 @@
     <link href="{% static "css/bootstrap.css" %}" rel="stylesheet">
     <link href="{% static "css/foodtrade.css" %}" rel="stylesheet">
     <link href="{% static "css/custom-design.css" %}" rel="stylesheet">
+    <link href="{% static "css/chardinjs.css" %}" rel="stylesheet">
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places"></script>
     <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
  {% block head %}
@@ -69,7 +70,7 @@ background: #eee;
         </div>
         <div class="navbar-collapse collapse">
           
-          <form action="/activity" class="navbar-form navbar-left nav-justified" role="search">
+          <form action="/activity" class="navbar-form navbar-left nav-justified" role="search"  data-intro="Search for anything, anywhere" data-position="bottom">
             <div class="form-group" style="margin-right:5px;"> 
               <input type="text" name="q" id="keyword" class="form-control pac-input" value="{{ search.query }}" placeholder="What?"> 
             </div> 
@@ -100,7 +101,8 @@ background: #eee;
                     </ul>
                 </li> -->
 
-                <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                 <i class="fa fa-user fa-fw"></i> {{userinfo.full_name}} <b class="caret"></b></a>
                     <ul class="dropdown-menu">
                         <li><a href="/editprofile/{{userinfo.username}}"><i class="fa fa-user fa-fw"></i> Edit profile</a></li>
@@ -125,7 +127,7 @@ background: #eee;
             <i class="fa fa-edit fa-fw"></i>  
           </button>
 
-          <button type="button" class="btn btn-default navbar-btn navbar-right hidden-sm" style="margin-left: 20px;"  data-toggle="modal" data-target="#newtwitterpost">
+          <button data-intro="Post an update from any screen." data-position="left"  type="button" class="btn btn-default navbar-btn navbar-right hidden-sm" style="margin-left: 20px;"  data-toggle="modal" data-target="#newtwitterpost">
             <i class="fa fa-edit fa-fw"></i> Post update
           </button>
         {% endif %}
@@ -237,7 +239,7 @@ background: #eee;
 {% if user.is_authenticated or search.query %}
  {% if user.is_authenticated %}
         <!-- show the logged in users account --> 
-        <div id="account_info">
+        <div id="account_info"  data-intro="Just start typing to search for specific foods, business type, or filter by organisation membership" data-position="right">
         
         <div class="clearfix" style="margin-bottom: 10px;">
           <!-- twitter 78px image - 'large' -->
@@ -283,12 +285,14 @@ background: #eee;
     
     <hr>
      
-    <form role="form">
+    <div data-intro="Just start typing to search for specific foods, business type, or filter by organisation membership" data-position="right">
+    <form role="form" >
       <div class="form-group"> 
         <input type="text" class="form-control" id="food_filter" placeholder="Filter by food">
       </div>
     </form>
- <ul class="foodtrade-tag-list">
+    
+    <ul class="foodtrade-tag-list">
     <li data-id="ALL" class="foodtrade-tag foodtrade-tag-click foodtrade-tag-all"><div class="foodtrade-tag-checkbox-column"><input type="checkbox" checked="checked" aria-label="All Partners" class="foodtrade-tag-checkbox"></div><div class="foodtrade-tag-text">All Foods</div><div class="foodtrade-tag-count">{{food_count}}</div></li>
     </ul>
 
@@ -309,6 +313,7 @@ background: #eee;
 
 <ul class="foodtrade-tag-list" id="business_filter_results">
     </ul>
+    </div><!-- charding overlay -->
     <hr />
      
      <form role="form">
@@ -426,12 +431,18 @@ background: #eee;
      <script src="{% static "js/ajax-handle.js" %}"></script>
      <script src="{% static "js/typeahead.min.js" %}"></script>
      <script src="{% static "js/typeahead.js" %}"></script>
+     <script src="{% static "js/chardinjs.min.js" %}"></script>
      
  <script src="http://getbootstrap.com/2.3.2/assets/js/bootstrap-typeahead.js"></script>
          {% block footer %}
  {% endblock %}
      <script type="text/javascript">
 $(document).ready(function() {
+
+
+$(".chardinjs-show-element").css('position','absolute');
+$('body').chardinJs('start')
+
     var activeSystemClass = $('.list-group-item.active');
     //something is entered in search form
     $('#system-search').keyup( function() {

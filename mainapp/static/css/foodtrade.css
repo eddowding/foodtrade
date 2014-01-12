@@ -24,7 +24,11 @@ h2 {
 	text-transform: uppercase;
 }
 
-
+.chardinjs-show-element {
+	z-index: auto;
+	background: #fff;
+	padding: 5px;
+}
 
 .tags a {
 	font-size: 12px;
