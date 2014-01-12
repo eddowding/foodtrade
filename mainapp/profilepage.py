@@ -129,7 +129,15 @@ def get_all_foods(user_id):
     final_foods = []
     for each in all_foods:
         all_rec = recomm.get_recomm(user_id, each['food_name'])
-        data = {'food_name': each['food_name'], 'vouch_count': len(all_rec)}
+        recomm_details =  []
+        for each_rec in all_rec:
+            myid = each_rec['recommenderuid']
+            account = SocialAccount.objects.get(user__id = myid)
+            recomm_details.append({'id': myid,
+                'name': account.extra_data['name'],
+                'screen_name': account.extra_data['screen_name'],
+                'photo': account.extra_data['profile_image_url']})
+        data = {'food_name': each['food_name'], 'vouch_count': len(all_rec), 'recomm_details': recomm_details}
         final_foods.append(data)
     print final_foods
     return final_foods
