@@ -40,6 +40,9 @@ class MongoConnection():
     def update(self, table_name, where, what):
         self.db[table_name].update(where,{"$set":what},upsert=False)
 
+    def update_multi(self, table_name, where, what):
+        self.db[table_name].update(where,{"$set":what},upsert=False, multi=True)
+
     def update_upsert(self, table_name, where, what):
         self.db[table_name].update(where,{"$set":what},upsert=True)
 
