@@ -299,11 +299,11 @@
                       <img class="pull-left tltip" style="margin:3px 4px 0 0; width:25px" src={{eachdet.photo}} title="{{eachdet.name}}"/>
                     </div>
                    {% endfor %}
-                 
+                 {% ifnotequal eachfood.vouch_count 0 %}
                    <div class="pull-right">
                      <span class="badge badge-default" style="margin:6px 4px 0 0;">{{eachfood.vouch_count}}</span>
                   </div>
-                   
+                  {% endifnotequal %}
               
 
                    </div>
