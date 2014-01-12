@@ -39,6 +39,7 @@ def display_profile(request, username):
         user_id = request.user.id
         user_profile_obj = UserProfile()
         user_profile = user_profile_obj.get_profile_by_id(str(user_id))
+        parameters['loggedin_signupas'] = user_profile['sign_up_as']
         user_info = UserInfo(user_id)
         parameters['userinfo'] = user_info
         parameters['user_id'] = request.user.id
@@ -54,15 +55,13 @@ def display_profile(request, username):
             parameters['organisations'] = get_organisations(usr.id)
 
             return render_to_response('singlebusiness.html', parameters, context_instance=RequestContext(request))
-        elif parameters['sign_up_as'] == 'Organisation':
-            parameters['members'] = get_members(usr.id)
-            parameters['teams'] = get_team(usr.id)
-            parameters['members_foods'] = get_foods_from_org_members(usr.id)
-            return render_to_response('single-organization.html', parameters, context_instance=RequestContext(request))
-        elif parameters['sign_up_as'] == 'Individual':
-            return render_to_response('individual.html', parameters, context_instance=RequestContext(request))           
-    else:
-        return render_to_response('single-loggedout.php', parameters, context_instance=RequestContext(request))
+    if parameters['sign_up_as'] == 'Organisation':
+        parameters['members'] = get_members(usr.id)
+        parameters['teams'] = get_team(usr.id)
+        parameters['members_foods'] = get_foods_from_org_members(usr.id)
+        return render_to_response('single-organization.html', parameters, context_instance=RequestContext(request))
+    elif parameters['sign_up_as'] == 'Individual':
+        return render_to_response('individual.html', parameters, context_instance=RequestContext(request))
         
 
 def edit_profile(request, username):

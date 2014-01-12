@@ -281,6 +281,22 @@
 
 
                    <div class="pull-right">
+<<<<<<< HEAD
+                    <a class="btn btn-default btn-sm"><i class="fa fa-heart-o tltip" title="Recommend this to others" onclick="recommend_food({{user_id}}, '{{eachfood.food_name}}', {{profile_id}}); return null;">
+                 </i></a> </div>
+                   {% for eachdet in eachfood.recomm_details %}
+                 <div class="pull-right">
+                           <img class="pull-left tltip" style="margin:3px 4px 0 0; width:25px" src={{eachdet.photo}} title="{{eachdet.name}}"/>
+                  </div>
+                 {% endfor %}
+                 <div class="pull-right">
+                  <span class="badge badge-default" style="margin:6px 4px 0 4px;">{{eachfood.vouch_count}}</span>
+                </div>
+                   <!-- if user has edit rights -->
+                   {% ifequal profile_id user_id %}
+                  <div class="pull-right">  
+                   <a class="btn btn-danger btn-sm"><i class="fa fa-trash-o" title="Delete" onClick="delete_food({{profile_id}}, '{{eachfood.food_name}}', this)"></i></a>
+=======
 
                    {% ifequal profile_id user_id %}
                      <a href="#"  class="btn btn-danger btn-sm"><i class="fa fa-trash-o" title="Delete" onClick="delete_food({{profile_id}}, '{{eachfood.food_name}}', this)"></i></a>
@@ -291,6 +307,7 @@
                       </i>
                     </a> 
                      
+>>>>>>> c203b8b3d34087d9aa4fd83b35760aa5bef0b0d3
                    {% endifequal %}
                    </div>
                    
@@ -299,11 +316,11 @@
                       <img class="pull-left tltip" style="margin:3px 4px 0 0; width:25px" src={{eachdet.photo}} title="{{eachdet.name}}"/>
                     </div>
                    {% endfor %}
-                 {% ifnotequal eachfood.vouch_count 0 %}
+                 
                    <div class="pull-right">
                      <span class="badge badge-default" style="margin:6px 4px 0 0;">{{eachfood.vouch_count}}</span>
                   </div>
-                  {% endifnotequal %}
+                   
               
 
                    </div>
