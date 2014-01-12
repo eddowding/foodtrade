@@ -11,14 +11,14 @@
   </style>
 
 
-    <div class="col-md-10" id="single">
+    <div class="col-md-6" id="single">
     <div class="container-responsive">
     <div id="header_box" class="clearfix">
       <div class="col-md-2" id="avatar">
         <img class="img-thumbnail center-block" src={{pic_url}}  />
       </div>
      
-      <div class="col-md-7">
+      <div class="col-md-6">
          <h1><a href="#">{{name}}</a></h1>
  
           <div class="tags tags-biztype  ">  
@@ -52,7 +52,7 @@
          </div> <!-- meta -->
   
       </div><!-- end header middle -->
-      <div id="contact_info" class="col-md-3">
+      <div id="contact_info" class="col-md-4">
       {% ifnotequal profile_id user_id %}
       <!-- if they dont't have an account yet -->
       <button class="btn btn-primary btn-block" onclick="invite_connect('{{screen_name}}', '{{userinfo.username}}')">Invite to connect</button>
@@ -209,7 +209,7 @@
     </div>
 
     <div class="row">
-      <div class="col-md-8">
+      <div class="col-md-12">
         <div class="container-responsive clearfix">
 
         <div class="tab-content">
@@ -273,24 +273,35 @@
                   
                   <td> 
                   <div class="pull-right">
-                   <!-- hide if user has edit rights -->
+
+
+
                    <div class="pull-right">
-                    <a class="btn btn-default btn-sm"><i class="fa fa-heart-o tltip" title="Recommend this to others" onclick="recommend_food({{user_id}}, '{{eachfood.food_name}}', {{profile_id}}); return null;">
-                 </i></a> </div>
-                 <div class="pull-right">
-                  <span class="badge" style="margin:0 4px 0 0;">{{eachfood.vouch_count}}</span>
-                </div>
-                   {% for eachdet in eachfood.recomm_details %}
-                 <div class="pull-right">
-                           <img class="pull-left img-rounded tltip" style="margin:0 4px 0 0; width:25px" src={{eachdet.photo}} title="{{eachdet.name}}"/>
-                  </div>
-                 {% endfor %}
-                   <!-- if user has edit rights -->
+
                    {% ifequal profile_id user_id %}
-                  <div class="pull-right">  
-                   <a href="#"  class="btn btn-danger btn-sm"><i class="fa fa-trash-o" title="Delete" onClick="delete_food({{profile_id}}, '{{eachfood.food_name}}', this)"></i></a>
+                     <a href="#"  class="btn btn-danger btn-sm"><i class="fa fa-trash-o" title="Delete" onClick="delete_food({{profile_id}}, '{{eachfood.food_name}}', this)"></i></a>
+
+                   {% else %}
+                    <a class="btn btn-default btn-sm">
+                      <i class="fa fa-heart-o tltip" title="Recommend this to others" onclick="recommend_food({{user_id}}, '{{eachfood.food_name}}', {{profile_id}}); return null;">
+                      </i>
+                    </a> 
+                     
                    {% endifequal %}
-                       </div>
+                   </div>
+                   
+                   {% for eachdet in eachfood.recomm_details %}
+                    <div class="pull-right">
+                      <img class="pull-left tltip" style="margin:3px 4px 0 0; width:25px" src={{eachdet.photo}} title="{{eachdet.name}}"/>
+                    </div>
+                   {% endfor %}
+                 
+                   <div class="pull-right">
+                     <span class="badge badge-default" style="margin:6px 4px 0 0;">{{eachfood.vouch_count}}</span>
+                  </div>
+                   
+              
+
                    </div>
                   </td>  
               </tr> 
@@ -480,23 +491,19 @@
       
  
    
-      </div><!-- end col8 --> 
-
-
-      <div class="col-md-4">
-        <div style="width:100%; height: 200px; " id="map"  data-spy="affix" data-offset-top="30">
-        <div class="alert alert-warning">
-          <p>This map shows 
-          Customers as points
-          Stockist as organge lines and 
-          Supplieras as purple lines</p>
-          <p>There are radius lines at 15, 30, and 100 miles.</p>
-        </div>
-      </div><!-- end col4 -->
+      </div><!-- end col --> 
+ 
     </div><!-- row -->
 
+
    
-    </div><!-- col10 --> 
+    </div><!-- col --> 
+ 
+
+    <div class="col-md-4">
+         <div style="width:100%; height: 1000px; " id="map"  data-spy="affix" data-offset-top="30">
+           </div> 
+           </div>
 
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js" type="text/javascript"></script>
   <script src="/static/js/chosen.jquery.min.js" type="text/javascript"></script>
