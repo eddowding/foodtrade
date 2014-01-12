@@ -513,9 +513,7 @@ article .content h4 {
   margin-bottom: 0;
 }
 
-.thumbnail {
-  background: #eee;
-}
+ 
 
 .thumbnail a:hover {
   text-decoration: none;
@@ -535,6 +533,7 @@ article .content h4 {
   box-shadow: 0 0 450px #000 inset;
   color: #fff;
   text-shadow: 1px 1px 2px #000;
+  margin-top: 20px;
 }
 
 
