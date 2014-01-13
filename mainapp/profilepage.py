@@ -107,10 +107,18 @@ def edit_profile(request, username):
         last_name = request.POST['last_name']
         description = request.POST['description']
         zip_code = request.POST['zip_code']
-        sign_up_as = request.POST['sign_up_as']
-        phone = request.POST['phone']
 
-        usr_type = request.POST['type']
+        try:
+            sign_up_as = request.POST['sign_up_as']
+        except:
+            userprof = user_profile.get_profile_by_id(str(request.user.id))
+            sign_up_as = userprof['sign_up_as']
+
+        phone = request.POST['phone']
+        if sign_up_as == 'Business':
+            usr_type = request.POST['type']
+        else:
+            usr_type = ''
         tweetFeedObj = TweetFeed()
         tweetFeedObj.update_tweets(username, first_name, last_name, description, zip_code)
         user_profile_obj = UserProfile()
