@@ -24,6 +24,7 @@ h2 {
 	text-transform: uppercase;
 }
 
+
 .chardinjs-show-element {
 	z-index: auto;
 	background: #fff;
@@ -218,8 +219,6 @@ article .content h4 {
 /**  MAKE DEFAULT:ACTIVE GREEN **/
 /********************************/
 
-
-
 .btn-default:active, .btn-default.active, .open .dropdown-toggle.btn-default {
 	background-image: none;
 }
@@ -236,6 +235,68 @@ article .content h4 {
 	-webkit-box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
 	box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
 }
+
+/********************************/
+/** COLOUR ICONS ON BUTTON HOVER  **/
+/********************************/
+
+.btn:hover > .text-muted,
+.btn-default:focus > .text-muted,
+.btn-default:active > .text-muted,
+.btn.active > .text-muted  {
+	color: #fff;
+}
+
+/********************************/
+/**  MAKE PRIMARY BUTTON ORANGE */
+/********************************/
+
+.btn-primary {
+color: #ffffff;
+background-color: #51B55E;
+border-color: #47a447;
+}
+
+.btn-primary:hover,
+.btn-primary:focus,
+.btn-primary:active,
+.btn-primary.active,
+.open .dropdown-toggle.btn-primary {
+  color: #ffffff;
+  background-color: ##FF9700;
+  border-color: #285e8e;
+}
+
+.btn-primary:active,
+.btn-primary.active,
+.open .dropdown-toggle.btn-primary {
+  background-image: none;
+}
+
+.btn-primary.disabled,
+.btn-primary[disabled],
+fieldset[disabled] .btn-primary,
+.btn-primary.disabled:hover,
+.btn-primary[disabled]:hover,
+fieldset[disabled] .btn-primary:hover,
+.btn-primary.disabled:focus,
+.btn-primary[disabled]:focus,
+fieldset[disabled] .btn-primary:focus,
+.btn-primary.disabled:active,
+.btn-primary[disabled]:active,
+fieldset[disabled] .btn-primary:active,
+.btn-primary.disabled.active,
+.btn-primary[disabled].active,
+fieldset[disabled] .btn-primary.active {
+  background-color: #428bca;
+  border-color: #357ebd;
+}
+
+.btn-primary .badge {
+  color: #428bca;
+  background-color: #fff;
+}
+
 
 
 /********************************/

@@ -36,12 +36,11 @@
           </div> 
          <hr />
          <p>{{description}}</p>        
-          <div class="tags">  
-           <a href="/tag/TAG">Box Scheme</a>
-           <a href="/tag/TAG">Butcher</a>
-           <a href="/tag/TAG">family</a>
-           <a href="/tag/TAG">organic</a> 
-          </div>
+        
+     <!--      <div class="tags">  
+           <a href="/tag/TAG">tag1</a>
+           <a href="/tag/TAG">tag2</a> 
+          </div> -->
          <hr /> 
      
          <div class="meta small text-muted">
@@ -60,8 +59,8 @@
       <div id="contact_info" class="col-md-4">
       {% ifnotequal profile_id user_id %}
       <!-- if they dont't have an account yet -->
-      <button class="btn btn-primary btn-block" onclick="invite_connect('{{screen_name}}', '{{userinfo.username}}')">Invite to connect</button>
-<!--       <button class="btn btn-primary btn-block alert-message" id="testalert" onclick="createAutoClosingAlert(".alert-message", 2000)">Test Alert</button> -->
+      <button class="btn btn-success btn-block" onclick="invite_connect('{{screen_name}}', '{{userinfo.username}}')">Invite to connect</button>
+<!--       <button class="btn btn-success btn-block alert-message" id="testalert" onclick="createAutoClosingAlert(".alert-message", 2000)">Test Alert</button> -->
 
 
 {% if user.is_authenticated %}      
@@ -104,12 +103,12 @@
       {% endifequal %}
  
       <!-- Button trigger modal -->
-      <button class="btn btn-primary btn-block" data-toggle="modal" data-target="#modal_contact">
+      <button class="btn btn-success btn-block" data-toggle="modal" data-target="#modal_contact">
         Contact
       </button>  
 {% else %}
       <!-- if not logged in show login prompt -->
-      <a href="{% provider_login_url "twitter" process="login" %}" class="btn btn-primary btn-block">Login for more</a>
+      <a href="{% provider_login_url "twitter" process="login" %}" class="btn btn-success btn-block">Login for more</a>
 {% endif %}
       {% endifnotequal %}
       <button class="btn btn-default btn-block" data-toggle="modal" data-target="#sharer">
@@ -168,8 +167,8 @@
    
             </div>
             <div class="modal-footer"> 
-              <button type="button" class="btn btn-primary" onclick="post_contact_tweet('{{screen_name}}')">Tweet it</button>
-              <button type="button" class="btn btn-primary" onclick="send_email('{{email}}')">Email it</button>
+              <button type="button" class="btn btn-success" onclick="post_contact_tweet('{{screen_name}}')">Tweet it</button>
+              <button type="button" class="btn btn-success" onclick="send_email('{{email}}')">Email it</button>
             </div>
           </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
@@ -192,9 +191,9 @@
             <div class="modal-footer"> 
               <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
               {% if user.is_authenticated %}
-              <button type="button" class="btn btn-primary" onClick="add_customer({{profile_id}}, {{user_id}})" data-dismiss="modal">Yes, I'm a happy customer!</button>
+              <button type="button" class="btn btn-success" onClick="add_customer({{profile_id}}, {{user_id}})" data-dismiss="modal">Yes, I'm a happy customer!</button>
               {% else %}
-              <button type="button" class="btn btn-primary" data-dismiss="modal">Yes, I'm a happy customer!</button>
+              <button type="button" class="btn btn-success" data-dismiss="modal">Yes, I'm a happy customer!</button>
               {% endif %}
             </div>
           </div><!-- /.modal-content -->
@@ -260,12 +259,9 @@
 
 
                             <span class="input-group-btn">
-                                <button class="btn btn-success" onClick="add_food({{profile_id}})"> Add</button>
+                                <button class="btn btn-default" onClick="add_food({{profile_id}})"> Add</button>
                             </span>
-                          </div> 
-                          {% else %}
-                          <a href="{% provider_login_url "twitter" process="login" %}" class="btn btn-primary">Login to add foods / see all foods</a>
-                          
+                          </div>  
                           {% endif %}
             </div>
 
@@ -287,6 +283,14 @@
 
 
       <table class="table table-list-search table-condensed">
+          <thead>
+            <tr>
+              <td colspan="2">
+                <p class="alert alert-warning"><a href="{% provider_login_url "twitter" process="login" %}" class="">Login</a> or <a href="{% provider_login_url "twitter" process="login" %}" class="">sign up free</a> to see all their foods, and any that you know are missing. </p>
+              </td>
+            </tr>
+          </thead>
+          </thead>
           <tbody id="food_tbody">
             {% for eachfood in all_foods %}
               <tr id="row{{forloop.counter}}">
@@ -362,10 +366,10 @@
               <button type="submit" class="btn btn-success">Add</button>
             </form>
           </div>
-          {% else %}
-          <div class="pull-left">  
-          <a href="{% provider_login_url "twitter" process="login" %}" class="btn btn-primary">Login to add connections / see all connections</a>
-        </div>
+          {% else %} 
+
+          <p class="alert alert-warning"><a href="{% provider_login_url "twitter" process="login" %}" class="">Login</a> or <a href="{% provider_login_url "twitter" process="login" %}" class="">sign up free</a> to see all their suppliers (or stockists), and any that you know are missing. </p>
+ 
            {% endif %}
            <div class="pull-left">
           {% for each in connections %}
@@ -403,10 +407,9 @@
           <div class="tab-pane fade" id="organisations">
             {% if user.is_authenticated %}
             {% else %}
-            <div class="pull-left">  
-          <a href="{% provider_login_url "twitter" process="login" %}" class="btn btn-primary">Login to see all</a>
-        </div>
-        {% endif %}
+             <p class="alert alert-warning"><a href="{% provider_login_url "twitter" process="login" %}" class="">Login</a> or <a href="{% provider_login_url "twitter" process="login" %}" class="">sign up free</a> to see the organisations or groups they belong to. </p>
+
+            {% endif %}
           {% for each in organisations %}
                 <div class="card card-organisation">
                   <div class="content">
@@ -429,10 +432,8 @@
 
           <div class="tab-pane fade" id="customers">
         {% if user.is_authenticated %}
-            {% else %}
-            <div class="pull-left">  
-          <a href="{% provider_login_url "twitter" process="login" %}" class="btn btn-primary">Login to see all</a>
-        </div>
+          {% else %} 
+            <p class="alert alert-warning"><a href="{% provider_login_url "twitter" process="login" %}" class="">Login</a> or <a href="{% provider_login_url "twitter" process="login" %}" class="">sign up free</a> to see where their customers live. Maybe they'll do home deliveries if you ask nicely! </p> 
         {% endif %}
 <div class="pull-left">
            {% for each in customers %}
@@ -509,9 +510,7 @@
                       </div>
                   </div>
               {% else %}
-                      <div class="pull-left">  
-                                <a href="{% provider_login_url "twitter" process="login" %}" class="btn btn-primary">Login to see updates</a>
-                      </div>
+                <p class="alert alert-warning"><a href="{% provider_login_url "twitter" process="login" %}" class="">Login</a> or <a href="{% provider_login_url "twitter" process="login" %}" class="">sign up free</a> to see updates and activity. </p>
               {% endif %}
 
               </div>
@@ -578,6 +577,14 @@ function createAutoClosingAlert(selector, delay) {
       '.chosen-select-no-results': {no_results_text:'Oops, nothing found!'},
       '.chosen-select-width'     : {width:"95%"}
     }
+
+      $(".my_select_box").chosen({
+    disable_search_threshold: 10,
+    no_results_text: "Oops, nothing found!",
+    width: "95%"
+  });
+
+
     for (var selector in config) {
       $(selector).chosen(config[selector]);
     }
