@@ -63,4 +63,4 @@ class SignupForm(forms.Form):
                     'notifying_user':str(twitter_username)
                     })
         print "saved", data
-        return HttpResponseRedirect('/?next=/?new_user=True')
+        return HttpResponseRedirect('/activity/')

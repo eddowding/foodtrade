@@ -491,7 +491,7 @@ class Food():
     def create_food (self, value):
         value['deleted'] =0
         # self.db_object.insert_one(self.table_name,value)
-        self.db_object.update_upsert(self.table_name, {'food_name': value['food_name']}, {'deleted': 0, 'useruid': value['useruid']})
+        self.db_object.update_upsert(self.table_name, {'food_name': value['food_name'], 'useruid': value['useruid']}, {'deleted': 0})
 
     def delete_food(self, useruid, food_name):
         self.db_object.update(self.table_name,{'useruid': useruid, 'food_name': food_name}, {'deleted':1})
@@ -594,6 +594,11 @@ class Invites():
     def check_invitees(self, screen_name):
         return self.db_object.get_all(self.table_name, {'to':'@'+screen_name})
 
+    def check_invited(self, screen_name):
+        if len(self.db_object.get_all(self.table_name, {'to':'@'+screen_name})) > 0:
+            return True
+        return False
+
 class Notification():
     def __init__ (self):
         self.db_object = MongoConnection("localhost",27017,'foodtrade')
@@ -604,9 +609,10 @@ class Notification():
         return self.db_object.insert_one(self.table_name,doc)
 
     def change_notification_status(self, notification_to):
-        return self.db_object.update(self.table_name, 
-            {'notification_to':notification_to}, 
+        self.db_object.update_multi(self.table_name, 
+            {'notification_to':str(notification_to)}, 
             {'notification_view_status':'true'})
+        return HttpResponse(json.dumps({'status':1}))
 
     def get_notification(self,username):
         notification_count = len(self.db_object.get_all_vals(self.table_name,
@@ -626,4 +632,7 @@ class TwitterError():
         return self.db_object.insert_one(self.table_name,doc)
 
     def get_error(self, screen_name):
-        return self.db_object.get_all_vals(self.table_name,{'screen_name':screen_name, 'error_solve_stat':'false'})        
+        return self.db_object.get_all_vals(self.table_name,{'username':screen_name, 'error_solve_stat':'false'})   
+
+    def change_error_status(self, screen_name):
+        return self.db_object.update(self.table_name, {'username':screen_name}, {'error_solve_stat':'true'})
