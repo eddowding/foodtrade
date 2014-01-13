@@ -1,5 +1,10 @@
 {% extends 'tbase.html' %}
 {% load staticfiles %}
+{% load socialaccount %}
+{% load url from future %}
+{% load i18n %}
+{% include "socialaccount/snippets/login_extra.html" %}
+{% load account %}
 {% block content %}
 <!-- <link rel="stylesheet" href="/static/css/docsupport/style.css"> -->
   <link rel="stylesheet" href="/static/css/docsupport/prism.css">
@@ -59,7 +64,7 @@
 <!--       <button class="btn btn-primary btn-block alert-message" id="testalert" onclick="createAutoClosingAlert(".alert-message", 2000)">Test Alert</button> -->
 
 
-      
+{% if user.is_authenticated %}      
       <!-- if logged in users = individual --> 
       {% ifequal loggedin_signupas "Individual" %}
       <button class="btn btn-default btn-block" data-toggle="modal" data-target="#modal_customer">
@@ -102,8 +107,10 @@
       <button class="btn btn-primary btn-block" data-toggle="modal" data-target="#modal_contact">
         Contact
       </button>  
+{% else %}
       <!-- if not logged in show login prompt -->
-      <!-- <button class="btn btn-primary btn-block">Login for more</button> -->
+      <a href="{% provider_login_url "twitter" process="login" %}" class="btn btn-primary btn-block">Login for more</a>
+{% endif %}
       {% endifnotequal %}
       <button class="btn btn-default btn-block" data-toggle="modal" data-target="#sharer">
         <i class="fa fa-share-square-o text-muted"></i> Share
@@ -224,7 +231,7 @@
           <div class=" well well-sm clearfix">
 <div class="row">
             <div class="col-md-8">
-            
+                    {% if user.is_authenticated %}
                       <div class="input-group">
                       <!-- link this to open food facts --> 
                             <!-- <input class="typeahead form-control" name="addfood" data-source='' data-provide="typeahead" autocomplete="off" id = "addfood_id" style="width:400px;" placeholder="Add foods you can buy here."> -->
@@ -250,6 +257,10 @@
                                 <button class="btn btn-success" onClick="add_food({{profile_id}})"> Add</button>
                             </span>
                           </div> 
+                          {% else %}
+                          <a href="{% provider_login_url "twitter" process="login" %}" class="btn btn-primary">Login to add foods / see all foods</a>
+                          
+                          {% endif %}
             </div>
 
             <div class="col-md-4">
@@ -286,10 +297,11 @@
                      <a href="#"  class="btn btn-danger btn-sm"><i class="fa fa-trash-o" title="Delete" onClick="delete_food({{profile_id}}, '{{eachfood.food_name}}', this)"></i></a>
 
                    {% else %}
+                        {% if user.is_authenticated %}
                     <a class="btn btn-default btn-sm">
                       <i class="fa fa-heart-o tltip" title="Recommend this to others" onclick="recommend_food({{user_id}}, '{{eachfood.food_name}}', {{profile_id}}); return null;">
                       </i>
-                    </a> 
+                    </a> {% endif %}
                      
                    {% endifequal %}
                    </div>
@@ -301,7 +313,7 @@
                    {% endfor %}
                  {% ifnotequal eachfood.vouch_count 0 %}
                    <div class="pull-right">
-                     <span class="badge badge-default" style="margin:6px 4px 0 0;">{{eachfood.vouch_count}}</span>
+                     <span class="badge badge-default tltip" style="margin:6px 4px 0 0;" title="{{eachfood.vouch_count}} recommendations on {{eachfood.food_name}}">{{eachfood.vouch_count}}</span>
                   </div>
                   {% endifnotequal %}
               
@@ -318,6 +330,7 @@
           </div> <!-- end produce -->
 
           <div class="tab-pane fade" id="connections">
+            {% if user.is_authenticated %}
             <div class="well well-sm">  
             <form class="form-inline" role="form">
               <div class="form-group">
@@ -342,8 +355,13 @@
               </div>
               <button type="submit" class="btn btn-success">Add</button>
             </form>
-          </div> 
-           <p class=""><a href="">Show all</a></p>
+          </div>
+          {% else %}
+          <div class="pull-left">  
+          <a href="{% provider_login_url "twitter" process="login" %}" class="btn btn-primary">Login to add connections / see all connections</a>
+        </div>
+           {% endif %}
+           <div class="pull-left">
           {% for each in connections %}
                   <div class="card card-business">
                     <div class="content">
@@ -373,10 +391,16 @@
                     </div>
                   </div> 
                   {% endfor %}
+                </div>
           </div> <!--  end connections -->
 
           <div class="tab-pane fade" id="organisations">
-<p class=""><a href="single-organisation.php">Show all</a></p>
+            {% if user.is_authenticated %}
+            {% else %}
+            <div class="pull-left">  
+          <a href="{% provider_login_url "twitter" process="login" %}" class="btn btn-primary">Login to see all</a>
+        </div>
+        {% endif %}
           {% for each in organisations %}
                 <div class="card card-organisation">
                   <div class="content">
@@ -398,8 +422,15 @@
           </div> <!-- end organisations -->
 
           <div class="tab-pane fade" id="customers">
-
+        {% if user.is_authenticated %}
+            {% else %}
+            <div class="pull-left">  
+          <a href="{% provider_login_url "twitter" process="login" %}" class="btn btn-primary">Login to see all</a>
+        </div>
+        {% endif %}
+<div class="pull-left">
            {% for each in customers %}
+
               <div class="card card-individual">
                 <div class="content">
                   <img src="{{each.photo}}" alt="{{each.name}}"
@@ -413,7 +444,7 @@
                
           </div>
           {% endfor %}
-
+          </div>
           </div> <!-- end customers -->
 
           <div class="tab-pane fade" id="activity">
@@ -421,6 +452,7 @@
           <div class="container-responsive">
           <div class="row">
               <div class="col-md-12">
+            {% if user.is_authenticated %}
                   <div class="">
 
                       <!-- if this is the profile of the logged in user -->
@@ -470,7 +502,14 @@
                           </ul>
                       </div>
                   </div>
+              {% else %}
+                      <div class="pull-left">  
+                                <a href="{% provider_login_url "twitter" process="login" %}" class="btn btn-primary">Login to see updates</a>
+                      </div>
+              {% endif %}
+
               </div>
+
           </div>
 
           </div>
