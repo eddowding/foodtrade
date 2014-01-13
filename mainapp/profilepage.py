@@ -43,19 +43,25 @@ def display_profile(request, username):
         user_info = UserInfo(user_id)
         parameters['userinfo'] = user_info
         parameters['user_id'] = request.user.id
-        if parameters['sign_up_as'] == 'Business':
-            
-            parameters['all_foods'] = get_all_foods(usr.id)
-            #get all customers
-            parameters['customers'] = get_customers(usr.id)
-            #get all connections
+        
+    if parameters['sign_up_as'] == 'Business':  
+        if request.user.is_authenticated():
             parameters['connections'], parameters['logged_conn'] = get_connections(usr.id, request.user.id)
-            parameters['connections_str'] = json.dumps(parameters['connections'])
-            # get all organisations
+            parameters['all_foods'] = get_all_foods(usr.id)
             parameters['organisations'] = get_organisations(usr.id)
+            parameters['customers'] = get_customers(usr.id)
+        else:
+            conn_limited, parameters['logged_conn'] = get_connections(usr.id)
+            # if not logged in show limited
+            parameters['connections'] = conn_limited[:5]
+            parameters['all_foods'] = get_all_foods(usr.id)[:3]
+            parameters['organisations'] = get_organisations(usr.id)[:3]
+            parameters['customers'] = get_customers(usr.id)[:10]
 
-            return render_to_response('singlebusiness.html', parameters, context_instance=RequestContext(request))
-    if parameters['sign_up_as'] == 'Organisation':
+        parameters['connections_str'] = json.dumps(parameters['connections'])
+        # get all organisations
+        return render_to_response('singlebusiness.html', parameters, context_instance=RequestContext(request))
+    elif parameters['sign_up_as'] == 'Organisation':
         parameters['members'] = get_members(usr.id)
         parameters['teams'] = get_team(usr.id)
         parameters['members_foods'] = get_foods_from_org_members(usr.id)
@@ -156,7 +162,7 @@ def get_customers(user_id):
          })
     return final_customers[:10]
 
-def get_connections(user_id, logged_in_id):
+def get_connections(user_id, logged_in_id = None):
     trade_conn = TradeConnection()
     userprof = UserProfile()
     b_conn = trade_conn.get_connection_by_business(user_id)
@@ -167,7 +173,7 @@ def get_connections(user_id, logged_in_id):
         account = SocialAccount.objects.get(user__id = each['c_useruid'])
         usr_pr = userprof.get_profile_by_id(str(each['c_useruid']))
         user_info = UserInfo(each['c_useruid'])
-        if each['c_useruid'] == logged_in_id:
+        if logged_in_id!=None and each['c_useruid'] == logged_in_id:
             logged_conn = 'buyer'
         final_connections.append({'id': each['c_useruid'],
          'name': account.extra_data['name'],
@@ -186,7 +192,7 @@ def get_connections(user_id, logged_in_id):
         account = SocialAccount.objects.get(user__id = each['b_useruid'])
         usr_pr = userprof.get_profile_by_id(str(each['b_useruid']))
         user_info = UserInfo(each['b_useruid'])
-        if each['b_useruid'] == logged_in_id:
+        if logged_in_id!=None and  each['b_useruid'] == logged_in_id:
             logged_conn = 'seller'
         data = {'id': each['b_useruid'],
          'name': account.extra_data['name'],
@@ -207,7 +213,6 @@ def get_connections(user_id, logged_in_id):
         else:
             index = final_connections.index(data)
             final_connections[index]['relation'] = 'both'
-    print 'logged_conn', logged_conn
     return final_connections[:10], logged_conn
 
 def get_members(user_id):
