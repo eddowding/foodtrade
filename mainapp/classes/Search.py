@@ -25,12 +25,15 @@ class Search():
         #     query_string['$or'] = [{'status':{"$regex": keyword_like, '$options': '-i'}},{'user.name':{"$regex": keyword_like, '$options': '-i'}},{'user.username':{"$regex": keyword_like, '$options': '-i'}},{'user.description':{"$regex": keyword_like, '$options': '-i'}}]
             
         if(self.lon != "" and self.lat != ""):
-            query_string['location'] = {"$near":{"$geometry":{"type":"Point", "coordinates":[float(self.lon), float(self.lat)]}, "$maxDistance":160.934}}
+
+
+
+            query_string['location'] = { "$near" : [ float(self.lon), float(self.lat)] , "$maxDistance": 0 } #('$near', {'lat': float(self.lat), 'long': float(self.lon)}), ('$maxDistance', 160.934)]) 
+            # query_string['location'] = {"$near":{"$geometry":{"type":"Point", "coordinates":[float(self.lon), float(self.lat)]}, "$maxDistance":160.934}}
             pass
-        
 
 
-        # aggregate_query = [{
+# aggregate_query = [{
         #                 "$geoNear": {"near": [float(self.lon), float(self.lat)],
         #                             "distanceField": "distance",
         #                             "maxDistance": 160.934,

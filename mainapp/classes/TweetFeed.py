@@ -105,7 +105,7 @@ class TweetFeed():
             var type_filter = """+json.dumps(type_filter)+""";
             var organisation_filter = """+json.dumps(organisation_filter)+""";
             var food_filtered = true;
-            var filtered = true;
+            var filtered = false;
             for(var i=0;i<food_filter.length;i++)
             {   
                 if(foods.indexOf(food_filter[i])==-1)
@@ -132,9 +132,11 @@ class TweetFeed():
 
             for(var i=0;i<organisation_filter.length;i++)
             {
+                organisation_filtered = false;
                 if(user_types.indexOf(organisation_filter[i])==-1)
                 {
                    organisation_filtered = false;
+                   
                    break;
                 }
             }
