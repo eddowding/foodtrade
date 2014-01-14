@@ -59,10 +59,11 @@
       <div id="contact_info" class="col-md-4">
       {% ifnotequal profile_id user_id %}
       <!-- if they dont't have an account yet -->
-      {% if not user.is_authenticated %}
+      
+<!--       {% if not user.is_authenticated %}
       <button class="btn btn-success btn-block" onclick="invite_connect('{{screen_name}}', '{{userinfo.username}}')">Invite to connect</button>
-      {% endif %}
-<!--       <button class="btn btn-success btn-block alert-message" id="testalert" onclick="createAutoClosingAlert(".alert-message", 2000)">Test Alert</button> -->
+      {% endif %} -->
+
 
 
 {% if user.is_authenticated %}      
@@ -284,6 +285,7 @@
 
 
       <table class="table table-list-search table-condensed">
+        {% if not user.is_authenticated %}
           <thead>
             <tr>
               <td colspan="2">
@@ -291,7 +293,7 @@
               </td>
             </tr>
           </thead>
-          </thead>
+          {% endif %}
           <tbody id="food_tbody">
             {% for eachfood in all_foods %}
               <tr id="row{{forloop.counter}}">
@@ -368,9 +370,10 @@
             </div>
           </div>
 
-
+          <h2>Buyers</h2> 
            <div class="pull-left">
           {% for each in connections %}
+              {% if each.relation == "buyer" or each.relation == "both" %}
                   <div class="card card-business">
                     <div class="content">
                       <div class="pull-left">
@@ -398,8 +401,46 @@
                       </p>
                     </div>
                   </div> 
+                  {% endif %}
                   {% endfor %}
                 </div>
+                
+          <h2>Sellers</h2> 
+           <div class="pull-left">
+          {% for each in connections %}
+              {% if each.relation == "seller" or each.relation == "both" %}
+                  <div class="card card-business">
+                    <div class="content">
+                      <div class="pull-left">
+                        <img src="{{each.photo}}" alt="{{each.name}}"
+                        class="img-rounded img-responsive" style="width:40px;" /> 
+                
+                      </div>
+                      <div class="text">
+                      <button type="button" class="close" aria-hidden="true">&times;</button>
+                        <h5><a href="/profile/{{username}}">{{each.name}}</a> 
+                        </h5>  
+                        <p class="small">{{each.description}}</p>
+                      </div>
+                    </div>
+                    <div class="numbers clearfix">
+                      <div class="tags tags-biztype pull-left">  
+                        {% for e in each.type %}
+                       <a href="/activity/?q={{e}}">{{e}}</a>
+                       {% endfor %}
+                      </div>
+                      <p class="small pull-right">
+                        <a href="#" title="{{each.food_no}} Foods"><i class="fa fa-leaf"></i> {{each.food_no}}</a>
+                        <a href="#" title="{{each.trade_conn_no}} conn"><i class="fa fa-link"></i> {{each.trade_conn_no}}</a>
+                        <a href="#" title="{{each.org_conn_no}} Organisations"><i class="fa fa-group"></i> {{each.org_conn_no}}</a> 
+                      </p>
+                    </div>
+                  </div> 
+                  {% endif %}
+                  {% endfor %}
+                </div>
+
+
           </div> <!--  end connections -->
 
           <div class="tab-pane fade" id="organisations">
