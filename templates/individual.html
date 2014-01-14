@@ -57,8 +57,9 @@
       <div id="contact_info" class="col-md-3">
       {% ifnotequal profile_id user_id %}
       <!-- if they dont't have an account yet -->
+      {% if not user.is_authenticated %}
       <button class="btn btn-primary btn-block">Invite to connect</button>
- 
+     {% endif %}
       <!-- Button trigger modal -->
       {% if user.is_authenticated %}
       <button class="btn btn-primary btn-block" data-toggle="modal" data-target="#modal_contact">
@@ -99,7 +100,7 @@
                   <address>
                     
           <a href="mailto:{{email}}" target="_blank"><i class="fa fa-envelope text-muted"></i> {{email}} </a><br />
-          <a href="#"><i class="fa fa-twitter text-muted"></i> {{screen_name}}</a><br />
+          <a href="http://twitter.com/{{screen_name}}"  target="_blank"><i class="fa fa-twitter text-muted"></i> {{screen_name}}</a><br />
           <a href="callto:{{phone_number}}"><i class="fa fa-phone text-muted"></i> {{phone_number}}</a>
                   </address>
                 </div>
@@ -108,13 +109,13 @@
                   <form id="contact" method="post" class="form" role="form">
                     <div class="row">
                       <div class="col-xs-6 col-md-6 form-group">
-                        <input class="form-control" id="name" name="name" placeholder="Name" type="text" required autofocus value="{{userinfo.full_name}}"/>
+                        <input class="form-control" id="sender_name" name="name" placeholder="Name" type="text" required autofocus value = "{{userinfo.full_name}}"/>
                       </div>
                       <div class="col-xs-6 col-md-6 form-group">
-                        <input class="form-control" id="email" name="email" placeholder="Email" type="email" value="{{userinfo.email}}"required />
+                        <input class="form-control" id="sender_email" name="email" placeholder="Email" type="email" required value = "{{userinfo.email}}" />
                       </div>
                     </div> 
-                    <textarea class="form-control counted" name="message" placeholder="Type in your message" rows="5"></textarea>
+                    <textarea class="form-control counted" id="email_message" placeholder="Type in your message" rows="5"></textarea>
                     <h6 class="pull-right" id="counter">320 characters remaining</h6>
                      
                   </form>
@@ -125,8 +126,8 @@
    
             </div>
             <div class="modal-footer"> 
-              <button type="button" class="btn btn-primary">Tweet it</button>
-              <button type="button" class="btn btn-primary">Email it</button>
+              <button type="button" class="btn btn-success" onclick="post_contact_tweet('{{screen_name}}')">Tweet it</button>
+              <button type="button" class="btn btn-success" onclick="send_email('{{email}}')">Email it</button>
             </div>
           </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
@@ -161,5 +162,6 @@
       </div><!-- end header last -->
     </div>
     </div>
+     <script src="{% static "js/contact.js" %}"></script>
 
  {% endblock %}
