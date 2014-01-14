@@ -661,7 +661,7 @@ clear: both;
 	 
 } 
 
-#header_box div[class*='col-']  { 
+#header_box > div[class*='col-']  { 
 	min-height: 300px;
 }
 
