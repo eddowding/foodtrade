@@ -12,6 +12,7 @@ from mainapp.classes.Tags import Tags
 from pygeocoder import Geocoder
 import json
 from mainapp.produce import *
+import random
 
 def display_profile(request, username):
     parameters = {}
@@ -38,30 +39,35 @@ def display_profile(request, username):
         user_id = request.user.id
         user_profile_obj = UserProfile()
         user_profile = user_profile_obj.get_profile_by_id(str(user_id))
+        parameters['loggedin_signupas'] = user_profile['sign_up_as']
         user_info = UserInfo(user_id)
         parameters['userinfo'] = user_info
         parameters['user_id'] = request.user.id
-        if parameters['sign_up_as'] == 'Business':
-            
-            parameters['all_foods'] = get_all_foods(usr.id)
-            #get all customers
-            parameters['customers'] = get_customers(usr.id)
-            #get all connections
+        
+    if parameters['sign_up_as'] == 'Business':  
+        if request.user.is_authenticated():
             parameters['connections'], parameters['logged_conn'] = get_connections(usr.id, request.user.id)
-            parameters['connections_str'] = json.dumps(parameters['connections'])
-            # get all organisations
+            parameters['all_foods'] = get_all_foods(usr.id)
             parameters['organisations'] = get_organisations(usr.id)
+            parameters['customers'] = get_customers(usr.id)
+        else:
+            conn_limited, parameters['logged_conn'] = get_connections(usr.id)
+            # if not logged in show limited
+            parameters['connections'] = conn_limited[:5]
+            parameters['all_foods'] = get_all_foods(usr.id)[:3]
+            parameters['organisations'] = get_organisations(usr.id)[:3]
+            parameters['customers'] = get_customers(usr.id)[:10]
 
-            return render_to_response('singlebusiness.html', parameters, context_instance=RequestContext(request))
-        elif parameters['sign_up_as'] == 'Organisation':
-            parameters['members'] = get_members(usr.id)
-            parameters['teams'] = get_team(usr.id)
-            parameters['members_foods'] = get_foods_from_org_members(usr.id)
-            return render_to_response('single-organization.html', parameters, context_instance=RequestContext(request))
-        elif parameters['sign_up_as'] == 'Individual':
-            return render_to_response('individual.html', parameters, context_instance=RequestContext(request))           
-    else:
-        return render_to_response('single-loggedout.php', parameters, context_instance=RequestContext(request))
+        parameters['connections_str'] = json.dumps(parameters['connections'])
+        # get all organisations
+        return render_to_response('singlebusiness.html', parameters, context_instance=RequestContext(request))
+    elif parameters['sign_up_as'] == 'Organisation':
+        parameters['members'] = get_members(usr.id)
+        parameters['teams'] = get_team(usr.id)
+        parameters['members_foods'] = get_foods_from_org_members(usr.id)
+        return render_to_response('single-organization.html', parameters, context_instance=RequestContext(request))
+    elif parameters['sign_up_as'] == 'Individual':
+        return render_to_response('individual.html', parameters, context_instance=RequestContext(request))
         
 
 def edit_profile(request, username):
@@ -101,10 +107,18 @@ def edit_profile(request, username):
         last_name = request.POST['last_name']
         description = request.POST['description']
         zip_code = request.POST['zip_code']
-        sign_up_as = request.POST['sign_up_as']
-        phone = request.POST['phone']
 
-        usr_type = request.POST['type']
+        try:
+            sign_up_as = request.POST['sign_up_as']
+        except:
+            userprof = user_profile.get_profile_by_id(str(request.user.id))
+            sign_up_as = userprof['sign_up_as']
+
+        phone = request.POST['phone']
+        if sign_up_as == 'Business':
+            usr_type = request.POST['type']
+        else:
+            usr_type = ''
         tweetFeedObj = TweetFeed()
         tweetFeedObj.update_tweets(username, first_name, last_name, description, zip_code)
         user_profile_obj = UserProfile()
@@ -129,7 +143,16 @@ def get_all_foods(user_id):
     final_foods = []
     for each in all_foods:
         all_rec = recomm.get_recomm(user_id, each['food_name'])
-        data = {'food_name': each['food_name'], 'vouch_count': len(all_rec)}
+        recomm_details =  []
+        for each_rec in all_rec:
+            myid = each_rec['recommenderuid']
+            account = SocialAccount.objects.get(user__id = myid)
+            recomm_details.append({'id': myid,
+                'name': account.extra_data['name'],
+                'screen_name': account.extra_data['screen_name'],
+                'photo': account.extra_data['profile_image_url']})
+        random.shuffle(recomm_details)
+        data = {'food_name': each['food_name'], 'vouch_count': len(all_rec), 'recomm_details': recomm_details[:8]}
         final_foods.append(data)
     return final_foods
 
@@ -147,7 +170,7 @@ def get_customers(user_id):
          })
     return final_customers[:10]
 
-def get_connections(user_id, logged_in_id):
+def get_connections(user_id, logged_in_id = None):
     trade_conn = TradeConnection()
     userprof = UserProfile()
     b_conn = trade_conn.get_connection_by_business(user_id)
@@ -158,7 +181,7 @@ def get_connections(user_id, logged_in_id):
         account = SocialAccount.objects.get(user__id = each['c_useruid'])
         usr_pr = userprof.get_profile_by_id(str(each['c_useruid']))
         user_info = UserInfo(each['c_useruid'])
-        if each['c_useruid'] == logged_in_id:
+        if logged_in_id!=None and each['c_useruid'] == logged_in_id:
             logged_conn = 'buyer'
         final_connections.append({'id': each['c_useruid'],
          'name': account.extra_data['name'],
@@ -177,7 +200,7 @@ def get_connections(user_id, logged_in_id):
         account = SocialAccount.objects.get(user__id = each['b_useruid'])
         usr_pr = userprof.get_profile_by_id(str(each['b_useruid']))
         user_info = UserInfo(each['b_useruid'])
-        if each['b_useruid'] == logged_in_id:
+        if logged_in_id!=None and  each['b_useruid'] == logged_in_id:
             logged_conn = 'seller'
         data = {'id': each['b_useruid'],
          'name': account.extra_data['name'],
@@ -198,7 +221,6 @@ def get_connections(user_id, logged_in_id):
         else:
             index = final_connections.index(data)
             final_connections[index]['relation'] = 'both'
-    print 'logged_conn', logged_conn
     return final_connections[:10], logged_conn
 
 def get_members(user_id):

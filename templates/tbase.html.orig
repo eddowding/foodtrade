@@ -5,7 +5,6 @@
 {% load i18n %}
 {% include "socialaccount/snippets/login_extra.html" %}
 {% load account %}
-
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -15,21 +14,28 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <link rel="shortcut icon" href="http://foodtrade.com/wp-content/uploads/2013/09/favi22.png">
-
     <title>FoodTrade</title>
-
     <!-- CSS -->
     <link href="{% static "css/bootstrap.css" %}" rel="stylesheet">
     <link href="{% static "css/foodtrade.css" %}" rel="stylesheet">
     <link href="{% static "css/custom-design.css" %}" rel="stylesheet">
-
+    <link href="{% static "css/chardinjs.css" %}" rel="stylesheet">
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places"></script>
-
     <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
- 
-
+ {% block head %}
+{% endblock %}
+ <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.1/leaflet.css" />
+<script src="{% static "js/leaflet.js" %}"></script>
     <!-- Custom styles for this template -->
     <link href="http://getbootstrap.com/examples/navbar-fixed-top/navbar-fixed-top.css" rel="stylesheet">
+    <style type="text/css">
+.tt-hint
+{
+  margin-left: 12px;
+margin-top: 4px;
+background: #eee;
+}
+    </style>
  
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -37,13 +43,11 @@
       <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
     <![endif]-->
   </head>
-
   <body>
-
     <!-- Fixed navbar -->
     <div class="navbar navbar-default navbar-fixed-top" role="navigation">
       <div class="ftstrip"></div>
-      <div class="container">
+      <div class="container-responsive">
         <div class="navbar-header">
           <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
             <span class="sr-only">Toggle navigation</span>
@@ -51,55 +55,123 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#">FoodTrade</a>
+
+        <div class="pull-left visible-xs">
+          <button type="button" class="navbar-toggle" data-toggle="offcanvas" style="margin-left: 5px">
+                <span class="sr-only">Toggle navigation</span>
+                <i class="fa fa-user fa-fw fa-lg" ></i>
+              </button>
+        </div>
+
+          <a href="/" class="navbar-brand">
+          <img src="{% static "images/logo.png" %}"  class="hidden-xs" alt="FoodTrade logo"   />
+          <img src="{% static "images/logo_icon.png" %}"  class="visible-xs" alt="FoodTrade logo"  />
+          </a>
         </div>
         <div class="navbar-collapse collapse">
           
-          <form class="navbar-form navbar-left nav-justified" role="search">
+          <form action="/activity" class="navbar-form navbar-left nav-justified" role="search"  data-intro="Search for anything, anywhere" data-position="bottom">
+            <div class="form-group" style="margin-right:5px;"> 
+              <input type="text" name="q" id="keyword" class="form-control pac-input" value="{{ search.query }}" placeholder="What?"> 
+            </div> 
             <div class="form-group" style="margin-right:5px;">
-              <input type="text" class="form-control" placeholder="What?"> 
+              <input type="text" name="location" id="pac-input" value="{{ search.place }}" class="pac-input form-control hidden-xs hidden-sm" placeholder="Where?">
             </div>
-            <div class="form-group" style="margin-right:5px;">
-              <input type="text" id="pac-input" class="form-control" placeholder="Where?">
-            </div>
+            <input type="hidden" name="lon" id="lon" value="{{search.lon}}"/>
+            <input type="hidden" name="lat" id="lat" value="{{search.lat}}"/>
             <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
-
           </form>
 
-        
-          <button type="button" class="btn btn-primary navbar-btn pull-right" style="margin-left: 20px;"  data-toggle="modal" data-target="#newpost">
+<<<<<<< HEAD
+        {% if user.is_authenticated %}
+         <button type="button" class="btn btn-primary navbar-btn pull-right" style="margin-left: 20px;"  data-toggle="modal" data-target="#newtwitterpost">
             <i class="fa fa-edit"></i>
           </button>
-<<<<<<< HEAD
-  
-          <!-- New post Modal -->
-          <div class="modal fade" id="newpost" tabindex="-1" role="dialog" aria-labelledby="newpost" aria-hidden="true">
+
+
+          <a src = "/accounts/logout" onclick="logout()" class="btn btn-primary navbar-btn pull-right hidden-xs hidden-sm" style="margin-left: 20px;">
+            Logout
+          </a>
+
 =======
- {% endif %}
+
+        {% if user.is_authenticated %}
+
+          <ul class="nav navbar-nav navbar-right">
 
 
-         <ul class="nav navbar-nav navbar-center">
+               <!--  <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><span
+                    class="glyphicon glyphicon-envelope"></span>Inbox <span class="label label-info">32</span>
+                </a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#"><span class="label label-warning">4:00 AM</span>Favourites Snippet</a></li>
+                        <li><a href="#"><span class="label label-warning">4:30 AM</span>Email marketing</a></li>
+                        <li><a href="#"><span class="label label-warning">5:00 AM</span>Subscriber focused email
+                            design</a></li>
+                        <li class="divider"></li>
+                        <li><a href="#" class="text-center">View All</a></li>
+                    </ul>
+                </li> -->
+
+                <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                <i class="fa fa-user fa-fw"></i> {{userinfo.full_name}} <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="/editprofile/{{userinfo.username}}"><i class="fa fa-user fa-fw"></i> Edit profile</a></li>
+                        <li><a href="/invite"><i class="fa fa-twitter fa-fw"></i> Invite friends</a></li>
+                        <li class="divider"></li>
+                        <li>
+                          <a src = "/accounts/logout" onclick="logout()" >
+                        <i class="fa fa-power-off fa-fw"></i> Logout</a></li>
+                    </ul>
+                </li>
+            </ul> 
+             
+>>>>>>> 7eec1ce0b336bbab5d5212c3a6df730d4ef8f1f7
+          <script type="text/javascript">
+          function logout()
+          {
+            window.location = '/accounts/logout';
+          }
+          </script>
+<<<<<<< HEAD
+          
+          <div id="divNotification" class="btn-group">
+            <button id= "notification" type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">{{notification.notification_count}} <span class="caret"></span></button>
+            <ul id="liNotification" class="dropdown-menu" role="menu">
+              <li class="divider"></li>
+            </ul>
+          </div><!-- /btn-group -->
+=======
+
+
+         <button type="button" class="btn btn-default navbar-btn navbar-right visible-sm" style="margin-left: 20px;"  data-toggle="modal" data-target="#newtwitterpost">
+            <i class="fa fa-edit fa-fw"></i>  
+          </button>
+
+          <button data-intro="Post an update from any screen." data-position="left"  type="button" class="btn btn-default navbar-btn navbar-right hidden-sm" style="margin-left: 20px;"  data-toggle="modal" data-target="#newtwitterpost">
+            <i class="fa fa-edit fa-fw"></i> Post update
+          </button>
+>>>>>>> 7eec1ce0b336bbab5d5212c3a6df730d4ef8f1f7
+        {% endif %}
+        
+         <ul class="nav navbar-nav navbar-center visible-md visible-lg">
           <li><a href="/activity">Activity</a></li>
-          <li><a href="pricing.php">Pricing</a></li> 
+          <li><a href="/pricing">Pricing</a></li> 
          </ul>
  
-         {% if not user.is_authenticated %}
-
-         <ul class="nav navbar-nav navbar-right">
-         <li><a href="register.php">Sign Up</a></li>
-         <li><a href="#" data-toggle="modal" data-target="#modal_login">Sign In</a></li>
-               </ul>
- {% endif %}
+         {% if not user.is_authenticated %} 
+         <a type="button" class="btn btn-success navbar-btn navbar-right" href="{% provider_login_url "twitter" process="login" %}" style="margin-right: 15px;">
+            <i class="fa fa-user fa-fw"></i> <strong>Login</strong> or <strong>Sign up</strong>
+          </a>
+         {% endif %}
+         
         </div><!--/.nav-collapse -->
       </div>
     <div class="ftstrip ftstrip-mini"></div>
     </div>
-
-
-
        <!-- New post Modal -->
           <div class="modal fade" id="newtwitterpost" tabindex="-1" role="dialog" aria-labelledby="newtwitterpost" aria-hidden="true">
->>>>>>> f3069a02e39dd973715be353e96bca98b3af0e6d
             <div class="modal-dialog">
               <div class="modal-content"> 
                 <div class="modal-body">               
@@ -110,47 +182,25 @@
                 <div class="modal-footer">
                   <h6 class="pull-left" id="counter">320 characters remaining</h6> 
                   <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                  <button type="button" class="btn btn-primary" onclick="UpdateStatus()">Post update</button>
+                  <button type="button" class="btn btn-primary" onclick="UpdateStatus('tweetMessage')">Post update</button>
                 </div>
               </div><!-- /.modal-content -->
             </div><!-- /.modal-dialog -->
           </div><!-- /.modal -->
-
-
-         <ul class="nav navbar-nav navbar-center">
-          <li><a href="/">Activity</a></li>
-          <li><a href="pricing.php">Pricing</a></li> 
-         </ul>
- 
-
-         <ul class="nav navbar-nav navbar-right">
-                  <li><a href="register.php">Sign Up</a></li>
-                  <li><a href="#" data-toggle="modal" data-target="#modal_login">Sign In</a></li>
-               </ul>
- 
-        </div><!--/.nav-collapse -->
-      </div>
-    <div class="ftstrip ftstrip-mini"></div>
-    </div>
-
 <!-- modal_invite -->
-<div class="modal fade" id="modal_login" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal fade" id="modal_login" tabindex="-2" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
    
       <div class="modal-body">
-
-
 <div class="container-responsive">
   <div class="row">
-
     <div class="main">
  
       <div class="row">  
         <div class="col-md-12 text-center">
           <a href="{% provider_login_url "twitter" process="login" %}" class="btn btn-lg btn-info btn-block"><i class="fa fa-twitter"></i> Sign in with Twitter</a>
         </div> 
-
 <!-- USE THIS LATER!! 
         <div class="col-xs-6 col-sm-6 col-md-6">
           <a href="#" class="btn btn-lg btn-primary btn-block">Facebook</a>
@@ -158,14 +208,11 @@
         <div class="col-xs-6 col-sm-6 col-md-6">
           <a href="#" class="btn btn-lg btn-info btn-block">Google</a>
         </div> -->
-
-
       </div>
       <div class="login-or">
         <hr class="hr-or">
         <span class="span-or">or</span>
       </div>
-
       <form role="form">
         <div class="form-group">
           <label for="inputUsernameEmail">Username or email</label>
@@ -191,41 +238,235 @@
   </div>
 </div>
  
-
       </div>
  
       </div> 
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
+<div class="container-responsive">
+ 
+<div class="row row-offcanvas row-offcanvas-left">
+ 
+ 
+<div id="sidebar" class="col-xs-6 col-sm-2 sidebar sidebar-offcanvas" role="navigation">
 
-<div class="container">
+{% if not user.is_authenticated %} 
+<div class="alert alert-info  ">
+<a type="button" href="{% provider_login_url "twitter" process="login" %}"  class="btn text-center btn-primary btn-lg btn-block" style="  margin-top: 1em;"><i class="fa fa-twitter fa-fw"></i> Sign in</a>
+</a>
+</div>
+{% endif %}
 
 
+{% if user.is_authenticated or search.query %}
+ {% if user.is_authenticated %}
+        <!-- show the logged in users account --> 
+        <div id="account_info"  data-intro="Just start typing to search for specific foods, business type, or filter by organisation membership" data-position="right">
+        
+        <div class="clearfix" style="margin-bottom: 10px;">
+          <!-- twitter 78px image - 'large' -->
+          <!--https://dev.twitter.com/docs/user-profile-images-and-banners -->
+          <img class="pull-left img-rounded" style="margin:0 8px 0 0; width:30px"  src="{{userinfo.profileimg}}"  />
+          <div class="content">
+            <h4 style="margin:0;"><a href="/profile/{{userinfo.username}}">{{userinfo.full_name}}</a></h4>
+            <small><a href="/editprofile/{{userinfo.username}}" class="text-muted">Edit your profile</a></small>
+          </div>
+        </div>
+         {% if search.query == "" or not search.query %}
+         
+        <p><a href="#">Trade connections <span class="badge pull-right">{{userinfo.trade_connections_no}}</span></a></p>
+        <p><a href="#">Foods <span class="badge pull-right">{{userinfo.food_no}}</span></a></p>
+        <p><a href="#">Organisations <span class="badge pull-right">{{userinfo.organisation_connection_no}}</span></a></p>
+
+        <!-- 
+        ADD IN AWARDS FUNCTIONALITY
+        <p><a href="#">Awards <span class="badge pull-right">{{userinfo.organisation_connection_no}}</span></a></p>
+         -->
+          
+          <!-- PUT EMPTY ONES AT THE BOTTOM OF THE LIST -->
+          <!-- if ZERO ON ANY OF THESE -->
+        
+       <!--  <div class="alert alert-info small"> 
+          <a class="close" data-dismiss="alert" href="#" aria-hidden="true">&times;</a>
+          <p><b>Want a great profile?</b></p>  
+        </div> -->
+        {% endif %}
+        </div><!-- /account_info -->
+<!-- {% if search.query == "" or not search.query %}
+    <hr /> 
+   
+      <h4>Who's nearby</h4>
+ 
+        <p><a href="#">Individuals <span class="badge pull-right">{{userinfo.nearby_individuals_no}}</span></a></p>
+        <p><a href="#">Businesses <span class="badge pull-right">{{userinfo.nearby_businesses_no}}</span></a></p> 
+         {% endif %} -->
+ {% endif %}
+ 
+    {% if search %}
+    <div class="foodtrade-sidebar">
+    
+    <hr>
+     
+    <div data-intro="Just start typing to search for specific foods, business type, or filter by organisation membership" data-position="right">
+    <form role="form" >
+      <div class="form-group"> 
+        <input type="text" class="form-control" id="food_filter" placeholder="Filter by food">
+      </div>
+    </form>
+    
+    <ul class="foodtrade-tag-list">
+    <li data-id="ALL" class="foodtrade-tag foodtrade-tag-click foodtrade-tag-all"><div class="foodtrade-tag-checkbox-column"><input type="checkbox" checked="checked" aria-label="All Partners" class="foodtrade-tag-checkbox"></div><div class="foodtrade-tag-text">All Foods</div><div class="foodtrade-tag-count">{{food_count}}</div></li>
+    </ul>
+
+    <ul class="foodtrade-tag-list" id="food_filter_results">
+   
+    </ul>
+     <hr>
+ 
+    
+    <form role="form">
+      <div class="form-group"> 
+        <input type="email" class="form-control" id="business_filter" placeholder="Filter Business Type">
+      </div>
+    </form>
+    <ul class="foodtrade-tag-list">
+    <li data-id="ALL" class="foodtrade-tag foodtrade-tag-click foodtrade-tag-all"><div class="foodtrade-tag-checkbox-column"><input type="checkbox" checked="checked" aria-label="All Partners" class="foodtrade-tag-checkbox"></div><div class="foodtrade-tag-text">All Businesses</div><div class="foodtrade-tag-count">{{business_count}}</div></li>
+</ul>
+
+<ul class="foodtrade-tag-list" id="business_filter_results">
+    </ul>
+    </div><!-- charding overlay -->
+    <hr />
+     
+     <form role="form">
+      <div class="form-group"> 
+        <input type="email" class="form-control" id="filter_organisation" placeholder="Filter organisation">
+      </div>
+    </form>
+
+
+    <ul class="foodtrade-tag-list">
+    <li data-id="ALL" class="foodtrade-tag foodtrade-tag-click foodtrade-tag-all"><div class="foodtrade-tag-checkbox-column"><input type="checkbox" checked="checked" aria-label="All Partners" class="foodtrade-tag-checkbox"></div><div class="foodtrade-tag-text">All Organisations</div><div class="foodtrade-tag-count">51</div></li><li data-id="8" class="foodtrade-tag foodtrade-tag-click "><div class="foodtrade-tag-checkbox-column"><input type="checkbox" aria-label="Johns Hopkins " class="foodtrade-tag-checkbox"></div><div class="foodtrade-tag-text">Soil Association </div><div class="foodtrade-tag-count">6</div></li><li data-id="1" class="foodtrade-tag foodtrade-tag-click "><div class="foodtrade-tag-checkbox-column"><input type="checkbox" aria-label="Stanford University" class="foodtrade-tag-checkbox"></div><div class="foodtrade-tag-text">NFU</div><div class="foodtrade-tag-count">5</div></li><li data-id="16" class="foodtrade-tag foodtrade-tag-click "><div class="foodtrade-tag-checkbox-column"><input type="checkbox" aria-label="École Polytechnique Fédérale de Lausanne" class="foodtrade-tag-checkbox"></div><div class="foodtrade-tag-text">Plunkett Foundation </div><div class="foodtrade-tag-count">4</div></li><li data-id="4" class="foodtrade-tag foodtrade-tag-click "><div class="foodtrade-tag-checkbox-column"><input type="checkbox" aria-label="Princeton University" class="foodtrade-tag-checkbox"></div><div class="foodtrade-tag-text">Organic institute</div><div class="foodtrade-tag-count">3</div></li><li data-id="15" class="foodtrade-tag foodtrade-tag-click "><div class="foodtrade-tag-checkbox-column"><input type="checkbox" aria-label="University of Washington" class="foodtrade-tag-checkbox"></div><div class="foodtrade-tag-text"> Slow Food</div><div class="foodtrade-tag-count">3</div></li><li class="foodtrade-tag-showmore">show more</li>
+    </ul>
+    </div><!--sidebar-->
+    {% endif %}
+
+       {% endif %}
+    </div>
  {% block content %}
-
-
  {% endblock %}  
 </div>
+</div>
+
+<!-- FOOTER --> 
+<div class="container-responsive" id="footer">    
+  <div class="row">
+    <div class="col-lg-12">
+        <div class="ftstrip"></div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-12" id="footer_container">
+      <div class="col-md-3">
+        <ul class="list-unstyled"><!-- 
+          <li>FoodTrade<li> -->
+          <li><a href="/about">About us</a></li>
+          <li><a href="http://digest.foodtrade.com/" target="_blank">Blog</a></li>
+          <li><a href="/contact">Contact & support</a></li>
+         </ul>
+      </div>
+      <div class="col-md-3">
+      <!-- 
+      developers
+      timeline
+        <ul class="list-unstyled">
+          <li>Applications<li>
+          <li><a href="#">Product for Mac</a></li>
+          <li><a href="#">Product for Windows</a></li>
+          <li><a href="#">Product for Eclipse</a></li>
+          <li><a href="#">Product mobile apps</a></li>              
+        </ul> -->
+      </div>
+      <div class="col-md-3">
+       <!--  <ul class="list-unstyled">
+          <li>Services<li>
+          <li><a href="#">Web analytics</a></li>
+          <li><a href="#">Presentations</a></li>
+          <li><a href="#">Code snippets</a></li>
+          <li><a href="#">Job board</a></li>              
+        </ul> -->
+      </div>
+      <div class="col-md-3">
+        <ul class="list-unstyled"><!-- 
+          <li>Stay connected<li> -->
+          <li>
+            <a href="http://www.facebook.com/foodtradeHQ"><i class="fa fa-facebook-square fa-2x"></i></a> 
+            <a href="http://www.twitter.com/foodtradeHQ"><i class="fa fa-twitter-square fa-2x"></i></a></li>
+           </li>
+           <!-- Begin MailChimp Signup Form -->
+<div id="mc_embed_signup">
+<form action="http://sustaination.us2.list-manage1.com/subscribe/post?u=79e1467c02512dbd83bddab5f&amp;id=eeea3ac4c6" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+    <div class="input-group"> 
+      <input type="email" value="" name="EMAIL"  class="form-control required" name="q"  id="mce-EMAIL"  placeholder="Email Address">
+      <span class="input-group-btn">
+          <button type="submit" class="btn btn-success"> Subscribe</button>
+      </span>
+    </div>
+      <div id="mce-responses" class="clear">
+    <div class="response" id="mce-error-response" style="display:none"></div>
+    <div class="response" id="mce-success-response" style="display:none"></div>
+    <div style="position: absolute; left: -5000px;"><input type="text" name="b_79e1467c02512dbd83bddab5f_eeea3ac4c6" value=""></div>
+  </div>    <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
+</form>
+ 
+  
+      
+<!--End mc_embed_signup-->     
+        </ul>
+      </div>  
+    </div>
+  </div>
+  <hr>
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="col-md-8">
+        <a href="/pages/terms">Terms of Service</a>    | 
+        <a href="/pages/privacy">Privacy</a>  
+      </div>
+      <div class="col-md-4">
+        <p class="muted pull-right">&copy; 2013 Foodtrade. All rights reserved</p>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- UserVoice JavaScript SDK (only needed once on a page) -->
 <script>(function(){var uv=document.createElement('script');uv.type='text/javascript';uv.async=true;uv.src='//widget.uservoice.com/HloB2aRxdk7fbhWMOI5AlQ.js';var s=document.getElementsByTagName('script')[0];s.parentNode.insertBefore(uv,s)})()</script>
-
 <!-- A tab to launch the Classic Widget -->
 <script>UserVoice=window.UserVoice||[];UserVoice.push(['showTab','classic_widget',{mode:'full',primary_color:'#f08119',link_color:'#61ae32',default_mode:'support',forum_id:231923,tab_label:'Feedback & Support',tab_color:'#cc6d00',tab_position:'middle-right',tab_inverted:false}]);</script>
-
-
-
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+    <script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
     <script src="{% static "js/bootstrap.min.js" %}"></script>
     <script src="{% static "js/foodtrade.js" %}"></script>
      <script src="{% static "js/ajax-handle.js" %}"></script>
+     <script src="{% static "js/typeahead.min.js" %}"></script>
+     <script src="{% static "js/typeahead.js" %}"></script>
+     <script src="{% static "js/chardinjs.min.js" %}"></script>
+     
+ <script src="http://getbootstrap.com/2.3.2/assets/js/bootstrap-typeahead.js"></script>
+         {% block footer %}
+ {% endblock %}
      <script type="text/javascript">
 $(document).ready(function() {
-    var activeSystemClass = $('.list-group-item.active');
 
+
+$(".chardinjs-show-element").css('position','absolute');
+$('body').chardinJs('start')
+
+    var activeSystemClass = $('.list-group-item.active');
     //something is entered in search form
     $('#system-search').keyup( function() {
        var that = this;
@@ -249,7 +490,6 @@ $(document).ready(function() {
             {
                 $('.search-query-sf').remove();
             }
-
             if( rowText.indexOf( inputText ) == -1 )
             {
                 //hide rows
@@ -270,11 +510,18 @@ $(document).ready(function() {
     });
 });
     </script>
-
     <script type="text/javascript">
-
-
       $('.tip').tooltip()
+
+      $('[data-toggle=offcanvas]').click(function() {
+        $('.row-offcanvas').toggleClass('active');
+      });
+
+       $('#media').carousel({
+          interval: 7000,
+        });
+
+
 
       /**
  *
@@ -288,95 +535,125 @@ $(document).ready(function() {
  
 (function($) {
     /**
-	 * attaches a character counter to each textarea element in the jQuery object
-	 * usage: $("#myTextArea").charCounter(max, settings);
-	 */
-	
-	$.fn.charCounter = function (max, settings) {
-		max = max || 100;
-		settings = $.extend({
-			container: "<span></span>",
-			classname: "charcounter",
-			format: "(%1 characters remaining)",
-			pulse: true,
-			delay: 0
-		}, settings);
-		var p, timeout;
-		
-		function count(el, container) {
-			el = $(el);
-			if (el.val().length > max) {
-			    el.val(el.val().substring(0, max));
-			    if (settings.pulse && !p) {
-			    	pulse(container, true);
-			    };
-			};
-			if (settings.delay > 0) {
-				if (timeout) {
-					window.clearTimeout(timeout);
-				}
-				timeout = window.setTimeout(function () {
-					container.html(settings.format.replace(/%1/, (max - el.val().length)));
-				}, settings.delay);
-			} else {
-				container.html(settings.format.replace(/%1/, (max - el.val().length)));
-			}
-		};
-		
-		function pulse(el, again) {
-			if (p) {
-				window.clearTimeout(p);
-				p = null;
-			};
-			el.animate({ opacity: 0.1 }, 100, function () {
-				$(this).animate({ opacity: 1.0 }, 100);
-			});
-			if (again) {
-				p = window.setTimeout(function () { pulse(el) }, 200);
-			};
-		};
-		
-		return this.each(function () {
-			var container;
-			if (!settings.container.match(/^<.+>$/)) {
-				// use existing element to hold counter message
-				container = $(settings.container);
-			} else {
-				// append element to hold counter message (clean up old element first)
-				$(this).next("." + settings.classname).remove();
-				container = $(settings.container)
-								.insertAfter(this)
-								.addClass(settings.classname);
-			}
-			$(this)
-				.unbind(".charCounter")
-				.bind("keydown.charCounter", function () { count(this, container); })
-				.bind("keypress.charCounter", function () { count(this, container); })
-				.bind("keyup.charCounter", function () { count(this, container); })
-				.bind("focus.charCounter", function () { count(this, container); })
-				.bind("mouseover.charCounter", function () { count(this, container); })
-				.bind("mouseout.charCounter", function () { count(this, container); })
-				.bind("paste.charCounter", function () { 
-					var me = this;
-					setTimeout(function () { count(me, container); }, 10);
-				});
-			if (this.addEventListener) {
-				this.addEventListener('input', function () { count(this, container); }, false);
-			};
-			count(this, container);
-		});
-	};
-
+   * attaches a character counter to each textarea element in the jQuery object
+   * usage: $("#myTextArea").charCounter(max, settings);
+   */
+  
+  $.fn.charCounter = function (max, settings) {
+    max = max || 100;
+    settings = $.extend({
+      container: "<span></span>",
+      classname: "charcounter",
+      format: "(%1 characters remaining)",
+      pulse: true,
+      delay: 0
+    }, settings);
+    var p, timeout;
+    
+    function count(el, container) {
+      el = $(el);
+      if (el.val().length > max) {
+          el.val(el.val().substring(0, max));
+          if (settings.pulse && !p) {
+            pulse(container, true);
+          };
+      };
+      if (settings.delay > 0) {
+        if (timeout) {
+          window.clearTimeout(timeout);
+        }
+        timeout = window.setTimeout(function () {
+          container.html(settings.format.replace(/%1/, (max - el.val().length)));
+        }, settings.delay);
+      } else {
+        container.html(settings.format.replace(/%1/, (max - el.val().length)));
+      }
+    };
+    
+    function pulse(el, again) {
+      if (p) {
+        window.clearTimeout(p);
+        p = null;
+      };
+      el.animate({ opacity: 0.1 }, 100, function () {
+        $(this).animate({ opacity: 1.0 }, 100);
+      });
+      if (again) {
+        p = window.setTimeout(function () { pulse(el) }, 200);
+      };
+    };
+    
+    return this.each(function () {
+      var container;
+      if (!settings.container.match(/^<.+>$/)) {
+        // use existing element to hold counter message
+        container = $(settings.container);
+      } else {
+        // append element to hold counter message (clean up old element first)
+        $(this).next("." + settings.classname).remove();
+        container = $(settings.container)
+                .insertAfter(this)
+                .addClass(settings.classname);
+      }
+      $(this)
+        .unbind(".charCounter")
+        .bind("keydown.charCounter", function () { count(this, container); })
+        .bind("keypress.charCounter", function () { count(this, container); })
+        .bind("keyup.charCounter", function () { count(this, container); })
+        .bind("focus.charCounter", function () { count(this, container); })
+        .bind("mouseover.charCounter", function () { count(this, container); })
+        .bind("mouseout.charCounter", function () { count(this, container); })
+        .bind("paste.charCounter", function () { 
+          var me = this;
+          setTimeout(function () { count(me, container); }, 10);
+        });
+      if (this.addEventListener) {
+        this.addEventListener('input', function () { count(this, container); }, false);
+      };
+      count(this, container);
+    });
+  };
 })(jQuery);
-
 $(function() {
     $(".counted").charCounter(320,{container: "#counter"});
 });
-
-
-
     </script>
+<script type="text/javascript">
+// This example adds a search box to a map, using the Google Place Autocomplete
+// feature. People can enter geographical searches. The search box will return a
+// pick list containing a mix of places and predicted search terms.
+var placeCord = '';
+function initialize() {
+  // Create the search box and link it to the UI element.
+  var input = /** @type {HTMLInputElement} */(
+      document.getElementById('pac-input'));
+  var searchBox = new google.maps.places.SearchBox(
+    /** @type {HTMLInputElement} */(input));
+  // [START region_getplaces]
+  // Listen for the event fired when the user selects an item from the
+  // pick list. Retrieve the matching places for that item.
+  google.maps.event.addListener(searchBox, 'places_changed', function() {
+  var places = searchBox.getPlaces();
+    placeCord = String(places[0].address_components[0].long_name);
+    alert(placeCord);
+  });
+}
+google.maps.event.addDomListener(window, 'load', initialize);
+window.setInterval(function(){
+  show_notifications();
+}, 20000);
+function  show_notifications(){
+  ajax_request('getnotification', 'build_notification', {'user':'{{userinfo.username}}'})
+}
+function build_notification(data){
+  data = jQuery.parseJSON(data);
+  $('#liNotification').html('');
+  $('#notification').html(String(data['notification_count']));
+  for (eachNotification in data['notifications']){
+      var data_dict = data['notifications'][eachNotification];
+      $('#liNotification').prepend('<li><a href="/profile/' + String(data_dict.notifying_user) + '/"' + String(data_dict.notification_message) + '</a></li>');
+  }
+}
+</script>    
   </body>
 </html>
-  
-

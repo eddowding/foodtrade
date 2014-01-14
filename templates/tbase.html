@@ -70,7 +70,8 @@ background: #eee;
         </div>
         <div class="navbar-collapse collapse">
           
-          <form action="/activity" class="navbar-form navbar-left nav-justified" role="search"  data-intro="Search for anything, anywhere" data-position="bottom">
+          <form action="/activity" class="navbar-form navbar-left nav-justified" role="search">
+          <div data-intro="Search for anything, anywhere" data-position="bottom">
             <div class="form-group" style="margin-right:5px;"> 
               <input type="text" name="q" id="keyword" class="form-control pac-input" value="{{ search.query }}" placeholder="What?"> 
             </div> 
@@ -80,6 +81,7 @@ background: #eee;
             <input type="hidden" name="lon" id="lon" value="{{search.lon}}"/>
             <input type="hidden" name="lat" id="lat" value="{{search.lat}}"/>
             <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+          </div>
           </form>
 
 
@@ -100,13 +102,21 @@ background: #eee;
                         <li><a href="#" class="text-center">View All</a></li>
                     </ul>
                 </li> -->
+              <li id="divNotification" onclick="clear_notification()" class="dropdown">
+                <a id= "notification" href="#" class="dropdown-toggle" data-toggle="dropdown">
+                {{notification.notification_count}} <b class="caret"></b></a>
+                <ul id="liNotification" class="dropdown-menu">
+                  <li>Sorry,there is no notification.</li>
+                </ul>
+              </li><!-- /btn-group -->
 
                 <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                 <i class="fa fa-user fa-fw"></i> {{userinfo.full_name}} <b class="caret"></b></a>
                     <ul class="dropdown-menu">
                         <li><a href="/editprofile/{{userinfo.username}}"><i class="fa fa-user fa-fw"></i> Edit profile</a></li>
-                        <li><a href="/invite"><i class="fa fa-twitter fa-fw"></i> Invite friends</a></li>
+                        <li><a href="/invite/"><i class="fa fa-twitter fa-fw"></i> Invite friends</a></li>
+                        <li><a href="#" id="help"><i class="fa fa-question-circle fa-fw"></i> Show help</a></li>
                         <li class="divider"></li>
                         <li>
                           <a src = "/accounts/logout" onclick="logout()" >
@@ -115,13 +125,14 @@ background: #eee;
                 </li>
             </ul> 
              
+
           <script type="text/javascript">
           function logout()
           {
             window.location = '/accounts/logout';
           }
           </script>
-
+          
 
          <button type="button" class="btn btn-default navbar-btn navbar-right visible-sm" style="margin-left: 20px;"  data-toggle="modal" data-target="#newtwitterpost">
             <i class="fa fa-edit fa-fw"></i>  
@@ -130,6 +141,7 @@ background: #eee;
           <button data-intro="Post an update from any screen." data-position="left"  type="button" class="btn btn-default navbar-btn navbar-right hidden-sm" style="margin-left: 20px;"  data-toggle="modal" data-target="#newtwitterpost">
             <i class="fa fa-edit fa-fw"></i> Post update
           </button>
+
         {% endif %}
         
          <ul class="nav navbar-nav navbar-center visible-md visible-lg">
@@ -221,10 +233,9 @@ background: #eee;
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
-<div class="container-responsive">
+<div class="container-responsive" id="main_page">
  
-<div class="row row-offcanvas row-offcanvas-left">
- 
+<div class="row row-offcanvas row-offcanvas-left" id="main_row">
  
 <div id="sidebar" class="col-xs-6 col-sm-2 sidebar sidebar-offcanvas" role="navigation">
 
@@ -239,7 +250,7 @@ background: #eee;
 {% if user.is_authenticated or search.query %}
  {% if user.is_authenticated %}
         <!-- show the logged in users account --> 
-        <div id="account_info"  data-intro="Just start typing to search for specific foods, business type, or filter by organisation membership" data-position="right">
+        <div id="account_info">
         
         <div class="clearfix" style="margin-bottom: 10px;">
           <!-- twitter 78px image - 'large' -->
@@ -418,6 +429,24 @@ background: #eee;
   </div>
 </div>
 
+<!-- Button trigger modal -->
+<button id="btn_must_be_logged" style="display:none" data-toggle="modal" data-target="#myModal_must_be_logged">
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="myModal_must_be_logged" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-body">
+        <h4 class="modal-title" id="myModalLabel">You must be <a href="/accounts/twitter/login/?process=login">logged</a> in to use this feature</h4>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
 <!-- UserVoice JavaScript SDK (only needed once on a page) -->
 <script>(function(){var uv=document.createElement('script');uv.type='text/javascript';uv.async=true;uv.src='//widget.uservoice.com/HloB2aRxdk7fbhWMOI5AlQ.js';var s=document.getElementsByTagName('script')[0];s.parentNode.insertBefore(uv,s)})()</script>
 <!-- A tab to launch the Classic Widget -->
@@ -439,9 +468,9 @@ background: #eee;
      <script type="text/javascript">
 $(document).ready(function() {
 
-
-$(".chardinjs-show-element").css('position','absolute');
-$('body').chardinJs('start')
+    $( "#help" ).click(function() {
+      $('body').chardinJs('start');
+    });
 
     var activeSystemClass = $('.list-group-item.active');
     //something is entered in search form
@@ -616,6 +645,43 @@ function initialize() {
   });
 }
 google.maps.event.addDomListener(window, 'load', initialize);
+{% if user.is_authenticated %}
+  window.setInterval(function(){
+    show_notifications();
+  }, 20000);
+{% endif %}
+function  show_notifications(){
+  ajax_request('getnotification', 'build_notification', {'user':'{{userinfo.username}}'})
+}
+var change_data;
+function build_notification(data){
+  data = jQuery.parseJSON(data);
+  change_data = data;
+  $('#liNotification').html('');
+  $('#notification').html(String(data['notification_count']));
+  for (eachNotification in data['notifications']){
+      var data_dict = data['notifications'][eachNotification];
+      $('#liNotification').prepend('<li><a href="/profile/' + String(data_dict.notifying_user) + '/" title="' + String(data_dict.notification_message) + '">' +String(data_dict.notification_message).substr(0,20)+'....</a></li>');
+  }
+  if (data['notification_count'] == 0){
+      $('#liNotification').prepend('<li>Sorry,there is no notification.</li>');
+  }
+}
+function clear_notification(){
+  $('#notification').html(String('0'));
+  ajax_request('change_notification_status','','')
+}
+
+function validate_login(){
+  {% if user.is_authenticated %}
+    return {'status':'1'}
+  {% endif %}
+  {% if not user.is_authenticated %}
+    return {'status':'0'}
+  {% endif %}
+  /*
+  ajax_request('validate_logged_in', 'ajax_success_validate_logged_in','');*/
+}
 </script>    
   </body>
 </html>

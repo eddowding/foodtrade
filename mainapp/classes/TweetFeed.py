@@ -9,6 +9,7 @@ from bson import json_util
 
 from twython import Twython
 from allauth.socialaccount.models import SocialToken, SocialAccount
+from django.http import HttpResponse, HttpResponseRedirect
 import json
 from pymongo import Connection
 
@@ -492,7 +493,7 @@ class Food():
     def create_food (self, value):
         value['deleted'] =0
         # self.db_object.insert_one(self.table_name,value)
-        self.db_object.update_upsert(self.table_name, {'food_name': value['food_name']}, {'deleted': 0, 'useruid': value['useruid']})
+        self.db_object.update_upsert(self.table_name, {'food_name': value['food_name'], 'useruid': value['useruid']}, {'deleted': 0})
 
     def delete_food(self, useruid, food_name):
         self.db_object.update(self.table_name,{'useruid': useruid, 'food_name': food_name}, {'deleted':1})
@@ -565,7 +566,7 @@ class RecommendFood():
     def create_recomm(self, value):
         value['deleted'] =0
         # self.db_object.insert_one(self.table_name,value)
-        self.db_object.update_upsert(self.table_name, {'food_name': value['food_name'], 'business_id': value['business_id']}, {'deleted': 0, 'recommender_id': value['recommender_id']})
+        self.db_object.update_upsert(self.table_name, {'food_name': value['food_name'], 'business_id': value['business_id'], 'recommender_id': value['recommender_id']}, {'deleted': 0})
 
     def delete_recomm(self, business_id, food_name, recommender_id):
         self.db_object.update(self.table_name,{'business_id': business_id, 'food_name': food_name, 'recommender_id': recommender_id}, {'deleted':1})
@@ -592,3 +593,48 @@ class Invites():
     def save_invites(self,doc):
         return self.db_object.insert_one(self.table_name,doc)
 
+    def check_invitees(self, screen_name):
+        return self.db_object.get_all(self.table_name, {'to':'@'+screen_name})
+
+    def check_invited(self, screen_name):
+        if len(self.db_object.get_all(self.table_name, {'to':'@'+screen_name})) > 0:
+            return True
+        return False
+
+class Notification():
+    def __init__ (self):
+        self.db_object = MongoConnection("localhost",27017,'foodtrade')
+        self.table_name = 'notification'
+        self.db_object.create_table(self.table_name,'to_username')
+
+    def save_notification(self,doc):
+        return self.db_object.insert_one(self.table_name,doc)
+
+    def change_notification_status(self, notification_to):
+        self.db_object.update_multi(self.table_name, 
+            {'notification_to':str(notification_to)}, 
+            {'notification_view_status':'true'})
+        return HttpResponse(json.dumps({'status':1}))
+
+    def get_notification(self,username):
+        notification_count = len(self.db_object.get_all_vals(self.table_name,
+            {'notification_to':username, 'notification_view_status':'false'}))
+        return HttpResponse(json.dumps({'notification_count':notification_count, 
+            'notifications':self.db_object.get_all_vals(self.table_name,
+            {'notification_to':username,'notification_view_status':'false'})}))
+
+
+class TwitterError():
+    def __init__ (self):
+        self.db_object = MongoConnection("localhost",27017,'foodtrade')
+        self.table_name = 'twittererror'
+        self.db_object.create_table(self.table_name,'screen_name')    
+
+    def save_error(self, doc):
+        return self.db_object.insert_one(self.table_name,doc)
+
+    def get_error(self, screen_name):
+        return self.db_object.get_all_vals(self.table_name,{'username':screen_name, 'error_solve_stat':'false'})   
+
+    def change_error_status(self, screen_name):
+        return self.db_object.update(self.table_name, {'username':screen_name}, {'error_solve_stat':'true'})

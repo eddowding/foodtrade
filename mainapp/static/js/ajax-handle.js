@@ -3,7 +3,7 @@ function ajax_request(s_handler, c_handler, input_data)
 {
    $.ajax({
     type: "POST",
-    url: "/ajax-handler/"+s_handler,
+    url: "/ajax-handler/" + s_handler,
     data: input_data,
     success: function(data) {
       window[c_handler](data);
@@ -13,29 +13,34 @@ function ajax_request(s_handler, c_handler, input_data)
 
 function conn_handler(value, prof_id)
 {
-	if (value == 'buy_from'){
-		var buy = document.getElementById('buy_from').checked
-		if (buy==true){
-			// create connection of logged in user and profile user
-			ajax_request("add_connection", 'create_conn', {conn_data: "{'prof_id': " +prof_id +", 'status': 'buy_from'}"});
-		}
-		else{
-			// delete connection
-			ajax_request("del_connection", 'create_conn', {conn_data: "{'prof_id': " +prof_id +", 'status': 'buy_from'}"})
-		}
-	}
-	else
-	{
-		var sell = document.getElementById('sell_to').checked
-		if (sell==true){
-			// create connection of logged in user and profile user
-			ajax_request("add_connection", 'create_conn', {conn_data: "{'prof_id': " +prof_id +", 'status': 'sell_to'}"});
-		}
-		else{
-			// delete connection
-			ajax_request("del_connection", 'create_conn', {conn_data: "{'prof_id': " +prof_id +",'status': 'sell_to'}"});
-		}
+	if (validate_login()['status'] == '1'){
+				if (value == 'buy_from'){
+					var buy = document.getElementById('buy_from').checked
+					if (buy==true){
+						// create connection of logged in user and profile user
+						ajax_request("add_connection", 'create_conn', {conn_data: "{'prof_id': " +prof_id +", 'status': 'buy_from'}"});
+					}
+					else{
+						// delete connection
+						ajax_request("del_connection", 'create_conn', {conn_data: "{'prof_id': " +prof_id +", 'status': 'buy_from'}"})
+					}
+				}
+				else
+				{
+					var sell = document.getElementById('sell_to').checked
+					if (sell==true){
+						// create connection of logged in user and profile user
+						ajax_request("add_connection", 'create_conn', {conn_data: "{'prof_id': " +prof_id +", 'status': 'sell_to'}"});
+					}
+					else{
+						// delete connection
+						ajax_request("del_connection", 'create_conn', {conn_data: "{'prof_id': " +prof_id +",'status': 'sell_to'}"});
+					}
 
+				}
+	}
+	else{
+		$('#ad_cons_id').tooltip('show');
 	}
 }
 
@@ -50,12 +55,18 @@ function invite_connect(prof_username, logged_username){
 
 function add_food(prof_id){
 	// var food = document.getElementById('addfood_id').value;
-	var food = document.getElementsByClassName('chosen-single')[0].children[0].innerHTML;
-	var data = {useruid: prof_id, food_name: food};
-	ajax_request("addfood", 'create_conn', {data: JSON.stringify(data)});
-	document.getElementsByClassName('chosen-single')[0].children[0].innerHTML = '';
-	var append_data = '<tr><td>'+food+'</td><td><div class="pull-right"><a href="#"><i class="fa fa-thumbs-o-up text-muted" title="Vouch for this"></i></a></div></td></tr>';
-	$("#food_tbody").prepend(append_data);
+	if (validate_login()['status'] == '1'){
+		var food = document.getElementsByClassName('chosen-single')[0].children[0].innerHTML;
+		var data = {useruid: prof_id, food_name: food};
+		ajax_request("addfood", 'create_conn', {data: JSON.stringify(data)});
+		document.getElementsByClassName('chosen-single')[0].children[0].innerHTML = '';
+		var append_data = '<tr><td>'+food+'</td><td><div class="pull-right"><a href="#"><i class="fa fa-heart-o" title="Vouch for this"></i></a></div></td></tr>';
+		$("#food_tbody").prepend(append_data);
+	}
+	else{
+		$('#adfoo_id').tooltip('show');
+	}
+
 }
 
 function recommend_food(logged_in_id, food_name, prof_id){
@@ -110,10 +121,11 @@ function UpdateStatus(id_name)
 		alert("You can't post empty status.");
 		return;
 	}
+
 	ajax_request("post_tweet", 'CloseNewPostModal', {message: message});	
 }
 
-
+var loggedIn = '';
 function UpdateActivity(id_name)
 {
 	message = $('#'+id_name).val();
@@ -122,7 +134,12 @@ function UpdateActivity(id_name)
 		alert("You can't post empty status.");
 		return;
 	}
-	ajax_request("post_tweet", 'update_activity', {message: message});	
+	if(validate_login()['status'] == '1'){
+		ajax_request("post_tweet", 'update_activity', {message: message});
+	}
+	else{
+		$('#btn_must_be_logged').click();
+	}	
 }
 
 function update_activity(status_id)
@@ -152,24 +169,34 @@ function ShowReply(reply_id, mentions)
 
 function BlurReply(reply_id, mentions)
 {
-	if($('#'+reply_id).val().trim()==mentions)
-	{
-	$('#'+reply_id).val("");
+	if($('#'+reply_id).val().trim()==mentions){
+		$('#'+reply_id).val("");
 	}
 }
 
 
 var nnn;
 $('.enterhandler').bind('keypress', function(e) {
-	var code = e.keyCode || e.which;
- if(code == 13) { //Enter keycode
-   //Do something
-   status_msg =this.value;
-   if(status_msg=="")
-   {
-   		return;
-   }
-   PostStatus(status_msg);
-   this.value=0;
- }
+	if(validate_login()['status'] == '1'){
+		var code = e.keyCode || e.which;
+		 if(code == 13) { //Enter keycode
+		   //Do something
+		   status_msg =this.value;
+		   if(status_msg=="")
+		   {
+		   		return;
+		   }
+		   PostStatus(status_msg);
+		   this.value=0;
+		 }
+	}
+	else{
+		$('#btn_must_be_logged').click();
+	}
 });
+
+/*function ajax_success_validate_logged_in(data){
+	alert(data);
+	data = jQuery.parseJSON(data);
+	loggedIn = data['status'];
+ }*/

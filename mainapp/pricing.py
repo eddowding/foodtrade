@@ -4,7 +4,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from allauth.socialaccount.models import SocialToken, SocialAccount
 from twython import Twython
 import json
-from mainapp.classes.TweetFeed import TweetFeed
+from mainapp.classes.TweetFeed import TweetFeed, Notification
 from search import search_general
 from streaming import MyStreamer
 from models import MaxTweetId
@@ -32,8 +32,28 @@ from django.views.decorators.csrf import csrf_exempt
 
 def home(request):
     parameters = { }
+    parameters['user'] = request.user
+    if request.user.is_authenticated():
+        # parameters['user'] = request.user
+        user_id = request.user.id
+       
+        user_info = UserInfo(user_id)
+        parameters['userinfo'] = user_info
+        notification_obj = Notification()
+        notification = notification_obj.get_notification(request.user.username)
+        parameters['notification'] = json.loads(notification.content)
     return render_to_response('pricing.html',parameters,context_instance=RequestContext(request))
 
 def pages(request, page_name):
     parameters = { }
+    parameters['user'] = request.user
+    if request.user.is_authenticated():
+        # parameters['user'] = request.user
+        user_id = request.user.id
+       
+        user_info = UserInfo(user_id)
+        parameters['userinfo'] = user_info
+        notification_obj = Notification()
+        notification = notification_obj.get_notification(request.user.username)
+        parameters['notification'] = json.loads(notification.content)
     return render_to_response(page_name+'.html',parameters,context_instance=RequestContext(request))

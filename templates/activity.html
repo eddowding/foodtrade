@@ -26,7 +26,7 @@
  
 
   <div id="update" class="well well-sm">
-    <form action="#" method="get">
+    <form action="#" method="get" >
         <div class="input-group"> 
           <input class="form-control" name="q" id="newstatus"  placeholder="What #food do you have to #buy, #sell, or #surplus?">
           <span class="input-group-btn">
@@ -440,10 +440,9 @@ $('#food_filter').keyup( function() {
 $('#business_filter').keyup( function() {
             business_value_changed(0);
         });
+show_food_filters(food_filters, 0);
+show_business_filters(business_filters, 0);
 
-
-         show_food_filters(food_filters, 0);
-         show_business_filters(business_filters, 0);
-        </script>
+</script>
 
  {% endblock %}
