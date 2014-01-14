@@ -44,10 +44,11 @@
       <div id="contact_info" class="col-md-3">
 {% ifnotequal profile_id user_id %}
       <!-- if they dont't have an account yet --> 
+      {% if not user.is_authenticated %}
       <button class="btn btn-primary btn-block" data-toggle="modal" data-target="#modal_invite">
          Invite to connect
       </button> 
-
+      {% endif %}
   
       {% if user.is_authenticated %}
       <button class="btn btn-default btn-block" data-toggle="modal" data-target="#modal_customer">
@@ -150,16 +151,15 @@
               <h4 class="modal-title" id="myModalLabel">Contact {{userinfo.name}}</h4>
             </div>
             <div class="modal-body">
-
             <div class="container-responsive">
               <div class="row">
                 <div class="col-sm-4">
              
                   <address>
                     
-          <a href="mailto:mail@smalesfarm.com" target="_blank"><i class="fa fa-envelope text-muted"></i> {{email}} </a><br />
-          <a href="#"><i class="fa fa-twitter text-muted"></i> {{screen_name}}</a><br />
-          <a href="callto:0131 476 5333"><i class="fa fa-phone text-muted"></i>{{phone_number}}</a>
+          <a href="mailto:{{email}}" target="_blank"><i class="fa fa-envelope text-muted"></i> {{email}} </a><br />
+          <a href="http://twitter.com/{{screen_name}}"  target="_blank"><i class="fa fa-twitter text-muted"></i> {{screen_name}}</a><br />
+          <a href="callto:{{phone_number}}"><i class="fa fa-phone text-muted"></i> {{phone_number}}</a>
                   </address>
                 </div>
                 
@@ -167,13 +167,13 @@
                   <form id="contact" method="post" class="form" role="form">
                     <div class="row">
                       <div class="col-xs-6 col-md-6 form-group">
-                        <input class="form-control" id="name" name="name" placeholder="Name (prefill if reg'd)" type="text" required autofocus />
+                        <input class="form-control" id="sender_name" name="name" placeholder="Name" type="text" required autofocus value = "{{userinfo.full_name}}"/>
                       </div>
                       <div class="col-xs-6 col-md-6 form-group">
-                        <input class="form-control" id="email" name="email" placeholder="Email (prefill if reg'd)" type="email" required />
+                        <input class="form-control" id="sender_email" name="email" placeholder="Email" type="email" required value = "{{userinfo.email}}" />
                       </div>
                     </div> 
-                    <textarea class="form-control counted" name="message" placeholder="Type in your message" rows="5"></textarea>
+                    <textarea class="form-control counted" id="email_message" placeholder="Type in your message" rows="5"></textarea>
                     <h6 class="pull-right" id="counter">320 characters remaining</h6>
                      
                   </form>
@@ -182,16 +182,14 @@
             </div>
  
    
-
             </div>
             <div class="modal-footer"> 
-              <button type="button" class="btn btn-primary">Tweet it</button>
-              <button type="button" class="btn btn-primary">Email it</button>
+              <button type="button" class="btn btn-success" onclick="post_contact_tweet('{{screen_name}}')">Tweet it</button>
+              <button type="button" class="btn btn-success" onclick="send_email('{{email}}')">Email it</button>
             </div>
           </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
       </div><!-- /.modal -->
-
       <!-- modal_customer -->
       <div class="modal fade" id="modal_customer" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -454,5 +452,6 @@ connections = [];
     {% endif %}
     </script>
      <script src="{% static "js/activity-map.js" %}"></script>
+     <script src="{% static "js/contact.js" %}"></script>
 
 {% endblock %}   
