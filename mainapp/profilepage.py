@@ -101,9 +101,13 @@ def edit_profile(request, username):
             userprof = user_profile.get_profile_by_id(str(request.user.id))
             parameters['profile_id'] = request.user.id
             parameters['sign_up_as'] = userprof['sign_up_as']
+            if userprof['sign_up_as'] == 'Business':
+                parameters['type_user'] = str(userprof['type_user'])
+            else:
+                parameters['type_user'] = ''
             parameters['zip_code'] = userprof['zip_code']
             parameters['address'] = userprof['address']
-            parameters['type_user'] = str(userprof['type_user'])
+            
             try:
                 parameters['first_name'] = account.extra_data['name'].split(' ')[0]
                 parameters['last_name']  = account.extra_data['name'].split(' ')[1]
@@ -123,6 +127,7 @@ def edit_profile(request, username):
             return HttpResponseRedirect('/')
 
     else:
+        user_profile = UserProfile()
         first_name = request.POST['first_name']
         last_name = request.POST['last_name']
         description = request.POST['description']

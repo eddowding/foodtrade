@@ -37,6 +37,10 @@
 .typeempty{
   display:none;
 }
+.error{
+  color:red;
+  font-size:12px;
+}
 </style>
 
     <div class="signup-container">
@@ -51,11 +55,11 @@
                       <!-- {{ form.as_p }} -->
 
                         <div class="form-group">
+                        <label class="error">{{ form.sign_up_as.errors.as_text }}</label>
                         <label for="id_sign_up_as" class="col-sm-3 control-label">
                              Sign up as</label>
                             {{form.sign_up_as.as_hidden}}
                             <div class="col-sm-9">
-
                           <div class="btn-group" data-toggle="buttons">
                             <label class="btn btn-default">
                               <input type="radio" name="options" id="option1" onchange="dataradio('Individual')"> Individual
@@ -69,24 +73,23 @@
                               <input type="radio" name="options" id="option3" onchange="dataradio('Organisation')"> Organisation
                             </label>
                           </div>
-
                         </div>
-                    </div>
+                        </div>
                             {{form.type_user.as_hidden}}
                     <div class="form-group" id="type_user_id">
-                        <label for="id_type_user" class="col-sm-3 control-label">
-                            Type</label>
+                        <label class="error">{{ form.type_user.errors.as_text }}</label>
+                        <label for="id_type_user" class="col-sm-3 control-label">Type</label>
                         <div class="col-sm-9">
-<select data-placeholder="Farm, wholesaler, restaurant, bakery..." style="width:100%;height:30px;" class="chosen-select" multiple>
-            <option value=""></option>
-            {% for each in all_tags %}
-            <optgroup label={{each.node}}>
-              {% if each.childrens %}
-                {% for eachchild in each.childrens %}
-                <option>{{eachchild.node}}</option>
-                {% endfor %}
-              {% else %}
-              <option>{{each.node}}</option>
+                        <select data-placeholder="Farm, wholesaler, restaurant, bakery..." style="width:100%;height:30px;" class="chosen-select" multiple>
+                        <option value=""></option>
+                          {% for each in all_tags %}
+                          <optgroup label={{each.node}}>
+                          {% if each.childrens %}
+                          {% for eachchild in each.childrens %}
+                          <option>{{eachchild.node}}</option>
+                          {% endfor %}
+                    {% else %}
+                        <option>{{each.node}}</option>
               {% endif %}
             </optgroup>
             {% endfor %}
@@ -97,6 +100,7 @@
                         </div>
                     </div>
                     <div class="form-group">
+                    <label class="error">{{ form.zip_code.errors.as_text }}</label>
                         <label for="id_zip_code" class="col-sm-3 control-label">
                             Post/Zip Code</label>
                         <div class="col-sm-9">
@@ -105,6 +109,7 @@
                     </div>
 
                     <div class="form-group">
+                        <label class="error">{{ form.username.errors.as_text }}</label>
                         <label for="id_username" class="col-sm-3 control-label">
                             Username</label>
                         <div class="col-sm-9">
@@ -112,6 +117,7 @@
                         </div>
                     </div>
                     <div class="form-group">
+                    <label class="error">{{ form.email.errors.as_text }}</label>
                         <label for="id_email" class="col-sm-3 control-label">
                             Email</label>
                         <div class="col-sm-9">
