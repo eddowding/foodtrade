@@ -70,6 +70,19 @@ def gen_tradeconnection_userprofile(third_pk, userid, user, name, description, n
                 con = { "deleted" : 0, "c_useruid" : ids[0], "b_useruid" : ids[1] }
                 trade_connections.create_connection(con)
 
+        fd = Food()
+        for f in foods:
+            food_data = {'food_name': f, 'useruid': userid}
+            fd.create_food(food_data)
+
+    if sign_up_types[0] == "Organisation":
+        org_obj = Organisation()
+        for i in range(int(random.randrange(1,5))):
+            rand_no = int(random.randrange(2,488))
+            if rand_no != userid:
+                con = { 'orguid': userid, 'memberuid': rand_no}
+                org_obj.create_member(con)
+
     tradeconnection_userprofile_fields = {"useruid": str(userid), "sign_up_as": sign_up_types[0],
                                           "type_user":str(','.join(type_user)),
                                             "zip_code": new_location[0], "address": new_location[3],
@@ -79,9 +92,11 @@ def gen_tradeconnection_userprofile(third_pk, userid, user, name, description, n
                                           # zip ode random, lat and lon from zip code.
     userprofile = UserProfile()
     userprofile.create_profile(tradeconnection_userprofile_fields)
+    
 
 
     rand_no = int(random.randrange(1,3))
+    tweet_feed = TweetFeed()
     for i in range(rand_no):
         # Generates Tweet Feeds
         status = gen_unique_sentence(15)
@@ -101,16 +116,18 @@ def gen_tradeconnection_userprofile(third_pk, userid, user, name, description, n
         if previous_tweet_id <0:
             previous_tweet_id =0
         if rand_no>90:
-            parent_tweet_id = item_no = int(random.randrange(previous_tweet_id,tweet_id))
+            parent_tweet_id = int(random.randrange(previous_tweet_id,tweet_id))
 
         tradeconnection_tweets_fields = {"status":status, "useruid": str(userid), "sign_up_as": sign_up_types[0],
-                                            "foods": foods, "type_user":type_user, "parent_tweet_id":parent_tweet_id,  "deleted":0, 
+                                            "foods": foods, 'organisations':[], "type_user":type_user, "parent_tweet_id":parent_tweet_id,  "deleted":0, 
                                          "tweet_id":tweet_id, "user": tradeconnection_tweets_fields_user, "time_stamp":tweet_time,
-                                          "location": tradeconnection_tweets_fields_location }  
+                                          "location": tradeconnection_tweets_fields_location }
 
-        tweet_feed = TweetFeed()
+
+        
         tweet_feed.insert_tweet(tradeconnection_tweets_fields)
         tweet_id = tweet_id +1
+    # tweet_feed.update_data(userid)
 
 
 
