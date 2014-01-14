@@ -103,6 +103,7 @@ def edit_profile(request, username):
             return HttpResponseRedirect('/')
 
     else:
+        user_profile = UserProfile()
         first_name = request.POST['first_name']
         last_name = request.POST['last_name']
         description = request.POST['description']
