@@ -336,9 +336,8 @@
           </div> <!-- end produce -->
 
           <div class="tab-pane fade" id="connections">
-            {% if user.is_authenticated %}
             <div class="well well-sm">  
-            <form class="form-inline" role="form">
+            <form class="form-inline"  onsubmit="check_status()" role="form">
               <div class="form-group">
                  
 
@@ -362,11 +361,6 @@
               <button type="submit" class="btn btn-success">Add</button>
             </form>
           </div>
-          {% else %}
-          <div class="pull-left">  
-          <a href="{% provider_login_url "twitter" process="login" %}" class="btn btn-primary">Login to add connections / see all connections</a>
-        </div>
-           {% endif %}
            <div class="pull-left">
           {% for each in connections %}
                   <div class="card card-business">
@@ -633,6 +627,13 @@ function post_contact_tweet(mention)
  
   $('#modal_contact').modal('hide');
 }
+function check_status(){
+  if (validate_login()['status'] == '1'){
 
+  }
+  else{
+    $('#btn_must_be_logged').click();
+  }
+}
      </script>
  {% endblock %}
