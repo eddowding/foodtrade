@@ -138,7 +138,8 @@ function UpdateActivity(id_name)
 		ajax_request("post_tweet", 'update_activity', {message: message});
 	}
 	else{
-		$('#btn_must_be_logged').click();
+		/*$('#btn_must_be_logged').click();*/
+		$('#btn_update_activity').tooltip('show');
 	}	
 }
 
@@ -191,7 +192,8 @@ $('.enterhandler').bind('keypress', function(e) {
 		 }
 	}
 	else{
-		$('#btn_must_be_logged').click();
+		/*$('#btn_must_be_logged').click();*/
+		$('#' + String(this.attributes.id.value)).tooltip('show');
 	}
 });
 
