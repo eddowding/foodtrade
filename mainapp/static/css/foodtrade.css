@@ -24,6 +24,8 @@ h2 {
 	text-transform: uppercase;
 }
 
+
+
 .chardinjs-show-element {
 	z-index: auto;
 	background: #fff;
@@ -97,13 +99,25 @@ html,body
 {
   height: 100%;
 }
-.sidebar {
+
+
+/********************************/
+/**  FULL HEIGHT SIDEBAR       **/
+/********************************/
+ 
+  
+#main_page #main_row
+{ 
+    height: 100%;
+}
+   
+#sidebar {
 	border-right: 1px solid #ccc;
-	background-image: url(http://www.stripegenerator.com/generators/generate_stripes.php?fore=e1e1e1&h=30&w=1&p=3&back1=ffffff&back2=ff0000&gt=0&d=0&shadow=0&);
-	min-height: 2000px;
+	background-image: url('/static/images/double_stripe.png');
 	padding-top: 30px;
 	margin-top: -12px;
 	padding-left: 25px;
+	min-height: 1000px;
 }
 
 .sidebar .alert {
@@ -112,6 +126,7 @@ html,body
 
 #map {
 	margin-top: -12px;
+	position: fixed;
 }
 
 #account_info h4 {
@@ -217,8 +232,6 @@ article .content h4 {
 /**  MAKE DEFAULT:ACTIVE GREEN **/
 /********************************/
 
-
-
 .btn-default:active, .btn-default.active, .open .dropdown-toggle.btn-default {
 	background-image: none;
 }
@@ -235,6 +248,68 @@ article .content h4 {
 	-webkit-box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
 	box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
 }
+
+/********************************/
+/** COLOUR ICONS ON BUTTON HOVER  **/
+/********************************/
+
+.btn:hover > .text-muted,
+.btn-default:focus > .text-muted,
+.btn-default:active > .text-muted,
+.btn.active > .text-muted  {
+	color: #fff;
+}
+
+/********************************/
+/**  MAKE PRIMARY BUTTON ORANGE */
+/********************************/
+
+.btn-primary {
+color: #ffffff;
+background-color: #51B55E;
+border-color: #47a447;
+}
+
+.btn-primary:hover,
+.btn-primary:focus,
+.btn-primary:active,
+.btn-primary.active,
+.open .dropdown-toggle.btn-primary {
+  color: #ffffff;
+  background-color: ##FF9700;
+  border-color: #285e8e;
+}
+
+.btn-primary:active,
+.btn-primary.active,
+.open .dropdown-toggle.btn-primary {
+  background-image: none;
+}
+
+.btn-primary.disabled,
+.btn-primary[disabled],
+fieldset[disabled] .btn-primary,
+.btn-primary.disabled:hover,
+.btn-primary[disabled]:hover,
+fieldset[disabled] .btn-primary:hover,
+.btn-primary.disabled:focus,
+.btn-primary[disabled]:focus,
+fieldset[disabled] .btn-primary:focus,
+.btn-primary.disabled:active,
+.btn-primary[disabled]:active,
+fieldset[disabled] .btn-primary:active,
+.btn-primary.disabled.active,
+.btn-primary[disabled].active,
+fieldset[disabled] .btn-primary.active {
+  background-color: #428bca;
+  border-color: #357ebd;
+}
+
+.btn-primary .badge {
+  color: #428bca;
+  background-color: #fff;
+}
+
 
 
 /********************************/
@@ -540,6 +615,26 @@ article .content h4 {
   margin-top: 20px;
 }
 
+#homehero .jumbotron {
+	background-color: none; 
+	background: url(http://upload.wikimedia.org/wikipedia/commons/5/5a/Milan_Vegetable_Market.jpg) no-repeat center center fixed; 
+	box-shadow: 0 0 1000px #000 inset;
+	background-size: cover;
+}
+
+#homehero .jumbotron * {
+	color: #fff; 
+}
+#homehero .jumbotron h1,
+#homehero .jumbotron h2,
+#homehero .jumbotron h3 {
+ background: rgba(0,0,0,0.6); 
+ padding: 10px;  
+ display: inline-block;
+margin:0;
+border-radius: 4px;
+clear: both;
+}
 
 /********************************/
 /**  REGISTRATION              **/
