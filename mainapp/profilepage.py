@@ -43,6 +43,26 @@ def display_profile(request, username):
         user_info = UserInfo(user_id)
         parameters['userinfo'] = user_info
         parameters['user_id'] = request.user.id
+        lon2 = user_info.lon
+        lat2 = user_info.lat
+
+    else:
+        x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+        if x_forwarded_for:
+            ip = x_forwarded_for.split(',')[0]
+
+        else:
+            ip = request.META.get('REMOTE_ADDR')
+        location_info = get_addr_from_ip(ip)
+        lon2 = float(location_info['longitude'])
+        lat2 = float(location_info['latitude'])
+
+
+    lon1, lat1 = userprof['longitude'],userprof['latitude']
+    dis = distance(lon1, lat1, lon2, lat2)
+    parameters['distance'] = "{:10.2f}".format(dis * 0.621371)
+
+
         
     if parameters['sign_up_as'] == 'Business':  
         if request.user.is_authenticated():
@@ -81,9 +101,13 @@ def edit_profile(request, username):
             userprof = user_profile.get_profile_by_id(str(request.user.id))
             parameters['profile_id'] = request.user.id
             parameters['sign_up_as'] = userprof['sign_up_as']
+            if userprof['sign_up_as'] == 'Business':
+                parameters['type_user'] = str(userprof['type_user'])
+            else:
+                parameters['type_user'] = ''
             parameters['zip_code'] = userprof['zip_code']
             parameters['address'] = userprof['address']
-            parameters['type_user'] = str(userprof['type_user'])
+            
             try:
                 parameters['first_name'] = account.extra_data['name'].split(' ')[0]
                 parameters['last_name']  = account.extra_data['name'].split(' ')[1]
@@ -103,6 +127,7 @@ def edit_profile(request, username):
             return HttpResponseRedirect('/')
 
     else:
+        user_profile = UserProfile()
         first_name = request.POST['first_name']
         last_name = request.POST['last_name']
         description = request.POST['description']
@@ -285,3 +310,19 @@ def get_team(user_id):
          })
     #print final_teams
     return final_teams[:10]
+
+from math import radians, cos, sin, asin, sqrt
+def distance(lon1, lat1, lon2, lat2):
+    """
+    Calculate the great circle distance between two points 
+    on the earth (specified in decimal degrees)
+    """
+    # convert decimal degrees to radians 
+    lon1, lat1, lon2, lat2 = map(radians, [lon1, lat1, lon2, lat2])
+    # haversine formula 
+    dlon = lon2 - lon1 
+    dlat = lat2 - lat1 
+    a = sin(dlat/2)**2 + cos(lat1) * cos(lat2) * sin(dlon/2)**2
+    c = 2 * asin(sqrt(a)) 
+    km = 6367 * c
+    return km

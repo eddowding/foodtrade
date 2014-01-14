@@ -121,4 +121,5 @@ class AjaxSearch():
 
         
         parameters['results'] = results
+        parameters['results_json'] = json.dumps(results)
         return render_to_response('activity_ajax.html',parameters)

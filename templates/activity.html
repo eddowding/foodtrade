@@ -145,7 +145,7 @@
     <div class="col-md-5">
 
     <!-- FIX THE MAP POSITION SO IT DOES NOT SCROLL --> 
-      <div style="width:100%; height: 1000px; " id="map"  data-spy="affix" data-offset-top="30">
+      <div style="height: 1000px; " id="map"  data-spy="affix" data-offset-top="30">
         
 
         <div class="alert alert-warning">
@@ -410,6 +410,8 @@ for(var i = 0; i < business_filters.length;i++){
        function show_ajax_results(data)
        {
          $('#activity').html(data);
+         connections = ajax_connections;
+         reload_controls();
 
        }
 $('#food_filter').keyup( function() {
