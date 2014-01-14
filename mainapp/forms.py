@@ -10,7 +10,7 @@ import time
 
 class SignupForm(forms.Form):
     username = forms.CharField(widget=forms.TextInput(attrs={'placeholder': u'Username',
-     'class' : 'form-control'}))
+     'class' : 'form-control'})) 
     email = forms.EmailField(widget=forms.TextInput(attrs={'placeholder': u'Email',
      'class' : 'form-control'}))
     sign_up_as = forms.CharField(widget=forms.TextInput(attrs={'placeholder': u'Sign up as',
@@ -47,7 +47,6 @@ class SignupForm(forms.Form):
         
         notification_obj = Notification()
         invites_obj = Invites()
-
         twitter_username = social_account.extra_data['screen_name']
         invitees_for_this_user = invites_obj.check_invitees(twitter_username) 
         now = datetime.datetime.now()
@@ -62,5 +61,5 @@ class SignupForm(forms.Form):
                     'notification_view_status':'false',
                     'notifying_user':str(twitter_username)
                     })
-        print "saved", data
+        #print "saved", data
         return HttpResponseRedirect('/activity/')
