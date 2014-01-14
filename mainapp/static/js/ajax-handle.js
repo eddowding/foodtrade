@@ -110,10 +110,11 @@ function UpdateStatus(id_name)
 		alert("You can't post empty status.");
 		return;
 	}
+
 	ajax_request("post_tweet", 'CloseNewPostModal', {message: message});	
 }
 
-
+var loggedIn = '';
 function UpdateActivity(id_name)
 {
 	message = $('#'+id_name).val();
@@ -122,7 +123,12 @@ function UpdateActivity(id_name)
 		alert("You can't post empty status.");
 		return;
 	}
-	ajax_request("post_tweet", 'update_activity', {message: message});	
+	if(validate_login()['status'] == '1'){
+		ajax_request("post_tweet", 'update_activity', {message: message});
+	}
+	else{
+		$('#btn_must_be_logged').click();
+	}	
 }
 
 function update_activity(status_id)
@@ -152,24 +158,34 @@ function ShowReply(reply_id, mentions)
 
 function BlurReply(reply_id, mentions)
 {
-	if($('#'+reply_id).val().trim()==mentions)
-	{
-	$('#'+reply_id).val("");
+	if($('#'+reply_id).val().trim()==mentions){
+		$('#'+reply_id).val("");
 	}
 }
 
 
 var nnn;
 $('.enterhandler').bind('keypress', function(e) {
-	var code = e.keyCode || e.which;
- if(code == 13) { //Enter keycode
-   //Do something
-   status_msg =this.value;
-   if(status_msg=="")
-   {
-   		return;
-   }
-   PostStatus(status_msg);
-   this.value=0;
- }
+	if(validate_login()['status'] == '1'){
+		var code = e.keyCode || e.which;
+		 if(code == 13) { //Enter keycode
+		   //Do something
+		   status_msg =this.value;
+		   if(status_msg=="")
+		   {
+		   		return;
+		   }
+		   PostStatus(status_msg);
+		   this.value=0;
+		 }
+	}
+	else{
+		$('#btn_must_be_logged').click();
+	}
 });
+
+/*function ajax_success_validate_logged_in(data){
+	alert(data);
+	data = jQuery.parseJSON(data);
+	loggedIn = data['status'];
+ }*/

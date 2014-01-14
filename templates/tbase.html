@@ -429,6 +429,24 @@ background: #eee;
   </div>
 </div>
 
+<!-- Button trigger modal -->
+<button id="btn_must_be_logged" style="display:none" data-toggle="modal" data-target="#myModal_must_be_logged">
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="myModal_must_be_logged" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-body">
+        <h4 class="modal-title" id="myModalLabel">You must be <a href="/accounts/twitter/login/?process=login">logged</a> in to use this feature</h4>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
 <!-- UserVoice JavaScript SDK (only needed once on a page) -->
 <script>(function(){var uv=document.createElement('script');uv.type='text/javascript';uv.async=true;uv.src='//widget.uservoice.com/HloB2aRxdk7fbhWMOI5AlQ.js';var s=document.getElementsByTagName('script')[0];s.parentNode.insertBefore(uv,s)})()</script>
 <!-- A tab to launch the Classic Widget -->
@@ -627,9 +645,11 @@ function initialize() {
   });
 }
 google.maps.event.addDomListener(window, 'load', initialize);
-window.setInterval(function(){
-  show_notifications();
-}, 20000);
+{% if user.is_authenticated %}
+  window.setInterval(function(){
+    show_notifications();
+  }, 20000);
+{% endif %}
 function  show_notifications(){
   ajax_request('getnotification', 'build_notification', {'user':'{{userinfo.username}}'})
 }
@@ -650,6 +670,17 @@ function build_notification(data){
 function clear_notification(){
   $('#notification').html(String('0'));
   ajax_request('change_notification_status','','')
+}
+
+function validate_login(){
+  {% if user.is_authenticated %}
+    return {'status':'1'}
+  {% endif %}
+  {% if not user.is_authenticated %}
+    return {'status':'0'}
+  {% endif %}
+  /*
+  ajax_request('validate_logged_in', 'ajax_success_validate_logged_in','');*/
 }
 </script>    
   </body>

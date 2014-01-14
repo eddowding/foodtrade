@@ -237,3 +237,9 @@ class AjaxHandle(AjaxSearch):
     def change_notification_status(self, request):
         notification_obj = Notification()
         return notification_obj.change_notification_status(request.user.username)
+
+    def validate_logged_in(self,request):
+        #print request.user.username
+        if request.user.is_authenticated:
+            return HttpResponse(json.dumps({'status':'1'}))
+        return HttpResponse(json.dumps({'status':'0'}))
