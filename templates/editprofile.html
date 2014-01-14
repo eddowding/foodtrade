@@ -64,13 +64,13 @@
 
         <div class="btn-group" data-toggle="buttons">
           <label class="btn btn-default {% ifequal sign_up_as 'Individual' %}active{% endifequal %}"> 
-              <input type="radio" {% ifequal sign_up_as 'Individual' %} checked="checked" {% endif %} name="sign_up_as" id="option1" value="Individual" onchange="dataradio('Individual')"> Individual 
+              <input type="radio" {% ifequal sign_up_as 'Individual' %} checked="checked" {% endifequal %} name="sign_up_as" id="option1" value="Individual" onchange="dataradio('Individual')"> Individual 
           </label> 
           <label class="btn btn-default {% ifequal sign_up_as 'Business' %}active{% endifequal %}">  
-              <input type="radio" {% ifequal sign_up_as 'Business' %} checked="checked" {% endif %} name="sign_up_as"  id="option2" value="Business" onchange="dataradio('Business')"> Business 
+              <input type="radio" {% ifequal sign_up_as 'Business' %} checked="checked" {% endifequal %} name="sign_up_as"  id="option2" value="Business" onchange="dataradio('Business')"> Business 
           </label>
           <label class="btn btn-default {% ifequal sign_up_as 'Organisation' %}active{% endifequal %}">
-              <input type="radio" {% ifequal sign_up_as 'Organisation' %} checked="checked" {% endif %} name="sign_up_as" id="option3" value="Organisation" onchange="dataradio('Organisation')"> Organisation
+              <input type="radio" {% ifequal sign_up_as 'Organisation' %} checked="checked" {% endifequal %} name="sign_up_as" id="option3" value="Organisation" onchange="dataradio('Organisation')"> Organisation
           </label>
         </div>
 
