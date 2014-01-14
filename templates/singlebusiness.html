@@ -235,8 +235,7 @@
                       <div class="input-group">
                       <!-- link this to open food facts --> 
                             <!-- <input class="typeahead form-control" name="addfood" data-source='' data-provide="typeahead" autocomplete="off" id = "addfood_id" style="width:400px;" placeholder="Add foods you can buy here."> -->
-
-                            <select data-placeholder="Add foods you can buy here." style="height:30px; width: 100%" class="chosen-select">
+                            <select id="myselect" data-placeholder="Add foods you can buy here." style="height:30px; width: 100%" class="chosen-select" onkeypress="return handle(event)" >
                                 <option value=""></option>
                                 {% for each in food_list %}
                                 <optgroup label={{each.node}}>
@@ -557,6 +556,12 @@ $( document ).ready(function() {
   
     $('.tltip').tooltip();
 });
+
+function handle(e){
+        if(e.keyCode === 13){
+            alert("Enter was pressed was presses");
+        }
+    }
 
 function createAutoClosingAlert(selector, delay) {
   alert(selector);
