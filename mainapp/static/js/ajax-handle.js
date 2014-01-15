@@ -1,4 +1,5 @@
 global_this = '';
+var friends;
 function ajax_request(s_handler, c_handler, input_data)
 {
    $.ajax({
@@ -10,6 +11,7 @@ function ajax_request(s_handler, c_handler, input_data)
     }
 });
 }
+
 
 function conn_handler(value, prof_id)
 {

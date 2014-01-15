@@ -28,9 +28,9 @@
   <div id="update" class="well well-sm">
     <form action="#" method="get" >
         <div class="input-group"> 
-          <input class="form-control" name="q" id="newstatus"  placeholder="What #food do you have to #buy, #sell, or #surplus?">
+          <input class="form-control" name="q" id="newstatus" {% if not user.authenticated %} disabled="true" title="Please login to use this feature." {% endif %} placeholder="What #food do you have to #buy, #sell, or #surplus?">
           <span class="input-group-btn">
-              <button type="button" id="btn_update_activity" class="btn btn-success" {% if not user.authenticated %} title="Please login to use this feature." {% endif %} onclick="UpdateActivity('newstatus');"> Post</button>
+              <button type="button" id="btn_update_activity" class="btn btn-success" {% if not user.authenticated %} disabled="true" title="Please login to use this feature." {% endif %} onclick="UpdateActivity('newstatus');"> Post</button>
           </span>
         </div>
     </form>
@@ -122,7 +122,7 @@
         </div>
 
         <div class="reply well well-sm" style="margin:0;"> 
-          <input class="form-control input-sm enterhandler"  class="btn btn-success" {% if not user.authenticated %} title="Please login to use this feature." {% endif %} type="text" id="replyid_{{forloop.counter}}" placeholder="Reply to @{{result.user.username}}" onfocus="ShowReply('replyid_{{forloop.counter}}', '@{{result.user.username}}')" onblur="BlurReply('replyid_{{forloop.counter}}', '@{{result.user.username}}')">
+          <input class="form-control input-sm enterhandler"  class="btn btn-success" {% if not user.authenticated %} disabled="true" title="Please login to use this feature." {% endif %} type="text" id="replyid_{{forloop.counter}}" placeholder="Reply to @{{result.user.username}}" onfocus="ShowReply('replyid_{{forloop.counter}}', '@{{result.user.username}}')" onblur="BlurReply('replyid_{{forloop.counter}}', '@{{result.user.username}}')">
         </div>
     </li>
   {% endfor %}
@@ -233,7 +233,7 @@ connections = {{json_data | safe}};
         </div>
 
         <div class="reply well well-sm" style="margin:0;"> 
-          <input class="form-control input-sm enterhandler"  {% if not user.authenticated %} title="Please login to use this feature." {% endif %} type="text" id="replyid_{{forloop.counter}}" placeholder="Reply to @{{result.user.username}}"  onfocus="ShowReply('replyid_{{forloop.counter}}', '@{{result.user.username}}')" onblur="BlurReply('replyid_{{forloop.counter}}', '@{{result.user.username}}')">
+          <input class="form-control input-sm enterhandler"  {% if not user.authenticated %} disabled="true" title="Please login to use this feature." {% endif %} type="text" id="replyid_{{forloop.counter}}" placeholder="Reply to @{{result.user.username}}"  onfocus="ShowReply('replyid_{{forloop.counter}}', '@{{result.user.username}}')" onblur="BlurReply('replyid_{{forloop.counter}}', '@{{result.user.username}}')">
         </div>
     </li>
 
