@@ -21,21 +21,8 @@ access_token_secret =''
 admin_access_token = '2248425234-EgPSi3nDAZ1VXjzRpPGMChkQab5P0V4ZeG1d7KN'
 admin_access_token_secret = 'ST8W9TWqqHpyskMADDSpZ5r9hl7ND6sEfaLvhcqNfk1v4'
 
-from math import radians, cos, sin, asin, sqrt
-def distance(lon1, lat1, lon2, lat2):
-    """
-    Calculate the great circle distance between two points 
-    on the earth (specified in decimal degrees)
-    """
-    # convert decimal degrees to radians 
-    lon1, lat1, lon2, lat2 = map(radians, [lon1, lat1, lon2, lat2])
-    # haversine formula 
-    dlon = lon2 - lon1 
-    dlat = lat2 - lat1 
-    a = sin(dlat/2)**2 + cos(lat1) * cos(lat2) * sin(dlon/2)**2
-    c = 2 * asin(sqrt(a)) 
-    km = 6367 * c
-    return km
+
+
 
 
 from django.template import RequestContext
@@ -68,9 +55,6 @@ def home(request):
         location_info = get_addr_from_ip(ip)
         default_lon = float(location_info['longitude'])
         default_lat = float(location_info['latitude'])
-
-        
-
 
     keyword = request.GET.get('q',"")
     my_lon = request.GET.get('lon',"")
@@ -151,6 +135,14 @@ def home(request):
     parameters['business_filter'] = json.dumps(business_filters)
     parameters['business_count'] = int(business_filters_count)
 
+
+    # For organisation Filter
+    organisation_filters = search_handle.get_organisation_filters()
+    organisation_filters_count = 0
+    for f in organisation_filters:
+        organisation_filters_count = organisation_filters_count + f['value']
+    parameters['organisation_filter'] = json.dumps(organisation_filters)
+    parameters['organisation_count'] = int(organisation_filters_count)
 
 
 

@@ -21,6 +21,7 @@ def display_profile(request, username):
     usr = User.objects.get(username = username)
     account = SocialAccount.objects.get(user__id = usr.id)
     userprof = user_profile.get_profile_by_id(str(usr.id))
+    parameters['userprof'] = UserInfo(usr.id)
     parameters['profile_id'] = usr.id
     parameters['sign_up_as'] = userprof['sign_up_as']
     parameters['address'] = userprof['address']
@@ -43,6 +44,26 @@ def display_profile(request, username):
         user_info = UserInfo(user_id)
         parameters['userinfo'] = user_info
         parameters['user_id'] = request.user.id
+        lon2 = user_info.lon
+        lat2 = user_info.lat
+
+    else:
+        x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+        if x_forwarded_for:
+            ip = x_forwarded_for.split(',')[0]
+
+        else:
+            ip = request.META.get('REMOTE_ADDR')
+        location_info = get_addr_from_ip(ip)
+        lon2 = float(location_info['longitude'])
+        lat2 = float(location_info['latitude'])
+
+
+    lon1, lat1 = userprof['longitude'],userprof['latitude']
+    dis = distance(lon1, lat1, lon2, lat2)
+    parameters['distance'] = "{:10.2f}".format(dis * 0.621371)
+
+
         
     if parameters['sign_up_as'] == 'Business':  
         if request.user.is_authenticated():
@@ -205,8 +226,7 @@ def get_connections(user_id, logged_in_id = None):
         account = SocialAccount.objects.get(user__id = each['b_useruid'])
         usr_pr = userprof.get_profile_by_id(str(each['b_useruid']))
         user_info = UserInfo(each['b_useruid'])
-        if logged_in_id!=None and  each['b_useruid'] == logged_in_id:
-            logged_conn = 'seller'
+        
         data = {'id': each['b_useruid'],
          'name': account.extra_data['name'],
          'description': account.extra_data['description'],
@@ -223,9 +243,13 @@ def get_connections(user_id, logged_in_id = None):
         if data not in final_connections:
             data['relation'] = 'seller'
             final_connections.append(data)
+            if logged_in_id!=None and each['b_useruid'] == logged_in_id:
+                logged_conn = 'seller'
         else:
             index = final_connections.index(data)
             final_connections[index]['relation'] = 'both'
+            if logged_in_id!=None and each['b_useruid'] == logged_in_id:
+                logged_conn = 'both'
     return final_connections[:10], logged_conn
 
 def get_members(user_id):
@@ -290,3 +314,19 @@ def get_team(user_id):
          })
     #print final_teams
     return final_teams[:10]
+
+from math import radians, cos, sin, asin, sqrt
+def distance(lon1, lat1, lon2, lat2):
+    """
+    Calculate the great circle distance between two points 
+    on the earth (specified in decimal degrees)
+    """
+    # convert decimal degrees to radians 
+    lon1, lat1, lon2, lat2 = map(radians, [lon1, lat1, lon2, lat2])
+    # haversine formula 
+    dlon = lon2 - lon1 
+    dlat = lat2 - lat1 
+    a = sin(dlat/2)**2 + cos(lat1) * cos(lat2) * sin(dlon/2)**2
+    c = 2 * asin(sqrt(a)) 
+    km = 6367 * c
+    return km

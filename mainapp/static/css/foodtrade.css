@@ -382,6 +382,14 @@ fieldset[disabled] .btn-primary.active {
 /**  PRICING                   **/
 /********************************/
 
+.beta {
+	color: #2F813A;
+	-webkit-transform: rotate(352deg);
+	-moz-transform: rotate(352deg);
+	-o-transform: rotate(352deg);
+	writing-mode: lr-tb;
+	max-width: 80px;
+}
  
 #pricing .panel
 {
@@ -608,7 +616,7 @@ fieldset[disabled] .btn-primary.active {
 	-moz-background-size: cover;
 	-o-background-size: cover;
 	background-size: cover;
-  padding: 60px 15px;
+  padding: 80px 15px;
   box-shadow: 0 0 450px #000 inset;
   color: #fff;
   text-shadow: 1px 1px 2px #000;
@@ -661,7 +669,7 @@ clear: both;
 	 
 } 
 
-#header_box div[class*='col-']  { 
+#header_box > div[class*='col-']  { 
 	min-height: 300px;
 }
 

@@ -77,6 +77,28 @@ class TweetFeed():
     def aggregrate(self, conditions):
         return self.db_object.aggregrate_all(self.table_name,conditions)
 
+    def update_data(self,user_id):
+        food = Food()
+        f_results = food.get_foods_by_userid(user_id)
+        f_list = []
+        for f in f_results:
+            f_list.append(f['food_name'])
+        business = UserProfile()
+        business_types_str = business.get_profile_by_id(user_id)
+        business_types = business_types_str.split(',')
+
+        orgn = organisation()
+        organisations = orgn.get_organisations_by_mem_id(user_id)
+        org_list = []
+        for org in organisations:
+            twitter_user = SocialAccount.objects.get(user__id = org['orguid'])
+            
+            full_name = twitter_user.extra_data['name']
+            org_list.append(full_name)
+
+        self.db_object.update_upsert(self.table_name, {'useruid':str(user_id)}, {'foods':f_list,'type_user':business_types, 'organisations':org_list})
+        
+
     def get_near_people(self, query):
         return self.db_object.get_distinct(self.table_name,'user.username',query)['count']
 
@@ -98,6 +120,16 @@ class TweetFeed():
             else
             {
             var user_types = [];
+            }
+
+
+             if(this.organisations)
+            {
+            var organisations = this.type_user;
+            }
+            else
+            {
+            var organisations = [];
             }
             
             
@@ -134,7 +166,7 @@ class TweetFeed():
             for(var i=0;i<organisation_filter.length;i++)
             {
                 organisation_filtered = false;
-                if(user_types.indexOf(organisation_filter[i])==-1)
+                if(organisations.indexOf(organisation_filter[i])==-1)
                 {
                    organisation_filtered = false;
                    
@@ -314,88 +346,61 @@ class TweetFeed():
             """)
         return self.db_object.map_reduce(self.table_name, mapper, reducer, query, -1)
 
-
-    # def get_all_foods(self, keyword, lon, lat, food_filter, type_filter, organisation_filter, query):
-    #     mapper = Code("""
-    #         function () {
-    #         var foods = this.foods;
-    #         var user_types = this.type_user;
-    #         var filtered = true;
-    #         var food_filter = """+json.dumps(food_filter)+""";
-    #         var type_filter = """+json.dumps(type_filter)+""";
-    #         var organisation_filter = """+json.dumps(organisation_filter)+""";
-    #         for(var i=0;i<food_filter.length && filtered;i++)
-    #         {
-    #             if(foods.indexOf(food_filter[i])<0)
-    #             {
-    #                 filtered = false;
-    #             }
-    #         }
+    def get_all_organisations(self, keyword, lon, lat, food_filter, type_filter, organisation_filter, query):
+        mapper = Code("""
+            function () {
+            var foods = this.foods;
+            var user_types = this.type_user;
+            var filtered = true;
+            var organisations = this.organisations;
             
-    #         for(var i=0;i<type_filter.length && filtered;i++)
-    #         {
-    #             if(user_types.indexOf(type_filter[i])<0)
-    #             {
-    #                 filtered = false;
-    #             }
-    #         }
 
+            var flag = true;
+            var keyword = '"""+keyword+"""';
 
-
-    #         for(var i=0;i<organisation_filter.length && filtered;i++)
-    #         {
-    #             if(user_types.indexOf(organisation_filter[i])<0)
-    #             {
-    #                 filtered = false;
-    #             }
-    #         }
-
-    #         var flag = true;
-    #         var keyword = '"""+keyword+"""';
-
-    #         if(keyword != '')
-    #         {
-    #             flag = false;
-    #             var scope_string ='';
+            if(keyword != '')
+            {
+                flag = false;
+                var scope_string ='';
                 
-    #             scope_string += this.user.username;
-    #             scope_string += this.user.name;
-    #             scope_string += this.sign_up_as;
-    #             scope_string += this.status;
-    #             scope_string += this.user.description;
-    #             scope_string = scope_string.toLowerCase();
+                scope_string += this.user.username;
+                scope_string += this.user.name;
+                scope_string += this.sign_up_as;
+                scope_string += this.status;
+                scope_string += this.user.description;
+                scope_string = scope_string.toLowerCase();
                
-    #            if(scope_string.indexOf(keyword.toLowerCase()) !=-1)
-    #            {
+               if(scope_string.indexOf(keyword.toLowerCase()) !=-1)
+               {
                      
-    #                 flag = true;
+                    flag = true;
 
-    #             }
-    #            }
+                }
+               }
 
-    #            if(filtered && flag && foods)
-    #            {
-    #            for(var i =0; i<foods.length;i++)
-    #            {
-    #                 emit(foods[i], 1);
-    #            }
+               if(filtered && flag && organisations)
+               {
+               for(var i =0; i<organisations.length;i++)
+               {
+                    emit(organisations[i], 1);
+               }
                
-    #           }
-                           
+              }
+                     
+            }
+            """)
+
+        reducer = Code("""
+            function (key, values) { 
+            var  sum = 0
+             for(var i=0;i<values.length;i++)
+             { sum += 1;}
+             return sum;
+            }
+            """)
+        return self.db_object.map_reduce(self.table_name, mapper, reducer, query, -1)
 
 
-    #         }
-    #         """)
-
-    #     reducer = Code("""
-    #         function (key, values) { 
-    #         var  sum = 0
-    #          for(var i=0;i<values.length;i++)
-    #          { sum += 1;}
-    #          return sum;
-    #         }
-    #         """)
-    #     return self.db_object.map_reduce(self.table_name, mapper, reducer, query, 1)
 
     def update_tweets(self, username, first_name, last_name, description, zip_code):
         try:
@@ -472,7 +477,8 @@ class TradeConnection():
 
     def create_connection (self, value):
         value['deleted'] =0
-        self.db_object.insert_one(self.table_name,value)
+        # self.db_object.insert_one(self.table_name,value)
+        self.db_object.update_upsert(self.table_name, {'c_useruid': value['c_useruid'], 'b_useruid': value['b_useruid']}, {'deleted': 0})
 
     def delete_connection(self, b_useruid, c_useruid):
         self.db_object.update(self.table_name,{'b_useruid': b_useruid, 'c_useruid': c_useruid}, {'deleted':1})
@@ -510,7 +516,8 @@ class Customer():
 
     def create_customer (self, value):
         value['deleted'] =0
-        self.db_object.insert_one(self.table_name,value)
+        # self.db_object.insert_one(self.table_name,value)
+        self.db_object.update_upsert(self.table_name, {'customeruid': value['customeruid'], 'useruid': value['useruid']}, {'deleted': 0})
 
     def delete_customer(self, useruid, customer_id):
         self.db_object.update(self.table_name,{'useruid': useruid, 'customeruid': customer_id}, {'deleted':1})
@@ -526,8 +533,9 @@ class Organisation():
         return self.db_object.get_all(self.table_name,{'orguid': orguid, 'deleted': 0})
 
     def create_member (self, value):
-        value['deleted'] =0
-        self.db_object.insert_one(self.table_name,value)
+        value['deleted'] = 0
+        # self.db_object.insert_one(self.table_name,value)
+        self.db_object.update_upsert(self.table_name, {'memberuid': value['memberuid'], 'orguid': value['orguid']}, {'deleted': 0})        
 
     def delete_member(self, orguid, member_id):
         self.db_object.update(self.table_name,{'orguid': orguid, 'memberuid': member_id}, {'deleted':1})
@@ -547,7 +555,8 @@ class Team():
 
     def create_member (self, value):
         value['deleted'] =0
-        self.db_object.insert_one(self.table_name,value)
+        # self.db_object.insert_one(self.table_name,value)
+        self.db_object.update_upsert(self.table_name, {'memberuid': value['memberuid'], 'orguid': value['orguid']}, {'deleted': 0})
 
     def delete_member(self, orguid, member_id):
         self.db_object.update(self.table_name,{'orguid': orguid, 'memberuid': member_id}, {'deleted':1})

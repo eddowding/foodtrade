@@ -48,7 +48,7 @@
             <i class="fa fa-map-marker"></i> <a href="http://maps.google.com/maps?saddr=current+location&daddr=Sydney+Opera+House,+Sydney+Opera+House,+Bennelong+Point,+Sydney+NSW+2000,+Australia" target="_blank" data-placement="top" data-toggle="tooltip" title="Get directions" class="text-muted">{{address}}</a>  
             
             <!-- if logged in or you've allows html5 browser location -->
-            <i class="fa fa-location-arrow" style="margin-left: 20px;"></i> 87.2 miles  
+            <i class="fa fa-location-arrow" style="margin-left: 20px;"></i> {{distance}} miles  
             <!--  // if logged in or you've allows html5 browser location -->
             <!-- DISTANCE TO NEAREST TRADER
              <i class="fa fa-bullseye" style="margin-left: 20px;"></i> 20.1 miles -->
@@ -59,10 +59,11 @@
       <div id="contact_info" class="col-md-4">
       {% ifnotequal profile_id user_id %}
       <!-- if they dont't have an account yet -->
-      {% if not user.is_authenticated %}
+      
+<!--       {% if not user.is_authenticated %}
       <button class="btn btn-success btn-block" onclick="invite_connect('{{screen_name}}', '{{userinfo.username}}')">Invite to connect</button>
-      {% endif %}
-<!--       <button class="btn btn-success btn-block alert-message" id="testalert" onclick="createAutoClosingAlert(".alert-message", 2000)">Test Alert</button> -->
+      {% endif %} -->
+
 
 
 {% if user.is_authenticated %}      
@@ -75,27 +76,30 @@
       <!-- if logged in users = business --> 
       {% ifequal loggedin_signupas "Business" %}
       <div class="btn-group btn-block" data-toggle="buttons">
-        <label class="btn btn-default" style="width:50%;" title="LOGGEDINUSER buys from PROFILENAME">
-          {% ifequal logged_conn "buyer" %}
+          {% if logged_conn == "buyer" or logged_conn == "both" %}
           
+        <label class="btn btn-default active" style="width:50%;" title="{{userinfo.full_name}} buys from {{name}}">
           <input type="checkbox" checked id="buy_from" onchange="conn_handler('buy_from', {{profile_id}})"> Buy from
           {% else %}
+        <label class="btn btn-default" style="width:50%;" title="{{userinfo.full_name}} buys from {{name}}">
           <input type="checkbox" id="buy_from" onchange="conn_handler('buy_from', {{profile_id}})"> Buy from
-          {% endifequal %}
+          {% endif %}
+
           {% comment %}
-          
           <input type="checkbox" id="buy_from" onchange="conn_handler('buy_from', {{profile_id}})"> Buy from
           {% endcomment %}
 
         </label>
         <!-- showing active mode if button is selected -->
-        <label class="btn btn-default" style="width:50%;" title="LOGGEDINUSER sells to PROFILENAME" >
-          {% ifequal logged_conn "seller" %}
-          sss
+          {% if logged_conn == "seller"  or logged_conn == "both" %}
+        <label class="btn btn-default active" style="width:50%;" title="{{userinfo.full_name}} sells to {{name}}" >
+          
           <input type="checkbox" checked id="sell_to" onchange="conn_handler('sell_to', {{profile_id}})"> Sell to
           {% else %}
+        <label class="btn btn-default" style="width:50%;" title="{{userinfo.full_name}} sells to {{name}}" >
           <input type="checkbox" id="sell_to" onchange="conn_handler('sell_to', {{profile_id}})"> Sell to
-          {% endifequal %}
+          {% endif %}
+
           {% comment %}
           <input type="checkbox" id="sell_to" onchange="conn_handler('sell_to', {{profile_id}})"> Sell to
           {% endcomment %}
@@ -209,15 +213,15 @@
     <div class="row">
      <div class="col-md-12">
         <ul class="nav nav-tabs">
-          <li class="active"><a href="#produce" data-toggle="tab">Foods <span class="badge">{{userinfo.food_no}}</span></a></li>
-          <li><a href="#connections" data-toggle="tab">Connections <span class="badge">{{userinfo.trade_connections_no}}</span></a> </li>
+          <li class="active"><a href="#produce" data-toggle="tab">Foods <span class="badge">{{userprof.food_no}}</span></a></li>
+          <li><a href="#connections" data-toggle="tab">Connections <span class="badge">{{userprof.trade_connections_no}}</span></a> </li>
 
-          <li><a href="#organisations" data-toggle="tab">Organisation</a> <span class="badge"></span></li> 
-          <li><a href="#activity" data-toggle="tab">Updates  <span class="badge">{{userinfo.trade_connections_no}}</span></a></li>  
+          <li><a href="#organisations" data-toggle="tab">Organisation <span class="badge">{{userprof.organisation_connection_no}}</span></a></li> 
+          <li><a href="#activity" data-toggle="tab">Updates  <span class="badge">{{userprof.trade_connections_no}}</span></a></li>  
           <li class="dropdown">
             <a href="#" id="people" class="dropdown-toggle" data-toggle="dropdown">People <b class="caret"></b></a>
             <ul class="dropdown-menu" role="menu" aria-labelledby="people">
-              <li><a href="#team" tabindex="-1" data-toggle="tab">Team <span class="badge pull-right">{{userinfo.trade_connections_no}}</span></a></li>
+              <li><a href="#team" tabindex="-1" data-toggle="tab">Team <span class="badge pull-right">{{userprof.trade_connections_no}}</span></a></li>
                <li role="presentation" class="divider"></li>
               <li><a href="#customers" tabindex="-1" data-toggle="tab">Customers <span class="badge pull-right">{{customers|length}}</span></a></li>
             </ul>
@@ -284,6 +288,7 @@
 
 
       <table class="table table-list-search table-condensed">
+        {% if not user.is_authenticated %}
           <thead>
             <tr>
               <td colspan="2">
@@ -291,7 +296,7 @@
               </td>
             </tr>
           </thead>
-          </thead>
+          {% endif %}
           <tbody id="food_tbody">
             {% for eachfood in all_foods %}
               <tr id="row{{forloop.counter}}">
@@ -368,9 +373,11 @@
             </div>
           </div>
 
-
+<div class="clearfix pull-left">
+          <h2>Buyers</h2> 
            <div class="pull-left">
           {% for each in connections %}
+              {% if each.relation == "buyer" or each.relation == "both" %}
                   <div class="card card-business">
                     <div class="content">
                       <div class="pull-left">
@@ -380,7 +387,7 @@
                       </div>
                       <div class="text">
                       <button type="button" class="close" aria-hidden="true">&times;</button>
-                        <h5><a href="/profile/{{username}}">{{each.name}}</a> 
+                        <h5><a href="/profile/{{each.username}}">{{each.name}}</a> 
                         </h5>  
                         <p class="small">{{each.description}}</p>
                       </div>
@@ -398,8 +405,46 @@
                       </p>
                     </div>
                   </div> 
+                  {% endif %}
                   {% endfor %}
-                </div>
+                </div></div>
+          <div class="clearfix pull-left">
+          <h2>Sellers</h2> 
+           <div class="pull-left">
+          {% for each in connections %}
+              {% if each.relation == "seller" or each.relation == "both" %}
+                  <div class="card card-business">
+                    <div class="content">
+                      <div class="pull-left">
+                        <img src="{{each.photo}}" alt="{{each.name}}"
+                        class="img-rounded img-responsive" style="width:40px;" /> 
+                
+                      </div>
+                      <div class="text">
+                      <button type="button" class="close" aria-hidden="true">&times;</button>
+                        <h5><a href="/profile/{{each.username}}">{{each.name}}</a> 
+                        </h5>  
+                        <p class="small">{{each.description}}</p>
+                      </div>
+                    </div>
+                    <div class="numbers clearfix">
+                      <div class="tags tags-biztype pull-left">  
+                        {% for e in each.type %}
+                       <a href="/activity/?q={{e}}">{{e}}</a>
+                       {% endfor %}
+                      </div>
+                      <p class="small pull-right">
+                        <a href="#" title="{{each.food_no}} Foods"><i class="fa fa-leaf"></i> {{each.food_no}}</a>
+                        <a href="#" title="{{each.trade_conn_no}} conn"><i class="fa fa-link"></i> {{each.trade_conn_no}}</a>
+                        <a href="#" title="{{each.org_conn_no}} Organisations"><i class="fa fa-group"></i> {{each.org_conn_no}}</a> 
+                      </p>
+                    </div>
+                  </div> 
+                  {% endif %}
+                  {% endfor %}
+                </div></div>
+
+
           </div> <!--  end connections -->
 
           <div class="tab-pane fade" id="organisations">
