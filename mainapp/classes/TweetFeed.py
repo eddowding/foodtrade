@@ -386,9 +386,7 @@ class TweetFeed():
                }
                
               }
-                           
-
-
+                     
             }
             """)
 

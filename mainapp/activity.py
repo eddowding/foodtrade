@@ -136,6 +136,14 @@ def home(request):
     parameters['business_count'] = int(business_filters_count)
 
 
+    # For organisation Filter
+    organisation_filters = search_handle.get_organisation_filters()
+    organisation_filters_count = 0
+    for f in organisation_filters:
+        organisation_filters_count = organisation_filters_count + f['value']
+    parameters['organisation_filter'] = json.dumps(organisation_filters)
+    parameters['organisation_count'] = int(organisation_filters_count)
+
 
 
     return render_to_response('activity.html',parameters ,context_instance=RequestContext(request))
