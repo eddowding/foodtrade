@@ -32,6 +32,8 @@ from django.views.decorators.csrf import csrf_exempt
 def home(request):
     parameters = {}
 
+    default_location = ""
+
     if request.user.is_authenticated():
         # parameters['user'] = request.user
         user_id = request.user.id
@@ -42,6 +44,7 @@ def home(request):
         default_lat = float(user_profile['latitude'])
         user_info = UserInfo(user_id)
         parameters['userinfo'] = user_info
+        default_location = user_profile['zip_code']
 
 
 
@@ -59,7 +62,7 @@ def home(request):
     keyword = request.GET.get('q',"")
     my_lon = request.GET.get('lon',"")
     my_lat = request.GET.get('lat',"")
-    location = request.GET.get('location',"")
+    location = request.GET.get('location',default_location)
     if my_lon == "" or my_lat=="":
         my_lon = default_lon
         my_lat = default_lat
