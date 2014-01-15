@@ -45,7 +45,8 @@
     <div class="form-group">
       <label for="phone" class="col-sm-2 control-label">Phone</label>
       <div class="col-sm-5">
-        <input type="text" id="phone" class="form-control" placeholder="Phone number" value="{{phone}}" name="phone"  onblur="validateFeedback()" >
+      <!--         <input  id="phone" type="tel" class="form-control" placeholder="Phone number" value="{{phone}}" name="phone"  onblur="validateFeedback()" > -->
+      <input type="tel" pattern="[0-9x\+\(\)\s-]+" name="phone" value="{{phone}}" class="form-control" placeholder="Phone number" required="required" onblur="validateFeedback()"/>
       </div>
     </div>
 
@@ -147,11 +148,12 @@ function dataradio(value){
 
 function validateFeedback(){
     var phone = document.getElementById("phone");
-    var RE = /[0-9]+/;
+    var RE = /[0-9x\+\(\)\s-]/+
+/*    var RE = /[0-9]+/;
     var ph = String(phone.value).replace(' ','');
         ph = String(ph.value).replace('-','');
         ph = String(ph.value).replace('x','');
-        ph = String(ph.value).replace('+','');
+        ph = String(ph.value).replace('+','');*/
     if(!RE.test(phone.value))
     {
         alert("You have entered an invalid phone number");
