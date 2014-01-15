@@ -383,12 +383,19 @@ fieldset[disabled] .btn-primary.active {
 /********************************/
 
 .beta {
-	color: #2F813A;
-	-webkit-transform: rotate(352deg);
-	-moz-transform: rotate(352deg);
-	-o-transform: rotate(352deg);
+	color: #fff;
+	-webkit-transform: rotate(340deg);
+	-moz-transform: rotate(340deg);
+	-o-transform: rotate(340deg);
 	writing-mode: lr-tb;
-	max-width: 80px;
+	max-width: 82px;
+	font-weight: bold;
+	display: inline-block;
+	float: right;
+	line-height: 1;
+	background: #2F813A;
+	border-radius: 9px;
+	padding: 2px;
 }
  
 #pricing .panel
