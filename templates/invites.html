@@ -20,15 +20,14 @@
 	<div class="panel panel-default">
 	<div class="panel-heading clearfix">
 	<button id="btnSendTweet1" onclick="send_invite()" class="btn btn-primary pull-right">Send invites</button>
-			<form action="#" method="get" class="col-md-6">
+			<div class="col-md-6">
 	          <div class="input-group">
 	            <!-- USE TWITTER TYPEAHEAD JSON WITH API TO SEARCH -->
-	            <input class="form-control" id="system-search" name="q" placeholder="Search for" required>
+	            <input class="form-control" id="inputFindFriends" name="q" placeholder="Search for" required>
 	            <span class="input-group-btn">
-	                <button  type="submit" class="btn btn-default"><i class="glyphicon glyphicon-search"></i></button>
+	                <button  type="submit" id="btnFindFriends" class="btn btn-default"><i class="glyphicon glyphicon-search"></i></button>
 	            </span>
 	          </div>
-	        </form>
     </div>
 
  	<div class="panel-body">
@@ -189,7 +188,7 @@ function parse_friends_ajax(data){
 	/*alert(friends);*/
 	var str ='';
 	$('#myFriendsLi').html('');
-	for (var i=0; i<15; i++){
+	for (var i=0; i<friends.length; i++){
 	    str = str + '<li id= "li' + String(i+1)+ '" class="list-group-item">';
 	      str = str + '<div class="checkbox">';
 	        str = str + '<input type=\"checkbox\" id=\"checkbox'+ String(i+1) +'\"'+ ' onclick=\"validate_tweets(' + '\'' + String(friends[i]['friends']['screen_name']) + '\',\'' + String(i+1) + '\')\"' + '/>';
@@ -203,6 +202,7 @@ function parse_friends_ajax(data){
 	}
 	$('#myFriendsLi').html(str);
 }
+
 var old=0;
 function update_ul_invites(cur_page){
 	$('#pg_' +String(old)).removeClass('active');
@@ -210,5 +210,11 @@ function update_ul_invites(cur_page){
 	old = cur_page;
 	ajax_request('get_friends_paginated', 'parse_friends_ajax',{'pgnum':cur_page});
 }
+
+$('#btnFindFriends').click(function(){
+	query = $('#inputFindFriends').val();
+	ajax_request('search_friend','parse_friends_ajax',{'query':query})
+});
+
 </script>
 {% endblock %}

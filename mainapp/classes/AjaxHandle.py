@@ -249,7 +249,14 @@ class AjaxHandle(AjaxSearch):
     def get_friends_paginated(self,request):
         if request.method == 'POST' and request.user.is_authenticated:
             page_num = request.POST['pgnum']
-            tweet_feed_obj = Friends()
-            return HttpResponse(json.dumps(tweet_feed_obj.get_paginated_friends(request.user.username, page_num)))
+            friends_obj = Friends()
+            return HttpResponse(json.dumps(friends_obj.get_paginated_friends(request.user.username, page_num)))
+        else:
+            return HttpResponse(json.dumps({'status':'0'}))
+    def search_friend(self, request):
+        if request.method == 'POST' and request.user.is_authenticated:
+            query = request.POST['query']
+            friends_obj = Friends()
+            return HttpResponse(json.dumps(friends_obj.search_friends(request.user.username, query)))
         else:
             return HttpResponse(json.dumps({'status':'0'}))

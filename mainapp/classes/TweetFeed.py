@@ -12,6 +12,7 @@ from allauth.socialaccount.models import SocialToken, SocialAccount
 from django.http import HttpResponse, HttpResponseRedirect
 import json
 from pymongo import Connection
+import re
 
 consumer_key = 'seqGJEiDVNPxde7jmrk6dQ'
 consumer_secret = 'sI2BsZHPk86SYB7nRtKy0nQpZX3NP5j5dLfcNiP14'
@@ -605,6 +606,14 @@ class Friends():
 
     def get_friends_count(self, username):
         return self.db_object.get_count(self.table_name,{'username':str(username)})
+
+    def search_friends(self, username, query):
+        friend = re.compile(str(query) + '+', re.IGNORECASE)
+        result = self.db_object.get_paginated_values(self.table_name, 
+            {'username':str(username), 
+            '$or':[{'friends.name':{'$regex':friend}}, {'friends.screen_name':{'$regex':friend}}]})
+        #print result
+        return result
 
 class Invites():
     def __init__ (self):
