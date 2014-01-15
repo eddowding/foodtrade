@@ -38,7 +38,7 @@ def display_profile(request, username):
     else:
         parameters['phone_number'] = pno
     
-    parameters['all_business'] = get_all_business()
+    parameters['all_business'] = get_all_business(usr.id)
     if request.user.is_authenticated():
         user_id = request.user.id
         user_profile_obj = UserProfile()
@@ -320,18 +320,19 @@ def get_team(user_id):
     #print final_teams
     return final_teams[:10]
 
-def get_all_business():
+def get_all_business(prof_id):
     userpro = UserProfile()
     all_business = userpro.get_profile_by_type("Business")
     final_business = []
     for each in all_business:
         account = SocialAccount.objects.get(user__id = each['useruid'])
-        final_business.append({'id': each['useruid'],
-            'name': account.extra_data['name'],
-            'description': account.extra_data['description'],
-            'photo': account.extra_data['profile_image_url'],
-            'username' : account.extra_data['screen_name']
-            })
+        if prof_id != int(each['useruid']):
+            final_business.append({'id': each['useruid'],
+                'name': account.extra_data['name'],
+                'description': account.extra_data['description'],
+                'photo': account.extra_data['profile_image_url'],
+                'username' : account.extra_data['screen_name']
+                })
     return final_business
 
 from math import radians, cos, sin, asin, sqrt

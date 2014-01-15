@@ -47,9 +47,8 @@ function conn_handler(value, prof_id)
 }
 
 function third_party_connection(prof_id){
-	var business_id = $('#ddl_try').val();
+	var business_id = $('#buss_chosen').val();
 	// buyer checked
-	console.log(typeof(business_id));
 	if($('#option1_conn').is(':checked')){
 		// var conn_data = {prof_id: prof_id, status: 'buy_from', buss_id: businesses_id };
 		ajax_request("third_party_conn", 'create_conn', {conn_data: "{'prof_id': " + prof_id + ",'buss_id': " + business_id + ",'status': 'buy_from'}"});
@@ -72,10 +71,15 @@ function invite_connect(prof_username, logged_username){
 function add_food(prof_id){
 	// var food = document.getElementById('addfood_id').value;
 	if (validate_login()['status'] == '1'){
-		var food = document.getElementsByClassName('chosen-single')[0].children[0].innerHTML;
+		// var food = document.getElementsByClassName('chosen-single')[0].children[0].innerHTML;
+		var elements = document.getElementsByClassName('search-choice');
+	    var food = elements[0].children[0].innerHTML;
+	    // alert(food);
 		var data = {useruid: prof_id, food_name: food};
 		ajax_request("addfood", 'create_conn', {data: JSON.stringify(data)});
-		document.getElementsByClassName('chosen-single')[0].children[0].innerHTML = '';
+		// document.getElementsByClassName('chosen-single')[0].children[0].innerHTML = '';
+		// $('#myselect').trigger('chosen:open');
+		$('.search-choice').remove();
 		var append_data = '<tr><td>'+food+'</td><td><div class="pull-right"><a href="#"><i class="fa fa-heart-o" title="Vouch for this"></i></a></div></td></tr>';
 		$("#food_tbody").prepend(append_data);
 	}
