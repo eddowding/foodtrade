@@ -47,7 +47,6 @@ function conn_handler(value, prof_id)
 }
 
 function third_party_connection(prof_id){
-	alert('third_party_connection');
 	var business_id = $('#ddl_try').val();
 	// buyer checked
 	console.log(typeof(business_id));
