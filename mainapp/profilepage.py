@@ -35,7 +35,10 @@ def display_profile(request, username):
     pno = userprof.get('phone_number')
     if pno == 'None':
         parameters['phone_number'] = ''
-   
+    else:
+        parameters['phone_number'] = pno
+    
+    parameters['all_business'] = get_all_business()
     if request.user.is_authenticated():
         user_id = request.user.id
         user_profile_obj = UserProfile()
@@ -82,6 +85,8 @@ def display_profile(request, username):
         parameters['connections_str'] = json.dumps(parameters['connections'])
         # get all organisations
         return render_to_response('singlebusiness.html', parameters, context_instance=RequestContext(request))
+        # return render_to_response('typeahead.html', parameters, context_instance=RequestContext(request))
+
     elif parameters['sign_up_as'] == 'Organisation':
         parameters['members'] = get_members(usr.id)
         parameters['teams'] = get_team(usr.id)
@@ -214,7 +219,7 @@ def get_connections(user_id, logged_in_id = None):
          'description': account.extra_data['description'],
          'photo': account.extra_data['profile_image_url'],
          'username' : account.extra_data['screen_name'],
-         'type': usr_pr['type_user'].split(','),
+         'type': usr_pr['type_user'].split(',')[:3],
          'trade_conn_no': user_info.trade_connections_no,
          'food_no': user_info.food_no,
          'org_conn_no': user_info.organisation_connection_no,
@@ -232,7 +237,7 @@ def get_connections(user_id, logged_in_id = None):
          'description': account.extra_data['description'],
          'photo': account.extra_data['profile_image_url'],
          'username' : account.extra_data['screen_name'],
-         'type': usr_pr['type_user'].split(','),
+         'type': usr_pr['type_user'].split(',')[:3],
          'trade_conn_no': user_info.trade_connections_no,
          'food_no': user_info.food_no,
          'org_conn_no': user_info.organisation_connection_no,
@@ -314,6 +319,20 @@ def get_team(user_id):
          })
     #print final_teams
     return final_teams[:10]
+
+def get_all_business():
+    userpro = UserProfile()
+    all_business = userpro.get_profile_by_type("Business")
+    final_business = []
+    for each in all_business:
+        account = SocialAccount.objects.get(user__id = each['useruid'])
+        final_business.append({'id': each['useruid'],
+            'name': account.extra_data['name'],
+            'description': account.extra_data['description'],
+            'photo': account.extra_data['profile_image_url'],
+            'username' : account.extra_data['screen_name']
+            })
+    return final_business
 
 from math import radians, cos, sin, asin, sqrt
 def distance(lon1, lat1, lon2, lat2):
