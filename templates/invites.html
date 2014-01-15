@@ -73,6 +73,7 @@ var countVal = 0;
 var send_list = [];
 var users = [];
 function validate_tweets (argument, count) {
+	alert("roshan");
 	tweet = $('#tweetMessage1').val();
 	var len = tweet.length;
 	var chkbx_status = document.getElementById('checkbox' + String(count)).checked;
@@ -142,12 +143,12 @@ function check_limit(){
 var mx_count = 5;
 var mn_count = 0;
 /*var pg_count = {{page_count}};*/
-var pg_count =10;
+var pg_count = {{page_count|safe}};
 
 $(document).ready(function(){
 	var str = '<li><a id="invite_page_dec" onclick="update_ul_invites_dec()">&laquo;</a></li>';
 	for (var i =0; i<5; i++){
-		str = str + '<li><a id="invite_page_' + String(i+1) + '"onclick="update_ul_invites('+ String(i+1) + ')">' + String(i+1) + '</a></li>';
+		str = str + '<li id=\"pg_'+ String(i+1) +'\"><a id="invite_page_' + String(i+1) + '"onclick="update_ul_invites('+ String(i+1) + ')">' + String(i+1) + '</a></li>';
 	}
 	str = str + '<li><a id="invite_page_inc" onclick="update_ul_invites_inc()">&raquo;</a></li>';
 	$('.pagination').html(str);
@@ -159,7 +160,7 @@ function update_ul_invites_dec(){
 		$('.pagination').html('');
 		var str = '<li><a id="invite_page_dec" onclick="update_ul_invites_dec()">&laquo;</a></li>';
 		for (var i =mn_count-1; i<mn_count+4; i++){
-			str = str + '<li><a id="invite_page_' + String(i+1) + '"onclick="update_ul_invites('+ String(i+1) + ')">' + String(i+1) + '</a></li>';
+			str = str + '<li id=\"pg_'+ String(i+1) +'\"><a id="invite_page_' + String(i+1) + '"onclick="update_ul_invites('+ String(i+1) + ')">' + String(i+1) + '</a></li>';
 		}
 		str = str + '<li><a id="invite_page_inc" onclick="update_ul_invites_inc()">&raquo;</a></li>';
 		$('.pagination').html(str);
@@ -172,7 +173,9 @@ function update_ul_invites_inc(){
 		$('.pagination').html('');
 		var str = '<li><a id="invite_page_dec" onclick="update_ul_invites_dec()">&laquo;</a></li>';
 		for (var i =mn_count+1; i<mn_count+6; i++){
-			str = str + '<li><a id="invite_page_' + String(i+1) + '"onclick="update_ul_invites('+ String(i+1) + ')">' + String(i+1) + '</a></li>';
+			str = str + '<li id=\"pg_'+ String(i+1) +'\"><a id="invite_page_' + 
+			String(i+1) + '" onclick="update_ul_invites(' +  
+				String(i+1) + ')">' + String(i+1) + '</a></li>';
 		}
 		str = str + '<li><a id="invite_page_inc" onclick="update_ul_invites_inc()">&raquo;</a></li>';
 		$('.pagination').html(str);
@@ -189,7 +192,8 @@ function parse_friends_ajax(data){
 	for (var i=0; i<15; i++){
 	    str = str + '<li id= "li' + String(i+1)+ '" class="list-group-item">';
 	      str = str + '<div class="checkbox">';
-	        str = str + '<input type="checkbox" id="checkbox'+ String(i+1) + '" onclick="validate_tweets("'; str = str + String(friends[i]['friends']['screen_name']) + '",' + String(i+1) + ')"/>';
+	        str = str + '<input type=\"checkbox\" id=\"checkbox'+ String(i+1) +'\"'+ ' onclick=\"validate_tweets(' + '\'' + String(friends[i]['friends']['screen_name']) + '\',\'' + String(i+1) + '\')\"' + '/>';
+	        alert(str);
 	        str = str + '<label for="checkbox">';
 	          str = str + '<img src="' + String(friends[i]['friends']['profile_image_url']) + '" alt="THEIRNAME" class="img-responsive pull-left" style="width:20px; margin-right: 5px;" />'; 
 	          str = str + String(friends[i]['friends'].name) + '<span class="text-muted small">@' + String(friends[i]['friends']['screen_name'])+'</span>';
@@ -199,11 +203,12 @@ function parse_friends_ajax(data){
 	}
 	$('#myFriendsLi').html(str);
 }
-
+var old=0;
 function update_ul_invites(cur_page){
-	$(this).addClass('active');
+	$('#pg_' +String(old)).removeClass('active');
+	$('#pg_' +String(cur_page)).addClass('active');
+	old = cur_page;
 	ajax_request('get_friends_paginated', 'parse_friends_ajax',{'pgnum':cur_page});
 }
-
 </script>
 {% endblock %}
