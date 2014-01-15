@@ -28,9 +28,9 @@
 	                <button  type="submit" id="btnFindFriends" class="btn btn-default"><i class="glyphicon glyphicon-search"></i></button>
 	            </span>
 	          </div>
-    </div>
+    		</div>
 
- 	<div class="panel-body">
+ 	<div class="panel-body mymargin">
 
     <div class="form-group"> 
  	<textarea id="tweetMessage1"  onkeyup="check_limit()" class="form-control counted" name="message" placeholder="Type in your message" rows="3" ></textarea>
@@ -143,7 +143,6 @@ var mx_count = 5;
 var mn_count = 0;
 /*var pg_count = {{page_count}};*/
 var pg_count = {{page_count|safe}};
-
 $(document).ready(function(){
 	var str = '<li><a id="invite_page_dec" onclick="update_ul_invites_dec()">&laquo;</a></li>';
 	for (var i =0; i<5; i++){
@@ -192,7 +191,6 @@ function parse_friends_ajax(data){
 	    str = str + '<li id= "li' + String(i+1)+ '" class="list-group-item">';
 	      str = str + '<div class="checkbox">';
 	        str = str + '<input type=\"checkbox\" id=\"checkbox'+ String(i+1) +'\"'+ ' onclick=\"validate_tweets(' + '\'' + String(friends[i]['friends']['screen_name']) + '\',\'' + String(i+1) + '\')\"' + '/>';
-	        alert(str);
 	        str = str + '<label for="checkbox">';
 	          str = str + '<img src="' + String(friends[i]['friends']['profile_image_url']) + '" alt="THEIRNAME" class="img-responsive pull-left" style="width:20px; margin-right: 5px;" />'; 
 	          str = str + String(friends[i]['friends'].name) + '<span class="text-muted small">@' + String(friends[i]['friends']['screen_name'])+'</span>';
