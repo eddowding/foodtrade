@@ -304,7 +304,7 @@ background: #eee;
     </form>
     
     <ul class="foodtrade-tag-list">
-    <li data-id="ALL" class="foodtrade-tag foodtrade-tag-click foodtrade-tag-all"><div class="foodtrade-tag-checkbox-column"><input type="checkbox" checked="checked" aria-label="All Partners" class="foodtrade-tag-checkbox"></div><div class="foodtrade-tag-text">All Foods</div><div class="foodtrade-tag-count">{{food_count}}</div></li>
+    <li data-id="ALL" class="foodtrade-tag foodtrade-tag-click foodtrade-tag-all"><div class="foodtrade-tag-checkbox-column"><input type="checkbox" id="all_foods" checked="checked" onclick="make_search()" aria-label="All Partners" class="foodtrade-tag-checkbox"></div><div class="foodtrade-tag-text">All Foods</div><div class="foodtrade-tag-count">{{food_count}}</div></li>
     </ul>
 
     <ul class="foodtrade-tag-list" id="food_filter_results">
@@ -319,7 +319,7 @@ background: #eee;
       </div>
     </form>
     <ul class="foodtrade-tag-list">
-    <li data-id="ALL" class="foodtrade-tag foodtrade-tag-click foodtrade-tag-all"><div class="foodtrade-tag-checkbox-column"><input type="checkbox" checked="checked" aria-label="All Partners" class="foodtrade-tag-checkbox"></div><div class="foodtrade-tag-text">All Businesses</div><div class="foodtrade-tag-count">{{business_count}}</div></li>
+    <li data-id="ALL" class="foodtrade-tag foodtrade-tag-click foodtrade-tag-all"><div class="foodtrade-tag-checkbox-column"><input type="checkbox" id="all_businesses" checked="checked" onclick="make_search()" aria-label="All Partners" class="foodtrade-tag-checkbox"></div><div class="foodtrade-tag-text">All Businesses</div><div class="foodtrade-tag-count">{{business_count}}</div></li>
 </ul>
 
 <ul class="foodtrade-tag-list" id="business_filter_results">
@@ -336,7 +336,7 @@ background: #eee;
       </div>
     </form>
     <ul class="foodtrade-tag-list">
-    <li data-id="ALL" class="foodtrade-tag foodtrade-tag-click foodtrade-tag-all"><div class="foodtrade-tag-checkbox-column"><input type="checkbox" checked="checked" aria-label="All Partners" class="foodtrade-tag-checkbox"></div><div class="foodtrade-tag-text">All Organisations</div><div class="foodtrade-tag-count">{{organisation_count}}</div></li>
+    <li data-id="ALL" class="foodtrade-tag foodtrade-tag-click foodtrade-tag-all"><div class="foodtrade-tag-checkbox-column"><input type="checkbox" id="all_organisations" checked="checked" onclick="make_search()" aria-label="All Partners" class="foodtrade-tag-checkbox"></div><div class="foodtrade-tag-text">All Organisations</div><div class="foodtrade-tag-count">{{organisation_count}}</div></li>
     </ul>
 
 

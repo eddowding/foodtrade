@@ -84,10 +84,12 @@ class TweetFeed():
         for f in f_results:
             f_list.append(f['food_name'])
         business = UserProfile()
-        business_types_str = business.get_profile_by_id(user_id)
+
+        business_types_str = business.get_profile_by_id(str(user_id))['type_user']
+        print business_types_str
         business_types = business_types_str.split(',')
 
-        orgn = organisation()
+        orgn = Organisation()
         organisations = orgn.get_organisations_by_mem_id(user_id)
         org_list = []
         for org in organisations:
@@ -125,7 +127,7 @@ class TweetFeed():
 
              if(this.organisations)
             {
-            var organisations = this.type_user;
+            var organisations = this.organisations;
             }
             else
             {
@@ -165,7 +167,6 @@ class TweetFeed():
 
             for(var i=0;i<organisation_filter.length;i++)
             {
-                organisation_filtered = false;
                 if(organisations.indexOf(organisation_filter[i])==-1)
                 {
                    organisation_filtered = false;
@@ -445,9 +446,11 @@ class UserProfile():
         self.db_object = MongoConnection("localhost",27017,'foodtrade')
         self.table_name = 'userprofile'
         self.db_object.create_table(self.table_name,'useruid')
+
   
     def get_profile_by_id(self,user_id):
         return self.db_object.get_one(self.table_name,{'useruid': user_id})
+
 
     def get_profile_by_type(self, type_usr):
         return self.db_object.get_all(self.table_name,{'type':type_usr})
@@ -500,7 +503,8 @@ class Food():
         value['deleted'] =0
         # self.db_object.insert_one(self.table_name,value)
         self.db_object.update_upsert(self.table_name, {'food_name': value['food_name'], 'useruid': value['useruid']}, {'deleted': 0})
-
+        twt = TweetFeed()
+        twt.update_data(value['useruid'])
     def delete_food(self, useruid, food_name):
         self.db_object.update(self.table_name,{'useruid': useruid, 'food_name': food_name}, {'deleted':1})
 
@@ -536,6 +540,8 @@ class Organisation():
         value['deleted'] = 0
         # self.db_object.insert_one(self.table_name,value)
         self.db_object.update_upsert(self.table_name, {'memberuid': value['memberuid'], 'orguid': value['orguid']}, {'deleted': 0})        
+        twt = TweetFeed()
+        twt.update_data(value['memberuid'])
 
     def delete_member(self, orguid, member_id):
         self.db_object.update(self.table_name,{'orguid': orguid, 'memberuid': member_id}, {'deleted':1})
