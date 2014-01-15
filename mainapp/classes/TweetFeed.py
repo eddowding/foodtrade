@@ -451,7 +451,7 @@ class UserProfile():
         return self.db_object.get_one(self.table_name,{'useruid': user_id})
 
     def get_profile_by_type(self, type_usr):
-        return self.db_object.get_all(self.table_name,{'type':type_usr})
+        return self.db_object.get_all(self.table_name,{'sign_up_as':type_usr})
 
     def create_profile (self, value):
         self.db_object.insert_one(self.table_name,value)

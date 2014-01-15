@@ -28,4 +28,6 @@ urlpatterns = patterns('',
 
     url(r'^invite/$', 'mainapp.views.invite'),
     url(r'^pricing/', 'mainapp.pricing.home'),
+
+    
 )
