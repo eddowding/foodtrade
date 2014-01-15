@@ -78,10 +78,10 @@
       <div class="btn-group btn-block" data-toggle="buttons">
           {% if logged_conn == "buyer" or logged_conn == "both" %}
           
-        <label class="btn btn-default active" style="width:50%;" title="{{userinfo.name}} buys from {{name}}">
+        <label class="btn btn-default active" style="width:50%;" title="{{userinfo.full_name}} buys from {{name}}">
           <input type="checkbox" checked id="buy_from" onchange="conn_handler('buy_from', {{profile_id}})"> Buy from
           {% else %}
-        <label class="btn btn-default" style="width:50%;" title="{{userinfo.name}} buys from {{name}}">
+        <label class="btn btn-default" style="width:50%;" title="{{userinfo.full_name}} buys from {{name}}">
           <input type="checkbox" id="buy_from" onchange="conn_handler('buy_from', {{profile_id}})"> Buy from
           {% endif %}
 
@@ -92,11 +92,11 @@
         </label>
         <!-- showing active mode if button is selected -->
           {% if logged_conn == "seller"  or logged_conn == "both" %}
-        <label class="btn btn-default active" style="width:50%;" title="{{userinfo.name}} sells to {{name}}" >
+        <label class="btn btn-default active" style="width:50%;" title="{{userinfo.full_name}} sells to {{name}}" >
           
           <input type="checkbox" checked id="sell_to" onchange="conn_handler('sell_to', {{profile_id}})"> Sell to
           {% else %}
-        <label class="btn btn-default" style="width:50%;" title="{{userinfo.name}} sells to {{name}}" >
+        <label class="btn btn-default" style="width:50%;" title="{{userinfo.full_name}} sells to {{name}}" >
           <input type="checkbox" id="sell_to" onchange="conn_handler('sell_to', {{profile_id}})"> Sell to
           {% endif %}
 
