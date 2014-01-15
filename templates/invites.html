@@ -72,11 +72,9 @@ var countVal = 0;
 var send_list = [];
 var users = [];
 function validate_tweets (argument, count) {
-	alert("roshan");
 	tweet = $('#tweetMessage1').val();
 	var len = tweet.length;
 	var chkbx_status = document.getElementById('checkbox' + String(count)).checked;
-	alert(chkbx_status);
 	if(chkbx_status == false){
 			tweet = tweet.replace('@' + String(argument)+' ','');
 			send_list.pop(count);
