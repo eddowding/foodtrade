@@ -291,7 +291,7 @@ class TweetFeed():
              return sum;
             }
             """)
-        return self.db_object.map_reduce(self.table_name, mapper, reducer, query, -1)
+        return self.db_object.map_reduce(self.table_name, mapper, reducer, query, -1, 200)
 
     def get_all_businesses(self, keyword, lon, lat, food_filter, type_filter, organisation_filter, query):
         mapper = Code("""
@@ -346,7 +346,7 @@ class TweetFeed():
              return sum;
             }
             """)
-        return self.db_object.map_reduce(self.table_name, mapper, reducer, query, -1)
+        return self.db_object.map_reduce(self.table_name, mapper, reducer, query, -1, 200)
 
     def get_all_organisations(self, keyword, lon, lat, food_filter, type_filter, organisation_filter, query):
         mapper = Code("""
@@ -400,7 +400,7 @@ class TweetFeed():
              return sum;
             }
             """)
-        return self.db_object.map_reduce(self.table_name, mapper, reducer, query, -1)
+        return self.db_object.map_reduce(self.table_name, mapper, reducer, query, -1, 200)
 
 
 
