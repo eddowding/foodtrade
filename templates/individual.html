@@ -57,9 +57,9 @@
       <div id="contact_info" class="col-md-3">
       {% ifnotequal profile_id user_id %}
       <!-- if they dont't have an account yet -->
-      {% if not user.is_authenticated %}
+<!--       {% if not user.is_authenticated %}
       <button class="btn btn-primary btn-block">Invite to connect</button>
-     {% endif %}
+     {% endif %} -->
       <!-- Button trigger modal -->
       {% if user.is_authenticated %}
       <button class="btn btn-primary btn-block" data-toggle="modal" data-target="#modal_contact">

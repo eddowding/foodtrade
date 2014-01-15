@@ -477,7 +477,8 @@ class TradeConnection():
 
     def create_connection (self, value):
         value['deleted'] =0
-        self.db_object.insert_one(self.table_name,value)
+        # self.db_object.insert_one(self.table_name,value)
+        self.db_object.update_upsert(self.table_name, {'c_useruid': value['c_useruid'], 'b_useruid': value['b_useruid']}, {'deleted': 0})
 
     def delete_connection(self, b_useruid, c_useruid):
         self.db_object.update(self.table_name,{'b_useruid': b_useruid, 'c_useruid': c_useruid}, {'deleted':1})
@@ -515,7 +516,8 @@ class Customer():
 
     def create_customer (self, value):
         value['deleted'] =0
-        self.db_object.insert_one(self.table_name,value)
+        # self.db_object.insert_one(self.table_name,value)
+        self.db_object.update_upsert(self.table_name, {'customeruid': value['customeruid'], 'useruid': value['useruid']}, {'deleted': 0})
 
     def delete_customer(self, useruid, customer_id):
         self.db_object.update(self.table_name,{'useruid': useruid, 'customeruid': customer_id}, {'deleted':1})
@@ -532,7 +534,8 @@ class Organisation():
 
     def create_member (self, value):
         value['deleted'] = 0
-        self.db_object.insert_one(self.table_name,value)
+        # self.db_object.insert_one(self.table_name,value)
+        self.db_object.update_upsert(self.table_name, {'memberuid': value['memberuid'], 'orguid': value['orguid']}, {'deleted': 0})        
 
     def delete_member(self, orguid, member_id):
         self.db_object.update(self.table_name,{'orguid': orguid, 'memberuid': member_id}, {'deleted':1})
@@ -552,7 +555,8 @@ class Team():
 
     def create_member (self, value):
         value['deleted'] =0
-        self.db_object.insert_one(self.table_name,value)
+        # self.db_object.insert_one(self.table_name,value)
+        self.db_object.update_upsert(self.table_name, {'memberuid': value['memberuid'], 'orguid': value['orguid']}, {'deleted': 0})
 
     def delete_member(self, orguid, member_id):
         self.db_object.update(self.table_name,{'orguid': orguid, 'memberuid': member_id}, {'deleted':1})
