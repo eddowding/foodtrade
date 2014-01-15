@@ -70,16 +70,19 @@
 <script src="{% static "js/jquery.js" %}"></script>
 <script type="text/javascript">
 
-var tweet = '';
+var tweet = 'You\'ll love www.foodtrade.com';
 var countVal = 0;
 var send_list = [];
 var users = [];
+$(document).ready(function(){
+	$('#tweetMessage1').html(tweet);
+})
 function validate_tweets (argument, count) {
 	tweet = $('#tweetMessage1').val();
 	var len = tweet.length;
 	var chkbx_status = document.getElementById('checkbox' + String(count)).checked;
 	if(chkbx_status == false){
-			tweet = tweet.replace('@' + String(argument)+' ','');
+			tweet = tweet.replace(' @' + String(argument)+' ','');
 			send_list.pop(count);
 			users.pop('@' + argument);
 			$('#tweetMessage1').val(tweet);
@@ -91,7 +94,7 @@ function validate_tweets (argument, count) {
 	}
 	else{
 		if (argument.length + len < 140 ) {
-			tweet = '@' + String(argument) + ' ' + tweet;
+			tweet = tweet + ' ' + '@' + String(argument) +' ';
 			countVal = countVal + 1;
 			send_list.push(count);
 			users.push('@' + argument);
