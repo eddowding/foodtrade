@@ -78,7 +78,7 @@
       <div class="btn-group btn-block" data-toggle="buttons">
           {% if logged_conn == "buyer" or logged_conn == "both" %}
           
-        <label class="btn btn-success" style="width:50%;" title="{{userinfo.name}} buys from {{name}}">
+        <label class="btn btn-default active" style="width:50%;" title="{{userinfo.name}} buys from {{name}}">
           <input type="checkbox" checked id="buy_from" onchange="conn_handler('buy_from', {{profile_id}})"> Buy from
           {% else %}
         <label class="btn btn-default" style="width:50%;" title="{{userinfo.name}} buys from {{name}}">
@@ -92,7 +92,7 @@
         </label>
         <!-- showing active mode if button is selected -->
           {% if logged_conn == "seller"  or logged_conn == "both" %}
-        <label class="btn btn-success" style="width:50%;" title="{{userinfo.name}} sells to {{name}}" >
+        <label class="btn btn-default active" style="width:50%;" title="{{userinfo.name}} sells to {{name}}" >
           
           <input type="checkbox" checked id="sell_to" onchange="conn_handler('sell_to', {{profile_id}})"> Sell to
           {% else %}
@@ -213,15 +213,15 @@
     <div class="row">
      <div class="col-md-12">
         <ul class="nav nav-tabs">
-          <li class="active"><a href="#produce" data-toggle="tab">Foods <span class="badge">{{userinfo.food_no}}</span></a></li>
-          <li><a href="#connections" data-toggle="tab">Connections <span class="badge">{{userinfo.trade_connections_no}}</span></a> </li>
+          <li class="active"><a href="#produce" data-toggle="tab">Foods <span class="badge">{{userprof.food_no}}</span></a></li>
+          <li><a href="#connections" data-toggle="tab">Connections <span class="badge">{{userprof.trade_connections_no}}</span></a> </li>
 
-          <li><a href="#organisations" data-toggle="tab">Organisation</a> <span class="badge"></span></li> 
-          <li><a href="#activity" data-toggle="tab">Updates  <span class="badge">{{userinfo.trade_connections_no}}</span></a></li>  
+          <li><a href="#organisations" data-toggle="tab">Organisation <span class="badge">{{userprof.organisation_connection_no}}</span></a></li> 
+          <li><a href="#activity" data-toggle="tab">Updates  <span class="badge">{{userprof.trade_connections_no}}</span></a></li>  
           <li class="dropdown">
             <a href="#" id="people" class="dropdown-toggle" data-toggle="dropdown">People <b class="caret"></b></a>
             <ul class="dropdown-menu" role="menu" aria-labelledby="people">
-              <li><a href="#team" tabindex="-1" data-toggle="tab">Team <span class="badge pull-right">{{userinfo.trade_connections_no}}</span></a></li>
+              <li><a href="#team" tabindex="-1" data-toggle="tab">Team <span class="badge pull-right">{{userprof.trade_connections_no}}</span></a></li>
                <li role="presentation" class="divider"></li>
               <li><a href="#customers" tabindex="-1" data-toggle="tab">Customers <span class="badge pull-right">{{customers|length}}</span></a></li>
             </ul>
@@ -373,6 +373,7 @@
             </div>
           </div>
 
+<div class="clearfix pull-left">
           <h2>Buyers</h2> 
            <div class="pull-left">
           {% for each in connections %}
@@ -386,7 +387,7 @@
                       </div>
                       <div class="text">
                       <button type="button" class="close" aria-hidden="true">&times;</button>
-                        <h5><a href="/profile/{{username}}">{{each.name}}</a> 
+                        <h5><a href="/profile/{{each.username}}">{{each.name}}</a> 
                         </h5>  
                         <p class="small">{{each.description}}</p>
                       </div>
@@ -406,8 +407,8 @@
                   </div> 
                   {% endif %}
                   {% endfor %}
-                </div>
-                
+                </div></div>
+          <div class="clearfix pull-left">
           <h2>Sellers</h2> 
            <div class="pull-left">
           {% for each in connections %}
@@ -421,7 +422,7 @@
                       </div>
                       <div class="text">
                       <button type="button" class="close" aria-hidden="true">&times;</button>
-                        <h5><a href="/profile/{{username}}">{{each.name}}</a> 
+                        <h5><a href="/profile/{{each.username}}">{{each.name}}</a> 
                         </h5>  
                         <p class="small">{{each.description}}</p>
                       </div>
@@ -441,7 +442,7 @@
                   </div> 
                   {% endif %}
                   {% endfor %}
-                </div>
+                </div></div>
 
 
           </div> <!--  end connections -->
