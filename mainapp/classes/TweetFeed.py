@@ -12,6 +12,7 @@ from allauth.socialaccount.models import SocialToken, SocialAccount
 from django.http import HttpResponse, HttpResponseRedirect
 import json
 from pymongo import Connection
+import re
 
 consumer_key = 'seqGJEiDVNPxde7jmrk6dQ'
 consumer_secret = 'sI2BsZHPk86SYB7nRtKy0nQpZX3NP5j5dLfcNiP14'
@@ -453,7 +454,7 @@ class UserProfile():
 
 
     def get_profile_by_type(self, type_usr):
-        return self.db_object.get_all(self.table_name,{'type':type_usr})
+        return self.db_object.get_all(self.table_name,{'sign_up_as':type_usr})
 
     def create_profile (self, value):
         self.db_object.insert_one(self.table_name,value)
@@ -598,6 +599,27 @@ class Friends():
     def get_friends(self, username):    
         all_doc = self.db_object.get_all_vals(self.table_name,{'username':str(username)})
         return all_doc
+
+    def get_paginated_friends(self, username, pagenum):
+        friends = self.db_object.get_paginated_values(self.table_name,{'username':str(username)}, pageNumber = int(pagenum))
+        friend_list = []
+        for eachFriend in friends:
+            invites_obj = Invites()
+            if invites_obj.check_invited(eachFriend['friends']['screen_name']) == False:
+                friend_list.append({'friends':{'screen_name':eachFriend['friends']['screen_name'],
+                    'name':eachFriend['friends']['name'], 'profile_image_url':eachFriend['friends']['profile_image_url']}})        
+        return friend_list
+
+    def get_friends_count(self, username):
+        return self.db_object.get_count(self.table_name,{'username':str(username)})
+
+    def search_friends(self, username, query):
+        friend = re.compile(str(query) + '+', re.IGNORECASE)
+        result = self.db_object.get_paginated_values(self.table_name, 
+            {'username':str(username), 
+            '$or':[{'friends.name':{'$regex':friend}}, {'friends.screen_name':{'$regex':friend}}]})
+        #print result
+        return result
 
 class Invites():
     def __init__ (self):

@@ -1,0 +1,29 @@
+{% load staticfiles %}  
+    <script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+<link href="http://twitter.github.io/typeahead.js/css/examples.css" rel="stylesheet">
+</style>
+<script src="{% static "js/typeahead.min.js" %}"></script>
+<script src="{% static "js/hogan-2.0.0.js" %}"></script>
+<div class="example example-twitter-oss">
+        <h2 class="example-name">Open Source Projects by Twitter</h2>
+        <p class="example-description">Defines a custom template and template engine for rendering suggestions</p>
+
+        <div class="demo">
+          <input class="typeahead" type="text" placeholder="open source projects by Twitter">
+        </div>
+      </div>
+
+      <script type="text/javascript">
+      $(document).ready(function() {
+		      $('.example-twitter-oss .typeahead').typeahead({
+		  name: 'twitter-oss',
+		  prefetch: '/static/repos.json',
+		  // template: [
+		  //   '<p class="repo-language">{{language}}</p>',
+		  //   '<p class="repo-name">{{name}}</p>',
+		  //   '<p class="repo-description">{{description}}</p>'
+		  // ].join(''),
+		  // engine: Hogan
+		});
+	});
+      </script>

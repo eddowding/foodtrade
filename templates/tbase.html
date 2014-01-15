@@ -459,12 +459,10 @@ background: #eee;
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+    <script src="{% static "js/jquery.js" %}"></script>
     <script src="{% static "js/bootstrap.min.js" %}"></script>
     <script src="{% static "js/foodtrade.js" %}"></script>
      <script src="{% static "js/ajax-handle.js" %}"></script>
-     <script src="{% static "js/typeahead.min.js" %}"></script>
-     <script src="{% static "js/typeahead.js" %}"></script>
      <script src="{% static "js/chardinjs.min.js" %}"></script>
      
  <script src="http://getbootstrap.com/2.3.2/assets/js/bootstrap-typeahead.js"></script>
@@ -653,7 +651,7 @@ google.maps.event.addDomListener(window, 'load', initialize);
 {% if user.is_authenticated %}
   window.setInterval(function(){
     show_notifications();
-  }, 200000);
+  }, 5000);
 {% endif %}
 function  show_notifications(){
   ajax_request('getnotification', 'build_notification', {'user':'{{userinfo.username}}'})
