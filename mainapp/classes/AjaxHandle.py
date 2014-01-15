@@ -7,7 +7,7 @@ import json
 from mainapp.classes.TweetFeed import TweetFeed
 from mainapp.classes.Email import Email
 from Tags import Tags
-from mainapp.classes.TweetFeed import TradeConnection, UserProfile, Food, Customer, Organisation, Team, RecommendFood, Notification
+from mainapp.classes.TweetFeed import TradeConnection, UserProfile, Food, Customer, Organisation, Team, RecommendFood, Notification, Friends
 from AjaxSearch import AjaxSearch
 
 consumer_key = 'seqGJEiDVNPxde7jmrk6dQ'
@@ -235,11 +235,21 @@ class AjaxHandle(AjaxSearch):
         return notification_obj.get_notification(username)
 
     def change_notification_status(self, request):
-        notification_obj = Notification()
-        return notification_obj.change_notification_status(request.user.username)
+        if request.method == 'POST' and request.user.is_authenticated:
+            notification_obj = Notification()
+            return notification_obj.change_notification_status(request.user.username)
+        else:
+            return HttpResponse(json.dumps({'status':'0'}))
 
     def validate_logged_in(self,request):
-        #print request.user.username
         if request.user.is_authenticated:
             return HttpResponse(json.dumps({'status':'1'}))
         return HttpResponse(json.dumps({'status':'0'}))
+
+    def get_friends_paginated(self,request):
+        if request.method == 'POST' and request.user.is_authenticated:
+            page_num = request.POST['pgnum']
+            tweet_feed_obj = Friends()
+            return HttpResponse(json.dumps(tweet_feed_obj.get_paginated_friends(request.user.username, page_num)))
+        else:
+            return HttpResponse(json.dumps({'status':'0'}))

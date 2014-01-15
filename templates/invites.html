@@ -5,6 +5,9 @@
 	    .panel-body input[type=checkbox]:checked + label { 
 	        color: #c00; 
 	    } 
+	    .mymargin{
+	    	margin-top:2.5%;
+	    }
 	</style>
 {% endblock %}
 
@@ -38,6 +41,7 @@
  	</div>
 
 	<ul class="list-group"> 
+	  <ul class="list-group-item" id ="myFriendsLi">
 	   {% for each in friend %}
 	    <li id= "li{{forloop.counter}}" class="list-group-item">
 	      <!-- only show this if checkbox selected --> 
@@ -50,14 +54,20 @@
 	      </div>
 	    </li>   
 	    {% endfor %}
+	  </ul>
 
 	  <li class="list-group-item clearfix" style="background: #eee;">
-        <button id="btnSendTweet3" onclick="send_invite()" class="btn btn-primary pull-right">Send invites</button>
+		<ul class="pagination pull-left mymargin">
+		</ul>	  
+        <button id="btnSendTweet3" onclick="send_invite()" class="btn btn-primary pull-right mymargin">Send invites</button>
       </li>
+
 	  </ul> 
 </div>
 </div>
+<script src="{% static "js/jquery.js" %}"></script>
 <script type="text/javascript">
+
 var tweet = '';
 var countVal = 0;
 var send_list = [];
@@ -66,6 +76,7 @@ function validate_tweets (argument, count) {
 	tweet = $('#tweetMessage1').val();
 	var len = tweet.length;
 	var chkbx_status = document.getElementById('checkbox' + String(count)).checked;
+	alert(chkbx_status);
 	if(chkbx_status == false){
 			tweet = tweet.replace('@' + String(argument)+' ','');
 			send_list.pop(count);
@@ -127,6 +138,72 @@ function check_limit(){
 		$('#charsRem').html(String(140-tweet.length) + ' characters remaining.');
 	}
 }
-</script>
 
+var mx_count = 5;
+var mn_count = 0;
+/*var pg_count = {{page_count}};*/
+var pg_count =10;
+
+$(document).ready(function(){
+	var str = '<li><a id="invite_page_dec" onclick="update_ul_invites_dec()">&laquo;</a></li>';
+	for (var i =0; i<5; i++){
+		str = str + '<li><a id="invite_page_' + String(i+1) + '"onclick="update_ul_invites('+ String(i+1) + ')">' + String(i+1) + '</a></li>';
+	}
+	str = str + '<li><a id="invite_page_inc" onclick="update_ul_invites_inc()">&raquo;</a></li>';
+	$('.pagination').html(str);
+
+});
+
+function update_ul_invites_dec(){
+	if(mn_count !=0 ){
+		$('.pagination').html('');
+		var str = '<li><a id="invite_page_dec" onclick="update_ul_invites_dec()">&laquo;</a></li>';
+		for (var i =mn_count-1; i<mn_count+4; i++){
+			str = str + '<li><a id="invite_page_' + String(i+1) + '"onclick="update_ul_invites('+ String(i+1) + ')">' + String(i+1) + '</a></li>';
+		}
+		str = str + '<li><a id="invite_page_inc" onclick="update_ul_invites_inc()">&raquo;</a></li>';
+		$('.pagination').html(str);
+		mn_count = mn_count - 1;
+		mx_count = mx_count - 1;
+	}
+}
+function update_ul_invites_inc(){
+	if(mx_count != pg_count){
+		$('.pagination').html('');
+		var str = '<li><a id="invite_page_dec" onclick="update_ul_invites_dec()">&laquo;</a></li>';
+		for (var i =mn_count+1; i<mn_count+6; i++){
+			str = str + '<li><a id="invite_page_' + String(i+1) + '"onclick="update_ul_invites('+ String(i+1) + ')">' + String(i+1) + '</a></li>';
+		}
+		str = str + '<li><a id="invite_page_inc" onclick="update_ul_invites_inc()">&raquo;</a></li>';
+		$('.pagination').html(str);
+		mn_count = mn_count + 1;
+		mx_count = mx_count + 1;
+	}
+}
+
+function parse_friends_ajax(data){
+	friends = jQuery.parseJSON(data);
+	/*alert(friends);*/
+	var str ='';
+	$('#myFriendsLi').html('');
+	for (var i=0; i<15; i++){
+	    str = str + '<li id= "li' + String(i+1)+ '" class="list-group-item">';
+	      str = str + '<div class="checkbox">';
+	        str = str + '<input type="checkbox" id="checkbox'+ String(i+1) + '" onclick="validate_tweets("'; str = str + String(friends[i]['friends']['screen_name']) + '",' + String(i+1) + ')"/>';
+	        str = str + '<label for="checkbox">';
+	          str = str + '<img src="' + String(friends[i]['friends']['profile_image_url']) + '" alt="THEIRNAME" class="img-responsive pull-left" style="width:20px; margin-right: 5px;" />'; 
+	          str = str + String(friends[i]['friends'].name) + '<span class="text-muted small">@' + String(friends[i]['friends']['screen_name'])+'</span>';
+	          str = str + '</label>';
+	      str = str + '</div>';
+	    str = str + '</li>';
+	}
+	$('#myFriendsLi').html(str);
+}
+
+function update_ul_invites(cur_page){
+	$(this).addClass('active');
+	ajax_request('get_friends_paginated', 'parse_friends_ajax',{'pgnum':cur_page});
+}
+
+</script>
 {% endblock %}

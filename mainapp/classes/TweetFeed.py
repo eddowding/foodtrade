@@ -582,7 +582,17 @@ class Friends():
 
     def get_friends(self, username):    
         all_doc = self.db_object.get_all_vals(self.table_name,{'username':str(username)})
-        return all_doc
+        return all_doc[0:20]
+
+    def get_paginated_friends(self, username, pagenum):
+        friends = self.db_object.get_paginated_values(self.table_name,{'username':str(username)}, pageNumber = int(pagenum))
+        friend_list = []
+        for eachFriend in friends:
+            invites_obj = Invites()
+            if invites_obj.check_invited(eachFriend['friends']['screen_name']) == False:
+                friend_list.append({'friends':{'screen_name':eachFriend['friends']['screen_name'],
+                    'name':eachFriend['friends']['name'], 'profile_image_url':eachFriend['friends']['profile_image_url']}})        
+        return friend_list
 
 class Invites():
     def __init__ (self):
