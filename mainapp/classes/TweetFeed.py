@@ -99,7 +99,7 @@ class TweetFeed():
             full_name = twitter_user.extra_data['name']
             org_list.append(full_name)
 
-        self.db_object.update_upsert(self.table_name, {'useruid':str(user_id)}, {'foods':f_list,'type_user':business_types, 'organisations':org_list})
+        self.db_object.update(self.table_name, {'useruid':str(user_id)}, {'foods':f_list,'type_user':business_types, 'organisations':org_list})
         
 
     def get_near_people(self, query):
