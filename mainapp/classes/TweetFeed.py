@@ -12,6 +12,7 @@ from allauth.socialaccount.models import SocialToken, SocialAccount
 from django.http import HttpResponse, HttpResponseRedirect
 import json
 from pymongo import Connection
+import re
 
 consumer_key = 'seqGJEiDVNPxde7jmrk6dQ'
 consumer_secret = 'sI2BsZHPk86SYB7nRtKy0nQpZX3NP5j5dLfcNiP14'
@@ -386,9 +387,7 @@ class TweetFeed():
                }
                
               }
-                           
-
-
+                     
             }
             """)
 
@@ -479,7 +478,8 @@ class TradeConnection():
 
     def create_connection (self, value):
         value['deleted'] =0
-        self.db_object.insert_one(self.table_name,value)
+        # self.db_object.insert_one(self.table_name,value)
+        self.db_object.update_upsert(self.table_name, {'c_useruid': value['c_useruid'], 'b_useruid': value['b_useruid']}, {'deleted': 0})
 
     def delete_connection(self, b_useruid, c_useruid):
         self.db_object.update(self.table_name,{'b_useruid': b_useruid, 'c_useruid': c_useruid}, {'deleted':1})
@@ -517,7 +517,8 @@ class Customer():
 
     def create_customer (self, value):
         value['deleted'] =0
-        self.db_object.insert_one(self.table_name,value)
+        # self.db_object.insert_one(self.table_name,value)
+        self.db_object.update_upsert(self.table_name, {'customeruid': value['customeruid'], 'useruid': value['useruid']}, {'deleted': 0})
 
     def delete_customer(self, useruid, customer_id):
         self.db_object.update(self.table_name,{'useruid': useruid, 'customeruid': customer_id}, {'deleted':1})
@@ -534,7 +535,8 @@ class Organisation():
 
     def create_member (self, value):
         value['deleted'] = 0
-        self.db_object.insert_one(self.table_name,value)
+        # self.db_object.insert_one(self.table_name,value)
+        self.db_object.update_upsert(self.table_name, {'memberuid': value['memberuid'], 'orguid': value['orguid']}, {'deleted': 0})        
 
     def delete_member(self, orguid, member_id):
         self.db_object.update(self.table_name,{'orguid': orguid, 'memberuid': member_id}, {'deleted':1})
@@ -554,7 +556,8 @@ class Team():
 
     def create_member (self, value):
         value['deleted'] =0
-        self.db_object.insert_one(self.table_name,value)
+        # self.db_object.insert_one(self.table_name,value)
+        self.db_object.update_upsert(self.table_name, {'memberuid': value['memberuid'], 'orguid': value['orguid']}, {'deleted': 0})
 
     def delete_member(self, orguid, member_id):
         self.db_object.update(self.table_name,{'orguid': orguid, 'memberuid': member_id}, {'deleted':1})
@@ -590,6 +593,27 @@ class Friends():
     def get_friends(self, username):    
         all_doc = self.db_object.get_all_vals(self.table_name,{'username':str(username)})
         return all_doc
+
+    def get_paginated_friends(self, username, pagenum):
+        friends = self.db_object.get_paginated_values(self.table_name,{'username':str(username)}, pageNumber = int(pagenum))
+        friend_list = []
+        for eachFriend in friends:
+            invites_obj = Invites()
+            if invites_obj.check_invited(eachFriend['friends']['screen_name']) == False:
+                friend_list.append({'friends':{'screen_name':eachFriend['friends']['screen_name'],
+                    'name':eachFriend['friends']['name'], 'profile_image_url':eachFriend['friends']['profile_image_url']}})        
+        return friend_list
+
+    def get_friends_count(self, username):
+        return self.db_object.get_count(self.table_name,{'username':str(username)})
+
+    def search_friends(self, username, query):
+        friend = re.compile(str(query) + '+', re.IGNORECASE)
+        result = self.db_object.get_paginated_values(self.table_name, 
+            {'username':str(username), 
+            '$or':[{'friends.name':{'$regex':friend}}, {'friends.screen_name':{'$regex':friend}}]})
+        #print result
+        return result
 
 class Invites():
     def __init__ (self):

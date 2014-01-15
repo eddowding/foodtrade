@@ -382,6 +382,80 @@ for(var i = 0; i < business_filters.length;i++){
         }
 
 
+
+
+
+
+organisation_filters = {{organisation_filter |safe}};
+          
+
+          function organisation_value_changed(more_no)
+          {
+                   var results = [];
+       var query = $("#organisation_filter").val().toLowerCase();
+        for(var i = 0; i < organisation_filters.length;i++)
+        {
+          var element  = organisation_filters[i].uid.toLowerCase();
+          if(element.indexOf(query)>-1)
+          {
+            results.push(organisation_filters[i]);
+          }
+        }
+
+            show_organisation_filters(results,more_no);
+          }
+
+          function show_organisation_filters(filters, more_no)
+          {
+            if(more_no == 0){
+            $('#organisation_filter_results').html('');
+            }
+            else
+            {
+              $("#organisation_more_"+(more_no-5)).remove();
+            }
+            for(var i = more_no;i<filters.length && i<(more_no+5); i++)
+            {
+              var checked = '';
+              if(filters[i].prev)
+              {
+                checked = "checked='checked'";
+              }
+
+            var row = '<li data-id="15" class="foodtrade-tag foodtrade-tag-click "><div class="foodtrade-tag-checkbox-column"><input type="checkbox" '+checked+' onClick="organisation_changed(this,\''+filters[i].uid+'\')" aria-label="University of Washington" class="foodtrade-tag-checkbox"></div><div class="foodtrade-tag-text"> '+filters[i].uid+'</div><div class="foodtrade-tag-count">'+filters[i].value+'</div></li>';
+            $('#organisation_filter_results').append(row);
+           
+          }
+           if(filters.length>more_no+5)
+            {
+              $('#organisation_filter_results').append('<li class="foodtrade-tag-showmore" id="organisation_more_'+more_no+'" onClick="organisation_value_changed('+(more_no+5)+')">show more</li>');
+            }
+          }
+
+
+
+
+
+            function organisation_changed(ref,organisation)
+          {
+for(var i = 0; i < organisation_filters.length;i++){
+          if(organisation_filters[i].uid==organisation)
+          {
+            var status = ref.checked;
+            //console.log(status);
+            organisation_filters[i].prev = status;
+          }
+          }
+          make_search();
+        }
+
+
+
+
+
+
+
+
        function make_search()
        {
         var foods = [];
@@ -422,7 +496,13 @@ $('#food_filter').keyup( function() {
 $('#business_filter').keyup( function() {
             business_value_changed(0);
         });
+
+$('#organisation_filter').keyup( function() {
+            business_value_changed(0);
+        });
+
 show_food_filters(food_filters, 0);
+show_organisation_filters(organisation_filters, 0);
 show_business_filters(business_filters, 0);
 
 </script>

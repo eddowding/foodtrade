@@ -21,6 +21,7 @@ def display_profile(request, username):
     usr = User.objects.get(username = username)
     account = SocialAccount.objects.get(user__id = usr.id)
     userprof = user_profile.get_profile_by_id(str(usr.id))
+    parameters['userprof'] = UserInfo(usr.id)
     parameters['profile_id'] = usr.id
     parameters['sign_up_as'] = userprof['sign_up_as']
     parameters['address'] = userprof['address']
@@ -225,8 +226,7 @@ def get_connections(user_id, logged_in_id = None):
         account = SocialAccount.objects.get(user__id = each['b_useruid'])
         usr_pr = userprof.get_profile_by_id(str(each['b_useruid']))
         user_info = UserInfo(each['b_useruid'])
-        if logged_in_id!=None and  each['b_useruid'] == logged_in_id:
-            logged_conn = 'seller'
+        
         data = {'id': each['b_useruid'],
          'name': account.extra_data['name'],
          'description': account.extra_data['description'],
@@ -243,9 +243,13 @@ def get_connections(user_id, logged_in_id = None):
         if data not in final_connections:
             data['relation'] = 'seller'
             final_connections.append(data)
+            if logged_in_id!=None and each['b_useruid'] == logged_in_id:
+                logged_conn = 'seller'
         else:
             index = final_connections.index(data)
             final_connections[index]['relation'] = 'both'
+            if logged_in_id!=None and each['b_useruid'] == logged_in_id:
+                logged_conn = 'both'
     return final_connections[:10], logged_conn
 
 def get_members(user_id):

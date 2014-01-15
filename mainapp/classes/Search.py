@@ -96,3 +96,23 @@ class Search():
         # search_results = tweet_search_object.aggregrate(aggregate_query)
         # search_results = tweet_search_object.search_tweets(query_string)
         return search_results
+
+
+    def get_organisation_filters(self):
+        query_string = {}
+        # if self.keyword !="":
+        #     keyword_like = re.compile(self.keyword + '+', re.IGNORECASE)
+        #     query_string['$or'] = [{'status':{"$regex": keyword_like, '$options': '-i'}},{'user.name':{"$regex": keyword_like, '$options': '-i'}},{'user.username':{"$regex": keyword_like, '$options': '-i'}},{'user.description':{"$regex": keyword_like, '$options': '-i'}}]
+            
+        if(self.lon != "" and self.lat != ""):
+            query_string['location'] = {"$near":{"$geometry":{"type":"Point", "coordinates":[float(self.lon), float(self.lat)]}, "$maxDistance":160.934}}
+            pass
+
+        tweet_search_object = TweetFeed()
+        search_results = tweet_search_object.get_all_organisations(self.keyword, self.lon, self.lat, self.foods, self.business, self.organisation,query_string)
+       
+
+
+        # search_results = tweet_search_object.aggregrate(aggregate_query)
+        # search_results = tweet_search_object.search_tweets(query_string)
+        return search_results
