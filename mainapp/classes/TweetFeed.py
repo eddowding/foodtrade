@@ -79,6 +79,10 @@ class TweetFeed():
         return self.db_object.aggregrate_all(self.table_name,conditions)
 
     def update_data(self,user_id):
+        user_data = self.db_object.get_all(self.table_name,{'user_id':tweet_id, 'deleted':0}, 'time_stamp')
+        if len(user_data)==0:
+            return 
+
         food = Food()
         f_results = food.get_foods_by_userid(user_id)
         f_list = []
