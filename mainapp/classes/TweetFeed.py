@@ -79,7 +79,7 @@ class TweetFeed():
         return self.db_object.aggregrate_all(self.table_name,conditions)
 
     def update_data(self,user_id):
-        user_data = self.db_object.get_all(self.table_name,{'user_id':str(user_id), 'deleted':0}, 'time_stamp')
+        user_data = self.db_object.get_all(self.table_name,{'useruid':str(user_id), 'deleted':0}, 'time_stamp')
         if len(user_data)==0:
             return 
 
@@ -253,6 +253,7 @@ class TweetFeed():
 
             var flag = true;
             var keyword = '"""+keyword+"""';
+            keyword = keyword.toLowerCase();
 
             if(keyword != '')
             {
@@ -308,6 +309,7 @@ class TweetFeed():
 
             var flag = true;
             var keyword = '"""+keyword+"""';
+            keyword = keyword.toLowerCase();
 
             if(keyword != '')
             {
@@ -364,6 +366,7 @@ class TweetFeed():
 
             var flag = true;
             var keyword = '"""+keyword+"""';
+            keyword = keyword.toLowerCase();
 
             if(keyword != '')
             {
