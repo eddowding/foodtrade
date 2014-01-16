@@ -104,8 +104,17 @@ function delete_food(prof_id, food_name, my_this){
 }
 
 function add_customer(prof_id, c_id){
+	var checked = $('#customer-chkbx').is(':checked');
 	var data = {useruid: prof_id, customeruid: c_id};
-	ajax_request("addcustomer", 'create_conn', {data: JSON.stringify(data)});
+	if (checked){
+		// add customer
+		ajax_request("addcustomer", 'create_conn', {data: JSON.stringify(data)});
+	}
+	else{
+		// delete that customer
+		ajax_request("deletecustomer", 'create_conn', {data: JSON.stringify(data)});
+	}
+	
 }
 
 function add_member(org_id, mem_id){

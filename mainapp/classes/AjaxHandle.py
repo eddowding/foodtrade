@@ -204,6 +204,16 @@ class AjaxHandle(AjaxSearch):
         else:
             return HttpResponse("{'status':0}")
 
+    def deletecustomer(self, request):
+        customer = Customer()
+        print request.POST.get('data')
+        data = eval(request.POST.get('data'))
+        if data !=None and data !="":
+            customer.delete_customer(useruid = data['useruid'], customer_id = data['customeruid'])
+            return HttpResponse("{'status':1}")
+        else:
+            return HttpResponse("{'status':0}")    
+
     def addmember(self, request):
         org = Organisation()
         print request.POST.get('data')

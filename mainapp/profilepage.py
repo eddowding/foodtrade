@@ -68,19 +68,20 @@ def display_profile(request, username):
 
 
         
-    if parameters['sign_up_as'] == 'Business':  
+    if parameters['sign_up_as'] == 'Business':
         if request.user.is_authenticated():
             parameters['connections'], parameters['logged_conn'] = get_connections(usr.id, request.user.id)
             parameters['all_foods'] = get_all_foods(usr.id)
             parameters['organisations'] = get_organisations(usr.id)
-            parameters['customers'] = get_customers(usr.id)
+            parameters['customers'], parameters['logged_customer'] = get_customers(usr.id, request.user.id)
         else:
             conn_limited, parameters['logged_conn'] = get_connections(usr.id)
             # if not logged in show limited
             parameters['connections'] = conn_limited[:5]
             parameters['all_foods'] = get_all_foods(usr.id)[:3]
             parameters['organisations'] = get_organisations(usr.id)[:3]
-            parameters['customers'] = get_customers(usr.id)[:10]
+            all_customers, parameters['logged_customer'] = get_customers(usr.id)
+            parameters['customers'] = all_customers[:10]
 
         parameters['connections_str'] = json.dumps(parameters['connections'])
         # get all organisations
@@ -187,19 +188,23 @@ def get_all_foods(user_id):
         final_foods.append(data)
     return final_foods
 
-def get_customers(user_id):
+def get_customers(user_id, logged_id=None):
     cust = Customer()
     all_customers = cust.get_customers_by_userid(user_id)
     final_customers = []
+    logged_customer = False
     for each in all_customers:
         account = SocialAccount.objects.get(user__id = each['customeruid'])
+        if logged_id!=None and each['customeruid'] == logged_id:
+            logged_customer = True
         final_customers.append({'id': each['customeruid'],
          'name': account.extra_data['name'],
          'description': account.extra_data['description'],
          'photo': account.extra_data['profile_image_url'],
          'username' : account.extra_data['screen_name']
          })
-    return final_customers[:10]
+    print 'logged_customer', logged_customer
+    return final_customers[:10], logged_customer
 
 def get_connections(user_id, logged_in_id = None):
     trade_conn = TradeConnection()
@@ -325,14 +330,17 @@ def get_all_business(prof_id):
     all_business = userpro.get_profile_by_type("Business")
     final_business = []
     for each in all_business:
-        account = SocialAccount.objects.get(user__id = each['useruid'])
-        if prof_id != int(each['useruid']):
-            final_business.append({'id': each['useruid'],
-                'name': account.extra_data['name'],
-                'description': account.extra_data['description'],
-                'photo': account.extra_data['profile_image_url'],
-                'username' : account.extra_data['screen_name']
-                })
+        try:
+            account = SocialAccount.objects.get(user__id = each['useruid'])
+            if prof_id != int(each['useruid']):
+                final_business.append({'id': each['useruid'],
+                    'name': account.extra_data['name'],
+                    'description': account.extra_data['description'],
+                    'photo': account.extra_data['profile_image_url'],
+                    'username' : account.extra_data['screen_name']
+                    })
+        except:
+            pass
     return final_business
 
 from math import radians, cos, sin, asin, sqrt

@@ -11,7 +11,10 @@
     .typeempty{
   display:none;
 }
-  </style>
+.my-height{
+  height: 30px;
+}
+</style>
 
 {% endblock %}
 
@@ -84,7 +87,11 @@
       <div class="form-group" id="type_user_id"> 
         <label for="id_type_user" class="col-sm-2 control-label">Business type</label>
         <div class="col-sm-5">
+<<<<<<< HEAD
           <select id= "dropdown3" data-placeholder="Farm, wholesaler, restaurant..." multiple  class="chosen-select" tabindex="6">
+=======
+          <select id= "dropdown3" data-placeholder="Farm, wholesaler, restaurant, bakery..." multiple  class="chosen-select my-height" tabindex="6" >
+>>>>>>> 645545d8f097f6e45c93e9f2208119189c4f6177
               <option value=""></option>
               {% for each in all_tags %}
               <optgroup label={{each.node}}>
@@ -126,6 +133,12 @@ $( document ).ready(function() {
   if('{{sign_up_as}}'!="Business"){
     $('#type_user_id').toggleClass('typeempty');
     }
+
+
+
+    // $('#dropdown3').chosen().ready(function(){
+    //   $('.search-field input').attr('style', 'width:192px;height:30px;');
+    // });
 });
 
 function dataradio(value){
