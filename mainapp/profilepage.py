@@ -139,13 +139,14 @@ def edit_profile(request, username):
 
     else:
         user_profile = UserProfile()
+        userprof = user_profile.get_profile_by_id(str(request.user.id))
         first_name = request.POST['first_name']
         last_name = request.POST['last_name']
         description = request.POST['description']
-        try:
-            address = request.POST['address']
-        except:
-            address = user_profile['address']
+        address = request.POST['address']
+        if address == '' or ' ':
+            address = userprof['address']
+        #print address
         try:
             sign_up_as = request.POST['sign_up_as']
         except:
