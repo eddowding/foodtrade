@@ -35,6 +35,11 @@
 margin-top: 4px;
 background: #eee;
 }
+
+.margin-notices{
+  margin-left:8%;
+  margin-top:8%;
+}
     </style>
  
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -103,8 +108,8 @@ background: #eee;
                     </ul>
                 </li> -->
               <li id="divNotification" onclick="clear_notification()" class="dropdown">
-                <button  class="btn btn-default" class="dropdown-toggle" data-toggle="dropdown" type="button">
-                  Notices <span id= "notification" class="badge">{{notification.notification_count}}</span>
+                <button  class="btn btn-default dropdown-toggle margin-notices" data-toggle="dropdown" type="button">
+                  Notice <span id= "notification" class="badge">{{notification.notification_count}}</span>
                 </button>
                 <!-- <a id= "notification" href="#" class="dropdown-toggle" data-toggle="dropdown">
                 {{notification.notification_count}} <b class="caret"></b></a> -->
@@ -172,7 +177,7 @@ background: #eee;
                   </form> 
                 </div>
                 <div class="modal-footer">
-                  <h6 class="pull-left" id="counter">320 characters remaining</h6> 
+                  <h6 class="pull-left" id="counter">142 characters remaining</h6> 
                   <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                   <button type="button" class="btn btn-primary" onclick="UpdateStatus('tweetMessage')">Post update</button>
                 </div>
@@ -654,7 +659,7 @@ google.maps.event.addDomListener(window, 'load', initialize);
 {% if user.is_authenticated %}
   window.setInterval(function(){
     show_notifications();
-  }, 5000);
+  }, 30000);
 {% endif %}
 function  show_notifications(){
   ajax_request('getnotification', 'build_notification', {'user':'{{userinfo.username}}'})
