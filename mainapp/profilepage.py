@@ -58,29 +58,30 @@ def display_profile(request, username):
         else:
             ip = request.META.get('REMOTE_ADDR')
         location_info = get_addr_from_ip(ip)
-        lon2 = float(location_info['longitude'])
-        lat2 = float(location_info['latitude'])
+        lon2 = float(str(location_info['longitude']))
+        lat2 = float(str(location_info['latitude']))
 
-
-    lon1, lat1 = userprof['longitude'],userprof['latitude']
+    lon2, lat2 = float(str(lon2)), float(str(lat2))
+    lon1, lat1 = float(userprof['longitude']),float(userprof['latitude'])
     dis = distance(lon1, lat1, lon2, lat2)
     parameters['distance'] = "{:10.2f}".format(dis * 0.621371)
 
 
         
-    if parameters['sign_up_as'] == 'Business':  
+    if parameters['sign_up_as'] == 'Business':
         if request.user.is_authenticated():
             parameters['connections'], parameters['logged_conn'] = get_connections(usr.id, request.user.id)
             parameters['all_foods'] = get_all_foods(usr.id)
             parameters['organisations'] = get_organisations(usr.id)
-            parameters['customers'] = get_customers(usr.id)
+            parameters['customers'], parameters['logged_customer'] = get_customers(usr.id, request.user.id)
         else:
             conn_limited, parameters['logged_conn'] = get_connections(usr.id)
             # if not logged in show limited
             parameters['connections'] = conn_limited[:5]
             parameters['all_foods'] = get_all_foods(usr.id)[:3]
             parameters['organisations'] = get_organisations(usr.id)[:3]
-            parameters['customers'] = get_customers(usr.id)[:10]
+            all_customers, parameters['logged_customer'] = get_customers(usr.id)
+            parameters['customers'] = all_customers[:10]
 
         parameters['connections_str'] = json.dumps(parameters['connections'])
         # get all organisations
@@ -111,7 +112,7 @@ def edit_profile(request, username):
                 parameters['type_user'] = str(userprof['type_user'])
             else:
                 parameters['type_user'] = ''
-            parameters['zip_code'] = userprof['zip_code']
+            #parameters['zip_code'] = userprof['zip_code']
             parameters['address'] = userprof['address']
             
             try:
@@ -137,7 +138,7 @@ def edit_profile(request, username):
         first_name = request.POST['first_name']
         last_name = request.POST['last_name']
         description = request.POST['description']
-        zip_code = request.POST['zip_code']
+        address = request.POST['address']
 
         try:
             sign_up_as = request.POST['sign_up_as']
@@ -151,9 +152,9 @@ def edit_profile(request, username):
         else:
             usr_type = ''
         tweetFeedObj = TweetFeed()
-        tweetFeedObj.update_tweets(username, first_name, last_name, description, zip_code)
+        tweetFeedObj.update_tweets(username, first_name, last_name, description, address)
         user_profile_obj = UserProfile()
-        user_profile_obj.update_profile(request.user.id, zip_code, usr_type, sign_up_as, phone)
+        user_profile_obj.update_profile(request.user.id, address, usr_type, sign_up_as, phone)
 
         usr = User.objects.get(username=username)
         usr.first_name = first_name
@@ -187,19 +188,23 @@ def get_all_foods(user_id):
         final_foods.append(data)
     return final_foods
 
-def get_customers(user_id):
+def get_customers(user_id, logged_id=None):
     cust = Customer()
     all_customers = cust.get_customers_by_userid(user_id)
     final_customers = []
+    logged_customer = False
     for each in all_customers:
         account = SocialAccount.objects.get(user__id = each['customeruid'])
+        if logged_id!=None and each['customeruid'] == logged_id:
+            logged_customer = True
         final_customers.append({'id': each['customeruid'],
          'name': account.extra_data['name'],
          'description': account.extra_data['description'],
          'photo': account.extra_data['profile_image_url'],
          'username' : account.extra_data['screen_name']
          })
-    return final_customers[:10]
+    print 'logged_customer', logged_customer
+    return final_customers[:10], logged_customer
 
 def get_connections(user_id, logged_in_id = None):
     trade_conn = TradeConnection()
@@ -325,14 +330,17 @@ def get_all_business(prof_id):
     all_business = userpro.get_profile_by_type("Business")
     final_business = []
     for each in all_business:
-        account = SocialAccount.objects.get(user__id = each['useruid'])
-        if prof_id != int(each['useruid']):
-            final_business.append({'id': each['useruid'],
-                'name': account.extra_data['name'],
-                'description': account.extra_data['description'],
-                'photo': account.extra_data['profile_image_url'],
-                'username' : account.extra_data['screen_name']
-                })
+        try:
+            account = SocialAccount.objects.get(user__id = each['useruid'])
+            if prof_id != int(each['useruid']):
+                final_business.append({'id': each['useruid'],
+                    'name': account.extra_data['name'],
+                    'description': account.extra_data['description'],
+                    'photo': account.extra_data['profile_image_url'],
+                    'username' : account.extra_data['screen_name']
+                    })
+        except:
+            pass
     return final_business
 
 from math import radians, cos, sin, asin, sqrt
