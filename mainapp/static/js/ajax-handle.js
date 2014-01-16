@@ -52,6 +52,7 @@ function third_party_connection(prof_id){
 	if($('#option1_conn').is(':checked')){
 		// var conn_data = {prof_id: prof_id, status: 'buy_from', buss_id: businesses_id };
 		ajax_request("third_party_conn", 'create_conn', {conn_data: "{'prof_id': " + prof_id + ",'buss_id': " + business_id + ",'status': 'buy_from'}"});
+		
 	}
 	// seller checked
 	if($('#option2_conn').is(':checked')){
@@ -118,8 +119,19 @@ function add_customer(prof_id, c_id){
 }
 
 function add_member(org_id, mem_id){
+	// var data = {orguid: org_id, memberuid: mem_id};
+	// ajax_request("addmember", 'create_conn', {data: JSON.stringify(data)});
+	var checked = $('#member-chkbx').is(':checked');
 	var data = {orguid: org_id, memberuid: mem_id};
-	ajax_request("addmember", 'create_conn', {data: JSON.stringify(data)});
+	if (checked){
+		// add member
+		ajax_request("addmember", 'create_conn', {data: JSON.stringify(data)});
+	}
+	else{
+		// delete that member
+		ajax_request("deletemember", 'create_conn', {data: JSON.stringify(data)});
+	}
+	
 }
 
 function add_team(org_id, team_id){

@@ -33,7 +33,7 @@ def display_profile(request, username):
     parameters['email'] = usr.email
     parameters['screen_name'] = "@" + account.extra_data['screen_name']
     pno = userprof.get('phone_number')
-    if pno == 'None':
+    if pno == None:
         parameters['phone_number'] = ''
     else:
         parameters['phone_number'] = pno
@@ -89,9 +89,13 @@ def display_profile(request, username):
         # return render_to_response('typeahead.html', parameters, context_instance=RequestContext(request))
 
     elif parameters['sign_up_as'] == 'Organisation':
-        parameters['members'] = get_members(usr.id)
-        parameters['teams'] = get_team(usr.id)
         parameters['members_foods'] = get_foods_from_org_members(usr.id)
+        if request.user.is_authenticated():
+            parameters['members'], parameters['logged_member'] = get_members(usr.id, request.user.id)
+            parameters['teams'] = get_team(usr.id)
+        else:
+            parameters['members'], parameters['logged_member'] = get_members(usr.id)
+            parameters['teams'] = get_team(usr.id)
         return render_to_response('single-organization.html', parameters, context_instance=RequestContext(request))
     elif parameters['sign_up_as'] == 'Individual':
         return render_to_response('individual.html', parameters, context_instance=RequestContext(request))
@@ -262,16 +266,18 @@ def get_connections(user_id, logged_in_id = None):
                 logged_conn = 'both'
     return final_connections[:10], logged_conn
 
-def get_members(user_id):
+def get_members(user_id, logged_in_id = None):
     org = Organisation()
     members = org.get_members_by_orgid(user_id)
     userprof = UserProfile()
     final_members = []
+    logged_member = False
     for each in members:
-        print each['memberuid']
         account = SocialAccount.objects.get(user__id = each['memberuid'])
         usr_pr = userprof.get_profile_by_id(str(each['memberuid']))
         user_info = UserInfo(each['memberuid'])
+        if logged_in_id!=None and each['memberuid'] == logged_in_id:
+                logged_member = True
         final_members.append({'id': each['memberuid'],
          'name': account.extra_data['name'],
          'description': account.extra_data['description'],
@@ -284,7 +290,7 @@ def get_members(user_id):
          'latitude': usr_pr['latitude'],
          'longitude': usr_pr['longitude']
          })
-    return final_members
+    return final_members, logged_member
 
 def get_organisations(user_id):
     org = Organisation()

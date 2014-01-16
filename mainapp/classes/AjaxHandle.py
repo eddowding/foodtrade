@@ -224,6 +224,16 @@ class AjaxHandle(AjaxSearch):
         else:
             return HttpResponse("{'status':0}")
 
+    def deletemember(self, request):
+        org = Organisation()
+        print request.POST.get('data')
+        data = eval(request.POST.get('data'))
+        if data !=None and data !="":
+            org.delete_member(orguid = data['orguid'], member_id = data['memberuid'])
+            return HttpResponse("{'status':1}")
+        else:
+            return HttpResponse("{'status':0}")    
+
     def addteam(self, request):
         team = Team()
         print request.POST.get('data')

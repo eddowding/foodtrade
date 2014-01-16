@@ -257,7 +257,7 @@
           <li><a href="#connections" data-toggle="tab" onclick="set_width()">Connections <span class="badge">{{userprof.trade_connections_no}}</span></a> </li>
 
           <li><a href="#organisations" data-toggle="tab">Organisation <span class="badge">{{userprof.organisation_connection_no}}</span></a></li> 
-          <li><a href="#activity" data-toggle="tab">Updates  <span class="badge">{{userprof.trade_connections_no}}</span></a></li>  
+          <li><a href="#activity" data-toggle="tab">Updates  <span class="badge">2</span></a></li>  
           <li class="dropdown">
             <a href="#" id="people" class="dropdown-toggle" data-toggle="dropdown">People <b class="caret"></b></a>
             <ul class="dropdown-menu" role="menu" aria-labelledby="people">
@@ -433,7 +433,7 @@
 
 <div class="clearfix">
           <h4>Buyers</h4> 
-           <div class="pull-left">
+           <div class="pull-left" id="buyers-cards">
           {% for each in connections %}
               {% if each.relation == "buyer" or each.relation == "both" %}
                   <div class="card card-business">
@@ -470,7 +470,7 @@
 
           <div class="clearfix">
           <h4>Sellers</h4> 
-           <div class="pull-left">
+           <div class="pull-left" id="seller-cards">
           {% for each in connections %}
               {% if each.relation == "seller" or each.relation == "both" %}
                   <div class="card card-business">

@@ -51,10 +51,18 @@
       {% endif %} -->
   
       {% if user.is_authenticated %}
-      <button class="btn btn-default btn-block" data-toggle="modal" data-target="#modal_customer">
+<!--       <button class="btn btn-default btn-block" data-toggle="modal" data-target="#modal_customer">
         <i class="fa fa-smile-o text-muted"></i> I'm a member
-      </button>  
- 
+      </button>   -->
+<div class="btn-group btn-block" data-toggle="buttons">
+        {% if logged_member %}
+      <label class="fa fa-smile-o text-muted btn btn-default btn-block active" style="width:100%;" title="{{userinfo.full_name}} is member of {{name}}" >
+      <input type="checkbox" checked="checked" id="member-chkbx" onchange="add_member({{profile_id}}, {{user_id}})">I'm a member!
+      {% else %}
+      <label class="fa fa-smile-o text-muted btn btn-default btn-block" style="width:100%;" title="{{userinfo.full_name}} is member of {{name}}" >
+      <input type="checkbox" id="member-chkbx" onchange="add_member({{profile_id}}, {{user_id}})">I'm a member!
+  {% endif %}
+ </label></div>
 
       <!-- Button trigger modal -->
       <button class="btn btn-primary btn-block" data-toggle="modal" data-target="#modal_contact">
@@ -227,8 +235,8 @@
         <ul class="nav nav-tabs ">
           <li class="active"><a href="#members" data-toggle="tab">Members <span class="badge ">{{members|length}}</span></a></li>
           <li><a href="#foods" data-toggle="tab">Foods  <span class="badge">{{members_foods|length}}</span></a></li> 
-          <li><a href="#people" data-toggle="tab">Team <span class="badge ">25</span></a></li>
-          <li><a href="#updates" data-toggle="tab">Updates <span class="badge ">25</span></a></li>
+          <li><a href="#people" data-toggle="tab">Team <span class="badge ">{{teams|length}}</span></a></li>
+          <li><a href="#updates" data-toggle="tab">Updates <span class="badge ">2</span></a></li>
         </ul>
      </div>
     </div>
@@ -240,12 +248,15 @@
         <div class="tab-content">
           <div class="tab-pane active fade in " id="members">
       {% if user.is_authenticated %}
+
            <button class="btn btn-default">
               <i class="fa fa-smile-o "></i> Are you a member?
             </button> 
             <button class="btn btn-success" onClick="add_member({{profile_id}}, {{user_id}})">
               <i class="fa fa-check "></i> I'm a member
             </button> 
+        
+
             {% endif %}
             <div class="clearfix"> 
                     {% for each_mem in members %}
