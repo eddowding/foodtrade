@@ -213,7 +213,9 @@ $('.enterhandler').bind('keypress', function(e) {
 	}
 	else{
 		/*$('#btn_must_be_logged').click();*/
-		$('#' + String(this.attributes.id.value)).tooltip('show');
+		/*$('#' + String(this.attributes.id.value)).tooltip('show');*/
+		  /*alert("roshan");*/
+		  window.location = '/accounts/twitter/login/?process=login';
 	}
 });
 

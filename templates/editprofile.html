@@ -11,7 +11,10 @@
     .typeempty{
   display:none;
 }
-  </style>
+.my-height{
+  height: 30px;
+}
+</style>
 
 {% endblock %}
 
@@ -84,7 +87,7 @@
       <div class="form-group" id="type_user_id"> 
         <label for="id_type_user" class="col-sm-2 control-label">Business type</label>
         <div class="col-sm-5">
-          <select id= "dropdown3" data-placeholder="Farm, wholesaler, restaurant, bakery..." multiple  class="chosen-select" tabindex="6" >
+          <select id= "dropdown3" data-placeholder="Farm, wholesaler, restaurant, bakery..." multiple  class="chosen-select my-height" tabindex="6" >
               <option value=""></option>
               {% for each in all_tags %}
               <optgroup label={{each.node}}>
