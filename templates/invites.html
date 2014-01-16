@@ -36,7 +36,7 @@
  	<div class="panel-body mymargin">
 
     <div class="form-group"> 
- 	<textarea id="tweetMessage1"  onkeyup="check_limit()" class="form-control counted" name="message" placeholder="Type in your message" rows="3" ></textarea>
+ 	<textarea id="tweetMessage1"  onkeyup="check_limit()" class="form-control counted" name="message" placeholder="Type in your message" rows="3" >You'll love www.foodtrade.com, </textarea>
  	</div>
  	<button id="btnSendTweet2" onclick="send_invite()" class="btn btn-primary pull-right">Send invites</button>
       <h6 id="charsRem" class="pull-left" id="counter">140 characters remaining</h6> 
@@ -49,9 +49,9 @@
 	      <!-- only show this if checkbox selected --> 
 	      <div class="checkbox">
 	        <input type="checkbox" id="checkbox{{forloop.counter}}" onclick="validate_tweets('{{each.friends.screen_name}}', {{forloop.counter}})" />
-	        <label for="checkbox">
-	          <img src="{{each.friends.profile_image_url}}" alt="THEIRNAME" class="img-responsive pull-left" style="width:20px; margin-right: 5px;" /> 
-	          {{each.friends.name}} <span class="text-muted small">@{{each.friends.screen_name}}</span>
+	        <label for="checkbox{{forloop.counter}}">
+	          <img src="{{each.friends.profile_image_url}}" title="{{each.friends.name}}" class="img-responsive pull-left" style="width:20px; margin-right: 5px;" /> 
+	          {{each.friends.name}} &nbsp;<span class="text-muted small">@{{each.friends.screen_name}}</span>
 	          </label>
 	      </div>
 	    </li>   
@@ -70,16 +70,19 @@
 <script src="{% static "js/jquery.js" %}"></script>
 <script type="text/javascript">
 
-var tweet = '';
+var tweet = 'You\'ll love www.foodtrade.com';
 var countVal = 0;
 var send_list = [];
 var users = [];
+$(document).ready(function(){
+	$('#tweetMessage1').html(tweet);
+})
 function validate_tweets (argument, count) {
 	tweet = $('#tweetMessage1').val();
 	var len = tweet.length;
 	var chkbx_status = document.getElementById('checkbox' + String(count)).checked;
 	if(chkbx_status == false){
-			tweet = tweet.replace('@' + String(argument)+' ','');
+			tweet = tweet.replace(' @' + String(argument)+' ','');
 			send_list.pop(count);
 			users.pop('@' + argument);
 			$('#tweetMessage1').val(tweet);
@@ -91,7 +94,7 @@ function validate_tweets (argument, count) {
 	}
 	else{
 		if (argument.length + len < 140 ) {
-			tweet = '@' + String(argument) + ' ' + tweet;
+			tweet = tweet + ' ' + '@' + String(argument) +' ';
 			countVal = countVal + 1;
 			send_list.push(count);
 			users.push('@' + argument);

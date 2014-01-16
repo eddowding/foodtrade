@@ -28,9 +28,9 @@
   <div id="update" class="well well-sm">
     <form action="#" method="get" >
         <div class="input-group"> 
-          <input class="form-control" name="q" id="newstatus" {% if not user.authenticated %} disabled="true" title="Please login to use this feature." {% endif %} placeholder="What #food do you have to #buy, #sell, or #surplus?">
+          <input class="form-control" name="q" id="newstatus" {% if not user.is_authenticated %} disabled="true" title="Please login to use this feature." {% endif %} placeholder="What #food do you have to #buy, #sell, or #surplus?">
           <span class="input-group-btn">
-              <button type="button" id="btn_update_activity" class="btn btn-success" {% if not user.authenticated %} disabled="true" title="Please login to use this feature." {% endif %} onclick="UpdateActivity('newstatus');"> Post</button>
+              <button type="button" id="btn_update_activity" class="btn btn-success" {% if not user.is_authenticated %} disabled="true" title="Please login to use this feature." {% endif %} onclick="UpdateActivity('newstatus');"> Post</button>
           </span>
         </div>
     </form>
@@ -122,7 +122,7 @@
         </div>
 
         <div class="reply well well-sm" style="margin:0;"> 
-          <input class="form-control input-sm enterhandler"  class="btn btn-success" {% if not user.authenticated %} disabled="true" title="Please login to use this feature." {% endif %} type="text" id="replyid_{{forloop.counter}}" placeholder="Reply to @{{result.user.username}}" onfocus="ShowReply('replyid_{{forloop.counter}}', '@{{result.user.username}}')" onblur="BlurReply('replyid_{{forloop.counter}}', '@{{result.user.username}}')">
+          <input class="form-control input-sm enterhandler"  class="btn btn-success" {% if not user.is_authenticated %} disabled="true" title="Please login to use this feature." {% endif %} type="text" id="replyid_{{forloop.counter}}" placeholder="Reply to @{{result.user.username}}" onfocus="ShowReply('replyid_{{forloop.counter}}', '@{{result.user.username}}')" onblur="BlurReply('replyid_{{forloop.counter}}', '@{{result.user.username}}')">
         </div>
     </li>
   {% endfor %}
@@ -233,7 +233,7 @@ connections = {{json_data | safe}};
         </div>
 
         <div class="reply well well-sm" style="margin:0;"> 
-          <input class="form-control input-sm enterhandler"  {% if not user.authenticated %} disabled="true" title="Please login to use this feature." {% endif %} type="text" id="replyid_{{forloop.counter}}" placeholder="Reply to @{{result.user.username}}"  onfocus="ShowReply('replyid_{{forloop.counter}}', '@{{result.user.username}}')" onblur="BlurReply('replyid_{{forloop.counter}}', '@{{result.user.username}}')">
+          <input class="form-control input-sm enterhandler"  {% if not user.is_authenticated %} disabled="true" title="Please login to use this feature." {% endif %} type="text" id="replyid_{{forloop.counter}}" placeholder="Reply to @{{result.user.username}}"  onfocus="ShowReply('replyid_{{forloop.counter}}', '@{{result.user.username}}')" onblur="BlurReply('replyid_{{forloop.counter}}', '@{{result.user.username}}')">
         </div>
     </li>
 
@@ -459,25 +459,42 @@ for(var i = 0; i < organisation_filters.length;i++){
        function make_search()
        {
         var foods = [];
+        if($("#all_foods").prop('checked') == false)
+        {
           for(var i = 0; i < food_filters.length;i++){
           if(food_filters[i].prev)
           {
             foods.push(food_filters[i].uid);
           }
           }
+        }
+
 
           var businesses = [];
+          if($("#all_businesses").prop('checked') == false)
+        {
           for(var i = 0; i < business_filters.length;i++){
           if(business_filters[i].prev)
           {
             businesses.push(business_filters[i].uid);
           }
+        }
           }
+            var organisations = [];
+            if($("#all_organisations").prop('checked') == false)
+        {
+          for(var i = 0; i < organisation_filters.length;i++){
+          if(organisation_filters[i].prev)
+          {
+            organisations.push(organisation_filters[i].uid);
+          }
+          }
+        }
           var keyword = $("#keyword").val();
           var s_lon = $("#lon").val();
           var s_lat = $("#lat").val();
 
-           ajax_request("ajax_search", 'show_ajax_results', {q:keyword, lon:s_lon, lat:s_lat, foods:JSON.stringify(foods), businesses:JSON.stringify(businesses)});
+           ajax_request("ajax_search", 'show_ajax_results', {q:keyword, lon:s_lon, lat:s_lat, foods:JSON.stringify(foods), businesses:JSON.stringify(businesses), organisations:JSON.stringify(organisations)});
        }
 
 
@@ -498,7 +515,7 @@ $('#business_filter').keyup( function() {
         });
 
 $('#organisation_filter').keyup( function() {
-            business_value_changed(0);
+            organisation_value_changed(0);
         });
 
 show_food_filters(food_filters, 0);
