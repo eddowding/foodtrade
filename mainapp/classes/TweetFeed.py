@@ -79,6 +79,10 @@ class TweetFeed():
         return self.db_object.aggregrate_all(self.table_name,conditions)
 
     def update_data(self,user_id):
+        user_data = self.db_object.get_all(self.table_name,{'user_id':tweet_id, 'deleted':0}, 'time_stamp')
+        if len(user_data)==0:
+            return 
+
         food = Food()
         f_results = food.get_foods_by_userid(user_id)
         f_list = []
@@ -99,7 +103,7 @@ class TweetFeed():
             full_name = twitter_user.extra_data['name']
             org_list.append(full_name)
 
-        self.db_object.update_multi(self.table_name, {'useruid':str(user_id)}, {'foods':f_list,'type_user':business_types, 'organisations':org_list})
+        self.db_object.update(self.table_name, {'useruid':str(user_id)}, {'foods':f_list,'type_user':business_types, 'organisations':org_list})
         
 
     def get_near_people(self, query):
@@ -460,10 +464,17 @@ class UserProfile():
         self.db_object.insert_one(self.table_name,value)
 
     def update_profile(self, userid, zipcode, type_usr, sign_up_as, phone):
-        print phone
+        #print phone
+        address = Geocoder.geocode(zipcode)
         return self.db_object.update(self.table_name,
              {'useruid':str(userid)},
-             {'zip_code':zipcode,'type_user':type_usr,'sign_up_as':sign_up_as, 'phone_number':str(phone)}
+             {'zip_code':str(address.postal_code),
+             'latitude':str(address.latitude),
+             'longitude':str(address.longitude),
+             'address':str(address),
+             'type_user':type_usr,
+             'sign_up_as':sign_up_as, 
+             'phone_number':str(phone)}
              )
 
 

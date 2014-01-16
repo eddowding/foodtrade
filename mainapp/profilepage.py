@@ -58,11 +58,11 @@ def display_profile(request, username):
         else:
             ip = request.META.get('REMOTE_ADDR')
         location_info = get_addr_from_ip(ip)
-        lon2 = float(location_info['longitude'])
-        lat2 = float(location_info['latitude'])
+        lon2 = float(str(location_info['longitude']))
+        lat2 = float(str(location_info['latitude']))
 
-
-    lon1, lat1 = userprof['longitude'],userprof['latitude']
+    lon2, lat2 = float(str(lon2)), float(str(lat2))
+    lon1, lat1 = float(userprof['longitude']),float(userprof['latitude'])
     dis = distance(lon1, lat1, lon2, lat2)
     parameters['distance'] = "{:10.2f}".format(dis * 0.621371)
 
@@ -112,7 +112,7 @@ def edit_profile(request, username):
                 parameters['type_user'] = str(userprof['type_user'])
             else:
                 parameters['type_user'] = ''
-            parameters['zip_code'] = userprof['zip_code']
+            #parameters['zip_code'] = userprof['zip_code']
             parameters['address'] = userprof['address']
             
             try:
@@ -138,7 +138,7 @@ def edit_profile(request, username):
         first_name = request.POST['first_name']
         last_name = request.POST['last_name']
         description = request.POST['description']
-        zip_code = request.POST['zip_code']
+        address = request.POST['address']
 
         try:
             sign_up_as = request.POST['sign_up_as']
@@ -152,9 +152,9 @@ def edit_profile(request, username):
         else:
             usr_type = ''
         tweetFeedObj = TweetFeed()
-        tweetFeedObj.update_tweets(username, first_name, last_name, description, zip_code)
+        tweetFeedObj.update_tweets(username, first_name, last_name, description, address)
         user_profile_obj = UserProfile()
-        user_profile_obj.update_profile(request.user.id, zip_code, usr_type, sign_up_as, phone)
+        user_profile_obj.update_profile(request.user.id, address, usr_type, sign_up_as, phone)
 
         usr = User.objects.get(username=username)
         usr.first_name = first_name

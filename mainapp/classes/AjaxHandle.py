@@ -63,6 +63,9 @@ class AjaxHandle(AjaxSearch):
                     'parent_tweet_id': 0 if tweet['in_reply_to_status_id'] == None else tweet['in_reply_to_status_id'],
                     'status': tweet['text'],
                     "useruid": str(user_id),
+                    "foods": [], 
+                    'organisations':[], 
+                    "type_user":[],
                     "sign_up_as": profile['sign_up_as'],
                     'picture': pic_url_list,
                     'user':{
