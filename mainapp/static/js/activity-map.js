@@ -53,16 +53,37 @@ function reload_controls()
 		map.removeLayer(map_controls[i]);
 	}
 	map_controls =[];
+	var max_lat = map_lat;
+	var min_lat = map_lat;
+	var max_lon = map_lon;
+	var min_lon = map_lon;
 		for(i=0;i<connections.length;i++)
 		{
 			var con = connections[i];
 			var name = con.user.name;
 			var status =  con.status;
-			
-			
-			var ctrl = L.marker([parseFloat(con.location.coordinates[1]), parseFloat(con.location.coordinates[0])]).addTo(map).bindPopup("<b>"+name + "</b> <br />"+status+"<br />");
+			var current_lat = con.location.coordinates[1];
+			var current_lon = con.location.coordinates[0];
+
+			var ctrl = L.marker([parseFloat(), parseFloat(con.location.coordinates[0])]).addTo(map).bindPopup("<b>"+name + "</b> <br />"+status+"<br />");
 			
 			map_controls.push(ctrl);
+			if(current_lat>max_lat)
+			{
+				max_lat = current_lat;
+			}
+			if(current_lat<min_lat);
+			{
+				min_lat = current_lat;
+			}
+			if(current_lon>max_lon)
+			{
+				max_lon = current_lon;
+			}
+			if(current_lon<min_lon);
+			{
+				min_lon = current_lon;
+			}
 		}
 
 }
