@@ -145,7 +145,8 @@ def edit_profile(request, username):
         last_name = request.POST['last_name']
         description = request.POST['description']
         address = request.POST['address']
-        if address == '' or ' ':
+        if len(address) == 0:
+            print "True", address
             address = userprof['address']
         #print address
         try:
