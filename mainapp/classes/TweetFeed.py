@@ -185,6 +185,7 @@ class TweetFeed():
             }
             var flag = true;
             var keyword = '"""+keyword+"""';
+            keyword = keyword.toLowerCase();
 
             if(keyword != '')
             {
@@ -194,7 +195,7 @@ class TweetFeed():
                 scope_string = foods.join();
                 scope_string += user_types.join();
                 }
-                scope_string += this.user.username;
+                scope_string += this.user.username.lower;
                 scope_string += this.user.name;
                 scope_string += this.sign_up_as;
                 scope_string += this.status;
