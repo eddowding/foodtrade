@@ -153,7 +153,7 @@ background: #eee;
         {% endif %}
         
          <ul class="nav navbar-nav navbar-center visible-md visible-lg">
-          <li><a href="/activity">Activity</a></li>
+          <li><a href="/activity">Nearby</a></li>
           <li><a href="/pricing">Pricing</a></li> 
          </ul>
  
@@ -270,10 +270,11 @@ background: #eee;
           </div>
         </div>
          {% if search.query == "" or not search.query %}
-         
-        <p><a href="#">Trade connections <span class="badge pull-right">{{userinfo.trade_connections_no}}</span></a></p>
-        <p><a href="#">Foods <span class="badge pull-right">{{userinfo.food_no}}</span></a></p>
-        <p><a href="#">Organisations <span class="badge pull-right">{{userinfo.organisation_connection_no}}</span></a></p>
+           {% ifequal userinfo.user_type 'Business' %}
+              <p><a href="#">Trade connections <span class="badge pull-right">{{userinfo.trade_connections_no}}</span></a></p>
+              <p><a href="#">Foods <span class="badge pull-right">{{userinfo.food_no}}</span></a></p>
+              <p><a href="#">Organisations <span class="badge pull-right">{{userinfo.organisation_connection_no}}</span></a></p>
+            {% endifequal %}
 
         <!-- 
         ADD IN AWARDS FUNCTIONALITY

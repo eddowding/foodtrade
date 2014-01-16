@@ -4,7 +4,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from allauth.socialaccount.models import SocialToken, SocialAccount
 from twython import Twython
 import json
-from mainapp.classes.TweetFeed import TweetFeed, Invites, Notification
+from mainapp.classes.TweetFeed import TweetFeed, Invites, Notification, UserProfile
 from search import search_general
 from streaming import MyStreamer
 from models import MaxTweetId
@@ -50,6 +50,11 @@ def admin_tags(request):
         user_id = request.user.id
        
         user_info = UserInfo(user_id)
+
+        user_profile_obj = UserProfile()
+        userprofile = user_profile_obj.get_profile_by_id(user_id)
+        parameters['userprofile'] = UserProfile
+
         parameters['userinfo'] = user_info
     mytag = Tags()
     tags = mytag.get_tags()
@@ -65,7 +70,13 @@ def home(request):
         user_id = request.user.id
        
         user_info = UserInfo(user_id)
+        
+        user_profile_obj = UserProfile()
+        userprofile = user_profile_obj.get_profile_by_id(user_id)
+        parameters['userprofile'] = UserProfile
+
         parameters['userinfo'] = user_info
+
         notification_obj = Notification()
         notification = notification_obj.get_notification(request.user.username)
         parameters['notification'] = json.loads(notification.content)
@@ -85,7 +96,7 @@ def tweets(request):
         return HttpResponseRedirect('/accounts/login/')
     parameters['user'] = request.user
     user_id = request.user.id
-    print user_id
+    # print user_id
     st = SocialToken.objects.get(account__user__id=user_id)
     access_token = st.token
     access_token_secret = st.token_secret
@@ -104,9 +115,9 @@ def tweets(request):
         )
     max_id = MaxTweetId.objects.all()[0]
     max_tweet_id = int(max_id.max_tweet_id)
-    print type(max_tweet_id), max_tweet_id
+    # print type(max_tweet_id), max_tweet_id
     mentions = admin_twitter.get_mentions_timeline(count = 200, contributer_details = True, since_id = max_tweet_id)
-    print len(mentions)
+    # print len(mentions)
     tweet_list = []
     tweet_feed = TweetFeed()
     for tweet in mentions:
@@ -166,6 +177,8 @@ def tweets(request):
     # print len(search_results['statuses'])
     # search_results = []
     parameters['tweet_list'] = mentions
-
+    user_profile_obj = UserProfile()
+    userprofile = user_profile_obj.get_profile_by_id(user_id)
+    parameters['userprofile'] = UserProfile
     return render_to_response('home.html', parameters)
 

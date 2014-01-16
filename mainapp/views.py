@@ -28,6 +28,11 @@ admin_access_token_secret = 'ST8W9TWqqHpyskMADDSpZ5r9hl7ND6sEfaLvhcqNfk1v4'
 
 def home(request):
     parameters={}
+
+    user_profile_obj = UserProfile()
+    userprofile = user_profile_obj.get_profile_by_id(request.user.id)
+    parameters['userprofile'] = UserProfile    
+    
     parameters['user'] = request.user
     parameters['total_food_count'] = 2
     parameters['food'] = [{'name': 'Cauliflowers', 'tagcount': 7},{'name': 'Mutton', 'tagcount': 5}]
@@ -156,6 +161,10 @@ def trends(request):
         parameters['userinfo'] = user_info
         parameters['user_id'] = request.user.id
 
+        user_profile_obj = UserProfile()
+        userprofile = user_profile_obj.get_profile_by_id(request.user.id)
+        parameters['userprofile'] = UserProfile
+
     return render_to_response('trends.html', parameters, context_instance=RequestContext(request))
 
 def invite(request):
@@ -238,4 +247,9 @@ def invite(request):
                 'name':eachFriend['friends']['name'], 'profile_image_url':eachFriend['friends']['profile_image_url']}})
     parameters['friend'] = friend_list
     parameters['page_count'] = int(friend_count/15)+1
+
+    user_profile_obj = UserProfile()
+    userprofile = user_profile_obj.get_profile_by_id(request.user.id)
+    parameters['userprofile'] = UserProfile
+
     return render_to_response('invites.html', parameters, context_instance=RequestContext(request))

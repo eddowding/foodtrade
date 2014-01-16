@@ -126,7 +126,6 @@ html,body
 
 #map {
 	margin-top: -12px;
-	position: fixed;
 }
 
 #account_info h4 {
@@ -388,13 +387,12 @@ fieldset[disabled] .btn-primary.active {
 	-moz-transform: rotate(340deg);
 	-o-transform: rotate(340deg);
 	writing-mode: lr-tb;
-	max-width: 82px;
-	font-weight: bold;
+	max-width: 82px; 
 	display: inline-block;
 	float: right;
 	line-height: 1;
 	background: #2F813A;
-	border-radius: 9px;
+	border-radius: 5px;
 	padding: 2px;
 }
  
