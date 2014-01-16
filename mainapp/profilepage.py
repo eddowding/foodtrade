@@ -1,5 +1,4 @@
-<<<<<<< HEAD
-=======
+
 from django.shortcuts import render_to_response
 from django.http import HttpResponse, HttpResponseRedirect
 from allauth.socialaccount.models import SocialToken, SocialAccount
@@ -369,4 +368,3 @@ def distance(lon1, lat1, lon2, lat2):
     c = 2 * asin(sqrt(a)) 
     km = 6367 * c
     return km
->>>>>>> 3c574b2260eb0d62ea0942c1efe4274239587d5f
