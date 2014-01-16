@@ -22,9 +22,6 @@ admin_access_token = '2248425234-EgPSi3nDAZ1VXjzRpPGMChkQab5P0V4ZeG1d7KN'
 admin_access_token_secret = 'ST8W9TWqqHpyskMADDSpZ5r9hl7ND6sEfaLvhcqNfk1v4'
 
 
-
-
-
 from django.template import RequestContext
 from mainapp.classes.AjaxHandle import AjaxHandle
 from django.views.decorators.csrf import csrf_exempt

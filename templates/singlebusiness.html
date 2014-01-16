@@ -43,7 +43,6 @@
 .typeahead:focus {
   border: 2px solid #0097cf;
 }
-
   </style>
 
 
@@ -100,9 +99,19 @@
 {% if user.is_authenticated %}      
       <!-- if logged in users = individual --> 
       {% ifequal loggedin_signupas "Individual" %}
-      <button class="btn btn-default btn-block" data-toggle="modal" data-target="#modal_customer">
+      <!-- <button class="btn btn-default btn-block" data-toggle="modal" data-target="#modal_customer">
         <i class="fa fa-smile-o text-muted"></i> I am a customer
-      </button> 
+      </button>  -->
+      <div class="btn-group btn-block" data-toggle="buttons">
+  {% if logged_customer %}
+      <label class="fa fa-smile-o text-muted btn btn-default btn-block active" style="width:100%;" title="{{userinfo.full_name}} is customer of {{name}}" >
+      <input type="checkbox" checked="checked" id="customer-chkbx" onchange="add_customer({{profile_id}}, {{user_id}})">I'm a customer!
+      {% else %}
+      <label class="fa fa-smile-o text-muted btn btn-default btn-block" style="width:100%;" title="{{userinfo.full_name}} is customer of {{name}}" >
+      <input type="checkbox" id="customer-chkbx" onchange="add_customer({{profile_id}}, {{user_id}})">I'm a customer!
+  {% endif %}
+      </label>      
+      </div>
       {% endifequal %}
       <!-- if logged in users = business --> 
       {% ifequal loggedin_signupas "Business" %}
@@ -245,7 +254,7 @@
      <div class="col-md-12">
         <ul class="nav nav-tabs">
           <li class="active"><a href="#produce" data-toggle="tab">Foods <span class="badge">{{userprof.food_no}}</span></a></li>
-          <li><a href="#connections" data-toggle="tab">Connections <span class="badge">{{userprof.trade_connections_no}}</span></a> </li>
+          <li><a href="#connections" data-toggle="tab" onclick="set_width()">Connections <span class="badge">{{userprof.trade_connections_no}}</span></a> </li>
 
           <li><a href="#organisations" data-toggle="tab">Organisation <span class="badge">{{userprof.organisation_connection_no}}</span></a></li> 
           <li><a href="#activity" data-toggle="tab">Updates  <span class="badge">{{userprof.trade_connections_no}}</span></a></li>  
@@ -276,21 +285,21 @@
                       <div class="input-group">
                       <!-- link this to open food facts --> 
                             <!-- <input class="typeahead form-control" name="addfood" data-source='' data-provide="typeahead" autocomplete="off" id = "addfood_id" style="width:400px;" placeholder="Add foods you can buy here."> -->
-                            <select id="myselect" data-placeholder="Add foods you can buy here." style="height:30px; width: 100%" class="chosen-select">
-                                <option value=""></option>
-                                {% for each in food_list %}
-                                <optgroup label={{each.node}}>
-                                  {% if each.children %}
-                                    {% for eachchild in each.children %}
-                                    <option>{{eachchild}}</option>
-                                    {% endfor %}
-                                  {% else %}
-                                  <option>{{each.node}}</option>
-                                  {% endif %}
-                                </optgroup>
-                                {% endfor %}
+                            <select id="myselect" data-placeholder="Add foods you can buy here." style="height:30px; width: 100%" multiple class="chosen-select" >
+                            <option value=""></option>
+                            {% for each in food_list %}
+                            <optgroup label={{each.node}}>
+                            {% if each.children %}
+                            {% for eachchild in each.children %}
+                            <option>{{eachchild}}</option>
+                            {% endfor %}
+                            {% else %}
+                            <option>{{each.node}}</option>
+                            {% endif %}
+                            </optgroup>
+                            {% endfor %}
 
-                              </select>
+                            </select>
 
                               
                             <span class="input-group-btn">
@@ -341,16 +350,16 @@
                    <div class="pull-right">
 
                    {% ifequal profile_id user_id %}
-                     <a href="#"  class="btn btn-danger btn-sm"><i class="fa fa-trash-o" title="Delete" onClick="delete_food({{profile_id}}, '{{eachfood.food_name}}', this)"></i></a>
+                     <a class="btn btn-danger btn-sm"><i class="fa fa-trash-o" title="Delete" onClick="delete_food({{profile_id}}, '{{eachfood.food_name}}', this)"></i></a>
 
-                   {% else %}
+                   {% endifequal %}
                         {% if user.is_authenticated %}
                     <a class="btn btn-default btn-sm">
                       <i class="fa fa-heart-o tltip" title="Recommend this to others" onclick="recommend_food({{user_id}}, '{{eachfood.food_name}}', {{profile_id}}); return null;">
                       </i>
                     </a> {% endif %}
                      
-                   {% endifequal %}
+                   
                    </div>
                    
                    {% for eachdet in eachfood.recomm_details %}
@@ -388,7 +397,7 @@
       
                 <div class="btn-group" data-toggle="buttons">
                   <label class="btn btn-default">
-                    <input type="checkbox" checked="checked" name="options" id="option1_conn"> Buys from 
+                    <input type="checkbox" name="options" id="option1_conn"> Buys from 
                   </label> 
                   <label class="btn btn-default">
                     <input type="checkbox" name="options" id="option2_conn"> Sells to
@@ -398,16 +407,29 @@
               <div class="form-group">
                 <!-- <label class="sr-only" for="exampleInputEmail2">Trade partnter</label>
                 <input type="text" class="form-control" style="min-width:250px;" id="trade" placeholder="Type business..."> -->
-                <select id="ddl_try">
+                <!-- <select id="ddl_try">
                   {% for each in all_business %}
                   <option value="{{each.id}}">{{each.name}}</option>
                   {% endfor %}
-              </select>
+              </select> -->
+              <select id="buss_chosen" data-placeholder="Type business..." class="chosen-select" >
+                            <option value=""></option>
+                            {% for each in all_business %}
+                            
+                              <option value={{each.id}}>{{each.name}}</option>
+                            
+                            {% endfor %}
+                            </select>              
+                  
+
               </div>
               
               <button class="btn btn-success" id="ad_cons_id" {% if not user.is_authenticated %} title="Please login to use this feature" {% endif %} onClick="third_party_connection({{profile_id}})" >Add</button>
+
+     
             </div>
           </div>
+                      
 
 <div class="clearfix">
           <h4>Buyers</h4> 
@@ -630,13 +652,12 @@
  
 
     <div class="col-md-4">
-         <div style="height: 1000px; " id="map"  data-spy="affix" data-offset-top="30">
+    <div style="width:32%;height: 1000px; " id="map"  data-spy="affix" data-offset-top="30">
            </div> 
            </div>
 
   
 
-     
    {% endblock %}
    {% block footer %}
 <script src="/static/js/chosen.jquery.min.js" type="text/javascript"></script>
@@ -647,59 +668,54 @@
   <script type="text/javascript">
 
 $( document ).ready(function() {
-  // return key press functionality on adding food
-$(".chosen-container").bind('keyup',function(e) {
-    if(e.which === 13) {
-        // $('#myform').submit();
-        // or your stuff here...
-        alert("enter key pressed");
-    }
-});
+  
 // activating tooltips
     $('.tltip').tooltip();
     $('#adfoo_id').tooltip();
 
-// typeahead code
-$('.typeahead').typeahead({
-name: 'twitter-oss',
-prefetch: '/static/repos.json',
-// template: [
-//   '<p class="repo-language">{{language}}</p>',
-//   '<p class="repo-name">{{name}}</p>',
-//   '<p class="repo-description">{{description}}</p>'
-// ].join(''),
-// engine: Hogan
+// chosen on change event
+    $('#myselect').chosen().change(function(){
+    add_food({{profile_id}});
+    });
+    $('#myselect').chosen().ready(function(){
+      $('.search-field input').attr('style', 'width:192px;height:30px;');
+    });
+// chosen config code
+// var config = {
+//       '.chosen-select'           : {},
+//       '.chosen-select-deselect'  : {allow_single_deselect:true},
+//       '.chosen-select-no-single' : {disable_search_threshold:10},
+//       '.chosen-select-no-results': {no_results_text:'Oops, nothing found!'},
+//       '.chosen-select-width'     : {width:"95%"},
+//       '.chosen-select-height'     : {height: "30px"}
+//     }
+
+      $(".chosen-select").chosen({
+    // disable_search_threshold: 10,
+    // no_results_text: "Oops, nothing found!",
+    // width: "95%",
+    create_option: true,
+    // persistent_create_option decides if you can add any term, even if part
+    // of the term is also found, or only unique, not overlapping terms
+    persistent_create_option: true,
+    // with the skip_no_results option you can disable the 'No results match..' 
+    // message, which is somewhat redundant when option adding is enabled
+    skip_no_results: false,
+    create_option_text: 'Create category'
+  });
+    // for (var selector in config) {
+    //   $(selector).chosen(config[selector]);
+    // }
+// chosen config code ends
+
 });
 
-
-});
-
-
-function createAutoClosingAlert(selector, delay) {
-  alert(selector);
-   var alert = $(selector).alert();
-   window.setTimeout(function() { alert.alert('close') }, delay);
+function set_width(){
+  $('#buss_chosen_chosen').attr("style", "width:350px;");
 }
 
 
-    var config = {
-      '.chosen-select'           : {},
-      '.chosen-select-deselect'  : {allow_single_deselect:true},
-      '.chosen-select-no-single' : {disable_search_threshold:10},
-      '.chosen-select-no-results': {no_results_text:'Oops, nothing found!'},
-      '.chosen-select-width'     : {width:"95%"}
-    }
-
-      $(".my_select_box").chosen({
-    disable_search_threshold: 10,
-    no_results_text: "Oops, nothing found!",
-    width: "95%"
-  });
-
-
-    for (var selector in config) {
-      $(selector).chosen(config[selector]);
-    }
+    
   </script>
 
         <script type="text/javascript">
@@ -710,13 +726,4 @@ connections = {{connections_str | safe}};
     </script>
      <script src="{% static "js/business-map.js" %}"></script>
      <script src="{% static "js/contact.js" %}"></script>
-
-
-<script type="text/javascript">
-     $('#addfood_id').typeahead({
-     prefetch: '/static/produce.json',
-  // remote: '/static/produce.json',                                         
-      limit: 10                                                                   
-});
-     </script>
  {% endblock %}

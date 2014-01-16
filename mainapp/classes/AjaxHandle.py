@@ -63,6 +63,9 @@ class AjaxHandle(AjaxSearch):
                     'parent_tweet_id': 0 if tweet['in_reply_to_status_id'] == None else tweet['in_reply_to_status_id'],
                     'status': tweet['text'],
                     "useruid": str(user_id),
+                    "foods": [], 
+                    'organisations':[], 
+                    "type_user":[],
                     "sign_up_as": profile['sign_up_as'],
                     'picture': pic_url_list,
                     'user':{
@@ -200,6 +203,16 @@ class AjaxHandle(AjaxSearch):
             return HttpResponse("{'status':1}")
         else:
             return HttpResponse("{'status':0}")
+
+    def deletecustomer(self, request):
+        customer = Customer()
+        print request.POST.get('data')
+        data = eval(request.POST.get('data'))
+        if data !=None and data !="":
+            customer.delete_customer(useruid = data['useruid'], customer_id = data['customeruid'])
+            return HttpResponse("{'status':1}")
+        else:
+            return HttpResponse("{'status':0}")    
 
     def addmember(self, request):
         org = Organisation()
