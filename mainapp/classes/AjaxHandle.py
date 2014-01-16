@@ -56,6 +56,9 @@ class AjaxHandle(AjaxSearch):
                 for each in tweet['entities'].get('media'):
                     pic_url_list.append(each['media_url'])
             
+
+
+            
             profile = user_profile.get_profile_by_id(str(usr.user.id))
             my_lat = profile['latitude']
             my_lon = profile['longitude']
