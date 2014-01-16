@@ -142,8 +142,10 @@ def edit_profile(request, username):
         first_name = request.POST['first_name']
         last_name = request.POST['last_name']
         description = request.POST['description']
-        address = request.POST['address']
-
+        try:
+            address = request.POST['address']
+        except:
+            address = user_profile['address']
         try:
             sign_up_as = request.POST['sign_up_as']
         except:
