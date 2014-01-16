@@ -145,10 +145,12 @@ def edit_profile(request, username):
         last_name = request.POST['last_name']
         description = request.POST['description']
         address = request.POST['address']
-        if len(address) == 0:
-            print "True", address
+        try:
+            addr_check = Geocoder.geocode(address)
+        except:
             address = userprof['address']
-        #print address
+        if len(address) == 0:
+            address = userprof['address']
         try:
             sign_up_as = request.POST['sign_up_as']
         except:
