@@ -84,7 +84,7 @@
       <div class="form-group" id="type_user_id"> 
         <label for="id_type_user" class="col-sm-2 control-label">Business type</label>
         <div class="col-sm-5">
-          <select id= "dropdown3" data-placeholder="Farm, wholesaler, restaurant, bakery..." multiple  class="chosen-select" tabindex="6" >
+          <select id= "dropdown3" data-placeholder="Farm, wholesaler, restaurant..." multiple  class="chosen-select" tabindex="6">
               <option value=""></option>
               {% for each in all_tags %}
               <optgroup label={{each.node}}>
@@ -126,6 +126,12 @@ $( document ).ready(function() {
   if('{{sign_up_as}}'!="Business"){
     $('#type_user_id').toggleClass('typeempty');
     }
+
+
+
+    // $('#dropdown3').chosen().ready(function(){
+    //   $('.search-field input').attr('style', 'width:192px;height:30px;');
+    // });
 });
 
 function dataradio(value){
@@ -143,8 +149,19 @@ function dataradio(value){
         }
     }
 }
-
-
+var config = {
+      '.chosen-select'           : {},
+      '.chosen-select-deselect'  : {allow_single_deselect:true},
+      '.chosen-select-no-single' : {disable_search_threshold:10},
+      '.chosen-select-no-results': {no_results_text:'Oops, nothing found!'},
+      '.chosen-select-width'     : {width:"350px"}
+    }
+    for (var selector in config) {
+      $(selector).chosen(config[selector]);
+    }
+    $('#dropdown3').chosen().ready(function(){
+      $('.search-field input').attr('style', 'width:192px;height:30px;');
+    });
 function validateFeedback(){
     var phone = document.getElementById("phone");
     var RE = /[0-9]+/;
@@ -174,15 +191,6 @@ function validateFeedback(){
       document.getElementById('hidden_type').value = all_values;
     }
 
-    var config = {
-      '.chosen-select'           : {},
-      '.chosen-select-deselect'  : {allow_single_deselect:true},
-      '.chosen-select-no-single' : {disable_search_threshold:10},
-      '.chosen-select-no-results': {no_results_text:'Oops, nothing found!'},
-      '.chosen-select-width'     : {width:"95%"}
-    }
-    for (var selector in config) {
-      $(selector).chosen(config[selector]);
-    }
+    
   </script>
 {% endblock %}
