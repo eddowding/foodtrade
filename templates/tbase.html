@@ -287,10 +287,12 @@ background: #eee;
         
        <!--  <div class="alert alert-info small"> 
           <a class="close" data-dismiss="alert" href="#" aria-hidden="true">&times;</a>
-          <p><b>Want a great profile?</b></p>  
+          <p><b>Want a great profile?</b></p>
+
         </div> -->
         {% endif %}
         </div><!-- /account_info -->
+
 <!-- {% if search.query == "" or not search.query %}
     <hr /> 
    
@@ -300,6 +302,7 @@ background: #eee;
         <p><a href="#">Businesses <span class="badge pull-right">{{userinfo.nearby_businesses_no}}</span></a></p> 
          {% endif %} -->
  {% endif %}
+
  
     {% if search %}
     <div class="foodtrade-sidebar">
@@ -352,7 +355,17 @@ background: #eee;
 
     <ul class="foodtrade-tag-list" id="organisation_filter_results">
     </ul>
+
+
     </div><!--sidebar-->
+
+
+      <div id="trendsThisWeek">
+          <div class="foodtrade-tag-text">Trends this week</div
+          {% for eachVal in userinfo.hashtags %}
+            <p><a>{{eachVal.uid}} <span class="badge pull-right">{{eachVal.value}}</span></a></p>
+          {% endfor %}
+      </div>
     {% endif %}
 
        {% endif %}
