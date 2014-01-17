@@ -133,9 +133,7 @@ function add_customer(prof_id, c_id){
 }
 
 function add_member(org_id, mem_id){
-	// var data = {orguid: org_id, memberuid: mem_id};
-	// ajax_request("addmember", 'create_conn', {data: JSON.stringify(data)});
-	var checked = $('#member-chkbx').is(':checked');
+	var checked = $('.member-chkbx').is(':checked');
 	var data = {orguid: org_id, memberuid: mem_id};
 	if (checked){
 		// add member
@@ -149,8 +147,18 @@ function add_member(org_id, mem_id){
 }
 
 function add_team(org_id, team_id){
+	// var data = {orguid: org_id, memberuid: team_id};
+	// ajax_request("addteam", 'create_conn', {data: JSON.stringify(data)});
+	var checked = $('#team-chkbx').is(':checked');
 	var data = {orguid: org_id, memberuid: team_id};
-	ajax_request("addteam", 'create_conn', {data: JSON.stringify(data)});
+	if (checked){
+		// add member
+		ajax_request("addteam", 'create_conn', {data: JSON.stringify(data)});
+	}
+	else{
+		// delete that member
+		ajax_request("deleteteam", 'create_conn', {data: JSON.stringify(data)});
+	}
 }
 
 function PostStatus(status_val)

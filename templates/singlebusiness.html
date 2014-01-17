@@ -47,7 +47,7 @@
      
          <div class="meta small text-muted">
             
-            <i class="fa fa-map-marker"></i> <a href="http://maps.google.com/maps?saddr=current+location&daddr=Sydney+Opera+House,+Sydney+Opera+House,+Bennelong+Point,+Sydney+NSW+2000,+Australia" target="_blank" data-placement="top" data-toggle="tooltip" title="Get directions" class="text-muted">{{address}}</a>  
+            <i class="fa fa-map-marker"></i> <a href="http://maps.google.com/maps?saddr=current+location&daddr={{address}}" target="_blank" data-placement="top" data-toggle="tooltip" title="Get directions" class="text-muted">{{address}}</a>  
             
             <!-- if logged in or you've allows html5 browser location -->
             <i class="fa fa-location-arrow" style="margin-left: 20px;"></i> {{distance}} miles  
@@ -646,6 +646,23 @@
      <script src="{% static "js/typeahead.min.js" %}"></script>
 
   <script type="text/javascript">
+// document.observe('dom:loaded', function(evt) {
+//     var config = {
+//       '.chosen-select'           : {create_option: true, skip_no_results: true},
+//       '.chosen-select-deselect'  : {allow_single_deselect:true},
+//       '.chosen-select-no-single' : {disable_search_threshold:10},
+//       '.chosen-select-no-results': {no_results_text: "Oops, nothing found!"},
+//       '.chosen-select-width'     : {width: "95%"}
+//     }
+//     var results = [];
+//     for (var selector in config) {
+//       var elements = $$(selector);
+//       for (var i = 0; i < elements.length; i++) {
+//         results.push(new Chosen(elements[i],config[selector]));
+//       }      
+//     }
+//     return results;
+// });
 
 $( document ).ready(function() {
   
@@ -653,6 +670,8 @@ $( document ).ready(function() {
     $('.tltip').tooltip();
     $('#adfoo_id').tooltip();
 
+$('#buss_chosen').chosen();
+$('#myselect').chosen({create_option: true, skip_no_results: true, create_option_text: 'Add food'});
 // chosen on change event
     $('#myselect').chosen().change(function(){
     add_food({{profile_id}});
@@ -670,19 +689,19 @@ $( document ).ready(function() {
 //       '.chosen-select-height'     : {height: "30px"}
 //     }
 
-      $(".chosen-select").chosen({
-    // disable_search_threshold: 10,
-    // no_results_text: "Oops, nothing found!",
-    // width: "95%",
-    create_option: true,
-    // persistent_create_option decides if you can add any term, even if part
-    // of the term is also found, or only unique, not overlapping terms
-    persistent_create_option: true,
-    // with the skip_no_results option you can disable the 'No results match..' 
-    // message, which is somewhat redundant when option adding is enabled
-    skip_no_results: false,
-    create_option_text: 'Create category'
-  });
+  //     $(".chosen-select").chosen({
+  //   // disable_search_threshold: 10,
+  //   // no_results_text: "Oops, nothing found!",
+  //   // width: "95%",
+  //   create_option: true,
+  //   // persistent_create_option decides if you can add any term, even if part
+  //   // of the term is also found, or only unique, not overlapping terms
+  //   persistent_create_option: true,
+  //   // with the skip_no_results option you can disable the 'No results match..' 
+  //   // message, which is somewhat redundant when option adding is enabled
+  //   skip_no_results: false,
+  //   create_option_text: 'Create category'
+  // });
     // for (var selector in config) {
     //   $(selector).chosen(config[selector]);
     // }

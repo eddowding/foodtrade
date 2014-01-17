@@ -5,11 +5,11 @@ body {
 
 @font-face {
     font-family: 'tradegothicbold';
-    src: url('http://foodtrade.com/wp-content/themes/Terso-Child/font_trade/trade_gothic_bold_condensed_no._20-webfont.eot');
-    src: url('http://foodtrade.com/wp-content/themes/Terso-Child/font_trade/trade_gothic_bold_condensed_no._20-webfont.eot?#iefix') format('embedded-opentype'),
-         url('http://foodtrade.com/wp-content/themes/Terso-Child/font_trade/trade_gothic_bold_condensed_no._20-webfont.woff') format('woff'),
-         url('http://foodtrade.com/wp-content/themes/Terso-Child/font_trade/trade_gothic_bold_condensed_no._20-webfont.ttf') format('truetype'),
-         url('http://foodtrade.com/wp-content/themes/Terso-Child/font_trade/trade_gothic_bold_condensed_no._20-webfont.svg#tradegothicbold') format('svg');
+    src: url('/static/fonts/trade_gothic_bold_condensed_no._20-webfont.eot');
+    src: url('/static/fonts/trade_gothic_bold_condensed_no._20-webfont.eot?#iefix') format('embedded-opentype'),
+         url('/static/fonts/trade_gothic_bold_condensed_no._20-webfont.woff') format('woff'),
+         url('/static/fonts/trade_gothic_bold_condensed_no._20-webfont.ttf') format('truetype'),
+         url('/static/fonts/trade_gothic_bold_condensed_no._20-webfont.svg#tradegothicbold') format('svg');
     font-weight: normal;
     font-style: normal;
 }
