@@ -56,7 +56,7 @@ class TweetFeed():
             function () {
              items = this.status.split(' ');
              for(i=0;i<items.length;i++){ 
-                if(items[i].indexOf('#')!=0){
+                if(items[i].indexOf('#')==0){
                         emit(items[i], 1); 
                         }
                     }
