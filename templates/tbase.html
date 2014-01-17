@@ -645,7 +645,7 @@ $(function() {
 {% if user.is_authenticated %}
   window.setInterval(function(){
     show_notifications();
-  }, 30000);
+  }, 50000);
 {% endif %}
 function  show_notifications(){
   ajax_request('getnotification', 'build_notification', {'user':'{{userinfo.username}}'})
