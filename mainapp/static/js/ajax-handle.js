@@ -13,8 +13,9 @@ function ajax_request(s_handler, c_handler, input_data)
 }
 
 
-function conn_handler(value, prof_id)
+function conn_handler(value, prof_id, conn_id)
 {
+	conn_id = typeof conn_id !== 'undefined' ? conn_id : 0;
 	if (validate_login()['status'] == '1'){
 				if (value == 'buy_from'){
 					var buy = document.getElementById('buy_from').checked
@@ -27,7 +28,7 @@ function conn_handler(value, prof_id)
 						ajax_request("del_connection", 'conn_ajax', {conn_data: "{'prof_id': " +prof_id +", 'status': 'buy_from'}"})
 					}
 				}
-				else
+				else if(value == "sell_to")
 				{
 					var sell = document.getElementById('sell_to').checked
 					if (sell==true){
@@ -40,6 +41,14 @@ function conn_handler(value, prof_id)
 					}
 
 				}
+				else if(value == "close_buy_from"){
+					
+					ajax_request("profile_user_delete_conn", 'conn_ajax', {conn_data: "{'prof_id': " +prof_id +", 'status': 'buy_from'" + ", 'conn_id': " + conn_id +"}"});
+				}
+				else if(value == "close_sell_to"){
+					
+					ajax_request("profile_user_delete_conn", 'conn_ajax', {conn_data: "{'prof_id': " +prof_id +", 'status': 'sell_to'" + ", 'conn_id': " + conn_id +"}"});
+				}				
 	}
 	else{
 		$('#ad_cons_id').tooltip('show');
