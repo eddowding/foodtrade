@@ -100,5 +100,4 @@ function reload_controls()
 
 
 
-setTimeout(function(){reload_controls()},3000);
 

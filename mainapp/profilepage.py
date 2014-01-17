@@ -28,7 +28,7 @@ def display_profile(request, username):
     parameters['type_user'] = userprof['type_user'].split(',')
     parameters['name'] = account.extra_data['name']
     parameters['description'] = account.extra_data['description']
-    parameters['pic_url'] = account.extra_data['profile_image_url']
+    parameters['pic_url'] = account.extra_data['profile_image_url'].replace("normal","bigger")
     parameters['loc'] = {'lat':userprof['latitude'], 'lon':userprof['longitude']}
     parameters['email'] = usr.email
     parameters['screen_name'] = "@" + account.extra_data['screen_name']
