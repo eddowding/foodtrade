@@ -7,13 +7,16 @@ import json
 from mainapp.classes.TweetFeed import TweetFeed
 from mainapp.classes.Email import Email
 from Tags import Tags
-<<<<<<< HEAD
-from mainapp.classes.TweetFeed import TradeConnection, UserProfile, Food, Customer, Organisation, Team, RecommendFood, Notification
-=======
-from mainapp.classes.TweetFeed import TradeConnection, UserProfile, Food, Customer, Organisation, Team, RecommendFood
+from mainapp.classes.TweetFeed import TradeConnection, UserProfile, Food, Customer, Organisation, Team, RecommendFood, Notification, Friends
 from AjaxSearch import AjaxSearch
->>>>>>> 7eec1ce0b336bbab5d5212c3a6df730d4ef8f1f7
+<<<<<<< HEAD
+from django.core.urlresolvers import reverse
+=======
+from pygeocoder import Geocoder
+from mainapp.profilepage import get_connections
 
+
+>>>>>>> 2e4b7a9aed773ce794282d81746c778a5a6ee759
 consumer_key = 'seqGJEiDVNPxde7jmrk6dQ'
 consumer_secret = 'sI2BsZHPk86SYB7nRtKy0nQpZX3NP5j5dLfcNiP14'
 access_token = ''
@@ -21,7 +24,6 @@ access_token_secret =''
 
 admin_access_token = '2248425234-EgPSi3nDAZ1VXjzRpPGMChkQab5P0V4ZeG1d7KN'
 admin_access_token_secret = 'ST8W9TWqqHpyskMADDSpZ5r9hl7ND6sEfaLvhcqNfk1v4'
-
 
 
 
@@ -51,29 +53,42 @@ class AjaxHandle(AjaxSearch):
             oauth_token_secret = admin_access_token_secret
             )
         message = request.POST.get('message')
+
+
+        url = " http://"+request.META['HTTP_HOST']+"/profile/"+request.user.username
+
         user_profile = UserProfile()
         if message != None and message != "":
-            tweet = twitter.update_status(status = message)
+            tweet = twitter.update_status(status = message+url)
             tweet_feed = TweetFeed()
             usr = SocialAccount.objects.get(uid = tweet['user']['id'])
             pic_url_list = []
             if tweet['entities'].get('media')!= None:
                 for each in tweet['entities'].get('media'):
                     pic_url_list.append(each['media_url'])
+
+            
+
+
             
             profile = user_profile.get_profile_by_id(str(usr.user.id))
             my_lat = profile['latitude']
             my_lon = profile['longitude']
             data = {'tweet_id': tweet['id'],
                     'parent_tweet_id': 0 if tweet['in_reply_to_status_id'] == None else tweet['in_reply_to_status_id'],
-                    'status': tweet['text'],
+                    'status': message,
+                    "useruid": str(user_id),
+                    "foods": [], 
+                    'organisations':[], 
+                    "type_user":[],
+                    "sign_up_as": profile['sign_up_as'],
                     'picture': pic_url_list,
                     'user':{
                     'username':tweet['user']['screen_name'],
                     'name': tweet['user']['name'],
                     'profile_img':tweet['user']['profile_image_url'],
-                    'Description':tweet['user']['description'],
-                    'place':tweet['user']['location'],
+                    'description':tweet['user']['description'],
+                    'location':tweet['user']['location'],
                     }
             }
             if my_lon == '' and my_lat == '':
@@ -85,6 +100,7 @@ class AjaxHandle(AjaxSearch):
             else:                
                 data['location'] = {"type": "Point", "coordinates": [float(my_lon), float(my_lat)]}
             tweet_feed.insert_tweet(data)
+            tweet_feed.update_data(user_id)
             return HttpResponse(json.dumps({'status':1}))
         else:
             return HttpResponse(json.dumps({'status':1}))
@@ -128,10 +144,14 @@ class AjaxHandle(AjaxSearch):
         data = eval(request.POST.get('conn_data'))
         if data !=None and data !="":
             if data['status'] == 'buy_from':
-                trade_conn.create_connection({'b_useruid': int(data['prof_id']), 'c_useruid': request.user.id});
+                trade_conn.create_connection({'b_useruid': int(data['prof_id']), 'c_useruid': request.user.id})
             else:
-                trade_conn.create_connection({'b_useruid': request.user.id, 'c_useruid': int(data['prof_id'])});
-            return HttpResponse("{'status':1}")
+                trade_conn.create_connection({'b_useruid': request.user.id, 'c_useruid': int(data['prof_id'])})
+            parameters = {}
+            parameters['connections'], parameters['conn'] = get_connections(int(data['prof_id']))
+            parameters['connections_str'] = json.dumps(parameters['connections'])
+            return render_to_response('conn_ajax.html', parameters)
+            # return HttpResponse("{'status':1}")
         else:
             return HttpResponse("{'status':0}")
 
@@ -144,7 +164,30 @@ class AjaxHandle(AjaxSearch):
                 trade_conn.delete_connection(b_useruid = int(data['prof_id']), c_useruid = request.user.id)
             else:
                 trade_conn.delete_connection(b_useruid = request.user.id, c_useruid = int(data['prof_id']))
-            return HttpResponse("{'status':1}")
+            parameters = {}
+            parameters['connections'], parameters['conn'] = get_connections(int(data['prof_id']))
+            parameters['connections_str'] = json.dumps(parameters['connections'])
+            return render_to_response('conn_ajax.html', parameters)            
+            # return HttpResponse("{'status':1}")
+        else:
+            return HttpResponse("{'status':0}")
+
+    def third_party_conn(self, request):
+        trade_conn = TradeConnection()
+        print request.POST.get('conn_data')
+        data = eval(request.POST.get('conn_data'))
+        if data !=None and data !="":
+            if data['status'] == 'buy_from':
+                trade_conn.create_connection({'b_useruid': int(data['prof_id']), 'c_useruid': int(data['buss_id'])})
+            elif data['status'] == 'sell_to':
+                trade_conn.create_connection({'b_useruid': int(data['buss_id']), 'c_useruid': int(data['prof_id'])})
+
+            # add parameters
+            parameters = {}
+            parameters['connections'], parameters['conn'] = get_connections(int(data['prof_id']))
+            parameters['connections_str'] = json.dumps(parameters['connections'])
+            return render_to_response('conn_ajax.html', parameters)
+            # return HttpResponse("{'status':1}")
         else:
             return HttpResponse("{'status':0}")
 
@@ -190,6 +233,16 @@ class AjaxHandle(AjaxSearch):
         else:
             return HttpResponse("{'status':0}")
 
+    def deletecustomer(self, request):
+        customer = Customer()
+        print request.POST.get('data')
+        data = eval(request.POST.get('data'))
+        if data !=None and data !="":
+            customer.delete_customer(useruid = data['useruid'], customer_id = data['customeruid'])
+            return HttpResponse("{'status':1}")
+        else:
+            return HttpResponse("{'status':0}")    
+
     def addmember(self, request):
         org = Organisation()
         print request.POST.get('data')
@@ -199,6 +252,16 @@ class AjaxHandle(AjaxSearch):
             return HttpResponse("{'status':1}")
         else:
             return HttpResponse("{'status':0}")
+
+    def deletemember(self, request):
+        org = Organisation()
+        print request.POST.get('data')
+        data = eval(request.POST.get('data'))
+        if data !=None and data !="":
+            org.delete_member(orguid = data['orguid'], member_id = data['memberuid'])
+            return HttpResponse("{'status':1}")
+        else:
+            return HttpResponse("{'status':0}")    
 
     def addteam(self, request):
         team = Team()
@@ -234,10 +297,46 @@ class AjaxHandle(AjaxSearch):
         else:
             return HttpResponse("{'status':0}")
 
-<<<<<<< HEAD
     def getnotification(self, request):
         username = request.user.username
         notification_obj  = Notification()
         return notification_obj.get_notification(username)
-=======
->>>>>>> 7eec1ce0b336bbab5d5212c3a6df730d4ef8f1f7
+
+    def change_notification_status(self, request):
+        if request.method == 'POST' and request.user.is_authenticated:
+            notification_obj = Notification()
+            return notification_obj.change_notification_status(request.user.username)
+        else:
+            return HttpResponse(json.dumps({'status':'0'}))
+
+    def validate_logged_in(self,request):
+        if request.user.is_authenticated:
+            return HttpResponse(json.dumps({'status':'1'}))
+        return HttpResponse(json.dumps({'status':'0'}))
+
+    def get_friends_paginated(self,request):
+        if request.method == 'POST' and request.user.is_authenticated:
+            page_num = request.POST['pgnum']
+            friends_obj = Friends()
+            return HttpResponse(json.dumps(friends_obj.get_paginated_friends(request.user.username, page_num)))
+        else:
+            return HttpResponse(json.dumps({'status':'0'}))
+    def search_friend(self, request):
+        if request.method == 'POST' and request.user.is_authenticated:
+            query = request.POST['query']
+            friends_obj = Friends()
+            return HttpResponse(json.dumps(friends_obj.search_friends(request.user.username, query)))
+        else:
+            return HttpResponse(json.dumps({'status':'0'}))
+
+    def check_valid_address(self, request):
+        # print "Roshan Validate"
+        if request.method == 'POST' and request.user.is_authenticated:
+            # print "Inside"
+            address = request.POST['address']
+            if Geocoder.geocode(address).valid_address:
+                return HttpResponse(json.dumps({'valid':'true'}))
+            else:
+                return HttpResponse(json.dumps({'valid':'false'}))
+        else:
+            return HttpResponse(json.dumps({'status':'0'}))

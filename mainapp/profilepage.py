@@ -1,4 +1,3 @@
-
 from django.shortcuts import render_to_response
 from django.http import HttpResponse, HttpResponseRedirect
 from allauth.socialaccount.models import SocialToken, SocialAccount
@@ -146,10 +145,12 @@ def edit_profile(request, username):
         last_name = request.POST['last_name']
         description = request.POST['description']
         address = request.POST['address']
-        if len(address) == 0:
-            print "True", address
+        try:
+            addr_check = Geocoder.geocode(address)
+        except:
             address = userprof['address']
-        #print address
+        if len(address) == 0:
+            address = userprof['address']
         try:
             sign_up_as = request.POST['sign_up_as']
         except:
@@ -270,7 +271,7 @@ def get_connections(user_id, logged_in_id = None):
             final_connections[index]['relation'] = 'both'
             if logged_in_id!=None and each['b_useruid'] == logged_in_id:
                 logged_conn = 'both'
-    return final_connections[:10], logged_conn
+    return final_connections, logged_conn
 
 def get_members(user_id, logged_in_id = None):
     org = Organisation()

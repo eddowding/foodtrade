@@ -9,7 +9,10 @@ from mainapp.classes.Email import Email
 from Tags import Tags
 from mainapp.classes.TweetFeed import TradeConnection, UserProfile, Food, Customer, Organisation, Team, RecommendFood, Notification, Friends
 from AjaxSearch import AjaxSearch
-from django.core.urlresolvers import reverse
+from pygeocoder import Geocoder
+from mainapp.profilepage import get_connections
+
+
 consumer_key = 'seqGJEiDVNPxde7jmrk6dQ'
 consumer_secret = 'sI2BsZHPk86SYB7nRtKy0nQpZX3NP5j5dLfcNiP14'
 access_token = ''
@@ -140,7 +143,11 @@ class AjaxHandle(AjaxSearch):
                 trade_conn.create_connection({'b_useruid': int(data['prof_id']), 'c_useruid': request.user.id})
             else:
                 trade_conn.create_connection({'b_useruid': request.user.id, 'c_useruid': int(data['prof_id'])})
-            return HttpResponse("{'status':1}")
+            parameters = {}
+            parameters['connections'], parameters['conn'] = get_connections(int(data['prof_id']))
+            parameters['connections_str'] = json.dumps(parameters['connections'])
+            return render_to_response('conn_ajax.html', parameters)
+            # return HttpResponse("{'status':1}")
         else:
             return HttpResponse("{'status':0}")
 
@@ -153,7 +160,11 @@ class AjaxHandle(AjaxSearch):
                 trade_conn.delete_connection(b_useruid = int(data['prof_id']), c_useruid = request.user.id)
             else:
                 trade_conn.delete_connection(b_useruid = request.user.id, c_useruid = int(data['prof_id']))
-            return HttpResponse("{'status':1}")
+            parameters = {}
+            parameters['connections'], parameters['conn'] = get_connections(int(data['prof_id']))
+            parameters['connections_str'] = json.dumps(parameters['connections'])
+            return render_to_response('conn_ajax.html', parameters)            
+            # return HttpResponse("{'status':1}")
         else:
             return HttpResponse("{'status':0}")
 
@@ -166,7 +177,13 @@ class AjaxHandle(AjaxSearch):
                 trade_conn.create_connection({'b_useruid': int(data['prof_id']), 'c_useruid': int(data['buss_id'])})
             elif data['status'] == 'sell_to':
                 trade_conn.create_connection({'b_useruid': int(data['buss_id']), 'c_useruid': int(data['prof_id'])})
-            return HttpResponse("{'status':1}")
+
+            # add parameters
+            parameters = {}
+            parameters['connections'], parameters['conn'] = get_connections(int(data['prof_id']))
+            parameters['connections_str'] = json.dumps(parameters['connections'])
+            return render_to_response('conn_ajax.html', parameters)
+            # return HttpResponse("{'status':1}")
         else:
             return HttpResponse("{'status':0}")
 
@@ -305,5 +322,17 @@ class AjaxHandle(AjaxSearch):
             query = request.POST['query']
             friends_obj = Friends()
             return HttpResponse(json.dumps(friends_obj.search_friends(request.user.username, query)))
+        else:
+            return HttpResponse(json.dumps({'status':'0'}))
+
+    def check_valid_address(self, request):
+        # print "Roshan Validate"
+        if request.method == 'POST' and request.user.is_authenticated:
+            # print "Inside"
+            address = request.POST['address']
+            if Geocoder.geocode(address).valid_address:
+                return HttpResponse(json.dumps({'valid':'true'}))
+            else:
+                return HttpResponse(json.dumps({'valid':'false'}))
         else:
             return HttpResponse(json.dumps({'status':'0'}))
