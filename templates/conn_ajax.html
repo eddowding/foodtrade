@@ -1,0 +1,72 @@
+<div class="clearfix">
+          <h4>Buyers</h4> 
+           <div class="pull-left" id="buyers-cards">
+          {% for each in connections %}
+              {% if each.relation == "buyer" or each.relation == "both" %}
+                  <div class="card card-business">
+                    <div class="content">
+                      <div class="pull-left">
+                        <img src="{{each.photo}}" alt="{{each.name}}"
+                        class="img-rounded img-responsive" style="width:40px;" /> 
+                
+                      </div>
+                      <div class="text">
+                      <button type="button" class="close" aria-hidden="true">&times;</button>
+                        <h5><a href="/profile/{{each.username}}">{{each.name}}</a> 
+                        </h5>  
+                        <p class="small">{{each.description|truncatechars:80}}</p>
+                      </div>
+                    </div>
+                    <div class="numbers clearfix">
+                      <div class="tags tags-biztype pull-left">  
+                        {% for e in each.type %}
+                       <a href="/activity/?q={{e}}">{{e}}</a>
+                       {% endfor %}
+                      </div>
+                      <p class="small pull-right">
+                        <a href="#" title="{{each.food_no}} Foods"><i class="fa fa-leaf"></i> {{each.food_no}}</a>
+                        <a href="#" title="{{each.trade_conn_no}} conn"><i class="fa fa-link"></i> {{each.trade_conn_no}}</a>
+                        <a href="#" title="{{each.org_conn_no}} Organisations"><i class="fa fa-group"></i> {{each.org_conn_no}}</a> 
+                      </p>
+                    </div>
+                  </div> 
+                  {% endif %}
+                  {% endfor %}
+                </div>
+          </div>
+
+          <div class="clearfix">
+          <h4>Sellers</h4> 
+           <div class="pull-left" id="seller-cards">
+          {% for each in connections %}
+              {% if each.relation == "seller" or each.relation == "both" %}
+                  <div class="card card-business">
+                    <div class="content">
+                      <div class="pull-left">
+                        <img src="{{each.photo}}" alt="{{each.name}}"
+                        class="img-rounded img-responsive" style="width:40px;" /> 
+                
+                      </div>
+                      <div class="text">
+                      <button type="button" class="close" aria-hidden="true">&times;</button>
+                        <h5><a href="/profile/{{each.username}}">{{each.name}}</a> 
+                        </h5>  
+                        <p class="small">{{each.description|truncatechars:80}}</p>
+                      </div>
+                    </div>
+                    <div class="numbers clearfix">
+                      <div class="tags tags-biztype pull-left">  
+                        {% for e in each.type %}
+                       <a href="/activity/?q={{e}}">{{e}}</a>
+                       {% endfor %}
+                      </div>
+                      <p class="small pull-right">
+                        <a href="#" title="{{each.food_no}} Foods"><i class="fa fa-leaf"></i> {{each.food_no}}</a>
+                        <a href="#" title="{{each.trade_conn_no}} conn"><i class="fa fa-link"></i> {{each.trade_conn_no}}</a>
+                        <a href="#" title="{{each.org_conn_no}} Organisations"><i class="fa fa-group"></i> {{each.org_conn_no}}</a> 
+                      </p>
+                    </div>
+                  </div> 
+                  {% endif %}
+                  {% endfor %}
+                </div></div>

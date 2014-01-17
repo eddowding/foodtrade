@@ -20,11 +20,11 @@ function conn_handler(value, prof_id)
 					var buy = document.getElementById('buy_from').checked
 					if (buy==true){
 						// create connection of logged in user and profile user
-						ajax_request("add_connection", 'create_conn', {conn_data: "{'prof_id': " +prof_id +", 'status': 'buy_from'}"});
+						ajax_request("add_connection", 'conn_ajax', {conn_data: "{'prof_id': " +prof_id +", 'status': 'buy_from'}"});
 					}
 					else{
 						// delete connection
-						ajax_request("del_connection", 'create_conn', {conn_data: "{'prof_id': " +prof_id +", 'status': 'buy_from'}"})
+						ajax_request("del_connection", 'conn_ajax', {conn_data: "{'prof_id': " +prof_id +", 'status': 'buy_from'}"})
 					}
 				}
 				else
@@ -32,11 +32,11 @@ function conn_handler(value, prof_id)
 					var sell = document.getElementById('sell_to').checked
 					if (sell==true){
 						// create connection of logged in user and profile user
-						ajax_request("add_connection", 'create_conn', {conn_data: "{'prof_id': " +prof_id +", 'status': 'sell_to'}"});
+						ajax_request("add_connection", 'conn_ajax', {conn_data: "{'prof_id': " +prof_id +", 'status': 'sell_to'}"});
 					}
 					else{
 						// delete connection
-						ajax_request("del_connection", 'create_conn', {conn_data: "{'prof_id': " +prof_id +",'status': 'sell_to'}"});
+						ajax_request("del_connection", 'conn_ajax', {conn_data: "{'prof_id': " +prof_id +",'status': 'sell_to'}"});
 					}
 
 				}
@@ -51,14 +51,18 @@ function third_party_connection(prof_id){
 	// buyer checked
 	if($('#option1_conn').is(':checked')){
 		// var conn_data = {prof_id: prof_id, status: 'buy_from', buss_id: businesses_id };
-		ajax_request("third_party_conn", 'create_conn', {conn_data: "{'prof_id': " + prof_id + ",'buss_id': " + business_id + ",'status': 'buy_from'}"});
+		ajax_request("third_party_conn", 'conn_ajax', {conn_data: "{'prof_id': " + prof_id + ",'buss_id': " + business_id + ",'status': 'buy_from'}"});
 		
 	}
 	// seller checked
 	if($('#option2_conn').is(':checked')){
 		// var conn_data = {prof_id: prof_id, status: 'sell_to', buss_id: businesses_id };
-		ajax_request("third_party_conn", 'create_conn', {conn_data: "{'prof_id': " + prof_id + ",'buss_id': " + business_id + ",'status': 'sell_to'}"});
+		ajax_request("third_party_conn", 'conn_ajax', {conn_data: "{'prof_id': " + prof_id + ",'buss_id': " + business_id + ",'status': 'sell_to'}"});
 	}
+}
+function conn_ajax(data){
+// alert(data);
+$('#all-connections').html(data);
 }
 function create_conn(){
 	
