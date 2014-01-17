@@ -28,7 +28,7 @@
   <div id="update" class="well well-sm">
     <form action="#" method="get" >
         <div class="input-group"> 
-          <input class="form-control" name="q" id="newstatus" {% if not user.is_authenticated %} disabled="true" onclick="login_redirect()" title="Please login to use this feature." {% endif %} placeholder="What #food do you have to #buy, #sell, or #surplus?">
+          <input class="form-control" name="q" id="newstatus" {% if not user.is_authenticated %}  onfocus="login_redirect()" title="Please login to use this feature." {% endif %} placeholder="What #food do you have to #buy, #sell, or #surplus?">
           <span class="input-group-btn">
               <button type="button" id="btn_update_activity" class="btn btn-success" {% if not user.is_authenticated %}  title="Please login to use this feature." {% endif %} onclick="UpdateActivity('newstatus');"> Post</button>
           </span>
