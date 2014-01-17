@@ -82,7 +82,7 @@ background: #eee;
               <input type="text" name="q" id="keyword" class="form-control pac-input" value="{{ search.query }}" placeholder="What?"> 
             </div> 
             <div class="form-group" style="margin-right:5px;">
-              <input type="text" name="location" id="pac-input" value="{{ search.place }}" class="pac-input form-control hidden-xs hidden-sm" placeholder="Where?">
+              <input type="text" name="location" id="pac-input" value="{% if search %} {{ search.place }} {% endif %} {% if not search %} {{userinfo.zip_code}}{% endif %} " class="pac-input form-control hidden-xs hidden-sm" placeholder="Where?">
             </div>
             <input type="hidden" name="lon" id="lon" value="{{search.lon}}"/>
             <input type="hidden" name="lat" id="lat" value="{{search.lat}}"/>
@@ -174,7 +174,7 @@ background: #eee;
               <div class="modal-content"> 
                 <div class="modal-body">               
                   <form accept-charset="UTF-8" action="" method="POST">
-                      <textarea id="tweetMessage" class="form-control counted" name="message" placeholder="Type in your message" rows="5" >@myfoodtrade</textarea>
+                      <textarea id="tweetMessage" class="form-control counted" name="message" placeholder="Type in your message" rows="5" ></textarea>
                   </form> 
                 </div>
                 <div class="modal-footer">
