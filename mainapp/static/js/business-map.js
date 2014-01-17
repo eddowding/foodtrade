@@ -48,6 +48,10 @@ function reload_connections()
 	{
 		map.removeLayer(map_controls[i]);
 	}
+	if(map_controls.length>0)
+	{
+		connections = new_connections;
+	}
 	map_controls =[];
 	var max_lat = parseFloat(map_lat);
 	var min_lat = parseFloat(map_lat);

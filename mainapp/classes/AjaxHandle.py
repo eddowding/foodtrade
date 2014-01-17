@@ -145,7 +145,7 @@ class AjaxHandle(AjaxSearch):
                 trade_conn.create_connection({'b_useruid': request.user.id, 'c_useruid': int(data['prof_id'])})
             parameters = {}
             parameters['connections'], parameters['conn'] = get_connections(int(data['prof_id']))
-            parameters['connections_str'] = json.dumps(parameters['connections'])
+            parameters['connections_str'] = str(json.dumps(parameters['connections']))
             return render_to_response('conn_ajax.html', parameters)
             # return HttpResponse("{'status':1}")
         else:
