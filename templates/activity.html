@@ -248,6 +248,11 @@ connections = {{json_data | safe}};
 
           {% block footer %}
 <script type="text/javascript">
+          
+          function login_redirect(){
+            window.location = '/accounts/twitter/login/?process=login';
+          }
+
           food_filters = {{foods_filter |safe}};
           
 
