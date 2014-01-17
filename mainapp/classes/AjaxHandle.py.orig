@@ -9,11 +9,9 @@ from mainapp.classes.Email import Email
 from Tags import Tags
 from mainapp.classes.TweetFeed import TradeConnection, UserProfile, Food, Customer, Organisation, Team, RecommendFood, Notification, Friends
 from AjaxSearch import AjaxSearch
-<<<<<<< HEAD
 from pygeocoder import Geocoder
-=======
 from mainapp.profilepage import get_connections
->>>>>>> 36dcffb4cc717ebc1b51fbe9ed80d4e14df893e5
+
 
 consumer_key = 'seqGJEiDVNPxde7jmrk6dQ'
 consumer_secret = 'sI2BsZHPk86SYB7nRtKy0nQpZX3NP5j5dLfcNiP14'
@@ -51,15 +49,20 @@ class AjaxHandle(AjaxSearch):
             oauth_token_secret = admin_access_token_secret
             )
         message = request.POST.get('message')
+
+
+        url = " http://"+request.META['HTTP_HOST']+"/profile/"+request.user.username
+
         user_profile = UserProfile()
         if message != None and message != "":
-            tweet = twitter.update_status(status = message)
+            tweet = twitter.update_status(status = message+url)
             tweet_feed = TweetFeed()
             usr = SocialAccount.objects.get(uid = tweet['user']['id'])
             pic_url_list = []
             if tweet['entities'].get('media')!= None:
                 for each in tweet['entities'].get('media'):
                     pic_url_list.append(each['media_url'])
+
             
 
 
@@ -69,7 +72,7 @@ class AjaxHandle(AjaxSearch):
             my_lon = profile['longitude']
             data = {'tweet_id': tweet['id'],
                     'parent_tweet_id': 0 if tweet['in_reply_to_status_id'] == None else tweet['in_reply_to_status_id'],
-                    'status': tweet['text'],
+                    'status': message,
                     "useruid": str(user_id),
                     "foods": [], 
                     'organisations':[], 
@@ -142,6 +145,12 @@ class AjaxHandle(AjaxSearch):
                 trade_conn.create_connection({'b_useruid': request.user.id, 'c_useruid': int(data['prof_id'])})
             parameters = {}
             parameters['connections'], parameters['conn'] = get_connections(int(data['prof_id']))
+<<<<<<< HEAD
+            parameters['connections_str'] = json.dumps(parameters['connections'])
+            parameters['profile_id'], parameters['user_id'] = int(data['prof_id']), request.user.id
+=======
+            parameters['connections_str'] = str(json.dumps(parameters['connections']))
+>>>>>>> 01d59ccd9481f100e9201468eb086c95fad16f2a
             return render_to_response('conn_ajax.html', parameters)
             # return HttpResponse("{'status':1}")
         else:
@@ -158,6 +167,26 @@ class AjaxHandle(AjaxSearch):
                 trade_conn.delete_connection(b_useruid = request.user.id, c_useruid = int(data['prof_id']))
             parameters = {}
             parameters['connections'], parameters['conn'] = get_connections(int(data['prof_id']))
+            parameters['connections_str'] = json.dumps(parameters['connections'])
+            parameters['profile_id'], parameters['user_id'] = int(data['prof_id']), request.user.id
+            return render_to_response('conn_ajax.html', parameters)            
+            # return HttpResponse("{'status':1}")
+        else:
+            return HttpResponse("{'status':0}")
+
+    def profile_user_delete_conn(self, request):
+        trade_conn = TradeConnection()
+        print request.POST.get('conn_data')
+        data = eval(request.POST.get('conn_data'))
+        if data !=None and data !="":
+            if data['status'] == 'buy_from':
+                trade_conn.delete_connection(b_useruid = int(data['prof_id']), c_useruid = int(data['conn_id']))
+            else:
+                trade_conn.delete_connection(b_useruid = int(data['conn_id']), c_useruid = int(data['prof_id']))
+            parameters = {}
+            parameters['connections'], parameters['conn'] = get_connections(int(data['prof_id']))
+            parameters['connections_str'] = json.dumps(parameters['connections'])
+            parameters['profile_id'], parameters['user_id'] = int(data['prof_id']), request.user.id
             return render_to_response('conn_ajax.html', parameters)            
             # return HttpResponse("{'status':1}")
         else:
@@ -176,6 +205,8 @@ class AjaxHandle(AjaxSearch):
             # add parameters
             parameters = {}
             parameters['connections'], parameters['conn'] = get_connections(int(data['prof_id']))
+            parameters['connections_str'] = json.dumps(parameters['connections'])
+            parameters['profile_id'], parameters['user_id'] = int(data['prof_id']), request.user.id
             return render_to_response('conn_ajax.html', parameters)
             # return HttpResponse("{'status':1}")
         else:

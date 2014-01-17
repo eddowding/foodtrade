@@ -194,7 +194,8 @@ function UpdateActivity(id_name)
 	}
 	else{
 		/*$('#btn_must_be_logged').click();*/
-		$('#btn_update_activity').tooltip('show');
+		/*$('#btn_update_activity').tooltip('show');*/
+		window.location('/accounts/twitter/login/?process=?login');
 	}	
 }
 
@@ -216,9 +217,14 @@ function CloseNewPostModal()
 
 function ShowReply(reply_id, mentions)
 {
-	if($('#'+reply_id).val()=="")
-	{
-	$('#'+reply_id).val(mentions+" ");
+	if(validate_login()['status'] == '1'){
+		if($('#'+reply_id).val()=="")
+		{
+		$('#'+reply_id).val(mentions+" ");
+		}
+	}
+	else{
+		window.location='/accounts/twitter/login/?process=login'
 	}
 }
 

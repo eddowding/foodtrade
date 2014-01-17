@@ -85,11 +85,13 @@ def home(request):
         distance_text = ""
         # try:
         lonlat_distance = results[i]['distance'] * 0.621371 #distance(my_lon, my_lat, results[i]['location']['coordinates'][0],results[i]['location']['coordinates'][1])
+        
+        lonlat_distance = '%.1f' % lonlat_distance
         # if lonlat_distance>1:
         #     distance_text = str(lonlat_distance) +" Km"
         # else:
         #     distance_text = str(lonlat_distance*1000) + " m"
-        distance_text = str("{:10.2f}".format(lonlat_distance)) + " miles"
+        distance_text = str(lonlat_distance) + " miles"
         time_elapsed = int(time.time()) - results[i]['time_stamp']
         if time_elapsed<60:
             time_text = str(time_elapsed) + 'seconds'

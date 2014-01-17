@@ -49,15 +49,20 @@ class AjaxHandle(AjaxSearch):
             oauth_token_secret = admin_access_token_secret
             )
         message = request.POST.get('message')
+
+
+        url = " http://"+request.META['HTTP_HOST']+"/profile/"+request.user.username
+
         user_profile = UserProfile()
         if message != None and message != "":
-            tweet = twitter.update_status(status = message)
+            tweet = twitter.update_status(status = message+url)
             tweet_feed = TweetFeed()
             usr = SocialAccount.objects.get(uid = tweet['user']['id'])
             pic_url_list = []
             if tweet['entities'].get('media')!= None:
                 for each in tweet['entities'].get('media'):
                     pic_url_list.append(each['media_url'])
+
             
 
 
@@ -67,7 +72,7 @@ class AjaxHandle(AjaxSearch):
             my_lon = profile['longitude']
             data = {'tweet_id': tweet['id'],
                     'parent_tweet_id': 0 if tweet['in_reply_to_status_id'] == None else tweet['in_reply_to_status_id'],
-                    'status': tweet['text'],
+                    'status': message,
                     "useruid": str(user_id),
                     "foods": [], 
                     'organisations':[], 
@@ -140,7 +145,7 @@ class AjaxHandle(AjaxSearch):
                 trade_conn.create_connection({'b_useruid': request.user.id, 'c_useruid': int(data['prof_id'])})
             parameters = {}
             parameters['connections'], parameters['conn'] = get_connections(int(data['prof_id']))
-            parameters['connections_str'] = json.dumps(parameters['connections'])
+            parameters['connections_str'] = str(json.dumps(parameters['connections']))
             parameters['profile_id'], parameters['user_id'] = int(data['prof_id']), request.user.id
             return render_to_response('conn_ajax.html', parameters)
             # return HttpResponse("{'status':1}")
