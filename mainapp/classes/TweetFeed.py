@@ -415,19 +415,22 @@ class TweetFeed():
     def update_tweets(self, username, first_name, last_name, description, zip_code):
         try:
             results = Geocoder.geocode(zip_code)
-            lon = results[0].longitude
-            lat = results[0].latitude
+            print str(results), zip_code
+            lon = results.longitude
+            lat = results.latitude
+            print lon, lat
         except:
             results = Geocoder.geocode('sp5 1nr')
-            lon = results[0].longitude
-            lat = results[0].latitude
+            lon = results.longitude
+            lat = results.latitude
 
         return self.db_object.update(self.table_name,
             {'user.username':username}, 
             {
                 'user.name':str(first_name + ' ' + last_name),
-                'user.Description':description, 
-                'location.coordinates':[lat, lon]
+                'user.description':description, 
+                'location.coordinates.0':float(results.longitude),
+                'location.coordinates.1':float(results.latitude),
             })
 
         
@@ -470,7 +473,7 @@ class UserProfile():
     def update_profile(self, userid, zipcode, type_usr, sign_up_as, phone):
         #print phone
         address = Geocoder.geocode(zipcode)
-        print zipcode, address
+        #print zipcode, address
         return self.db_object.update(self.table_name,
              {'useruid':str(userid)},
              {'zip_code':str(address.postal_code),
