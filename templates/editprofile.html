@@ -185,6 +185,15 @@ function validateFeedback(){
       document.getElementById('hidden_type').value = all_values;
     }
 
-    
+  function validate_address(){
+    address = document.getElementById("phone").value;
+    ajax_request('check_valid_address', 'success_validate_address',{'address':address});
+  }
+  function success_validate_address(data){
+    data = jQuery.parseJSON(data);
+    if (data['valid'] != 'true'){
+      alert('Invalid Address!!');
+    }
+  }
   </script>
 {% endblock %}

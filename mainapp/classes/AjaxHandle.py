@@ -9,6 +9,7 @@ from mainapp.classes.Email import Email
 from Tags import Tags
 from mainapp.classes.TweetFeed import TradeConnection, UserProfile, Food, Customer, Organisation, Team, RecommendFood, Notification, Friends
 from AjaxSearch import AjaxSearch
+from pygeocoder import Geocoder
 
 consumer_key = 'seqGJEiDVNPxde7jmrk6dQ'
 consumer_secret = 'sI2BsZHPk86SYB7nRtKy0nQpZX3NP5j5dLfcNiP14'
@@ -300,5 +301,17 @@ class AjaxHandle(AjaxSearch):
             query = request.POST['query']
             friends_obj = Friends()
             return HttpResponse(json.dumps(friends_obj.search_friends(request.user.username, query)))
+        else:
+            return HttpResponse(json.dumps({'status':'0'}))
+
+    def check_valid_address(self, request):
+        # print "Roshan Validate"
+        if request.method == 'POST' and request.user.is_authenticated:
+            # print "Inside"
+            address = request.POST['address']
+            if Geocoder.geocode(address).valid_address:
+                return HttpResponse(json.dumps({'valid':'true'}))
+            else:
+                return HttpResponse(json.dumps({'valid':'false'}))
         else:
             return HttpResponse(json.dumps({'status':'0'}))
