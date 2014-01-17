@@ -63,6 +63,7 @@ function third_party_connection(prof_id){
 function conn_ajax(data){
 // alert(data);
 $('#all-connections').html(data);
+reload_connections();
 }
 function create_conn(){
 	
