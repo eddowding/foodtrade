@@ -69,7 +69,7 @@ class TweetFeed():
              for (var i =0; i<values.length; i++){
                     sum = sum + parseInt(values[i]);
              }
-             return sum;
+             return parseInt(sum);
             }
             """)
         return self.db_object.map_reduce(self.table_name, mapper, reducer, query = { 'time_stamp':{'$gte': start_time_stamp,'$lte': end_time_stamp}})[0:10]

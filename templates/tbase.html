@@ -364,7 +364,7 @@ background: #eee;
       <div id="trendsThisWeek">
           <div class="foodtrade-tag-text">Trends this week</div
           {% for eachVal in userinfo.hashtags %}
-            <p><a>{{eachVal.uid}} <span class="badge pull-right">{{eachVal.value}}</span></a></p>
+            <p><a>{{eachVal.uid}} <span class="badge pull-right">{{eachVal.value|floatformat:"0"}}</span></a></p>
           {% endfor %}
       </div>
     {% endif %}
