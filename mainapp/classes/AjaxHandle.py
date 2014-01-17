@@ -141,6 +141,7 @@ class AjaxHandle(AjaxSearch):
             parameters = {}
             parameters['connections'], parameters['conn'] = get_connections(int(data['prof_id']))
             parameters['connections_str'] = json.dumps(parameters['connections'])
+            parameters['profile_id'], parameters['user_id'] = int(data['prof_id']), request.user.id
             return render_to_response('conn_ajax.html', parameters)
             # return HttpResponse("{'status':1}")
         else:
@@ -158,6 +159,25 @@ class AjaxHandle(AjaxSearch):
             parameters = {}
             parameters['connections'], parameters['conn'] = get_connections(int(data['prof_id']))
             parameters['connections_str'] = json.dumps(parameters['connections'])
+            parameters['profile_id'], parameters['user_id'] = int(data['prof_id']), request.user.id
+            return render_to_response('conn_ajax.html', parameters)            
+            # return HttpResponse("{'status':1}")
+        else:
+            return HttpResponse("{'status':0}")
+
+    def profile_user_delete_conn(self, request):
+        trade_conn = TradeConnection()
+        print request.POST.get('conn_data')
+        data = eval(request.POST.get('conn_data'))
+        if data !=None and data !="":
+            if data['status'] == 'buy_from':
+                trade_conn.delete_connection(b_useruid = int(data['prof_id']), c_useruid = int(data['conn_id']))
+            else:
+                trade_conn.delete_connection(b_useruid = int(data['conn_id']), c_useruid = int(data['prof_id']))
+            parameters = {}
+            parameters['connections'], parameters['conn'] = get_connections(int(data['prof_id']))
+            parameters['connections_str'] = json.dumps(parameters['connections'])
+            parameters['profile_id'], parameters['user_id'] = int(data['prof_id']), request.user.id
             return render_to_response('conn_ajax.html', parameters)            
             # return HttpResponse("{'status':1}")
         else:
@@ -177,6 +197,7 @@ class AjaxHandle(AjaxSearch):
             parameters = {}
             parameters['connections'], parameters['conn'] = get_connections(int(data['prof_id']))
             parameters['connections_str'] = json.dumps(parameters['connections'])
+            parameters['profile_id'], parameters['user_id'] = int(data['prof_id']), request.user.id
             return render_to_response('conn_ajax.html', parameters)
             # return HttpResponse("{'status':1}")
         else:
