@@ -40,6 +40,19 @@ L.circle([map_lat,map_lon], 160934, {
 		}).addTo(map);
 L.marker([parseFloat(map_lat), parseFloat(map_lon)]).addTo(map);
 
+
+var map_controls = [];
+function reload_connections()
+{
+	for(var i = 0;i<map_controls.length;i++)
+	{
+		map.removeLayer(map_controls[i]);
+	}
+	map_controls =[];
+	var max_lat = parseFloat(map_lat);
+	var min_lat = parseFloat(map_lat);
+	var max_lon = parseFloat(map_lon);
+	var min_lon = parseFloat(map_lon);
 		for(var i=0;i<connections.length;i++)
 		{
 			var con = connections[i];
@@ -51,6 +64,31 @@ L.marker([parseFloat(map_lat), parseFloat(map_lon)]).addTo(map);
 			var relation = con.relation;
 			var latitude =  con.latitude;
          	var longitude =  con.longitude;
+
+
+			var current_lat = parseFloat(latitude);
+			var current_lon = parseFloat(longitude);
+			if(current_lat>max_lat)
+			{
+				max_lat = current_lat;
+			}
+			if(current_lat<min_lat)
+			{
+				min_lat = current_lat;
+			}
+
+			
+			if(current_lon>max_lon)
+			{
+				max_lon = current_lon;
+			}
+
+			if(current_lon<min_lon)
+			{
+				min_lon = current_lon;
+			}
+
+
 
 			color = '#890D2F';
 			if(relation=="buyer")
@@ -64,6 +102,15 @@ L.marker([parseFloat(map_lat), parseFloat(map_lon)]).addTo(map);
 				color: color,
 				weight: 2,
 				opacity: 0.8
-			}).addTo(map)
+			}).addTo(map);
+			map_controls.push(polyline);
+
+}
+					  map.fitBounds([
+    [min_lat, min_lon],
+    [max_lat, max_lon]
+]);
 		}
 
+
+setTimeout(function(){reload_connections()},3000);

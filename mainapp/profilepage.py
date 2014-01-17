@@ -65,7 +65,8 @@ def display_profile(request, username):
     lon2, lat2 = float(str(lon2)), float(str(lat2))
     lon1, lat1 = float(userprof['longitude']),float(userprof['latitude'])
     dis = distance(lon1, lat1, lon2, lat2)
-    parameters['distance'] = "{:10.2f}".format(dis * 0.621371)
+    dis = '%.1f' % (dis * 0.621371)
+    parameters['distance'] = dis
 
 
         

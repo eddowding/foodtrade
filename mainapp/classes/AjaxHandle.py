@@ -9,7 +9,7 @@ from mainapp.classes.Email import Email
 from Tags import Tags
 from mainapp.classes.TweetFeed import TradeConnection, UserProfile, Food, Customer, Organisation, Team, RecommendFood, Notification, Friends
 from AjaxSearch import AjaxSearch
-
+from django.core.urlresolvers import reverse
 consumer_key = 'seqGJEiDVNPxde7jmrk6dQ'
 consumer_secret = 'sI2BsZHPk86SYB7nRtKy0nQpZX3NP5j5dLfcNiP14'
 access_token = ''
@@ -46,15 +46,20 @@ class AjaxHandle(AjaxSearch):
             oauth_token_secret = admin_access_token_secret
             )
         message = request.POST.get('message')
+
+
+        url = " http://"+request.META['HTTP_HOST']+"/profile/"+request.user.username
+
         user_profile = UserProfile()
         if message != None and message != "":
-            tweet = twitter.update_status(status = message)
+            tweet = twitter.update_status(status = message+url)
             tweet_feed = TweetFeed()
             usr = SocialAccount.objects.get(uid = tweet['user']['id'])
             pic_url_list = []
             if tweet['entities'].get('media')!= None:
                 for each in tweet['entities'].get('media'):
                     pic_url_list.append(each['media_url'])
+
             
 
 
@@ -64,7 +69,7 @@ class AjaxHandle(AjaxSearch):
             my_lon = profile['longitude']
             data = {'tweet_id': tweet['id'],
                     'parent_tweet_id': 0 if tweet['in_reply_to_status_id'] == None else tweet['in_reply_to_status_id'],
-                    'status': tweet['text'],
+                    'status': message,
                     "useruid": str(user_id),
                     "foods": [], 
                     'organisations':[], 
