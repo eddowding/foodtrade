@@ -11,7 +11,11 @@
                 
                       </div>
                       <div class="text">
-                      <button type="button" class="close" aria-hidden="true">&times;</button>
+                      {% ifequal profile_id user_id %}
+                      <button type="button" class="close" aria-hidden="true" onclick="conn_handler('close_buy_from', {{profile_id}}, {{each.id}})">&times;</button>
+                      
+                      <!-- <button type="button" class="close" aria-hidden="true">&times;</button> -->
+                      {% endifequal %}
                         <h5><a href="/profile/{{each.username}}">{{each.name}}</a> 
                         </h5>  
                         <p class="small">{{each.description|truncatechars:80}}</p>
@@ -48,7 +52,11 @@
                 
                       </div>
                       <div class="text">
-                      <button type="button" class="close" aria-hidden="true">&times;</button>
+                      {% ifequal profile_id user_id %}
+                      <button type="button" class="close" aria-hidden="true" onclick="conn_handler('close_sell_to', {{profile_id}}, {{each.id}})">&times;</button>
+                      
+                      <!-- <button type="button" class="close" aria-hidden="true">&times;</button> -->
+                      {% endifequal %}
                         <h5><a href="/profile/{{each.username}}">{{each.name}}</a> 
                         </h5>  
                         <p class="small">{{each.description|truncatechars:80}}</p>

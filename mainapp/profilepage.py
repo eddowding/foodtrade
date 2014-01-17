@@ -93,10 +93,12 @@ def display_profile(request, username):
         parameters['members_foods'] = get_foods_from_org_members(usr.id)
         if request.user.is_authenticated():
             parameters['members'], parameters['logged_member'] = get_members(usr.id, request.user.id)
-            parameters['teams'] = get_team(usr.id)
+            parameters['teams'], parameters['logged_team'] = get_team(usr.id, request.user.id)
         else:
-            parameters['members'], parameters['logged_member'] = get_members(usr.id)
-            parameters['teams'] = get_team(usr.id)
+            member_limited, parameters['logged_member'] = get_members(usr.id)
+            parameters['members'] = member_limited
+            team_limited, parameters['logged_team'] = get_team(usr.id)
+            parameters['teams'] = team_limited[:10]
         return render_to_response('single-organization.html', parameters, context_instance=RequestContext(request))
     elif parameters['sign_up_as'] == 'Individual':
         return render_to_response('individual.html', parameters, context_instance=RequestContext(request))
@@ -323,12 +325,15 @@ def get_foods_from_org_members(user_id):
         all_foods.extend(mem_foods)
     return all_foods
 
-def get_team(user_id):
+def get_team(user_id, logged_in_id=None):
     team = Team()
     teams = team.get_members_by_orgid(user_id)
     final_teams = []
+    logged_team = False
     for each in teams:
         account = SocialAccount.objects.get(user__id = each['memberuid'])
+        if logged_in_id!=None and each['memberuid'] == logged_in_id:
+                logged_team = True
         final_teams.append({'id': each['memberuid'],
          'name': account.extra_data['name'],
          'description': account.extra_data['description'],
@@ -336,7 +341,7 @@ def get_team(user_id):
          'username' : account.extra_data['screen_name']
          })
     #print final_teams
-    return final_teams[:10]
+    return final_teams, logged_team
 
 def get_all_business(prof_id):
     userpro = UserProfile()

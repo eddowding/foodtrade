@@ -57,10 +57,10 @@
 <div class="btn-group btn-block" data-toggle="buttons">
         {% if logged_member %}
       <label class="fa fa-smile-o text-muted btn btn-default btn-block active" style="width:100%;" title="{{userinfo.full_name}} is member of {{name}}" >
-      <input type="checkbox" checked="checked" id="member-chkbx" onchange="add_member({{profile_id}}, {{user_id}})">I'm a member!
+      <input type="checkbox" checked="checked" class="member-chkbx" onchange="add_member({{profile_id}}, {{user_id}})">I'm a member!
       {% else %}
       <label class="fa fa-smile-o text-muted btn btn-default btn-block" style="width:100%;" title="{{userinfo.full_name}} is member of {{name}}" >
-      <input type="checkbox" id="member-chkbx" onchange="add_member({{profile_id}}, {{user_id}})">I'm a member!
+      <input type="checkbox" class="member-chkbx" onchange="add_member({{profile_id}}, {{user_id}})">I'm a member!
   {% endif %}
  </label></div>
 
@@ -248,13 +248,23 @@
         <div class="tab-content">
           <div class="tab-pane active fade in " id="members">
       {% if user.is_authenticated %}
-
+<div>
+  <!-- <div>
            <button class="btn btn-default">
               <i class="fa fa-smile-o "></i> Are you a member?
-            </button> 
-            <button class="btn btn-success" onClick="add_member({{profile_id}}, {{user_id}})">
+            </button> </div> -->
+            <!-- <button class="btn btn-success" onClick="add_member({{profile_id}}, {{user_id}})">
               <i class="fa fa-check "></i> I'm a member
-            </button> 
+            </button>  -->
+      <div class="btn-group btn-block" data-toggle="buttons">
+        {% if logged_member %}
+      <label class="fa fa-check btn btn-default btn-block active" style="width:30%%;" title="{{userinfo.full_name}} is member of {{name}}" >
+      <input type="checkbox" checked="checked" class="member-chkbx" onchange="add_member({{profile_id}}, {{user_id}})">I'm a member!
+      {% else %}
+      <label class="btn btn-default btn-block" style="width:30%;" title="{{userinfo.full_name}} is member of {{name}}" >
+      <input type="checkbox" class="member-chkbx" onchange="add_member({{profile_id}}, {{user_id}})">I'm a member!
+  {% endif %}
+ </label></div></div>
         
 
             {% endif %}
@@ -271,7 +281,7 @@
 
                             <div class="text">
                             <button type="button" class="close" aria-hidden="true">&times;</button>
-                              <h5><a href="/profile/{{username}}">{{each_mem.name}}</a> 
+                              <h5><a href="/profile/{{each_mem.username}}">{{each_mem.name}}</a> 
                               </h5>  
                               <p class="small">{{each_mem.description}}</p>
                             </div>
@@ -327,13 +337,24 @@
 
           <div class="tab-pane fade" id="people">
 {% ifequal loggedin_signupas "Individual" %}
-           <button class="btn btn-default">
+           <!-- <button class="btn btn-default">
               <i class="fa fa-smile-o "></i> Do you work here?
-            </button> 
+            </button>  -->
 
-            <button class="btn btn-success" onClick="add_team({{profile_id}}, {{user_id}})">
+<!--             <button class="btn btn-success" onClick="add_team({{profile_id}}, {{user_id}})">
               <i class="fa fa-check "></i> I work here
-            </button> 
+            </button>  -->
+
+            <div class="btn-group btn-block" data-toggle="buttons">
+        {% if logged_team %}
+      <label class="fa fa-check btn btn-default btn-block active" style="width:30%;">
+      <input type="checkbox" checked="checked" id="team-chkbx" onchange="add_team({{profile_id}}, {{user_id}})">I work here
+      {% else %}
+      <label class="btn btn-default btn-block" style="width:30%;" >
+      <input type="checkbox" id="team-chkbx" onchange="add_team({{profile_id}}, {{user_id}})">I work here
+  {% endif %}
+ </label></div>
+
 {% endifequal %}
             <div class="clearfix">
           {% for each in teams %}
