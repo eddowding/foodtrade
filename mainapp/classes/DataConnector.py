@@ -43,7 +43,7 @@ class UserConnections():
     def get_nearby_individuals_no(self, lon, lat):
         query_string = {}
         
-        query_string['location'] = {"$near":{"$geometry":{"type":"Point", "coordinates":[float(lon), float(lat)]}, "$maxDistance":160934000000}}
+        query_string['location'] = {"$near":{"$geometry":{"type":"Point", "coordinates":[float(lon), float(lat)]}, "$maxDistance":160934}}
 
         query_string['sign_up_as'] ='Individual'
        
@@ -55,7 +55,7 @@ class UserConnections():
     def get_nearby_businesses_no(self, lon, lat):
         query_string = {}
         
-        query_string['location'] = {"$near":{"$geometry":{"type":"Point", "coordinates":[float(lon), float(lat)]}, "$maxDistance":16093400000000}}
+        query_string['location'] = {"$near":{"$geometry":{"type":"Point", "coordinates":[float(lon), float(lat)]}, "$maxDistance":160934}}
 
         query_string['sign_up_as'] ='Business'
        
