@@ -327,7 +327,7 @@
                    {% endifequal %}
                         {% if user.is_authenticated %}
                     <a class="btn btn-default btn-sm">
-                      <i class="fa fa-heart-o tltip" title="Recommend this to others" onclick="recommend_food({{user_id}}, '{{eachfood.food_name}}', {{profile_id}}); return null;">
+                      <i class="fa fa-thumbs-o-up tltip" title="Recommend this to others" onclick="recommend_food({{user_id}}, '{{eachfood.food_name}}', {{profile_id}}); return null;">
                       </i>
                     </a> {% endif %}
                      
@@ -433,7 +433,7 @@
                        {% endfor %}
                       </div>
                       <p class="small pull-right">
-                        <a href="#" title="{{each.food_no}} Foods"><i class="fa fa-leaf"></i> {{each.food_no}}</a>
+                        <a href="#" title="{{each.food_no}} Foods"><i class="fa fa-cutlery"></i> {{each.food_no}}</a>
                         <a href="#" title="{{each.trade_conn_no}} conn"><i class="fa fa-link"></i> {{each.trade_conn_no}}</a>
                         <a href="#" title="{{each.org_conn_no}} Organisations"><i class="fa fa-group"></i> {{each.org_conn_no}}</a> 
                       </p>
@@ -474,7 +474,7 @@
                        {% endfor %}
                       </div>
                       <p class="small pull-right">
-                        <a href="#" title="{{each.food_no}} Foods"><i class="fa fa-leaf"></i> {{each.food_no}}</a>
+                        <a href="#" title="{{each.food_no}} Foods"><i class="fa fa-cutlery"></i> {{each.food_no}}</a>
                         <a href="#" title="{{each.trade_conn_no}} conn"><i class="fa fa-link"></i> {{each.trade_conn_no}}</a>
                         <a href="#" title="{{each.org_conn_no}} Organisations"><i class="fa fa-group"></i> {{each.org_conn_no}}</a> 
                       </p>
@@ -632,7 +632,7 @@
  
 
     <div class="col-md-4">
-    <div style="width:100%;height: 1000px; " id="map"  data-spy="affix" data-offset-top="30">
+    <div style="width:100%; height: 100%; position: fixed; z-index: 100; " id="map"  data-spy="affix" data-offset-top="30">
            </div> 
            </div>
 
