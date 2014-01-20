@@ -227,52 +227,58 @@ def get_connections(user_id, logged_in_id = None):
     final_connections = []
     logged_conn = 'none'
     for each in b_conn:
-        account = SocialAccount.objects.get(user__id = each['c_useruid'])
-        usr_pr = userprof.get_profile_by_id(str(each['c_useruid']))
-        user_info = UserInfo(each['c_useruid'])
-        if logged_in_id!=None and each['c_useruid'] == logged_in_id:
-            logged_conn = 'buyer'
-        final_connections.append({'id': each['c_useruid'],
-         'name': account.extra_data['name'],
-         'description': account.extra_data['description'],
-         'photo': account.extra_data['profile_image_url'],
-         'username' : account.extra_data['screen_name'],
-         'type': usr_pr['type_user'].split(',')[:3],
-         'trade_conn_no': user_info.trade_connections_no,
-         'food_no': user_info.food_no,
-         'org_conn_no': user_info.organisation_connection_no,
-         'latitude': usr_pr['latitude'],
-         'longitude': usr_pr['longitude'],
-         'relation': 'buyer'
-         })
+        try:
+            account = SocialAccount.objects.get(user__id = each['c_useruid'])
+            usr_pr = userprof.get_profile_by_id(str(each['c_useruid']))
+            user_info = UserInfo(each['c_useruid'])
+            if logged_in_id!=None and each['c_useruid'] == logged_in_id:
+                logged_conn = 'buyer'
+            final_connections.append({'id': each['c_useruid'],
+             'name': account.extra_data['name'],
+             'description': account.extra_data['description'],
+             'photo': account.extra_data['profile_image_url'],
+             'username' : account.extra_data['screen_name'],
+             'type': usr_pr['type_user'].split(',')[:3],
+             'trade_conn_no': user_info.trade_connections_no,
+             'food_no': user_info.food_no,
+             'org_conn_no': user_info.organisation_connection_no,
+             'latitude': usr_pr['latitude'],
+             'longitude': usr_pr['longitude'],
+             'relation': 'buyer'
+             })
+        except:
+            pass
     for each in c_conn:
-        account = SocialAccount.objects.get(user__id = each['b_useruid'])
-        usr_pr = userprof.get_profile_by_id(str(each['b_useruid']))
-        user_info = UserInfo(each['b_useruid'])
-        
-        data = {'id': each['b_useruid'],
-         'name': account.extra_data['name'],
-         'description': account.extra_data['description'],
-         'photo': account.extra_data['profile_image_url'],
-         'username' : account.extra_data['screen_name'],
-         'type': usr_pr['type_user'].split(',')[:3],
-         'trade_conn_no': user_info.trade_connections_no,
-         'food_no': user_info.food_no,
-         'org_conn_no': user_info.organisation_connection_no,
-         'latitude': usr_pr['latitude'],
-         'longitude': usr_pr['longitude'],
-         'relation': 'buyer'
-         }
-        if data not in final_connections:
-            data['relation'] = 'seller'
-            final_connections.append(data)
-            if logged_in_id!=None and each['b_useruid'] == logged_in_id:
-                logged_conn = 'seller'
-        else:
-            index = final_connections.index(data)
-            final_connections[index]['relation'] = 'both'
-            if logged_in_id!=None and each['b_useruid'] == logged_in_id:
-                logged_conn = 'both'
+        try:
+            account = SocialAccount.objects.get(user__id = each['b_useruid'])
+            usr_pr = userprof.get_profile_by_id(str(each['b_useruid']))
+            user_info = UserInfo(each['b_useruid'])
+            
+            data = {'id': each['b_useruid'],
+             'name': account.extra_data['name'],
+             'description': account.extra_data['description'],
+             'photo': account.extra_data['profile_image_url'],
+             'username' : account.extra_data['screen_name'],
+             'type': usr_pr['type_user'].split(',')[:3],
+             'trade_conn_no': user_info.trade_connections_no,
+             'food_no': user_info.food_no,
+             'org_conn_no': user_info.organisation_connection_no,
+             'latitude': usr_pr['latitude'],
+             'longitude': usr_pr['longitude'],
+             'relation': 'buyer'
+             }
+            if data not in final_connections:
+                data['relation'] = 'seller'
+                final_connections.append(data)
+                if logged_in_id!=None and each['b_useruid'] == logged_in_id:
+                    logged_conn = 'seller'
+            else:
+                index = final_connections.index(data)
+                final_connections[index]['relation'] = 'both'
+                if logged_in_id!=None and each['b_useruid'] == logged_in_id:
+                    logged_conn = 'both'
+        except:
+            pass
     return final_connections, logged_conn
 
 def get_members(user_id, logged_in_id = None):
