@@ -803,7 +803,7 @@ margin-top: 10px;
 /********************************/
 
    
-.foodtrade-sidebar .foodtrade-tag-list{list-style:none;  margin:15px 0 15px 0; padding:0;}
+.foodtrade-sidebar .foodtrade-tag-list{list-style:none; padding:0;}
 .foodtrade-tag-text{padding-left:18px;padding-right:26px}
 .foodtrade-tag-checkbox-column{float:left;}
 .foodtrade-tag-checkbox-column .foodtrade-tag-checkbox{margin-top:-1px}
