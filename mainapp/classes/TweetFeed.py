@@ -73,11 +73,12 @@ class TweetFeed():
             }
             """)
         if start_time_stamp=="" and end_time_stamp =="":
-            return self.db_object.map_reduce(self.table_name, mapper, reducer, query = {})[0:10]
+            result = self.db_object.map_reduce(self.table_name, mapper, reducer, query = {})[0:10]
         else:
-            return self.db_object.map_reduce(self.table_name, mapper, reducer, 
+            result = self.db_object.map_reduce(self.table_name, mapper, reducer, 
                 query = { 'time_stamp':{'$gte': start_time_stamp,'$lte': end_time_stamp}})[0:10]
-        
+        print result
+        return result
 
     def aggregrate(self, conditions):
         return self.db_object.aggregrate_all(self.table_name,conditions)
