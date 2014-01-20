@@ -362,13 +362,13 @@ background: #eee;
 
 
       <div id="trendsThisWeek">
-          <div class="foodtrade-tag-text">Trends this week</div
+          <div class="foodtrade-tag-text">Trends this week</div>
           {% for eachVal in userinfo.hashtagsthis %}
             <p><a href="/activity/?q=%23{{eachVal.uid|slice:"1:"}}&location=++None+&lon=&lat=">{{eachVal.uid}} <span class="badge pull-right">{{eachVal.value|floatformat:"0"}}</span></a></p>
           {% endfor %}
       </div>
       <div id="trendsThisWeek">
-          <div class="foodtrade-tag-text">Trends all time</div
+          <div class="foodtrade-tag-text">Trends all time</div>
           {% for eachVal in userinfo.hashtagsall %}
             <p><a href="/activity/?q=%23{{eachVal.uid|slice:"1:"}}&location=++None+&lon=&lat=">{{eachVal.uid}} <span class="badge pull-right">{{eachVal.value|floatformat:"0"}}</span></a></p>
           {% endfor %}
