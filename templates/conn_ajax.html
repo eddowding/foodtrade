@@ -22,11 +22,13 @@
                       </div>
                     </div>
                     <div class="numbers clearfix">
+                    {% if each.type|length == 0 or each.type|first == '' %}
+                      {% else %}
                       <div class="tags tags-biztype pull-left">  
                         {% for e in each.type %}
                        <a href="/activity/?q={{e}}">{{e}}</a>
                        {% endfor %}
-                      </div>
+                      </div>{% endif %}
                       <p class="small pull-right">
                         <a href="#" title="{{each.food_no}} Foods"><i class="fa fa-cutlery"></i> {{each.food_no}}</a>
                         <a href="#" title="{{each.trade_conn_no}} conn"><i class="fa fa-link"></i> {{each.trade_conn_no}}</a>
@@ -63,11 +65,13 @@
                       </div>
                     </div>
                     <div class="numbers clearfix">
+                    {% if each.type|length == 0 or each.type|first == '' %}
+                      {% else %}
                       <div class="tags tags-biztype pull-left">  
                         {% for e in each.type %}
                        <a href="/activity/?q={{e}}">{{e}}</a>
                        {% endfor %}
-                      </div>
+                      </div>{% endif %}
                       <p class="small pull-right">
                         <a href="#" title="{{each.food_no}} Foods"><i class="fa fa-cutlery"></i> {{each.food_no}}</a>
                         <a href="#" title="{{each.trade_conn_no}} conn"><i class="fa fa-link"></i> {{each.trade_conn_no}}</a>
