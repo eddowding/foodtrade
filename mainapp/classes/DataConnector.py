@@ -103,4 +103,4 @@ class UserInfo():
         self.hashtagsthis = hashtags_this_week
 
         hashtags_all_time = t_feed_obj.get_trending_hashtags("", "")
-        self.hashtagsthis = hashtags_all_time
+        self.hashtagsall = hashtags_all_time
