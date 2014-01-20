@@ -532,6 +532,10 @@ class Food():
         twt.update_data(value['useruid'])
     def delete_food(self, useruid, food_name):
         self.db_object.update(self.table_name,{'useruid': useruid, 'food_name': food_name}, {'deleted':1})
+        # also delete recommendations of the food
+        table_name = 'recommendfood'
+        self.db_object.create_table(table_name,'food_name')
+        self.db_object.update_multi(table_name,{'business_id': useruid, 'food_name': food_name}, {'deleted':1})
 
 class Customer():
     """docstring for Connection"""
