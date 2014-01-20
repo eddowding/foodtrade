@@ -98,5 +98,9 @@ class UserInfo():
         start_time = datetime.date.today() - datetime.timedelta(7)
         end_time = datetime.date.today()
         t_feed_obj = TweetFeed()
-        hashtags = t_feed_obj.get_trending_hashtags(start_time, end_time)
-        self.hashtags = hashtags
+
+        hashtags_this_week = t_feed_obj.get_trending_hashtags(start_time, end_time)
+        self.hashtagsthis = hashtags_this_week
+
+        hashtags_all_time = t_feed_obj.get_trending_hashtags("", "")
+        self.hashtagsall = hashtags_all_time

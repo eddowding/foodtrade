@@ -56,7 +56,7 @@ class TweetFeed():
             function () {
              items = this.status.split(' ');
              for(i=0;i<items.length;i++){ 
-                if(items[i].indexOf('#')!=0){
+                if(items[i].indexOf('#')==0){
                         emit(items[i], 1); 
                         }
                     }
@@ -72,8 +72,13 @@ class TweetFeed():
              return parseInt(sum);
             }
             """)
-        return self.db_object.map_reduce(self.table_name, mapper, reducer, query = { 'time_stamp':{'$gte': start_time_stamp,'$lte': end_time_stamp}})[0:10]
-        
+        if start_time_stamp=="" and end_time_stamp =="":
+            result = self.db_object.map_reduce(self.table_name, mapper, reducer, query = {})[0:10]
+        else:
+            result = self.db_object.map_reduce(self.table_name, mapper, reducer, 
+                query = { 'time_stamp':{'$gte': start_time_stamp,'$lte': end_time_stamp}})[0:10]
+        print result
+        return result
 
     def aggregrate(self, conditions):
         return self.db_object.aggregrate_all(self.table_name,conditions)
