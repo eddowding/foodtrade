@@ -9,7 +9,7 @@ from django.contrib.auth.models import User
 from MongoConnection import MongoConnection
 from datetime import datetime
 from bson.objectid import ObjectId
-import time
+import time, datetime
 from mainapp.classes.TweetFeed import TweetFeed, Food, TradeConnection, Customer, TradeConnection, UserProfile, Organisation, Team
 
 class UserConnections():
@@ -43,7 +43,7 @@ class UserConnections():
     def get_nearby_individuals_no(self, lon, lat):
         query_string = {}
         
-        query_string['location'] = {"$near":{"$geometry":{"type":"Point", "coordinates":[float(lon), float(lat)]}, "$maxDistance":160934000000}}
+        query_string['location'] = {"$near":{"$geometry":{"type":"Point", "coordinates":[float(lon), float(lat)]}, "$maxDistance":160934}}
 
         query_string['sign_up_as'] ='Individual'
        
@@ -55,7 +55,7 @@ class UserConnections():
     def get_nearby_businesses_no(self, lon, lat):
         query_string = {}
         
-        query_string['location'] = {"$near":{"$geometry":{"type":"Point", "coordinates":[float(lon), float(lat)]}, "$maxDistance":16093400000000}}
+        query_string['location'] = {"$near":{"$geometry":{"type":"Point", "coordinates":[float(lon), float(lat)]}, "$maxDistance":160934}}
 
         query_string['sign_up_as'] ='Business'
        
@@ -81,12 +81,12 @@ class UserInfo():
         self.user_type = userprof['sign_up_as']
         self.zip_code = userprof['zip_code']
 
-
         user_connection =  UserConnections(user_id)
 
         self.full_name = twitter_user.extra_data['name']
         self.username = twitter_user.extra_data['screen_name']
         self.profileimg = twitter_user.extra_data['profile_image_url_https']
+
         # print 'hello'+twitter_user.extra_data['profile_image_url_https']
         self.trade_connections_no = user_connection.get_trade_connection_no()
         self.food_no = user_connection.get_food_connection_no()
@@ -94,3 +94,13 @@ class UserInfo():
         self.nearby_individuals_no = user_connection.get_nearby_individuals_no(self.lon,self.lat)
         self.organisation_connection_no = user_connection.get_organisation_connection_no()
         self.award_no = user_connection.get_award_no()
+
+        start_time = datetime.date.today() - datetime.timedelta(7)
+        end_time = datetime.date.today()
+        t_feed_obj = TweetFeed()
+
+        hashtags_this_week = t_feed_obj.get_trending_hashtags(start_time, end_time)
+        self.hashtagsthis = hashtags_this_week
+
+        hashtags_all_time = t_feed_obj.get_trending_hashtags("", "")
+        self.hashtagsall = hashtags_all_time
