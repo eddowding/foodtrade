@@ -384,7 +384,7 @@
                   <option value="{{each.id}}">{{each.name}}</option>
                   {% endfor %}
               </select> -->
-              <select id="buss_chosen" data-placeholder="Type business..." class="chosen-select" >
+              <select id="buss_chosen" data-placeholder="Type business..." class="chosen-select" multiple>
                             <option value=""></option>
                             {% for each in all_business %}
                             
@@ -671,10 +671,14 @@ $( document ).ready(function() {
     $('#adfoo_id').tooltip();
 
 $('#buss_chosen').chosen();
+// $("#buss_chosen").chosen({max_selected_options: 1});
 $('#myselect').chosen({create_option: true, skip_no_results: true, create_option_text: 'Add food'});
 // chosen on change event
     $('#myselect').chosen().change(function(){
     add_food({{profile_id}});
+    });
+    $('#buss_chosen').chosen().change(function(){
+    // add_food({{profile_id}});
     });
     $('#myselect').chosen().ready(function(){
       $('.search-field input').attr('style', 'width:192px;height:30px;');
