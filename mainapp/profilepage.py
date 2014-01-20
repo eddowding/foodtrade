@@ -14,6 +14,17 @@ import json
 from mainapp.produce import *
 import random
 
+def resolve_profile(request, username):
+    usr = User.objects.get(username = username)
+    user_profile = UserProfile()
+    userprof = user_profile.get_profile_by_id(str(usr.id))
+    if userprof['sign_up_as'] == 'Business':
+        return HttpResponseRedirect('/business/'+username)
+    elif userprof['sign_up_as'] == 'Individual':
+        return HttpResponseRedirect('/person/'+username)
+    elif userprof['sign_up_as'] == 'Organisation':
+        return HttpResponseRedirect('/organisation/'+username)
+
 def display_profile(request, username):
     parameters = {}
     parameters['food_list'] = final_foods
