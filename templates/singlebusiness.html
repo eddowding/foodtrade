@@ -230,14 +230,15 @@
 
           <li><a href="#organisations" data-toggle="tab">Organisation <span class="badge">{{userprof.organisation_connection_no}}</span></a></li> 
           <li><a href="#activity" data-toggle="tab">Updates  <span class="badge">2</span></a></li>  
-          <li class="dropdown">
+          <li><a href="#customers" tabindex="-1" data-toggle="tab">Customers <span class="badge">{{customers|length}}</span></a></li>
+          <!-- <li class="dropdown">
             <a href="#" id="people" class="dropdown-toggle" data-toggle="dropdown">People <b class="caret"></b></a>
             <ul class="dropdown-menu" role="menu" aria-labelledby="people">
               <li><a href="#team" tabindex="-1" data-toggle="tab">Team <span class="badge pull-right">{{userprof.trade_connections_no}}</span></a></li>
                <li role="presentation" class="divider"></li>
               <li><a href="#customers" tabindex="-1" data-toggle="tab">Customers <span class="badge pull-right">{{customers|length}}</span></a></li>
             </ul>
-          </li>
+          </li> -->
         </ul>
      </div>
     </div>
@@ -604,13 +605,13 @@
         </div>
 
 
-     <div class="tab-pane fade" id="team">
+     <!-- <div class="tab-pane fade" id="team">
           {% include 'card_team.php' %}
           {% include 'card_team.php' %}
           {% include 'card_team.php' %}
           {% include 'card_team.php' %}
           {% include 'card_team.php' %}
-          </div>
+          </div> -->
 
 
         
