@@ -12,21 +12,23 @@
 
 <style type="text/css" media="all">
     /* fix rtl for demo */
-    .chosen-rtl .chosen-drop { left: -9000px; }
+    .chosen-rtl .chosen-drop { left: -9000px; } 
+</style>
 
 
-  </style>
-
-
-    <div class="col-md-6" id="single">
+    <div class="col-md-6 col-sm-7" id="single">
     <div class="container-responsive">
+
     <div id="header_box" class="clearfix">
-      <div class="col-md-2" id="avatar">
+
+      <div class="col-md-2 hidden-sm hidden-xs" id="avatar">
         <img class="img-thumbnail center-block" src={{pic_url}}  />
       </div>
      
-      <div class="col-md-6">
-         <h1><a href="#">{{name}}</a></h1>
+      <div class="col-md-6 col-sm-8 col-xs-8">
+         <h1>
+          <img class="visible-sm visible-xs" style="width: 30px; margin-right: 10px; float:left;" src={{pic_url}}  />
+         <a href="#">{{name}}</a></h1>
           {% if type_user|length == 0 or type_user|first == '' %}
           {% else %}
           <div class="tags tags-biztype  ">  
@@ -59,7 +61,7 @@
          </div> <!-- meta -->
   
       </div><!-- end header middle -->
-      <div id="contact_info" class="col-md-4">
+      <div id="contact_info" class="col-md-4 col-sm-4  col-xs-4">
       {% ifnotequal profile_id user_id %}
       <!-- if they dont't have an account yet -->
       
@@ -255,7 +257,7 @@
           <div class="col-md-12 ">
           <div class=" well well-sm clearfix">
 <div class="row">
-            <div class="col-md-8">
+            <div class="col-md-8 col-sm-8 col-xs-7">
                       <div class="input-group">
                       <!-- link this to open food facts --> 
                             <!-- <input class="typeahead form-control" name="addfood" data-source='' data-provide="typeahead" autocomplete="off" id = "addfood_id" style="width:400px;" placeholder="Add foods you can buy here."> -->
@@ -284,7 +286,7 @@
                           
             </div>
 
-            <div class="col-md-4">
+            <div class="col-md-4 col-sm-4 col-xs-5">
              <form action="#" method="get">
               <div class="input-group">
                   <input class="form-control" id="system-search" name="q" placeholder="Search foods..." required>
@@ -637,7 +639,8 @@
     </div><!-- col --> 
  
 
-    <div class="col-md-4">
+
+    <div class="col-md-4 col-sm-3">
     <div style="width:100%; height: 600px;  z-index: 100; " id="map"  data-spy="affix" data-offset-top="30">
            </div> 
            </div>
