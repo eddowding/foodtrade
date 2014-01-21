@@ -64,14 +64,7 @@ background: #eee;
                 <img src="{% static "images/logo_icon_menu.png" %}"  class="visible-xs" alt="FoodTrade logo" width="" />
           </span>
         </div>
-
-         <div class="visible-xs">
-          <span data-toggle="offcanvas" style="top: 10px; position:relative;">
-                <span class="sr-only">Toggle navigation</span>
-                right
-          </span>
-        </div>
-
+ 
 
         <a href="/" class="navbar-brand hidden-xs">
           <img src="{% static "images/logo.png" %}"alt="FoodTrade logo"   />
@@ -127,12 +120,12 @@ background: #eee;
                 <li class="dropdown">
 
                 <!-- bigger screens --> 
-                <a href="#" class="dropdown-toggle visible-sm" data-toggle="dropdown">
+                <a href="#" class="dropdown-toggle visible-md  visible-lg" data-toggle="dropdown">
                 <i class="fa fa-user fa-fw"></i>{{userinfo.full_name}} <b class="caret"></b>
                 </a>
 
                 <!-- smaller screens --> 
-                <a href="#" class="dropdown-toggle hidden-sm" data-toggle="dropdown">
+                <a href="#" class="dropdown-toggle visible-sm hidden-md  hidden-lg" data-toggle="dropdown">
                 <i class="fa fa-user fa-fw"></i><b class="caret"></b>
                 </a>
 
@@ -157,7 +150,7 @@ background: #eee;
           </script>
            
 
-            <button data-step="2" data-intro="Post an update from any screen" data-position="left" type="button" class="btn btn-default navbar-btn navbar-right" style="margin-left: 20px;"  data-toggle="modal" data-target="#newtwitterpost">
+            <button data-step="2" data-intro="Post an update from any screen" data-position="left" type="button" class="btn btn-default navbar-btn navbar-right" style="margin-right: 10px;"  data-toggle="modal" data-target="#newtwitterpost">
               <i class="fa fa-edit fa-fw"></i>  
             </button> 
 
@@ -256,7 +249,12 @@ background: #eee;
  
 <div class="row row-offcanvas row-offcanvas-left row-offcanvas-right" id="main_row">
  
-<div id="sidebar" class="col-xs-6 col-sm-2 sidebar sidebar-offcanvas" role="navigation">
+<div id="sidebar" class="col-xs-6 col-sm-2 sidebar sidebar-offcanvas
+
+{% if not user.is_authenticated %} 
+hidden
+{% endif %}
+" role="navigation">
 
 {% if not user.is_authenticated %} 
 <div class="alert alert-info  ">
@@ -282,7 +280,7 @@ background: #eee;
         </div> 
   
         <hr />
-          <p><a href="/activity"><i class="fa fa-dot-circle-o fa-fw"></i> Activity near me</a></p> 
+          <p><a href="/activity"><i class="fa fa-dot-circle-o fa-fw"></i> Near me now</a></p> 
 
           <p><a href="#" title="Coming soon" class="text-muted"><i class="fa fa-envelope fa-fw"></i> Messages</a></p> 
 
@@ -586,7 +584,8 @@ $(document).ready(function() {
 });
     </script>
     <script type="text/javascript">
-      $('.tip').tooltip()
+      $('.tip').tooltip();
+      $('[rel=tooltip]').tooltip();
 
       $('[data-toggle=offcanvas]').click(function() {
         $('.row-offcanvas').toggleClass('active');
@@ -701,7 +700,7 @@ $(function() {
 <script type="text/javascript">
   document.getElementById('help').onclick = function() {
     introJs().setOption('doneLabel', 'Next page').start().oncomplete(function() {
-      window.location.href = 'second.html?multipage=true';
+      window.location.href = '/activity?multipage=true';
     });
   };
 </script>

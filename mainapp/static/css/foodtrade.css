@@ -108,13 +108,13 @@ h2 {
 
 #main_page,  
 #main_page #main_row,
-#main_page #main_row .fill
+#main_page #main_row .fill,
+#sidebar
 { 
     height: 100%;
 }
 
 .fill {
-
   margin: -12px 0; 
 }
    
@@ -123,8 +123,7 @@ h2 {
 	background-image: url('/static/images/double_stripe.png');
 	padding-top: 30px;
 	margin-top: -12px;
-	padding-left: 25px;
-	min-height: 1000px;
+	padding-left: 25px; 
 }
 
 .sidebar .alert {
@@ -652,6 +651,24 @@ fieldset[disabled] .btn-primary.active {
 margin:0;
 border-radius: 4px;
 clear: both;
+}
+
+.lead {
+  color: #777;
+}
+
+.showcase .row {
+  padding: 50px 0;
+}
+
+.showcase h1 {
+  font-size: 50px;
+}
+
+.showcase h3 {
+  margin: 0 0 10px 0;
+  font-weight: normal;
+  color: #666;
 }
 
 /********************************/

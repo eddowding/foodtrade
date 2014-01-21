@@ -408,7 +408,8 @@
                       
 <div id="all-connections">
 <div class="clearfix">
-          <h4>Buyers</h4> 
+          <h4>Buyers</h4>
+          <hr /> 
            <div class="pull-left" id="buyers-cards">
           {% for each in connections %}
               {% if each.relation == "buyer" or each.relation == "both" %}
@@ -439,9 +440,9 @@
                        {% endfor %}
                       </div>{% endif %}
                       <p class="small pull-right">
-                        <a href="#" title="{{each.food_no}} Foods"><i class="fa fa-cutlery"></i> {{each.food_no}}</a>
-                        <a href="#" title="{{each.trade_conn_no}} conn"><i class="fa fa-link"></i> {{each.trade_conn_no}}</a>
-                        <a href="#" title="{{each.org_conn_no}} Organisations"><i class="fa fa-group"></i> {{each.org_conn_no}}</a> 
+                        <span rel="tooltip" title="{{each.food_no}} foods"><i class="fa fa-cutlery"></i> {{each.food_no}}</span>
+                        <span rel="tooltip" title="{{each.trade_conn_no}} connections"><i class="fa fa-link"></i> {{each.trade_conn_no}}</span>
+                        <span rel="tooltip" title="{{each.org_conn_no}} organisations"><i class="fa fa-group"></i> {{each.org_conn_no}}</span> 
                       </p>
                     </div>
                   </div> 
@@ -451,7 +452,8 @@
           </div>
 
           <div class="clearfix">
-          <h4>Sellers</h4> 
+          <h3>Sellers</h3> 
+          <hr /> 
            <div class="pull-left" id="seller-cards">
           {% for each in connections %}
               {% if each.relation == "seller" or each.relation == "both" %}
@@ -482,9 +484,9 @@
                        {% endfor %}
                       </div>{% endif %}
                       <p class="small pull-right">
-                        <a href="#" title="{{each.food_no}} Foods"><i class="fa fa-cutlery"></i> {{each.food_no}}</a>
-                        <a href="#" title="{{each.trade_conn_no}} conn"><i class="fa fa-link"></i> {{each.trade_conn_no}}</a>
-                        <a href="#" title="{{each.org_conn_no}} Organisations"><i class="fa fa-group"></i> {{each.org_conn_no}}</a> 
+                        <span rel="tooltip" title="{{each.food_no}} Foods"><i class="fa fa-cutlery"></i> {{each.food_no}}</span>
+                        <span rel="tooltip" title="{{each.trade_conn_no}} conn"><i class="fa fa-link"></i> {{each.trade_conn_no}}</span>
+                        <span rel="tooltip" title="{{each.org_conn_no}} Organisations"><i class="fa fa-group"></i> {{each.org_conn_no}}</span> 
                       </p>
                     </div>
                   </div> 
