@@ -215,7 +215,26 @@ function update_ul_invites(cur_page){
 
 $('#btnFindFriends').click(function(){
 	query = $('#inputFindFriends').val();
-	ajax_request('search_friend','parse_friends_ajax',{'query':query})
+	ajax_request('search_friend','parse_friends_ajax',{'query':query});
+});
+
+$('#inputFindFriends').bind('keypress', function(e) {
+	if(validate_login()['status'] == '1'){
+		var code = e.keyCode || e.which;
+		 if(code == 13) {
+		   status_msg = this.value;
+		   if(status_msg==""){
+		   		alert('Please add some search term !!!');
+		   }
+		   else{
+			query = $('#inputFindFriends').val();
+			ajax_request('search_friend','parse_friends_ajax',{'query':query});
+		   }
+		 }
+	}
+	else{
+		  window.location = '/accounts/twitter/login/?process=login';
+	}
 });
 
 </script>
