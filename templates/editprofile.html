@@ -18,7 +18,7 @@
 {% block content %}
 
 <div class="col-md-10"> 
-  <form class="form-horizontal" name="myform" role="form"  method="POST" action=".">
+  <form class="form-horizontal" name="myform" role="form" onsubmit="return validate_business_type()" method="POST" action=".">
   {% csrf_token %}
     
     <div class="form-group">
@@ -120,19 +120,26 @@
         return $(this).text() == selVals[i];
     }).prop('selected', true);
   }
-</script>
-<script type="text/javascript">
+
+var business_type = '{{sign_up_as}}';
 $( document ).ready(function() {
   if('{{sign_up_as}}'!="Business"){
     $('#type_user_id').toggleClass('typeempty');
+    /*$('#dropdown3').attr('required','flase');*/
+    /*$('#dropdown3').removeAttr('required');*/
     }
+  else{
+    /*$('#dropdown3').attr('required','true');*/
+  }
 });
 
 function dataradio(value){
     // var result_val = $("input[name=options]:checked").val();
+    business_type = value;
     if (value == "Business"){
         if ( $('#type_user_id').hasClass('typeempty') ){
           $('#type_user_id').removeClass('typeempty');
+          /*$('#dropdown3').attr('required','true');*/
         }
     }
     else{
@@ -141,6 +148,7 @@ function dataradio(value){
         else{
             $('#type_user_id').addClass('typeempty');
         }
+        /*$('#dropdown3').removeAttr('required');*/
     }
 }
 var config = {
@@ -174,15 +182,15 @@ function validateFeedback(){
   function copydata(){
     var all_values = '';
     var elements = document.getElementsByClassName('search-choice');
-      for(i=0;i<elements.length;i++){
-        if(all_values==''){
-          all_values = all_values + elements[i].children[0].innerHTML;  
-        }
-        else{
-        all_values = all_values + ',' + elements[i].children[0].innerHTML;
-        }
+    for(i=0;i<elements.length;i++){
+      if(all_values==''){
+        all_values = all_values + elements[i].children[0].innerHTML;  
       }
-      document.getElementById('hidden_type').value = all_values;
+      else{
+      all_values = all_values + ',' + elements[i].children[0].innerHTML;
+      }
+    }
+    document.getElementById('hidden_type').value = all_values;
     }
 
   function validate_address(){
@@ -193,6 +201,12 @@ function validateFeedback(){
     data = jQuery.parseJSON(data);
     if (data['valid'] != 'true'){
       alert('Invalid Address!!');
+    }
+  }
+  function validate_business_type(){
+    if (business_type == 'Business' && $('#hidden_type').val().length == 0){
+      alert("Please select atleast one Business Type!");
+      return false;
     }
   }
   </script>

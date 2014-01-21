@@ -77,7 +77,7 @@ class TweetFeed():
         else:
             result = self.db_object.map_reduce(self.table_name, mapper, reducer, 
                 query = { 'time_stamp':{'$gte': start_time_stamp,'$lte': end_time_stamp}})[0:10]
-        print result
+        #print result
         return result
 
     def aggregrate(self, conditions):
