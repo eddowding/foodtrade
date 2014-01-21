@@ -27,7 +27,8 @@
      
       <div class="col-md-6">
          <h1><a href="#">{{name}}</a></h1>
- 
+          {% if type_user|length == 0 or type_user|first == '' %}
+          {% else %}
           <div class="tags tags-biztype  ">  
             {% for eachtype in type_user %}
            <a href="/activity/?q={{eachtype}}">{{eachtype}}</a>
@@ -35,7 +36,7 @@
            <!-- <a href="/type/buther">Wholesale</a>  
            <a href="/type/buther">Distribution</a>  
            <a href="/type/buther">Livestock Farm</a>   -->
-          </div> 
+          </div> {% endif %}
          <hr />
          <p>{{description}}</p>        
         
@@ -230,14 +231,15 @@
 
           <li><a href="#organisations" data-toggle="tab">Organisation <span class="badge">{{userprof.organisation_connection_no}}</span></a></li> 
           <li><a href="#activity" data-toggle="tab">Updates  <span class="badge">2</span></a></li>  
-          <li class="dropdown">
+          <li><a href="#customers" tabindex="-1" data-toggle="tab">Customers <span class="badge">{{customers|length}}</span></a></li>
+          <!-- <li class="dropdown">
             <a href="#" id="people" class="dropdown-toggle" data-toggle="dropdown">People <b class="caret"></b></a>
             <ul class="dropdown-menu" role="menu" aria-labelledby="people">
               <li><a href="#team" tabindex="-1" data-toggle="tab">Team <span class="badge pull-right">{{userprof.trade_connections_no}}</span></a></li>
                <li role="presentation" class="divider"></li>
               <li><a href="#customers" tabindex="-1" data-toggle="tab">Customers <span class="badge pull-right">{{customers|length}}</span></a></li>
             </ul>
-          </li>
+          </li> -->
         </ul>
      </div>
     </div>
@@ -327,7 +329,7 @@
                    {% endifequal %}
                         {% if user.is_authenticated %}
                     <a class="btn btn-default btn-sm">
-                      <i class="fa fa-heart-o tltip" title="Recommend this to others" onclick="recommend_food({{user_id}}, '{{eachfood.food_name}}', {{profile_id}}); return null;">
+                      <i class="fa fa-thumbs-o-up tltip" title="Recommend this to others" onclick="recommend_food({{user_id}}, '{{eachfood.food_name}}', {{profile_id}}); return null;">
                       </i>
                     </a> {% endif %}
                      
@@ -384,7 +386,7 @@
                   <option value="{{each.id}}">{{each.name}}</option>
                   {% endfor %}
               </select> -->
-              <select id="buss_chosen" data-placeholder="Type business..." class="chosen-select" >
+              <select id="buss_chosen" data-placeholder="Type business..." class="chosen-select" multiple>
                             <option value=""></option>
                             {% for each in all_business %}
                             
@@ -427,13 +429,15 @@
                       </div>
                     </div>
                     <div class="numbers clearfix">
+                      {% if each.type|length == 0 or each.type|first == '' %}
+                      {% else %}
                       <div class="tags tags-biztype pull-left">  
                         {% for e in each.type %}
                        <a href="/activity/?q={{e}}">{{e}}</a>
                        {% endfor %}
-                      </div>
+                      </div>{% endif %}
                       <p class="small pull-right">
-                        <a href="#" title="{{each.food_no}} Foods"><i class="fa fa-leaf"></i> {{each.food_no}}</a>
+                        <a href="#" title="{{each.food_no}} Foods"><i class="fa fa-cutlery"></i> {{each.food_no}}</a>
                         <a href="#" title="{{each.trade_conn_no}} conn"><i class="fa fa-link"></i> {{each.trade_conn_no}}</a>
                         <a href="#" title="{{each.org_conn_no}} Organisations"><i class="fa fa-group"></i> {{each.org_conn_no}}</a> 
                       </p>
@@ -468,13 +472,15 @@
                       </div>
                     </div>
                     <div class="numbers clearfix">
+                      {% if each.type|length == 0 or each.type|first == '' %}
+                      {% else %}
                       <div class="tags tags-biztype pull-left">  
                         {% for e in each.type %}
                        <a href="/activity/?q={{e}}">{{e}}</a>
                        {% endfor %}
-                      </div>
+                      </div>{% endif %}
                       <p class="small pull-right">
-                        <a href="#" title="{{each.food_no}} Foods"><i class="fa fa-leaf"></i> {{each.food_no}}</a>
+                        <a href="#" title="{{each.food_no}} Foods"><i class="fa fa-cutlery"></i> {{each.food_no}}</a>
                         <a href="#" title="{{each.trade_conn_no}} conn"><i class="fa fa-link"></i> {{each.trade_conn_no}}</a>
                         <a href="#" title="{{each.org_conn_no}} Organisations"><i class="fa fa-group"></i> {{each.org_conn_no}}</a> 
                       </p>
@@ -604,13 +610,13 @@
         </div>
 
 
-     <div class="tab-pane fade" id="team">
+     <!-- <div class="tab-pane fade" id="team">
           {% include 'card_team.php' %}
           {% include 'card_team.php' %}
           {% include 'card_team.php' %}
           {% include 'card_team.php' %}
           {% include 'card_team.php' %}
-          </div>
+          </div> -->
 
 
         
@@ -632,7 +638,7 @@
  
 
     <div class="col-md-4">
-    <div style="width:100%;height: 1000px; " id="map"  data-spy="affix" data-offset-top="30">
+    <div style="width:100%; height: 100%; position: fixed; z-index: 100; " id="map"  data-spy="affix" data-offset-top="30">
            </div> 
            </div>
 
@@ -671,11 +677,13 @@ $( document ).ready(function() {
     $('#adfoo_id').tooltip();
 
 $('#buss_chosen').chosen();
+// $("#buss_chosen").chosen({max_selected_options: 1});
 $('#myselect').chosen({create_option: true, skip_no_results: true, create_option_text: 'Add food'});
 // chosen on change event
     $('#myselect').chosen().change(function(){
     add_food({{profile_id}});
     });
+    
     $('#myselect').chosen().ready(function(){
       $('.search-field input').attr('style', 'width:192px;height:30px;');
     });

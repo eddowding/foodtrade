@@ -287,15 +287,15 @@
                             </div>
                           </div>
                           <div class="numbers clearfix">
-
-                            <div class="tags tags-biztype pull-left">  
-                              {% for e in each_mem.type %}
-                             <a href="/activity/?q={{e}}">{{e}}</a>
-                             {% endfor %}
-                            </div>
-
+                    {% if each_mem.type|length == 0 or each_mem.type|first == '' %}
+                      {% else %}
+                      <div class="tags tags-biztype pull-left">  
+                        {% for e in each_mem.type %}
+                       <a href="/activity/?q={{e}}">{{e}}</a>
+                       {% endfor %}
+                      </div>{% endif %}
                             <p class="small pull-right">
-                              <a href="#" title="{{each_mem.food_no}} Foods"><i class="fa fa-leaf"></i> {{each_mem.food_no}}</a>
+                              <a href="#" title="{{each_mem.food_no}} Foods"><i class="fa fa-cutlery"></i> {{each_mem.food_no}}</a>
                               <a href="#" title="{{each_mem.trade_conn_no}} conn"><i class="fa fa-link"></i> {{each_mem.trade_conn_no}}</a>
                               <a href="#" title="{{each_mem.org_conn_no}} Organisations"><i class="fa fa-group"></i> {{each_mem.org_conn_no}}</a> 
                             </p>

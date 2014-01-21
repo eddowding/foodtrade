@@ -56,7 +56,7 @@ function conn_handler(value, prof_id, conn_id)
 }
 
 function third_party_connection(prof_id){
-	var business_id = $('#buss_chosen').val();
+	var business_id = $('#buss_chosen').val().join('');
 	// buyer checked
 	if($('#option1_conn').is(':checked')){
 		// var conn_data = {prof_id: prof_id, status: 'buy_from', buss_id: businesses_id };
@@ -68,9 +68,14 @@ function third_party_connection(prof_id){
 		// var conn_data = {prof_id: prof_id, status: 'sell_to', buss_id: businesses_id };
 		ajax_request("third_party_conn", 'conn_ajax', {conn_data: "{'prof_id': " + prof_id + ",'buss_id': " + business_id + ",'status': 'sell_to'}"});
 	}
+	// $('.search-choice').remove();
+	// $("#buss_chosen").val('');
 }
 function conn_ajax(data){
-// alert(data);
+// clear selected choice
+$('.search-choice').remove();
+$("#buss_chosen").val('').trigger('chosen:updated');
+
 $('#all-connections').html(data);
 reload_connections();
 }
@@ -91,12 +96,12 @@ function add_food(prof_id){
 	    var food = elements[0].children[0].innerHTML;
 	    // alert(food);
 		var data = {useruid: prof_id, food_name: food};
-		ajax_request("addfood", 'create_conn', {data: JSON.stringify(data)});
+		ajax_request("addfood", 'food_ajax', {data: JSON.stringify(data)});
 		// document.getElementsByClassName('chosen-single')[0].children[0].innerHTML = '';
 		// $('#myselect').trigger('chosen:open');
 		$('.search-choice').remove();
-		var append_data = '<tr><td>'+food+'</td><td><div class="pull-right"><a href="#"><i class="fa fa-heart-o" title="Vouch for this"></i></a></div></td></tr>';
-		$("#food_tbody").prepend(append_data);
+		// var append_data = '<tr><td>'+food+'</td><td><div class="pull-right"><a href="#"><i class="fa fa-heart-o" title="Vouch for this"></i></a></div></td></tr>';
+		// $("#food_tbody").prepend(append_data);
 	}
 	else{
 		$('#adfoo_id').tooltip('show');
@@ -104,6 +109,9 @@ function add_food(prof_id){
 
 }
 
+function food_ajax(data){
+$('#food_tbody').html(data);
+}
 function recommend_food(logged_in_id, food_name, prof_id){
 	var data = {recommender_id: logged_in_id, food_name: food_name, business_id: prof_id}
 	ajax_request("vouch_for_food", 'create_conn', {data: JSON.stringify(data)});
@@ -112,7 +120,7 @@ function recommend_food(logged_in_id, food_name, prof_id){
 
 function delete_food(prof_id, food_name, my_this){
 	var data = {useruid: prof_id, food_name: food_name};
-	ajax_request("deletefood", 'create_conn', {data: JSON.stringify(data)});
+	ajax_request("deletefood", 'food_ajax', {data: JSON.stringify(data)});
 	global_this = my_this;
 	var del_id = global_this.parentElement.parentElement.parentElement.parentElement.getAttribute('id');
 	$('#'+del_id).remove();

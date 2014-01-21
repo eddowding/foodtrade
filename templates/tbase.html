@@ -111,12 +111,12 @@ background: #eee;
                 </li> -->
               <li id="divNotification" onclick="clear_notification()" class="dropdown">
                 <button  class="btn btn-default dropdown-toggle margin-notices" data-toggle="dropdown" type="button">
-                   <I class="fa fa-bell-o" title="Notifications">{{notification.notification_count}}</I> 
+                   <i class="fa fa-bell-o" title="Notifications"></i> {{notification.notification_count}} 
                 </button>
                 <!-- <a id= "notification" href="#" class="dropdown-toggle" data-toggle="dropdown">
                 {{notification.notification_count}} <b class="caret"></b></a> -->
                 <ul id="liNotification" class="dropdown-menu">
-                  <li>Sorry,there is no notification.</li>
+                  <li>No notifications.</li>
                 </ul>
               </li><!-- /btn-group -->
 
@@ -313,7 +313,7 @@ background: #eee;
     <div data-intro="Just start typing to search for specific foods, business type, or filter by organisation membership" data-position="right">
     <form role="form" >
       <div class="form-group"> 
-        <input type="text" class="form-control" id="food_filter" placeholder="Filter by food">
+        <input type="text" class="form-control input-sm" id="food_filter" placeholder="Filter by food">
       </div>
     </form>
     
@@ -329,7 +329,7 @@ background: #eee;
     
     <form role="form">
       <div class="form-group"> 
-        <input type="email" class="form-control" id="business_filter" placeholder="Filter Business Type">
+        <input type="email" class="form-control input-sm" id="business_filter" placeholder="Filter Business Type">
       </div>
     </form>
     <ul class="foodtrade-tag-list">
@@ -346,7 +346,7 @@ background: #eee;
 
      <form role="form">
       <div class="form-group"> 
-        <input type="email" class="form-control" id="organisation_filter" placeholder="Filter organisation">
+        <input type="email" class="form-control input-sm" id="organisation_filter" placeholder="Filter organisation">
       </div>
     </form>
     <ul class="foodtrade-tag-list">
@@ -362,13 +362,13 @@ background: #eee;
 
 
       <div id="trendsThisWeek">
-          <div class="foodtrade-tag-text">Trends this week</div>
+          <h5>Trends this week</h5>
           {% for eachVal in userinfo.hashtagsthis %}
             <p><a href="/activity/?q=%23{{eachVal.uid|slice:"1:"}}&location=++None+&lon=&lat=">{{eachVal.uid}} <span class="badge pull-right">{{eachVal.value|floatformat:"0"}}</span></a></p>
           {% endfor %}
       </div>
       <div id="trendsThisWeek">
-          <div class="foodtrade-tag-text">Trends all time</div>
+          <h5>Trends all time</h5>
           {% for eachVal in userinfo.hashtagsall %}
             <p><a href="/activity/?q=%23{{eachVal.uid|slice:"1:"}}&location=++None+&lon=&lat=">{{eachVal.uid}} <span class="badge pull-right">{{eachVal.value|floatformat:"0"}}</span></a></p>
           {% endfor %}
