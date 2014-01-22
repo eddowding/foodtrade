@@ -274,6 +274,25 @@ $('.enterhandler').bind('keypress', function(e) {
 	}
 });
 
+
+
+
+
+
+
+
+
+$('#newstatus').bind('keypress', function(e) {
+	
+		var code = e.keyCode || e.which;
+		 if(code == 13) { //Enter keycode
+		   //Do something
+		   UpdateActivity('newstatus');
+		 }
+	
+	
+});
+
 /*function ajax_success_validate_logged_in(data){
 	alert(data);
 	data = jQuery.parseJSON(data);

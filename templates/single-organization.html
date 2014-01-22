@@ -313,13 +313,13 @@
                   </form>
                    <table class="table table-list-search">
                       <tbody>
-                              {% for eachfood in members_foods %}
+                              {% for each in members_foods %}
+                                  {% for eachfood in each.foods%}
                           <tr>
-                              <td>{{eachfood.food_name}}</td>  
-                              <td> 
-                               <a href="#" class="pull-right"><i class="fa fa-thumbs-o-up text-muted" title="Vouch for this"></i></a> 
-                              </td> 
+                              <!-- <td>{{eachfood.food_name}}</td> -->
+                            <td><a href="/profile/{{each.username}}/"> <img class="pull-left" style="margin:0 50px 0 5px; width:25px;" src={{each.photo}} title="{{each.username}}"/></a>{{eachfood.food_name}}</td>
                           </tr> 
+                                {% endfor %}
                               {% endfor %}
                       </tbody>
                       
@@ -471,13 +471,9 @@
         <script type="text/javascript">
     map_lat={{ loc.lat }};
     map_lon = {{ loc.lon }};
-
-
-{% if results %}
-connections = [];
-    {% endif %}
+connections = {{members_str | safe}};
     </script>
-     <script src="{% static "js/activity-map.js" %}"></script>
+    <script src="{% static "js/business-map.js" %}"></script>
      <script src="{% static "js/contact.js" %}"></script>
 
 {% endblock %}   

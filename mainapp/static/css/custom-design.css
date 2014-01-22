@@ -70,3 +70,50 @@ ol.example li.placeholder:before {
   position: absolute;
   /** Define arrowhead **/
 }
+
+
+
+
+
+
+.card-box .content {
+  padding: 5px;
+}
+
+.card-box h5 {
+  margin: 0 0 2px 0;
+  font-size: 13px;
+  font-weight: bold;
+}
+
+.card-box h5 a {
+  color: #444;
+}
+ 
+.card-box .text {
+  margin-left: 55px;
+}
+
+.card-box p {
+  margin: 0;
+}
+
+.card-box p.small {
+  font-size: 12px;
+  color: rgb(153,153,153);
+  line-height: 15px;
+}
+
+.card-box .numbers {
+  background: #eee;
+  padding: 2px 5px;
+}
+
+.card-box .numbers a {
+  margin-left: 8px;
+  color: #999;
+}
+
+.card-box hr {
+  margin: 5px 0;
+}
