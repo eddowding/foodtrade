@@ -346,7 +346,16 @@ def get_foods_from_org_members(user_id):
     all_foods = []
     for each in members:
         mem_foods = foo.get_foods_by_userid(each['memberuid'])
-        all_foods.extend(mem_foods)
+        try:
+            account = SocialAccount.objects.get(user__id = each['memberuid'])
+            all_foods.append({'id': each['memberuid'],
+             'name': account.extra_data['name'],
+             'photo': account.extra_data['profile_image_url'],
+             'username' : account.extra_data['screen_name'],
+             'foods': mem_foods
+             })
+        except:
+            pass
     return all_foods
 
 def get_team(user_id, logged_in_id=None):
