@@ -594,7 +594,6 @@ class Organisation():
 
     def create_member (self, value):
         value['deleted'] = 0
-        # self.db_object.insert_one(self.table_name,value)
         self.db_object.update_upsert(self.table_name, {'memberuid': value['memberuid'], 'orguid': value['orguid']}, {'deleted': 0})        
         twt = TweetFeed()
         twt.update_data(value['memberuid'])
@@ -604,6 +603,9 @@ class Organisation():
 
     def get_organisations_by_mem_id(self, member_id):
         return self.db_object.get_all(self.table_name,{'memberuid': member_id, 'deleted': 0})
+
+    def check_member(self, org_id, mem_id):
+        return self.db_object.get_one(self.table_name, {'orguid': int(org_id), 'memberuid':int(mem_id), 'deleted': 0})
 
 class Team():
     """docstring for Connection"""
