@@ -79,11 +79,11 @@
               {% endif %}
               <li class="divider"></li>
               {% ifequal result.user.username userinfo.username %}
-              <li><a href="#" onclick="click_activity('delete', '{{result.uid.id}}')">Delete</a></li>
+              <li><a href="#" onclick="click_activity('delete','{{result.uid.id}}')">Delete</a></li>
               {% endifequal %}
               {% if result.user.username != userinfo.username %}
-              <li><a href="#" onclick="click_activity('spam', '{{result.uid.id}}')">Flag as spam</a></li>
-              <li><a href="#" onclick="click_activity('follow', '{{result.user.username}}')">Follow on Twitter</a></li>
+              <li><a href="#" onclick="click_activity('spam','{{result.uid.id}}')">Flag as spam</a></li>
+              <li><a href="#" onclick="click_activity('follow','{{result.user.username}}')">Follow on Twitter</a></li>
               {% endif %}
               <li><a href="/profile/{{result.user.username}}/">View full profile</a></li> 
             </ul>
@@ -530,7 +530,12 @@ function click_activity(activity, changeID){
 }
 function success_activity_handle(data){
   data = jQuery.parseJSON(data);
-  $('#' + String(data['_id'])).hide();
+  if(data['status'] == 1 && data['activity'] == 'deleteTweet'){
+    $('#' + String(data['_id'])).hide();
+  }
+  if(data['activity'] == 'follow' ){
+    alert(data['message']);
+  }
 }
 </script>
 
