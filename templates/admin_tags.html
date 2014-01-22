@@ -18,7 +18,7 @@ DEVELOPER NOTES
 We'll add merge tags later, I'm just adding the icon since I'm here. 
    </pre> -->
 
-<form  role="form" class="well">
+<form  role="form" class="well" on>
       <div class="row">
         <div class="col-md-6">
 
@@ -84,8 +84,10 @@ $("ul.tag_admin").sortable({
     }
   },
   onDrop: function (item, container, _super) {
-    container.el.removeClass("active")
-    _super(item)
+    container.el.removeClass("active");
+    _super(item);
+
+ZebraStrip();
   }
 });
 
@@ -100,7 +102,7 @@ function AddTerm()
   }
 
   var list_input = '<li class="tag_item_admin"> <i class="fa fa-arrows text-muted"></i> <input type="checkbox"> ';
-  list_input += ' <span>'+ input_val+'</span><span class="pull-right"> <i class="fa fa-edit"></i> <i class="fa fa-trash-o" onclick="RemoveTag(this)"></i> <i class="fa fa-compress" title="Merge selected"> </i> </span><!-- show this form on edit --> <div class="hidden"><form role="form"><div class="form-group"> <input type="text" class="form-control" id="tag1" value="Fish"> </div> <div class="form-group"> <textarea class="form-control" rows="3" placeholder="Description" disabled="disabled"></textarea> </div> <div class="form-group"> <input type="text" class="form-control" id="tag1" disabled="disabled" placeholder="http://www.link.com"> </div>  <div class="form-group"> <label for="image">Image</label> <input type="file" class="form-control" disabled="disabled" id="file"> </div><button type="submit" class="btn btn-sm btn-success">Save</button></form> </div><ul></ul></li>';
+  list_input += ' <span>'+ input_val+'</span><span class="pull-right"> <i class="fa fa-edit" onclick="EditTag(this)"></i> <i class="fa fa-trash-o" onclick="RemoveTag(this)"></i> <i class="fa fa-compress" title="Merge selected"> </i> </span><!-- show this form on edit --> <div class="hidden"><form role="form"><div class="form-group"> <input type="text" class="form-control" id="tag1" value="Fish"> </div> <div class="form-group"> <textarea class="form-control" rows="3" placeholder="Description" disabled="disabled"></textarea> </div> <div class="form-group"> <input type="text" class="form-control" id="tag1" disabled="disabled" placeholder="http://www.link.com"> </div>  <div class="form-group"> <label for="image">Image</label> <input type="file" class="form-control" disabled="disabled" id="file"> </div><button type="submit" class="btn btn-sm btn-success">Save</button></form> </div><ul></ul></li>';
     $("ul.tag_admin").prepend(list_input);
      $("#termInput").val('');
 
@@ -108,7 +110,7 @@ function AddTerm()
 
 }
 function RemoveTag(my_this){
-my_this.parentElement.parentElement.remove();
+// my_this.parentElement.parentElement.remove();
 }
 function tags_saved(data)
 {
@@ -117,11 +119,28 @@ function tags_saved(data)
     alert("Tags Saved");
   }
 }
+function EditTag(my_this){
+  $("ul.tag_admin").sortable("disable");
+  var old_value = my_this.parentElement.parentElement.getElementsByTagName("span")[0].innerHTML;
+  my_this.parentElement.parentElement.getElementsByTagName("span")[0].innerHTML = "<input type='text' id='current_tag_edit' value='"+old_value+"' onblur='SaveEdit()'>";
+  $('#current_tag_edit').focus();
+// my_this.parentElement.parentElement.remove();
+}
+
+function SaveEdit()
+{
+  $("ul.tag_admin").sortable("enable");
+  if($("#current_tag_edit").length>0){
+
+  document.getElementById('current_tag_edit').parentElement.innerHTML = document.getElementById('current_tag_edit').value;
+  }
 
 
+}
 
 function SaveTagAdmin()
 {
+  SaveEdit();
    parent_tags = $('ul.tag_admin').children('li');
    h_tags = GetTags(parent_tags,0);
    ajax_request("save_tags", 'tags_saved', {tags:JSON.stringify(h_tags)});
@@ -161,7 +180,7 @@ function get_old_tags(tags)
   {
     var current_tag = tags[i];
     list_input += '<li class="tag_item_admin"> <i class="fa fa-arrows text-muted"></i> <input type="checkbox"> ';
-  list_input += ' <span>'+ current_tag['node']+'</span><span class="pull-right"> <i class="fa fa-edit"></i> <i class="fa fa-trash-o" onclick="RemoveTag(this)"></i> <i class="fa fa-compress" title="Merge selected"> </i> </span><!-- show this form on edit --> <div class="hidden"><form role="form"><div class="form-group"> <input type="text" class="form-control" id="tag1" value="Fish"> </div> <div class="form-group"> <textarea class="form-control" rows="3" placeholder="Description" disabled="disabled"></textarea> </div> <div class="form-group"> <input type="text" class="form-control" id="tag1" disabled="disabled" placeholder="http://www.link.com"> </div>  <div class="form-group"> <label for="image">Image</label> <input type="file" class="form-control" disabled="disabled" id="file"> </div><button type="submit" class="btn btn-sm btn-success">Save</button></form> </div>';
+  list_input += ' <span>'+ current_tag['node']+'</span><span class="pull-right"> <i class="fa fa-edit" onclick="EditTag(this)"></i> <i class="fa fa-trash-o" onclick="RemoveTag(this)"></i> <i class="fa fa-compress" title="Merge selected"> </i> </span><!-- show this form on edit --> <div class="hidden"><form role="form"><div class="form-group"> <input type="text" class="form-control" id="tag1" value="Fish"> </div> <div class="form-group"> <textarea class="form-control" rows="3" placeholder="Description" disabled="disabled"></textarea> </div> <div class="form-group"> <input type="text" class="form-control" id="tag1" disabled="disabled" placeholder="http://www.link.com"> </div>  <div class="form-group"> <label for="image">Image</label> <input type="file" class="form-control" disabled="disabled" id="file"> </div><button type="submit" class="btn btn-sm btn-success">Save</button></form> </div>';
   if(current_tag['childrens']==null)
   {
       list_input += '<ul></ul></li>';
@@ -180,6 +199,27 @@ function get_old_tags(tags)
 }
 var old_tags = {{ tags | safe}};
 $("ul.tag_admin").html(get_old_tags(old_tags));
+
+
+function ZebraStrip()
+{
+  var list_items = $('.tag_admin li');
+  var colors = [];
+  colors.push("#efefef");
+  colors.push("#afafaf");
+  for(var i = 0;i<list_items.length; i++)
+  {
+      list_items[i].style.background = colors[i%2];
+  }
+
+  var list_items = $('.tag_admin ul');
+  for(var i = 0;i<list_items.length; i++)
+  {
+      list_items[i].style.background = "white";
+  }
+}
+
+ZebraStrip();
 
 // $(".switch-container").on("click", ".switch", function  (e) {
 //   var method = $(this).hasClass("active") ? "enable" : "disable"
