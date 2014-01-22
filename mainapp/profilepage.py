@@ -303,23 +303,26 @@ def get_members(user_id, logged_in_id = None):
     final_members = []
     logged_member = False
     for each in members:
-        account = SocialAccount.objects.get(user__id = each['memberuid'])
-        usr_pr = userprof.get_profile_by_id(str(each['memberuid']))
-        user_info = UserInfo(each['memberuid'])
-        if logged_in_id!=None and each['memberuid'] == logged_in_id:
-                logged_member = True
-        final_members.append({'id': each['memberuid'],
-         'name': account.extra_data['name'],
-         'description': account.extra_data['description'],
-         'photo': account.extra_data['profile_image_url'],
-         'username' : account.extra_data['screen_name'],
-         'type': usr_pr['type_user'].split(','),
-         'trade_conn_no': user_info.trade_connections_no,
-         'food_no': user_info.food_no,
-         'org_conn_no': user_info.organisation_connection_no,
-         'latitude': usr_pr['latitude'],
-         'longitude': usr_pr['longitude']
-         })
+        try:
+            account = SocialAccount.objects.get(user__id = each['memberuid'])
+            usr_pr = userprof.get_profile_by_id(str(each['memberuid']))
+            user_info = UserInfo(each['memberuid'])
+            if logged_in_id!=None and each['memberuid'] == logged_in_id:
+                    logged_member = True
+            final_members.append({'id': each['memberuid'],
+             'name': account.extra_data['name'],
+             'description': account.extra_data['description'],
+             'photo': account.extra_data['profile_image_url'],
+             'username' : account.extra_data['screen_name'],
+             'type': usr_pr['type_user'].split(','),
+             'trade_conn_no': user_info.trade_connections_no,
+             'food_no': user_info.food_no,
+             'org_conn_no': user_info.organisation_connection_no,
+             'latitude': usr_pr['latitude'],
+             'longitude': usr_pr['longitude']
+             })
+        except:
+            pass
     return final_members, logged_member
 
 def get_organisations(user_id):
@@ -352,15 +355,18 @@ def get_team(user_id, logged_in_id=None):
     final_teams = []
     logged_team = False
     for each in teams:
-        account = SocialAccount.objects.get(user__id = each['memberuid'])
-        if logged_in_id!=None and each['memberuid'] == logged_in_id:
-                logged_team = True
-        final_teams.append({'id': each['memberuid'],
-         'name': account.extra_data['name'],
-         'description': account.extra_data['description'],
-         'photo': account.extra_data['profile_image_url'],
-         'username' : account.extra_data['screen_name']
-         })
+        try:
+            account = SocialAccount.objects.get(user__id = each['memberuid'])
+            if logged_in_id!=None and each['memberuid'] == logged_in_id:
+                    logged_team = True
+            final_teams.append({'id': each['memberuid'],
+             'name': account.extra_data['name'],
+             'description': account.extra_data['description'],
+             'photo': account.extra_data['profile_image_url'],
+             'username' : account.extra_data['screen_name']
+             })
+        except:
+            pass
     #print final_teams
     return final_teams, logged_team
 
