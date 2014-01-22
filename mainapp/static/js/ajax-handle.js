@@ -83,7 +83,7 @@ $('#all-connections').html(data);
 reload_connections();
 }
 function create_conn(){
-	
+	location.reload();
 }
 
 function invite_connect(prof_username, logged_username){
@@ -92,19 +92,12 @@ function invite_connect(prof_username, logged_username){
 }
 
 function add_food(prof_id){
-	// var food = document.getElementById('addfood_id').value;
 	if (validate_login()['status'] == '1'){
-		// var food = document.getElementsByClassName('chosen-single')[0].children[0].innerHTML;
 		var elements = document.getElementsByClassName('search-choice');
 	    var food = elements[0].children[0].innerHTML;
-	    // alert(food);
 		var data = {useruid: prof_id, food_name: food};
 		ajax_request("addfood", 'food_ajax', {data: JSON.stringify(data)});
-		// document.getElementsByClassName('chosen-single')[0].children[0].innerHTML = '';
-		// $('#myselect').trigger('chosen:open');
-		$('.search-choice').remove();
-		// var append_data = '<tr><td>'+food+'</td><td><div class="pull-right"><a href="#"><i class="fa fa-heart-o" title="Vouch for this"></i></a></div></td></tr>';
-		// $("#food_tbody").prepend(append_data);
+		
 	}
 	else{
 		$('#adfoo_id').tooltip('show');
@@ -113,6 +106,8 @@ function add_food(prof_id){
 }
 
 function food_ajax(data){
+$('.search-choice').remove();
+$("#myselect").val('').trigger('chosen:updated');
 $('#food_tbody').html(data);
 }
 function recommend_food(logged_in_id, food_name, prof_id){

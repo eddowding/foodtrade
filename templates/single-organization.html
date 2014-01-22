@@ -247,15 +247,9 @@
 
         <div class="tab-content">
           <div class="tab-pane active fade in " id="members">
-      {% if user.is_authenticated %}
+  <!--     {% if user.is_authenticated %}
 <div>
-  <!-- <div>
-           <button class="btn btn-default">
-              <i class="fa fa-smile-o "></i> Are you a member?
-            </button> </div> -->
-            <!-- <button class="btn btn-success" onClick="add_member({{profile_id}}, {{user_id}})">
-              <i class="fa fa-check "></i> I'm a member
-            </button>  -->
+  
       <div class="btn-group btn-block" data-toggle="buttons">
         {% if logged_member %}
       <label class="fa fa-check btn btn-default btn-block active" style="width:30%%;" title="{{userinfo.full_name}} is member of {{name}}" >
@@ -267,7 +261,7 @@
  </label></div></div>
         
 
-            {% endif %}
+            {% endif %} -->
             <div class="clearfix"> 
                     {% for each_mem in members %}
                         <div class="card card-business">
