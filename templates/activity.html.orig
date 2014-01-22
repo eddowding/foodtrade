@@ -42,6 +42,22 @@
     </div>
   </div> 
 
+<<<<<<< HEAD
+ <div class="row">
+  <div class="col-md-12">
+ <input type="hidden" id="sortby" value="distance">
+ <div class="btn-group pull-right">
+    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+      Sort By
+      <span class="caret"></span>
+    </button>
+
+    <ul class="dropdown-menu">
+      <li><a onclick="sort_by('distance')">Distance</a></li>
+      <li><a onclick="sort_by('time')">Time</a></li>
+    </ul>
+  </div>
+=======
  <div id="sortby" class="clearfix">
 
     <div class="btn-group pull-right">
@@ -56,6 +72,7 @@
     </div> 
 
  </div>
+>>>>>>> 90bc4469e91aadc96d09200d6cd4572c78743201
 
   <div id="activity"> 
         <ul class="chat">

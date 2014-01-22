@@ -113,12 +113,13 @@ function reload_connections()
 
 			var dot = L.circleMarker([parseFloat(latitude), parseFloat(longitude)],  {
 			
-			color: '#000',
+			color: '#100',
 			opacity:1,
-			weight:2,
-			fill:2,
-			fillColor: "#000",
-			fillOpacity: 1,
+			weight:1,
+			fill:1,
+			radius: 3,
+			fillColor: "#600",
+			fillOpacity: 0.8,
 
 		}).addTo(map);
 			map_controls.push(dot);

@@ -97,6 +97,7 @@ def display_profile(request, username):
             parameters['customers'] = all_customers[:10]
 
         parameters['connections_str'] = json.dumps(parameters['connections'])
+        parameters['customers_str'] = json.dumps(parameters['customers'])
         # get all organisations
         return render_to_response('singlebusiness.html', parameters, context_instance=RequestContext(request))
         # return render_to_response('typeahead.html', parameters, context_instance=RequestContext(request))
@@ -221,18 +222,21 @@ def get_customers(user_id, logged_id=None):
     cust = Customer()
     all_customers = cust.get_customers_by_userid(user_id)
     final_customers = []
+    userprof = UserProfile()
     logged_customer = False
     for each in all_customers:
         account = SocialAccount.objects.get(user__id = each['customeruid'])
+        usr_pr = userprof.get_profile_by_id(str(each['customeruid']))
         if logged_id!=None and each['customeruid'] == logged_id:
             logged_customer = True
         final_customers.append({'id': each['customeruid'],
          'name': account.extra_data['name'],
          'description': account.extra_data['description'],
          'photo': account.extra_data['profile_image_url'],
-         'username' : account.extra_data['screen_name']
+         'username' : account.extra_data['screen_name'],
+         'latitude': usr_pr['latitude'],
+         'longitude': usr_pr['longitude']
          })
-    print 'logged_customer', logged_customer
     return final_customers[:10], logged_customer
 
 def get_connections(user_id, logged_in_id = None):
