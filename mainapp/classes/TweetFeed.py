@@ -77,7 +77,7 @@ class TweetFeed():
         else:
             result = self.db_object.map_reduce(self.table_name, mapper, reducer, 
                 query = { 'time_stamp':{'$gte': start_time_stamp,'$lte': end_time_stamp}})[0:10]
-        print result
+        #print result
         return result
 
     def aggregrate(self, conditions):
@@ -117,6 +117,8 @@ class TweetFeed():
     def get_search_results(self, keyword, lon, lat, food_filter, type_filter, organisation_filter, query):
         mapper = Code("""
             function () {
+            if(this.deleted==0)
+            {
             if(this.foods)
             {
             var foods = this.foods;
@@ -236,6 +238,7 @@ class TweetFeed():
                            
 
 
+            }
             }
             """)
 
@@ -420,10 +423,10 @@ class TweetFeed():
     def update_tweets(self, username, first_name, last_name, description, zip_code):
         try:
             results = Geocoder.geocode(zip_code)
-            print str(results), zip_code
+            #print str(results), zip_code
             lon = results.longitude
             lat = results.latitude
-            print lon, lat
+            #print lon, lat
         except:
             results = Geocoder.geocode('sp5 1nr')
             lon = results.longitude
@@ -433,7 +436,8 @@ class TweetFeed():
             {'user.username':username}, 
             {
                 'user.name':str(first_name + ' ' + last_name),
-                'user.description':description, 
+                'user.description':description,
+                'user.place' :str(results),
                 'location.coordinates.0':float(results.longitude),
                 'location.coordinates.1':float(results.latitude),
             })
@@ -455,6 +459,9 @@ class TweetFeed():
         return friends
 
     def get_followers(self, twitter_id):
+        pass
+        
+    def get_user_tweets_latest(self, user_id):
         pass
 
 
@@ -532,6 +539,10 @@ class Food():
         twt.update_data(value['useruid'])
     def delete_food(self, useruid, food_name):
         self.db_object.update(self.table_name,{'useruid': useruid, 'food_name': food_name}, {'deleted':1})
+        # also delete recommendations of the food
+        table_name = 'recommendfood'
+        self.db_object.create_table(table_name,'food_name')
+        self.db_object.update_multi(table_name,{'business_id': useruid, 'food_name': food_name}, {'deleted':1})
 
 class Customer():
     """docstring for Connection"""

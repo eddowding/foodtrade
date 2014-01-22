@@ -27,21 +27,16 @@
 {% endblock %}
  <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.1/leaflet.css" />
 <script src="{% static "js/leaflet.js" %}"></script>
-    <!-- Custom styles for this template -->
-    <link href="http://getbootstrap.com/examples/navbar-fixed-top/navbar-fixed-top.css" rel="stylesheet">
-    <style type="text/css">
+
+
+  <style type="text/css">
 .tt-hint
 {
   margin-left: 12px;
 margin-top: 4px;
 background: #eee;
 }
-
-.margin-notices{
-  margin-left:8%;
-  margin-top:18%%;
-  margin-right:15%%;
-}
+ 
     </style>
  
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -56,31 +51,32 @@ background: #eee;
       <div class="ftstrip"></div>
       <div class="container-responsive">
         <div class="navbar-header">
-          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+        <!--   <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-coll apse">
             <span class="sr-only">Toggle navigation</span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
-          </button>
+          </button> -->
 
-        <div class="pull-left visible-xs">
-          <button type="button" class="navbar-toggle" data-toggle="offcanvas" style="margin-left: 5px">
+        <div class="visible-xs">
+          <span data-toggle="offcanvas" style="top: 10px; position:relative;">
                 <span class="sr-only">Toggle navigation</span>
-                <i class="fa fa-user fa-fw fa-lg" ></i>
-              </button>
+                <img src="{% static "images/logo_icon_menu.png" %}"  class="visible-xs" alt="FoodTrade logo" width="" />
+          </span>
         </div>
+ 
 
-          <a href="/" class="navbar-brand">
-          <img src="{% static "images/logo.png" %}"  class="hidden-xs" alt="FoodTrade logo"   />
-          <img src="{% static "images/logo_icon.png" %}"  class="visible-xs" alt="FoodTrade logo"  />
-          </a>
+        <a href="/" class="navbar-brand hidden-xs">
+          <img src="{% static "images/logo.png" %}"alt="FoodTrade logo"   />
+        </a>
+
         </div>
-        <div class="navbar-collapse collapse">
+        <div class="navbar-col lapse coll apse">
           
-          <form action="/activity" class="navbar-form navbar-left nav-justified" role="search">
-          <div data-intro="Search for anything, anywhere" data-position="bottom">
+          <form action="/activity" class="navbar-form navbar-left nav-justified" role="search" data-step="1" data-intro="Search for anyhing, anywhere">
+          <div data-position="bottom">
             <div class="form-group" style="margin-right:5px;"> 
-              <input type="text" name="q" id="keyword" class="form-control pac-input" value="{{ search.query }}" placeholder="What?"> 
+              <input type="text" name="q" id="keyword" class="form-control col-xs-2 pac-input" value="{{ search.query }}" placeholder="What?"> 
             </div> 
             <div class="form-group" style="margin-right:5px;">
               <input type="text" name="location" id="pac-input" value="{% if search %} {{ search.place }} {% endif %} {% if not search %} {{userinfo.zip_code}}{% endif %} " class="pac-input form-control hidden-xs hidden-sm" placeholder="Where?">
@@ -109,24 +105,34 @@ background: #eee;
                         <li><a href="#" class="text-center">View All</a></li>
                     </ul>
                 </li> -->
-              <li id="divNotification" onclick="clear_notification()" class="dropdown">
-                <button  class="btn btn-default dropdown-toggle margin-notices" data-toggle="dropdown" type="button">
-                   <I class="fa fa-bell-o" title="Notifications">{{notification.notification_count}}</I> 
-                </button>
-                <!-- <a id= "notification" href="#" class="dropdown-toggle" data-toggle="dropdown">
-                {{notification.notification_count}} <b class="caret"></b></a> -->
-                <ul id="liNotification" class="dropdown-menu">
-                  <li>Sorry,there is no notification.</li>
-                </ul>
-              </li><!-- /btn-group -->
+
+                <li id="divNotification" onclick="clear_notification()">
+                  <button  class="btn btn-default navbar-btn  dropdown-toggle margin-notices" data-toggle="dropdown" type="button" class="dropdown-toggle" data-toggle="dropdown">
+                     <i class="fa fa-bell-o" title="Notifications"></i> {{notification.notification_count}} 
+                  </button>
+                  <!-- <a id= "notification" href="#" class="dropdown-toggle" data-toggle="dropdown">
+                  {{notification.notification_count}} <b class="caret"></b></a> -->
+                  <ul id="liNotification" class="dropdown-menu">
+                    <li><a href="#">No notifications.</a></li>
+                  </ul>
+                </li><!-- /btn-group -->
 
                 <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                <i class="fa fa-user fa-fw"></i> {{userinfo.full_name}} <b class="caret"></b></a>
+
+                <!-- bigger screens --> 
+                <a href="#" class="dropdown-toggle visible-md  visible-lg" data-toggle="dropdown">
+                <i class="fa fa-user fa-fw"></i>{{userinfo.full_name}} <b class="caret"></b>
+                </a>
+
+                <!-- smaller screens --> 
+                <a href="#" class="dropdown-toggle visible-sm hidden-md  hidden-lg" data-toggle="dropdown">
+                <i class="fa fa-user fa-fw"></i><b class="caret"></b>
+                </a>
+
                     <ul class="dropdown-menu">
                         <li><a href="/editprofile/{{userinfo.username}}"><i class="fa fa-user fa-fw"></i> Edit profile</a></li>
                         <li><a href="/invite/"><i class="fa fa-twitter fa-fw"></i> Invite friends</a></li>
-                        <li><a href="#" id="help"><i class="fa fa-question-circle fa-fw"></i> Show help</a></li>
+                        <li><a href="#" id="help"><i class="fa fa-question-circle fa-fw"></i> Help guide</a></li>
                         <li class="divider"></li>
                         <li>
                           <a src = "/accounts/logout" onclick="logout()" >
@@ -142,20 +148,16 @@ background: #eee;
             window.location = '/accounts/logout';
           }
           </script>
-          
+           
 
-         <button type="button" class="btn btn-default navbar-btn navbar-right visible-sm" style="margin-left: 20px;"  data-toggle="modal" data-target="#newtwitterpost">
-            <i class="fa fa-edit fa-fw"></i>  
-          </button>
-
-          <button data-intro="Post an update from any screen." data-position="left"  type="button" class="btn btn-default navbar-btn navbar-right hidden-sm" style="margin-left: 20px;"  data-toggle="modal" data-target="#newtwitterpost">
-            <i class="fa fa-edit fa-fw"></i> Post update
-          </button>
+            <button data-step="2" data-intro="Post an update from any screen" data-position="left" type="button" class="btn btn-default navbar-btn navbar-right" style="margin-right: 10px;"  data-toggle="modal" data-target="#newtwitterpost">
+              <i class="fa fa-edit fa-fw"></i>  
+            </button> 
 
         {% endif %}
         
          <ul class="nav navbar-nav navbar-center visible-md visible-lg">
-          <li><a href="/activity">Nearby</a></li>
+           
           <li><a href="/pricing">Pricing</a></li> 
          </ul>
  
@@ -245,9 +247,14 @@ background: #eee;
 </div><!-- /.modal -->
 <div class="container-responsive" id="main_page">
  
-<div class="row row-offcanvas row-offcanvas-left" id="main_row">
+<div class="row row-offcanvas row-offcanvas-left row-offcanvas-right" id="main_row">
  
-<div id="sidebar" class="col-xs-6 col-sm-2 sidebar sidebar-offcanvas" role="navigation">
+<div id="sidebar" class="col-xs-6 col-sm-2 sidebar sidebar-offcanvas
+
+{% if not user.is_authenticated %} 
+hidden
+{% endif %}
+" role="navigation">
 
 {% if not user.is_authenticated %} 
 <div class="alert alert-info  ">
@@ -268,15 +275,25 @@ background: #eee;
           <img class="pull-left img-rounded" style="margin:0 8px 0 0; width:30px"  src="{{userinfo.profileimg}}"  />
           <div class="content">
             <h4 style="margin:0;"><a href="/profile/{{userinfo.username}}">{{userinfo.full_name}}</a></h4>
-            <small><a href="/editprofile/{{userinfo.username}}" class="text-muted">Edit your profile</a></small>
+            <small><a href="/profile/{{userinfo.username}}" class="text-muted">View your profile</a></small>
           </div>
-        </div>
+        </div> 
+  
+        <hr />
+          <p><a href="/activity"><i class="fa fa-dot-circle-o fa-fw"></i> Near me now</a></p> 
+
+          <p><a href="#" title="Coming soon" class="text-muted"><i class="fa fa-envelope fa-fw"></i> Messages</a></p> 
+
+
+
          {% if search.query == "" or not search.query %}
-           {% ifequal userinfo.user_type 'Business' %}
-              <p><a href="#">Trade connections <span class="badge pull-right">{{userinfo.trade_connections_no}}</span></a></p>
+           
+ 
+    <!--    {% ifequal userinfo.user_type 'Business' %}
+              <p><a href="#">Connections <span class="badge pull-right">{{userinfo.trade_connections_no}}</span></a></p>
               <p><a href="#">Foods <span class="badge pull-right">{{userinfo.food_no}}</span></a></p>
               <p><a href="#">Organisations <span class="badge pull-right">{{userinfo.organisation_connection_no}}</span></a></p>
-            {% endifequal %}
+            {% endifequal %} -->
 
         <!-- 
         ADD IN AWARDS FUNCTIONALITY
@@ -310,10 +327,10 @@ background: #eee;
     
     <hr>
      
-    <div data-intro="Just start typing to search for specific foods, business type, or filter by organisation membership" data-position="right">
+    <div data-step="3" data-intro="Just start typing to search for specific foods, business type, or filter by organisation membership" data-position="right">
     <form role="form" >
       <div class="form-group"> 
-        <input type="text" class="form-control" id="food_filter" placeholder="Filter by food">
+        <input type="text" class="form-control input-sm" id="food_filter" placeholder="Filter by food">
       </div>
     </form>
     
@@ -329,7 +346,7 @@ background: #eee;
     
     <form role="form">
       <div class="form-group"> 
-        <input type="email" class="form-control" id="business_filter" placeholder="Filter Business Type">
+        <input type="email" class="form-control input-sm" id="business_filter" placeholder="Filter Business Type">
       </div>
     </form>
     <ul class="foodtrade-tag-list">
@@ -346,7 +363,7 @@ background: #eee;
 
      <form role="form">
       <div class="form-group"> 
-        <input type="email" class="form-control" id="organisation_filter" placeholder="Filter organisation">
+        <input type="email" class="form-control input-sm" id="organisation_filter" placeholder="Filter organisation">
       </div>
     </form>
     <ul class="foodtrade-tag-list">
@@ -360,19 +377,22 @@ background: #eee;
 
     </div><!--sidebar-->
 
-
+    <hr /> 
+    <div data-step="4" data-intro="See what's active">
       <div id="trendsThisWeek">
-          <div class="foodtrade-tag-text">Trends this week</div>
+          <h5>Trends this week</h5>
           {% for eachVal in userinfo.hashtagsthis %}
             <p><a href="/activity/?q=%23{{eachVal.uid|slice:"1:"}}&location=++None+&lon=&lat=">{{eachVal.uid}} <span class="badge pull-right">{{eachVal.value|floatformat:"0"}}</span></a></p>
           {% endfor %}
       </div>
       <div id="trendsThisWeek">
-          <div class="foodtrade-tag-text">Trends all time</div>
+          <h5>Trends all time</h5>
           {% for eachVal in userinfo.hashtagsall %}
             <p><a href="/activity/?q=%23{{eachVal.uid|slice:"1:"}}&location=++None+&lon=&lat=">{{eachVal.uid}} <span class="badge pull-right">{{eachVal.value|floatformat:"0"}}</span></a></p>
           {% endfor %}
       </div>
+    </div>
+
     {% endif %}
 
        {% endif %}
@@ -482,28 +502,42 @@ background: #eee;
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
+ 
 <!-- UserVoice JavaScript SDK (only needed once on a page) -->
 <script>(function(){var uv=document.createElement('script');uv.type='text/javascript';uv.async=true;uv.src='//widget.uservoice.com/HloB2aRxdk7fbhWMOI5AlQ.js';var s=document.getElementsByTagName('script')[0];s.parentNode.insertBefore(uv,s)})()</script>
+
 <!-- A tab to launch the Classic Widget -->
-<script>UserVoice=window.UserVoice||[];UserVoice.push(['showTab','classic_widget',{mode:'full',primary_color:'#f08119',link_color:'#61ae32',default_mode:'support',forum_id:231923,tab_label:'Feedback & Support',tab_color:'#cc6d00',tab_position:'middle-right',tab_inverted:false}]);</script>
+<script>
+UserVoice = window.UserVoice || [];
+UserVoice.push(['showTab', 'classic_widget', {
+  mode: 'full',
+  primary_color: '#ff9900',
+  link_color: '#7fc836',
+  default_mode: 'feedback',
+  forum_id: 231923,
+  tab_label: 'Feedback & Support',
+  tab_color: '#66A12B',
+  tab_position: 'bottom-right',
+  tab_inverted: false
+}]);
+</script>
+
+
+
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="{% static "js/jquery.js" %}"></script>
     <script src="{% static "js/bootstrap.min.js" %}"></script>
     <script src="{% static "js/foodtrade.js" %}"></script>
-     <script src="{% static "js/ajax-handle.js" %}"></script>
-     <script src="{% static "js/chardinjs.min.js" %}"></script>
+     <script src="{% static "js/ajax-handle.js" %}"></script> 
+     <script src="{% static "js/intro.min.js" %}"></script>
      
  <script src="http://getbootstrap.com/2.3.2/assets/js/bootstrap-typeahead.js"></script>
          {% block footer %}
  {% endblock %}
      <script type="text/javascript">
 $(document).ready(function() {
-
-    $( "#help" ).click(function() {
-      $('body').chardinJs('start');
-    });
 
     var activeSystemClass = $('.list-group-item.active');
     //something is entered in search form
@@ -550,7 +584,8 @@ $(document).ready(function() {
 });
     </script>
     <script type="text/javascript">
-      $('.tip').tooltip()
+      $('.tip').tooltip();
+      $('[rel=tooltip]').tooltip();
 
       $('[data-toggle=offcanvas]').click(function() {
         $('.row-offcanvas').toggleClass('active');
@@ -657,6 +692,23 @@ $(function() {
     $(".counted").charCounter(320,{container: "#counter"});
 });
     </script>
+
+
+
+
+<!-- TOUR SCRIPT --> 
+<script type="text/javascript">
+  document.getElementById('help').onclick = function() {
+    introJs().setOption('doneLabel', 'Next page').start().oncomplete(function() {
+      window.location.href = '/activity?multipage=true';
+    });
+  };
+</script>
+<!-- // TOUR SCRIPT --> 
+
+
+
+
 <script type="text/javascript">
 // This example adds a search box to a map, using the Google Place Autocomplete
 // feature. People can enter geographical searches. The search box will return a
@@ -681,7 +733,7 @@ function build_notification(data){
       $('#liNotification').prepend('<li><a href="/profile/' + String(data_dict.notifying_user) + '/" title="' + String(data_dict.notification_message) + '">' +String(data_dict.notification_message).substr(0,20)+'....</a></li>');
   }
   if (data['notification_count'] == 0){
-      $('#liNotification').prepend('<li>Sorry,there is no notification.</li>');
+      $('#liNotification').prepend('<li><a href="#">No notifications</a></li>');
   }
 }
 function clear_notification(){

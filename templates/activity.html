@@ -34,7 +34,7 @@
           </span>
         </div>
     </form>
-    <div class="help-block small">
+    <div class="help-block small hidden-sm">
     <ul>
     <li>300kg #surplus conference #pears for #sale or #surplus</li>
     <li>I want to  #buy organic #honey for my farm shop.</li>
@@ -54,7 +54,7 @@
 
 {% for result in results %}
 
-    <li class="left clearfix"><span class="chat-img pull-left">
+    <li class="left clearfix" id="{{result.uid.id}}"><span class="chat-img pull-left">
     <img src="{{result.user.profile_img}}" alt="{{result.user.name}}" class="img-thumbnail" />
     </span>
         <div class="chat-body clearfix">
@@ -66,22 +66,26 @@
                 <span class="caret text-muted"></span>
             </button> 
             <ul class="dropdown-menu" role="menu">
-            {% if userinfo.user_type == "Business" and result.sign_up_as == "Business" %}
-              <li><a href="#">I buy from</a></li>
-              <li><a href="#">I sell to</a></li> 
+              {%  if userinfo.user_type == "Business" and result.sign_up_as == "Business" and result.user.username != userinfo.username %}
+              <li><a href="#" onclick="update_connection('buyFrom')">I buy from</a></li>
+              <li><a href="#" onclick="update_connection('sellTo')">I sell to</a></li> 
               <li class="divider"></li>
               {% endif %}
               {% if result.sign_up_as == "Organisation" %}
-              <li><a href="#">I'm a member</a></li>
+              <li><a href="#" onclick="click_activity('markMember', '{{result.user.username}}')">I'm a member</a></li>
               {% endif %}
               {% if userinfo.user_type == "Individual" and result.sign_up_as == "Business" %}
-              <li><a href="#">I'm a customer</a></li>
+              <li><a href="#" onclick="click_activity('markCustomer', '{{result.user.username}}')">I'm a customer</a></li>
               {% endif %}
               <li class="divider"></li>
-              <li><a href="#">Delete</a></li>
-              <li><a href="#">Flag as spam</a></li>
-              <li><a href="#">Follow on Twitter</a></li>
-              <li><a href="#">View full profile</a></li> 
+              {% ifequal result.user.username userinfo.username %}
+              <li><a href="#" onclick="click_activity('delete', '{{result.uid.id}}')">Delete</a></li>
+              {% endifequal %}
+              {% if result.user.username != userinfo.username %}
+              <li><a href="#" onclick="click_activity('spam', '{{result.uid.id}}')">Flag as spam</a></li>
+              <li><a href="#" onclick="click_activity('follow', '{{result.user.username}}')">Follow on Twitter</a></li>
+              {% endif %}
+              <li><a href="/profile/{{result.user.username}}/">View full profile</a></li> 
             </ul>
           </div>  
 
@@ -89,11 +93,13 @@
             <div class="header">
                 <strong class="pull-left" style="margin-right: 10px;"><a href="/profile/{{result.user.username}}">{{result.user.name}}</a></strong> 
 
-                <div class="tags tags-biztype">
-                {% for tag in result.type_user  %}
+          {% if type_user|length == 0 or type_user|first == '' %}
+          {% else %}
+          <div class="tags tags-biztype  ">  
+            {% for tag in result.type_user  %}
                   <a href="/activity/?q={{tag}}">{{tag}}</a>
                   {% endfor %}
-                </div>
+          </div> {% endif %}
             </div>
 
             <p>
@@ -102,7 +108,7 @@
 
               <div class="meta small text-muted">
                <i class="fa fa-map-marker"></i>
-                {{result.user.place}}   
+                {{result.user.place}}
 
                  <!-- if logged in or you've allows html5 browser location -->
 
@@ -142,10 +148,10 @@
      
     </div><!-- closes 5 -->
 
-    <div class="col-md-5  col-sm-5">
+    <div class="col-md-5  col-sm-5 fill"  style="height: 100%; ">
 
     <!-- FIX THE MAP POSITION SO IT DOES NOT SCROLL --> 
-      <div style="height: 700px; " id="map"  data-spy="affix" data-offset-top="30">
+      <div style="height: 100%; min-height: 100%;" id="map"  data-spy="affix" data-offset-top="30">
         
 
         <div class="alert alert-warning">
@@ -183,17 +189,9 @@ connections = {{json_data | safe}};
                 <span class="caret text-muted"></span>
             </button> 
             <ul class="dropdown-menu" role="menu">
-              <li><a href="#">I buy from</a></li>
-              <li><a href="#">I sell to</a></li> 
-              <li class="divider"></li>
-              <li><a href="#">I'm a member</a></li>
-              <li><a href="#">I'm a customer</a></li>
-              <li class="divider"></li>
-              <li><a href="#">Delete</a></li>
-              <li><a href="#">Flag as spam</a></li>
-              <li><a href="#">dsf</a></li> 
-              <li><a href="#">Follow on Twitter</a></li>
-              <li><a href="#">View full profile</a></li> 
+              
+                <li><a href="#" onclick="click_activity('delete', '{{result.uid.id}}')">Delete</a></li>
+              <li><a href="/profile/{{result.user.username}}" >View full profile</a></li> 
             </ul>
           </div>  
 
@@ -201,10 +199,10 @@ connections = {{json_data | safe}};
             <div class="header">
                 <strong class="pull-left" style="margin-right: 10px;">{{userinfo.full_name}}</strong> 
 
-                <div class="tags tags-biztype">  
-    <!--               <a href="/type/livestock-farm">Bakery</a>
-                  <a href="/type/buther">Wholesale</a>  --> 
-                </div>
+                <!-- <div class="tags tags-biztype">  
+                  <a href="/type/livestock-farm">Bakery</a>
+                  <a href="/type/buther">Wholesale</a>  
+                </div> -->
             </div>
 
             <p>
@@ -213,11 +211,11 @@ connections = {{json_data | safe}};
 
               <div class="meta small text-muted">
                <i class="fa fa-map-marker"></i>
-               London, UK 
+               {{userinfo.address}}
 
                  <!-- if logged in or you've allows html5 browser location -->
 
-                 <a href="http://maps.google.com/maps?saddr=current+location&daddr=Sydney+Opera+House,+Sydney+Opera+House,+Bennelong+Point,+Sydney+NSW+2000,+Australia" 
+                 <a href="http://maps.google.com/maps?saddr=current+location&daddr={{userinfo.address}}" 
                     target="_blank" data-placement="top" data-toggle="tooltip" 
                     class="text-muted" 
                     title="Get directions"> 
@@ -560,7 +558,13 @@ show_food_filters(food_filters, 0);
 show_organisation_filters(organisation_filters, 0);
 show_business_filters(business_filters, 0);
 
-
+function click_activity(activity, changeID){
+  ajax_request('activity_handle','success_activity_handle',{'user':'{{userinfo.username}}', 'changeID':changeID, 'task':activity});
+}
+function success_activity_handle(data){
+  data = jQuery.parseJSON(data);
+  $('#' + String(data['_id'])).hide();
+}
 </script>
 
  {% endblock %}

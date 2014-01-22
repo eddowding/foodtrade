@@ -3,6 +3,7 @@ from django.shortcuts import render_to_response
 from django.http import HttpResponse, HttpResponseRedirect
 from allauth.socialaccount.models import SocialToken, SocialAccount
 from twython import Twython
+from django.template import RequestContext
 import json
 from mainapp.classes.TweetFeed import TweetFeed
 from mainapp.classes.Email import Email
@@ -10,7 +11,7 @@ from Tags import Tags
 from mainapp.classes.TweetFeed import TradeConnection, UserProfile, Food, Customer, Organisation, Team, RecommendFood, Notification, Friends
 from AjaxSearch import AjaxSearch
 from pygeocoder import Geocoder
-from mainapp.profilepage import get_connections
+from mainapp.profilepage import get_connections, get_all_foods
 
 
 consumer_key = 'seqGJEiDVNPxde7jmrk6dQ'
@@ -214,7 +215,11 @@ class AjaxHandle(AjaxSearch):
         data = eval(request.POST.get('data'))
         if data !=None and data !="":
             foo.create_food(data)
-            return HttpResponse("{'status':1}")
+            parameters = {}
+            parameters['all_foods'] = get_all_foods(int(data['useruid']))
+            parameters['profile_id'], parameters['user_id'] = int(data['useruid']), request.user.id
+            return render_to_response('ajax_food.html', parameters, context_instance=RequestContext(request))
+            # return HttpResponse("{'status':1}")
         else:
             return HttpResponse("{'status':0}")
 
@@ -224,7 +229,11 @@ class AjaxHandle(AjaxSearch):
         data = eval(request.POST.get('data'))
         if data !=None and data !="":
             foo.delete_food(useruid = data['useruid'], food_name = data['food_name']);
-            return HttpResponse("{'status':1}")
+            parameters = {}
+            parameters['all_foods'] = get_all_foods(int(data['useruid']))
+            parameters['profile_id'], parameters['user_id'] = int(data['useruid']), request.user.id
+            return render_to_response('ajax_food.html', parameters, context_instance=RequestContext(request))
+            # return HttpResponse("{'status':1}")
         else:
             return HttpResponse("{'status':0}")    
 
@@ -367,3 +376,23 @@ class AjaxHandle(AjaxSearch):
                 return HttpResponse(json.dumps({'valid':'false'}))
         else:
             return HttpResponse(json.dumps({'status':'0'}))
+
+    def activity_handle(self,request):
+        if request.user.is_authenticated and request.method == 'POST':
+            task = request.POST['task']
+            change_id = request.POST['changeID']
+            user = request.user.username
+            if task == 'spam':
+                print task
+                pass
+                #return HttpResponse(json.dumps({'status':'1'}))
+            if task == 'delete':
+                tweet_feed_obj = TweetFeed()
+                tweet_feed_obj.delete_tweet(change_id)
+                return HttpResponse(json.dumps({'status':'1', 'activity':'deleteTweet', '_id':change_id}))
+            if task == 'follow':
+                pass
+        else:
+            return HttpResponse(json.dumps({'status':'0'}))
+
+

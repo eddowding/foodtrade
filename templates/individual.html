@@ -24,14 +24,12 @@
       <div class="col-md-7">
          <h1><a href="#">{{name}}</a></h1>
  
-          <div class="tags tags-biztype  ">  
+<!--           <div class="tags tags-biztype  ">  
             {% for eachtype in type_user %}
            <a href="/activity/?q={{eachtype}}">{{eachtype}}</a>
            {% endfor %}
-           <!-- <a href="/type/buther">Wholesale</a>  
-           <a href="/type/buther">Distribution</a>  
-           <a href="/type/buther">Livestock Farm</a>   -->
-          </div> 
+
+          </div>  -->
          <hr />
          <p>{{description}}</p>        
           <div class="tags">  
@@ -44,7 +42,7 @@
      
          <div class="meta small text-muted">
             
-            <i class="fa fa-map-marker"></i> <a href="http://maps.google.com/maps?saddr=current+location&daddr={{address}}" target="_blank" data-placement="top" data-toggle="tooltip" title="Get directions" class="text-muted">{{address}}</a>  
+            <i class="fa fa-map-marker"></i> <a href="http://maps.google.com/maps?saddr={{loggedin_address}}&daddr={{address}}" target="_blank" data-placement="top" data-toggle="tooltip" title="Get directions" class="text-muted">{{address}}</a>  
             
             <!-- if logged in or you've allows html5 browser location -->
             <i class="fa fa-location-arrow" style="margin-left: 20px;"></i> {{distance}} 
