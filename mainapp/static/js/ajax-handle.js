@@ -110,11 +110,15 @@ $('.search-choice').remove();
 $("#myselect").val('').trigger('chosen:updated');
 $('#food_tbody').html(data);
 }
-function recommend_food(logged_in_id, food_name, prof_id){
+function recommend_food(logged_in_id, food_name, prof_id, username){
 	var data = {recommender_id: logged_in_id, food_name: food_name, business_id: prof_id}
-	ajax_request("vouch_for_food", 'create_conn', {data: JSON.stringify(data)});
-
+	ajax_request("vouch_for_food", 'empty', {data: JSON.stringify(data)});
+	var url = window.location.href;
+	msg = "I've just vouched for " + food_name + " from " + username + " " + url;
+	$('#tweet-recomm').val(msg);
 }
+
+function empty(){}
 
 function delete_food(prof_id, food_name, my_this){
 	var data = {useruid: prof_id, food_name: food_name};
@@ -182,16 +186,21 @@ function PostStatus(status_val)
 // 	ajax_request("del_connection", 'del_conn', {conn_data: {'b_useruid'; b_useruid, 'c_useruid': c_useruid}});
 // }
 
-function UpdateStatus(id_name)
+function UpdateStatus(id_name, noappend)
 {
+	noappend = typeof noappend !== 'undefined' ? noappend : '';
 	message = $('#'+id_name).val();
 	if(message=="")
 	{
 		alert("You can't post empty status.");
 		return;
 	}
-
-	ajax_request("post_tweet", 'CloseNewPostModal', {message: message});	
+	if(noappend == 'noappend'){
+		ajax_request("post_tweet", 'CloseNewPostModal', {message: message, noappend: 'noappend'});
+	}
+	else{
+		ajax_request("post_tweet", 'CloseNewPostModal', {message: message});
+	}
 }
 
 var loggedIn = '';
