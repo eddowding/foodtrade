@@ -117,6 +117,8 @@ class TweetFeed():
     def get_search_results(self, keyword, lon, lat, food_filter, type_filter, organisation_filter, query):
         mapper = Code("""
             function () {
+            if(this.deleted==0)
+            {
             if(this.foods)
             {
             var foods = this.foods;
@@ -236,6 +238,7 @@ class TweetFeed():
                            
 
 
+            }
             }
             """)
 
@@ -420,10 +423,10 @@ class TweetFeed():
     def update_tweets(self, username, first_name, last_name, description, zip_code):
         try:
             results = Geocoder.geocode(zip_code)
-            print str(results), zip_code
+            #print str(results), zip_code
             lon = results.longitude
             lat = results.latitude
-            print lon, lat
+            #print lon, lat
         except:
             results = Geocoder.geocode('sp5 1nr')
             lon = results.longitude
@@ -433,7 +436,8 @@ class TweetFeed():
             {'user.username':username}, 
             {
                 'user.name':str(first_name + ' ' + last_name),
-                'user.description':description, 
+                'user.description':description,
+                'user.place' :str(results),
                 'location.coordinates.0':float(results.longitude),
                 'location.coordinates.1':float(results.latitude),
             })
