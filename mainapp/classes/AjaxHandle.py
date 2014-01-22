@@ -50,13 +50,17 @@ class AjaxHandle(AjaxSearch):
             oauth_token_secret = admin_access_token_secret
             )
         message = request.POST.get('message')
+        noappend = request.POST.get('noappend')
 
 
         url = " http://"+request.META['HTTP_HOST']+"/profile/"+request.user.username
 
         user_profile = UserProfile()
         if message != None and message != "":
-            tweet = twitter.update_status(status = message+url)
+            if noappend == 'noappend':
+                tweet = twitter.update_status(status = message)
+            else:
+                tweet = twitter.update_status(status = message+url)
             tweet_feed = TweetFeed()
             usr = SocialAccount.objects.get(uid = tweet['user']['id'])
             pic_url_list = []

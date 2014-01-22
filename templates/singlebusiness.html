@@ -192,26 +192,25 @@
         </div><!-- /.modal-dialog -->
       </div><!-- /.modal -->
       <!-- modal_customer -->
-      <div class="modal fade" id="modal_customer" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal fade" id="modal_tweet_recomm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
               <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-              <h4 class="modal-title" id="myModalLabel">You're a customer of {{name}}?</h4>
+              <h4 class="modal-title" id="myModalLabel">Tell others what you have just recommended !</h4>
             </div>
             <div class="modal-body">
- 
-            <p><strong>Thanks!</strong> Knowing where customers are is a win-win. {{name}} understands how it can better serve you, and we'll help them innovate, and keep you informed. </p> 
-            <p>Examples might include home deliveries from your local shops, later opening hours, or working together with other local business to make things better. </p>
-            <p>We'll show you as being a customer, and put a small dot on the map near your location.</p>
+               <form accept-charset="UTF-8" action="" method="POST">
+                      <textarea id="tweet-recomm" class="form-control counted" name="message" placeholder="Type in your message" rows="5" ></textarea>
+                  </form> 
    
             </div>
             <div class="modal-footer"> 
               <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
               {% if user.is_authenticated %}
-              <button type="button" class="btn btn-success" onClick="add_customer({{profile_id}}, {{user_id}})" data-dismiss="modal">Yes, I'm a happy customer!</button>
+              <button type="button" class="btn btn-success" data-dismiss="modal" onclick="UpdateStatus('tweet-recomm', 'noappend')">Tweet</button>
               {% else %}
-              <button type="button" class="btn btn-success" data-dismiss="modal">Yes, I'm a happy customer!</button>
+              <button type="button" class="btn btn-success" data-dismiss="modal">Tweet</button>
               {% endif %}
             </div>
           </div><!-- /.modal-content -->
@@ -328,7 +327,7 @@
                    {% endifequal %}
                         {% if user.is_authenticated %}
                     <a class="btn btn-default btn-sm">
-                      <i class="fa fa-thumbs-o-up tltip" title="Recommend this to others" onclick="recommend_food({{user_id}}, '{{eachfood.food_name}}', {{profile_id}}); return null;">
+                      <i class="fa fa-thumbs-o-up tltip" title="Recommend this to others" onclick="recommend_food({{user_id}}, '{{eachfood.food_name}}', {{profile_id}}, '{{screen_name}}'); return null;" data-toggle="modal" data-target="#modal_tweet_recomm">
                       </i>
                     </a> {% endif %}
                      
@@ -732,6 +731,7 @@ function set_width(){
     map_lon = {{ loc.lon }};
 
 connections = {{connections_str | safe}};
+customers = {{customers_str | safe}};
     </script>
      <script src="{% static "js/business-map.js" %}"></script>
      <script src="{% static "js/contact.js" %}"></script>
