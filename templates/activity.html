@@ -67,8 +67,8 @@
             </button> 
             <ul class="dropdown-menu" role="menu">
               {%  if userinfo.user_type == "Business" and result.sign_up_as == "Business" and result.user.username != userinfo.username %}
-              <li><a href="#" onclick="update_connection('buyFrom')">I buy from</a></li>
-              <li><a href="#" onclick="update_connection('sellTo')">I sell to</a></li> 
+              <li><a href="#" onclick="click_activity('buyFrom','{{result.useruid}}')">I buy from</a></li>
+              <li><a href="#"onclick="click_activity('sellTo','{{result.useruid}}')">I sell to</a></li> 
               <li class="divider"></li>
               {% endif %}
               {% if result.sign_up_as == "Organisation" %}
@@ -568,6 +568,9 @@ function success_activity_handle(data){
   }
   if(data['activity'] == 'follow' ){
     alert(data['message']);
+  }
+  if((data['activity'] == 'buyFrom' && data['status'] == 0) || (data['activity'] == 'sellTo' && data['status'] ==0)){
+   alert(data['message']); 
   }
 }
 </script>

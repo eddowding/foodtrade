@@ -385,15 +385,42 @@ class AjaxHandle(AjaxSearch):
             tweet_feed_obj = TweetFeed()
             if task == 'spam':
                 print task
+
             if task == 'delete':
                 tweet_feed_obj.delete_tweet(change_id)
                 return HttpResponse(json.dumps({'status':'1', 'activity':'deleteTweet', '_id':change_id}))
-            if task == 'follow':
 
+            if task == 'follow':
                 friend_obj = Friends()
                 fid = friend_obj.get_friend_id(request.user.username, change_id)
                 data = tweet_feed_obj.follow_user(fid, request.user.username, request.user.id)
                 return HttpResponse(json.dumps(data))
+            if task == 'buyFrom':
+                # print request.user.id, change_id
+                tc_object = TradeConnection()
+                result = tc_object.search_connectedness(int(change_id), int(request.user.id))
+                try:
+                    if (len(result) > 0):
+                        return HttpResponse (json.dumps({'status':0, 'activity':'buyFrom', '_id':change_id, 'message':'You are already connected.'}))
+                    else:
+                        tc_object.create_connection({'c_useruid':int(request.user.id) , 'b_useruid': int(change_id)})
+                        return HttpResponse (json.dumps({'status':1, 'activity':'buyFrom', '_id':change_id, 'message':'You are connected.'}))
+                except:
+                    tc_object.create_connection({'c_useruid':int(request.user.id) , 'b_useruid': int(change_id)})
+                    return HttpResponse (json.dumps({'status':1, 'activity':'buyFrom', '_id':change_id, 'message':'You are connected.'}))
+
+            if task == 'sellTo':                
+                tc_object = TradeConnection()
+                result = tc_object.search_connectedness(int(request.user.id), int(change_id))
+                try:
+                    if (len(result) > 0):
+                        return HttpResponse (json.dumps({'status':0, 'activity':'sellTo', '_id':change_id, 'message':'You are already connected.'}))
+                    else:
+                        tc_object.create_connection({'c_useruid':int(change_id) , 'b_useruid': int(request.user.id)})
+                        return HttpResponse (json.dumps({'status':1, 'activity':'sellTo', '_id':change_id, 'message':'You are connected.'}))
+                except:
+                    tc_object.create_connection({'c_useruid':int(change_id) , 'b_useruid': int(request.user.id)})
+                    return HttpResponse (json.dumps({'status':1, 'activity':'sellTo', '_id':change_id, 'message':'You are connected.'}))
         else:
             return HttpResponse(json.dumps({'status':'0'}))
 

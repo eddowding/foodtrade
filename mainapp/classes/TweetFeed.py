@@ -519,6 +519,7 @@ class TradeConnection():
         self.db_object = MongoConnection("localhost",27017,'foodtrade')
         self.table_name = 'tradeconnection'
         self.db_object.create_table(self.table_name,'b_useruid')
+
     def get_connection_by_business(self,b_useruid):
         return self.db_object.get_all(self.table_name,{'b_useruid': b_useruid, 'deleted': 0})
 
@@ -532,6 +533,10 @@ class TradeConnection():
 
     def delete_connection(self, b_useruid, c_useruid):
         self.db_object.update(self.table_name,{'b_useruid': b_useruid, 'c_useruid': c_useruid}, {'deleted':1})
+
+    def search_connectedness(self, b_useruid, c_useruid):
+        result = self.db_object.get_one(self.table_name, {'b_useruid': b_useruid, 'c_useruid': c_useruid,'deleted':0})
+        return result
 
 class Food():
     """docstring for Connection"""
@@ -668,7 +673,6 @@ class Friends():
         result = self.db_object.get_paginated_values(self.table_name, 
             {'username':str(username), 
             '$or':[{'friends.name':{'$regex':friend}}, {'friends.screen_name':{'$regex':friend}}]})
-        #print result
         return result
 
     def get_friend_id(self, username, screen_name):
