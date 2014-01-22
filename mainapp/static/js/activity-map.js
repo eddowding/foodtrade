@@ -112,6 +112,20 @@ var card_str = '<div class="card-box"><div class="content"><div class="pull-left
 			map_controls.push(ctrl);
 
 		}
+
+
+
+		if(max_lat == min_lat && max_lon==min_lon)
+		{
+			var padding = 0.3
+			max_lat += padding;
+			min_lat -= padding;
+			max_lon += padding;
+			min_lon -= padding;
+		}
+
+
+
 		  map.fitBounds([
     [min_lat, min_lon],
     [max_lat, max_lon]
