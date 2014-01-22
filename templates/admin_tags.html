@@ -84,8 +84,10 @@ $("ul.tag_admin").sortable({
     }
   },
   onDrop: function (item, container, _super) {
-    container.el.removeClass("active")
-    _super(item)
+    container.el.removeClass("active");
+    _super(item);
+
+ZebraStrip();
   }
 });
 
@@ -197,6 +199,27 @@ function get_old_tags(tags)
 }
 var old_tags = {{ tags | safe}};
 $("ul.tag_admin").html(get_old_tags(old_tags));
+
+
+function ZebraStrip()
+{
+  var list_items = $('.tag_admin li');
+  var colors = [];
+  colors.push("#efefef");
+  colors.push("#afafaf");
+  for(var i = 0;i<list_items.length; i++)
+  {
+      list_items[i].style.background = colors[i%2];
+  }
+
+  var list_items = $('.tag_admin ul');
+  for(var i = 0;i<list_items.length; i++)
+  {
+      list_items[i].style.background = "white";
+  }
+}
+
+ZebraStrip();
 
 // $(".switch-container").on("click", ".switch", function  (e) {
 //   var method = $(this).hasClass("active") ? "enable" : "disable"
