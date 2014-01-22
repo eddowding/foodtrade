@@ -56,20 +56,23 @@ function conn_handler(value, prof_id, conn_id)
 }
 
 function third_party_connection(prof_id){
-	var business_id = $('#buss_chosen').val().join('');
-	// buyer checked
-	if($('#option1_conn').is(':checked')){
-		// var conn_data = {prof_id: prof_id, status: 'buy_from', buss_id: businesses_id };
-		ajax_request("third_party_conn", 'conn_ajax', {conn_data: "{'prof_id': " + prof_id + ",'buss_id': " + business_id + ",'status': 'buy_from'}"});
-		
+	// var business_id = $('#buss_chosen').val().join('');
+	var business_ids_list = $('#buss_chosen').val();
+
+	for(i=0;i<business_ids_list.length;i++){
+		// buyer checked
+		if($('#option1_conn').is(':checked') && business_ids_list[i]!=""){
+			// var conn_data = {prof_id: prof_id, status: 'buy_from', buss_id: businesses_id };
+			ajax_request("third_party_conn", 'conn_ajax', {conn_data: "{'prof_id': " + prof_id + ",'buss_id': " + business_ids_list[i] + ",'status': 'buy_from'}"});
+			
+		}
+		// seller checked
+		if($('#option2_conn').is(':checked') && business_ids_list[i]!=""){
+			// var conn_data = {prof_id: prof_id, status: 'sell_to', buss_id: businesses_id };
+			ajax_request("third_party_conn", 'conn_ajax', {conn_data: "{'prof_id': " + prof_id + ",'buss_id': " + business_ids_list[i] + ",'status': 'sell_to'}"});
+		}
 	}
-	// seller checked
-	if($('#option2_conn').is(':checked')){
-		// var conn_data = {prof_id: prof_id, status: 'sell_to', buss_id: businesses_id };
-		ajax_request("third_party_conn", 'conn_ajax', {conn_data: "{'prof_id': " + prof_id + ",'buss_id': " + business_id + ",'status': 'sell_to'}"});
-	}
-	// $('.search-choice').remove();
-	// $("#buss_chosen").val('');
+	
 }
 function conn_ajax(data){
 // clear selected choice
@@ -80,7 +83,7 @@ $('#all-connections').html(data);
 reload_connections();
 }
 function create_conn(){
-	
+	location.reload();
 }
 
 function invite_connect(prof_username, logged_username){
@@ -89,19 +92,12 @@ function invite_connect(prof_username, logged_username){
 }
 
 function add_food(prof_id){
-	// var food = document.getElementById('addfood_id').value;
 	if (validate_login()['status'] == '1'){
-		// var food = document.getElementsByClassName('chosen-single')[0].children[0].innerHTML;
 		var elements = document.getElementsByClassName('search-choice');
 	    var food = elements[0].children[0].innerHTML;
-	    // alert(food);
 		var data = {useruid: prof_id, food_name: food};
 		ajax_request("addfood", 'food_ajax', {data: JSON.stringify(data)});
-		// document.getElementsByClassName('chosen-single')[0].children[0].innerHTML = '';
-		// $('#myselect').trigger('chosen:open');
-		$('.search-choice').remove();
-		// var append_data = '<tr><td>'+food+'</td><td><div class="pull-right"><a href="#"><i class="fa fa-heart-o" title="Vouch for this"></i></a></div></td></tr>';
-		// $("#food_tbody").prepend(append_data);
+		
 	}
 	else{
 		$('#adfoo_id').tooltip('show');
@@ -110,13 +106,19 @@ function add_food(prof_id){
 }
 
 function food_ajax(data){
+$('.search-choice').remove();
+$("#myselect").val('').trigger('chosen:updated');
 $('#food_tbody').html(data);
 }
-function recommend_food(logged_in_id, food_name, prof_id){
+function recommend_food(logged_in_id, food_name, prof_id, username){
 	var data = {recommender_id: logged_in_id, food_name: food_name, business_id: prof_id}
-	ajax_request("vouch_for_food", 'create_conn', {data: JSON.stringify(data)});
-
+	ajax_request("vouch_for_food", 'empty', {data: JSON.stringify(data)});
+	var url = window.location.href;
+	msg = "I've just vouched for " + food_name + " from " + username + " " + url;
+	$('#tweet-recomm').val(msg);
 }
+
+function empty(){}
 
 function delete_food(prof_id, food_name, my_this){
 	var data = {useruid: prof_id, food_name: food_name};
@@ -184,16 +186,21 @@ function PostStatus(status_val)
 // 	ajax_request("del_connection", 'del_conn', {conn_data: {'b_useruid'; b_useruid, 'c_useruid': c_useruid}});
 // }
 
-function UpdateStatus(id_name)
+function UpdateStatus(id_name, noappend)
 {
+	noappend = typeof noappend !== 'undefined' ? noappend : '';
 	message = $('#'+id_name).val();
 	if(message=="")
 	{
 		alert("You can't post empty status.");
 		return;
 	}
-
-	ajax_request("post_tweet", 'CloseNewPostModal', {message: message});	
+	if(noappend == 'noappend'){
+		ajax_request("post_tweet", 'CloseNewPostModal', {message: message, noappend: 'noappend'});
+	}
+	else{
+		ajax_request("post_tweet", 'CloseNewPostModal', {message: message});
+	}
 }
 
 var loggedIn = '';
@@ -274,6 +281,25 @@ $('.enterhandler').bind('keypress', function(e) {
 		  /*alert("roshan");*/
 		  window.location = '/accounts/twitter/login/?process=login';
 	}
+});
+
+
+
+
+
+
+
+
+
+$('#newstatus').bind('keypress', function(e) {
+	
+		var code = e.keyCode || e.which;
+		 if(code == 13) { //Enter keycode
+		   //Do something
+		   UpdateActivity('newstatus');
+		 }
+	
+	
 });
 
 /*function ajax_success_validate_logged_in(data){

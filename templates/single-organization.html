@@ -31,7 +31,7 @@
      
          <div class="meta small text-muted">
             
-            <i class="fa fa-map-marker"></i> <a href="http://maps.google.com/maps?saddr=current+location&daddr={{address}}" target="_blank" data-placement="top" data-toggle="tooltip" title="Get directions" class="text-muted">{{address}}</a>  
+            <i class="fa fa-map-marker"></i> <a href="http://maps.google.com/maps?saddr={{loggedin_address}}&daddr={{address}}" target="_blank" data-placement="top" data-toggle="tooltip" title="Get directions" class="text-muted">{{address}}</a>  
             
             <!-- if logged in or you've allows html5 browser location -->
             <i class="fa fa-location-arrow" style="margin-left: 20px;"></i> {{distance}} miles  
@@ -247,15 +247,9 @@
 
         <div class="tab-content">
           <div class="tab-pane active fade in " id="members">
-      {% if user.is_authenticated %}
+  <!--     {% if user.is_authenticated %}
 <div>
-  <!-- <div>
-           <button class="btn btn-default">
-              <i class="fa fa-smile-o "></i> Are you a member?
-            </button> </div> -->
-            <!-- <button class="btn btn-success" onClick="add_member({{profile_id}}, {{user_id}})">
-              <i class="fa fa-check "></i> I'm a member
-            </button>  -->
+  
       <div class="btn-group btn-block" data-toggle="buttons">
         {% if logged_member %}
       <label class="fa fa-check btn btn-default btn-block active" style="width:30%%;" title="{{userinfo.full_name}} is member of {{name}}" >
@@ -267,7 +261,7 @@
  </label></div></div>
         
 
-            {% endif %}
+            {% endif %} -->
             <div class="clearfix"> 
                     {% for each_mem in members %}
                         <div class="card card-business">
@@ -319,13 +313,13 @@
                   </form>
                    <table class="table table-list-search">
                       <tbody>
-                              {% for eachfood in members_foods %}
+                              {% for each in members_foods %}
+                                  {% for eachfood in each.foods%}
                           <tr>
-                              <td>{{eachfood.food_name}}</td>  
-                              <td> 
-                               <a href="#" class="pull-right"><i class="fa fa-thumbs-o-up text-muted" title="Vouch for this"></i></a> 
-                              </td> 
+                              <!-- <td>{{eachfood.food_name}}</td> -->
+                            <td><a href="/profile/{{each.username}}/"> <img class="pull-left" style="margin:0 50px 0 5px; width:25px;" src={{each.photo}} title="{{each.username}}"/></a>{{eachfood.food_name}}</td>
                           </tr> 
+                                {% endfor %}
                               {% endfor %}
                       </tbody>
                       
@@ -477,13 +471,9 @@
         <script type="text/javascript">
     map_lat={{ loc.lat }};
     map_lon = {{ loc.lon }};
-
-
-{% if results %}
-connections = [];
-    {% endif %}
+connections = {{members_str | safe}};
     </script>
-     <script src="{% static "js/activity-map.js" %}"></script>
+    <script src="{% static "js/business-map.js" %}"></script>
      <script src="{% static "js/contact.js" %}"></script>
 
 {% endblock %}   

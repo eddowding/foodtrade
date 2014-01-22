@@ -117,6 +117,8 @@ class TweetFeed():
     def get_search_results(self, keyword, lon, lat, food_filter, type_filter, organisation_filter, query):
         mapper = Code("""
             function () {
+            if(this.deleted==0)
+            {
             if(this.foods)
             {
             var foods = this.foods;
@@ -236,6 +238,7 @@ class TweetFeed():
                            
 
 
+            }
             }
             """)
 
@@ -420,10 +423,10 @@ class TweetFeed():
     def update_tweets(self, username, first_name, last_name, description, zip_code):
         try:
             results = Geocoder.geocode(zip_code)
-            print str(results), zip_code
+            #print str(results), zip_code
             lon = results.longitude
             lat = results.latitude
-            print lon, lat
+            #print lon, lat
         except:
             results = Geocoder.geocode('sp5 1nr')
             lon = results.longitude
@@ -433,7 +436,8 @@ class TweetFeed():
             {'user.username':username}, 
             {
                 'user.name':str(first_name + ' ' + last_name),
-                'user.description':description, 
+                'user.description':description,
+                'user.place' :str(results),
                 'location.coordinates.0':float(results.longitude),
                 'location.coordinates.1':float(results.latitude),
             })
@@ -456,7 +460,25 @@ class TweetFeed():
 
     def get_followers(self, twitter_id):
         pass
-
+        
+    def get_user_tweets_latest(self, user_id):
+        pass
+    
+    def follow_user(self, friend_id, my_username, my_id):
+        st = SocialToken.objects.get(account__user__id=my_id)
+        access_token = st.token
+        access_token_secret = st.token_secret        
+        twitter = Twython(
+        app_key = consumer_key,
+        app_secret = consumer_secret,
+        oauth_token = access_token,
+        oauth_token_secret = access_token_secret
+        )
+        try:
+            twitter.create_friendship(user_id = friend_id)
+            return {'status':1, 'activity':'follow', '_id':my_id, 'message':'You have successfully followed.'}
+        except:
+            return {'status':0, 'activity':'follow', '_id':my_id, 'message':'Already Followed'}
 
 class UserProfile():
     def __init__ (self):
@@ -497,6 +519,7 @@ class TradeConnection():
         self.db_object = MongoConnection("localhost",27017,'foodtrade')
         self.table_name = 'tradeconnection'
         self.db_object.create_table(self.table_name,'b_useruid')
+
     def get_connection_by_business(self,b_useruid):
         return self.db_object.get_all(self.table_name,{'b_useruid': b_useruid, 'deleted': 0})
 
@@ -510,6 +533,10 @@ class TradeConnection():
 
     def delete_connection(self, b_useruid, c_useruid):
         self.db_object.update(self.table_name,{'b_useruid': b_useruid, 'c_useruid': c_useruid}, {'deleted':1})
+
+    def search_connectedness(self, b_useruid, c_useruid):
+        result = self.db_object.get_one(self.table_name, {'b_useruid': b_useruid, 'c_useruid': c_useruid,'deleted':0})
+        return result
 
 class Food():
     """docstring for Connection"""
@@ -646,8 +673,13 @@ class Friends():
         result = self.db_object.get_paginated_values(self.table_name, 
             {'username':str(username), 
             '$or':[{'friends.name':{'$regex':friend}}, {'friends.screen_name':{'$regex':friend}}]})
-        #print result
         return result
+
+    def get_friend_id(self, username, screen_name):
+        #print username, screen_name, "Inside GET FRIEND ID"
+        result = self.db_object.get_one(self.table_name,{'username':str(username),'friends.screen_name':str(screen_name)})
+        #print result
+        return result['friends']['id']
 
 class Invites():
     def __init__ (self):

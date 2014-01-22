@@ -197,12 +197,14 @@ function validateFeedback(){
     address = document.getElementById("phone").value;
     ajax_request('check_valid_address', 'success_validate_address',{'address':address});
   }
+
   function success_validate_address(data){
     data = jQuery.parseJSON(data);
     if (data['valid'] != 'true'){
       alert('Invalid Address!!');
     }
   }
+   
   function validate_business_type(){
     if (business_type == 'Business' && $('#hidden_type').val().length == 0){
       alert("Please select atleast one Business Type!");

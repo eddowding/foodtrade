@@ -22,19 +22,19 @@
 </ul>
 
 <div class="tab-content">
-  <div class="tab-pane active" id="activity">
+  <div class="tab-pane active" id="near_me">
  
 
   <div id="update" class="well well-sm">
-    <form action="#" method="get" >
+    
         <div class="input-group"> 
           <input class="form-control" name="q" id="newstatus" {% if not user.is_authenticated %}  onfocus="login_redirect()" title="Please login to use this feature." {% endif %} placeholder="What #food do you have to #buy, #sell, or #surplus?">
           <span class="input-group-btn">
               <button type="button" id="btn_update_activity" class="btn btn-success" {% if not user.is_authenticated %}  title="Please login to use this feature." {% endif %} onclick="UpdateActivity('newstatus');"> Post</button>
           </span>
         </div>
-    </form>
-    <div class="help-block small hidden-sm hidden-xs">
+
+    <div class="help-block small hidden-sm">
     <ul>
     <li>300kg #surplus conference #pears for #sale or #surplus</li>
     <li>I want to  #buy organic #honey for my farm shop.</li>
@@ -42,7 +42,21 @@
     </div>
   </div> 
 
- 
+ <div class="row">
+  <div class="col-md-12">
+ <div class="btn-group pull-right">
+    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+      Sort By
+      <span class="caret"></span>
+    </button>
+    <ul class="dropdown-menu">
+      <li><a onclick="sort_by('distance')">Distance</a></li>
+      <li><a onclick="sort_by('time')">Time</a></li>
+    </ul>
+  </div>
+
+  </div>
+</div>
   <div id="activity"> 
         <ul class="chat">
 
@@ -54,7 +68,7 @@
 
 {% for result in results %}
 
-    <li class="left clearfix"><span class="chat-img pull-left">
+    <li class="left clearfix" id="{{result.uid.id}}"><span class="chat-img pull-left">
     <img src="{{result.user.profile_img}}" alt="{{result.user.name}}" class="img-thumbnail" />
     </span>
         <div class="chat-body clearfix">
@@ -66,22 +80,26 @@
                 <span class="caret text-muted"></span>
             </button> 
             <ul class="dropdown-menu" role="menu">
-            {% if userinfo.user_type == "Business" and result.sign_up_as == "Business" %}
-              <li><a href="#">I buy from</a></li>
-              <li><a href="#">I sell to</a></li> 
+              {%  if userinfo.user_type == "Business" and result.sign_up_as == "Business" and result.user.username != userinfo.username %}
+              <li><a href="#" onclick="click_activity('buyFrom','{{result.useruid}}')">I buy from</a></li>
+              <li><a href="#"onclick="click_activity('sellTo','{{result.useruid}}')">I sell to</a></li> 
               <li class="divider"></li>
               {% endif %}
               {% if result.sign_up_as == "Organisation" %}
-              <li><a href="#">I'm a member</a></li>
+              <li><a href="#" onclick="click_activity('markMember', '{{result.user.username}}')">I'm a member</a></li>
               {% endif %}
               {% if userinfo.user_type == "Individual" and result.sign_up_as == "Business" %}
-              <li><a href="#">I'm a customer</a></li>
+              <li><a href="#" onclick="click_activity('markCustomer', '{{result.user.username}}')">I'm a customer</a></li>
               {% endif %}
               <li class="divider"></li>
-              <li><a href="#">Delete</a></li>
-              <li><a href="#">Flag as spam</a></li>
-              <li><a href="#">Follow on Twitter</a></li>
-              <li><a href="#">View full profile</a></li> 
+              {% ifequal result.user.username userinfo.username %}
+              <li><a href="#" onclick="click_activity('delete','{{result.uid.id}}')">Delete</a></li>
+              {% endifequal %}
+              {% if result.user.username != userinfo.username %}
+              <li><a href="#" onclick="click_activity('spam','{{result.uid.id}}')">Flag as spam</a></li>
+              <li><a href="#" onclick="click_activity('follow','{{result.user.username}}')">Follow on Twitter</a></li>
+              {% endif %}
+              <li><a href="/profile/{{result.user.username}}/">View full profile</a></li> 
             </ul>
           </div>  
 
@@ -104,7 +122,7 @@
 
               <div class="meta small text-muted">
                <i class="fa fa-map-marker"></i>
-                {{result.user.place}}   
+                {{result.user.place}}
 
                  <!-- if logged in or you've allows html5 browser location -->
 
@@ -185,17 +203,9 @@ connections = {{json_data | safe}};
                 <span class="caret text-muted"></span>
             </button> 
             <ul class="dropdown-menu" role="menu">
-              <li><a href="#">I buy from</a></li>
-              <li><a href="#">I sell to</a></li> 
-              <li class="divider"></li>
-              <li><a href="#">I'm a member</a></li>
-              <li><a href="#">I'm a customer</a></li>
-              <li class="divider"></li>
-              <li><a href="#">Delete</a></li>
-              <li><a href="#">Flag as spam</a></li>
-              <li><a href="#">dsf</a></li> 
-              <li><a href="#">Follow on Twitter</a></li>
-              <li><a href="#">View full profile</a></li> 
+              
+                <li><a href="#" onclick="click_activity('delete', '{{result.uid.id}}')">Delete</a></li>
+              <li><a href="/profile/{{result.user.username}}" >View full profile</a></li> 
             </ul>
           </div>  
 
@@ -215,11 +225,11 @@ connections = {{json_data | safe}};
 
               <div class="meta small text-muted">
                <i class="fa fa-map-marker"></i>
-               London, UK 
+               {{userinfo.address}}
 
                  <!-- if logged in or you've allows html5 browser location -->
 
-                 <a href="http://maps.google.com/maps?saddr=current+location&daddr=Sydney+Opera+House,+Sydney+Opera+House,+Bennelong+Point,+Sydney+NSW+2000,+Australia" 
+                 <a href="http://maps.google.com/maps?saddr=current+location&daddr={{userinfo.address}}" 
                     target="_blank" data-placement="top" data-toggle="tooltip" 
                     class="text-muted" 
                     title="Get directions"> 
@@ -466,42 +476,77 @@ for(var i = 0; i < organisation_filters.length;i++){
        function make_search()
        {
         var foods = [];
-        if($("#all_foods").prop('checked') == false)
-        {
+        var flag = false;
+        
           for(var i = 0; i < food_filters.length;i++){
           if(food_filters[i].prev)
           {
+            flag = true;
             foods.push(food_filters[i].uid);
           }
           }
-        }
+
+          if(flag)
+        {
+           $('#all_foods').prop('checked', false);
+          }
+          else
+          {
+            $('#all_foods').prop('checked', true);
+          }
+          flag = false;
+       
 
 
           var businesses = [];
-          if($("#all_businesses").prop('checked') == false)
-        {
+          
+          
           for(var i = 0; i < business_filters.length;i++){
           if(business_filters[i].prev)
           {
+            flag =true;
             businesses.push(business_filters[i].uid);
           }
         }
-          }
-            var organisations = [];
-            if($("#all_organisations").prop('checked') == false)
+        if(flag)
         {
+           $('#all_businesses').prop('checked', false);
+          }
+          else
+          {
+            $('#all_businesses').prop('checked', true);
+          }
+          flag = false;
+
+
+
+
+            var organisations = [];
+          
           for(var i = 0; i < organisation_filters.length;i++){
           if(organisation_filters[i].prev)
           {
+            flag = true;
             organisations.push(organisation_filters[i].uid);
           }
           }
-        }
+          if(flag)
+        {
+           $('#all_organisations').prop('checked', false);
+          }
+          else
+          {
+            $('#all_organisations').prop('checked', true);
+          }
+          flag = false;
+       
           var keyword = $("#keyword").val();
           var s_lon = $("#lon").val();
           var s_lat = $("#lat").val();
+          var sort_type = $("#sortby").val();
 
-           ajax_request("ajax_search", 'show_ajax_results', {q:keyword, lon:s_lon, lat:s_lat, foods:JSON.stringify(foods), businesses:JSON.stringify(businesses), organisations:JSON.stringify(organisations)});
+
+           ajax_request("ajax_search", 'show_ajax_results', {q:keyword, lon:s_lon, lat:s_lat, foods:JSON.stringify(foods), businesses:JSON.stringify(businesses), organisations:JSON.stringify(organisations), sort: sort_type});
        }
 
 
@@ -529,6 +574,28 @@ show_food_filters(food_filters, 0);
 show_organisation_filters(organisation_filters, 0);
 show_business_filters(business_filters, 0);
 
+function click_activity(activity, changeID){
+  ajax_request('activity_handle','success_activity_handle',{'user':'{{userinfo.username}}', 'changeID':changeID, 'task':activity});
+}
+function success_activity_handle(data){
+  data = jQuery.parseJSON(data);
+  if(data['status'] == 1 && data['activity'] == 'deleteTweet'){
+    $('#' + String(data['_id'])).hide();
+  }
+  if(data['activity'] == 'follow' ){
+    alert(data['message']);
+  }
+  if((data['activity'] == 'buyFrom' && data['status'] == 0) || (data['activity'] == 'sellTo' && data['status'] ==0)){
+   alert(data['message']); 
+  }
+}
+
+
+function sort_by(sort)
+{
+   $("#sortby").val(sort);
+   make_search()
+}
 
 </script>
 

@@ -55,6 +55,7 @@ def display_profile(request, username):
         user_profile_obj = UserProfile()
         user_profile = user_profile_obj.get_profile_by_id(str(user_id))
         parameters['loggedin_signupas'] = user_profile['sign_up_as']
+        parameters['loggedin_address'] = user_profile['address']
         user_info = UserInfo(user_id)
         parameters['userinfo'] = user_info
         parameters['user_id'] = request.user.id
@@ -96,6 +97,7 @@ def display_profile(request, username):
             parameters['customers'] = all_customers[:10]
 
         parameters['connections_str'] = json.dumps(parameters['connections'])
+        parameters['customers_str'] = json.dumps(parameters['customers'])
         # get all organisations
         return render_to_response('singlebusiness.html', parameters, context_instance=RequestContext(request))
         # return render_to_response('typeahead.html', parameters, context_instance=RequestContext(request))
@@ -110,6 +112,7 @@ def display_profile(request, username):
             parameters['members'] = member_limited
             team_limited, parameters['logged_team'] = get_team(usr.id)
             parameters['teams'] = team_limited[:10]
+        parameters['members_str'] = json.dumps(parameters['members'])
         return render_to_response('single-organization.html', parameters, context_instance=RequestContext(request))
     elif parameters['sign_up_as'] == 'Individual':
         return render_to_response('individual.html', parameters, context_instance=RequestContext(request))
@@ -219,18 +222,21 @@ def get_customers(user_id, logged_id=None):
     cust = Customer()
     all_customers = cust.get_customers_by_userid(user_id)
     final_customers = []
+    userprof = UserProfile()
     logged_customer = False
     for each in all_customers:
         account = SocialAccount.objects.get(user__id = each['customeruid'])
+        usr_pr = userprof.get_profile_by_id(str(each['customeruid']))
         if logged_id!=None and each['customeruid'] == logged_id:
             logged_customer = True
         final_customers.append({'id': each['customeruid'],
          'name': account.extra_data['name'],
          'description': account.extra_data['description'],
          'photo': account.extra_data['profile_image_url'],
-         'username' : account.extra_data['screen_name']
+         'username' : account.extra_data['screen_name'],
+         'latitude': usr_pr['latitude'],
+         'longitude': usr_pr['longitude']
          })
-    print 'logged_customer', logged_customer
     return final_customers[:10], logged_customer
 
 def get_connections(user_id, logged_in_id = None):
@@ -302,23 +308,26 @@ def get_members(user_id, logged_in_id = None):
     final_members = []
     logged_member = False
     for each in members:
-        account = SocialAccount.objects.get(user__id = each['memberuid'])
-        usr_pr = userprof.get_profile_by_id(str(each['memberuid']))
-        user_info = UserInfo(each['memberuid'])
-        if logged_in_id!=None and each['memberuid'] == logged_in_id:
-                logged_member = True
-        final_members.append({'id': each['memberuid'],
-         'name': account.extra_data['name'],
-         'description': account.extra_data['description'],
-         'photo': account.extra_data['profile_image_url'],
-         'username' : account.extra_data['screen_name'],
-         'type': usr_pr['type_user'].split(','),
-         'trade_conn_no': user_info.trade_connections_no,
-         'food_no': user_info.food_no,
-         'org_conn_no': user_info.organisation_connection_no,
-         'latitude': usr_pr['latitude'],
-         'longitude': usr_pr['longitude']
-         })
+        try:
+            account = SocialAccount.objects.get(user__id = each['memberuid'])
+            usr_pr = userprof.get_profile_by_id(str(each['memberuid']))
+            user_info = UserInfo(each['memberuid'])
+            if logged_in_id!=None and each['memberuid'] == logged_in_id:
+                    logged_member = True
+            final_members.append({'id': each['memberuid'],
+             'name': account.extra_data['name'],
+             'description': account.extra_data['description'],
+             'photo': account.extra_data['profile_image_url'],
+             'username' : account.extra_data['screen_name'],
+             'type': usr_pr['type_user'].split(','),
+             'trade_conn_no': user_info.trade_connections_no,
+             'food_no': user_info.food_no,
+             'org_conn_no': user_info.organisation_connection_no,
+             'latitude': usr_pr['latitude'],
+             'longitude': usr_pr['longitude']
+             })
+        except:
+            pass
     return final_members, logged_member
 
 def get_organisations(user_id):
@@ -342,7 +351,16 @@ def get_foods_from_org_members(user_id):
     all_foods = []
     for each in members:
         mem_foods = foo.get_foods_by_userid(each['memberuid'])
-        all_foods.extend(mem_foods)
+        try:
+            account = SocialAccount.objects.get(user__id = each['memberuid'])
+            all_foods.append({'id': each['memberuid'],
+             'name': account.extra_data['name'],
+             'photo': account.extra_data['profile_image_url'],
+             'username' : account.extra_data['screen_name'],
+             'foods': mem_foods
+             })
+        except:
+            pass
     return all_foods
 
 def get_team(user_id, logged_in_id=None):
@@ -351,15 +369,18 @@ def get_team(user_id, logged_in_id=None):
     final_teams = []
     logged_team = False
     for each in teams:
-        account = SocialAccount.objects.get(user__id = each['memberuid'])
-        if logged_in_id!=None and each['memberuid'] == logged_in_id:
-                logged_team = True
-        final_teams.append({'id': each['memberuid'],
-         'name': account.extra_data['name'],
-         'description': account.extra_data['description'],
-         'photo': account.extra_data['profile_image_url'],
-         'username' : account.extra_data['screen_name']
-         })
+        try:
+            account = SocialAccount.objects.get(user__id = each['memberuid'])
+            if logged_in_id!=None and each['memberuid'] == logged_in_id:
+                    logged_team = True
+            final_teams.append({'id': each['memberuid'],
+             'name': account.extra_data['name'],
+             'description': account.extra_data['description'],
+             'photo': account.extra_data['profile_image_url'],
+             'username' : account.extra_data['screen_name']
+             })
+        except:
+            pass
     #print final_teams
     return final_teams, logged_team
 
