@@ -62,6 +62,11 @@ function reload_controls()
 			var con = connections[i];
 			var name = con.user.name;
 			var status =  con.status;
+			var profile_img = con.user.profile_img;
+			var username = con.user.username;
+			var description = con.user.description;
+			var type_user = con.type_user;
+
 			var current_lat = parseFloat(con.location.coordinates[1]);
 			var current_lon = parseFloat(con.location.coordinates[0]);
 			if(current_lat>max_lat)
@@ -84,11 +89,43 @@ function reload_controls()
 				min_lon = current_lon;
 			}
 
-			var ctrl = L.marker([parseFloat(current_lat), parseFloat(current_lon)]).addTo(map).bindPopup("<b>"+name + "</b> <br />"+status+"<br />");
+var card_str = '<div class="card-box"><div class="content"><div class="pull-left"><a href="/profile/'+username+'"><img src="'+profile_img+'" alt="'+name+'" class="img-rounded img-responsive" style="width:40px;" /></a>';
+
+                
+                      card_str += '</div><div class="text"><h5><a href="/profile/'+username+'">'+name+'</a></h5>';
+
+                      card_str += '<p class="small">'+description.substr(0,80)+'</p></div></div>';
+                      if(type_user.length>0)
+                      {
+                    card_str += '<div class="numbers clearfix"><div class="tags tags-biztype pull-left">';
+                    for(var j=0;j<type_user.length;j++)
+                    {  
+                      
+                      card_str +=  '<a href="/activity/?q='+type_user[j]+'">'+type_user[j]+'</a>';
+                     }
+                      card_str += '</div></div>';
+                }
+                  card_str += '</div> ';
+
+			var ctrl = L.marker([parseFloat(current_lat), parseFloat(current_lon)]).addTo(map).bindPopup(card_str);
 			
 			map_controls.push(ctrl);
 
 		}
+
+
+
+		if(max_lat == min_lat && max_lon==min_lon)
+		{
+			var padding = 0.3
+			max_lat += padding;
+			min_lat -= padding;
+			max_lon += padding;
+			min_lon -= padding;
+		}
+
+
+
 		  map.fitBounds([
     [min_lat, min_lon],
     [max_lat, max_lon]
@@ -101,3 +138,4 @@ function reload_controls()
 
 
 
+setTimeout(function(){reload_controls()},3000);

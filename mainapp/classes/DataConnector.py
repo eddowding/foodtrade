@@ -80,6 +80,7 @@ class UserInfo():
         self.lat = userprof['latitude']
         self.user_type = userprof['sign_up_as']
         self.zip_code = userprof['zip_code']
+        self.address = userprof['address']
 
         user_connection =  UserConnections(user_id)
 

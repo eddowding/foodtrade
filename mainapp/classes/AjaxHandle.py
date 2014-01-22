@@ -382,7 +382,16 @@ class AjaxHandle(AjaxSearch):
             task = request.POST['task']
             change_id = request.POST['changeID']
             user = request.user.username
-            print task, change_id, user
+            if task == 'spam':
+                print task
+                pass
+                #return HttpResponse(json.dumps({'status':'1'}))
+            if task == 'delete':
+                tweet_feed_obj = TweetFeed()
+                tweet_feed_obj.delete_tweet(change_id)
+                return HttpResponse(json.dumps({'status':'1', 'activity':'deleteTweet', '_id':change_id}))
+            if task == 'follow':
+                pass
         else:
             return HttpResponse(json.dumps({'status':'0'}))
 

@@ -28,7 +28,7 @@ from django.views.decorators.csrf import csrf_exempt
 
 @csrf_exempt
 def ajax_request(request, func_name):
-    print func_name, request.POST
+    #print func_name, request.POST
     ajax_handle = AjaxHandle()
     return_msg = getattr(ajax_handle,func_name)(request)
     if func_name == 'post_tweet' and 'invite' in request.POST and json.loads(return_msg.content)['status'] == 1:
