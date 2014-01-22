@@ -1,7 +1,7 @@
 
 
 import smtplib
-
+import json
 
 class Email():
     def __init__ (self):
@@ -19,10 +19,26 @@ class Email():
         server.starttls()
         server.login(sender, passwd)
 
-        body = '\r\n'.join(['To: %s' % to,
-                            'From: %s' % sender,
+        template_content = {"template_content": [
+        {
+            "name": "title",
+            "content": "<h2>Your Order is Complete</h2>"
+        },
+        {
+            "name": "main",
+            "content": "We appreciate your business. Your order information is below."
+        }
+    ]}
+    
+
+        body = '\r\n'.join([
+                            'To: %s' % to,
+                            # 'From: %s' % sender,
+                            'X-MC-Template: %s' % "foodtrade-master|main",
+                            # 'X-MC-Metadata: %s' % json.dumps(template_content),
                             'Subject: %s' % subject,
-                            '', message])
+                            '', message
+                            ])
 
         try:
             server.sendmail(sender, [to], body)
@@ -31,5 +47,3 @@ class Email():
         except:
             server.quit()
             return False
-
-            
