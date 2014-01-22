@@ -113,12 +113,24 @@ h2 {
   margin-top: -10px; 
 }
 
+.tt-hint
+{
+  margin-left: 12px;
+margin-top: 4px;
+background: #eee;
+}
+
+.fa span {
+  font-family: "Helvetica Neue",Helvetica,Arial,sans-serif !important;
+  font-size: 14px; 
+  font-weight: normal;
+}
+
 /********************************/
 /**  FULL HEIGHT SIDEBAR       **/
 /********************************/
  
-
-#main_page,  
+#main_page,
 #main_page #main_row,
 #main_page #main_row .fill,
 #sidebar
@@ -366,6 +378,9 @@ fieldset[disabled] .btn-primary.active {
 /**  LEAFLET MAP  & LABEL      **/
 /********************************/
 
+#map {
+  height: 800px;
+}
 
 .leaflet-marker-icon {
 	width: 18px !important;
