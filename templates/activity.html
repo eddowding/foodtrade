@@ -22,7 +22,7 @@
 </ul>
 
 <div class="tab-content">
-  <div class="tab-pane active" id="activity">
+  <div class="tab-pane active" id="near_me">
  
 
   <div id="update" class="well well-sm">
@@ -42,7 +42,21 @@
     </div>
   </div> 
 
- 
+ <div class="row">
+  <div class="col-md-12">
+ <div class="btn-group pull-right">
+    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+      Sort By
+      <span class="caret"></span>
+    </button>
+    <ul class="dropdown-menu">
+      <li><a onclick="sort_by('distance')">Distance</a></li>
+      <li><a onclick="sort_by('time')">Time</a></li>
+    </ul>
+  </div>
+
+  </div>
+</div>
   <div id="activity"> 
         <ul class="chat">
 
@@ -79,11 +93,11 @@
               {% endif %}
               <li class="divider"></li>
               {% ifequal result.user.username userinfo.username %}
-              <li><a href="#" onclick="click_activity('delete', '{{result.uid.id}}')">Delete</a></li>
+              <li><a href="#" onclick="click_activity('delete','{{result.uid.id}}')">Delete</a></li>
               {% endifequal %}
               {% if result.user.username != userinfo.username %}
-              <li><a href="#" onclick="click_activity('spam', '{{result.uid.id}}')">Flag as spam</a></li>
-              <li><a href="#" onclick="click_activity('follow', '{{result.user.username}}')">Follow on Twitter</a></li>
+              <li><a href="#" onclick="click_activity('spam','{{result.uid.id}}')">Flag as spam</a></li>
+              <li><a href="#" onclick="click_activity('follow','{{result.user.username}}')">Follow on Twitter</a></li>
               {% endif %}
               <li><a href="/profile/{{result.user.username}}/">View full profile</a></li> 
             </ul>
@@ -529,8 +543,10 @@ for(var i = 0; i < organisation_filters.length;i++){
           var keyword = $("#keyword").val();
           var s_lon = $("#lon").val();
           var s_lat = $("#lat").val();
+          var sort_type = $("#sortby").val();
 
-           ajax_request("ajax_search", 'show_ajax_results', {q:keyword, lon:s_lon, lat:s_lat, foods:JSON.stringify(foods), businesses:JSON.stringify(businesses), organisations:JSON.stringify(organisations)});
+
+           ajax_request("ajax_search", 'show_ajax_results', {q:keyword, lon:s_lon, lat:s_lat, foods:JSON.stringify(foods), businesses:JSON.stringify(businesses), organisations:JSON.stringify(organisations), sort: sort_type});
        }
 
 
@@ -563,8 +579,21 @@ function click_activity(activity, changeID){
 }
 function success_activity_handle(data){
   data = jQuery.parseJSON(data);
-  $('#' + String(data['_id'])).hide();
+  if(data['status'] == 1 && data['activity'] == 'deleteTweet'){
+    $('#' + String(data['_id'])).hide();
+  }
+  if(data['activity'] == 'follow' ){
+    alert(data['message']);
+  }
 }
+
+
+function sort_by(sort)
+{
+   $("#sortby").val(sort);
+   make_search()
+}
+
 </script>
 
  {% endblock %}

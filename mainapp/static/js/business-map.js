@@ -109,7 +109,32 @@ function reload_connections()
 			}).addTo(map);
 			map_controls.push(polyline);
 
+
+
+			var dot = L.circleMarker([parseFloat(latitude), parseFloat(longitude)],  {
+			
+			color: '#000',
+			opacity:1,
+			weight:2,
+			fill:2,
+			fillColor: "#000",
+			fillOpacity: 1,
+
+		}).addTo(map);
+			map_controls.push(dot);
+
 }
+
+	if(max_lat == min_lat && max_lon==min_lon)
+		{
+			var padding = 0.3
+			max_lat += padding;
+			min_lat -= padding;
+			max_lon += padding;
+			min_lon -= padding;
+		}
+
+
 					  map.fitBounds([
     [min_lat, min_lon],
     [max_lat, max_lon]
