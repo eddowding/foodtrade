@@ -2,8 +2,10 @@
 {% load staticfiles %}
 
 {% block content %}
+ 
+<div class="col-md-10  {% if not user.is_authenticated %} col-md-offset-1 {% endif %}" id="pricing">
 
-<div class="col-md-10" id="pricing">
+<div class="container-responsive block-center showcase">
 
 <div class='row'>
   <div class="col-md-12 hero" style="background-image: url('http://farm3.staticflickr.com/2088/2540412429_b5f2ab371b_o.jpg');">
