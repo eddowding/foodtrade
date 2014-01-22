@@ -34,7 +34,7 @@
           </span>
         </div>
     </form>
-    <div class="help-block small">
+    <div class="help-block small hidden-sm">
     <ul>
     <li>300kg #surplus conference #pears for #sale or #surplus</li>
     <li>I want to  #buy organic #honey for my farm shop.</li>
@@ -91,11 +91,13 @@
             <div class="header">
                 <strong class="pull-left" style="margin-right: 10px;"><a href="/profile/{{result.user.username}}">{{result.user.name}}</a></strong> 
 
-                <div class="tags tags-biztype">
-                {% for tag in result.type_user  %}
+          {% if type_user|length == 0 or type_user|first == '' %}
+          {% else %}
+          <div class="tags tags-biztype  ">  
+            {% for tag in result.type_user  %}
                   <a href="/activity/?q={{tag}}">{{tag}}</a>
                   {% endfor %}
-                </div>
+          </div> {% endif %}
             </div>
 
             <p>
@@ -144,10 +146,10 @@
      
     </div><!-- closes 5 -->
 
-    <div class="col-md-5  col-sm-5">
+    <div class="col-md-5  col-sm-5 fill"  style="height: 100%; ">
 
     <!-- FIX THE MAP POSITION SO IT DOES NOT SCROLL --> 
-      <div style="height: 700px; " id="map"  data-spy="affix" data-offset-top="30">
+      <div style="height: 100%; min-height: 100%;" id="map"  data-spy="affix" data-offset-top="30">
         
 
         <div class="alert alert-warning">
@@ -204,10 +206,10 @@ connections = {{json_data | safe}};
             <div class="header">
                 <strong class="pull-left" style="margin-right: 10px;">{{userinfo.full_name}}</strong> 
 
-                <div class="tags tags-biztype">  
-    <!--               <a href="/type/livestock-farm">Bakery</a>
-                  <a href="/type/buther">Wholesale</a>  --> 
-                </div>
+                <!-- <div class="tags tags-biztype">  
+                  <a href="/type/livestock-farm">Bakery</a>
+                  <a href="/type/buther">Wholesale</a>  
+                </div> -->
             </div>
 
             <p>

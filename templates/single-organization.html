@@ -21,17 +21,17 @@
          <hr />
          <p>{{description}}</p>        
 
-          <div class="tags">  
+  <!--         <div class="tags">  
            <a href="/tag/TAG">Box Scheme</a>
            <a href="/tag/TAG">Butcher</a>
            <a href="/tag/TAG">family</a>
            <a href="/tag/TAG">organic</a> 
-          </div>
+          </div> -->
          <hr /> 
      
          <div class="meta small text-muted">
             
-            <i class="fa fa-map-marker"></i> <a href="http://maps.google.com/maps?saddr=current+location&daddr={{address}}" target="_blank" data-placement="top" data-toggle="tooltip" title="Get directions" class="text-muted">{{address}}</a>  
+            <i class="fa fa-map-marker"></i> <a href="http://maps.google.com/maps?saddr={{loggedin_address}}&daddr={{address}}" target="_blank" data-placement="top" data-toggle="tooltip" title="Get directions" class="text-muted">{{address}}</a>  
             
             <!-- if logged in or you've allows html5 browser location -->
             <i class="fa fa-location-arrow" style="margin-left: 20px;"></i> {{distance}} miles  

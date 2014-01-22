@@ -55,6 +55,7 @@ def display_profile(request, username):
         user_profile_obj = UserProfile()
         user_profile = user_profile_obj.get_profile_by_id(str(user_id))
         parameters['loggedin_signupas'] = user_profile['sign_up_as']
+        parameters['loggedin_address'] = user_profile['address']
         user_info = UserInfo(user_id)
         parameters['userinfo'] = user_info
         parameters['user_id'] = request.user.id
@@ -202,11 +203,14 @@ def get_all_foods(user_id):
         recomm_details =  []
         for each_rec in all_rec:
             myid = each_rec['recommenderuid']
-            account = SocialAccount.objects.get(user__id = myid)
-            recomm_details.append({'id': myid,
-                'name': account.extra_data['name'],
-                'screen_name': account.extra_data['screen_name'],
-                'photo': account.extra_data['profile_image_url']})
+            try:
+                account = SocialAccount.objects.get(user__id = myid)
+                recomm_details.append({'id': myid,
+                    'name': account.extra_data['name'],
+                    'screen_name': account.extra_data['screen_name'],
+                    'photo': account.extra_data['profile_image_url']})
+            except:
+                pass
         random.shuffle(recomm_details)
         data = {'food_name': each['food_name'], 'vouch_count': len(all_rec), 'recomm_details': recomm_details[:8]}
         final_foods.append(data)
