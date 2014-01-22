@@ -44,11 +44,13 @@
 
  <div class="row">
   <div class="col-md-12">
+ <input type="hidden" id="sortby" value="distance">
  <div class="btn-group pull-right">
     <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
       Sort By
       <span class="caret"></span>
     </button>
+
     <ul class="dropdown-menu">
       <li><a onclick="sort_by('distance')">Distance</a></li>
       <li><a onclick="sort_by('time')">Time</a></li>
@@ -591,7 +593,7 @@ function success_activity_handle(data){
 function sort_by(sort)
 {
    $("#sortby").val(sort);
-   make_search()
+   make_search();
 }
 
 </script>

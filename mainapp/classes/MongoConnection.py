@@ -59,6 +59,20 @@ class MongoConnection():
         json_doc = json_doc.replace("_id", "uid")
         return json.loads(str(json_doc))
 
+
+    def map_reduce_search(self, table_name, mapper, reducer,query, sort_by, sort = -1, limit = 20):
+
+        if sort_by == "distance":
+            sort_direction = pymongo.ASCENDING
+        else:
+            sort_direction = pymongo.DESCENDING
+        myresult = self.db[table_name].map_reduce(mapper,reducer,'results', query)
+        results = self.db['results'].find().sort("value."+sort_by, sort_direction).limit(limit)
+        json_doc = json.dumps(list(results),default=json_util.default)
+        json_doc = json_doc.replace("$oid", "id")
+        json_doc = json_doc.replace("_id", "uid")
+        return json.loads(str(json_doc))
+
     def aggregrate_all(self,table_name,conditions={}):
         all_doc = self.db[table_name].aggregate(conditions)['result']
         json_doc = json.dumps(list(all_doc),default=json_util.default)
