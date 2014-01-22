@@ -55,6 +55,7 @@ def display_profile(request, username):
         user_profile_obj = UserProfile()
         user_profile = user_profile_obj.get_profile_by_id(str(user_id))
         parameters['loggedin_signupas'] = user_profile['sign_up_as']
+        parameters['loggedin_address'] = user_profile['address']
         user_info = UserInfo(user_id)
         parameters['userinfo'] = user_info
         parameters['user_id'] = request.user.id
