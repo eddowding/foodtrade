@@ -318,7 +318,7 @@
                                   {% for eachfood in each.foods%}
                           <tr>
                               <!-- <td>{{eachfood.food_name}}</td> -->
-                            <td><a href="/profile/{{each.username}}/"> <img class="pull-left" style="margin:0 50px 0 5px; width:25px;" src={{each.photo}} title="{{each.username}}"/></a>{{eachfood.food_name}}</td>
+                            <td><a href="/profile/{{each.username}}/"> <img class="pull-left" style="margin:0 50px 0 5px; width:25px;" src={{each.photo}} title="{{each.username}}"/>{{eachfood.food_name}}</a></td>
                           </tr> 
                                 {% endfor %}
                               {% endfor %}
