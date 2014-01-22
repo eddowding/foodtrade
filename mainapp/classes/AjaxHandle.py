@@ -376,3 +376,14 @@ class AjaxHandle(AjaxSearch):
                 return HttpResponse(json.dumps({'valid':'false'}))
         else:
             return HttpResponse(json.dumps({'status':'0'}))
+
+    def activity_handle(self,request):
+        if request.user.is_authenticated and request.method == 'POST':
+            task = request.POST['task']
+            change_id = request.POST['changeID']
+            user = request.user.username
+            print task, change_id, user
+        else:
+            return HttpResponse(json.dumps({'status':'0'}))
+
+

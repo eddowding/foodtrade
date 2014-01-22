@@ -456,6 +456,9 @@ class TweetFeed():
 
     def get_followers(self, twitter_id):
         pass
+        
+    def get_user_tweets_latest(self, user_id):
+        pass
 
 
 class UserProfile():

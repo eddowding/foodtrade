@@ -67,21 +67,23 @@
             </button> 
             <ul class="dropdown-menu" role="menu">
             {% if userinfo.user_type == "Business" and result.sign_up_as == "Business" %}
-              <li><a href="#">I buy from</a></li>
-              <li><a href="#">I sell to</a></li> 
+              <li><a href="#" onclick="update_connection('buy')">I buy from</a></li>
+              <li><a href="#" onclick="update_connection('sell')">I sell to</a></li> 
               <li class="divider"></li>
               {% endif %}
               {% if result.sign_up_as == "Organisation" %}
-              <li><a href="#">I'm a member</a></li>
+              <li><a href="#" onclick="click_activity('markMember', '{{result.user.username}}')">I'm a member</a></li>
               {% endif %}
               {% if userinfo.user_type == "Individual" and result.sign_up_as == "Business" %}
-              <li><a href="#">I'm a customer</a></li>
+              <li><a href="#" onclick="click_activity('markCustomer', '{{result.user.username}}')">I'm a customer</a></li>
               {% endif %}
               <li class="divider"></li>
-              <li><a href="#">Delete</a></li>
-              <li><a href="#">Flag as spam</a></li>
-              <li><a href="#">Follow on Twitter</a></li>
-              <li><a href="#">View full profile</a></li> 
+              {% ifequal result.user.username userinfo.username %}
+              <li><a href="#" onclick="click_activity('delete', '{{result.uid.id}}')">Delete</a></li>
+              {% endifequal %}
+              <li><a href="#" onclick="click_activity('spam', '{{result.uid.id}}')">Flag as spam</a></li>
+              <li><a href="#" onclick="click_activity('follow', '{{result.user.username}}')">Follow on Twitter</a></li>
+              <li><a href="/profile/{{result.user.username}}/">View full profile</a></li> 
             </ul>
           </div>  
 
@@ -183,17 +185,18 @@ connections = {{json_data | safe}};
                 <span class="caret text-muted"></span>
             </button> 
             <ul class="dropdown-menu" role="menu">
-              <li><a href="#">I buy from</a></li>
-              <li><a href="#">I sell to</a></li> 
+              <li><a href="#" onclick="click_activity('buyFrom', '{{result.user.username}}')">I buy from</a></li>
+              <li><a href="#" onclick="click_activity('sellTo', '{{result.user.username}}')">I sell to</a></li> 
               <li class="divider"></li>
-              <li><a href="#">I'm a member</a></li>
-              <li><a href="#">I'm a customer</a></li>
+              <li><a href="#" onclick="click_activity('markMember', '{{result.user.username}}')">I'm a member</a></li>
+              <li><a href="#" onclick="click_activity('markCustomer', '{{result.user.username}}')">I'm a customer</a></li>
               <li class="divider"></li>
-              <li><a href="#">Delete</a></li>
-              <li><a href="#">Flag as spam</a></li>
-              <li><a href="#">dsf</a></li> 
-              <li><a href="#">Follow on Twitter</a></li>
-              <li><a href="#">View full profile</a></li> 
+              {% ifequal result.user.username userinfo.username %}
+                <li><a href="#" onclick="click_activity('delete', '{{result.uid.id}}')">Delete</a></li>
+              {% endifequal %}
+              <li><a href="#" onclick="click_activity('spam', '{{result.uid.id}}')">Flag as spam</a></li>
+              <li><a href="#" onclick="click_activity('follow', '{{result.user.username}}')">Follow on Twitter</a></li>
+              <li><a href="/profile/{{result.user.username}}" >View full profile</a></li> 
             </ul>
           </div>  
 
@@ -527,7 +530,9 @@ show_food_filters(food_filters, 0);
 show_organisation_filters(organisation_filters, 0);
 show_business_filters(business_filters, 0);
 
-
+function click_activity(activity, changeID){
+  ajax_request('activity_handle','success_activity_handle',{'user':'{{userinfo.user.username}}', 'changeID':changeID, 'task':activity});
+}
 </script>
 
  {% endblock %}
