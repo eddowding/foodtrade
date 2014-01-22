@@ -29,12 +29,8 @@ h2 {
 	text-transform: uppercase;
 }
 
-
-
-.chardinjs-show-element {
-	z-index: auto;
-	background: #fff;
-	padding: 5px;
+#footer {
+  margin-top: 100px;
 }
 
 .tags a {
@@ -123,7 +119,8 @@ background: #eee;
 .fa span {
   font-family: "Helvetica Neue",Helvetica,Arial,sans-serif !important;
   font-size: 14px; 
-  font-weight: normal;
+  font-weight: 500;
+  line-height: 18px;
 }
 
 .ellipsis {
@@ -133,11 +130,16 @@ background: #eee;
   white-space: nowrap;
 }
 
+.chosen-container {
+  width: 200px !important;
+}
+
 /********************************/
 /**  FULL HEIGHT SIDEBAR       **/
 /********************************/
  
-#main_page,
+
+#main_page, 
 #main_page #main_row,
 #main_page #main_row .fill,
 #sidebar
@@ -155,6 +157,7 @@ background: #eee;
 	padding-top: 30px;
 	margin-top: -6px;
 	padding-left: 25px; 
+  height: calc(100% - 58px);
 }
 
 .sidebar .alert {
@@ -216,7 +219,22 @@ article .content h4 {
 /********************************/
 
 #header_box.organisation {
-  border-top: 10px solid #cc0;
+  border-top: 10px solid rgba(154,215,255,0.3);
+}
+
+.card-organisation .numbers {
+  background: rgba(154,215,255,0.3) !important;
+  padding: 0 5px;
+}
+
+
+#header_box.individual {
+  border-top: 10px solid rgba(97,174,50,0.3);
+}
+
+.card-individual .numbers {
+  background: rgba(97,174,50,0.3) !important;
+  padding: 0 5px;
 }
 
 /********************************/
