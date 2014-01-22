@@ -57,6 +57,7 @@ def home(request):
         default_lat = float(location_info['latitude'])
 
     keyword = request.GET.get('q',"")
+    sort = request.GET.get('sort',"distance")
     my_lon = request.GET.get('lon',"")
     my_lat = request.GET.get('lat',"")
     location = request.GET.get('location',default_location)
@@ -79,7 +80,7 @@ def home(request):
         foods = []
 
 
-    search_handle = Search(keyword=keyword, lon = my_lon, lat =my_lat, place = location, foods=foods, business=businesses, organisation=organisations)
+    search_handle = Search(keyword=keyword, lon = my_lon, lat =my_lat, place = location, foods=foods, business=businesses, organisation=organisations, sort=sort)
     results = search_handle.search()
     for i in range(len(results)):
         distance_text = ""

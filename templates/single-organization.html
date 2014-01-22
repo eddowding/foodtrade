@@ -56,11 +56,12 @@
       </button>   -->
 <div class="btn-group btn-block" data-toggle="buttons">
         {% if logged_member %}
-      <label class="fa fa-smile-o text-muted btn btn-default btn-block active" style="width:100%;" title="{{userinfo.full_name}} is member of {{name}}" >
-      <input type="checkbox" checked="checked" class="member-chkbx" onchange="add_member({{profile_id}}, {{user_id}})">I'm a member!
+      <label class="fa fa-smile-o text-muted btn btn-default btn-block active" style="width:100%;
+  padding: 8px 12px;" title="{{userinfo.full_name}} is member of {{name}}" >
+      <input type="checkbox" checked="checked" class="member-chkbx" onchange="add_member({{profile_id}}, {{user_id}})"><span>I'm a member!</span>
       {% else %}
       <label class="fa fa-smile-o text-muted btn btn-default btn-block" style="width:100%;" title="{{userinfo.full_name}} is member of {{name}}" >
-      <input type="checkbox" class="member-chkbx" onchange="add_member({{profile_id}}, {{user_id}})">I'm a member!
+      <input type="checkbox" class="member-chkbx" onchange="add_member({{profile_id}}, {{user_id}})"><span>I'm a member!</span>
   {% endif %}
  </label></div>
 

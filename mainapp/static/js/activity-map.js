@@ -11,11 +11,12 @@ var map = L.map('map').setView([map_lat,map_lon], 7);
  
 
 	L.icon({
-			iconUrl:'/images/map_marker.png',
-			iconRetinaUrl:'/images/map_marker.png',
+			iconUrl:'/static/images/map_marker.png',
+			iconRetinaUrl:'/static/images/map_marker.png',
 			iconSize:[18, 18],
 			iconAnchor:[9, 18],
-			popupAnchor:[0, -18]
+			popupAnchor:[0, -18],
+			shadowURL: '/static/images/shadow-map_marker.png'
 		});
 
 L.circle([map_lat,map_lon], 24140.2, {
@@ -41,6 +42,7 @@ L.circle([map_lat,map_lon], 160934, {
 			fill: 0,
 		}).addTo(map);
 
+ 
 
 var map_controls = [];
 

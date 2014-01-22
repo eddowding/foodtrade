@@ -42,6 +42,22 @@
     </div>
   </div> 
 
+<<<<<<< HEAD
+ <div class="row">
+  <div class="col-md-12">
+ <input type="hidden" id="sortby" value="distance">
+ <div class="btn-group pull-right">
+    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+      Sort By
+      <span class="caret"></span>
+    </button>
+
+    <ul class="dropdown-menu">
+      <li><a onclick="sort_by('distance')">Distance</a></li>
+      <li><a onclick="sort_by('time')">Time</a></li>
+    </ul>
+  </div>
+=======
  <div id="sortby" class="clearfix">
 
     <div class="btn-group pull-right">
@@ -56,6 +72,7 @@
     </div> 
 
  </div>
+>>>>>>> 90bc4469e91aadc96d09200d6cd4572c78743201
 
   <div id="activity"> 
         <ul class="chat">
@@ -86,7 +103,7 @@
               <li class="divider"></li>
               {% endif %}
               {% if result.sign_up_as == "Organisation" %}
-              <li><a href="#" onclick="click_activity('markMember', '{{result.useruid}}')">I'm a member</a></li>
+              <li><a href="#" onclick="click_activity('markMember', '{{result.user.username}}')">I'm a member</a></li>
               {% endif %}
               {% if userinfo.user_type == "Individual" and result.sign_up_as == "Business" %}
               <li><a href="#" onclick="click_activity('markCustomer', '{{result.user.username}}')">I'm a customer</a></li>
@@ -165,10 +182,14 @@
     <div class="col-md-5  col-sm-5 fill"  style="height: 100%; ">
 
     <!-- FIX THE MAP POSITION SO IT DOES NOT SCROLL --> 
-      <div id="map">
+      <div style="height: 100%; min-height: 100%;" id="map"  data-spy="affix" data-offset-top="30">
         
 
-        <div class="alert alert-warning"> 
+        <div class="alert alert-warning">
+          <p>This map shows 
+          Customers as points
+          Stockist as organge lines and 
+          Supplieras as purple lines</p>
 
           <p>There are radius lines at 15, 30, and 100 miles.</p>
         </div>
@@ -581,7 +602,7 @@ function success_activity_handle(data){
   if(data['activity'] == 'follow' ){
     alert(data['message']);
   }
-  if((data['activity'] == 'buyFrom' && data['status'] == 0) || (data['activity'] == 'sellTo' && data['status'] ==0) || (data['activity'] == 'markMember' && data['status'] == 0) ){
+  if((data['activity'] == 'buyFrom' && data['status'] == 0) || (data['activity'] == 'sellTo' && data['status'] ==0)){
    alert(data['message']); 
   }
 }

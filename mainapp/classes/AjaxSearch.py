@@ -56,6 +56,7 @@ class AjaxSearch():
 
 
         keyword = request.POST.get('q',"")
+        sort = request.POST.get('sort',"distance")
         my_lon = request.POST.get('lon',"")
         my_lat = request.POST.get('lat',"")
         location = request.POST.get('location',"")
@@ -85,7 +86,7 @@ class AjaxSearch():
             foods = json.loads(foods)
 
 
-        search_handle = Search(keyword=keyword, lon = my_lon, lat =my_lat, place = location, foods=foods, business=businesses, organisation=organisations)
+        search_handle = Search(keyword=keyword, lon = my_lon, lat =my_lat, place = location, foods=foods, business=businesses, organisation=organisations,sort=sort)
         results = search_handle.search()
         for i in range(len(results)):
             distance_text = ""

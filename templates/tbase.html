@@ -22,13 +22,18 @@
     <link href="{% static "css/chardinjs.css" %}" rel="stylesheet">
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places"></script>
     <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+
+    
+   
+    
     
  {% block head %}
 {% endblock %}
  <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.1/leaflet.css" />
+  <link rel="stylesheet" href="http://leaflet.github.io/Leaflet.label/leaflet.label.css" /> 
 <script src="{% static "js/leaflet.js" %}"></script>
 
-
+<script src="http://leaflet.github.io/Leaflet.label/leaflet.js"></script>
   <style type="text/css">
 .tt-hint
 {
@@ -47,36 +52,32 @@ background: #eee;
   </head>
   <body>
     <!-- Fixed navbar -->
-    <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
       <div class="ftstrip"></div>
       <div class="container-responsive">
-        <div class="navbar-header">
-        <!--   <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-coll apse">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button> -->
 
-        <div class="visible-xs">
-          <span data-toggle="offcanvas" style="top: 10px; position:relative;">
-                <span class="sr-only">Toggle navigation</span>
-                <img src="{% static "images/logo_icon_menu.png" %}"  class="visible-xs" alt="FoodTrade logo" width="" />
-          </span>
-        </div>
- 
+        <div class="navbar-header col-xs-2 col-sm-3"> 
 
-        <a href="/" class="navbar-brand hidden-xs">
-          <img src="{% static "images/logo.png" %}"alt="FoodTrade logo"   />
-        </a>
+          <div class="visible-xs visible-sm">
+            <span data-toggle="offcanvas" style="top: 10px; position:relative;">
+                  <span class="sr-only">Toggle navigation</span>
+                  <img src="{% static "images/logo_icon_menu.png" %}" alt="FoodTrade logo" width="" />
+            </span>
+          </div>
 
-        </div>
-        <div class="navbar-col lapse coll apse">
-          
-          <form action="/activity" class="navbar-form navbar-left nav-justified" role="search" data-step="1" data-intro="Search for anyhing, anywhere">
-          <div data-position="bottom">
+          <a href="/" class="navbar-brand visible-md visible-lg">
+            <img src="{% static "images/logo.png" %}"alt="FoodTrade logo"   />
+          </a>
+
+        </div> 
+         
+        <div class="col-sm-6 visible-sm visible-lg">
+          <form action="/activity" class="navbar-form" role="search" data-step="1" data-intro="Search for anyhing, anywhere"
+          style="border: 0;">
+
+          <div data-position="b ottom">
             <div class="form-group" style="margin-right:5px;"> 
-              <input type="text" name="q" id="keyword" class="form-control col-xs-2 pac-input" value="{{ search.query }}" placeholder="What?"> 
+              <input type="text" name="q" id="keyword" class="form-control  pac-input" value="{{ search.query }}" placeholder="What?"> 
             </div> 
             <div class="form-group" style="margin-right:5px;">
               <input type="text" name="location" id="pac-input" value="{% if search %} {{ search.place }} {% endif %} {% if not search %} {{userinfo.zip_code}}{% endif %} " class="pac-input form-control hidden-xs hidden-sm" placeholder="Where?">
@@ -86,27 +87,36 @@ background: #eee;
             <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
           </div>
           </form>
+        </div>
+
+        <div class="col-xs-6 visible-xs visible-xs"> 
+          <form action="/activity" class="navbar-form" role="search" style="border: 0;">
+          <div class="input-group"> 
+              <input type="text" name="q" id="keyword" class="form-control" value="{{ search.query }}" placeholder="Search"> 
+              <div class="input-group-btn">
+                  <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+              </div> 
+          </div>
+          <input type="hidden" name="location" id="pac-input" value="{% if search %} {{ search.place }} {% endif %} {% if not search %} {{userinfo.zip_code}}{% endif %} ">
+          <input type="hidden" name="lon" id="lon" value="{{search.lon}}"/>
+          <input type="hidden" name="lat" id="lat" value="{{search.lat}}"/>
+          </form>
+        </div>
 
 
         {% if user.is_authenticated %}
+        <div class="col-xs-4 col-sm-3 text-right">
+          <ul class="nav navbar-nav pull-right">
 
-          <ul class="nav navbar-nav navbar-right">
+                <li class="visible-md visible-lg"><a href="/pricing">Pricing</a></li> 
 
+                <li class="">
+                  <button data-step="2" data-intro="Post an update from any screen" data-position="left" type="button" class="btn btn-default navbar-btn" id="newpost"  data-toggle="modal" data-target="#newtwitterpost">
+                    <i class="fa fa-edit fa-fw"></i>  
+                  </button> 
+                </li>
 
-               <!--  <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><span
-                    class="glyphicon glyphicon-envelope"></span>Inbox <span class="label label-info">32</span>
-                </a>
-                    <ul class="dropdown-menu">
-                        <li><a href="#"><span class="label label-warning">4:00 AM</span>Favourites Snippet</a></li>
-                        <li><a href="#"><span class="label label-warning">4:30 AM</span>Email marketing</a></li>
-                        <li><a href="#"><span class="label label-warning">5:00 AM</span>Subscriber focused email
-                            design</a></li>
-                        <li class="divider"></li>
-                        <li><a href="#" class="text-center">View All</a></li>
-                    </ul>
-                </li> -->
-
-                <li id="divNotification" onclick="clear_notification()">
+                <li id="divNotification" onclick="clear_notification()" class="hidden">
                   <button  class="btn btn-default navbar-btn  dropdown-toggle margin-notices" data-toggle="dropdown" type="button" class="dropdown-toggle" data-toggle="dropdown">
                      <i class="fa fa-bell-o" title="Notifications"></i> {{notification.notification_count}} 
                   </button>
@@ -125,52 +135,50 @@ background: #eee;
                 </a>
 
                 <!-- smaller screens --> 
-                <a href="#" class="dropdown-toggle visible-sm hidden-md  hidden-lg" data-toggle="dropdown">
+                <a href="#" class="dropdown-toggle visible-sm visible-xs" data-toggle="dropdown">
                 <i class="fa fa-user fa-fw"></i><b class="caret"></b>
                 </a>
 
                     <ul class="dropdown-menu">
                         <li><a href="/editprofile/{{userinfo.username}}"><i class="fa fa-user fa-fw"></i> Edit profile</a></li>
-                        <li><a href="/invite/"><i class="fa fa-twitter fa-fw"></i> Invite friends</a></li>
+                      <!--   <li><a href="/invite/"><i class="fa fa-twitter fa-fw"></i> Invite friends</a></li>
                         <li><a href="#" id="help"><i class="fa fa-question-circle fa-fw"></i> Help guide</a></li>
-                        <li class="divider"></li>
+                        <li class="divider"></li> -->
                         <li>
                           <a src = "/accounts/logout" onclick="logout()" >
                         <i class="fa fa-power-off fa-fw"></i> Logout</a></li>
                     </ul>
                 </li>
-            </ul> 
-             
+            </ul>  
+          </div>
 
-          <script type="text/javascript">
-          function logout()
-          {
-            window.location = '/accounts/logout';
-          }
-          </script>
-           
-
-            <button data-step="2" data-intro="Post an update from any screen" data-position="left" type="button" class="btn btn-default navbar-btn navbar-right" style="margin-right: 10px;"  data-toggle="modal" data-target="#newtwitterpost">
-              <i class="fa fa-edit fa-fw"></i>  
-            </button> 
-
+            <script type="text/javascript">
+            function logout()
+            {
+              window.location = '/accounts/logout';
+            }
+            </script>
+      
         {% endif %}
-        
-         <ul class="nav navbar-nav navbar-center visible-md visible-lg">
-           
-          <li><a href="/pricing">Pricing</a></li> 
-         </ul>
+         
+          
+          
  
          {% if not user.is_authenticated %} 
          <a type="button" class="btn btn-success navbar-btn navbar-right" href="{% provider_login_url "twitter" process="login" %}" style="margin-right: 15px;">
             <i class="fa fa-user fa-fw"></i> <strong>Login</strong> or <strong>Sign up</strong>
           </a>
          {% endif %}
-         
-        </div><!--/.nav-collapse -->
+          
       </div>
+
+
+
     <div class="ftstrip ftstrip-mini"></div>
-    </div>
+    </nav>
+
+
+
        <!-- New post Modal -->
           <div class="modal fade" id="newtwitterpost" tabindex="-1" role="dialog" aria-labelledby="newtwitterpost" aria-hidden="true">
             <div class="modal-dialog">
@@ -245,12 +253,11 @@ background: #eee;
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
-<div class="container-responsive" id="main_page">
+<div class="container-responsive clearfix" id="main_page">
  
 <div class="row row-offcanvas row-offcanvas-left row-offcanvas-right" id="main_row">
- 
-<div id="sidebar" class="col-xs-6 col-sm-2 sidebar sidebar-offcanvas
 
+<div id="sidebar" class="col-xs-6 col-sm-2 sidebar sidebar-offcanvas
 {% if not user.is_authenticated %} 
 hidden
 {% endif %}
@@ -278,11 +285,17 @@ hidden
             <small><a href="/profile/{{userinfo.username}}" class="text-muted">View your profile</a></small>
           </div>
         </div> 
-  
-        <hr />
-          <p><a href="/activity"><i class="fa fa-dot-circle-o fa-fw"></i> Near me now</a></p> 
 
-          <p><a href="#" title="Coming soon" class="text-muted"><i class="fa fa-envelope fa-fw"></i> Messages</a></p> 
+        <div style="margin-left: 18px;">
+   
+          <p><a href="/activity"><i class="fa fa-dot-circle-o fa-fw"></i> Near me</a></p> 
+ 
+          <p><a href="/invite/"><i class="fa fa-twitter fa-fw"></i> Invite</a></p>
+
+          <p><a href="#" id="help"><i class="fa fa-question-circle fa-fw"></i> Help</a></p> 
+
+          <p><a href="#" rel="tooltip" title="Coming soon" class="text-muted"><i class="fa fa-envelope fa-fw"></i> Inbox</a></p> 
+        </div>
 
 
 
@@ -403,7 +416,7 @@ hidden
 </div>
 
 <!-- FOOTER --> 
-<div class="container-responsive" id="footer">    
+<div class="container-responsive clearfix" id="footer">    
   <div class="row">
     <div class="col-lg-12">
         <div class="ftstrip"></div>
@@ -586,6 +599,8 @@ $(document).ready(function() {
     <script type="text/javascript">
       $('.tip').tooltip();
       $('[rel=tooltip]').tooltip();
+
+   
 
       $('[data-toggle=offcanvas]').click(function() {
         $('.row-offcanvas').toggleClass('active');

@@ -7,7 +7,7 @@ from bson.objectid import ObjectId
 class Search():
 
     """docstring for UserConnections"""
-    def __init__(self, keyword="", lon = "", lat ="", place = "", foods="", business="", organisation=""):
+    def __init__(self, keyword="", lon = "", lat ="", place = "", foods="", business="", organisation="",sort=""):
         self.keyword = str(keyword)
         self.lon = lon
         self.lat = lat
@@ -15,6 +15,7 @@ class Search():
         self.foods = foods
         self.business = business
         self.organisation = organisation
+        self.sort = sort
 
 
 
@@ -46,13 +47,13 @@ class Search():
         #               {"$sort": SON([("distance", 1), ("_id", -1)])}
         #               ]
         tweet_search_object = TweetFeed()
-        search_results = tweet_search_object.get_search_results(self.keyword, self.lon, self.lat, self.foods, self.business, self.organisation,query_string)
+        search_results = tweet_search_object.get_search_results(self.keyword, self.lon, self.lat, self.foods, self.business, self.organisation,query_string,self.sort)
         full_search_results = []
         for rs in search_results:
             result_id = rs['uid']['id']
             result_id_obj=ObjectId(result_id)
             result_json = tweet_search_object.search_tweets({"_id":result_id_obj})[0]
-            result_json['distance'] = rs['value']
+            result_json['distance'] = rs['value']['distance']
             full_search_results.append(result_json)
 
         return full_search_results

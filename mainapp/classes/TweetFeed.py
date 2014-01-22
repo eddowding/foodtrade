@@ -114,7 +114,7 @@ class TweetFeed():
     def get_near_people(self, query):
         return self.db_object.get_distinct(self.table_name,'user.username',query)['count']
 
-    def get_search_results(self, keyword, lon, lat, food_filter, type_filter, organisation_filter, query):
+    def get_search_results(self, keyword, lon, lat, food_filter, type_filter, organisation_filter, query,sort):
         mapper = Code("""
             function () {
             if(this.deleted==0)
@@ -233,7 +233,8 @@ class TweetFeed():
                 ; 
               var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
               var d = R * c; // Distance in km
-              emit(this._id, d);
+              var ret_value =
+              emit(this._id, {distance:d, time: this.time_stamp});
               }
                            
 
@@ -248,7 +249,7 @@ class TweetFeed():
              return values[0];
             }
             """)
-        return self.db_object.map_reduce(self.table_name, mapper, reducer, query, 1)
+        return self.db_object.map_reduce_search(self.table_name, mapper, reducer, query, sort)
         
 
     def get_all_foods(self, keyword, lon, lat, food_filter, type_filter, organisation_filter, query):
