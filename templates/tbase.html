@@ -71,7 +71,7 @@ background: #eee;
 
         </div> 
          
-        <div class="col-sm-5 visible-md visible-lg">
+        <div class="col-sm-4 visible-md visible-lg">
           <form action="/activity" class="navbar-form" role="search" data-step="1" data-intro="Search for anyhing, anywhere"
           style="border: 0;">
  
@@ -88,7 +88,7 @@ background: #eee;
           </form>
         </div>
 
-        <div class="col-xs-5 visible-xs visible-sm"> 
+        <div class="col-xs-4 visible-xs visible-sm"> 
           <form action="/activity" class="navbar-form" role="search" style="border: 0;">
           <div class="input-group"> 
               <input type="text" name="q" id="keyword" class="form-control" value="{{ search.query }}" placeholder="Search"> 
@@ -104,7 +104,7 @@ background: #eee;
 
 
         {% if user.is_authenticated %}
-        <div class="col-xs-4 col-sm-4  text-right">
+        <div class="col-xs-4 col-sm-5  text-right">
           <ul class="nav navbar-nav pull-right">
 
                 <li class="visible-md visible-lg"><a href="/pricing">Pricing</a></li> 
@@ -129,13 +129,13 @@ background: #eee;
                 <li class="dropdown">
 
                 <!-- bigger screens --> 
-                <a href="#" class="dropdown-toggle visible-md  visible-lg" data-toggle="dropdown">
-                <i class="fa fa-user fa-fw"></i>{{userinfo.full_name}} <b class="caret"></b>
+                <a href="#" class="dropdown-toggle visible-md visible-lg" data-toggle="dropdown" style="padding: 5px">
+                <img class="img-thum bnail  img-round ed" style="  width:40px"  src="{{userinfo.profileimg}}"  /> <b class="caret"></b>
                 </a>
 
                 <!-- smaller screens --> 
-                <a href="#" class="dropdown-toggle visible-sm visible-xs" data-toggle="dropdown">
-                <i class="fa fa-user fa-fw"></i><b class="caret"></b>
+                <a href="#" class="dropdown-toggle visible-sm visible-xs" data-toggle="dropdown" style="padding: 2px;" >
+                <img class="img-thumbnail" style=" width:40px" style="padding: 2px;"  src="{{userinfo.profileimg}}"  />  <b class="caret"></b>
                 </a>
 
                     <ul class="dropdown-menu">

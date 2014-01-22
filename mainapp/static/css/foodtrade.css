@@ -5,7 +5,7 @@ body {
 }
 
 body {
-  padding-top: 70px;
+  padding-top: 58px;
 }
 
 @font-face {
@@ -126,6 +126,13 @@ background: #eee;
   font-weight: normal;
 }
 
+.ellipsis {
+  display: inline-block;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
 /********************************/
 /**  FULL HEIGHT SIDEBAR       **/
 /********************************/
@@ -139,14 +146,14 @@ background: #eee;
 }
 
 .fill {
-  margin: -12px 0; 
+  margin: 0; 
 }
    
 #sidebar {
 	border-right: 1px solid #ccc;
 	background-image: url('/static/images/double_stripe.png');
 	padding-top: 30px;
-	margin-top: -18px;
+	margin-top: -6px;
 	padding-left: 25px; 
 }
 
@@ -202,6 +209,14 @@ article .content h4 {
 
 .danger {
 	color: red;
+}
+
+/********************************/
+/**  ORG / BIZ / PPL           **/
+/********************************/
+
+#header_box.organisation {
+  border-top: 10px solid #cc0;
 }
 
 /********************************/
