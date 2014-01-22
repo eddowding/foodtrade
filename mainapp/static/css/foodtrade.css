@@ -91,6 +91,11 @@ h2 {
 	font-style: italic;;
 }
 
+.well-sm .help-block,
+.well-sm .help-block ul {
+  margin-bottom: 0;
+}
+
 .nav-tabs  {
 	background: #fff;
 	margin:40px 0 20px 0;
@@ -100,6 +105,13 @@ h2 {
 	margin: 0;
 }
  
+#sortby {
+  border: 1px solid #eee;
+  padding: 3px 0; 
+  border-width: 1px 0;
+  margin-bottom: 5px;
+  margin-top: -10px; 
+}
 
 /********************************/
 /**  FULL HEIGHT SIDEBAR       **/
