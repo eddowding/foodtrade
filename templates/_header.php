@@ -31,21 +31,21 @@
       <div class="ftstrip"></div>
       <div class="container">
         <div class="navbar-header">
-          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+          <button type="button" class="navbar-togg le" data-toggle="collapse" data-target=".navbar-collapse">
             <span class="sr-only">Toggle navigation</span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand"><img src="/images/logo.png" alt="FoodTrade logo" /></a>
+          <a class="navbar-brand">FT</a>
         </div>
-        <div class="navbar-collapse collapse">
+        <div class="navbar-coll apse colla pse">
           
-          <form class="navbar-form navbar-left nav-justified" role="search">
-            <div class="form-group" style="margin-right:5px;">
+          <form class="navbar-form navbar-left nav-justif ied" role="search">
+            <div class="form-group    col-xs-3" style="margin-right:5px;">
               <input type="text" class="form-control" placeholder="What?"> 
             </div>
-            <div class="form-group" style="margin-right:5px;">
+            <div class="form-group   col-xs-3 " style="margin-right:5px;">
               <input type="text" class="form-control" placeholder="Where?">
             </div>
             <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
