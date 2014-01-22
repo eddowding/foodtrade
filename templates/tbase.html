@@ -55,22 +55,22 @@ background: #eee;
       <div class="ftstrip"></div>
       <div class="container-responsive">
 
-        <div class="navbar-header col-xs-2 col-md-3"> 
+        <div class="navbar-header col-xs-2 col-sm-3"> 
 
-          <div class="visible-xs">
+          <div class="visible-xs visible-sm">
             <span data-toggle="offcanvas" style="top: 10px; position:relative;">
                   <span class="sr-only">Toggle navigation</span>
-                  <img src="{% static "images/logo_icon_menu.png" %}"  class="visible-xs" alt="FoodTrade logo" width="" />
+                  <img src="{% static "images/logo_icon_menu.png" %}" alt="FoodTrade logo" width="" />
             </span>
           </div>
 
-          <a href="/" class="navbar-brand hidden-xs">
+          <a href="/" class="navbar-brand visible-md visible-lg">
             <img src="{% static "images/logo.png" %}"alt="FoodTrade logo"   />
           </a>
 
         </div> 
          
-        <div class="col-md-6 visible-md visible-lg">
+        <div class="col-sm-6 visible-sm visible-lg">
           <form action="/activity" class="navbar-form" role="search" data-step="1" data-intro="Search for anyhing, anywhere"
           style="border: 0;">
 
@@ -88,7 +88,7 @@ background: #eee;
           </form>
         </div>
 
-        <div class="col-xs-6 visible-sm visible-xs"> 
+        <div class="col-xs-6 visible-xs visible-xs"> 
           <form action="/activity" class="navbar-form" role="search" style="border: 0;">
           <div class="input-group"> 
               <input type="text" name="q" id="keyword" class="form-control" value="{{ search.query }}" placeholder="Search"> 
@@ -104,8 +104,8 @@ background: #eee;
 
 
         {% if user.is_authenticated %}
-        <div class="col-xs-4 col-md-3 text-right">
-          <ul class="nav navbar-nav">
+        <div class="col-xs-4 col-sm-3 text-right">
+          <ul class="nav navbar-nav pull-right">
 
                 <li class="visible-md visible-lg"><a href="/pricing">Pricing</a></li> 
 
@@ -252,7 +252,7 @@ background: #eee;
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
-<div class="container-responsive" id="main_page">
+<div class="container-responsive clearfix" id="main_page">
  
 <div class="row row-offcanvas row-offcanvas-left row-offcanvas-right" id="main_row">
 
@@ -415,7 +415,7 @@ hidden
 </div>
 
 <!-- FOOTER --> 
-<div class="container-responsive" id="footer">    
+<div class="container-responsive clearfix" id="footer">    
   <div class="row">
     <div class="col-lg-12">
         <div class="ftstrip"></div>
