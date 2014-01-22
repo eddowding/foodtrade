@@ -111,6 +111,7 @@ def display_profile(request, username):
             parameters['members'] = member_limited
             team_limited, parameters['logged_team'] = get_team(usr.id)
             parameters['teams'] = team_limited[:10]
+        parameters['members_str'] = json.dumps(parameters['members'])
         return render_to_response('single-organization.html', parameters, context_instance=RequestContext(request))
     elif parameters['sign_up_as'] == 'Individual':
         return render_to_response('individual.html', parameters, context_instance=RequestContext(request))
