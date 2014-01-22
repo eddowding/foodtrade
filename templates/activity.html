@@ -86,7 +86,7 @@
               <li class="divider"></li>
               {% endif %}
               {% if result.sign_up_as == "Organisation" %}
-              <li><a href="#" onclick="click_activity('markMember', '{{result.user.username}}')">I'm a member</a></li>
+              <li><a href="#" onclick="click_activity('markMember', '{{result.useruid}}')">I'm a member</a></li>
               {% endif %}
               {% if userinfo.user_type == "Individual" and result.sign_up_as == "Business" %}
               <li><a href="#" onclick="click_activity('markCustomer', '{{result.user.username}}')">I'm a customer</a></li>
@@ -581,7 +581,7 @@ function success_activity_handle(data){
   if(data['activity'] == 'follow' ){
     alert(data['message']);
   }
-  if((data['activity'] == 'buyFrom' && data['status'] == 0) || (data['activity'] == 'sellTo' && data['status'] ==0)){
+  if((data['activity'] == 'buyFrom' && data['status'] == 0) || (data['activity'] == 'sellTo' && data['status'] ==0) || (data['activity'] == 'markMember' && data['status'] == 0) ){
    alert(data['message']); 
   }
 }
