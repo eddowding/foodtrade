@@ -13,6 +13,8 @@ import time
 import json
 from mainapp.classes.Tags import Tags
 
+from django.contrib.auth.decorators import user_passes_test
+
 consumer_key = 'seqGJEiDVNPxde7jmrk6dQ'
 consumer_secret = 'sI2BsZHPk86SYB7nRtKy0nQpZX3NP5j5dLfcNiP14'
 access_token = ''
@@ -44,6 +46,8 @@ def ajax_request(request, func_name):
                 })
     return return_msg
 
+
+@user_passes_test(lambda u: u.is_superuser)
 def admin_tags(request):
     parameters = {}
     if request.user.is_authenticated():

@@ -24,15 +24,25 @@
     <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
 
     
-    <link rel="stylesheet" href="http://leaflet.github.io/Leaflet.label/leaflet.label.css" /> 
-    <script src="http://leaflet.github.io/Leaflet.label/leaflet.js"></script>
+   
+    
     
  {% block head %}
 {% endblock %}
  <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.1/leaflet.css" />
+  <link rel="stylesheet" href="http://leaflet.github.io/Leaflet.label/leaflet.label.css" /> 
 <script src="{% static "js/leaflet.js" %}"></script>
 
+<script src="http://leaflet.github.io/Leaflet.label/leaflet.js"></script>
+  <style type="text/css">
+.tt-hint
+{
+  margin-left: 12px;
+margin-top: 4px;
+background: #eee;
+}
  
+    </style>
  
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -381,7 +391,7 @@ hidden
     </div><!--sidebar-->
 
     <hr /> 
-    <div data-step="4" data-intro="See what's active" data-position="top">
+    <div data-step="4" data-intro="See what's active">
       <div id="trendsThisWeek">
           <h5>Trends this week</h5>
           {% for eachVal in userinfo.hashtagsthis %}
@@ -542,10 +552,6 @@ UserVoice.push(['showTab', 'classic_widget', {
      <script type="text/javascript">
 $(document).ready(function() {
 
-  
-      var h = $(window).height();
-      document.getElementById("map").style.height = h + "px";
-
     var activeSystemClass = $('.list-group-item.active');
     //something is entered in search form
     $('#system-search').keyup( function() {
@@ -593,7 +599,6 @@ $(document).ready(function() {
     <script type="text/javascript">
       $('.tip').tooltip();
       $('[rel=tooltip]').tooltip();
-
 
    
 

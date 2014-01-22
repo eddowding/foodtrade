@@ -399,32 +399,50 @@ class AjaxHandle(AjaxSearch):
                 fid = friend_obj.get_friend_id(request.user.username, change_id)
                 data = tweet_feed_obj.follow_user(fid, request.user.username, request.user.id)
                 return HttpResponse(json.dumps(data))
-            if task == 'buyFrom':
-                # print request.user.id, change_id
-                tc_object = TradeConnection()
-                result = tc_object.search_connectedness(int(change_id), int(request.user.id))
-                try:
-                    if (len(result) > 0):
-                        return HttpResponse (json.dumps({'status':0, 'activity':'buyFrom', '_id':change_id, 'message':'You are already connected.'}))
-                    else:
-                        tc_object.create_connection({'c_useruid':int(request.user.id) , 'b_useruid': int(change_id)})
-                        return HttpResponse (json.dumps({'status':1, 'activity':'buyFrom', '_id':change_id, 'message':'You are connected.'}))
-                except:
-                    tc_object.create_connection({'c_useruid':int(request.user.id) , 'b_useruid': int(change_id)})
-                    return HttpResponse (json.dumps({'status':1, 'activity':'buyFrom', '_id':change_id, 'message':'You are connected.'}))
 
-            if task == 'sellTo':                
+            if task == 'buyFrom' or task == 'sellTo':
                 tc_object = TradeConnection()
-                result = tc_object.search_connectedness(int(request.user.id), int(change_id))
+                if task == 'buyFrom':
+                    b_id = int(change_id)
+                    c_id = int(request.user.id)
+
+                elif task == 'sellTo':
+                    b_id = int(request.user.id)
+                    c_id = int(change_id)
+
+                result = tc_object.search_connectedness(b_id,c_id)
+
                 try:
                     if (len(result) > 0):
-                        return HttpResponse (json.dumps({'status':0, 'activity':'sellTo', '_id':change_id, 'message':'You are already connected.'}))
+                        return HttpResponse (json.dumps({'status':0, 'activity':'buyFrom', '_id':change_id, 
+                            'message':'You are already connected.'}))
                     else:
-                        tc_object.create_connection({'c_useruid':int(change_id) , 'b_useruid': int(request.user.id)})
-                        return HttpResponse (json.dumps({'status':1, 'activity':'sellTo', '_id':change_id, 'message':'You are connected.'}))
+                        tc_object.create_connection({'c_useruid':c_id , 'b_useruid': b_id})
+                        return HttpResponse (json.dumps({'status':1, 'activity':'buyFrom', '_id':change_id, 
+                            'message':'You are connected.'}))
                 except:
-                    tc_object.create_connection({'c_useruid':int(change_id) , 'b_useruid': int(request.user.id)})
-                    return HttpResponse (json.dumps({'status':1, 'activity':'sellTo', '_id':change_id, 'message':'You are connected.'}))
+                    tc_object.create_connection({'c_useruid':c_id , 'b_useruid': b_id})
+                    return HttpResponse (json.dumps({'status':1, 'activity':'buyFrom', '_id':change_id, 
+                        'message':'You are connected.'}))
+
+            if task == 'markMember':
+                memberuid = int(request.user.id)
+                orgid = int(change_id)
+                org_obj = Organisation()
+                result = org_obj.check_member(orgid, memberuid)
+                print result
+                try:
+                    if(len(result)>0):
+                        return HttpResponse(json.dumps({'status':0, 'activity':'markMember', '_id':change_id, 
+                            'message':'You are already a member.'}))
+                    else:        
+                        org_obj.create_member({'memberuid': int(memberuid), 'orguid': int(orgid)})
+                        return HttpResponse(json.dumps({'status':1, 'activity':'markMember', '_id':change_id, 
+                            'message':'You are now a member.'}))
+                except:
+                    org_obj.create_member({'memberuid': int(memberuid), 'orguid': int(orgid)})
+                    return HttpResponse(json.dumps({'status':1, 'activity':'markMember', '_id':change_id, 
+                            'message':'You are now a member.'}))
         else:
             return HttpResponse(json.dumps({'status':'0'}))
 

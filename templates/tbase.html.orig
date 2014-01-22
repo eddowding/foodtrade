@@ -22,20 +22,29 @@
     <link href="{% static "css/chardinjs.css" %}" rel="stylesheet">
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places"></script>
     <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+
+    
+   
+    
+    
  {% block head %}
 {% endblock %}
  <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.1/leaflet.css" />
+  <link rel="stylesheet" href="http://leaflet.github.io/Leaflet.label/leaflet.label.css" /> 
 <script src="{% static "js/leaflet.js" %}"></script>
-    <!-- Custom styles for this template -->
-    <link href="http://getbootstrap.com/examples/navbar-fixed-top/navbar-fixed-top.css" rel="stylesheet">
-    <style type="text/css">
+
+<<<<<<< HEAD
+<script src="http://leaflet.github.io/Leaflet.label/leaflet.js"></script>
+  <style type="text/css">
 .tt-hint
 {
   margin-left: 12px;
 margin-top: 4px;
 background: #eee;
 }
-    </style>
+=======
+>>>>>>> 53b3c6cad734f0b0cd229642b55bce7e1c181093
+ 
  
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -45,142 +54,144 @@ background: #eee;
   </head>
   <body>
     <!-- Fixed navbar -->
-    <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
       <div class="ftstrip"></div>
       <div class="container-responsive">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
 
-        <div class="pull-left visible-xs">
-          <button type="button" class="navbar-toggle" data-toggle="offcanvas" style="margin-left: 5px">
-                <span class="sr-only">Toggle navigation</span>
-                <i class="fa fa-user fa-fw fa-lg" ></i>
-              </button>
-        </div>
+        <div class="navbar-header col-xs-2 col-sm-3"> 
 
-          <a href="/" class="navbar-brand">
-          <img src="{% static "images/logo.png" %}"  class="hidden-xs" alt="FoodTrade logo"   />
-          <img src="{% static "images/logo_icon.png" %}"  class="visible-xs" alt="FoodTrade logo"  />
+          <div class="visible-xs visible-sm">
+            <span data-toggle="offcanvas" style="top: 10px; position:relative;">
+                  <span class="sr-only">Toggle navigation</span>
+                  <img src="{% static "images/logo_icon_menu.png" %}" alt="FoodTrade logo" width="" />
+            </span>
+          </div>
+
+          <a href="/" class="navbar-brand visible-md visible-lg">
+            <img src="{% static "images/logo.png" %}"alt="FoodTrade logo"   />
           </a>
-        </div>
-        <div class="navbar-collapse collapse">
-          
-          <form action="/activity" class="navbar-form navbar-left nav-justified" role="search"  data-intro="Search for anything, anywhere" data-position="bottom">
+
+        </div> 
+         
+        <div class="col-sm-6 visible-sm visible-lg">
+          <form action="/activity" class="navbar-form" role="search" data-step="1" data-intro="Search for anyhing, anywhere"
+          style="border: 0;">
+
+          <div data-position="b ottom">
             <div class="form-group" style="margin-right:5px;"> 
-              <input type="text" name="q" id="keyword" class="form-control pac-input" value="{{ search.query }}" placeholder="What?"> 
+              <input type="text" name="q" id="keyword" class="form-control  pac-input" value="{{ search.query }}" placeholder="What?"> 
             </div> 
             <div class="form-group" style="margin-right:5px;">
-              <input type="text" name="location" id="pac-input" value="{{ search.place }}" class="pac-input form-control hidden-xs hidden-sm" placeholder="Where?">
+              <input type="text" name="location" id="pac-input" value="{% if search %} {{ search.place }} {% endif %} {% if not search %} {{userinfo.zip_code}}{% endif %} " class="pac-input form-control hidden-xs hidden-sm" placeholder="Where?">
             </div>
             <input type="hidden" name="lon" id="lon" value="{{search.lon}}"/>
             <input type="hidden" name="lat" id="lat" value="{{search.lat}}"/>
             <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+          </div>
           </form>
+        </div>
 
-<<<<<<< HEAD
+        <div class="col-xs-6 visible-xs visible-xs"> 
+          <form action="/activity" class="navbar-form" role="search" style="border: 0;">
+          <div class="input-group"> 
+              <input type="text" name="q" id="keyword" class="form-control" value="{{ search.query }}" placeholder="Search"> 
+              <div class="input-group-btn">
+                  <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+              </div> 
+          </div>
+          <input type="hidden" name="location" id="pac-input" value="{% if search %} {{ search.place }} {% endif %} {% if not search %} {{userinfo.zip_code}}{% endif %} ">
+          <input type="hidden" name="lon" id="lon" value="{{search.lon}}"/>
+          <input type="hidden" name="lat" id="lat" value="{{search.lat}}"/>
+          </form>
+        </div>
+
+
         {% if user.is_authenticated %}
-         <button type="button" class="btn btn-primary navbar-btn pull-right" style="margin-left: 20px;"  data-toggle="modal" data-target="#newtwitterpost">
-            <i class="fa fa-edit"></i>
-          </button>
+        <div class="col-xs-4 col-sm-3 text-right">
+          <ul class="nav navbar-nav pull-right">
 
+                <li class="visible-md visible-lg"><a href="/pricing">Pricing</a></li> 
 
-          <a src = "/accounts/logout" onclick="logout()" class="btn btn-primary navbar-btn pull-right hidden-xs hidden-sm" style="margin-left: 20px;">
-            Logout
-          </a>
+                <li class="">
+                  <button data-step="2" data-intro="Post an update from any screen" data-position="left" type="button" class="btn btn-default navbar-btn" id="newpost"  data-toggle="modal" data-target="#newtwitterpost">
+                    <i class="fa fa-edit fa-fw"></i>  
+                  </button> 
+                </li>
 
-=======
-
-        {% if user.is_authenticated %}
-
-          <ul class="nav navbar-nav navbar-right">
-
-
-               <!--  <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><span
-                    class="glyphicon glyphicon-envelope"></span>Inbox <span class="label label-info">32</span>
-                </a>
-                    <ul class="dropdown-menu">
-                        <li><a href="#"><span class="label label-warning">4:00 AM</span>Favourites Snippet</a></li>
-                        <li><a href="#"><span class="label label-warning">4:30 AM</span>Email marketing</a></li>
-                        <li><a href="#"><span class="label label-warning">5:00 AM</span>Subscriber focused email
-                            design</a></li>
-                        <li class="divider"></li>
-                        <li><a href="#" class="text-center">View All</a></li>
-                    </ul>
-                </li> -->
+                <li id="divNotification" onclick="clear_notification()" class="hidden">
+                  <button  class="btn btn-default navbar-btn  dropdown-toggle margin-notices" data-toggle="dropdown" type="button" class="dropdown-toggle" data-toggle="dropdown">
+                     <i class="fa fa-bell-o" title="Notifications"></i> {{notification.notification_count}} 
+                  </button>
+                  <!-- <a id= "notification" href="#" class="dropdown-toggle" data-toggle="dropdown">
+                  {{notification.notification_count}} <b class="caret"></b></a> -->
+                  <ul id="liNotification" class="dropdown-menu">
+                    <li><a href="#">No notifications.</a></li>
+                  </ul>
+                </li><!-- /btn-group -->
 
                 <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                <i class="fa fa-user fa-fw"></i> {{userinfo.full_name}} <b class="caret"></b></a>
+
+                <!-- bigger screens --> 
+                <a href="#" class="dropdown-toggle visible-md  visible-lg" data-toggle="dropdown">
+                <i class="fa fa-user fa-fw"></i>{{userinfo.full_name}} <b class="caret"></b>
+                </a>
+
+                <!-- smaller screens --> 
+                <a href="#" class="dropdown-toggle visible-sm visible-xs" data-toggle="dropdown">
+                <i class="fa fa-user fa-fw"></i><b class="caret"></b>
+                </a>
+
                     <ul class="dropdown-menu">
                         <li><a href="/editprofile/{{userinfo.username}}"><i class="fa fa-user fa-fw"></i> Edit profile</a></li>
-                        <li><a href="/invite"><i class="fa fa-twitter fa-fw"></i> Invite friends</a></li>
-                        <li class="divider"></li>
+                      <!--   <li><a href="/invite/"><i class="fa fa-twitter fa-fw"></i> Invite friends</a></li>
+                        <li><a href="#" id="help"><i class="fa fa-question-circle fa-fw"></i> Help guide</a></li>
+                        <li class="divider"></li> -->
                         <li>
                           <a src = "/accounts/logout" onclick="logout()" >
                         <i class="fa fa-power-off fa-fw"></i> Logout</a></li>
                     </ul>
                 </li>
-            </ul> 
-             
->>>>>>> 7eec1ce0b336bbab5d5212c3a6df730d4ef8f1f7
-          <script type="text/javascript">
-          function logout()
-          {
-            window.location = '/accounts/logout';
-          }
-          </script>
-<<<<<<< HEAD
-          
-          <div id="divNotification" class="btn-group">
-            <button id= "notification" type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">{{notification.notification_count}} <span class="caret"></span></button>
-            <ul id="liNotification" class="dropdown-menu" role="menu">
-              <li class="divider"></li>
-            </ul>
-          </div><!-- /btn-group -->
-=======
+            </ul>  
+          </div>
 
-
-         <button type="button" class="btn btn-default navbar-btn navbar-right visible-sm" style="margin-left: 20px;"  data-toggle="modal" data-target="#newtwitterpost">
-            <i class="fa fa-edit fa-fw"></i>  
-          </button>
-
-          <button data-intro="Post an update from any screen." data-position="left"  type="button" class="btn btn-default navbar-btn navbar-right hidden-sm" style="margin-left: 20px;"  data-toggle="modal" data-target="#newtwitterpost">
-            <i class="fa fa-edit fa-fw"></i> Post update
-          </button>
->>>>>>> 7eec1ce0b336bbab5d5212c3a6df730d4ef8f1f7
+            <script type="text/javascript">
+            function logout()
+            {
+              window.location = '/accounts/logout';
+            }
+            </script>
+      
         {% endif %}
-        
-         <ul class="nav navbar-nav navbar-center visible-md visible-lg">
-          <li><a href="/activity">Activity</a></li>
-          <li><a href="/pricing">Pricing</a></li> 
-         </ul>
+         
+          
+          
  
          {% if not user.is_authenticated %} 
          <a type="button" class="btn btn-success navbar-btn navbar-right" href="{% provider_login_url "twitter" process="login" %}" style="margin-right: 15px;">
             <i class="fa fa-user fa-fw"></i> <strong>Login</strong> or <strong>Sign up</strong>
           </a>
          {% endif %}
-         
-        </div><!--/.nav-collapse -->
+          
       </div>
+
+
+
     <div class="ftstrip ftstrip-mini"></div>
-    </div>
+    </nav>
+
+
+
        <!-- New post Modal -->
           <div class="modal fade" id="newtwitterpost" tabindex="-1" role="dialog" aria-labelledby="newtwitterpost" aria-hidden="true">
             <div class="modal-dialog">
               <div class="modal-content"> 
                 <div class="modal-body">               
                   <form accept-charset="UTF-8" action="" method="POST">
-                      <textarea id="tweetMessage" class="form-control counted" name="message" placeholder="Type in your message" rows="5" >@myfoodtrade</textarea>
+                      <textarea id="tweetMessage" class="form-control counted" name="message" placeholder="Type in your message" rows="5" ></textarea>
                   </form> 
                 </div>
                 <div class="modal-footer">
-                  <h6 class="pull-left" id="counter">320 characters remaining</h6> 
+                  <h6 class="pull-left" id="counter">142 characters remaining</h6> 
                   <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                   <button type="button" class="btn btn-primary" onclick="UpdateStatus('tweetMessage')">Post update</button>
                 </div>
@@ -244,12 +255,15 @@ background: #eee;
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
-<div class="container-responsive">
+<div class="container-responsive clearfix" id="main_page">
  
-<div class="row row-offcanvas row-offcanvas-left">
- 
- 
-<div id="sidebar" class="col-xs-6 col-sm-2 sidebar sidebar-offcanvas" role="navigation">
+<div class="row row-offcanvas row-offcanvas-left row-offcanvas-right" id="main_row">
+
+<div id="sidebar" class="col-xs-6 col-sm-2 sidebar sidebar-offcanvas
+{% if not user.is_authenticated %} 
+hidden
+{% endif %}
+" role="navigation">
 
 {% if not user.is_authenticated %} 
 <div class="alert alert-info  ">
@@ -262,7 +276,7 @@ background: #eee;
 {% if user.is_authenticated or search.query %}
  {% if user.is_authenticated %}
         <!-- show the logged in users account --> 
-        <div id="account_info"  data-intro="Just start typing to search for specific foods, business type, or filter by organisation membership" data-position="right">
+        <div id="account_info">
         
         <div class="clearfix" style="margin-bottom: 10px;">
           <!-- twitter 78px image - 'large' -->
@@ -270,14 +284,31 @@ background: #eee;
           <img class="pull-left img-rounded" style="margin:0 8px 0 0; width:30px"  src="{{userinfo.profileimg}}"  />
           <div class="content">
             <h4 style="margin:0;"><a href="/profile/{{userinfo.username}}">{{userinfo.full_name}}</a></h4>
-            <small><a href="/editprofile/{{userinfo.username}}" class="text-muted">Edit your profile</a></small>
+            <small><a href="/profile/{{userinfo.username}}" class="text-muted">View your profile</a></small>
           </div>
+        </div> 
+
+        <div style="margin-left: 18px;">
+   
+          <p><a href="/activity"><i class="fa fa-dot-circle-o fa-fw"></i> Near me</a></p> 
+ 
+          <p><a href="/invite/"><i class="fa fa-twitter fa-fw"></i> Invite</a></p>
+
+          <p><a href="#" id="help"><i class="fa fa-question-circle fa-fw"></i> Help</a></p> 
+
+          <p><a href="#" rel="tooltip" title="Coming soon" class="text-muted"><i class="fa fa-envelope fa-fw"></i> Inbox</a></p> 
         </div>
+
+
+
          {% if search.query == "" or not search.query %}
-         
-        <p><a href="#">Trade connections <span class="badge pull-right">{{userinfo.trade_connections_no}}</span></a></p>
-        <p><a href="#">Foods <span class="badge pull-right">{{userinfo.food_no}}</span></a></p>
-        <p><a href="#">Organisations <span class="badge pull-right">{{userinfo.organisation_connection_no}}</span></a></p>
+           
+ 
+    <!--    {% ifequal userinfo.user_type 'Business' %}
+              <p><a href="#">Connections <span class="badge pull-right">{{userinfo.trade_connections_no}}</span></a></p>
+              <p><a href="#">Foods <span class="badge pull-right">{{userinfo.food_no}}</span></a></p>
+              <p><a href="#">Organisations <span class="badge pull-right">{{userinfo.organisation_connection_no}}</span></a></p>
+            {% endifequal %} -->
 
         <!-- 
         ADD IN AWARDS FUNCTIONALITY
@@ -289,10 +320,12 @@ background: #eee;
         
        <!--  <div class="alert alert-info small"> 
           <a class="close" data-dismiss="alert" href="#" aria-hidden="true">&times;</a>
-          <p><b>Want a great profile?</b></p>  
+          <p><b>Want a great profile?</b></p>
+
         </div> -->
         {% endif %}
         </div><!-- /account_info -->
+
 <!-- {% if search.query == "" or not search.query %}
     <hr /> 
    
@@ -302,21 +335,22 @@ background: #eee;
         <p><a href="#">Businesses <span class="badge pull-right">{{userinfo.nearby_businesses_no}}</span></a></p> 
          {% endif %} -->
  {% endif %}
+
  
     {% if search %}
     <div class="foodtrade-sidebar">
     
     <hr>
      
-    <div data-intro="Just start typing to search for specific foods, business type, or filter by organisation membership" data-position="right">
+    <div data-step="3" data-intro="Just start typing to search for specific foods, business type, or filter by organisation membership" data-position="right">
     <form role="form" >
       <div class="form-group"> 
-        <input type="text" class="form-control" id="food_filter" placeholder="Filter by food">
+        <input type="text" class="form-control input-sm" id="food_filter" placeholder="Filter by food">
       </div>
     </form>
     
     <ul class="foodtrade-tag-list">
-    <li data-id="ALL" class="foodtrade-tag foodtrade-tag-click foodtrade-tag-all"><div class="foodtrade-tag-checkbox-column"><input type="checkbox" checked="checked" aria-label="All Partners" class="foodtrade-tag-checkbox"></div><div class="foodtrade-tag-text">All Foods</div><div class="foodtrade-tag-count">{{food_count}}</div></li>
+    <li data-id="ALL" class="foodtrade-tag foodtrade-tag-click foodtrade-tag-all"><div class="foodtrade-tag-checkbox-column"><input type="checkbox" id="all_foods" checked="checked" onclick="make_search()" aria-label="All Partners" class="foodtrade-tag-checkbox"></div><div class="foodtrade-tag-text">All Foods</div><div class="foodtrade-tag-count">{{food_count}}</div></li>
     </ul>
 
     <ul class="foodtrade-tag-list" id="food_filter_results">
@@ -327,11 +361,11 @@ background: #eee;
     
     <form role="form">
       <div class="form-group"> 
-        <input type="email" class="form-control" id="business_filter" placeholder="Filter Business Type">
+        <input type="email" class="form-control input-sm" id="business_filter" placeholder="Filter Business Type">
       </div>
     </form>
     <ul class="foodtrade-tag-list">
-    <li data-id="ALL" class="foodtrade-tag foodtrade-tag-click foodtrade-tag-all"><div class="foodtrade-tag-checkbox-column"><input type="checkbox" checked="checked" aria-label="All Partners" class="foodtrade-tag-checkbox"></div><div class="foodtrade-tag-text">All Businesses</div><div class="foodtrade-tag-count">{{business_count}}</div></li>
+    <li data-id="ALL" class="foodtrade-tag foodtrade-tag-click foodtrade-tag-all"><div class="foodtrade-tag-checkbox-column"><input type="checkbox" id="all_businesses" checked="checked" onclick="make_search()" aria-label="All Partners" class="foodtrade-tag-checkbox"></div><div class="foodtrade-tag-text">All Businesses</div><div class="foodtrade-tag-count">{{business_count}}</div></li>
 </ul>
 
 <ul class="foodtrade-tag-list" id="business_filter_results">
@@ -339,17 +373,41 @@ background: #eee;
     </div><!-- charding overlay -->
     <hr />
      
+
+
+
      <form role="form">
       <div class="form-group"> 
-        <input type="email" class="form-control" id="filter_organisation" placeholder="Filter organisation">
+        <input type="email" class="form-control input-sm" id="organisation_filter" placeholder="Filter organisation">
       </div>
     </form>
-
-
     <ul class="foodtrade-tag-list">
-    <li data-id="ALL" class="foodtrade-tag foodtrade-tag-click foodtrade-tag-all"><div class="foodtrade-tag-checkbox-column"><input type="checkbox" checked="checked" aria-label="All Partners" class="foodtrade-tag-checkbox"></div><div class="foodtrade-tag-text">All Organisations</div><div class="foodtrade-tag-count">51</div></li><li data-id="8" class="foodtrade-tag foodtrade-tag-click "><div class="foodtrade-tag-checkbox-column"><input type="checkbox" aria-label="Johns Hopkins " class="foodtrade-tag-checkbox"></div><div class="foodtrade-tag-text">Soil Association </div><div class="foodtrade-tag-count">6</div></li><li data-id="1" class="foodtrade-tag foodtrade-tag-click "><div class="foodtrade-tag-checkbox-column"><input type="checkbox" aria-label="Stanford University" class="foodtrade-tag-checkbox"></div><div class="foodtrade-tag-text">NFU</div><div class="foodtrade-tag-count">5</div></li><li data-id="16" class="foodtrade-tag foodtrade-tag-click "><div class="foodtrade-tag-checkbox-column"><input type="checkbox" aria-label="École Polytechnique Fédérale de Lausanne" class="foodtrade-tag-checkbox"></div><div class="foodtrade-tag-text">Plunkett Foundation </div><div class="foodtrade-tag-count">4</div></li><li data-id="4" class="foodtrade-tag foodtrade-tag-click "><div class="foodtrade-tag-checkbox-column"><input type="checkbox" aria-label="Princeton University" class="foodtrade-tag-checkbox"></div><div class="foodtrade-tag-text">Organic institute</div><div class="foodtrade-tag-count">3</div></li><li data-id="15" class="foodtrade-tag foodtrade-tag-click "><div class="foodtrade-tag-checkbox-column"><input type="checkbox" aria-label="University of Washington" class="foodtrade-tag-checkbox"></div><div class="foodtrade-tag-text"> Slow Food</div><div class="foodtrade-tag-count">3</div></li><li class="foodtrade-tag-showmore">show more</li>
+    <li data-id="ALL" class="foodtrade-tag foodtrade-tag-click foodtrade-tag-all"><div class="foodtrade-tag-checkbox-column"><input type="checkbox" id="all_organisations" checked="checked" onclick="make_search()" aria-label="All Partners" class="foodtrade-tag-checkbox"></div><div class="foodtrade-tag-text">All Organisations</div><div class="foodtrade-tag-count">{{organisation_count}}</div></li>
     </ul>
+
+
+    <ul class="foodtrade-tag-list" id="organisation_filter_results">
+    </ul>
+
+
     </div><!--sidebar-->
+
+    <hr /> 
+    <div data-step="4" data-intro="See what's active" data-position="top">
+      <div id="trendsThisWeek">
+          <h5>Trends this week</h5>
+          {% for eachVal in userinfo.hashtagsthis %}
+            <p><a href="/activity/?q=%23{{eachVal.uid|slice:"1:"}}&location=++None+&lon=&lat=">{{eachVal.uid}} <span class="badge pull-right">{{eachVal.value|floatformat:"0"}}</span></a></p>
+          {% endfor %}
+      </div>
+      <div id="trendsThisWeek">
+          <h5>Trends all time</h5>
+          {% for eachVal in userinfo.hashtagsall %}
+            <p><a href="/activity/?q=%23{{eachVal.uid|slice:"1:"}}&location=++None+&lon=&lat=">{{eachVal.uid}} <span class="badge pull-right">{{eachVal.value|floatformat:"0"}}</span></a></p>
+          {% endfor %}
+      </div>
+    </div>
+
     {% endif %}
 
        {% endif %}
@@ -360,7 +418,7 @@ background: #eee;
 </div>
 
 <!-- FOOTER --> 
-<div class="container-responsive" id="footer">    
+<div class="container-responsive clearfix" id="footer">    
   <div class="row">
     <div class="col-lg-12">
         <div class="ftstrip"></div>
@@ -441,20 +499,54 @@ background: #eee;
   </div>
 </div>
 
+<!-- Button trigger modal -->
+<button id="btn_must_be_logged" style="display:none" data-toggle="modal" data-target="#myModal_must_be_logged">
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="myModal_must_be_logged" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-body">
+        <h4 class="modal-title" id="myModalLabel">You must be <a href="/accounts/twitter/login/?process=login">logged</a> in to use this feature</h4>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+ 
 <!-- UserVoice JavaScript SDK (only needed once on a page) -->
 <script>(function(){var uv=document.createElement('script');uv.type='text/javascript';uv.async=true;uv.src='//widget.uservoice.com/HloB2aRxdk7fbhWMOI5AlQ.js';var s=document.getElementsByTagName('script')[0];s.parentNode.insertBefore(uv,s)})()</script>
+
 <!-- A tab to launch the Classic Widget -->
-<script>UserVoice=window.UserVoice||[];UserVoice.push(['showTab','classic_widget',{mode:'full',primary_color:'#f08119',link_color:'#61ae32',default_mode:'support',forum_id:231923,tab_label:'Feedback & Support',tab_color:'#cc6d00',tab_position:'middle-right',tab_inverted:false}]);</script>
+<script>
+UserVoice = window.UserVoice || [];
+UserVoice.push(['showTab', 'classic_widget', {
+  mode: 'full',
+  primary_color: '#ff9900',
+  link_color: '#7fc836',
+  default_mode: 'feedback',
+  forum_id: 231923,
+  tab_label: 'Feedback & Support',
+  tab_color: '#66A12B',
+  tab_position: 'bottom-right',
+  tab_inverted: false
+}]);
+</script>
+
+
+
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+    <script src="{% static "js/jquery.js" %}"></script>
     <script src="{% static "js/bootstrap.min.js" %}"></script>
     <script src="{% static "js/foodtrade.js" %}"></script>
-     <script src="{% static "js/ajax-handle.js" %}"></script>
-     <script src="{% static "js/typeahead.min.js" %}"></script>
-     <script src="{% static "js/typeahead.js" %}"></script>
-     <script src="{% static "js/chardinjs.min.js" %}"></script>
+     <script src="{% static "js/ajax-handle.js" %}"></script> 
+     <script src="{% static "js/intro.min.js" %}"></script>
      
  <script src="http://getbootstrap.com/2.3.2/assets/js/bootstrap-typeahead.js"></script>
          {% block footer %}
@@ -462,9 +554,9 @@ background: #eee;
      <script type="text/javascript">
 $(document).ready(function() {
 
-
-$(".chardinjs-show-element").css('position','absolute');
-$('body').chardinJs('start')
+  
+      var h = $(window).height();
+      document.getElementById("map").style.height = h + "px";
 
     var activeSystemClass = $('.list-group-item.active');
     //something is entered in search form
@@ -511,7 +603,11 @@ $('body').chardinJs('start')
 });
     </script>
     <script type="text/javascript">
-      $('.tip').tooltip()
+      $('.tip').tooltip();
+      $('[rel=tooltip]').tooltip();
+
+
+   
 
       $('[data-toggle=offcanvas]').click(function() {
         $('.row-offcanvas').toggleClass('active');
@@ -618,41 +714,64 @@ $(function() {
     $(".counted").charCounter(320,{container: "#counter"});
 });
     </script>
+
+
+
+
+<!-- TOUR SCRIPT --> 
+<script type="text/javascript">
+  document.getElementById('help').onclick = function() {
+    introJs().setOption('doneLabel', 'Next page').start().oncomplete(function() {
+      window.location.href = '/activity?multipage=true';
+    });
+  };
+</script>
+<!-- // TOUR SCRIPT --> 
+
+
+
+
 <script type="text/javascript">
 // This example adds a search box to a map, using the Google Place Autocomplete
 // feature. People can enter geographical searches. The search box will return a
 // pick list containing a mix of places and predicted search terms.
-var placeCord = '';
-function initialize() {
-  // Create the search box and link it to the UI element.
-  var input = /** @type {HTMLInputElement} */(
-      document.getElementById('pac-input'));
-  var searchBox = new google.maps.places.SearchBox(
-    /** @type {HTMLInputElement} */(input));
-  // [START region_getplaces]
-  // Listen for the event fired when the user selects an item from the
-  // pick list. Retrieve the matching places for that item.
-  google.maps.event.addListener(searchBox, 'places_changed', function() {
-  var places = searchBox.getPlaces();
-    placeCord = String(places[0].address_components[0].long_name);
-    alert(placeCord);
-  });
-}
-google.maps.event.addDomListener(window, 'load', initialize);
-window.setInterval(function(){
-  show_notifications();
-}, 20000);
+
+{% if user.is_authenticated %}
+  window.setInterval(function(){
+    show_notifications();
+  }, 50000);
+{% endif %}
 function  show_notifications(){
   ajax_request('getnotification', 'build_notification', {'user':'{{userinfo.username}}'})
 }
+var change_data;
 function build_notification(data){
   data = jQuery.parseJSON(data);
+  change_data = data;
   $('#liNotification').html('');
   $('#notification').html(String(data['notification_count']));
   for (eachNotification in data['notifications']){
       var data_dict = data['notifications'][eachNotification];
-      $('#liNotification').prepend('<li><a href="/profile/' + String(data_dict.notifying_user) + '/"' + String(data_dict.notification_message) + '</a></li>');
+      $('#liNotification').prepend('<li><a href="/profile/' + String(data_dict.notifying_user) + '/" title="' + String(data_dict.notification_message) + '">' +String(data_dict.notification_message).substr(0,20)+'....</a></li>');
   }
+  if (data['notification_count'] == 0){
+      $('#liNotification').prepend('<li><a href="#">No notifications</a></li>');
+  }
+}
+function clear_notification(){
+  $('#notification').html(String('0'));
+  ajax_request('change_notification_status','','')
+}
+
+function validate_login(){
+  {% if user.is_authenticated %}
+    return {'status':'1'}
+  {% endif %}
+  {% if not user.is_authenticated %}
+    return {'status':'0'}
+  {% endif %}
+  /*
+  ajax_request('validate_logged_in', 'ajax_success_validate_logged_in','');*/
 }
 </script>    
   </body>
