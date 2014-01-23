@@ -1,6 +1,16 @@
+<<<<<<< HEAD
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+<h1>404 Error : Page Not Found !!</h1>
+</body>
+</html>
+=======
 {% extends 'tbase.html' %}
 {% load staticfiles %}
-{% load mail_errors %}
+
 {% block content %} 
 
 <div class="col-md-10  {% if not user.is_authenticated %} col-md-offset-1 {% endif %}">
@@ -17,9 +27,7 @@
 
  
 		<h1 style="font-size: 100px;" class="text-center">Oh crumbs. </h1>
-		<p class="lead">
-			{{request_path|error:'404'}}
-			Sorry, we can't find what you're looking for. Check it's not a typo in the address?
+		<p class="lead">Sorry, we can't find what you're looking for. Check it's not a typo in the address?
 		We've been notified of the error and will fix the problem if we can. If you have time, <a href="https://foodtrade.uservoice.com/" target="_blank">please get in touch to tell us more</a>. 
 </p>
 		</div>
@@ -29,3 +37,4 @@
 </div> 
 </div>
 </div><!-- col10 --> {% endblock %}
+>>>>>>> 7eab23aedda73bc9086799d3d10465f406048c94
