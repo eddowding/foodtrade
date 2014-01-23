@@ -271,8 +271,8 @@ $('.enterhandler').bind('keypress', function(e) {
 		   {
 		   		return;
 		   }
-		   PostStatus(status_msg);
-		   this.value=0;
+		   ajax_request("post_tweet", 'CloseNewPostModal', {message: status_msg});
+		 
 		 }
 	}
 	else{
