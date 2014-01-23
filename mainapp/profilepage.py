@@ -4,6 +4,8 @@ from allauth.socialaccount.models import SocialToken, SocialAccount
 from django.template import RequestContext
 from django.contrib.auth.models import User
 from django.core.context_processors import csrf
+from django.http import Http404
+
 from mainapp.classes.TweetFeed import TweetFeed
 from geolocation import get_addr_from_ip
 from classes.DataConnector import UserInfo
@@ -20,12 +22,18 @@ def resolve_profile(request, username):
     usr = User.objects.get(username = username)
     user_profile = UserProfile()
     userprof = user_profile.get_profile_by_id(str(usr.id))
-    if userprof['sign_up_as'] == 'Business':
-        return HttpResponseRedirect('/business/'+username)
-    elif userprof['sign_up_as'] == 'Individual':
-        return HttpResponseRedirect('/person/'+username)
-    elif userprof['sign_up_as'] == 'Organisation':
-        return HttpResponseRedirect('/organisation/'+username)
+    # if userprof['sign_up_as'] == 'Business':
+    #     return HttpResponseRedirect('/business/'+username)
+    # elif userprof['sign_up_as'] == 'Individual':
+    #     return HttpResponseRedirect('/person/'+username)
+    # elif userprof['sign_up_as'] == 'Organisation':
+    #     return HttpResponseRedirect('/organisation/'+username)
+    try:
+        usr = User.objects.get(username = 'aaa')
+    except:
+        raise Http404
+    return HttpResponseRedirect('/person/'+username)
+
 
 def display_profile(request, username):
     parameters = {}
