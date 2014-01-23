@@ -17,17 +17,19 @@
     <meta property="og:site_name" content="FoodTrade" />
     <meta property="og:type" content="company" />
 
+
+
 <!--     <meta property="fb:admins" content="USER_ID" />
     <meta property="fb:app_id" content="APP_ID" /> -->
 
-<!--     <meta property="og:url" content="http://www.foodtrade.com/XXX PERMALINK XXX" />
-    <meta property="og:image" content="XXX AVATAR OF CONTENT BEING VIEWED XXX" />  
-    <meta property="og:title" content=" XXX THEIR NAME XXX - FoodTrade" />
-    <meta property="og:latitude" content="XXX Latitude" />
-    <meta property="og:longitude" content="XXX Longitude" />
-    <meta property="og:postal-code" content="XXX Postal Code" />
-    <meta property="og:country-name" content="XXX Country Name" />
- -->
+    <meta property="og:url" content="http://www.{{request.META.HTTP_HOST}}{{request.path}}" />
+    <meta property="og:image" content="{% block imageurl %}http://www.{{request.META.HTTP_HOST}}/static/images/logo.png{% endblock %}" />  
+    <meta property="og:title" content="{% block titlecontent %}Home{% endblock %} - FoodTrade" />
+    <meta property="og:latitude" content="{{userinfo.lat}}" />
+    <meta property="og:longitude" content="{{userinfo.lon}}" />
+    <meta property="og:postal-code" content="{{userinfo.zip_code}}" />
+    <meta property="og:country-name" content="{{userinfo.country}}" />
+
     <link rel="shortcut icon" href="http://foodtrade.com/wp-content/uploads/2013/09/favi22.png">
     <title>FoodTrade</title>
     <!-- CSS -->
