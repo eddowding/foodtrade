@@ -6,7 +6,7 @@
 {% include "socialaccount/snippets/login_extra.html" %}
 {% load account %}
 {% block content %}
-    <div class="col-md-10" id="single">
+    <div class="col-md-6 col-sm-7" id="single">
     <div class="container-responsive">
     <div id="header_box" class="clearfix organisation">
       <div class="col-md-2" id="avatar">
@@ -122,7 +122,7 @@
           </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
       </div><!-- /.modal -->
-      <div class="icons text-center" style="font-size:25px">
+      <!-- <div class="icons text-center" style="font-size:25px">
         <a href="#"><i class="fa fa-facebook-square"></i></a>
         <a href="#"><i class="fa fa-twitter-square"></i></a> 
         <a href="#"><i class="fa fa-phone-square"></i></a> 
@@ -131,8 +131,16 @@
         <a href="#"><i class="fa fa-globe"></i></a> 
         <a href="#"><i class="fa fa-youtube"></i></a> 
         <a href="#"><i class="fa fa-linkedin-square"></i></a> 
-      </div> 
-      <?php include 'modal_invite.php';?>
+      </div>  -->
+      <div class="icons text-center" style="font-size:25px">
+      <span class='st_facebook'></span>
+      <span class='st_twitter'></span>
+      <span class='st_pinterest'></span>
+      <span class='st_googleplus'></span>
+      <span class='st_tumblr'></span>
+      <span class='st_linkedin'></span>
+      </div>
+      
      <!-- modal_contact -->
       <div class="modal fade" id="modal_contact" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -218,7 +226,7 @@
      </div>
     </div>
     <div class="row">
-      <div class="col-md-8">
+      <div class="col-md-12">
         <div class="container-responsive clearfix">
         <div class="tab-content">
           <div class="tab-pane active fade in " id="members">
@@ -360,7 +368,7 @@
                               </span>
                                   <div class="chat-body clearfix">
                                       <div class="header">
-                                          <strong class="primary-font">{{eachUpdate.user.username}}</strong> <small class="pull-right text-muted">
+                                          <strong class="primary-font">{{eachUpdate.user.name}}</strong> <small class="pull-right text-muted">
                                               <span class="glyphicon glyphicon-time"></span>{{eachUpdate.time_elapsed}} ago</small>
                                       </div>
                                       <p>
@@ -393,25 +401,37 @@
  
    
       </div><!-- end col8 --> 
-      <div class="col-md-4">
-       <div style="width:100%; height: 600px; " id="map"  data-spy="affix" data-offset-top="30">
-        <div class="alert alert-warning">
+    </div><!-- col6 --> 
+  </div>
+  <div class="col-md-4 col-sm-3">
+    <div style="width:100%; z-index: 100;" id="map">
+      <div class="alert alert-warning">
           <p>This map shows 
           Customers as points
           Stockist as organge lines and 
           Supplieras as purple lines</p>
           <p>There are radius lines at 15, 30, and 100 miles.</p>
         </div>
-      </div><!-- end col4 -->
-    </div><!-- row -->
+           </div> 
+           </div>
+      
    
         
-    </div><!-- col10 --> 
         <script type="text/javascript">
     map_lat={{ loc.lat }};
     map_lon = {{ loc.lon }};
 connections = {{members_str | safe}};
+
+var name = "{{userprof.full_name}}";
+      var description = "{{userprof.description}}";
+      var photo =  "{{userprof.profileimg}}";
+      var username = "{{userprof.username}}";
+      var type = "{{userprof.type}}".split(',');
+      var latitude =  {{userprof.lat}};
+          var longitude =  {{userprof.lon}};
     </script>
     <script src="{% static "js/organisation-map.js" %}"></script>
      <script src="{% static "js/contact.js" %}"></script>
+     <script type="text/javascript" src="http://w.sharethis.com/button/buttons.js"></script>
+<script type="text/javascript">stLight.options({publisher: "13c078b3-f35d-443f-a1b0-5d09282eb2b1", doNotHash: false, doNotCopy: false, hashAddressBar: false});</script>
 {% endblock %}

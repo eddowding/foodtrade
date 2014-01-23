@@ -14,7 +14,7 @@
   </style>
 
 
-    <div class="col-md-10" id="single">
+    <div class="col-md-6 col-sm-7" id="single">
     <div class="container-responsive">
     <div id="header_box" class="clearfix individual">
       <div class="col-md-2" id="avatar">
@@ -72,8 +72,57 @@
       <button class="btn btn-default btn-block" data-toggle="modal" data-target="#sharer">
         <i class="fa fa-share-square-o text-muted"></i> Share
       </button>
-      {% include 'modal_share.php' %}
-      <div class="icons text-center" style="font-size:25px">
+      <!--SHARER  Modal -->
+      <div class="modal fade" id="sharer" tabindex="-1" role="dialog" aria-labelledby="sharer" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-body"> 
+        <div class="container-responsive">
+          <div class="row">
+            <div class="col-sm-6">
+              <a href="#" class="btn btn-block  btn-social btn-facebook" onclick="window.open(
+                    'https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent('URL') +'&amp;t=' + encodeURIComponent('TITLE'), 
+                    'facebook-share-dialog', 
+                    'width=626,height=436,top='+((screen.height - 436) / 2)+',left='+((screen.width - 626)/2 )); 
+                  return false;">
+                <i class="fa fa-facebook"></i>  Share on Facebook
+              </a>
+              <a href="#" class="btn btn-block  btn-social btn-twitter" onclick="window.open(
+                    'https://twitter.com/share?url='+encodeURIComponent('URL')+'&amp;text='+encodeURIComponent('@THEIRNAME on @foodtradeHQ') + '&amp;count=none/', 
+                    'twitter-share-dialog', 
+                    'width=626,height=436,top='+((screen.height - 436) / 2)+',left='+((screen.width - 626)/2 )); 
+                  return false;">
+                <i class="fa fa-twitter"></i>  Share on Twitter
+              </a>
+  
+              <a class="btn  btn-block  btn-social btn-pinterest" href="http://pinterest.com/pin/create/button/?url={URI-encoded URL of the page to pin}&media={URI-encoded URL of the image to pin}&description={optional URI-encoded description}" class="pin-it-button" count-layout="horizontal">
+                <i class="fa fa-pinterest"></i>
+                Share on Pinterest
+              </a>
+            </div>
+            <div class="col-sm-6">
+              <a  class="btn btn-social btn-block btn-google-plus" href="https://plus.google.com/share?url=myline">
+                <i class="fa fa-google-plus"></i>
+                Share on Google+
+              </a>
+              <a  class="btn btn-block btn-social btn-tumblr" href="http://www.tumblr.com/share" title="Share on Tumblr">
+                <i class="fa fa-tumblr"></i>
+                Share on Tumblr
+              </a>
+                 
+              <a  class="btn btn-block  btn-social btn-bitbucket" href="http://www.linkedin.com/shareArticle?mini=true&url=THEURL&title=TITLE&summary=SUMMARY&source=">
+                <i class="fa fa-linkedin"></i>
+                Share on LinkedIn
+              </a>
+            </div>
+            </div>
+            </div>
+              <script type="text/javascript" src="http://platform.tumblr.com/v1/share.js"></script>
+            </div> 
+          </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+      </div><!-- /.modal -->
+      <!-- <div class="icons text-center" style="font-size:25px">
         <a href="#"><i class="fa fa-facebook-square"></i></a>
         <a href="#"><i class="fa fa-twitter-square"></i></a> 
         <a href="#"><i class="fa fa-phone-square"></i></a> 
@@ -82,7 +131,15 @@
         <a href="#"><i class="fa fa-globe"></i></a> 
         <a href="#"><i class="fa fa-youtube"></i></a> 
         <a href="#"><i class="fa fa-linkedin-square"></i></a> 
-      </div> 
+      </div>  -->
+      <div class="icons text-center" style="font-size:25px">
+      <span class='st_facebook'></span>
+      <span class='st_twitter'></span>
+      <span class='st_pinterest'></span>
+      <span class='st_googleplus'></span>
+      <span class='st_tumblr'></span>
+      <span class='st_linkedin'></span>
+      </div>
      <!-- modal_contact -->
       <div class="modal fade" id="modal_contact" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -132,35 +189,105 @@
         </div><!-- /.modal-dialog -->
       </div><!-- /.modal -->
       <!-- modal_customer -->
-      <div class="modal fade" id="modal_customer" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-              <h4 class="modal-title" id="myModalLabel">You're a customer of {{name}}?</h4>
-            </div>
-            <div class="modal-body">
- 
-            <p><strong>Thanks!</strong> Knowing where customers are is a win-win. BUSINESS NAME understands how it can better serve you, and in time we'll help them keep you informed about special local offers. </p> 
-            <p>Examples might include home deliveries from your local shops, later opening hours, or working together with other local business to make things better. </p>
-            <p>We'll show you as being a customer and put a small dot on the map near your location.</p>
-   
-            </div>
-            <div class="modal-footer"> 
-              <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-              {% if user.is_authenticated %}
-              <button type="button" class="btn btn-primary" onClick="add_customer({{profile_id}}, {{user_id}})" data-dismiss="modal">Yes, I'm a happy customer!</button>
-              {% else %}
-              <button type="button" class="btn btn-primary" data-dismiss="modal">Yes, I'm a happy customer!</button>
-              {% endif %}
-            </div>
-          </div><!-- /.modal-content -->
-        </div><!-- /.modal-dialog -->
-      </div><!-- /.modal -->
+      
  
       </div><!-- end header last -->
     </div>
     </div>
-     <script src="{% static "js/contact.js" %}"></script>
+<div class="row">
+     <div class="col-md-12">
+        <ul class="nav nav-tabs ">
+          <li class="active"><a href="#activity" data-toggle="tab">Updates <span class="badge ">{{updates_count}}</span></a></li>
+        </ul>
+     </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-12">
+        <div class="container-responsive clearfix">
+
+        <div class="tab-content">
+<div class="tab-pane active fade in" id="activity">
+
+          <div class="container-responsive">
+          <div class="row">
+              <div class="col-md-12">
+            {% if user.is_authenticated %}
+                  <div>
+
+                      <!-- if this is the profile of the logged in user -->
+                      <!-- <div class="well well-sm">
+                          <div class="input-group">
+                              <input id="btn-input" type="text" class="form-control input-sm" placeholder="Send an update..." />
+                              <span class="input-group-btn">
+                                  <button class="btn btn-warning btn-sm" id="btn-chat">
+                                      Send</button>
+                              </span>
+                          </div>
+                      </div> -->
+                      <!-- // if this is the profile of the logged in user -->
+                      <div>
+                          <ul class="chat">
+                          {% for eachUpdate in updates %}
+                              <li class="left clearfix"><span class="chat-img pull-left">
+                                  <img src="{{eachUpdate.user.profile_img}}" />
+                              </span>
+                                  <div class="chat-body clearfix">
+                                      <div class="header">
+                                          <strong class="primary-font">{{eachUpdate.user.name}}</strong> <small class="pull-right text-muted">
+                                              <span class="glyphicon glyphicon-time"></span>{{eachUpdate.time_elapsed}} ago</small>
+                                      </div>
+                                      <p>
+                                         {{eachUpdate.status}}
+                                      </p>
+                                  </div>
+                              </li>
+                          {% endfor %}    
+                          </ul>
+                      </div>
+                  </div>
+              {% else %}
+                <p class="alert alert-warning"><a href="{% provider_login_url "twitter" process="login" %}" class="">Login</a> or <a href="{% provider_login_url "twitter" process="login" %}" class="">sign up free</a> to see updates and activity. </p>
+              {% endif %}
+
+              </div>
+
+          </div>
+
+          </div>
+        </div>
+</div></div></div></div>
+
+
+</div>
+<div class="col-md-4 col-sm-3">
+    <div style="width:100%; z-index: 100;" id="map">
+      <div class="alert alert-warning">
+          <p>This map shows 
+          Customers as points
+          Stockist as organge lines and 
+          Supplieras as purple lines</p>
+          <p>There are radius lines at 15, 30, and 100 miles.</p>
+        </div>
+           </div> 
+           </div>
+
 
  {% endblock %}
+    {% block footer %}
+     <script src="{% static "js/contact.js" %}"></script>
+    <script type="text/javascript">
+    map_lat={{ loc.lat }};
+    map_lon = {{ loc.lon }};
+    var name = "{{userprof.full_name}}";
+      var description = "{{userprof.description}}";
+      var photo =  "{{userprof.profileimg}}";
+      var username = "{{userprof.username}}";
+      var type = "{{userprof.type}}".split(',');
+      var latitude =  {{userprof.lat}};
+          var longitude =  {{userprof.lon}};
+    </script>
+          <script src="{% static "js/individual-map.js" %}"></script>
+          <script type="text/javascript" src="http://w.sharethis.com/button/buttons.js"></script>
+<script type="text/javascript">stLight.options({publisher: "13c078b3-f35d-443f-a1b0-5d09282eb2b1", doNotHash: false, doNotCopy: false, hashAddressBar: false});</script>
+{% endblock %}

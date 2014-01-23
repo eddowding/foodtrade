@@ -4,6 +4,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from allauth.socialaccount.models import SocialToken, SocialAccount
 from twython import Twython
 from django.template import RequestContext
+from django.conf import settings
 import json
 from mainapp.classes.TweetFeed import TweetFeed
 from mainapp.classes.Email import Email
@@ -13,16 +14,15 @@ from mainapp.classes.TweetFeed import TradeConnection, UserProfile, Food, Custom
 from AjaxSearch import AjaxSearch
 from pygeocoder import Geocoder
 from mainapp.profilepage import get_connections, get_all_foods
+from mainapp.views import get_twitter_obj
 
+# consumer_key = 'seqGJEiDVNPxde7jmrk6dQ'
+# consumer_secret = 'sI2BsZHPk86SYB7nRtKy0nQpZX3NP5j5dLfcNiP14'
+ACCESS_TOKEN = ''
+ACCESS_TOKEN_SECRET =''
 
-consumer_key = 'seqGJEiDVNPxde7jmrk6dQ'
-consumer_secret = 'sI2BsZHPk86SYB7nRtKy0nQpZX3NP5j5dLfcNiP14'
-access_token = ''
-access_token_secret =''
-
-admin_access_token = '2248425234-EgPSi3nDAZ1VXjzRpPGMChkQab5P0V4ZeG1d7KN'
-admin_access_token_secret = 'ST8W9TWqqHpyskMADDSpZ5r9hl7ND6sEfaLvhcqNfk1v4'
-
+# admin_access_token = '2248425234-EgPSi3nDAZ1VXjzRpPGMChkQab5P0V4ZeG1d7KN'
+# admin_access_token_secret = 'ST8W9TWqqHpyskMADDSpZ5r9hl7ND6sEfaLvhcqNfk1v4'
 
 
 class AjaxHandle(AjaxSearch):
@@ -35,33 +35,20 @@ class AjaxHandle(AjaxSearch):
             return HttpResponseRedirect('/accounts/login/')
         user_id = request.user.id
         st = SocialToken.objects.get(account__user__id=user_id)
-        access_token = st.token
-        access_token_secret = st.token_secret
-        twitter = Twython(
-            app_key = consumer_key,
-            app_secret = consumer_secret,
-            oauth_token = access_token,
-            oauth_token_secret = access_token_secret
-        )
+        ACCESS_TOKEN = st.token
+        ACCESS_TOKEN_SECRET = st.token_secret
+        user_twitter = get_twitter_obj(ACCESS_TOKEN, ACCESS_TOKEN_SECRET)
         # uid = SocialAccount.objects.get(user__id=user_id).uid
-        admin_twitter = Twython(
-            app_key = consumer_key,
-            app_secret = consumer_secret,
-            oauth_token = admin_access_token,
-            oauth_token_secret = admin_access_token_secret
-            )
+        bot_twitter = get_twitter_obj(settings.BOT_ACCESS_TOKEN, settings.BOT_ACCESS_TOKEN_SECRET)
         message = request.POST.get('message')
         noappend = request.POST.get('noappend')
-
-
         url = " http://"+request.META['HTTP_HOST']+"/profile/"+request.user.username
-
         user_profile = UserProfile()
         if message != None and message != "":
             if noappend == 'noappend':
-                tweet = twitter.update_status(status = message)
+                tweet = user_twitter.update_status(status = message)
             else:
-                tweet = twitter.update_status(status = message+url)
+                tweet = user_twitter.update_status(status = message+url)
             tweet_feed = TweetFeed()
             usr = SocialAccount.objects.get(uid = tweet['user']['id'])
             pic_url_list = []
@@ -69,10 +56,6 @@ class AjaxHandle(AjaxSearch):
                 for each in tweet['entities'].get('media'):
                     pic_url_list.append(each['media_url'])
 
-            
-
-
-            
             profile = user_profile.get_profile_by_id(str(usr.user.id))
             my_lat = profile['latitude']
             my_lon = profile['longitude']
@@ -90,7 +73,7 @@ class AjaxHandle(AjaxSearch):
                     'name': tweet['user']['name'],
                     'profile_img':tweet['user']['profile_image_url'],
                     'description':tweet['user']['description'],
-                    'location':tweet['user']['location'],
+                    'place':tweet['user']['location'],
                     }
             }
             if my_lon == '' and my_lat == '':
@@ -101,6 +84,8 @@ class AjaxHandle(AjaxSearch):
                 data['location'] = {"type": "Point", "coordinates": [float(ip_location['longitude']), float(ip_location['latitude'])]},
             else:                
                 data['location'] = {"type": "Point", "coordinates": [float(my_lon), float(my_lat)]}
+
+            print data
             tweet_feed.insert_tweet(data)
             tweet_feed.update_data(user_id)
             return HttpResponse(json.dumps({'status':1}))
@@ -111,15 +96,9 @@ class AjaxHandle(AjaxSearch):
     def post_tweet_admin(self, request):
         message = request.POST.get('message')
         if not request.user.is_authenticated():
-            admin_twitter = Twython(
-            app_key = consumer_key,
-            app_secret = consumer_secret,
-            oauth_token = admin_access_token,
-            oauth_token_secret = admin_access_token_secret
-            )
+            bot_twitter = get_twitter_obj(settings.BOT_ACCESS_TOKEN, settings.BOT_ACCESS_TOKEN_SECRET)
             if message != None and message != "":
-                admin_twitter.update_status(status=message)
-
+                bot_twitter.update_status(status=message)
                 return HttpResponse("{'status':1}")
             
         # uid = SocialAccount.objects.get(user__id=user_id).uid
@@ -127,16 +106,11 @@ class AjaxHandle(AjaxSearch):
         if request.user.is_authenticated():
             user_id = request.user.id
             st = SocialToken.objects.get(account__user__id=user_id)
-            access_token = st.token
-            access_token_secret = st.token_secret
-            twitter = Twython(
-                app_key = consumer_key,
-                app_secret = consumer_secret,
-                oauth_token = access_token,
-                oauth_token_secret = access_token_secret
-            )
+            ACCESS_TOKEN = st.token
+            ACCESS_TOKEN_SECRET = st.token_secret
+            user_twitter = get_twitter_obj(ACCESS_TOKEN, ACCESS_TOKEN_SECRET)
             if message != None and message != "":
-                tweet = twitter.update_status(status = message)       
+                tweet = user_twitter.update_status(status = message)       
                 return HttpResponse("{'status':1}")
         return HttpResponse("{'status':0}")
 

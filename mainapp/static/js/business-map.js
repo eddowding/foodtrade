@@ -38,7 +38,27 @@ L.circle([map_lat,map_lon], 160934, {
 			weight:1,
 			fill: 0,
 		}).addTo(map);
-L.marker([parseFloat(map_lat), parseFloat(map_lon)]).addTo(map);
+var card_str = '<div class="card-box"><div class="content"><div class="pull-left"><a href="/profile/'+username+'"><img src="'+photo+'" alt="'+name+'" class="img-rounded img-responsive" style="width:40px;" /></a>';
+
+                
+                      card_str += '</div><div class="text"><h5><a href="/profile/'+username+'">'+name+'</a></h5>';
+
+                      card_str += '<p class="small">'+description.substr(0,80)+'</p></div></div>';
+                      if(type.length>0)
+                      {
+                    card_str += '<div class="numbers clearfix"><div class="tags tags-biztype pull-left">';
+                    for(var j=0;j<type.length;j++)
+                    {  
+                      
+                      card_str +=  '<a href="/activity/?q='+type[j]+'">'+type[j]+'</a>';
+                     }
+                      card_str += '</div></div>';
+                }
+                  card_str += '</div> ';
+
+		 L.marker([parseFloat(map_lat), parseFloat(map_lon)]).addTo(map).bindPopup(card_str);
+			
+
 
 
 var map_controls = [];
@@ -109,6 +129,27 @@ function reload_connections()
 				opacity: 0.8
 			}).addTo(map);
 			map_controls.push(polyline);
+			var card_str = '<div class="card-box"><div class="content"><div class="pull-left"><a href="/profile/'+username+'"><img src="'+photo+'" alt="'+name+'" class="img-rounded img-responsive" style="width:40px;" /></a>';
+
+                
+                      card_str += '</div><div class="text"><h5><a href="/profile/'+username+'">'+name+'</a></h5>';
+
+                      card_str += '<p class="small">'+description.substr(0,80)+'</p></div></div>';
+                      if(type.length>0)
+                      {
+                    card_str += '<div class="numbers clearfix"><div class="tags tags-biztype pull-left">';
+                    for(var j=0;j<type.length;j++)
+                    {  
+                      
+                      card_str +=  '<a href="/activity/?q='+type[j]+'">'+type[j]+'</a>';
+                     }
+                      card_str += '</div></div>';
+                }
+                  card_str += '</div> ';
+
+			var ctrl = L.marker([parseFloat(current_lat), parseFloat(current_lon)]).addTo(map).bindPopup(card_str);
+			
+			map_controls.push(ctrl);
 
 }
 
@@ -127,25 +168,25 @@ for(var j=0;j<customers.length;j++)
 
 			var current_lat = parseFloat(latitude);
 			var current_lon = parseFloat(longitude);
-			if(current_lat>max_lat)
-			{
-				max_lat = current_lat;
-			}
-			if(current_lat<min_lat)
-			{
-				min_lat = current_lat;
-			}
+			// if(current_lat>max_lat)
+			// {
+			// 	max_lat = current_lat;
+			// }
+			// if(current_lat<min_lat)
+			// {
+			// 	min_lat = current_lat;
+			// }
 
 			
-			if(current_lon>max_lon)
-			{
-				max_lon = current_lon;
-			}
+			// if(current_lon>max_lon)
+			// {
+			// 	max_lon = current_lon;
+			// }
 
-			if(current_lon<min_lon)
-			{
-				min_lon = current_lon;
-			}
+			// if(current_lon<min_lon)
+			// {
+			// 	min_lon = current_lon;
+			// }
 
 
 

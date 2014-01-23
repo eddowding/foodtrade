@@ -4,6 +4,8 @@ from allauth.socialaccount.models import SocialToken, SocialAccount
 from django.template import RequestContext
 from django.contrib.auth.models import User
 from django.core.context_processors import csrf
+from django.http import Http404
+
 from mainapp.classes.TweetFeed import TweetFeed
 from geolocation import get_addr_from_ip
 from classes.DataConnector import UserInfo
@@ -26,6 +28,11 @@ def resolve_profile(request, username):
         return HttpResponseRedirect('/person/'+username)
     elif userprof['sign_up_as'] == 'Organisation':
         return HttpResponseRedirect('/organisation/'+username)
+    # try:
+    #     usr = User.objects.get(username = 'aaa')
+    # except:
+    #     raise Http404
+    # return HttpResponseRedirect('/person/'+username)
 
 def display_profile(request, username):
     parameters = {}
@@ -50,7 +57,6 @@ def display_profile(request, username):
 
     tweet_feed_obj = TweetFeed()
     updates = tweet_feed_obj.get_tweet_by_user_id(str(usr.id))
-    print usr.id, len(updates)
     for i in range(len(updates)):
         time_elapsed = int(time.time()) - updates[i]['time_stamp']
         if time_elapsed<60:

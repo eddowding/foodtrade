@@ -1,0 +1,216 @@
+{% extends 'tbase.html' %}
+{% load staticfiles %}
+
+{% block content %}
+
+ 
+<div class="col-md-10  {% if not user.is_authenticated %} col-md-offset-1 {% endif %}">
+
+<div class="container-responsive block-center  ">
+
+
+<div class='row' style="padding:20px 0 0px 0;" id="homehero">
+  <div class="col-md-12 text-center jumbotron">
+
+      <h1>Finding better food, simplified</h1>
+      <h3>Start for free, and find and trade with everyone</h3>
+
+      <p><a href="/accounts/twitter/login/?process=login" class="btn text-center btn-primary btn-lg" style="font-size: 2em; margin-top: 1em; border: 7px double #fff;"><i class="fa fa-twitter fa-fw"></i> Get started &raquo;</a></p>
+
+      <h3 class="lead" style="  margin-top: 20px; ">
+        "This technology could transform
+        the way food networks operate."
+        &mdash; <em> HRH Prince Charles</em></h3>
+    
+  </div>
+</div>
+
+ 
+<div class="ftstrip"></div>
+
+ 
+  <div class='row'>
+    <div class='col-md-12'>
+      <div class="carousel slide media-carousel" id="media" style="margin-top: 30px;">
+        <div class="carousel-inner">
+          <div class="item  active">
+            <div class="row">
+              <div class="col-md-4">
+
+                <div class="panel panel-success">
+                  <div class="panel-heading"><h4>Individuals</h4></div>
+                  <div class="panel-body">
+                    <a class="text-center  " href="#signup">  
+                    <img alt="" class="img-thumbnail center" src="https://fbcdn-profile-a.akamaihd.net/hprofile-ak-prn1/c41.41.518.518/s160x160/15202_10152750860890051_592474866_n.jpg">
+                    </a>
+                  </div>
+                  <div class="panel-footer">
+                    <p class=" ">I use FoodTrade to find great local food and support my area</p>
+                  </div>
+                </div><!-- panel -->
+
+              </div>
+
+              <div class="col-md-4">
+
+                <div class="panel panel-success">
+                  <div class="panel-heading"><h4>Businesses</h4></div>
+                  <div class="panel-body">
+                    <a class="text-center  " href="#signup">  
+                    <img alt="" class="img-thumbnail center" src="http://foodtrade.com/wp-content/uploads/2013/10/the-organic-fresh-food-company.jpg">
+                    </a>
+                  </div>
+                  <div class="panel-footer">
+                    <p class=" ">We just send a tweet to @myfoodtrade and BOOM! It gets sold!</p>
+                  </div>
+                </div><!-- panel -->
+ 
+              </div>
+              <div class="col-md-4">
+                <div class="panel panel-success">
+                  <div class="panel-heading"><h4>Organisations</h4></div>
+                  <div class="panel-body">
+                    <a class="text-center  " href="#signup">  
+                    <img alt="" class="img-thumbnail center" src="http://foodtrade.com/wp-content/uploads/2013/10/Real-Bread-Campaign--150x150.png">
+                    </a>
+                  </div>
+                  <div class="panel-footer">
+                    <p class=" ">We use FoodTrade to promote our members and their produce.</p>
+                  </div>
+                </div><!-- panel -->
+ 
+              </div>       
+            </div>
+          </div> 
+
+          <div class="item ">
+            <div class="row">
+              <div class="col-md-4">
+
+                <div class="panel panel-success">
+                  <div class="panel-heading"><h4>Individuals</h4></div>
+                  <div class="panel-body">
+                    <a class="text-center  " href="#signup">  
+                    <img alt="" class="img-thumbnail center" src="https://fbcdn-profile-a.akamaihd.net/hprofile-ak-prn1/c41.41.518.518/s160x160/15202_10152750860890051_592474866_n.jpg">
+                    </a>
+                  </div>
+                  <div class="panel-footer">
+                    <p class=" ">I use FoodTrade to map my local food system for our community group.</p>
+                  </div>
+                </div><!-- panel -->
+
+              </div>
+
+              <div class="col-md-4">
+
+                <div class="panel panel-success">
+                  <div class="panel-heading"><h4>Businesses</h4></div>
+                  <div class="panel-body">
+                    <a class="text-center  " href="#signup">  
+                    <img alt="" class="img-thumbnail center" src="http://foodtrade.com/wp-content/uploads/2013/10/the-organic-fresh-food-company.jpg">
+                    </a>
+                  </div>
+                  <div class="panel-footer">
+                    <p class=" ">We use FoodTrade show customers where they can find our meats.</p>
+                  </div>
+                </div><!-- panel -->
+ 
+              </div>
+              <div class="col-md-4">
+                <div class="panel panel-success">
+                  <div class="panel-heading"><h4>Organisations</h4></div>
+                  <div class="panel-body">
+                    <a class="text-center  " href="#signup">  
+                    <img alt="" class="img-thumbnail center" src="http://foodtrade.com/wp-content/uploads/2013/10/Real-Bread-Campaign--150x150.png">
+                    </a>
+                  </div>
+                  <div class="panel-footer">
+                    <p class=" ">FoodTrade makes it easy for people us to understand our reach.</p>
+                  </div>
+                </div><!-- panel -->
+ 
+              </div>       
+            </div>
+          </div> 
+ 
+
+          
+
+        </div> 
+      </div>                          
+    </div>
+  </div> 
+
+
+<div class="row">
+  <div class="col-md-12">
+  <p class="text-center lead">We also provide services for <a href="#">cites and regions</a>, and <a href="#">developers</a>.</p>  
+  </div>
+</div> 
+ 
+
+
+<div class='row'>
+  <div class='col-md-12'>
+    <div class="well  clearfix ">
+    As featured in 
+    The Grocer,
+    Wired,
+    BBC Food Programme,
+    Modern Farmer,
+    Fast Company
+    Financial Times,
+    Virgin Unite,
+    &amp; the Huffington Post.
+    <br><small>Amongst others.</small>
+ 
+    </div>
+  </div>
+</div>
+
+
+<div class='row'>
+  <div class='col-md-12'>
+
+  <div class="col-md-3 ">
+  <div class="thumbnail"> 
+<p><img class="alignright size-full wp-image-5023" alt="wired" src="http://foodtrade.com/wp-content/uploads/2013/10/264x54xwired.png.pagespeed.ic.PHJlPo-jPC.jpg" width="264" height="54" pagespeed_url_hash="3184154382"></p>
+
+</div>
+</div>
+  <div class="col-md-3 ">
+  <div class="thumbnail">
+ 
+<img class="size-full wp-image-5025 alignright" alt="grocer" src="http://foodtrade.com/wp-content/uploads/2013/10/264x54xgrocer.png.pagespeed.ic.52CPNeyH2n.jpg" width="264" height="54" pagespeed_url_hash="2406920671"></p>
+
+</div>
+</div>
+  <div class="col-md-3 ">
+  <div class="thumbnail">
+ 
+<p><img class="alignright size-full wp-image-5022" alt="huffpo" src="http://foodtrade.com/wp-content/uploads/2013/10/264x54xhuffpo.png.pagespeed.ic.hZ_X0nTf7q.png" width="264" height="54" pagespeed_url_hash="873157195"></p>
+
+</div>
+</div>
+  <div class="col-md-3 ">
+  <div class="thumbnail"> 
+<p><img class="alignright size-full wp-image-5024" alt="fastcompany" src="http://foodtrade.com/wp-content/uploads/2013/10/264x54xfastcompany.png.pagespeed.ic.tK890tqMEd.jpg" width="264" height="54" pagespeed_url_hash="1618865448"></p>
+
+</div>
+</div>
+
+  </div>
+</div>
+
+
+</div>
+
+</div><!-- col10 --> {% endblock %}
+
+
+      <script type="text/javascript">
+    map_lat='50';
+    map_lon = "0";
+ 
+    </script>
+     <script src="{% static "js/business-map.js" %}"></script>
