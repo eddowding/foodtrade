@@ -5,10 +5,8 @@
 {% load i18n %}
 {% include "socialaccount/snippets/login_extra.html" %}
 {% load account %}
-
 {% block content %}
     <div class="col-md-10" id="single">
-
     <div class="container-responsive">
     <div id="header_box" class="clearfix organisation">
       <div class="col-md-2" id="avatar">
@@ -20,7 +18,6 @@
      
          <hr />
          <p>{{description}}</p>        
-
   <!--         <div class="tags">  
            <a href="/tag/TAG">Box Scheme</a>
            <a href="/tag/TAG">Butcher</a>
@@ -40,7 +37,6 @@
          </div> <!-- meta -->
   
       </div><!-- end header middle -->
-
       <div id="contact_info" class="col-md-3">
 {% ifnotequal profile_id user_id %}
       <!-- if they dont't have an account yet --> 
@@ -64,7 +60,6 @@
       <input type="checkbox" class="member-chkbx" onchange="add_member({{profile_id}}, {{user_id}})"><span>I'm a member!</span>
   {% endif %}
  </label></div>
-
       <!-- Button trigger modal -->
       <button class="btn btn-primary btn-block" data-toggle="modal" data-target="#modal_contact">
         Contact
@@ -74,23 +69,17 @@
       <a href="{% provider_login_url "twitter" process="login" %}" class="btn btn-primary btn-block">Login for more</a>
       {% endif %}
 {% endifnotequal %} 
-
       <button class="btn btn-default btn-block" data-toggle="modal" data-target="#sharer">
         <i class="fa fa-share-square-o text-muted"></i> Share
       </button>
-
       <!--SHARER  Modal -->
       <div class="modal fade" id="sharer" tabindex="-1" role="dialog" aria-labelledby="sharer" aria-hidden="true">
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-body"> 
-
-
-
         <div class="container-responsive">
           <div class="row">
             <div class="col-sm-6">
-
               <a href="#" class="btn btn-block  btn-social btn-facebook" onclick="window.open(
                     'https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent('URL') +'&amp;t=' + encodeURIComponent('TITLE'), 
                     'facebook-share-dialog', 
@@ -98,7 +87,6 @@
                   return false;">
                 <i class="fa fa-facebook"></i>  Share on Facebook
               </a>
-
               <a href="#" class="btn btn-block  btn-social btn-twitter" onclick="window.open(
                     'https://twitter.com/share?url='+encodeURIComponent('URL')+'&amp;text='+encodeURIComponent('@THEIRNAME on @foodtradeHQ') + '&amp;count=none/', 
                     'twitter-share-dialog', 
@@ -117,7 +105,6 @@
                 <i class="fa fa-google-plus"></i>
                 Share on Google+
               </a>
-
               <a  class="btn btn-block btn-social btn-tumblr" href="http://www.tumblr.com/share" title="Share on Tumblr">
                 <i class="fa fa-tumblr"></i>
                 Share on Tumblr
@@ -131,12 +118,10 @@
             </div>
             </div>
               <script type="text/javascript" src="http://platform.tumblr.com/v1/share.js"></script>
-
             </div> 
           </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
       </div><!-- /.modal -->
-
       <div class="icons text-center" style="font-size:25px">
         <a href="#"><i class="fa fa-facebook-square"></i></a>
         <a href="#"><i class="fa fa-twitter-square"></i></a> 
@@ -147,10 +132,7 @@
         <a href="#"><i class="fa fa-youtube"></i></a> 
         <a href="#"><i class="fa fa-linkedin-square"></i></a> 
       </div> 
-
-
       <?php include 'modal_invite.php';?>
-
      <!-- modal_contact -->
       <div class="modal fade" id="modal_contact" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -213,7 +195,6 @@
             <p>Examples might include home deliveries from your local shops, later opening hours, or working together with other local business to make things better. </p>
             <p>We'll show you as being a customer and put a small dot on the map near your location.</p>
    
-
             </div>
             <div class="modal-footer"> 
               <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
@@ -222,30 +203,23 @@
           </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
       </div><!-- /.modal -->
-
-
  
       </div><!-- end header last -->
-
     </div>
     </div>
-
-
     <div class="row">
      <div class="col-md-12">
         <ul class="nav nav-tabs ">
           <li class="active"><a href="#members" data-toggle="tab">Members <span class="badge ">{{members|length}}</span></a></li>
           <li><a href="#foods" data-toggle="tab">Foods  <span class="badge">{{food_count}}</span></a></li> 
           <li><a href="#people" data-toggle="tab">Team <span class="badge ">{{teams|length}}</span></a></li>
-          <li><a href="#updates" data-toggle="tab">Updates <span class="badge ">2</span></a></li>
+          <li><a href="#updates" data-toggle="tab">Updates <span class="badge ">{{updates_count}}</span></a></li>
         </ul>
      </div>
     </div>
-
     <div class="row">
       <div class="col-md-8">
         <div class="container-responsive clearfix">
-
         <div class="tab-content">
           <div class="tab-pane active fade in " id="members">
   <!--     {% if user.is_authenticated %}
@@ -261,19 +235,16 @@
   {% endif %}
  </label></div></div>
         
-
             {% endif %} -->
             <div class="clearfix"> 
                     {% for each_mem in members %}
                         <div class="card card-business">
                           <div class="content">
-
                             <div class="pull-left">
                               <img src="{{each_mem.photo}}" alt="{{each_mem.name}}"
                               class="img-rounded img-responsive" style="width:40px;" /> 
                       
                             </div>
-
                             <div class="text">
                             <button type="button" class="close" aria-hidden="true">&times;</button>
                               <h5><a href="/profile/{{each_mem.username}}">{{each_mem.name}}</a> 
@@ -305,7 +276,6 @@
                 <div class="col-md-12">
                   <form action="#" method="get">
                       <div class="input-group well well-sm">
-
                           <input class="form-control" id="system-search" name="q" placeholder="Search foods from {{name}} members..."  required>
                           <span class="input-group-btn">
                               <button type="submit" class="btn btn-default"><i class="glyphicon glyphicon-search"></i></button>
@@ -329,17 +299,14 @@
               </div>
             </div>
           </div> 
-
           <div class="tab-pane fade" id="people">
 {% ifequal loggedin_signupas "Individual" %}
            <!-- <button class="btn btn-default">
               <i class="fa fa-smile-o "></i> Do you work here?
             </button>  -->
-
 <!--             <button class="btn btn-success" onClick="add_team({{profile_id}}, {{user_id}})">
               <i class="fa fa-check "></i> I work here
             </button>  -->
-
             <div class="btn-group btn-block" data-toggle="buttons">
         {% if logged_team %}
       <label class="fa fa-check btn btn-default btn-block active" style="width:30%;">
@@ -349,7 +316,6 @@
       <input type="checkbox" id="team-chkbx" onchange="add_team({{profile_id}}, {{user_id}})">I work here
   {% endif %}
  </label></div>
-
 {% endifequal %}
             <div class="clearfix">
           {% for each in teams %}
@@ -357,7 +323,6 @@
                   <div class="content">
                     <img src="{{each.photo}}" alt="{{each.name}}"
                     class="img-rounded img-responsive pull-left" style="width:40px;" />
-
                     <div class="text">
                       <h5><a href="/profile/{{each.username}}">{{each.name}}</a> <span class="label label-success pull-right">Role</span></a></h5> 
                       <p class="small">
@@ -369,16 +334,15 @@
                 {% endfor %}
             </div> <!-- end clearfix  -->
           </div>
-
           <div class="tab-pane fade" id="updates">
-
           <div class="container-responsive">
           <div class="row">
               <div class="col-md-12">
+            {% if user.is_authenticated %}
                   <div class="">
 
                       <!-- if this is the profile of the logged in user -->
-                      <div class="well well-sm">
+                      <!-- <div class="well well-sm">
                           <div class="input-group">
                               <input id="btn-input" type="text" class="form-control input-sm" placeholder="Send an update..." />
                               <span class="input-group-btn">
@@ -386,53 +350,39 @@
                                       Send</button>
                               </span>
                           </div>
-                      </div>
+                      </div> -->
                       <!-- // if this is the profile of the logged in user -->
-
                       <div class="">
                           <ul class="chat">
+                          {% for eachUpdate in updates %}
                               <li class="left clearfix"><span class="chat-img pull-left">
-                                  <img src="https://pbs.twimg.com/profile_images/378800000141996074/6a363e3c4f2a84a956c3cb27c50b2ca0_normal.png" alt="User Avatar" class="img-thumbnail" />
+                                  <img src="{{eachUpdate.user.profile_img}}" />
                               </span>
                                   <div class="chat-body clearfix">
                                       <div class="header">
-                                          <strong class="primary-font">Smales Farm</strong> <small class="pull-right text-muted">
-                                              <span class="glyphicon glyphicon-time"></span>12 mins ago</small>
+                                          <strong class="primary-font">{{eachUpdate.user.username}}</strong> <small class="pull-right text-muted">
+                                              <span class="glyphicon glyphicon-time"></span>{{eachUpdate.time_elapsed}} ago</small>
                                       </div>
                                       <p>
-                                          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur bibendum ornare
-                                          dolor, quis ullamcorper ligula sodales.
+                                         {{eachUpdate.status}}
                                       </p>
                                   </div>
                               </li>
-                              
-                              <li class="left clearfix"><span class="chat-img pull-left">
-                              <img src="https://pbs.twimg.com/profile_images/378800000141996074/6a363e3c4f2a84a956c3cb27c50b2ca0_normal.png" alt="User Avatar" class="img-thumbnail" />
-                              </span>
-                                  <div class="chat-body clearfix">
-                                      <div class="header">
-                                          <strong class="primary-font">Smales Farm</strong> <small class="pull-right text-muted">
-                                              <span class="glyphicon glyphicon-time"></span>14 mins ago</small>
-                                      </div>
-                                      <p>
-                                          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur bibendum ornare
-                                          dolor, quis ullamcorper ligula sodales.
-                                      </p>
-                                  </div>
-                              </li>
-                               
+                          {% endfor %}    
                           </ul>
                       </div>
                   </div>
+              {% else %}
+                <p class="alert alert-warning"><a href="{% provider_login_url "twitter" process="login" %}" class="">Login</a> or <a href="{% provider_login_url "twitter" process="login" %}" class="">sign up free</a> to see updates and activity. </p>
+              {% endif %}
+
               </div>
+
           </div>
 
           </div>
         </div>
-
-
      
-
         
       </div>
  
@@ -443,31 +393,19 @@
  
    
       </div><!-- end col8 --> 
-
-
       <div class="col-md-4">
        <div style="width:100%; height: 600px; " id="map"  data-spy="affix" data-offset-top="30">
-
         <div class="alert alert-warning">
           <p>This map shows 
           Customers as points
           Stockist as organge lines and 
           Supplieras as purple lines</p>
-
           <p>There are radius lines at 15, 30, and 100 miles.</p>
         </div>
-
-
       </div><!-- end col4 -->
-
     </div><!-- row -->
-
    
-
-
         
-
-
     </div><!-- col10 --> 
         <script type="text/javascript">
     map_lat={{ loc.lat }};
@@ -476,5 +414,4 @@ connections = {{members_str | safe}};
     </script>
     <script src="{% static "js/organisation-map.js" %}"></script>
      <script src="{% static "js/contact.js" %}"></script>
-
-{% endblock %}   
+{% endblock %}
