@@ -195,6 +195,7 @@ def edit_profile(request, username):
         last_name = request.POST['last_name']
         description = request.POST['description']
         address = request.POST['address']
+        #print "Roshan", request.POST['formatted_address']
         try:
             lat = request.POST['lat']
             lon = request.POST['lng']
