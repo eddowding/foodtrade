@@ -15,31 +15,44 @@ class SignupForm(forms.Form):
      'class' : 'form-control'}))
     sign_up_as = forms.CharField(widget=forms.TextInput(attrs={'placeholder': u'Sign up as',
      'class' : 'form-control'}))
-    # type_user = forms.CharField(max_length=30, label='Type')
-    zip_code = forms.CharField(widget=forms.TextInput(attrs={'placeholder': u'Zip Code',
-     'class' : 'form-control'}))
+
+    address = forms.CharField(required=True, widget=forms.TextInput(attrs={'placeholder': u'Please select an address.',
+     'class' : 'form-control', 'value':'London,UK'}))
+
     type_user = forms.CharField(required=False, widget=forms.TextInput(attrs={'placeholder': u'Farm, wholesaler, restaurant, bakery...',
+     'class' : 'form-control'}))
+
+    lat = forms.CharField(required=False, widget=forms.TextInput(attrs={'placeholder': u'Farm, wholesaler, restaurant, bakery...',
+     'class' : 'form-control'}))
+
+    lng = forms.CharField(required=False, widget=forms.TextInput(attrs={'placeholder': u'Farm, wholesaler, restaurant, bakery...',
      'class' : 'form-control'}))
 
     def save(self, user):
         # code to save form fields to mongodb
         # convert zip code to longitude and latitude
-        zip_code = self.cleaned_data['zip_code'] 
+        #zip_code = self.cleaned_data['zip_code'] 
+        lat = float(self.cleaned_data['lat'])
+        lon = float(self.cleaned_data['lng'])
         try:
-            results = Geocoder.geocode(zip_code)
-            lon = results[0].longitude
-            lat = results[0].latitude
+            addr = Geocoder.reverse_geocode(float(lat),float(lon))
+            print addr
+            address = str(addr)
+            postal_code = str(addr.postal_code) 
+            print postal_code           
         except:
-            results = Geocoder.geocode('sp5 1nr')
-            lon = results[0].longitude
-            lat = results[0].latitude
+            results = Geocoder.geocode('London, UK')
+            address = str(results)
+            lat, lon  = float(results.latitude), float(results.longitude)
+            postal_code = str(results.postal_code)
+
         userprofile = UserProfile()
         social_account = SocialAccount.objects.get(user__id = user.id)
-        addr = social_account.extra_data['location']
-        data = {'useruid': str(user.id), 'sign_up_as': self.cleaned_data['sign_up_as'],
-        		'type_user': self.cleaned_data['type_user'], 
-                'zip_code': self.cleaned_data['zip_code'],
-        		'address': addr,
+        #addr = social_account.extra_data['location']
+        data = {'useruid': str(user.id), 'sign_up_as': str(self.cleaned_data['sign_up_as']),
+        		'type_user': str(self.cleaned_data['type_user']), 
+                'zip_code': str(postal_code),
+        		'address': address,
                 'latitude': lat,
                 'longitude': lon,
                 'name': social_account.extra_data['name'],
