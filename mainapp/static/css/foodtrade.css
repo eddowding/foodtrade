@@ -30,7 +30,7 @@ h2 {
 }
 
 #footer {
-  margin-top: 100px;
+  margin-top: 00px;
 }
 
 #footer h5 {
@@ -146,7 +146,7 @@ background: #eee;
   background: #5B9C20;
   z-index: 10000;
   padding: 5px;
-  color: rgba(255,255,255,0.8);
+  color: rgba(255,255,255,0.9);
   text-align: center;
   box-shadow: 0 0 20px rgba(0,0,0,0.5) inset;
 }
@@ -160,7 +160,8 @@ background: #eee;
 #main_page #main_row .fill,
 #sidebar
 { 
-    min-height: 1000px;
+    min-height: 2000px;
+    height: calc(100%+70px);
 }
 
 .fill {
@@ -650,7 +651,7 @@ fieldset[disabled] .btn-primary.active {
 	/* carousel */
 .media-carousel 
 {
-  margin-bottom: 0;  
+  margin-bottom:  0;  
 }
 /* Previous button  */
 .media-carousel .carousel-control.left 
@@ -742,7 +743,7 @@ fieldset[disabled] .btn-primary.active {
 	-moz-background-size: cover;
 	-o-background-size: cover;
 	background-size: cover;
-  padding: 120px 55px;
+  padding: 100px 55px;
   box-shadow: 0 0 450px #000 inset;
   color: #fff;
   text-shadow: 1px 1px 2px #000;  
@@ -774,7 +775,16 @@ fieldset[disabled] .btn-primary.active {
 
 .black *,
 .black {
-  color: #444 !important;
+  color: #222 !important;
+}
+
+.noshadow,
+.noshadow * {
+  text-shadow: none;
+}
+
+.whiteshadow * {
+  text-shadow: 1px 1px 2px #fff;  
 }
 
 #homehero .jumbotron {
@@ -871,7 +881,7 @@ h2 {
 /********************************/
 
 .card {
-	width: 48%;
+	min-width: 48%;
 	float: left;
 	margin-right: 2%;
 	border: 1px solid #ccc;
