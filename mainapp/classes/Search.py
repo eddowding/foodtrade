@@ -1,6 +1,6 @@
 import re
 
-from TweetFeed import TweetFeed
+from TweetFeed import TweetFeed, UserProfile
 
 from bson.son import SON
 from bson.objectid import ObjectId
@@ -28,6 +28,18 @@ class Search():
 
 
     def search_profiles(self):
+
+        tweet_search_object = UserProfile()
+        search_results = tweet_search_object.get_search_results(self.keyword, self.lon, self.lat, self.foods, self.business, self.organisation,query_string,self.sort)
+        full_search_results = []
+        for rs in search_results:
+            result_id = rs['uid']['id']
+            result_id_obj=ObjectId(result_id)
+            result_json = tweet_search_object.search_tweets({"_id":result_id_obj})[0]
+            result_json['distance'] = rs['value']['distance']
+            full_search_results.append(result_json)
+
+        return full_search_results
         pass
 
 
@@ -45,6 +57,8 @@ class Search():
             # query_string['location'] = {"$near":{"$geometry":{"type":"Point", "coordinates":[float(self.lon), float(self.lat)]}, "$maxDistance":160.934}}
             pass
 
+        
+
 
 # aggregate_query = [{
         #                 "$geoNear": {"near": [float(self.lon), float(self.lat)],
@@ -61,6 +75,8 @@ class Search():
         #               { '$match':query_string},
         #               {"$sort": SON([("distance", 1), ("_id", -1)])}
         #               ]
+
+
         tweet_search_object = TweetFeed()
         search_results = tweet_search_object.get_search_results(self.keyword, self.lon, self.lat, self.foods, self.business, self.organisation,query_string,self.sort)
         full_search_results = []
