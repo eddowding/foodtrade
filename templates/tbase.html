@@ -83,8 +83,34 @@ background: #eee;
             </div>
             <input type="hidden" name="lon" id="lon" value="{{search.lon}}"/>
             <input type="hidden" name="lat" id="lat" value="{{search.lat}}"/>
-            <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
-           
+
+<input type="hidden" name="search" id="search_by" value="Updates" />
+<div class="input-group-btn">
+  <button type="submit" class="btn btn-success"> <i class="fa fa-search"></i> <span id="current_search_option">Updates</span></button>
+  <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown">
+    <span class="caret"></span>
+    <span class="sr-only">Toggle Dropdown</span>
+  </button>
+  <ul class="dropdown-menu" role="menu">
+    <li id="search_options"><a onclick="select_search_by('Profiles')">Profiles</a></li>
+  </ul>
+</div>
+
+
+
+<script type="text/javascript">
+  function select_search_by(search_by)
+  {
+      $("#search_by").val(search_by);
+      var current_option = (search_by == "Updates")?"Updates":"Profiles";
+      var next_option = (search_by != "Updates")?"Updates":"Profiles";
+      $("#current_search_option").html(current_option);
+      $("#search_options").html('<a onclick="select_search_by(\''+next_option+'\')">'+next_option+'</a>');
+
+  }
+</script>
+            <!-- <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button> -->
+          </div>
           </form>
         </div>
 
@@ -92,6 +118,13 @@ background: #eee;
           <form action="/activity" class="navbar-form" role="search" style="border: 0;">
           <div class="input-group"> 
               <input type="text" name="q" id="keyword" class="form-control" value="{{ search.query }}" placeholder="Search"> 
+
+
+
+
+
+
+
               <div class="input-group-btn">
                   <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
               </div> 

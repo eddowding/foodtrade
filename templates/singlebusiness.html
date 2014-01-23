@@ -257,6 +257,7 @@
                       <div class="input-group">
                       <!-- link this to open food facts --> 
                             <!-- <input class="typeahead form-control" name="addfood" data-source='' data-provide="typeahead" autocomplete="off" id = "addfood_id" style="width:400px;" placeholder="Add foods you can buy here."> -->
+                            <div class='pull-left'>
                             <select id="myselect" data-placeholder="Add foods you can buy here." style="height:30px; width: 100%" multiple class="chosen-select" >
                             <option value=""></option>
                             {% for each in food_list %}
@@ -271,13 +272,13 @@
                             </optgroup>
                             {% endfor %}
 
-                            </select>
+                            </select></div>
 
-                              
+                              <div class="pull-left">
                             <span class="input-group-btn">
                     
                                 <button class="btn btn-success" id="adfoo_id" onClick="add_food({{profile_id}})" {% if not user.is_authenticated %} title="Please log in to use this feature." {% endif %} > Add</button>
-                            </span>
+                            </span></div>
                           </div>  
                           
             </div>
