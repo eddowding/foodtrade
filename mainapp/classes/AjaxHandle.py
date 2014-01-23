@@ -8,6 +8,7 @@ import json
 from mainapp.classes.TweetFeed import TweetFeed
 from mainapp.classes.Email import Email
 from Tags import Tags
+from Foods import AdminFoods
 from mainapp.classes.TweetFeed import TradeConnection, UserProfile, Food, Customer, Organisation, Team, RecommendFood, Notification, Friends, Spam
 from AjaxSearch import AjaxSearch
 from pygeocoder import Geocoder
@@ -248,6 +249,18 @@ class AjaxHandle(AjaxSearch):
             insert_val = {'parent':1, 'tags':json_tags}
             mytag = Tags()
             mytag.set_tags(insert_val)
+            return HttpResponse("1")
+        else:
+            return HttpResponse('0')
+
+    def save_adminfoods(self, request):
+        if request.user.is_authenticated():
+            tags = request.POST.get('tags')
+            json_tags = json.loads(tags)
+            insert_val = {'parent':1, 'adminfoods':json_tags}
+            foods = AdminFoods()
+            foods.set_tags(insert_val)
+            # print foods.get_tags()
             return HttpResponse("1")
         else:
             return HttpResponse('0')

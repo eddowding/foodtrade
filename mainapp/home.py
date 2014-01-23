@@ -11,6 +11,7 @@ from models import MaxTweetId
 import datetime
 import time
 import json
+from mainapp.classes.Foods import AdminFoods
 from mainapp.classes.Tags import Tags
 
 from django.contrib.auth.decorators import user_passes_test
@@ -66,6 +67,26 @@ def admin_tags(request):
     parameters['tags'] = json.dumps(tags)
 
     return render_to_response('admin_tags.html', parameters, context_instance=RequestContext(request))
+
+@user_passes_test(lambda u: u.is_superuser)
+def food_tags(request):
+    parameters = {}
+    if request.user.is_authenticated():
+        # parameters['user'] = request.user
+        user_id = request.user.id
+       
+        user_info = UserInfo(user_id)
+
+        user_profile_obj = UserProfile()
+        userprofile = user_profile_obj.get_profile_by_id(user_id)
+        parameters['userprofile'] = UserProfile
+
+        parameters['userinfo'] = user_info
+    foods = AdminFoods()
+    tags = foods.get_tags()
+    parameters['tags'] = json.dumps(tags)
+
+    return render_to_response('food-tags.html', parameters, context_instance=RequestContext(request))
 
 def home(request):
     parameters = {}

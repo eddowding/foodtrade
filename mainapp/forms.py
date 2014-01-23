@@ -41,7 +41,11 @@ class SignupForm(forms.Form):
                 'zip_code': self.cleaned_data['zip_code'],
         		'address': addr,
                 'latitude': lat,
-                'longitude': lon
+                'longitude': lon,
+                'name': social_account.extra_data['name'],
+                'description': social_account.extra_data['description'],
+                'username': social_account.extra_data['screen_name'],
+                'profile_pic': social_account.extra_data['profile_image_url']
         }
         userprofile.create_profile(data)
         
