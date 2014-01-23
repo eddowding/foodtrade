@@ -228,7 +228,7 @@
           <li><a href="#connections" data-toggle="tab" onclick="set_width()">Connections <span class="badge">{{userprof.trade_connections_no}}</span></a> </li>
 
           <li><a href="#organisations" data-toggle="tab">Organisation <span class="badge">{{userprof.organisation_connection_no}}</span></a></li> 
-          <li><a href="#activity" data-toggle="tab">Updates  <span class="badge">2</span></a></li>  
+          <li><a href="#activity" data-toggle="tab">Updates  <span class="badge">{{updates_count}}</span></a></li>  
           <li><a href="#customers" tabindex="-1" data-toggle="tab">Customers <span class="badge">{{customers|length}}</span></a></li>
           <!-- <li class="dropdown">
             <a href="#" id="people" class="dropdown-toggle" data-toggle="dropdown">People <b class="caret"></b></a>
@@ -553,7 +553,7 @@
                   <div class="">
 
                       <!-- if this is the profile of the logged in user -->
-                      <div class="well well-sm">
+                      <!-- <div class="well well-sm">
                           <div class="input-group">
                               <input id="btn-input" type="text" class="form-control input-sm" placeholder="Send an update..." />
                               <span class="input-group-btn">
@@ -561,41 +561,25 @@
                                       Send</button>
                               </span>
                           </div>
-                      </div>
+                      </div> -->
                       <!-- // if this is the profile of the logged in user -->
-
                       <div class="">
                           <ul class="chat">
+                          {% for eachUpdate in updates %}
                               <li class="left clearfix"><span class="chat-img pull-left">
-                                  <img src="https://pbs.twimg.com/profile_images/378800000141996074/6a363e3c4f2a84a956c3cb27c50b2ca0_normal.png" alt="User Avatar" class="img-thumbnail" />
+                                  <img src="{{eachUpdate.user.profile_img}}" />
                               </span>
                                   <div class="chat-body clearfix">
                                       <div class="header">
-                                          <strong class="primary-font">Smales Farm</strong> <small class="pull-right text-muted">
-                                              <span class="glyphicon glyphicon-time"></span>12 mins ago</small>
+                                          <strong class="primary-font">{{eachUpdate.user.username}}</strong> <small class="pull-right text-muted">
+                                              <span class="glyphicon glyphicon-time"></span>{{eachUpdate.time_elapsed}} ago</small>
                                       </div>
                                       <p>
-                                          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur bibendum ornare
-                                          dolor, quis ullamcorper ligula sodales.
+                                         {{eachUpdate.status}}
                                       </p>
                                   </div>
                               </li>
-                              
-                              <li class="left clearfix"><span class="chat-img pull-left">
-                              <img src="https://pbs.twimg.com/profile_images/378800000141996074/6a363e3c4f2a84a956c3cb27c50b2ca0_normal.png" alt="User Avatar" class="img-thumbnail" />
-                              </span>
-                                  <div class="chat-body clearfix">
-                                      <div class="header">
-                                          <strong class="primary-font">Smales Farm</strong> <small class="pull-right text-muted">
-                                              <span class="glyphicon glyphicon-time"></span>14 mins ago</small>
-                                      </div>
-                                      <p>
-                                          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur bibendum ornare
-                                          dolor, quis ullamcorper ligula sodales.
-                                      </p>
-                                  </div>
-                              </li>
-                               
+                          {% endfor %}    
                           </ul>
                       </div>
                   </div>
