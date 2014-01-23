@@ -81,11 +81,13 @@ class UserInfo():
         self.user_type = userprof['sign_up_as']
         self.zip_code = userprof['zip_code']
         self.address = userprof['address']
+        self.type = userprof['type_user']
 
         user_connection =  UserConnections(user_id)
 
         self.full_name = twitter_user.extra_data['name']
         self.username = twitter_user.extra_data['screen_name']
+        self.description = twitter_user.extra_data['description']
         self.profileimg = twitter_user.extra_data['profile_image_url_https']
 
         # print 'hello'+twitter_user.extra_data['profile_image_url_https']
