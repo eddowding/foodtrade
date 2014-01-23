@@ -101,7 +101,7 @@ var card_str = '<div class="card-box"><div class="content"><div class="pull-left
                 
                       card_str += '</div><div class="text"><h5><a href="/profile/'+username+'">'+name+'</a></h5>';
 
-                      card_str += '<p class="small">'+description.substr(0,80)+'</p></div></div>';
+                      card_str += '<p class="small">'+description+'</p></div></div>';
                       if(type_user.length>0)
                       {
                     card_str += '<div class="numbers clearfix"><div class="tags tags-biztype pull-left">';
