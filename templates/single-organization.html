@@ -10,7 +10,7 @@
     <div class="col-md-10" id="single">
 
     <div class="container-responsive">
-    <div id="header_box" class="clearfix">
+    <div id="header_box" class="clearfix organisation">
       <div class="col-md-2" id="avatar">
         <img class="img-thumbnail center-block" src={{pic_url}}  />
       </div>
@@ -31,7 +31,7 @@
      
          <div class="meta small text-muted">
             
-            <i class="fa fa-map-marker"></i> <a href="http://maps.google.com/maps?saddr={{loggedin_address}}&daddr={{address}}" target="_blank" data-placement="top" data-toggle="tooltip" title="Get directions" class="text-muted">{{address}}</a>  
+            <i class="fa fa-map-marker"></i> <a href="http://maps.google.com/maps?saddr={{loggedin_coord.lat}},{{loggedin_coord.lon}}&daddr={{loc.lat}},{{loc.lon}}" target="_blank" data-placement="top" data-toggle="tooltip" title="Get directions" class="text-muted">{{address}}</a>  
             
             <!-- if logged in or you've allows html5 browser location -->
             <i class="fa fa-location-arrow" style="margin-left: 20px;"></i> {{distance}} miles  
@@ -318,7 +318,7 @@
                                   {% for eachfood in each.foods%}
                           <tr>
                               <!-- <td>{{eachfood.food_name}}</td> -->
-                            <td><a href="/profile/{{each.username}}/"> <img class="pull-left" style="margin:0 50px 0 5px; width:25px;" src={{each.photo}} title="{{each.username}}"/></a>{{eachfood.food_name}}</td>
+                            <td><a href="/profile/{{each.username}}/"> <img class="pull-left" style="margin:0 50px 0 5px; width:25px;" src={{each.photo}} title="{{each.username}}"/>{{eachfood.food_name}}</a></td>
                           </tr> 
                                 {% endfor %}
                               {% endfor %}

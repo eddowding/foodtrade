@@ -8,7 +8,7 @@ import json
 from mainapp.classes.TweetFeed import TweetFeed
 from mainapp.classes.Email import Email
 from Tags import Tags
-from mainapp.classes.TweetFeed import TradeConnection, UserProfile, Food, Customer, Organisation, Team, RecommendFood, Notification, Friends
+from mainapp.classes.TweetFeed import TradeConnection, UserProfile, Food, Customer, Organisation, Team, RecommendFood, Notification, Friends, Spam
 from AjaxSearch import AjaxSearch
 from pygeocoder import Geocoder
 from mainapp.profilepage import get_connections, get_all_foods
@@ -387,8 +387,22 @@ class AjaxHandle(AjaxSearch):
             change_id = request.POST['changeID']
             user = request.user.username
             tweet_feed_obj = TweetFeed()
+
             if task == 'spam':
-                print task
+                spam_obj = Spam()
+                result = spam_obj.check_spam_by(change_id, int(request.user.id))
+                try:
+                    if(len(result) >0):
+                        return HttpResponse(json.dumps({'status':0, 'activity':'spam', '_id':change_id, 
+                            'message':'You have already marked it as spam.'}))
+                    else:
+                        spam_obj.mark_spam(int(request.user.id), change_id)
+                        return HttpResponse(json.dumps({'status':1, 'activity':'spam', '_id':change_id, 
+                            'message':'You marked this tweet as spam.'}))
+                except:
+                    spam_obj.mark_spam(int(request.user.id), change_id)
+                    return HttpResponse(json.dumps({'status':1, 'activity':'spam', '_id':change_id, 
+                        'message':'You marked this tweet as spam.'}))                    
 
             if task == 'delete':
                 tweet_feed_obj.delete_tweet(change_id)
@@ -444,6 +458,6 @@ class AjaxHandle(AjaxSearch):
                     return HttpResponse(json.dumps({'status':1, 'activity':'markMember', '_id':change_id, 
                             'message':'You are now a member.'}))
         else:
-            return HttpResponse(json.dumps({'status':'0'}))
+            return HttpResponse(json.dumps({'status':'0', 'message':'You are not authorized for this request.'}))
 
 

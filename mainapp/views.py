@@ -16,13 +16,25 @@ import time
 from mainapp.classes.DataConnector import UserInfo
 import pprint
 next_cursor = -1
+# new ones
+consumer_key = 'waBmigQf9LIqYXkhMNeMdQ'
+consumer_secret = 'KVVf35OAJQVUGrVQsrQnF7fmB2JLz6XAW3IAmqFB8'
 
 
-consumer_key = 'seqGJEiDVNPxde7jmrk6dQ'
-consumer_secret = 'sI2BsZHPk86SYB7nRtKy0nQpZX3NP5j5dLfcNiP14'
+# consumer_key = 'seqGJEiDVNPxde7jmrk6dQ'
+# consumer_secret = 'sI2BsZHPk86SYB7nRtKy0nQpZX3NP5j5dLfcNiP14'
 access_token = ''
 access_token_secret =''
 
+#new ones of foodtrade_help  -- only to use for reply messages
+# admin_access_token = '2304652134-jeY4dnvwhqzmTs6FvLfRCGQml7LNpkupvks0E8R'
+# admin_access_token_secret = 'qpXLwqqECsjDqBghOn2VNJN6XfpypGJbNwHzR3lYdokyX'
+
+#new ones of foodtradeHQ  -- to use with daemon.. msg parsing
+# admin_access_token = '384361932-tLfbr6U9LsxOQfVrOn6dCGxMS22Hb00PThCVq9gx'
+# admin_access_token_secret = 'l8IuymnykSCptTcKdDPGckSvlfFRx2UYLvCg3f2LiuRo0'  # read only
+
+# old ones of myfoodtrade
 admin_access_token = '2248425234-EgPSi3nDAZ1VXjzRpPGMChkQab5P0V4ZeG1d7KN'
 admin_access_token_secret = 'ST8W9TWqqHpyskMADDSpZ5r9hl7ND6sEfaLvhcqNfk1v4'
 

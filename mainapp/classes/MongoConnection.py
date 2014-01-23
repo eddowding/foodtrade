@@ -38,6 +38,7 @@ class MongoConnection():
         self.db[table_name].insert(value)
 
     def update(self, table_name, where, what):
+        #print where, what
         self.db[table_name].update(where,{"$set":what},upsert=False)
 
     def update_multi(self, table_name, where, what):

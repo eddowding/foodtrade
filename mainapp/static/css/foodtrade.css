@@ -5,7 +5,7 @@ body {
 }
 
 body {
-  padding-top: 70px;
+  padding-top: 58px;
 }
 
 @font-face {
@@ -29,12 +29,16 @@ h2 {
 	text-transform: uppercase;
 }
 
+#footer {
+  margin-top: 100px;
+}
 
+#footer h5 {
+  text-transform: uppercase;
+}
 
-.chardinjs-show-element {
-	z-index: auto;
-	background: #fff;
-	padding: 5px;
+#footer .list-unstyled li {
+  line-height: 1.5;
 }
 
 .tags a {
@@ -123,14 +127,27 @@ background: #eee;
 .fa span {
   font-family: "Helvetica Neue",Helvetica,Arial,sans-serif !important;
   font-size: 14px; 
-  font-weight: normal;
+  font-weight: 500;
+  line-height: 18px;
+}
+
+.ellipsis {
+  display: inline-block;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.chosen-container {
+  width: 200px !important;
 }
 
 /********************************/
 /**  FULL HEIGHT SIDEBAR       **/
 /********************************/
  
-#main_page,
+
+#main_page, 
 #main_page #main_row,
 #main_page #main_row .fill,
 #sidebar
@@ -139,15 +156,16 @@ background: #eee;
 }
 
 .fill {
-  margin: -12px 0; 
+  margin: 0; 
 }
    
 #sidebar {
 	border-right: 1px solid #ccc;
 	background-image: url('/static/images/double_stripe.png');
 	padding-top: 30px;
-	margin-top: -18px;
+	margin-top: -6px;
 	padding-left: 25px; 
+  height: calc(100% - 58px);
 }
 
 .sidebar .alert {
@@ -205,6 +223,29 @@ article .content h4 {
 }
 
 /********************************/
+/**  ORG / BIZ / PPL           **/
+/********************************/
+
+#header_box.organisation {
+  border-top: 10px solid rgba(154,215,255,0.3);
+}
+
+.card-organisation .numbers {
+  background: rgba(154,215,255,0.3) !important;
+  padding: 0 5px;
+}
+
+
+#header_box.individual {
+  border-top: 10px solid rgba(97,174,50,0.3);
+}
+
+.card-individual .numbers {
+  background: rgba(97,174,50,0.3) !important;
+  padding: 0 5px;
+}
+
+/********************************/
 /**  NAVBAR                    **/
 /********************************/
  
@@ -245,8 +286,14 @@ article .content h4 {
   }
 
   .nav > li > a {
-    padding: 10px 0 10px 5px;
+    padding: 10px 5px;
   }
+
+  .nav > li > a {
+    position: relative;
+    display: block;
+    padding: 10px 8px;
+    }
 
 } /* @media 768 */
 

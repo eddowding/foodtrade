@@ -530,7 +530,8 @@ class TradeConnection():
     def create_connection (self, value):
         value['deleted'] =0
         # self.db_object.insert_one(self.table_name,value)
-        self.db_object.update_upsert(self.table_name, {'c_useruid': value['c_useruid'], 'b_useruid': value['b_useruid']}, {'deleted': 0})
+        self.db_object.update_upsert(self.table_name, 
+            {'c_useruid': value['c_useruid'], 'b_useruid': value['b_useruid']}, {'deleted': 0})
 
     def delete_connection(self, b_useruid, c_useruid):
         self.db_object.update(self.table_name,{'b_useruid': b_useruid, 'c_useruid': c_useruid}, {'deleted':1})
@@ -555,7 +556,8 @@ class Food():
     def create_food (self, value):
         value['deleted'] =0
         # self.db_object.insert_one(self.table_name,value)
-        self.db_object.update_upsert(self.table_name, {'food_name': value['food_name'], 'useruid': value['useruid']}, {'deleted': 0})
+        self.db_object.update_upsert(self.table_name, {'food_name': value['food_name'], 
+            'useruid': value['useruid']}, {'deleted': 0})
         twt = TweetFeed()
         twt.update_data(value['useruid'])
     def delete_food(self, useruid, food_name):
@@ -738,3 +740,16 @@ class TwitterError():
 
     def change_error_status(self, screen_name):
         return self.db_object.update(self.table_name, {'username':screen_name}, {'error_solve_stat':'true'})
+class Spam():
+    def __init__ (self):
+        self.db_object = MongoConnection("localhost",27017,'foodtrade')
+        self.table_name = 'spam'
+        self.db_object.create_table(self.table_name,'screen_name') 
+
+    def check_spam_by(self, tweet_id, user_id):
+        result = self.db_object.get_one(self.table_name, {'tweet_id':ObjectId(tweet_id),'spam_by':user_id})
+        return result
+
+    def mark_spam(self, spam_by, tweet_id):
+        return self.db_object.update_upsert(self.table_name, 
+            {'tweet_id':ObjectId(tweet_id)}, {'spam_by':spam_by})  

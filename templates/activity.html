@@ -68,7 +68,7 @@
 
 {% for result in results %}
 
-    <li class="left clearfix" id="{{result.uid.id}}"><span class="chat-img pull-left">
+    <li class="left clearfix " id="{{result.uid.id}}"><span class="chat-img pull-left">
     <img src="{{result.user.profile_img}}" alt="{{result.user.name}}" class="img-thumbnail" />
     </span>
         <div class="chat-body clearfix">
@@ -581,7 +581,10 @@ function success_activity_handle(data){
   if(data['activity'] == 'follow' ){
     alert(data['message']);
   }
-  if((data['activity'] == 'buyFrom' && data['status'] == 0) || (data['activity'] == 'sellTo' && data['status'] ==0) || (data['activity'] == 'markMember' && data['status'] == 0) ){
+  if((data['activity'] == 'buyFrom' && data['status'] == 0) || 
+    (data['activity'] == 'sellTo' && data['status'] ==0) || 
+    (data['activity'] == 'markMember' && data['status'] == 0) ||
+    (data['activity'] == 'spam' && data['status'] == 0)){
    alert(data['message']); 
   }
 }
