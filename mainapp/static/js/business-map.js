@@ -127,25 +127,25 @@ for(var j=0;j<customers.length;j++)
 
 			var current_lat = parseFloat(latitude);
 			var current_lon = parseFloat(longitude);
-			if(current_lat>max_lat)
-			{
-				max_lat = current_lat;
-			}
-			if(current_lat<min_lat)
-			{
-				min_lat = current_lat;
-			}
+			// if(current_lat>max_lat)
+			// {
+			// 	max_lat = current_lat;
+			// }
+			// if(current_lat<min_lat)
+			// {
+			// 	min_lat = current_lat;
+			// }
 
 			
-			if(current_lon>max_lon)
-			{
-				max_lon = current_lon;
-			}
+			// if(current_lon>max_lon)
+			// {
+			// 	max_lon = current_lon;
+			// }
 
-			if(current_lon<min_lon)
-			{
-				min_lon = current_lon;
-			}
+			// if(current_lon<min_lon)
+			// {
+			// 	min_lon = current_lon;
+			// }
 
 
 
