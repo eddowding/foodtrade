@@ -69,9 +69,9 @@ function reload_controls()
 			var description = con.user.description;
 			var type_user = con.type_user;
 			var sign_up_as = con.sign_up_as;
-			if(!user_type)
+			if(!type_user)
 			{
-				user_type = [];
+				type_user = [];
 			}
 			// if(sign_up_as != "Business")
 			// {
