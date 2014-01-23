@@ -2,7 +2,7 @@ html,
 body {
   overflow-x: hidden; /* Prevent scroll on narrow devices */
   height: 100%;
-}
+} 
 
 body {
   padding-top: 58px;
@@ -143,11 +143,12 @@ background: #eee;
 }
 
 #beta {
-  background: #ADC742;
+  background: #5B9C20;
   z-index: 10000;
   padding: 5px;
   color: rgba(255,255,255,0.8);
   text-align: center;
+  box-shadow: 0 0 20px rgba(0,0,0,0.5) inset;
 }
 
 /********************************/
@@ -744,8 +745,7 @@ fieldset[disabled] .btn-primary.active {
   padding: 120px 55px;
   box-shadow: 0 0 450px #000 inset;
   color: #fff;
-  text-shadow: 1px 1px 2px #000;
-  
+  text-shadow: 1px 1px 2px #000;  
 }
 
 .hero h1 {
@@ -770,6 +770,11 @@ fieldset[disabled] .btn-primary.active {
 .white *,
 .white {
   color: #fff !important;
+}
+
+.black *,
+.black {
+  color: #444 !important;
 }
 
 #homehero .jumbotron {
