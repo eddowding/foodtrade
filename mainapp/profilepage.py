@@ -103,7 +103,7 @@ def display_profile(request, username):
         # return render_to_response('typeahead.html', parameters, context_instance=RequestContext(request))
 
     elif parameters['sign_up_as'] == 'Organisation':
-        parameters['members_foods'] = get_foods_from_org_members(usr.id)
+        parameters['members_foods'], parameters['food_count'] = get_foods_from_org_members(usr.id)
         if request.user.is_authenticated():
             parameters['members'], parameters['logged_member'] = get_members(usr.id, request.user.id)
             parameters['teams'], parameters['logged_team'] = get_team(usr.id, request.user.id)
@@ -348,11 +348,13 @@ def get_foods_from_org_members(user_id):
     org = Organisation()
     members = org.get_members_by_orgid(user_id)
     foo = Food()
+    foods_count = []
     all_foods = []
     for each in members:
-        mem_foods = foo.get_foods_by_userid(each['memberuid'])
         try:
             account = SocialAccount.objects.get(user__id = each['memberuid'])
+            mem_foods = foo.get_foods_by_userid(each['memberuid'])
+            foods_count.extend(mem_foods)
             all_foods.append({'id': each['memberuid'],
              'name': account.extra_data['name'],
              'photo': account.extra_data['profile_image_url'],
@@ -361,7 +363,7 @@ def get_foods_from_org_members(user_id):
              })
         except:
             pass
-    return all_foods
+    return all_foods, len(foods_count)
 
 def get_team(user_id, logged_in_id=None):
     team = Team()
