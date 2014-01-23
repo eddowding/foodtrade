@@ -33,7 +33,6 @@
   <link rel="stylesheet" href="http://leaflet.github.io/Leaflet.label/leaflet.label.css" /> 
 <script src="{% static "js/leaflet.js" %}"></script>
 
-<<<<<<< HEAD
 <script src="http://leaflet.github.io/Leaflet.label/leaflet.js"></script>
   <style type="text/css">
 .tt-hint
@@ -42,9 +41,8 @@
 margin-top: 4px;
 background: #eee;
 }
-=======
->>>>>>> 53b3c6cad734f0b0cd229642b55bce7e1c181093
  
+    </style>
  
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -73,28 +71,52 @@ background: #eee;
 
         </div> 
          
-        <div class="col-sm-6 visible-sm visible-lg">
+        <div class="col-sm-4 visible-md visible-lg">
           <form action="/activity" class="navbar-form" role="search" data-step="1" data-intro="Search for anyhing, anywhere"
           style="border: 0;">
-
-          <div data-position="b ottom">
+ 
             <div class="form-group" style="margin-right:5px;"> 
               <input type="text" name="q" id="keyword" class="form-control  pac-input" value="{{ search.query }}" placeholder="What?"> 
             </div> 
             <div class="form-group" style="margin-right:5px;">
-              <input type="text" name="location" id="pac-input" value="{% if search %} {{ search.place }} {% endif %} {% if not search %} {{userinfo.zip_code}}{% endif %} " class="pac-input form-control hidden-xs hidden-sm" placeholder="Where?">
+              <input type="text" name="location" id="pac-input" value="{% if search %}{{ search.place }}{% endif %}{% if not search %}{{userinfo.zip_code}}{% endif %}" class="pac-input form-control hidden-xs hidden-sm" placeholder="Where?">
             </div>
             <input type="hidden" name="lon" id="lon" value="{{search.lon}}"/>
             <input type="hidden" name="lat" id="lat" value="{{search.lat}}"/>
-            <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+<<<<<<< HEAD
+
+
+<div class="input-group-btn">
+  <button type="button" class="btn btn-danger"> <i class="fa fa-search"></i> Search</button>
+  <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown">
+    <span class="caret"></span>
+    <span class="sr-only">Toggle Dropdown</span>
+  </button>
+  <ul class="dropdown-menu" role="menu">
+    <li><a href="#">Profiles</a></li>
+    <li><a href="#">Updates</a></li>
+  </ul>
+</div>
+            <!-- <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button> -->
           </div>
+=======
+            <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+           
+>>>>>>> 1add38fc2b57c423645172c82b1a123d2be6089a
           </form>
         </div>
 
-        <div class="col-xs-6 visible-xs visible-xs"> 
+        <div class="col-xs-4 visible-xs visible-sm"> 
           <form action="/activity" class="navbar-form" role="search" style="border: 0;">
           <div class="input-group"> 
               <input type="text" name="q" id="keyword" class="form-control" value="{{ search.query }}" placeholder="Search"> 
+
+
+
+
+
+
+
               <div class="input-group-btn">
                   <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
               </div> 
@@ -107,7 +129,7 @@ background: #eee;
 
 
         {% if user.is_authenticated %}
-        <div class="col-xs-4 col-sm-3 text-right">
+        <div class="col-xs-4 col-sm-5  text-right">
           <ul class="nav navbar-nav pull-right">
 
                 <li class="visible-md visible-lg"><a href="/pricing">Pricing</a></li> 
@@ -132,13 +154,13 @@ background: #eee;
                 <li class="dropdown">
 
                 <!-- bigger screens --> 
-                <a href="#" class="dropdown-toggle visible-md  visible-lg" data-toggle="dropdown">
-                <i class="fa fa-user fa-fw"></i>{{userinfo.full_name}} <b class="caret"></b>
+                <a href="#" class="dropdown-toggle visible-md visible-lg" data-toggle="dropdown" style="padding: 5px">
+                <img class="img-thum bnail  img-round ed" style="  width:40px"  src="{{userinfo.profileimg}}"  /> <b class="caret"></b>
                 </a>
 
                 <!-- smaller screens --> 
-                <a href="#" class="dropdown-toggle visible-sm visible-xs" data-toggle="dropdown">
-                <i class="fa fa-user fa-fw"></i><b class="caret"></b>
+                <a href="#" class="dropdown-toggle visible-sm visible-xs" data-toggle="dropdown" style="padding: 2px;" >
+                <img class="img-thumbnail" style=" width:40px" style="padding: 2px;"  src="{{userinfo.profileimg}}"  />  <b class="caret"></b>
                 </a>
 
                     <ul class="dropdown-menu">
@@ -393,7 +415,7 @@ hidden
     </div><!--sidebar-->
 
     <hr /> 
-    <div data-step="4" data-intro="See what's active" data-position="top">
+    <div data-step="4" data-intro="See what's active">
       <div id="trendsThisWeek">
           <h5>Trends this week</h5>
           {% for eachVal in userinfo.hashtagsthis %}
@@ -415,7 +437,7 @@ hidden
  {% block content %}
  {% endblock %}  
 </div>
-</div>
+</div> 
 
 <!-- FOOTER --> 
 <div class="container-responsive clearfix" id="footer">    
@@ -427,24 +449,24 @@ hidden
   <div class="row">
     <div class="col-lg-12" id="footer_container">
       <div class="col-md-3">
-        <ul class="list-unstyled"><!-- 
-          <li>FoodTrade<li> -->
-          <li><a href="/about">About us</a></li>
+      <h5>About FoodTrade </h5>
+        <ul class="list-unstyled"> 
+          <li><a href="/pages/about">About us</a></li>
           <li><a href="http://digest.foodtrade.com/" target="_blank">Blog</a></li>
-          <li><a href="/contact">Contact & support</a></li>
+          <li><a href="http://foodtrade.uservoice.com/" target="_blank">Contact & support</a></li>
          </ul>
       </div>
       <div class="col-md-3">
       <!-- 
       developers
-      timeline
-        <ul class="list-unstyled">
-          <li>Applications<li>
-          <li><a href="#">Product for Mac</a></li>
-          <li><a href="#">Product for Windows</a></li>
-          <li><a href="#">Product for Eclipse</a></li>
-          <li><a href="#">Product mobile apps</a></li>              
-        </ul> -->
+      timeline -->
+      <h5>Features</h5>
+        <ul class="list-unstyled">  
+          <li><a href="/pages/individuals">Individuals</a></li>
+          <li><a href="/pages/business">Business</a></li>
+          <li><a href="/pages/organisations">Organisations</a></li>
+          <li><a href="/pages/pricing">Pricing</a></li>            
+        </ul> 
       </div>
       <div class="col-md-3">
        <!--  <ul class="list-unstyled">
@@ -456,8 +478,8 @@ hidden
         </ul> -->
       </div>
       <div class="col-md-3">
-        <ul class="list-unstyled"><!-- 
-          <li>Stay connected<li> -->
+      <h5>Stay connected</h5>
+        <ul class="list-unstyled">
           <li>
             <a href="http://www.facebook.com/foodtradeHQ"><i class="fa fa-facebook-square fa-2x"></i></a> 
             <a href="http://www.twitter.com/foodtradeHQ"><i class="fa fa-twitter-square fa-2x"></i></a></li>
@@ -554,10 +576,6 @@ UserVoice.push(['showTab', 'classic_widget', {
      <script type="text/javascript">
 $(document).ready(function() {
 
-  
-      var h = $(window).height();
-      document.getElementById("map").style.height = h + "px";
-
     var activeSystemClass = $('.list-group-item.active');
     //something is entered in search form
     $('#system-search').keyup( function() {
@@ -605,7 +623,6 @@ $(document).ready(function() {
     <script type="text/javascript">
       $('.tip').tooltip();
       $('[rel=tooltip]').tooltip();
-
 
    
 
