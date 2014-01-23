@@ -57,7 +57,7 @@ def home(request):
         default_lat = float(location_info['latitude'])
 
     keyword = request.GET.get('q',"")
-    sort = request.GET.get('sort',"distance")
+    sort = request.GET.get('sort',"time")
     my_lon = request.GET.get('lon',"")
     my_lat = request.GET.get('lat',"")
     location = request.GET.get('location',default_location)
