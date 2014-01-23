@@ -182,7 +182,7 @@
           </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
       </div><!-- /.modal -->
-      <div class="icons text-center" style="font-size:25px">
+      <!-- <div class="icons text-center" style="font-size:25px">
         <a href="#"><i class="fa fa-facebook-square"></i></a>
         <a href="#"><i class="fa fa-twitter-square"></i></a> 
         <a href="#"><i class="fa fa-phone-square"></i></a> 
@@ -191,7 +191,15 @@
         <a href="#"><i class="fa fa-globe"></i></a> 
         <a href="#"><i class="fa fa-youtube"></i></a> 
         <a href="#"><i class="fa fa-linkedin-square"></i></a> 
-      </div> 
+      </div> --> 
+      <div class="icons text-center" style="font-size:25px">
+      <span class='st_facebook'></span>
+      <span class='st_twitter'></span>
+      <span class='st_pinterest'></span>
+      <span class='st_googleplus'></span>
+      <span class='st_tumblr'></span>
+      <span class='st_linkedin'></span>
+      </div>
      <!-- modal_contact -->
       <div class="modal fade" id="modal_contact" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -770,4 +778,6 @@ customers = {{customers_str | safe}};
     </script>
      <script src="{% static "js/business-map.js" %}"></script>
      <script src="{% static "js/contact.js" %}"></script>
+     <script type="text/javascript" src="http://w.sharethis.com/button/buttons.js"></script>
+<script type="text/javascript">stLight.options({publisher: "13c078b3-f35d-443f-a1b0-5d09282eb2b1", doNotHash: false, doNotCopy: false, hashAddressBar: false});</script>
  {% endblock %}
