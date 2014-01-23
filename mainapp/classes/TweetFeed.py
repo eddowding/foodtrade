@@ -258,6 +258,7 @@ class TweetFeed():
             var foods = this.foods;
             var user_types = this.type_user;
             var filtered = true;
+
             
 
             var flag = true;
@@ -512,6 +513,97 @@ class UserProfile():
              'sign_up_as':sign_up_as, 
              'phone_number':str(phone)}
              )
+
+
+    def search_profiles(self):
+        mapper = Code("""
+            function () {
+            
+            var keyword = '"""+keyword+"""';
+            keyword = keyword.toLowerCase();
+            {"useruid": str(userid), "sign_up_as": sign_up_types[0],
+                                          "type_user":str(','.join(type_user)),
+                                            "zip_code": new_location[0], "address": new_location[3],
+                                           "latitude": float(new_location[1]), "longitude": float(new_location[2]), 
+                                           }
+            
+            var sign_up_as = this.sign_up_as.toLowerCase();
+            var user_types = this.type_user.toLowerCase();
+            var longitude = this.longitde;
+            var latitude = this.latitude;
+
+
+           
+            var search_more = true;
+            if(keyword == sign_up_as)
+            {
+                search_more = false;
+            }
+
+            var type_array = user_types.split();
+            if(type_array.indexOf(keyword)!=-1)
+            {
+                search_more = false;
+            }
+
+            try
+              {
+               var user_name = this.username;
+
+                        var name = this.name;
+
+                        
+                        var description = this.description;
+                        if(user_name.indexOf(keyword) != -1 || name.indexOf(keyword) != -1 || description.indexOf(keyword) != -1 )
+                        {
+                            search_more = false;
+
+                        }
+              }
+            catch(err)
+              {
+              
+              }
+
+            if(!search_more)
+            {
+
+
+
+
+              var lon1 = parseFloat("""+str(lon)+""");
+               var lat1 = parseFloat("""+str(lat)+""");
+               var lon2 = longitude;
+               var lat2 = latitude;
+               var R = 6371; // Radius of the earth in km
+              var dLat = (lat2-lat1)* (Math.PI/180);  // deg2rad below
+              var dLon = (lon2-lon1)* (Math.PI/180); 
+              var a = 
+                Math.sin(dLat/2) * Math.sin(dLat/2) +
+                Math.cos((lat1)* (Math.PI/180)) * Math.cos((lat2)* (Math.PI/180)) * 
+                Math.sin(dLon/2) * Math.sin(dLon/2)
+                ; 
+              var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
+              var d = R * c; // Distance in km
+              var ret_value =
+              emit(this._id, d);
+        }
+                           
+
+
+            }
+            """)
+
+        reducer = Code("""
+            function (key, values) { 
+            var  sum = 0
+             for(var i=0;i<values.length;i++)
+             { sum += 1;}
+             return sum;
+            }
+            """)
+        return self.db_object.map_reduce(self.table_name, mapper, reducer, query, -1, 200)
+        
 
 
 class TradeConnection():

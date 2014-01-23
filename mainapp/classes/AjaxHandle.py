@@ -248,7 +248,6 @@ class AjaxHandle(AjaxSearch):
             insert_val = {'parent':1, 'tags':json_tags}
             mytag = Tags()
             mytag.set_tags(insert_val)
-            print mytag.get_tags()
             return HttpResponse("1")
         else:
             return HttpResponse('0')
