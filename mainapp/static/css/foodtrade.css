@@ -787,6 +787,15 @@ fieldset[disabled] .btn-primary.active {
   text-shadow: 1px 1px 2px #fff;  
 }
 
+.showcase .row .col-sm-6,
+.block-vertical {
+  display: table-cell;
+  float: none;
+  height: 300px /*any value*/;
+  vertical-align: middle;
+}
+
+
 #homehero .jumbotron {
 	background-color: none; 
 	background: url(http://upload.wikimedia.org/wikipedia/commons/5/5a/Milan_Vegetable_Market.jpg) no-repeat center center fixed; 

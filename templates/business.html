@@ -1,0 +1,128 @@
+fon{% extends 'tbase.html' %}
+{% load staticfiles %}
+
+{% block content %}
+
+<div class="col-md-10  {% if not user.is_authenticated %} col-md-offset-1 {% endif %}">
+
+<div class="container-responsive block-center showcase">
+
+ 
+
+
+<div class="row">
+  <div class="col-sm-6 text-center">
+    <img src="/static/images/vouch.png" class="img-responsive img-thumbnail" />
+  </div>
+
+  <div class="col-sm-6">        
+    <h1>Your customers have great taste</h1>
+    <h3>Help them help you look fantastic</h3>
+    <p class="lead">Nothing helps sell your produce like other people talking about it, FoodTrade encourages your customers to like and share your produce. It's 2014, social selling is where it's at.</p>
+  </div>
+</div>
+
+
+<div class="row">
+   
+  <div class="col-sm-6 block-vertical">        
+    <h1>If you've got it, flaunt it. </h1>
+    <h3>Showcase your stockists and supplies. </h3>
+    <p class="lead">The food system of the 21st century is about trust, responsibility, and resilience. That's why FoodTrade makes it easy to showcase your trade partners, connect with the best people for the job, and trade with a diverse range of people.</p>
+  </div>
+
+  <div class="col-sm-6 block-vertical text-center">
+    <img src="/static/images/stockists.png" class="img-responsive img-thumbnail" />
+  </div>
+
+</div>
+
+
+
+<div class="row hero white" style="background-image: url('http://foodtrade.com/wp-content/uploads/2013/09/xapples2.jpg.pagespeed.ic.ByAiEq4muT.jpg');">
+  <div class="col-sm-12 text-center">
+    <blockquote>Numerous industries have been radically transformed by ‘disruptive technology’, but to date there has been little technology innovation in the grocery industry which can be considered truly disruptive. That may all be about to change…</blockquote>
+    <cite><img class="img-thumbnail" src="http://foodtrade.com/wp-content/uploads/2013/10/264x54xgrocer.png.pagespeed.ic.52CPNeyH2n.jpg"</cite>
+  </div>
+</div> 
+
+<div class="row">
+  <div class="col-sm-6">
+    <h1>search</h1>
+  </div>
+
+  <div class="col-sm-6">        
+    <h1>Doing the food what Google bid for everything else</h1>
+    <h3>Share what you know so that others can benefit</h3>
+    <p class="lead">Finding responsibly sourced produce shouldn't have to be a hassle. Food trade helps you find your nearest producer, And their nearest stockist. So that's the biggest problem out of the way.</p>
+  </div>
+</div>
+  
+
+
+<div class="row">
+  <div class="col-sm-6">
+    <h1>CONTACT / EAMIL/ TWEET</h1>
+  </div>
+
+  <div class="col-sm-6">        
+    <h1>Connecting you to better, directly</h1>
+    <h3>We don't take a cut of your sales</h3>
+    <p class="lead">We connect you directly to the people you need to talk to, never getting in the way for a second. (We'd say something about getting it straight from the horse's mouth, but we wouldn't want to rub it in...)</p>
+  </div>
+</div>
+
+<div class="row hero white" style="background-image: url('http://foodtrade.com/wp-content/uploads/2013/11/xCalon_Wen_HR-7.jpg.pagespeed.ic.85ZH6Q6D_e.jpg');">
+  <div class="col-sm-12 text-center">
+    <blockquote>The sustainable alternative to the UK’s food network — Together [small companies] are able to enjoy the same advantages as big agri-business.</blockquote>
+    <cite><img class="img-thumbnail" src="http://foodtrade.com/wp-content/uploads/2013/10/264x54xwired.png.pagespeed.ic.PHJlPo-jPC.jpg"</cite>
+  </div>
+</div> 
+
+
+<div class="row">
+  <div class="col-sm-6">
+    <h1>MOBILE</h1>
+  </div>
+
+  <div class="col-sm-6">        
+    <h1>Online, on the farm, in the kitchen, on the road</h1>
+    <h3>we're with you every step of the way</h3>
+    <p class="lead">FoodTrade is as easy as a status update, whether you're tweeting from the polytunnal, or busy in the kitchens whilst spotting a great deal on surplus fruit. Optimised for mobile and tablets it's perfect for any scale of business, anywhere.</p>
+  </div>
+</div>
+
+
+ 
+<div class="row hero white" style="background-image: url('http://e5bakehouse.com/wp-content/uploads/2013/08/growing-community.jpg');">
+  <div class="col-sm-12 text-center">
+    <blockquote>The ‘dating site for food’, connects food producers with local businesses to foster communities and help small farms exist whilst in competition with the big supermarkets.
+    </blockquote>
+    <cite><img class="img-thumbnail" src="http://foodtrade.com/wp-content/uploads/2013/10/264x54xhuffpo.png.pagespeed.ic.hZ_X0nTf7q.png"</cite>
+  </div>
+</div> 
+
+ 
+
+<div class="row">
+  <div class="col-sm-6">
+    <h1>WIKI</h1>
+  </div>
+
+  <div class="col-sm-6">        
+    <h1>we all want better food</h1>
+    <h3>Share what you know so that others can benefit</h3>
+    <p class="lead">FoodTrade invites you to add what foods are sold where, and who trade what with who, so that we can all make smarter decisions for a fairer, better food system.</p>
+  </div>
+</div>
+
+
+
+
+ 
+
+
+
+ 
+</div>
+</div><!-- col10 --> {% endblock %}
