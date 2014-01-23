@@ -7,11 +7,12 @@
 
 <style type="text/css" media="all">
     /* fix rtl for demo */
-    .chosen-rtl .chosen-drop { left: -9000px; }
-    .typeempty{
+  .chosen-rtl .chosen-drop { left: -9000px; }
+  .typeempty{
   display:none;
-}
-  </style>
+  }
+
+</style>
 
 {% endblock %}
 
@@ -52,13 +53,13 @@
     <div class="form-group">
       <label for="address" class="col-sm-2 control-label">Address</label>
       <div class="col-sm-5">
-        <input type="text" id="address" required class="form-control" placeholder="Enter your address" value="{{address}}" name="address">
-
-        <div class="map_canvas"></div>
-        <input name="lat" type="hidden" name="lat" value="">
-        <input name="lng" type="hidden" value="" name="lng">
-        <input name="formatted_address" type="text" value="">
-        </div>
+      <input type="text" id="address" required class="form-control" placeholder="Enter your address" value="{{address}}" name="address">
+      <input id="find" type="hidden" value="find" />
+      <p>Please drag and drop the marker to change your location.</p>
+      <div class="map_canvas" style="width: 100%;height: 300px; margin-top:3%;"></div>
+      <input name="lat" type="hidden" value=""  class="form-control">
+      <input name="lng" type="hidden" value=""  class="form-control">
+      </div>
     </div>
 
 
@@ -115,37 +116,9 @@
 </div> 
 
 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js" type="text/javascript"></script>
   <script src="/static/js/chosen.jquery.min.js" type="text/javascript"></script>
-  <script src="/static/css/docsupport/prism.js" type="text/javascript" charset="utf-8"></script>    
-  <script src="http://maps.googleapis.com/maps/api/js?sensor=false&amp;libraries=places"></script>
-  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-  <script src="{% static "js/jquery.geocomplete.js" %}"></script>
-        <script>
-      $(function(){
-        $("#address").GeoComplete({
-          map: ".map_canvas",
-          details: "form ",
-          markerOptions: {
-            draggable: true
-          }
-        });
-        
-        $("#address").bind("geocode:dragged", function(event, latLng){
-          $("input[name=lat]").val(latLng.lat());
-          $("input[name=lng]").val(latLng.lng());
-          $("#reset").show();
-        });
-        
-        
-        $("#reset").click(function(){
-          $("#address").GeoComplete("resetMarker");
-          $("#reset").hide();
-          return false;
-        });
-
-      });
-    </script>
-
+  <script src="/static/css/docsupport/prism.js" type="text/javascript" charset="utf-8"></script>
 <script type="text/javascript">
   var selVals = String('{{type_user}}').split(',');
   for (var i=0; i < selVals.length; i++){
@@ -244,6 +217,25 @@ function validateFeedback(){
       return false;
     }
   }
-
-  </script>
+ $(function(){
+        $("#address").geocomplete({
+          map: ".map_canvas",
+          details: "form ",
+          markerOptions: {
+            draggable: true
+          }
+        });
+        
+        $("#address").bind("geocode:dragged", function(event, latLng){
+          $("input[name=lat]").val(latLng.lat());
+          $("input[name=lng]").val(latLng.lng());
+          $("#reset").show();
+        });
+        
+        
+        $("#find").click(function(){
+          $("#address").trigger("geocode");
+        }).click();
+      });
+    </script>
 {% endblock %}

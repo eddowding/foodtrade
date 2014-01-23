@@ -187,9 +187,18 @@ def edit_profile(request, username):
         description = request.POST['description']
         address = request.POST['address']
         try:
-            addr_check = Geocoder.geocode(address)
+            lat = request.POST['lat']
+            lon = request.POST['lng']
+            addr_check = Geocoder.reverse_geocode(float(lat),float(lon))
+            address = str(addr_check)
+            postal_code = str(addr_check.postal_code)
         except:
             address = userprof['address']
+            except_address = Geocoder.geocode(address)
+            lat = except_address.latitude
+            lon = except_address.longitude
+            postal_code = str(except_address.postal_code)
+
         if len(address) == 0:
             address = userprof['address']
         try:
@@ -204,9 +213,11 @@ def edit_profile(request, username):
         else:
             usr_type = ''
         tweetFeedObj = TweetFeed()
-        tweetFeedObj.update_tweets(username, first_name, last_name, description, address, sign_up_as, usr_type.split(','))
+        tweetFeedObj.update_tweets(username, first_name, last_name,
+         description, address, sign_up_as,  lat, lon, usr_type.split(','))
         user_profile_obj = UserProfile()
-        user_profile_obj.update_profile(request.user.id, address, usr_type, sign_up_as, phone)
+        user_profile_obj.update_profile(request.user.id, address, 
+            usr_type, sign_up_as, phone, lat, lon, postal_code)
 
         usr = User.objects.get(username=username)
         usr.first_name = first_name

@@ -423,26 +423,27 @@ class TweetFeed():
 
 
 
-    def update_tweets(self, username, first_name, last_name, description, zip_code, sign_up_as, type_user=[]):
-        try:
-            results = Geocoder.geocode(zip_code)
-            #print str(results), zip_code
-            lon = results.longitude
-            lat = results.latitude
-            #print lon, lat
-        except:
-            results = Geocoder.geocode('sp5 1nr')
-            lon = results.longitude
-            lat = results.latitude
-
+    def update_tweets(self, username, first_name, last_name, description, address, sign_up_as,  lat, lon,type_user=[]):
+        # try:
+        #     results = Geocoder.geocode(zip_code)
+        #     #print str(results), zip_code
+        #     lon = results.longitude
+        #     lat = results.latitude
+        #     #print lon, lat
+        # except:
+        #     results = Geocoder.geocode('sp5 1nr')
+        #     lon = results.longitude
+        #     lat = results.latitude
+        results = address
         return self.db_object.update(self.table_name,
             {'user.username':username}, 
             {
                 'user.name':str(first_name + ' ' + last_name),
                 'user.description':description,
                 'user.place' :str(results),
-                'location.coordinates.0':float(results.longitude),
-                'location.coordinates.1':float(results.latitude),
+                # 'user.location' :str(results),
+                'location.coordinates.0':float(lon),
+                'location.coordinates.1':float(lat),
                 'sign_up_as':str(sign_up_as),
                 'type_user':type_user
             })
@@ -502,15 +503,15 @@ class UserProfile():
     def create_profile (self, value):
         self.db_object.insert_one(self.table_name,value)
 
-    def update_profile(self, userid, zipcode, type_usr, sign_up_as, phone):
+    def update_profile(self, userid, address, type_usr, sign_up_as, phone, lat, lon, postal_code):
         #print phone
-        address = Geocoder.geocode(zipcode)
+        #address = Geocoder.geocode(zipcode)
         #print zipcode, address
         return self.db_object.update(self.table_name,
              {'useruid':str(userid)},
-             {'zip_code':str(address.postal_code),
-             'latitude':str(address.latitude),
-             'longitude':str(address.longitude),
+             {'zip_code':str(postal_code),
+             'latitude':str(lat),
+             'longitude':str(lon),
              'address':str(address),
              'type_user':type_usr,
              'sign_up_as':sign_up_as, 
