@@ -83,7 +83,7 @@ def gen_tradeconnection_userprofile(third_pk, userid, user, name, description, n
                 con = { 'orguid': userid, 'memberuid': rand_no}
                 org_obj.create_member(con)
 
-    tradeconnection_userprofile_fields = {"useruid": str(userid), "sign_up_as": sign_up_types[0],
+    tradeconnection_userprofile_fields = {"username":user, "description", description, "name":name, "profile_img":"https://pbs.twimg.com/profile_images/378800000141996074/6a363e3c4f2a84a956c3cb27c50b2ca0_normal.png", useruid": str(userid), "sign_up_as": sign_up_types[0],
                                           "type_user":str(','.join(type_user)),
                                             "zip_code": new_location[0], "address": new_location[3],
                                            "latitude": float(new_location[1]), "longitude": float(new_location[2]), 

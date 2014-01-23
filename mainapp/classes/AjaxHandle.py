@@ -90,7 +90,7 @@ class AjaxHandle(AjaxSearch):
                     'name': tweet['user']['name'],
                     'profile_img':tweet['user']['profile_image_url'],
                     'description':tweet['user']['description'],
-                    'location':tweet['user']['location'],
+                    'place':tweet['user']['location'],
                     }
             }
             if my_lon == '' and my_lat == '':
@@ -101,6 +101,8 @@ class AjaxHandle(AjaxSearch):
                 data['location'] = {"type": "Point", "coordinates": [float(ip_location['longitude']), float(ip_location['latitude'])]},
             else:                
                 data['location'] = {"type": "Point", "coordinates": [float(my_lon), float(my_lat)]}
+
+            print data
             tweet_feed.insert_tweet(data)
             tweet_feed.update_data(user_id)
             return HttpResponse(json.dumps({'status':1}))
