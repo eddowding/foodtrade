@@ -11,6 +11,7 @@ from models import MaxTweetId
 import datetime
 import time
 import json
+from mainapp.classes.Foods import AdminFoods
 from mainapp.classes.Tags import Tags
 
 from django.contrib.auth.decorators import user_passes_test
@@ -81,8 +82,8 @@ def food_tags(request):
         parameters['userprofile'] = UserProfile
 
         parameters['userinfo'] = user_info
-    mytag = Tags()
-    tags = mytag.get_tags()
+    foods = AdminFoods()
+    tags = foods.get_tags()
     parameters['tags'] = json.dumps(tags)
 
     return render_to_response('food-tags.html', parameters, context_instance=RequestContext(request))

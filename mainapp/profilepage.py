@@ -9,6 +9,7 @@ from geolocation import get_addr_from_ip
 from classes.DataConnector import UserInfo
 from mainapp.classes.TweetFeed import Food, TradeConnection, Customer, TradeConnection, UserProfile, Organisation, Team, RecommendFood
 from mainapp.classes.Tags import Tags
+from mainapp.classes.Foods import AdminFoods
 from pygeocoder import Geocoder
 import json
 from mainapp.produce import *
@@ -27,7 +28,9 @@ def resolve_profile(request, username):
 
 def display_profile(request, username):
     parameters = {}
-    parameters['food_list'] = final_foods
+    # parameters['food_list'] = final_foods
+    foo = AdminFoods()
+    parameters['all_tags'] = foo.get_tags()
     user_profile = UserProfile()
     usr = User.objects.get(username = username)
     account = SocialAccount.objects.get(user__id = usr.id)
