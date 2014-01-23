@@ -209,10 +209,7 @@ connections = {{json_data | safe}};
             <div class="header">
                 <strong class="pull-left" style="margin-right: 10px;">{{userinfo.full_name}}</strong> 
 
-                <!-- <div class="tags tags-biztype">  
-                  <a href="/type/livestock-farm">Bakery</a>
-                  <a href="/type/buther">Wholesale</a>  
-                </div> -->
+               
             </div>
 
             <p>
@@ -234,14 +231,14 @@ connections = {{json_data | safe}};
                 <!--  // if logged in or you've allows html5 browser location -->
 
                 <span class="pull-right">
-                   <a href="activity_single.php" class="text-muted"><i class="fa fa-clock-o"></i> 21m</a> 
+                   <a href="activity_single.php" class="text-muted"><i class="fa fa-clock-o"></i> 0s</a> 
                 </span>
               </div> 
 
         </div>
 
         <div class="reply well well-sm" style="margin:0;"> 
-          <input class="form-control input-sm enterhandler"  {% if not user.is_authenticated %}  title="Please login to use this feature." {% endif %} type="text" id="replyid_{{forloop.counter}}" placeholder="Reply to @{{result.user.username}}"  onfocus="ShowReply('replyid_{{forloop.counter}}', '@{{result.user.username}}')" onblur="BlurReply('replyid_{{forloop.counter}}', '@{{result.user.username}}')">
+          <input class="form-control input-sm enterhandler"  {% if not user.is_authenticated %}  title="Please login to use this feature." {% endif %} type="text" id="replyid_{{forloop.counter}}" placeholder="Reply to @{{result.user.username}}"  onfocus="ShowReply('replyid_{{forloop.counter}}', '@{{result.user.username}}')" onblur="BlurReply('replyid_rfrf', '@{{info.username}}')">
         </div>
     </li>
 

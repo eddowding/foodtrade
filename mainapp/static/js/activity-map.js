@@ -69,10 +69,10 @@ function reload_controls()
 			var description = con.user.description;
 			var type_user = con.type_user;
 			var sign_up_as = con.sign_up_as;
-			if(sign_up_as != "Business")
-			{
-				continue;
-			}
+			// if(sign_up_as != "Business")
+			// {
+			// 	continue;
+			// }
 
 			var current_lat = parseFloat(con.location.coordinates[1]);
 			var current_lon = parseFloat(con.location.coordinates[0]);
@@ -101,7 +101,7 @@ var card_str = '<div class="card-box"><div class="content"><div class="pull-left
                 
                       card_str += '</div><div class="text"><h5><a href="/profile/'+username+'">'+name+'</a></h5>';
 
-                      card_str += '<p class="small">'+description.substr(0,80)+'</p></div></div>';
+                      card_str += '<p class="small">'+description+'</p></div></div>';
                       if(type_user.length>0)
                       {
                     card_str += '<div class="numbers clearfix"><div class="tags tags-biztype pull-left">';
