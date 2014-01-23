@@ -142,17 +142,24 @@ background: #eee;
   width: 200px !important;
 }
 
+#beta {
+  background: #ADC742;
+  z-index: 10000;
+  padding: 5px;
+  color: rgba(255,255,255,0.8);
+  text-align: center;
+}
+
 /********************************/
 /**  FULL HEIGHT SIDEBAR       **/
-/********************************/
- 
+/********************************/ 
 
 #main_page, 
 #main_page #main_row,
 #main_page #main_row .fill,
 #sidebar
 { 
-    height: 100%;
+    min-height: 1000px;
 }
 
 .fill {
@@ -163,7 +170,7 @@ background: #eee;
 	border-right: 1px solid #ccc;
 	background-image: url('/static/images/double_stripe.png');
 	padding-top: 30px;
-	margin-top: -6px;
+	margin-top: 0px;
 	padding-left: 25px; 
   height: calc(100% - 58px);
 }
@@ -738,7 +745,7 @@ fieldset[disabled] .btn-primary.active {
   box-shadow: 0 0 450px #000 inset;
   color: #fff;
   text-shadow: 1px 1px 2px #000;
-  margin-top: -20px;
+  
 }
 
 .hero h1 {
@@ -751,6 +758,13 @@ fieldset[disabled] .btn-primary.active {
   padding: 30px 20% ;
   font-style: italic;
   font-family: georgia, serif;
+}
+
+.photocredit {
+  top: -20px;
+  position: relative;
+  color: #fff;
+  padding-right: 20px;
 }
 
 .white *,
