@@ -110,7 +110,7 @@ function AddTerm()
 
 }
 function RemoveTag(my_this){
-  xxx = my_this;
+that = my_this;
 $(my_this).parent().parent().remove();
 }
 function tags_saved(data)
@@ -144,7 +144,7 @@ function SaveTagAdmin()
   SaveEdit();
    parent_tags = $('ul.tag_admin').children('li');
    h_tags = GetTags(parent_tags,0);
-   ajax_request("save_tags", 'tags_saved', {tags:JSON.stringify(h_tags)});
+   ajax_request("save_adminfoods", 'tags_saved', {tags:JSON.stringify(h_tags)});
 
 
 }

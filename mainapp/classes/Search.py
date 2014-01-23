@@ -19,7 +19,22 @@ class Search():
 
 
 
-    def search(self):
+    def search(self, search_by="Updates"):
+        return self.search_updates()
+        if search_by == "updates":
+            pass
+        else:
+            return self.search_profiles()
+
+
+    def search_profiles(self):
+        pass
+
+
+
+
+        
+    def search_updates(self):
         query_string = {}
         # if self.keyword !="":
         #     keyword_like = re.compile(self.keyword + '+', re.IGNORECASE)

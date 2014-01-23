@@ -110,8 +110,11 @@ function AddTerm()
 
 }
 function RemoveTag(my_this){
+<<<<<<< HEAD
+=======
   xxx = my_this;
-$(my_this).parent().parent().remove();
+>>>>>>> 38b3df4bb5018a2f8d2f14a7ae0bb1fabe2e453d
+my_this.parentElement.parentElement.remove();
 }
 function tags_saved(data)
 {

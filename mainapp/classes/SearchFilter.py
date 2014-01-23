@@ -13,6 +13,7 @@ class SearchFilter():
 
 
     def get_all_foods(self):
+        
         query_string = {}
         # if self.keyword !="":
         #     keyword_like = re.compile(self.keyword + '+', re.IGNORECASE)

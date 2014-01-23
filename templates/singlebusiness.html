@@ -260,7 +260,7 @@
                             <div class='pull-left'>
                             <select id="myselect" data-placeholder="Add foods you can buy here." style="height:30px; width: 100%" multiple class="chosen-select" >
                             <option value=""></option>
-                            {% for each in food_list %}
+<!--                             {% for each in food_list %}
                             <optgroup label={{each.node}}>
                             {% if each.children %}
                             {% for eachchild in each.children %}
@@ -271,7 +271,18 @@
                             {% endif %}
                             </optgroup>
                             {% endfor %}
-
+ -->
+                           {% for each in all_tags %}
+                                          <optgroup label={{each.node}}>
+                                          {% if each.childrens %}
+                                          {% for eachchild in each.childrens %}
+                                          <option>{{eachchild.node}}</option>
+                                          {% endfor %}
+                                    {% else %}
+                                        <option>{{each.node}}</option>
+                              {% endif %}
+                            </optgroup>
+                            {% endfor %}
                             </select></div>
 
                               <div class="pull-left">
