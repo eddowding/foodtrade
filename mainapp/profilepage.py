@@ -14,6 +14,7 @@ from pygeocoder import Geocoder
 import json
 from mainapp.produce import *
 import random
+import time
 
 def resolve_profile(request, username):
     usr = User.objects.get(username = username)
@@ -46,6 +47,30 @@ def display_profile(request, username):
     parameters['loc'] = {'lat':userprof['latitude'], 'lon':userprof['longitude']}
     parameters['email'] = usr.email
     parameters['screen_name'] = "@" + account.extra_data['screen_name']
+
+    tweet_feed_obj = TweetFeed()
+    updates = tweet_feed_obj.get_tweet_by_user_id(str(usr.id))
+    print usr.id, len(updates)
+    for i in range(len(updates)):
+        time_elapsed = int(time.time()) - updates[i]['time_stamp']
+        if time_elapsed<60:
+            time_text = str(time_elapsed) + 'seconds'
+        elif time_elapsed < 3600:
+            minutes = time_elapsed/60
+            time_text = str(minutes) + 'minutes'
+        elif time_elapsed < 3600*24:
+            hours = time_elapsed/3600
+            time_text = str(hours) + 'hours'
+        elif time_elapsed < 3600*24*365:
+            days = time_elapsed/3600/24
+            time_text = str(days) + 'days'
+        else:
+            years = time_elapsed/3600/24/365
+            time_text = str(years) + 'years'
+        updates[i]['time_elapsed'] = time_text
+    parameters['updates'] = updates
+    parameters['updates_count'] = len(updates)
+
     pno = userprof.get('phone_number')
     if pno == None:
         parameters['phone_number'] = ''
@@ -182,7 +207,7 @@ def edit_profile(request, username):
         else:
             usr_type = ''
         tweetFeedObj = TweetFeed()
-        tweetFeedObj.update_tweets(username, first_name, last_name, description, address)
+        tweetFeedObj.update_tweets(username, first_name, last_name, description, address, sign_up_as, usr_type.split(','))
         user_profile_obj = UserProfile()
         user_profile_obj.update_profile(request.user.id, address, usr_type, sign_up_as, phone)
 

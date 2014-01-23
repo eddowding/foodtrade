@@ -38,7 +38,7 @@ class TweetFeed():
         self.db_object.update(self.table_name,{'_id':ObjectId(tweet_id)}, {'deleted':1})
 
     def get_tweet_by_user_id(self, user_id):
-        return self.db_object.get_all(self.table_name,{'user_id':tweet_id, 'deleted':0}, 'time_stamp')
+        return self.db_object.get_all(self.table_name,{'useruid':user_id, 'deleted':0}, 'time_stamp')
 
     def search_tweets(self, query):
         return self.db_object.get_all(self.table_name, query, 'time_stamp')
@@ -54,12 +54,14 @@ class TweetFeed():
     def get_trending_hashtags(self, start_time_stamp, end_time_stamp):
         mapper = Code("""
             function () {
-             items = this.status.split(' ');
-             for(i=0;i<items.length;i++){ 
-                if(items[i].indexOf('#')==0){
-                        emit(items[i], 1); 
-                        }
-                    }
+            if(this.deleted != 1){
+                     items = this.status.split(' ');
+                     for(i=0;i<items.length;i++){ 
+                        if(items[i].indexOf('#')==0){
+                                emit(items[i], 1); 
+                                }
+                            }
+                }
             }
             """)
 
@@ -421,7 +423,7 @@ class TweetFeed():
 
 
 
-    def update_tweets(self, username, first_name, last_name, description, zip_code):
+    def update_tweets(self, username, first_name, last_name, description, zip_code, sign_up_as, type_user=[]):
         try:
             results = Geocoder.geocode(zip_code)
             #print str(results), zip_code
@@ -441,6 +443,8 @@ class TweetFeed():
                 'user.place' :str(results),
                 'location.coordinates.0':float(results.longitude),
                 'location.coordinates.1':float(results.latitude),
+                'sign_up_as':str(sign_up_as),
+                'type_user':type_user
             })
 
         
