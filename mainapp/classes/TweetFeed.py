@@ -291,7 +291,14 @@ class TweetFeed():
                {
                for(var i =0; i<foods.length;i++)
                {
-                    emit(foods[i], 1);
+                var food_item = foods[i].trim();
+                if(food_item.length>0)
+                {
+                    emit(food_item, 1);
+                }
+
+
+
                }
                
               }
@@ -347,7 +354,11 @@ class TweetFeed():
                {
                for(var i =0; i<user_types.length;i++)
                {
+               var type_item = user_types[i].trim();
+               if(type_item.length>0)
+               {
                     emit(user_types[i], 1);
+               }
                }
                
               }
@@ -404,7 +415,12 @@ class TweetFeed():
                {
                for(var i =0; i<organisations.length;i++)
                {
+
+               var org_item = organisations[i].trim();
+               if(org_item.length>0)
+               {
                     emit(organisations[i], 1);
+               }
                }
                
               }
