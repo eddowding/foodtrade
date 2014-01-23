@@ -4,6 +4,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from allauth.socialaccount.models import SocialToken, SocialAccount
 from twython import Twython
 import json
+from django.conf import settings
 from mainapp.classes.TweetFeed import TweetFeed, UserProfile, Friends, TwitterError, Invites
 from search import search_general
 from streaming import MyStreamer
@@ -16,27 +17,17 @@ import time
 from mainapp.classes.DataConnector import UserInfo
 import pprint
 next_cursor = -1
-# new ones
-consumer_key = 'waBmigQf9LIqYXkhMNeMdQ'
-consumer_secret = 'KVVf35OAJQVUGrVQsrQnF7fmB2JLz6XAW3IAmqFB8'
 
+ACCESS_TOKEN = ''
+ACCESS_TOKEN_SECRET =''
 
-# consumer_key = 'seqGJEiDVNPxde7jmrk6dQ'
-# consumer_secret = 'sI2BsZHPk86SYB7nRtKy0nQpZX3NP5j5dLfcNiP14'
-access_token = ''
-access_token_secret =''
-
-#new ones of foodtrade_help  -- only to use for reply messages
-# admin_access_token = '2304652134-jeY4dnvwhqzmTs6FvLfRCGQml7LNpkupvks0E8R'
-# admin_access_token_secret = 'qpXLwqqECsjDqBghOn2VNJN6XfpypGJbNwHzR3lYdokyX'
-
-#new ones of foodtradeHQ  -- to use with daemon.. msg parsing
-# admin_access_token = '384361932-tLfbr6U9LsxOQfVrOn6dCGxMS22Hb00PThCVq9gx'
-# admin_access_token_secret = 'l8IuymnykSCptTcKdDPGckSvlfFRx2UYLvCg3f2LiuRo0'  # read only
-
-# old ones of myfoodtrade
-admin_access_token = '2248425234-EgPSi3nDAZ1VXjzRpPGMChkQab5P0V4ZeG1d7KN'
-admin_access_token_secret = 'ST8W9TWqqHpyskMADDSpZ5r9hl7ND6sEfaLvhcqNfk1v4'
+def get_twitter_obj(token, secret):
+    return Twython(
+        app_key = settings.CONSUMER_KEY,
+        app_secret = settings.CONSUMER_SECRET,
+        oauth_token = token,
+        oauth_token_secret = secret
+        )
 
 def home(request):
     parameters={}
@@ -59,19 +50,16 @@ def singlebusiness(request):
 
 def tweets(request):
     parameters = {}
-    admin_twitter = Twython(
-        app_key = consumer_key,
-        app_secret = consumer_secret,
-        oauth_token = admin_access_token,
-        oauth_token_secret = admin_access_token_secret
-        )
+    HQ_twitter = get_twitter_obj(settings.HQ_ACCESS_TOKEN, settings.HQ_ACCESS_TOKEN_SECRET)
+    bot_twitter = get_twitter_obj(settings.BOT_ACCESS_TOKEN, settings.BOT_ACCESS_TOKEN_SECRET)  
     try:
         max_id = MaxTweetId.objects.all()[0]
-        max_tweet_id = int(max_id.max_tweet_id)
     except:
-        max_tweet_id = 12345
+        max_id = MaxTweetId(max_tweet_id = 12345)
+        max_id.save()
+    max_tweet_id = int(max_id.max_tweet_id)
     print 'max_tweet_id', max_tweet_id
-    mentions = admin_twitter.get_mentions_timeline(count = 200, contributer_details = True, since_id = max_tweet_id)
+    mentions = HQ_twitter.get_mentions_timeline(count = 200, contributer_details = True, since_id = max_tweet_id)
     tweet_list = []
     tweet_feed = TweetFeed()
     user_profile = UserProfile()
@@ -112,19 +100,17 @@ def tweets(request):
             display_tweets.append(data)
         except:
             text = "@" + tweet['user']['screen_name'] + " Thanks! Please confirm your post by clicking this http://foodtradelite.cloudapp.net/?" + tweet['id_str'] + " You'll only have to do this once."
-            try:
-                admin_twitter.update_status(status = text, in_reply_to_status_id = tweet['id'])
-            except:
-                pass
+            print text
+            # try:
+            #     bot_twitter.update_status(status = text, in_reply_to_status_id = tweet['id'])
+            # except:
+            #     pass
 
     if len(tweet_list)!=0:
         max_id.max_tweet_id = max(tweet_list)
         max_id.save()
-
-
     print display_tweets
     parameters['tweet_list'] = display_tweets
-
     return render_to_response('home.html', parameters)
 
 def get_client_ip(request):
