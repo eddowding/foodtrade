@@ -272,7 +272,7 @@ $('.enterhandler').bind('keypress', function(e) {
 		   		return;
 		   }
 		   ajax_request("post_tweet", 'CloseNewPostModal', {message: status_msg});
-		 
+		 $(this).focus();
 		 }
 	}
 	else{
@@ -282,6 +282,7 @@ $('.enterhandler').bind('keypress', function(e) {
 		  window.location = '/accounts/twitter/login/?process=login';
 	}
 });
+
 
 
 
