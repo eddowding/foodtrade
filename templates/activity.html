@@ -581,7 +581,10 @@ function success_activity_handle(data){
   if(data['activity'] == 'follow' ){
     alert(data['message']);
   }
-  if((data['activity'] == 'buyFrom' && data['status'] == 0) || (data['activity'] == 'sellTo' && data['status'] ==0) || (data['activity'] == 'markMember' && data['status'] == 0) ){
+  if((data['activity'] == 'buyFrom' && data['status'] == 0) || 
+    (data['activity'] == 'sellTo' && data['status'] ==0) || 
+    (data['activity'] == 'markMember' && data['status'] == 0) ||
+    (data['activity'] == 'spam' && data['status'] == 0)){
    alert(data['message']); 
   }
 }
