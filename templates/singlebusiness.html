@@ -560,7 +560,7 @@
 
           <div class="container-responsive">
           <div class="row">
-              <div class="col-md-12">
+           <div class="col-md-12">
             {% if user.is_authenticated %}
                   <div class="">
 
@@ -583,7 +583,7 @@
                               </span>
                                   <div class="chat-body clearfix">
                                       <div class="header">
-                                          <strong class="primary-font">{{eachUpdate.user.username}}</strong> <small class="pull-right text-muted">
+                                          <strong class="primary-font">{{eachUpdate.user.name}}</strong> <small class="pull-right text-muted">
                                               <span class="glyphicon glyphicon-time"></span>{{eachUpdate.time_elapsed}} ago</small>
                                       </div>
                                       <p>
@@ -636,9 +636,9 @@
 
 
     <div class="col-md-4 col-sm-3">
-    <div style="width:100%; z-index: 100;" id="map">
-           </div> 
-           </div>
+       <div style="width:100%; z-index: 100;" id="map">
+       </div> 
+    </div>
 
   
 
