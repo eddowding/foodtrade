@@ -33,6 +33,14 @@ h2 {
   margin-top: 100px;
 }
 
+#footer h5 {
+  text-transform: uppercase;
+}
+
+#footer .list-unstyled li {
+  line-height: 1.5;
+}
+
 .tags a {
 	font-size: 12px;
 	padding-top: 1px; 
@@ -278,8 +286,14 @@ article .content h4 {
   }
 
   .nav > li > a {
-    padding: 10px 0 10px 5px;
+    padding: 10px 5px;
   }
+
+  .nav > li > a {
+    position: relative;
+    display: block;
+    padding: 10px 8px;
+    }
 
 } /* @media 768 */
 
