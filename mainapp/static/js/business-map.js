@@ -9,8 +9,8 @@ var map = L.map('map').setView([map_lat,map_lon], 7);
 
 
 		L.icon({
-			iconUrl:'/images/map_marker.png',
-			iconRetinaUrl:'/images/map_marker.png',
+			iconUrl:'/static/images/map_marker.png',
+			iconRetinaUrl:'/static/images/map_marker.png',
 			iconSize:[18, 18],
 			iconAnchor:[9, 18],
 			popupAnchor:[0, -18]
@@ -52,6 +52,7 @@ function reload_connections()
 	{
 		connections = new_connections;
 	}
+	connections.concat(customers);
 	map_controls =[];
 	var max_lat = parseFloat(map_lat);
 	var min_lat = parseFloat(map_lat);
@@ -109,6 +110,44 @@ function reload_connections()
 			}).addTo(map);
 			map_controls.push(polyline);
 
+}
+
+
+
+
+
+
+for(var j=0;j<customers.length;j++)
+		{
+			var con1 = customers[j];
+			
+			var latitude =  con1.latitude;
+         	var longitude =  con1.longitude;
+
+
+			var current_lat = parseFloat(latitude);
+			var current_lon = parseFloat(longitude);
+			if(current_lat>max_lat)
+			{
+				max_lat = current_lat;
+			}
+			if(current_lat<min_lat)
+			{
+				min_lat = current_lat;
+			}
+
+			
+			if(current_lon>max_lon)
+			{
+				max_lon = current_lon;
+			}
+
+			if(current_lon<min_lon)
+			{
+				min_lon = current_lon;
+			}
+
+
 
 
 			var dot = L.circleMarker([parseFloat(latitude), parseFloat(longitude)],  {
@@ -125,6 +164,10 @@ function reload_connections()
 			map_controls.push(dot);
 
 }
+
+
+
+
 
 	if(max_lat == min_lat && max_lon==min_lon)
 		{

@@ -68,6 +68,11 @@ function reload_controls()
 			var username = con.user.username;
 			var description = con.user.description;
 			var type_user = con.type_user;
+			var sign_up_as = con.sign_up_as;
+			if(sign_up_as != "Business")
+			{
+				continue;
+			}
 
 			var current_lat = parseFloat(con.location.coordinates[1]);
 			var current_lon = parseFloat(con.location.coordinates[0]);
