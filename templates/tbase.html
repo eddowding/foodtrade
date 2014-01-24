@@ -15,7 +15,8 @@
     <meta name="author" content="FoodTrade">
 
     <meta property="og:site_name" content="FoodTrade" />
-    <meta property="og:type" content="company" />
+
+    <meta property="og:type" content="{% block ogtype %}{% if userinfo.user_type == "Business" %}Business{%endif%}{% if userinfo.user_type == "Individual" %}Profile{%endif%}{% if userinfo.user_type == "Organisation" %}Group{%endif%}{% endblock %}" />
 
 
 
