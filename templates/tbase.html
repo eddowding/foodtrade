@@ -24,7 +24,7 @@
     <meta property="fb:app_id" content="1400801613504478" /> 
 
     <meta property="og:url" content="http://{{request.META.HTTP_HOST}}{{request.path}}" />
-    <meta property="og:image" content="{% block imageurl %}http://{{request.META.HTTP_HOST}}/static/images/logo.png{% endblock %}" />  
+    <meta property="og:image" content="{% block imageurl %}{{userinfo.profileimg}}{% endblock %}" />  
     <meta property="og:title" content="{% block titlecontent %}Home{% endblock %} - FoodTrade" />
     <meta property="og:latitude" content="{% block fblat %}{{userinfo.lat}}{% endblock %}" />
     <meta property="og:longitude" content="{% block fblon %}{{userinfo.lon}}{% endblock %}" />

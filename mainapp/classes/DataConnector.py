@@ -82,9 +82,6 @@ class UserInfo():
         self.zip_code = userprof['zip_code']
         self.address = userprof['address']
         self.type = userprof['type_user']
-        # from pygeocoder import Geocoder
-        # geo_loc = Geocoder.geocode(self.zip_code)
-        # self.country = geo_loc.country
 
         user_connection =  UserConnections(user_id)
 
