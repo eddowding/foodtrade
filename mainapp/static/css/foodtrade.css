@@ -756,7 +756,7 @@ fieldset[disabled] .btn-primary.active {
 .hero blockquote {
   border: 0;
   font-size: 30px;
-  padding: 30px 20% ;
+  padding: 0px 15% ;
   font-style: italic;
   font-family: georgia, serif;
 }
@@ -785,6 +785,15 @@ fieldset[disabled] .btn-primary.active {
 
 .whiteshadow * {
   text-shadow: 1px 1px 2px #fff;  
+}
+
+.whitebackground {
+  background: rgba(255,255,255,0.7);
+}
+
+.blackbackground {
+  background: rgba(0,0,0,0.7);
+  display: inline-block;
 }
 
 .showcase .row .col-sm-6,

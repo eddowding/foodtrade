@@ -70,7 +70,8 @@
 <script src="{% static "js/jquery.js" %}"></script>
 <script type="text/javascript">
 var invite_id = String('{{invite_id}}');
-var tweet = 'You\'ll love foodtrade. Join here:- http://foodtrade.com/invitation/' + invite_id + '/' ;
+var domain = document.domain;
+tweet = 'You\'ll love foodtrade. Join here:- http://' + domain + '/invitation/' + invite_id + '/' ;
 var countVal = 0;
 var send_list = [];
 var users = [];
@@ -119,7 +120,8 @@ function invites_handler (data) {
 		$('#btnSendTweet1').html("Send invites");
 		$('#btnSendTweet2').html("Send invites");			
 		$('#btnSendTweet3').html("Send invites");
-		tweet = 'You\'ll love foodtrade. Join here:- http://foodtrade.com/invitation/' + invite_id + '/' ;
+		var domain = document.domain;
+		tweet = 'You\'ll love foodtrade. Join here:- http://' + domain + '/invitation/' + invite_id + '/' ;
 		$('#tweetMessage1').val(tweet);
 		/*$('#btnSendTweet1').html('');*/		
 		for (var val in send_list){
