@@ -200,7 +200,8 @@ def invite(request):
                         friends_obj = Friends()
                         count = count + 1
                         for eachFriend in friends['users']:
-                            friends_obj.save_friends({'username':request.user.username,'friends':eachFriend})
+                            friends_obj.save_friends({'username':request.user.username,
+                                'friends':eachFriend})
                         if next_cursor != 0:
                             friends = tweetfeed_obj.get_friends(request.user.id, next_cursor)
                 except:
@@ -226,7 +227,8 @@ def invite(request):
                     friends_obj = Friends()
                     count = count + 1
                     for eachFriend in friends['users']:
-                        friends_obj.save_friends({'username':request.user.username,'friends':eachFriend})
+                        friends_obj.save_friends({'username':request.user.username,
+                            'friends':eachFriend})
                     if next_cursor != 0:
                         friends = tweetfeed_obj.get_friends(request.user.id, next_cursor)
             except:
@@ -273,9 +275,8 @@ def invite(request):
 
 def handle_invitation_hit(request, invite_id):
     request.session['invite_id'] = str(invite_id)
-    #return HttpResponseRedirect('/accounts/twitter/login/?process=login')
-    return HttpResponseRedirect('/mylogin')
+    return HttpResponseRedirect('/accounts/twitter/login/?process=login')
 
-def my_login(request):
-    print request.session['invite_id']
-    return HttpResponse(json.dumps({'invite_id':request.session['invite_id']}))
+# def my_login(request):
+#     print request.session['invite_id']
+#     return HttpResponse(json.dumps({'invite_id':request.session['invite_id']}))

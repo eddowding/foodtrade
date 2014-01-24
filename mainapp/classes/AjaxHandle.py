@@ -37,30 +37,17 @@ class AjaxHandle(AjaxSearch):
         if not request.user.is_authenticated():
             return HttpResponseRedirect('/accounts/login/')
 
-        if request.POST['invite'] == 'true':
-            invite_id_obj = InviteId()
-            invite_obj = Invites()
-
-            invitees = request.POST['to'].split(',')
-            for eachInvitee in invitees:
-                #print eachInvitee
-                invite_obj.save_invites({'to':str(eachInvitee), 
-                    'from':str(request.user.username),
-                    'sent_time':str(time.mktime(datetime.datetime.now().timetuple())),
-                    'invite_id':ObjectId(request.POST['invite_id']), 
-                    'message':str(request.POST['message'])
-                    })
-
-            invite_id_obj.change_used_status(request.user.id, request.POST['invite_id'])
-            new_invite_id = invite_id_obj.get_unused_id(request.user.id)['uid']['id']
-            return HttpResponse(json.dumps({'status':'1', 'new_invite_id':new_invite_id}))
-
         user_id = request.user.id
         st = SocialToken.objects.get(account__user__id=user_id)
+
         ACCESS_TOKEN = st.token
         ACCESS_TOKEN_SECRET = st.token_secret
+        # print "Roshan", ACCESS_TOKEN, ACCESS_TOKEN_SECRET
         user_twitter = get_twitter_obj(ACCESS_TOKEN, ACCESS_TOKEN_SECRET)
+
         # uid = SocialAccount.objects.get(user__id=user_id).uid
+        print ACCESS_TOKEN, ACCESS_TOKEN_SECRET
+        
         bot_twitter = get_twitter_obj(settings.BOT_ACCESS_TOKEN, settings.BOT_ACCESS_TOKEN_SECRET)
         message = request.POST.get('message')
         noappend = request.POST.get('noappend')
@@ -111,6 +98,24 @@ class AjaxHandle(AjaxSearch):
             tweet_feed.insert_tweet(data)
             tweet_feed.update_data(user_id)
 
+            if 'invite' in request.POST:
+                if request.POST['invite'] == 'true':
+                    invite_id_obj = InviteId()
+                    invite_obj = Invites()
+
+                    invitees = request.POST['to'].split(',')
+                    for eachInvitee in invitees:
+                        #print eachInvitee
+                        invite_obj.save_invites({
+                                'to_screename':str(eachInvitee), 
+                                'from_username':str(request.user.username),
+                                'sent_time':str(time.mktime(datetime.datetime.now().timetuple())),
+                                'invite_id':ObjectId(request.POST['invite_id']), 
+                                'message':str(request.POST['message'])
+                            })
+                    invite_id_obj.change_used_status(request.user.id, request.POST['invite_id'])
+                    new_invite_id = invite_id_obj.get_unused_id(request.user.id)['uid']['id']
+                    return HttpResponse(json.dumps({'status':'1', 'new_invite_id':new_invite_id}))
 
             return HttpResponse(json.dumps({'status':1}))
         else:

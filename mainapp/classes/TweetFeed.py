@@ -799,22 +799,6 @@ class Friends():
         #print result
         return result['friends']['id']
 
-class Invites():
-    def __init__ (self):
-        self.db_object = MongoConnection("localhost",27017,'foodtrade')
-        self.table_name = 'invites'
-        self.db_object.create_table(self.table_name,'username')
-
-    def save_invites(self,doc):
-        return self.db_object.insert_one(self.table_name,doc)
-
-    def check_invitees(self, screen_name):
-        return self.db_object.get_all(self.table_name, {'to':str('@'+screen_name)})
-
-    def check_invited(self, screen_name, user_name):
-        if len(self.db_object.get_all(self.table_name, {'to':str('@'+screen_name), 'from':str(user_name)})) > 0:
-            return True
-        return False
 
 class InviteId():
     def __init__ (self):
@@ -838,6 +822,40 @@ class InviteId():
 
     def change_used_status(self, user_id, invite_id):
         return self.db_object.update(self.table_name,{'_id':ObjectId(invite_id), 'userid':user_id}, {'used':'true'})
+
+class Invites():
+    def __init__ (self):
+        self.db_object = MongoConnection("localhost",27017,'foodtrade')
+        self.table_name = 'invites'
+        self.db_object.create_table(self.table_name,'username')
+
+    def save_invites(self,doc):
+        return self.db_object.insert_one(self.table_name,doc)
+
+    def check_invitees(self, screen_name):
+        return self.db_object.get_all(self.table_name, {'to_screenname':str('@'+ str(screen_name))})
+
+    def check_invited(self, screen_name, user_name):
+        if len(self.db_object.get_all(self.table_name, {'to_screenname':str('@'+ str(screen_name)), 
+            'from_username':str(user_name)})) > 0:
+            return True
+        return False
+
+    def check_invited_by_invite_id(self, screen_name, invite_id):
+        return self.db_object.get_one(self.table_name, {'to_screenname':str('@'+str(screen_name)), 
+            'invite_id':ObjectId(invite_id)})
+
+class InviteAccept():
+    def __init__ (self):
+        self.db_object = MongoConnection("localhost",27017,'foodtrade')
+        self.table_name = 'inviteAccept'
+        self.db_object.create_table(self.table_name,'screen_name') 
+
+    def insert_invite_accept(self, invite_id, invitation_by, invitation_to):
+        result = self.db_object.insert_one(self.table_name, 
+            {'invite_id':ObjectId(invite_id),'to_username':str('@'+str(invitation_to)), 'from_username':invitation_by,
+            'accept_time': time.mktime(datetime.now().timetuple())})
+        return result
 
 class Notification():
     def __init__ (self):
@@ -890,3 +908,4 @@ class Spam():
     def mark_spam(self, spam_by, tweet_id):
         return self.db_object.update_upsert(self.table_name, 
             {'tweet_id':ObjectId(tweet_id)}, {'spam_by':spam_by})  
+
