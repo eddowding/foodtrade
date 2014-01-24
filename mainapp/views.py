@@ -101,10 +101,10 @@ def tweets(request):
         except:
             text = "@" + tweet['user']['screen_name'] + " Thanks! Please confirm your post by clicking this http://fresh.foodtrade.com/?" + tweet['id_str'] + " You'll only have to do this once."
             print text
-            try:
-                bot_twitter.update_status(status = text, in_reply_to_status_id = tweet['id'])
-            except:
-                pass
+            # try:
+            #     bot_twitter.update_status(status = text, in_reply_to_status_id = tweet['id'])
+            # except:
+            #     pass
 
     if len(tweet_list)!=0:
         max_id.max_tweet_id = max(tweet_list)
