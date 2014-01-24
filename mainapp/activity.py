@@ -13,18 +13,10 @@ from geolocation import get_addr_from_ip
 import time
 from classes.DataConnector import UserInfo
 
-consumer_key = 'seqGJEiDVNPxde7jmrk6dQ'
-consumer_secret = 'sI2BsZHPk86SYB7nRtKy0nQpZX3NP5j5dLfcNiP14'
-access_token = ''
-access_token_secret =''
-
-admin_access_token = '2248425234-EgPSi3nDAZ1VXjzRpPGMChkQab5P0V4ZeG1d7KN'
-admin_access_token_secret = 'ST8W9TWqqHpyskMADDSpZ5r9hl7ND6sEfaLvhcqNfk1v4'
-
-
 from django.template import RequestContext
 from mainapp.classes.AjaxHandle import AjaxHandle
 from django.views.decorators.csrf import csrf_exempt
+
 @csrf_exempt
 def home(request):
     parameters = {}
