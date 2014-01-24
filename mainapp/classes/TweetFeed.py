@@ -13,12 +13,22 @@ from django.http import HttpResponse, HttpResponseRedirect
 import json
 from pymongo import Connection
 import re
+from django.conf import settings
+# from mainapp.views import get_twitter_obj
 
-consumer_key = 'seqGJEiDVNPxde7jmrk6dQ'
-consumer_secret = 'sI2BsZHPk86SYB7nRtKy0nQpZX3NP5j5dLfcNiP14'
-access_token = ''
-access_token_secret =''
+ACCESS_TOKEN = ''
+ACCESS_TOKEN_SECRET =''
 
+
+
+
+def get_twitter_obj(token, secret):
+    return Twython(
+        app_key = settings.CONSUMER_KEY,
+        app_secret = settings.CONSUMER_SECRET,
+        oauth_token = token,
+        oauth_token_secret = secret
+        )
 
 import json
 class TweetFeed():
@@ -468,17 +478,12 @@ class TweetFeed():
         
     def get_friends(self, user_id, next_cursor):
         st = SocialToken.objects.get(account__user__id=user_id)
-        access_token = st.token
-        access_token_secret = st.token_secret        
+        ACCESS_TOKEN = st.token
+        ACCESS_TOKEN_SECRET = st.token_secret        
         sa = SocialAccount.objects.get(user__id = user_id)
         screen_name = sa.extra_data['screen_name']
-        twitter = Twython(
-        app_key = consumer_key,
-        app_secret = consumer_secret,
-        oauth_token = access_token,
-        oauth_token_secret = access_token_secret
-        )
-        friends = twitter.get_friends_list(screen_name = screen_name, count=200, cursor = next_cursor)
+        user_twitter = get_twitter_obj(ACCESS_TOKEN, ACCESS_TOKEN_SECRET)
+        friends = user_twitter.get_friends_list(screen_name = screen_name, count=200, cursor = next_cursor)
         return friends
 
     def get_followers(self, twitter_id):
@@ -489,16 +494,11 @@ class TweetFeed():
     
     def follow_user(self, friend_id, my_username, my_id):
         st = SocialToken.objects.get(account__user__id=my_id)
-        access_token = st.token
-        access_token_secret = st.token_secret        
-        twitter = Twython(
-        app_key = consumer_key,
-        app_secret = consumer_secret,
-        oauth_token = access_token,
-        oauth_token_secret = access_token_secret
-        )
+        ACCESS_TOKEN = st.token
+        ACCESS_TOKEN_SECRET = st.token_secret        
+        user_twitter = get_twitter_obj(ACCESS_TOKEN, ACCESS_TOKEN_SECRET)
         try:
-            twitter.create_friendship(user_id = friend_id)
+            user_twitter.create_friendship(user_id = friend_id)
             return {'status':1, 'activity':'follow', '_id':my_id, 'message':'You have successfully followed.'}
         except:
             return {'status':0, 'activity':'follow', '_id':my_id, 'message':'Already Followed'}
@@ -774,7 +774,8 @@ class Friends():
         return all_doc
 
     def get_paginated_friends(self, username, pagenum):
-        friends = self.db_object.get_paginated_values(self.table_name,{'username':str(username)}, pageNumber = int(pagenum))
+        friends = self.db_object.get_paginated_values(self.table_name,
+            {'username':str(username)}, pageNumber = int(pagenum))
         friend_list = []
         for eachFriend in friends:
             invites_obj = Invites()
@@ -833,7 +834,8 @@ class Invites():
         return self.db_object.insert_one(self.table_name,doc)
 
     def check_invitees(self, screen_name):
-        return self.db_object.get_all(self.table_name, {'to_screenname':str('@'+ str(screen_name))})
+        return self.db_object.get_all(self.table_name, 
+            {'to_screenname':str('@'+ str(screen_name))})
 
     def check_invited(self, screen_name, user_name):
         if len(self.db_object.get_all(self.table_name, {'to_screenname':str('@'+ str(screen_name)), 

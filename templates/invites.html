@@ -114,7 +114,7 @@ function invites_handler (data) {
 	data = jQuery.parseJSON(data);
 	if(data['status'] == '1'){
 		invite_id = String(data['new_invite_id']);
-		alert(invite_id);
+		/*alert(invite_id);*/
 		$('#charsRem').html(String(140) + ' characters remaining.');
 		$('#btnSendTweet1').html("Send invites");
 		$('#btnSendTweet2').html("Send invites");			

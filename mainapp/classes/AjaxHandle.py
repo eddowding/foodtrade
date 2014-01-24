@@ -107,7 +107,7 @@ class AjaxHandle(AjaxSearch):
                     for eachInvitee in invitees:
                         #print eachInvitee
                         invite_obj.save_invites({
-                                'to_screename':str(eachInvitee), 
+                                'to_screenname':str(eachInvitee), 
                                 'from_username':str(request.user.username),
                                 'sent_time':str(time.mktime(datetime.datetime.now().timetuple())),
                                 'invite_id':ObjectId(request.POST['invite_id']), 
