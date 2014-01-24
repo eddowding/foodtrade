@@ -31,7 +31,6 @@ urlpatterns = patterns('',
     # url(r'^terms/', 'mainapp.terms.home')
 
     url(r'^invite/$', 'mainapp.views.invite'),
-    url(r'^pricing/', 'mainapp.pricing.home'),
-
-    
+    url(r'^invitation/(?P<invite_id>\w{1,40})/$', 'mainapp.views.handle_invitation_hit', name='handle_invitation_hit'),
+    url(r'^pricing/$', 'mainapp.pricing.home')    
 )

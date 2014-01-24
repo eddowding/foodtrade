@@ -5,7 +5,7 @@ from allauth.socialaccount.models import SocialToken, SocialAccount
 from twython import Twython
 import json
 from django.conf import settings
-from mainapp.classes.TweetFeed import TweetFeed, UserProfile, Friends, TwitterError, Invites
+from mainapp.classes.TweetFeed import TweetFeed, UserProfile, Friends, TwitterError, Invites, InviteId
 from search import search_general
 from streaming import MyStreamer
 from models import MaxTweetId
@@ -17,7 +17,6 @@ import time
 from mainapp.classes.DataConnector import UserInfo
 import pprint
 next_cursor = -1
-
 ACCESS_TOKEN = ''
 ACCESS_TOKEN_SECRET =''
 
@@ -166,6 +165,7 @@ def trends(request):
     return render_to_response('trends.html', parameters, context_instance=RequestContext(request))
 
 def invite(request):
+    page_num = 1
     parameters = {}
     tweetfeed_obj = TweetFeed()
     if not request.user.is_authenticated():
@@ -200,7 +200,8 @@ def invite(request):
                         friends_obj = Friends()
                         count = count + 1
                         for eachFriend in friends['users']:
-                            friends_obj.save_friends({'username':request.user.username,'friends':eachFriend})
+                            friends_obj.save_friends({'username':request.user.username,
+                                'friends':eachFriend})
                         if next_cursor != 0:
                             friends = tweetfeed_obj.get_friends(request.user.id, next_cursor)
                 except:
@@ -208,11 +209,11 @@ def invite(request):
                     twitter_err_obj.save_error({'username':request.user.username, 
                         'next_cursor_str':next_cursor, 'error_solve_stat':'false'})
                 # print "Inside use case 1 get values"
-                friends = friends_obj.get_paginated_friends(request.user.username, 1)
+                friends = friends_obj.get_paginated_friends(request.user.username, page_num)
                 friend_count = friends_obj.get_friends_count(request.user.username)
             else:
                 # print "Inside use case 1 else"
-                friends = friends_obj.get_paginated_friends(request.user.username, 1)
+                friends = friends_obj.get_paginated_friends(request.user.username, page_num)
                 friend_count = friends_obj.get_friends_count(request.user.username)
         else:
             # print "Inside use case 2"
@@ -226,7 +227,8 @@ def invite(request):
                     friends_obj = Friends()
                     count = count + 1
                     for eachFriend in friends['users']:
-                        friends_obj.save_friends({'username':request.user.username,'friends':eachFriend})
+                        friends_obj.save_friends({'username':request.user.username,
+                            'friends':eachFriend})
                     if next_cursor != 0:
                         friends = tweetfeed_obj.get_friends(request.user.id, next_cursor)
             except:
@@ -235,19 +237,46 @@ def invite(request):
                 twitter_err_obj.save_error({'username':request.user.username, 
                     'next_cursor_str':next_cursor, 'error_solve_stat':'false'})
             #print "Inside use case 2 get friends"
-            friends = friends_obj.get_paginated_friends(request.user.username, 1)
+            friends = friends_obj.get_paginated_friends(request.user.username, page_num)
             friend_count = friends_obj.get_friends_count(request.user.username)
     friend_list = []
+
     for eachFriend in friends:
         invites_obj = Invites()
-        if invites_obj.check_invited(eachFriend['friends']['screen_name']) == False:
+        my_name = request.user.username
+        if invites_obj.check_invited(eachFriend['friends']['screen_name'], my_name) == False:
             friend_list.append({'friends':{'screen_name':eachFriend['friends']['screen_name'],
                 'name':eachFriend['friends']['name'], 'profile_image_url':eachFriend['friends']['profile_image_url']}})
+    
+    page_count = int(friend_count/15)+1
+    while (len(friend_list) == 0 and page_num <=page_count):
+        page_num = page_num + 1
+        print page_num, page_count
+        friends = friends_obj.get_paginated_friends(request.user.username, page_num)
+        for eachFriend in friends:
+            invites_obj = Invites()
+            my_name = request.user.username
+            if invites_obj.check_invited(eachFriend['friends']['screen_name'], my_name) == False:
+                friend_list.append({'friends':{'screen_name':eachFriend['friends']['screen_name'],
+                    'name':eachFriend['friends']['name'], 'profile_image_url':eachFriend['friends']['profile_image_url']}})
+
     parameters['friend'] = friend_list
-    parameters['page_count'] = int(friend_count/15)+1
+    parameters['page_count'] = page_count
 
     user_profile_obj = UserProfile()
     userprofile = user_profile_obj.get_profile_by_id(request.user.id)
     parameters['userprofile'] = UserProfile
 
+    invites_obj = InviteId()
+    invite_id = invites_obj.get_unused_id(request.user.id)
+    #print invite_id
+    parameters['invite_id'] = invite_id['uid']['id']
     return render_to_response('invites.html', parameters, context_instance=RequestContext(request))
+
+def handle_invitation_hit(request, invite_id):
+    request.session['invite_id'] = str(invite_id)
+    return HttpResponseRedirect('/accounts/twitter/login/?process=login')
+
+# def my_login(request):
+#     print request.session['invite_id']
+#     return HttpResponse(json.dumps({'invite_id':request.session['invite_id']}))
