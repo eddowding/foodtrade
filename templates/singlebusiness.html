@@ -7,6 +7,8 @@
 {% load account %}
 
 
+{% block ogtype %}{% if userprof.user_type == "Business" %}Business{%endif%}{% if userprof.user_type == "Individual" %}Profile{%endif%}{% if userprof.user_type == "Organisation" %}Group{%endif%}{% endblock %}
+
 {% block titlecontent %}{{userprof.full_name}}{% endblock %}
 {% block fblat %}{{userprof.lat}}{% endblock %}
 {% block fblon %}{{userprof.lon}}{% endblock %}
