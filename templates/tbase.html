@@ -25,10 +25,10 @@
     <meta property="og:url" content="http://{{request.META.HTTP_HOST}}{{request.path}}" />
     <meta property="og:image" content="{% block imageurl %}http://{{request.META.HTTP_HOST}}/static/images/logo.png{% endblock %}" />  
     <meta property="og:title" content="{% block titlecontent %}Home{% endblock %} - FoodTrade" />
-    <meta property="og:latitude" content="{{userinfo.lat}}" />
-    <meta property="og:longitude" content="{{userinfo.lon}}" />
-    <meta property="og:postal-code" content="{{userinfo.zip_code}}" />
-    <meta property="og:country-name" content="{{userinfo.country}}" />
+    <meta property="og:latitude" content="{% block fblat %}{{userinfo.lat}}{% endblock %}" />
+    <meta property="og:longitude" content="{% block fblon %}{{userinfo.lon}}{% endblock %}" />
+    <meta property="og:postal-code" content="{% block fbzipcode %}{{userinfo.zip_code}}{% endblock %}" />
+    <meta property="og:country-name" content="{% block fbcountry %}{{userinfo.country}}{% endblock %}" />
 
     <link rel="shortcut icon" href="http://foodtrade.com/wp-content/uploads/2013/09/favi22.png">
     <title>FoodTrade</title>
