@@ -5,8 +5,7 @@ from allauth.socialaccount.models import SocialToken, SocialAccount
 from django.http import HttpResponse, HttpResponseRedirect
 from classes.Tags import Tags
 from pygeocoder import Geocoder
-import datetime
-import time
+import datetime,time
 
 class SignupForm(forms.Form):
     username = forms.CharField(widget=forms.TextInput(attrs={'placeholder': u'Username',
@@ -28,7 +27,7 @@ class SignupForm(forms.Form):
     lng = forms.CharField(required=False, widget=forms.TextInput(attrs={'placeholder': u'Farm, wholesaler, restaurant, bakery...',
      'class' : 'form-control'}))
 
-    def save(self, user):
+    def save(self, user, request):
         # code to save form fields to mongodb
         # convert zip code to longitude and latitude
         #zip_code = self.cleaned_data['zip_code'] 
@@ -65,6 +64,7 @@ class SignupForm(forms.Form):
         notification_obj = Notification()
         invites_obj = Invites()
         twitter_username = social_account.extra_data['screen_name']
+        invite_id = req
         invitees_for_this_user = invites_obj.check_invitees(twitter_username) 
         now = datetime.datetime.now()
         notification_time  = time.mktime(now.timetuple())
