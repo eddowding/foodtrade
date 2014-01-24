@@ -20,6 +20,7 @@ next_cursor = -1
 ACCESS_TOKEN = ''
 ACCESS_TOKEN_SECRET =''
 
+
 def get_twitter_obj(token, secret):
     return Twython(
         app_key = settings.CONSUMER_KEY,
