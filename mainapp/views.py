@@ -98,7 +98,7 @@ def tweets(request):
             tweet_feed.insert_tweet(data)
             display_tweets.append(data)
         except:
-            text = "@" + tweet['user']['screen_name'] + " Thanks! Please confirm your post by clicking this http://foodtradelite.cloudapp.net/?" + tweet['id_str'] + " You'll only have to do this once."
+            text = "@" + tweet['user']['screen_name'] + " Thanks! Please confirm your post by clicking this http://fresh.foodtrade.com/?" + tweet['id_str'] + " You'll only have to do this once."
             print text
             try:
                 bot_twitter.update_status(status = text, in_reply_to_status_id = tweet['id'])

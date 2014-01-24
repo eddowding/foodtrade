@@ -47,6 +47,7 @@
             
             <!-- if logged in or you've allows html5 browser location -->
             <i class="fa fa-location-arrow" style="margin-left: 20px;"></i> {{distance}} 
+
             <!--  // if logged in or you've allows html5 browser location -->
             <!-- <i class="fa fa-bullseye" style="margin-left: 20px;"></i> 20.1 miles -->
   
@@ -81,10 +82,7 @@
           <div class="row">
             <div class="col-sm-6">
               <a href="#" class="btn btn-block  btn-social btn-facebook" onclick="window.open(
-              'https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent('{{ request.build_absolute_uri }}'),
-              'facebook-share-dialog',
-                    'width=626,height=436,top='+((screen.height - 436) / 2)+',left='+((screen.width - 626)/2 )); 
-                  return false;">
+              'https://www.facebook.com/sharer/sharer.php?s=100&amp;p[url]='+encodeURIComponent('{{ request.build_absolute_uri }}') +'&amp;p[images][0]='+encodeURIComponent('{{pic_url}}')+'&amp;p[title]='+encodeURIComponent('{{name}} on FoodTrade')+'&amp;p[summary]='+encodeURIComponent('Hey, see my profile on FoodTrade')+'&amp;u='+encodeURIComponent('{{ request.build_absolute_uri }}') +'&amp;t='+encodeURIComponent('{{name}} on FoodTrade')+'&amp;display=popup', 'facebook-share-dialog', 'width=626,height=436,top='+((screen.height - 436) / 2)+',left='+((screen.width - 626)/2 )); return false;">
 
                 <i class="fa fa-facebook"></i>  Share on Facebook
               </a>
@@ -123,7 +121,7 @@
           </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
       </div><!-- /.modal -->
-      <div class="icons text-center" style="font-size:25px">
+      <!-- <div class="icons text-center" style="font-size:25px">
         <a href="#"><i class="fa fa-facebook-square"></i></a>
         <a href="#"><i class="fa fa-twitter-square"></i></a> 
         <a href="#"><i class="fa fa-phone-square"></i></a> 
@@ -132,7 +130,7 @@
         <a href="#"><i class="fa fa-globe"></i></a> 
         <a href="#"><i class="fa fa-youtube"></i></a> 
         <a href="#"><i class="fa fa-linkedin-square"></i></a> 
-      </div> 
+      </div>  -->
       
      <!-- modal_contact -->
       <div class="modal fade" id="modal_contact" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">

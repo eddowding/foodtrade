@@ -8,8 +8,8 @@ BOT_ACCESS_TOKEN = '2304652134-1IvED7AvT9vPeSxILY3GmaanySroansD28Sl4n7'
 BOT_ACCESS_TOKEN_SECRET = '9Hb8qd7OQfYDTt4fgl113Xue0hopbFbwkIA94E0X2PZBs'
 
 #new ones of foodtradeHQ  -- to use with daemon.. msg parsing
-HQ_ACCESS_TOKEN = '384361932-tLfbr6U9LsxOQfVrOn6dCGxMS22Hb00PThCVq9gx'
-HQ_ACCESS_TOKEN_SECRET = 'l8IuymnykSCptTcKdDPGckSvlfFRx2UYLvCg3f2LiuRo0'  # read only
+HQ_ACCESS_TOKEN = '384361932-3B8FuUiocDzHtrO8WCePU1BpARf6N6mEiIrgKl1M'
+HQ_ACCESS_TOKEN_SECRET = 'vqKxGltO4o66qXjNODLI1YSgqzl8Dl2l4Dw4SO6JBNFki'
 
 # old ones of my twitter app
 # CONSUMER_KEY = 'seqGJEiDVNPxde7jmrk6dQ'
