@@ -5,6 +5,13 @@
 {% load i18n %}
 {% include "socialaccount/snippets/login_extra.html" %}
 {% load account %}
+
+{% block titlecontent %}{{userprof.full_name}}{% endblock %}
+{% block fblat %}{{userprof.lat}}{% endblock %}
+{% block fblon %}{{userprof.lon}}{% endblock %}
+{% block fbzipcode %}{{userprof.zip_code}}{% endblock %}
+{% block fbcountry %}{{userprof.country}}{% endblock %}
+
 {% block content %}
 <style type="text/css" media="all">
     /* fix rtl for demo */
