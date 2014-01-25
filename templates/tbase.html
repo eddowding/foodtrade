@@ -15,14 +15,9 @@
     <meta name="author" content="FoodTrade">
 
     <meta property="og:site_name" content="FoodTrade" />
-
     <meta property="og:type" content="{% block ogtype %}{% if userinfo.user_type == "Business" %}Business{%endif%}{% if userinfo.user_type == "Individual" %}Profile{%endif%}{% if userinfo.user_type == "Organisation" %}Group{%endif%}{% endblock %}" />
-
-
-
     <meta property="fb:admins" content="732525050" />
     <meta property="fb:app_id" content="1400801613504478" /> 
-
     <meta property="og:url" content="http://{{request.META.HTTP_HOST}}{{request.path}}" />
     <meta property="og:image" content="{% block ogimg %}{{userinfo.profileimg}}{% endblock %}" />  
     <meta property="og:title" content="{% block titlecontent %}Home{% endblock %} - FoodTrade" />
@@ -30,8 +25,8 @@
     <meta property="og:longitude" content="{% block fblon %}{{userinfo.lon}}{% endblock %}" />
     <meta property="og:postal-code" content="{% block fbzipcode %}{{userinfo.zip_code}}{% endblock %}" />
     <meta property="og:country-name" content="{% block fbcountry %}{{userinfo.country}}{% endblock %}" />
-
-    <link rel="shortcut icon" href="http://foodtrade.com/wp-content/uploads/2013/09/favi22.png">
+  
+    <link rel="shortcut icon" href="/static/images/favicon.png">
     <title>FoodTrade</title>
     <!-- CSS -->
     <link href="{% static "css/bootstrap.css" %}" rel="stylesheet">
