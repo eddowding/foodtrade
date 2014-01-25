@@ -17,7 +17,7 @@ from mainapp.profilepage import get_connections, get_all_foods
 from mainapp.views import get_twitter_obj
 import datetime, time
 from bson.objectid import ObjectId
-
+from mainapp.views import calculate_time_ago
 # consumer_key = 'seqGJEiDVNPxde7jmrk6dQ'
 # consumer_secret = 'sI2BsZHPk86SYB7nRtKy0nQpZX3NP5j5dLfcNiP14'
 ACCESS_TOKEN = ''
@@ -478,3 +478,52 @@ class AjaxHandle(AjaxSearch):
             return HttpResponse(json.dumps({'status':'0', 'message':'You are not authorized for this request.'}))
 
 
+    def archive_notification(self,request):
+        #print request.POST
+        notification_id = request.POST['notification_id']
+        notifying_user_name = request.POST['notifying_user_name']
+        if request.user.is_authenticated:
+            notification_obj = Notification()
+            result = notification_obj.change_notification_archived_status(notification_id)
+            return HttpResponse(json.dumps(result))
+        else:
+            return HttpResponse(json.dumps({'status':0, 'message':'You are not authorized for this action.'}))
+    
+    def get_notices_paginated(self, request):
+        page_num = request.POST['pgnum']
+        n_type = request.POST['n_type']
+
+        if request.user.is_authenticated:
+            parameters ={}
+            user_name = request.user.username
+            notices = Notification()
+            if n_type == 'unread':
+                my_notifications = notices.get_notification_unread(user_name, page_number= int(page_num))
+            elif n_type == 'notifications':
+                my_notifications = notices.get_notification_all(user_name, page_number= int(page_num))
+            elif n_type == 'archived' :
+                my_notifications = notices.get_notification_archived(user_name, page_number= int(page_num))
+
+            parameters['archived_notification_count'] = my_notifications['archived_notification_count']
+            parameters['all_notification_count'] = my_notifications['all_notification_count']
+            parameters['unread_notification_count'] = my_notifications['unread_notification_count']
+
+            myNotice = []
+            for eachNotification in my_notifications['notifications']:
+                processed_notice = {}
+                user_profile_obj = UserProfile()
+                notifying_user_profile = user_profile_obj.get_profile_by_username(eachNotification['notifying_user'])
+
+                processed_notice['notification_id'] = eachNotification['uid']['id']
+                processed_notice['notifying_user'] = eachNotification['notifying_user']
+                processed_notice['notification_message'] = eachNotification['notification_message']
+                processed_notice['time_elapsed'] = calculate_time_ago(eachNotification['notification_time'])
+                processed_notice['notifying_user_profile'] = notifying_user_profile
+                processed_notice['notification_view_status'] = eachNotification['notification_view_status']
+                myNotice.append(processed_notice)
+
+            parameters['notifications'] = myNotice
+            print parameters
+            return HttpResponse(json.dumps(parameters))
+        else:
+            return HttpResponse(json.dumps({'status':0, 'message':'You are not authorized for this action.'}))    

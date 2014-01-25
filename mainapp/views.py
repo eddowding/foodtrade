@@ -314,7 +314,7 @@ def notifications(request):
 
     user_name = request.user.username
     notices = Notification()
-    my_notifications = notices.get_notification(user_name)
+    my_notifications = notices.get_notification_unread(user_name,page_number=1)
     parameters['notification_count'] = my_notifications['notification_count']
 
     myNotice = []

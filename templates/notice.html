@@ -38,18 +38,19 @@
   <div class="panel-heading clearfix">
 
   <ul class="list-group">
-    <ul class="nav nav-tabs notice" >
-      <li class="active"><a href="#produce" data-toggle="tab">Notifications <span class="badge">{{notification_count}}</span></a></li>
-    </ul>
+      <ul class="nav nav-tabs">
+          <li><a href="#notifications" data-toggle="tab">Notifications <span class="badge">{{all_notification_count}}</span></a></li>
+          <li class="active"><a href="#unread" data-toggle="tab" onclick="set_width()">Unread <span class="badge">{{unread_notification_count}}</span></a> </li>
+          <li><a href="#archived" data-toggle="tab"> {{archived_notification_count}} <span class="badge">12</span></a></li> 
+      </ul>
 
-    <ul class="list-group-item">
+    <ul class="list-group-item" id="myNoticesLi">
       {% for each_notification in notifications %}
-      <a href="#">
-        <li class="left notice-li list-group-item {% if each_notification.notification_view_status %} notice-transparent {% endif %}"><span class="chat-img pull-left">
+        <li id ="li{{each_notification.notification_id}}" class="left notice-li list-group-item {% if each_notification.notification_view_status %} notice-transparent {% endif %}"><span class="chat-img pull-left">
             <img src="{{each_notification.notifying_user_profile.profile_img}}" />
         </span>
         <div class="header">
-            <strong class="primary-font"><a href="/profile/{{each_notification.notifying_user}}">{{each_notification.notifying_user}}</a></strong> <small class="text-muted">
+            <strong class="primary-font"><a href="/profile/{{each_notification.notifying_user}}">{{each_notification.notifying_user_profile.name}}</a></strong> <small class="text-muted">
             <span class="glyphicon glyphicon-time"></span>{{each_notification.time_elapsed}} ago</small>
             <div class="btn-group pull-right" style="margin-left: 5px;">
               <button type="button" class="btn btn-default dropdown-toggle btn-xs pull-left" data-toggle="dropdown">
@@ -57,9 +58,9 @@
                   <span class="caret text-muted"></span>
               </button> 
               <ul class="dropdown-menu new-ddl" role="menu">
-                <li><a href="#">archive </a></li> 
+                <li><a href="#" onclick="archive_click('{{each_notification.notification_id}}','{{each_notification.notifying_user}}')">archive </a></li> 
                 <li><a href="/profile/{{each_notification.notifying_user}}">view </a></li>
-                <li><a href="#">reply</a></li> 
+                <li><a href="#" onclick="reply_click('{{each_notification.notification_id}}','{{each_notification.notifying_user}}')">reply</a></li> 
                 <li><a href="/profile/{{each_notification.notifying_user}}">view user</a></li>  
  
               </ul>
@@ -69,8 +70,9 @@
            {{each_notification.notification_message}}
         </p>
         </li>
-        </a>
       {% endfor %}  
+      </ul>
+      <ul class="list-group-item">
       <li class="list-group-item clearfix" style="background: #eee;">
         <ul class="pagination pull-left mymargin">
         </ul>   
@@ -80,5 +82,109 @@
   </div>
 </div>
 </div>
+<script src="{% static "js/jquery.js" %}"></script>
+<script type="text/javascript">
+  function reply_click(notifying_user_name, notification_id){
 
+  }
+
+  function archive_click(notification_id, notifying_user_name){
+    ajax_request('archive_notification', 'archive_notification_success', {'notifying_user_name':notifying_user_name, 'notification_id':notification_id});
+  }
+ function archive_notification_success(data){
+    data = jQuery.parseJSON(data);
+    if(data['status'] == 1){
+      $('#li' + String(data['notification_id'])).hide();
+    }
+  }
+var mx_count = 5;
+var mn_count = 0;
+/*var pg_count = {{page_count|safe}};*/
+var pg_count = 10;
+$(document).ready(function(){
+  var str = '<li><a id="notification_page_dec" onclick="update_ul_notification_dec()">&laquo;</a></li>';
+  for (var i =0; i<5; i++){
+    str = str + '<li id=\"pg_'+ String(i+1) +'\"><a id="notification_page_' + String(i+1) + '"onclick="update_ul_notification('+ String(i+1) + ')">' + String(i+1) + '</a></li>';
+  }
+  str = str + '<li><a id="notification_page_inc" onclick="update_ul_notification_inc()">&raquo;</a></li>';
+  $('.pagination').html(str);
+
+});
+
+function update_ul_notification_dec(){
+  if(mn_count !=0 ){
+    $('.pagination').html('');
+    var str = '<li><a id="notification_page_dec" onclick="update_ul_notification_dec()">&laquo;</a></li>';
+    for (var i =mn_count-1; i<mn_count+4; i++){
+      str = str + '<li id=\"pg_'+ String(i+1) +'\"><a id="notification_page_' + String(i+1) + '"onclick="update_ul_notification('+ String(i+1) + ')">' + String(i+1) + '</a></li>';
+    }
+    str = str + '<li><a id="notification_page_inc" onclick="update_ul_notification_inc()">&raquo;</a></li>';
+    $('.pagination').html(str);
+    mn_count = mn_count - 1;
+    mx_count = mx_count - 1;
+  }
+}
+function update_ul_notification_inc(){
+  if(mx_count != pg_count){
+    $('.pagination').html('');
+    var str = '<li><a id="notification_page_dec" onclick="update_ul_notification_dec()">&laquo;</a></li>';
+    for (var i =mn_count+1; i<mn_count+6; i++){
+      str = str + '<li id=\"pg_'+ String(i+1) +'\"><a id="notification_page_' + 
+      String(i+1) + '" onclick="update_ul_notification(' +  
+        String(i+1) + ')">' + String(i+1) + '</a></li>';
+    }
+    str = str + '<li><a id="notification_page_inc" onclick="update_ul_notification_inc()">&raquo;</a></li>';
+    $('.pagination').html(str);
+    mn_count = mn_count + 1;
+    mx_count = mx_count + 1;
+  }
+}
+
+var old = 0;
+function update_ul_notification(cur_page){
+  $('#pg_' +String(old)).removeClass('active');
+  $('#pg_' +String(cur_page)).addClass('active');
+  old = cur_page;
+  ajax_request('get_notices_paginated', 'parse_notices_ajax',{'pgnum':cur_page});
+}
+
+function parse_notices_ajax(data){
+  notices = jQuery.parseJSON(data);
+  /*alert(notices);*/
+  var str ='';
+  $('#myNoticesLi').html('');
+  for (each_notification in notices['notifications']){
+      str = str + '<li id ="li' + String(notices['notifications'][each_notification].notification_id) + '" class="left notice-li list-group-item ';  
+        
+        if (notices['notifications'][each_notification].notification_view_status) {
+          str = str + 'notice-transparent'; 
+        }
+
+        str = str + '"><span class="chat-img pull-left">';
+        str = str + '<img src="' + String(notices['notifications'][each_notification]['notifying_user_profile']['profile_img']) + '"/>';
+        str = str + '</span>';
+        str = str + '<div class="header">';
+        str = str + '<strong class="primary-font"><a href="/profile/' + String(notices['notifications'][each_notification]['notifying_user_profile']['name']) + '">' + String(notices['notifications'][each_notification]['notifying_user']) + '</a></strong> <small class="text-muted">';
+        str = str + '<span class="glyphicon glyphicon-time"></span>' + String(notices['notifications'][each_notification]['time_elapsed']) + ' ago</small> ';
+        str = str + '<div class="btn-group pull-right" style="margin-left: 5px;">';
+        str = str + '<button type="button" class="btn btn-default dropdown-toggle btn-xs pull-left" data-toggle="dropdown">';
+        str = str + '<i class="fa fa-link fa-large text-muted"></i>';
+        str = str + '<span class="caret text-muted"></span>';
+        str = str +  '</button> ';
+        str = str +'<ul class="dropdown-menu new-ddl" role="menu">';
+        str = str + '<li><a href="#" onclick="archive_click(\'' + String(notices['notifications'][each_notification].notification_id) + '\'' + ',\'' + String(notices['notifications'][each_notification].notifying_user)+ '\')">archive </a></li>'; 
+        str = str + '<li><a href="/profile/' + String(notices['notifications'][each_notification].notifying_user) + '">view </a></li>';
+        str = str + '<li><a href="#" onclick="reply_click(' + '\'' + String(notices['notifications'][each_notification].notification_id) + '\',\'' + String(notices['notifications'][each_notification].notifying_user) + '\')">reply</a></li>'; 
+        str = str + '<li><a href="/profile/' + String(notices['notifications'][each_notification].notifying_user) + '">view user</a></li>';
+        str = str +  '</ul>';
+        str = str + '</div>';
+        str = str + '</div>';
+        str = str +'<p>';
+        str = str + String(notices['notifications'][each_notification].notification_message);
+        str = str + '</p>';
+        str = str + '</li>';
+  }
+  $('#myNoticesLi').html(str);
+}
+</script>
 {% endblock %}

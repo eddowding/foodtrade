@@ -877,23 +877,55 @@ class Notification():
         return HttpResponse(json.dumps({'status':1}))
 
     def change_notification_archived_status(self, notification_id):
+        print type(notification_id)
         self.db_object.update_multi(self.table_name, 
-            {'_id':ObjectId(notification_id)}, 
+            {'_id':ObjectId(str(notification_id))}, 
             {'notification_archived_status':'true'})
-        return HttpResponse(json.dumps({'status':1}))
+        return {'status':1, 'activity':'archive', 'notification_id':notification_id, 
+            'message':'Message Archived successfully'}
 
-    def get_notification(self,username):
-        notification_count = self.db_object.get_count(self.table_name,
+    def get_notification_unread(self,username, page_number = 1):
+        all_notification_count = self.db_object.get_count(self.table_name,
+            {'notification_to':username})
+        unread_notification_count = self.db_object.get_count(self.table_name,
             {'notification_to':username, 'notification_view_status':'false'})
+        archived_notification_count = self.db_object.get_count(self.table_name,
+            {'notification_to':username, 'notification_archived_status':'true'})
+
+        return {'archived_notification_count':archived_notification_count, 
+                'all_notification_count':all_notification_count, 
+                'unread_notification_count':unread_notification_count, 
+                'notifications':self.db_object.get_paginated_values(self.table_name,
+                {'notification_to':username,
+                'notification_view_status':'false',
+                'notification_archived_status':'false'},
+                sort_index ='notification_time', pageNumber = page_number)}
+    
+    def get_notification_archived(self,username, page_number = 1):
+        notification_count = self.db_object.get_count(self.table_name,
+            {'notification_to':username, 'notification_archived_status':'true'})
         return {'notification_count':notification_count, 
             'notifications':self.db_object.get_paginated_values(self.table_name,
-            {'notification_to':username,'notification_archived_status':'false'}, 
-            sort_index ='notification_time', pageNumber = 1)}
+            {'notification_to':username,'notification_archived_status':'true'}, 
+            sort_index ='notification_time', pageNumber = page_number)}
+    
+    def get_notification_all(self, username, page_number = 1):
+        notification_count = self.db_object.get_count(self.table_name,
+            {'notification_to':username, 'notification_archived_status':'true'})
+        return {'notification_count':notification_count, 
+            'notifications':self.db_object.get_paginated_values(self.table_name,
+            {'notification_to':username,'notification_archived_status':'true'}, 
+            sort_index ='notification_time', pageNumber = page_number)}
 
     def get_notification_count(self, username):
         notification_count = self.db_object.get_count(self.table_name,
             {'notification_to':username, 'notification_view_status':'false'})
         return notification_count
+
+    def get_archive_count(self, username):
+        notification_count = self.db_object.get_count(self.table_name,
+            {'notification_to':username, 'notification_archived_status':'true'})
+        return notification_count    
 
 
 class TwitterError():
