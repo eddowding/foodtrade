@@ -52,13 +52,18 @@ class SignupForm(forms.Form):
         data = {'useruid': str(user.id), 'sign_up_as': str(self.cleaned_data['sign_up_as']),
         		'type_user': str(self.cleaned_data['type_user']), 
                 'zip_code': str(postal_code),
+                'latlng' : {"type" : "Point", "coordinates" : [float(lon),float(lat)] }
         		'address': address,
                 'latitude': lat,
                 'longitude': lon,
                 'name': social_account.extra_data['name'],
                 'description': social_account.extra_data['description'],
-                'username': social_account.extra_data['screen_name'],
+                'username' : user.username,
+                'twitter_name': social_account.extra_data['screen_name'],
                 'profile_img': social_account.extra_data['profile_image_url']
+                'updates': [],
+                'foods':[],
+                'organisations':[]
         }
         userprofile.create_profile(data)
         

@@ -14,10 +14,6 @@ import json
 from pymongo import Connection
 import re
 
-consumer_key = 'seqGJEiDVNPxde7jmrk6dQ'
-consumer_secret = 'sI2BsZHPk86SYB7nRtKy0nQpZX3NP5j5dLfcNiP14'
-access_token = ''
-access_token_secret =''
 
 
 import json
