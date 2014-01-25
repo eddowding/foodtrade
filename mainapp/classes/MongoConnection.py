@@ -112,6 +112,5 @@ class MongoConnection():
         return json.loads(json_doc)        
 
     def get_count(self, table_name,conditions={}, sort_index='_id'):
-        print conditions
         return self.db[table_name].find(conditions).count()
 

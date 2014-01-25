@@ -1,0 +1,69 @@
+{% extends 'tbase.html' %}
+{% load staticfiles %}
+{% load socialaccount %}
+{% load url from future %}
+{% load i18n %}
+{% include "socialaccount/snippets/login_extra.html" %}
+{% load account %}
+
+{% block content %} 
+<style type="text/css">
+  .notice{
+    margin-top:2%; 
+    height:50px;
+  }
+  .notice-uli{
+    width:68%;
+    margin-left: 16%;
+    margin-right: 16%;
+  }
+  .notice-li{
+   margin-bottom: 2%; 
+   height: 2%;
+  }
+  .notice-transparent{
+    background-color: green;
+    opacity:0.9;
+  }
+
+</style>
+<div class="container-responsive">
+  <div class="row">
+    <ul class="nav nav-tabs notice" >
+      <li class="active"><a href="#produce" data-toggle="tab">Notifications <span class="badge">{{notification_count}}</span></a></li>
+    </ul>
+
+    <ul class="notice-uli">
+      {% for each_notification in notifications %}
+      <a href="#">
+        <li class="left notice-li {% if each_notification.notification_view_status %} notice-transparent {% endif %}"><span class="chat-img pull-left">
+            <img src="{{each_notification.notifying_user_profile.profile_img}}" />
+        </span>
+        <div class="header">
+            <strong class="primary-font"><a href="/profile/{{each_notification.notifying_user}}">{{each_notification.notifying_user}}</a></strong> <small class="text-muted">
+            <span class="glyphicon glyphicon-time"></span>{{each_notification.time_elapsed}} ago</small>
+            <div class="btn-group pull-right" style="margin-left: 5px;">
+              <button type="button" class="btn btn-default dropdown-toggle btn-xs pull-left" data-toggle="dropdown">
+                <i class="fa fa-link fa-large text-muted"></i>
+                  <span class="caret text-muted"></span>
+              </button> 
+              <ul class="dropdown-menu" role="menu">
+                <li><a href="#">archive </a></li> 
+                <li><a href="/profile/{{each_notification.notifying_user}}">view </a></li>
+                <li><a href="#">reply</a></li> 
+                <li><a href="/profile/{{each_notification.notifying_user}}">view user</a></li>  
+ 
+              </ul>
+            </div>
+        </div>
+        <p>
+           {{each_notification.notification_message}}
+        </p>
+        </li>
+        </a>
+      {% endfor %}    
+    </ul>
+  </div>
+</div>
+
+{% endblock %}
