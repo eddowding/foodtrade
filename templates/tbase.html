@@ -158,47 +158,69 @@ background: #eee;
 
                 <li class="visible-md visible-lg"><a href="/pricing">Pricing</a></li> 
 
-                <li class="">
-                  <button data-step="2" data-intro="Post an update from any screen" data-position="left" type="button" class="btn btn-default navbar-btn" id="newpost"  data-toggle="modal" data-target="#newtwitterpost">
-                    <i class="fa fa-edit fa-fw"></i>  
-                  </button> 
-                </li>
 
-                <li id="divNotification" onclick="clear_notification()" class="hidden">
-                  <button  class="btn btn-default navbar-btn  dropdown-toggle margin-notices" data-toggle="dropdown" type="button" class="dropdown-toggle" data-toggle="dropdown">
-                     <i class="fa fa-bell-o" title="Notifications"></i> {{notification.notification_count}} 
-                  </button>
-                  <!-- <a id= "notification" href="#" class="dropdown-toggle" data-toggle="dropdown">
-                  {{notification.notification_count}} <b class="caret"></b></a> -->
-                  <ul id="liNotification" class="dropdown-menu">
-                    <li><a href="#">No notifications.</a></li>
-                  </ul>
-                </li><!-- /btn-group -->
+    <li class="dropdown" data-step="5" data-intro="See what's active">
+ 
+      <a href="#" class="dropdown-toggle visible-md visible-lg" data-toggle="dropdown">
+      Trending
+      </a>
 
-                <li class="dropdown">
+      <ul class="dropdown-menu">
+        <li><a href="#"><h5>Trends this week</h5></a></li>
+          {% for eachVal in userinfo.hashtagsthis %}
+            <li><a href="/activity/?q=%23{{eachVal.uid|slice:"1:"}}&location=++None+&lon=&lat=">{{eachVal.uid}} <span class="badge pull-right">{{eachVal.value|floatformat:"0"}}</span></a></li>
+          {% endfor %}
 
-                <!-- bigger screens --> 
-                <a href="#" class="dropdown-toggle visible-md visible-lg" data-toggle="dropdown" style="padding: 5px">
-                <img class="img-thum bnail  img-round ed" style="  width:40px"  src="{{userinfo.profileimg}}"  /> <b class="caret"></b>
-                </a>
 
-                <!-- smaller screens --> 
-                <a href="#" class="dropdown-toggle visible-sm visible-xs" data-toggle="dropdown" style="padding: 2px;" >
-                <img class="img-thumbnail" style=" width:40px" style="padding: 2px;"  src="{{userinfo.profileimg}}"  />  <b class="caret"></b>
-                </a>
+          <li><a href="#"><h5>Trends this week</h5></a></li>
+          {% for eachVal in userinfo.hashtagsall %}
+            <li><a href="/activity/?q=%23{{eachVal.uid|slice:"1:"}}&location=++None+&lon=&lat=">{{eachVal.uid}} <span class="badge pull-right">{{eachVal.value|floatformat:"0"}}</span></a></li>
+          {% endfor %}
+      </ul>
+    </li>
+  
 
-                    <ul class="dropdown-menu">
-                        <li><a href="/editprofile/{{userinfo.username}}"><i class="fa fa-user fa-fw"></i> Edit profile</a></li>
-                      <!--   <li><a href="/invite/"><i class="fa fa-twitter fa-fw"></i> Invite friends</a></li>
-                        <li><a href="#" id="help"><i class="fa fa-question-circle fa-fw"></i> Help guide</a></li>
-                        <li class="divider"></li> -->
-                        <li>
-                          <a src = "/accounts/logout" onclick="logout()" >
-                        <i class="fa fa-power-off fa-fw"></i> Logout</a></li>
-                    </ul>
-                </li>
-            </ul>  
-          </div>
+      <li class="">
+        <button data-step="2" data-intro="Post an update from any screen" data-position="left" type="button" class="btn btn-default navbar-btn" id="newpost"  data-toggle="modal" data-target="#newtwitterpost">
+          <i class="fa fa-edit fa-fw"></i>  
+        </button> 
+      </li>
+
+      <li id="divNotification" onclick="clear_notification()" class="hidden">
+        <button  class="btn btn-default navbar-btn  dropdown-toggle margin-notices" data-toggle="dropdown" type="button" class="dropdown-toggle" data-toggle="dropdown">
+           <i class="fa fa-bell-o" title="Notifications"></i> {{notification.notification_count}} 
+        </button>
+        <!-- <a id= "notification" href="#" class="dropdown-toggle" data-toggle="dropdown">
+        {{notification.notification_count}} <b class="caret"></b></a> -->
+        <ul id="liNotification" class="dropdown-menu">
+          <li><a href="#">No notifications.</a></li>
+        </ul>
+      </li><!-- /btn-group -->
+
+      <li class="dropdown">
+
+      <!-- bigger screens --> 
+      <a href="#" class="dropdown-toggle visible-md visible-lg" data-toggle="dropdown" style="padding: 5px">
+      <img class="img-thum bnail  img-round ed" style="  width:40px"  src="{{userinfo.profileimg}}"  /> <b class="caret"></b>
+      </a>
+
+      <!-- smaller screens --> 
+      <a href="#" class="dropdown-toggle visible-sm visible-xs" data-toggle="dropdown" style="padding: 2px;" >
+      <img class="img-thumbnail" style=" width:40px" style="padding: 2px;"  src="{{userinfo.profileimg}}"  />  <b class="caret"></b>
+      </a>
+
+          <ul class="dropdown-menu">
+              <li><a href="/editprofile/{{userinfo.username}}"><i class="fa fa-user fa-fw"></i> Edit profile</a></li>
+            <!--   <li><a href="/invite/"><i class="fa fa-twitter fa-fw"></i> Invite friends</a></li>
+              <li><a href="#" id="help"><i class="fa fa-question-circle fa-fw"></i> Help guide</a></li>
+              <li class="divider"></li> -->
+              <li>
+                <a src = "/accounts/logout" onclick="logout()" >
+              <i class="fa fa-power-off fa-fw"></i> Logout</a></li>
+          </ul>
+      </li>
+  </ul>  
+</div>
 
             <script type="text/javascript">
             function logout()
@@ -443,7 +465,7 @@ hidden
     </div><!--sidebar-->
 
     <hr /> 
-    <div data-step="5" data-intro="See what's active">
+    <!-- <div data-step="5" data-intro="See what's active">
       <div id="trendsThisWeek">
           <h5>Trends this week</h5>
           {% for eachVal in userinfo.hashtagsthis %}
@@ -456,7 +478,7 @@ hidden
             <p><a href="/activity/?q=%23{{eachVal.uid|slice:"1:"}}&location=++None+&lon=&lat=">{{eachVal.uid}} <span class="badge pull-right">{{eachVal.value|floatformat:"0"}}</span></a></p>
           {% endfor %}
       </div>
-    </div>
+    </div> -->
 
     {% endif %}
 
@@ -582,7 +604,7 @@ UserVoice.push(['showTab', 'classic_widget', {
   forum_id: 231923,
   tab_label: 'Feedback & Support',
   tab_color: '#66A12B',
-  tab_position: 'bottom-right',
+  tab_position: 'bottom-left',
   tab_inverted: false
 }]);
 </script>
@@ -648,6 +670,10 @@ $(document).ready(function() {
     });
 });
     </script>
+
+<!--Start of Zopim Live Chat Script-->
+<script type="text/javascript">window.$zopim||(function(d,s){var z=$zopim=function(c){z._.push(c)},$=z.s=d.createElement(s),e=d.getElementsByTagName(s)[0];z.set=function(o){z.set._.push(o)};z._=[];z.set._=[];$.async=!0;$.setAttribute('charset','utf-8');$.src='//cdn.zopim.com/?1MlPpsDpWc6md7n2dz3Sp1n9UEpY0Og7';z.t=+new Date;$.type='text/javascript';e.parentNode.insertBefore($,e)})(document,'script');</script><script>$zopim(function(){$zopim.livechat.set({name:'Ed Dowding',email:'ed@foodtrade.com'});});$zopim(function(){})</script><!--End of Zopim Live Chat Script-->
+
     <script type="text/javascript">
       $('.tip').tooltip();
       $('[rel=tooltip]').tooltip();
