@@ -1,5 +1,10 @@
 {% extends 'tbase.html' %}
-{% load staticfiles %}
+{% load staticfiles %} 
+{% load socialaccount %}
+{% load url from future %}
+{% load i18n %}
+{% include "socialaccount/snippets/login_extra.html" %}
+{% load account %}
 
 {% block content %}
 
@@ -34,7 +39,7 @@
 
 <div class="row">
    
-  <div class="col-sm-6 block-vertical">        
+  <div class="col-sm-6 block-vertical text-right">        
     <h1>Find your nearest supplier. </h1>
     <h3>Showcase your stockists and suppliers. </h3>
     <p class="lead">The food system of the 21st century is about trust, responsibility, and resilience. That's why FoodTrade makes it easy to find the foods you love, sold by the people you trust.</p>
@@ -75,7 +80,7 @@
 <div class="row">
    
 
-  <div class="col-sm-6">        
+  <div class="col-sm-6 text-right">        
     <h1>Connecting you to better</h1>
     <h3>Think of us like a dating site.</h3>
     <p class="lead">We connect you directly to the people you want to talk to, never getting in the way for a second. (We'd say something about getting it straight from the horse's mouth, but we wouldn't want to rub it in...)</p>
