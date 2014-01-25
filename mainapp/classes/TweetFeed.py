@@ -870,10 +870,16 @@ class Notification():
     def save_notification(self,doc):
         return self.db_object.insert_one(self.table_name,doc)
 
-    def change_notification_status(self, notification_to):
+    def change_notification_view_status(self, notification_id):
         self.db_object.update_multi(self.table_name, 
-            {'notification_to':str(notification_to)}, 
+            {'_id':ObjectId(notification_id)}, 
             {'notification_view_status':'true'})
+        return HttpResponse(json.dumps({'status':1}))
+
+    def change_notification_archived_status(self, notification_id):
+        self.db_object.update_multi(self.table_name, 
+            {'_id':ObjectId(notification_id)}, 
+            {'notification_archived_status':'true'})
         return HttpResponse(json.dumps({'status':1}))
 
     def get_notification(self,username):
@@ -881,7 +887,8 @@ class Notification():
             {'notification_to':username, 'notification_view_status':'false'})
         return {'notification_count':notification_count, 
             'notifications':self.db_object.get_paginated_values(self.table_name,
-            {'notification_to':username}, sort_index ='notification_time', pageNumber = 1)}
+            {'notification_to':username,'notification_archived_status':'false'}, 
+            sort_index ='notification_time', pageNumber = 1)}
 
     def get_notification_count(self, username):
         notification_count = self.db_object.get_count(self.table_name,
