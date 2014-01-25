@@ -13,16 +13,32 @@ from django.http import HttpResponse, HttpResponseRedirect
 import json
 from pymongo import Connection
 import re
+from django.conf import settings
+# from mainapp.views import get_twitter_obj
+import json
 
+ACCESS_TOKEN = ''
+ACCESS_TOKEN_SECRET =''
 
 
 import json
+
+
+def get_twitter_obj(token, secret):
+    return Twython(
+        app_key = settings.CONSUMER_KEY,
+        app_secret = settings.CONSUMER_SECRET,
+        oauth_token = token,
+        oauth_token_secret = secret
+        )
+
+
 class TweetFeed():
     def __init__ (self):
         self.db_object = MongoConnection("localhost",27017,'foodtrade')
-        self.table_name = 'tweets'
-        self.db_object.create_table(self.table_name,'parent_tweet_id')
-        self.db_object.ensure_index(self.table_name,'location')
+        self.table_name = 'userprofile'
+        self.db_object.create_table(self.table_name,'useruid')
+        self.db_object.ensure_index(self.table_name,'latlng')
     
     def get_tweet_by_id(self,tweet_id):
         return self.db_object.get_one(self.table_name,{'tweet_id':tweet_id, 'deleted':0})
@@ -106,7 +122,7 @@ class TweetFeed():
             full_name = twitter_user.extra_data['name']
             org_list.append(full_name)
 
-        self.db_object.update(self.table_name, {'useruid':str(user_id)}, {'foods':f_list,'type_user':business_types, 'organisations':org_list})
+        self.db_object.update(self.table_name, {'useruid':int(user_id)}, {'foods':f_list,'type_user':business_types, 'organisations':org_list})
         
 
     def get_near_people(self, query):
@@ -464,17 +480,12 @@ class TweetFeed():
         
     def get_friends(self, user_id, next_cursor):
         st = SocialToken.objects.get(account__user__id=user_id)
-        access_token = st.token
-        access_token_secret = st.token_secret        
+        ACCESS_TOKEN = st.token
+        ACCESS_TOKEN_SECRET = st.token_secret        
         sa = SocialAccount.objects.get(user__id = user_id)
         screen_name = sa.extra_data['screen_name']
-        twitter = Twython(
-        app_key = consumer_key,
-        app_secret = consumer_secret,
-        oauth_token = access_token,
-        oauth_token_secret = access_token_secret
-        )
-        friends = twitter.get_friends_list(screen_name = screen_name, count=200, cursor = next_cursor)
+        user_twitter = get_twitter_obj(ACCESS_TOKEN, ACCESS_TOKEN_SECRET)
+        friends = user_twitter.get_friends_list(screen_name = screen_name, count=200, cursor = next_cursor)
         return friends
 
     def get_followers(self, twitter_id):
@@ -485,16 +496,11 @@ class TweetFeed():
     
     def follow_user(self, friend_id, my_username, my_id):
         st = SocialToken.objects.get(account__user__id=my_id)
-        access_token = st.token
-        access_token_secret = st.token_secret        
-        twitter = Twython(
-        app_key = consumer_key,
-        app_secret = consumer_secret,
-        oauth_token = access_token,
-        oauth_token_secret = access_token_secret
-        )
+        ACCESS_TOKEN = st.token
+        ACCESS_TOKEN_SECRET = st.token_secret        
+        user_twitter = get_twitter_obj(ACCESS_TOKEN, ACCESS_TOKEN_SECRET)
         try:
-            twitter.create_friendship(user_id = friend_id)
+            user_twitter.create_friendship(user_id = friend_id)
             return {'status':1, 'activity':'follow', '_id':my_id, 'message':'You have successfully followed.'}
         except:
             return {'status':0, 'activity':'follow', '_id':my_id, 'message':'Already Followed'}
@@ -507,8 +513,10 @@ class UserProfile():
 
   
     def get_profile_by_id(self,user_id):
-        return self.db_object.get_one(self.table_name,{'useruid': user_id})
+        return self.db_object.get_one(self.table_name,{'useruid': int(user_id)})
 
+    def get_profile_by_username(self, username):
+        return self.db_object.get_one(self.table_name,{'username': str(username)})
 
     def get_profile_by_type(self, type_usr):
         return self.db_object.get_all(self.table_name,{'sign_up_as':type_usr})
@@ -521,10 +529,10 @@ class UserProfile():
         #address = Geocoder.geocode(zipcode)
         #print zipcode, address
         return self.db_object.update(self.table_name,
-             {'useruid':str(userid)},
+             {'useruid':int(userid)},
              {'zip_code':str(postal_code),
-             'latitude':str(lat),
-             'longitude':str(lon),
+             'latlng.coordinates.1':float(lat),
+             'latlng.coordinates.0':float(lon),
              'address':str(address),
              'type_user':type_usr,
              'sign_up_as':sign_up_as, 
@@ -770,11 +778,12 @@ class Friends():
         return all_doc
 
     def get_paginated_friends(self, username, pagenum):
-        friends = self.db_object.get_paginated_values(self.table_name,{'username':str(username)}, pageNumber = int(pagenum))
+        friends = self.db_object.get_paginated_values(self.table_name,
+            {'username':str(username)}, pageNumber = int(pagenum))
         friend_list = []
         for eachFriend in friends:
             invites_obj = Invites()
-            if invites_obj.check_invited(eachFriend['friends']['screen_name']) == False:
+            if invites_obj.check_invited(eachFriend['friends']['screen_name'], username) == False:
                 friend_list.append({'friends':{'screen_name':eachFriend['friends']['screen_name'],
                     'name':eachFriend['friends']['name'], 'profile_image_url':eachFriend['friends']['profile_image_url']}})        
         return friend_list
@@ -795,6 +804,30 @@ class Friends():
         #print result
         return result['friends']['id']
 
+
+class InviteId():
+    def __init__ (self):
+        self.db_object = MongoConnection("localhost",27017,'foodtrade')
+        self.table_name = 'inviteid'
+        self.db_object.create_table(self.table_name,'username')
+
+    def create_invites_id(self,doc):
+        return self.db_object.insert_one(self.table_name,doc)
+
+    def get_unused_id(self, user_id):
+        try:
+            if(len(self.db_object.get_one(self.table_name, {'used':'false', 'userid':user_id}))>0):
+                return self.db_object.get_one(self.table_name, {'used':'false', 'userid':user_id})
+            else:
+                self.create_invites_id({'used':'false', 'userid':user_id})
+                return self.db_object.get_one(self.table_name, {'used':'false', 'userid':user_id})
+        except:
+            self.create_invites_id({'used':'false', 'userid':user_id})
+            return self.db_object.get_one(self.table_name, {'used':'false', 'userid':user_id})
+
+    def change_used_status(self, user_id, invite_id):
+        return self.db_object.update(self.table_name,{'_id':ObjectId(invite_id), 'userid':user_id}, {'used':'true'})
+
 class Invites():
     def __init__ (self):
         self.db_object = MongoConnection("localhost",27017,'foodtrade')
@@ -805,12 +838,30 @@ class Invites():
         return self.db_object.insert_one(self.table_name,doc)
 
     def check_invitees(self, screen_name):
-        return self.db_object.get_all(self.table_name, {'to':'@'+screen_name})
+        return self.db_object.get_all(self.table_name, 
+            {'to_screenname':str('@'+ str(screen_name))})
 
-    def check_invited(self, screen_name):
-        if len(self.db_object.get_all(self.table_name, {'to':'@'+screen_name})) > 0:
+    def check_invited(self, screen_name, user_name):
+        if len(self.db_object.get_all(self.table_name, {'to_screenname':str('@'+ str(screen_name)), 
+            'from_username':str(user_name)})) > 0:
             return True
         return False
+
+    def check_invited_by_invite_id(self, screen_name, invite_id):
+        return self.db_object.get_one(self.table_name, {'to_screenname':str('@'+str(screen_name)), 
+            'invite_id':ObjectId(invite_id)})
+
+class InviteAccept():
+    def __init__ (self):
+        self.db_object = MongoConnection("localhost",27017,'foodtrade')
+        self.table_name = 'inviteAccept'
+        self.db_object.create_table(self.table_name,'screen_name') 
+
+    def insert_invite_accept(self, invite_id, invitation_by, invitation_to):
+        result = self.db_object.insert_one(self.table_name, 
+            {'invite_id':ObjectId(invite_id),'to_username':str('@'+str(invitation_to)), 'from_username':invitation_by,
+            'accept_time': time.mktime(datetime.now().timetuple())})
+        return result
 
 class Notification():
     def __init__ (self):
@@ -821,18 +872,30 @@ class Notification():
     def save_notification(self,doc):
         return self.db_object.insert_one(self.table_name,doc)
 
-    def change_notification_status(self, notification_to):
+    def change_notification_view_status(self, notification_id):
         self.db_object.update_multi(self.table_name, 
-            {'notification_to':str(notification_to)}, 
+            {'_id':ObjectId(notification_id)}, 
             {'notification_view_status':'true'})
         return HttpResponse(json.dumps({'status':1}))
 
+    def change_notification_archived_status(self, notification_id):
+        self.db_object.update_multi(self.table_name, 
+            {'_id':ObjectId(notification_id)}, 
+            {'notification_archived_status':'true'})
+        return HttpResponse(json.dumps({'status':1}))
+
     def get_notification(self,username):
-        notification_count = len(self.db_object.get_all_vals(self.table_name,
-            {'notification_to':username, 'notification_view_status':'false'}))
-        return HttpResponse(json.dumps({'notification_count':notification_count, 
-            'notifications':self.db_object.get_all_vals(self.table_name,
-            {'notification_to':username,'notification_view_status':'false'})}))
+        notification_count = self.db_object.get_count(self.table_name,
+            {'notification_to':username, 'notification_view_status':'false'})
+        return {'notification_count':notification_count, 
+            'notifications':self.db_object.get_paginated_values(self.table_name,
+            {'notification_to':username,'notification_archived_status':'false'}, 
+            sort_index ='notification_time', pageNumber = 1)}
+
+    def get_notification_count(self, username):
+        notification_count = self.db_object.get_count(self.table_name,
+            {'notification_to':username, 'notification_view_status':'false'})
+        return notification_count
 
 
 class TwitterError():
@@ -849,6 +912,7 @@ class TwitterError():
 
     def change_error_status(self, screen_name):
         return self.db_object.update(self.table_name, {'username':screen_name}, {'error_solve_stat':'true'})
+
 class Spam():
     def __init__ (self):
         self.db_object = MongoConnection("localhost",27017,'foodtrade')
@@ -862,3 +926,4 @@ class Spam():
     def mark_spam(self, spam_by, tweet_id):
         return self.db_object.update_upsert(self.table_name, 
             {'tweet_id':ObjectId(tweet_id)}, {'spam_by':spam_by})  
+

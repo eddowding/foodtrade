@@ -1,5 +1,6 @@
 <div class="clearfix">
-          <h4>Buyers</h4> 
+          <h4>We buy from <small>these suppliers</small></h4>
+          <hr /> 
            <div class="pull-left" id="buyers-cards">
           {% for each in connections %}
               {% if each.relation == "buyer" or each.relation == "both" %}
@@ -42,7 +43,8 @@
           </div>
 
           <div class="clearfix">
-          <h4>Sellers</h4> 
+          <h4>We sell to <small>these stockists</small></h4> 
+          <hr /> 
            <div class="pull-left" id="seller-cards">
           {% for each in connections %}
               {% if each.relation == "seller" or each.relation == "both" %}

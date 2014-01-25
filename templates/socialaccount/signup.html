@@ -51,7 +51,7 @@
                       <!-- {{ form.as_p }} -->
 
                         <div class="form-group">
-                        <label class="error">{{ form.sign_up_as.errors.as_text }}</label>
+                        
                         <label for="id_sign_up_as" class="col-sm-3 control-label">
                              Sign up as</label>
                             {{form.sign_up_as.as_hidden}}
@@ -69,11 +69,15 @@
                               <input type="radio" name="options" id="option3" onchange="dataradio('Organisation')"> Organisation
                             </label>
                           </div>
+
+                          <label class="error">{{ form.sign_up_as.errors.as_text }}</label>
+                          
                         </div>
+
                         </div>
                             {{form.type_user.as_hidden}}
                     <div class="form-group" id="type_user_id">
-                        <label class="error">{{ form.type_user.errors.as_text }}</label>
+                        
                         <label for="id_type_user" class="col-sm-3 control-label">Type</label>
                         <div class="col-sm-9">
                         <select data-placeholder="Farm, wholesaler, bakery..." style="width:100%;height:30px;" class="chosen-select" multiple>
@@ -86,46 +90,52 @@
                           {% endfor %}
                     {% else %}
                         <option>{{each.node}}</option>
-              {% endif %}
-            </optgroup>
-            {% endfor %}
+                    {% endif %}
+                        </optgroup>
+                        {% endfor %}
 
-          </select>
+                        </select>
 
 
                         </div>
+                        <label class="error">{{ form.type_user.errors.as_text }}</label>
                     </div>
 
                     {{form.lat.as_hidden}}
                     {{form.lng.as_hidden}}
 
                     <div class="form-group">
-                    <label class="error">{{ form.address.errors.as_text }}</label>
                         <label for="id_address" class="col-sm-3 control-label">
                             Address</label>
                         <div class="col-sm-9">
                             {{form.address}}
+                       
+                        {% if form.address.error.as_text %} <label class="error">{( form.address.error.as_text}}</label>{% endif %}
                         </div>
                     </div>
                     <div class="form-group">
+                      <div class="col-sm-12 block-center">
                         <input id="find" type="hidden" value="find" />
-                        <p>Please drag and drop the marker to change your location.</p>
-                        <div class="map_canvas" style="width: 100%;height: 300px; margin-top:3%;"></div>
+                        <p class="small" style="margin:0;">Please drag and drop the marker to change your location.</p>
+                        <div class="map_canvas " style="width: 100%;height: 200px; margin-top:3%;"></div>
                       </div>
+                    </div>
                     <div class="form-group">
-                        <label class="error">{{ form.username.errors.as_text }}</label>
                         <label for="id_username" class="col-sm-3 control-label">
                             Username</label>
                         <div class="col-sm-9">
-                            {{form.username}}
+                          {{form.username}}
+
+                          <label class="error">{{ form.username.errors.as_text }}</label>
                         </div>
                     </div>
                     <div class="form-group">
-                    <label class="error">{{ form.email.errors.as_text }}</label>
                         <label for="id_email" class="col-sm-3 control-label">
                             Email</label>
                         <div class="col-sm-9">
-                            {{form.email}}
+                          {{form.email}}
+
+                          <label class="error">{{ form.email.errors.as_text }}</label>
                         </div>
                     </div>
                                
@@ -134,16 +144,16 @@
                                 {% if redirect_field_value %}
                           <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
                           {% endif %}
-                          <button type="submit" class="btn btn-success btn-sm" onclick="copydata()">
+                          <button type="submit" class="btn btn-success btn-lg" onclick="copydata()">
                                     {% trans "Sign Up" %} &raquo;</button>
-                                     <button type="reset" class="btn btn-default btn-sm">
+                                     <button type="reset" class="btn btn-default">
                                     Reset</button>
                         </div>
                     </div>
                     </form>
                 </div>
                 <div class="panel-footer">
-                    <small>By signing up you agree to the  <a href="/terms" target="blank">terms of use</a> and <a href="/privacy" target="blank">privacy policy</a>.</small>
+                    <p class="small">By signing up you agree to the  <a href="/terms" target="blank">terms of use</a> and <a href="/privacy" target="blank">privacy policy</a>.</p>
                 </div>
             </div>
         </div>

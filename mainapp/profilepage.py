@@ -47,11 +47,11 @@ def display_profile(request, username):
     parameters['profile_id'] = usr.id
     parameters['sign_up_as'] = userprof['sign_up_as']
     parameters['address'] = userprof['address']
-    parameters['type_user'] = userprof['type_user'].split(',')
+    parameters['type_user'] = userprof['type_user']
     parameters['name'] = account.extra_data['name']
     parameters['description'] = account.extra_data['description']
     parameters['pic_url'] = account.extra_data['profile_image_url'].replace("normal","bigger")
-    parameters['loc'] = {'lat':userprof['latitude'], 'lon':userprof['longitude']}
+    parameters['loc'] = {'lat':userprof['latlng']['coordinates'][1], 'lon':userprof['latlng']['coordinates'][0]}
     parameters['email'] = usr.email
     parameters['screen_name'] = "@" + account.extra_data['screen_name']
 
@@ -87,9 +87,10 @@ def display_profile(request, username):
     if request.user.is_authenticated():
         user_id = request.user.id
         user_profile_obj = UserProfile()
+        print user_id
         user_profile = user_profile_obj.get_profile_by_id(str(user_id))
         parameters['loggedin_signupas'] = user_profile['sign_up_as']
-        parameters['loggedin_coord'] = {'lat':user_profile['latitude'], 'lon':user_profile['longitude']}
+        parameters['loggedin_coord'] = {'lat':user_profile['latlng']['coordinates'][1], 'lon':user_profile['latlng']['coordinates'][0]}
         user_info = UserInfo(user_id)
         parameters['userinfo'] = user_info
         parameters['user_id'] = request.user.id
@@ -108,7 +109,7 @@ def display_profile(request, username):
         lat2 = float(str(location_info['latitude']))
 
     lon2, lat2 = float(str(lon2)), float(str(lat2))
-    lon1, lat1 = float(userprof['longitude']),float(userprof['latitude'])
+    lon1, lat1 = float(userprof['latlng']['coordinates'][0]),float(userprof['latlng']['coordinates'][1])
     dis = distance(lon1, lat1, lon2, lat2)
     dis = '%.1f' % (dis * 0.621371)
     parameters['distance'] = dis
@@ -219,12 +220,12 @@ def edit_profile(request, username):
 
         phone = request.POST['phone']
         if sign_up_as == 'Business':
-            usr_type = request.POST['type']
+            usr_type = request.POST['type'].split(",")
         else:
-            usr_type = ''
-        tweetFeedObj = TweetFeed()
-        tweetFeedObj.update_tweets(username, first_name, last_name,
-         description, address, sign_up_as,  lat, lon, usr_type.split(','))
+            usr_type = []
+        # tweetFeedObj = TweetFeed()
+        # tweetFeedObj.update_tweets(username, first_name, last_name,
+        #  description, address, sign_up_as,  lat, lon, usr_type.split(','))
         user_profile_obj = UserProfile()
         user_profile_obj.update_profile(request.user.id, address, 
             usr_type, sign_up_as, phone, lat, lon, postal_code)

@@ -109,7 +109,7 @@
 
           {% if type_user|length == 0 or type_user|first == '' %}
           {% else %}
-          <div class="tags tags-biztype  ">  
+          <div class="tags tags-biztype">  
             {% for tag in result.type_user  %}
                   <a href="/activity/?q={{tag}}">{{tag}}</a>
                   {% endfor %}
@@ -122,11 +122,10 @@
 
               <div class="meta small text-muted">
                <i class="fa fa-map-marker"></i>
-                {{result.user.place}}
+                {{result.user.address}}
 
                  <!-- if logged in or you've allows html5 browser location -->
-
-                 <a href="http://maps.google.com/maps?saddr=current+location&daddr={{result.user.place}}" 
+                 <a href="http://maps.google.com/maps?saddr={{userinfo.lat}},{{userinfo.lon}}&daddr={{result.location.coordinates.1}},{{result.location.coordinates.0}}" 
                     target="_blank" data-placement="top" data-toggle="tooltip" 
                     class="text-muted" 
                     title="Get directions"> 

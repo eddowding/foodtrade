@@ -34,6 +34,9 @@ class SignupView(RedirectAuthenticatedUserMixin, CloseableSignupMixin,
     def get_form_kwargs(self):
         ret = super(SignupView, self).get_form_kwargs()
         ret['sociallogin'] = self.sociallogin
+        ret.update({
+            'request': self.request
+            })
         return ret
 
     def form_valid(self, form):

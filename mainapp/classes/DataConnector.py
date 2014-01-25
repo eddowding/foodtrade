@@ -76,15 +76,12 @@ class UserInfo():
         twitter_user = SocialAccount.objects.get(user__id = user_id)
         user_profile = UserProfile()
         userprof = user_profile.get_profile_by_id(str(user_id))
-        self.lon = userprof['longitude']
-        self.lat = userprof['latitude']
+        self.lon = userprof['latlng']['coordinates'][0]
+        self.lat = userprof['latlng']['coordinates'][1]
         self.user_type = userprof['sign_up_as']
         self.zip_code = userprof['zip_code']
         self.address = userprof['address']
         self.type = userprof['type_user']
-        from pygeocoder import Geocoder
-        geo_loc = Geocoder.geocode(self.zip_code)
-        self.country = geo_loc.country
 
         user_connection =  UserConnections(user_id)
 

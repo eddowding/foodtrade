@@ -5,7 +5,7 @@ from allauth.socialaccount.models import SocialToken, SocialAccount
 from twython import Twython
 import json
 from django.conf import settings
-from mainapp.classes.TweetFeed import TweetFeed, UserProfile, Friends, TwitterError, Invites
+from mainapp.classes.TweetFeed import TweetFeed, UserProfile, Friends, TwitterError, Invites, InviteId, Notification
 from search import search_general
 from streaming import MyStreamer
 from models import MaxTweetId
@@ -17,9 +17,26 @@ import time
 from mainapp.classes.DataConnector import UserInfo
 import pprint
 next_cursor = -1
-
 ACCESS_TOKEN = ''
 ACCESS_TOKEN_SECRET =''
+
+def calculate_time_ago(calc_time):
+    time_elapsed = int(time.time()) - calc_time
+    if time_elapsed<60:
+        time_text = str(time_elapsed) + 'seconds'
+    elif time_elapsed < 3600:
+        minutes = time_elapsed/60
+        time_text = str(int(minutes)) + 'minutes'
+    elif time_elapsed < 3600*24:
+        hours = time_elapsed/3600
+        time_text = str(int(hours)) + 'hours'
+    elif time_elapsed < 3600*24*365:
+        days = time_elapsed/3600/24
+        time_text = str(int(days)) + 'days'
+    else:
+        years = time_elapsed/3600/24/365
+        time_text = str(int(years)) + 'years'
+    return time_text
 
 def get_twitter_obj(token, secret):
     return Twython(
@@ -99,12 +116,12 @@ def tweets(request):
             tweet_feed.insert_tweet(data)
             display_tweets.append(data)
         except:
-            text = "@" + tweet['user']['screen_name'] + " Thanks! Please confirm your post by clicking this http://foodtradelite.cloudapp.net/?" + tweet['id_str'] + " You'll only have to do this once."
+            text = "@" + tweet['user']['screen_name'] + " Thanks! Please confirm your post by clicking this http://fresh.foodtrade.com/?" + tweet['id_str'] + " You'll only have to do this once."
             print text
-            try:
-                bot_twitter.update_status(status = text, in_reply_to_status_id = tweet['id'])
-            except:
-                pass
+            # try:
+            #     bot_twitter.update_status(status = text, in_reply_to_status_id = tweet['id'])
+            # except:
+            #     pass
 
     if len(tweet_list)!=0:
         max_id.max_tweet_id = max(tweet_list)
@@ -166,6 +183,7 @@ def trends(request):
     return render_to_response('trends.html', parameters, context_instance=RequestContext(request))
 
 def invite(request):
+    page_num = 1
     parameters = {}
     tweetfeed_obj = TweetFeed()
     if not request.user.is_authenticated():
@@ -200,7 +218,8 @@ def invite(request):
                         friends_obj = Friends()
                         count = count + 1
                         for eachFriend in friends['users']:
-                            friends_obj.save_friends({'username':request.user.username,'friends':eachFriend})
+                            friends_obj.save_friends({'username':request.user.username,
+                                'friends':eachFriend})
                         if next_cursor != 0:
                             friends = tweetfeed_obj.get_friends(request.user.id, next_cursor)
                 except:
@@ -208,11 +227,11 @@ def invite(request):
                     twitter_err_obj.save_error({'username':request.user.username, 
                         'next_cursor_str':next_cursor, 'error_solve_stat':'false'})
                 # print "Inside use case 1 get values"
-                friends = friends_obj.get_paginated_friends(request.user.username, 1)
+                friends = friends_obj.get_paginated_friends(request.user.username, page_num)
                 friend_count = friends_obj.get_friends_count(request.user.username)
             else:
                 # print "Inside use case 1 else"
-                friends = friends_obj.get_paginated_friends(request.user.username, 1)
+                friends = friends_obj.get_paginated_friends(request.user.username, page_num)
                 friend_count = friends_obj.get_friends_count(request.user.username)
         else:
             # print "Inside use case 2"
@@ -226,7 +245,8 @@ def invite(request):
                     friends_obj = Friends()
                     count = count + 1
                     for eachFriend in friends['users']:
-                        friends_obj.save_friends({'username':request.user.username,'friends':eachFriend})
+                        friends_obj.save_friends({'username':request.user.username,
+                            'friends':eachFriend})
                     if next_cursor != 0:
                         friends = tweetfeed_obj.get_friends(request.user.id, next_cursor)
             except:
@@ -235,19 +255,81 @@ def invite(request):
                 twitter_err_obj.save_error({'username':request.user.username, 
                     'next_cursor_str':next_cursor, 'error_solve_stat':'false'})
             #print "Inside use case 2 get friends"
-            friends = friends_obj.get_paginated_friends(request.user.username, 1)
+            friends = friends_obj.get_paginated_friends(request.user.username, page_num)
             friend_count = friends_obj.get_friends_count(request.user.username)
     friend_list = []
+
     for eachFriend in friends:
         invites_obj = Invites()
-        if invites_obj.check_invited(eachFriend['friends']['screen_name']) == False:
+        my_name = request.user.username
+        if invites_obj.check_invited(eachFriend['friends']['screen_name'], my_name) == False:
             friend_list.append({'friends':{'screen_name':eachFriend['friends']['screen_name'],
                 'name':eachFriend['friends']['name'], 'profile_image_url':eachFriend['friends']['profile_image_url']}})
+    
+    page_count = int(friend_count/15)+1
+    while (len(friend_list) == 0 and page_num <=page_count):
+        page_num = page_num + 1
+        print page_num, page_count
+        friends = friends_obj.get_paginated_friends(request.user.username, page_num)
+        for eachFriend in friends:
+            invites_obj = Invites()
+            my_name = request.user.username
+            if invites_obj.check_invited(eachFriend['friends']['screen_name'], my_name) == False:
+                friend_list.append({'friends':{'screen_name':eachFriend['friends']['screen_name'],
+                    'name':eachFriend['friends']['name'], 'profile_image_url':eachFriend['friends']['profile_image_url']}})
+
     parameters['friend'] = friend_list
-    parameters['page_count'] = int(friend_count/15)+1
+    parameters['page_count'] = page_count
 
     user_profile_obj = UserProfile()
     userprofile = user_profile_obj.get_profile_by_id(request.user.id)
-    parameters['userprofile'] = UserProfile
+    parameters['userprofile'] = userprofile
 
+    invites_obj = InviteId()
+    invite_id = invites_obj.get_unused_id(request.user.id)
+    #print invite_id
+    parameters['invite_id'] = invite_id['uid']['id']
     return render_to_response('invites.html', parameters, context_instance=RequestContext(request))
+
+def handle_invitation_hit(request, invite_id):
+    request.session['invite_id'] = str(invite_id)
+    return HttpResponseRedirect('/accounts/twitter/login/?process=login')
+
+def notifications(request):
+    parameters = {}
+
+    if request.user.is_authenticated():        
+        user_id = request.user.id
+        user_profile_obj = UserProfile()
+        user_profile = user_profile_obj.get_profile_by_id(str(user_id))
+        user_info = UserInfo(user_id)
+        parameters['userinfo'] = user_info
+        parameters['user_id'] = request.user.id
+
+        user_profile_obj = UserProfile()
+        userprofile = user_profile_obj.get_profile_by_id(request.user.id)
+        parameters['userprofile'] = UserProfile
+    else:
+        return HttpResponseRedirect('/')
+
+    user_name = request.user.username
+    notices = Notification()
+    my_notifications = notices.get_notification(user_name)
+    parameters['notification_count'] = my_notifications['notification_count']
+
+    myNotice = []
+    for eachNotification in my_notifications['notifications']:
+        processed_notice = {}
+        user_profile_obj = UserProfile()
+        notifying_user_profile = user_profile_obj.get_profile_by_username(eachNotification['notifying_user'])
+
+        processed_notice['notification_id'] = eachNotification['uid']['id']
+        processed_notice['notifying_user'] = eachNotification['notifying_user']
+        processed_notice['notification_message'] = eachNotification['notification_message']
+        processed_notice['time_elapsed'] = calculate_time_ago(eachNotification['notification_time'])
+        processed_notice['notifying_user_profile'] = notifying_user_profile
+        processed_notice['notification_view_status'] = eachNotification['notification_view_status']
+        myNotice.append(processed_notice)
+    parameters['notifications'] = myNotice
+    return render_to_response('notice.html', parameters, context_instance=RequestContext(request))
+

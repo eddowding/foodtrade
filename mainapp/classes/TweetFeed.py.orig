@@ -6,20 +6,35 @@ from pygeocoder import Geocoder
 from bson.code import Code
 from bson import BSON
 from bson import json_util
-<<<<<<< HEAD
+
 from twython import Twython
 from allauth.socialaccount.models import SocialToken, SocialAccount
+from django.http import HttpResponse, HttpResponseRedirect
 import json
 from pymongo import Connection
-
-consumer_key = 'seqGJEiDVNPxde7jmrk6dQ'
-consumer_secret = 'sI2BsZHPk86SYB7nRtKy0nQpZX3NP5j5dLfcNiP14'
-access_token = ''
-access_token_secret =''
-=======
->>>>>>> 7a815459166f619374bf3232b71c97d6e3f583bd
-
+import re
+from django.conf import settings
+# from mainapp.views import get_twitter_obj
 import json
+
+<<<<<<< HEAD
+=======
+ACCESS_TOKEN = ''
+ACCESS_TOKEN_SECRET =''
+
+
+
+
+def get_twitter_obj(token, secret):
+    return Twython(
+        app_key = settings.CONSUMER_KEY,
+        app_secret = settings.CONSUMER_SECRET,
+        oauth_token = token,
+        oauth_token_secret = secret
+        )
+>>>>>>> 45583c7396ff5668f8a3a530f5eb0732d786585f
+
+
 class TweetFeed():
     def __init__ (self):
         self.db_object = MongoConnection("localhost",27017,'foodtrade')
@@ -37,7 +52,7 @@ class TweetFeed():
         self.db_object.update(self.table_name,{'_id':ObjectId(tweet_id)}, {'deleted':1})
 
     def get_tweet_by_user_id(self, user_id):
-        return self.db_object.get_all(self.table_name,{'user_id':tweet_id, 'deleted':0}, 'time_stamp')
+        return self.db_object.get_all(self.table_name,{'useruid':user_id, 'deleted':0}, 'time_stamp')
 
     def search_tweets(self, query):
         return self.db_object.get_all(self.table_name, query, 'time_stamp')
@@ -53,12 +68,14 @@ class TweetFeed():
     def get_trending_hashtags(self, start_time_stamp, end_time_stamp):
         mapper = Code("""
             function () {
-             items = this.status.split(' ');
-             for(i=0;i<items.length;i++){ 
-                if(items[i].indexOf('#')!=0){
-                        emit(items[i], 1); 
-                        }
-                    }
+            if(this.deleted != 1){
+                     items = this.status.split(' ');
+                     for(i=0;i<items.length;i++){ 
+                        if(items[i].indexOf('#')==0){
+                                emit(items[i], 1); 
+                                }
+                            }
+                }
             }
             """)
 
@@ -68,55 +85,130 @@ class TweetFeed():
              for (var i =0; i<values.length; i++){
                     sum = sum + parseInt(values[i]);
              }
-             return sum;
+             return parseInt(sum);
             }
             """)
-        return self.db_object.map_reduce(self.table_name, mapper, reducer, query = { 'time_stamp':{'$gte': start_time_stamp,'$lte': end_time_stamp}})
-        
+        if start_time_stamp=="" and end_time_stamp =="":
+            result = self.db_object.map_reduce(self.table_name, mapper, reducer, query = {})[0:10]
+        else:
+            result = self.db_object.map_reduce(self.table_name, mapper, reducer, 
+                query = { 'time_stamp':{'$gte': start_time_stamp,'$lte': end_time_stamp}})[0:10]
+        #print result
+        return result
 
     def aggregrate(self, conditions):
         return self.db_object.aggregrate_all(self.table_name,conditions)
 
+    def update_data(self,user_id):
+        user_data = self.db_object.get_all(self.table_name,{'useruid':str(user_id), 'deleted':0}, 'time_stamp')
+        if len(user_data)==0:
+            return 
+
+        food = Food()
+        f_results = food.get_foods_by_userid(user_id)
+        f_list = []
+        for f in f_results:
+            f_list.append(f['food_name'])
+        business = UserProfile()
+
+        business_types_str = business.get_profile_by_id(str(user_id))['type_user']
+        print business_types_str
+        business_types = business_types_str.split(',')
+
+        orgn = Organisation()
+        organisations = orgn.get_organisations_by_mem_id(user_id)
+        org_list = []
+        for org in organisations:
+            twitter_user = SocialAccount.objects.get(user__id = org['orguid'])
+            
+            full_name = twitter_user.extra_data['name']
+            org_list.append(full_name)
+
+        self.db_object.update(self.table_name, {'useruid':str(user_id)}, {'foods':f_list,'type_user':business_types, 'organisations':org_list})
+        
+
     def get_near_people(self, query):
         return self.db_object.get_distinct(self.table_name,'user.username',query)['count']
 
-    def get_search_results(self, keyword, lon, lat, food_filter, type_filter, organisation_filter, query):
+    def get_search_results(self, keyword, lon, lat, food_filter, type_filter, organisation_filter, query,sort):
         mapper = Code("""
             function () {
+            if(this.deleted==0)
+            {
+            if(this.foods)
+            {
             var foods = this.foods;
+            }
+            else
+            {
+            var foods = [];
+            }
+            if(this.type_user)
+            {
             var user_types = this.type_user;
-            var filtered = true;
+            }
+            else
+            {
+            var user_types = [];
+            }
+
+
+             if(this.organisations)
+            {
+            var organisations = this.organisations;
+            }
+            else
+            {
+            var organisations = [];
+            }
+            
+            
+            var filtered = false;
             var food_filter = """+json.dumps(food_filter)+""";
             var type_filter = """+json.dumps(type_filter)+""";
             var organisation_filter = """+json.dumps(organisation_filter)+""";
-            for(var i=0;i<food_filter.length && filtered;i++)
-            {
-                if(foods.indexOf(food_filter[i])<0)
+            var food_filtered = true;
+            var filtered = false;
+            for(var i=0;i<food_filter.length;i++)
+            {   
+                if(foods.indexOf(food_filter[i])==-1)
                 {
-                    filtered = false;
+
+                    food_filtered = false;
+                    break;
+                   
                 }
             }
-            
-            for(var i=0;i<type_filter.length && filtered;i++)
+            var business_filtered = true;
+            for(var i=0;i<type_filter.length; i++)
             {
-                if(user_types.indexOf(type_filter[i])<0)
+                if(user_types.indexOf(type_filter[i])==-1)
                 {
-                    filtered = false;
+                    business_filtered = false;
+                    break;
+                    
                 }
+
             }
 
+            var organisation_filtered = true;
 
-
-            for(var i=0;i<organisation_filter.length && filtered;i++)
+            for(var i=0;i<organisation_filter.length;i++)
             {
-                if(user_types.indexOf(organisation_filter[i])<0)
+                if(organisations.indexOf(organisation_filter[i])==-1)
                 {
-                    filtered = false;
+                   organisation_filtered = false;
+                   
+                   break;
                 }
             }
-
+            if(organisation_filtered && business_filtered && food_filtered)
+            {
+                filtered = true;
+            }
             var flag = true;
             var keyword = '"""+keyword+"""';
+            keyword = keyword.toLowerCase();
 
             if(keyword != '')
             {
@@ -126,7 +218,7 @@ class TweetFeed():
                 scope_string = foods.join();
                 scope_string += user_types.join();
                 }
-                scope_string += this.user.username;
+                scope_string += this.user.username.lower;
                 scope_string += this.user.name;
                 scope_string += this.sign_up_as;
                 scope_string += this.status;
@@ -157,11 +249,13 @@ class TweetFeed():
                 ; 
               var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
               var d = R * c; // Distance in km
-              emit(this._id, d);
+              var ret_value =
+              emit(this._id, {distance:d, time: this.time_stamp});
               }
                            
 
 
+            }
             }
             """)
 
@@ -171,7 +265,7 @@ class TweetFeed():
              return values[0];
             }
             """)
-        return self.db_object.map_reduce(self.table_name, mapper, reducer, query, 1)
+        return self.db_object.map_reduce_search(self.table_name, mapper, reducer, query, sort)
         
 
     def get_all_foods(self, keyword, lon, lat, food_filter, type_filter, organisation_filter, query):
@@ -180,120 +274,12 @@ class TweetFeed():
             var foods = this.foods;
             var user_types = this.type_user;
             var filtered = true;
-            var food_filter = """+json.dumps(food_filter)+""";
-            var type_filter = """+json.dumps(type_filter)+""";
-            var organisation_filter = """+json.dumps(organisation_filter)+""";
-            for(var i=0;i<food_filter.length && filtered;i++)
-            {
-                if(foods.indexOf(food_filter[i])<0)
-                {
-                    filtered = false;
-                }
-            }
+
             
-            for(var i=0;i<type_filter.length && filtered;i++)
-            {
-                if(user_types.indexOf(type_filter[i])<0)
-                {
-                    filtered = false;
-                }
-            }
-
-
-
-            for(var i=0;i<organisation_filter.length && filtered;i++)
-            {
-                if(user_types.indexOf(organisation_filter[i])<0)
-                {
-                    filtered = false;
-                }
-            }
 
             var flag = true;
             var keyword = '"""+keyword+"""';
-
-            if(keyword != '')
-            {
-                flag = false;
-                var scope_string ='';
-                
-                scope_string += this.user.username;
-                scope_string += this.user.name;
-                scope_string += this.sign_up_as;
-                scope_string += this.status;
-                scope_string += this.user.description;
-                scope_string = scope_string.toLowerCase();
-               
-               if(scope_string.indexOf(keyword.toLowerCase()) !=-1)
-               {
-                     
-                    flag = true;
-
-                }
-               }
-
-               if(filtered && flag)
-               {
-               for(var i =0; i<foods.length;i++)
-               {
-                    emit(foods[i], 1);
-               }
-               
-              }
-                           
-
-
-            }
-            """)
-
-        reducer = Code("""
-            function (key, values) { 
-            var  sum = 0
-             for(var i=0;i<values.length;i++)
-             { sum += 1;}
-             return sum;
-            }
-            """)
-        return self.db_object.map_reduce(self.table_name, mapper, reducer, query, 1)
-
-
-    def get_all_foods(self, keyword, lon, lat, food_filter, type_filter, organisation_filter, query):
-        mapper = Code("""
-            function () {
-            var foods = this.foods;
-            var user_types = this.type_user;
-            var filtered = true;
-            var food_filter = """+json.dumps(food_filter)+""";
-            var type_filter = """+json.dumps(type_filter)+""";
-            var organisation_filter = """+json.dumps(organisation_filter)+""";
-            for(var i=0;i<food_filter.length && filtered;i++)
-            {
-                if(foods.indexOf(food_filter[i])<0)
-                {
-                    filtered = false;
-                }
-            }
-            
-            for(var i=0;i<type_filter.length && filtered;i++)
-            {
-                if(user_types.indexOf(type_filter[i])<0)
-                {
-                    filtered = false;
-                }
-            }
-
-
-
-            for(var i=0;i<organisation_filter.length && filtered;i++)
-            {
-                if(user_types.indexOf(organisation_filter[i])<0)
-                {
-                    filtered = false;
-                }
-            }
-
-            var flag = true;
-            var keyword = '"""+keyword+"""';
+            keyword = keyword.toLowerCase();
 
             if(keyword != '')
             {
@@ -319,7 +305,14 @@ class TweetFeed():
                {
                for(var i =0; i<foods.length;i++)
                {
-                    emit(foods[i], 1);
+                var food_item = foods[i].trim();
+                if(food_item.length>0)
+                {
+                    emit(food_item, 1);
+                }
+
+
+
                }
                
               }
@@ -337,67 +330,306 @@ class TweetFeed():
              return sum;
             }
             """)
-        return self.db_object.map_reduce(self.table_name, mapper, reducer, query, 1)
+        return self.db_object.map_reduce(self.table_name, mapper, reducer, query, -1, 200)
 
-    def update_tweets(self, username, first_name, last_name, description, zip_code):
-        try:
-            results = Geocoder.geocode(zip_code)
-            lon = results[0].longitude
-            lat = results[0].latitude
-        except:
-            results = Geocoder.geocode('sp5 1nr')
-            lon = results[0].longitude
-            lat = results[0].latitude
+    def get_all_businesses(self, keyword, lon, lat, food_filter, type_filter, organisation_filter, query):
+        mapper = Code("""
+            function () {
+            var foods = this.foods;
+            var user_types = this.type_user;
+            var filtered = true;
+            
 
+            var flag = true;
+            var keyword = '"""+keyword+"""';
+            keyword = keyword.toLowerCase();
+
+            if(keyword != '')
+            {
+                flag = false;
+                var scope_string ='';
+                
+                scope_string += this.user.username;
+                scope_string += this.user.name;
+                scope_string += this.sign_up_as;
+                scope_string += this.status;
+                scope_string += this.user.description;
+                scope_string = scope_string.toLowerCase();
+               
+               if(scope_string.indexOf(keyword.toLowerCase()) !=-1)
+               {
+                     
+                    flag = true;
+
+                }
+               }
+
+               if(filtered && flag && user_types)
+               {
+               for(var i =0; i<user_types.length;i++)
+               {
+               var type_item = user_types[i].trim();
+               if(type_item.length>0)
+               {
+                    emit(user_types[i], 1);
+               }
+               }
+               
+              }
+                           
+
+
+            }
+            """)
+
+        reducer = Code("""
+            function (key, values) { 
+            var  sum = 0
+             for(var i=0;i<values.length;i++)
+             { sum += 1;}
+             return sum;
+            }
+            """)
+        return self.db_object.map_reduce(self.table_name, mapper, reducer, query, -1, 200)
+
+    def get_all_organisations(self, keyword, lon, lat, food_filter, type_filter, organisation_filter, query):
+        mapper = Code("""
+            function () {
+            var foods = this.foods;
+            var user_types = this.type_user;
+            var filtered = true;
+            var organisations = this.organisations;
+            
+
+            var flag = true;
+            var keyword = '"""+keyword+"""';
+            keyword = keyword.toLowerCase();
+
+            if(keyword != '')
+            {
+                flag = false;
+                var scope_string ='';
+                
+                scope_string += this.user.username;
+                scope_string += this.user.name;
+                scope_string += this.sign_up_as;
+                scope_string += this.status;
+                scope_string += this.user.description;
+                scope_string = scope_string.toLowerCase();
+               
+               if(scope_string.indexOf(keyword.toLowerCase()) !=-1)
+               {
+                     
+                    flag = true;
+
+                }
+               }
+
+               if(filtered && flag && organisations)
+               {
+               for(var i =0; i<organisations.length;i++)
+               {
+
+               var org_item = organisations[i].trim();
+               if(org_item.length>0)
+               {
+                    emit(organisations[i], 1);
+               }
+               }
+               
+              }
+                     
+            }
+            """)
+
+        reducer = Code("""
+            function (key, values) { 
+            var  sum = 0
+             for(var i=0;i<values.length;i++)
+             { sum += 1;}
+             return sum;
+            }
+            """)
+        return self.db_object.map_reduce(self.table_name, mapper, reducer, query, -1, 200)
+
+
+
+    def update_tweets(self, username, first_name, last_name, description, address, sign_up_as,  lat, lon,type_user=[]):
+        # try:
+        #     results = Geocoder.geocode(zip_code)
+        #     #print str(results), zip_code
+        #     lon = results.longitude
+        #     lat = results.latitude
+        #     #print lon, lat
+        # except:
+        #     results = Geocoder.geocode('sp5 1nr')
+        #     lon = results.longitude
+        #     lat = results.latitude
+        results = address
         return self.db_object.update(self.table_name,
             {'user.username':username}, 
             {
                 'user.name':str(first_name + ' ' + last_name),
-                'user.Description':description, 
-                'location.coordinates':[lat, lon]
+                'user.description':description,
+                'user.place' :str(results),
+                # 'user.location' :str(results),
+                'location.coordinates.0':float(lon),
+                'location.coordinates.1':float(lat),
+                'sign_up_as':str(sign_up_as),
+                'type_user':type_user
             })
-<<<<<<< HEAD
+
         
     def get_friends(self, user_id, next_cursor):
         st = SocialToken.objects.get(account__user__id=user_id)
-        access_token = st.token
-        access_token_secret = st.token_secret        
+        ACCESS_TOKEN = st.token
+        ACCESS_TOKEN_SECRET = st.token_secret        
         sa = SocialAccount.objects.get(user__id = user_id)
         screen_name = sa.extra_data['screen_name']
-        twitter = Twython(
-        app_key = consumer_key,
-        app_secret = consumer_secret,
-        oauth_token = access_token,
-        oauth_token_secret = access_token_secret
-        )
-        friends = twitter.get_friends_list(screen_name = screen_name, count=200, cursor = next_cursor)
+        user_twitter = get_twitter_obj(ACCESS_TOKEN, ACCESS_TOKEN_SECRET)
+        friends = user_twitter.get_friends_list(screen_name = screen_name, count=200, cursor = next_cursor)
         return friends
-=======
+
     def get_followers(self, twitter_id):
         pass
->>>>>>> 7a815459166f619374bf3232b71c97d6e3f583bd
+        
+    def get_user_tweets_latest(self, user_id):
+        pass
+    
+    def follow_user(self, friend_id, my_username, my_id):
+        st = SocialToken.objects.get(account__user__id=my_id)
+        ACCESS_TOKEN = st.token
+        ACCESS_TOKEN_SECRET = st.token_secret        
+        user_twitter = get_twitter_obj(ACCESS_TOKEN, ACCESS_TOKEN_SECRET)
+        try:
+            user_twitter.create_friendship(user_id = friend_id)
+            return {'status':1, 'activity':'follow', '_id':my_id, 'message':'You have successfully followed.'}
+        except:
+            return {'status':0, 'activity':'follow', '_id':my_id, 'message':'Already Followed'}
 
 class UserProfile():
     def __init__ (self):
         self.db_object = MongoConnection("localhost",27017,'foodtrade')
         self.table_name = 'userprofile'
         self.db_object.create_table(self.table_name,'useruid')
-  
+
     def get_profile_by_id(self,user_id):
         return self.db_object.get_one(self.table_name,{'useruid': user_id})
 
+    def get_profile_by_username(self, username):
+        return self.db_object.get_one(self.table_name,{'username': str(username)})
+
     def get_profile_by_type(self, type_usr):
-        return self.db_object.get_all(self.table_name,{'type':type_usr})
+        return self.db_object.get_all(self.table_name,{'sign_up_as':type_usr})
 
     def create_profile (self, value):
         self.db_object.insert_one(self.table_name,value)
 
-    def update_profile(self, userid, zipcode, type_usr, sign_up_as, phone):
-        print phone
+    def update_profile(self, userid, address, type_usr, sign_up_as, phone, lat, lon, postal_code):
+        #print phone
+        #address = Geocoder.geocode(zipcode)
+        #print zipcode, address
         return self.db_object.update(self.table_name,
              {'useruid':str(userid)},
-             {'zip_code':zipcode,'type_user':type_usr,'sign_up_as':sign_up_as, 'phone_number':str(phone)}
+             {'zip_code':str(postal_code),
+             'latitude':str(lat),
+             'longitude':str(lon),
+             'address':str(address),
+             'type_user':type_usr,
+             'sign_up_as':sign_up_as, 
+             'phone_number':str(phone)}
              )
+
+
+    def search_profiles(self):
+        mapper = Code("""
+            function () {
+            
+            var keyword = '"""+keyword+"""';
+            keyword = keyword.toLowerCase();
+            {"useruid": str(userid), "sign_up_as": sign_up_types[0],
+                                          "type_user":str(','.join(type_user)),
+                                            "zip_code": new_location[0], "address": new_location[3],
+                                           "latitude": float(new_location[1]), "longitude": float(new_location[2]), 
+                                           }
+            
+            var sign_up_as = this.sign_up_as.toLowerCase();
+            var user_types = this.type_user.toLowerCase();
+            var longitude = this.longitde;
+            var latitude = this.latitude;
+
+
+           
+            var search_more = true;
+            if(keyword == sign_up_as)
+            {
+                search_more = false;
+            }
+
+            var type_array = user_types.split();
+            if(type_array.indexOf(keyword)!=-1)
+            {
+                search_more = false;
+            }
+
+            try
+              {
+               var user_name = this.username;
+
+                        var name = this.name;
+
+                        
+                        var description = this.description;
+                        if(user_name.indexOf(keyword) != -1 || name.indexOf(keyword) != -1 || description.indexOf(keyword) != -1 )
+                        {
+                            search_more = false;
+
+                        }
+              }
+            catch(err)
+              {
+              
+              }
+
+            if(!search_more)
+            {
+
+
+
+
+              var lon1 = parseFloat("""+str(lon)+""");
+               var lat1 = parseFloat("""+str(lat)+""");
+               var lon2 = longitude;
+               var lat2 = latitude;
+               var R = 6371; // Radius of the earth in km
+              var dLat = (lat2-lat1)* (Math.PI/180);  // deg2rad below
+              var dLon = (lon2-lon1)* (Math.PI/180); 
+              var a = 
+                Math.sin(dLat/2) * Math.sin(dLat/2) +
+                Math.cos((lat1)* (Math.PI/180)) * Math.cos((lat2)* (Math.PI/180)) * 
+                Math.sin(dLon/2) * Math.sin(dLon/2)
+                ; 
+              var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
+              var d = R * c; // Distance in km
+              var ret_value =
+              emit(this._id, d);
+        }
+                           
+
+
+            }
+            """)
+
+        reducer = Code("""
+            function (key, values) { 
+            var  sum = 0
+             for(var i=0;i<values.length;i++)
+             { sum += 1;}
+             return sum;
+            }
+            """)
+        return self.db_object.map_reduce(self.table_name, mapper, reducer, query, -1, 200)
+        
 
 
 class TradeConnection():
@@ -406,6 +638,7 @@ class TradeConnection():
         self.db_object = MongoConnection("localhost",27017,'foodtrade')
         self.table_name = 'tradeconnection'
         self.db_object.create_table(self.table_name,'b_useruid')
+
     def get_connection_by_business(self,b_useruid):
         return self.db_object.get_all(self.table_name,{'b_useruid': b_useruid, 'deleted': 0})
 
@@ -414,10 +647,16 @@ class TradeConnection():
 
     def create_connection (self, value):
         value['deleted'] =0
-        self.db_object.insert_one(self.table_name,value)
+        # self.db_object.insert_one(self.table_name,value)
+        self.db_object.update_upsert(self.table_name, 
+            {'c_useruid': value['c_useruid'], 'b_useruid': value['b_useruid']}, {'deleted': 0})
 
     def delete_connection(self, b_useruid, c_useruid):
         self.db_object.update(self.table_name,{'b_useruid': b_useruid, 'c_useruid': c_useruid}, {'deleted':1})
+
+    def search_connectedness(self, b_useruid, c_useruid):
+        result = self.db_object.get_one(self.table_name, {'b_useruid': b_useruid, 'c_useruid': c_useruid,'deleted':0})
+        return result
 
 class Food():
     """docstring for Connection"""
@@ -435,10 +674,16 @@ class Food():
     def create_food (self, value):
         value['deleted'] =0
         # self.db_object.insert_one(self.table_name,value)
-        self.db_object.update_upsert(self.table_name, {'food_name': value['food_name']}, {'deleted': 0, 'useruid': value['useruid']})
-
+        self.db_object.update_upsert(self.table_name, {'food_name': value['food_name'], 
+            'useruid': value['useruid']}, {'deleted': 0})
+        twt = TweetFeed()
+        twt.update_data(value['useruid'])
     def delete_food(self, useruid, food_name):
         self.db_object.update(self.table_name,{'useruid': useruid, 'food_name': food_name}, {'deleted':1})
+        # also delete recommendations of the food
+        table_name = 'recommendfood'
+        self.db_object.create_table(table_name,'food_name')
+        self.db_object.update_multi(table_name,{'business_id': useruid, 'food_name': food_name}, {'deleted':1})
 
 class Customer():
     """docstring for Connection"""
@@ -452,7 +697,8 @@ class Customer():
 
     def create_customer (self, value):
         value['deleted'] =0
-        self.db_object.insert_one(self.table_name,value)
+        # self.db_object.insert_one(self.table_name,value)
+        self.db_object.update_upsert(self.table_name, {'customeruid': value['customeruid'], 'useruid': value['useruid']}, {'deleted': 0})
 
     def delete_customer(self, useruid, customer_id):
         self.db_object.update(self.table_name,{'useruid': useruid, 'customeruid': customer_id}, {'deleted':1})
@@ -468,14 +714,19 @@ class Organisation():
         return self.db_object.get_all(self.table_name,{'orguid': orguid, 'deleted': 0})
 
     def create_member (self, value):
-        value['deleted'] =0
-        self.db_object.insert_one(self.table_name,value)
+        value['deleted'] = 0
+        self.db_object.update_upsert(self.table_name, {'memberuid': value['memberuid'], 'orguid': value['orguid']}, {'deleted': 0})        
+        twt = TweetFeed()
+        twt.update_data(value['memberuid'])
 
     def delete_member(self, orguid, member_id):
         self.db_object.update(self.table_name,{'orguid': orguid, 'memberuid': member_id}, {'deleted':1})
 
     def get_organisations_by_mem_id(self, member_id):
         return self.db_object.get_all(self.table_name,{'memberuid': member_id, 'deleted': 0})
+
+    def check_member(self, org_id, mem_id):
+        return self.db_object.get_one(self.table_name, {'orguid': int(org_id), 'memberuid':int(mem_id), 'deleted': 0})
 
 class Team():
     """docstring for Connection"""
@@ -489,7 +740,8 @@ class Team():
 
     def create_member (self, value):
         value['deleted'] =0
-        self.db_object.insert_one(self.table_name,value)
+        # self.db_object.insert_one(self.table_name,value)
+        self.db_object.update_upsert(self.table_name, {'memberuid': value['memberuid'], 'orguid': value['orguid']}, {'deleted': 0})
 
     def delete_member(self, orguid, member_id):
         self.db_object.update(self.table_name,{'orguid': orguid, 'memberuid': member_id}, {'deleted':1})
@@ -508,7 +760,7 @@ class RecommendFood():
     def create_recomm(self, value):
         value['deleted'] =0
         # self.db_object.insert_one(self.table_name,value)
-        self.db_object.update_upsert(self.table_name, {'food_name': value['food_name'], 'business_id': value['business_id']}, {'deleted': 0, 'recommender_id': value['recommender_id']})
+        self.db_object.update_upsert(self.table_name, {'food_name': value['food_name'], 'business_id': value['business_id'], 'recommender_id': value['recommender_id']}, {'deleted': 0})
 
     def delete_recomm(self, business_id, food_name, recommender_id):
         self.db_object.update(self.table_name,{'business_id': business_id, 'food_name': food_name, 'recommender_id': recommender_id}, {'deleted':1})
@@ -526,6 +778,57 @@ class Friends():
         all_doc = self.db_object.get_all_vals(self.table_name,{'username':str(username)})
         return all_doc
 
+    def get_paginated_friends(self, username, pagenum):
+        friends = self.db_object.get_paginated_values(self.table_name,
+            {'username':str(username)}, pageNumber = int(pagenum))
+        friend_list = []
+        for eachFriend in friends:
+            invites_obj = Invites()
+            if invites_obj.check_invited(eachFriend['friends']['screen_name'], username) == False:
+                friend_list.append({'friends':{'screen_name':eachFriend['friends']['screen_name'],
+                    'name':eachFriend['friends']['name'], 'profile_image_url':eachFriend['friends']['profile_image_url']}})        
+        return friend_list
+
+    def get_friends_count(self, username):
+        return self.db_object.get_count(self.table_name,{'username':str(username)})
+
+    def search_friends(self, username, query):
+        friend = re.compile(str(query) + '+', re.IGNORECASE)
+        result = self.db_object.get_paginated_values(self.table_name, 
+            {'username':str(username), 
+            '$or':[{'friends.name':{'$regex':friend}}, {'friends.screen_name':{'$regex':friend}}]})
+        return result
+
+    def get_friend_id(self, username, screen_name):
+        #print username, screen_name, "Inside GET FRIEND ID"
+        result = self.db_object.get_one(self.table_name,{'username':str(username),'friends.screen_name':str(screen_name)})
+        #print result
+        return result['friends']['id']
+
+
+class InviteId():
+    def __init__ (self):
+        self.db_object = MongoConnection("localhost",27017,'foodtrade')
+        self.table_name = 'inviteid'
+        self.db_object.create_table(self.table_name,'username')
+
+    def create_invites_id(self,doc):
+        return self.db_object.insert_one(self.table_name,doc)
+
+    def get_unused_id(self, user_id):
+        try:
+            if(len(self.db_object.get_one(self.table_name, {'used':'false', 'userid':user_id}))>0):
+                return self.db_object.get_one(self.table_name, {'used':'false', 'userid':user_id})
+            else:
+                self.create_invites_id({'used':'false', 'userid':user_id})
+                return self.db_object.get_one(self.table_name, {'used':'false', 'userid':user_id})
+        except:
+            self.create_invites_id({'used':'false', 'userid':user_id})
+            return self.db_object.get_one(self.table_name, {'used':'false', 'userid':user_id})
+
+    def change_used_status(self, user_id, invite_id):
+        return self.db_object.update(self.table_name,{'_id':ObjectId(invite_id), 'userid':user_id}, {'used':'true'})
+
 class Invites():
     def __init__ (self):
         self.db_object = MongoConnection("localhost",27017,'foodtrade')
@@ -534,4 +837,94 @@ class Invites():
 
     def save_invites(self,doc):
         return self.db_object.insert_one(self.table_name,doc)
+
+    def check_invitees(self, screen_name):
+        return self.db_object.get_all(self.table_name, 
+            {'to_screenname':str('@'+ str(screen_name))})
+
+    def check_invited(self, screen_name, user_name):
+        if len(self.db_object.get_all(self.table_name, {'to_screenname':str('@'+ str(screen_name)), 
+            'from_username':str(user_name)})) > 0:
+            return True
+        return False
+
+    def check_invited_by_invite_id(self, screen_name, invite_id):
+        return self.db_object.get_one(self.table_name, {'to_screenname':str('@'+str(screen_name)), 
+            'invite_id':ObjectId(invite_id)})
+
+class InviteAccept():
+    def __init__ (self):
+        self.db_object = MongoConnection("localhost",27017,'foodtrade')
+        self.table_name = 'inviteAccept'
+        self.db_object.create_table(self.table_name,'screen_name') 
+
+    def insert_invite_accept(self, invite_id, invitation_by, invitation_to):
+        result = self.db_object.insert_one(self.table_name, 
+            {'invite_id':ObjectId(invite_id),'to_username':str('@'+str(invitation_to)), 'from_username':invitation_by,
+            'accept_time': time.mktime(datetime.now().timetuple())})
+        return result
+
+class Notification():
+    def __init__ (self):
+        self.db_object = MongoConnection("localhost",27017,'foodtrade')
+        self.table_name = 'notification'
+        self.db_object.create_table(self.table_name,'to_username')
+
+    def save_notification(self,doc):
+        return self.db_object.insert_one(self.table_name,doc)
+
+    def change_notification_view_status(self, notification_id):
+        self.db_object.update_multi(self.table_name, 
+            {'_id':ObjectId(notification_id)}, 
+            {'notification_view_status':'true'})
+        return HttpResponse(json.dumps({'status':1}))
+
+    def change_notification_archived_status(self, notification_id):
+        self.db_object.update_multi(self.table_name, 
+            {'_id':ObjectId(notification_id)}, 
+            {'notification_archived_status':'true'})
+        return HttpResponse(json.dumps({'status':1}))
+
+    def get_notification(self,username):
+        notification_count = self.db_object.get_count(self.table_name,
+            {'notification_to':username, 'notification_view_status':'false'})
+        return {'notification_count':notification_count, 
+            'notifications':self.db_object.get_paginated_values(self.table_name,
+            {'notification_to':username,'notification_archived_status':'false'}, 
+            sort_index ='notification_time', pageNumber = 1)}
+
+    def get_notification_count(self, username):
+        notification_count = self.db_object.get_count(self.table_name,
+            {'notification_to':username, 'notification_view_status':'false'})
+        return notification_count
+
+
+class TwitterError():
+    def __init__ (self):
+        self.db_object = MongoConnection("localhost",27017,'foodtrade')
+        self.table_name = 'twittererror'
+        self.db_object.create_table(self.table_name,'screen_name')    
+
+    def save_error(self, doc):
+        return self.db_object.insert_one(self.table_name,doc)
+
+    def get_error(self, screen_name):
+        return self.db_object.get_all_vals(self.table_name,{'username':screen_name, 'error_solve_stat':'false'})   
+
+    def change_error_status(self, screen_name):
+        return self.db_object.update(self.table_name, {'username':screen_name}, {'error_solve_stat':'true'})
+
+class Spam():
+    def __init__ (self):
+        self.db_object = MongoConnection("localhost",27017,'foodtrade')
+        self.table_name = 'spam'
+        self.db_object.create_table(self.table_name,'screen_name') 
+
+    def check_spam_by(self, tweet_id, user_id):
+        result = self.db_object.get_one(self.table_name, {'tweet_id':ObjectId(tweet_id),'spam_by':user_id})
+        return result
+
+    def mark_spam(self, spam_by, tweet_id):
+        return self.db_object.update_upsert(self.table_name, 
+            {'tweet_id':ObjectId(tweet_id)}, {'spam_by':spam_by})  
 

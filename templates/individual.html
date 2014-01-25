@@ -5,9 +5,17 @@
 {% load i18n %}
 {% include "socialaccount/snippets/login_extra.html" %}
 {% load account %}
+
+
+{% block ogtype %}{% if userprof.user_type == "Business" %}Business{%endif%}{% if userprof.user_type == "Individual" %}Profile{%endif%}{% if userprof.user_type == "Organisation" %}Group{%endif%}{% endblock %}
+{% block titlecontent %}{{userprof.full_name}}{% endblock %}
+{% block fblat %}{{userprof.lat}}{% endblock %}
+{% block fblon %}{{userprof.lon}}{% endblock %}
+{% block fbzipcode %}{{userprof.zip_code}}{% endblock %}
+{% block fbcountry %}{{userprof.country}}{% endblock %}
+{% block ogimg %}{{userprof.profileimg}}{% endblock %}
+
 {% block content %}
-
-
 <style type="text/css" media="all">
     /* fix rtl for demo */
     .chosen-rtl .chosen-drop { left: -9000px; }
@@ -32,6 +40,7 @@
           </div>  -->
          <hr />
          <p>{{description}}</p>        
+
          
          <!--  <div class="tags">  
            <a href="/tag/TAG">Box Scheme</a>
@@ -47,6 +56,7 @@
             
             <!-- if logged in or you've allows html5 browser location -->
             <i class="fa fa-location-arrow" style="margin-left: 20px;"></i> {{distance}} 
+
             <!--  // if logged in or you've allows html5 browser location -->
             <!-- <i class="fa fa-bullseye" style="margin-left: 20px;"></i> 20.1 miles -->
   
@@ -80,7 +90,8 @@
         <div class="container-responsive">
           <div class="row">
             <div class="col-sm-6">
-              <a href="#" class="btn btn-block  btn-social btn-facebook" onclick="window.open(
+
+                            <a href="#" class="btn btn-block  btn-social btn-facebook" onclick="window.open(
               'https://www.facebook.com/sharer/sharer.php?s=100&amp;p[url]='+encodeURIComponent('{{ request.build_absolute_uri }}') +'&amp;p[images][0]='+encodeURIComponent('{{pic_url}}')+'&amp;p[title]='+encodeURIComponent('{{name}} on FoodTrade')+'&amp;p[summary]='+encodeURIComponent('Hey, see my profile on FoodTrade')+'&amp;u='+encodeURIComponent('{{ request.build_absolute_uri }}') +'&amp;t='+encodeURIComponent('{{name}} on FoodTrade'),
                     'facebook-share-dialog', 
                     'width=626,height=436,top='+((screen.height - 436) / 2)+',left='+((screen.width - 626)/2 )); 
@@ -88,6 +99,10 @@
 
                 <i class="fa fa-facebook"></i>  Share on Facebook
               </a>
+
+              <!-- <div class="fb-share-button" data-href="http://developers.facebook.com/docs/plugins/" data-type="link"></div> -->
+              
+              
               <a href="#" class="btn btn-block  btn-social btn-twitter" onclick="window.open(
                     'https://twitter.com/share?url='+encodeURIComponent('{{ request.build_absolute_uri }}')+'&amp;text='+encodeURIComponent('{{screen_name}} on @foodtradeHQ') + '&amp;count=none/', 
                     'twitter-share-dialog', 
@@ -123,7 +138,7 @@
           </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
       </div><!-- /.modal -->
-      <div class="icons text-center" style="font-size:25px">
+      <!-- <div class="icons text-center" style="font-size:25px">
         <a href="#"><i class="fa fa-facebook-square"></i></a>
         <a href="#"><i class="fa fa-twitter-square"></i></a> 
         <a href="#"><i class="fa fa-phone-square"></i></a> 
@@ -132,7 +147,7 @@
         <a href="#"><i class="fa fa-globe"></i></a> 
         <a href="#"><i class="fa fa-youtube"></i></a> 
         <a href="#"><i class="fa fa-linkedin-square"></i></a> 
-      </div> 
+      </div>  -->
       
      <!-- modal_contact -->
       <div class="modal fade" id="modal_contact" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -151,7 +166,8 @@
                     
           <a href="mailto:{{email}}" target="_blank"><i class="fa fa-envelope text-muted"></i> {{email}} </a><br />
           <a href="http://twitter.com/{{screen_name}}"  target="_blank"><i class="fa fa-twitter text-muted"></i> {{screen_name}}</a><br />
-          <a href="callto:{{phone_number}}"><i class="fa fa-phone text-muted"></i> {{phone_number}}</a>
+         
+         
                   </address>
                 </div>
                 

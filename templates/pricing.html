@@ -3,7 +3,7 @@
 
 {% block content %}
 
-<div class="col-md-10 col-sm-10"  id="pricing">
+<div class="col-md-10 col-sm-10 {% if not user.is_authenticated %} col-md-offset-1 {% endif %}"  id="pricing">
 
 
 <div class="container-responsive">
@@ -11,11 +11,9 @@
 
 <div class='row'>
   <div class="col-md-12 hero text-center" style="background-image: url('http://farm5.staticflickr.com/4060/4568681066_db1d22e3a4_b.jpg');">
-     
-    <div class=""> 
+      
       <h1>Keep a bigger slice  of the pie.</h1> 
-      <h3 class="text-center">Simple affordable pricing, with no surprises.</h3>
-    </div> 
+      <h3 class="text-center">Simple affordable pricing, with no surprises.</h3> 
   </div>
 </div>
 

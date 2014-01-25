@@ -69,8 +69,9 @@
 </div>
 <script src="{% static "js/jquery.js" %}"></script>
 <script type="text/javascript">
-
-var tweet = 'You\'ll love www.foodtrade.com';
+var invite_id = String('{{invite_id}}');
+var domain = document.domain;
+tweet = 'You\'ll love foodtrade. Join here:- http://' + domain + '/invitation/' + invite_id + '/' ;
 var countVal = 0;
 var send_list = [];
 var users = [];
@@ -113,14 +114,19 @@ function validate_tweets (argument, count) {
 function invites_handler (data) {
 	data = jQuery.parseJSON(data);
 	if(data['status'] == '1'){
+		invite_id = String(data['new_invite_id']);
+		/*alert(invite_id);*/
+		$('#charsRem').html(String(140) + ' characters remaining.');
+		$('#btnSendTweet1').html("Send invites");
+		$('#btnSendTweet2').html("Send invites");			
+		$('#btnSendTweet3').html("Send invites");
+		var domain = document.domain;
+		tweet = 'You\'ll love foodtrade. Join here:- http://' + domain + '/invitation/' + invite_id + '/' ;
+		$('#tweetMessage1').val(tweet);
+		/*$('#btnSendTweet1').html('');*/		
 		for (var val in send_list){
 			$('#li' + String(send_list[val])).hide();
 			tweet = tweet.replace(users[val], '');
-			$('#btnSendTweet1').html("Send invites");
-			$('#btnSendTweet2').html("Send invites");			
-			$('#btnSendTweet3').html("Send invites");
-			$('#btnSendTweet1').html('');
-			$('#charsRem').html(String(140) + ' characters remaining.');
 		}
 	}
 }
@@ -130,7 +136,15 @@ function send_invite () {
 	}
 	else{
 		countVal = 0;
-		ajax_request('post_tweet','invites_handler',{'message':tweet, 'invite':'true', 'to':String(users)})
+		ajax_request(
+			'post_tweet',
+			'invites_handler',
+			{'message':tweet, 
+			'invite':'true', 
+			'to':String(users), 
+			'invite_id':'{{invite_id|safe}}', 
+			'noappend':'noappend'
+		});
 	}
 }
 function check_limit(){

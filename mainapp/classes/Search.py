@@ -5,7 +5,6 @@ import re
 from bson.son import SON
 from bson.objectid import ObjectId
 from MongoConnection import MongoConnection
-
 import json
 import operator
 
@@ -53,15 +52,26 @@ class Search():
 
     def item_counter(self, item_list):
         counter = {}
-        for item in item_list:
-            for it in item:
+        try:
+            for it in item_list:
                 try:
                     counter[it] = counter[it] + 1
                 except:
                     counter[it] = 1
+        except:
+            counter = {}
+            for item in item_list:
+                for it in item:
+                    try:
+                        counter[it] = counter[it] + 1
+                    except:
+                        counter[it] = 1
+    
+            
+
         
         sorted_counter = sorted(counter.iteritems(), key=operator.itemgetter(1),reverse=True)
-        return [{value:label} for value, label in sorted_counter]
+        return [{"uid":value,"value":label} for value, label in sorted_counter]
  
 
     def search_all(self):
@@ -83,20 +93,20 @@ class Search():
             or_conditions.append({'updates.status':reg_expression})
             query_string['$or'] = or_conditions
 
-
-
-
         # if(self.lon != "" and self.lat != ""):
         #     query_string['latlng'] = {"$near":{"$geometry":{"type":"Point", "coordinates":[float(self.lon), float(self.lat)]}, "$maxDistance":1609340}} #{ "$near" : [ float(self.lon), float(self.lat)] , "$maxDistance": 160.934 } #('$near', {'lat': float(self.lat), 'long': float(self.lon)}), ('$maxDistance', 160.934)]) 
             # query_string['location'] = {"$near":{"$geometry":{"type":"Point", "coordinates":[float(self.lon), float(self.lat)]}, "$maxDistance":160.934}}
             pass
+        and_query =[]
         if len(self.foods) > 0:
-            query_string['foods'] = {"$in":self.foods}
+            and_query.append({"foods": {"$all":self.foods}})
+            query_string["$and"] = and_query
         if len(self.business) > 0:
-            query_string['type_user'] = {"$in":self.business}
+            and_query.append({"type_user":{"$all":self.business}})
+            query_string["$and"] = and_query
         if len(self.organisation) > 0:
-            query_string['organisations'] = {"$in":self.organisation}
-
+            and_query.append({"organisations":{"$all":self.organisation}})
+            query_string["$and"] = and_query
         up = UserProfile()
         # up.update({"username":"BobbyeRhym"}, {"updates":[]})
 
@@ -116,7 +126,12 @@ class Search():
 
         agg_pipeline.append(geo_near)
         agg_pipeline.append({ '$match':query_string})
-        agg_pipeline.append({"$unwind": "$updates"})
+
+       
+        agg_pipeline.append({ '$match':{"updates":{"$size":0}}})
+            
+        
+        agg_pipeline.append({"$sort": SON([("updates.time_stamp", -1), ("time_stamp", -1)])})
 
 
         if len(or_conditions) > 0:
@@ -139,17 +154,39 @@ class Search():
         "type_user":"$type_user",
         "parent_tweetuid":"$parent_tweetuid",
         "status":"$updates.status",
-        "distance_text":"$distance",
+        "distance":"$distance",
         "location":"$latlng",
         "organisations":"$organisations",
         "foods":"$foods",
         "sign_up_as":"$sign_up_as",
-        "time_stamp":"$time_stamp",
+        "time_stamp":"$updates.time_stamp",
         }}
         
         agg_pipeline.append({"$group": group_fields})
-        agg_pipeline.append({"$sort": SON([("distance", 1), ("time_stamp", -1)])})
-        results = up.agg(agg_pipeline)[0]
+        
+        agg_pipeline.append({ "$limit" : 20 })
+
+        
+        
+        profiles = up.agg(agg_pipeline)
+        agg_pipeline[2] = {"$unwind": "$updates"}
+        statuses = up.agg(agg_pipeline)
+
+        if len(profiles)>0:
+            if len(statuses)>0:
+               
+                profiles[0]["foods"].extend(statuses[0]["foods"])
+                profiles[0]["businesses"].extend(statuses[0]["businesses"])
+                profiles[0]["organisations"].extend(statuses[0]["organisations"])
+                profiles[0]["results"].extend(statuses[0]["results"])
+        else:
+            profiles = statuses
+
+        if len(profiles)>0:
+
+            results = profiles[0]
+        else:
+            return {"foods":[], "businesses":[], "organisations":[],"results":[]}
         foods_list = results["foods"]
 
         foods_counter = self.item_counter(foods_list)
@@ -159,17 +196,18 @@ class Search():
         businesses_counter = self.item_counter(businesses_list)
         results["businesses"] = businesses_counter
 
-
         organisations_list = results["organisations"]
         organisations_counter = self.item_counter(organisations_list)
         results["organisations"] = organisations_counter
-        print len(results['results'])
-        print json.dumps(results)
+        # print len(results['results'])
+        # print json.dumps(results)
+        # print results
+        return results
         # print json.dumps(len(up.find(query_string)))
         # print json.dumps(up.find(query_string))
 
-sh = Search(keyword="tone", lon = 85.3363578, lat=27.7059892, place = "", foods=[], business=[], organisation=[],sort="")
-sh.search_all()
+sh = Search(keyword="sujit", lon = 85.3363578, lat=27.7059892, place = "", foods=[], business=['Compost','Animal Feed'], organisation=[],sort="")
+print sh.search_all()
 
 
         
