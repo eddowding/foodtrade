@@ -1,0 +1,84 @@
+{% extends 'tbase.html' %}
+{% load staticfiles %}
+{% load socialaccount %}
+{% load url from future %}
+{% load i18n %}
+{% include "socialaccount/snippets/login_extra.html" %}
+{% load account %}
+{% block head %}
+{% endblock %}
+
+{% block content %} 
+<style type="text/css">
+  .notice{
+    margin-top:2%; 
+    height:50px;
+  }
+  .notice-uli{
+    width:68%;
+    margin-left: 22%;
+    margin-right: 16%;
+  }
+  .notice-li{
+/*   margin-bottom: 2%; 
+   height: 2%;
+*/  }
+  .notice-transparent{
+    /*background-color: green;*/
+    /*opacity:0.9;*/
+  }
+  .new-ddl{
+    margin-top: -60px;
+    margin-right: 20px;
+  }
+</style>
+
+<div class="col-md-10" >
+  <div class="panel panel-default">
+  <div class="panel-heading clearfix">
+
+  <ul class="list-group">
+    <ul class="nav nav-tabs notice" >
+      <li class="active"><a href="#produce" data-toggle="tab">Notifications <span class="badge">{{notification_count}}</span></a></li>
+    </ul>
+
+    <ul class="list-group-item">
+      {% for each_notification in notifications %}
+      <a href="#">
+        <li class="left notice-li list-group-item {% if each_notification.notification_view_status %} notice-transparent {% endif %}"><span class="chat-img pull-left">
+            <img src="{{each_notification.notifying_user_profile.profile_img}}" />
+        </span>
+        <div class="header">
+            <strong class="primary-font"><a href="/profile/{{each_notification.notifying_user}}">{{each_notification.notifying_user}}</a></strong> <small class="text-muted">
+            <span class="glyphicon glyphicon-time"></span>{{each_notification.time_elapsed}} ago</small>
+            <div class="btn-group pull-right" style="margin-left: 5px;">
+              <button type="button" class="btn btn-default dropdown-toggle btn-xs pull-left" data-toggle="dropdown">
+                <i class="fa fa-link fa-large text-muted"></i>
+                  <span class="caret text-muted"></span>
+              </button> 
+              <ul class="dropdown-menu new-ddl" role="menu">
+                <li><a href="#">archive </a></li> 
+                <li><a href="/profile/{{each_notification.notifying_user}}">view </a></li>
+                <li><a href="#">reply</a></li> 
+                <li><a href="/profile/{{each_notification.notifying_user}}">view user</a></li>  
+ 
+              </ul>
+            </div>
+        </div>
+        <p>
+           {{each_notification.notification_message}}
+        </p>
+        </li>
+        </a>
+      {% endfor %}  
+      <li class="list-group-item clearfix" style="background: #eee;">
+        <ul class="pagination pull-left mymargin">
+        </ul>   
+      </li>  
+    </ul>
+    </ul>
+  </div>
+</div>
+</div>
+
+{% endblock %}

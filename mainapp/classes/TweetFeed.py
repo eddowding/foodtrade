@@ -15,6 +15,7 @@ from pymongo import Connection
 import re
 from django.conf import settings
 # from mainapp.views import get_twitter_obj
+import json
 
 ACCESS_TOKEN = ''
 ACCESS_TOKEN_SECRET =''
@@ -30,7 +31,7 @@ def get_twitter_obj(token, secret):
         oauth_token_secret = secret
         )
 
-import json
+
 class TweetFeed():
     def __init__ (self):
         self.db_object = MongoConnection("localhost",27017,'foodtrade')
@@ -509,10 +510,11 @@ class UserProfile():
         self.table_name = 'userprofile'
         self.db_object.create_table(self.table_name,'useruid')
 
-  
     def get_profile_by_id(self,user_id):
         return self.db_object.get_one(self.table_name,{'useruid': user_id})
 
+    def get_profile_by_username(self, username):
+        return self.db_object.get_one(self.table_name,{'username': str(username)})
 
     def get_profile_by_type(self, type_usr):
         return self.db_object.get_all(self.table_name,{'sign_up_as':type_usr})
@@ -868,18 +870,30 @@ class Notification():
     def save_notification(self,doc):
         return self.db_object.insert_one(self.table_name,doc)
 
-    def change_notification_status(self, notification_to):
+    def change_notification_view_status(self, notification_id):
         self.db_object.update_multi(self.table_name, 
-            {'notification_to':str(notification_to)}, 
+            {'_id':ObjectId(notification_id)}, 
             {'notification_view_status':'true'})
         return HttpResponse(json.dumps({'status':1}))
 
+    def change_notification_archived_status(self, notification_id):
+        self.db_object.update_multi(self.table_name, 
+            {'_id':ObjectId(notification_id)}, 
+            {'notification_archived_status':'true'})
+        return HttpResponse(json.dumps({'status':1}))
+
     def get_notification(self,username):
-        notification_count = len(self.db_object.get_all_vals(self.table_name,
-            {'notification_to':username, 'notification_view_status':'false'}))
-        return HttpResponse(json.dumps({'notification_count':notification_count, 
-            'notifications':self.db_object.get_all_vals(self.table_name,
-            {'notification_to':username,'notification_view_status':'false'})}))
+        notification_count = self.db_object.get_count(self.table_name,
+            {'notification_to':username, 'notification_view_status':'false'})
+        return {'notification_count':notification_count, 
+            'notifications':self.db_object.get_paginated_values(self.table_name,
+            {'notification_to':username,'notification_archived_status':'false'}, 
+            sort_index ='notification_time', pageNumber = 1)}
+
+    def get_notification_count(self, username):
+        notification_count = self.db_object.get_count(self.table_name,
+            {'notification_to':username, 'notification_view_status':'false'})
+        return notification_count
 
 
 class TwitterError():

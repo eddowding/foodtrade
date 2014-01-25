@@ -808,9 +808,9 @@ $(function() {
 // pick list containing a mix of places and predicted search terms.
 
 {% if user.is_authenticated %}
-  window.setInterval(function(){
+/*  window.setInterval(function(){
     show_notifications();
-  }, 50000);
+  }, 50000);*/
 {% endif %}
 function  show_notifications(){
   ajax_request('getnotification', 'build_notification', {'user':'{{userinfo.username}}'})

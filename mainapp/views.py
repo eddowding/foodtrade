@@ -5,7 +5,7 @@ from allauth.socialaccount.models import SocialToken, SocialAccount
 from twython import Twython
 import json
 from django.conf import settings
-from mainapp.classes.TweetFeed import TweetFeed, UserProfile, Friends, TwitterError, Invites, InviteId
+from mainapp.classes.TweetFeed import TweetFeed, UserProfile, Friends, TwitterError, Invites, InviteId, Notification
 from search import search_general
 from streaming import MyStreamer
 from models import MaxTweetId
@@ -20,6 +20,23 @@ next_cursor = -1
 ACCESS_TOKEN = ''
 ACCESS_TOKEN_SECRET =''
 
+def calculate_time_ago(calc_time):
+    time_elapsed = int(time.time()) - calc_time
+    if time_elapsed<60:
+        time_text = str(time_elapsed) + 'seconds'
+    elif time_elapsed < 3600:
+        minutes = time_elapsed/60
+        time_text = str(int(minutes)) + 'minutes'
+    elif time_elapsed < 3600*24:
+        hours = time_elapsed/3600
+        time_text = str(int(hours)) + 'hours'
+    elif time_elapsed < 3600*24*365:
+        days = time_elapsed/3600/24
+        time_text = str(int(days)) + 'days'
+    else:
+        years = time_elapsed/3600/24/365
+        time_text = str(int(years)) + 'years'
+    return time_text
 
 def get_twitter_obj(token, secret):
     return Twython(
@@ -266,7 +283,7 @@ def invite(request):
 
     user_profile_obj = UserProfile()
     userprofile = user_profile_obj.get_profile_by_id(request.user.id)
-    parameters['userprofile'] = UserProfile
+    parameters['userprofile'] = userprofile
 
     invites_obj = InviteId()
     invite_id = invites_obj.get_unused_id(request.user.id)
@@ -278,6 +295,41 @@ def handle_invitation_hit(request, invite_id):
     request.session['invite_id'] = str(invite_id)
     return HttpResponseRedirect('/accounts/twitter/login/?process=login')
 
-# def my_login(request):
-#     print request.session['invite_id']
-#     return HttpResponse(json.dumps({'invite_id':request.session['invite_id']}))
+def notifications(request):
+    parameters = {}
+
+    if request.user.is_authenticated():        
+        user_id = request.user.id
+        user_profile_obj = UserProfile()
+        user_profile = user_profile_obj.get_profile_by_id(str(user_id))
+        user_info = UserInfo(user_id)
+        parameters['userinfo'] = user_info
+        parameters['user_id'] = request.user.id
+
+        user_profile_obj = UserProfile()
+        userprofile = user_profile_obj.get_profile_by_id(request.user.id)
+        parameters['userprofile'] = UserProfile
+    else:
+        return HttpResponseRedirect('/')
+
+    user_name = request.user.username
+    notices = Notification()
+    my_notifications = notices.get_notification(user_name)
+    parameters['notification_count'] = my_notifications['notification_count']
+
+    myNotice = []
+    for eachNotification in my_notifications['notifications']:
+        processed_notice = {}
+        user_profile_obj = UserProfile()
+        notifying_user_profile = user_profile_obj.get_profile_by_username(eachNotification['notifying_user'])
+
+        processed_notice['notification_id'] = eachNotification['uid']['id']
+        processed_notice['notifying_user'] = eachNotification['notifying_user']
+        processed_notice['notification_message'] = eachNotification['notification_message']
+        processed_notice['time_elapsed'] = calculate_time_ago(eachNotification['notification_time'])
+        processed_notice['notifying_user_profile'] = notifying_user_profile
+        processed_notice['notification_view_status'] = eachNotification['notification_view_status']
+        myNotice.append(processed_notice)
+    parameters['notifications'] = myNotice
+    return render_to_response('notice.html', parameters, context_instance=RequestContext(request))
+
