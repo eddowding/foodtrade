@@ -56,6 +56,8 @@ class AjaxHandle(AjaxSearch):
         if message != None and message != "":
             if noappend == 'noappend':
                 tweet = user_twitter.update_status(status = message)
+                # don't save tweet to mongo if it is vouch for food
+                return HttpResponse(json.dumps({'status':1}))
             else:
                 tweet = user_twitter.update_status(status = message+url)
             tweet_feed = TweetFeed()
