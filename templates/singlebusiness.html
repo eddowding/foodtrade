@@ -44,7 +44,7 @@
           {% else %}
           <div class="tags tags-biztype  ">  
             {% for eachtype in type_user %}
-           <a href="/activity/?q={{eachtype}}">{{eachtype}}</a>
+           <a href="/activity/?b={{eachtype}}">{{eachtype}}</a>
            {% endfor %}
           </div> {% endif %}
          <hr />
@@ -317,7 +317,7 @@
                       <!-- link this to open food facts --> 
                             <!-- <input class="typeahead form-control" name="addfood" data-source='' data-provide="typeahead" autocomplete="off" id = "addfood_id" style="width:400px;" placeholder="Add foods you can buy here."> -->
                             <div class='pull-left'>
-                            <select id="myselect" data-placeholder="Add foods you can buy here." style="height:30px; width: 100%" multiple class="chosen-select" >
+                            <select id="myselect" data-placeholder="Add foods you can buy here." style="height:30px; width: 192px" multiple class="chosen-select" >
                             <option value=""></option>
 <!--                             {% for each in food_list %}
                             <optgroup label={{each.node}}>
@@ -383,7 +383,7 @@
           <tbody id="food_tbody">
             {% for eachfood in all_foods %}
               <tr id="row{{forloop.counter}}">
-                  <td>{{eachfood.food_name}}</td>  
+                  <td><a href="/activity/?f={{eachfood.food_name}}">{{eachfood.food_name}}</a></td>  
                   
                   <td>  
 
@@ -501,7 +501,7 @@
                       {% else %}
                       <div class="tags tags-biztype pull-left">  
                         {% for e in each.type %}
-                       <a href="/activity/?q={{e}}">{{e}}</a>
+                       <a href="/activity/?b={{e}}">{{e}}</a>
                        {% endfor %}
                       </div>{% endif %}
                       <p class="small pull-right">
@@ -545,7 +545,7 @@
                       {% else %}
                       <div class="tags tags-biztype pull-left">  
                         {% for e in each.type %}
-                       <a href="/activity/?q={{e}}">{{e}}</a>
+                       <a href="/activity/?b={{e}}">{{e}}</a>
                        {% endfor %}
                       </div>{% endif %}
                       <p class="small pull-right">
@@ -638,7 +638,7 @@
                           <ul class="chat">
                           {% for eachUpdate in updates %}
                               <li class="left clearfix"><span class="chat-img pull-left">
-                                  <img src="{{eachUpdate.user.profile_img}}" />
+                                  <img src="{{userprof.profileimg}}" />
                               </span>
                                   <div class="chat-body clearfix">
                                       <div class="header">
@@ -724,7 +724,7 @@ $( document ).ready(function() {
 
 $('#buss_chosen').chosen();
 // $("#buss_chosen").chosen({max_selected_options: 1});
-$('#myselect').chosen({create_option: true, skip_no_results: true, create_option_text: 'Add food'});
+$('#myselect').chosen({create_option: true, skip_no_results: true, create_option_text: 'Add'});
 // chosen on change event
     $('#myselect').chosen().change(function(){
     add_food({{profile_id}});

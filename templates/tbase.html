@@ -11,11 +11,12 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="The search engine for real food, rewiring the food system for good.">
+    <meta name="description" content="FoodTrade is the tool foodies, artisans, and real food businesses have been waiting for. It helps you find your nearest producers and stockists, connect with collaborators, map your local food web, share knowledge about provenance, and trade in real-time. ">
     <meta name="author" content="FoodTrade">
 
     <meta property="og:site_name" content="FoodTrade" />
-    <meta property="og:type" content="{% block ogtype %}{% if userinfo.user_type == "Business" %}Business {% elif userinfo.user_type == "Individual" %} Profile {% elif userinfo.user_type == "Organisation" %} Group {% else %}fresh.foodtrade.com{% endif %}{% endblock %}" />
+    <meta property="og:description" content="FoodTrade is the tool foodies, artisans, and real food businesses have been waiting for. It helps you find your nearest producers and stockists, connect with collaborators, map your local food web, share knowledge about provenance, and trade in real-time." />
+    <meta property="og:type" content="{% block ogtype %}website{% endblock %}" />
     <meta property="fb:admins" content="732525050" />
     <meta property="fb:app_id" content="1400801613504478" /> 
     <meta property="og:url" content="http://{{request.META.HTTP_HOST}}{{request.path}}" />
@@ -30,9 +31,7 @@
     <title>FoodTrade</title>
     <!-- CSS -->
     <link href="{% static "css/bootstrap.css" %}" rel="stylesheet">
-    <link href="{% static "css/foodtrade.css" %}" rel="stylesheet">
-    <link href="{% static "css/custom-design.css" %}" rel="stylesheet">
-    <link href="{% static "css/chardinjs.css" %}" rel="stylesheet">
+    <link href="{% static "css/foodtrade.css" %}" rel="stylesheet"> 
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places"></script>
     <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
 
@@ -42,11 +41,35 @@
     
  {% block head %}
 {% endblock %}
- <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.1/leaflet.css" />
-  <link rel="stylesheet" href="http://leaflet.github.io/Leaflet.label/leaflet.label.css" /> 
-<script src="{% static "js/leaflet.js" %}"></script>
+ <!-- <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.1/leaflet.css" /> -->
+     <link rel="stylesheet" href="{% static "css/leaflet.css" %}" /> 
+  <link rel="stylesheet" href="{% static "css/label-leaflet.css" %}" /> 
 
+<!-- <script src="{% static "js/leaflet.js" %}"></script> -->
 <script src="http://leaflet.github.io/Leaflet.label/leaflet.js"></script>
+
+
+<!-- <script src="http://leaflet.github.io/Leaflet.label/leaflet.js"></script> -->
+<script src="{% static "js/label-leaflet.js" %}"></script> 
+<script type="text/javascript">
+   var RedIcon = L.Icon.Default.extend({
+            options: {
+                  iconUrl:'/static/images/map_marker.png',
+
+                  iconRetinaUrl:'/static/images/map_marker.png',
+                  iconSize:[18, 18],
+                  iconAnchor:[9, 18],
+                   popupAnchor:[0, -18],
+                  shadowURL: '/static/images/shadow-map_marker.png',
+                  shadowRetinaUrl: '/static/images/shadow-map_marker.png',
+                  shadowSize:[41, 41],
+                  shadowAnchor: [14,41], 
+            }
+         });
+         var redIcon = new RedIcon();
+</script>
+
+
   <style type="text/css">
 .tt-hint
 {
@@ -235,14 +258,15 @@ background: #eee;
           
  
          {% if not user.is_authenticated %} 
-         <a type="button" class="btn btn-success navbar-btn navbar-right" href="{% provider_login_url "twitter" process="login" %}" style="margin-right: 15px;">
-            <i class="fa fa-user fa-fw"></i> <strong>Login</strong> or <strong>Sign up</strong>
+          <a type="button" class="btn btn-success navbar-btn navbar-right" style="margin-right: 15px;" data-toggle="modal" data-target="#modal_signup">
+            <i class="fa fa-user fa-fw"></i><strong>Sign up</strong>
+          </a>
+         <a type="button" href="{% provider_login_url "twitter" process="login" %}" class="btn btn-success navbar-btn navbar-right" style="margin-right: 15px;">
+            <i class="fa fa-user fa-fw"></i> <strong>Login</strong>
           </a>
          {% endif %}
           
       </div>
-
-
 
     <div class="ftstrip ftstrip-mini"></div>
     </nav>
@@ -271,7 +295,7 @@ background: #eee;
             </div><!-- /.modal-dialog -->
           </div><!-- /.modal -->
 <!-- modal_invite -->
-<div class="modal fade" id="modal_login" tabindex="-2" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal fade" id="modal_login_old" tabindex="-2" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
    
@@ -367,8 +391,8 @@ hidden
           <p data-step="4" data-intro="Building a better food system is going to take all of us. Please invite your suppliers, stockists, customers, friends.. everyone! For everyone you invite who signs up, we'll give you a month free, too." rel="tooltip" title="For everyone you invite who signs up, we'll give you a month free!"><a href="/invite/"><i class="fa fa-twitter fa-fw"></i> Invite</a></p>
 
           <p><a href="#" id="help"><i class="fa fa-question-circle fa-fw"></i> Help</a></p> 
-
           <p><a href="/inbox/" id="inbox" title="Inbox"><i class="fa fa-envelope fa-fw"></i> Inbox <span id="spanInbox" class="badge" style="color:red">{{userinfo.notification_count}}</span></a></p> 
+
         </div>
 
 
@@ -488,6 +512,28 @@ hidden
  {% endblock %}  
 </div>
 </div> 
+
+<div class="modal fade" id="modal_signup" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+              <h4 class="modal-title" id="myModalLabel">Signup to FoodTrade</h4>
+            </div>
+            <div class="modal-body">
+              <p><strong>Twitter is about to ask for some permissions from you. </strong></p><p>We want to assure you that we will only post tweets for you when you say so.</p>
+   
+            </div>
+            <div class="modal-footer"> 
+              <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+              
+          <!-- <a href="{% provider_login_url "twitter" process="login" %}" class="btn btn-lg btn-info btn-block"><i class="fa fa-twitter"></i> Continue Login</a> -->
+                       <a href="{% provider_login_url "twitter" process="login" %}"><button type="button" class="btn btn-primary btn-lg"><i class="fa fa-twitter"></i> Continue Registration</button></a>
+              
+            </div>
+          </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 
 <!-- FOOTER --> 
 <div class="container-responsive clearfix" id="footer">    
