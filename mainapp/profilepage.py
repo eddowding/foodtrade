@@ -233,7 +233,7 @@ def edit_profile(request, username):
         # tweetFeedObj.update_tweets(username, first_name, last_name,
         #  description, address, sign_up_as,  lat, lon, usr_type.split(','))
         user_profile_obj = UserProfile()
-        user_profile_obj.update_profile(request.user.id, address, 
+        user_profile_obj.update_profile(request.user.id, description, address, 
             usr_type, sign_up_as, phone, lat, lon, postal_code)
 
         usr = User.objects.get(username=username)
