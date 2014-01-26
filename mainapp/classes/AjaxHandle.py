@@ -513,11 +513,25 @@ class AjaxHandle(AjaxSearch):
             return HttpResponse(json.dumps(parameters))
         else:
             return HttpResponse(json.dumps({'status':0, 'message':'You are not authorized for this action.'}))    
+
     def change_notification_view_status(self, request):
         if request.user.is_authenticated:
             notice_obj = Notification()
             notification_id = request.POST['notification_id']
-            notice_obj.change_notification_view_status(notification_id)
+            this_not = notice_obj.get_notification_by_id(notification_id)
+            notice_obj.change_notification_view_status(notification_id)            
+            if this_not['notification_view_status'] == 'false':
+                return HttpResponse(json.dumps({'status':1, 'notification_id':notification_id, 'message':'Successfully changed status','already':'false'}))
+            else:
+                return HttpResponse(json.dumps({'status':1, 'notification_id':notification_id, 'message':'Successfully changed status', 'already':'true'})) 
+        else:
+            return HttpResponse(json.dumps({'status':0, 'activity':'notification status change', 'message':'You are not authorized to perform this action.'}))
+
+    def change_notification_view_status(self, request):
+        if request.user.is_authenticated:
+            notice_obj = Notification()
+            notification_id = request.POST['notification_id']
+            notice_obj.un_archive_notification(notification_id)            
             return HttpResponse(json.dumps({'status':1, 'notification_id':notification_id, 'message':'Successfully changed status'}))
         else:
             return HttpResponse(json.dumps({'status':0, 'activity':'notification status change', 'message':'You are not authorized to perform this action.'}))
