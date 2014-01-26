@@ -47,7 +47,7 @@ class TweetFeed():
         return self.db_object.get_all(self.table_name,{'parent_tweet_id':parent_tweet_id, 'deleted':0}, 'time_stamp')
 
     def delete_tweet(self, tweet_id):
-        self.db_object.update(self.table_name,{'_id':ObjectId(tweet_id)}, {'deleted':1})
+        self.db_object.update(self.table_name,{'_id':ObjectId(str(tweet_id))}, {'deleted':1})
 
     def get_tweet_by_user_id(self, user_id):
         return self.db_object.get_one(self.table_name,{'useruid':int(user_id), 'updates':{"$elemMatch":{'deleted':0}}})
