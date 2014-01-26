@@ -55,10 +55,10 @@ class TweetFeed():
     def search_tweets(self, query):
         return self.db_object.get_all(self.table_name, query, 'time_stamp')
 
-    def insert_tweet(self, value):
+    def insert_tweet(self, user_id, tweet):
         value['deleted'] =0
         value['time_stamp'] = int(time.time())
-        self.db_object.insert_one(self.table_name,value)
+        self.db_object.update(self.table_name,{"useruid":int(user_id)}, {"$push":tweet})
         
     def get_tweet_by_user_ids(self, user_ids):
         return self.db_object.get_all(self.table_name,{"user_id": {"$in": user_ids},'deleted':0}, 'time_stamp')    
@@ -66,13 +66,20 @@ class TweetFeed():
     def get_trending_hashtags(self, start_time_stamp, end_time_stamp):
         mapper = Code("""
             function () {
-            if(this.deleted != 1){
-                     items = this.status.split(' ');
+            for(var i = 0;i<this.updates.length;i++)
+
+            {
+
+            var current = this.updates[i];
+            if(current.deleted != 1){
+                     items = current.status.split(' ');
                      for(i=0;i<items.length;i++){ 
                         if(items[i].indexOf('#')==0){
                                 emit(items[i], 1); 
                                 }
                             }
+                }
+
                 }
             }
             """)
@@ -126,7 +133,7 @@ class TweetFeed():
         
 
     def get_near_people(self, query):
-        return self.db_object.get_distinct(self.table_name,'user.username',query)['count']
+        return self.db_object.get_distinct(self.table_name,'username',query)['count']
 
     def get_search_results(self, keyword, lon, lat, food_filter, type_filter, organisation_filter, query,sort):
         mapper = Code("""

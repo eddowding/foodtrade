@@ -52,7 +52,7 @@ class AjaxHandle(AjaxSearch):
         message = request.POST.get('message')
         noappend = request.POST.get('noappend')
         url = " http://"+request.META['HTTP_HOST']+"/profile/"+request.user.username
-        user_profile = UserProfile()
+
         if message != None and message != "":
             if noappend == 'noappend':
                 tweet = user_twitter.update_status(status = message)
@@ -61,44 +61,22 @@ class AjaxHandle(AjaxSearch):
             else:
                 tweet = user_twitter.update_status(status = message+url)
             tweet_feed = TweetFeed()
-            usr = SocialAccount.objects.get(uid = tweet['user']['id'])
+
             pic_url_list = []
             if tweet['entities'].get('media')!= None:
                 for each in tweet['entities'].get('media'):
                     pic_url_list.append(each['media_url'])
 
-            profile = user_profile.get_profile_by_id(str(usr.user.id))
-            my_lat = profile['latitude']
-            my_lon = profile['longitude']
+
             data = {'tweet_id': tweet['id'],
                     'parent_tweet_id': 0 if tweet['in_reply_to_status_id'] == None else tweet['in_reply_to_status_id'],
                     'status': message,
-                    "useruid": str(user_id),
-                    "foods": [], 
-                    'organisations':[], 
-                    "type_user":[],
-                    "sign_up_as": profile['sign_up_as'],
+                    
                     'picture': pic_url_list,
-                    'user':{
-                    'username':tweet['user']['screen_name'],
-                    'name': tweet['user']['name'],
-                    'profile_img':tweet['user']['profile_image_url'],
-                    'description':tweet['user']['description'],
-                    'place':tweet['user']['location'],
-                    }
+                    
             }
-            if my_lon == '' and my_lat == '':
-                # get ip address
-                ip_addr = get_client_ip(request)
-                #get lat, long and address of user
-                ip_location = get_addr_from_ip(ip_addr)
-                data['location'] = {"type": "Point", "coordinates": [float(ip_location['longitude']), float(ip_location['latitude'])]},
-            else:                
-                data['location'] = {"type": "Point", "coordinates": [float(my_lon), float(my_lat)]}
-
-            #print data
-            tweet_feed.insert_tweet(data)
-            tweet_feed.update_data(user_id)
+           
+            tweet_feed.insert_tweet(int(user_id),data)
 
             if 'invite' in request.POST:
                 if request.POST['invite'] == 'true':
