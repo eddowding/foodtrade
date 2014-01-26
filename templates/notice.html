@@ -106,7 +106,7 @@ Contact
               <div class="row">                
                 <div class="col-sm-12 contact-form">
                     <div class="row">
-                      <div class="col-xs-6 col-md-6 form-group">
+                      <div class="col-xs-12 col-md-12 form-group">
                         From:<p id = "notifier_name" class="form-control" id="notification_from">Roshan (brishi98@gmail.com) </p>
                       </div>
                     </div> 
@@ -235,7 +235,7 @@ function un_archive_notification_success(data){
     if(data['status'] == 1){
       $('#li' + String(data['notification_id'])).hide();
       $('#spanArchive').html('');
-      var val = String(parseInt($('#spanArchive').html() + 1));
+      var val = String(parseInt($('#spanArchive').html() - 1));
       $('#spanArchive').html(val);
     }
   }
@@ -353,10 +353,12 @@ function notification_view_success(data){
   data = jQuery.parseJSON(data);
   if(data['status'] == 1){
       $('#spanArchive').html('');
-      if (not_type == 'unread'){
-        $('#li' + String(data['notification_id'])).hide();
+      if ((not_type == 'unread' && data['already'] == 'false') || (not_type == 'all' && data['already'] == 'false')){
         var val = String(parseInt($('#spanUnread').html() - 1));
         $('#spanUnread').html(val);
+      }
+      if(not_type == 'unread'){
+        $('#li' + String(data['notification_id'])).hide();
       }
   }
 }

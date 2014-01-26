@@ -117,7 +117,7 @@ class SignupForm(forms.Form):
                         'notification_time':time.mktime(datetime.datetime.now().timetuple()),
                         'notification_type':'Joined FoodTrade',
                         'notification_view_status':'false',
-                        'notification_arcived_status':'false',
+                        'notification_archived_status':'false',
                         'notifying_user':str(screen_name)
                         })
             except:
