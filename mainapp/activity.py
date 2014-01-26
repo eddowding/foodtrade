@@ -29,8 +29,8 @@ def home(request):
         user_profile_obj = UserProfile()
         user_profile = user_profile_obj.get_profile_by_id(str(user_id))
         
-        default_lon = float(user_profile['longitude'])
-        default_lat = float(user_profile['latitude'])
+        default_lon = float(user_profile['latlng']['coordinates'][0])
+        default_lat = float(user_profile['latlng']['coordinates'][1])
         user_info = UserInfo(user_id)
         parameters['userinfo'] = user_info
         default_location = user_profile['zip_code']
@@ -73,7 +73,9 @@ def home(request):
 
 
     search_handle = Search(keyword=keyword, lon = my_lon, lat =my_lat, place = location, foods=foods, business=businesses, organisation=organisations, sort=sort)
-    results = search_handle.search()
+    search_results = search_handle.search_all()
+    results =search_results['results'][:20]
+
     for i in range(len(results)):
         distance_text = ""
         # try:
@@ -85,24 +87,27 @@ def home(request):
         # else:
         #     distance_text = str(lonlat_distance*1000) + " m"
         distance_text = str(lonlat_distance) + " miles"
-        time_elapsed = int(time.time()) - results[i]['time_stamp']
-        if time_elapsed<60:
-            time_text = str(time_elapsed) + 'seconds'
-        elif time_elapsed < 3600:
-            minutes = time_elapsed/60
-            time_text = str(minutes) + 'minutes'
-        elif time_elapsed < 3600*24:
-            hours = time_elapsed/3600
-            time_text = str(hours) + 'hours'
-        elif time_elapsed < 3600*24*365:
-            days = time_elapsed/3600/24
-            time_text = str(days) + 'days'
-        else:
-            years = time_elapsed/3600/24/365
-            time_text = str(years) + 'years'
+        try:
+            time_elapsed = int(time.time()) - results[i]['time_stamp']
+            
 
-        # except:
-        #    pass
+            if time_elapsed<60:
+                time_text = str(time_elapsed) + 'seconds'
+            elif time_elapsed < 3600:
+                minutes = time_elapsed/60
+                time_text = str(minutes) + 'minutes'
+            elif time_elapsed < 3600*24:
+                hours = time_elapsed/3600
+                time_text = str(hours) + 'hours'
+            elif time_elapsed < 3600*24*365:
+                days = time_elapsed/3600/24
+                time_text = str(days) + 'days'
+            else:
+                years = time_elapsed/3600/24/365
+                time_text = str(years) + 'years'
+
+        except:
+           time_text = ""
 
         results[i]['distance_text'] = distance_text
         results[i]['time_elapsed'] = time_text
@@ -114,7 +119,7 @@ def home(request):
     parameters['search'] = {'query':keyword, 'place':location, 'lon':my_lon, 'lat':my_lat}
 
     # For food Filters
-    food_filters = search_handle.get_food_filters()
+    food_filters = search_results["foods"]
     food_filters_count = 0
     for f in food_filters:
         food_filters_count = food_filters_count + f['value']
@@ -123,7 +128,7 @@ def home(request):
 
 
     # For business Filter
-    business_filters = search_handle.get_business_filters()
+    business_filters = search_results["businesses"]
     business_filters_count = 0
     for f in business_filters:
         business_filters_count = business_filters_count + f['value']
@@ -132,7 +137,7 @@ def home(request):
 
 
     # For organisation Filter
-    organisation_filters = search_handle.get_organisation_filters()
+    organisation_filters = search_results["organisations"]
     organisation_filters_count = 0
     for f in organisation_filters:
         organisation_filters_count = organisation_filters_count + f['value']

@@ -83,17 +83,18 @@ def gen_tradeconnection_userprofile(third_pk, userid, user, name, description, n
                 con = { 'orguid': userid, 'memberuid': rand_no}
                 org_obj.create_member(con)
 
-    tradeconnection_userprofile_fields = {"username":user, "description": description, "name":name, "profile_img":"https://pbs.twimg.com/profile_images/378800000141996074/6a363e3c4f2a84a956c3cb27c50b2ca0_normal.png", "useruid": str(userid), "sign_up_as": sign_up_types[0],
-                                          "type_user":str(','.join(type_user)),
+    latlng = {"type" : "Point", "coordinates" : [float(new_location[2]),float(new_location[1])] } #copy coordinated from above lat-lon of user.
+       
+    tradeconnection_userprofile_fields = {"username":user, 'twitter_name':user, "description": description, "name":name, "profile_img":"https://pbs.twimg.com/profile_images/378800000141996074/6a363e3c4f2a84a956c3cb27c50b2ca0_normal.png", "useruid": userid, "sign_up_as": sign_up_types[0],
+                                          "type_user":type_user,
                                             "zip_code": new_location[0], "address": new_location[3],
-                                           "latitude": float(new_location[1]), "longitude": float(new_location[2]), 
+                                           "latlng":latlng, "foods":foods, "organisations":[]
                                            }
                                           #userid from above, sign_up_as is string = Individual, or Food Business or Organization,
                                           # zip ode random, lat and lon from zip code.
-    userprofile = UserProfile()
-    userprofile.create_profile(tradeconnection_userprofile_fields)
     
-
+    
+    tradeconnection_userprofile_fields["updates"] = []
 
     rand_no = int(random.randrange(1,3))
     tweet_feed = TweetFeed()
@@ -118,15 +119,15 @@ def gen_tradeconnection_userprofile(third_pk, userid, user, name, description, n
         if rand_no>90:
             parent_tweet_id = int(random.randrange(previous_tweet_id,tweet_id))
 
-        tradeconnection_tweets_fields = {"status":status, "useruid": str(userid), "sign_up_as": sign_up_types[0],
-                                            "foods": foods, 'organisations':[], "type_user":type_user, "parent_tweet_id":parent_tweet_id,  "deleted":0, 
-                                         "tweet_id":tweet_id, "user": tradeconnection_tweets_fields_user, "time_stamp":tweet_time,
-                                          "location": tradeconnection_tweets_fields_location }
+        tradeconnection_tweets_fields = {"status":status, "parent_tweet_id":parent_tweet_id,  "deleted":0, 
+                                         "tweet_id":tweet_id, "time_stamp":tweet_time}
 
 
         
-        tweet_feed.insert_tweet(tradeconnection_tweets_fields)
+        tradeconnection_userprofile_fields["updates"].append(tradeconnection_tweets_fields)
         tweet_id = tweet_id +1
+    userprofile = UserProfile()
+    userprofile.create_profile(tradeconnection_userprofile_fields)
     # tweet_feed.update_data(userid)
 
 

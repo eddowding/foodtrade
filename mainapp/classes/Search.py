@@ -1,9 +1,41 @@
 import re
 
-from TweetFeed import TweetFeed, UserProfile
+# from TweetFeed import TweetFeed, UserProfile
 
 from bson.son import SON
 from bson.objectid import ObjectId
+from MongoConnection import MongoConnection
+import json
+import operator
+
+
+class UserProfile():
+    def __init__ (self):
+        self.db_object = MongoConnection("localhost",27017,'foodtrade')
+        self.table_name = 'userprofile'
+        self.db_object.create_table(self.table_name,'useruid')
+        self.db_object.ensure_index(self.table_name,'latlng')
+
+  
+    def get_profile_by_id(self,user_id):
+        return self.db_object.get_one(self.table_name,{'useruid': user_id})
+
+
+    def get_profile_by_type(self, type_usr):
+        return self.db_object.get_all(self.table_name,{'sign_up_as':type_usr})
+
+    def create_profile (self, value):
+        self.db_object.insert_one(self.table_name,value)
+    def update(self, where, what):
+        return self.db_object.update(self.table_name, where, what)
+
+    def agg(self,query):
+        return self.db_object.aggregrate_all(self.table_name,query)
+
+    def find (self, query):
+        return self.db_object.get_all(table_name=self.table_name,conditions=query, sort_index ='_id', limit=5000)
+
+
 class Search():
 
     """docstring for UserConnections"""
@@ -16,132 +48,190 @@ class Search():
         self.business = business
         self.organisation = organisation
         self.sort = sort
+    def get_result_fields(self,type_result):
+        return { "$push": {
+        "user":{"name":"$name", 
+        "address":"$address",
+        "profile_img":"$profile_img",
+        "description":"$description",
+        "username":"$username"},
+        "useruid":"$useruid",
+        "type_user":"$type_user",
+        "parent_tweetuid":"$parent_tweetuid",
+        "status":"$"+type_result,
+        "distance":"$distance",
+        "location":"$latlng",
+        "organisations":"$organisations",
+        "foods":"$foods",
+        "sign_up_as":"$sign_up_as",
+        "time_stamp":"$updates.time_stamp",
+        }}
 
 
-
-    def search(self, search_by="Updates"):
-        return self.search_updates()
-        if search_by == "updates":
-            pass
-        else:
-            return self.search_profiles()
-
-
-    def search_profiles(self):
-
-        tweet_search_object = UserProfile()
-        search_results = tweet_search_object.get_search_results(self.keyword, self.lon, self.lat, self.foods, self.business, self.organisation,query_string,self.sort)
-        full_search_results = []
-        for rs in search_results:
-            result_id = rs['uid']['id']
-            result_id_obj=ObjectId(result_id)
-            result_json = tweet_search_object.search_tweets({"_id":result_id_obj})[0]
-            result_json['distance'] = rs['value']['distance']
-            full_search_results.append(result_json)
-
-        return full_search_results
-        pass
-
-
-
+    def item_counter(self, item_list):
+        counter = {}
+        try:
+            for it in item_list:
+                try:
+                    counter[it] = counter[it] + 1
+                except:
+                    
+                    counter[it] = 1
+             
+        except:
+            counter = {}
+            for item in item_list:
+                for it in item:
+                    try:
+                        counter[it] = counter[it] + 1
+                    except:
+                        try:
+                            counter[it] = 1
+                        except:
+                            pass
+                            # print "error hash", it
+    
+            
 
         
-    def search_updates(self):
+        sorted_counter = sorted(counter.iteritems(), key=operator.itemgetter(1),reverse=True)
+        return [{"uid":value,"value":label} for value, label in sorted_counter]
+ 
+
+    def search_all(self):
         query_string = {}
-        # if self.keyword !="":
-        #     keyword_like = re.compile(self.keyword + '+', re.IGNORECASE)
-        #     query_string['$or'] = [{'status':{"$regex": keyword_like, '$options': '-i'}},{'user.name':{"$regex": keyword_like, '$options': '-i'}},{'user.username':{"$regex": keyword_like, '$options': '-i'}},{'user.description':{"$regex": keyword_like, '$options': '-i'}}]
+        agg_pipeline = []
+        or_conditions = []
+        if self.keyword !="":
+            keyword_like = re.compile(self.keyword + '+', re.IGNORECASE)
+            reg_expression = {"$regex": keyword_like, '$options': '-i'}
+
+
+            search_variables = ["sign_up_as", "name", "description", "username", "twitter_name"]
             
-        if(self.lon != "" and self.lat != ""):
-            query_string['location'] = { "$near" : [ float(self.lon), float(self.lat)] , "$maxDistance": 0 } #('$near', {'lat': float(self.lat), 'long': float(self.lon)}), ('$maxDistance', 160.934)]) 
+            
+            for search_item in search_variables:
+                or_conditions.append({search_item:reg_expression})
+            status_query ={'updates':{"$elemMatch":{'status':reg_expression}}}
+            or_conditions.append(status_query)
+            or_conditions.append({'updates.status':reg_expression})
+            query_string['$or'] = or_conditions
+
+        # if(self.lon != "" and self.lat != ""):
+        #     query_string['latlng'] = {"$near":{"$geometry":{"type":"Point", "coordinates":[float(self.lon), float(self.lat)]}, "$maxDistance":1609340}} #{ "$near" : [ float(self.lon), float(self.lat)] , "$maxDistance": 160.934 } #('$near', {'lat': float(self.lat), 'long': float(self.lon)}), ('$maxDistance', 160.934)]) 
             # query_string['location'] = {"$near":{"$geometry":{"type":"Point", "coordinates":[float(self.lon), float(self.lat)]}, "$maxDistance":160.934}}
             pass
+        and_query =[]
+        if len(self.foods) > 0:
+            and_query.append({"foods": {"$all":self.foods}})
+            query_string["$and"] = and_query
+        if len(self.business) > 0:
+            and_query.append({"type_user":{"$all":self.business}})
+            query_string["$and"] = and_query
+        if len(self.organisation) > 0:
+            and_query.append({"organisations":{"$all":self.organisation}})
+            query_string["$and"] = and_query
+        up = UserProfile()
+        # up.update({"username":"BobbyeRhym"}, {"updates":[]})
+
+        geo_near = {
+                        "$geoNear": {"near": [float(self.lon), float(self.lat)],
+                                    "distanceField": "distance",
+                                    "maxDistance": 160.934,
+                                    # "query": query_string,
+                                    "includeLocs": "latlng",
+                                    "uniqueDocs": True,  
+                                    "spherical":True,
+                                    "limit":5000,
+                                    "distanceMultiplier":6371                          
+                                  }
+                      }
+
+
+        agg_pipeline.append(geo_near)
+        agg_pipeline.append({ '$match':query_string})
+
+       
+        agg_pipeline.append({ '$match':{"updates":{"$size":0}}})
+        if self.sort == "time":
+            sort_text = "updates.time_stamp"
+        else:
+            sort_text = "distance"
+        
+
+        # print sort_text
+        
+        
+        agg_pipeline.append({"$sort": SON([(sort_text, -1), ("time_stamp", -1)])})
+
+        next_index = 4
+        if len(or_conditions) > 0:
+            next_index = 5
+            agg_pipeline.append({ '$match':{"$or":or_conditions}})
+
+
+        group_fields = {}
+        group_fields["_id"] = "all"
+        group_fields["foods"] = { "$push": "$foods" }
+        group_fields["businesses"] = { "$push": "$type_user" }
+        group_fields["organisations"] = { "$push": "$organisations"}
+
+        group_fields["results"] = self.get_result_fields("description")
+        
+        agg_pipeline.append({"$group": group_fields})
+        
+        agg_pipeline.append({ "$limit" : 20 })
+
+        
+        
+        profiles = up.agg(agg_pipeline)
+        agg_pipeline[2] = {"$unwind": "$updates"}
+
+        group_fields["results"] = self.get_result_fields("updates.status")
+        # agg_pipeline[next_index] = {"$group":group_fields}
+        statuses = up.agg(agg_pipeline)
+
+        if len(profiles)>0:
+            if len(statuses)>0:
+               
+                profiles[0]["foods"].extend(statuses[0]["foods"])
+                profiles[0]["businesses"].extend(statuses[0]["businesses"])
+                profiles[0]["organisations"].extend(statuses[0]["organisations"])
+                profiles[0]["results"].extend(statuses[0]["results"])
+        else:
+            profiles = statuses
+
+        
+        if len(profiles)>0:
+
+            results = profiles[0]
+        else:
+            return {"foods":[], "businesses":[], "organisations":[],"results":[]}
+
+
+        foods_list = results["foods"]
+
+        foods_counter = self.item_counter(foods_list)
+        results["foods"] = foods_counter
+
+        businesses_list = results["businesses"]
+        businesses_counter = self.item_counter(businesses_list)
+        results["businesses"] = businesses_counter
+
+        organisations_list = results["organisations"]
+        organisations_counter = self.item_counter(organisations_list)
+        results["organisations"] = organisations_counter
+        # print len(results['results'])
+        # print json.dumps(results)
+        # print results
+        return results
+        # print json.dumps(len(up.find(query_string)))
+        # print json.dumps(up.find(query_string))
+
+sh = Search(keyword="sujit", lon = 85.3363578, lat=27.7059892, place = "", foods=[], business=['Compost','Animal Feed'], organisation=[],sort="")
+print sh.search_all()
+
 
         
 
 
-# aggregate_query = [{
-        #                 "$geoNear": {"near": [float(self.lon), float(self.lat)],
-        #                             "distanceField": "distance",
-        #                             "maxDistance": 160.934,
-        #                             # "query": query_string,
-        #                             # "includeLocs": "location.coordinates",
-        #                             "uniqueDocs": True,  
-        #                             "spherical":True,
-        #                             "limit":20,
-        #                             "distanceMultiplier":6371                          
-        #                           }
-        #               },
-        #               { '$match':query_string},
-        #               {"$sort": SON([("distance", 1), ("_id", -1)])}
-        #               ]
-
-
-        tweet_search_object = TweetFeed()
-        search_results = tweet_search_object.get_search_results(self.keyword, self.lon, self.lat, self.foods, self.business, self.organisation,query_string,self.sort)
-        full_search_results = []
-        for rs in search_results:
-            result_id = rs['uid']['id']
-            result_id_obj=ObjectId(result_id)
-            result_json = tweet_search_object.search_tweets({"_id":result_id_obj})[0]
-            result_json['distance'] = rs['value']['distance']
-            full_search_results.append(result_json)
-
-        return full_search_results
-    def get_food_filters(self):
-        query_string = {}
-        # if self.keyword !="":
-        #     keyword_like = re.compile(self.keyword + '+', re.IGNORECASE)
-        #     query_string['$or'] = [{'status':{"$regex": keyword_like, '$options': '-i'}},{'user.name':{"$regex": keyword_like, '$options': '-i'}},{'user.username':{"$regex": keyword_like, '$options': '-i'}},{'user.description':{"$regex": keyword_like, '$options': '-i'}}]
-            
-        if(self.lon != "" and self.lat != ""):
-            query_string['location'] = {"$near":{"$geometry":{"type":"Point", "coordinates":[float(self.lon), float(self.lat)]}, "$maxDistance":160.934}}
-            pass
-
-        tweet_search_object = TweetFeed()
-        search_results = tweet_search_object.get_all_foods(self.keyword, self.lon, self.lat, self.foods, self.business, self.organisation,query_string)
-       
-
-
-        # search_results = tweet_search_object.aggregrate(aggregate_query)
-        # search_results = tweet_search_object.search_tweets(query_string)
-        return search_results
-
-    def get_business_filters(self):
-        query_string = {}
-        # if self.keyword !="":
-        #     keyword_like = re.compile(self.keyword + '+', re.IGNORECASE)
-        #     query_string['$or'] = [{'status':{"$regex": keyword_like, '$options': '-i'}},{'user.name':{"$regex": keyword_like, '$options': '-i'}},{'user.username':{"$regex": keyword_like, '$options': '-i'}},{'user.description':{"$regex": keyword_like, '$options': '-i'}}]
-            
-        if(self.lon != "" and self.lat != ""):
-            query_string['location'] = {"$near":{"$geometry":{"type":"Point", "coordinates":[float(self.lon), float(self.lat)]}, "$maxDistance":160.934}}
-            pass
-
-        tweet_search_object = TweetFeed()
-        search_results = tweet_search_object.get_all_businesses(self.keyword, self.lon, self.lat, self.foods, self.business, self.organisation,query_string)
-       
-
-
-        # search_results = tweet_search_object.aggregrate(aggregate_query)
-        # search_results = tweet_search_object.search_tweets(query_string)
-        return search_results
-
-
-    def get_organisation_filters(self):
-        query_string = {}
-        # if self.keyword !="":
-        #     keyword_like = re.compile(self.keyword + '+', re.IGNORECASE)
-        #     query_string['$or'] = [{'status':{"$regex": keyword_like, '$options': '-i'}},{'user.name':{"$regex": keyword_like, '$options': '-i'}},{'user.username':{"$regex": keyword_like, '$options': '-i'}},{'user.description':{"$regex": keyword_like, '$options': '-i'}}]
-            
-        if(self.lon != "" and self.lat != ""):
-            query_string['location'] = {"$near":{"$geometry":{"type":"Point", "coordinates":[float(self.lon), float(self.lat)]}, "$maxDistance":160.934}}
-            pass
-
-        tweet_search_object = TweetFeed()
-        search_results = tweet_search_object.get_all_organisations(self.keyword, self.lon, self.lat, self.foods, self.business, self.organisation,query_string)
-       
-
-
-        # search_results = tweet_search_object.aggregrate(aggregate_query)
-        # search_results = tweet_search_object.search_tweets(query_string)
-        return search_results

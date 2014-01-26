@@ -38,6 +38,10 @@ class MongoConnection():
         print value
         self.db[table_name].insert(value)
 
+    def update_push(self, table_name, where, what):
+        #print where, what
+        self.db[table_name].update(where,{"$push":what},upsert=False)
+
     def update(self, table_name, where, what):
         #print where, what
         self.db[table_name].update(where,{"$set":what},upsert=False)
