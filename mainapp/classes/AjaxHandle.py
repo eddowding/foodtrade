@@ -523,7 +523,8 @@ class AjaxHandle(AjaxSearch):
                 processed_notice['my_email'] = User.objects.get(username = request.user.username).email
                 processed_notice['notification_id'] = eachNotification['uid']['id']
                 processed_notice['notifying_user'] = eachNotification['notifying_user']
-                processed_notice['notification_message'] = eachNotification['notification_message']
+                processed_notice['notification_message'] = eachNotification['notification_message'][0:50] + '....'
+                processed_notice['notification_message_full'] = eachNotification['notification_message']
                 processed_notice['time_elapsed'] = calculate_time_ago(eachNotification['notification_time'])
                 processed_notice['notifying_user_profile'] = notifying_user_profile
                 processed_notice['notification_view_status'] = eachNotification['notification_view_status']
@@ -534,3 +535,11 @@ class AjaxHandle(AjaxSearch):
             return HttpResponse(json.dumps(parameters))
         else:
             return HttpResponse(json.dumps({'status':0, 'message':'You are not authorized for this action.'}))    
+    def change_notification_view_status(self, request):
+        if request.user.is_authenticated:
+            notice_obj = Notification()
+            notification_id = request.POST['notification_id']
+            notice_obj.change_notification_view_status(notification_id)
+            return HttpResponse(json.dumps({'status':1, 'notification_id':notification_id, 'message':'Successfully changed status'}))
+        else:
+            return HttpResponse(json.dumps({'status':0, 'activity':'notification status change', 'message':'You are not authorized to perform this action.'}))
