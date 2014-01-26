@@ -87,6 +87,11 @@ h2 {
 	box-shadow: 0 1px 2px rgba(0,0,0,0.25) inset;
 }
 
+
+.ftstrip-mid {
+  height: 4px
+}
+
 .ftstrip-mini {
 	height: 1px
 }
@@ -825,10 +830,10 @@ margin:0;
 border-radius: 4px;
 clear: both;
 }
-
+/*
 .lead {
   color: #777;
-}
+}*/
 
 .showcase .row {
   padding: 50px 0;
