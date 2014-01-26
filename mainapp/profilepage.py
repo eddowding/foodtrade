@@ -56,7 +56,9 @@ def display_profile(request, username):
     parameters['screen_name'] = "@" + account.extra_data['screen_name']
 
     tweet_feed_obj = TweetFeed()
-    updates = tweet_feed_obj.get_tweet_by_user_id(str(usr.id))
+    user_profile = tweet_feed_obj.get_tweet_by_user_id(str(usr.id))
+    updates = user_profile["updates"]
+
     for i in range(len(updates)):
         time_elapsed = int(time.time()) - updates[i]['time_stamp']
         if time_elapsed<60:
