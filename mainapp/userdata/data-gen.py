@@ -85,7 +85,7 @@ def gen_tradeconnection_userprofile(third_pk, userid, user, name, description, n
 
     latlng = {"type" : "Point", "coordinates" : [float(new_location[2]),float(new_location[1])] } #copy coordinated from above lat-lon of user.
        
-    tradeconnection_userprofile_fields = {"username":user, 'twitter_name':user, "description": description, "name":name, "profile_img":"https://pbs.twimg.com/profile_images/378800000141996074/6a363e3c4f2a84a956c3cb27c50b2ca0_normal.png", "useruid": userid, "sign_up_as": sign_up_types[0],
+    tradeconnection_userprofile_fields = {"username":user, 'screen_name':user, "description": description, "name":name, "profile_img":"https://pbs.twimg.com/profile_images/378800000141996074/6a363e3c4f2a84a956c3cb27c50b2ca0_normal.png", "useruid": userid, "sign_up_as": sign_up_types[0],
                                           "type_user":type_user,
                                             "zip_code": new_location[0], "address": new_location[3],
                                            "latlng":latlng, "foods":foods, "organisations":[]
