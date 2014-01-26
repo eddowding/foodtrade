@@ -115,11 +115,10 @@ h2 {
 }
  
 #sortby {
-  border: 1px solid #eee;
+  border-bottom: 1px solid #eee;
   padding: 3px 0; 
   border-width: 1px 0;
-  margin-bottom: 5px;
-  margin-top: -10px; 
+  margin-bottom: 5px; 
 }
 
 .tt-hint
@@ -172,7 +171,7 @@ background: #eee;
 }
 
 #logos .thumbnail > img {
-  height: 30px;
+  height: 60px;
 }
 
 #partners .thumbnail > img  {
@@ -281,6 +280,15 @@ article .content h4 {
 .card-individual .numbers {
   background: rgba(97,174,50,0.3) !important;
   padding: 0 5px;
+}
+
+
+.Individual .tags-biztype {
+  display: none;
+}
+
+.chat li.Individual {
+  border-left: 2px solid rgba(97,174,50,0.3);
 }
 
 /********************************/
