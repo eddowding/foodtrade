@@ -881,6 +881,10 @@ clear: both;
   color: #666;
 }
 
+.showcase .btn {
+  text-shadow: 1px 1px 1px rgba(0,0,0,0.6);
+}
+
 /********************************/
 /**  REGISTRATION              **/
 /********************************/
