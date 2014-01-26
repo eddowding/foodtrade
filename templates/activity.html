@@ -6,7 +6,7 @@
  
  
 
-<div class="container-responsive block-center showcase">
+<div class="container-responsive block-center">
 
 
     <div class="col-md-5 col-sm-5 {% if not user.is_authenticated %} col-md-offset-1 col-sm-offset-1 {% endif %}" id="activity_switcher">
@@ -143,7 +143,7 @@
         </div>
 
         <div class="reply well well-sm" style="margin:0;"> 
-          <input class="form-control input-sm enterhandler"  class="btn btn-success" {% if not user.is_authenticated %}  title="Please login to use this feature." {% endif %} type="text" id="replyid_{{forloop.counter}}" placeholder="Reply to @{{result.user.username}}" onfocus="ShowReply('replyid_{{forloop.counter}}', '@{{result.user.username}}')" onblur="BlurReply('replyid_{{forloop.counter}}', '@{{result.user.username}}')">
+          <input class="form-control input-sm enterhandler"  {% if not user.is_authenticated %} rel="tooltip" title="Please login to use this feature." {% endif %} type="text" id="replyid_{{forloop.counter}}" placeholder="Reply to @{{result.user.username}}" onfocus="ShowReply('replyid_{{forloop.counter}}', '@{{result.user.username}}')" onblur="BlurReply('replyid_{{forloop.counter}}', '@{{result.user.username}}')">
         </div>
     </li>
   {% endfor %}

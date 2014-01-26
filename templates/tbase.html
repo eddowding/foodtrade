@@ -102,7 +102,7 @@ background: #eee;
           </div>
 
           <a href="/" class="navbar-brand visible-md visible-lg">
-            <img src="{% static "images/logo.png" %}"alt="FoodTrade logo"   />
+            <img src="{% static "images/logo.png" %}" alt="FoodTrade logo"   />
           </a>
 
         </div> 
@@ -120,36 +120,32 @@ background: #eee;
             <input type="hidden" name="lon" id="lon" value="{{search.lon}}"/>
             <input type="hidden" name="lat" id="lat" value="{{search.lat}}"/>
 
-<!-- <input type="hidden" name="search" id="search_by" value="Updates" />
-<div class="input-group-btn">
-  <button type="submit" class="btn btn-success"> <i class="fa fa-search"></i> <span id="current_search_option">Updates</span></button>
-  <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown">
-    <span class="caret"></span>
-    <span class="sr-only">Toggle Dropdown</span>
-  </button>
-  <ul class="dropdown-menu" role="menu">
-    <li id="search_options"><a onclick="select_search_by('Profiles')">Profiles</a></li>
-  </ul>
-</div> -->
+            <!-- <input type="hidden" name="search" id="search_by" value="Updates" />
+            <div class="input-group-btn">
+              <button type="submit" class="btn btn-success"> <i class="fa fa-search"></i> <span id="current_search_option">Updates</span></button>
+              <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown">
+                <span class="caret"></span>
+                <span class="sr-only">Toggle Dropdown</span>
+              </button>
+              <ul class="dropdown-menu" role="menu">
+                <li id="search_options"><a onclick="select_search_by('Profiles')">Profiles</a></li>
+              </ul>
+            </div> -->
 
-<button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+            <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+ 
+            <script type="text/javascript">
+              function select_search_by(search_by)
+              {
+                  $("#search_by").val(search_by);
+                  var current_option = (search_by == "Updates")?"Updates":"Profiles";
+                  var next_option = (search_by != "Updates")?"Updates":"Profiles";
+                  $("#current_search_option").html(current_option);
+                  $("#search_options").html('<a onclick="select_search_by(\''+next_option+'\')">'+next_option+'</a>');
 
-
-
-
-<script type="text/javascript">
-  function select_search_by(search_by)
-  {
-      $("#search_by").val(search_by);
-      var current_option = (search_by == "Updates")?"Updates":"Profiles";
-      var next_option = (search_by != "Updates")?"Updates":"Profiles";
-      $("#current_search_option").html(current_option);
-      $("#search_options").html('<a onclick="select_search_by(\''+next_option+'\')">'+next_option+'</a>');
-
-  }
-</script>
+              }
+            </script>
             <!-- <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button> -->
-          </div>
           </form>
         </div>
 
@@ -391,7 +387,7 @@ hidden
           <p data-step="4" data-intro="Building a better food system is going to take all of us. Please invite your suppliers, stockists, customers, friends.. everyone! For everyone you invite who signs up, we'll give you a month free, too." rel="tooltip" title="For everyone you invite who signs up, we'll give you a month free!"><a href="/invite/"><i class="fa fa-twitter fa-fw"></i> Invite</a></p>
 
           <p><a href="#" id="help"><i class="fa fa-question-circle fa-fw"></i> Help</a></p> 
-          <p><a href="/inbox/" id="inbox" title="Inbox"><i class="fa fa-envelope fa-fw"></i> Inbox <span id="spanInbox" class="badge" style="color:red">{{userinfo.notification_count}}</span></a></p> 
+          <p><a href="/inbox/" id="inbox" title="Inbox"><i class="fa fa-envelope fa-fw"></i> Inbox <span id="spanInbox" class="badge pull-right">{{userinfo.notification_count}}</span></a></p> 
 
         </div>
 
@@ -577,14 +573,15 @@ hidden
       <h5>Stay connected</h5>
         <ul class="list-unstyled">
           <li>
-            <a href="http://www.facebook.com/foodtradeHQ"><i class="fa fa-facebook-square fa-2x"></i></a> 
-            <a href="http://www.twitter.com/foodtradeHQ"><i class="fa fa-twitter-square fa-2x"></i></a></li>
-           </li>
+            <a href="http://www.facebook.com/foodtradeHQ"><i class="fa fa-facebook-square fa-2x"></i></a></li><li> 
+            <a href="http://www.twitter.com/foodtradeHQ"><i class="fa fa-twitter-square fa-2x"></i></a></li> 
+        </ul>
+
            <!-- Begin MailChimp Signup Form -->
-<div id="mc_embed_signup">
+<li id="mc_embed_signup">
 <form action="http://sustaination.us2.list-manage1.com/subscribe/post?u=79e1467c02512dbd83bddab5f&amp;id=eeea3ac4c6" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
     <div class="input-group"> 
-      <input type="email" value="" name="EMAIL"  class="form-control required" name="q"  id="mce-EMAIL"  placeholder="Email Address">
+      <input type="email" value="" name="EMAIL"  class="form-control required" id="mce-EMAIL" placeholder="Email Address"> 
       <span class="input-group-btn">
           <button type="submit" class="btn btn-success"> Subscribe</button>
       </span>
@@ -595,11 +592,11 @@ hidden
     <div style="position: absolute; left: -5000px;"><input type="text" name="b_79e1467c02512dbd83bddab5f_eeea3ac4c6" value=""></div>
   </div>    <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
 </form>
- 
-  
+ </li>
+   </ul>
       
 <!--End mc_embed_signup-->     
-        </ul>
+       
       </div>  
     </div>
   </div>
