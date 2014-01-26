@@ -159,7 +159,8 @@ class Search():
             sort_text = "distance"
         
 
-        print sort_text
+        # print sort_text
+        
         
         agg_pipeline.append({"$sort": SON([(sort_text, -1), ("time_stamp", -1)])})
 
@@ -199,7 +200,7 @@ class Search():
                 profiles[0]["results"].extend(statuses[0]["results"])
         else:
             profiles = statuses
-        profiles = statuses
+
         
         if len(profiles)>0:
 
