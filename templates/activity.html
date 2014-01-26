@@ -64,15 +64,13 @@
   <div id="activity"> 
         <ul class="chat">
 
-
-
-
+ 
 
 {% if results %}
 
 {% for result in results %}
 
-    <li class="left clearfix " id="{{result.uid.id}}"><span class="chat-img pull-left">
+    <li class="left clearfix {{result.sign_up_as}}" id="{{result.uid.id}}"><span class="chat-img pull-left">
     <img src="{{result.user.profile_img}}" alt="{{result.user.name}}" class="img-thumbnail" />
     </span>
         <div class="chat-body clearfix">
@@ -113,11 +111,12 @@
 
           {% if type_user|length == 0 or type_user|first == '' %}
           {% else %}
-          <div class="tags tags-biztype">  
-            {% for tag in result.type_user  %}
-                  <a href="/activity/?b={{tag}}">{{tag}}</a>
-                  {% endfor %}
-          </div> {% endif %}
+            <div class="tags tags-biztype">  
+              {% for tag in result.type_user  %}
+                <a href="/activity/?b={{tag}}">{{tag}}</a>
+              {% endfor %}
+            </div> 
+          {% endif %}
             </div>
 
             <p>
