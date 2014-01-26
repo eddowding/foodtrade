@@ -53,6 +53,28 @@ def home(request):
     my_lon = request.GET.get('lon',"")
     my_lat = request.GET.get('lat',"")
     location = request.GET.get('location',default_location)
+    biz_request = request.GET.get('b',"")
+    food_request = request.GET.get('f',"")
+    organisation_request = request.GET.get('o',"")
+
+
+    if len(biz_request)>0:
+        businesses = [biz_request]
+    else:
+        businesses = []
+
+    if len(food_request)>0:
+        foods = [food_request]
+    else:
+        foods = []
+
+    if len(organisation_request)>0:
+        organisations = [organisation_request]
+    else:
+        organisations = []
+
+
+
     if my_lon == "" or my_lat=="":
         my_lon = default_lon
         my_lat = default_lat
@@ -61,15 +83,7 @@ def home(request):
         my_lat = float(my_lat)
         my_lon = float(my_lon)
 
-    organisations =request.GET.get('organisations',"")
-    foods = request.GET.get('foods',"")
-    businesses =request.GET.get('businesses',"")
-    if organisations == "":
-        organisations = []
-    if businesses == "":
-        businesses = []
-    if foods == "":
-        foods = []
+
 
 
     search_handle = Search(keyword=keyword, lon = my_lon, lat =my_lat, place = location, foods=foods, business=businesses, organisation=organisations, sort=sort)
@@ -122,6 +136,8 @@ def home(request):
     food_filters = search_results["foods"]
     food_filters_count = 0
     for f in food_filters:
+        if f["uid"] == food_request or f["uid"].lower() == keyword:
+            f["prev"] = True;
         food_filters_count = food_filters_count + f['value']
     parameters['foods_filter'] = json.dumps(food_filters)
     parameters['food_count'] = int(food_filters_count)
@@ -131,6 +147,8 @@ def home(request):
     business_filters = search_results["businesses"]
     business_filters_count = 0
     for f in business_filters:
+        if f["uid"] == biz_request or f["uid"].lower() == keyword:
+            f["prev"] = True;
         business_filters_count = business_filters_count + f['value']
     parameters['business_filter'] = json.dumps(business_filters)
     parameters['business_count'] = int(business_filters_count)
@@ -140,6 +158,8 @@ def home(request):
     organisation_filters = search_results["organisations"]
     organisation_filters_count = 0
     for f in organisation_filters:
+        if f["uid"] == organisation_request or f["uid"].lower() == keyword:
+            f["prev"] = True;
         organisation_filters_count = organisation_filters_count + f['value']
     parameters['organisation_filter'] = json.dumps(organisation_filters)
     parameters['organisation_count'] = int(organisation_filters_count)

@@ -112,7 +112,7 @@ var card_str = '<div class="card-box"><div class="content"><div class="pull-left
                     for(var j=0;j<type_user.length;j++)
                     {  
                       
-                      card_str +=  '<a href="/activity/?q='+type_user[j]+'">'+type_user[j]+'</a>';
+                      card_str +=  '<a href="/activity/?b='+type_user[j]+'">'+type_user[j]+'</a>';
                      }
                       card_str += '</div></div>';
                 }
