@@ -1,8 +1,12 @@
 {% extends 'tbase.html' %}
-{% load staticfiles %}
+{% load staticfiles %} 
+{% load socialaccount %}
+{% load url from future %}
+{% load i18n %}
+{% include "socialaccount/snippets/login_extra.html" %}
+{% load account %}
 
-{% block content %}
- 
+{% block content %} 
 <div class="col-md-10  {% if not user.is_authenticated %} col-md-offset-1 {% endif %}" id="pricing">
 
 <div class="container-responsive block-center showcase">
@@ -124,21 +128,23 @@ We are a social enterprise working with the mission of <strong>good food, for ev
             <div class="timeline-heading">
               <h4 class="timeline-title">Prizes and funding</h4>
             </div>
-            <p><small class="text-muted"><i class="glyphicon glyphicon-time"></i> Summer 2012</small></p>
+            <p><small class="text-muted"><i class="glyphicon glyphicon-time"></i> Autumn 2012 - Spring 2013</small></p>
             <div class="timeline-body">
-              <p>A good and busy summer. We won <a href="https://www.geovation.org.uk/" target="_blank">GeoVation</a>, and backing from <a href="http://wayra.org/" target="_blank">Wayra</a>. 
+              <p>A good and busy summer. We won <a href="https://www.geovation.org.uk/" target="_blank">GeoVation</a>, and backing from <a href="http://wayra.org/" target="_blank">Wayra</a> and a number of wonderful impact investors. 
               <p>Then we made some stupid mistakes. Motto: careful what you wish for. </p>
             </div>
           </div>
         </li>
         <li class="timeline-inverted">
-          <div class="timeline-badge success"><i class="glyphicon glyphicon-volume-up"></i></div>
+          <div class="timeline-badge warning"><i class="glyphicon glyphicon-volume-up"></i></div>
           <div class="timeline-panel">
             <div class="timeline-heading">
               <h4 class="timeline-title">Spreading the word</h4>
             </div>
+            <p><small class="text-muted"><i class="glyphicon glyphicon-time"></i> Summer 2013</small></p>
             <div class="timeline-body">
-              <p>TED, HRH</p
+              <p>Even though we're not doing quite what we want to do with our service, we're developing credibility as a place to find ideas about food system innovation, tech, and the power of big &amp; open data.</p>
+              <p>We were invited by HRH Prince of Wales to present at a private conference on <a href="http://www.langenburg-forum.de/?page_id=94" target="_blank">Sustainable Regional Food Systems</a> in Germany, and presented at TED (video above).</p>
             </div>
           </div>
         </li>
@@ -150,7 +156,7 @@ We are a social enterprise working with the mission of <strong>good food, for ev
             </div>
             <p><small class="text-muted"><i class="glyphicon glyphicon-time"></i> Summer 2013</small></p>
             <div class="timeline-body">
-              <p>Interns, better crack. Ideas, development</p>
+              <p>Moved to Bristol, and with the help of some great interns from UWE, increased our presence in the South West of the UK, and worked out how to beter scale the parts that worked well.</p>
             </div>
           </div>
         </li>
@@ -162,15 +168,15 @@ We are a social enterprise working with the mission of <strong>good food, for ev
             </div>
             <p><small class="text-muted"><i class="glyphicon glyphicon-time"></i> January 2014</small></p>
             <div class="timeline-body">
-              <p>Mussum ipsum cacilds, vidis litro abertis. Consetis adipiscings elitis. Pra lá , depois div is.</p> 
+              <p>Launch of Version-3 of the site. This is the version we always wanted to build, plus two years of learning. Here's some of the things we'll want to do this year. </p> 
                  <ul>
-<li>Introducing peer-to-peer payments (eg paypal, Dwolla, Ripple, Bitcoin..)</li>
-<li>Analysing your network for synergies (eg sharing deliveries)</li>
-<li>Promotion into public sector and larger contracts</li>
-<li>Local area trade reports</li>
-<li>Linking to more open data</li>
-<li>Discounted membership to other organisations</li>
-</ul>
+                  <li>Add peer-to-peer payments to make it even easier to trade.</li>
+                  <li>Local area &amp; personalised reports to highlight opportunities</li>
+                  <li>Promotion into public sector and larger contracts</li> 
+                  <li>Helping create buying groups</li> 
+                  <li><a href="https://foodtrade.uservoice.com/forums/231923-general" target="_blank">...and much more &raquo;</a></li>
+                </ul>
+                <p>But we don't be able to do any of them unless you sign up!</p>
             </div>
           </div>
         </li> 
@@ -223,6 +229,20 @@ Soon to launch api
 </div>
 
  
+{% if not user.is_authenticated %}   
+<div class="ftstrip ftstrip-mid" style="  margin-top: 50px;" ></div>
+<div style="padding: 20px 0; " class="text-center">
+
+  <span class="lead" style="position: relative;
+top: 5px;
+margin-right: 0px;">You're obviously interested. You should definitely </span>
+  <a type="button" class="btn btn-success btn-lg" href="{% provider_login_url "twitter" process="login" %}"  >  <strong>sign up now &raquo;</strong>
+  </a>
+
+</div>
+<div class="ftstrip ftstrip-mid"></div>
+{% endif %}
+
 <div class="row" id="logos">  
 
 <div class="col-md-12">

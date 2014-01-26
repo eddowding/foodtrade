@@ -50,7 +50,24 @@
 
 </div>
 
+  
+{% if not user.is_authenticated %}   
+<div class="ftstrip ftstrip-mid"></div>
+<div style="padding: 20px 0;" class="text-center">
 
+  <span class="lead" style="position: relative;
+top: 5px;
+margin-right: 20px;"><strong>Already seen enough?</strong></span>
+  <a type="button" class="btn btn-success btn-lg" href="{% provider_login_url "twitter" process="login" %}" style="margin-right: 15px;">
+    <i class="fa fa-user fa-fw"></i> <strong>Sign up now</strong>
+  </a>
+  <span class="lead" style="position: relative;
+top: 5px;">&mdash; it's free for individuals. Forever.</p>
+
+</div>
+<div class="ftstrip ftstrip-mid"></div>
+{% endif %}
+ 
 <div class="row">
 
   <div class="col-sm-6 block-center">
@@ -64,7 +81,7 @@
 </div>
 
 
-  
+
   
 
 <div class="row hero white" style="background-image: url('/static/images/cows.jpg');">
@@ -136,6 +153,19 @@
   </div>
 </div> 
 
+{% if not user.is_authenticated %}   
+<div class="ftstrip ftstrip-mid" style="  margin-top: 50px;" ></div>
+<div style="padding: 20px 0; " class="text-center">
+
+  <span class="lead" style="position: relative;
+top: 5px;
+margin-right: 0px;">You made it this far, it would seem silly not to</span>
+  <a type="button" class="btn btn-success btn-lg" href="{% provider_login_url "twitter" process="login" %}"  >  <strong>sign up now &raquo;</strong>
+  </a>
+
+</div>
+<div class="ftstrip ftstrip-mid"></div>
+{% endif %}
 
 
 <div style="margin-bottom: 100px;"></div>
