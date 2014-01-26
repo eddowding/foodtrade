@@ -55,5 +55,5 @@ def pages(request, page_name):
         parameters['userinfo'] = user_info
         notification_obj = Notification()
         notification = notification_obj.get_notification(request.user.username)
-        parameters['notification'] = json.loads(notification.content)
+        # parameters['notification'] = json.loads(notification.content)
     return render_to_response(page_name+'.html',parameters,context_instance=RequestContext(request))

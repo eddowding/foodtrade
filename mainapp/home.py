@@ -90,25 +90,7 @@ def food_tags(request):
 
 def home(request):
     parameters = {}
-
     if request.user.is_authenticated():
-    #     user_id = request.user.id
-    #     user_info = UserInfo(user_id)
-    #     user_profile_obj = UserProfile()
-    #     userprofile = user_profile_obj.get_profile_by_id(user_id)
-    #     parameters['userprofile'] = UserProfile
-    #     parameters['userinfo'] = user_info
-    #     notification_obj = Notification()
-    #     notification = notification_obj.get_notification(request.user.username)
-    #     parameters['notification'] = json.loads(notification.content)
-    # # parameters={}
-    # # parameters['user'] = request.user
-    # # parameters['total_food_count'] = 2
-    # # parameters['food'] = [{'name': 'Cauliflowers', 'tagcount': 7},{'name': 'Mutton', 'tagcount': 5}]
-    # # parameters['total_business_count'] = 2
-    # # parameters['business'] = [{'name': 'FoodSupply Pvt. Ltd.', 'tagcount': 7},{'name': 'Nina and Hager Meat Industry', 'tagcount': 5}]
-    # # parameters['total_organization_count'] = 2
-    # # parameters['organization'] = [{'name': 'Onion Export', 'tagcount': 7},{'name': 'Bajeko Sekuwa', 'tagcount': 5}]
         return HttpResponseRedirect('/activity/')
     return render_to_response('front.html',parameters,context_instance=RequestContext(request))
 
