@@ -48,6 +48,24 @@ class Search():
         self.business = business
         self.organisation = organisation
         self.sort = sort
+    def get_result_fields(self,type_result):
+        return { "$push": {
+        "user":{"name":"$name", 
+        "address":"$address",
+        "profile_img":"$profile_img",
+        "description":"$description",
+        "username":"$username"},
+        "useruid":"$useruid",
+        "type_user":"$type_user",
+        "parent_tweetuid":"$parent_tweetuid",
+        "status":"$"+type_result,
+        "distance":"$distance",
+        "location":"$latlng",
+        "organisations":"$organisations",
+        "foods":"$foods",
+        "sign_up_as":"$sign_up_as",
+        "time_stamp":"$updates.time_stamp",
+        }}
 
 
     def item_counter(self, item_list):
@@ -57,7 +75,9 @@ class Search():
                 try:
                     counter[it] = counter[it] + 1
                 except:
+                    
                     counter[it] = 1
+             
         except:
             counter = {}
             for item in item_list:
@@ -65,7 +85,11 @@ class Search():
                     try:
                         counter[it] = counter[it] + 1
                     except:
-                        counter[it] = 1
+                        try:
+                            counter[it] = 1
+                        except:
+                            pass
+                            # print "error hash", it
     
             
 
@@ -129,12 +153,19 @@ class Search():
 
        
         agg_pipeline.append({ '$match':{"updates":{"$size":0}}})
-            
+        if self.sort == "time":
+            sort_text = "updates.time_stamp"
+        else:
+            sort_text = "distance"
         
-        agg_pipeline.append({"$sort": SON([("updates.time_stamp", -1), ("time_stamp", -1)])})
 
+        print sort_text
+        
+        agg_pipeline.append({"$sort": SON([(sort_text, -1), ("time_stamp", -1)])})
 
+        next_index = 4
         if len(or_conditions) > 0:
+            next_index = 5
             agg_pipeline.append({ '$match':{"$or":or_conditions}})
 
 
@@ -144,23 +175,7 @@ class Search():
         group_fields["businesses"] = { "$push": "$type_user" }
         group_fields["organisations"] = { "$push": "$organisations"}
 
-        group_fields["results"] = { "$push": {
-        "user":{"name":"$name", 
-        "address":"$address",
-        "profile_img":"$profile_img",
-        "description":"$description",
-        "username":"$username"},
-        "useruid":"$useruid",
-        "type_user":"$type_user",
-        "parent_tweetuid":"$parent_tweetuid",
-        "status":"$updates.status",
-        "distance":"$distance",
-        "location":"$latlng",
-        "organisations":"$organisations",
-        "foods":"$foods",
-        "sign_up_as":"$sign_up_as",
-        "time_stamp":"$updates.time_stamp",
-        }}
+        group_fields["results"] = self.get_result_fields("description")
         
         agg_pipeline.append({"$group": group_fields})
         
@@ -170,6 +185,9 @@ class Search():
         
         profiles = up.agg(agg_pipeline)
         agg_pipeline[2] = {"$unwind": "$updates"}
+
+        group_fields["results"] = self.get_result_fields("updates.status")
+        # agg_pipeline[next_index] = {"$group":group_fields}
         statuses = up.agg(agg_pipeline)
 
         if len(profiles)>0:
@@ -181,12 +199,15 @@ class Search():
                 profiles[0]["results"].extend(statuses[0]["results"])
         else:
             profiles = statuses
-
+        profiles = statuses
+        
         if len(profiles)>0:
 
             results = profiles[0]
         else:
             return {"foods":[], "businesses":[], "organisations":[],"results":[]}
+
+
         foods_list = results["foods"]
 
         foods_counter = self.item_counter(foods_list)
