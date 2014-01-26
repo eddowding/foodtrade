@@ -8,6 +8,10 @@ body {
   padding-top: 58px;
 }
 
+a {
+  color: #468517;
+}
+
 @font-face {
     font-family: 'tradegothicbold';
     src: url('/static/fonts/trade_gothic_bold_condensed_no._20-webfont.eot');
