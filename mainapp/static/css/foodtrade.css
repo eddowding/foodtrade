@@ -147,6 +147,15 @@ background: #eee;
   width: 200px !important;
 }
 
+.chosen-container a { 
+  font-weight: bold;
+  color: green;
+}
+
+.chosen-container li.highlighted a { 
+  color: #fff;
+}
+
 #beta {
   background: #5B9C20;
   z-index: 10000;
@@ -155,6 +164,21 @@ background: #eee;
   text-align: center;
   box-shadow: 0 0 20px rgba(0,0,0,0.5) inset;
 }
+
+#partners .thumbnail,
+#logos .thumbnail {
+  margin-right: 1em;
+  display: inline-block;
+}
+
+#logos .thumbnail > img {
+  height: 30px;
+}
+
+#partners .thumbnail > img  {
+  height: 60px;
+}
+
 
 /********************************/
 /**  FULL HEIGHT SIDEBAR       **/
