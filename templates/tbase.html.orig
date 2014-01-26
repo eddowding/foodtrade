@@ -55,7 +55,6 @@
    var RedIcon = L.Icon.Default.extend({
             options: {
                   iconUrl:'/static/images/map_marker.png',
-<<<<<<< HEAD
 
                   iconRetinaUrl:'/static/images/map_marker.png',
                   iconSize:[18, 18],
@@ -63,20 +62,8 @@
                    popupAnchor:[0, -18],
                   shadowURL: '/static/images/shadow-map_marker.png',
                   shadowRetinaUrl: '/static/images/shadow-map_marker.png',
-      
-      
                   shadowSize:[41, 41],
-                  
                   shadowAnchor: [14,41], 
-=======
-      iconRetinaUrl:'/static/images/map_marker.png',
-      iconSize:[18, 18],
-      iconAnchor:[9, 18],
-      popupAnchor:[0, -18],
-      shadowURL: '/static/images/shadow-map_marker.png',
-      shadowSize: [28, 18],
-      shadowAnchor: [9, 18]
->>>>>>> dc631b3f2e8aed641bd9bbe20b9dfa860909ba2a
             }
          });
          var redIcon = new RedIcon();
@@ -405,7 +392,11 @@ hidden
 
           <p><a href="#" id="help"><i class="fa fa-question-circle fa-fw"></i> Help</a></p> 
 
+<<<<<<< HEAD
+          <p><a href="/inbox/" id="inbox" title="Inbox"><i class="fa fa-envelope fa-fw"></i> Inbox <span id="spanInbox" class="badge" style="color:red">{{userinfo.notification_count}}</span></a></p> 
+=======
           <p><a href="/inbox/" id="inbox" title="Inbox"><i class="fa fa-envelope fa-fw"></i> Inbox <span id="spanArchive" class="badge pull-right"  >{{userinfo.notification_count}}</span></a></p> 
+>>>>>>> 86eb76483538466702d823e3819aafe3d10749e7
         </div>
 
 
@@ -867,30 +858,18 @@ $(function() {
 // pick list containing a mix of places and predicted search terms.
 
 {% if user.is_authenticated %}
-/*  window.setInterval(function(){
+  window.setInterval(function(){
     show_notifications();
-  }, 50000);*/
+  }, 1500000);
 {% endif %}
 function  show_notifications(){
-  ajax_request('getnotification', 'build_notification', {'user':'{{userinfo.username}}'})
+  ajax_request('get_notification_counts', 'update_inbox');
 }
-var change_data;
-function build_notification(data){
+
+function update_inbox(data){
   data = jQuery.parseJSON(data);
-  change_data = data;
-  $('#liNotification').html('');
-  $('#notification').html(String(data['notification_count']));
-  for (eachNotification in data['notifications']){
-      var data_dict = data['notifications'][eachNotification];
-      $('#liNotification').prepend('<li><a href="/profile/' + String(data_dict.notifying_user) + '/" title="' + String(data_dict.notification_message) + '">' +String(data_dict.notification_message).substr(0,20)+'....</a></li>');
-  }
-  if (data['notification_count'] == 0){
-      $('#liNotification').prepend('<li><a href="#">No notifications</a></li>');
-  }
-}
-function clear_notification(){
-  $('#notification').html(String('0'));
-  ajax_request('change_notification_status','','')
+  $('#spanInbox').html('');
+  $('#spanInbox').html(data['unread']);
 }
 
 function validate_login(){
