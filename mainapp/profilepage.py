@@ -57,6 +57,7 @@ def display_profile(request, username):
 
     tweet_feed_obj = TweetFeed()
     updates = tweet_feed_obj.get_tweet_by_user_id(str(usr.id))
+    print updates
     for i in range(len(updates)):
         time_elapsed = int(time.time()) - updates[i]['time_stamp']
         if time_elapsed<60:
