@@ -224,22 +224,29 @@ function un_archive_click(notification_id, notifying_user_name){
 function archive_notification_success(data){
     data = jQuery.parseJSON(data);
     if(data['status'] == 1){
+      ajax_request('get_notification_counts', 'parse_notification_counts');
       $('#li' + String(data['notification_id'])).hide();
-      $('#spanArchive').html('');
-      var val = String(parseInt($('#spanArchive').html() + 1));
-      $('#spanArchive').html(val);
     }
   }
+function parse_notification_counts(data){
+  data =jQuery.parseJSON(data);
+  $('#spanAll').html('');
+  $('#spanAll').html(data['all']);
+  $('#spanArchive').html('');
+  $('#spanArchive').html(data['archived']);
+  $('#spanUnread').html('');
+  $('#spanUnread').html(data['unread']);
+  $('#spanInbox').html('');
+  $('#spanInbox').html(data['unread']);
+}
+
 function un_archive_notification_success(data){
     data = jQuery.parseJSON(data);
     if(data['status'] == 1){
+      ajax_request('get_notification_counts', 'parse_notification_counts');
       $('#li' + String(data['notification_id'])).hide();
-      $('#spanArchive').html('');
-      var val = String(parseInt($('#spanArchive').html() - 1));
-      $('#spanArchive').html(val);
     }
-  }
-
+}
 $(document).ready(function(){
   var str = '<li><a id="notification_page_dec" onclick="update_ul_notification_dec()">&laquo;</a></li>';
   for (var i =0; i<5; i++){
@@ -346,20 +353,14 @@ function view_message(notifying_user_profile_name , notifying_user_email, notifi
   $('#notifier_name').html(String(notifying_user_profile_name) + ' (' + notifying_user_email + ')');
   $('#notification_message').html('');
   $('#notification_message').html(String(notification_message));
-  ajax_request('change_notification_view_status', 'notification_view_success', {'notification_id':notification_id})
+  ajax_request('change_notification_view_status', 'notification_view_success', {'notification_id':notification_id});
 }
 
 function notification_view_success(data){
   data = jQuery.parseJSON(data);
   if(data['status'] == 1){
-      $('#spanArchive').html('');
-      if ((not_type == 'unread' && data['already'] == 'false') || (not_type == 'all' && data['already'] == 'false')){
-        var val = String(parseInt($('#spanUnread').html() - 1));
-        $('#spanUnread').html(val);
-      }
-      if(not_type == 'unread'){
-        $('#li' + String(data['notification_id'])).hide();
-      }
+    ajax_request('get_notification_counts', 'parse_notification_counts');
+    $('#li' + String(data['notification_id'])).hide();    
   }
 }
 </script>

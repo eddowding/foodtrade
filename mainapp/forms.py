@@ -84,9 +84,7 @@ class SignupForm(forms.Form):
             screen_name = social_account.extra_data['screen_name']
             invite_accept_obj = InviteAccept()
             invites_obj = Invites()
-            print screen_name, invite_id
             result = invites_obj.check_invited_by_invite_id(str(screen_name), str(invite_id))
-            print result
             try:
                 if(len(result)>0):
                     invited_by = result['from_username']

@@ -602,6 +602,15 @@ class Notification():
                     'notification_archived_status':'false'},
                     sort_index ='notification_time', pageNumber = page_number)}
 
+    def get_notification_counts(self,username):
+        all_notification_count = self.db_object.get_count(self.table_name,
+            {'notification_to':username, 'notification_archived_status':'false'})
+        unread_notification_count = self.db_object.get_count(self.table_name,
+            {'notification_to':username, 'notification_view_status':'false'})
+        archived_notification_count = self.db_object.get_count(self.table_name,
+            {'notification_to':username, 'notification_archived_status':'true'})
+        return {'all':all_notification_count, 'unread':unread_notification_count, 'archived':archived_notification_count}
+
     def get_notification_count(self, username):
         notification_count = self.db_object.get_count(self.table_name,
             {'notification_to':username, 'notification_view_status':'false'})
