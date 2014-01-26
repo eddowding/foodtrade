@@ -8,16 +8,6 @@ var map = L.map('map').setView([map_lat,map_lon], 7);
 		}).addTo(map);
 
 
- 
-
-	L.icon({
-			iconUrl:'/static/images/map_marker.png',
-			iconRetinaUrl:'/static/images/map_marker.png',
-			iconSize:[18, 18],
-			iconAnchor:[9, 18],
-			popupAnchor:[0, -18],
-			shadowURL: '/static/images/shadow-map_marker.png'
-		});
 
 L.circle([map_lat,map_lon], 24140.2, {
 			stroke: 1,
@@ -118,7 +108,7 @@ var card_str = '<div class="card-box"><div class="content"><div class="pull-left
                 }
                   card_str += '</div> ';
 
-			var ctrl = L.marker([parseFloat(current_lat), parseFloat(current_lon)]).addTo(map).bindPopup(card_str);
+			var ctrl = L.marker([parseFloat(current_lat), parseFloat(current_lon)], {icon: redIcon}).addTo(map).bindPopup(card_str);
 			
 			map_controls.push(ctrl);
 

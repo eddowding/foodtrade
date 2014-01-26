@@ -56,7 +56,7 @@ var card_str = '<div class="card-box"><div class="content"><div class="pull-left
                 }
                   card_str += '</div> ';
 
-		 L.marker([parseFloat(map_lat), parseFloat(map_lon)]).addTo(map).bindPopup(card_str);
+		 L.marker([parseFloat(map_lat), parseFloat(map_lon)], {icon: redIcon}).addTo(map).bindPopup(card_str);
 			
 
 
@@ -147,7 +147,7 @@ function reload_connections()
                 }
                   card_str += '</div> ';
 
-			var ctrl = L.marker([parseFloat(current_lat), parseFloat(current_lon)]).addTo(map).bindPopup(card_str);
+			var ctrl = L.marker([parseFloat(current_lat), parseFloat(current_lon)], {icon: redIcon}).addTo(map).bindPopup(card_str);
 			
 			map_controls.push(ctrl);
 
