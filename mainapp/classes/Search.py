@@ -89,7 +89,7 @@ class Search():
                             counter[it] = 1
                         except:
                             pass
-                            # print "error hash", it
+
     
             
 
@@ -155,13 +155,16 @@ class Search():
         agg_pipeline.append({ '$match':{"updates":{"$size":0}}})
         if self.sort == "time":
             sort_text = "updates.time_stamp"
+            sort_order = -1
         else:
             sort_text = "distance"
+            sort_order = 1
         
 
-        print sort_text
+        # print sort_text
+
         
-        agg_pipeline.append({"$sort": SON([(sort_text, -1), ("time_stamp", -1)])})
+        agg_pipeline.append({"$sort": SON([(sort_text, sort_order), ("time_stamp", -1)])})
 
         next_index = 4
         if len(or_conditions) > 0:
@@ -199,7 +202,7 @@ class Search():
                 profiles[0]["results"].extend(statuses[0]["results"])
         else:
             profiles = statuses
-        profiles = statuses
+
         
         if len(profiles)>0:
 
