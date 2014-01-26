@@ -55,29 +55,33 @@ def display_profile(request, username):
     parameters['email'] = usr.email
     parameters['screen_name'] = "@" + account.extra_data['screen_name']
 
-    tweet_feed_obj = TweetFeed()
-    user_profile = tweet_feed_obj.get_tweet_by_user_id(str(usr.id))
-    updates = user_profile["updates"]
+    try:
+        tweet_feed_obj = TweetFeed()
+        user_profile = tweet_feed_obj.get_tweet_by_user_id(str(usr.id))
+        updates = user_profile["updates"]
 
-    for i in range(len(updates)):
-        time_elapsed = int(time.time()) - updates[i]['time_stamp']
-        if time_elapsed<60:
-            time_text = str(time_elapsed) + 'seconds'
-        elif time_elapsed < 3600:
-            minutes = time_elapsed/60
-            time_text = str(minutes) + 'minutes'
-        elif time_elapsed < 3600*24:
-            hours = time_elapsed/3600
-            time_text = str(hours) + 'hours'
-        elif time_elapsed < 3600*24*365:
-            days = time_elapsed/3600/24
-            time_text = str(days) + 'days'
-        else:
-            years = time_elapsed/3600/24/365
-            time_text = str(years) + 'years'
-        updates[i]['time_elapsed'] = time_text
-    parameters['updates'] = updates
-    parameters['updates_count'] = len(updates)
+        for i in range(len(updates)):
+            time_elapsed = int(time.time()) - updates[i]['time_stamp']
+            if time_elapsed<60:
+                time_text = str(time_elapsed) + 'seconds'
+            elif time_elapsed < 3600:
+                minutes = time_elapsed/60
+                time_text = str(minutes) + 'minutes'
+            elif time_elapsed < 3600*24:
+                hours = time_elapsed/3600
+                time_text = str(hours) + 'hours'
+            elif time_elapsed < 3600*24*365:
+                days = time_elapsed/3600/24
+                time_text = str(days) + 'days'
+            else:
+                years = time_elapsed/3600/24/365
+                time_text = str(years) + 'years'
+            updates[i]['time_elapsed'] = time_text
+        parameters['updates'] = updates
+        parameters['updates_count'] = len(updates)
+    except:
+        parameters['updates'] = []
+        parameters['updates_count'] = 0
 
     pno = userprof.get('phone_number')
     if pno == None:
