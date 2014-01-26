@@ -56,8 +56,9 @@ def display_profile(request, username):
     parameters['screen_name'] = "@" + account.extra_data['screen_name']
 
     tweet_feed_obj = TweetFeed()
-    updates = tweet_feed_obj.get_tweet_by_user_id(str(usr.id))
-    print updates
+    user_profile = tweet_feed_obj.get_tweet_by_user_id(str(usr.id))
+    updates = user_profile["updates"]
+
     for i in range(len(updates)):
         time_elapsed = int(time.time()) - updates[i]['time_stamp']
         if time_elapsed<60:
@@ -282,8 +283,8 @@ def get_customers(user_id, logged_id=None):
          'description': account.extra_data['description'],
          'photo': account.extra_data['profile_image_url'],
          'username' : account.extra_data['screen_name'],
-         'latitude': usr_pr['latitude'],
-         'longitude': usr_pr['longitude']
+         'latitude': usr_pr['latlng']['coordinates'][1],
+         'longitude': usr_pr['latlng']['coordinates'][0]
          })
     return final_customers[:10], logged_customer
 
@@ -306,12 +307,12 @@ def get_connections(user_id, logged_in_id = None):
              'description': account.extra_data['description'],
              'photo': account.extra_data['profile_image_url'],
              'username' : account.extra_data['screen_name'],
-             'type': usr_pr['type_user'].split(',')[:3],
+             'type': usr_pr['type_user'][:3],
              'trade_conn_no': user_info.trade_connections_no,
              'food_no': user_info.food_no,
              'org_conn_no': user_info.organisation_connection_no,
-             'latitude': usr_pr['latitude'],
-             'longitude': usr_pr['longitude'],
+             'latitude': usr_pr['latlng']['coordinates'][1],
+             'longitude': usr_pr['latlng']['coordinates'][0],
              'relation': 'buyer'
              })
         except:
@@ -327,12 +328,12 @@ def get_connections(user_id, logged_in_id = None):
              'description': account.extra_data['description'],
              'photo': account.extra_data['profile_image_url'],
              'username' : account.extra_data['screen_name'],
-             'type': usr_pr['type_user'].split(',')[:3],
+             'type': usr_pr['type_user'][:3],
              'trade_conn_no': user_info.trade_connections_no,
              'food_no': user_info.food_no,
              'org_conn_no': user_info.organisation_connection_no,
-             'latitude': usr_pr['latitude'],
-             'longitude': usr_pr['longitude'],
+             'latitude': usr_pr['latlng']['coordinates'][1],
+             'longitude': usr_pr['latlng']['coordinates'][0],
              'relation': 'buyer'
              }
             if data not in final_connections:
@@ -367,12 +368,12 @@ def get_members(user_id, logged_in_id = None):
              'description': account.extra_data['description'],
              'photo': account.extra_data['profile_image_url'],
              'username' : account.extra_data['screen_name'],
-             'type': usr_pr['type_user'].split(','),
+             'type': usr_pr['type_user'],
              'trade_conn_no': user_info.trade_connections_no,
              'food_no': user_info.food_no,
              'org_conn_no': user_info.organisation_connection_no,
-             'latitude': usr_pr['latitude'],
-             'longitude': usr_pr['longitude']
+             'latitude': usr_pr['latlng']['coordinates'][1],
+             'longitude': usr_pr['latlng']['coordinates'][0],
              })
         except:
             pass

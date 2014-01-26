@@ -301,7 +301,7 @@
                                   {% for eachfood in each.foods%}
                           <tr>
                               <!-- <td>{{eachfood.food_name}}</td> -->
-                            <td><a href="/profile/{{each.username}}/"> <img class="pull-left" style="margin:0 50px 0 5px; width:25px;" src={{each.photo}} title="{{each.username}}"/>{{eachfood.food_name}}</a></td>
+                            <td><a href="/profile/{{each.username}}/"> <img class="pull-left" style="margin:0 50px 0 5px; width:25px;" src={{each.photo}} title="{{each.username}}"/></a><a href="/activity/?f={{eachfood.food_name}}">{{eachfood.food_name}}</a></td>
                           </tr> 
                                 {% endfor %}
                               {% endfor %}
@@ -369,7 +369,7 @@
                           <ul class="chat">
                           {% for eachUpdate in updates %}
                               <li class="left clearfix"><span class="chat-img pull-left">
-                                  <img src="{{eachUpdate.user.profile_img}}" />
+                                  <img src="{{userprof.profileimg}}" />
                               </span>
                                   <div class="chat-body clearfix">
                                       <div class="header">

@@ -240,10 +240,10 @@
                           <ul class="chat">
                           {% for eachUpdate in updates %}
                               <li class="left clearfix"><span class="chat-img pull-left">
-                                  <img src="{{eachUpdate.user.profile_img}}" />
+                                  <img src="{{userprof.profileimg}}" />
                               </span>
                                   <div class="chat-body clearfix">
-                                      <div class="header">
+                                      <div class="header">                                                                                                                                                                                                                                                                                                                                                        
                                           <strong class="primary-font">{{eachUpdate.user.name}}</strong> <small class="pull-right text-muted">
                                               <span class="glyphicon glyphicon-time"></span>{{eachUpdate.time_elapsed}} ago</small>
                                       </div>
