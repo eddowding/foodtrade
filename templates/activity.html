@@ -3,9 +3,13 @@
 
 {% block content %}
 
+ 
+ 
+
+<div class="container-responsive block-center showcase">
 
 
-    <div class="col-md-5 col-sm-5" id="activity_switcher">
+    <div class="col-md-5 col-sm-5 {% if not user.is_authenticated %} col-md-offset-1 col-sm-offset-1 {% endif %}" id="activity_switcher">
  
  
 <ul class="nav nav-tabs hidden">

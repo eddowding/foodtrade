@@ -552,6 +552,9 @@ class Notification():
     def save_notification(self,doc):
         return self.db_object.insert_one(self.table_name,doc)
 
+    def get_notification_by_id(self, notification_id):
+        return self.db_object.get_one(self.table_name, {'_id':ObjectId(str(notification_id))})
+
     def change_notification_view_status(self, notification_id):
         self.db_object.update_multi(self.table_name, 
             {'_id':ObjectId(notification_id)}, 
@@ -609,6 +612,9 @@ class Notification():
             {'notification_to':username, 'notification_archived_status':'true'})
         return notification_count    
 
+    def un_archive_notification(self, notification_id):
+        return self.db_object.update(self.table_name,
+            {'_id':ObjectId(str(notification_id))}, {'notification_archived_status':'false'}) 
 
 class TwitterError():
     def __init__ (self):
