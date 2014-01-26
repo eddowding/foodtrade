@@ -201,13 +201,14 @@ class UserProfile():
     def create_profile (self, value):
         self.db_object.insert_one(self.table_name,value)
 
-    def update_profile(self, userid, address, type_usr, sign_up_as, phone, lat, lon, postal_code):
+    def update_profile(self, userid, description, address, type_usr, sign_up_as, phone, lat, lon, postal_code):
         #print phone
         #address = Geocoder.geocode(zipcode)
         #print zipcode, address
         return self.db_object.update(self.table_name,
              {'useruid':int(userid)},
              {'zip_code':str(postal_code),
+             'description':str(description),
              'latlng.coordinates.1':float(lat),
              'latlng.coordinates.0':float(lon),
              'address':str(address),
