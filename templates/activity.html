@@ -11,23 +11,6 @@
 
     <div class="col-md-5 col-sm-5 {% if not user.is_authenticated %} col-md-offset-1 col-sm-offset-1 {% endif %}" id="activity_switcher">
  
- 
-<ul class="nav nav-tabs">
-  <li class="active">
-    <a href="#activity" data-toggle="tab">Activity 
-      <span class="badge">{{userinfo.nearby_individuals_no}}</span>
-    </a>
-  </li>
-  <li>
-    <a href="#biz" data-toggle="tab">Businesses 
-    <span class="badge">{{userinfo.nearby_businesses_no}}</span>
-    </a>
-  </li> 
-</ul>
-
-<div class="tab-content">
-  <div class="tab-pane active" id="near_me">
- 
 
   <div id="update" class="well well-sm">
     
@@ -45,21 +28,37 @@
     </ul>
     </div>
   </div> 
+ 
+<ul class="nav nav-tabs">
+  <li class="active">
+    <a href="#near_me" data-toggle="tab">Activity 
+      <span class="badge">{{userinfo.nearby_individuals_no}}</span>
+    </a>
+  </li>
+  <li>
+    <a href="#biz" data-toggle="tab">Businesses 
+    <span class="badge">{{userinfo.nearby_businesses_no}}</span>
+    </a>
+  </li> 
+</ul>
 
- <div id="sortby" class="clearfix">
+<div class="tab-content">
+  <div class="tab-pane active" id="near_me">
+ 
+   <div id="sortby" class="clearfix">
 
-    <div class="btn-group pull-right">
-      <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown">
-        Sort results
-        <span class="caret"></span>
-      </button>
-      <ul class="dropdown-menu">
-        <li><a onclick="sort_by('distance')"><i class="fa fa-location-arrow fa-fw"></i> Distance from {% if search %} {{ search.place }} {% endif %} {% if not search %} {{userinfo.zip_code}}{% endif %}</a></li>
-        <li><a onclick="sort_by('time')"><i class="fa fa-clock-o fa-fw"></i> Time posted</a></li>
-      </ul>
-    </div> 
+      <div class="btn-group pull-right">
+        <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown">
+          Sort results
+          <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu">
+          <li><a onclick="sort_by('distance')"><i class="fa fa-location-arrow fa-fw"></i> Distance from {% if search %} {{ search.place }} {% endif %} {% if not search %} {{userinfo.zip_code}}{% endif %}</a></li>
+          <li><a onclick="sort_by('time')"><i class="fa fa-clock-o fa-fw"></i> Time posted</a></li>
+        </ul>
+      </div> 
 
- </div>
+   </div>
 
   <div id="activity"> 
         <ul class="chat">

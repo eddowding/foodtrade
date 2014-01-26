@@ -115,11 +115,10 @@ h2 {
 }
  
 #sortby {
-  border: 1px solid #eee;
+  border-bottom: 1px solid #eee;
   padding: 3px 0; 
   border-width: 1px 0;
-  margin-bottom: 5px;
-  margin-top: -10px; 
+  margin-bottom: 5px; 
 }
 
 .tt-hint
