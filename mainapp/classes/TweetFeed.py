@@ -21,6 +21,7 @@ ACCESS_TOKEN = ''
 ACCESS_TOKEN_SECRET =''
 
 
+import json
 
 
 def get_twitter_obj(token, secret):
@@ -35,9 +36,9 @@ def get_twitter_obj(token, secret):
 class TweetFeed():
     def __init__ (self):
         self.db_object = MongoConnection("localhost",27017,'foodtrade')
-        self.table_name = 'tweets'
-        self.db_object.create_table(self.table_name,'parent_tweet_id')
-        self.db_object.ensure_index(self.table_name,'location')
+        self.table_name = 'userprofile'
+        self.db_object.create_table(self.table_name,'useruid')
+        self.db_object.ensure_index(self.table_name,'latlng')
     
     def get_tweet_by_id(self,tweet_id):
         return self.db_object.get_one(self.table_name,{'tweet_id':tweet_id, 'deleted':0})
@@ -54,10 +55,10 @@ class TweetFeed():
     def search_tweets(self, query):
         return self.db_object.get_all(self.table_name, query, 'time_stamp')
 
-    def insert_tweet(self, value):
-        value['deleted'] =0
-        value['time_stamp'] = int(time.time())
-        self.db_object.insert_one(self.table_name,value)
+    def insert_tweet(self, user_id, tweet):
+        tweet['deleted'] =0
+        tweet['time_stamp'] = int(time.time())
+        self.db_object.update_push(self.table_name,{"useruid":int(user_id)},{"updates":tweet})
         
     def get_tweet_by_user_ids(self, user_ids):
         return self.db_object.get_all(self.table_name,{"user_id": {"$in": user_ids},'deleted':0}, 'time_stamp')    
@@ -65,13 +66,20 @@ class TweetFeed():
     def get_trending_hashtags(self, start_time_stamp, end_time_stamp):
         mapper = Code("""
             function () {
-            if(this.deleted != 1){
-                     items = this.status.split(' ');
+            for(var i = 0;i<this.updates.length;i++)
+
+            {
+
+            var current = this.updates[i];
+            if(current.deleted != 1){
+                     items = current.status.split(' ');
                      for(i=0;i<items.length;i++){ 
                         if(items[i].indexOf('#')==0){
                                 emit(items[i], 1); 
                                 }
                             }
+                }
+
                 }
             }
             """)
@@ -121,11 +129,11 @@ class TweetFeed():
             full_name = twitter_user.extra_data['name']
             org_list.append(full_name)
 
-        self.db_object.update(self.table_name, {'useruid':str(user_id)}, {'foods':f_list,'type_user':business_types, 'organisations':org_list})
+        self.db_object.update(self.table_name, {'useruid':int(user_id)}, {'foods':f_list,'type_user':business_types, 'organisations':org_list})
         
 
     def get_near_people(self, query):
-        return self.db_object.get_distinct(self.table_name,'user.username',query)['count']
+        return self.db_object.get_distinct(self.table_name,'username',query)['count']
 
     def get_search_results(self, keyword, lon, lat, food_filter, type_filter, organisation_filter, query,sort):
         mapper = Code("""
@@ -510,8 +518,9 @@ class UserProfile():
         self.table_name = 'userprofile'
         self.db_object.create_table(self.table_name,'useruid')
 
+  
     def get_profile_by_id(self,user_id):
-        return self.db_object.get_one(self.table_name,{'useruid': user_id})
+        return self.db_object.get_one(self.table_name,{'useruid': int(user_id)})
 
     def get_profile_by_username(self, username):
         return self.db_object.get_one(self.table_name,{'username': str(username)})
@@ -527,10 +536,10 @@ class UserProfile():
         #address = Geocoder.geocode(zipcode)
         #print zipcode, address
         return self.db_object.update(self.table_name,
-             {'useruid':str(userid)},
+             {'useruid':int(userid)},
              {'zip_code':str(postal_code),
-             'latitude':str(lat),
-             'longitude':str(lon),
+             'latlng.coordinates.1':float(lat),
+             'latlng.coordinates.0':float(lon),
              'address':str(address),
              'type_user':type_usr,
              'sign_up_as':sign_up_as, 
@@ -833,6 +842,7 @@ class Invites():
         self.db_object.create_table(self.table_name,'username')
 
     def save_invites(self,doc):
+        print doc
         return self.db_object.insert_one(self.table_name,doc)
 
     def check_invitees(self, screen_name):
@@ -878,22 +888,53 @@ class Notification():
 
     def change_notification_archived_status(self, notification_id):
         self.db_object.update_multi(self.table_name, 
-            {'_id':ObjectId(notification_id)}, 
+            {'_id':ObjectId(str(notification_id))}, 
             {'notification_archived_status':'true'})
-        return HttpResponse(json.dumps({'status':1}))
+        return {'status':1, 'activity':'archive', 'notification_id':notification_id, 
+            'message':'Message Archived successfully'}
 
-    def get_notification(self,username):
-        notification_count = self.db_object.get_count(self.table_name,
+    def get_notification(self,username, page_number = 1, n_type = 'unread'):
+        all_notification_count = self.db_object.get_count(self.table_name,
+            {'notification_to':username})
+        unread_notification_count = self.db_object.get_count(self.table_name,
             {'notification_to':username, 'notification_view_status':'false'})
-        return {'notification_count':notification_count, 
-            'notifications':self.db_object.get_paginated_values(self.table_name,
-            {'notification_to':username,'notification_archived_status':'false'}, 
-            sort_index ='notification_time', pageNumber = 1)}
+        archived_notification_count = self.db_object.get_count(self.table_name,
+            {'notification_to':username, 'notification_archived_status':'true'})
+        if n_type == 'unread':
+            return {'archived_notification_count':archived_notification_count, 
+                    'all_notification_count':all_notification_count, 
+                    'unread_notification_count':unread_notification_count, 
+                    'notifications':self.db_object.get_paginated_values(self.table_name,
+                    {'notification_to':username},
+                    sort_index ='notification_time', pageNumber = page_number)}
+
+        elif n_type == 'archive':
+            return {'archived_notification_count':archived_notification_count, 
+                    'all_notification_count':all_notification_count, 
+                    'unread_notification_count':unread_notification_count, 
+                    'notifications':self.db_object.get_paginated_values(self.table_name,
+                    {'notification_to':username,
+                    'notification_archived_status':'true'},
+                    sort_index ='notification_time', pageNumber = page_number)}
+
+        elif n_type == 'all':
+            return {'archived_notification_count':archived_notification_count, 
+                    'all_notification_count':all_notification_count, 
+                    'unread_notification_count':unread_notification_count, 
+                    'notifications':self.db_object.get_paginated_values(self.table_name,
+                    {'notification_to':username,
+                    'notification_view_status':'false'},
+                    sort_index ='notification_time', pageNumber = page_number)}
 
     def get_notification_count(self, username):
         notification_count = self.db_object.get_count(self.table_name,
             {'notification_to':username, 'notification_view_status':'false'})
         return notification_count
+
+    def get_archive_count(self, username):
+        notification_count = self.db_object.get_count(self.table_name,
+            {'notification_to':username, 'notification_archived_status':'true'})
+        return notification_count    
 
 
 class TwitterError():

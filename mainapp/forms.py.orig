@@ -60,21 +60,33 @@ class SignupForm(forms.Form):
 
         social_account = SocialAccount.objects.get(user__id = user.id)
 
-
+<<<<<<< HEAD
         data = {'useruid': int(user.id), 'sign_up_as': str(self.cleaned_data['sign_up_as']),
         		'type_user': str(self.cleaned_data['type_user']).split(","), 
+=======
+        data = {
+                'useruid': str(user.id), 
+                'sign_up_as': str(self.cleaned_data['sign_up_as']),
+        		'type_user': str(self.cleaned_data['type_user']), 
+>>>>>>> 7d08fe98ae5f846bec3acf0358927a20e7018d7a
                 'zip_code': str(postal_code),
                 'latlng' : {"type" : "Point", "coordinates" : [float(lon),float(lat)] },
         		'address': address,
                 'name': social_account.extra_data['name'],
                 'email': str(self.cleaned_data['email']), 
                 'description': social_account.extra_data['description'],
+<<<<<<< HEAD
                 'username' : user.username,
-                'screen_name': social_account.extra_data['screen_name'],
+                'twitter_name': social_account.extra_data['screen_name'],
                 'profile_img': social_account.extra_data['profile_image_url'],
                 'updates': [],
                 'foods':[],
                 'organisations':[]
+=======
+                'screen_name': social_account.extra_data['screen_name'],
+                'username': str(self.cleaned_data['username']),
+                'profile_img': social_account.extra_data['profile_image_url']
+>>>>>>> 7d08fe98ae5f846bec3acf0358927a20e7018d7a
         }
 
         userprofile.create_profile(data)

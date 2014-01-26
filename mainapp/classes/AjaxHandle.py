@@ -17,6 +17,8 @@ from mainapp.profilepage import get_connections, get_all_foods
 from mainapp.views import get_twitter_obj
 import datetime, time
 from bson.objectid import ObjectId
+from mainapp.views import calculate_time_ago
+from django.contrib.auth.models import User
 
 # consumer_key = 'seqGJEiDVNPxde7jmrk6dQ'
 # consumer_secret = 'sI2BsZHPk86SYB7nRtKy0nQpZX3NP5j5dLfcNiP14'
@@ -37,6 +39,8 @@ class AjaxHandle(AjaxSearch):
         if not request.user.is_authenticated():
             return HttpResponseRedirect('/accounts/login/')
 
+        print request.POST
+        print request.POST['message']
         user_id = request.user.id
         st = SocialToken.objects.get(account__user__id=user_id)
 
@@ -52,72 +56,48 @@ class AjaxHandle(AjaxSearch):
         message = request.POST.get('message')
         noappend = request.POST.get('noappend')
         url = " http://"+request.META['HTTP_HOST']+"/profile/"+request.user.username
-        user_profile = UserProfile()
+
         if message != None and message != "":
             if noappend == 'noappend':
                 tweet = user_twitter.update_status(status = message)
+                print request.POST['invite'] == 'true'
+                if 'invite' in request.POST:
+                    if request.POST['invite'] == 'true':
+                        invite_id_obj = InviteId()
+                        invite_obj = Invites()
+                        invitees = request.POST['to'].split(',')
+                        for eachInvitee in invitees:
+                            doc = {
+                                    'to_screenname':str(eachInvitee), 
+                                    'from_username':str(request.user.username),
+                                    'sent_time':str(time.mktime(datetime.datetime.now().timetuple())),
+                                    'invite_id':ObjectId(str(request.POST['invite_id'])), 
+                                    'message':str(str(message))}
+                            invite_obj.save_invites(doc)
+                        invite_id_obj.change_used_status(request.user.id, request.POST['invite_id'])
+                        new_invite_id = invite_id_obj.get_unused_id(request.user.id)['uid']['id']
+                        return HttpResponse(json.dumps({'status':'1', 'new_invite_id':new_invite_id}))
                 # don't save tweet to mongo if it is vouch for food
                 return HttpResponse(json.dumps({'status':1}))
             else:
                 tweet = user_twitter.update_status(status = message+url)
             tweet_feed = TweetFeed()
-            usr = SocialAccount.objects.get(uid = tweet['user']['id'])
+
             pic_url_list = []
             if tweet['entities'].get('media')!= None:
                 for each in tweet['entities'].get('media'):
                     pic_url_list.append(each['media_url'])
 
-            profile = user_profile.get_profile_by_id(str(usr.user.id))
-            my_lat = profile['latitude']
-            my_lon = profile['longitude']
+
             data = {'tweet_id': tweet['id'],
                     'parent_tweet_id': 0 if tweet['in_reply_to_status_id'] == None else tweet['in_reply_to_status_id'],
                     'status': message,
-                    "useruid": str(user_id),
-                    "foods": [], 
-                    'organisations':[], 
-                    "type_user":[],
-                    "sign_up_as": profile['sign_up_as'],
+                    
                     'picture': pic_url_list,
-                    'user':{
-                    'username':tweet['user']['screen_name'],
-                    'name': tweet['user']['name'],
-                    'profile_img':tweet['user']['profile_image_url'],
-                    'description':tweet['user']['description'],
-                    'place':tweet['user']['location'],
-                    }
+                    
             }
-            if my_lon == '' and my_lat == '':
-                # get ip address
-                ip_addr = get_client_ip(request)
-                #get lat, long and address of user
-                ip_location = get_addr_from_ip(ip_addr)
-                data['location'] = {"type": "Point", "coordinates": [float(ip_location['longitude']), float(ip_location['latitude'])]},
-            else:                
-                data['location'] = {"type": "Point", "coordinates": [float(my_lon), float(my_lat)]}
-
-            #print data
-            tweet_feed.insert_tweet(data)
-            tweet_feed.update_data(user_id)
-
-            if 'invite' in request.POST:
-                if request.POST['invite'] == 'true':
-                    invite_id_obj = InviteId()
-                    invite_obj = Invites()
-
-                    invitees = request.POST['to'].split(',')
-                    for eachInvitee in invitees:
-                        #print eachInvitee
-                        invite_obj.save_invites({
-                                'to_screenname':str(eachInvitee), 
-                                'from_username':str(request.user.username),
-                                'sent_time':str(time.mktime(datetime.datetime.now().timetuple())),
-                                'invite_id':ObjectId(request.POST['invite_id']), 
-                                'message':str(request.POST['message'])
-                            })
-                    invite_id_obj.change_used_status(request.user.id, request.POST['invite_id'])
-                    new_invite_id = invite_id_obj.get_unused_id(request.user.id)['uid']['id']
-                    return HttpResponse(json.dumps({'status':'1', 'new_invite_id':new_invite_id}))
+           
+            tweet_feed.insert_tweet(int(user_id),data)
 
             return HttpResponse(json.dumps({'status':1}))
         else:
@@ -478,3 +458,57 @@ class AjaxHandle(AjaxSearch):
             return HttpResponse(json.dumps({'status':'0', 'message':'You are not authorized for this request.'}))
 
 
+    def archive_notification(self,request):
+        #print request.POST
+        notification_id = request.POST['notification_id']
+        notifying_user_name = request.POST['notifying_user_name']
+        if request.user.is_authenticated:
+            notification_obj = Notification()
+            result = notification_obj.change_notification_archived_status(notification_id)
+            return HttpResponse(json.dumps(result))
+        else:
+            return HttpResponse(json.dumps({'status':0, 'message':'You are not authorized for this action.'}))
+    
+    def get_notices_paginated(self, request):
+        page_num = request.POST['pgnum']
+        n_type = request.POST['n_type']
+
+        if request.user.is_authenticated:
+            parameters ={}
+            user_name = request.user.username
+            notices = Notification()
+            my_notifications = notices.get_notification(user_name, page_number= int(page_num), n_type = n_type)
+
+            parameters['archived_notification_count'] = my_notifications['archived_notification_count']
+            parameters['all_notification_count'] = my_notifications['all_notification_count']
+            parameters['unread_notification_count'] = my_notifications['unread_notification_count']
+            
+            myNotice = []
+            for eachNotification in my_notifications['notifications']:
+                processed_notice = {}
+                user_profile_obj = UserProfile()
+                notifying_user_profile = user_profile_obj.get_profile_by_username(eachNotification['notifying_user'])
+                try:
+                    if (notifying_user_profile['email'] != ''):
+                        processed_notice['notifying_user_email'] = notifying_user_profile['email']
+                except:
+                    processed_notice['notifying_user_email'] = User.objects.get(username = eachNotification['notifying_user']).email
+                try:                    
+                    if (notifying_user_profile['screen_name'] != ''):
+                        processed_notice['notifying_user_screenname'] = notifying_user_profile['screen_name']
+                except:
+                    processed_notice['notifying_user_screenname'] = SocialAccount.objects.get(user__id = request.user.id).extra_data['screen_name']
+                processed_notice['my_email'] = User.objects.get(username = request.user.username).email
+                processed_notice['notification_id'] = eachNotification['uid']['id']
+                processed_notice['notifying_user'] = eachNotification['notifying_user']
+                processed_notice['notification_message'] = eachNotification['notification_message']
+                processed_notice['time_elapsed'] = calculate_time_ago(eachNotification['notification_time'])
+                processed_notice['notifying_user_profile'] = notifying_user_profile
+                processed_notice['notification_view_status'] = eachNotification['notification_view_status']
+                myNotice.append(processed_notice)
+
+
+            parameters['notifications'] = myNotice
+            return HttpResponse(json.dumps(parameters))
+        else:
+            return HttpResponse(json.dumps({'status':0, 'message':'You are not authorized for this action.'}))    

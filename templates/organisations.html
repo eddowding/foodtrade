@@ -1,5 +1,10 @@
 {% extends 'tbase.html' %}
-{% load staticfiles %}
+{% load staticfiles %} 
+{% load socialaccount %}
+{% load url from future %}
+{% load i18n %}
+{% include "socialaccount/snippets/login_extra.html" %}
+{% load account %}
 
 {% block content %}
 
@@ -10,19 +15,25 @@
 
 <div class="row hero white" style="background-image: url('/static/images/clifton.jpg');">
   <div class="col-sm-12 text-center">
-    <blockquote>There is currently no other mechanism that provides us with this information - which will greatly increase our data on local Fairtrade providers, and therefore our capacity to increase sales of Fairtrade products.</blockquote>
+    <blockquote>"There is currently no other mechanism that provides us with this information - which will greatly increase our data on local Fairtrade providers, and therefore our capacity to increase sales of Fairtrade products."</blockquote>
     <cite><img class="img-thumbnail" src="/static/images/logos/fairtrade.png" /></cite>
   </div>
 </div> 
 <div class="text-right small photocredit white">Photo credit: <a href="http://en.wikipedia.org/wiki/Bristol" target="_blank">Wikipedia</a></div>
 
-
+<!-- 
 
  SHOW MEMBERS 
  SHOW TEAM
  SHARE UPDATES
  FIND PPL
- 
+  -->
+
+<div class="ftstrip ftstrip-mid"></div>
+<div style="padding: 20px 0;" class="text-center">
+<p class="lead" style="margin: 0;">Don't forget to see everything we can do for your <a href="/pages/business" target="_blank">trade</a> and <a href="/pages/individuals" target="_blank">individual</a> members.</p>
+</div>
+<div class="ftstrip ftstrip-mid"></div>
 
 
 <div class="row">
@@ -31,7 +42,7 @@
   </div>
 
   <div class="col-sm-7">        
-    <h1>Make it easy to find great produce</h1>
+    <h1>Make it easy to find your members' produce</h1>
     <h3>Instantly search all produce from all your members</h3>
     <p class="lead">Nothing helps sell your produce like other people talking about it, FoodTrade encourages users to find, vouch for, and share your members' produce. It's 2014, social selling is where it's at.</p>
   </div>
@@ -115,12 +126,16 @@
   </div>
 </div>
 
-
+<div class="ftstrip ftstrip-mid"></div>
+<div style="padding: 20px 0;" class="text-center">
+<p class="lead" style="margin: 0;">Don't forget to see everything we can do for your <a href="/pages/business" target="_blank">trade</a> and <a href="/pages/individuals" target="_blank">individual</a> members.</p>
+</div>
+<div class="ftstrip ftstrip-mid"></div>
  
 
 <div class="row">
 
-  <div class="col-sm-6">        
+  <div class="col-sm-6 text-right">        
     <h1>Wiki..foodia?</h1>
     <h3>Share what you know so that others can benefit</h3>
     <p class="lead">FoodTrade invites users to add what foods are sold where, and who trade what with who, so that we can all make smarter decisions for a fairer, better food system.</p>
@@ -140,6 +155,8 @@
     <cite><img class="img-thumbnail" src="/static/images/logos/huffpo.png"</cite>
   </div>
 </div> 
+
+
 
 <div style="margin-bottom: 100px;"></div>
 

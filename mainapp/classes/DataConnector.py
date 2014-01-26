@@ -10,7 +10,7 @@ from MongoConnection import MongoConnection
 from datetime import datetime
 from bson.objectid import ObjectId
 import time, datetime
-from mainapp.classes.TweetFeed import TweetFeed, Food, TradeConnection, Customer, TradeConnection, UserProfile, Organisation, Team
+from mainapp.classes.TweetFeed import TweetFeed, Food, TradeConnection, Customer, TradeConnection, UserProfile, Organisation, Team, Notification
 
 class UserConnections():
     """docstring for UserConnections"""
@@ -43,7 +43,7 @@ class UserConnections():
     def get_nearby_individuals_no(self, lon, lat):
         query_string = {}
         
-        query_string['location'] = {"$near":{"$geometry":{"type":"Point", "coordinates":[float(lon), float(lat)]}, "$maxDistance":160934}}
+        query_string['latlng'] = {"$near":{"$geometry":{"type":"Point", "coordinates":[float(lon), float(lat)]}, "$maxDistance":160934}}
 
         query_string['sign_up_as'] ='Individual'
        
@@ -55,7 +55,7 @@ class UserConnections():
     def get_nearby_businesses_no(self, lon, lat):
         query_string = {}
         
-        query_string['location'] = {"$near":{"$geometry":{"type":"Point", "coordinates":[float(lon), float(lat)]}, "$maxDistance":160934}}
+        query_string['latlng'] = {"$near":{"$geometry":{"type":"Point", "coordinates":[float(lon), float(lat)]}, "$maxDistance":160934}}
 
         query_string['sign_up_as'] ='Business'
        
@@ -76,8 +76,8 @@ class UserInfo():
         twitter_user = SocialAccount.objects.get(user__id = user_id)
         user_profile = UserProfile()
         userprof = user_profile.get_profile_by_id(str(user_id))
-        self.lon = userprof['longitude']
-        self.lat = userprof['latitude']
+        self.lon = userprof['latlng']['coordinates'][0]
+        self.lat = userprof['latlng']['coordinates'][1]
         self.user_type = userprof['sign_up_as']
         self.zip_code = userprof['zip_code']
         self.address = userprof['address']
@@ -107,3 +107,6 @@ class UserInfo():
 
         hashtags_all_time = t_feed_obj.get_trending_hashtags("", "")
         self.hashtagsall = hashtags_all_time
+
+        notification_obj = Notification()
+        self.notification_count = notification_obj.get_notification_count(self.username)

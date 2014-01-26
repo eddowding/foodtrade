@@ -111,6 +111,7 @@ function validate_tweets (argument, count) {
 		}		
 	}
 }
+
 function invites_handler (data) {
 	data = jQuery.parseJSON(data);
 	if(data['status'] == '1'){
@@ -147,6 +148,7 @@ function send_invite () {
 		});
 	}
 }
+
 function check_limit(){
 	tweet = $('#tweetMessage1').val();
 	if(tweet.len > 140){

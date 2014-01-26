@@ -32,24 +32,78 @@
     margin-right: 20px;
   }
 </style>
+<!-- Button trigger modal -->
+<button class="btn btn-success btn-block hidden" id="btnModalReply" data-toggle="modal" data-target="#modal_contact">
+Contact
+</button>  
+<!-- modal_contact -->
+      <div class="modal fade" id="modal_contact" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+              <h4 class="modal-title" id="myModalLabel">Contact</h4>
+            </div>
+            <div class="modal-body">
+            <div class="container-responsive">
+              <div class="row">
+                <div class="col-sm-4">
+             
+                  <address>
+                    
+          <a  id="ahrefNotifyerEmail" target="_blank"><i class="fa fa-envelope text-muted"></i> </a><br />
+          <a  id="ahrefNotifyerTwitter" target="_blank"><i class="fa fa-twitter text-muted"></i> </a><br />
+
+
+                  </address>
+                </div>
+                
+                <div class="col-sm-8 contact-form">
+                  <form id="contact" method="post" class="form" role="form">
+                    <div class="row">
+                      <div class="col-xs-6 col-md-6 form-group">
+                        <input class="form-control" id="sender_name" name="name" placeholder="Name" type="text" required autofocus value = "{{userinfo.full_name}}"/>
+                      </div>
+                      <div class="col-xs-6 col-md-6 form-group">
+                        <input class="form-control" id="sender_email" name="email" placeholder="Email" type="email" required value = "{{userinfo.email}}" />
+                      </div>
+                    </div> 
+                    <textarea class="form-control counted" id="email_message" placeholder="Type in your message" rows="5"></textarea>
+                    <h6 class="pull-right" id="counter">320 characters remaining</h6>
+                     
+                  </form>
+                </div>
+              </div>
+            </div>
+ 
+   
+            </div>
+            <div class="modal-footer"> 
+              <button type="button" class="btn btn-success" onclick="post_contact_tweet('{{screen_name}}')">Tweet it</button>
+              <button type="button" class="btn btn-success" onclick="send_email('{{email}}')">Email it</button>
+            </div>
+          </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+      </div><!-- /.modal -->
 
 <div class="col-md-10" >
   <div class="panel panel-default">
   <div class="panel-heading clearfix">
 
   <ul class="list-group">
-    <ul class="nav nav-tabs notice" >
-      <li class="active"><a href="#produce" data-toggle="tab">Notifications <span class="badge">{{notification_count}}</span></a></li>
-    </ul>
+      <ul class="nav nav-tabs">
+          <li class="active"><a href="#notifications" onclick="toggle_notification('unread')" data-toggle="tab"> Unread <span class="badge" "spanAll">{{unread_notification_count}}</span></a></li>
+          <li><a href="#unread" onclick="toggle_notification('all')" data-toggle="tab" onclick="set_width()"> All <span class="badge" id = "spanUnread">{{all_notification_count}}</span></a> </li>
+          <li><a href="#archived" onclick="toggle_notification('archived')" data-toggle="tab"> Archive <span id="spanArchive" class="badge">{{archived_notification_count}}</span></a></li> 
+      </ul>
 
-    <ul class="list-group-item">
+    <ul class="list-group-item" id="myNoticesLi">
       {% for each_notification in notifications %}
-      <a href="#">
-        <li class="left notice-li list-group-item {% if each_notification.notification_view_status %} notice-transparent {% endif %}"><span class="chat-img pull-left">
+        <li id ="li{{each_notification.notification_id}}" class="left notice-li list-group-item {% if each_notification.notification_view_status %} notice-transparent {% endif %}"><span class="chat-img pull-left">
             <img src="{{each_notification.notifying_user_profile.profile_img}}" />
         </span>
         <div class="header">
-            <strong class="primary-font"><a href="/profile/{{each_notification.notifying_user}}">{{each_notification.notifying_user}}</a></strong> <small class="text-muted">
+            <strong class="primary-font"><a href="/profile/{{each_notification.notifying_user}}">{{each_notification.notifying_user_profile.name}}</a></strong> <small class="text-muted">
             <span class="glyphicon glyphicon-time"></span>{{each_notification.time_elapsed}} ago</small>
             <div class="btn-group pull-right" style="margin-left: 5px;">
               <button type="button" class="btn btn-default dropdown-toggle btn-xs pull-left" data-toggle="dropdown">
@@ -57,9 +111,9 @@
                   <span class="caret text-muted"></span>
               </button> 
               <ul class="dropdown-menu new-ddl" role="menu">
-                <li><a href="#">archive </a></li> 
-                <li><a href="/profile/{{each_notification.notifying_user}}">view </a></li>
-                <li><a href="#">reply</a></li> 
+                <li><a href="#" onclick="archive_click('{{each_notification.notification_id}}','{{each_notification.notifying_user}}')">archive </a></li> 
+                <li><a href="#">view </a></li>
+                <li><a href="#" onclick="reply_click('{{each_notification.notifying_user_screenname}}','{{each_notification.notifying_user_email}}', '{{each_notification.notification_id}}', '{{each_notification.notifying_user_profile.name}}')">reply</a></li> 
                 <li><a href="/profile/{{each_notification.notifying_user}}">view user</a></li>  
  
               </ul>
@@ -69,8 +123,9 @@
            {{each_notification.notification_message}}
         </p>
         </li>
-        </a>
       {% endfor %}  
+      </ul>
+      <ul class="list-group-item">
       <li class="list-group-item clearfix" style="background: #eee;">
         <ul class="pagination pull-left mymargin">
         </ul>   
@@ -80,5 +135,143 @@
   </div>
 </div>
 </div>
+<script src="{% static "js/jquery.js" %}"></script>
+<script src="{% static "js/contact.js" %}"></script>
+<script type="text/javascript">
 
+var not_type = 'unread';
+var cur_page = 1;
+
+var mx_count = 5;
+var mn_count = 0;
+/*var pg_count = {{page_count|safe}};*/
+var pg_count = 10;
+var old = 0;
+/*{{each_notification.notifying_user_screenname}}','{{each_notification.notifying_user_email}}', '{{each_notification.notification_id}}','{{user.username}}', '{{userprofile.name}}','{{user.email}}'*/
+function reply_click(notifying_user_screenname, notifying_user_email, notification_id, nofifying_user_full_name){
+    $('#myModalLabel').html('Contact ' + nofifying_user_full_name);
+    $('#btnModalReply').click();
+    $('#ahrefNotifyerEmail').attr('href','mailto:' + notifying_user_email);
+    $('#ahrefNotifyerTwiter').attr('href','http://twitter.com/' + notifying_user_screenname);
+    $('#ahrefNotifyerEmail').html('<i class="fa fa-envelope text-muted"></i> ' + notifying_user_email);
+    $('#ahrefNotifyerTwitter').html('<i class="fa fa-twitter text-muted"></i> @' + notifying_user_screenname);
+}
+function toggle_notification(n_type){
+  if (n_type == 'all'){
+    not_type = 'all';
+  }
+  else if (n_type == 'unread'){
+    not_type = 'unread';
+  }
+  else {
+    not_type = 'archive';
+  }
+  cur_page = 1;
+  update_ul_notification(cur_page);
+}
+
+function archive_click(notification_id, notifying_user_name){
+    ajax_request('archive_notification', 'archive_notification_success', {'notifying_user_name':notifying_user_name, 'notification_id':notification_id});
+  }
+
+function archive_notification_success(data){
+    data = jQuery.parseJSON(data);
+    if(data['status'] == 1){
+      $('#li' + String(data['notification_id'])).hide();
+      $('#spanArchive').html('');
+      var val = String(parseInt($('#spanArchive').html() + 1));
+      $('#spanArchive').html(val);
+    }
+  }
+
+
+$(document).ready(function(){
+  var str = '<li><a id="notification_page_dec" onclick="update_ul_notification_dec()">&laquo;</a></li>';
+  for (var i =0; i<5; i++){
+    str = str + '<li id=\"pg_'+ String(i+1) +'\"><a id="notification_page_' + String(i+1) + '"onclick="update_ul_notification('+ String(i+1) + ')">' + String(i+1) + '</a></li>';
+  }
+  str = str + '<li><a id="notification_page_inc" onclick="update_ul_notification_inc()">&raquo;</a></li>';
+  $('.pagination').html(str);
+
+});
+
+function update_ul_notification_dec(){
+  if(mn_count !=0 ){
+    $('.pagination').html('');
+    var str = '<li><a id="notification_page_dec" onclick="update_ul_notification_dec()">&laquo;</a></li>';
+    for (var i =mn_count-1; i<mn_count+4; i++){
+      str = str + '<li id=\"pg_'+ String(i+1) +'\"><a id="notification_page_' + String(i+1) + '"onclick="update_ul_notification('+ String(i+1) + ')">' + String(i+1) + '</a></li>';
+    }
+    str = str + '<li><a id="notification_page_inc" onclick="update_ul_notification_inc()">&raquo;</a></li>';
+    $('.pagination').html(str);
+    mn_count = mn_count - 1;
+    mx_count = mx_count - 1;
+  }
+}
+function update_ul_notification_inc(){
+  if(mx_count != pg_count){
+    $('.pagination').html('');
+    var str = '<li><a id="notification_page_dec" onclick="update_ul_notification_dec()">&laquo;</a></li>';
+    for (var i =mn_count+1; i<mn_count+6; i++){
+      str = str + '<li id=\"pg_'+ String(i+1) +'\"><a id="notification_page_' + 
+      String(i+1) + '" onclick="update_ul_notification(' +  
+        String(i+1) + ')">' + String(i+1) + '</a></li>';
+    }
+    str = str + '<li><a id="notification_page_inc" onclick="update_ul_notification_inc()">&raquo;</a></li>';
+    $('.pagination').html(str);
+    mn_count = mn_count + 1;
+    mx_count = mx_count + 1;
+  }
+}
+
+function update_ul_notification(cur_page){
+  $('#pg_' +String(old)).removeClass('active');
+  $('#pg_' +String(cur_page)).addClass('active');
+  old = cur_page;
+  ajax_request('get_notices_paginated', 'parse_notices_ajax',{'pgnum':cur_page, 'n_type':not_type});
+}
+
+function parse_notices_ajax(data){
+  notices = jQuery.parseJSON(data);
+  /*alert(notices);*/
+  var str ='';
+  $('#myNoticesLi').html('');
+  for (each_notification in notices['notifications']){
+      str = str + '<li id ="li' + String(notices['notifications'][each_notification].notification_id) + '" class="left notice-li list-group-item ';  
+        
+        if (notices['notifications'][each_notification].notification_view_status) {
+          str = str + 'notice-transparent'; 
+        }
+
+        str = str + '"><span class="chat-img pull-left">';
+        str = str + '<img src="' + String(notices['notifications'][each_notification]['notifying_user_profile']['profile_img']) + '"/>';
+        str = str + '</span>';
+        str = str + '<div class="header">';
+        str = str + '<strong class="primary-font"><a href="/profile/' + String(notices['notifications'][each_notification]['notifying_user_profile']['name']) + '">' + String(notices['notifications'][each_notification]['notifying_user']) + '</a></strong> <small class="text-muted">';
+        str = str + '<span class="glyphicon glyphicon-time"></span>' + String(notices['notifications'][each_notification]['time_elapsed']) + ' ago</small> ';
+        str = str + '<div class="btn-group pull-right" style="margin-left: 5px;">';
+        str = str + '<button type="button" class="btn btn-default dropdown-toggle btn-xs pull-left" data-toggle="dropdown">';
+        str = str + '<i class="fa fa-link fa-large text-muted"></i>';
+        str = str + '<span class="caret text-muted"></span>';
+        str = str +  '</button> ';
+        str = str +'<ul class="dropdown-menu new-ddl" role="menu">';
+
+        if(not_type != 'archive'){
+        str = str + '<li><a href="#" onclick="archive_click(\'' + String(notices['notifications'][each_notification].notification_id) + '\'' + ',\'' + String(notices['notifications'][each_notification].notifying_user)+ '\')">archive </a></li>';
+        }
+        str = str + '<li><a href="/profile/' + String(notices['notifications'][each_notification].notifying_user) + '">view </a></li>';
+
+        str = str + '<li><a href="#" onclick="reply_click(' + '\'' + String(notices['notifications'][each_notification]['notifying_user_screenname']) + '\',\''  + String(notices['notifications'][each_notification]['notifying_user_email']) + '\',\'' + String(notices['notifications'][each_notification]['notification_id']) + '\',\'' + String( notices['notifications'][each_notification]['notifying_user_profile']['name']) + '\'' + ')">reply</a></li>'; 
+        str = str + '<li><a href="/profile/' + String(notices['notifications'][each_notification].notifying_user) + '">view user</a></li>';
+        str = str +  '</ul>';
+        str = str + '</div>';
+        str = str + '</div>';
+        str = str + '<p>';
+        str = str + String(notices['notifications'][each_notification].notification_message);
+        str = str + '</p>';
+        str = str + '</li>';
+  }
+  $('#myNoticesLi').html(str);
+}
+</script>
 {% endblock %}
