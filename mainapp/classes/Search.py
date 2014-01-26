@@ -107,12 +107,19 @@ class Search():
             reg_expression = {"$regex": keyword_like, '$options': '-i'}
 
 
-            search_variables = ["sign_up_as", "name", "description", "username", "twitter_name"]
+            search_variables = ["sign_up_as", "name", "description", "username", "nick_name"]
             
             
             for search_item in search_variables:
                 or_conditions.append({search_item:reg_expression})
             status_query ={'updates':{"$elemMatch":{'status':reg_expression}}}
+
+            # Searches keyword as food
+            # or_conditions.append({'foods':{"$in":{'status':reg_expression}}})
+
+
+            # or_conditions.append({'businesses':{"$elemMatch":{'status':reg_expression}}})
+
             or_conditions.append(status_query)
             or_conditions.append({'updates.status':reg_expression})
             query_string['$or'] = or_conditions
@@ -230,8 +237,8 @@ class Search():
         # print json.dumps(len(up.find(query_string)))
         # print json.dumps(up.find(query_string))
 
-sh = Search(keyword="sujit", lon = 85.3363578, lat=27.7059892, place = "", foods=[], business=['Compost','Animal Feed'], organisation=[],sort="")
-print sh.search_all()
+# sh = Search(keyword="sujit", lon = 85.3363578, lat=27.7059892, place = "", foods=[], business=['Compost','Animal Feed'], organisation=[],sort="")
+# print sh.search_all()
 
 
         
