@@ -342,7 +342,8 @@ def notifications(request):
             processed_notice['notifying_user_screenname'] = account = SocialAccount.objects.get(user__id = request.user.id).extra_data['screen_name']
         processed_notice['notification_id'] = eachNotification['uid']['id']
         processed_notice['notifying_user'] = eachNotification['notifying_user']
-        processed_notice['notification_message'] = eachNotification['notification_message']
+        processed_notice['notification_message'] = eachNotification['notification_message'][0:50] + '....'
+        processed_notice['notification_message_full'] = eachNotification['notification_message']
         processed_notice['time_elapsed'] = calculate_time_ago(eachNotification['notification_time'])
         processed_notice['notifying_user_profile'] = notifying_user_profile
         processed_notice['notification_view_status'] = eachNotification['notification_view_status']

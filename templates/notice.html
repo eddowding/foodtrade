@@ -36,6 +36,10 @@
 <button class="btn btn-success btn-block hidden" id="btnModalReply" data-toggle="modal" data-target="#modal_contact">
 Contact
 </button>  
+<!-- Button trigger modal -->
+<button class="btn btn-success btn-block hidden" id="btnModalView" data-toggle="modal" data-target="#modal_view">
+Contact
+</button>
 <!-- modal_contact -->
       <div class="modal fade" id="modal_contact" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -86,14 +90,53 @@ Contact
         </div><!-- /.modal-dialog -->
       </div><!-- /.modal -->
 
+
+
+
+<!-- modal_contact -->
+      <div class="modal fade" id="modal_view" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+              <h4 class="modal-title" id="myModalLabel">Message </h4>
+            </div>
+            <div class="modal-body">
+            <div class="container-responsive">
+              <div class="row">                
+                <div class="col-sm-12 contact-form">
+                    <div class="row">
+                      <div class="col-xs-6 col-md-6 form-group">
+                        From:<p id = "notifier_name" class="form-control" id="notification_from">Roshan (brishi98@gmail.com) </p>
+                      </div>
+                    </div> 
+                    <textarea disabled="disabled" class="form-control counted" id="notification_message"rows="8">Foodtrade is awesome.</textarea>
+                     
+                </div>
+              </div>
+            </div>
+ 
+   
+            </div>
+            <div class="modal-footer"> 
+              <button type="button" class="btn btn-success" data-dismiss="modal">Close</button>
+            </div>
+          </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+      </div><!-- /.modal -->
+
+
+
 <div class="col-md-10" >
   <div class="panel panel-default">
   <div class="panel-heading clearfix">
 
   <ul class="list-group">
       <ul class="nav nav-tabs">
-          <li class="active"><a href="#notifications" onclick="toggle_notification('unread')" data-toggle="tab"> Unread <span class="badge" "spanAll">{{unread_notification_count}}</span></a></li>
-          <li><a href="#unread" onclick="toggle_notification('all')" data-toggle="tab" onclick="set_width()"> All <span class="badge" id = "spanUnread">{{all_notification_count}}</span></a> </li>
+          <li class="active"><a href="#all" onclick="toggle_notification('all')" data-toggle="tab" onclick="set_width()"> All <span class="badge" id = "spanAll">{{all_notification_count}}</span></a> </li>
+
+          <li><a href="#unread" onclick="toggle_notification('unread')" data-toggle="tab"> Unread <span class="badge" id="spanUnread">{{unread_notification_count}}</span></a></li>
+
           <li><a href="#archived" onclick="toggle_notification('archived')" data-toggle="tab"> Archive <span id="spanArchive" class="badge">{{archived_notification_count}}</span></a></li> 
       </ul>
 
@@ -111,8 +154,8 @@ Contact
                   <span class="caret text-muted"></span>
               </button> 
               <ul class="dropdown-menu new-ddl" role="menu">
-                <li><a href="#" onclick="archive_click('{{each_notification.notification_id}}','{{each_notification.notifying_user}}')">archive </a></li> 
-                <li><a href="#">view </a></li>
+                <li><a href="#" onclick="archive_click('{{each_notification.notification_id}}','{{each_notification.notifying_user}}')">archive</a></li> 
+                <li><a href="#" onclick="view_message('{{each_notification.notifying_user_profile.name}}','{{each_notification.notifying_user_email}}', '{{each_notification.notification_message_full}}', '{{each_notification.notification_id}}')">view </a></li>
                 <li><a href="#" onclick="reply_click('{{each_notification.notifying_user_screenname}}','{{each_notification.notifying_user_email}}', '{{each_notification.notification_id}}', '{{each_notification.notifying_user_profile.name}}')">reply</a></li> 
                 <li><a href="/profile/{{each_notification.notifying_user}}">view user</a></li>  
  
@@ -139,7 +182,7 @@ Contact
 <script src="{% static "js/contact.js" %}"></script>
 <script type="text/javascript">
 
-var not_type = 'unread';
+var not_type = 'all';
 var cur_page = 1;
 
 var mx_count = 5;
@@ -174,6 +217,10 @@ function archive_click(notification_id, notifying_user_name){
     ajax_request('archive_notification', 'archive_notification_success', {'notifying_user_name':notifying_user_name, 'notification_id':notification_id});
   }
 
+function un_archive_click(notification_id, notifying_user_name){
+    ajax_request('un_archive_notification', 'un_archive_notification_success', {'notifying_user_name':notifying_user_name, 'notification_id':notification_id});
+  }
+
 function archive_notification_success(data){
     data = jQuery.parseJSON(data);
     if(data['status'] == 1){
@@ -183,7 +230,15 @@ function archive_notification_success(data){
       $('#spanArchive').html(val);
     }
   }
-
+function un_archive_notification_success(data){
+    data = jQuery.parseJSON(data);
+    if(data['status'] == 1){
+      $('#li' + String(data['notification_id'])).hide();
+      $('#spanArchive').html('');
+      var val = String(parseInt($('#spanArchive').html() + 1));
+      $('#spanArchive').html(val);
+    }
+  }
 
 $(document).ready(function(){
   var str = '<li><a id="notification_page_dec" onclick="update_ul_notification_dec()">&laquo;</a></li>';
@@ -259,7 +314,19 @@ function parse_notices_ajax(data){
         if(not_type != 'archive'){
         str = str + '<li><a href="#" onclick="archive_click(\'' + String(notices['notifications'][each_notification].notification_id) + '\'' + ',\'' + String(notices['notifications'][each_notification].notifying_user)+ '\')">archive </a></li>';
         }
-        str = str + '<li><a href="/profile/' + String(notices['notifications'][each_notification].notifying_user) + '">view </a></li>';
+        if(not_type == 'archive'){
+        str = str + '<li><a href="#" onclick="un_archive_click(\'' + String(notices['notifications'][each_notification].notification_id) + '\'' + ',\'' + String(notices['notifications'][each_notification].notifying_user)+ '\')"> un-archive </a></li>';
+        }
+
+        str = str + '<li><a href="#"' + 'onclick="view_message(\'' + 
+          String(notices['notifications'][each_notification].notifying_user_profile.name) + 
+          '\',\'' + 
+          String(notices['notifications'][each_notification].notifying_user_email) +           
+          '\',\'' + 
+          String(notices['notifications'][each_notification].notification_message_full) + 
+          '\',\'' +  
+          String(notices['notifications'][each_notification].notification_id) + '\')' + 
+          '">view </a></li>';
 
         str = str + '<li><a href="#" onclick="reply_click(' + '\'' + String(notices['notifications'][each_notification]['notifying_user_screenname']) + '\',\''  + String(notices['notifications'][each_notification]['notifying_user_email']) + '\',\'' + String(notices['notifications'][each_notification]['notification_id']) + '\',\'' + String( notices['notifications'][each_notification]['notifying_user_profile']['name']) + '\'' + ')">reply</a></li>'; 
         str = str + '<li><a href="/profile/' + String(notices['notifications'][each_notification].notifying_user) + '">view user</a></li>';
@@ -272,6 +339,26 @@ function parse_notices_ajax(data){
         str = str + '</li>';
   }
   $('#myNoticesLi').html(str);
+}
+function view_message(notifying_user_profile_name , notifying_user_email, notification_message, notification_id){
+  $('#btnModalView').click();
+  $('#notifier_name').html('');
+  $('#notifier_name').html(String(notifying_user_profile_name) + ' (' + notifying_user_email + ')');
+  $('#notification_message').html('');
+  $('#notification_message').html(String(notification_message));
+  ajax_request('change_notification_view_status', 'notification_view_success', {'notification_id':notification_id})
+}
+
+function notification_view_success(data){
+  data = jQuery.parseJSON(data);
+  if(data['status'] == 1){
+      $('#spanArchive').html('');
+      if (not_type == 'unread'){
+        $('#li' + String(data['notification_id'])).hide();
+        var val = String(parseInt($('#spanUnread').html() - 1));
+        $('#spanUnread').html(val);
+      }
+  }
 }
 </script>
 {% endblock %}
