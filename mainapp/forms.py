@@ -33,8 +33,12 @@ class SignupForm(forms.Form):
         super(SignupForm, self).__init__(*args, **kwargs)
 
     def save(self, user):
-        lat = float(self.cleaned_data['lat'])
-        lon = float(self.cleaned_data['lng'])
+        try:
+            lat = float(self.cleaned_data['lat'])
+            lon = float(self.cleaned_data['lng'])
+        except:
+            lat, lon = 51.5072 , -0.1275
+
         invite_id = ''
         try:
             invite_id = self.request.session['invite_id']
@@ -53,19 +57,22 @@ class SignupForm(forms.Form):
             postal_code = str(results.postal_code)
 
         userprofile = UserProfile()
-        social_account = SocialAccount.objects.get(user__id = user.id)
-        print self.request
-        print invite_id, "Roshan Bhandari"
 
-        data = {'useruid': str(user.id), 'sign_up_as': str(self.cleaned_data['sign_up_as']),
+        social_account = SocialAccount.objects.get(user__id = user.id)
+
+        data = {
+                'useruid': str(user.id), 
+                'sign_up_as': str(self.cleaned_data['sign_up_as']),
         		'type_user': str(self.cleaned_data['type_user']), 
                 'zip_code': str(postal_code),
         		'address': address,
                 'latitude': lat,
                 'longitude': lon,
                 'name': social_account.extra_data['name'],
+                'email': str(self.cleaned_data['email']), 
                 'description': social_account.extra_data['description'],
-                'username': social_account.extra_data['screen_name'],
+                'screen_name': social_account.extra_data['screen_name'],
+                'username': str(self.cleaned_data['username']),
                 'profile_img': social_account.extra_data['profile_image_url']
         }
 

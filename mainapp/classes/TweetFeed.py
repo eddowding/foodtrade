@@ -833,6 +833,7 @@ class Invites():
         self.db_object.create_table(self.table_name,'username')
 
     def save_invites(self,doc):
+        print doc
         return self.db_object.insert_one(self.table_name,doc)
 
     def check_invitees(self, screen_name):
@@ -877,45 +878,44 @@ class Notification():
         return HttpResponse(json.dumps({'status':1}))
 
     def change_notification_archived_status(self, notification_id):
-        print type(notification_id)
         self.db_object.update_multi(self.table_name, 
             {'_id':ObjectId(str(notification_id))}, 
             {'notification_archived_status':'true'})
         return {'status':1, 'activity':'archive', 'notification_id':notification_id, 
             'message':'Message Archived successfully'}
 
-    def get_notification_unread(self,username, page_number = 1):
+    def get_notification(self,username, page_number = 1, n_type = 'unread'):
         all_notification_count = self.db_object.get_count(self.table_name,
             {'notification_to':username})
         unread_notification_count = self.db_object.get_count(self.table_name,
             {'notification_to':username, 'notification_view_status':'false'})
         archived_notification_count = self.db_object.get_count(self.table_name,
             {'notification_to':username, 'notification_archived_status':'true'})
+        if n_type == 'unread':
+            return {'archived_notification_count':archived_notification_count, 
+                    'all_notification_count':all_notification_count, 
+                    'unread_notification_count':unread_notification_count, 
+                    'notifications':self.db_object.get_paginated_values(self.table_name,
+                    {'notification_to':username},
+                    sort_index ='notification_time', pageNumber = page_number)}
 
-        return {'archived_notification_count':archived_notification_count, 
-                'all_notification_count':all_notification_count, 
-                'unread_notification_count':unread_notification_count, 
-                'notifications':self.db_object.get_paginated_values(self.table_name,
-                {'notification_to':username,
-                'notification_view_status':'false',
-                'notification_archived_status':'false'},
-                sort_index ='notification_time', pageNumber = page_number)}
-    
-    def get_notification_archived(self,username, page_number = 1):
-        notification_count = self.db_object.get_count(self.table_name,
-            {'notification_to':username, 'notification_archived_status':'true'})
-        return {'notification_count':notification_count, 
-            'notifications':self.db_object.get_paginated_values(self.table_name,
-            {'notification_to':username,'notification_archived_status':'true'}, 
-            sort_index ='notification_time', pageNumber = page_number)}
-    
-    def get_notification_all(self, username, page_number = 1):
-        notification_count = self.db_object.get_count(self.table_name,
-            {'notification_to':username, 'notification_archived_status':'true'})
-        return {'notification_count':notification_count, 
-            'notifications':self.db_object.get_paginated_values(self.table_name,
-            {'notification_to':username,'notification_archived_status':'true'}, 
-            sort_index ='notification_time', pageNumber = page_number)}
+        elif n_type == 'archive':
+            return {'archived_notification_count':archived_notification_count, 
+                    'all_notification_count':all_notification_count, 
+                    'unread_notification_count':unread_notification_count, 
+                    'notifications':self.db_object.get_paginated_values(self.table_name,
+                    {'notification_to':username,
+                    'notification_archived_status':'true'},
+                    sort_index ='notification_time', pageNumber = page_number)}
+
+        elif n_type == 'all':
+            return {'archived_notification_count':archived_notification_count, 
+                    'all_notification_count':all_notification_count, 
+                    'unread_notification_count':unread_notification_count, 
+                    'notifications':self.db_object.get_paginated_values(self.table_name,
+                    {'notification_to':username,
+                    'notification_view_status':'false'},
+                    sort_index ='notification_time', pageNumber = page_number)}
 
     def get_notification_count(self, username):
         notification_count = self.db_object.get_count(self.table_name,

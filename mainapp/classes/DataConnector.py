@@ -10,7 +10,7 @@ from MongoConnection import MongoConnection
 from datetime import datetime
 from bson.objectid import ObjectId
 import time, datetime
-from mainapp.classes.TweetFeed import TweetFeed, Food, TradeConnection, Customer, TradeConnection, UserProfile, Organisation, Team
+from mainapp.classes.TweetFeed import TweetFeed, Food, TradeConnection, Customer, TradeConnection, UserProfile, Organisation, Team, Notification
 
 class UserConnections():
     """docstring for UserConnections"""
@@ -107,3 +107,6 @@ class UserInfo():
 
         hashtags_all_time = t_feed_obj.get_trending_hashtags("", "")
         self.hashtagsall = hashtags_all_time
+
+        notification_obj = Notification()
+        self.notification_count = notification_obj.get_notification_count(self.username)

@@ -18,6 +18,8 @@ from mainapp.views import get_twitter_obj
 import datetime, time
 from bson.objectid import ObjectId
 from mainapp.views import calculate_time_ago
+from django.contrib.auth.models import User
+
 # consumer_key = 'seqGJEiDVNPxde7jmrk6dQ'
 # consumer_secret = 'sI2BsZHPk86SYB7nRtKy0nQpZX3NP5j5dLfcNiP14'
 ACCESS_TOKEN = ''
@@ -37,6 +39,8 @@ class AjaxHandle(AjaxSearch):
         if not request.user.is_authenticated():
             return HttpResponseRedirect('/accounts/login/')
 
+        print request.POST
+        print request.POST['message']
         user_id = request.user.id
         st = SocialToken.objects.get(account__user__id=user_id)
 
@@ -56,6 +60,23 @@ class AjaxHandle(AjaxSearch):
         if message != None and message != "":
             if noappend == 'noappend':
                 tweet = user_twitter.update_status(status = message)
+                print request.POST['invite'] == 'true'
+                if 'invite' in request.POST:
+                    if request.POST['invite'] == 'true':
+                        invite_id_obj = InviteId()
+                        invite_obj = Invites()
+                        invitees = request.POST['to'].split(',')
+                        for eachInvitee in invitees:
+                            doc = {
+                                    'to_screenname':str(eachInvitee), 
+                                    'from_username':str(request.user.username),
+                                    'sent_time':str(time.mktime(datetime.datetime.now().timetuple())),
+                                    'invite_id':ObjectId(str(request.POST['invite_id'])), 
+                                    'message':str(str(message))}
+                            invite_obj.save_invites(doc)
+                        invite_id_obj.change_used_status(request.user.id, request.POST['invite_id'])
+                        new_invite_id = invite_id_obj.get_unused_id(request.user.id)['uid']['id']
+                        return HttpResponse(json.dumps({'status':'1', 'new_invite_id':new_invite_id}))
                 # don't save tweet to mongo if it is vouch for food
                 return HttpResponse(json.dumps({'status':1}))
             else:
@@ -99,25 +120,6 @@ class AjaxHandle(AjaxSearch):
             #print data
             tweet_feed.insert_tweet(data)
             tweet_feed.update_data(user_id)
-
-            if 'invite' in request.POST:
-                if request.POST['invite'] == 'true':
-                    invite_id_obj = InviteId()
-                    invite_obj = Invites()
-
-                    invitees = request.POST['to'].split(',')
-                    for eachInvitee in invitees:
-                        #print eachInvitee
-                        invite_obj.save_invites({
-                                'to_screenname':str(eachInvitee), 
-                                'from_username':str(request.user.username),
-                                'sent_time':str(time.mktime(datetime.datetime.now().timetuple())),
-                                'invite_id':ObjectId(request.POST['invite_id']), 
-                                'message':str(request.POST['message'])
-                            })
-                    invite_id_obj.change_used_status(request.user.id, request.POST['invite_id'])
-                    new_invite_id = invite_id_obj.get_unused_id(request.user.id)['uid']['id']
-                    return HttpResponse(json.dumps({'status':'1', 'new_invite_id':new_invite_id}))
 
             return HttpResponse(json.dumps({'status':1}))
         else:
@@ -497,23 +499,28 @@ class AjaxHandle(AjaxSearch):
             parameters ={}
             user_name = request.user.username
             notices = Notification()
-            if n_type == 'unread':
-                my_notifications = notices.get_notification_unread(user_name, page_number= int(page_num))
-            elif n_type == 'notifications':
-                my_notifications = notices.get_notification_all(user_name, page_number= int(page_num))
-            elif n_type == 'archived' :
-                my_notifications = notices.get_notification_archived(user_name, page_number= int(page_num))
+            my_notifications = notices.get_notification(user_name, page_number= int(page_num), n_type = n_type)
 
             parameters['archived_notification_count'] = my_notifications['archived_notification_count']
             parameters['all_notification_count'] = my_notifications['all_notification_count']
             parameters['unread_notification_count'] = my_notifications['unread_notification_count']
-
+            
             myNotice = []
             for eachNotification in my_notifications['notifications']:
                 processed_notice = {}
                 user_profile_obj = UserProfile()
                 notifying_user_profile = user_profile_obj.get_profile_by_username(eachNotification['notifying_user'])
-
+                try:
+                    if (notifying_user_profile['email'] != ''):
+                        processed_notice['notifying_user_email'] = notifying_user_profile['email']
+                except:
+                    processed_notice['notifying_user_email'] = User.objects.get(username = eachNotification['notifying_user']).email
+                try:                    
+                    if (notifying_user_profile['screen_name'] != ''):
+                        processed_notice['notifying_user_screenname'] = notifying_user_profile['screen_name']
+                except:
+                    processed_notice['notifying_user_screenname'] = SocialAccount.objects.get(user__id = request.user.id).extra_data['screen_name']
+                processed_notice['my_email'] = User.objects.get(username = request.user.username).email
                 processed_notice['notification_id'] = eachNotification['uid']['id']
                 processed_notice['notifying_user'] = eachNotification['notifying_user']
                 processed_notice['notification_message'] = eachNotification['notification_message']
@@ -522,8 +529,8 @@ class AjaxHandle(AjaxSearch):
                 processed_notice['notification_view_status'] = eachNotification['notification_view_status']
                 myNotice.append(processed_notice)
 
+
             parameters['notifications'] = myNotice
-            print parameters
             return HttpResponse(json.dumps(parameters))
         else:
             return HttpResponse(json.dumps({'status':0, 'message':'You are not authorized for this action.'}))    

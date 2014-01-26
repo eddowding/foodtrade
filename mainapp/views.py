@@ -16,6 +16,8 @@ from django.core.context_processors import csrf
 import time
 from mainapp.classes.DataConnector import UserInfo
 import pprint
+from django.contrib.auth.models import User
+
 next_cursor = -1
 ACCESS_TOKEN = ''
 ACCESS_TOKEN_SECRET =''
@@ -308,21 +310,36 @@ def notifications(request):
 
         user_profile_obj = UserProfile()
         userprofile = user_profile_obj.get_profile_by_id(request.user.id)
-        parameters['userprofile'] = UserProfile
+        parameters['userprofile'] = userprofile
     else:
         return HttpResponseRedirect('/')
 
     user_name = request.user.username
+    user_email = request.user.email
+
     notices = Notification()
-    my_notifications = notices.get_notification_unread(user_name,page_number=1)
-    parameters['notification_count'] = my_notifications['notification_count']
+    my_notifications = notices.get_notification(user_name, page_number=1, n_type = 'all')
+    parameters['archived_notification_count'] = my_notifications['archived_notification_count']
+    parameters['all_notification_count'] = my_notifications['all_notification_count']
+    parameters['unread_notification_count'] = my_notifications['unread_notification_count']
+    parameters['email'] = user_email
+    parameters['screen_name'] = SocialAccount.objects.get(user__id = user_id).extra_data['screen_name']
 
     myNotice = []
     for eachNotification in my_notifications['notifications']:
         processed_notice = {}
         user_profile_obj = UserProfile()
         notifying_user_profile = user_profile_obj.get_profile_by_username(eachNotification['notifying_user'])
-
+        try:
+            if (notifying_user_profile['email'] != ''):
+                processed_notice['notifying_user_email'] = notifying_user_profile['email']
+        except:
+            processed_notice['notifying_user_email'] = User.objects.get(username = eachNotification['notifying_user']).email
+        try:
+            if (notifying_user_profile['screen_name'] != ''):
+                processed_notice['notifying_user_screenname'] = notifying_user_profile['screen_name']
+        except:
+            processed_notice['notifying_user_screenname'] = account = SocialAccount.objects.get(user__id = request.user.id).extra_data['screen_name']
         processed_notice['notification_id'] = eachNotification['uid']['id']
         processed_notice['notifying_user'] = eachNotification['notifying_user']
         processed_notice['notification_message'] = eachNotification['notification_message']

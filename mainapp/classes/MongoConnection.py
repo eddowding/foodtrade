@@ -35,6 +35,7 @@ class MongoConnection():
 
 
     def insert_one(self, table_name, value):
+        print value
         self.db[table_name].insert(value)
 
     def update(self, table_name, where, what):
