@@ -1,20 +1,10 @@
 
 
-var map = L.map('map').setView([map_lat,map_lon], 7);
-
-		L.tileLayer('http://{s}.tile.cloudmade.com/0c670d97b5984ce79b34deb902915b3e/110167/256/{z}/{x}/{y}.png', {
-			maxZoom: 18,
-			attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://cloudmade.com">CloudMade</a>'
-		}).addTo(map);
+var cloudmadeUrl = 'http://{s}.tile.cloudmade.com/BC9A493B41014CAABB98F0471D759707/997/256/{z}/{x}/{y}.png',
+			cloudmade = new L.TileLayer(cloudmadeUrl, {maxZoom: 18}),
+			map = new L.Map('map', {layers: [cloudmade], center: new L.LatLng(map_lat,map_lon), zoom: 7 });
 
 
-		L.icon({
-			iconUrl:'/static/images/map_marker.png',
-			iconRetinaUrl:'/static/images/map_marker.png',
-			iconSize:[18, 18],
-			iconAnchor:[9, 18],
-			popupAnchor:[0, -18]
-		});
 
 L.circle([map_lat,map_lon], 24140.2, {
 			stroke: 1,
