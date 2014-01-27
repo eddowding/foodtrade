@@ -10,8 +10,8 @@ from TweetFeed import TweetFeed,TradeConnection, UserProfile, Food, Customer, Or
 from pymongo import Connection
 
 tweet_id = 10000
-c = Connection()
-c.drop_database('foodtrade')
+# c = Connection()
+# c.drop_database('foodtrade')
 def gen_unique_sentence(no_words):
     f = open("american-english", 'r')
     words = f.read().split("\n")
