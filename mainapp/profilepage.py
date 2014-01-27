@@ -167,7 +167,7 @@ def edit_profile(request, username):
             parameters['profile_id'] = request.user.id
             parameters['sign_up_as'] = userprof['sign_up_as']
             if userprof['sign_up_as'] == 'Business':
-                parameters['type_user'] = str(userprof['type_user'])
+                parameters['type_user'] = str(','.join(userprof['type_user']))
             else:
                 parameters['type_user'] = ''
             #parameters['zip_code'] = userprof['zip_code']
