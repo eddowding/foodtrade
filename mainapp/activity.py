@@ -85,7 +85,7 @@ def home(request):
 
 
 
-
+    keyword = keyword.lower()
     search_handle = Search(keyword=keyword, lon = my_lon, lat =my_lat, place = location, foods=foods, business=businesses, organisation=organisations, sort=sort)
     search_results = search_handle.search_all()
     results =search_results['results'][:20]
@@ -96,6 +96,21 @@ def home(request):
         lonlat_distance = results[i]['distance'] * 0.621371 #distance(my_lon, my_lat, results[i]['location']['coordinates'][0],results[i]['location']['coordinates'][1])
         
         lonlat_distance = '%.1f' % lonlat_distance
+        result_class = results[i]["sign_up_as"].lower() 
+        for fd in results[i]:
+            if fd.lower() == keyword or fd in foods:
+                result_class = result_class + " produce"
+                break
+        if results[i]["result_type"] == results[i]["user"]["username"]:
+            if keyword in results[i]['status']:
+                result_class = result_class + " updates"
+
+        else:
+            result_class = result_class + " profile"
+
+        results[i]["result_class"] = result_class
+
+
         # if lonlat_distance>1:
         #     distance_text = str(lonlat_distance) +" Km"
         # else:

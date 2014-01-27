@@ -49,6 +49,10 @@ class Search():
         self.organisation = organisation
         self.sort = sort
     def get_result_fields(self,type_result):
+        if type_result == "description":
+            result_type = "$useruid"
+        else:
+            result_type = "$username"
         return { "$push": {
         "user":{"name":"$name", 
         "address":"$address",
@@ -65,6 +69,7 @@ class Search():
         "foods":"$foods",
         "sign_up_as":"$sign_up_as",
         "time_stamp":"$updates.time_stamp",
+        "result_type":result_type
         }}
 
 
@@ -130,6 +135,8 @@ class Search():
             pass
 
         and_query =[]
+        up = UserProfile()
+
 
         # Limit distance within 200 miles
         and_query.append({"distance":{"$lte":321.868}})
@@ -149,8 +156,7 @@ class Search():
 
 
         query_string["$and"] = and_query
-        up = UserProfile()
-        # up.update({"username":"BobbyeRhym"}, {"updates":[]})
+ 
 
         geo_near = {
                         "$geoNear": {"near": [float(self.lon), float(self.lat)],
