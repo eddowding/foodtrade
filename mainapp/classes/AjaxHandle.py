@@ -103,6 +103,7 @@ class AjaxHandle(AjaxSearch):
         else:
             return HttpResponse(json.dumps({'status':1}))
             
+
     def post_tweet_admin(self, request):
         message = request.POST.get('message')
         if not request.user.is_authenticated():
@@ -286,21 +287,21 @@ class AjaxHandle(AjaxSearch):
 
             notification_obj = Notification()
             user_profile_obj = UserProfile()
-            # try:
-            cust = user_profile_obj.get_profile_by_id(int(data['customeruid']))
-            usr  = user_profile_obj.get_profile_by_id(int(data['useruid']))
+            try:
+                cust = user_profile_obj.get_profile_by_id(int(data['customeruid']))
+                usr  = user_profile_obj.get_profile_by_id(int(data['useruid']))
 
-            notification_obj.save_notification({
-                    'notification_to':request.user.username, 
-                    'notification_message':'@' + str(cust.screen_name) + ' added himself as your customer. You can add contacts, connect and increase your business value.', 
-                    'notification_time':time.mktime(datetime.datetime.now().timetuple()),
-                    'notification_type':'Added Customer',
-                    'notification_view_status':'false',
-                    'notification_archived_status':'false',
-                    'notifying_user':str(usr.username)
-                    })
-            # except:
-            #     pass
+                notification_obj.save_notification({
+                        'notification_to':request.user.username, 
+                        'notification_message':'@' + str(cust.screen_name) + ' added himself as your customer. You can add contacts, connect and increase your business value.', 
+                        'notification_time':time.mktime(datetime.datetime.now().timetuple()),
+                        'notification_type':'Added Customer',
+                        'notification_view_status':'false',
+                        'notification_archived_status':'false',
+                        'notifying_user':str(usr.username)
+                        })
+            except:
+                pass
 
             return HttpResponse("{'status':1}")
         else:
@@ -325,21 +326,21 @@ class AjaxHandle(AjaxSearch):
             
             notification_obj = Notification()
             user_profile_obj = UserProfile()
-            # try:
-            mem = user_profile_obj.get_profile_by_id(int(data['memberuid']))
-            org  = user_profile_obj.get_profile_by_id(int(data['orguid']))
-        
-            notification_obj.save_notification({
-                    'notification_to':org.username, 
-                    'notification_message':'@' + str(mem.screen_name) + ' added himself as you as member. You can add, connect and increase value of your Organisation.', 
-                    'notification_time':time.mktime(datetime.datetime.now().timetuple()),
-                    'notification_type':'Added member',
-                    'notification_view_status':'false',
-                    'notification_archived_status':'false',
-                    'notifying_user':str(mem.username)
-                    })
-            # except:
-            #     pass
+            try:
+                mem = user_profile_obj.get_profile_by_id(int(data['memberuid']))
+                org  = user_profile_obj.get_profile_by_id(int(data['orguid']))
+            
+                notification_obj.save_notification({
+                        'notification_to':org.username, 
+                        'notification_message':'@' + str(mem.screen_name) + ' added himself as you as member. You can add, connect and increase value of your Organisation.', 
+                        'notification_time':time.mktime(datetime.datetime.now().timetuple()),
+                        'notification_type':'Added member',
+                        'notification_view_status':'false',
+                        'notification_archived_status':'false',
+                        'notifying_user':str(mem.username)
+                        })
+            except:
+                pass
 
             return HttpResponse("{'status':1}")
         else:
@@ -357,7 +358,7 @@ class AjaxHandle(AjaxSearch):
 
     def addteam(self, request):
         team = Team()
-        #print request.POST.get('data')
+        print request.POST.get('data')
         data = eval(request.POST.get('data'))
         if data !=None and data !="":
             team.create_member(data)
@@ -415,22 +416,22 @@ class AjaxHandle(AjaxSearch):
 
             notification_obj = Notification()
             user_profile_obj = UserProfile()
-            # try:
-            food = user_profile_obj.get_profile_by_id(int(data['food_name']))
-            bus  = user_profile_obj.get_profile_by_id(int(data['business_id']))
-            rec  = user_profile_obj.get_profile_by_id(int(data['recommender_id']))
+            try:
+                food = user_profile_obj.get_profile_by_id(int(data['food_name']))
+                bus  = user_profile_obj.get_profile_by_id(int(data['business_id']))
+                rec  = user_profile_obj.get_profile_by_id(int(data['recommender_id']))
 
-            notification_obj.save_notification({
-                    'notification_to':org.username, 
-                    'notification_message':'@' + str(mem.screen_name) + ' added himself as you as member. You can add, connect and increase value of your Organisation.', 
-                    'notification_time':time.mktime(datetime.datetime.now().timetuple()),
-                    'notification_type':'Added member',
-                    'notification_view_status':'false',
-                    'notification_archived_status':'false',
-                    'notifying_user':str(mem.username)
-                    })            
-            # except:
-            #     pass
+                notification_obj.save_notification({
+                        'notification_to':org.username, 
+                        'notification_message':'@' + str(mem.screen_name) + ' added himself as you as member. You can add, connect and increase value of your Organisation.', 
+                        'notification_time':time.mktime(datetime.datetime.now().timetuple()),
+                        'notification_type':'Added member',
+                        'notification_view_status':'false',
+                        'notification_archived_status':'false',
+                        'notifying_user':str(mem.username)
+                        })            
+            except:
+                pass
             return HttpResponse("{'status':1}")
         else:
             return HttpResponse("{'status':0}")
@@ -557,6 +558,7 @@ class AjaxHandle(AjaxSearch):
                             'message':'You are now a member.'}))
         else:
             return HttpResponse(json.dumps({'status':'0', 'message':'You are not authorized for this request.'}))
+
 
     def archive_notification(self,request):
         #print request.POST
