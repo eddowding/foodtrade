@@ -48,8 +48,9 @@
    <div id="sortby" class="clearfix">
 
       <div class="btn-group pull-right">
+        <span class="pull-left" style="position: relative; top: 5px; margin-right: 5px;">Sort by </span>
         <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown">
-          Sort results
+          <span  id="current_sort_text"><i class="fa fa-clock-o fa-fw"></i> Time posted</span>
           <span class="caret"></span>
         </button>
         <ul class="dropdown-menu">
@@ -69,7 +70,7 @@
 
 {% for result in results %}
 
-    <li class="left clearfix {{result.sign_up_as}}" id="{{result.uid.id}}"><span class="chat-img pull-left">
+    <li class="left clearfix {{result.result_class}}" id="{{result.uid.id}}"><span class="chat-img pull-left">
     <img src="{{result.user.profile_img}}" alt="{{result.user.name}}" class="img-thumbnail" />
     </span>
         <div class="chat-body clearfix">
@@ -592,6 +593,17 @@ function sort_by(sort)
 {
    $("#sortby").val(sort);
    make_search();
+   if(sort == "distance")
+   {
+    var sort_text = '<i class="fa fa-location-arrow fa-fw"></i> Distance from {% if search %} {{ search.place }} {% endif %} {% if not search %} {{userinfo.zip_code}}{% endif %}';
+   }
+   else
+   {
+    var sort_text = '<i class="fa fa-clock-o fa-fw"></i> Time posted';
+   }
+   $("#current_sort_text").html(sort_text);
+   
+
 }
 
 </script>
