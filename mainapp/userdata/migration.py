@@ -181,6 +181,6 @@ def changes():
             'foods':userprofile['foods'],
             'organisations':userprofile['organisations']
             }
-    up.update({'useruid': int(userprofile['useruid'])}, data)
+    up.update(int(userprofile['useruid']), data)
 
 changes()
