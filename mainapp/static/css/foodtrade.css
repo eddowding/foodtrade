@@ -287,8 +287,8 @@ article .content h4 {
 }
 
 
-.Organisation .tags-biztype,
-.Individual .tags-biztype {
+.organisation .tags-biztype,
+.individual .tags-biztype {
   display: none;
 }
 
