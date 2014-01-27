@@ -115,10 +115,10 @@ class Search():
             status_query ={'updates':{"$elemMatch":{'status':reg_expression}}}
 
             # Searches keyword as food
-            # or_conditions.append({'foods':{"$in":{'status':reg_expression}}})
+            or_conditions.append({'foods':reg_expression})
 
 
-            # or_conditions.append({'businesses':{"$elemMatch":{'status':reg_expression}}})
+            or_conditions.append({'businesses':reg_expression})
 
             or_conditions.append(status_query)
             or_conditions.append({'updates.status':reg_expression})
