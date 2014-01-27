@@ -49,6 +49,10 @@ class Search():
         self.organisation = organisation
         self.sort = sort
     def get_result_fields(self,type_result):
+        if type_result == "description":
+            result_type = "$useruid"
+        else:
+            result_type = "$username"
         return { "$push": {
         "user":{"name":"$name", 
         "address":"$address",
@@ -65,6 +69,7 @@ class Search():
         "foods":"$foods",
         "sign_up_as":"$sign_up_as",
         "time_stamp":"$updates.time_stamp",
+        "result_type":result_type
         }}
 
 
@@ -115,10 +120,10 @@ class Search():
             status_query ={'updates':{"$elemMatch":{'status':reg_expression}}}
 
             # Searches keyword as food
-            # or_conditions.append({'foods':{"$in":{'status':reg_expression}}})
+            or_conditions.append({'foods':reg_expression})
 
 
-            # or_conditions.append({'businesses':{"$elemMatch":{'status':reg_expression}}})
+            or_conditions.append({'businesses':reg_expression})
 
             or_conditions.append(status_query)
             or_conditions.append({'updates.status':reg_expression})
@@ -128,18 +133,30 @@ class Search():
         #     query_string['latlng'] = {"$near":{"$geometry":{"type":"Point", "coordinates":[float(self.lon), float(self.lat)]}, "$maxDistance":1609340}} #{ "$near" : [ float(self.lon), float(self.lat)] , "$maxDistance": 160.934 } #('$near', {'lat': float(self.lat), 'long': float(self.lon)}), ('$maxDistance', 160.934)]) 
             # query_string['location'] = {"$near":{"$geometry":{"type":"Point", "coordinates":[float(self.lon), float(self.lat)]}, "$maxDistance":160.934}}
             pass
+
         and_query =[]
+        up = UserProfile()
+
+
+        # Limit distance within 200 miles
+        and_query.append({"distance":{"$lte":321.868}})
+
+
+        # check food filters
         if len(self.foods) > 0:
             and_query.append({"foods": {"$all":self.foods}})
-            query_string["$and"] = and_query
+        
+        # Check business filter
         if len(self.business) > 0:
             and_query.append({"type_user":{"$all":self.business}})
-            query_string["$and"] = and_query
+        
+        # Check organisation filter
         if len(self.organisation) > 0:
             and_query.append({"organisations":{"$all":self.organisation}})
-            query_string["$and"] = and_query
-        up = UserProfile()
-        # up.update({"username":"BobbyeRhym"}, {"updates":[]})
+
+
+        query_string["$and"] = and_query
+ 
 
         geo_near = {
                         "$geoNear": {"near": [float(self.lon), float(self.lat)],

@@ -6,7 +6,7 @@
  
  
 
-<div class="container-responsive block-center showcase">
+<div class="container-responsive block-center">
 
 
     <div class="col-md-5 col-sm-5 {% if not user.is_authenticated %} col-md-offset-1 col-sm-offset-1 {% endif %}" id="activity_switcher">
@@ -29,7 +29,7 @@
     </div>
   </div> 
  
-<ul class="nav nav-tabs">
+<ul class="nav nav-tabs hidden">
   <li class="active">
     <a href="#near_me" data-toggle="tab">Activity 
       <span class="badge">{{userinfo.nearby_individuals_no}}</span>
@@ -48,8 +48,9 @@
    <div id="sortby" class="clearfix">
 
       <div class="btn-group pull-right">
+        <span class="pull-left" style="position: relative; top: 5px; margin-right: 5px;">Sort by </span>
         <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown">
-          Sort results
+          <span  id="current_sort_text"><i class="fa fa-clock-o fa-fw"></i> Time posted</span>
           <span class="caret"></span>
         </button>
         <ul class="dropdown-menu">
@@ -69,7 +70,7 @@
 
 {% for result in results %}
 
-    <li class="left clearfix {{result.sign_up_as}}" id="{{result.uid.id}}"><span class="chat-img pull-left">
+    <li class="left clearfix {{result.result_class}}" id="{{result.uid.id}}"><span class="chat-img pull-left">
     <img src="{{result.user.profile_img}}" alt="{{result.user.name}}" class="img-thumbnail" />
     </span>
         <div class="chat-body clearfix">
@@ -143,7 +144,7 @@
         </div>
 
         <div class="reply well well-sm" style="margin:0;"> 
-          <input class="form-control input-sm enterhandler"  class="btn btn-success" {% if not user.is_authenticated %}  title="Please login to use this feature." {% endif %} type="text" id="replyid_{{forloop.counter}}" placeholder="Reply to @{{result.user.username}}" onfocus="ShowReply('replyid_{{forloop.counter}}', '@{{result.user.username}}')" onblur="BlurReply('replyid_{{forloop.counter}}', '@{{result.user.username}}')">
+          <input class="form-control input-sm enterhandler"  {% if not user.is_authenticated %} rel="tooltip" title="Please login to use this feature." {% endif %} type="text" id="replyid_{{forloop.counter}}" placeholder="Reply to @{{result.user.username}}" onfocus="ShowReply('replyid_{{forloop.counter}}', '@{{result.user.username}}')" onblur="BlurReply('replyid_{{forloop.counter}}', '@{{result.user.username}}')">
         </div>
     </li>
   {% endfor %}
@@ -592,6 +593,17 @@ function sort_by(sort)
 {
    $("#sortby").val(sort);
    make_search();
+   if(sort == "distance")
+   {
+    var sort_text = '<i class="fa fa-location-arrow fa-fw"></i> Distance from {% if search %} {{ search.place }} {% endif %} {% if not search %} {{userinfo.zip_code}}{% endif %}';
+   }
+   else
+   {
+    var sort_text = '<i class="fa fa-clock-o fa-fw"></i> Time posted';
+   }
+   $("#current_sort_text").html(sort_text);
+   
+
 }
 
 </script>

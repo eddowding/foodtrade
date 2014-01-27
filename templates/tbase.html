@@ -11,10 +11,11 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="The search engine for real food, rewiring the food system for good.">
+    <meta name="description" content="FoodTrade is the tool foodies, artisans, and real food businesses have been waiting for. It helps you find your nearest producers and stockists, connect with collaborators, map your local food web, share knowledge about provenance, and trade in real-time. ">
     <meta name="author" content="FoodTrade">
 
     <meta property="og:site_name" content="FoodTrade" />
+    <meta property="og:description" content="FoodTrade is the tool foodies, artisans, and real food businesses have been waiting for. It helps you find your nearest producers and stockists, connect with collaborators, map your local food web, share knowledge about provenance, and trade in real-time." />
     <meta property="og:type" content="{% block ogtype %}website{% endblock %}" />
     <meta property="fb:admins" content="732525050" />
     <meta property="fb:app_id" content="1400801613504478" /> 
@@ -30,9 +31,7 @@
     <title>FoodTrade</title>
     <!-- CSS -->
     <link href="{% static "css/bootstrap.css" %}" rel="stylesheet">
-    <link href="{% static "css/foodtrade.css" %}" rel="stylesheet">
-    <link href="{% static "css/custom-design.css" %}" rel="stylesheet">
-    <link href="{% static "css/chardinjs.css" %}" rel="stylesheet">
+    <link href="{% static "css/foodtrade.css" %}" rel="stylesheet"> 
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places"></script>
     <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
 
@@ -42,24 +41,35 @@
     
  {% block head %}
 {% endblock %}
- <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.1/leaflet.css" />
-  <link rel="stylesheet" href="http://leaflet.github.io/Leaflet.label/leaflet.label.css" /> 
-<script src="{% static "js/leaflet.js" %}"></script>
+ <!-- <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.1/leaflet.css" /> -->
+     <link rel="stylesheet" href="{% static "css/leaflet.css" %}" /> 
+  <link rel="stylesheet" href="{% static "css/label-leaflet.css" %}" /> 
+
+<!-- <script src="{% static "js/leaflet.js" %}"></script> -->
+<script src="http://leaflet.github.io/Leaflet.label/leaflet.js"></script>
+
+
+<!-- <script src="http://leaflet.github.io/Leaflet.label/leaflet.js"></script> -->
+<script src="{% static "js/label-leaflet.js" %}"></script> 
 <script type="text/javascript">
    var RedIcon = L.Icon.Default.extend({
             options: {
                   iconUrl:'/static/images/map_marker.png',
-      iconRetinaUrl:'/static/images/map_marker.png',
-      iconSize:[18, 18],
-      iconAnchor:[9, 18],
-      popupAnchor:[0, -18],
-      shadowURL: '/static/images/shadow-map_marker.png'
+
+                  iconRetinaUrl:'/static/images/map_marker.png',
+                  iconSize:[18, 18],
+                  iconAnchor:[9, 18],
+                   popupAnchor:[0, -18],
+                  shadowURL: '/static/images/shadow-map_marker.png',
+                  shadowRetinaUrl: '/static/images/shadow-map_marker.png',
+                  shadowSize:[28, 18],
+                  shadowAnchor: [9,18], 
             }
          });
          var redIcon = new RedIcon();
 </script>
 
-<script src="http://leaflet.github.io/Leaflet.label/leaflet.js"></script>
+
   <style type="text/css">
 .tt-hint
 {
@@ -92,7 +102,7 @@ background: #eee;
           </div>
 
           <a href="/" class="navbar-brand visible-md visible-lg">
-            <img src="{% static "images/logo.png" %}"alt="FoodTrade logo"   />
+            <img src="{% static "images/logo.png" %}" alt="FoodTrade logo"   />
           </a>
 
         </div> 
@@ -110,36 +120,32 @@ background: #eee;
             <input type="hidden" name="lon" id="lon" value="{{search.lon}}"/>
             <input type="hidden" name="lat" id="lat" value="{{search.lat}}"/>
 
-<!-- <input type="hidden" name="search" id="search_by" value="Updates" />
-<div class="input-group-btn">
-  <button type="submit" class="btn btn-success"> <i class="fa fa-search"></i> <span id="current_search_option">Updates</span></button>
-  <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown">
-    <span class="caret"></span>
-    <span class="sr-only">Toggle Dropdown</span>
-  </button>
-  <ul class="dropdown-menu" role="menu">
-    <li id="search_options"><a onclick="select_search_by('Profiles')">Profiles</a></li>
-  </ul>
-</div> -->
+            <!-- <input type="hidden" name="search" id="search_by" value="Updates" />
+            <div class="input-group-btn">
+              <button type="submit" class="btn btn-success"> <i class="fa fa-search"></i> <span id="current_search_option">Updates</span></button>
+              <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown">
+                <span class="caret"></span>
+                <span class="sr-only">Toggle Dropdown</span>
+              </button>
+              <ul class="dropdown-menu" role="menu">
+                <li id="search_options"><a onclick="select_search_by('Profiles')">Profiles</a></li>
+              </ul>
+            </div> -->
 
-<button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+            <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+ 
+            <script type="text/javascript">
+              function select_search_by(search_by)
+              {
+                  $("#search_by").val(search_by);
+                  var current_option = (search_by == "Updates")?"Updates":"Profiles";
+                  var next_option = (search_by != "Updates")?"Updates":"Profiles";
+                  $("#current_search_option").html(current_option);
+                  $("#search_options").html('<a onclick="select_search_by(\''+next_option+'\')">'+next_option+'</a>');
 
-
-
-
-<script type="text/javascript">
-  function select_search_by(search_by)
-  {
-      $("#search_by").val(search_by);
-      var current_option = (search_by == "Updates")?"Updates":"Profiles";
-      var next_option = (search_by != "Updates")?"Updates":"Profiles";
-      $("#current_search_option").html(current_option);
-      $("#search_options").html('<a onclick="select_search_by(\''+next_option+'\')">'+next_option+'</a>');
-
-  }
-</script>
+              }
+            </script>
             <!-- <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button> -->
-          </div>
           </form>
         </div>
 
@@ -378,11 +384,11 @@ hidden
    
           <p><a href="/activity"><i class="fa fa-dot-circle-o fa-fw"></i> Near me</a></p> 
  
-          <p data-step="4" data-intro="Building a better food system is going to take all of us. Please invite your suppliers, stockists, customers, friends.. everyone! For everyone you invite who signs up, we'll give you a month free, too." rel="tooltip" title="For everyone you invite who signs up, we'll give you a month free!"><a href="/invite/"><i class="fa fa-twitter fa-fw"></i> Invite</a></p>
+          <p data-step="4" data-intro="Building a better food system is going to take all of us. Please invite your suppliers, stockists, customers, friends.. everyone! For everyone you invite who signs up, we'll give you a month free, too." rel="tooltip" title="For everyone you invite who signs up, we'll give you a month free!"><a href="/invite/" rel="tooltip" title="This might take a while if you're popular!"><i class="fa fa-twitter fa-fw"></i> Invite</a></p>
 
           <p><a href="#" id="help"><i class="fa fa-question-circle fa-fw"></i> Help</a></p> 
+          <p><a href="/inbox/" id="inbox" title="Inbox"><i class="fa fa-envelope fa-fw"></i> Inbox <span id="spanInbox" class="badge pull-right">{{userinfo.notification_count}}</span></a></p> 
 
-          <p><a href="/inbox/" id="inbox" title="Inbox"><i class="fa fa-envelope fa-fw"></i> Inbox <span id="spanArchive" class="badge pull-right"  >{{userinfo.notification_count}}</span></a></p> 
         </div>
 
 
@@ -567,14 +573,15 @@ hidden
       <h5>Stay connected</h5>
         <ul class="list-unstyled">
           <li>
-            <a href="http://www.facebook.com/foodtradeHQ"><i class="fa fa-facebook-square fa-2x"></i></a> 
-            <a href="http://www.twitter.com/foodtradeHQ"><i class="fa fa-twitter-square fa-2x"></i></a></li>
-           </li>
+            <a href="http://www.facebook.com/foodtradeHQ"><i class="fa fa-facebook-square fa-2x"></i></a></li><li> 
+            <a href="http://www.twitter.com/foodtradeHQ"><i class="fa fa-twitter-square fa-2x"></i></a></li> 
+        </ul>
+
            <!-- Begin MailChimp Signup Form -->
-<div id="mc_embed_signup">
+<li id="mc_embed_signup">
 <form action="http://sustaination.us2.list-manage1.com/subscribe/post?u=79e1467c02512dbd83bddab5f&amp;id=eeea3ac4c6" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
     <div class="input-group"> 
-      <input type="email" value="" name="EMAIL"  class="form-control required" name="q"  id="mce-EMAIL"  placeholder="Email Address">
+      <input type="email" value="" name="EMAIL"  class="form-control required" id="mce-EMAIL" placeholder="Email Address"> 
       <span class="input-group-btn">
           <button type="submit" class="btn btn-success"> Subscribe</button>
       </span>
@@ -585,11 +592,11 @@ hidden
     <div style="position: absolute; left: -5000px;"><input type="text" name="b_79e1467c02512dbd83bddab5f_eeea3ac4c6" value=""></div>
   </div>    <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
 </form>
- 
-  
+ </li>
+   </ul>
       
 <!--End mc_embed_signup-->     
-        </ul>
+       
       </div>  
     </div>
   </div>
@@ -844,30 +851,18 @@ $(function() {
 // pick list containing a mix of places and predicted search terms.
 
 {% if user.is_authenticated %}
-/*  window.setInterval(function(){
+  window.setInterval(function(){
     show_notifications();
-  }, 50000);*/
+  }, 1500000);
 {% endif %}
 function  show_notifications(){
-  ajax_request('getnotification', 'build_notification', {'user':'{{userinfo.username}}'})
+  ajax_request('get_notification_counts', 'update_inbox');
 }
-var change_data;
-function build_notification(data){
+
+function update_inbox(data){
   data = jQuery.parseJSON(data);
-  change_data = data;
-  $('#liNotification').html('');
-  $('#notification').html(String(data['notification_count']));
-  for (eachNotification in data['notifications']){
-      var data_dict = data['notifications'][eachNotification];
-      $('#liNotification').prepend('<li><a href="/profile/' + String(data_dict.notifying_user) + '/" title="' + String(data_dict.notification_message) + '">' +String(data_dict.notification_message).substr(0,20)+'....</a></li>');
-  }
-  if (data['notification_count'] == 0){
-      $('#liNotification').prepend('<li><a href="#">No notifications</a></li>');
-  }
-}
-function clear_notification(){
-  $('#notification').html(String('0'));
-  ajax_request('change_notification_status','','')
+  $('#spanInbox').html('');
+  $('#spanInbox').html(data['unread']);
 }
 
 function validate_login(){

@@ -6,12 +6,12 @@ import uuid
 import random
 import csv
 import time
-from TweetFeed import TweetFeed,TradeConnection, UserProfile, Food, Customer, Organisation
+from TweetFeed import TweetFeed,TradeConnection, UserProfile, UserProfile1, Food, Customer, Organisation
 from pymongo import Connection
 
 tweet_id = 10000
-c = Connection()
-c.drop_database('foodtrade')
+# c = Connection()
+# c.drop_database('foodtrade')
 def gen_unique_sentence(no_words):
     f = open("american-english", 'r')
     words = f.read().split("\n")
@@ -60,28 +60,7 @@ def gen_tradeconnection_userprofile(third_pk, userid, user, name, description, n
         type_user = []
         foods = []
     global tweet_id
-    if sign_up_types[0] == "Business":
-        trade_connections = TradeConnection()
-        for i in range(int(random.randrange(1,5))):
-            rand_no = int(random.randrange(2,488))
-            if rand_no != userid:
-                ids = [rand_no, userid]
-                random.shuffle(ids)
-                con = { "deleted" : 0, "c_useruid" : ids[0], "b_useruid" : ids[1] }
-                trade_connections.create_connection(con)
 
-        fd = Food()
-        for f in foods:
-            food_data = {'food_name': f, 'useruid': userid}
-            fd.create_food(food_data)
-
-    if sign_up_types[0] == "Organisation":
-        org_obj = Organisation()
-        for i in range(int(random.randrange(1,5))):
-            rand_no = int(random.randrange(2,488))
-            if rand_no != userid:
-                con = { 'orguid': userid, 'memberuid': rand_no}
-                org_obj.create_member(con)
 
     latlng = {"type" : "Point", "coordinates" : [float(new_location[2]),float(new_location[1])] } #copy coordinated from above lat-lon of user.
        
@@ -126,8 +105,10 @@ def gen_tradeconnection_userprofile(third_pk, userid, user, name, description, n
         
         tradeconnection_userprofile_fields["updates"].append(tradeconnection_tweets_fields)
         tweet_id = tweet_id +1
-    userprofile = UserProfile()
-    userprofile.create_profile(tradeconnection_userprofile_fields)
+   
+
+    # userprofile.create_profile(tradeconnection_userprofile_fields)
+
     # tweet_feed.update_data(userid)
 
 
@@ -141,7 +122,7 @@ def main(total_data, tweets_per_user):
 
     my_entry = []
     with open('../fixtures/my_json.json', 'a') as fp:
-        fp.write('[')
+        # fp.write('[')
         for i in range(total_data-1):
             username = unique_name[user_pk-2].replace(" ", "")
             name = unique_name[user_pk - 2]
@@ -167,11 +148,39 @@ def main(total_data, tweets_per_user):
             #   entry.append(tradeconnection_tweets)
             # my_entry.extend(entry)
         
-            fp.write(json.dumps(auth_user)+',')
-            fp.write(json.dumps(socialaccount_socialaccount))
-            if i!=total_data-2:
-                fp.write(',')
-        fp.write(']')
+        #     fp.write(json.dumps(auth_user)+',')
+        #     fp.write(json.dumps(socialaccount_socialaccount))
+        #     if i!=total_data-2:
+        #         fp.write(',')
+        # fp.write(']')
 
 
-main(499, [1, 10]  ) # first fields is the total no of users and second is tweets_per_user with [min, max]
+# main(499, [1, 10]  ) # first fields is the total no of users and second is tweets_per_user with [min, max]/
+
+def changes():
+
+    up = UserProfile()
+    up.flag_profile()
+
+    up1 = UserProfile1()
+    up1_a = up1.get_all_profiles()
+
+    for userprofile in up1_a:
+        data = {'sign_up_as': str(userprofile['sign_up_as']),
+            'type_user': userprofile['type_user'], 
+            'zip_code': str(userprofile['zip_code']),
+            'latlng' : userprofile['latlng'],
+            'address': userprofile["address"],
+            'name': userprofile['name'],
+            'email': "", 
+            'description':userprofile['description'],
+            'username' : userprofile["username"],
+            'screen_name': userprofile['username'],
+            'profile_img': userprofile['profile_img'],
+            'updates': userprofile['updates'],
+            'foods':userprofile['foods'],
+            'organisations':userprofile['organisations']
+            }
+        up.update(int(userprofile['useruid']), data)
+
+changes()

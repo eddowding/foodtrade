@@ -22,6 +22,7 @@
 <div class="col-md-10" >
 	<div class="panel panel-default">
 	<div class="panel-heading clearfix">
+	<div class="alert alert-success" style="display:none" id="successDiv"><b>Cool! Your invitations have been sent, thank you! Why not invite some more? Together we can rewire the food system.</b> </div>
 	<button id="btnSendTweet1" onclick="send_invite()" class="btn btn-primary pull-right newmargin">Send invites</button>
 			<div class="col-md-6">
 	          <div class="input-group">
@@ -129,6 +130,9 @@ function invites_handler (data) {
 			$('#li' + String(send_list[val])).hide();
 			tweet = tweet.replace(users[val], '');
 		}
+		update_ul_invites(1);
+		$('#successDiv').show(2000);
+		$('#successDiv').delay(5000).fadeOut('slow');
 	}
 }
 function send_invite () {
@@ -252,6 +256,8 @@ $('#inputFindFriends').bind('keypress', function(e) {
 		  window.location = '/accounts/twitter/login/?process=login';
 	}
 });
-
+$(document).ready(function(){
+	$('#successDiv').hide();
+});
 </script>
 {% endblock %}

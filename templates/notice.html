@@ -10,24 +10,24 @@
 
 {% block content %} 
 <style type="text/css">
-  .notice{
+  .no tice{
     margin-top:2%; 
     height:50px;
   }
-  .notice-uli{
+  .not ice-uli{
     width:68%;
     margin-left: 22%;
     margin-right: 16%;
   }
-  .notice-li{
+  .no tice-li{
 /*   margin-bottom: 2%; 
    height: 2%;
 */  }
-  .notice-transparent{
+  .not ice-transparent{
     /*background-color: green;*/
     /*opacity:0.9;*/
   }
-  .new-ddl{
+  .ne w-ddl{
     margin-top: -60px;
     margin-right: 20px;
   }
@@ -128,56 +128,73 @@ Contact
 
 
 <div class="col-md-10" >
-  <div class="panel panel-default">
-  <div class="panel-heading clearfix">
+  <ul class="nav nav-tabs">
+    <li class="active"><a href="#all" onclick="toggle_notification('all')" data-toggle="tab" onclick="set_width()"> All <span class="badge" id = "spanAll">{{all_notification_count}}</span></a> </li>
 
-  <ul class="list-group">
-      <ul class="nav nav-tabs">
-          <li class="active"><a href="#all" onclick="toggle_notification('all')" data-toggle="tab" onclick="set_width()"> All <span class="badge" id = "spanAll">{{all_notification_count}}</span></a> </li>
+    <li><a href="#unread" onclick="toggle_notification('unread')" data-toggle="tab"> Unread <span class="badge" id="spanUnread">{{unread_notification_count}}</span></a></li>
 
-          <li><a href="#unread" onclick="toggle_notification('unread')" data-toggle="tab"> Unread <span class="badge" id="spanUnread">{{unread_notification_count}}</span></a></li>
+    <li><a href="#archived" onclick="toggle_notification('archived')" data-toggle="tab"> Archive <span id="spanArchive" class="badge">{{archived_notification_count}}</span></a></li> 
+  </ul>
 
-          <li><a href="#archived" onclick="toggle_notification('archived')" data-toggle="tab"> Archive <span id="spanArchive" class="badge">{{archived_notification_count}}</span></a></li> 
-      </ul>
+ 
+  <ul class="list-group" id="myNoticesLi"> 
 
-    <ul class="list-group-item" id="myNoticesLi">
       {% for each_notification in notifications %}
-        <li id ="li{{each_notification.notification_id}}" class="left notice-li list-group-item {% if each_notification.notification_view_status %} notice-transparent {% endif %}"><span class="chat-img pull-left">
-            <img src="{{each_notification.notifying_user_profile.profile_img}}" />
-        </span>
-        <div class="header">
-            <strong class="primary-font"><a href="/profile/{{each_notification.notifying_user}}">{{each_notification.notifying_user_profile.name}}</a></strong> <small class="text-muted">
-            <span class="glyphicon glyphicon-time"></span>{{each_notification.time_elapsed}} ago</small>
-            <div class="btn-group pull-right" style="margin-left: 5px;">
+        <li id ="li{{each_notification.notification_id}}" class="clearfix list-group-item {% if each_notification.notification_view_status %} notice-transparent {% endif %}">
+ 
+            <span class="col-sm-2">
+            <img src="{{each_notification.notifying_user_profile.profile_img}}" style="width:25px;" />
+            <strong>
+              <a href="/profile/{{each_notification.notifying_user}}">
+                {{each_notification.notifying_user_profile.name}}
+              </a>
+            </strong>
+            </span>
+
+            <p class="col-sm-5">
+              <a href="#" onclick="view_message('{{each_notification.notifying_user_profile.name}}','{{each_notification.notifying_user_email}}', '{{each_notification.notification_message_full}}', '{{each_notification.notification_id}}')">
+                {{each_notification.notification_message}}
+              </a>
+            </p>
+
+            <p class="col-sm-3">
+              
+              <a href="#" onclick="reply_click('{{each_notification.notifying_user_screenname}}','{{each_notification.notifying_user_email}}', '{{each_notification.notification_id}}', '{{each_notification.notifying_user_profile.name}}')" style="margin-right: 4px"><i class="fa fa-reply"></i> Reply</a>
+
+              <a href="#" onclick="archive_click('{{each_notification.notification_id}}','{{each_notification.notifying_user}}')"><i class="fa fa-archive"></i> Archive</a>  
+
+            </p>
+
+            <p class="col-sm-2">
+            <small class="text-muted text-right">
+              <span class="glyphicon glyphicon-time"></span>
+              {{each_notification.time_elapsed}} ago
+            </small>
+            </p>
+
+            <div class="btn-group pull-right hidden" style="margin-left: 5px;">
               <button type="button" class="btn btn-default dropdown-toggle btn-xs pull-left" data-toggle="dropdown">
                 <i class="fa fa-link fa-large text-muted"></i>
-                  <span class="caret text-muted"></span>
+                <span class="caret text-muted"></span>
               </button> 
               <ul class="dropdown-menu new-ddl" role="menu">
                 <li><a href="#" onclick="archive_click('{{each_notification.notification_id}}','{{each_notification.notifying_user}}')">archive</a></li> 
                 <li><a href="#" onclick="view_message('{{each_notification.notifying_user_profile.name}}','{{each_notification.notifying_user_email}}', '{{each_notification.notification_message_full}}', '{{each_notification.notification_id}}')">view </a></li>
                 <li><a href="#" onclick="reply_click('{{each_notification.notifying_user_screenname}}','{{each_notification.notifying_user_email}}', '{{each_notification.notification_id}}', '{{each_notification.notifying_user_profile.name}}')">reply</a></li> 
-                <li><a href="/profile/{{each_notification.notifying_user}}">view user</a></li>  
- 
-              </ul>
+
+              </ul> 
             </div>
-        </div>
-        <p>
-           {{each_notification.notification_message}}
-        </p>
+        
         </li>
       {% endfor %}  
-      </ul>
-      <ul class="list-group-item">
-      <li class="list-group-item clearfix" style="background: #eee;">
+      </ul> 
+       
         <ul class="pagination pull-left mymargin">
         </ul>   
-      </li>  
-    </ul>
-    </ul>
-  </div>
+      
 </div>
-</div>
+
+
 <script src="{% static "js/jquery.js" %}"></script>
 <script src="{% static "js/contact.js" %}"></script>
 <script type="text/javascript">
@@ -188,7 +205,8 @@ var cur_page = 1;
 var mx_count = 5;
 var mn_count = 0;
 /*var pg_count = {{page_count|safe}};*/
-var pg_count = 10;
+/*var pg_count = parseInt((parseInt({{archived_notification_count|safe}}) + parseInt({{unread_notification_count|safe}}))/15);*/
+var pg_count = 30;
 var old = 0;
 /*{{each_notification.notifying_user_screenname}}','{{each_notification.notifying_user_email}}', '{{each_notification.notification_id}}','{{user.username}}', '{{userprofile.name}}','{{user.email}}'*/
 function reply_click(notifying_user_screenname, notifying_user_email, notification_id, nofifying_user_full_name){
@@ -224,22 +242,29 @@ function un_archive_click(notification_id, notifying_user_name){
 function archive_notification_success(data){
     data = jQuery.parseJSON(data);
     if(data['status'] == 1){
+      ajax_request('get_notification_counts', 'parse_notification_counts');
       $('#li' + String(data['notification_id'])).hide();
-      $('#spanArchive').html('');
-      var val = String(parseInt($('#spanArchive').html() + 1));
-      $('#spanArchive').html(val);
     }
   }
+function parse_notification_counts(data){
+  data =jQuery.parseJSON(data);
+  $('#spanAll').html('');
+  $('#spanAll').html(data['all']);
+  $('#spanArchive').html('');
+  $('#spanArchive').html(data['archived']);
+  $('#spanUnread').html('');
+  $('#spanUnread').html(data['unread']);
+  $('#spanInbox').html('');
+  $('#spanInbox').html(data['unread']);
+}
+
 function un_archive_notification_success(data){
     data = jQuery.parseJSON(data);
     if(data['status'] == 1){
+      ajax_request('get_notification_counts', 'parse_notification_counts');
       $('#li' + String(data['notification_id'])).hide();
-      $('#spanArchive').html('');
-      var val = String(parseInt($('#spanArchive').html() - 1));
-      $('#spanArchive').html(val);
     }
-  }
-
+}
 $(document).ready(function(){
   var str = '<li><a id="notification_page_dec" onclick="update_ul_notification_dec()">&laquo;</a></li>';
   for (var i =0; i<5; i++){
@@ -346,20 +371,14 @@ function view_message(notifying_user_profile_name , notifying_user_email, notifi
   $('#notifier_name').html(String(notifying_user_profile_name) + ' (' + notifying_user_email + ')');
   $('#notification_message').html('');
   $('#notification_message').html(String(notification_message));
-  ajax_request('change_notification_view_status', 'notification_view_success', {'notification_id':notification_id})
+  ajax_request('change_notification_view_status', 'notification_view_success', {'notification_id':notification_id});
 }
 
 function notification_view_success(data){
   data = jQuery.parseJSON(data);
   if(data['status'] == 1){
-      $('#spanArchive').html('');
-      if ((not_type == 'unread' && data['already'] == 'false') || (not_type == 'all' && data['already'] == 'false')){
-        var val = String(parseInt($('#spanUnread').html() - 1));
-        $('#spanUnread').html(val);
-      }
-      if(not_type == 'unread'){
-        $('#li' + String(data['notification_id'])).hide();
-      }
+    ajax_request('get_notification_counts', 'parse_notification_counts');
+    $('#li' + String(data['notification_id'])).hide();    
   }
 }
 </script>

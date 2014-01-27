@@ -127,13 +127,42 @@ class AjaxHandle(AjaxSearch):
 
     def add_connection(self, request):
         trade_conn = TradeConnection()
-        print request.POST.get('conn_data')
+        #print request.POST.get('conn_data')
         data = eval(request.POST.get('conn_data'))
+        notification_obj = Notification()
+        user_profile_obj = UserProfile()
         if data !=None and data !="":
             if data['status'] == 'buy_from':
                 trade_conn.create_connection({'b_useruid': int(data['prof_id']), 'c_useruid': request.user.id})
+                try:
+                    buyer = user_profile_obj.get_profile_by_id(int(data['prof_id']))
+
+                    notification_obj.save_notification({
+                            'notification_to':request.user.username, 
+                            'notification_message':'@' + str(userprof.screen_name) + ' added you as buyer. You can add contacts, connect and share your business products.', 
+                            'notification_time':time.mktime(datetime.datetime.now().timetuple()),
+                            'notification_type':'Added Buyer',
+                            'notification_view_status':'false',
+                            'notification_archived_status':'false',
+                            'notifying_user':str(userprof.username)
+                            })
+                except:
+                    pass
             else:
                 trade_conn.create_connection({'b_useruid': request.user.id, 'c_useruid': int(data['prof_id'])})
+                try:
+                    userprof = user_profile_obj.get_profile_by_id(int(data['prof_id']))
+                    notification_obj.save_notification({
+                            'notification_to':request.user.username, 
+                            'notification_message':'@' + str(userprof.screen_name) + ' added you as seller. You can add contacts, connect and have happy business now.', 
+                            'notification_time':time.mktime(datetime.datetime.now().timetuple()),
+                            'notification_type':'Added Seller',
+                            'notification_view_status':'false',
+                            'notification_archived_status':'false',
+                            'notifying_user':str(userprof.username)
+                            })                
+                except:
+                    pass
             parameters = {}
             parameters['connections'], parameters['conn'] = get_connections(int(data['prof_id']))
             parameters['connections_str'] = str(json.dumps(parameters['connections']))
@@ -252,10 +281,28 @@ class AjaxHandle(AjaxSearch):
 
     def addcustomer(self, request):
         customer = Customer()
-        print request.POST.get('data')
         data = eval(request.POST.get('data'))
         if data !=None and data !="":
             customer.create_customer(data)
+
+            notification_obj = Notification()
+            user_profile_obj = UserProfile()
+            try:
+                cust = user_profile_obj.get_profile_by_id(int(data['customeruid']))
+                usr  = user_profile_obj.get_profile_by_id(int(data['useruid']))
+
+                notification_obj.save_notification({
+                        'notification_to':request.user.username, 
+                        'notification_message':'@' + str(cust.screen_name) + ' added himself as your customer. You can add contacts, connect and increase your business value.', 
+                        'notification_time':time.mktime(datetime.datetime.now().timetuple()),
+                        'notification_type':'Added Customer',
+                        'notification_view_status':'false',
+                        'notification_archived_status':'false',
+                        'notifying_user':str(usr.username)
+                        })
+            except:
+                pass
+
             return HttpResponse("{'status':1}")
         else:
             return HttpResponse("{'status':0}")
@@ -276,6 +323,25 @@ class AjaxHandle(AjaxSearch):
         data = eval(request.POST.get('data'))
         if data !=None and data !="":
             org.create_member(data)
+            
+            notification_obj = Notification()
+            user_profile_obj = UserProfile()
+            try:
+                mem = user_profile_obj.get_profile_by_id(int(data['memberuid']))
+                org  = user_profile_obj.get_profile_by_id(int(data['orguid']))
+            
+                notification_obj.save_notification({
+                        'notification_to':org.username, 
+                        'notification_message':'@' + str(mem.screen_name) + ' added himself as you as member. You can add, connect and increase value of your Organisation.', 
+                        'notification_time':time.mktime(datetime.datetime.now().timetuple()),
+                        'notification_type':'Added member',
+                        'notification_view_status':'false',
+                        'notification_archived_status':'false',
+                        'notifying_user':str(mem.username)
+                        })
+            except:
+                pass
+
             return HttpResponse("{'status':1}")
         else:
             return HttpResponse("{'status':0}")
@@ -296,6 +362,23 @@ class AjaxHandle(AjaxSearch):
         data = eval(request.POST.get('data'))
         if data !=None and data !="":
             team.create_member(data)
+
+            notification_obj = Notification()
+            user_profile_obj = UserProfile()
+            
+            mem = user_profile_obj.get_profile_by_id(int(data['memberuid']))
+            org  = user_profile_obj.get_profile_by_id(int(data['orguid']))
+            
+            notification_obj.save_notification({
+                    'notification_to':org.username, 
+                    'notification_message':'@' + str(mem.screen_name) + ' added himself as you to team. You can add, connect and increase value of your Organisation.', 
+                    'notification_time':time.mktime(datetime.datetime.now().timetuple()),
+                    'notification_type':'Added member',
+                    'notification_view_status':'false',
+                    'notification_archived_status':'false',
+                    'notifying_user':str(mem.username)
+                    })
+
             return HttpResponse("{'status':1}")
         else:
             return HttpResponse("{'status':0}")
@@ -330,6 +413,25 @@ class AjaxHandle(AjaxSearch):
         data = eval(request.POST.get('data'))
         if data !=None and data !="":
             recomm.create_recomm(data)
+
+            notification_obj = Notification()
+            user_profile_obj = UserProfile()
+            try:
+                food = user_profile_obj.get_profile_by_id(int(data['food_name']))
+                bus  = user_profile_obj.get_profile_by_id(int(data['business_id']))
+                rec  = user_profile_obj.get_profile_by_id(int(data['recommender_id']))
+
+                notification_obj.save_notification({
+                        'notification_to':org.username, 
+                        'notification_message':'@' + str(mem.screen_name) + ' added himself as you as member. You can add, connect and increase value of your Organisation.', 
+                        'notification_time':time.mktime(datetime.datetime.now().timetuple()),
+                        'notification_type':'Added member',
+                        'notification_view_status':'false',
+                        'notification_archived_status':'false',
+                        'notifying_user':str(mem.username)
+                        })            
+            except:
+                pass
             return HttpResponse("{'status':1}")
         else:
             return HttpResponse("{'status':0}")
@@ -527,7 +629,7 @@ class AjaxHandle(AjaxSearch):
         else:
             return HttpResponse(json.dumps({'status':0, 'activity':'notification status change', 'message':'You are not authorized to perform this action.'}))
 
-    def change_notification_view_status(self, request):
+    def un_archive_notification(self, request):
         if request.user.is_authenticated:
             notice_obj = Notification()
             notification_id = request.POST['notification_id']
@@ -535,3 +637,11 @@ class AjaxHandle(AjaxSearch):
             return HttpResponse(json.dumps({'status':1, 'notification_id':notification_id, 'message':'Successfully changed status'}))
         else:
             return HttpResponse(json.dumps({'status':0, 'activity':'notification status change', 'message':'You are not authorized to perform this action.'}))
+
+    def get_notification_counts(self, request):
+        if request.user.username:
+            notice_obj = Notification()
+            notices = notice_obj.get_notification_counts(request.user.username)
+            return HttpResponse(json.dumps(notices))
+        else:
+            return HttpResponse(json.dumps({'status':0, 'message':'You are not authorized to perform this action.'}))

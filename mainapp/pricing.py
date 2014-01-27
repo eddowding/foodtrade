@@ -41,7 +41,7 @@ def home(request):
         parameters['userinfo'] = user_info
         notification_obj = Notification()
         notification = notification_obj.get_notification(request.user.username)
-        parameters['notification'] = json.loads(notification.content)
+        parameters['notification'] = json.dumps(notification)
     return render_to_response('pricing.html',parameters,context_instance=RequestContext(request))
 
 def pages(request, page_name):
