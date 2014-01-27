@@ -64,6 +64,11 @@
   
       </div><!-- end header middle -->
       <div id="contact_info" class="col-md-3">
+      {% ifequal profile_id user_id %}
+        <a href="/editprofile/{{userinfo.username}}" class="btn btn-danger btn-block">
+           Edit my profile
+        </a>
+      {% endifequal %}
       {% ifnotequal profile_id user_id %}
       <!-- if they dont't have an account yet -->
 <!--       {% if not user.is_authenticated %}

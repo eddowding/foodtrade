@@ -70,6 +70,14 @@
   
       </div><!-- end header middle -->
       <div id="contact_info" class="col-md-4 col-sm-4  col-xs-4">
+
+
+     {% ifequal profile_id user_id %}
+        <a href="/editprofile/{{userinfo.username}}" class="btn btn-danger btn-block">
+           Edit my profile
+        </a>
+      {% endifequal %}
+
       {% ifnotequal profile_id user_id %}
       <!-- if they dont't have an account yet -->
       
@@ -143,6 +151,7 @@
       <button class="btn btn-default btn-block" data-toggle="modal" data-target="#sharer">
         <i class="fa fa-share-square-o text-muted"></i> Share
       </button>
+
 
       <!--SHARER  Modal -->
       <div class="modal fade" id="sharer" tabindex="-1" role="dialog" aria-labelledby="sharer" aria-hidden="true">
