@@ -165,7 +165,6 @@ def changes():
     up1 = UserProfile1()
     up1_a = up1.get_all_profiles()
 
-    userprofiles = self.get_all("userprofile")
     for userprofile in up1_a:
         data = {'sign_up_as': str(userprofile['sign_up_as']),
             'type_user': userprofile['type_user'], 
