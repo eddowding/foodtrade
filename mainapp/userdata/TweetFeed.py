@@ -99,6 +99,36 @@ class UserProfile():
                 'type_user':type_usr,
                 'sign_up_as':sign_up_as
             })
+    def flag_profile(self,):
+        self.db_object.update(self.table_name,{},{"screen_name":"null"})
+    def update(self,userid, data):
+        self.db_object.update(self.table_name,{'useruid':int(userid)},data)
+
+
+class UserProfile1():
+    def __init__ (self):
+        self.db_object = MongoConnection("localhost",27017,'foodtrade')
+        self.table_name = 'userprofiles'
+        self.db_object.create_table(self.table_name,'useruid')
+  
+    def get_profile_by_id(self,user_id):
+        return self.db_object.get_one(self.table_name,{'useruid': user_id})
+
+    def get_all_profiles(self):
+        return self.db_object.get_all(self.table_name,{})
+
+    def create_profile (self, value):
+        self.db_object.insert_one(self.table_name,value)
+
+    def update_profile(self, userid, zipcode, type_usr, sign_up_as):
+        return self.db_object.update(self.table_name,
+            {'useruid':str(userid)}, {
+                'zip_code':zipcode,
+                'type_user':type_usr,
+                'sign_up_as':sign_up_as
+            })
+    def flag_profile(self,):
+        self.db_object.update(self.table_name,{},{"screen_name":"null"})
 
 class TradeConnection():
     """docstring for Connection"""

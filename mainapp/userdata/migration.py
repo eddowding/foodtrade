@@ -6,7 +6,7 @@ import uuid
 import random
 import csv
 import time
-from TweetFeed import TweetFeed,TradeConnection, UserProfile, Food, Customer, Organisation
+from TweetFeed import TweetFeed,TradeConnection, UserProfile, UserProfile1, Food, Customer, Organisation
 from pymongo import Connection
 
 tweet_id = 10000
@@ -105,8 +105,10 @@ def gen_tradeconnection_userprofile(third_pk, userid, user, name, description, n
         
         tradeconnection_userprofile_fields["updates"].append(tradeconnection_tweets_fields)
         tweet_id = tweet_id +1
-    userprofile = UserProfile()
-    userprofile.create_profile(tradeconnection_userprofile_fields)
+   
+
+    # userprofile.create_profile(tradeconnection_userprofile_fields)
+
     # tweet_feed.update_data(userid)
 
 
@@ -153,4 +155,32 @@ def main(total_data, tweets_per_user):
         # fp.write(']')
 
 
-main(499, [1, 10]  ) # first fields is the total no of users and second is tweets_per_user with [min, max]
+# main(499, [1, 10]  ) # first fields is the total no of users and second is tweets_per_user with [min, max]/
+
+def changes():
+
+    up = UserProfile()
+    up.flag_profile()
+
+    up1 = UserProfile1()
+    up1_a = up1.get_all_profiles()
+
+    userprofiles = self.get_all("userprofile")
+    for userprofile in up1_a:
+        data = {'sign_up_as': str(userprofile['sign_up_as']),
+            'type_user': userprofile['type_user'], 
+            'zip_code': str(userprofile['zip_code']),
+            'latlng' : userprofile['latlng'],
+            'address': userprofile["address"],
+            'name': userprofile['name'],
+            'email': "", 
+            'description':userprofile['description'],
+            'username' : userprofile["username"],
+            'screen_name': userprofile['username'],
+            'profile_img': userprofile['profile_img'],
+            'updates': userprofile['updates'],
+            'foods':userprofile['foods'],
+            'organisations':userprofile['organisations']
+            }
+    up.update({'useruid': int(userprofile['useruid'])}, data)
+
