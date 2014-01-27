@@ -184,3 +184,4 @@ def changes():
             }
     up.update({'useruid': int(userprofile['useruid'])}, data)
 
+changes()
