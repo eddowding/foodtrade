@@ -153,7 +153,7 @@ def home(request):
         if (f["uid"] == food_request or f["uid"].lower() == keyword) and f["uid"]!="":
             f["prev"] = True
         if f["uid"]=="":
-            food_filters.pop(f)
+            food_filters.remove(f)
         else:
             food_filters_count = food_filters_count + f['value']
     parameters['foods_filter'] = json.dumps(food_filters)
@@ -167,7 +167,7 @@ def home(request):
         if (f["uid"] == biz_request or f["uid"].lower() == keyword) and f["uid"]!="":
             f["prev"] = True
         if f["uid"]=="":
-            business_filters.pop(f)
+            business_filters.remove(f)
         else:
             business_filters_count = business_filters_count + f['value']
     parameters['business_filter'] = json.dumps(business_filters)
@@ -181,7 +181,7 @@ def home(request):
         if (f["uid"] == organisation_request or f["uid"].lower() == keyword) and f["uid"]!="":
             f["prev"] = True
         if f["uid"]=="":
-            organisation_filters.pop(f)
+            organisation_filters.remove(f)
         else:
             organisation_filters_count = organisation_filters_count + f['value']
     parameters['organisation_filter'] = json.dumps(organisation_filters)
