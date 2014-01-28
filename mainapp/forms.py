@@ -11,6 +11,7 @@ class SignupForm(forms.Form):
 
     username = forms.CharField(widget=forms.TextInput(attrs={'placeholder': u'Username',
      'class' : 'form-control'})) 
+
     email = forms.EmailField(widget=forms.TextInput(attrs={'placeholder': u'Email',
      'class' : 'form-control'}))
     sign_up_as = forms.CharField(widget=forms.TextInput(attrs={'placeholder': u'Sign up as',
@@ -28,40 +29,47 @@ class SignupForm(forms.Form):
     lng = forms.CharField(required=False, widget=forms.TextInput(attrs={'placeholder': u'Farm, wholesaler, restaurant, bakery...',
      'class' : 'form-control'}))
 
-    formatted_address = forms.CharField(required=False, widget=forms.TextInput(attrs={'placeholder': u'Farm, wholesaler, restaurant, bakery...',
-     'class' : 'form-control'}))
+    # formatted_address = forms.CharField(required=False, widget=forms.TextInput(attrs={'placeholder': u'Farm, wholesaler, restaurant, bakery...',
+    #  'class' : 'form-control'}))
 
     def __init__(self, request, *args, **kwargs):
         self.request =request
         super(SignupForm, self).__init__(*args, **kwargs)
+        self.fields['username'].widget.attrs['readonly'] = True
 
     def save(self, user):
         try:
-            lat = float(self.cleaned_data['lat'])
-            lon = float(self.cleaned_data['lng'])
-            addr = str(self.cleaned_data['formatted_address'])
-        except:
-            lat, lon, addr = 51.5072 , -0.1275, "London UK"
+            addr = self.cleaned_data['address']
+            lat = self.cleaned_data['lat']
+            lon = self.cleaned_data['lng']
+            # print lat, lon, len(lat), len(lon)
+            if len(lat) == 0 and len(lon) == 0:
+                addr_geo = Geocoder.geocode(addr.strip())
+                lat = float(addr_geo.latitude)
+                lon = float(addr_geo.longitude)
+                postal_code = str(addr_geo.postal_code)
+                # print addr, lat, lon, postal_code, "inside try if"
+            else:
+                result = Geocoder.reverse_geocode(float(lat),float(lon))
+                postal_code = str(result.postal_code)
+                # print addr, lat, lon, postal_code, "inside try else"
 
+        except:
+            lat, lon, addr,postal_code = 51.5072 , -0.1275, "3 Whitehall, London SW1A 2EL, UK", "SW1 A 2EL"
+            # print addr, lat, lon, postal_code, "inside exception"
+        
         invite_id = ''
         try:
             invite_id = self.request.session['invite_id']
         except:
             invite_id = ''
-        try:
-            result = Geocoder.reverse_geocode(float(lat),float(lon))
-            postal_code = str(result.postal_code) 
-        
-        except:
-            results = Geocoder.geocode('London, UK')
-            #lat, lon  = float(results.latitude), float(results.longitude)
-            postal_code = str(results.postal_code)
+
         address = addr 
+
+        
+
         userprofile = UserProfile()
-
         social_account = SocialAccount.objects.get(user__id = user.id)
-
-
         data = {'useruid': int(user.id), 'sign_up_as': str(self.cleaned_data['sign_up_as']),
         		'type_user': str(self.cleaned_data['type_user']).split(","), 
                 'zip_code': str(postal_code),

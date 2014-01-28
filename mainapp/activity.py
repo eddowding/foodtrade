@@ -147,7 +147,7 @@ def home(request):
     parameters['results'] = results
     parameters['json_data'] = json.dumps(results)
     parameters['search'] = {'query':keyword, 'place':location, 'lon':my_lon, 'lat':my_lat}
-    print results
+    #print results
     # For food Filters
     food_filters = search_results["foods"]
     food_filters_count = 0

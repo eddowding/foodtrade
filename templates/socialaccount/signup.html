@@ -37,6 +37,10 @@
   color:red;
   font-size:12px;
 }
+.my-margin{
+  margin-left: 5%;
+  margin-right: 5%;
+}
 </style>
 
     <div class="signup-container">
@@ -115,21 +119,22 @@
 
                     {{form.lat.as_hidden}}
                     {{form.lng.as_hidden}}
-                    {{form.formatted_address.as_hidden}}
+                    <!-- {{form.formatted_address.as_hidden}} -->
 
                     <div class="form-group">
+                        <p class="small my-margin">Please select your address from the auto-complete and drag the marker to change the location.</p>
                         <label for="id_address" class="col-sm-3 control-label">
                             Address</label>
                         <div class="col-sm-9">
                             {{form.address}}
                        
-                        {% if form.address.error.as_text %} <label class="error">{( form.address.error.as_text}}</label>{% endif %}
+                        {% if form.address.errors.as_text %} <label class="error">{{ form.address.errors.as_text}}</label>{% endif %}
                         </div>
                     </div>
                     <div class="form-group">
                       <div class="col-sm-12 block-center">
                         <input id="find" type="hidden" value="find" />
-                        <p class="small" style="margin:0;">Please drag and drop the marker to change your location.</p>
+<!--                         <p class="small" style="margin:0;">Please drag and drop the marker to change your location.</p> -->
                         <div class="map_canvas " style="width: 100%;height: 200px; margin-top:3%;"></div>
                       </div>
                     </div>
