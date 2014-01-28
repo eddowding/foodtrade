@@ -77,7 +77,6 @@ def tweets(request):
         max_id = MaxTweetId(max_tweet_id = 12345)
         max_id.save()
     max_tweet_id = int(max_id.max_tweet_id)
-    print 'max_tweet_id', max_tweet_id
     mentions = HQ_twitter.get_mentions_timeline(count = 200, contributer_details = True, since_id = max_tweet_id)
     tweet_list = []
     tweet_feed = TweetFeed()
@@ -119,7 +118,6 @@ def tweets(request):
             display_tweets.append(data)
         except:
             text = "@" + tweet['user']['screen_name'] + " Thanks! Please confirm your post by clicking this http://fresh.foodtrade.com/?" + tweet['id_str'] + " You'll only have to do this once."
-            print text
             # try:
             #     bot_twitter.update_status(status = text, in_reply_to_status_id = tweet['id'])
             # except:
@@ -128,7 +126,6 @@ def tweets(request):
     if len(tweet_list)!=0:
         max_id.max_tweet_id = max(tweet_list)
         max_id.save()
-    print display_tweets
     parameters['tweet_list'] = display_tweets
     return render_to_response('home.html', parameters)
 
@@ -271,7 +268,6 @@ def invite(request):
     page_count = int(friend_count/15)+1
     while (len(friend_list) == 0 and page_num <=page_count):
         page_num = page_num + 1
-        print page_num, page_count
         friends = friends_obj.get_paginated_friends(request.user.username, page_num)
         for eachFriend in friends:
             invites_obj = Invites()

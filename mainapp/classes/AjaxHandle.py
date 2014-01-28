@@ -39,8 +39,6 @@ class AjaxHandle(AjaxSearch):
         if not request.user.is_authenticated():
             return HttpResponseRedirect('/accounts/login/')
 
-        print request.POST
-        print request.POST['message']
         user_id = request.user.id
         st = SocialToken.objects.get(account__user__id=user_id)
 
@@ -50,7 +48,6 @@ class AjaxHandle(AjaxSearch):
         user_twitter = get_twitter_obj(ACCESS_TOKEN, ACCESS_TOKEN_SECRET)
 
         # uid = SocialAccount.objects.get(user__id=user_id).uid
-        print ACCESS_TOKEN, ACCESS_TOKEN_SECRET
         
         bot_twitter = get_twitter_obj(settings.BOT_ACCESS_TOKEN, settings.BOT_ACCESS_TOKEN_SECRET)
         message = request.POST.get('message')
@@ -60,7 +57,6 @@ class AjaxHandle(AjaxSearch):
         if message != None and message != "":
             if noappend == 'noappend':
                 tweet = user_twitter.update_status(status = message)
-                print request.POST['invite'] == 'true'
                 if 'invite' in request.POST:
                     if request.POST['invite'] == 'true':
                         invite_id_obj = InviteId()
@@ -174,7 +170,6 @@ class AjaxHandle(AjaxSearch):
 
     def del_connection(self, request):
         trade_conn = TradeConnection()
-        print request.POST.get('conn_data')
         data = eval(request.POST.get('conn_data'))
         if data !=None and data !="":
             if data['status'] == 'buy_from':
@@ -192,7 +187,6 @@ class AjaxHandle(AjaxSearch):
 
     def profile_user_delete_conn(self, request):
         trade_conn = TradeConnection()
-        print request.POST.get('conn_data')
         data = eval(request.POST.get('conn_data'))
         if data !=None and data !="":
             if data['status'] == 'buy_from':
@@ -210,7 +204,6 @@ class AjaxHandle(AjaxSearch):
 
     def third_party_conn(self, request):
         trade_conn = TradeConnection()
-        print request.POST.get('conn_data')
         data = eval(request.POST.get('conn_data'))
         if data !=None and data !="":
             if data['status'] == 'buy_from':
@@ -230,7 +223,6 @@ class AjaxHandle(AjaxSearch):
 
     def addfood(self, request):
         foo = Food()
-        print request.POST.get('data')
         data = eval(request.POST.get('data'))
         if data !=None and data !="":
             foo.create_food(data)
@@ -244,7 +236,6 @@ class AjaxHandle(AjaxSearch):
 
     def deletefood(self, request):
         foo = Food()
-        print request.POST.get('data')
         data = eval(request.POST.get('data'))
         if data !=None and data !="":
             foo.delete_food(useruid = data['useruid'], food_name = data['food_name']);
@@ -309,7 +300,6 @@ class AjaxHandle(AjaxSearch):
 
     def deletecustomer(self, request):
         customer = Customer()
-        print request.POST.get('data')
         data = eval(request.POST.get('data'))
         if data !=None and data !="":
             customer.delete_customer(useruid = data['useruid'], customer_id = data['customeruid'])
@@ -319,7 +309,6 @@ class AjaxHandle(AjaxSearch):
 
     def addmember(self, request):
         org = Organisation()
-        print request.POST.get('data')
         data = eval(request.POST.get('data'))
         if data !=None and data !="":
             org.create_member(data)
@@ -348,7 +337,6 @@ class AjaxHandle(AjaxSearch):
 
     def deletemember(self, request):
         org = Organisation()
-        print request.POST.get('data')
         data = eval(request.POST.get('data'))
         if data !=None and data !="":
             org.delete_member(orguid = data['orguid'], member_id = data['memberuid'])
@@ -358,7 +346,6 @@ class AjaxHandle(AjaxSearch):
 
     def addteam(self, request):
         team = Team()
-        print request.POST.get('data')
         data = eval(request.POST.get('data'))
         if data !=None and data !="":
             team.create_member(data)
@@ -385,7 +372,6 @@ class AjaxHandle(AjaxSearch):
 
     def deleteteam(self, request):
         team = Team()
-        print request.POST.get('data')
         data = eval(request.POST.get('data'))
         if data !=None and data !="":
             team.delete_member(orguid = data['orguid'], member_id = data['memberuid'])
@@ -543,7 +529,6 @@ class AjaxHandle(AjaxSearch):
                 orgid = int(change_id)
                 org_obj = Organisation()
                 result = org_obj.check_member(orgid, memberuid)
-                print result
                 try:
                     if(len(result)>0):
                         return HttpResponse(json.dumps({'status':0, 'activity':'markMember', '_id':change_id, 
