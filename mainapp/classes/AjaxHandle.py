@@ -146,19 +146,19 @@ class AjaxHandle(AjaxSearch):
                     pass
             else:
                 trade_conn.create_connection({'b_useruid': request.user.id, 'c_useruid': int(data['prof_id'])})
-                try:
-                    userprof = user_profile_obj.get_profile_by_id(int(data['prof_id']))
-                    notification_obj.save_notification({
-                            'notification_to':request.user.username, 
-                            'notification_message':'@' + str(userprof.screen_name) + ' added you as seller. You can add contacts, connect and have happy business now.', 
-                            'notification_time':time.mktime(datetime.datetime.now().timetuple()),
-                            'notification_type':'Added Seller',
-                            'notification_view_status':'false',
-                            'notification_archived_status':'false',
-                            'notifying_user':str(userprof.username)
-                            })                
-                except:
-                    pass
+                # try:
+                userprof = user_profile_obj.get_profile_by_id(int(data['prof_id']))
+                notification_obj.save_notification({
+                        'notification_to':request.user.username, 
+                        'notification_message':'@' + str(userprof.screen_name) + ' added you as seller. You can add contacts, connect and have happy business now.', 
+                        'notification_time':time.mktime(datetime.datetime.now().timetuple()),
+                        'notification_type':'Added Seller',
+                        'notification_view_status':'false',
+                        'notification_archived_status':'false',
+                        'notifying_user':str(userprof.username)
+                        })                
+                # except:
+                #     pass
             parameters = {}
             parameters['connections'], parameters['conn'] = get_connections(int(data['prof_id']))
             parameters['connections_str'] = str(json.dumps(parameters['connections']))
