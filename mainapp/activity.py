@@ -89,9 +89,10 @@ def home(request):
     search_handle = Search(keyword=keyword, lon = my_lon, lat =my_lat, place = location, foods=foods, business=businesses, organisation=organisations, sort=sort)
     search_results = search_handle.search_all()
     results =search_results['results'][:20]
-
+    print results[0]
     for i in range(len(results)):
         distance_text = ""
+
         # try:
         lonlat_distance = results[i]['distance'] * 0.621371 #distance(my_lon, my_lat, results[i]['location']['coordinates'][0],results[i]['location']['coordinates'][1])
         

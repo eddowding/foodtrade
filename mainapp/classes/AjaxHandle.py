@@ -504,7 +504,8 @@ class AjaxHandle(AjaxSearch):
                         'message':'You marked this tweet as spam.'}))                    
 
             if task == 'delete':
-                tweet_feed_obj.delete_tweet(change_id)
+                print change_id
+                tweet_feed_obj.delete_tweet(request.user.id,int(change_id))
                 return HttpResponse(json.dumps({'status':'1', 'activity':'deleteTweet', '_id':change_id}))
 
             if task == 'follow':

@@ -61,7 +61,8 @@ class Search():
         "username":"$username"},
         "useruid":"$useruid",
         "type_user":"$type_user",
-        "parent_tweetuid":"$parent_tweetuid",
+        "tweet_id":"$updates.tweet_id",
+        "parent_tweetuid":"$updates.parent_tweet_id",
         "status":"$"+type_result,
         "distance":"$distance",
         "location":"$latlng",
@@ -190,9 +191,9 @@ class Search():
         
         agg_pipeline.append({"$sort": SON([(sort_text, sort_order), ("time_stamp", -1)])})
 
-        next_index = 4
+        next_index = 5
         if len(or_conditions) > 0:
-            next_index = 5
+            next_index = 6
             agg_pipeline.append({ '$match':{"$or":or_conditions}})
 
 
@@ -203,8 +204,10 @@ class Search():
         group_fields["organisations"] = { "$push": "$organisations"}
 
         group_fields["results"] = self.get_result_fields("description")
-        
+        agg_pipeline.append({ '$match':{"updates.deleted":{"$ne":1}}})
         agg_pipeline.append({"$group": group_fields})
+        
+
         
         agg_pipeline.append({ "$limit" : 20 })
 
@@ -214,7 +217,7 @@ class Search():
         agg_pipeline[2] = {"$unwind": "$updates"}
 
         group_fields["results"] = self.get_result_fields("updates.status")
-        # agg_pipeline[next_index] = {"$group":group_fields}
+        agg_pipeline[next_index] = {"$group":group_fields}
         statuses = up.agg(agg_pipeline)
 
         if len(profiles)>0:
