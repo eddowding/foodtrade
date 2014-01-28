@@ -651,6 +651,29 @@ UserVoice.push(['showTab', 'classic_widget', {
   tab_inverted: false
 }]);
 </script>
+<script type="text/javascript">
+function checktweet(input, counter, button){
+        var tweettext = $("#"+input).val();
+        var char = 120- parseInt(tweettext.length);
+        if(char <= 0){
+            $("#"+counter).text('');
+            $('#'+button).attr('disabled', 'disabled');
+        }
+        else{
+            $("#"+counter).text(char+' characters remaining');
+            $('#'+button).removeAttr('disabled');
+        }
+    }
+function tweetlistener(input, counter, button){
+    $('#'+input).change(function(){
+        checktweet(input, counter, button);
+    });
+    $('#'+input).keyup(function(){
+        checktweet(input, counter, button);
+    });
+}
+
+</script>
 
 
 
@@ -664,6 +687,7 @@ UserVoice.push(['showTab', 'classic_widget', {
     <script src="{% static "js/intro.min.js" %}"></script>
     <script src="{% static "js/jquery.geocomplete.js" %}"></script>
     <script src="http://getbootstrap.com/2.3.2/assets/js/bootstrap-typeahead.js"></script>
+
          {% block footer %}
  {% endblock %}
      <script type="text/javascript">
@@ -876,26 +900,6 @@ function validate_login(){
   {% endif %}
   /*
   ajax_request('validate_logged_in', 'ajax_success_validate_logged_in','');*/
-}
-function checktweet(input, counter, button){
-        var tweettext = $("#"+input).val();
-        var char = 120- parseInt(tweettext.length);
-        if(char <= 0){
-            $("#"+counter).text('');
-            $('#'+button).attr('disabled', 'disabled');
-        }
-        else{
-            $("#"+counter).text(char+' characters remaining');
-            $('#'+button).removeAttr('disabled');
-        }
-    }
-function tweetlistener(input, counter, button){
-    $('#'+input).change(function(){
-        checktweet(input, counter, button);
-    });
-    $('#'+input).keyup(function(){
-        checktweet(input, counter, button);
-    });
 }
 
 </script>    
