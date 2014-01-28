@@ -130,20 +130,19 @@ class AjaxHandle(AjaxSearch):
         if data !=None and data !="":
             if data['status'] == 'buy_from':
                 trade_conn.create_connection({'b_useruid': int(data['prof_id']), 'c_useruid': request.user.id})
-                try:
-                    buyer = user_profile_obj.get_profile_by_id(int(data['prof_id']))
+ 
+                buyer = user_profile_obj.get_profile_by_id(int(data['prof_id']))
 
-                    notification_obj.save_notification({
-                            'notification_to':request.user.username, 
-                            'notification_message':'@' + str(userprof.screen_name) + ' added you as buyer. You can add contacts, connect and share your business products.', 
-                            'notification_time':time.mktime(datetime.datetime.now().timetuple()),
-                            'notification_type':'Added Buyer',
-                            'notification_view_status':'false',
-                            'notification_archived_status':'false',
-                            'notifying_user':str(userprof.username)
-                            })
-                except:
-                    pass
+                notification_obj.save_notification({
+                        'notification_to':request.user.username, 
+                        'notification_message':'@' + str(userprof.screen_name) + ' added you as buyer. You can add contacts, connect and share your business products.', 
+                        'notification_time':time.mktime(datetime.datetime.now().timetuple()),
+                        'notification_type':'Added Buyer',
+                        'notification_view_status':'false',
+                        'notification_archived_status':'false',
+                        'notifying_user':str(userprof.username)
+                        })
+
             else:
                 trade_conn.create_connection({'b_useruid': request.user.id, 'c_useruid': int(data['prof_id'])})
                 try:
