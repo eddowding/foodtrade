@@ -151,8 +151,11 @@ def home(request):
     food_filters_count = 0
     for f in food_filters:
         if (f["uid"] == food_request or f["uid"].lower() == keyword) and f["uid"]!="":
-            f["prev"] = True;
-        food_filters_count = food_filters_count + f['value']
+            f["prev"] = True
+        if f["uid"]=="":
+            food_filters.remove(f)
+        else:
+            food_filters_count = food_filters_count + f['value']
     parameters['foods_filter'] = json.dumps(food_filters)
     parameters['food_count'] = int(food_filters_count)
 
@@ -160,10 +163,19 @@ def home(request):
     # For business Filter
     business_filters = search_results["businesses"]
     business_filters_count = 0
-    for f in business_filters:
+
+
+    for f in business_filters:        
+
+        if f["uid"]=="":
+            business_filters.remove(f)
+        else:
+            business_filters_count = business_filters_count + f['value']
         if (f["uid"] == biz_request or f["uid"].lower() == keyword) and f["uid"]!="":
-            f["prev"] = True;
-        business_filters_count = business_filters_count + f['value']
+            f["prev"] = True
+
+
+
     parameters['business_filter'] = json.dumps(business_filters)
     parameters['business_count'] = int(business_filters_count)
 
@@ -173,8 +185,11 @@ def home(request):
     organisation_filters_count = 0
     for f in organisation_filters:
         if (f["uid"] == organisation_request or f["uid"].lower() == keyword) and f["uid"]!="":
-            f["prev"] = True;
-        organisation_filters_count = organisation_filters_count + f['value']
+            f["prev"] = True
+        if f["uid"]=="":
+            organisation_filters.remove(f)
+        else:
+            organisation_filters_count = organisation_filters_count + f['value']
     parameters['organisation_filter'] = json.dumps(organisation_filters)
     parameters['organisation_count'] = int(organisation_filters_count)
 
