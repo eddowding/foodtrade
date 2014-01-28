@@ -14,6 +14,7 @@ class SignupForm(forms.Form):
 
     email = forms.EmailField(widget=forms.TextInput(attrs={'placeholder': u'Email',
      'class' : 'form-control'}))
+
     sign_up_as = forms.CharField(widget=forms.TextInput(attrs={'placeholder': u'Sign up as',
      'class' : 'form-control'}))
 
@@ -36,6 +37,7 @@ class SignupForm(forms.Form):
         self.request =request
         super(SignupForm, self).__init__(*args, **kwargs)
         self.fields['username'].widget.attrs['readonly'] = True
+        self.fields['email'].widget.attrs['class'] = 'form-control'
 
     def save(self, user):
         try:
@@ -65,8 +67,6 @@ class SignupForm(forms.Form):
             invite_id = ''
 
         address = addr 
-
-        
 
         userprofile = UserProfile()
         social_account = SocialAccount.objects.get(user__id = user.id)
