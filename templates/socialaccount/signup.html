@@ -36,11 +36,8 @@
 .error{
   color:red;
   font-size:12px;
-}
-.my-margin{
-  margin-left: 5%;
-  margin-right: 5%;
-}
+} 
+
 </style>
 
     <div class="signup-container">
@@ -105,16 +102,31 @@
                         <label class="error">{{ form.type_user.errors.as_text }}</label>
                     </div>
 
+
+                    <div class="form-group">
+                        <label for="id_email" class="col-sm-3 control-label">
+                            Email</label>
+                        <div class="col-sm-9">
+                          {{form.email}}
+
+                          {% if form.email.errors.as_text %}
+                          <label class="error">{{ form.email.errors.as_text }}</label>
+                          {% endif %} 
+                        </div>
+                    </div>
+
                     {{form.lat.as_hidden}}
                     {{form.lng.as_hidden}}
                     <!-- {{form.formatted_address.as_hidden}} -->
 
-                    <div class="form-group">
-                        <p class="small my-margin">Please select your address from the auto-complete and drag the marker to change the location.</p>
+                    <div class="form-group" style="margin-bottom: 0;">
+                        
                         <label for="id_address" class="col-sm-3 control-label">
                             Address</label>
                         <div class="col-sm-9">
                             {{form.address}}
+
+                            <p class="small help-block help">Find your address, then drag the marker to the exact location.</p>
                        
                         {% if form.address.errors.as_text %} <label class="error">{{ form.address.errors.as_text}}</label>{% endif %}
                         </div>
@@ -134,22 +146,14 @@
                           <!-- <label class="error">{{ form.username.errors.as_text }}</label> -->
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label for="id_email" class="col-sm-3 control-label">
-                            Email</label>
-                        <div class="col-sm-9">
-                          {{form.email}}
-
-                          <label class="error">{{ form.email.errors.as_text }}</label>
-                        </div>
-                    </div>
                                
                     <div class="form-group last">
                         <div class="col-sm-offset-3 col-sm-9">
                                 {% if redirect_field_value %}
                           <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
                           {% endif %}
-                          <button type="submit" class="btn btn-success btn-lg" onclick="copydata()">
+                          <button type="submit" class="btn btn-success btn-lg" onclick="copydata()" style="
+  text-shadow: 1px 1px 1px rgba(0,0,0,0.6);">
                                     {% trans "Sign Up" %} &raquo;</button>
                                      <button type="reset" class="btn btn-default">
                                     Reset</button>
