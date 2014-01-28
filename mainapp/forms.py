@@ -17,7 +17,7 @@ class SignupForm(forms.Form):
      'class' : 'form-control'}))
 
     address = forms.CharField(required=True, widget=forms.TextInput(attrs={'placeholder': u'Please select an address.',
-     'class' : 'form-control', 'value':'London,UK'}))
+     'class' : 'form-control', 'value':''}))
 
     type_user = forms.CharField(required=False, widget=forms.TextInput(attrs={'placeholder': u'Farm, wholesaler, restaurant, bakery...',
      'class' : 'form-control'}))
@@ -28,6 +28,9 @@ class SignupForm(forms.Form):
     lng = forms.CharField(required=False, widget=forms.TextInput(attrs={'placeholder': u'Farm, wholesaler, restaurant, bakery...',
      'class' : 'form-control'}))
 
+    formatted_address = forms.CharField(required=False, widget=forms.TextInput(attrs={'placeholder': u'Farm, wholesaler, restaurant, bakery...',
+     'class' : 'form-control'}))
+
     def __init__(self, request, *args, **kwargs):
         self.request =request
         super(SignupForm, self).__init__(*args, **kwargs)
@@ -36,8 +39,9 @@ class SignupForm(forms.Form):
         try:
             lat = float(self.cleaned_data['lat'])
             lon = float(self.cleaned_data['lng'])
+            addr = str(self.cleaned_data['formatted_address'])
         except:
-            lat, lon = 51.5072 , -0.1275
+            lat, lon, addr = 51.5072 , -0.1275, "London UK"
 
         invite_id = ''
         try:
@@ -45,17 +49,14 @@ class SignupForm(forms.Form):
         except:
             invite_id = ''
         try:
-            addr = Geocoder.reverse_geocode(float(lat),float(lon))
-
-            address = str(addr)
-            postal_code = str(addr.postal_code) 
+            result = Geocoder.reverse_geocode(float(lat),float(lon))
+            postal_code = str(result.postal_code) 
         
         except:
             results = Geocoder.geocode('London, UK')
-            address = str(results)
-            lat, lon  = float(results.latitude), float(results.longitude)
+            #lat, lon  = float(results.latitude), float(results.longitude)
             postal_code = str(results.postal_code)
-
+        address = addr 
         userprofile = UserProfile()
 
         social_account = SocialAccount.objects.get(user__id = user.id)

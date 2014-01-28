@@ -201,13 +201,13 @@ def edit_profile(request, username):
         first_name = request.POST['first_name']
         last_name = request.POST['last_name']
         description = request.POST['description']
-        address = request.POST['address']
         #print "Roshan", request.POST['formatted_address']
         try:
             lat = request.POST['lat']
             lon = request.POST['lng']
+            address = request.POST['formatted_address']
             addr_check = Geocoder.reverse_geocode(float(lat),float(lon))
-            address = str(addr_check)
+            #address = str(addr_check)
             postal_code = str(addr_check.postal_code)
         except:
             address = userprof['address']

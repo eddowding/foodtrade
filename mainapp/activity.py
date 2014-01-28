@@ -146,7 +146,7 @@ def home(request):
     parameters['results'] = results
     parameters['json_data'] = json.dumps(results)
     parameters['search'] = {'query':keyword, 'place':location, 'lon':my_lon, 'lat':my_lat}
-
+    print results
     # For food Filters
     food_filters = search_results["foods"]
     food_filters_count = 0
@@ -178,7 +178,6 @@ def home(request):
         organisation_filters_count = organisation_filters_count + f['value']
     parameters['organisation_filter'] = json.dumps(organisation_filters)
     parameters['organisation_count'] = int(organisation_filters_count)
-
 
 
     return render_to_response('activity.html',parameters ,context_instance=RequestContext(request))
