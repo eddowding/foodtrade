@@ -89,7 +89,7 @@ def home(request):
     search_handle = Search(keyword=keyword, lon = my_lon, lat =my_lat, place = location, foods=foods, business=businesses, organisation=organisations, sort=sort)
     search_results = search_handle.search_all()
     results =search_results['results'][:20]
-    print results[0]
+
     for i in range(len(results)):
         distance_text = ""
 
@@ -147,7 +147,7 @@ def home(request):
     parameters['results'] = results
     parameters['json_data'] = json.dumps(results)
     parameters['search'] = {'query':keyword, 'place':location, 'lon':my_lon, 'lat':my_lat}
-    print results
+
     # For food Filters
     food_filters = search_results["foods"]
     food_filters_count = 0
