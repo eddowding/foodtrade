@@ -163,13 +163,23 @@ def home(request):
     # For business Filter
     business_filters = search_results["businesses"]
     business_filters_count = 0
-    for f in business_filters:
-        if (f["uid"] == biz_request or f["uid"].lower() == keyword) and f["uid"]!="":
-            f["prev"] = True
+
+    business_filters_temp = []
+    for f in business_filters:        
+
         if f["uid"]=="":
-            business_filters.remove(f)
+            continue
         else:
             business_filters_count = business_filters_count + f['value']
+        if (f["uid"] == biz_request or f["uid"].lower() == keyword) and f["uid"]!="":
+            f["prev"] = True
+
+        business_filters_temp.append(f)
+    business_filters = business_filters_temp
+
+
+
+
     parameters['business_filter'] = json.dumps(business_filters)
     parameters['business_count'] = int(business_filters_count)
 
