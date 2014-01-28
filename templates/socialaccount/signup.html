@@ -101,6 +101,18 @@
                         <label class="error">{{ form.type_user.errors.as_text }}</label>
                     </div>
 
+                    <div class="form-group">
+                        <label for="id_email" class="col-sm-3 control-label">
+                            Email</label>
+                        <div class="col-sm-9">
+                          {{form.email}}
+
+                          {% if form.email.errors.as_text %}
+                          <label class="error">{{ form.email.errors.as_text }}</label>
+                          {% endif %}
+                        </div>
+                    </div>
+
                     {{form.lat.as_hidden}}
                     {{form.lng.as_hidden}}
                     {{form.formatted_address.as_hidden}}
@@ -121,22 +133,13 @@
                         <div class="map_canvas " style="width: 100%;height: 200px; margin-top:3%;"></div>
                       </div>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group hidden">
                         <label for="id_username" class="col-sm-3 control-label">
                             Username</label>
                         <div class="col-sm-9">
                           {{form.username}}
 
                           <label class="error">{{ form.username.errors.as_text }}</label>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="id_email" class="col-sm-3 control-label">
-                            Email</label>
-                        <div class="col-sm-9">
-                          {{form.email}}
-
-                          <label class="error">{{ form.email.errors.as_text }}</label>
                         </div>
                     </div>
                                
