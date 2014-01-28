@@ -182,8 +182,8 @@
                         <input class="form-control" id="sender_email" name="email" placeholder="Email" type="email" required value = "{{userinfo.email}}" />
                       </div>
                     </div> 
-                    <textarea class="form-control counted" id="email_message" placeholder="Type in your message" rows="5"></textarea>
-                    <h6 class="pull-right" id="counter">320 characters remaining</h6>
+                    <textarea class="form-control" id="email_message" placeholder="Type in your message" rows="5"></textarea>
+                    <h6 class="pull-right" id="contact_counter">320 characters remaining</h6>
                      
                   </form>
                 </div>
@@ -193,7 +193,7 @@
    
             </div>
             <div class="modal-footer"> 
-              <button type="button" class="btn btn-success" onclick="post_contact_tweet('{{screen_name}}')">Tweet it</button>
+              <button type="button" id="contact_tweet" class="btn btn-success" onclick="post_contact_tweet('{{screen_name}}')">Tweet it</button>
               <button type="button" class="btn btn-success" onclick="send_email('{{email}}')">Email it</button>
             </div>
           </div><!-- /.modal-content -->
@@ -428,6 +428,7 @@
    
         
         <script type="text/javascript">
+  tweetlistener('email_message', 'contact_counter', 'contact_tweet');
     map_lat={{ loc.lat }};
     map_lon = {{ loc.lon }};
 connections = {{members_str | safe}};

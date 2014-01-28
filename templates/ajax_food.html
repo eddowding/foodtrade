@@ -14,8 +14,8 @@
 
                    {% endifequal %}
                         {% if user.is_authenticated %}
-                    <a class="btn btn-default btn-sm">
-                      <i class="fa fa-thumbs-o-up tltip" title="Recommend this to others" onclick="recommend_food({{user_id}}, '{{eachfood.food_name}}', {{profile_id}}); return null;">
+                    <a class="btn btn-default btn-sm" title="Recommend this to others" onclick="recommend_food({{user_id}}, '{{eachfood.food_name}}', {{profile_id}}, '{{screen_name}}'); return null;" data-toggle="modal" data-target="#modal_tweet_recomm">
+                      <i class="fa fa-thumbs-o-up tltip" >
                       </i>
                     </a> {% endif %}
                      

@@ -283,9 +283,9 @@ background: #eee;
                   </form> 
                 </div>
                 <div class="modal-footer">
-                  <h6 class="pull-left" id="counter">142 characters remaining</h6> 
+                  <h6 class="pull-left" id="counter">120 characters remaining</h6> 
                   <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                  <button type="button" class="btn btn-primary" onclick="UpdateStatus('tweetMessage')">Post update</button>
+                  <button id="newtweet_btn" type="button" class="btn btn-primary" onclick="UpdateStatus('tweetMessage')">Post update</button>
                 </div>
               </div><!-- /.modal-content -->
             </div><!-- /.modal-dialog -->
@@ -669,6 +669,8 @@ UserVoice.push(['showTab', 'classic_widget', {
      <script type="text/javascript">
 $(document).ready(function() {
 
+tweetlistener('tweetMessage', 'counter', 'contact_tweet', 'newtweet_btn');
+
     var activeSystemClass = $('.list-group-item.active');
     //something is entered in search form
     $('#system-search').keyup( function() {
@@ -825,7 +827,7 @@ $(document).ready(function() {
   };
 })(jQuery);
 $(function() {
-    $(".counted").charCounter(320,{container: "#counter"});
+    $(".counted").charCounter(120,{container: "#counter"});
 });
     </script>
 
@@ -875,6 +877,27 @@ function validate_login(){
   /*
   ajax_request('validate_logged_in', 'ajax_success_validate_logged_in','');*/
 }
+function checktweet(input, counter, button){
+        var tweettext = $("#"+input).val();
+        var char = 120- parseInt(tweettext.length);
+        if(char <= 0){
+            $("#"+counter).text('');
+            $('#'+button).attr('disabled', 'disabled');
+        }
+        else{
+            $("#"+counter).text(char+' characters remaining');
+            $('#'+button).removeAttr('disabled');
+        }
+    }
+function tweetlistener(input, counter, button){
+    $('#'+input).change(function(){
+        checktweet(input, counter, button);
+    });
+    $('#'+input).keyup(function(){
+        checktweet(input, counter, button);
+    });
+}
+
 </script>    
   </body>
 </html>
