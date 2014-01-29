@@ -110,6 +110,9 @@ def home(request):
         results[i]["result_class"] = result_class
 
 
+        
+
+
         # if lonlat_distance>1:
         #     distance_text = str(lonlat_distance) +" Km"
         # else:

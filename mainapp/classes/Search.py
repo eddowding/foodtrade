@@ -54,6 +54,7 @@ class Search():
         else:
             result_type = "$username"
         return { "$push": {
+
         "user":{"name":"$name", 
         "address":"$address",
         "profile_img":"$profile_img",
@@ -70,7 +71,7 @@ class Search():
         "foods":"$foods",
         "sign_up_as":"$sign_up_as",
         "time_stamp":"$updates.time_stamp",
-        "result_type":result_type
+        "result_type":result_type,
         }}
 
 
@@ -102,123 +103,12 @@ class Search():
         
         sorted_counter = sorted(counter.iteritems(), key=operator.itemgetter(1),reverse=True)
         return [{"uid":value,"value":label} for value, label in sorted_counter]
- 
-
-    def search_all(self):
-        query_string = {}
-        agg_pipeline = []
-        or_conditions = []
-        if self.keyword !="":
-            keyword_like = re.compile(self.keyword + '+', re.IGNORECASE)
-            reg_expression = {"$regex": keyword_like, '$options': '-i'}
 
 
-            search_variables = ["sign_up_as", "name", "description", "username", "nick_name"]
-            
-            
-            for search_item in search_variables:
-                or_conditions.append({search_item:reg_expression})
-            status_query ={'updates':{"$elemMatch":{'status':reg_expression}}}
 
-            # Searches keyword as food
-            or_conditions.append({'foods':reg_expression})
-
-
-            or_conditions.append({'businesses':reg_expression})
-
-            or_conditions.append(status_query)
-            or_conditions.append({'updates.status':reg_expression})
-            query_string['$or'] = or_conditions
-
-        # if(self.lon != "" and self.lat != ""):
-        #     query_string['latlng'] = {"$near":{"$geometry":{"type":"Point", "coordinates":[float(self.lon), float(self.lat)]}, "$maxDistance":1609340}} #{ "$near" : [ float(self.lon), float(self.lat)] , "$maxDistance": 160.934 } #('$near', {'lat': float(self.lat), 'long': float(self.lon)}), ('$maxDistance', 160.934)]) 
-            # query_string['location'] = {"$near":{"$geometry":{"type":"Point", "coordinates":[float(self.lon), float(self.lat)]}, "$maxDistance":160.934}}
-            pass
-
-        and_query =[]
-        up = UserProfile()
-
-
-        # Limit distance within 200 miles
-        and_query.append({"distance":{"$lte":321.868}})
-
-
-        # check food filters
-        if len(self.foods) > 0:
-            and_query.append({"foods": {"$all":self.foods}})
-        
-        # Check business filter
-        if len(self.business) > 0:
-            and_query.append({"type_user":{"$all":self.business}})
-        
-        # Check organisation filter
-        if len(self.organisation) > 0:
-            and_query.append({"organisations":{"$all":self.organisation}})
-
-
-        query_string["$and"] = and_query
- 
-
-        geo_near = {
-                        "$geoNear": {"near": [float(self.lon), float(self.lat)],
-                                    "distanceField": "distance",
-                                    "maxDistance": 160.934,
-                                    # "query": query_string,
-                                    "includeLocs": "latlng",
-                                    "uniqueDocs": True,  
-                                    "spherical":True,
-                                    "limit":5000,
-                                    "distanceMultiplier":6371                          
-                                  }
-                      }
-
-
-        agg_pipeline.append(geo_near)
-        agg_pipeline.append({ '$match':query_string})
-
-       
-        agg_pipeline.append({ '$match':{"updates":{"$size":0}}})
-        if self.sort == "time":
-            sort_text = "updates.time_stamp"
-            sort_order = -1
-        else:
-            sort_text = "distance"
-            sort_order = 1
-        
-
-        # print sort_text
-
-        
-        agg_pipeline.append({"$sort": SON([(sort_text, sort_order), ("time_stamp", -1)])})
-
-        next_index = 5
-        if len(or_conditions) > 0:
-            next_index = 6
-            agg_pipeline.append({ '$match':{"$or":or_conditions}})
-
-
-        group_fields = {}
-        group_fields["_id"] = "all"
-        group_fields["foods"] = { "$push": "$foods" }
-        group_fields["businesses"] = { "$push": "$type_user" }
-        group_fields["organisations"] = { "$push": "$organisations"}
-
-        group_fields["results"] = self.get_result_fields("description")
-        agg_pipeline.append({ '$match':{"updates.deleted":{"$ne":1}}})
-        agg_pipeline.append({"$group": group_fields})
-        
-
-        
-        agg_pipeline.append({ "$limit" : 20 })
-
-        
-        
-        profiles = up.agg(agg_pipeline)
-        agg_pipeline[2] = {"$unwind": "$updates"}
-
-        group_fields["results"] = self.get_result_fields("updates.status")
-        agg_pipeline[next_index] = {"$group":group_fields}
-        statuses = up.agg(agg_pipeline)
+    def search_all(self,):
+        statuses = self.get_search_type(0)
+        profiles = self.get_search_type(1)
 
         if len(profiles)>0:
             if len(statuses)>0:
@@ -254,6 +144,144 @@ class Search():
         # print json.dumps(results)
         # print results
         return results
+
+    def get_search_type(self, search_type):
+        query_string = {}
+        agg_pipeline = []
+        or_conditions = []
+        if self.keyword !="":
+            keyword_like = re.compile(self.keyword + '+', re.IGNORECASE)
+            reg_expression = {"$regex": keyword_like, '$options': '-i'}
+
+
+            search_variables = ["sign_up_as", "name", "description", "username", "nick_name"]
+            
+            
+            for search_item in search_variables:
+                or_conditions.append({search_item:reg_expression})
+
+            
+
+            # Searches keyword as food
+            or_conditions.append({'foods':reg_expression})
+
+
+            or_conditions.append({'businesses':reg_expression})
+
+            
+            #Only for Status
+            if search_type==0:
+                or_conditions.append({'updates.status':reg_expression})
+                status_query ={'updates':{"$elemMatch":{'status':reg_expression}}}
+                or_conditions.append(status_query)
+
+
+            # Only for profile Search
+            # status_query ={'':{"$elemMatch":{'status':reg_expression}}}
+
+
+
+
+        # if(self.lon != "" and self.lat != ""):
+        #     query_string['latlng'] = {"$near":{"$geometry":{"type":"Point", "coordinates":[float(self.lon), float(self.lat)]}, "$maxDistance":1609340}} #{ "$near" : [ float(self.lon), float(self.lat)] , "$maxDistance": 160.934 } #('$near', {'lat': float(self.lat), 'long': float(self.lon)}), ('$maxDistance', 160.934)]) 
+            # query_string['location'] = {"$near":{"$geometry":{"type":"Point", "coordinates":[float(self.lon), float(self.lat)]}, "$maxDistance":160.934}}
+            pass
+
+        and_query =[]
+        # for profile search
+        if search_type==1:
+            and_query.append({"sign_up_as":{"$ne":"Individual"}})
+
+
+        # Limit distance within 200 miles
+        and_query.append({"distance":{"$lte":321868}})
+
+
+        # check food filters
+        if len(self.foods) > 0:
+            and_query.append({"foods": {"$all":self.foods}})
+        
+        # Check business filter
+        if len(self.business) > 0:
+            and_query.append({"type_user":{"$all":self.business}})
+        
+        # Check organisation filter
+        if len(self.organisation) > 0:
+            and_query.append({"organisations":{"$all":self.organisation}})
+
+
+        query_string["$and"] = and_query
+ 
+
+        geo_near = {
+                        "$geoNear": {"near": [float(self.lon), float(self.lat)],
+                                    "distanceField": "distance",
+                                    "maxDistance": 160.934,
+                                    # "query": query_string,
+                                    "includeLocs": "latlng",
+                                    "uniqueDocs": True,  
+                                    "spherical":True,
+                                    "limit":5000,
+                                    "distanceMultiplier":6371
+                                  }
+                      }
+
+
+        agg_pipeline.append(geo_near)
+        agg_pipeline.append({ '$match':query_string})
+        if search_type == 0:
+            agg_pipeline.append({"$unwind": "$updates"})
+
+
+        if search_type == 0:
+            agg_pipeline.append({ '$match':{"updates.deleted":{"$ne":1}}})
+
+       
+        # agg_pipeline.append({ '$match':{"updates":{"$size":0}}})
+        if self.sort == "time":
+            sort_text = "updates.time_stamp"
+            sort_order = -1
+        else:
+            sort_text = "distance"
+            sort_order = 1
+        
+
+        # print sort_text
+        agg_pipeline.append({"$sort": SON([(sort_text, sort_order), ("time_stamp", -1)])})
+
+        # next_index = 5
+        # if len(or_conditions) > 0:
+        #     next_index = 6
+        #     agg_pipeline.append({ '$match':{"$or":or_conditions}})
+
+
+        group_fields = {}
+        group_fields["_id"] = "all"
+        group_fields["foods"] = { "$push": "$foods" }
+        group_fields["businesses"] = { "$push": "$type_user"}
+        group_fields["organisations"] = { "$push": "$organisations"}
+        group_fields["business_count"] = {"$sum":{"$cond": [{"$eq": ['$sign_up_as', "Business"]}, 1, 0]}}
+        group_fields["organisation_count"] = {"$sum":{"$cond": [{"$eq": ['$sign_up_as', "Organisation"]}, 1, 0]}}
+
+
+        if search_type == 0:
+            result_type = "updates.status"
+        else:
+            result_type = "description"
+        
+        group_fields["results"] = self.get_result_fields(result_type)
+        
+        agg_pipeline.append({"$group": group_fields})
+        
+
+        
+        agg_pipeline.append({ "$limit" : 30 })
+
+        
+
+        up = UserProfile()
+        return up.agg(agg_pipeline)
+        
         # print json.dumps(len(up.find(query_string)))
         # print json.dumps(up.find(query_string))
 
