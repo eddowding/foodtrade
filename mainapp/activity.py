@@ -86,7 +86,7 @@ def home(request):
     keyword = keyword.lower()
     search_handle = Search(keyword=keyword, lon = my_lon, lat =my_lat, place = location, foods=foods, business=businesses, organisation=organisations, sort=sort)
     search_results = search_handle.search_all()
-    results =search_results['results'][:20]
+    results =search_results['results'][:40]
 
     for i in range(len(results)):
         distance_text = ""
@@ -108,6 +108,9 @@ def home(request):
             result_class = result_class + " profile"
 
         results[i]["result_class"] = result_class
+
+
+
 
 
         # if lonlat_distance>1:
@@ -144,6 +147,11 @@ def home(request):
     
     parameters['results'] = results
     parameters['json_data'] = json.dumps(results)
+    parameters['results_business_count'] = search_results["business_counter"]
+    parameters['results_organisation_count'] = search_results["organisation_counter"]
+    parameters['results_updates_count'] = search_results["update_counter"]
+
+
     parameters['search'] = {'query':keyword, 'place':location, 'lon':my_lon, 'lat':my_lat}
 
     # For food Filters

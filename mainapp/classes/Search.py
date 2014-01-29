@@ -54,6 +54,7 @@ class Search():
         else:
             result_type = "$username"
         return { "$push": {
+
         "user":{"name":"$name", 
         "address":"$address",
         "profile_img":"$profile_img",
@@ -70,7 +71,7 @@ class Search():
         "foods":"$foods",
         "sign_up_as":"$sign_up_as",
         "time_stamp":"$updates.time_stamp",
-        "result_type":result_type
+        "result_type":result_type,
         }}
 
 
@@ -102,12 +103,68 @@ class Search():
         
         sorted_counter = sorted(counter.iteritems(), key=operator.itemgetter(1),reverse=True)
         return [{"uid":value,"value":label} for value, label in sorted_counter]
- 
 
-    def search_all(self):
+
+
+    def search_all(self,):
+        statuses = self.get_search_type(0)
+        profiles = self.get_search_type(1)
+
+        if len(profiles)>0:
+            if len(statuses)>0:               
+                profiles[0]["foods"].extend(statuses[0]["foods"])
+                profiles[0]["businesses"].extend(statuses[0]["businesses"])
+                profiles[0]["organisations"].extend(statuses[0]["organisations"])
+                profiles[0]["results"] = profiles[0]["results"][:30]
+                profiles[0]["results"].extend(statuses[0]["results"][:30])
+                results = profiles[0]
+        else:
+            if len(statuses)>0: 
+                results = statuses[0]
+            else:
+                return {"foods":[], "businesses":[], "organisations":[],"results":[], "business_counter":0, "organisation_counter":0, "update_counter":0}
+
+
+        
+  
+
+
+        foods_list = results["foods"]
+
+        foods_counter = self.item_counter(foods_list)
+        results["foods"] = foods_counter
+
+        businesses_list = results["businesses"]
+        businesses_counter = self.item_counter(businesses_list)
+        results["businesses"] = businesses_counter
+
+        organisations_list = results["organisations"]
+        organisations_counter = self.item_counter(organisations_list)
+        results["organisations"] = organisations_counter
+
+        try:
+            results["business_counter"] = profiles[0]["business_count"]
+            results["organisation_counter"] = profiles[0]["organisation_count"]
+        except:
+            results["business_counter"] = 0
+            results["organisation_counter"] = 0
+        try:
+
+            results["update_counter"] = statuses[0]["update_count"]
+        except:
+            results["update_counter"] = 0
+
+        # print len(results['results'])
+        # print json.dumps(results)
+        # print results
+        return results
+
+    def get_search_type(self, search_type):
         query_string = {}
         agg_pipeline = []
         or_conditions = []
+
+
         if self.keyword !="":
             keyword_like = re.compile(self.keyword + '+', re.IGNORECASE)
             reg_expression = {"$regex": keyword_like, '$options': '-i'}
@@ -118,7 +175,8 @@ class Search():
             
             for search_item in search_variables:
                 or_conditions.append({search_item:reg_expression})
-            status_query ={'updates':{"$elemMatch":{'status':reg_expression}}}
+
+            
 
             # Searches keyword as food
             or_conditions.append({'foods':reg_expression})
@@ -126,21 +184,34 @@ class Search():
 
             or_conditions.append({'businesses':reg_expression})
 
-            or_conditions.append(status_query)
-            or_conditions.append({'updates.status':reg_expression})
-            query_string['$or'] = or_conditions
+            
+            #Only for Status
+            if search_type==0:
+                or_conditions.append({'updates.status':reg_expression})
+                status_query ={'updates':{"$elemMatch":{'status':reg_expression}}}
+                or_conditions.append(status_query)
+
+
+            # Only for profile Search
+            # status_query ={'':{"$elemMatch":{'status':reg_expression}}}
+
+
+
 
         # if(self.lon != "" and self.lat != ""):
         #     query_string['latlng'] = {"$near":{"$geometry":{"type":"Point", "coordinates":[float(self.lon), float(self.lat)]}, "$maxDistance":1609340}} #{ "$near" : [ float(self.lon), float(self.lat)] , "$maxDistance": 160.934 } #('$near', {'lat': float(self.lat), 'long': float(self.lon)}), ('$maxDistance', 160.934)]) 
             # query_string['location'] = {"$near":{"$geometry":{"type":"Point", "coordinates":[float(self.lon), float(self.lat)]}, "$maxDistance":160.934}}
-            pass
+
 
         and_query =[]
-        up = UserProfile()
+
+        # for profile search
+        if search_type==1:
+            and_query.append({"sign_up_as":{"$ne":"Individual"}})
 
 
         # Limit distance within 200 miles
-        and_query.append({"distance":{"$lte":321.868}})
+        and_query.append({"distance":{"$lte":1609.34}})
 
 
         # check food filters
@@ -157,7 +228,9 @@ class Search():
 
 
         query_string["$and"] = and_query
- 
+        if self.keyword !="":
+            query_string["$or"] = or_conditions
+        print query_string
 
         geo_near = {
                         "$geoNear": {"near": [float(self.lon), float(self.lat)],
@@ -168,16 +241,25 @@ class Search():
                                     "uniqueDocs": True,  
                                     "spherical":True,
                                     "limit":5000,
-                                    "distanceMultiplier":6371                          
+                                    "distanceMultiplier":6371
                                   }
                       }
 
 
         agg_pipeline.append(geo_near)
+
         agg_pipeline.append({ '$match':query_string})
 
+
+        if search_type == 0:
+            agg_pipeline.append({"$unwind": "$updates"})
+
+
+        if search_type == 0:
+            agg_pipeline.append({ '$match':{"updates.deleted":{"$ne":1}}})
+
        
-        agg_pipeline.append({ '$match':{"updates":{"$size":0}}})
+        # agg_pipeline.append({ '$match':{"updates":{"$size":0}}})
         if self.sort == "time":
             sort_text = "updates.time_stamp"
             sort_order = -1
@@ -187,73 +269,41 @@ class Search():
         
 
         # print sort_text
-
-        
         agg_pipeline.append({"$sort": SON([(sort_text, sort_order), ("time_stamp", -1)])})
 
-        next_index = 5
-        if len(or_conditions) > 0:
-            next_index = 6
-            agg_pipeline.append({ '$match':{"$or":or_conditions}})
+        # next_index = 5
+        # if len(or_conditions) > 0:
+        #     next_index = 6
+        #     agg_pipeline.append({ '$match':{"$or":or_conditions}})
 
 
         group_fields = {}
         group_fields["_id"] = "all"
         group_fields["foods"] = { "$push": "$foods" }
-        group_fields["businesses"] = { "$push": "$type_user" }
+        group_fields["businesses"] = { "$push": "$type_user"}
         group_fields["organisations"] = { "$push": "$organisations"}
+        group_fields["business_count"] = {"$sum":{"$cond": [{"$eq": ['$sign_up_as', "Business"]}, 1, 0]}}
+        group_fields["organisation_count"] = {"$sum":{"$cond": [{"$eq": ['$sign_up_as', "Organisation"]}, 1, 0]}}
+        group_fields["update_count"] = {"$sum": 1}
 
-        group_fields["results"] = self.get_result_fields("description")
-        agg_pipeline.append({ '$match':{"updates.deleted":{"$ne":1}}})
+        if search_type == 0:
+            result_type = "updates.status"
+        else:
+            result_type = "description"
+        
+        group_fields["results"] = self.get_result_fields(result_type)
+        
         agg_pipeline.append({"$group": group_fields})
         
 
         
-        agg_pipeline.append({ "$limit" : 20 })
+        agg_pipeline.append({ "$limit" : 30 })
 
         
+
+        up = UserProfile()
+        return up.agg(agg_pipeline)
         
-        profiles = up.agg(agg_pipeline)
-        agg_pipeline[2] = {"$unwind": "$updates"}
-
-        group_fields["results"] = self.get_result_fields("updates.status")
-        agg_pipeline[next_index] = {"$group":group_fields}
-        statuses = up.agg(agg_pipeline)
-
-        if len(profiles)>0:
-            if len(statuses)>0:
-               
-                profiles[0]["foods"].extend(statuses[0]["foods"])
-                profiles[0]["businesses"].extend(statuses[0]["businesses"])
-                profiles[0]["organisations"].extend(statuses[0]["organisations"])
-                profiles[0]["results"].extend(statuses[0]["results"])
-        else:
-            profiles = statuses
-
-        
-        if len(profiles)>0:
-
-            results = profiles[0]
-        else:
-            return {"foods":[], "businesses":[], "organisations":[],"results":[]}
-
-
-        foods_list = results["foods"]
-
-        foods_counter = self.item_counter(foods_list)
-        results["foods"] = foods_counter
-
-        businesses_list = results["businesses"]
-        businesses_counter = self.item_counter(businesses_list)
-        results["businesses"] = businesses_counter
-
-        organisations_list = results["organisations"]
-        organisations_counter = self.item_counter(organisations_list)
-        results["organisations"] = organisations_counter
-        # print len(results['results'])
-        # print json.dumps(results)
-        # print results
-        return results
         # print json.dumps(len(up.find(query_string)))
         # print json.dumps(up.find(query_string))
 

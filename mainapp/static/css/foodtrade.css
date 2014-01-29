@@ -168,6 +168,11 @@ background: #eee;
   box-shadow: 0 0 20px rgba(0,0,0,0.5) inset;
 }
 
+#beta a {
+  color: #fff;
+  text-decoration: underline;
+}
+
 #partners .thumbnail,
 #logos .thumbnail {
   margin-right: 1em;
@@ -1021,20 +1026,22 @@ h2 {
 /**  ACTIVITY                  **/
 /********************************/
 
-#activity { 
+ 
+.activity { 
+  margin-top: 1em;
 }
 
-#activity .chat li {
+.activity .chat li {
 	border: 0
 }
 
-#activity .chat .dropdown-menu li {
+.activity .chat .dropdown-menu li {
 	margin: 0;
 	padding: 0;
 }
  
 
-#activity .well-sm {
+.activity .well-sm {
 	margin-top: 5px !Important;
 	padding: 3px;
 	border-radius: 0px; 

@@ -88,14 +88,33 @@ class AjaxSearch():
 
         search_handle = Search(keyword=keyword, lon = my_lon, lat =my_lat, place = location, foods=foods, business=businesses, organisation=organisations,sort=sort)
         search_results = search_handle.search_all()
-        results =search_results['results'][:20]
+        results =search_results['results'][:40]
 
         for i in range(len(results)):
             distance_text = ""
+
             # try:
             lonlat_distance = results[i]['distance'] * 0.621371 #distance(my_lon, my_lat, results[i]['location']['coordinates'][0],results[i]['location']['coordinates'][1])
             
             lonlat_distance = '%.1f' % lonlat_distance
+            result_class = results[i]["sign_up_as"].lower() 
+            for fd in results[i]:
+                if fd.lower() == keyword or fd in foods:
+                    result_class = result_class + " produce"
+                    break
+            if results[i]["result_type"] == results[i]["user"]["username"]:
+                if keyword in results[i]['status']:
+                    result_class = result_class + " updates"
+
+            else:
+                result_class = result_class + " profile"
+
+            results[i]["result_class"] = result_class
+
+
+
+
+
             # if lonlat_distance>1:
             #     distance_text = str(lonlat_distance) +" Km"
             # else:
@@ -123,12 +142,18 @@ class AjaxSearch():
             except:
                time_text = ""
 
-
             results[i]['distance_text'] = distance_text
             results[i]['time_elapsed'] = time_text
 
 
         
         parameters['results'] = results
-        parameters['results_json'] = json.dumps(results)
-        return render_to_response('activity_ajax.html',parameters)
+        parameters['json_data'] = json.dumps(results)
+
+
+
+        ret_val = {}
+        ret_val["updates"] = str(render_to_response('activity_updates.html',parameters)).replace("Content-Type: text/html; charset=utf-8","")
+        ret_val["biz"] = str(render_to_response('activity_biz.html',parameters)).replace("Content-Type: text/html; charset=utf-8","")
+        ret_val["org"] = str(render_to_response('activity_org.html',parameters)).replace("Content-Type: text/html; charset=utf-8","")
+        return HttpResponse(json.dumps(ret_val))
