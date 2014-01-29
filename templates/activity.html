@@ -32,12 +32,18 @@
 <ul class="nav nav-tabs">
   <li class="active">
     <a href="#near_me" data-toggle="tab">Activity 
-      <span class="badge">{{userinfo.nearby_individuals_no}}</span>
+      <span class="badge">{{results_updates_count}}</span>
     </a>
   </li>
   <li>
     <a href="#biz" data-toggle="tab">Businesses 
-    <span class="badge">{{userinfo.nearby_businesses_no}}</span>
+    <span class="badge">{{results_business_count}}</span>
+    </a>
+  </li> 
+
+    <li>
+    <a href="#org" data-toggle="tab">Organisations
+    <span class="badge">{{results_organisation_count}}</span>
     </a>
   </li> 
 </ul>
@@ -167,6 +173,10 @@
 
 
 </div><!-- tab pane activity -->
+
+
+
+
   <div class="tab-pane" id="biz">
  
   <div id="activity"> 
@@ -177,7 +187,7 @@
 {% if results %}
 
 {% for result in results %}
-{% if result.user.username != result.result_type %}
+{% if result.user.username != result.result_type and result.sign_up_as == "Business" %}
 
     <li class="left clearfix {{result.result_class}}" id="{{result.uid.id}}"><span class="chat-img pull-left">
     <img src="{{result.user.profile_img}}" alt="{{result.user.name}}" class="img-thumbnail" />
@@ -267,6 +277,113 @@
 
 
   </div> 
+
+
+
+  <div class="tab-pane" id="org">
+ 
+  <div id="activity"> 
+        <ul class="chat">
+
+ 
+
+{% if results %}
+
+{% for result in results %}
+{% if result.user.username != result.result_type and result.sign_up_as == "Organisation" %}
+
+    <li class="left clearfix {{result.result_class}}" id="{{result.uid.id}}"><span class="chat-img pull-left">
+    <img src="{{result.user.profile_img}}" alt="{{result.user.name}}" class="img-thumbnail" />
+    </span>
+        <div class="chat-body clearfix">
+ 
+
+        <div class="btn-group pull-right" style="margin-left: 5px;">
+            <button type="button" class="btn btn-default dropdown-toggle btn-xs pull-left" data-toggle="dropdown">
+              <i class="fa fa-link fa-large text-muted"></i>
+                <span class="caret text-muted"></span>
+            </button> 
+            <ul class="dropdown-menu" role="menu">
+              {%  if userinfo.user_type == "Business" and result.sign_up_as == "Business" and result.user.username != userinfo.username %}
+              <li><a href="#" onclick="click_activity('buyFrom','{{result.useruid}}')">I buy from</a></li>
+              <li><a href="#"onclick="click_activity('sellTo','{{result.useruid}}')">I sell to</a></li> 
+              <li class="divider"></li>
+              {% endif %}
+              {% if result.sign_up_as == "Organisation" %}
+              <li><a href="#" onclick="click_activity('markMember', '{{result.useruid}}')">I'm a member</a></li>
+              {% endif %}
+              {% if userinfo.user_type == "Individual" and result.sign_up_as == "Business" %}
+              <li><a href="#" onclick="click_activity('markCustomer', '{{result.user.username}}')">I'm a customer</a></li>
+              {% endif %}
+              <li class="divider"></li>
+              {% ifequal result.user.username userinfo.username %}
+              <li><a href="#" onclick="click_activity('delete','{{result.tweetuid}}')">Delete</a></li>
+              {% endifequal %}
+              {% if result.user.username != userinfo.username %}
+              <li><a href="#" onclick="click_activity('spam','{{result.uid.id}}')">Flag as spam</a></li>
+              <li><a href="#" onclick="click_activity('follow','{{result.user.username}}')">Follow on Twitter</a></li>
+              {% endif %}
+              <li><a href="/profile/{{result.user.username}}/">View full profile</a></li> 
+            </ul>
+          </div>  
+
+
+            <div class="header">
+                <strong class="pull-left" style="margin-right: 10px;"><a href="/profile/{{result.user.username}}">{{result.user.name}}</a></strong> 
+
+          {% if type_user|length == 0 or type_user|first == '' %}
+          {% else %}
+          {% if result.sign_up_as == "Business" %}
+            <div class="tags tags-biztype">  
+              {% for tag in result.type_user  %}
+                <a href="/activity/?b={{tag}}">{{tag}}</a>
+              {% endfor %}
+            </div> 
+            {% endif %}
+          {% endif %}
+            </div>
+
+            <p>
+                {{result.status}}
+            </p>
+
+              <div class="meta small text-muted">
+               <i class="fa fa-map-marker"></i>
+                {{result.user.address}}
+
+                 
+
+                <span class="pull-right">
+                   <!-- if logged in or you've allows html5 browser location -->
+                 <a href="http://maps.google.com/maps?saddr={{userinfo.lat}},{{userinfo.lon}}&daddr={{result.location.coordinates.1}},{{result.location.coordinates.0}}" 
+                    target="_blank" data-placement="top" data-toggle="tooltip" 
+                    class="text-muted" 
+                    rel="tooltip" 
+                    title="Get directions"> 
+                 <i class="fa fa-location-arrow"></i> {{result.distance_text}}  
+                 </a>
+                <!--  // if logged in or you've allows html5 browser location -->
+                </span>
+              </div> 
+
+        </div>
+
+        <div class="reply well well-sm" style="margin:0;"> 
+          <input class="form-control input-sm enterhandler"  {% if not user.is_authenticated %} rel="tooltip" title="Please login to use this feature." {% endif %} type="text" id="replyid_{{forloop.counter}}" placeholder="Reply to @{{result.user.username}}" onfocus="ShowReply('replyid_{{forloop.counter}}', '@{{result.user.username}}')" onblur="BlurReply('replyid_{{forloop.counter}}', '@{{result.user.username}}')">
+        </div>
+    </li>
+    {% endif %}
+  {% endfor %}
+    {% endif %}
+</ul> 
+  </div>
+
+
+  </div> 
+  <!-- close organisation tab -->
+
+
+
 </div><!-- tabs -->
 
 

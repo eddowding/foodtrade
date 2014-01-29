@@ -112,18 +112,18 @@ class Search():
         print len(profiles[0]["results"])
         print len(statuses[0]["results"])
         if len(profiles)>0:
-            if len(statuses)>0:
-               
+            if len(statuses)>0:               
                 profiles[0]["foods"].extend(statuses[0]["foods"])
                 profiles[0]["businesses"].extend(statuses[0]["businesses"])
                 profiles[0]["organisations"].extend(statuses[0]["organisations"])
                 profiles[0]["results"] = profiles[0]["results"][:30]
                 profiles[0]["results"].extend(statuses[0]["results"][:30])
+                results = profiles
         else:
-            profiles = statuses
+            results = statuses
 
         
-        if len(profiles)>0:
+        if len(results)>0:
 
             results = profiles[0]
         else:
@@ -142,6 +142,11 @@ class Search():
         organisations_list = results["organisations"]
         organisations_counter = self.item_counter(organisations_list)
         results["organisations"] = organisations_counter
+
+
+        results["business_counter"] = profiles[0]["business_count"]
+        results["organisation_counter"] = profiles[0]["organisation_count"]
+        results["update_counter"] = statuses[0]["update_count"]
         # print len(results['results'])
         # print json.dumps(results)
         # print results
@@ -151,6 +156,8 @@ class Search():
         query_string = {}
         agg_pipeline = []
         or_conditions = []
+
+
         if self.keyword !="":
             keyword_like = re.compile(self.keyword + '+', re.IGNORECASE)
             reg_expression = {"$regex": keyword_like, '$options': '-i'}
@@ -187,7 +194,7 @@ class Search():
         # if(self.lon != "" and self.lat != ""):
         #     query_string['latlng'] = {"$near":{"$geometry":{"type":"Point", "coordinates":[float(self.lon), float(self.lat)]}, "$maxDistance":1609340}} #{ "$near" : [ float(self.lon), float(self.lat)] , "$maxDistance": 160.934 } #('$near', {'lat': float(self.lat), 'long': float(self.lon)}), ('$maxDistance', 160.934)]) 
             # query_string['location'] = {"$near":{"$geometry":{"type":"Point", "coordinates":[float(self.lon), float(self.lat)]}, "$maxDistance":160.934}}
-            pass
+
 
         and_query =[]
         # for profile search
@@ -264,7 +271,7 @@ class Search():
         group_fields["organisations"] = { "$push": "$organisations"}
         group_fields["business_count"] = {"$sum":{"$cond": [{"$eq": ['$sign_up_as', "Business"]}, 1, 0]}}
         group_fields["organisation_count"] = {"$sum":{"$cond": [{"$eq": ['$sign_up_as', "Organisation"]}, 1, 0]}}
-
+        group_fields["update_count"] = {"$sum": 1}
 
         if search_type == 0:
             result_type = "updates.status"
