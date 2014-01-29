@@ -4,3 +4,4 @@ twython
 pyyaml
 pymongo
 pygeocoder
+requests

@@ -37,10 +37,10 @@
  	<div class="panel-body mymargin">
 
     <div class="form-group"> 
- 	<textarea id="tweetMessage1"  onkeyup="check_limit()" class="form-control counted" name="message" placeholder="Type in your message" rows="3" >You'll love www.foodtrade.com, </textarea>
+ 	<textarea id="tweetMessage1"  onkeyup="check_limit()" class="form-control counted-invite" name="message" placeholder="Type in your message" rows="3" >You'll love www.foodtrade.com, </textarea>
  	</div>
  	<button id="btnSendTweet2" onclick="send_invite()" class="btn btn-primary pull-right">Send invites</button>
-      <h6 id="charsRem" class="pull-left" id="counter">120 characters remaining</h6> 
+      <h6 id="charsRem" class="pull-left" id="counter">140 characters remaining</h6> 
  	</div>
 
 	<ul class="list-group"> 
@@ -70,9 +70,9 @@
 </div>
 <script src="{% static "js/jquery.js" %}"></script>
 <script type="text/javascript">
-var invite_id = String('{{invite_id}}');
+var invite_id = String('{{invite_id|safe}}');
 var domain = document.domain;
-var tweet = String({{invite_tweet|safe}});
+var tweet = String('{{invite_tweet|safe}}');
 var countVal = 0;
 var send_list = [];
 var users = [];
@@ -95,7 +95,7 @@ function validate_tweets (argument, count) {
 			$('#charsRem').html(String(140-tweet.length) + ' characters remaining.')
 	}
 	else{
-		if (argument.length + len < 120 ) {
+		if (argument.length + len < 140 ) {
 			tweet = tweet + ' ' + '@' + String(argument) +' ';
 			countVal = countVal + 1;
 			send_list.push(count);
@@ -104,7 +104,7 @@ function validate_tweets (argument, count) {
 			$('#btnSendTweet1').html("Send " + String(countVal) + ' invites');
 			$('#btnSendTweet2').html("Send " + String(countVal) + ' invites');
 			$('#btnSendTweet3').html("Send " + String(countVal) + ' invites');
-			$('#charsRem').html(String(120-tweet.length) + ' characters remaining.')			
+			$('#charsRem').html(String(140-tweet.length) + ' characters remaining.')			
 		}
 		else{
 			alert('Character Length 140 of Tweets exceeded');
@@ -116,12 +116,12 @@ function validate_tweets (argument, count) {
 function invites_handler (data) {
 	data = jQuery.parseJSON(data);
 	if(data['status'] == '1'){
-		/*invite_id = String(data['new_invite_id']);*/
+		invite_id = String(data['new_invite_id']);
 		new_invite_tweet = String(data['new_invite_tweet']);
-		alert(new_invite_tweet);
+		/*alert(new_invite_tweet);*/
 		tweet = new_invite_tweet;
 		/*alert(invite_id);*/
-		$('#charsRem').html(String(120) + ' characters remaining.');
+		$('#charsRem').html(String(140) + ' characters remaining.');
 		$('#btnSendTweet1').html("Send invites");
 		$('#btnSendTweet2').html("Send invites");			
 		$('#btnSendTweet3').html("Send invites");
@@ -131,7 +131,7 @@ function invites_handler (data) {
 			$('#li' + String(send_list[val])).hide();
 			tweet = tweet.replace(users[val], '');
 		}
-		update_ul_invites(1);
+		/*update_ul_invites(1);*/
 		$('#successDiv').show(2000);
 		$('#successDiv').delay(5000).fadeOut('slow');
 	}
@@ -148,8 +148,7 @@ function send_invite () {
 			{'message':tweet, 
 			'invite':'true', 
 			'to':String(users), 
-			'invite_id':'{{invite_id|safe}}', 
-			'invite_url':invite_url,
+			'invite_id':invite_id,
 			'noappend':'noappend'
 		});
 	}
@@ -157,11 +156,11 @@ function send_invite () {
 
 function check_limit(){
 	tweet = $('#tweetMessage1').val();
-	if(tweet.len > 120){
+	if(tweet.len > 140){
 		$('#charsRem').html( 'Max of 120 characters exceeded.');
 	}
 	else{
-		$('#charsRem').html(String(120-tweet.length) + ' characters remaining.');
+		$('#charsRem').html(String(140-tweet.length) + ' characters remaining.');
 	}
 }
 

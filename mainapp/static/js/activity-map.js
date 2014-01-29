@@ -126,10 +126,10 @@ var card_str = '<div class="card-box"><div class="content"><div class="pull-left
 
 
 
-// 		  map.fitBounds([
-//     [min_lat, min_lon],
-//     [max_lat, max_lon]
-// ]);
+		  map.fitBounds([
+    [min_lat, min_lon],
+    [max_lat, max_lon]
+]);
 		
 
 
