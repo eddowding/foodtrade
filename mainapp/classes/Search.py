@@ -225,7 +225,6 @@ class Search():
         query_string["$and"] = and_query
         if self.keyword !="":
             query_string["$or"] = or_conditions
-        print query_string
 
         geo_near = {
                         "$geoNear": {"near": [float(self.lon), float(self.lat)],
@@ -263,7 +262,6 @@ class Search():
             sort_order = 1
         
 
-        # print sort_text
         agg_pipeline.append({"$sort": SON([(sort_text, sort_order), ("time_stamp", -1)])})
 
         # next_index = 5
