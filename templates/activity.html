@@ -404,7 +404,7 @@ connections = {{json_data | safe}};
               }
  if(filters[i].uid!="")
               {
-            var row = '<li data-id="15" class="foodtrade-tag foodtrade-tag-click "><div class="foodtrade-tag-checkbox-column"><input type="checkbox" '+checked+' onClick="foods_changed(this,\''+filters[i].uid+'\')" aria-label="University of Washington" class="foodtrade-tag-checkbox"></div><div class="foodtrade-tag-text"> '+filters[i].uid+'</div><div class="foodtrade-tag-count">'+filters[i].value+'</div></li>';
+            var row = '<li data-id="15" class="foodtrade-tag foodtrade-tag-click "><div class="foodtrade-tag-checkbox-column"><input type="checkbox" '+checked+' onClick="foods_changed(this,\''+filters[i].uid+'\')" class="foodtrade-tag-checkbox"></div><div class="foodtrade-tag-text"> '+filters[i].uid+'</div><div class="foodtrade-tag-count">'+filters[i].value+'</div></li>';
             $('#food_filter_results').append(row);
           }
            
@@ -476,7 +476,7 @@ business_filters = {{business_filter |safe}};
               }
  if(filters[i].uid!="")
               {
-            var row = '<li data-id="15" class="foodtrade-tag foodtrade-tag-click "><div class="foodtrade-tag-checkbox-column"><input type="checkbox" '+checked+' onClick="business_changed(this,\''+filters[i].uid+'\')" aria-label="University of Washington" class="foodtrade-tag-checkbox"></div><div class="foodtrade-tag-text"> '+filters[i].uid+'</div><div class="foodtrade-tag-count">'+filters[i].value+'</div></li>';
+            var row = '<li data-id="15" class="foodtrade-tag foodtrade-tag-click "><div class="foodtrade-tag-checkbox-column"><input type="checkbox" '+checked+' onClick="business_changed(this,\''+filters[i].uid+'\')"   class="foodtrade-tag-checkbox"></div><div class="foodtrade-tag-text"> '+filters[i].uid+'</div><div class="foodtrade-tag-count">'+filters[i].value+'</div></li>';
             $('#business_filter_results').append(row);
           }
            
@@ -546,7 +546,7 @@ organisation_filters = {{organisation_filter |safe}};
               }
               if(filters[i].uid!="")
               {
-            var row = '<li data-id="15" class="foodtrade-tag foodtrade-tag-click "><div class="foodtrade-tag-checkbox-column"><input type="checkbox" '+checked+' onClick="organisation_changed(this,\''+filters[i].uid+'\')" aria-label="University of Washington" class="foodtrade-tag-checkbox"></div><div class="foodtrade-tag-text"> '+filters[i].uid+'</div><div class="foodtrade-tag-count">'+filters[i].value+'</div></li>';
+            var row = '<li data-id="15" class="foodtrade-tag foodtrade-tag-click "><div class="foodtrade-tag-checkbox-column"><input type="checkbox" '+checked+' onClick="organisation_changed(this,\''+filters[i].uid+'\')"   class="foodtrade-tag-checkbox"></div><div class="foodtrade-tag-text"> '+filters[i].uid+'</div><div class="foodtrade-tag-count">'+filters[i].value+'</div></li>';
             $('#organisation_filter_results').append(row);
           }
            

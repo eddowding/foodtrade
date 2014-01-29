@@ -374,13 +374,6 @@ function parse_notices_ajax(data){
   $('#myNoticesLi').html(str);
 }
 function view_message(notifying_user_profile_name , notifying_user_email, notification_message, notification_id,  notitying_screen_name){
-  alert(
-    String(notifying_user_profile_name) +
-    String(notifying_user_email) +
-    String(notification_message) +
-    String(notification_id) +  
-    String(notitying_screen_name)
-    );
   $('#btnModalView').click();
   $('#notifier_name').html('');
   $('#notifier_name').html(String(notifying_user_profile_name) + ' (' + notifying_user_email + ')');

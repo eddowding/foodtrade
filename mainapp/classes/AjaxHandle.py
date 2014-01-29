@@ -19,6 +19,7 @@ import datetime, time
 from bson.objectid import ObjectId
 from mainapp.views import calculate_time_ago
 from django.contrib.auth.models import User
+from mainapp.bitly import construct_Invite_tweet
 
 # consumer_key = 'seqGJEiDVNPxde7jmrk6dQ'
 # consumer_secret = 'sI2BsZHPk86SYB7nRtKy0nQpZX3NP5j5dLfcNiP14'
@@ -72,7 +73,8 @@ class AjaxHandle(AjaxSearch):
                             invite_obj.save_invites(doc)
                         invite_id_obj.change_used_status(request.user.id, request.POST['invite_id'])
                         new_invite_id = invite_id_obj.get_unused_id(request.user.id)['uid']['id']
-                        return HttpResponse(json.dumps({'status':'1', 'new_invite_id':new_invite_id}))
+                        new_invite_tweet =construct_Invite_tweet(request, invite_id)
+                        return HttpResponse(json.dumps({'status':'1', 'new_invite_id':new_invite_id, 'new_invite_url':new_invite_tweet}))
                 # don't save tweet to mongo if it is vouch for food
                 return HttpResponse(json.dumps({'status':1}))
             else:
@@ -146,19 +148,19 @@ class AjaxHandle(AjaxSearch):
                     pass
             else:
                 trade_conn.create_connection({'b_useruid': request.user.id, 'c_useruid': int(data['prof_id'])})
-                try:
-                    userprof = user_profile_obj.get_profile_by_id(int(data['prof_id']))
-                    notification_obj.save_notification({
-                            'notification_to':request.user.username, 
-                            'notification_message':'@' + str(userprof.screen_name) + ' added you as seller. You can add contacts, connect and have happy business now.', 
-                            'notification_time':time.mktime(datetime.datetime.now().timetuple()),
-                            'notification_type':'Added Seller',
-                            'notification_view_status':'false',
-                            'notification_archived_status':'false',
-                            'notifying_user':str(userprof.username)
-                            })                
-                except:
-                    pass
+                # try:
+                userprof = user_profile_obj.get_profile_by_id(int(data['prof_id']))
+                notification_obj.save_notification({
+                        'notification_to':request.user.username, 
+                        'notification_message':'@' + str(userprof.screen_name) + ' added you as seller. You can add contacts, connect and have happy business now.', 
+                        'notification_time':time.mktime(datetime.datetime.now().timetuple()),
+                        'notification_type':'Added Seller',
+                        'notification_view_status':'false',
+                        'notification_archived_status':'false',
+                        'notifying_user':str(userprof.username)
+                        })                
+                # except:
+                #     pass
             parameters = {}
             parameters['connections'], parameters['conn'] = get_connections(int(data['prof_id']))
             parameters['connections_str'] = str(json.dumps(parameters['connections']))

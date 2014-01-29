@@ -85,7 +85,7 @@
         <li data-id="ALL" class="foodtrade-tag foodtrade-tag-click foodtrade-tag-all"><div class="foodtrade-tag-checkbox-column"><input type="checkbox" checked="checked" aria-label="All Partners" class="foodtrade-tag-checkbox"></div><div class="foodtrade-tag-text">All food</div><div class="foodtrade-tag-count">{{total_food_count}}</div></li>
 
         {% for eachfood in food %}
-        <li data-id="{{eachfood.id}}" class="foodtrade-tag foodtrade-tag-click "><div class="foodtrade-tag-checkbox-column"><input type="checkbox" aria-label="Johns Hopkins " class="foodtrade-tag-checkbox"></div><div class="foodtrade-tag-text">{{eachfood.name}} </div><div class="foodtrade-tag-count">{{eachfood.tagcount}}</div></li>
+        <li data-id="{{eachfood.id}}" class="foodtrade-tag foodtrade-tag-click "><div class="foodtrade-tag-checkbox-column"><input type="checkbox"   class="foodtrade-tag-checkbox"></div><div class="foodtrade-tag-text">{{eachfood.name}} </div><div class="foodtrade-tag-count">{{eachfood.tagcount}}</div></li>
         {% endfor %}
 
         <li class="foodtrade-tag-showmore">show more</li>
@@ -125,7 +125,7 @@
         <li data-id="ALL" class="foodtrade-tag foodtrade-tag-click foodtrade-tag-all"><div class="foodtrade-tag-checkbox-column"><input type="checkbox" checked="checked" aria-label="All Partners" class="foodtrade-tag-checkbox"></div><div class="foodtrade-tag-text">All Organisations</div><div class="foodtrade-tag-count">{{total_organisation_count}}</div></li>
 
         {% for eachorganisation in organisation %}
-        <li data-id="{{ eachorganisation.id }}" class="foodtrade-tag foodtrade-tag-click "><div class="foodtrade-tag-checkbox-column"><input type="checkbox" aria-label="Johns Hopkins " class="foodtrade-tag-checkbox"></div><div class="foodtrade-tag-text">{{ eachorganisation.name }} </div><div class="foodtrade-tag-count">{{ eachorganisation.tagcount }}</div></li>
+        <li data-id="{{ eachorganisation.id }}" class="foodtrade-tag foodtrade-tag-click "><div class="foodtrade-tag-checkbox-column"><input type="checkbox"   class="foodtrade-tag-checkbox"></div><div class="foodtrade-tag-text">{{ eachorganisation.name }} </div><div class="foodtrade-tag-count">{{ eachorganisation.tagcount }}</div></li>
         {% endfor %}
         
         <li class="foodtrade-tag-showmore">show more</li>
