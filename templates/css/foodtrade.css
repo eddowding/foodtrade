@@ -388,6 +388,7 @@ h2 {
 /********************************/
 
 #activity { 
+	padding-top: 1em;
 }
 
 #activity .chat li {
