@@ -109,8 +109,7 @@ class Search():
     def search_all(self,):
         statuses = self.get_search_type(0)
         profiles = self.get_search_type(1)
-        print len(profiles[0]["results"])
-        print len(statuses[0]["results"])
+
         if len(profiles)>0:
             if len(statuses)>0:               
                 profiles[0]["foods"].extend(statuses[0]["foods"])
@@ -127,7 +126,7 @@ class Search():
 
             results = profiles[0]
         else:
-            return {"foods":[], "businesses":[], "organisations":[],"results":[]}
+            return {"foods":[], "businesses":[], "organisations":[],"results":[], "business_counter":0, "organisations_counter":0, "update_counter":0}
 
 
         foods_list = results["foods"]
@@ -197,18 +196,19 @@ class Search():
 
 
         and_query =[]
+
         # for profile search
         if search_type==1:
             and_query.append({"sign_up_as":{"$ne":"Individual"}})
 
 
         # Limit distance within 200 miles
-        and_query.append({"distance":{"$lte":321868}})
+        and_query.append({"distance":{"$lte":321.868}})
 
 
         # check food filters
         if len(self.foods) > 0:
-            and_query.append({"foods": {"$all":self.foods}})
+            and_query.append({"foods": {"$all":["kdjfjdkjfkjkj"]}})
         
         # Check business filter
         if len(self.business) > 0:
@@ -220,6 +220,7 @@ class Search():
 
 
         query_string["$and"] = and_query
+        query_string["$or"] = or_conditions
  
 
         geo_near = {
@@ -237,7 +238,11 @@ class Search():
 
 
         agg_pipeline.append(geo_near)
+        print query_string
+
         agg_pipeline.append({ '$match':query_string})
+
+
         if search_type == 0:
             agg_pipeline.append({"$unwind": "$updates"})
 
