@@ -17,6 +17,7 @@ import time
 from mainapp.classes.DataConnector import UserInfo
 import pprint
 from django.contrib.auth.models import User
+from mainapp.bitly import construct_Invite_tweet
 
 next_cursor = -1
 ACCESS_TOKEN = ''
@@ -181,6 +182,7 @@ def trends(request):
 
     return render_to_response('trends.html', parameters, context_instance=RequestContext(request))
 
+
 def invite(request):
     page_num = 1
     parameters = {}
@@ -285,9 +287,14 @@ def invite(request):
 
     invites_obj = InviteId()
     invite_id = invites_obj.get_unused_id(request.user.id)
+
+    invite_tweet = construct_Invite_tweet(request, invite_id)
     #print invite_id
     parameters['invite_id'] = invite_id['uid']['id']
+    parameters ['invite_tweet'] = invite_tweet
     return render_to_response('invites.html', parameters, context_instance=RequestContext(request))
+
+
 
 def handle_invitation_hit(request, invite_id):
     request.session['invite_id'] = str(invite_id)

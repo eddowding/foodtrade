@@ -19,6 +19,7 @@ import datetime, time
 from bson.objectid import ObjectId
 from mainapp.views import calculate_time_ago
 from django.contrib.auth.models import User
+from mainapp.bitly import construct_Invite_tweet
 
 # consumer_key = 'seqGJEiDVNPxde7jmrk6dQ'
 # consumer_secret = 'sI2BsZHPk86SYB7nRtKy0nQpZX3NP5j5dLfcNiP14'
@@ -72,7 +73,8 @@ class AjaxHandle(AjaxSearch):
                             invite_obj.save_invites(doc)
                         invite_id_obj.change_used_status(request.user.id, request.POST['invite_id'])
                         new_invite_id = invite_id_obj.get_unused_id(request.user.id)['uid']['id']
-                        return HttpResponse(json.dumps({'status':'1', 'new_invite_id':new_invite_id}))
+                        new_invite_tweet =construct_Invite_tweet(request, invite_id)
+                        return HttpResponse(json.dumps({'status':'1', 'new_invite_id':new_invite_id, 'new_invite_url':new_invite_tweet}))
                 # don't save tweet to mongo if it is vouch for food
                 return HttpResponse(json.dumps({'status':1}))
             else:
