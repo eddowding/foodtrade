@@ -70,8 +70,8 @@
 
 
 
+
   <div class="activity_updates"> 
-  <div class="activity"> 
 
 <div class="alert alert-warning text-center">
   <p><strong>Sorry, we've found nothing for this search... yet!</strong></p>
@@ -789,12 +789,12 @@ for(var i = 0; i < organisation_filters.length;i++){
        function show_ajax_results(data)
        {
         var data_json = jQuery.parseJSON(data);
-         $('#activity_updates').html(data_json.updates);
-         $('#activity_biz').html(data_json.biz);
-         $('#activity_org').html(data_json.org);
+         $('.activity_updates').html(data_json.updates);
+         $('.activity_biz').html(data_json.biz);
+         $('.activity_org').html(data_json.org);
          
          // connections = ajax_connections;
-         reload_controls();
+         // reload_controls();
 
        }
 $('#food_filter').keyup( function() {

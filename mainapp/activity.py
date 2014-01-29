@@ -101,7 +101,6 @@ def home(request):
                 result_class = result_class + " produce"
                 break
         if results[i]["result_type"] == results[i]["user"]["username"]:
-            print "yes"
             if keyword in results[i]['status']:
                 result_class = result_class + " updates"
 

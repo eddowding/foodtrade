@@ -230,7 +230,7 @@ class Search():
         query_string["$and"] = and_query
         if self.keyword !="":
             query_string["$or"] = or_conditions
- 
+        print query_string
 
         geo_near = {
                         "$geoNear": {"near": [float(self.lon), float(self.lat)],
