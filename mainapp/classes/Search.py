@@ -117,16 +117,16 @@ class Search():
                 profiles[0]["organisations"].extend(statuses[0]["organisations"])
                 profiles[0]["results"] = profiles[0]["results"][:30]
                 profiles[0]["results"].extend(statuses[0]["results"][:30])
-                results = profiles
+                results = profiles[0]
         else:
-            results = statuses
+            if len(statuses)>0: 
+                results = statuses[0]
+            else:
+                return {"foods":[], "businesses":[], "organisations":[],"results":[], "business_counter":0, "organisation_counter":0, "update_counter":0}
+
 
         
-        if len(results)>0:
-
-            results = profiles[0]
-        else:
-            return {"foods":[], "businesses":[], "organisations":[],"results":[], "business_counter":0, "organisations_counter":0, "update_counter":0}
+  
 
 
         foods_list = results["foods"]
@@ -142,10 +142,18 @@ class Search():
         organisations_counter = self.item_counter(organisations_list)
         results["organisations"] = organisations_counter
 
+        try:
+            results["business_counter"] = profiles[0]["business_count"]
+            results["organisation_counter"] = profiles[0]["organisation_count"]
+        except:
+            results["business_counter"] = 0
+            results["organisation_counter"] = 0
+        try:
 
-        results["business_counter"] = profiles[0]["business_count"]
-        results["organisation_counter"] = profiles[0]["organisation_count"]
-        results["update_counter"] = statuses[0]["update_count"]
+            results["update_counter"] = statuses[0]["update_count"]
+        except:
+            results["update_counter"] = 0
+
         # print len(results['results'])
         # print json.dumps(results)
         # print results
@@ -203,12 +211,12 @@ class Search():
 
 
         # Limit distance within 200 miles
-        and_query.append({"distance":{"$lte":321.868}})
+        and_query.append({"distance":{"$lte":1609.34}})
 
 
         # check food filters
         if len(self.foods) > 0:
-            and_query.append({"foods": {"$all":["kdjfjdkjfkjkj"]}})
+            and_query.append({"foods": {"$all":self.foods}})
         
         # Check business filter
         if len(self.business) > 0:
@@ -220,7 +228,8 @@ class Search():
 
 
         query_string["$and"] = and_query
-        query_string["$or"] = or_conditions
+        if self.keyword !="":
+            query_string["$or"] = or_conditions
  
 
         geo_near = {
@@ -238,7 +247,6 @@ class Search():
 
 
         agg_pipeline.append(geo_near)
-        print query_string
 
         agg_pipeline.append({ '$match':query_string})
 
