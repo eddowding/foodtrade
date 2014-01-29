@@ -30,6 +30,9 @@ class AjaxSearch():
     
     def ajax_search(self,request):
         parameters = {}
+
+        default_location = ""
+
         if request.user.is_authenticated():
             # parameters['user'] = request.user
             user_id = request.user.id
@@ -40,6 +43,9 @@ class AjaxSearch():
             default_lat = float(user_profile['latlng']['coordinates'][1])
             user_info = UserInfo(user_id)
             parameters['userinfo'] = user_info
+            default_location = user_profile['zip_code']
+
+
 
         else:
             x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
@@ -52,14 +58,33 @@ class AjaxSearch():
             default_lon = float(location_info['longitude'])
             default_lat = float(location_info['latitude'])
 
-            
+        keyword = request.GET.get('q',"")
+        sort = request.GET.get('sort',"time")
+        my_lon = request.GET.get('lon',"")
+        my_lat = request.GET.get('lat',"")
+        location = request.GET.get('location',default_location)
+        biz_request = request.GET.get('b',"")
+        food_request = request.GET.get('f',"")
+        organisation_request = request.GET.get('o',"")
 
 
-        keyword = request.POST.get('q',"")
-        sort = request.POST.get('sort',"distance")
-        my_lon = request.POST.get('lon',"")
-        my_lat = request.POST.get('lat',"")
-        location = request.POST.get('location',"")
+        if len(biz_request)>0:
+            businesses = [biz_request]
+        else:
+            businesses = []
+
+        if len(food_request)>0:
+            foods = [food_request]
+        else:
+            foods = []
+
+        if len(organisation_request)>0:
+            organisations = [organisation_request]
+        else:
+            organisations = []
+
+
+
         if my_lon == "" or my_lat=="":
             my_lon = default_lon
             my_lat = default_lat
@@ -68,34 +93,37 @@ class AjaxSearch():
             my_lat = float(my_lat)
             my_lon = float(my_lon)
 
-        organisations =request.POST.get('organisations',"")
-        foods = request.POST.get('foods',"")
-        businesses =request.POST.get('businesses',"")
-        if organisations == "":
-            organisations = []
-
-        else:
-            organisations = json.loads(organisations)
-        if businesses == "":
-            businesses = []
-        else:
-            businesses = json.loads(businesses)
-        if foods == "":
-            foods = []
-        else:
-            foods = json.loads(foods)
-
-
-        search_handle = Search(keyword=keyword, lon = my_lon, lat =my_lat, place = location, foods=foods, business=businesses, organisation=organisations,sort=sort)
+        keyword = keyword.lower()
+        search_handle = Search(keyword=keyword, lon = my_lon, lat =my_lat, place = location, foods=foods, business=businesses, organisation=organisations, sort=sort)
         search_results = search_handle.search_all()
-        results =search_results['results'][:20]
+        results =search_results['results'][:40]
 
         for i in range(len(results)):
             distance_text = ""
+
             # try:
             lonlat_distance = results[i]['distance'] * 0.621371 #distance(my_lon, my_lat, results[i]['location']['coordinates'][0],results[i]['location']['coordinates'][1])
             
             lonlat_distance = '%.1f' % lonlat_distance
+            result_class = results[i]["sign_up_as"].lower() 
+            for fd in results[i]:
+                if fd.lower() == keyword or fd in foods:
+                    result_class = result_class + " produce"
+                    break
+            if results[i]["result_type"] == results[i]["user"]["username"]:
+                print "yes"
+                if keyword in results[i]['status']:
+                    result_class = result_class + " updates"
+
+            else:
+                result_class = result_class + " profile"
+
+            results[i]["result_class"] = result_class
+
+
+
+
+
             # if lonlat_distance>1:
             #     distance_text = str(lonlat_distance) +" Km"
             # else:
@@ -123,12 +151,21 @@ class AjaxSearch():
             except:
                time_text = ""
 
-
             results[i]['distance_text'] = distance_text
             results[i]['time_elapsed'] = time_text
 
 
         
         parameters['results'] = results
-        parameters['results_json'] = json.dumps(results)
-        return render_to_response('activity_ajax.html',parameters)
+        parameters['json_data'] = json.dumps(results)
+        parameters['results_business_count'] = search_results["business_counter"]
+        parameters['results_organisation_count'] = search_results["organisation_counter"]
+        parameters['results_updates_count'] = search_results["update_counter"]
+
+
+        parameters['search'] = {'query':keyword, 'place':location, 'lon':my_lon, 'lat':my_lat}
+        ret_val = {}
+        ret_val["updates"] = str(render_to_response('activity_updates.html',parameters))
+        ret_val["biz"] = str(render_to_response('activity_biz.html',parameters))
+        ret_val["org"] = str(render_to_response('activity_org.html',parameters))
+        return HttpResponse(json.dumps(ret_val))

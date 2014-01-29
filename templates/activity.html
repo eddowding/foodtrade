@@ -48,7 +48,7 @@
   </li> 
 </ul>
 
-<div class="tab-content">
+<div class="tab-content" id = "filtered_content">
   <div class="tab-pane active" id="near_me">
  
    <div id="sortby" class="clearfix">
@@ -70,7 +70,7 @@
 
 
 
-  <div class="activity"> 
+  <div class="activity_updates"> 
         <ul class="chat">
 
  
@@ -179,7 +179,7 @@
 
   <div class="tab-pane" id="biz">
  
-  <div class="activity"> 
+  <div class="activity_biz"> 
         <ul class="chat">
 
  
@@ -282,7 +282,7 @@
 
   <div class="tab-pane" id="org">
  
-  <div class="activity"> 
+  <div class="activity_org"> 
         <ul class="chat">
 
  
@@ -381,7 +381,6 @@
 
   </div> 
   <!-- close organisation tab -->
-
 
 
 </div><!-- tabs -->
@@ -780,8 +779,12 @@ for(var i = 0; i < organisation_filters.length;i++){
 
        function show_ajax_results(data)
        {
-         $('#activity').html(data);
-         connections = ajax_connections;
+        var data_json = jQuery.parseJSON(data);
+         $('#activity_updates').html(data_json.updates);
+         $('#activity_biz').html(data_json.biz);
+         $('#activity_org').html(data_json.org);
+         
+         // connections = ajax_connections;
          reload_controls();
 
        }
