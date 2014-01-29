@@ -86,7 +86,7 @@ def home(request):
     keyword = keyword.lower()
     search_handle = Search(keyword=keyword, lon = my_lon, lat =my_lat, place = location, foods=foods, business=businesses, organisation=organisations, sort=sort)
     search_results = search_handle.search_all()
-    results =search_results['results'][:20]
+    results =search_results['results'][:40]
 
     for i in range(len(results)):
         distance_text = ""
@@ -101,6 +101,7 @@ def home(request):
                 result_class = result_class + " produce"
                 break
         if results[i]["result_type"] == results[i]["user"]["username"]:
+            print "yes"
             if keyword in results[i]['status']:
                 result_class = result_class + " updates"
 
@@ -110,7 +111,7 @@ def home(request):
         results[i]["result_class"] = result_class
 
 
-        
+
 
 
         # if lonlat_distance>1:

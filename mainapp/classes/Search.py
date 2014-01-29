@@ -109,14 +109,16 @@ class Search():
     def search_all(self,):
         statuses = self.get_search_type(0)
         profiles = self.get_search_type(1)
-
+        print len(profiles[0]["results"])
+        print len(statuses[0]["results"])
         if len(profiles)>0:
             if len(statuses)>0:
                
                 profiles[0]["foods"].extend(statuses[0]["foods"])
                 profiles[0]["businesses"].extend(statuses[0]["businesses"])
                 profiles[0]["organisations"].extend(statuses[0]["organisations"])
-                profiles[0]["results"].extend(statuses[0]["results"])
+                profiles[0]["results"] = profiles[0]["results"][:30]
+                profiles[0]["results"].extend(statuses[0]["results"][:30])
         else:
             profiles = statuses
 
