@@ -295,7 +295,7 @@ background: #eee;
             </div><!-- /.modal-dialog -->
           </div><!-- /.modal -->
 <!-- modal_invite -->
-<div class="modal fade" id="modal_login_old" tabindex="-2" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal fade hidden" id="modal_login_old" tabindex="-2" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
    
@@ -856,6 +856,7 @@ tweetlistener('tweetMessage', 'counter', 'contact_tweet', 'newtweet_btn');
 })(jQuery);
 $(function() {
     $(".counted").charCounter(120,{container: "#counter"});
+    $(".counted-invite").charCounter(140,{container: "#counter"});
 });
     </script>
 
