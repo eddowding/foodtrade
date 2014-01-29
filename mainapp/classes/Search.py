@@ -96,14 +96,9 @@ class Search():
                             counter[it] = 1
                         except:
                             pass
-
-    
-            
-
         
         sorted_counter = sorted(counter.iteritems(), key=operator.itemgetter(1),reverse=True)
         return [{"uid":value,"value":label} for value, label in sorted_counter]
-
 
 
     def search_all(self,):
