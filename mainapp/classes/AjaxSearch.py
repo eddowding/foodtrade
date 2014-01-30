@@ -149,6 +149,7 @@ class AjaxSearch():
         
         parameters['results'] = results
         parameters['json_data'] = json.dumps(results)
+        
 
 
 
@@ -156,4 +157,7 @@ class AjaxSearch():
         ret_val["updates"] = str(render_to_response('activity_updates.html',parameters)).replace("Content-Type: text/html; charset=utf-8","")
         ret_val["biz"] = str(render_to_response('activity_biz.html',parameters)).replace("Content-Type: text/html; charset=utf-8","")
         ret_val["org"] = str(render_to_response('activity_org.html',parameters)).replace("Content-Type: text/html; charset=utf-8","")
+        ret_val['results_business_count'] = search_results["business_counter"]
+        ret_val['results_organisation_count'] = search_results["organisation_counter"]
+        ret_val['results_updates_count'] = search_results["update_counter"]
         return HttpResponse(json.dumps(ret_val))
