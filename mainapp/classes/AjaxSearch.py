@@ -149,6 +149,9 @@ class AjaxSearch():
         
         parameters['results'] = results
         parameters['json_data'] = json.dumps(results)
+        parameters['results_business_count'] = search_results["business_counter"]
+        parameters['results_organisation_count'] = search_results["organisation_counter"]
+        parameters['results_updates_count'] = search_results["update_counter"]
         
 
 
