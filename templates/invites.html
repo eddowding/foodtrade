@@ -79,6 +79,7 @@ var users = [];
 $(document).ready(function(){
 	$('#tweetMessage1').html(tweet);
 });
+var pg_clicked = 1;
 function validate_tweets (argument, count) {
 	tweet = $('#tweetMessage1').val();
 	var len = tweet.length;
@@ -131,7 +132,7 @@ function invites_handler (data) {
 			$('#li' + String(send_list[val])).hide();
 			tweet = tweet.replace(users[val], '');
 		}
-		update_ul_invites(1);
+		update_ul_invites(pg_clicked);
 		$('#successDiv').show(2000);
 		$('#successDiv').delay(5000).fadeOut('slow');
 	}
@@ -228,6 +229,7 @@ function parse_friends_ajax(data){
 
 var old=0;
 function update_ul_invites(cur_page){
+	pg_clicked = cur_page;
 	$('#pg_' +String(old)).removeClass('active');
 	$('#pg_' +String(cur_page)).addClass('active');
 	old = cur_page;
