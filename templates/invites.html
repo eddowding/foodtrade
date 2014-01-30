@@ -131,7 +131,7 @@ function invites_handler (data) {
 			$('#li' + String(send_list[val])).hide();
 			tweet = tweet.replace(users[val], '');
 		}
-		/*update_ul_invites(1);*/
+		update_ul_invites(1);
 		$('#successDiv').show(2000);
 		$('#successDiv').delay(5000).fadeOut('slow');
 	}
