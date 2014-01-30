@@ -32,18 +32,18 @@
 <ul class="nav nav-tabs">
   <li {% if results_updates_count != 0  or results_business_count == 0 and results_organisation_count == 0  %}class="active"{% endif %}>
     <a href="#near_me" data-toggle="tab">Updates 
-      <span class="badge">{{results_updates_count}}</span>
+      <span class="badge" id="update_count">{{results_updates_count}}</span>
     </a>
   </li >
   <li {% if results_updates_count == 0  and results_organisation_count == 0 and results_business_count != 0 %}class="active"{% endif %}>
     <a href="#biz" data-toggle="tab">Business 
-    <span class="badge">{{results_business_count}}</span>
+    <span class="badge" id="business_count">{{results_business_count}}</span>
     </a>
   </li> 
 
     <li {% if results_updates_count == 0 and results_business_count == 0 and results_organisation_count != 0 %}class="active"{% endif %}>
     <a href="#org" data-toggle="tab">Orgs
-    <span class="badge">{{results_organisation_count}}</span>
+    <span class="badge" id="organisation_count">{{results_organisation_count}}</span>
     </a>
   </li> 
 </ul>
@@ -188,6 +188,12 @@
   <div class="tab-pane" id="biz">
  
   <div class="activity" id="activity_biz"> 
+  {% if results_updates_count == 0 and results_business_count == 0 and results_organisation_count == 0 %}
+<div class="alert alert-warning text-center">
+  <p><strong>Sorry, we've found nothing for this search... yet!</strong></p>
+  <p>More produce, businesses, and organisations are signing up every day so check back soon.</p>
+</div>
+{% endif %}
         <ul class="chat">
 
  
@@ -291,6 +297,12 @@
   <div class="tab-pane" id="org">
  
   <div class="activity" id="activity_org"> 
+  {% if results_updates_count == 0 and results_business_count == 0 and results_organisation_count == 0 %}
+<div class="alert alert-warning text-center">
+  <p><strong>Sorry, we've found nothing for this search... yet!</strong></p>
+  <p>More produce, businesses, and organisations are signing up every day so check back soon.</p>
+</div>
+{% endif %}
         <ul class="chat">
 
  
@@ -792,7 +804,9 @@ for(var i = 0; i < organisation_filters.length;i++){
          $('#activity_updates').html(data_json.updates);
          $('#activity_biz').html(data_json.biz);
          $('#activity_org').html(data_json.org);
-         
+         $('#update_count').html(data_json.results_updates_count);
+         $('#business_count').html(data_json.results_business_count);
+         $('#organisation_count').html(data_json.results_organisation_count);
          connections = ajax_connections;
          reload_controls();
 

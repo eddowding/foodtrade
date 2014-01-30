@@ -180,7 +180,7 @@ class Search():
             or_conditions.append({'businesses':reg_expression})
 
             
-            #Only for Status
+            # Only for Status
             if search_type==0:
                 or_conditions.append({'updates.status':reg_expression})
                 status_query ={'updates':{"$elemMatch":{'status':reg_expression}}}
@@ -261,6 +261,9 @@ class Search():
             sort_text = "distance"
             sort_order = 1
         
+        if search_type == 1:
+            sort_text = "distance"
+            sort_order = 1
 
         agg_pipeline.append({"$sort": SON([(sort_text, sort_order), ("time_stamp", -1)])})
 
