@@ -19,7 +19,7 @@ import datetime, time
 from bson.objectid import ObjectId
 from mainapp.views import calculate_time_ago
 from django.contrib.auth.models import User
-from mainapp.bitly import construct_invite_tweet
+from mainapp.bitly import construct_invite_tweet, shorten_url
 
 # consumer_key = 'seqGJEiDVNPxde7jmrk6dQ'
 # consumer_secret = 'sI2BsZHPk86SYB7nRtKy0nQpZX3NP5j5dLfcNiP14'
@@ -50,7 +50,10 @@ class AjaxHandle(AjaxSearch):
         bot_twitter = get_twitter_obj(settings.BOT_ACCESS_TOKEN, settings.BOT_ACCESS_TOKEN_SECRET)
         message = request.POST.get('message')
         noappend = request.POST.get('noappend')
-        url = " http://"+request.META['HTTP_HOST']+"/profile/"+request.user.username
+
+        prof_url = " http://"+request.META['HTTP_HOST']+"/profile/"+request.user.username
+
+        url = shorten_url(prof_url)
 
         if message != None and message != "":
             if noappend == 'noappend':
