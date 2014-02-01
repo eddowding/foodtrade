@@ -1,4 +1,5 @@
 from django.conf.urls import patterns, include, url
+from django.views.generic import TemplateView
 
 # Uncomment the next two lines to enable the admin:
 from django.contrib import admin
@@ -6,6 +7,8 @@ admin.autodiscover()
 
 urlpatterns = patterns('',
     url(r'^$', 'mainapp.home.home', name='home'),
+    url(r'^robots\.txt$', TemplateView.as_view(template_name='robots.txt',content_type='text/plain'), name='robots'),
+
     url(r'^admin-tags$', 'mainapp.home.admin_tags', name='home'),
     url(r'^food-tags$', 'mainapp.home.food_tags', name='home'),
     url(r'^ajax-handler/(?P<func_name>\w{1,40})$', 'mainapp.home.ajax_request', name='ajax_handle'),
