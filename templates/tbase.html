@@ -16,7 +16,8 @@
 
     <meta property="og:site_name" content="FoodTrade" />
     <meta property="og:description" content="FoodTrade is the tool foodies, artisans, and real food businesses have been waiting for. It helps you find your nearest producers and stockists, connect with collaborators, map your local food web, share knowledge about provenance, and trade in real-time." />
-    <meta property="og:type" content="{% block ogtype %}website{% endblock %}" />
+    <meta property="og:type" content="website" /><!-- 
+    <meta property="og:type" content="{% block ogtype %}website{% endblock %}" /> -->
     <meta property="fb:admins" content="732525050" />
     <meta property="fb:app_id" content="1400801613504478" /> 
     <meta property="og:url" content="http://{{request.META.HTTP_HOST}}{{request.path}}" />
@@ -96,7 +97,7 @@ background: #eee;
       <div class="ftstrip"></div>
       <div class="container-responsive">
 
-        <div class="navbar-header col-xs-2 col-sm-3"> 
+        <div class="navbar-header col-xs-2 col-sm-2 col-md-3"> 
 
           <div class="visible-xs visible-sm">
             <span data-toggle="offcanvas" style="top: 10px; position:relative;">
@@ -111,7 +112,7 @@ background: #eee;
 
         </div> 
          
-        <div class="col-sm-4 visible-md visible-lg">
+        <div class="col-sm-5 col-md-4 visible-sm visible-md visible-lg">
           <form action="/activity" class="navbar-form" role="search" data-step="1" data-intro="Search for anyhing, anywhere"
           style="border: 0;">
  
@@ -119,49 +120,22 @@ background: #eee;
               <input type="text" name="q" id="keyword" class="form-control  pac-input" value="{{ search.query }}" placeholder="What?"> 
             </div> 
             <div class="form-group" style="margin-right:5px;">
-              <input type="text" name="location" id="pac-input" value="{% if search %}{{ search.place }}{% endif %}{% if not search %}{{userinfo.zip_code}}{% endif %}" class="pac-input form-control hidden-xs hidden-sm" placeholder="Where?">
+              <input type="text" name="location" id="pac-input" value="{% if search %}{{ search.place }}{% endif %}{% if not search %}{{userinfo.zip_code}}{% endif %}" class="pac-input form-control  " placeholder="Where?">
             </div>
             <input type="hidden" name="lon" id="lon" value="{{search.lon}}"/>
             <input type="hidden" name="lat" id="lat" value="{{search.lat}}"/>
-
-            <!-- <input type="hidden" name="search" id="search_by" value="Updates" />
-            <div class="input-group-btn">
-              <button type="submit" class="btn btn-success"> <i class="fa fa-search"></i> <span id="current_search_option">Updates</span></button>
-              <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown">
-                <span class="caret"></span>
-                <span class="sr-only">Toggle Dropdown</span>
-              </button>
-              <ul class="dropdown-menu" role="menu">
-                <li id="search_options"><a onclick="select_search_by('Profiles')">Profiles</a></li>
-              </ul>
-            </div> -->
+ 
 
             <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
  
-            <script type="text/javascript">
-              function select_search_by(search_by)
-              {
-                  $("#search_by").val(search_by);
-                  var current_option = (search_by == "Updates")?"Updates":"Profiles";
-                  var next_option = (search_by != "Updates")?"Updates":"Profiles";
-                  $("#current_search_option").html(current_option);
-                  $("#search_options").html('<a onclick="select_search_by(\''+next_option+'\')">'+next_option+'</a>');
-
-              }
-            </script>
-            <!-- <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button> -->
+            
           </form>
         </div>
 
-        <div class="col-xs-4 visible-xs visible-sm"> 
+        <div class="col-xs-4 visible-xs "> 
           <form action="/activity" class="navbar-form" role="search" style="border: 0;">
           <div class="input-group"> 
-              <input type="text" name="q" id="keyword" class="form-control" value="{{ search.query }}" placeholder="Search"> 
-
-
-
-
-
+              <input type="text" name="q" id="keyword" class="form-control" value="{{ search.query }}" placeholder="Search">  
 
 
               <div class="input-group-btn">
@@ -272,7 +246,7 @@ background: #eee;
     </nav>
     
     <div id="beta">
-     You're one of the first to use this new site. Please get involved and invite your friends, and help make this more useful for everyone. 
+     You're one of the first to use this new site. Please get involved and <a href="/invite">invite your friends</a>, and help make this more useful for everyone. 
     </div>
 
 
@@ -295,7 +269,7 @@ background: #eee;
             </div><!-- /.modal-dialog -->
           </div><!-- /.modal -->
 <!-- modal_invite -->
-<div class="modal fade" id="modal_login_old" tabindex="-2" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal fade hidden" id="modal_login_old" tabindex="-2" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
    
@@ -388,7 +362,7 @@ hidden
    
           <p><a href="/activity"><i class="fa fa-dot-circle-o fa-fw"></i> Near me</a></p> 
  
-          <p data-step="4" data-intro="Building a better food system is going to take all of us. Please invite your suppliers, stockists, customers, friends.. everyone! For everyone you invite who signs up, we'll give you a month free, too." rel="tooltip" title="For everyone you invite who signs up, we'll give you a month free!"><a href="/invite/" rel="tooltip" title="This might take a while if you're popular!"><i class="fa fa-twitter fa-fw"></i> Invite</a></p>
+          <p data-step="4" data-intro="Building a better food system is going to take all of us. Please invite your suppliers, stockists, customers, friends.. everyone! For everyone you invite who signs up, we'll give you a month free, too." rel="tooltip" title="For everyone you invite who signs up, we'll give you a month free!"><a href="/invite/" ><i class="fa fa-twitter fa-fw"></i> Invite</a></p>
 
           <p><a href="#" id="help"><i class="fa fa-question-circle fa-fw"></i> Help</a></p> 
           <p><a href="/inbox/" id="inbox" title="Inbox"><i class="fa fa-envelope fa-fw"></i> Inbox <span id="spanInbox" class="badge pull-right">{{userinfo.notification_count}}</span></a></p> 
@@ -855,6 +829,7 @@ tweetlistener('tweetMessage', 'counter', 'contact_tweet', 'newtweet_btn');
 })(jQuery);
 $(function() {
     $(".counted").charCounter(120,{container: "#counter"});
+    $(".counted-invite").charCounter(140,{container: "#counter"});
 });
     </script>
 
@@ -906,5 +881,17 @@ function validate_login(){
 }
 
 </script>    
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-3315919-37', 'foodtrade.com');
+  ga('send', 'pageview');
+
+</script>
+
   </body>
 </html>

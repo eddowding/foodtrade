@@ -19,7 +19,7 @@ import datetime, time
 from bson.objectid import ObjectId
 from mainapp.views import calculate_time_ago
 from django.contrib.auth.models import User
-from mainapp.bitly import construct_Invite_tweet
+from mainapp.bitly import construct_invite_tweet, shorten_url
 
 # consumer_key = 'seqGJEiDVNPxde7jmrk6dQ'
 # consumer_secret = 'sI2BsZHPk86SYB7nRtKy0nQpZX3NP5j5dLfcNiP14'
@@ -36,7 +36,6 @@ class AjaxHandle(AjaxSearch):
         pass
     
     def post_tweet(self, request):
-        #print request.POST
         if not request.user.is_authenticated():
             return HttpResponseRedirect('/accounts/login/')
 
@@ -45,15 +44,16 @@ class AjaxHandle(AjaxSearch):
 
         ACCESS_TOKEN = st.token
         ACCESS_TOKEN_SECRET = st.token_secret
-        # print "Roshan", ACCESS_TOKEN, ACCESS_TOKEN_SECRET
+        
         user_twitter = get_twitter_obj(ACCESS_TOKEN, ACCESS_TOKEN_SECRET)
 
-        # uid = SocialAccount.objects.get(user__id=user_id).uid
-        
         bot_twitter = get_twitter_obj(settings.BOT_ACCESS_TOKEN, settings.BOT_ACCESS_TOKEN_SECRET)
         message = request.POST.get('message')
         noappend = request.POST.get('noappend')
-        url = " http://"+request.META['HTTP_HOST']+"/profile/"+request.user.username
+
+        prof_url = " http://"+request.META['HTTP_HOST']+"/profile/"+request.user.username
+
+        url = shorten_url(prof_url)
 
         if message != None and message != "":
             if noappend == 'noappend':
@@ -72,10 +72,11 @@ class AjaxHandle(AjaxSearch):
                                     'message':str(str(message))}
                             invite_obj.save_invites(doc)
                         invite_id_obj.change_used_status(request.user.id, request.POST['invite_id'])
-                        new_invite_id = invite_id_obj.get_unused_id(request.user.id)['uid']['id']
-                        new_invite_tweet =construct_Invite_tweet(request, invite_id)
-                        return HttpResponse(json.dumps({'status':'1', 'new_invite_id':new_invite_id, 'new_invite_url':new_invite_tweet}))
-                # don't save tweet to mongo if it is vouch for food
+                        new_invite_id = invite_id_obj.get_unused_id(request.user.id)
+                        new_invite_tweet = construct_invite_tweet(request, new_invite_id)
+                        return HttpResponse(json.dumps({'status':'1', 
+                            'new_invite_id':new_invite_id['uid']['id'], 
+                            'new_invite_tweet':new_invite_tweet}))
                 return HttpResponse(json.dumps({'status':1}))
             else:
                 tweet = user_twitter.update_status(status = message+url)
@@ -109,8 +110,6 @@ class AjaxHandle(AjaxSearch):
             if message != None and message != "":
                 bot_twitter.update_status(status=message)
                 return HttpResponse("{'status':1}")
-            
-        # uid = SocialAccount.objects.get(user__id=user_id).uid
         
         if request.user.is_authenticated():
             user_id = request.user.id
@@ -125,7 +124,6 @@ class AjaxHandle(AjaxSearch):
 
     def add_connection(self, request):
         trade_conn = TradeConnection()
-        #print request.POST.get('conn_data')
         data = eval(request.POST.get('conn_data'))
         notification_obj = Notification()
         user_profile_obj = UserProfile()
@@ -134,39 +132,37 @@ class AjaxHandle(AjaxSearch):
                 trade_conn.create_connection({'b_useruid': int(data['prof_id']), 'c_useruid': request.user.id})
                 try:
                     buyer = user_profile_obj.get_profile_by_id(int(data['prof_id']))
-
                     notification_obj.save_notification({
-                            'notification_to':request.user.username, 
-                            'notification_message':'@' + str(userprof.screen_name) + ' added you as buyer. You can add contacts, connect and share your business products.', 
+                            'notification_to':buyer['username'], 
+                            'notification_message':'@' + str(request.user.username) + ' added you as buyer. You can add contacts, connect and share your business products.', 
                             'notification_time':time.mktime(datetime.datetime.now().timetuple()),
                             'notification_type':'Added Buyer',
                             'notification_view_status':'false',
                             'notification_archived_status':'false',
-                            'notifying_user':str(userprof.username)
+                            'notifying_user':str(request.user.username)
                             })
                 except:
                     pass
             else:
                 trade_conn.create_connection({'b_useruid': request.user.id, 'c_useruid': int(data['prof_id'])})
-                # try:
-                userprof = user_profile_obj.get_profile_by_id(int(data['prof_id']))
-                notification_obj.save_notification({
-                        'notification_to':request.user.username, 
-                        'notification_message':'@' + str(userprof.screen_name) + ' added you as seller. You can add contacts, connect and have happy business now.', 
-                        'notification_time':time.mktime(datetime.datetime.now().timetuple()),
-                        'notification_type':'Added Seller',
-                        'notification_view_status':'false',
-                        'notification_archived_status':'false',
-                        'notifying_user':str(userprof.username)
-                        })                
-                # except:
-                #     pass
+                try:
+                    cust = user_profile_obj.get_profile_by_id(int(data['prof_id']))
+                    notification_obj.save_notification({
+                            'notification_to':cust['username'],
+                            'notification_message':'@' + str(cust['username']) + ' said he sells products tp you. You can add contacts, connect and share your business products.', 
+                            'notification_time':time.mktime(datetime.datetime.now().timetuple()),
+                            'notification_type':'Added Seller',
+                            'notification_view_status':'false',
+                            'notification_archived_status':'false',
+                            'notifying_user':str(request.user.username)
+                            })                
+                except:
+                    pass
             parameters = {}
             parameters['connections'], parameters['conn'] = get_connections(int(data['prof_id']))
             parameters['connections_str'] = str(json.dumps(parameters['connections']))
             parameters['profile_id'], parameters['user_id'] = int(data['prof_id']), request.user.id
             return render_to_response('conn_ajax.html', parameters)
-            # return HttpResponse("{'status':1}")
         else:
             return HttpResponse("{'status':0}")
 
@@ -183,7 +179,6 @@ class AjaxHandle(AjaxSearch):
             parameters['connections_str'] = json.dumps(parameters['connections'])
             parameters['profile_id'], parameters['user_id'] = int(data['prof_id']), request.user.id
             return render_to_response('conn_ajax.html', parameters)            
-            # return HttpResponse("{'status':1}")
         else:
             return HttpResponse("{'status':0}")
 
@@ -282,16 +277,15 @@ class AjaxHandle(AjaxSearch):
             user_profile_obj = UserProfile()
             try:
                 cust = user_profile_obj.get_profile_by_id(int(data['customeruid']))
-                usr  = user_profile_obj.get_profile_by_id(int(data['useruid']))
-
+                seller  = user_profile_obj.get_profile_by_id(int(data['useruid']))
                 notification_obj.save_notification({
-                        'notification_to':request.user.username, 
-                        'notification_message':'@' + str(cust.screen_name) + ' added himself as your customer. You can add contacts, connect and increase your business value.', 
+                        'notification_to':seller['username'], 
+                        'notification_message':'@' + str(cust['username']) + ' said, he is your customer. You can connect to him and increase your business value.', 
                         'notification_time':time.mktime(datetime.datetime.now().timetuple()),
                         'notification_type':'Added Customer',
                         'notification_view_status':'false',
                         'notification_archived_status':'false',
-                        'notifying_user':str(usr.username)
+                        'notifying_user':str(cust['username'])
                         })
             except:
                 pass
@@ -320,15 +314,15 @@ class AjaxHandle(AjaxSearch):
             try:
                 mem = user_profile_obj.get_profile_by_id(int(data['memberuid']))
                 org  = user_profile_obj.get_profile_by_id(int(data['orguid']))
-            
+                # print org
                 notification_obj.save_notification({
-                        'notification_to':org.username, 
-                        'notification_message':'@' + str(mem.screen_name) + ' added himself as you as member. You can add, connect and increase value of your Organisation.', 
+                        'notification_to':org['username'], 
+                        'notification_message':'@' + str(mem['username']) + ' added himself as the member of your Organisation. You can connect with him and increase value of your Organisation', 
                         'notification_time':time.mktime(datetime.datetime.now().timetuple()),
                         'notification_type':'Added member',
                         'notification_view_status':'false',
                         'notification_archived_status':'false',
-                        'notifying_user':str(mem.username)
+                        'notifying_user':str(mem['username'])
                         })
             except:
                 pass
@@ -354,20 +348,20 @@ class AjaxHandle(AjaxSearch):
 
             notification_obj = Notification()
             user_profile_obj = UserProfile()
-            
             mem = user_profile_obj.get_profile_by_id(int(data['memberuid']))
             org  = user_profile_obj.get_profile_by_id(int(data['orguid']))
-            
-            notification_obj.save_notification({
-                    'notification_to':org.username, 
-                    'notification_message':'@' + str(mem.screen_name) + ' added himself as you to team. You can add, connect and increase value of your Organisation.', 
-                    'notification_time':time.mktime(datetime.datetime.now().timetuple()),
-                    'notification_type':'Added member',
-                    'notification_view_status':'false',
-                    'notification_archived_status':'false',
-                    'notifying_user':str(mem.username)
-                    })
-
+            try:
+                notification_obj.save_notification({
+                        'notification_to':org['username'], 
+                        'notification_message':'@' + str(mem['username']) + ' said he/she works inyour Organisation.', 
+                        'notification_time':time.mktime(datetime.datetime.now().timetuple()),
+                        'notification_type':'Added Team',
+                        'notification_view_status':'false',
+                        'notification_archived_status':'false',
+                        'notifying_user':str(mem['username'])
+                        })
+            except:
+                pass
             return HttpResponse("{'status':1}")
         else:
             return HttpResponse("{'status':0}")
@@ -405,18 +399,16 @@ class AjaxHandle(AjaxSearch):
             notification_obj = Notification()
             user_profile_obj = UserProfile()
             try:
-                food = user_profile_obj.get_profile_by_id(int(data['food_name']))
-                bus  = user_profile_obj.get_profile_by_id(int(data['business_id']))
+                busss  = user_profile_obj.get_profile_by_id(int(data['business_id']))
                 rec  = user_profile_obj.get_profile_by_id(int(data['recommender_id']))
-
                 notification_obj.save_notification({
-                        'notification_to':org.username, 
-                        'notification_message':'@' + str(mem.screen_name) + ' added himself as you as member. You can add, connect and increase value of your Organisation.', 
+                        'notification_to':busss['username'], 
+                        'notification_message':'@' + str(rec['username']) + ' vouched for your food ' + str(data['food_name']) + '.', 
                         'notification_time':time.mktime(datetime.datetime.now().timetuple()),
-                        'notification_type':'Added member',
+                        'notification_type':'Vouched Food',
                         'notification_view_status':'false',
                         'notification_archived_status':'false',
-                        'notifying_user':str(mem.username)
+                        'notifying_user':str(rec['username'])
                         })            
             except:
                 pass

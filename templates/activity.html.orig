@@ -3,26 +3,13 @@
 
 {% block content %}
 
-
-
-    <div class="col-md-5 col-sm-5" id="activity_switcher">
  
  
-<ul class="nav nav-tabs hidden">
-  <li class="active">
-    <a href="#activity" data-toggle="tab">Activity 
-      <span class="badge">{{userinfo.nearby_individuals_no}}</span>
-    </a>
-  </li>
-  <li>
-    <a href="#biz" data-toggle="tab">Businesses 
-    <span class="badge">{{userinfo.nearby_businesses_no}}</span>
-    </a>
-  </li> 
-</ul>
 
-<div class="tab-content">
-  <div class="tab-pane active" id="near_me">
+<div class="container-responsive block-center">
+
+
+    <div class="col-md-5 col-sm-5 {% if not user.is_authenticated %} col-md-offset-1 col-sm-offset-1 {% endif %}" id="activity_switcher">
  
 
   <div id="update" class="well well-sm">
@@ -41,51 +28,69 @@
     </ul>
     </div>
   </div> 
+ 
+<ul class="nav nav-tabs">
+  <li class="active">
+    <a href="#near_me" data-toggle="tab">Updates 
+      <span class="badge">{{results_updates_count}}</span>
+    </a>
+  </li>
+  <li>
+    <a href="#biz" data-toggle="tab">Business 
+    <span class="badge">{{results_business_count}}</span>
+    </a>
+  </li> 
+
+    <li>
+    <a href="#org" data-toggle="tab">Orgs
+    <span class="badge">{{results_organisation_count}}</span>
+    </a>
+  </li> 
+</ul>
+
+<div class="tab-content" id = "filtered_content">
+  <div class="tab-pane active" id="near_me">
+ 
+   <div id="sortby" class="clearfix">
+
+      <div class="btn-group pull-right">
+        <span class="pull-left" style="position: relative; top: 5px; margin-right: 5px;">Sort by </span>
+        <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown">
+          <span  id="current_sort_text"><i class="fa fa-clock-o fa-fw"></i> Time posted</span>
+          <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu">
+          <li><a onclick="sort_by('distance')"><i class="fa fa-location-arrow fa-fw"></i> Distance from {% if search %} {{ search.place }} {% endif %} {% if not search %} {{userinfo.zip_code}}{% endif %}</a></li>
+          <li><a onclick="sort_by('time')"><i class="fa fa-clock-o fa-fw"></i> Time posted</a></li>
+        </ul>
+      </div> 
+
+   </div>
+
+
+
 
 <<<<<<< HEAD
- <div class="row">
-  <div class="col-md-12">
- <input type="hidden" id="sortby" value="distance">
- <div class="btn-group pull-right">
-    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-      Sort By
-      <span class="caret"></span>
-    </button>
-
-    <ul class="dropdown-menu">
-      <li><a onclick="sort_by('distance')">Distance</a></li>
-      <li><a onclick="sort_by('time')">Time</a></li>
-    </ul>
-  </div>
+  <div class="activity_updates"> 
 =======
- <div id="sortby" class="clearfix">
+  <div class="activity"> 
 
-    <div class="btn-group pull-right">
-      <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown">
-        Sort results
-        <span class="caret"></span>
-      </button>
-      <ul class="dropdown-menu">
-        <li><a onclick="sort_by('distance')"><i class="fa fa-location-arrow fa-fw"></i> Distance from {% if search %} {{ search.place }} {% endif %} {% if not search %} {{userinfo.zip_code}}{% endif %}</a></li>
-        <li><a onclick="sort_by('time')"><i class="fa fa-clock-o fa-fw"></i> Time posted</a></li>
-      </ul>
-    </div> 
+<div class="alert alert-warning text-center">
+  <p><strong>Sorry, we've found nothing for this search... yet!</strong></p>
+  <p>More produce, businesses, and organisations are signing up every day so check back soon.</p>
+</div>
 
- </div>
->>>>>>> 90bc4469e91aadc96d09200d6cd4572c78743201
 
-  <div id="activity"> 
+>>>>>>> e8ec7f2ae45bc44d403cb96c6ed32c1f6fa5d3f2
         <ul class="chat">
 
-
-
-
+ 
 
 {% if results %}
 
 {% for result in results %}
-
-    <li class="left clearfix" id="{{result.uid.id}}"><span class="chat-img pull-left">
+{% if result.user.username == result.result_type %}
+    <li class="left clearfix {{result.result_class}}" id="{{result.uid.id}}"><span class="chat-img pull-left">
     <img src="{{result.user.profile_img}}" alt="{{result.user.name}}" class="img-thumbnail" />
     </span>
         <div class="chat-body clearfix">
@@ -103,14 +108,14 @@
               <li class="divider"></li>
               {% endif %}
               {% if result.sign_up_as == "Organisation" %}
-              <li><a href="#" onclick="click_activity('markMember', '{{result.user.username}}')">I'm a member</a></li>
+              <li><a href="#" onclick="click_activity('markMember', '{{result.useruid}}')">I'm a member</a></li>
               {% endif %}
               {% if userinfo.user_type == "Individual" and result.sign_up_as == "Business" %}
               <li><a href="#" onclick="click_activity('markCustomer', '{{result.user.username}}')">I'm a customer</a></li>
               {% endif %}
               <li class="divider"></li>
               {% ifequal result.user.username userinfo.username %}
-              <li><a href="#" onclick="click_activity('delete','{{result.uid.id}}')">Delete</a></li>
+              <li><a href="#" onclick="click_activity('delete','{{result.tweetuid}}')">Delete</a></li>
               {% endifequal %}
               {% if result.user.username != userinfo.username %}
               <li><a href="#" onclick="click_activity('spam','{{result.uid.id}}')">Flag as spam</a></li>
@@ -126,11 +131,14 @@
 
           {% if type_user|length == 0 or type_user|first == '' %}
           {% else %}
-          <div class="tags tags-biztype  ">  
-            {% for tag in result.type_user  %}
-                  <a href="/activity/?q={{tag}}">{{tag}}</a>
-                  {% endfor %}
-          </div> {% endif %}
+          {% if result.sign_up_as == "Business" %}
+            <div class="tags tags-biztype">  
+              {% for tag in result.type_user  %}
+                <a href="/activity/?b={{tag}}">{{tag}}</a>
+              {% endfor %}
+            </div> 
+            {% endif %}
+          {% endif %}
             </div>
 
             <p>
@@ -139,19 +147,19 @@
 
               <div class="meta small text-muted">
                <i class="fa fa-map-marker"></i>
-                {{result.user.place}}
+                {{result.user.address}}
 
                  <!-- if logged in or you've allows html5 browser location -->
-
-                 <a href="http://maps.google.com/maps?saddr=current+location&daddr={{result.user.place}}" 
+                 <a href="http://maps.google.com/maps?saddr={{userinfo.lat}},{{userinfo.lon}}&daddr={{result.location.coordinates.1}},{{result.location.coordinates.0}}" 
                     target="_blank" data-placement="top" data-toggle="tooltip" 
                     class="text-muted" 
+                    rel="tooltip" 
                     title="Get directions"> 
                  <i class="fa fa-location-arrow"></i> {{result.distance_text}}  
                  </a>
                 <!--  // if logged in or you've allows html5 browser location -->
 
-                <span class="pull-right">
+                <span class="pull-right time_ago">
                    <a href="/profile/{{result.user.username}}/" class="text-muted"><i class="fa fa-clock-o"></i> {{result.time_elapsed}}</a> 
                 </span>
               </div> 
@@ -159,9 +167,10 @@
         </div>
 
         <div class="reply well well-sm" style="margin:0;"> 
-          <input class="form-control input-sm enterhandler"  class="btn btn-success" {% if not user.is_authenticated %}  title="Please login to use this feature." {% endif %} type="text" id="replyid_{{forloop.counter}}" placeholder="Reply to @{{result.user.username}}" onfocus="ShowReply('replyid_{{forloop.counter}}', '@{{result.user.username}}')" onblur="BlurReply('replyid_{{forloop.counter}}', '@{{result.user.username}}')">
+          <input class="form-control input-sm enterhandler"  {% if not user.is_authenticated %} rel="tooltip" title="Please login to use this feature." {% endif %} type="text" id="replyid_{{forloop.counter}}" placeholder="Reply to @{{result.user.username}}" onfocus="ShowReply('replyid_{{forloop.counter}}', '@{{result.user.username}}')" onblur="BlurReply('replyid_{{forloop.counter}}', '@{{result.user.username}}')">
         </div>
     </li>
+     {% endif %}
   {% endfor %}
     {% endif %}
 </ul> 
@@ -169,27 +178,235 @@
 
 
 
+
+
+
+
+
 </div><!-- tab pane activity -->
+
+
+
+
   <div class="tab-pane" id="biz">
-    biz
+ 
+  <div class="activity_biz"> 
+        <ul class="chat">
+
+ 
+
+{% if results %}
+
+{% for result in results %}
+{% if result.user.username != result.result_type and result.sign_up_as == "Business" %}
+
+    <li class="left clearfix {{result.result_class}}" id="{{result.uid.id}}"><span class="chat-img pull-left">
+    <img src="{{result.user.profile_img}}" alt="{{result.user.name}}" class="img-thumbnail" />
+    </span>
+        <div class="chat-body clearfix">
+ 
+
+        <div class="btn-group pull-right" style="margin-left: 5px;">
+            <button type="button" class="btn btn-default dropdown-toggle btn-xs pull-left" data-toggle="dropdown">
+              <i class="fa fa-link fa-large text-muted"></i>
+                <span class="caret text-muted"></span>
+            </button> 
+            <ul class="dropdown-menu" role="menu">
+              {%  if userinfo.user_type == "Business" and result.sign_up_as == "Business" and result.user.username != userinfo.username %}
+              <li><a href="#" onclick="click_activity('buyFrom','{{result.useruid}}')">I buy from</a></li>
+              <li><a href="#"onclick="click_activity('sellTo','{{result.useruid}}')">I sell to</a></li> 
+              <li class="divider"></li>
+              {% endif %}
+              {% if result.sign_up_as == "Organisation" %}
+              <li><a href="#" onclick="click_activity('markMember', '{{result.useruid}}')">I'm a member</a></li>
+              {% endif %}
+              {% if userinfo.user_type == "Individual" and result.sign_up_as == "Business" %}
+              <li><a href="#" onclick="click_activity('markCustomer', '{{result.user.username}}')">I'm a customer</a></li>
+              {% endif %}
+              <li class="divider"></li>
+              {% ifequal result.user.username userinfo.username %}
+              <li><a href="#" onclick="click_activity('delete','{{result.tweetuid}}')">Delete</a></li>
+              {% endifequal %}
+              {% if result.user.username != userinfo.username %}
+              <li><a href="#" onclick="click_activity('spam','{{result.uid.id}}')">Flag as spam</a></li>
+              <li><a href="#" onclick="click_activity('follow','{{result.user.username}}')">Follow on Twitter</a></li>
+              {% endif %}
+              <li><a href="/profile/{{result.user.username}}/">View full profile</a></li> 
+            </ul>
+          </div>  
+
+
+            <div class="header">
+                <strong class="pull-left" style="margin-right: 10px;"><a href="/profile/{{result.user.username}}">{{result.user.name}}</a></strong> 
+
+          {% if type_user|length == 0 or type_user|first == '' %}
+          {% else %}
+          {% if result.sign_up_as == "Business" %}
+            <div class="tags tags-biztype">  
+              {% for tag in result.type_user  %}
+                <a href="/activity/?b={{tag}}">{{tag}}</a>
+              {% endfor %}
+            </div> 
+            {% endif %}
+          {% endif %}
+            </div>
+
+            <p>
+                {{result.status}}
+            </p>
+
+              <div class="meta small text-muted">
+               <i class="fa fa-map-marker"></i>
+                {{result.user.address}}
+
+                 
+
+                <span class="pull-right">
+                   <!-- if logged in or you've allows html5 browser location -->
+                 <a href="http://maps.google.com/maps?saddr={{userinfo.lat}},{{userinfo.lon}}&daddr={{result.location.coordinates.1}},{{result.location.coordinates.0}}" 
+                    target="_blank" data-placement="top" data-toggle="tooltip" 
+                    class="text-muted" 
+                    rel="tooltip" 
+                    title="Get directions"> 
+                 <i class="fa fa-location-arrow"></i> {{result.distance_text}}  
+                 </a>
+                <!--  // if logged in or you've allows html5 browser location -->
+                </span>
+              </div> 
+
+        </div>
+
+        <div class="reply well well-sm" style="margin:0;"> 
+          <input class="form-control input-sm enterhandler"  {% if not user.is_authenticated %} rel="tooltip" title="Please login to use this feature." {% endif %} type="text" id="replyid_{{forloop.counter}}" placeholder="Reply to @{{result.user.username}}" onfocus="ShowReply('replyid_{{forloop.counter}}', '@{{result.user.username}}')" onblur="BlurReply('replyid_{{forloop.counter}}', '@{{result.user.username}}')">
+        </div>
+    </li>
+    {% endif %}
+  {% endfor %}
+    {% endif %}
+</ul> 
+  </div>
+
+
   </div> 
+
+
+
+  <div class="tab-pane" id="org">
+ 
+  <div class="activity_org"> 
+        <ul class="chat">
+
+ 
+
+{% if results %}
+
+{% for result in results %}
+{% if result.user.username != result.result_type and result.sign_up_as == "Organisation" %}
+
+    <li class="left clearfix {{result.result_class}}" id="{{result.uid.id}}"><span class="chat-img pull-left">
+    <img src="{{result.user.profile_img}}" alt="{{result.user.name}}" class="img-thumbnail" />
+    </span>
+        <div class="chat-body clearfix">
+ 
+
+        <div class="btn-group pull-right" style="margin-left: 5px;">
+            <button type="button" class="btn btn-default dropdown-toggle btn-xs pull-left" data-toggle="dropdown">
+              <i class="fa fa-link fa-large text-muted"></i>
+                <span class="caret text-muted"></span>
+            </button> 
+            <ul class="dropdown-menu" role="menu">
+              {%  if userinfo.user_type == "Business" and result.sign_up_as == "Business" and result.user.username != userinfo.username %}
+              <li><a href="#" onclick="click_activity('buyFrom','{{result.useruid}}')">I buy from</a></li>
+              <li><a href="#"onclick="click_activity('sellTo','{{result.useruid}}')">I sell to</a></li> 
+              <li class="divider"></li>
+              {% endif %}
+              {% if result.sign_up_as == "Organisation" %}
+              <li><a href="#" onclick="click_activity('markMember', '{{result.useruid}}')">I'm a member</a></li>
+              {% endif %}
+              {% if userinfo.user_type == "Individual" and result.sign_up_as == "Business" %}
+              <li><a href="#" onclick="click_activity('markCustomer', '{{result.user.username}}')">I'm a customer</a></li>
+              {% endif %}
+              <li class="divider"></li>
+              {% ifequal result.user.username userinfo.username %}
+              <li><a href="#" onclick="click_activity('delete','{{result.tweetuid}}')">Delete</a></li>
+              {% endifequal %}
+              {% if result.user.username != userinfo.username %}
+              <li><a href="#" onclick="click_activity('spam','{{result.uid.id}}')">Flag as spam</a></li>
+              <li><a href="#" onclick="click_activity('follow','{{result.user.username}}')">Follow on Twitter</a></li>
+              {% endif %}
+              <li><a href="/profile/{{result.user.username}}/">View full profile</a></li> 
+            </ul>
+          </div>  
+
+
+            <div class="header">
+                <strong class="pull-left" style="margin-right: 10px;"><a href="/profile/{{result.user.username}}">{{result.user.name}}</a></strong> 
+
+          {% if type_user|length == 0 or type_user|first == '' %}
+          {% else %}
+          {% if result.sign_up_as == "Business" %}
+            <div class="tags tags-biztype">  
+              {% for tag in result.type_user  %}
+                <a href="/activity/?b={{tag}}">{{tag}}</a>
+              {% endfor %}
+            </div> 
+            {% endif %}
+          {% endif %}
+            </div>
+
+            <p>
+                {{result.status}}
+            </p>
+
+              <div class="meta small text-muted">
+               <i class="fa fa-map-marker"></i>
+                {{result.user.address}}
+
+                 
+
+                <span class="pull-right">
+                   <!-- if logged in or you've allows html5 browser location -->
+                 <a href="http://maps.google.com/maps?saddr={{userinfo.lat}},{{userinfo.lon}}&daddr={{result.location.coordinates.1}},{{result.location.coordinates.0}}" 
+                    target="_blank" data-placement="top" data-toggle="tooltip" 
+                    class="text-muted" 
+                    rel="tooltip" 
+                    title="Get directions"> 
+                 <i class="fa fa-location-arrow"></i> {{result.distance_text}}  
+                 </a>
+                <!--  // if logged in or you've allows html5 browser location -->
+                </span>
+              </div> 
+
+        </div>
+
+        <div class="reply well well-sm" style="margin:0;"> 
+          <input class="form-control input-sm enterhandler"  {% if not user.is_authenticated %} rel="tooltip" title="Please login to use this feature." {% endif %} type="text" id="replyid_{{forloop.counter}}" placeholder="Reply to @{{result.user.username}}" onfocus="ShowReply('replyid_{{forloop.counter}}', '@{{result.user.username}}')" onblur="BlurReply('replyid_{{forloop.counter}}', '@{{result.user.username}}')">
+        </div>
+    </li>
+    {% endif %}
+  {% endfor %}
+    {% endif %}
+</ul> 
+  </div>
+
+
+  </div> 
+  <!-- close organisation tab -->
+
+
 </div><!-- tabs -->
 
 
      
     </div><!-- closes 5 -->
 
-    <div class="col-md-5  col-sm-5 fill"  style="height: 100%; ">
+    <div class="col-md-5  col-sm-5 fill"  style="height: 1000px; ">
 
     <!-- FIX THE MAP POSITION SO IT DOES NOT SCROLL --> 
-      <div style="height: 100%; min-height: 100%;" id="map"  data-spy="affix" data-offset-top="30">
+      <div id="map" >
         
 
-        <div class="alert alert-warning">
-          <p>This map shows 
-          Customers as points
-          Stockist as organge lines and 
-          Supplieras as purple lines</p>
+        <div class="alert alert-warning"> 
 
           <p>There are radius lines at 15, 30, and 100 miles.</p>
         </div>
@@ -230,10 +447,7 @@ connections = {{json_data | safe}};
             <div class="header">
                 <strong class="pull-left" style="margin-right: 10px;">{{userinfo.full_name}}</strong> 
 
-                <!-- <div class="tags tags-biztype">  
-                  <a href="/type/livestock-farm">Bakery</a>
-                  <a href="/type/buther">Wholesale</a>  
-                </div> -->
+               
             </div>
 
             <p>
@@ -244,25 +458,26 @@ connections = {{json_data | safe}};
                <i class="fa fa-map-marker"></i>
                {{userinfo.address}}
 
-                 <!-- if logged in or you've allows html5 browser location -->
-
-                 <a href="http://maps.google.com/maps?saddr=current+location&daddr={{userinfo.address}}" 
-                    target="_blank" data-placement="top" data-toggle="tooltip" 
-                    class="text-muted" 
-                    title="Get directions"> 
-                 <i class="fa fa-location-arrow"></i> 0m  
-                 </a>
-                <!--  // if logged in or you've allows html5 browser location -->
+                 
 
                 <span class="pull-right">
-                   <a href="activity_single.php" class="text-muted"><i class="fa fa-clock-o"></i> 21m</a> 
+                  <a href="http://maps.google.com/maps?saddr=current+location&daddr={{userinfo.address}}" 
+                    target="_blank" data-placement="top" data-toggle="tooltip" 
+                    class="text-muted" 
+                    rel="tooltip" 
+                    title="Get directions"
+                    style="margin-right: 10px;"> 
+                 <i class="fa fa-location-arrow"></i> 0m  
+                 </a> 
+
+                   <a href="#" class="text-muted"><i class="fa fa-clock-o"></i> 0s</a> 
                 </span>
               </div> 
 
         </div>
 
         <div class="reply well well-sm" style="margin:0;"> 
-          <input class="form-control input-sm enterhandler"  {% if not user.is_authenticated %}  title="Please login to use this feature." {% endif %} type="text" id="replyid_{{forloop.counter}}" placeholder="Reply to @{{result.user.username}}"  onfocus="ShowReply('replyid_{{forloop.counter}}', '@{{result.user.username}}')" onblur="BlurReply('replyid_{{forloop.counter}}', '@{{result.user.username}}')">
+          <input class="form-control input-sm enterhandler"  {% if not user.is_authenticated %}  title="Please login to use this feature." {% endif %} type="text" id="replyid_{{forloop.counter}}" placeholder="Reply to @{{result.user.username}}"  onfocus="ShowReply('replyid_{{forloop.counter}}', '@{{result.user.username}}')" onblur="BlurReply('replyid_rfrf', '@{{info.username}}')">
         </div>
     </li>
 
@@ -317,9 +532,11 @@ connections = {{json_data | safe}};
               {
                 checked = "checked='checked'";
               }
-
-            var row = '<li data-id="15" class="foodtrade-tag foodtrade-tag-click "><div class="foodtrade-tag-checkbox-column"><input type="checkbox" '+checked+' onClick="foods_changed(this,\''+filters[i].uid+'\')" aria-label="University of Washington" class="foodtrade-tag-checkbox"></div><div class="foodtrade-tag-text"> '+filters[i].uid+'</div><div class="foodtrade-tag-count">'+filters[i].value+'</div></li>';
+ if(filters[i].uid!="")
+              {
+            var row = '<li data-id="15" class="foodtrade-tag foodtrade-tag-click "><div class="foodtrade-tag-checkbox-column"><input type="checkbox" '+checked+' onClick="foods_changed(this,\''+filters[i].uid+'\')" class="foodtrade-tag-checkbox"></div><div class="foodtrade-tag-text"> '+filters[i].uid+'</div><div class="foodtrade-tag-count">'+filters[i].value+'</div></li>';
             $('#food_filter_results').append(row);
+          }
            
           }
            if(filters.length>more_no+5)
@@ -387,9 +604,11 @@ business_filters = {{business_filter |safe}};
               {
                 checked = "checked='checked'";
               }
-
-            var row = '<li data-id="15" class="foodtrade-tag foodtrade-tag-click "><div class="foodtrade-tag-checkbox-column"><input type="checkbox" '+checked+' onClick="business_changed(this,\''+filters[i].uid+'\')" aria-label="University of Washington" class="foodtrade-tag-checkbox"></div><div class="foodtrade-tag-text"> '+filters[i].uid+'</div><div class="foodtrade-tag-count">'+filters[i].value+'</div></li>';
+ if(filters[i].uid!="")
+              {
+            var row = '<li data-id="15" class="foodtrade-tag foodtrade-tag-click "><div class="foodtrade-tag-checkbox-column"><input type="checkbox" '+checked+' onClick="business_changed(this,\''+filters[i].uid+'\')"   class="foodtrade-tag-checkbox"></div><div class="foodtrade-tag-text"> '+filters[i].uid+'</div><div class="foodtrade-tag-count">'+filters[i].value+'</div></li>';
             $('#business_filter_results').append(row);
+          }
            
           }
            if(filters.length>more_no+5)
@@ -455,9 +674,11 @@ organisation_filters = {{organisation_filter |safe}};
               {
                 checked = "checked='checked'";
               }
-
-            var row = '<li data-id="15" class="foodtrade-tag foodtrade-tag-click "><div class="foodtrade-tag-checkbox-column"><input type="checkbox" '+checked+' onClick="organisation_changed(this,\''+filters[i].uid+'\')" aria-label="University of Washington" class="foodtrade-tag-checkbox"></div><div class="foodtrade-tag-text"> '+filters[i].uid+'</div><div class="foodtrade-tag-count">'+filters[i].value+'</div></li>';
+              if(filters[i].uid!="")
+              {
+            var row = '<li data-id="15" class="foodtrade-tag foodtrade-tag-click "><div class="foodtrade-tag-checkbox-column"><input type="checkbox" '+checked+' onClick="organisation_changed(this,\''+filters[i].uid+'\')"   class="foodtrade-tag-checkbox"></div><div class="foodtrade-tag-text"> '+filters[i].uid+'</div><div class="foodtrade-tag-count">'+filters[i].value+'</div></li>';
             $('#organisation_filter_results').append(row);
+          }
            
           }
            if(filters.length>more_no+5)
@@ -569,8 +790,12 @@ for(var i = 0; i < organisation_filters.length;i++){
 
        function show_ajax_results(data)
        {
-         $('#activity').html(data);
-         connections = ajax_connections;
+        var data_json = jQuery.parseJSON(data);
+         $('#activity_updates').html(data_json.updates);
+         $('#activity_biz').html(data_json.biz);
+         $('#activity_org').html(data_json.org);
+         
+         // connections = ajax_connections;
          reload_controls();
 
        }
@@ -602,7 +827,10 @@ function success_activity_handle(data){
   if(data['activity'] == 'follow' ){
     alert(data['message']);
   }
-  if((data['activity'] == 'buyFrom' && data['status'] == 0) || (data['activity'] == 'sellTo' && data['status'] ==0)){
+  if((data['activity'] == 'buyFrom' && data['status'] == 0) || 
+    (data['activity'] == 'sellTo' && data['status'] ==0) || 
+    (data['activity'] == 'markMember' && data['status'] == 0) ||
+    (data['activity'] == 'spam' && data['status'] == 0)){
    alert(data['message']); 
   }
 }
@@ -612,6 +840,17 @@ function sort_by(sort)
 {
    $("#sortby").val(sort);
    make_search();
+   if(sort == "distance")
+   {
+    var sort_text = '<i class="fa fa-location-arrow fa-fw"></i> Distance from {% if search %} {{ search.place }} {% endif %} {% if not search %} {{userinfo.zip_code}}{% endif %}';
+   }
+   else
+   {
+    var sort_text = '<i class="fa fa-clock-o fa-fw"></i> Time posted';
+   }
+   $("#current_sort_text").html(sort_text);
+   
+
 }
 
 </script>

@@ -17,7 +17,7 @@ import time
 from mainapp.classes.DataConnector import UserInfo
 import pprint
 from django.contrib.auth.models import User
-from mainapp.bitly import construct_Invite_tweet
+from mainapp.bitly import construct_invite_tweet
 
 next_cursor = -1
 ACCESS_TOKEN = ''
@@ -288,7 +288,7 @@ def invite(request):
     invites_obj = InviteId()
     invite_id = invites_obj.get_unused_id(request.user.id)
 
-    invite_tweet = construct_Invite_tweet(request, invite_id)
+    invite_tweet = construct_invite_tweet(request, invite_id)
     #print invite_id
     parameters['invite_id'] = invite_id['uid']['id']
     parameters ['invite_tweet'] = invite_tweet
@@ -337,7 +337,9 @@ def notifications(request):
             if (notifying_user_profile['email'] != ''):
                 processed_notice['notifying_user_email'] = notifying_user_profile['email']
         except:
-            processed_notice['notifying_user_email'] = User.objects.get(username = eachNotification['notifying_user']).email
+            user = User.objects.get(username = eachNotification['notifying_user'])
+            # print eachNotification
+            processed_notice['notifying_user_email'] = user.email
         try:
             if (notifying_user_profile['screen_name'] != ''):
                 processed_notice['notifying_user_screenname'] = notifying_user_profile['screen_name']
@@ -353,4 +355,3 @@ def notifications(request):
         myNotice.append(processed_notice)
     parameters['notifications'] = myNotice
     return render_to_response('notice.html', parameters, context_instance=RequestContext(request))
-

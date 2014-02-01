@@ -353,10 +353,13 @@ class Food():
         # self.db_object.insert_one(self.table_name,value)
         self.db_object.update_upsert(self.table_name, {'food_name': value['food_name'], 
             'useruid': value['useruid']}, {'deleted': 0})
-
-        print "santosh"
         twt = TweetFeed()
         twt.update_data(value['useruid'])
+
+    def get_food_by_uid_food_name(self, food_name, user_id):
+        return self.db_object.get_one(self.table_name, 
+            {'useruid':user_id, 'food_name':food_name})
+
     def delete_food(self, useruid, food_name):
         self.db_object.update(self.table_name,{'useruid': useruid, 'food_name': food_name}, {'deleted':1})
         # also delete recommendations of the food
