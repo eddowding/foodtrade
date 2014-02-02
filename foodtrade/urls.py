@@ -1,13 +1,14 @@
 from django.conf.urls import patterns, include, url
-from django.views.generic import TemplateView
-
+from django.views.generic import TemplateView, RedirectView
 # Uncomment the next two lines to enable the admin:
 from django.contrib import admin
+from django.conf import settings
 admin.autodiscover()
 
 urlpatterns = patterns('',
     url(r'^$', 'mainapp.home.home', name='home'),
     url(r'^robots\.txt$', TemplateView.as_view(template_name='robots.txt',content_type='text/plain'), name='robots'),
+    url(r'^favicon\.ico$', RedirectView.as_view(url=settings.STATIC_URL + 'images/favicon.ico')),
 
     url(r'^admin-tags$', 'mainapp.home.admin_tags', name='home'),
     url(r'^food-tags$', 'mainapp.home.food_tags', name='home'),
