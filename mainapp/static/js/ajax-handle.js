@@ -105,10 +105,31 @@ function add_food(prof_id){
 
 }
 
+function food_detail(){
+var links = $('.food-popover').popover({trigger: 'manual', html: true});
+defaultWidth = links.width();
+links.mouseenter(function (event) {
+    
+        var link = $(this);
+        link.popover('show').width(180);
+    
+        $('.popover').mouseleave(function () {
+            link.popover('hide').width(defaultWidth);
+        });   
+    });
+        
+    links.mouseleave(function (event) {
+        if (event.toElement === document.body) {
+            $(this).popover('hide').width(defaultWidth);
+        }           
+    });
+}
+
 function food_ajax(data){
 $('.search-choice').remove();
 $("#myselect").val('').trigger('chosen:updated');
 $('#food_tbody').html(data);
+food_detail();
 }
 function recommend_food(logged_in_id, food_name, prof_id, username){
 	var data = {recommender_id: logged_in_id, food_name: food_name, business_id: prof_id}
