@@ -2,7 +2,6 @@
 {% load staticfiles %}
 
 {% block content %}
-
  
  
 
@@ -11,22 +10,56 @@
 
     <div class="col-md-5 col-sm-5 {% if not user.is_authenticated %} col-md-offset-1 col-sm-offset-1 {% endif %}" id="activity_switcher">
  
+      <div id="update" class="well well-sm clearfix">
+        <input class="form-control col-xs-12" name="q" id="newstatus" {% if not user.is_authenticated %}  onfocus="login_redirect()" title="Please login to use this feature." {% endif %} placeholder="What #food do you have to #buy, #sell, or #surplus?">  
+      </div> 
 
-  <div id="update" class="well well-sm">
-    
-        <div class="input-group"> 
-          <input class="form-control" name="q" id="newstatus" {% if not user.is_authenticated %}  onfocus="login_redirect()" title="Please login to use this feature." {% endif %} placeholder="What #food do you have to #buy, #sell, or #surplus?">
-          <span class="input-group-btn">
-              <button type="button" id="btn_update_activity" class="btn btn-success" {% if not user.is_authenticated %}  title="Please login to use this feature." {% endif %} onclick="UpdateActivity('newstatus');"> Post</button>
-          </span>
-        </div>
+      <div id="update" class="well well-sm clearfix">
+        <form class="form-horizontal">
+          <div class="row">
+            <div class="col-xs-12">
+              <textarea class="form-control col-xs-12" rows="3" name="q" id="newstatus" {% if not user.is_authenticated %}  onfocus="login_redirect()" title="Please login to use this feature." {% endif %} placeholder="What would you like? Eg '300kg #surplus conference #pears for #sale or #surplus' or 'I want to  #buy organic #honey for my farm shop.' "></textarea>
+            </div>
+          </div>
 
-    <div class="help-block small hidden-sm">
-    <ul>
-    <li>300kg #surplus conference #pears for #sale or #surplus</li>
-    <li>I want to  #buy organic #honey for my farm shop.</li>
-    </ul>
-    </div>
+          <div class="row" style="margin-top: 5px;">
+            <div class="col-xs-7">
+              <ul class="list-inline small" style="margin-bottom:0;">
+                <li class="text-muted">Also send to </li>
+                <li> 
+                  <label>
+                    <input type="checkbox" name="post_to_twitter" value="1" checked="checked">
+                    <i class="fa fa-twitter-square fa-lg text-muted"></i>
+                  </label>
+                </li>
+                <li> 
+                  <label rel="tooltip" title="Post to Facebook, coming soon!">
+                    <input type="checkbox" name="post_to_facebook" value="1" disabled > 
+                    <i class="fa fa-facebook-square fa-lg text-muted"></i>
+                  </label>
+                </li>
+                <li> 
+                  <label rel="tooltip" title="Follower newsletters, coming soon!">
+                    <input type="checkbox" name="post_to_newsletter" value="1" disabled> 
+                    <i class="fa fa-list-alt fa-lg text-muted"></i> 
+                  </label>
+                </li> 
+              </ul> 
+            </div>
+            <div class="col-xs-5 text-right">
+              <span class="small text-muted" id="char_count">
+                120 characters remaining
+              </span>
+            </div>
+          </div>
+
+
+              <button type="button" id="btn_update_activity" class="btn btn-sm btn-success pull-right" {% if not user.is_authenticated %}  title="Please login to use this feature." {% endif %} onclick="UpdateActivity('newstatus');"> Post</button>
+          </form>
+
+          
+         
+  
   </div> 
  
 <ul class="nav nav-tabs">
@@ -95,10 +128,13 @@
 
         <div class="btn-group pull-right" style="margin-left: 5px;">
             <button type="button" class="btn btn-default dropdown-toggle btn-xs pull-left" data-toggle="dropdown">
-              <i class="fa fa-link fa-large text-muted"></i>
-                <span class="caret text-muted"></span>
+              <i class="fa fa-share fa-large text-muted"></i>
+                
             </button> 
             <ul class="dropdown-menu" role="menu">
+              <li><a href="http://www.facebook.com/sharer/sharer.php?u=SINGLE_PERMALINK" target="_blank"><i class="fa fa-facebook fa-fw"></i> Share on Facebook</a></li>
+              <li><a href="http://twitter.com/home?status=SINGLE_PERMALINK" target="_blank"><i class="fa fa-twitter fa-fw"></i> Share on Twitter</a></li>
+              <li class="divider"></li>
               {%  if userinfo.user_type == "Business" and result.sign_up_as == "Business" and result.user.username != userinfo.username %}
               <li><a href="#" onclick="click_activity('buyFrom','{{result.useruid}}')">I buy from</a></li>
               <li><a href="#"onclick="click_activity('sellTo','{{result.useruid}}')">I sell to</a></li> 
