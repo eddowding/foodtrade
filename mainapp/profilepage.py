@@ -90,6 +90,7 @@ def display_profile(request, username):
         parameters['phone_number'] = pno
     
     parameters['all_business'] = get_all_business(usr.id)
+    parameters['all_organisation'] = get_all_orgs(usr.id)
     if request.user.is_authenticated():
         user_id = request.user.id
         user_profile_obj = UserProfile()
@@ -456,6 +457,24 @@ def get_all_business(prof_id):
         except:
             pass
     return final_business
+
+def get_all_orgs(prof_id):
+    userpro = UserProfile()
+    all_organisation = userpro.get_profile_by_type("Organisation")
+    final_organisation = []
+    for each in all_organisation:
+        try:
+            account = SocialAccount.objects.get(user__id = each['useruid'])
+            if prof_id != int(each['useruid']):
+                final_organisation.append({'id': each['useruid'],
+                    'name': account.extra_data['name'],
+                    'description': account.extra_data['description'],
+                    'photo': account.extra_data['profile_image_url'],
+                    'username' : account.extra_data['screen_name']
+                    })
+        except:
+            pass
+    return final_organisation    
 
 from math import radians, cos, sin, asin, sqrt
 def distance(lon1, lat1, lon2, lat2):

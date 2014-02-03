@@ -598,6 +598,33 @@
           </div> <!--  end connections -->
 
           <div class="tab-pane fade" id="organisations">
+            <div class="well well-sm">  
+            <div class="form-inline"  role="form">
+              <div class="form-group">
+                <!-- <label class="sr-only" for="exampleInputEmail2">Trade partnter</label>
+                <input type="text" class="form-control" style="min-width:250px;" id="trade" placeholder="Type business..."> -->
+                <!-- <select id="ddl_try">
+                  {% for each in all_business %}
+                  <option value="{{each.id}}">{{each.name}}</option>
+                  {% endfor %}
+              </select> -->
+              <select id="org_chosen" data-placeholder="Type orgainsation..." class="chosen-select col-xs-4 col-sm-4" multiple>
+                            <option value=""></option>
+                            {% for each in all_organisation %}
+                            
+                              <option value={{each.id}}>{{each.name}}</option>
+                            
+                            {% endfor %}
+                            </select>              
+                  
+
+              </div>
+              
+              <button class="btn btn-success" id="ad_cons_id" {% if not user.is_authenticated %} title="Please login to use this feature" {% endif %} onClick="add_orgainsation({{profile_id}})">Add</button>
+
+     
+            </div>
+          </div>
             {% if user.is_authenticated %}
             {% else %}
              <p class="alert alert-warning"><a href="{% provider_login_url "twitter" process="login" %}" class="">Login</a> or <a href="{% provider_login_url "twitter" process="login" %}" class="">sign up free</a> to see the organisations or groups they belong to. </p>
@@ -760,6 +787,8 @@ $( document ).ready(function() {
 
 food_detail();
 $('#buss_chosen').chosen();
+$('#org_chosen').chosen();
+
 // $("#buss_chosen").chosen({max_selected_options: 1});
 $('#myselect').chosen({create_option: true, skip_no_results: true, create_option_text: 'Add'});
 // chosen on change event
