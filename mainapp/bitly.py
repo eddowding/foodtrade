@@ -4,7 +4,6 @@ import json
 BIT_LY_ACCESS_TOKEN = '6d2e7698597e642b16e78f3f73ead15da94697ee'
 
 def shorten_url(url):
-    url = 'http://fresh.foodtradelite.cloudapp.net'
     get_url = 'https://api-ssl.bitly.com/v3/shorten'
     payload = {
     'URI':url,

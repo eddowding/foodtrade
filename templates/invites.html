@@ -37,7 +37,7 @@
  	<div class="panel-body mymargin">
 
     <div class="form-group"> 
- 	<textarea id="tweetMessage1"  onkeyup="check_limit()" class="form-control counted-invite" name="message" placeholder="Type in your message" rows="3" >You'll love www.foodtrade.com, </textarea>
+ 	<textarea id="tweetMessage1"  onkeyup="check_limit()" class="form-control counted-invite" name="message" placeholder="Type in your message" rows="3" >Join the #realfood search engine:  </textarea>
  	</div>
  	<button id="btnSendTweet2" onclick="send_invite()" class="btn btn-primary pull-right">Send invites</button>
       <h6 id="charsRem" class="pull-left" id="counter">140 characters remaining</h6> 
@@ -79,6 +79,10 @@ var users = [];
 $(document).ready(function(){
 	$('#tweetMessage1').html(tweet);
 });
+
+var pg_clicked = 1;
+var for_page_counter = 0;
+
 function validate_tweets (argument, count) {
 	tweet = $('#tweetMessage1').val();
 	var len = tweet.length;
@@ -89,21 +93,23 @@ function validate_tweets (argument, count) {
 			users.pop('@' + argument);
 			$('#tweetMessage1').val(tweet);
 			countVal = countVal - 1;
-			$('#btnSendTweet1').html("Send " + String(countVal) + ' invites');
-			$('#btnSendTweet2').html("Send " + String(countVal) + ' invites');
-			$('#btnSendTweet3').html("Send " + String(countVal) + ' invites');
+			for_page_counter = for_page_counter - 1;
+			$('#btnSendTweet1').html("Send " + "selected" + ' invites');
+			$('#btnSendTweet2').html("Send " + "selected" + ' invites');
+			$('#btnSendTweet3').html("Send " + "selected" + ' invites');
 			$('#charsRem').html(String(140-tweet.length) + ' characters remaining.')
 	}
 	else{
 		if (argument.length + len < 140 ) {
 			tweet = tweet + ' ' + '@' + String(argument) +' ';
 			countVal = countVal + 1;
+			for_page_counter = for_page_counter + 1;
 			send_list.push(count);
 			users.push('@' + argument);
 			$('#tweetMessage1').val(tweet);
-			$('#btnSendTweet1').html("Send " + String(countVal) + ' invites');
-			$('#btnSendTweet2').html("Send " + String(countVal) + ' invites');
-			$('#btnSendTweet3').html("Send " + String(countVal) + ' invites');
+			$('#btnSendTweet1').html("Send " + "selected" + ' invites');
+			$('#btnSendTweet2').html("Send " + "selected" + ' invites');
+			$('#btnSendTweet3').html("Send " + "selected" + ' invites');
 			$('#charsRem').html(String(140-tweet.length) + ' characters remaining.')			
 		}
 		else{
@@ -131,7 +137,11 @@ function invites_handler (data) {
 			$('#li' + String(send_list[val])).hide();
 			tweet = tweet.replace(users[val], '');
 		}
-		/*update_ul_invites(1);*/
+		if (for_page_counter >= 15){
+			update_ul_invites(pg_clicked+1);
+		}
+		send_list = []; 
+		users = [];
 		$('#successDiv').show(2000);
 		$('#successDiv').delay(5000).fadeOut('slow');
 	}
@@ -228,6 +238,7 @@ function parse_friends_ajax(data){
 
 var old=0;
 function update_ul_invites(cur_page){
+	pg_clicked = cur_page;
 	$('#pg_' +String(old)).removeClass('active');
 	$('#pg_' +String(cur_page)).addClass('active');
 	old = cur_page;

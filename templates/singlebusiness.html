@@ -293,6 +293,55 @@
         </div><!-- /.modal-dialog -->
       </div><!-- /.modal -->
  
+<div class="modal fade" id="modal_food_detail" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+              <h4 class="modal-title" id="myModalLabel">Add details to [[FOODNAME]]</h4>
+            </div>
+            <div class="modal-body">
+              <form accept-charset="UTF-8" action="" method="POST">
+               
+               <div class="row">
+                <div class="col-xs-12 col-md-3"> 
+                  <a href="#" rel="tooltip" title="Change the photo">
+                    <img src="http://placehold.it/100x100&text=Upload an image" class="img-responsive img-thumbnail">
+                  </a>
+                  <!-- show this in another modal? -->
+                  <!-- can we use html5 drag and drop to upload? -->
+                    <div class="form-group">
+                      <label for="exampleInputFile">Upload a file</label>
+                      <input type="file" id="exampleInputFile">
+                    </div>
+                  <!-- end code --> 
+                </div>
+                <div class="col-xs-12 col-md-9">
+                  <div class="form-group">
+                    <textarea id="tweet-recomm" class="form-control counted" name="message" placeholder="What makes your [[USE FOOD NAME]] special? This is where it's completely fine to show-off! Remember to name any variety names, special techniques, or unique properties - and how it tastes is the most important thing." rows="5" ></textarea>
+                  </div>
+                  <div class="form-group">
+                  <input type="text" class="col-xs-10" placeholder="TAG INPUT not sure if you want to use chosen or..?" />
+                  Add 
+                  </div>
+                </div>
+               </div><!-- row -->
+
+              </form> 
+            </div><!-- modal body -->
+            <div class="modal-footer"> 
+              <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+              {% if user.is_authenticated %}
+              <button type="button" class="btn btn-success" data-dismiss="modal">Save</button>
+              {% else %}
+              <button type="button" class="btn btn-success" data-dismiss="modal">Save</button>
+              {% endif %}
+            </div>
+          </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+      </div><!-- /.modal -->
+
+
       </div><!-- end header last -->
     </div>
     </div>
@@ -392,7 +441,10 @@
           <tbody id="food_tbody">
             {% for eachfood in all_foods %}
               <tr id="row{{forloop.counter}}">
-                  <td><a href="/activity/?f={{eachfood.food_name}}">{{eachfood.food_name}}</a></td>  
+                  <td>
+                  <a href="/activity/?f={{eachfood.food_name}}">{{eachfood.food_name}}</a> 
+                  <a href="" data-toggle="modal" data-target="#modal_food_detail" class="showonhover" data-container="body" >Add details</a>
+                  </td>  
                   
                   <td>  
 
@@ -730,7 +782,9 @@ $( document ).ready(function() {
 // activating tooltips
     $('.tltip').tooltip();
     $('#adfoo_id').tooltip();
+// food popover
 
+food_detail();
 $('#buss_chosen').chosen();
 // $("#buss_chosen").chosen({max_selected_options: 1});
 $('#myselect').chosen({create_option: true, skip_no_results: true, create_option_text: 'Add'});
