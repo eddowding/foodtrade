@@ -169,8 +169,8 @@ background: #eee;
 }
 
 #beta a {
-  color: #fff;
-  text-decoration: underline;
+  color: #fff !important;
+  text-decoration: underline !important;
 }
 
 #partners .thumbnail,
