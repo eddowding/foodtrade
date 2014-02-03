@@ -293,6 +293,32 @@
         </div><!-- /.modal-dialog -->
       </div><!-- /.modal -->
  
+<div class="modal fade" id="modal_food_detail" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+              <h4 class="modal-title" id="myModalLabel">Add details to your food !</h4>
+            </div>
+            <div class="modal-body">
+               <form accept-charset="UTF-8" action="" method="POST">
+                      <textarea id="tweet-recomm" class="form-control counted" name="message" placeholder="Type in your message" rows="5" ></textarea>
+                  </form> 
+   
+            </div>
+            <div class="modal-footer"> 
+              <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+              {% if user.is_authenticated %}
+              <button type="button" class="btn btn-success" data-dismiss="modal">Save</button>
+              {% else %}
+              <button type="button" class="btn btn-success" data-dismiss="modal">Save</button>
+              {% endif %}
+            </div>
+          </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+      </div><!-- /.modal -->
+
+
       </div><!-- end header last -->
     </div>
     </div>
@@ -392,7 +418,7 @@
           <tbody id="food_tbody">
             {% for eachfood in all_foods %}
               <tr id="row{{forloop.counter}}">
-                  <td><a href="/activity/?f={{eachfood.food_name}}">{{eachfood.food_name}}</a></td>  
+                  <td><a href="/activity/?f={{eachfood.food_name}}" data-container="body" data-toggle="popover" data-content='<a href="" data-toggle="modal" data-target="#modal_food_detail">Add details</a>' class="food-popover">{{eachfood.food_name}}</a></td>  
                   
                   <td>  
 
@@ -730,7 +756,9 @@ $( document ).ready(function() {
 // activating tooltips
     $('.tltip').tooltip();
     $('#adfoo_id').tooltip();
+// food popover
 
+food_detail();
 $('#buss_chosen').chosen();
 // $("#buss_chosen").chosen({max_selected_options: 1});
 $('#myselect').chosen({create_option: true, skip_no_results: true, create_option_text: 'Add'});
