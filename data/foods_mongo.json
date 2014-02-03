@@ -604,307 +604,309 @@
         "node": "Butter"
       },
       {
-        "node": "Cream/Clotted cream"
+        "node": "Clotted cream"
       },
       {
-        "node": "Cream/Single cream"
-      },
-      {
-        "node": "Cream/Double cream"
-      },
-      {
-        "node": "Milk/Cow's milk"
-      },
-      {
-        "node": "Milk/Goat's milk"
-      },
-      {
-        "node": "Cheese/Chedder"
-      },
-      {
-        "node": "Cheese/Goat"
-      },
-      {
-        "node": "Cheese/Brie"
-      },
-      {
-        "node": "Cheese/Stilton"
-      },
-      {
-        "node": "Cheese /"
-      },
-      {
-        "node": "Cheese/Blue cheese/Bath Blue cheese"
-      },
-      {
-        "node": "Cheese/Blue cheese/Barkham Blue cheese"
-      },
-      {
-        "node": "Cheese/Blue cheese/Blue Monday cheese"
-      },
-      {
-        "node": "Cheese/Blue cheese/Buxton Blue cheese"
-      },
-      {
-        "node": "Cheese/Blue cheese/Cheshire Blue cheese"
-      },
-      {
-        "node": "Cheese/Blue cheese/Devon Blue cheese"
-      },
-      {
-        "node": "Cheese/Blue cheese/Dorset Blue Vinney cheese"
-      },
-      {
-        "node": "Cheese/Blue cheese/Dovedale cheese"
-      },
-      {
-        "node": "Cheese/Blue cheese/Exmoor Blue cheese"
-      },
-      {
-        "node": "Cheese/Blue cheese/Harbourne Blue cheese"
-      },
-      {
-        "node": "Cheese/Blue cheese/Lanark Blue  cheese"
-      },
-      {
-        "node": "Cheese/Blue cheese/Oxford Blue cheese"
-      },
-      {
-        "node": "Cheese/Blue cheese/Shropshire Blue cheese"
-      },
-      {
-        "node": "Cheese/Blue cheese/Stichelton cheese"
-      },
-      {
-        "node": "Cheese/Blue cheese/Stilton cheese"
-      },
-      {
-        "node": "Cheese/Blue cheese/Blue Wensleydale cheese"
-      },
-      {
-        "node": "Cheese/Blue cheese/Yorkshire Blue cheese"
-      },
-      {
-        "node": "Cheese/Appledore cheese"
-      },
-      {
-        "node": "Cheese/Berkswell cheese"
-      },
-      {
-        "node": "Cheese/Bonchester cheese"
-      },
-      {
-        "node": "Cheese/Brie cheese"
-      },
-      {
-        "node": "Cheese/Somerset Brie"
-      },
-      {
-        "node": "Cheese/Cornish Brie cheese"
-      },
-      {
-        "node": "Cheese/Brinkburn cheese"
-      },
-      {
-        "node": "Cheese/Caithness cheese"
-      },
-      {
-        "node": "Cheese/Caboc cheese"
-      },
-      {
-        "node": "Cheese/Caerphilly cheese"
-      },
-      {
-        "node": "Cheese/Cheddar cheese"
-      },
-      {
-        "node": "Cheese/West Country Farmhouse Cheddar cheese"
-      },
-      {
-        "node": "Cheese/Applewood cheese"
-      },
-      {
-        "node": "Cheese/Coleraine Cheddar cheese"
-      },
-      {
-        "node": "Cheese/Cheshire cheese"
-      },
-      {
-        "node": "Cheese/Appleby Cheshire cheese"
-      },
-      {
-        "node": "Cheese/Chevington cheese"
-      },
-      {
-        "node": "Cheese/Coquetdale cheese"
-      },
-      {
-        "node": "Cheese/Cornish Pepper cheese"
-      },
-      {
-        "node": "Cheese/Cotherstone cheese"
-      },
-      {
-        "node": "Cheese/Cotswold cheese"
-      },
-      {
-        "node": "Cheese/Coverdale cheese"
-      },
-      {
-        "node": "Cheese/Croglin cheese"
-      },
-      {
-        "node": "Cheese/Crowdie cheese"
-      },
-      {
-        "node": "Cheese/Derby cheese"
-      },
-      {
-        "node": "Cheese/Double Gloucester cheese"
-      },
-      {
-        "node": "Cheese/Goosnargh Gold cheese"
-      },
-      {
-        "node": "Cheese/Dorstone cheese"
-      },
-      {
-        "node": "Cheese/Dovedale cheese"
-      },
-      {
-        "node": "Cheese/Farmhouse Llanboidy cheese"
-      },
-      {
-        "node": "Cheese/Fine Fettle Yorkshire cheese"
-      },
-      {
-        "node": "Cheese/Black Eyed Susan cheese"
-      },
-      {
-        "node": "Cheese/Golden Cross cheese"
-      },
-      {
-        "node": "Cheese/Gruth Dhu cheese"
-      },
-      {
-        "node": "Cheese/Harlech cheese"
-      },
-      {
-        "node": "Cheese/Hereford Hop cheese"
-      },
-      {
-        "node": "Cheese/Huntsman cheese"
-      },
-      {
-        "node": "Cheese/Ilchester cheese"
-      },
-      {
-        "node": "Cheese/Innkeepers Choice cheese"
-      },
-      {
-        "node": "Cheese/Isle Of Mull cheese"
-      },
-      {
-        "node": "Cheese/Lancashire cheese"
-      },
-      {
-        "node": "Cheese/Beacon Fell Traditional Lancashire cheese"
-      },
-      {
-        "node": "Cheese/Lincolnshire Poacher cheese"
-      },
-      {
-        "node": "Cheese/Little Wallop cheese"
-      },
-      {
-        "node": "Cheese/Katy's White Lavender cheese"
-      },
-      {
-        "node": "Cheese/Kidderton Ash cheese"
-      },
-      {
-        "node": "Cheese/Lord Of The Hundreds cheese"
-      },
-      {
-        "node": "Cheese/Lowerdale Goats Cheese cheese"
-      },
-      {
-        "node": "Cheese/Pantysgawn cheese"
-      },
-      {
-        "node": "Cheese/Red Devil cheese"
-      },
-      {
-        "node": "Cheese/Red Dragon cheese"
-      },
-      {
-        "node": "Cheese/Red Leicester cheese"
-      },
-      {
-        "node": "Cheese/Rothbury Red cheese"
-      },
-      {
-        "node": "Cheese/Red Windsor cheese"
-      },
-      {
-        "node": "Cheese/Sage Derby cheese"
-      },
-      {
-        "node": "Cheese/Single Gloucester cheese"
-      },
-      {
-        "node": "Cheese/Stinking Bishop cheese"
-      },
-      {
-        "node": "Cheese/Sussex Slipcote cheese"
-      },
-      {
-        "node": "Cheese/Swaledale cheese"
-      },
-      {
-        "node": "Cheese/Teviotdale  cheese"
-      },
-      {
-        "node": "Cheese/Tintern cheese"
-      },
-      {
-        "node": "Cheese/Waterloo cheese"
-      },
-      {
-        "node": "Cheese/Wensleydale cheese"
-      },
-      {
-        "node": "Cheese/White Stilton cheese"
-      },
-      {
-        "node": "Cheese/Suffolk Gold cheese"
-      },
-      {
-        "node": "Cheese/Whitehaven cheese"
-      },
-      {
-        "node": "Cheese/Yarg cheese"
-      },
-      {
-        "node": "Cheese/Wild Garlic Yarg cheese"
-      },
-      {
-        "node": "Cheese/Wiltshire Loaf"
-      },
-      {
-        "node": "Cheese/Woolsery Goats cheese"
-      },
+        "node": "Cream (single / double)" 
+      }, 
       {
-        "node": "Cheese/Village Green Goat"
+        "node": "Cow's milk"
       },
       {
-        "node": "Cheese/Y Fenni cheese"
+        "node": "Goat's milk"
       },
       {
-        "node": "Ice Cream/Sorbets"
+        "node": "Ice Cream / Sorbets"
       },
       {
         "node": "Yoghurt"
+      }
+    ]
+  },
+  {
+    "node": "Cheese",
+    "childrens": [ 
+      {
+        "node": "Chedder cheese"
+      },
+      {
+        "node": "Goat cheese"
+      },
+      {
+        "node": "Brie"
+      },
+      {
+        "node": "Stilton"
+      },
+      {
+        "node": "Cheese "
+      },
+      {
+        "node": "Bath Blue cheese"
+      },
+      {
+        "node": "Barkham Blue cheese"
+      },
+      {
+        "node": "Blue Monday cheese"
+      },
+      {
+        "node": "Buxton Blue cheese"
+      },
+      {
+        "node": "Cheshire Blue cheese"
+      },
+      {
+        "node": "Devon Blue cheese"
+      },
+      {
+        "node": "Dorset Blue Vinney cheese"
+      },
+      {
+        "node": "Dovedale cheese"
+      },
+      {
+        "node": "Exmoor Blue cheese"
+      },
+      {
+        "node": "Harbourne Blue cheese"
+      },
+      {
+        "node": "Lanark Blue  cheese"
+      },
+      {
+        "node": "Oxford Blue cheese"
+      },
+      {
+        "node": "Shropshire Blue cheese"
+      },
+      {
+        "node": "Stichelton cheese"
+      },
+      {
+        "node": "Stilton cheese"
+      },
+      {
+        "node": "Blue Wensleydale cheese"
+      },
+      {
+        "node": "Yorkshire Blue cheese"
+      },
+      {
+        "node": "Appledore cheese"
+      },
+      {
+        "node": "Berkswell cheese"
+      },
+      {
+        "node": "Bonchester cheese"
+      },
+      {
+        "node": "Brie cheese"
+      },
+      {
+        "node": "Somerset Brie"
+      },
+      {
+        "node": "Cornish Brie cheese"
+      },
+      {
+        "node": "Brinkburn cheese"
+      },
+      {
+        "node": "Caithness cheese"
+      },
+      {
+        "node": "Caboc cheese"
+      },
+      {
+        "node": "Caerphilly cheese"
+      },
+      {
+        "node": "Cheddar cheese"
+      },
+      {
+        "node": "West Country Farmhouse Cheddar cheese"
+      },
+      {
+        "node": "Applewood cheese"
+      },
+      {
+        "node": "Coleraine Cheddar cheese"
+      },
+      {
+        "node": "Cheshire cheese"
+      },
+      {
+        "node": "Appleby Cheshire cheese"
+      },
+      {
+        "node": "Chevington cheese"
+      },
+      {
+        "node": "Coquetdale cheese"
+      },
+      {
+        "node": "Cornish Pepper cheese"
+      },
+      {
+        "node": "Cotherstone cheese"
+      },
+      {
+        "node": "Cotswold cheese"
+      },
+      {
+        "node": "Coverdale cheese"
+      },
+      {
+        "node": "Croglin cheese"
+      },
+      {
+        "node": "Crowdie cheese"
+      },
+      {
+        "node": "Derby cheese"
+      },
+      {
+        "node": "Double Gloucester cheese"
+      },
+      {
+        "node": "Goosnargh Gold cheese"
+      },
+      {
+        "node": "Dorstone cheese"
+      },
+      {
+        "node": "Dovedale cheese"
+      },
+      {
+        "node": "Farmhouse Llanboidy cheese"
+      },
+      {
+        "node": "Fine Fettle Yorkshire cheese"
+      },
+      {
+        "node": "Black Eyed Susan cheese"
+      },
+      {
+        "node": "Golden Cross cheese"
+      },
+      {
+        "node": "Gruth Dhu cheese"
+      },
+      {
+        "node": "Harlech cheese"
+      },
+      {
+        "node": "Hereford Hop cheese"
+      },
+      {
+        "node": "Huntsman cheese"
+      },
+      {
+        "node": "Ilchester cheese"
+      },
+      {
+        "node": "Innkeepers Choice cheese"
+      },
+      {
+        "node": "Isle Of Mull cheese"
+      },
+      {
+        "node": "Lancashire cheese"
+      },
+      {
+        "node": "Beacon Fell Traditional Lancashire cheese"
+      },
+      {
+        "node": "Lincolnshire Poacher cheese"
+      },
+      {
+        "node": "Little Wallop cheese"
+      },
+      {
+        "node": "Katy's White Lavender cheese"
+      },
+      {
+        "node": "Kidderton Ash cheese"
+      },
+      {
+        "node": "Lord Of The Hundreds cheese"
+      },
+      {
+        "node": "Lowerdale Goats Cheese cheese"
+      },
+      {
+        "node": "Pantysgawn cheese"
+      },
+      {
+        "node": "Red Devil cheese"
+      },
+      {
+        "node": "Red Dragon cheese"
+      },
+      {
+        "node": "Red Leicester cheese"
+      },
+      {
+        "node": "Rothbury Red cheese"
+      },
+      {
+        "node": "Red Windsor cheese"
+      },
+      {
+        "node": "Sage Derby cheese"
+      },
+      {
+        "node": "Single Gloucester cheese"
+      },
+      {
+        "node": "Stinking Bishop cheese"
+      },
+      {
+        "node": "Sussex Slipcote cheese"
+      },
+      {
+        "node": "Swaledale cheese"
+      },
+      {
+        "node": "Teviotdale  cheese"
+      },
+      {
+        "node": "Tintern cheese"
+      },
+      {
+        "node": "Waterloo cheese"
+      },
+      {
+        "node": "Wensleydale cheese"
+      },
+      {
+        "node": "White Stilton cheese"
+      },
+      {
+        "node": "Suffolk Gold cheese"
+      },
+      {
+        "node": "Whitehaven cheese"
+      },
+      {
+        "node": "Yarg cheese"
+      },
+      {
+        "node": "Wild Garlic Yarg cheese"
+      },
+      {
+        "node": "Wiltshire Loaf"
+      },
+      {
+        "node": "Woolsery Goats cheese"
+      },
+      {
+        "node": "Village Green Goat"
+      },
+      {
+        "node": "Y Fenni cheese"
       }
     ]
   },
@@ -1131,21 +1133,23 @@
       },
       {
         "node": "Watermelon"
+      }
+    ]
+  },
+  {
+    "node": "Fruits (processed)",
+    "childrens": [ 
+      {
+        "node": "Canned fruit"
       },
       {
-        "node": "Processed fruits/Canned fruit"
+        "node": "Frozen fruit"
       },
       {
-        "node": "Processed fruits/Frozen fruit"
-      },
+        "node": "Fruit sauces"
+      }, 
       {
-        "node": "Processed fruits/Fruit sauces"
-      },
-      {
-        "node": "Processed fruits/Jam"
-      },
-      {
-        "node": "Processed fruits/Pie fillings"
+        "node": "Pie fillings"
       }
     ]
   },
@@ -1153,10 +1157,10 @@
     "node": "Vegetables",
     "childrens": [
       {
-        "node": "Artichokes/Jerusalem"
+        "node": "Artichoke (Jerusalem)"
       },
       {
-        "node": "Artichokes/Globe"
+        "node": "Artichoke (Globe)"
       },
       {
         "node": "Alfalfa sprouts"
@@ -1174,7 +1178,7 @@
         "node": "Asparagus"
       },
       {
-        "node": "Aubergine, Eggplant"
+        "node": "Aubergine / Eggplant"
       },
       {
         "node": "Avocados"
@@ -1195,19 +1199,19 @@
         "node": "Broccoflower"
       },
       {
-        "node": "Broccoli/Purple Sprouting Broccoli"
+        "node": "Broccoli / Purple Sprouting Broccoli"
       },
       {
         "node": "Brussels sprouts"
       },
       {
-        "node": "Cabbage/Red"
+        "node": "Cabbage (Red)"
       },
       {
-        "node": "Cabbage/White"
+        "node": "Cabbage (White)"
       },
       {
-        "node": "Cabbage/Green"
+        "node": "Cabbage (Green)"
       },
       {
         "node": "Calabrese"
@@ -1267,7 +1271,7 @@
         "node": "Kale"
       },
       {
-        "node": "Kale (Curl)"
+        "node": "Kale (Curly)"
       },
       {
         "node": "Kale (Mixed)"
@@ -1330,46 +1334,46 @@
         "node": "Parsnips"
       },
       {
-        "node": "Potatoes/Charlotte potatoes"
+        "node": "Potatoes (Charlotte)"
       },
       {
-        "node": "Potatoes/King Edward potatoes"
+        "node": "Potatoes (King Edward)"
       },
       {
-        "node": "Potatoes/Estima potatoes"
+        "node": "Potatoes (Estima)"
       },
       {
-        "node": "Potatoes/Maris Piper potatoes"
+        "node": "Potatoes (Maris Piper)"
       },
       {
-        "node": "Potatoes/Desiree potatoes"
+        "node": "Potatoes (Desiree)"
       },
       {
-        "node": "Potatoes/Marfona potatoes"
+        "node": "Potatoes (Marfona)"
       },
       {
-        "node": "Potatoes/Anya potatoes"
+        "node": "Potatoes (Anya)"
       },
       {
-        "node": "Potatoes/Nicola potatoes"
+        "node": "Potatoes (Nicola)"
       },
       {
-        "node": "Potatoes/Rooster potatoes"
+        "node": "Potatoes (Rooster)"
       },
       {
-        "node": "Potatoes/Sante potatoes"
+        "node": "Potatoes (Sante)"
       },
       {
-        "node": "Potatoes/Accord potatoes"
+        "node": "Potatoes (Accord)"
       },
       {
-        "node": "Potatoes/Carlingford potatoes"
+        "node": "Potatoes (Carlingford)"
       },
       {
-        "node": "Potatoes/Romano potatoes"
+        "node": "Potatoes (Romano)"
       },
       {
-        "node": "Potatoes/Sweet potatoes, yams"
+        "node": "Potatoes (Sweet potatoes, yams)"
       },
       {
         "node": "Rocket"
@@ -1417,28 +1421,28 @@
         "node": "Sprouted Seeds"
       },
       {
-        "node": "Squashes/Acorn squash"
+        "node": "Acorn squash"
       },
       {
-        "node": "Squashes/Butternut squash"
+        "node": "Butternut squash"
       },
       {
-        "node": "Squashes/Courgette, Zucchini"
+        "node": "Courgette, Zucchini"
       },
       {
-        "node": "Squashes/Cucumber"
+        "node": "Cucumber"
       },
       {
-        "node": "Squashes/Gem squash"
+        "node": "Gem squash"
       },
       {
-        "node": "Squashes/Marrow, Squash"
+        "node": "Marrow, Squash"
       },
       {
-        "node": "Squashes/Pumpkin"
+        "node": "Pumpkin"
       },
       {
-        "node": "Squashes/Spaghetti squash"
+        "node": "Spaghetti squash"
       },
       {
         "node": "Swede, Rutabaga"
@@ -1475,15 +1479,20 @@
       },
       {
         "node": "White radish"
+      }
+    ]
+  },
+  {
+    "node": "rocessed vegetables",
+    "childrens": [ 
+      {
+        "node": "Canned vegetables"
       },
       {
-        "node": "Processed vegetables/Canned vegetables"
+        "node": "Frozen vegetables"
       },
       {
-        "node": "Processed vegetables/Frozen vegetables"
-      },
-      {
-        "node": "Processed vegetables/French fries"
+        "node": "French fries"
       }
     ]
   },
@@ -1801,10 +1810,10 @@
         "node": "Galingale"
       },
       {
-        "node": "Garlic/Garlic powder"
+        "node": "Garlic powder"
       },
       {
-        "node": "Garlic/Elephant garlic"
+        "node": "Elephant garlic"
       },
       {
         "node": "Garlic chives"
@@ -1885,7 +1894,7 @@
         "node": "Leptotes bicolor"
       },
       {
-        "node": "Lesser calamint , nipitella, nepitella"
+        "node": "Lesser calamint, nipitella, nepitella"
       },
       {
         "node": "Licorice, liquorice"
@@ -1967,10 +1976,7 @@
       },
       {
         "node": "Pandan leaf, screwpine"
-      },
-      {
-        "node": "Pandanus amaryllifolius"
-      },
+      }, 
       {
         "node": "Paprika"
       },
@@ -2002,28 +2008,28 @@
         "node": "Cayenne pepper"
       },
       {
-        "node": "Pepper/Cubeb pepper"
+        "node": "Cubeb pepper"
       },
       {
-        "node": "Pepper/Green pepper"
+        "node": "Green pepper"
       },
       {
-        "node": "Pepper/Kani pepper"
+        "node": "Kani pepper"
       },
       {
-        "node": "Pepper/Peruvian pepper"
+        "node": "Peruvian pepper"
       },
       {
-        "node": "Pepper/Pink pepper"
+        "node": "Pink pepper"
       },
       {
-        "node": "Pepper/Red pepper"
+        "node": "Red pepper"
       },
       {
-        "node": "Pepper/Szechuan pepper"
+        "node": "Szechuan pepper"
       },
       {
-        "node": "Pepper/White pepper"
+        "node": "White pepper"
       },
       {
         "node": "Peppercorns"
@@ -2169,31 +2175,28 @@
     "node": "Cereal Grains",
     "childrens": [
       {
-        "node": "Rice/Basmati Rice"
+        "node": "Basmati Rice"
       },
       {
-        "node": "Rice/Black Rice"
+        "node": "Black Rice"
       },
       {
-        "node": "Rice/Broken Rice"
+        "node": "Broken Rice"
       },
       {
-        "node": "Rice/Brown Rice"
+        "node": "Brown Rice"
       },
       {
-        "node": "Rice/Jasmine Rice"
+        "node": "Jasmine Rice"
+      }, 
+      {
+        "node": "White Corn rice"
       },
       {
-        "node": "Rice/Organic Rice"
+        "node": "Wild rice"
       },
       {
-        "node": "Rice/White Corn"
-      },
-      {
-        "node": "Rice/Wild rice"
-      },
-      {
-        "node": "Rice/Yellow Corn"
+        "node": "Yellow Corn"
       },
       {
         "node": "Amaranth"
@@ -2332,21 +2335,26 @@
       },
       {
         "node": "Wheatgrass"
+      }
+    ]
+  },
+  {
+    "node": "Flour",
+    "childrens": [ 
+      {
+        "node": "White flour"
       },
       {
-        "node": "Flour/White flour"
+        "node": "Brown flour"
       },
       {
-        "node": "Flour/Brown flour"
+        "node": "Rye flour"
       },
       {
-        "node": "Flour/Rye flour"
+        "node": "Spelt flour"
       },
       {
-        "node": "Flour/Spelt flour"
-      },
-      {
-        "node": "Flour/Barley flour"
+        "node": "Barley flour"
       }
     ]
   },
@@ -2371,217 +2379,25 @@
     ]
   },
   {
-    "node": "Drinks",
+    "node": "Soft Drinks",
     "childrens": [
       {
-        "node": "Juice/Apple juice"
+        "node": "Apple juice"
       },
       {
-        "node": "Juice/Orange juice"
+        "node": "Orange juice"
       },
       {
-        "node": "Juice/Pear juice"
+        "node": "Pear juice"
       },
       {
-        "node": "Juice/Grape juice"
+        "node": "Grape juice"
       },
       {
-        "node": "Soft drinks/Ginger Beer"
+        "node": "Ginger Beer"
       },
       {
-        "node": "Soft drinks/Lemonade"
-      },
-      {
-        "node": "Alcoholic drinks/Beer/Ale/Barleywine"
-      },
-      {
-        "node": "Alcoholic drinks/Beer/Ale/Bitter ale"
-      },
-      {
-        "node": "Alcoholic drinks/Beer/Ale/Mild ale"
-      },
-      {
-        "node": "Alcoholic drinks/Beer/Ale/Pale ale"
-      },
-      {
-        "node": "Alcoholic drinks/Beer/Ale/Porter/Stout"
-      },
-      {
-        "node": "Alcoholic drinks/Beer/Ale/Cask ale"
-      },
-      {
-        "node": "Alcoholic drinks/Beer/Ale/Stock ale"
-      },
-      {
-        "node": "Alcoholic drinks/Beer/Fruit Beer"
-      },
-      {
-        "node": "Alcoholic drinks/Beer/Large Beer/Bock"
-      },
-      {
-        "node": "Alcoholic drinks/Beer/Large Beer/Dry beer"
-      },
-      {
-        "node": "Alcoholic drinks/Beer/Large Beer/Maerzen/Oktoberfest Beer"
-      },
-      {
-        "node": "Alcoholic drinks/Beer/Large Beer/Pilsener"
-      },
-      {
-        "node": "Alcoholic drinks/Beer/Large Beer/Schwarzbier"
-      },
-      {
-        "node": "Alcoholic drinks/Beer/Sahti"
-      },
-      {
-        "node": "Alcoholic drinks/Beer/Small beer"
-      },
-      {
-        "node": "Alcoholic drinks/Beer/Wheat beer/Witbier White Beer"
-      },
-      {
-        "node": "Alcoholic drinks/Beer/Wheat beer/Hefeweizen"
-      },
-      {
-        "node": "Alcoholic drinks/Cauim"
-      },
-      {
-        "node": "Alcoholic drinks/Chicha"
-      },
-      {
-        "node": "Alcoholic drinks/Cider"
-      },
-      {
-        "node": "Alcoholic drinks/Mead"
-      },
-      {
-        "node": "Alcoholic drinks/Palm wine"
-      },
-      {
-        "node": "Alcoholic drinks/Perry"
-      },
-      {
-        "node": "Alcoholic drinks/Sake"
-      },
-      {
-        "node": "Alcoholic drinks/Wine/Fruit wine"
-      },
-      {
-        "node": "Alcoholic drinks/Wine/Table wine"
-      },
-      {
-        "node": "Alcoholic drinks/Wine/Sangria"
-      },
-      {
-        "node": "Alcoholic drinks/Wine/Sparkling wine/Champagne"
-      },
-      {
-        "node": "Alcoholic drinks/Wine/Fortified wine/Port"
-      },
-      {
-        "node": "Alcoholic drinks/Wine/Fortified wine/Madeira"
-      },
-      {
-        "node": "Alcoholic drinks/Wine/Fortified wine/Marsala"
-      },
-      {
-        "node": "Alcoholic drinks/Wine/Fortified wine/Sherry"
-      },
-      {
-        "node": "Alcoholic drinks/Wine/Fortified wine/Vermouth"
-      },
-      {
-        "node": "Alcoholic drinks/Wine/Fortified wine/Vinsanto"
-      },
-      {
-        "node": "Alcoholic drinks/Spirits/Absinthe"
-      },
-      {
-        "node": "Alcoholic drinks/Spirits/Akvavit"
-      },
-      {
-        "node": "Alcoholic drinks/Spirits/Arak"
-      },
-      {
-        "node": "Alcoholic drinks/Spirits/Arrack"
-      },
-      {
-        "node": "Alcoholic drinks/Spirits/Baijiu"
-      },
-      {
-        "node": "Alcoholic drinks/Spirits/Cachaca"
-      },
-      {
-        "node": "Alcoholic drinks/Spirits/Gin/Damson gin"
-      },
-      {
-        "node": "Alcoholic drinks/Spirits/Gin/Sloe gin"
-      },
-      {
-        "node": "Alcoholic drinks/Spirits/Gulu"
-      },
-      {
-        "node": "Alcoholic drinks/Spirits/Horilka"
-      },
-      {
-        "node": "Alcoholic drinks/Spirits/Kaoliang"
-      },
-      {
-        "node": "Alcoholic drinks/Spirits/Maotai"
-      },
-      {
-        "node": "Alcoholic drinks/Spirits/Mezcal"
-      },
-      {
-        "node": "Alcoholic drinks/Spirits/Neutral grain spirit"
-      },
-      {
-        "node": "Alcoholic drinks/Spirits/Ogogoro"
-      },
-      {
-        "node": "Alcoholic drinks/Spirits/Ouzo"
-      },
-      {
-        "node": "Alcoholic drinks/Spirits/Palinka"
-      },
-      {
-        "node": "Alcoholic drinks/Spirits/Pisco"
-      },
-      {
-        "node": "Alcoholic drinks/Spirits/Rum"
-      },
-      {
-        "node": "Alcoholic drinks/Spirits/Soju"
-      },
-      {
-        "node": "Alcoholic drinks/Spirits/Tequila"
-      },
-      {
-        "node": "Alcoholic drinks/Spirits/Vodka"
-      },
-      {
-        "node": "Alcoholic drinks/Spirits/Metaxa"
-      },
-      {
-        "node": "Alcoholic drinks/Spirits/Whisky/Bourbon"
-      },
-      {
-        "node": "Alcoholic drinks/Spirits/Whisky/Scotch"
-      },
-      {
-        "node": "Alcoholic drinks/Spirits/Whisky/Tennessee whiskey"
-      },
-      {
-        "node": "Alcoholic drinks/Spirits/Brandy/Armagnac"
-      },
-      {
-        "node": "Alcoholic drinks/Spirits/Brandy/Cognac"
-      },
-      {
-        "node": "Alcoholic drinks/Spirits/Brandy/Fruit brandy, Eau-de-vie, Schnapps"
-      },
-      {
-        "node": "Alcoholic drinks/Spirits/Brandy/Kirsch"
+        "node": "Lemonade"
       },
       {
         "node": "Tea/Green"
@@ -2594,6 +2410,219 @@
       },
       {
         "node": "Coffee"
+      }
+    ]
+  },
+  {
+    "node": "Beer (Alcoholic Drinks)",
+    "childrens": [ 
+      {
+        "node": "Barleywine"
+      },
+      {
+        "node": "Bitter ale"
+      },
+      {
+        "node": "Mild ale"
+      },
+      {
+        "node": "Pale ale"
+      },
+      {
+        "node": "Porter / Stout"
+      },
+      {
+        "node": "Cask ale"
+      },
+      {
+        "node": "Stock ale"
+      },
+      {
+        "node": "Fruit Beer"
+      },
+      {
+        "node": "Large Bock"
+      },
+      {
+        "node": "Large Dry beer"
+      },
+      {
+        "node": "Oktoberfest Beer"
+      },
+      {
+        "node": "Pilsener"
+      },
+      {
+        "node": "Schwarzbier"
+      },
+      {
+        "node": "Sahti"
+      },
+      {
+        "node": "Small beer"
+      },
+      {
+        "node": "Wheat Witbier / White Beer"
+      },
+      {
+        "node": "Wheat Hefeweizen"
+      }
+    ]
+  },
+  {
+    "node": "Beer (Alcoholic Drinks)",
+    "childrens": [ 
+      {
+        "node": "Cauim"
+      },
+      {
+        "node": "Chicha"
+      },
+      {
+        "node": "Cider"
+      },
+      {
+        "node": "Mead"
+      },
+      {
+        "node": "Palm wine"
+      },
+      {
+        "node": "Perry"
+      },
+      {
+        "node": "Sake"
+      }
+    ]
+  },
+  {
+    "node": "Wine (Alcoholic Drinks)",
+    "childrens": [ 
+      {
+        "node": "Fruit wine"
+      },
+      {
+        "node": "Table wine"
+      },
+      {
+        "node": "Sangria"
+      },
+      {
+        "node": "Sparkling Champagne"
+      },
+      {
+        "node": "Port"
+      },
+      {
+        "node": "Madeira"
+      },
+      {
+        "node": "Marsala"
+      },
+      {
+        "node": "Sherry"
+      },
+      {
+        "node": "Vermouth"
+      },
+      {
+        "node": "Vinsanto"
+      }
+    ]
+  },
+  {
+    "node": "Spirits (Alcoholic Drinks)",
+    "childrens": [ 
+      {
+      {
+        "node": "Absinthe"
+      },
+      {
+        "node": "Akvavit"
+      },
+      {
+        "node": "Arak"
+      },
+      {
+        "node": "Arrack"
+      },
+      {
+        "node": "Baijiu"
+      },
+      {
+        "node": "Cachaca"
+      },
+      {
+        "node": "Gin/Damson gin"
+      },
+      {
+        "node": "Gin/Sloe gin"
+      },
+      {
+        "node": "Gulu"
+      },
+      {
+        "node": "Horilka"
+      },
+      {
+        "node": "Kaoliang"
+      },
+      {
+        "node": "Maotai"
+      },
+      {
+        "node": "Mezcal"
+      },
+      {
+        "node": "Neutral grain spirit"
+      },
+      {
+        "node": "Ogogoro"
+      },
+      {
+        "node": "Ouzo"
+      },
+      {
+        "node": "Palinka"
+      },
+      {
+        "node": "Pisco"
+      },
+      {
+        "node": "Rum"
+      },
+      {
+        "node": "Soju"
+      },
+      {
+        "node": "Tequila"
+      },
+      {
+        "node": "Vodka"
+      },
+      {
+        "node": "Metaxa"
+      },
+      {
+        "node": "Bourbon whisky"
+      },
+      {
+        "node": "Scotch whisky"
+      },
+      {
+        "node": "Tennessee whiskey"
+      },
+      {
+        "node": "Armagnac brandy"
+      },
+      {
+        "node": "Cognac brandy"
+      },
+      {
+        "node": "Fruit brandy, Eau-de-vie, Schnapps"
+      },
+      {
+        "node": "Kirsch"
       }
     ]
   },
@@ -2713,13 +2742,13 @@
         "node": "Pies"
       },
       {
-        "node": "Twice-baked goods/Biscotti"
+        "node": "Biscotti"
       },
       {
-        "node": "Twice-baked goods/Rusk"
+        "node": "Rusk"
       },
       {
-        "node": "Twice-baked goods/Zweiback"
+        "node": "Zweiback"
       }
     ]
   },
