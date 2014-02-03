@@ -69,8 +69,12 @@ class AjaxHandle(AjaxSearch):
                                     'from_username':str(request.user.username),
                                     'sent_time':str(time.mktime(datetime.datetime.now().timetuple())),
                                     'invite_id':ObjectId(str(request.POST['invite_id'])), 
-                                    'message':str(str(message))}
+                                    'message':str(message)}
+                            
                             invite_obj.save_invites(doc)
+                            #----Creating Fake Profile on Invitation Send----
+                            create_fake_profile(str(eachInvitee))
+
                         invite_id_obj.change_used_status(request.user.id, request.POST['invite_id'])
                         new_invite_id = invite_id_obj.get_unused_id(request.user.id)
                         new_invite_tweet = construct_invite_tweet(request, new_invite_id)

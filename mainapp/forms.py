@@ -88,6 +88,8 @@ class SignupForm(forms.Form):
 
         userprofile.create_profile(data)
 
+        
+
         if invite_id != '':
             invititation_to = user.username
             screen_name = social_account.extra_data['screen_name']
