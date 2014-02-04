@@ -308,7 +308,7 @@
                <div class="row">
                 <div class="col-xs-12 col-md-4"> 
                   <a href="#" rel="tooltip" title="Change the photo">
-                    <img src="http://placehold.it/100x100&text=Upload an image" class="img-responsive img-thumbnail">
+                    <img src="http://placehold.it/100x100&text=Upload an image" class="img-responsive img-thumbnail" id="food_photo">
                   </a>
                   <!-- show this in another modal? -->
                   <!-- can we use html5 drag and drop to upload? -->
@@ -455,7 +455,7 @@
               <tr id="row{{forloop.counter}}">
                   <td>
                   <a href="/activity/?f={{eachfood.food_name}}">{{eachfood.food_name}}</a> 
-                  <a href="" data-toggle="modal" data-target="#modal_food_detail" class="showonhover" data-container="body" onClick="get_food_detail('{{profile_id}}', '{{eachfood.food_name}}', '{{eachfood.description}}', '{{eachfood.food_tags}}')">Add details</a>
+                  <a href="" data-toggle="modal" data-target="#modal_food_detail" class="showonhover" data-container="body" onClick="get_food_detail('{{profile_id}}', '{{eachfood.food_name}}', '{{eachfood.description}}', '{{eachfood.food_tags}}', '{{eachfood.photo_url}}')">Add details</a>
                   </td>  
                   
                   <td>  
@@ -867,7 +867,7 @@ function set_width(){
   $('#buss_chosen_chosen').attr("style", "width:350px;");
 }
 
-function get_food_detail(profile_id, food_name, description, food_tags){
+function get_food_detail(profile_id, food_name, description, food_tags, photo_url){
     $("#myTags").tagit("removeAll");
     $('#food_detail_title').text('Add details to '+ food_name);
     var placeholder = "What makes your " + food_name + " special? This is where it's completely fine to show-off! Remember to name any variety names, special techniques, or unique properties - and how it tastes is the most important thing."
@@ -882,6 +882,8 @@ function get_food_detail(profile_id, food_name, description, food_tags){
     for(i=0;i<tags_list.length;i++){
       $("#myTags").tagit('createTag', tags_list[i]);
     }
+    $('#food_photo').attr('src', photo_url);
+    
     
 }
     
