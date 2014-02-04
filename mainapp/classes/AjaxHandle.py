@@ -275,6 +275,34 @@ class AjaxHandle(AjaxSearch):
         else:
             return HttpResponse("{'status':0}")
 
+    def third_party_add_org(self, request):
+        org = Organisation()
+        data = eval(request.POST.get('data'))
+        if data !=None and data !="":
+            org.create_member(data)
+            
+            notification_obj = Notification()
+            user_profile_obj = UserProfile()
+            try:
+                mem = user_profile_obj.get_profile_by_id(int(data['memberuid']))
+                org  = user_profile_obj.get_profile_by_id(int(data['orguid']))
+                # print org
+                notification_obj.save_notification({
+                        'notification_to':org['username'], 
+                        'notification_message':'@' + str(mem['username']) + ' added himself as the member of your Organisation. You can connect with him and increase value of your Organisation', 
+                        'notification_time':time.mktime(datetime.datetime.now().timetuple()),
+                        'notification_type':'Added member',
+                        'notification_view_status':'false',
+                        'notification_archived_status':'false',
+                        'notifying_user':str(mem['username'])
+                        })
+            except:
+                pass
+
+            return HttpResponse("{'status':1}")
+        else:
+            return HttpResponse("{'status':0}")
+
     def addfood(self, request):
         foo = Food()
         data = eval(request.POST.get('data'))

@@ -17,6 +17,7 @@ import json
 from mainapp.produce import *
 import random
 import time
+from mainapp.forms import FoodForm
 
 def resolve_profile(request, username):
     user_profile = UserProfile()
@@ -29,7 +30,24 @@ def resolve_profile(request, username):
         return HttpResponseRedirect('/organisation/'+username)
 
 def display_profile(request, username):
+    if request.method == 'POST':
+        food_form = FoodForm(request.POST, request.FILES)
+        if food_form.is_valid():
+            food_form.save()
+        # food_description = request.POST['food_description']
+        # food_name = request.POST['food_name']
+        # profile_id = int(request.POST['profile_id'])
+        # food_tags = request.POST['food_tags']
+        # food_photo = request.FILES['food_photo']
+        # print food_photo.name, food_photo.content_type, food_photo.size
+        # food_detail = Food()
+        # data = {'food_name': food_name, 'useruid': profile_id, 'description': food_description, 'food_tags': food_tags}
+        # food_detail.update_food(data)
+        
     parameters = {}
+    # parameters['food_list'] = final_foods
+    food_form = FoodForm()
+    parameters['form'] = food_form
     foo = AdminFoods()
     parameters['all_tags'] = foo.get_tags()
     user_profile = UserProfile()
@@ -48,7 +66,7 @@ def display_profile(request, username):
 
     try:
         tweet_feed_obj = TweetFeed()
-        user_profile = tweet_feed_obj.get_tweet_by_user_id(str(usr.id))
+        user_profile = tweet_feed_obj.get_tweet_by_user_id(userprof['useruid'])
         updates = user_profile["updates"]
 
         for i in range(len(updates)):
@@ -81,6 +99,7 @@ def display_profile(request, username):
         parameters['phone_number'] = pno
     
     parameters['all_business'] = get_all_business(userprof['useruid'])
+    parameters['all_organisation'] = get_all_orgs(userprof['useruid'])
     if request.user.is_authenticated():
         user_id = request.user.id
         user_profile_obj = UserProfile()
@@ -280,6 +299,10 @@ def get_all_foods(user_id):
                 pass
         random.shuffle(recomm_details)
         data = {'food_name': each['food_name'], 'vouch_count': len(all_rec), 'recomm_details': recomm_details[:8]}
+        if each.get('description')!=None:
+            data['description'] = each.get('description')
+        if each.get('food_tags')!=None:
+            data['food_tags'] = each.get('food_tags')
         final_foods.append(data)
     return final_foods
 
@@ -468,6 +491,24 @@ def get_all_business(prof_id):
         except:
             pass
     return final_business
+
+def get_all_orgs(prof_id):
+    userpro = UserProfile()
+    all_organisation = userpro.get_profile_by_type("Organisation")
+    final_organisation = []
+    for each in all_organisation:
+        try:
+            account = SocialAccount.objects.get(user__id = each['useruid'])
+            if prof_id != int(each['useruid']):
+                final_organisation.append({'id': each['useruid'],
+                    'name': account.extra_data['name'],
+                    'description': account.extra_data['description'],
+                    'photo': account.extra_data['profile_image_url'],
+                    'username' : account.extra_data['screen_name']
+                    })
+        except:
+            pass
+    return final_organisation    
 
 from math import radians, cos, sin, asin, sqrt
 def distance(lon1, lat1, lon2, lat2):

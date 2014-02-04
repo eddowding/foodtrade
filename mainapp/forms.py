@@ -6,6 +6,38 @@ from django.http import HttpResponse, HttpResponseRedirect
 from classes.Tags import Tags
 from pygeocoder import Geocoder
 import datetime,time
+from mainapp.classes.TweetFeed import Food
+# from mainapp.models import FoodPhoto
+
+class FoodForm(forms.Form):
+
+    food_description = forms.CharField(required=False, widget=forms.Textarea(attrs={'class' : 'form-control'})) 
+
+    food_tags = forms.CharField(required=False, widget=forms.TextInput(attrs={'class' : 'form-control'})) 
+
+    profile_id = forms.CharField(required=False, widget=forms.TextInput(attrs={'class' : 'form-control'})) 
+
+    food_name = forms.CharField(required=False, widget=forms.TextInput(attrs={'class' : 'form-control'}))
+
+    food_photo = forms.ImageField(required=False)
+
+    def __init__(self, *args, **kwargs):
+        super(FoodForm, self).__init__(*args, **kwargs)
+
+    def save(self):
+        food_description = self.cleaned_data['food_description']
+        food_tags = self.cleaned_data['food_tags']
+        profile_id = int(self.cleaned_data['profile_id'])
+        food_name = self.cleaned_data['food_name']
+        food_photo = self.cleaned_data['food_photo']
+        # photo_model = FoodPhoto(food_photo = food_photo)
+        # photo_model.save()
+        # print photo_model.food_photo.url
+        food_detail = Food()
+        data = {'food_name': food_name, 'useruid': profile_id, 'description': food_description,
+        'food_tags': food_tags}
+        print data
+        food_detail.update_food(data)
 
 class SignupForm(forms.Form):
 

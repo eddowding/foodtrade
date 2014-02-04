@@ -21,6 +21,9 @@
   <link rel="stylesheet" href="/static/css/docsupport/prism.css">
   <link rel="stylesheet" href="/static/css/chosen.min.css">
 
+<link href="{% static "css/jquery.tagit.css" %}" rel="stylesheet" type="text/css">
+    <link href="{% static "css/tagit.ui-zendesk.css" %}" rel="stylesheet" type="text/css">
+
 <style type="text/css" media="all">
     /* fix rtl for demo */
     .chosen-rtl .chosen-drop { left: -9000px; } 
@@ -298,45 +301,55 @@
           <div class="modal-content">
             <div class="modal-header">
               <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-              <h4 class="modal-title" id="myModalLabel">Add details to [[FOODNAME]]</h4>
+              <h4 class="modal-title" id="food_detail_title">Add details to </h4>
             </div>
             <div class="modal-body">
-              <form accept-charset="UTF-8" action="" method="POST">
-               
+              <form accept-charset="UTF-8" action="." role="form" method="POST" enctype="multipart/form-data">
+               {% csrf_token %}
                <div class="row">
-                <div class="col-xs-12 col-md-3"> 
+                <div class="col-xs-12 col-md-4"> 
                   <a href="#" rel="tooltip" title="Change the photo">
                     <img src="http://placehold.it/100x100&text=Upload an image" class="img-responsive img-thumbnail">
                   </a>
                   <!-- show this in another modal? -->
                   <!-- can we use html5 drag and drop to upload? -->
                     <div class="form-group">
-                      <label for="exampleInputFile">Upload a file</label>
-                      <input type="file" id="exampleInputFile">
+                      <label for="food_photo">Upload a file</label>
+                      {{form.food_photo}}
+                      {{form.food_name.as_hidden}}
+                      {{form.profile_id.as_hidden}}
+                {{form.food_tags.as_hidden}}
+                
                     </div>
-                  <!-- end code --> 
+                  <!-- end code -->
                 </div>
-                <div class="col-xs-12 col-md-9">
+                
+                <div class="col-xs-12 col-md-8">
                   <div class="form-group">
-                    <textarea id="tweet-recomm" class="form-control counted" name="message" placeholder="What makes your [[USE FOOD NAME]] special? This is where it's completely fine to show-off! Remember to name any variety names, special techniques, or unique properties - and how it tastes is the most important thing." rows="5" ></textarea>
+                    {{form.food_description}}
                   </div>
                   <div class="form-group">
-                  <input type="text" class="col-xs-10" placeholder="TAG INPUT not sure if you want to use chosen or..?" />
-                  Add 
+                  <ul id="myTags">
+                  <!-- Existing list items will be pre-added to the tags -->
+                  <!-- <li>Tag1</li>
+                  <li>Tag2</li> -->
+                  </ul>
+                  
                   </div>
                 </div>
                </div><!-- row -->
 
-              </form> 
+               
             </div><!-- modal body -->
             <div class="modal-footer"> 
               <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
               {% if user.is_authenticated %}
-              <button type="button" class="btn btn-success" data-dismiss="modal">Save</button>
+              <button type="submit" class="btn btn-success" onClick="var tags =$('#myTags').tagit('assignedTags'); $('#id_food_tags').val(tags);">Save</button>
               {% else %}
-              <button type="button" class="btn btn-success" data-dismiss="modal">Save</button>
+              <button type="submit" class="btn btn-success">Save</button>
               {% endif %}
             </div>
+            </form>
           </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
       </div><!-- /.modal -->
@@ -443,7 +456,7 @@
               <tr id="row{{forloop.counter}}">
                   <td>
                   <a href="/activity/?f={{eachfood.food_name}}">{{eachfood.food_name}}</a> 
-                  <a href="" data-toggle="modal" data-target="#modal_food_detail" class="showonhover" data-container="body" >Add details</a>
+                  <a href="" data-toggle="modal" data-target="#modal_food_detail" class="showonhover" data-container="body" onClick="get_food_detail('{{profile_id}}', '{{eachfood.food_name}}', '{{eachfood.description}}', '{{eachfood.food_tags}}')">Add details</a>
                   </td>  
                   
                   <td>  
@@ -624,6 +637,26 @@
           </div> <!--  end connections -->
 
           <div class="tab-pane fade" id="organisations">
+            <!-- <div class="well well-sm">  
+            <div class="form-inline"  role="form">
+              <div class="form-group">
+              <select id="org_chosen" data-placeholder="Type orgainsation..." class="chosen-select col-xs-4 col-sm-4" multiple>
+                            <option value=""></option>
+                            {% for each in all_organisation %}
+                            
+                              <option value={{each.id}}>{{each.name}}</option>
+                            
+                            {% endfor %}
+                            </select>              
+                  
+
+              </div>
+              
+              <button class="btn btn-success" id="ad_cons_id" {% if not user.is_authenticated %} title="Please login to use this feature" {% endif %} onClick="add_orgainsation({{profile_id}})">Add</button>
+
+     
+            </div>
+          </div> -->
             {% if user.is_authenticated %}
             {% else %}
              <p class="alert alert-warning"><a href="{% provider_login_url "twitter" process="login" %}" class="">Login</a> or <a href="{% provider_login_url "twitter" process="login" %}" class="">sign up free</a> to see the organisations or groups they belong to. </p>
@@ -778,6 +811,9 @@
 // });
 
 $( document ).ready(function() {
+
+  $("#myTags").tagit({placeholderText: 'Add tags to your food...'});
+
   tweetlistener('email_message', 'contact_counter', 'contact_tweet');
 // activating tooltips
     $('.tltip').tooltip();
@@ -786,6 +822,8 @@ $( document ).ready(function() {
 
 food_detail();
 $('#buss_chosen').chosen();
+$('#org_chosen').chosen();
+
 // $("#buss_chosen").chosen({max_selected_options: 1});
 $('#myselect').chosen({create_option: true, skip_no_results: true, create_option_text: 'Add'});
 // chosen on change event
@@ -830,7 +868,23 @@ function set_width(){
   $('#buss_chosen_chosen').attr("style", "width:350px;");
 }
 
-
+function get_food_detail(profile_id, food_name, description, food_tags){
+    $("#myTags").tagit("removeAll");
+    $('#food_detail_title').text('Add details to '+ food_name);
+    var placeholder = "What makes your " + food_name + " special? This is where it's completely fine to show-off! Remember to name any variety names, special techniques, or unique properties - and how it tastes is the most important thing."
+    $('#id_food_description').attr('placeholder', placeholder);
+    $('#id_food_description').attr('rows', 5);
+    // document.getElementsByName('food_name').value = food_name;
+    // document.getElementsByName('profile_id').value = profile_id;
+    $('#id_food_name').val(food_name);
+    $('#id_profile_id').val(profile_id);
+    $('#id_food_description').val(description);
+    var tags_list = food_tags.split(',');
+    for(i=0;i<tags_list.length;i++){
+      $("#myTags").tagit('createTag', tags_list[i]);
+    }
+    
+}
     
   </script>
 
