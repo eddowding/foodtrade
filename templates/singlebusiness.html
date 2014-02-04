@@ -873,6 +873,7 @@ function get_food_detail(profile_id, food_name, description, food_tags){
     $('#food_detail_title').text('Add details to '+ food_name);
     var placeholder = "What makes your " + food_name + " special? This is where it's completely fine to show-off! Remember to name any variety names, special techniques, or unique properties - and how it tastes is the most important thing."
     $('#id_food_description').attr('placeholder', placeholder);
+    $('#id_food_description').attr('rows', 5);
     // document.getElementsByName('food_name').value = food_name;
     // document.getElementsByName('profile_id').value = profile_id;
     $('#id_food_name').val(food_name);
