@@ -17,6 +17,7 @@ import json
 from mainapp.produce import *
 import random
 import time
+from mainapp.forms import FoodForm
 
 def resolve_profile(request, username):
     usr = User.objects.get(username = username)
@@ -35,8 +36,24 @@ def resolve_profile(request, username):
     # return HttpResponseRedirect('/person/'+username)
 
 def display_profile(request, username):
+    if request.method == 'POST':
+        food_form = FoodForm(request.POST, request.FILES)
+        if food_form.is_valid():
+            food_form.save()
+        # food_description = request.POST['food_description']
+        # food_name = request.POST['food_name']
+        # profile_id = int(request.POST['profile_id'])
+        # food_tags = request.POST['food_tags']
+        # food_photo = request.FILES['food_photo']
+        # print food_photo.name, food_photo.content_type, food_photo.size
+        # food_detail = Food()
+        # data = {'food_name': food_name, 'useruid': profile_id, 'description': food_description, 'food_tags': food_tags}
+        # food_detail.update_food(data)
+        
     parameters = {}
     # parameters['food_list'] = final_foods
+    food_form = FoodForm()
+    parameters['form'] = food_form
     foo = AdminFoods()
     parameters['all_tags'] = foo.get_tags()
     user_profile = UserProfile()
@@ -269,6 +286,10 @@ def get_all_foods(user_id):
                 pass
         random.shuffle(recomm_details)
         data = {'food_name': each['food_name'], 'vouch_count': len(all_rec), 'recomm_details': recomm_details[:8]}
+        if each.get('description')!=None:
+            data['description'] = each.get('description')
+        if each.get('food_tags')!=None:
+            data['food_tags'] = each.get('food_tags')
         final_foods.append(data)
     return final_foods
 
