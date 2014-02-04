@@ -79,7 +79,7 @@ class AjaxHandle(AjaxSearch):
                             'new_invite_tweet':new_invite_tweet}))
                 return HttpResponse(json.dumps({'status':1}))
             else:
-                tweet = user_twitter.update_status(status = message+url)
+                tweet = user_twitter.update_status(status = message+url, in_reply_to_status_id=)
             tweet_feed = TweetFeed()
 
             pic_url_list = []

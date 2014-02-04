@@ -307,6 +307,64 @@ class Search():
 # print sh.search_all()
 
 
+
+    def get_tweet_by_parent(self, parent_tweet_id):
+        query_string = {'updates':{"$elemMatch":{'parent_tweet_id':parent_tweet_id}}}
+        agg_pipeline = []
+        # agg_pipeline.append(geo_near)
+
+        agg_pipeline.append({ '$match':query_string})
+
+        agg_pipeline.append({"$unwind": "$updates"})
+
+
+        agg_pipeline.append({ '$match':{"updates.deleted":{"$ne":1}, "updates.parent_tweet_id":parent_tweet_id}})
+
+       
+        # agg_pipeline.append({ '$match':{"updates":{"$size":0}}})
+
+        sort_text = "updates.time_stamp"
+        sort_order = -1
+
+        agg_pipeline.append({"$sort": SON([(sort_text, sort_order), ("time_stamp", -1)])})
+
+        # next_index = 5
+        # if len(or_conditions) > 0:
+        #     next_index = 6
+        #     agg_pipeline.append({ '$match':{"$or":or_conditions}})
+
+
+        group_fields = {}
+        group_fields["_id"] = "all"
+        group_fields["foods"] = { "$push": "$foods" }
+        group_fields["businesses"] = { "$push": "$type_user"}
+        group_fields["organisations"] = { "$push": "$organisations"}
+        group_fields["business_count"] = {"$sum":{"$cond": [{"$eq": ['$sign_up_as', "Business"]}, 1, 0]}}
+        group_fields["organisation_count"] = {"$sum":{"$cond": [{"$eq": ['$sign_up_as', "Organisation"]}, 1, 0]}}
+        group_fields["update_count"] = {"$sum": 1}
+
+   
+        result_type = "updates.status"
+   
+        
+        group_fields["results"] = self.get_result_fields(result_type)
+        
+        agg_pipeline.append({"$group": group_fields})
+        
+
+        
+        agg_pipeline.append({ "$limit" : 30 })
+
+        
+
+        up = UserProfile()
+        return up.agg(agg_pipeline)
+
+
+
         
 
 
+
+sh = Search(keyword="sujit", lon = 85.3363578, lat=27.7059892, place = "", foods=[], business=['Compost','Animal Feed'], organisation=[],sort="")
+print sh.get_tweet_by_parent(53)
