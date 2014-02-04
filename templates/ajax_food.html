@@ -1,6 +1,9 @@
 {% for eachfood in all_foods %}
               <tr id="row{{forloop.counter}}">
-                  <td><a href="/activity/?f={{eachfood.food_name}}" data-container="body" data-toggle="popover" data-content='<a href="" data-toggle="modal" data-target="#modal_food_detail">Add details</a>' class="food-popover">{{eachfood.food_name}}</a></td>  
+                  <td>
+                  <a href="/activity/?f={{eachfood.food_name}}">{{eachfood.food_name}}</a> 
+                  <a href="" data-toggle="modal" data-target="#modal_food_detail" class="showonhover" data-container="body" onClick="get_food_detail('{{profile_id}}', '{{eachfood.food_name}}', '{{eachfood.description}}', '{{eachfood.food_tags}}')">Add details</a>
+                  </td>  
                   
                   <td>  
 

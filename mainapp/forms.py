@@ -7,7 +7,7 @@ from classes.Tags import Tags
 from pygeocoder import Geocoder
 import datetime,time
 from mainapp.classes.TweetFeed import Food
-# from mainapp.models import FoodPhoto
+from mainapp.models import FoodPhoto
 
 class FoodForm(forms.Form):
 
@@ -30,12 +30,12 @@ class FoodForm(forms.Form):
         profile_id = int(self.cleaned_data['profile_id'])
         food_name = self.cleaned_data['food_name']
         food_photo = self.cleaned_data['food_photo']
-        # photo_model = FoodPhoto(food_photo = food_photo)
-        # photo_model.save()
-        # print photo_model.food_photo.url
+        photo_model = FoodPhoto(food_photo = food_photo)
+        photo_model.save()
+        photo_url = str(photo_model.food_photo.url)
         food_detail = Food()
         data = {'food_name': food_name, 'useruid': profile_id, 'description': food_description,
-        'food_tags': food_tags}
+        'food_tags': food_tags, 'photo_url': photo_url}
         print data
         food_detail.update_food(data)
 

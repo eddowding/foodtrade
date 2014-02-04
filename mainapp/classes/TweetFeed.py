@@ -369,7 +369,7 @@ class Food():
 
     def update_food(self, data):
         self.db_object.update(self.table_name,{'food_name': data['food_name'], 'useruid': data['useruid'], 'deleted': 0},
-         {'description':data['description'], 'food_tags': data['food_tags']})
+         {'description':data['description'], 'food_tags': data['food_tags'], 'photo_url': data['photo_url']})
 
 
 class Customer():
