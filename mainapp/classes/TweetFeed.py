@@ -367,6 +367,11 @@ class Food():
         self.db_object.create_table(table_name,'food_name')
         self.db_object.update_multi(table_name,{'business_id': useruid, 'food_name': food_name}, {'deleted':1})
 
+    def update_food(self, data):
+        self.db_object.update(self.table_name,{'food_name': data['food_name'], 'useruid': data['useruid'], 'deleted': 0},
+         {'description':data['description'], 'food_tags': data['food_tags']})
+
+
 class Customer():
     """docstring for Connection"""
     def __init__(self):
