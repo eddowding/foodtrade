@@ -7,6 +7,7 @@ class MaxTweetId(models.Model):
     def __unicode__(self):
         return str(self.max_tweet_id)
 
+
 class FoodPhoto(models.Model):
     """ Model just for uploading images to media dir"""
     food_photo = models.ImageField(upload_to='food/')
