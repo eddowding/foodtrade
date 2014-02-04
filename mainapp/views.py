@@ -18,6 +18,7 @@ from mainapp.classes.DataConnector import UserInfo
 import pprint
 from django.contrib.auth.models import User
 from mainapp.bitly import construct_invite_tweet
+from django.contrib.auth.decorators import user_passes_test
 
 next_cursor = -1
 ACCESS_TOKEN = ''
@@ -289,7 +290,6 @@ def invite(request):
     invite_id = invites_obj.get_unused_id(request.user.id)
 
     invite_tweet = construct_invite_tweet(request, invite_id)
-    #print invite_id
     parameters['invite_id'] = invite_id['uid']['id']
     parameters ['invite_tweet'] = invite_tweet
     return render_to_response('invites.html', parameters, context_instance=RequestContext(request))
@@ -298,7 +298,7 @@ def invite(request):
 
 def handle_invitation_hit(request, invite_id):
     request.session['invite_id'] = str(invite_id)
-    return HttpResponseRedirect('/accounts/twitter/login/?process=login')
+    return HttpResponseRedirect('/')
 
 def notifications(request):
     parameters = {}
@@ -355,3 +355,21 @@ def notifications(request):
         myNotice.append(processed_notice)
     parameters['notifications'] = myNotice
     return render_to_response('notice.html', parameters, context_instance=RequestContext(request))
+
+
+@user_passes_test(lambda u: u.is_superuser)
+def unclaimed_profiles(request):
+    parameters = {}
+    if request.user.is_authenticated():
+        user_id = request.user.id
+        user_info = UserInfo(user_id)
+        user_profile_obj = UserProfile()
+        userprofile = user_profile_obj.get_profile_by_id(user_id)
+        parameters['userprofile'] = UserProfile
+        parameters['userinfo'] = user_info
+    user_profile_obj = UserProfile()
+    unclaimed_profiles = user_profile_obj.get_unclaimed_profile_paginated(1)
+    parameters['unclaimed_profiles'] = unclaimed_profiles
+    return render_to_response('unclaimed.html', parameters, context_instance=RequestContext(request))
+
+

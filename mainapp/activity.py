@@ -108,15 +108,6 @@ def home(request):
             result_class = result_class + " profile"
 
         results[i]["result_class"] = result_class
-
-
-
-
-
-        # if lonlat_distance>1:
-        #     distance_text = str(lonlat_distance) +" Km"
-        # else:
-        #     distance_text = str(lonlat_distance*1000) + " m"
         distance_text = str(lonlat_distance) + " miles"
         try:
             time_elapsed = int(time.time()) - results[i]['time_stamp']
