@@ -12,6 +12,12 @@ function ajax_request(s_handler, c_handler, input_data)
 });
 }
 
+function add_org_to_biz(member_id){
+	var org_ids_list = $('#org_chosen').val();
+	for(i=0;i<org_ids_list.length;i++){
+		ajax_request("third_party_add_org", 'org_ajax', {data: "{'memberuid': " + prof_id + ",'orguid': " + org_ids_list[i] +"}"});
+	}
+}
 
 function conn_handler(value, prof_id, conn_id)
 {

@@ -91,19 +91,19 @@
     "node": "Meat (game)",
     "childrens": [
       {
-        "node": "Game/Partridge"
+        "node": "Partridge"
       },
       {
-        "node": "Game/Pheasant"
+        "node": "Pheasant"
       },
       {
-        "node": "Game/Rabbit"
+        "node": "Rabbit"
       },
       {
-        "node": "Game/Hare/levret"
+        "node": "Hare/levret"
       },
       {
-        "node": "Game/Venison"
+        "node": "Venison"
       }
     ]
   },
