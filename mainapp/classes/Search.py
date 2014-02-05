@@ -250,7 +250,7 @@ class Search():
 
 
         if search_type == 0:
-            agg_pipeline.append({ '$match':{"updates.deleted":{"$ne":1}}})
+            agg_pipeline.append({ '$match':{"updates.deleted":{"$ne":1},"updates.parent_tweet_id":"0"}})
 
        
         # agg_pipeline.append({ '$match':{"updates":{"$size":0}}})
