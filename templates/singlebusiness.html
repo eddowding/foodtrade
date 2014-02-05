@@ -460,9 +460,8 @@
 <!--data for food details:{{eachfood.food_description}},{{eachfood.food_tags}} and {{eachfood.food_photo}}  -->    
                 <a href="/activity/?f={{eachfood.food_name}}">  
                   {% if eachfood.photo_url %} 
-
-                  <!-- src="/../food/{{eachfood.photo_url}}" -->
-                    <img src="/static/images/apples.jpg" alt="{{eachfood.food_name}}" class="img-rounded produce_square" /> 
+ 
+                    <img src="/media/food/{{eachfood.photo_url}}" alt="{{eachfood.food_name}}" class="img-rounded produce_square" /> 
                   {% endif %}
                   {{eachfood.food_name}}
                 </a>  
