@@ -29,26 +29,12 @@ def resolve_profile(request, username):
         return HttpResponseRedirect('/person/'+username)
     elif userprof['sign_up_as'] == 'Organisation':
         return HttpResponseRedirect('/organisation/'+username)
-    # try:
-    #     usr = User.objects.get(username = 'aaa')
-    # except:
-    #     raise Http404
-    # return HttpResponseRedirect('/person/'+username)
 
 def display_profile(request, username):
     if request.method == 'POST':
         food_form = FoodForm(request.POST, request.FILES)
         if food_form.is_valid():
             food_form.save()
-        # food_description = request.POST['food_description']
-        # food_name = request.POST['food_name']
-        # profile_id = int(request.POST['profile_id'])
-        # food_tags = request.POST['food_tags']
-        # food_photo = request.FILES['food_photo']
-        # print food_photo.name, food_photo.content_type, food_photo.size
-        # food_detail = Food()
-        # data = {'food_name': food_name, 'useruid': profile_id, 'description': food_description, 'food_tags': food_tags}
-        # food_detail.update_food(data)
         
     parameters = {}
     # parameters['food_list'] = final_foods
