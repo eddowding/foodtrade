@@ -398,7 +398,7 @@ class Search():
                                   }
                       }
         agg_pipeline.append(geo_near)
-        query_string = {'updates':{"$elemMatch":{'tweet_id'::tweet_id}}}
+        query_string = {'updates':{"$elemMatch":{'tweet_id':tweet_id}}}
         agg_pipeline.append({ '$match':query_string})
 
         agg_pipeline.append({"$unwind": "$updates"})
@@ -438,7 +438,12 @@ class Search():
 
 
 
-
+    def get_direct_children(self, root_id):
+        try:
+            results = self.get_tweet_by_parent(root_id)[0]['results']
+            return results
+        except:
+            return None
 
 
 

@@ -12,44 +12,45 @@
 
 
       <div class="col-md-2" id="avatar">
-        <img class="img-thumbnail center-block" src="http://a0.twimg.com/profile_images/2596092158/afpecvf41m8f0juql78p_bigger.png"  />
+        <img class="img-thumbnail center-block" src="{{parent_tweet.user.profile_img}}"  />
       </div>
      
       <div class="col-md-7">
 
          <p style="font-size: 20px; font-weight: 200; padding-top: 20px;">
-          Nullam quis risus eget urna mollis ornare vel eu leo. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nullam id dolor id nibh ultricies vehicula.</p>        
+          {{parent_tweet.status}}</p>        
 
  <hr />
 
-         <h1><a href="#">Smales Farm</a></h1>
+         <h1><a href="#">{{parent_tweet.user.name}}</a></h1>
 
-        
+        {% if parent_tweet.type_user|length == 0 or parent_tweet.type_user|first == '' %}
+          {% else %}
           <div class="tags tags-biztype  ">  
+            {% for eachtype in parent_tweet.type_user %}
+           <a href="/activity/?b={{eachtype}}">{{eachtype}}</a>
+           {% endfor %}
+          </div> {% endif %}
+
+          <!-- <div class="tags tags-biztype  ">  
            <a href="/type/livestock-farm">Bakery</a>
            <a href="/type/buther">Wholesale</a>  
            <a href="/type/buther">Distribution</a>  
            <a href="/type/buther">Livestock Farm</a>  
-          </div> 
+          </div>  -->
    
      
          <div class="meta small text-muted">
-            
-            <i class="fa fa-map-marker"></i> 78 Example Street, Test Town  
+            <i class="fa fa-map-marker"></i> <a href="http://maps.google.com/maps?saddr={{userinfo.lat}},{{userinfo.lon}}&daddr={{parent_tweet.location.coordinates.1}},{{parent_tweet.location.coordinates.0}}" target="_blank" data-placement="top" data-toggle="tooltip" title="Get directions" class="text-muted">{{parent_tweet.user.address}}</a>  
             
             <!-- if logged in or you've allows html5 browser location -->
-            <a href="http://maps.google.com/maps?saddr=current+location&daddr=Sydney+Opera+House,+Sydney+Opera+House,+Bennelong+Point,+Sydney+NSW+2000,+Australia" target="_blank" data-placement="top" data-toggle="tooltip" title="Get directions" class="text-muted">
-            <i class="fa fa-location-arrow" style="margin-left: 20px;"></i> 87.2 miles</a> 
+            <i class="fa fa-location-arrow" style="margin-left: 20px;"></i> {{parent_tweet.distance_text}} miles  
 
-
-            <i class="fa fa-bullseye" style="margin-left: 20px;"></i> 20.1 miles
-   
-            <!--  // if logged in or you've allows html5 browser location -->
   
          </div> <!-- meta -->
   
       </div><!-- end header middle -->
-
+{% comment %}
       <div id="contact_info" class="col-md-3">
  
       <!-- if logged in users = individual --> 
@@ -154,7 +155,7 @@
 
  
       </div><!-- end header last -->
-
+{% endcomment %}
     </div>
     </div> 
 
@@ -162,14 +163,15 @@
       <div class="col-md-6">
 
         <div id="update" class="well  ">
-          <form action="#" method="get">
+          
               <div class="input-group"> 
-                <input class="form-control" name="q"  placeholder="Reply to @smalesfarm">
+                <input class="form-control input-sm enterhandler" data-tweet-id = "{{parent_tweet.tweetuid}}" data-main = "main"   {% if not user.is_authenticated %} rel="tooltip" title="Please login to use this feature." {% endif %} type="text" id="replyid" placeholder="Reply to @{{parent_tweet.user.username}}" onfocus="ShowReply('replyid', '@{{parent_tweet.user.username}}')" onblur="BlurReply('replyid', '@{{parent_tweet.user.username}}')">
+
                 <span class="input-group-btn">
                     <button type="submit" class="btn btn-success"> Post</button>
                 </span>
               </div>
-          </form> 
+          
         </div> 
 
         <div class="container-responsive clearfix">
@@ -177,18 +179,195 @@
            
 <ul class="chat">
 
-   {% include 'card_activity_item.html' %}
-   {% include 'card_activity_item.html' %}
-   {% include 'card_activity_item.html' %}
-   {% include 'card_activity_item.html' %}
-   {% include 'card_activity_item.html' %}
-   {% include 'card_activity_item.html' %}
-   {% include 'card_activity_item.html' %}
-   {% include 'card_activity_item.html' %}
-   {% include 'card_activity_item.html' %}
-   {% include 'card_activity_item.html' %}
-   {% include 'card_activity_item.html' %}
-   {% include 'card_activity_item.html' %} 
+   {% if results %}
+
+{% for result in results %}
+{% if result.user.username == result.result_type %}
+    <li class="left clearfix {{result.result_class}}" id="{{result.uid.id}}"><span class="chat-img pull-left">
+    <img src="{{result.user.profile_img}}" alt="{{result.user.name}}" class="img-thumbnail" />
+    </span>
+        <div class="chat-body clearfix">
+ 
+
+        <div class="btn-group pull-right" style="margin-left: 5px;">
+            <button type="button" class="btn btn-default dropdown-toggle btn-xs pull-left" data-toggle="dropdown">
+              <i class="fa fa-share fa-large text-muted"></i>
+                
+            </button> 
+            <ul class="dropdown-menu" role="menu">
+              <li><a href="http://www.facebook.com/sharer/sharer.php?u=SINGLE_PERMALINK" target="_blank"><i class="fa fa-facebook fa-fw"></i> Share on Facebook</a></li>
+              <li><a href="http://twitter.com/home?status=SINGLE_PERMALINK" target="_blank"><i class="fa fa-twitter fa-fw"></i> Share on Twitter</a></li>
+              <li class="divider"></li>
+              {%  if userinfo.user_type == "Business" and result.sign_up_as == "Business" and result.user.username != userinfo.username %}
+              <li><a href="#" onclick="click_activity('buyFrom','{{result.useruid}}')">I buy from</a></li>
+              <li><a href="#"onclick="click_activity('sellTo','{{result.useruid}}')">I sell to</a></li> 
+              <li class="divider"></li>
+              {% endif %}
+              {% if result.sign_up_as == "Organisation" %}
+              <li><a href="#" onclick="click_activity('markMember', '{{result.useruid}}')">I'm a member</a></li>
+              {% endif %}
+              {% if userinfo.user_type == "Individual" and result.sign_up_as == "Business" %}
+              <li><a href="#" onclick="click_activity('markCustomer', '{{result.user.username}}')">I'm a customer</a></li>
+              {% endif %}
+              <li class="divider"></li>
+              {% ifequal result.user.username userinfo.username %}
+              <li><a href="#" onclick="click_activity('delete','{{result.tweetuid}}')">Delete</a></li>
+              {% endifequal %}
+              {% if result.user.username != userinfo.username %}
+              <li><a href="#" onclick="click_activity('spam','{{result.uid.id}}')">Flag as spam</a></li>
+              <li><a href="#" onclick="click_activity('follow','{{result.user.username}}')">Follow on Twitter</a></li>
+              {% endif %}
+              <li><a href="/profile/{{result.user.username}}/">View full profile</a></li> 
+            </ul>
+          </div>  
+
+
+            <div class="header">
+                <strong class="pull-left" style="margin-right: 10px;"><a href="/profile/{{result.user.username}}">{{result.user.name}}</a></strong> 
+
+          {% if type_user|length == 0 or type_user|first == '' %}
+          {% else %}
+          {% if result.sign_up_as == "Business" %}
+            <div class="tags tags-biztype">  
+              {% for tag in result.type_user  %}
+                <a href="/activity/?b={{tag}}">{{tag}}</a>
+              {% endfor %}
+            </div> 
+            {% endif %}
+          {% endif %}
+            </div>
+
+            <p>
+                {{result.status}}
+            </p>
+
+              <div class="meta small text-muted">
+               <i class="fa fa-map-marker"></i>
+                {{result.user.address}}
+
+                 <!-- if logged in or you've allows html5 browser location -->
+                 <a href="http://maps.google.com/maps?saddr={{userinfo.lat}},{{userinfo.lon}}&daddr={{result.location.coordinates.1}},{{result.location.coordinates.0}}" 
+                    target="_blank" data-placement="top" data-toggle="tooltip" 
+                    class="text-muted" 
+                    rel="tooltip" 
+                    title="Get directions"> 
+                 <i class="fa fa-location-arrow"></i> {{result.distance_text}}  
+                 </a>
+                <!--  // if logged in or you've allows html5 browser location -->
+
+                <span class="pull-right time_ago">
+                   <a href="/profile/{{result.user.username}}/" class="text-muted"><i class="fa fa-clock-o"></i> {{result.time_elapsed}}</a> 
+                </span>
+              </div> 
+
+        </div>
+
+        <div class="reply well well-sm" style="margin:0;"> 
+          <input class="form-control input-sm enterhandler" data-tweet-id = "{{result.tweetuid}}" data-main = "main"   {% if not user.is_authenticated %} rel="tooltip" title="Please login to use this feature." {% endif %} type="text" id="replyid_{{forloop.counter}}" placeholder="Reply to @{{result.user.username}}" onfocus="ShowReply('replyid_{{forloop.counter}}', '@{{result.user.username}}')" onblur="BlurReply('replyid_{{forloop.counter}}', '@{{result.user.username}}')">
+        </div>
+    </li>
+
+
+
+
+
+
+     <li>
+      <ul>
+      {% for reply_result in result.replies %}
+
+          <li class="left clearfix activity_reply {{reply_result.result_class}}" id="{{reply_result.uid.id}}"><span class="chat-img pull-left">
+    <img src="{{reply_result.user.profile_img}}" alt="{{reply_result.user.name}}" class="img-thumbnail" />
+    </span>
+        <div class="chat-body clearfix">
+ 
+
+        <div class="btn-group pull-right" style="margin-left: 5px;">
+            <button type="button" class="btn btn-default dropdown-toggle btn-xs pull-left" data-toggle="dropdown">
+              <i class="fa fa-share fa-large text-muted"></i>
+                
+            </button> 
+            <ul class="dropdown-menu" role="menu">
+              <li><a href="http://www.facebook.com/sharer/sharer.php?u=SINGLE_PERMALINK" target="_blank"><i class="fa fa-facebook fa-fw"></i> Share on Facebook</a></li>
+              <li><a href="http://twitter.com/home?status=SINGLE_PERMALINK" target="_blank"><i class="fa fa-twitter fa-fw"></i> Share on Twitter</a></li>
+              <li class="divider"></li>
+              {%  if userinfo.user_type == "Business" and reply_result.sign_up_as == "Business" and reply_result.user.username != userinfo.username %}
+              <li><a href="#" onclick="click_activity('buyFrom','{{reply_result.useruid}}')">I buy from</a></li>
+              <li><a href="#"onclick="click_activity('sellTo','{{reply_result.useruid}}')">I sell to</a></li> 
+              <li class="divider"></li>
+              {% endif %}
+              {% if reply_result.sign_up_as == "Organisation" %}
+              <li><a href="#" onclick="click_activity('markMember', '{{reply_result.useruid}}')">I'm a member</a></li>
+              {% endif %}
+              {% if userinfo.user_type == "Individual" and reply_result.sign_up_as == "Business" %}
+              <li><a href="#" onclick="click_activity('markCustomer', '{{reply_result.user.username}}')">I'm a customer</a></li>
+              {% endif %}
+              <li class="divider"></li>
+              {% ifequal reply_result.user.username userinfo.username %}
+              <li><a href="#" onclick="click_activity('delete','{{reply_result.tweetuid}}')">Delete</a></li>
+              {% endifequal %}
+              {% if reply_result.user.username != userinfo.username %}
+              <li><a href="#" onclick="click_activity('spam','{{reply_result.uid.id}}')">Flag as spam</a></li>
+              <li><a href="#" onclick="click_activity('follow','{{reply_result.user.username}}')">Follow on Twitter</a></li>
+              {% endif %}
+              <li><a href="/profile/{{reply_result.user.username}}/">View full profile</a></li> 
+            </ul>
+          </div>  
+
+
+            <div class="header">
+                <strong class="pull-left" style="margin-right: 10px;"><a href="/profile/{{reply_result.user.username}}">{{reply_result.user.name}}</a></strong> 
+
+          {% if type_user|length == 0 or type_user|first == '' %}
+          {% else %}
+          {% if reply_result.sign_up_as == "Business" %}
+            <div class="tags tags-biztype">  
+              {% for tag in reply_result.type_user  %}
+                <a href="/activity/?b={{tag}}">{{tag}}</a>
+              {% endfor %}
+            </div> 
+            {% endif %}
+          {% endif %}
+            </div>
+
+            <p>
+                {{reply_result.status}}
+            </p>
+
+              <div class="meta small text-muted">
+               <i class="fa fa-map-marker"></i>
+                {{reply_result.user.address}}
+
+                 <!-- if logged in or you've allows html5 browser location -->
+                 <a href="http://maps.google.com/maps?saddr={{userinfo.lat}},{{userinfo.lon}}&daddr={{reply_result.location.coordinates.1}},{{reply_result.location.coordinates.0}}" 
+                    target="_blank" data-placement="top" data-toggle="tooltip" 
+                    class="text-muted" 
+                    rel="tooltip" 
+                    title="Get directions"> 
+                 <i class="fa fa-location-arrow"></i> {{reply_result.distance_text}}  
+                 </a>
+                <!--  // if logged in or you've allows html5 browser location -->
+
+                <span class="pull-right time_ago">
+                   <a href="/profile/{{reply_result.user.username}}/" class="text-muted"><i class="fa fa-clock-o"></i> {{reply_result.time_elapsed}}</a> 
+                </span>
+              </div> 
+
+        </div>
+
+        <div class="reply well well-sm" style="margin:0;"> 
+          <input class="form-control input-sm enterhandler" data-tweet-id = "{{reply_result.tweetuid}}" data-main = "reply" {% if not user.is_authenticated %} rel="tooltip" title="Please login to use this feature." {% endif %} type="text" id="replyid_{{reply_result.tweetuid}}" placeholder="Reply to @{{result.user.username}} {{reply_result.mentions}}" onfocus="ShowReply('replyid_{{reply_result.tweetuid}}', '@{{result.user.username}} {{reply_result.mentions}}')" onblur="BlurReply('replyid_{{reply_result.tweetuid}}', '@{{result.user.username}} {{reply_result.mentions}}')">
+        </div>
+    </li>
+
+         {% endfor %}
+        
+</ul>
+</li>
+
+{% endif %}
+  {% endfor %}
+    {% endif %}
 
 </ul>
 
