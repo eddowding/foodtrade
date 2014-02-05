@@ -82,7 +82,7 @@
 </ul>
 
 <div class="tab-content reply_text" id = "filtered_content">
-  <div class="tab-pane active" id="near_me">
+  <div class="tab-pane {% if results_updates_count != 0  or results_business_count == 0 and results_organisation_count == 0  %}active{% endif %}" id="near_me">
  
    <div id="sortby" class="clearfix">
 
@@ -146,7 +146,7 @@
 
 
 
-  <div class="tab-pane" id="biz">
+  <div class="tab-pane {% if results_updates_count == 0  and results_organisation_count == 0 and results_business_count != 0 %}active{% endif %}" id="biz">
  
   <div class="activity" id="activity_biz"> 
   {% if results_updates_count == 0 and results_business_count == 0 and results_organisation_count == 0 %}
@@ -176,7 +176,7 @@
 
 
 
-  <div class="tab-pane" id="org">
+  <div class="tab-pane {% if results_updates_count == 0 and results_business_count == 0 and results_organisation_count != 0 %}active{% endif %}" id="org">
  
   <div class="activity" id="activity_org"> 
   {% if results_updates_count == 0 and results_business_count == 0 and results_organisation_count == 0 %}
