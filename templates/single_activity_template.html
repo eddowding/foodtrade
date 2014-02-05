@@ -78,6 +78,6 @@
         </div>
 
         <div class="reply well well-sm" style="margin:0;"> 
-          <input class="form-control input-sm enterhandler" {% if result_type == "status" %}data-tweet-id = "{{result.tweetuid}}" {% endif %} data-main = "{{position}}"   {% if userinfo.user.username %} rel="tooltip" title="Please login to use this feature." {% endif %} type="text" id="replyid_{% if result_type == "status" %}{{result.tweetuid}}{% else %}{{result.user.username}}{% endif %}" placeholder="Reply to @{{result.user.username}}" onfocus="ShowReply('replyid_{% if result_type == "status" %}{{result.tweetuid}}{% else %}{{result.user.username}}{% endif %}', '@{{result.user.username}}')" onblur="BlurReply('replyid_{% if result_type == "status" %}{{result.tweetuid}}{% else %}{{result.user.username}}{% endif %}', '@{{result.user.username}}')">
+          <input class="form-control input-sm enterhandler reply_input" {% if result_type == "status" %}data-tweet-id = "{{result.tweetuid}}" {% endif %} data-main = "{{position}}"   {% if userinfo.user.username %} rel="tooltip" title="Please login to use this feature." {% endif %} type="text" placeholder="Reply to {{result.mentions}}" data-mentions = "{{result.mentions}}">
         </div>
     </li>

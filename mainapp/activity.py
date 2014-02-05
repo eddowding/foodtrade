@@ -39,6 +39,7 @@ def get_time(time_val):
 def set_time_date(single_result,keyword):
     distance_text = ""
 
+
     # try:
     lonlat_distance = single_result['distance'] * 0.621371 #distance(my_lon, my_lat, single_result['location']['coordinates'][0],single_result['location']['coordinates'][1])
     
@@ -156,6 +157,8 @@ def home(request):
 
     for i in range(len(results)):
         results[i] = set_time_date(results[i],keyword)
+        results[i]['mentions'] = "@" + results[i]['user']['username'] 
+
         if results[i]["result_type"] == results[i]["user"]["username"]:
             tweet_id = results[i]["tweetuid"]
             replies = search_handle.get_all_children([tweet_id])
@@ -164,6 +167,7 @@ def home(request):
             replies = sorted(replies, key=lambda k: k['time_stamp']) 
             for j in range(len(replies)):
                 replies[j] = set_time_date(replies[j],keyword)
+                replies[j]['mentions'] = "@" + results[i]['user']['username'] + " " + replies[j]['mentions']
             # print results[i]['replies']
             results[i]['replies'] = replies
     

@@ -1,0 +1,443 @@
+
+$("#filtered_content").on('focus', '.reply_input', function(e) {
+  var that = e.target;
+     if(validate_login()['status'] == '1'){
+    if($(that).val()=="")
+    {
+      var mentions = $(that).attr("data-mentions");
+    $(that).val(mentions + " ");
+    }
+  }
+  else{
+    window.location='/accounts/twitter/login/?process=login'
+  }
+});
+
+
+
+$("#filtered_content").on('blur', '.reply_input', function(e) {
+  var that = e.target;
+     if($(that).val().trim()==$(that).attr("data-mentions")){
+    $(that).val("");
+  }
+});
+
+var nnn;
+$("#filtered_content").on('keypress', '.reply_input', function(e) {
+  if(validate_login()['status'] == '1'){
+    var code = e.keyCode || e.which;
+     if(code == 13) { //Enter keycode
+      alert("sujit");
+      return;
+       //Do something
+       status_msg =this.value;
+       if(status_msg=="")
+       {
+          return;
+       }
+        var tweet_id = $(this).attr("data-tweet-id");
+       ajax_request("post_tweet", 'CloseNewPostModal', {message: status_msg, parentid:tweet_id});
+       this.value = "";
+
+  activity_html = $('#status_template').html();
+  activity_html = activity_html.replace('===status===',status_msg);
+  var input_type = $(this).attr("data-main");
+  if(input_type=="reply")
+  {
+    $(this).parent().parent().html($(this).parent().parent().html()+activity_html);
+
+  }
+  else
+  {
+    $(this).parent().parent().next().children().html($(this).parent().parent().next().children().html()+activity_html);
+  }
+  
+      
+    $(this).focus();
+     
+  }
+}
+  else{
+    /*$('#btn_must_be_logged').click();*/
+    /*$('#' + String(this.attributes.id.value)).tooltip('show');*/
+      /*alert("roshan");*/
+      window.location = '/accounts/twitter/login/?process=login';
+  }
+});
+
+
+
+ function login_redirect(){
+            window.location = '/accounts/twitter/login/?process=login';
+          }
+
+        
+          
+
+          function food_value_changed(more_no)
+          {
+                   var results = [];
+       var query = $("#food_filter").val().toLowerCase();
+        for(var i = 0; i < food_filters.length;i++)
+        {
+          var element  = food_filters[i].uid.toLowerCase();
+          if(element.indexOf(query)>-1)
+          {
+            results.push(food_filters[i]);
+          }
+        }
+
+            show_food_filters(results,more_no);
+          }
+
+          function show_food_filters(filters, more_no)
+          {
+            if(more_no == 0){
+            $('#food_filter_results').html('');
+            }
+            else
+            {
+              $("#food_more_"+(more_no-5)).remove();
+            }
+            for(var i = more_no;i<filters.length && i<(more_no+5); i++)
+            {
+              var checked = '';
+              if(filters[i].prev)
+              {
+                checked = "checked='checked'";
+              }
+ if(filters[i].uid!="")
+              {
+            var row = '<li data-id="15" class="foodtrade-tag foodtrade-tag-click "><div class="foodtrade-tag-checkbox-column"><input type="checkbox" '+checked+' onClick="foods_changed(this,\''+filters[i].uid+'\')" class="foodtrade-tag-checkbox"></div><div class="foodtrade-tag-text"> '+filters[i].uid+'</div><div class="foodtrade-tag-count">'+filters[i].value+'</div></li>';
+            $('#food_filter_results').append(row);
+          }
+           
+          }
+           if(filters.length>more_no+5)
+            {
+              $('#food_filter_results').append('<li class="foodtrade-tag-showmore" id="food_more_'+more_no+'" onClick="food_value_changed('+(more_no+5)+')">show more</li>');
+            }
+          }
+
+
+
+
+
+            function foods_changed(ref,food)
+          {
+for(var i = 0; i < food_filters.length;i++){
+          if(food_filters[i].uid==food)
+          {
+            var status = ref.checked;
+            //console.log(status);
+            food_filters[i].prev = status;
+          }
+          }
+          make_search();
+        }
+
+
+
+
+
+
+
+
+
+          
+
+          function business_value_changed(more_no)
+          {
+                   var results = [];
+       var query = $("#business_filter").val().toLowerCase();
+        for(var i = 0; i < business_filters.length;i++)
+        {
+          var element  = business_filters[i].uid.toLowerCase();
+          if(element.indexOf(query)>-1)
+          {
+            results.push(business_filters[i]);
+          }
+        }
+
+            show_business_filters(results,more_no);
+          }
+
+          function show_business_filters(filters, more_no)
+          {
+            if(more_no == 0){
+            $('#business_filter_results').html('');
+            }
+            else
+            {
+              $("#business_more_"+(more_no-5)).remove();
+            }
+            for(var i = more_no;i<filters.length && i<(more_no+5); i++)
+            {
+              var checked = '';
+              if(filters[i].prev)
+              {
+                checked = "checked='checked'";
+              }
+ if(filters[i].uid!="")
+              {
+            var row = '<li data-id="15" class="foodtrade-tag foodtrade-tag-click "><div class="foodtrade-tag-checkbox-column"><input type="checkbox" '+checked+' onClick="business_changed(this,\''+filters[i].uid+'\')"   class="foodtrade-tag-checkbox"></div><div class="foodtrade-tag-text"> '+filters[i].uid+'</div><div class="foodtrade-tag-count">'+filters[i].value+'</div></li>';
+            $('#business_filter_results').append(row);
+          }
+           
+          }
+           if(filters.length>more_no+5)
+            {
+              $('#business_filter_results').append('<li class="foodtrade-tag-showmore" id="business_more_'+more_no+'" onClick="business_value_changed('+(more_no+5)+')">show more</li>');
+            }
+          }
+
+
+
+
+
+            function business_changed(ref,business)
+          {
+for(var i = 0; i < business_filters.length;i++){
+          if(business_filters[i].uid==business)
+          {
+            var status = ref.checked;
+            //console.log(status);
+            business_filters[i].prev = status;
+          }
+          }
+          make_search();
+        }
+
+
+
+
+
+
+
+          
+
+          function organisation_value_changed(more_no)
+          {
+                   var results = [];
+       var query = $("#organisation_filter").val().toLowerCase();
+        for(var i = 0; i < organisation_filters.length;i++)
+        {
+          var element  = organisation_filters[i].uid.toLowerCase();
+          if(element.indexOf(query)>-1)
+          {
+            results.push(organisation_filters[i]);
+          }
+        }
+
+            show_organisation_filters(results,more_no);
+          }
+
+          function show_organisation_filters(filters, more_no)
+          {
+            if(more_no == 0){
+            $('#organisation_filter_results').html('');
+            }
+            else
+            {
+              $("#organisation_more_"+(more_no-5)).remove();
+            }
+            for(var i = more_no;i<filters.length && i<(more_no+5); i++)
+            {
+              var checked = '';
+              if(filters[i].prev)
+              {
+                checked = "checked='checked'";
+              }
+              if(filters[i].uid!="")
+              {
+            var row = '<li data-id="15" class="foodtrade-tag foodtrade-tag-click "><div class="foodtrade-tag-checkbox-column"><input type="checkbox" '+checked+' onClick="organisation_changed(this,\''+filters[i].uid+'\')"   class="foodtrade-tag-checkbox"></div><div class="foodtrade-tag-text"> '+filters[i].uid+'</div><div class="foodtrade-tag-count">'+filters[i].value+'</div></li>';
+            $('#organisation_filter_results').append(row);
+          }
+           
+          }
+           if(filters.length>more_no+5)
+            {
+              $('#organisation_filter_results').append('<li class="foodtrade-tag-showmore" id="organisation_more_'+more_no+'" onClick="organisation_value_changed('+(more_no+5)+')">show more</li>');
+            }
+          }
+
+
+
+
+
+            function organisation_changed(ref,organisation)
+          {
+for(var i = 0; i < organisation_filters.length;i++){
+          if(organisation_filters[i].uid==organisation)
+          {
+            var status = ref.checked;
+            //console.log(status);
+            organisation_filters[i].prev = status;
+          }
+          }
+          make_search();
+        }
+
+
+
+
+
+
+
+
+       function make_search()
+       {
+        var foods = [];
+        var flag = false;
+        
+          for(var i = 0; i < food_filters.length;i++){
+          if(food_filters[i].prev)
+          {
+            flag = true;
+            foods.push(food_filters[i].uid);
+          }
+          }
+
+          if(flag)
+        {
+           $('#all_foods').prop('checked', false);
+          }
+          else
+          {
+            $('#all_foods').prop('checked', true);
+          }
+          flag = false;
+       
+
+
+          var businesses = [];
+          
+          
+          for(var i = 0; i < business_filters.length;i++){
+          if(business_filters[i].prev)
+          {
+            flag =true;
+            businesses.push(business_filters[i].uid);
+          }
+        }
+        if(flag)
+        {
+           $('#all_businesses').prop('checked', false);
+          }
+          else
+          {
+            $('#all_businesses').prop('checked', true);
+          }
+          flag = false;
+
+
+
+
+            var organisations = [];
+          
+          for(var i = 0; i < organisation_filters.length;i++){
+          if(organisation_filters[i].prev)
+          {
+            flag = true;
+            organisations.push(organisation_filters[i].uid);
+          }
+          }
+          if(flag)
+        {
+           $('#all_organisations').prop('checked', false);
+          }
+          else
+          {
+            $('#all_organisations').prop('checked', true);
+          }
+          flag = false;
+       
+          var keyword = $("#keyword").val();
+          var s_lon = $("#lon").val();
+          var s_lat = $("#lat").val();
+          var sort_type = $("#sortby").val();
+
+
+           ajax_request("ajax_search", 'show_ajax_results', {q:keyword, lon:s_lon, lat:s_lat, foods:JSON.stringify(foods), businesses:JSON.stringify(businesses), organisations:JSON.stringify(organisations), sort: sort_type});
+       }
+
+
+       function show_ajax_results(data)
+       {
+        var data_json = jQuery.parseJSON(data);
+         $('#activity_updates').html(data_json.updates);
+         $('#activity_biz').html(data_json.biz);
+         $('#activity_org').html(data_json.org);
+         $('#update_count').html(data_json.results_updates_count);
+         $('#business_count').html(data_json.results_business_count);
+         $('#organisation_count').html(data_json.results_organisation_count);
+         connections = ajax_connections;
+         reload_controls();
+
+       }
+$('#food_filter').keyup( function() {
+            food_value_changed(0);
+        });
+
+
+$('#business_filter').keyup( function() {
+            business_value_changed(0);
+        });
+
+$('#organisation_filter').keyup( function() {
+            organisation_value_changed(0);
+        });
+
+show_food_filters(food_filters, 0);
+show_organisation_filters(organisation_filters, 0);
+show_business_filters(business_filters, 0);
+
+function click_activity(activity, changeID){
+  ajax_request('activity_handle','success_activity_handle',{'user':'{{userinfo.username}}', 'changeID':changeID, 'task':activity});
+}
+function success_activity_handle(data){
+  data = jQuery.parseJSON(data);
+  if(data['status'] == 1 && data['activity'] == 'deleteTweet'){
+    $('#' + String(data['_id'])).hide();
+  }
+  if(data['activity'] == 'follow' ){
+    alert(data['message']);
+  }
+  if((data['activity'] == 'buyFrom' && data['status'] == 0) || 
+    (data['activity'] == 'sellTo' && data['status'] ==0) || 
+    (data['activity'] == 'markMember' && data['status'] == 0) ||
+    (data['activity'] == 'spam' && data['status'] == 0)){
+   alert(data['message']); 
+  }
+}
+
+
+function sort_by(sort)
+{
+   $("#sortby").val(sort);
+   make_search();
+   if(sort == "distance")
+   {
+    var sort_text = '<i class="fa fa-location-arrow fa-fw"></i> Distance from {% if search %} {{ search.place }} {% endif %} {% if not search %} {{userinfo.zip_code}}{% endif %}';
+   }
+   else
+   {
+    var sort_text = '<i class="fa fa-clock-o fa-fw"></i> Time posted';
+   }
+   $("#current_sort_text").html(sort_text);
+   
+
+}
+function switch_text_area(){
+  $('#update-small').hide();
+  $('#update-big').attr('class', 'well well-sm clearfix');
+}
+function check_limit(){
+  tweet = $('#newstatus').val();
+  if(tweet.length > 120){
+    $('#charsRem').html( 'Max of 120 characters exceeded.');
+  }
+  else{
+    $('#charsRem').html(String(120-tweet.length) + ' characters remaining.');
+  }
+}
