@@ -166,7 +166,7 @@
         <div id="update" class="well  ">
           
               <div class="input-group"> 
-               <input class="form-control input-sm reply_input" data-tweet-id = "{{parent_tweet.tweetuid}}" data-main = "{{position}}"   {% if userinfo.user.username %} rel="tooltip" title="Please login to use this feature." {% endif %} type="text" placeholder="Reply to @{{parent_tweet.user.username}}" data-mentions = "@{{parent_tweet.user.username}}">
+               <input id="main_post_input" class="form-control input-sm reply_input" data-tweet-id = "{{parent_tweet.tweetuid}}" data-main = "{{position}}"   {% if userinfo.user.username %} rel="tooltip" title="Please login to use this feature." {% endif %} type="text" placeholder="Reply to @{{parent_tweet.user.username}}" data-mentions = "@{{parent_tweet.user.username}}">
 
 
            
@@ -215,7 +215,7 @@
 
 
       <div class="col-md-6">
-        <img src="map.png" style="width: 100%;" />
+       <div id="map" >
 
         <div class="alert alert-warning">
           <p>This map shows 
@@ -224,6 +224,7 @@
           Supplieras as purple lines</p>
 
           <p>There are radius lines at 15, 30, and 100 miles.</p>
+        </div>
         </div>
 
 
@@ -238,6 +239,18 @@
 
 
     </div><!-- col10 --> 
+
+        <script type="text/javascript">
+    map_lat={{parent_tweet.location.coordinates.1}};
+    map_lon = {{parent_tweet.location.coordinates.0}};
+
+
+{% if results %}
+connections = {{json_data | safe}};
+    {% endif %}
+   
+    </script>
+     <script src="{% static "js/activity-map.js" %}"></script>
 
    {% endblock %}
 

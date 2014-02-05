@@ -12,7 +12,7 @@ from mainapp.classes.TweetFeed import TradeConnection, UserProfile, Food, Custom
 from Search import Search
 import time
 from mainapp.classes.DataConnector import UserInfo
-
+from mainapp.single_activity import get_post_parameters
 from mainapp.activity import get_search_parameters
 consumer_key = 'seqGJEiDVNPxde7jmrk6dQ'
 consumer_secret = 'sI2BsZHPk86SYB7nRtKy0nQpZX3NP5j5dLfcNiP14'
@@ -30,6 +30,16 @@ class AjaxSearch():
     def __init__(self):
         pass
     
+    def single_post_ajax(self,request):
+        tweet_id = request.POST.get("parentid",0)
+        if tweet_id == 0 :
+            return HttpResponse(json.dumps({'status':0}))
+        else:
+            parameters = get_post_parameters(request,tweet_id)
+            ret_val = {}
+            ret_val['status'] = 1
+            ret_val['result'] = str(render_to_response('single_activity_updates.html',parameters)).replace("Content-Type: text/html; charset=utf-8","")
+            return HttpResponse(json.dumps(ret_val))
     def ajax_search(self,request):
            
         parameters = get_search_parameters(request)

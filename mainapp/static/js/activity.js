@@ -64,6 +64,54 @@ $("#filtered_content").on('keypress', '.reply_input', function(e) {
   }
 });
 
+
+
+
+$("#update").on('keypress', '.reply_input', function(e) {
+  if(validate_login()['status'] == '1'){
+    var code = e.keyCode || e.which;
+     if(code == 13) { //Enter keycode
+
+       //Do something
+       status_msg =this.value;
+       if(status_msg=="")
+       {
+          return;
+       }
+        var tweet_id = $(this).attr("data-tweet-id");
+       ajax_request("post_tweet", 'update_single_post_content', {message: status_msg, parentid:tweet_id});
+
+     
+  }
+}
+  else{
+
+      window.location = '/accounts/twitter/login/?process=login';
+  }
+});
+
+function update_single_post_content()
+{
+  var tweet_id = $("#main_post_input").attr("data-tweet-id");
+  ajax_request("single_post_ajax", 'ajax_update_single_post', {parentid:tweet_id});
+}
+
+function ajax_update_single_post(data)
+{
+  var data_json = jQuery.parseJSON(data);
+  $("#main_post_input").val('');
+  if(data_json.status == 1)
+  {
+     $('#update_content').html(data_json.result);
+      connections = new_connections;
+      reload_controls();
+
+  }
+}
+
+
+
+
 $('#newstatus').bind('keypress', function(e) {
   
     var code = e.keyCode || e.which;
