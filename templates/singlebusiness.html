@@ -457,6 +457,7 @@
             {% for eachfood in all_foods %}
               <tr id="row{{forloop.counter}}">
                   <td>
+<!--data for food details:{{eachfood.food_description}},{{eachfood.food_tags}} and {{eachfood.food_photo}}  -->                    
                   <a href="/activity/?f={{eachfood.food_name}}">{{eachfood.food_name}}</a> 
                   <a href="" data-toggle="modal" data-target="#modal_food_detail" class="showonhover" data-container="body" onClick="get_food_detail('{{profile_id}}', '{{eachfood.food_name}}', '{{eachfood.description}}', '{{eachfood.food_tags}}', '{{eachfood.photo_url}}')">Add details</a>
                   </td>  
@@ -814,6 +815,7 @@
 
 $( document ).ready(function() {
 
+
   $("#myTags").tagit({placeholderText: 'Add tags to your food...'});
 
   tweetlistener('email_message', 'contact_counter', 'contact_tweet');
@@ -875,6 +877,7 @@ function get_food_detail(profile_id, food_name, description, food_tags, photo_ur
     $('#food_detail_title').text('Add details to '+ food_name);
     var placeholder = "What makes your " + food_name + " special? This is where it's completely fine to show-off! Remember to name any variety names, special techniques, or unique properties - and how it tastes is the most important thing."
     $('#id_food_description').attr('placeholder', placeholder);
+    $('#id_food_description').addClass('food_details_counted');
     $('#id_food_description').attr('rows', 5);
     // document.getElementsByName('food_name').value = food_name;
     // document.getElementsByName('profile_id').value = profile_id;
@@ -886,7 +889,7 @@ function get_food_detail(profile_id, food_name, description, food_tags, photo_ur
       $("#myTags").tagit('createTag', tags_list[i]);
     }
     $('#food_photo').attr('src', photo_url);
-    
+    $(".food_details_counted").charCounter(300,{container: "#counter"});    
     
 }
     
