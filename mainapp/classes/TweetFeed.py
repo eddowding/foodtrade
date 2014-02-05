@@ -73,9 +73,9 @@ class TweetFeed():
             var current = this.updates[i];
             if(current.deleted != 1){
                      items = current.status.split(' ');
-                     for(i=0;i<items.length;i++){ 
-                        if(items[i].indexOf('#')==0){
-                                emit(items[i], 1); 
+                     for(var j=0;j<items.length;j++){ 
+                        if(items[j].indexOf('#')==0){
+                                emit(items[j], 1); 
                                 }
                             }
                 }
