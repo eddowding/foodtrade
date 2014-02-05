@@ -398,7 +398,7 @@ class Search():
                                   }
                       }
         agg_pipeline.append(geo_near)
-        query_string = {'updates':{"$elemMatch":{'tweet_id'::tweet_id}}}
+        query_string = {'updates':{"$elemMatch":{'tweet_id':tweet_id}}}
         agg_pipeline.append({ '$match':query_string})
 
         agg_pipeline.append({"$unwind": "$updates"})
@@ -435,11 +435,6 @@ class Search():
 
         up = UserProfile()
         return up.agg(agg_pipeline)[0]['results']
-
-
-
-
-
 
 
     def get_all_children(self,root_id):

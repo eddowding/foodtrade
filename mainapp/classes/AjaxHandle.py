@@ -147,8 +147,8 @@ class AjaxHandle(AjaxSearch):
                     pic_url_list.append(each['media_url'])
 
 
-            data = {'tweet_id': tweet['id'],
-                    'parent_tweet_id': parent_tweet_id,
+            data = {'tweet_id': str(tweet['id']),
+                    'parent_tweet_id': str(parent_tweet_id),
                     'status': message,
                     
                     'picture': pic_url_list,
