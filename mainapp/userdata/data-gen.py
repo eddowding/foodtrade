@@ -86,7 +86,7 @@ def gen_tradeconnection_userprofile(third_pk, userid, user, name, description, n
     latlng = {"type" : "Point", "coordinates" : [float(new_location[2]),float(new_location[1])] } #copy coordinated from above lat-lon of user.
        
     tradeconnection_userprofile_fields = {"username":user, 'screen_name':user, "description": description, "name":name, "profile_img":"https://pbs.twimg.com/profile_images/378800000141996074/6a363e3c4f2a84a956c3cb27c50b2ca0_normal.png", "useruid": userid, "sign_up_as": sign_up_types[0],
-                                          "type_user":type_user,
+                                          "type_user":type_user, "email":"sujitmhj@gmail.com",
                                             "zip_code": new_location[0], "address": new_location[3],
                                            "latlng":latlng, "foods":foods, "organisations":[]
                                            }
@@ -119,8 +119,8 @@ def gen_tradeconnection_userprofile(third_pk, userid, user, name, description, n
         if rand_no>90:
             parent_tweet_id = int(random.randrange(previous_tweet_id,tweet_id))
 
-        tradeconnection_tweets_fields = {"status":status, "parent_tweet_id":parent_tweet_id,  "deleted":0, 
-                                         "tweet_id":tweet_id, "time_stamp":tweet_time}
+        tradeconnection_tweets_fields = {"status":status, "parent_tweet_id":str(parent_tweet_id),  "deleted":0, 
+                                         "tweet_id":str(tweet_id), "time_stamp":tweet_time}
 
 
         
@@ -174,4 +174,4 @@ def main(total_data, tweets_per_user):
         fp.write(']')
 
 
-main(499, [1, 10]  ) # first fields is the total no of users and second is tweets_per_user with [min, max]
+main(499, [1, 10]) # first fields is the total no of users and second is tweets_per_user with [min, max]
