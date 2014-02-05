@@ -67,7 +67,7 @@ $("#filtered_content").on('keypress', '.reply_input', function(e) {
 
 
 
-$("#update").on('keypress', '.reply_input', function(e) {
+$("#single_post_content").on('keypress', '.reply_input', function(e) {
   if(validate_login()['status'] == '1'){
     var code = e.keyCode || e.which;
      if(code == 13) { //Enter keycode
