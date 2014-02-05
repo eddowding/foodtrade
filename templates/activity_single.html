@@ -2,7 +2,9 @@
 {% load staticfiles %}
 {% block content %}
 {% load activity_tags %}
-    <div id="activity_single" class="container">
+
+
+    <div id="activity_single">
 
       
 
@@ -163,7 +165,7 @@
     <div class="row" style="margin-top: 30px;">
       <div class="col-md-6  reply_text">
 
-        <div id="update" class="well  ">
+        <div id="update" class="well well-sm">
           
               <div class="input-group"> 
                <input class="form-control input-sm reply_input" data-tweet-id = "{{parent_tweet.tweetuid}}" data-main = "{{position}}"   {% if userinfo.user.username %} rel="tooltip" title="Please login to use this feature." {% endif %} type="text" placeholder="Reply to @{{parent_tweet.user.username}}" data-mentions = "@{{parent_tweet.user.username}}">
