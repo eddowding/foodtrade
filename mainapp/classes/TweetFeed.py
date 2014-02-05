@@ -201,10 +201,10 @@ class UserProfile():
     def create_profile (self, value):
         self.db_object.insert_one(self.table_name,value)
 
+    def update_profile_fields(self, where, what):
+        self.db_object.update(self.table_name, where, what)
+
     def update_profile(self, userid, description, address, type_usr, sign_up_as, phone, lat, lon, postal_code):
-        #print phone
-        #address = Geocoder.geocode(zipcode)
-        #print zipcode, address
         return self.db_object.update(self.table_name,
              {'useruid':int(userid)},
              {'zip_code':str(postal_code),
@@ -217,6 +217,25 @@ class UserProfile():
              'phone_number':str(phone)}
              )
 
+    def update_profile_by_username(self, username, description, address, type_usr, sign_up_as, phone, lat, lon, postal_code, name):
+        return self.db_object.update(self.table_name,
+             {'username':username},
+             {'zip_code':str(postal_code),
+             'description':str(description),
+             'latlng.coordinates.1':float(lat),
+             'latlng.coordinates.0':float(lon),
+             'address':str(address),
+             'type_user':type_usr,
+             'sign_up_as':sign_up_as, 
+             'phone_number':str(phone),
+             'name':name
+             })        
+    def update_profile_upsert(self, where, what):
+        return self.db_object.update_upsert(self.table_name, where, what)
+
+    def get_unclaimed_profile_paginated(self, pagenum = 1):
+        return self.db_object.get_paginated_values(self.table_name, 
+            conditions = {'is_unknown_profile':'true'}, pageNumber = pagenum)
 
     def search_profiles(self):
         mapper = Code("""
@@ -369,7 +388,7 @@ class Food():
 
     def update_food(self, data):
         self.db_object.update(self.table_name,{'food_name': data['food_name'], 'useruid': data['useruid'], 'deleted': 0},
-         {'description':data['description'], 'food_tags': data['food_tags']})
+         {'description':data['description'], 'food_tags': data['food_tags'], 'photo_url': data['photo_url']})
 
 
 class Customer():
@@ -492,6 +511,10 @@ class Friends():
         #print result
         return result['friends']['id']
 
+    def get_friend_from_screen_name(self, screen_name, username):
+        result = self.db_object.get_one(self.table_name,
+            {'friends.screen_name':screen_name, 'username':username})
+        return result
 
 class InviteId():
     def __init__ (self):
@@ -523,7 +546,6 @@ class Invites():
         self.db_object.create_table(self.table_name,'username')
 
     def save_invites(self,doc):
-        print doc
         return self.db_object.insert_one(self.table_name,doc)
 
     def check_invitees(self, screen_name):

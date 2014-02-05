@@ -72,10 +72,10 @@ class UserConnections():
 class UserInfo():
     def __init__ (self,user_id):
         self.user_id = user_id
-        self.email = User.objects.get(id = user_id).email
-        twitter_user = SocialAccount.objects.get(user__id = user_id)
         user_profile = UserProfile()
-        userprof = user_profile.get_profile_by_id(str(user_id))
+        userprof = user_profile.get_profile_by_id(user_id)
+        self.email = userprof['email']
+        twitter_user = userprof['screen_name']
         self.lon = userprof['latlng']['coordinates'][0]
         self.lat = userprof['latlng']['coordinates'][1]
         self.user_type = userprof['sign_up_as']
@@ -85,12 +85,11 @@ class UserInfo():
 
         user_connection =  UserConnections(user_id)
 
-        self.full_name = twitter_user.extra_data['name']
-        self.username = twitter_user.extra_data['screen_name']
-        self.description = twitter_user.extra_data['description']
-        self.profileimg = twitter_user.extra_data['profile_image_url_https']
-
-        # print 'hello'+twitter_user.extra_data['profile_image_url_https']
+        self.full_name = userprof['name']
+        self.username = userprof['screen_name']
+        self.description = userprof['description']
+        self.profileimg = userprof['profile_img']
+        
         self.trade_connections_no = user_connection.get_trade_connection_no()
         self.food_no = user_connection.get_food_connection_no()
         self.nearby_businesses_no = user_connection.get_nearby_businesses_no(self.lon,self.lat)

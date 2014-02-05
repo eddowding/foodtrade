@@ -170,7 +170,7 @@ background: #eee;
           {% endfor %}
 
 
-          <li><a href="#"><h5>Trends this week</h5></a></li>
+          <li><a href="#"><h5>Trends all time</h5></a></li>
           {% for eachVal in userinfo.hashtagsall %}
             <li><a href="/activity/?q=%23{{eachVal.uid|slice:"1:"}}&location=++None+&lon=&lat=">{{eachVal.uid}} <span class="badge pull-right">{{eachVal.value|floatformat:"0"}}</span></a></li>
           {% endfor %}
@@ -355,7 +355,7 @@ hidden
           <img class="pull-left img-rounded" style="margin:0 8px 0 0; width:30px"  src="{{userinfo.profileimg}}"  />
           <div class="content">
             <h4 style="margin:0;"><a href="/profile/{{userinfo.username}}">{{userinfo.full_name}}</a></h4>
-            <small><a href="/profile/{{userinfo.username}}" class="text-muted">View your profile</a></small>
+            <small><a href="/editprofile/{{userinfo.username}}" class="text-muted">Edit your profile</a></small>
           </div>
         </div> 
 
@@ -366,7 +366,10 @@ hidden
           <p data-step="4" data-intro="Building a better food system is going to take all of us. Please invite your suppliers, stockists, customers, friends.. everyone! For everyone you invite who signs up, we'll give you a month free, too." rel="tooltip" title="For everyone you invite who signs up, we'll give you a month free!"><a href="/invite/" ><i class="fa fa-twitter fa-fw"></i> Invite</a></p>
 
           <p><a href="#" id="help"><i class="fa fa-question-circle fa-fw"></i> Help</a></p> 
-          <p><a href="/inbox/" id="inbox" title="Inbox"><i class="fa fa-envelope fa-fw"></i> Inbox <span id="spanInbox" class="badge pull-right">{{userinfo.notification_count}}</span></a></p> 
+          <p><a href="/inbox/" id="inbox" title="Inbox"><i class="fa fa-envelope fa-fw"></i> Inbox <span id="spanInbox" class="badge pull-right">{{userinfo.notification_count}}</span></a></p>
+          {% if user.is_superuser %}
+          <p><a href="/unclaimed-profiles/" id="unclaimed" title="Unclaimed Profiles"><i class="glyphicon glyphicon-certificate"></i> Unclaimed Profiles <!-- <span id="spanInbox" class="badge pull-right">{{userinfo.notification_count}}</span> --></a></p>  
+          {% endif %}
 
         </div>
 

@@ -75,6 +75,14 @@ h2 {
 	margin-right: 7px;
 }
 
+.dotdotdot {
+  width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: inline-block;
+}
+
 .ftstrip {
 	position: relative;
 	height: 0.5em;

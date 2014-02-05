@@ -28,7 +28,6 @@ urlpatterns = patterns('',
     # Uncomment the next line to enable the admin:
     url(r'^admin/', include(admin.site.urls)),
     url(r'^trends/', 'mainapp.views.trends'),
-
     url(r'^pricing/', 'mainapp.pricing.home'),
     url(r'^pages/(?P<page_name>\w{1,40})$', 'mainapp.pricing.pages'),
     # url(r'^privacy/', 'mainapp.privacy.home'),
@@ -37,5 +36,6 @@ urlpatterns = patterns('',
     url(r'^invite/$', 'mainapp.views.invite'),
     url(r'^invitation/(?P<invite_id>\w{1,40})/$', 'mainapp.views.handle_invitation_hit', name='handle_invitation_hit'),
     url(r'^pricing/$', 'mainapp.pricing.home'),
-    url(r'^inbox/$', 'mainapp.views.notifications')
+    url(r'^inbox/$', 'mainapp.views.notifications'),
+    url(r'^unclaimed-profiles/', 'mainapp.views.unclaimed_profiles')
 )
