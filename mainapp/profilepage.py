@@ -20,9 +20,12 @@ import time
 from mainapp.forms import FoodForm
 
 def resolve_profile(request, username):
-    usr = User.objects.get(username = username)
     user_profile = UserProfile()
-    userprof = user_profile.get_profile_by_id(str(usr.id))
+    userprof = user_profile.get_profile_by_username(str(username))
+    try:
+        pass
+    except:
+        pass
     if userprof['sign_up_as'] == 'Business':
         return HttpResponseRedirect('/business/'+username)
     elif userprof['sign_up_as'] == 'Individual':
@@ -37,30 +40,32 @@ def display_profile(request, username):
             food_form.save()
         
     parameters = {}
-    # parameters['food_list'] = final_foods
     food_form = FoodForm()
     parameters['form'] = food_form
     foo = AdminFoods()
     parameters['all_tags'] = foo.get_tags()
     user_profile = UserProfile()
-    usr = User.objects.get(username = username)
-    account = SocialAccount.objects.get(user__id = usr.id)
-    userprof = user_profile.get_profile_by_id(str(usr.id))
-    parameters['userprof'] = UserInfo(usr.id)
-    parameters['profile_id'] = usr.id
+    userprof = user_profile.get_profile_by_username(str(username))
+    parameters['userprof'] = UserInfo(userprof['useruid'])
+    parameters['profile_id'] = userprof['useruid']
     parameters['sign_up_as'] = userprof['sign_up_as']
     parameters['address'] = userprof['address']
     parameters['type_user'] = userprof['type_user']
-    parameters['name'] = account.extra_data['name']
-    parameters['description'] = account.extra_data['description']
-    parameters['pic_url'] = account.extra_data['profile_image_url'].replace("normal","bigger")
+    parameters['name'] = userprof['name']
+    parameters['description'] = userprof['description']
+    parameters['pic_url'] = userprof['profile_img'].replace("normal","bigger")
+    print userprof
     parameters['loc'] = {'lat':userprof['latlng']['coordinates'][1], 'lon':userprof['latlng']['coordinates'][0]}
-    parameters['email'] = usr.email
-    parameters['screen_name'] = "@" + account.extra_data['screen_name']
+    parameters['email'] = userprof['email']
+    parameters['screen_name'] = "@" + userprof['screen_name']
+    try:
+        parameters['is_unknown_profile'] = userprof['is_unknown_profile']
+    except:
+        parameters['is_unknown_profile'] = 'false'
 
     try:
         tweet_feed_obj = TweetFeed()
-        user_profile = tweet_feed_obj.get_tweet_by_user_id(str(usr.id))
+        user_profile = tweet_feed_obj.get_tweet_by_user_id(userprof['useruid'])
         updates = user_profile["updates"]
 
         for i in range(len(updates)):
@@ -92,12 +97,11 @@ def display_profile(request, username):
     else:
         parameters['phone_number'] = pno
     
-    parameters['all_business'] = get_all_business(usr.id)
-    parameters['all_organisation'] = get_all_orgs(usr.id)
+    parameters['all_business'] = get_all_business(userprof['useruid'])
+    parameters['all_organisation'] = get_all_orgs(userprof['useruid'])
     if request.user.is_authenticated():
         user_id = request.user.id
         user_profile_obj = UserProfile()
-        print user_id
         user_profile = user_profile_obj.get_profile_by_id(str(user_id))
         parameters['loggedin_signupas'] = user_profile['sign_up_as']
         parameters['loggedin_coord'] = {'lat':user_profile['latlng']['coordinates'][1], 'lon':user_profile['latlng']['coordinates'][0]}
@@ -128,17 +132,17 @@ def display_profile(request, username):
         
     if parameters['sign_up_as'] == 'Business':
         if request.user.is_authenticated():
-            parameters['connections'], parameters['logged_conn'] = get_connections(usr.id, request.user.id)
-            parameters['all_foods'] = get_all_foods(usr.id)
-            parameters['organisations'] = get_organisations(usr.id)
-            parameters['customers'], parameters['logged_customer'] = get_customers(usr.id, request.user.id)
+            parameters['connections'], parameters['logged_conn'] = get_connections(userprof['useruid'], request.user.id)
+            parameters['all_foods'] = get_all_foods(userprof['useruid'])
+            parameters['organisations'] = get_organisations(userprof['useruid'])
+            parameters['customers'], parameters['logged_customer'] = get_customers(userprof['useruid'], request.user.id)
         else:
-            conn_limited, parameters['logged_conn'] = get_connections(usr.id)
+            conn_limited, parameters['logged_conn'] = get_connections(userprof['useruid'])
             # if not logged in show limited
             parameters['connections'] = conn_limited[:5]
-            parameters['all_foods'] = get_all_foods(usr.id)[:3]
-            parameters['organisations'] = get_organisations(usr.id)[:3]
-            all_customers, parameters['logged_customer'] = get_customers(usr.id)
+            parameters['all_foods'] = get_all_foods(userprof['useruid'])[:3]
+            parameters['organisations'] = get_organisations(userprof['useruid'])[:3]
+            all_customers, parameters['logged_customer'] = get_customers(userprof['useruid'])
             parameters['customers'] = all_customers[:10]
 
         parameters['connections_str'] = json.dumps(parameters['connections'])
@@ -148,14 +152,14 @@ def display_profile(request, username):
         # return render_to_response('typeahead.html', parameters, context_instance=RequestContext(request))
 
     elif parameters['sign_up_as'] == 'Organisation':
-        parameters['members_foods'], parameters['food_count'] = get_foods_from_org_members(usr.id)
+        parameters['members_foods'], parameters['food_count'] = get_foods_from_org_members(userprof['useruid'])
         if request.user.is_authenticated():
-            parameters['members'], parameters['logged_member'] = get_members(usr.id, request.user.id)
-            parameters['teams'], parameters['logged_team'] = get_team(usr.id, request.user.id)
+            parameters['members'], parameters['logged_member'] = get_members(userprof['useruid'], request.user.id)
+            parameters['teams'], parameters['logged_team'] = get_team(userprof['useruid'], request.user.id)
         else:
-            member_limited, parameters['logged_member'] = get_members(usr.id)
+            member_limited, parameters['logged_member'] = get_members(userprof['useruid'])
             parameters['members'] = member_limited
-            team_limited, parameters['logged_team'] = get_team(usr.id)
+            team_limited, parameters['logged_team'] = get_team(userprof['useruid'])
             parameters['teams'] = team_limited[:10]
         parameters['members_str'] = json.dumps(parameters['members'])
         return render_to_response('single-organization.html', parameters, context_instance=RequestContext(request))
@@ -170,28 +174,45 @@ def edit_profile(request, username):
         parameters['all_tags'] = tags.get_tags()
         if request.user.is_authenticated():
             user_profile = UserProfile()
-            account = SocialAccount.objects.get(user__id = request.user.id)
-            userprof = user_profile.get_profile_by_id(str(request.user.id))
-            parameters['profile_id'] = request.user.id
+            '''
+                If the user is is_authenticated and is super user then he/she can 
+                edit all unclaimed accounts.Else he/she can edit only his profile.
+            '''
+            if request.user.is_superuser:
+                userprof = user_profile.get_profile_by_username(str(username))
+                if userprof['is_unknown_profile'] == 'false':
+                    userprof = user_profile.get_profile_by_username(str(request.user.username))
+            else:
+                userprof = user_profile.get_profile_by_username(str(request.user.username))
+            '''
+                Edit Ends
+                ------------------------------------------------------------------
+                Edited By  : Roshan Bhandari
+                Email      : brishi98@gmail.com 
+                Date       : 2/4/2014
+                ------------------------------------------------------------------            
+            '''
+
+            #parameters['profile_id'] = request.user.id
             parameters['sign_up_as'] = userprof['sign_up_as']
             if userprof['sign_up_as'] == 'Business':
                 parameters['type_user'] = str(','.join(userprof['type_user']))
             else:
                 parameters['type_user'] = ''
-            #parameters['zip_code'] = userprof['zip_code']
             parameters['address'] = userprof['address']
             
             try:
-                parameters['first_name'] = account.extra_data['name'].split(' ')[0]
-                parameters['last_name']  = account.extra_data['name'].split(' ')[1]
+                parameters['first_name'] = userprof['name'].split(' ')[0]
+                parameters['last_name']  = userprof['name'].split(' ')[1]
             except:
-                parameters['first_name']  = account.extra_data['name']
+                parameters['first_name']  = userprof['name']
                 parameters['last_name']  = ''
-            parameters['description'] = account.extra_data['description']
+            parameters['description'] = userprof['description']
             try:
                 parameters['phone'] = userprof['phone_number']
             except:
                 parameters['phone'] = ''
+
             parameters.update(csrf(request))
             user_info = UserInfo(request.user.id)
             parameters['userinfo'] = user_info
@@ -201,54 +222,59 @@ def edit_profile(request, username):
 
     else:
         user_profile = UserProfile()
-        userprof = user_profile.get_profile_by_id(str(request.user.id))
+        '''
+            If the user is is_authenticated and is super user then he/she can 
+            edit all unclaimed accounts.Else he/she can edit only his profile.       
+        '''
+        if request.user.is_authenticated:
+            if request.user.is_superuser:
+                userprof = user_profile.get_profile_by_username(str(username))
+            else:
+                userprof = user_profile.get_profile_by_username(request.user.username)
+        else:
+            return HttpResponseRedirect('/')
+        '''
+            Edit Ends
+            ------------------------------------------------------------------
+            Edited By  : Roshan Bhandari
+            Email      : brishi98@gmail.com 
+            Date       : 2/4/2014
+            ------------------------------------------------------------------ 
+        '''
+
         first_name = request.POST['first_name']
         last_name = request.POST['last_name']
+        name = first_name + " " + last_name
         description = request.POST['description']
-        #print "Roshan", request.POST['formatted_address']
         try:
             lat = request.POST['lat']
             lon = request.POST['lng']
             address = request.POST['formatted_address']
             addr_check = Geocoder.reverse_geocode(float(lat),float(lon))
-            #address = str(addr_check)
             postal_code = str(addr_check.postal_code)
         except:
             address = userprof['address']
             except_address = Geocoder.geocode(address)
-            lat = except_address.latitude
-            lon = except_address.longitude
-            postal_code = str(except_address.postal_code)
+            lat = userprof['latlng.coordinates.0']
+            lon = userprof['latlng.coordinates.1']
+            postal_code = userprof['zip_code']
 
         if len(address) == 0:
             address = userprof['address']
         try:
             sign_up_as = request.POST['sign_up_as']
         except:
-            userprof = user_profile.get_profile_by_id(str(request.user.id))
             sign_up_as = userprof['sign_up_as']
 
         phone = request.POST['phone']
+
         if sign_up_as == 'Business':
             usr_type = request.POST['type'].split(",")
         else:
             usr_type = []
-        # tweetFeedObj = TweetFeed()
-        # tweetFeedObj.update_tweets(username, first_name, last_name,
-        #  description, address, sign_up_as,  lat, lon, usr_type.split(','))
-        user_profile_obj = UserProfile()
-        user_profile_obj.update_profile(request.user.id, description, address, 
-            usr_type, sign_up_as, phone, lat, lon, postal_code)
 
-        usr = User.objects.get(username=username)
-        usr.first_name = first_name
-        usr.last_name = last_name 
-        usr.save()
-
-        twitter_user = SocialAccount.objects.get(user__id = request.user.id)
-        twitter_user.extra_data['name'] = first_name + ' ' + last_name
-        twitter_user.extra_data['description'] = description
-        twitter_user.save()
+        user_profile.update_profile_by_username(userprof['username'], description, address, 
+            usr_type, sign_up_as, phone, lat, lon, postal_code, name)
 
         return HttpResponseRedirect('/')
 

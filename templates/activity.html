@@ -1,4 +1,4 @@
- {% extends 'tbase.html' %}
+{% extends 'tbase.html' %}
 {% load staticfiles %}
 
 {% block content %}
@@ -10,15 +10,15 @@
 
     <div class="col-md-5 col-sm-5 {% if not user.is_authenticated %} col-md-offset-1 col-sm-offset-1 {% endif %}" id="activity_switcher">
  
-      <div id="update" class="well well-sm clearfix">
-        <input class="form-control col-xs-12" name="q" id="newstatus" {% if not user.is_authenticated %}  onfocus="login_redirect()" title="Please login to use this feature." {% endif %} placeholder="What #food do you have to #buy, #sell, or #surplus?">  
+      <div id="update-small" class="well well-sm clearfix">
+        <input class="form-control col-xs-12"  {% if not user.is_authenticated %}  onfocus="login_redirect()" title="Please login to use this feature." {% else %} onfocus= "switch_text_area()"{% endif %} placeholder="What #food do you have to #buy, #sell, or #surplus?">  
       </div> 
 
-      <div id="update" class="well well-sm clearfix">
+      <div id="update-big" class="well well-sm clearfix hidden">
         <form class="form-horizontal">
           <div class="row">
             <div class="col-xs-12">
-              <textarea class="form-control col-xs-12" rows="3" name="q" id="newstatus" {% if not user.is_authenticated %}  onfocus="login_redirect()" title="Please login to use this feature." {% endif %} placeholder="What would you like? Eg '300kg #surplus conference #pears for #sale or #surplus' or 'I want to  #buy organic #honey for my farm shop.' "></textarea>
+              <textarea class="form-control col-xs-12 counted" onkeyup="check_limit()" rows="3" name="q" id="newstatus" {% if not user.is_authenticated %}  onfocus="login_redirect()" title="Please login to use this feature." {% endif %} placeholder="What would you like? Eg '300kg #surplus conference #pears for #sale or #surplus' or 'I want to  #buy organic #honey for my farm shop.' "></textarea>
             </div>
           </div>
 
@@ -28,7 +28,7 @@
                 <li class="text-muted">Also send to </li>
                 <li> 
                   <label>
-                    <input type="checkbox" name="post_to_twitter" value="1" checked="checked">
+                    <input type="checkbox" name="post_to_twitter" value="1" checked="checked" disabled>
                     <i class="fa fa-twitter-square fa-lg text-muted"></i>
                   </label>
                 </li>
@@ -47,7 +47,7 @@
               </ul> 
             </div>
             <div class="col-xs-5 text-right">
-              <span class="small text-muted" id="char_count">
+              <span class="small text-muted counted" id="charsRem">
                 120 characters remaining
               </span>
             </div>
@@ -897,7 +897,18 @@ function sort_by(sort)
    
 
 }
-
+function switch_text_area(){
+  $('#update-small').hide();
+  $('#update-big').attr('class', 'well well-sm clearfix');
+}
+function check_limit(){
+  tweet = $('#newstatus').val();
+  if(tweet.length > 120){
+    $('#charsRem').html( 'Max of 120 characters exceeded.');
+  }
+  else{
+    $('#charsRem').html(String(120-tweet.length) + ' characters remaining.');
+  }
+}
 </script>
-
  {% endblock %}

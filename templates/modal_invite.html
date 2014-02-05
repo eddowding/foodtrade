@@ -1,0 +1,53 @@
+<!-- modal_invite -->
+<div class="modal fade" id="modal_invite" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="myModalLabel">Invite {{screen_name}}</h4>
+      </div>
+      <div class="modal-body">
+
+      <div class="container-responsive">
+        <div class="row">
+          <div class="col-sm-2 ">
+       
+            <img  class="img-rounded img-thumbnail pull-right"  src="{{pic_url}}"  />
+
+          </div>
+          
+          <div class="col-sm-10 contact-form">
+            <form id="contact" method="post" class="form" role="form">
+              <textarea class="form-control counted" id="invite_message" name="message"  onkeyup="check_limit()"  rows="5">Hi {{screen_name}} - have you seen @FoodtradeHQ's new site? #nailedit. http://www.foodtrade.com
+              </textarea>
+              <h6 class="pull-right" id="counter-invite">120 characters remaining</h6>
+               
+            </form>
+          </div>
+        </div>
+      </div>
+ 
+      </div>
+      <div class="modal-footer"> 
+        <button type="button" onclick="invite_unclaimed()" data-dismiss="modal" class="btn btn-primary">Tweet it</button> 
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<script type="text/javascript">
+  
+function check_limit(){
+  tweet = $('#invite_message').val();
+  if(tweet.length > 120){
+    $('#counter-invite').html( 'Max of 120 characters exceeded.');
+  }
+  else{
+    $('#counter-invite').html('');
+    $('#counter-invite').html(String(120-tweet.length) + ' characters remaining.');
+  }
+ }
+function invite_unclaimed(){
+  tweet = $('#invite_message').html();
+  ajax_request('post_tweet','unclaimed_invites_handler',{'message':tweet, 'noappend':'noappend'});
+}
+</script>

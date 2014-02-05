@@ -24,7 +24,7 @@ from mainapp.bitly import construct_invite_tweet, shorten_url
 # consumer_key = 'seqGJEiDVNPxde7jmrk6dQ'
 # consumer_secret = 'sI2BsZHPk86SYB7nRtKy0nQpZX3NP5j5dLfcNiP14'
 ACCESS_TOKEN = ''
-ACCESS_TOKEN_SECRET =''
+ACCESS_TOKEN_SECRET = ''
 
 # admin_access_token = '2248425234-EgPSi3nDAZ1VXjzRpPGMChkQab5P0V4ZeG1d7KN'
 # admin_access_token_secret = 'ST8W9TWqqHpyskMADDSpZ5r9hl7ND6sEfaLvhcqNfk1v4'
@@ -34,7 +34,53 @@ class AjaxHandle(AjaxSearch):
     """docstring for AjaxHandle"""
     def __init__(self):
         pass
-    
+    def create_fake_profile(self, invitee_name, username):
+        '''
+            This function checks if the invited user is already a member or not.Then
+            If it is already a member it bypasses that and if not then it creates a 
+            membership in the site in such a way that his/her profile can be edited 
+            by admin and the flag is_unknown_profile is raised in the userinfo 
+            collection.
+        '''
+        user_profile_obj = UserProfile()
+        registered_user = user_profile_obj.get_profile_by_username(invitee_name)
+
+        if registered_user == None or len(registered_user) == 0:
+            friend_obj = Friends()
+            invited_friend = friend_obj.get_friend_from_screen_name(invitee_name.replace('@',''), username)
+            data = {
+                'is_unknown_profile': 'true',
+                'address' : invited_friend['friends']['location'],
+                'email' : '',
+                'description' : invited_friend['friends']['description'],
+                'foods': [],
+                'name' : invited_friend['friends']['name'],
+                'phone_number' : '',
+                'profile_img':invited_friend['friends']['profile_image_url'],
+                'sign_up_as': 'Individual',
+                'type_user':[],
+                'updates': [],
+                'screen_name': invited_friend['friends']['screen_name'],
+                'Organisations':[],
+                'useruid': -1,
+                'username':invited_friend['friends']['screen_name']
+            }
+            try:
+                location_res = Geocoder.geocode(invited_friend['friends']['location'])
+                data['latlng'] = {"type":"Point",
+                    "coordinates":list([float(location_res.longitude) ,float(location_res.latitude)])}
+                print data['latlng'], "Roshan"
+                data['zip_code'] = str(location_res.postal_code)
+            except:
+                lat, lon, addr,postal_code = 51.5072 , -0.1275, "3 Whitehall, London SW1A 2EL, UK", "SW1 A 2EL"
+                data['address'] = addr
+                data['latlng'] = {"type":"Point","coordinates" : [float(lon),float(lat)]},
+            
+            user_profile_obj.create_profile(data)
+            return {'status':0}
+        else:
+            return {'status':1}
+
     def post_tweet(self, request):
         if not request.user.is_authenticated():
             return HttpResponseRedirect('/accounts/login/')
@@ -56,6 +102,8 @@ class AjaxHandle(AjaxSearch):
         url = shorten_url(prof_url)
 
         if message != None and message != "":
+            print "Roshan ROshan"
+            '''For invitation message only.'''
             if noappend == 'noappend':
                 tweet = user_twitter.update_status(status = message)
                 if 'invite' in request.POST:
@@ -69,10 +117,20 @@ class AjaxHandle(AjaxSearch):
                                     'from_username':str(request.user.username),
                                     'sent_time':str(time.mktime(datetime.datetime.now().timetuple())),
                                     'invite_id':ObjectId(str(request.POST['invite_id'])), 
-                                    'message':str(str(message))}
+                                    'message':str(message)}
+                            '''Save the invited ones to invites collection'''
                             invite_obj.save_invites(doc)
+                            
+                            ''' Creating the unused profile of each Invited. '''
+                            self.create_fake_profile(str(eachInvitee), request.user.username)
+
+                        '''Change the used status flag of the invite ID generated.'''
                         invite_id_obj.change_used_status(request.user.id, request.POST['invite_id'])
+
+                        '''Generate new invite ID.'''
                         new_invite_id = invite_id_obj.get_unused_id(request.user.id)
+
+                        '''Construct New Invite URL.'''
                         new_invite_tweet = construct_invite_tweet(request, new_invite_id)
                         return HttpResponse(json.dumps({'status':'1', 
                             'new_invite_id':new_invite_id['uid']['id'], 
@@ -97,7 +155,6 @@ class AjaxHandle(AjaxSearch):
             }
            
             tweet_feed.insert_tweet(int(user_id),data)
-
             return HttpResponse(json.dumps({'status':1}))
         else:
             return HttpResponse(json.dumps({'status':1}))
@@ -450,6 +507,7 @@ class AjaxHandle(AjaxSearch):
         return notification_obj.get_notification(username)
 
     def change_notification_status(self, request):
+    	'''Changes the status of Notification'''
         if request.method == 'POST' and request.user.is_authenticated:
             notification_obj = Notification()
             return notification_obj.change_notification_status(request.user.username)
@@ -457,11 +515,13 @@ class AjaxHandle(AjaxSearch):
             return HttpResponse(json.dumps({'status':'0'}))
 
     def validate_logged_in(self,request):
+    	'''Validates if the user is logged in or not.'''
         if request.user.is_authenticated:
             return HttpResponse(json.dumps({'status':'1'}))
         return HttpResponse(json.dumps({'status':'0'}))
 
     def get_friends_paginated(self,request):
+    	'''Returns a list of pagiated friends'''
         if request.method == 'POST' and request.user.is_authenticated:
             page_num = request.POST['pgnum']
             friends_obj = Friends()
@@ -469,6 +529,7 @@ class AjaxHandle(AjaxSearch):
         else:
             return HttpResponse(json.dumps({'status':'0'}))
     def search_friend(self, request):
+    	'''This function is used to search friends from the invite page'''
         if request.method == 'POST' and request.user.is_authenticated:
             query = request.POST['query']
             friends_obj = Friends()
@@ -476,19 +537,8 @@ class AjaxHandle(AjaxSearch):
         else:
             return HttpResponse(json.dumps({'status':'0'}))
 
-    def check_valid_address(self, request):
-        # print "Roshan Validate"
-        if request.method == 'POST' and request.user.is_authenticated:
-            # print "Inside"
-            address = request.POST['address']
-            if Geocoder.geocode(address).valid_address:
-                return HttpResponse(json.dumps({'valid':'true'}))
-            else:
-                return HttpResponse(json.dumps({'valid':'false'}))
-        else:
-            return HttpResponse(json.dumps({'status':'0'}))
-
     def activity_handle(self,request):
+    	'''This function is used for tasks on the dropdown in activity page.'''
         if request.user.is_authenticated and request.method == 'POST':
             task = request.POST['task']
             change_id = request.POST['changeID']
@@ -496,6 +546,7 @@ class AjaxHandle(AjaxSearch):
             tweet_feed_obj = TweetFeed()
 
             if task == 'spam':
+            	'''Marking spam.'''
                 spam_obj = Spam()
                 result = spam_obj.check_spam_by(change_id, int(request.user.id))
                 try:
@@ -512,11 +563,13 @@ class AjaxHandle(AjaxSearch):
                         'message':'You marked this tweet as spam.'}))                    
 
             if task == 'delete':
-                print change_id
+            	'''Deleting a Tweet'''
+                #print change_id
                 tweet_feed_obj.delete_tweet(request.user.id,int(change_id))
                 return HttpResponse(json.dumps({'status':'1', 'activity':'deleteTweet', '_id':change_id}))
 
             if task == 'follow':
+            	'''Marking follower'''
                 friend_obj = Friends()
                 fid = friend_obj.get_friend_id(request.user.username, change_id)
                 data = tweet_feed_obj.follow_user(fid, request.user.username, request.user.id)
@@ -525,10 +578,12 @@ class AjaxHandle(AjaxSearch):
             if task == 'buyFrom' or task == 'sellTo':
                 tc_object = TradeConnection()
                 if task == 'buyFrom':
+                    '''Marks buys from'''
                     b_id = int(change_id)
                     c_id = int(request.user.id)
 
                 elif task == 'sellTo':
+                    '''If adds as sells to'''
                     b_id = int(request.user.id)
                     c_id = int(change_id)
 
@@ -548,6 +603,7 @@ class AjaxHandle(AjaxSearch):
                         'message':'You are connected.'}))
 
             if task == 'markMember':
+                '''If marks as Member'''
                 memberuid = int(request.user.id)
                 orgid = int(change_id)
                 org_obj = Organisation()
@@ -569,7 +625,7 @@ class AjaxHandle(AjaxSearch):
 
 
     def archive_notification(self,request):
-        #print request.POST
+        '''This function is used to archive a notification.'''
         notification_id = request.POST['notification_id']
         notifying_user_name = request.POST['notifying_user_name']
         if request.user.is_authenticated:
@@ -580,6 +636,7 @@ class AjaxHandle(AjaxSearch):
             return HttpResponse(json.dumps({'status':0, 'message':'You are not authorized for this action.'}))
     
     def get_notices_paginated(self, request):
+    	'''This function returns the paginated list of notifications.'''
         page_num = request.POST['pgnum']
         n_type = request.POST['n_type']
 
@@ -625,31 +682,82 @@ class AjaxHandle(AjaxSearch):
             return HttpResponse(json.dumps({'status':0, 'message':'You are not authorized for this action.'}))    
 
     def change_notification_view_status(self, request):
+        '''This function changes the notification status from read to unread.'''
         if request.user.is_authenticated:
             notice_obj = Notification()
             notification_id = request.POST['notification_id']
             this_not = notice_obj.get_notification_by_id(notification_id)
             notice_obj.change_notification_view_status(notification_id)            
             if this_not['notification_view_status'] == 'false':
-                return HttpResponse(json.dumps({'status':1, 'notification_id':notification_id, 'message':'Successfully changed status','already':'false'}))
+                return HttpResponse(json.dumps({'status':1, 
+                	'notification_id':notification_id, 
+                	'message':'Successfully changed status','already':'false'}))
             else:
-                return HttpResponse(json.dumps({'status':1, 'notification_id':notification_id, 'message':'Successfully changed status', 'already':'true'})) 
+                return HttpResponse(json.dumps({'status':1, 
+                	'notification_id':notification_id, 
+                	'message':'Successfully changed status', 'already':'true'})) 
         else:
-            return HttpResponse(json.dumps({'status':0, 'activity':'notification status change', 'message':'You are not authorized to perform this action.'}))
+            return HttpResponse(json.dumps({'status':0, 
+            	'activity':'notification status change', 
+            	'message':'You are not authorized to perform this action.'}))
 
     def un_archive_notification(self, request):
+        '''This function un-archives a notification.'''
         if request.user.is_authenticated:
             notice_obj = Notification()
             notification_id = request.POST['notification_id']
             notice_obj.un_archive_notification(notification_id)            
-            return HttpResponse(json.dumps({'status':1, 'notification_id':notification_id, 'message':'Successfully changed status'}))
+            return HttpResponse(json.dumps({'status':1, 
+            	'notification_id':notification_id, 
+            	'message':'Successfully changed status'}))
         else:
-            return HttpResponse(json.dumps({'status':0, 'activity':'notification status change', 'message':'You are not authorized to perform this action.'}))
+            return HttpResponse(json.dumps({'status':0, 
+            	'activity':'notification status change', 
+            	'message':'You are not authorized to perform this action.'}))
 
     def get_notification_counts(self, request):
+        '''This function returns the Notification(Inbox) Count.'''
         if request.user.username:
             notice_obj = Notification()
             notices = notice_obj.get_notification_counts(request.user.username)
             return HttpResponse(json.dumps(notices))
         else:
-            return HttpResponse(json.dumps({'status':0, 'message':'You are not authorized to perform this action.'}))
+            return HttpResponse(json.dumps({'status':0, 
+            	'message':'You are not authorized to perform this action.'}))
+
+    def get_unclaimed_paginated(self, request):
+        '''This function returns unclaimed profiles paginated.'''
+        print request.POST
+        parameters = {}  
+        user_profile_obj = UserProfile()  
+        tags = Tags()
+        parameters['all_tags'] = tags.get_tags()
+        if request.user.is_authenticated() and request.user.is_superuser:
+            unclaimed_profiles = user_profile_obj.get_unclaimed_profile_paginated(int(request.POST['current_page']))
+            parameters['unclaimed_profiles'] = unclaimed_profiles
+            return HttpResponse(json.dumps(parameters))
+        else:
+            return HttpResponse(json.dumps({'status':0, 
+                'message':'You are not authorized to perform this action.'}))
+
+    def unclaimed_profiles_bulk_update(self, request):
+        if request.user.is_authenticated and request.user.is_superuser and request.method =="POST":
+            print request.POST
+            type_user = request.POST['type']
+            lat = request.POST['lat']
+            lng = request.POST['lng']
+            formatted_address = request.POST['formatted_address']
+            sign_up_as = request.POST['sign_up_as']
+            users = request.POST['users'].split(',')
+            for eachUser in users:
+                user_profile_obj = UserProfile()
+                user_profile_obj.update_profile_fields({'username':eachUser}, 
+                    {'latlng.coordinates':list([float(lng),float(lat)]), 
+                    'address':str(formatted_address),
+                    'sign_up_as':sign_up_as,
+                    'type_user':list(type_user[0].split(',')),
+                    'recently_updated':'true'})
+            return HttpResponse(json.dumps({'users':users, 'status':'1'}))
+        else:
+            return HttpResponse(json.dumps({'status':0, 
+                'message':'You are not authorized to perform this action.'}))

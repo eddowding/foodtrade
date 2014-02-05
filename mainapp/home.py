@@ -52,16 +52,13 @@ def ajax_request(request, func_name):
 def admin_tags(request):
     parameters = {}
     if request.user.is_authenticated():
-        # parameters['user'] = request.user
         user_id = request.user.id
-       
         user_info = UserInfo(user_id)
-
         user_profile_obj = UserProfile()
         userprofile = user_profile_obj.get_profile_by_id(user_id)
         parameters['userprofile'] = UserProfile
-
         parameters['userinfo'] = user_info
+        
     mytag = Tags()
     tags = mytag.get_tags()
     parameters['tags'] = json.dumps(tags)
@@ -139,9 +136,7 @@ def tweets(request):
             tweet_list.append(tweet['id'])
             tweet_feed.insert_tweet(data)
         except:
-            print "Inside except"
             text = "@" + tweet['user']['screen_name'] + " Thanks! Please confirm your post by clicking this link [link]. You'll only have to do this once."
-            print text    
             try:
                 admin_twitter.update_status(status = text)
             except:

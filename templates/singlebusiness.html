@@ -17,6 +17,7 @@
 {% block ogimg %}{{userprof.profileimg}}{% endblock %}
 <!-- <meta property="og:image" content="{% block imageurl %}{{userinfo.profileimg}}{% endblock %}" /> -->
 {% block content %}
+{% include 'modal_invite.html' %}
 <!-- <link rel="stylesheet" href="/static/css/docsupport/style.css"> -->
   <link rel="stylesheet" href="/static/css/docsupport/prism.css">
   <link rel="stylesheet" href="/static/css/chosen.min.css">
@@ -142,10 +143,12 @@
       </div>
       {% endifequal %}
  
-      <!-- Button trigger modal -->
-      <button class="btn btn-success btn-block" data-toggle="modal" data-target="#modal_contact">
-        Contact
-      </button>  
+          {% ifequal is_unknown_profile 'false' %}
+          <button class="btn btn-primary btn-block" data-toggle="modal" data-target="#modal_contact">Contact</button>
+          {% else %}
+            <button class="btn btn-primary btn-block" style="margin-top:40px;" data-toggle="modal" data-target="#modal_invite">Invite to connect</button> 
+          {% endifequal %}
+           
 {% else %}
       <!-- if not logged in show login prompt -->
       <a href="{% provider_login_url "twitter" process="login" %}" class="btn btn-success btn-block">Login for more</a>

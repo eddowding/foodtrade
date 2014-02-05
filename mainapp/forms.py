@@ -69,31 +69,27 @@ class SignupForm(forms.Form):
     #  'class' : 'form-control'}))
 
     def __init__(self, request, *args, **kwargs):
-        self.request =request
+        self.request = request
         super(SignupForm, self).__init__(*args, **kwargs)
         self.fields['username'].widget.attrs['readonly'] = True
         self.fields['email'].widget.attrs['class'] = 'form-control'
+        #self.fields['form'].widget.attrs['onsubmit'] = 'return validate_business_type()"'
 
     def save(self, user):
         try:
             addr = self.cleaned_data['address']
             lat = self.cleaned_data['lat']
             lon = self.cleaned_data['lng']
-            # print lat, lon, len(lat), len(lon)
             if len(lat) == 0 and len(lon) == 0:
                 addr_geo = Geocoder.geocode(addr.strip())
                 lat = float(addr_geo.latitude)
                 lon = float(addr_geo.longitude)
                 postal_code = str(addr_geo.postal_code)
-                # print addr, lat, lon, postal_code, "inside try if"
             else:
                 result = Geocoder.reverse_geocode(float(lat),float(lon))
                 postal_code = str(result.postal_code)
-                # print addr, lat, lon, postal_code, "inside try else"
-
         except:
             lat, lon, addr,postal_code = 51.5072 , -0.1275, "3 Whitehall, London SW1A 2EL, UK", "SW1 A 2EL"
-            # print addr, lat, lon, postal_code, "inside exception"
         
         invite_id = ''
         try:
@@ -105,7 +101,9 @@ class SignupForm(forms.Form):
 
         userprofile = UserProfile()
         social_account = SocialAccount.objects.get(user__id = user.id)
-        data = {'useruid': int(user.id), 'sign_up_as': str(self.cleaned_data['sign_up_as']),
+        data = {
+                'is_unknown_profile':'false',
+                'useruid': int(user.id), 'sign_up_as': str(self.cleaned_data['sign_up_as']),
         		'type_user': str(self.cleaned_data['type_user']).split(","), 
                 'zip_code': str(postal_code),
                 'latlng' : {"type" : "Point", "coordinates" : [float(lon),float(lat)] },
@@ -121,7 +119,8 @@ class SignupForm(forms.Form):
                 'organisations':[]
         }
 
-        userprofile.create_profile(data)
+        userprofile.update_profile_upsert({'screen_name':social_account.extra_data['screen_name'],
+            'is_unknown_profile':'true', 'username':social_account.extra_data['screen_name']},data)
 
         if invite_id != '':
             invititation_to = user.username
@@ -164,4 +163,4 @@ class SignupForm(forms.Form):
                         })
             except:
                 return HttpResponseRedirect('/activity/')
-        return HttpResponseRedirect('/activity/')                
+        return HttpResponseRedirect('/activity/')
