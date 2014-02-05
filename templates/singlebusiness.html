@@ -472,10 +472,7 @@
                   <span class="text-muted   hidden-xs">{{eachfood.description}}</span>
                   {% endif %} 
 
-
-                  {% ifequal profile_id user_id %} 
-                  <a href="" data-toggle="modal" data-target="#modal_food_detail" class=" text-muted small" data-container="body" onClick="get_food_detail('{{profile_id}}', '{{eachfood.food_name}}', '{{eachfood.description}}', '{{eachfood.food_tags}}', '{{eachfood.photo_url}}')">Edit details</a>
-                  {% endifequal %}
+ 
  
                   <td nowrap="nowrap">  
                    <div class="pull-right">
@@ -491,13 +488,13 @@
 
                    {% if user.is_authenticated %}
 
-                   {% ifnotequal profile_id user_id %}
-                    <a class="btn btn-default btn-sm" title="Recommend this to others" onclick="recommend_food({{user_id}}, '{{eachfood.food_name}}', {{profile_id}}, '{{screen_name}}'); return null;" data-toggle="modal" data-target="#modal_tweet_recomm">
-                      <i class="fa fa-thumbs-o-up tltip" >
-                      </i>
-                    </a> 
+                     {% ifnotequal profile_id user_id %}
+                      <a class="btn btn-default btn-sm" title="Recommend this to others" onclick="recommend_food({{user_id}}, '{{eachfood.food_name}}', {{profile_id}}, '{{screen_name}}'); return null;" data-toggle="modal" data-target="#modal_tweet_recomm">
+                        <i class="fa fa-thumbs-o-up tltip" >
+                        </i>
+                      </a> 
 
-                   {% endifnotequal %}
+                     {% endifnotequal %}
                    {% endif %}
                      
                    
