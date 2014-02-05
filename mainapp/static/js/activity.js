@@ -65,15 +65,23 @@ $("#filtered_content").on('keypress', '.reply_input', function(e) {
 });
 
 
+function single_post_content_new_post(){
 
+       var status_msg = $("#main_post_input").val();
+       if(status_msg=="")
+       {
+          return;
+       }
+        var tweet_id = $("#main_post_input").attr("data-tweet-id");
+       ajax_request("post_tweet", 'update_single_post_content', {message: status_msg, parentid:tweet_id});
+
+}
 
 $("#single_post_content").on('keypress', '.reply_input', function(e) {
   if(validate_login()['status'] == '1'){
     var code = e.keyCode || e.which;
      if(code == 13) { //Enter keycode
-
-       //Do something
-       status_msg =this.value;
+      status_msg = this.value;
        if(status_msg=="")
        {
           return;
@@ -478,9 +486,7 @@ $('#organisation_filter').keyup( function() {
             organisation_value_changed(0);
         });
 
-show_food_filters(food_filters, 0);
-show_organisation_filters(organisation_filters, 0);
-show_business_filters(business_filters, 0);
+
 
 function click_activity(activity, changeID){
   ajax_request('activity_handle','success_activity_handle',{'user':'{{userinfo.username}}', 'changeID':changeID, 'task':activity});
