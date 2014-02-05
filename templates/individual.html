@@ -16,6 +16,7 @@
 {% block ogimg %}{{userprof.profileimg}}{% endblock %}
 
 {% block content %}
+{% include 'modal_invite.html' %}
 <style type="text/css" media="all">
     /* fix rtl for demo */
     .chosen-rtl .chosen-drop { left: -9000px; }
@@ -76,9 +77,11 @@
      {% endif %} -->
       <!-- Button trigger modal -->
       {% if user.is_authenticated %}
-      <button class="btn btn-primary btn-block" data-toggle="modal" data-target="#modal_contact">
-        Contact
-      </button>  
+          {% ifequal is_unknown_profile 'false' %}
+          <button class="btn btn-primary btn-block" data-toggle="modal" data-target="#modal_contact">Contact</button>
+          {% else %}
+            <button class="btn btn-primary btn-block" style="margin-top:40px;" data-toggle="modal" data-target="#modal_invite">Invite to connect</button> 
+          {% endifequal %}
       {% else %}
       <!-- if not logged in show login prompt -->
       <a href="{% provider_login_url "twitter" process="login" %}" class="btn btn-primary btn-block">Login for more</a>

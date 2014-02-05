@@ -22,6 +22,10 @@ from mainapp.forms import FoodForm
 def resolve_profile(request, username):
     user_profile = UserProfile()
     userprof = user_profile.get_profile_by_username(str(username))
+    try:
+        pass
+    except:
+        pass
     if userprof['sign_up_as'] == 'Business':
         return HttpResponseRedirect('/business/'+username)
     elif userprof['sign_up_as'] == 'Individual':
@@ -34,18 +38,8 @@ def display_profile(request, username):
         food_form = FoodForm(request.POST, request.FILES)
         if food_form.is_valid():
             food_form.save()
-        # food_description = request.POST['food_description']
-        # food_name = request.POST['food_name']
-        # profile_id = int(request.POST['profile_id'])
-        # food_tags = request.POST['food_tags']
-        # food_photo = request.FILES['food_photo']
-        # print food_photo.name, food_photo.content_type, food_photo.size
-        # food_detail = Food()
-        # data = {'food_name': food_name, 'useruid': profile_id, 'description': food_description, 'food_tags': food_tags}
-        # food_detail.update_food(data)
         
     parameters = {}
-    # parameters['food_list'] = final_foods
     food_form = FoodForm()
     parameters['form'] = food_form
     foo = AdminFoods()
@@ -60,9 +54,14 @@ def display_profile(request, username):
     parameters['name'] = userprof['name']
     parameters['description'] = userprof['description']
     parameters['pic_url'] = userprof['profile_img'].replace("normal","bigger")
+    print userprof
     parameters['loc'] = {'lat':userprof['latlng']['coordinates'][1], 'lon':userprof['latlng']['coordinates'][0]}
     parameters['email'] = userprof['email']
     parameters['screen_name'] = "@" + userprof['screen_name']
+    try:
+        parameters['is_unknown_profile'] = userprof['is_unknown_profile']
+    except:
+        parameters['is_unknown_profile'] = 'false'
 
     try:
         tweet_feed_obj = TweetFeed()

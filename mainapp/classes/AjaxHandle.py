@@ -724,3 +724,40 @@ class AjaxHandle(AjaxSearch):
         else:
             return HttpResponse(json.dumps({'status':0, 
             	'message':'You are not authorized to perform this action.'}))
+
+    def get_unclaimed_paginated(self, request):
+        '''This function returns unclaimed profiles paginated.'''
+        print request.POST
+        parameters = {}  
+        user_profile_obj = UserProfile()  
+        tags = Tags()
+        parameters['all_tags'] = tags.get_tags()
+        if request.user.is_authenticated() and request.user.is_superuser:
+            unclaimed_profiles = user_profile_obj.get_unclaimed_profile_paginated(int(request.POST['current_page']))
+            parameters['unclaimed_profiles'] = unclaimed_profiles
+            return HttpResponse(json.dumps(parameters))
+        else:
+            return HttpResponse(json.dumps({'status':0, 
+                'message':'You are not authorized to perform this action.'}))
+
+    def unclaimed_profiles_bulk_update(self, request):
+        if request.user.is_authenticated and request.user.is_superuser and request.method =="POST":
+            print request.POST
+            type_user = request.POST['type']
+            lat = request.POST['lat']
+            lng = request.POST['lng']
+            formatted_address = request.POST['formatted_address']
+            sign_up_as = request.POST['sign_up_as']
+            users = request.POST['users'].split(',')
+            for eachUser in users:
+                user_profile_obj = UserProfile()
+                user_profile_obj.update_profile_fields({'username':eachUser}, 
+                    {'latlng.coordinates':list([float(lng),float(lat)]), 
+                    'address':str(formatted_address),
+                    'sign_up_as':sign_up_as,
+                    'type_user':list(type_user[0].split(',')),
+                    'recently_updated':'true'})
+            return HttpResponse(json.dumps({'users':users, 'status':'1'}))
+        else:
+            return HttpResponse(json.dumps({'status':0, 
+                'message':'You are not authorized to perform this action.'}))

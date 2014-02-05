@@ -6,6 +6,7 @@ from twython import Twython
 import json
 from django.conf import settings
 from mainapp.classes.TweetFeed import TweetFeed, UserProfile, Friends, TwitterError, Invites, InviteId, Notification
+from mainapp.classes.Tags import Tags
 from search import search_general
 from streaming import MyStreamer
 from models import MaxTweetId
@@ -359,7 +360,9 @@ def notifications(request):
 
 @user_passes_test(lambda u: u.is_superuser)
 def unclaimed_profiles(request):
-    parameters = {}
+    parameters = {}    
+    tags = Tags()
+    parameters['all_tags'] = tags.get_tags()
     if request.user.is_authenticated():
         user_id = request.user.id
         user_info = UserInfo(user_id)
@@ -367,9 +370,14 @@ def unclaimed_profiles(request):
         userprofile = user_profile_obj.get_profile_by_id(user_id)
         parameters['userprofile'] = UserProfile
         parameters['userinfo'] = user_info
-    user_profile_obj = UserProfile()
-    unclaimed_profiles = user_profile_obj.get_unclaimed_profile_paginated(1)
-    parameters['unclaimed_profiles'] = unclaimed_profiles
-    return render_to_response('unclaimed.html', parameters, context_instance=RequestContext(request))
+    else:
+        return HttpResponseRedirect('/')
+
+    if request.method == 'GET':
+        user_profile_obj = UserProfile()
+        unclaimed_profiles = user_profile_obj.get_unclaimed_profile_paginated(1)
+        parameters['unclaimed_profiles'] = unclaimed_profiles
+        
+    return render_to_response('unclaimed.html', parameters, context_instance=RequestContext(request))    
 
 

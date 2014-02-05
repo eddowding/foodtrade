@@ -201,6 +201,9 @@ class UserProfile():
     def create_profile (self, value):
         self.db_object.insert_one(self.table_name,value)
 
+    def update_profile_fields(self, where, what):
+        self.db_object.update(self.table_name, where, what)
+
     def update_profile(self, userid, description, address, type_usr, sign_up_as, phone, lat, lon, postal_code):
         return self.db_object.update(self.table_name,
              {'useruid':int(userid)},

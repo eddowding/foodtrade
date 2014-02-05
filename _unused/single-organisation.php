@@ -57,10 +57,12 @@
  
 
       <!-- Button trigger modal -->
-      <button class="btn btn-primary btn-block" data-toggle="modal" data-target="#modal_contact">
-        Contact
-      </button>  
 
+      {% ifequal userinfo.is_unknown_profile 'false' %}
+      <button class="btn btn-primary btn-block" data-toggle="modal" data-target="#modal_contact">Contact</button>
+      {% else %}
+        <button class="btn btn-primary btn-block" style="margin-top:40px;" data-toggle="modal" data-target="#modal_invite">Invite to connect</button> 
+      {% endifequal %}
       <!-- if not logged in show login prompt -->
       <button class="btn btn-primary btn-block">Login for more</button>
 

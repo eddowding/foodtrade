@@ -66,10 +66,11 @@ class SignupForm(forms.Form):
     #  'class' : 'form-control'}))
 
     def __init__(self, request, *args, **kwargs):
-        self.request =request
+        self.request = request
         super(SignupForm, self).__init__(*args, **kwargs)
         self.fields['username'].widget.attrs['readonly'] = True
         self.fields['email'].widget.attrs['class'] = 'form-control'
+        #self.fields['form'].widget.attrs['onsubmit'] = 'return validate_business_type()"'
 
     def save(self, user):
         try:
