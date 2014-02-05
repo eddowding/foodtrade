@@ -22,11 +22,9 @@ from mainapp.forms import FoodForm
 def resolve_profile(request, username):
     user_profile = UserProfile()
     userprof = user_profile.get_profile_by_username(str(username))
-    try:
-        pass
-    except:
-        pass
-    if userprof['sign_up_as'] == 'Business':
+    if userprof['sign_up_as'] == 'unclaimed':
+        return HttpResponseRedirect('/')
+    elif userprof['sign_up_as'] == 'Business':
         return HttpResponseRedirect('/business/'+username)
     elif userprof['sign_up_as'] == 'Individual':
         return HttpResponseRedirect('/person/'+username)
@@ -58,6 +56,7 @@ def display_profile(request, username):
     parameters['loc'] = {'lat':userprof['latlng']['coordinates'][1], 'lon':userprof['latlng']['coordinates'][0]}
     parameters['email'] = userprof['email']
     parameters['screen_name'] = "@" + userprof['screen_name']
+    parameters['username'] = userprof['username']
     try:
         parameters['is_unknown_profile'] = userprof['is_unknown_profile']
     except:
@@ -180,18 +179,11 @@ def edit_profile(request, username):
             '''
             if request.user.is_superuser:
                 userprof = user_profile.get_profile_by_username(str(username))
-                if userprof.get('is_unknown_profile') == None or userprof.get('is_unknown_profile')=='false':
-                    userprof = user_profile.get_profile_by_username(str(request.user.username))
+                # if userprof.get('is_unknown_profile') == None or userprof.get('is_unknown_profile')=='false':
+                #     userprof = user_profile.get_profile_by_username(str(request.user.username))
             else:
                 userprof = user_profile.get_profile_by_username(str(request.user.username))
-            '''
-                Edit Ends
-                ------------------------------------------------------------------
-                Edited By  : Roshan Bhandari
-                Email      : brishi98@gmail.com 
-                Date       : 2/4/2014
-                ------------------------------------------------------------------            
-            '''
+
 
             #parameters['profile_id'] = request.user.id
             parameters['sign_up_as'] = userprof['sign_up_as']
@@ -233,14 +225,7 @@ def edit_profile(request, username):
                 userprof = user_profile.get_profile_by_username(request.user.username)
         else:
             return HttpResponseRedirect('/')
-        '''
-            Edit Ends
-            ------------------------------------------------------------------
-            Edited By  : Roshan Bhandari
-            Email      : brishi98@gmail.com 
-            Date       : 2/4/2014
-            ------------------------------------------------------------------ 
-        '''
+
 
         first_name = request.POST['first_name']
         last_name = request.POST['last_name']

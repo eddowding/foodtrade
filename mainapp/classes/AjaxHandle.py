@@ -57,7 +57,7 @@ class AjaxHandle(AjaxSearch):
                 'name' : invited_friend['friends']['name'],
                 'phone_number' : '',
                 'profile_img':invited_friend['friends']['profile_image_url'],
-                'sign_up_as': 'Individual',
+                'sign_up_as': 'unclaimed',
                 'type_user':[],
                 'updates': [],
                 'screen_name': invited_friend['friends']['screen_name'],
@@ -67,8 +67,7 @@ class AjaxHandle(AjaxSearch):
             }
             try:
                 location_res = Geocoder.geocode(invited_friend['friends']['location'])
-                data['latlng'] = {"type":"Point",
-                    "coordinates":list([float(location_res.longitude) ,float(location_res.latitude)])}
+                data['latlng'] = {"type":"Point","coordinates":[float(location_res.longitude) ,float(location_res.latitude)]}
                 print data['latlng'], "Roshan"
                 data['zip_code'] = str(location_res.postal_code)
             except:

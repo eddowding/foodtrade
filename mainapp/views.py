@@ -378,6 +378,4 @@ def unclaimed_profiles(request):
         unclaimed_profiles = user_profile_obj.get_unclaimed_profile_paginated(1)
         parameters['unclaimed_profiles'] = unclaimed_profiles
         
-    return render_to_response('unclaimed.html', parameters, context_instance=RequestContext(request))    
-
-
+    return render_to_response('unclaimed1.html', parameters, context_instance=RequestContext(request))

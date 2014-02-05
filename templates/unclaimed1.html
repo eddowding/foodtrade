@@ -54,48 +54,7 @@
 	  </div>
 	</div>
 
- 	<button id="btnBulkUpdate1" onclick="update_clicked()" class="btn btn-primary pull-right">Bulk Update</button>
-	<ul class="list-group" style="margin-bottom:500px;"> 
-	    <div class="form-group" style="margin-top:5%;">
-	      <label for="id_sign_up_as" class="col-sm-2 control-label">Sign up as</label>
-	      <div class="col-sm-5">
-	        <div class="btn-group" data-toggle="buttons">
-	          <label class="btn btn-default"> 
-	              <input type="radio" name="sign_up_as" id="option1" value="Individual" onchange="dataradio('Individual')"> Individual 
-	          </label> 
-	          <label class="btn btn-default active">  
-	              <input type="radio" name="sign_up_as" checked="checked" id="option2" value="Business" onchange="dataradio('Business')"> Business 
-	          </label>
-	          <label class="btn btn-default">
-	              <input type="radio" name="sign_up_as" id="option3" value="Organisation" onchange="dataradio('Organisation')"> Organisation
-	          </label>
-	        </div>
-	        <input type="hidden" id= "hidden_type" name="type">
-	      </div>
-	      </div>
-
-		  <div class="form-group margin-type" id="type_user_id"> 
-		        <label for="id_type_user" class="col-sm-2 control-label">Business type</label>
-		        <div class="col-sm-5">
-		          <select id= "dropdown3" data-placeholder="Farm, wholesaler, restaurant..." multiple  class="chosen-select" tabindex="6">
-		              <option value=""></option>
-		              {% for each in all_tags %}
-		              <optgroup label={{each.node}}>
-		                {% if each.childrens %}
-		                  {% for eachchild in each.childrens %}
-		                  <option>{{eachchild.node}}</option>
-		                  {% endfor %}
-		                {% else %}
-		                <option>{{each.node}}</option>
-		                {% endif %}
-		              </optgroup>
-		              {% endfor %}
-		            </select>
-		        </div>
-	      </div>	
-
-
-	</ul>		    
+ 	<button id="btnBulkUpdate1" onclick="update_clicked()" class="btn btn-primary pull-right">Bulk Update</button>		    
 	<ul class="list-group"> 
 	  <ul class="list-group-item my-margin" id ="myFriendsLi">
 	  <div class="panel panel-default">
@@ -106,35 +65,37 @@
 		    <thead>
 		    	<tr>
 				  	<th>#</th>
-				  	<th></th>
+				  	<th> </th>
 				  	<th>Name</th>
 				  	<th>Sign Up As</th>
-				  	<th>Address</th>
 				  	<!-- <th>Business Type</th> -->
+				  	<th>Address</th>
 				</tr>
 			</thead>
 		  	<tbody>
-
-	   		{% for each in unclaimed_profiles %} 
-
-	      		<span class="pull-right"><i class="glyphicon glyphicon-edit"></i><a href="/editprofile/{{each.username}}/">Edit</a></span>
-		        	
-		      </div>
-		    	<tr id = "li{{each.username}}" class="list-group-item li-height">
+	   		{% for each in unclaimed_profiles %} 		        	
+		    	<tr id = "li{{each.username}}">
 		    		<td>{{forloop.counter}}</td>
 			  		<td>
 			  			<a href="/profile/{{each.username}}/"><img src="{{each.profile_img}}" title="{{each.name}}" class="img-responsive pull-left" style="width:20px; margin-right: 5px;" />
 			  			</a>
 			  		</td>
 			  		<td>
-			  			<input type="text" id='ip_name{{each.name}}' value="{{forloop.counter}}"/>
+			  			<input type="text" id='ip_name{{each.name}}' class="form-control" value="{{each.name}}"/>
 			  		</td>
 			  		<td>
-			  				
+				          <label class="btn btn-default"> 
+				              <input type="radio" checked="checked" name="sign_up_as_{{each.username}}" id="buss_{{each.username}}" value="Individual" onchange="dataradio('Individual')"> Individual 
+				          </label> 
+				          <label class="btn btn-default">  
+				              <input type="radio" name="sign_up_as_{{each.username}}"  id="buss_{{each.username}}" value="Business" onchange="dataradio('Business')"> Business 
+				          </label>
+				          <label class="btn btn-default" >
+				              <input type="radio"  name="sign_up_as_{{each.username}}" id="option3" id="org_{{each.username}}" value="Organisation" onchange="dataradio('Organisation')"> Organisation
+				          </label>
 			  		</td>
-			  		<!-- <td></td> -->
 			  		<td>
-			      		<input type="text" id="address" required class="form-control" placeholder="Enter your address" value="London, UK" name="address" value="London, UK">
+			      		<input type="text" id="address" required class="form-control" placeholder="Enter your address" name="address" value="{{each.address}}">
 			      		<input id="find" type="hidden" value="find" />
 			      		<input name="lat" id="lat" type="hidden" value=""  class="form-control">
 			      		<input name="lng" id="lng" type="hidden" value=""  class="form-control">
