@@ -180,7 +180,7 @@ def edit_profile(request, username):
             '''
             if request.user.is_superuser:
                 userprof = user_profile.get_profile_by_username(str(username))
-                if userprof['is_unknown_profile'] == 'false':
+                if userprof.get('is_unknown_profile') == None or userprof.get('is_unknown_profile')=='false':
                     userprof = user_profile.get_profile_by_username(str(request.user.username))
             else:
                 userprof = user_profile.get_profile_by_username(str(request.user.username))
