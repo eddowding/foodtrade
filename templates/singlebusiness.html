@@ -31,7 +31,7 @@
 </style>
 
 
-    <div class="col-md-6 col-sm-7 {% if not user.is_authenticated %} col-md-offset-1 {% endif %}" id="single">
+    <div class="col-md-6 col-sm-7 col-xs-12 {% if not user.is_authenticated %} col-md-offset-1 {% endif %}" id="single">
     <div class="container-responsive">
 
     <div id="header_box" class="clearfix">
@@ -316,7 +316,7 @@
                   <!-- show this in another modal? -->
                   <!-- can we use html5 drag and drop to upload? -->
                     <div class="form-group">
-                      <label for="food_photo">Upload a file</label>
+                      <label for="food_photo">Upload a photo</label>
                       {{form.food_photo}}
                       {{form.food_name.as_hidden}}
                       {{form.profile_id.as_hidden}}
@@ -456,26 +456,45 @@
           <tbody id="food_tbody">
             {% for eachfood in all_foods %}
               <tr id="row{{forloop.counter}}">
-                  <td>
-<!--data for food details:{{eachfood.food_description}},{{eachfood.food_tags}} and {{eachfood.food_photo}}  -->                    
-                  <a href="/activity/?f={{eachfood.food_name}}">{{eachfood.food_name}}</a> 
-                  <a href="" data-toggle="modal" data-target="#modal_food_detail" class="showonhover" data-container="body" onClick="get_food_detail('{{profile_id}}', '{{eachfood.food_name}}', '{{eachfood.description}}', '{{eachfood.food_tags}}', '{{eachfood.photo_url}}')">Add details</a>
-                  </td>  
+                  <td  >
+<!--data for food details:{{eachfood.food_description}},{{eachfood.food_tags}} and {{eachfood.food_photo}}  -->    
+                <a href="/activity/?f={{eachfood.food_name}}">  
+                  {% if eachfood.photo_url %} 
+ 
+                    <img src="/media/food/{{eachfood.photo_url}}" alt="{{eachfood.food_name}}" class="img-rounded produce_square" /> 
+                  {% endif %}
+                  {{eachfood.food_name}}
+                </a>  
+ 
                   
-                  <td>  
+                  {% if eachfood.description %}
+                  <span class="text-muted   hidden-xs">{{eachfood.description}}</span>
+                  {% endif %} 
 
-
+ 
+ 
+                  <td nowrap="nowrap">  
                    <div class="pull-right">
 
                    {% ifequal profile_id user_id %}
+
+                     <a href="" data-toggle="modal" data-target="#modal_food_detail" class="btn btn-sm btn-default" data-container="body" onClick="get_food_detail('{{profile_id}}', '{{eachfood.food_name}}', '{{eachfood.description}}', '{{eachfood.food_tags}}', '{{eachfood.photo_url}}')"><i class="fa fa-edit" title="Edit" ></i></a>
+
                      <a class="btn btn-danger btn-sm"><i class="fa fa-trash-o" title="Delete" onClick="delete_food({{profile_id}}, '{{eachfood.food_name}}', this)"></i></a>
 
                    {% endifequal %}
-                        {% if user.is_authenticated %}
-                    <a class="btn btn-default btn-sm" title="Recommend this to others" onclick="recommend_food({{user_id}}, '{{eachfood.food_name}}', {{profile_id}}, '{{screen_name}}'); return null;" data-toggle="modal" data-target="#modal_tweet_recomm">
-                      <i class="fa fa-thumbs-o-up tltip" >
-                      </i>
-                    </a> {% endif %}
+
+
+                   {% if user.is_authenticated %}
+
+                     {% ifnotequal profile_id user_id %}
+                      <a class="btn btn-default btn-sm" title="Recommend this to others" onclick="recommend_food({{user_id}}, '{{eachfood.food_name}}', {{profile_id}}, '{{screen_name}}'); return null;" data-toggle="modal" data-target="#modal_tweet_recomm">
+                        <i class="fa fa-thumbs-o-up tltip" >
+                        </i>
+                      </a> 
+
+                     {% endifnotequal %}
+                   {% endif %}
                      
                    
                    </div>

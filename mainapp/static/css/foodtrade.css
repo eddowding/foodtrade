@@ -969,10 +969,6 @@ h2 {
 
 
 
-.table > tbody#food_tbody > tr > td {
-	vertical-align: middle;
-}
-
 /********************************/
 /**  ROLES                     **/
 /********************************/
@@ -1037,6 +1033,33 @@ h2 {
 	margin: 5px 0;
 }
 
+/********************************/
+/**  PRODUCE LIST               **/
+/********************************/
+
+.table > tbody#food_tbody {
+  max-width: 100%;
+}
+ 
+.table > tbody#food_tbody > tr > td {
+  vertical-align: middle;
+}
+
+.table > tbody#food_tbody .dotdotdot {
+  width: 200px;
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: inline-block;
+}
+ 
+
+.produce_square {
+  width: 30px;
+  height: 30px;
+  margin-right: 5px;
+}
 
 /********************************/
 /**  ACTIVITY                  **/

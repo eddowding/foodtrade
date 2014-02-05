@@ -303,7 +303,7 @@ def get_all_foods(user_id):
         if each.get('food_tags')!=None:
             data['food_tags'] = each.get('food_tags')
         if each.get('photo_url')== None or each.get('photo_url')== '':
-            data['photo_url'] = 'http://placehold.it/100x100'
+            data['photo_url'] = ''
         else:
             data['photo_url'] = each.get('photo_url')
         final_foods.append(data)
