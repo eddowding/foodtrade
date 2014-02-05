@@ -110,28 +110,41 @@ function ajax_update_single_post(data)
 }
 
 
-
-
-$('#newstatus').bind('keypress', function(e) {
-  
-    var code = e.keyCode || e.which;
-     if(code == 13) { //Enter keycode
-       //Do something
+function post_new_status()
+{
        message = $('#newstatus').val();
   if(message=="")
   {
     alert("You can't post empty status.");
     return;
   }
+
+  if($('#post_to_twitter').prop('checked'))
+  {
+    var foodtrade_only = "false";
+
+  }
+  else
+  {
+    var foodtrade_only = "true";
+  }
   if(validate_login()['status'] == '1'){
-    ajax_request("post_tweet", 'clear_input', {message: message});
+    ajax_request("post_tweet", 'clear_input', {message: message,foodtrade_only:foodtrade_only});
   }
   else{
     /*$('#btn_must_be_logged').click();*/
     /*$('#btn_update_activity').tooltip('show');*/
     window.location('/accounts/twitter/login/?process=?login');
-  } 
-      
+  }
+}
+
+$('#newstatus').bind('keypress', function(e) {
+  
+    var code = e.keyCode || e.which;
+     if(code == 13) { //Enter keycode
+       //Do something
+   
+      post_new_status();
      }
   
   

@@ -28,7 +28,7 @@
                 <li class="text-muted">Also send to </li>
                 <li> 
                   <label>
-                    <input type="checkbox" name="post_to_twitter" value="1" checked="checked">
+                    <input type="checkbox" id="post_to_twitter" name="post_to_twitter" value="1" checked="checked">
                     <i class="fa fa-twitter-square fa-lg text-muted"></i>
                   </label>
                 </li>
@@ -54,7 +54,7 @@
           </div>
 
 
-              <button type="button" id="btn_update_activity" class="btn btn-sm btn-success pull-right" {% if not user.is_authenticated %}  title="Please login to use this feature." {% endif %} onclick="UpdateActivity('newstatus');"> Post</button>
+              <button type="button" id="btn_update_activity" class="btn btn-sm btn-success pull-right" {% if not user.is_authenticated %}  title="Please login to use this feature." {% endif %} onclick="post_new_status();"> Post</button>
           </form>
 
           
