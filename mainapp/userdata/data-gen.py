@@ -174,4 +174,4 @@ def main(total_data, tweets_per_user):
         fp.write(']')
 
 
-main(499, [1, 10]  ) # first fields is the total no of users and second is tweets_per_user with [min, max]
+main(499, [1, 10]) # first fields is the total no of users and second is tweets_per_user with [min, max]

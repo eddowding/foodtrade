@@ -307,6 +307,176 @@ class Search():
 # print sh.search_all()
 
 
+
+    def get_tweet_by_parent(self, parent_tweet_id):
+        
+        agg_pipeline = []
+
+
+        geo_near = {
+                        "$geoNear": {"near": [float(self.lon), float(self.lat)],
+                                    "distanceField": "distance",
+                                    "maxDistance": 160.934,
+                                    # "query": query_string,
+                                    "includeLocs": "latlng",
+                                    "uniqueDocs": True,  
+                                    "spherical":True,
+                                    "limit":5000,
+                                    "distanceMultiplier":6371
+                                  }
+                      }
+        agg_pipeline.append(geo_near)
+        query_string = {'updates':{"$elemMatch":{'parent_tweet_id':{"$in":parent_tweet_id}}}}
+        agg_pipeline.append({ '$match':query_string})
+
+        agg_pipeline.append({"$unwind": "$updates"})
+
+
+        agg_pipeline.append({ '$match':{"updates.deleted":{"$ne":1}, "updates.parent_tweet_id":{"$in":parent_tweet_id}}})
+
+       
+        # agg_pipeline.append({ '$match':{"updates":{"$size":0}}})
+
+        sort_text = "updates.time_stamp"
+        sort_order = -1
+
+        agg_pipeline.append({"$sort": SON([(sort_text, sort_order), ("time_stamp", -1)])})
+
+        # next_index = 5
+        # if len(or_conditions) > 0:
+        #     next_index = 6
+        #     agg_pipeline.append({ '$match':{"$or":or_conditions}})
+
+
+        group_fields = {}
+        group_fields["_id"] = "all"
+        group_fields["foods"] = { "$push": "$foods" }
+        group_fields["businesses"] = { "$push": "$type_user"}
+        group_fields["organisations"] = { "$push": "$organisations"}
+        group_fields["business_count"] = {"$sum":{"$cond": [{"$eq": ['$sign_up_as', "Business"]}, 1, 0]}}
+        group_fields["organisation_count"] = {"$sum":{"$cond": [{"$eq": ['$sign_up_as', "Organisation"]}, 1, 0]}}
+        group_fields["update_count"] = {"$sum": 1}
+
+   
+        result_type = "updates.status"
+   
+        
+        group_fields["results"] = self.get_result_fields(result_type)
+        
+        agg_pipeline.append({"$group": group_fields})
+        
+
+        
+        agg_pipeline.append({ "$limit" : 30 })
+
+        
+
+        up = UserProfile()
+        return up.agg(agg_pipeline)
+
+
+
+
+
+
+
+    def get_single_tweet(self, tweet_id):
+        
+        agg_pipeline = []
+
+
+        geo_near = {
+                        "$geoNear": {"near": [float(self.lon), float(self.lat)],
+                                    "distanceField": "distance",
+                                    "maxDistance": 160.934,
+                                    # "query": query_string,
+                                    "includeLocs": "latlng",
+                                    "uniqueDocs": True,  
+                                    "spherical":True,
+                                    "limit":5000,
+                                    "distanceMultiplier":6371
+                                  }
+                      }
+        agg_pipeline.append(geo_near)
+        query_string = {'updates':{"$elemMatch":{'tweet_id'::tweet_id}}}
+        agg_pipeline.append({ '$match':query_string})
+
+        agg_pipeline.append({"$unwind": "$updates"})
+
+
+        agg_pipeline.append({ '$match':{"updates.deleted":{"$ne":1}, "updates.tweet_id":tweet_id}})
+
+       
+        # agg_pipeline.append({ '$match':{"updates":{"$size":0}}})
+
+        sort_text = "updates.time_stamp"
+        sort_order = -1
+
+        agg_pipeline.append({"$sort": SON([(sort_text, sort_order), ("time_stamp", -1)])})
+
+        # next_index = 5
+        # if len(or_conditions) > 0:
+        #     next_index = 6
+        #     agg_pipeline.append({ '$match':{"$or":or_conditions}})
+
+
+        group_fields = {}
+        group_fields["_id"] = "all"
+   
+        result_type = "updates.status"
+   
+        
+        group_fields["results"] = self.get_result_fields(result_type)
+        
+        agg_pipeline.append({"$group": group_fields})
+        
+
+        
+
+        up = UserProfile()
+        return up.agg(agg_pipeline)[0]['results']
+
+
+
+
+
+
+
+    def get_all_children(self,root_id):
+    
+        try:
+            results = self.get_tweet_by_parent(root_id)[0]['results']
+            # return results
+            total_results = results
+            tweet_ids = []
+            for result in results:
+                mentions = '@'+result['user']['username']
+                result['mentions'] = mentions
+                # tweet_ids.append(result['tweetuid'])
+
+                childrens = self.get_all_children([result['tweetuid']])
+
+                if childrens != None:
+                    for child in childrens:
+                        child['mentions'] = mentions + " " + child['mentions']
+                    total_results.extend(childrens)
+            return total_results
+        except:
+            return None
+
+
+
+
+
+
+
+
+
         
 
 
+
+# sh = Search(keyword="sujit", lon = 85.3363578, lat=27.7059892, place = "", foods=[], business=['Compost','Animal Feed'], organisation=[],sort="")
+# res = sh.get_all_children([9800])
+# print len(res)
+# print res

@@ -17,6 +17,72 @@ from django.template import RequestContext
 from mainapp.classes.AjaxHandle import AjaxHandle
 from django.views.decorators.csrf import csrf_exempt
 
+def get_time(time_val):
+    time_elapsed = int(time.time()) - time_val         
+    if time_elapsed<60:
+        time_text = str(time_elapsed) + 'seconds'
+    elif time_elapsed < 3600:
+        minutes = time_elapsed/60
+        time_text = str(minutes) + 'minutes'
+    elif time_elapsed < 3600*24:
+        hours = time_elapsed/3600
+        time_text = str(hours) + 'hours'
+    elif time_elapsed < 3600*24*365:
+        days = time_elapsed/3600/24
+        time_text = str(days) + 'days'
+    else:
+        years = time_elapsed/3600/24/365
+        time_text = str(years) + 'years'
+    return time_text
+
+
+def set_time_date(single_result,keyword):
+    distance_text = ""
+
+    # try:
+    lonlat_distance = single_result['distance'] * 0.621371 #distance(my_lon, my_lat, single_result['location']['coordinates'][0],single_result['location']['coordinates'][1])
+    
+    lonlat_distance = '%.1f' % lonlat_distance
+    result_class = single_result["sign_up_as"].lower()
+    try: 
+        for fd in single_result["foods"]:
+            if fd.lower() == keyword or fd in foods:
+                result_class = result_class + " produce"
+                break
+    except:
+        pass
+    try:
+        if single_result["result_type"] == single_result["user"]["username"]:
+            if keyword in single_result['status']:
+                result_class = result_class + " updates"
+
+
+
+        else:
+            result_class = result_class + " profile"
+    except:
+        pass
+
+    single_result["result_class"] = result_class
+
+
+
+
+
+    # if lonlat_distance>1:
+    #     distance_text = str(lonlat_distance) +" Km"
+    # else:
+    #     distance_text = str(lonlat_distance*1000) + " m"
+    distance_text = str(lonlat_distance) + " miles"
+    try:
+        single_result['time_elapsed'] = get_time(single_result['time_stamp'])
+
+    except:
+       time_text = ""
+
+    single_result['distance_text'] = distance_text
+    return single_result
+
 @csrf_exempt
 def home(request):
     parameters = {}
@@ -89,52 +155,17 @@ def home(request):
     results =search_results['results'][:40]
 
     for i in range(len(results)):
-        distance_text = ""
-
-        # try:
-        lonlat_distance = results[i]['distance'] * 0.621371 #distance(my_lon, my_lat, results[i]['location']['coordinates'][0],results[i]['location']['coordinates'][1])
-        
-        lonlat_distance = '%.1f' % lonlat_distance
-        result_class = results[i]["sign_up_as"].lower() 
-        for fd in results[i]:
-            if fd.lower() == keyword or fd in foods:
-                result_class = result_class + " produce"
-                break
+        results[i] = set_time_date(results[i],keyword)
         if results[i]["result_type"] == results[i]["user"]["username"]:
-            if keyword in results[i]['status']:
-                result_class = result_class + " updates"
-
-        else:
-            result_class = result_class + " profile"
-
-        results[i]["result_class"] = result_class
-        distance_text = str(lonlat_distance) + " miles"
-        try:
-            time_elapsed = int(time.time()) - results[i]['time_stamp']
-            
-
-            if time_elapsed<60:
-                time_text = str(time_elapsed) + 'seconds'
-            elif time_elapsed < 3600:
-                minutes = time_elapsed/60
-                time_text = str(minutes) + 'minutes'
-            elif time_elapsed < 3600*24:
-                hours = time_elapsed/3600
-                time_text = str(hours) + 'hours'
-            elif time_elapsed < 3600*24*365:
-                days = time_elapsed/3600/24
-                time_text = str(days) + 'days'
-            else:
-                years = time_elapsed/3600/24/365
-                time_text = str(years) + 'years'
-
-        except:
-           time_text = ""
-
-        results[i]['distance_text'] = distance_text
-        results[i]['time_elapsed'] = time_text
-
-
+            tweet_id = results[i]["tweetuid"]
+            replies = search_handle.get_all_children([tweet_id])
+            if replies == None:
+                continue
+            replies = sorted(replies, key=lambda k: k['time_stamp']) 
+            for j in range(len(replies)):
+                replies[j] = set_time_date(replies[j],keyword)
+            # print results[i]['replies']
+            results[i]['replies'] = replies
     
     parameters['results'] = results
     parameters['json_data'] = json.dumps(results)
