@@ -457,22 +457,19 @@
           <tbody id="food_tbody">
             {% for eachfood in all_foods %}
               <tr id="row{{forloop.counter}}">
-                  <td  >
-<!--data for food details:{{eachfood.food_description}},{{eachfood.food_tags}} and {{eachfood.food_photo}}  -->    
-                <a href="/activity/?f={{eachfood.food_name}}">  
-                  {% if eachfood.photo_url %} 
- 
-                    <img src="/media/food/{{eachfood.photo_url}}" alt="{{eachfood.food_name}}" class="img-rounded produce_square" /> 
-                  {% endif %}
-                  {{eachfood.food_name}}
-                </a>  
- 
-                  
-                  {% if eachfood.description %}
-                  <span class="text-muted   hidden-xs">{{eachfood.description}}</span>
-                  {% endif %} 
+                  <td>
 
+                  <div class="clearfix">   
+          
+
+                <a href="/activity/?f={{eachfood.food_name}}" >  
+                  
+                  {{eachfood.food_name}}
+                </a>   
+
+                  </div>
  
+                  </td>
  
                   <td nowrap="nowrap">  
                    <div class="pull-right">
@@ -515,6 +512,19 @@
                    </div>
                   </td>  
               </tr> 
+
+              {% if eachfood.description %}
+              <tr>
+                <td colspan="3">
+                  <div class="produce_detail">  
+                    <img src="{{eachfood.photo_url}}" alt="{{eachfood.food_name}}" class="img-rounded img-responsive produce_large img-thumbnail " /> 
+
+                    <span class="text-muted   ">{{eachfood.description}}</span>
+                  </div> 
+                </td>
+              </tr>
+              {% endif %} 
+
               {% endfor %}
           </tbody>
           

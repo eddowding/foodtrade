@@ -1052,14 +1052,20 @@ h2 {
   overflow: hidden;
   text-overflow: ellipsis;
   display: inline-block;
-}
- 
+} 
 
 .produce_square {
   width: 30px;
   height: 30px;
   margin-right: 5px;
 }
+
+.produce_large {
+  width: 100px;
+  height: 100px;
+  margin-right: 10px;
+  float: left;
+} 
 
 ul.tagit li.tagit-choice {
   -moz-border-radius: 0px !important;
