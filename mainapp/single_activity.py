@@ -30,13 +30,16 @@ def home(request, username, tweet_id):
         default_lat = float(location_info['latitude'])
 
     search_handle = Search(lon = default_lon, lat =default_lat)
-    single_tweet = search_handle.get_single_tweet(int(tweet_id))
+    single_tweet = search_handle.get_single_tweet(str(tweet_id))
     keyword = ''
     single_tweet = set_time_date(single_tweet[0],keyword)
-    results = search_handle.get_direct_children([int(tweet_id)])
+    results = search_handle.get_direct_children([str(tweet_id)])
     if results!= None:
         for i in range(len(results)):
             results[i] = set_time_date(results[i],keyword)
+            mentions = "@" + username+ " " + "@" + results[i]['user']['username'] 
+            results[i]['mentions'] = mentions
+
             if results[i]["result_type"] == results[i]["user"]["username"]:
                 tweet_id = results[i]["tweetuid"]
                 replies = search_handle.get_all_children([tweet_id])
@@ -45,6 +48,7 @@ def home(request, username, tweet_id):
                 replies = sorted(replies, key=lambda k: k['time_stamp']) 
                 for j in range(len(replies)):
                     replies[j] = set_time_date(replies[j],keyword)
+                    replies[j]['mentions'] = mentions + " " + replies[j]['mentions']
                 # print results[i]['replies']
                 results[i]['replies'] = replies
 

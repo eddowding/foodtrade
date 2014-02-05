@@ -1,5 +1,5 @@
 
-$("#filtered_content").on('focus', '.reply_input', function(e) {
+$(".reply_text").on('focus', '.reply_input', function(e) {
   var that = e.target;
      if(validate_login()['status'] == '1'){
     if($(that).val()=="")
@@ -15,7 +15,7 @@ $("#filtered_content").on('focus', '.reply_input', function(e) {
 
 
 
-$("#filtered_content").on('blur', '.reply_input', function(e) {
+$(".reply_text").on('blur', '.reply_input', function(e) {
   var that = e.target;
      if($(that).val().trim()==$(that).attr("data-mentions")){
     $(that).val("");

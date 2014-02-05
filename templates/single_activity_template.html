@@ -69,10 +69,11 @@
                  <i class="fa fa-location-arrow"></i> {{result.distance_text}}  
                  </a>
                 <!--  // if logged in or you've allows html5 browser location -->
-
+                {% if result_type == "status" %}
                 <span class="pull-right time_ago">
-                   <a href="/profile/{{result.user.username}}/" class="text-muted"><i class="fa fa-clock-o"></i> {{result.time_elapsed}}</a> 
+                   <a href="/{{result.user.username}}/post/{{result.tweetuid}}" class="text-muted"><i class="fa fa-clock-o"></i> {{result.time_elapsed}}</a> 
                 </span>
+                {% endif %}
               </div> 
 
         </div>
