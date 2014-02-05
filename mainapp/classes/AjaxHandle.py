@@ -50,6 +50,7 @@ class AjaxHandle(AjaxSearch):
         bot_twitter = get_twitter_obj(settings.BOT_ACCESS_TOKEN, settings.BOT_ACCESS_TOKEN_SECRET)
         message = request.POST.get('message')
         noappend = request.POST.get('noappend')
+        parent_tweet_id = int(request.POST.get("parentid",0))
 
         prof_url = " http://"+request.META['HTTP_HOST']+"/profile/"+request.user.username
 
@@ -79,7 +80,7 @@ class AjaxHandle(AjaxSearch):
                             'new_invite_tweet':new_invite_tweet}))
                 return HttpResponse(json.dumps({'status':1}))
             else:
-                tweet = user_twitter.update_status(status = message+url, in_reply_to_status_id=)
+                tweet = user_twitter.update_status(status = message+url, in_reply_to_status_id=parent_tweet_id)
             tweet_feed = TweetFeed()
 
             pic_url_list = []
@@ -89,7 +90,7 @@ class AjaxHandle(AjaxSearch):
 
 
             data = {'tweet_id': tweet['id'],
-                    'parent_tweet_id': 0 if tweet['in_reply_to_status_id'] == None else tweet['in_reply_to_status_id'],
+                    'parent_tweet_id': parent_tweet_id,
                     'status': message,
                     
                     'picture': pic_url_list,

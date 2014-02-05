@@ -309,16 +309,30 @@ class Search():
 
 
     def get_tweet_by_parent(self, parent_tweet_id):
-        query_string = {'updates':{"$elemMatch":{'parent_tweet_id':parent_tweet_id}}}
+        
         agg_pipeline = []
-        # agg_pipeline.append(geo_near)
 
+
+        geo_near = {
+                        "$geoNear": {"near": [float(self.lon), float(self.lat)],
+                                    "distanceField": "distance",
+                                    "maxDistance": 160.934,
+                                    # "query": query_string,
+                                    "includeLocs": "latlng",
+                                    "uniqueDocs": True,  
+                                    "spherical":True,
+                                    "limit":5000,
+                                    "distanceMultiplier":6371
+                                  }
+                      }
+        agg_pipeline.append(geo_near)
+        query_string = {'updates':{"$elemMatch":{'parent_tweet_id':{"$in":parent_tweet_id}}}}
         agg_pipeline.append({ '$match':query_string})
 
         agg_pipeline.append({"$unwind": "$updates"})
 
 
-        agg_pipeline.append({ '$match':{"updates.deleted":{"$ne":1}, "updates.parent_tweet_id":parent_tweet_id}})
+        agg_pipeline.append({ '$match':{"updates.deleted":{"$ne":1}, "updates.parent_tweet_id":{"$in":parent_tweet_id}}})
 
        
         # agg_pipeline.append({ '$match':{"updates":{"$size":0}}})
@@ -360,11 +374,41 @@ class Search():
         up = UserProfile()
         return up.agg(agg_pipeline)
 
+    def get_all_children(self,root_id):
+    
+        try:
+            results = self.get_tweet_by_parent(root_id)[0]['results']
+            # return results
+            total_results = results
+            tweet_ids = []
+            for result in results:
+                mentions = '@'+result['user']['username']
+                result['mentions'] = mentions
+                # tweet_ids.append(result['tweetuid'])
+
+                childrens = self.get_all_children([result['tweetuid']])
+
+                if childrens != None:
+                    for child in childrens:
+                        child['mentions'] = mentions + " " + child['mentions']
+                    total_results.extend(childrens)
+            return total_results
+        except:
+            return None
+
+
+
+
+
+
+
 
 
         
 
 
 
-sh = Search(keyword="sujit", lon = 85.3363578, lat=27.7059892, place = "", foods=[], business=['Compost','Animal Feed'], organisation=[],sort="")
-print sh.get_tweet_by_parent(53)
+# sh = Search(keyword="sujit", lon = 85.3363578, lat=27.7059892, place = "", foods=[], business=['Compost','Animal Feed'], organisation=[],sort="")
+# res = sh.get_all_children([9800])
+# print len(res)
+# print res

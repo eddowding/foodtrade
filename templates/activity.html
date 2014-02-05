@@ -200,7 +200,7 @@
         </div>
 
         <div class="reply well well-sm" style="margin:0;"> 
-          <input class="form-control input-sm enterhandler"  {% if not user.is_authenticated %} rel="tooltip" title="Please login to use this feature." {% endif %} type="text" id="replyid_{{forloop.counter}}" placeholder="Reply to @{{result.user.username}}" onfocus="ShowReply('replyid_{{forloop.counter}}', '@{{result.user.username}}')" onblur="BlurReply('replyid_{{forloop.counter}}', '@{{result.user.username}}')">
+          <input class="form-control input-sm enterhandler" data-tweet-id = "{{result.tweetuid}}" data-main = "main"   {% if not user.is_authenticated %} rel="tooltip" title="Please login to use this feature." {% endif %} type="text" id="replyid_{{forloop.counter}}" placeholder="Reply to @{{result.user.username}}" onfocus="ShowReply('replyid_{{forloop.counter}}', '@{{result.user.username}}')" onblur="BlurReply('replyid_{{forloop.counter}}', '@{{result.user.username}}')">
         </div>
     </li>
 
@@ -211,9 +211,10 @@
 
      <li>
       <ul>
+      {% for reply_result in result.replies %}
 
-          <li class="left clearfix activity_reply {{result.result_class}}" id="{{result.uid.id}}"><span class="chat-img pull-left">
-    <img src="{{result.user.profile_img}}" alt="{{result.user.name}}" class="img-thumbnail" />
+          <li class="left clearfix activity_reply {{reply_result.result_class}}" id="{{reply_result.uid.id}}"><span class="chat-img pull-left">
+    <img src="{{reply_result.user.profile_img}}" alt="{{reply_result.user.name}}" class="img-thumbnail" />
     </span>
         <div class="chat-body clearfix">
  
@@ -227,38 +228,38 @@
               <li><a href="http://www.facebook.com/sharer/sharer.php?u=SINGLE_PERMALINK" target="_blank"><i class="fa fa-facebook fa-fw"></i> Share on Facebook</a></li>
               <li><a href="http://twitter.com/home?status=SINGLE_PERMALINK" target="_blank"><i class="fa fa-twitter fa-fw"></i> Share on Twitter</a></li>
               <li class="divider"></li>
-              {%  if userinfo.user_type == "Business" and result.sign_up_as == "Business" and result.user.username != userinfo.username %}
-              <li><a href="#" onclick="click_activity('buyFrom','{{result.useruid}}')">I buy from</a></li>
-              <li><a href="#"onclick="click_activity('sellTo','{{result.useruid}}')">I sell to</a></li> 
+              {%  if userinfo.user_type == "Business" and reply_result.sign_up_as == "Business" and reply_result.user.username != userinfo.username %}
+              <li><a href="#" onclick="click_activity('buyFrom','{{reply_result.useruid}}')">I buy from</a></li>
+              <li><a href="#"onclick="click_activity('sellTo','{{reply_result.useruid}}')">I sell to</a></li> 
               <li class="divider"></li>
               {% endif %}
-              {% if result.sign_up_as == "Organisation" %}
-              <li><a href="#" onclick="click_activity('markMember', '{{result.useruid}}')">I'm a member</a></li>
+              {% if reply_result.sign_up_as == "Organisation" %}
+              <li><a href="#" onclick="click_activity('markMember', '{{reply_result.useruid}}')">I'm a member</a></li>
               {% endif %}
-              {% if userinfo.user_type == "Individual" and result.sign_up_as == "Business" %}
-              <li><a href="#" onclick="click_activity('markCustomer', '{{result.user.username}}')">I'm a customer</a></li>
+              {% if userinfo.user_type == "Individual" and reply_result.sign_up_as == "Business" %}
+              <li><a href="#" onclick="click_activity('markCustomer', '{{reply_result.user.username}}')">I'm a customer</a></li>
               {% endif %}
               <li class="divider"></li>
-              {% ifequal result.user.username userinfo.username %}
-              <li><a href="#" onclick="click_activity('delete','{{result.tweetuid}}')">Delete</a></li>
+              {% ifequal reply_result.user.username userinfo.username %}
+              <li><a href="#" onclick="click_activity('delete','{{reply_result.tweetuid}}')">Delete</a></li>
               {% endifequal %}
-              {% if result.user.username != userinfo.username %}
-              <li><a href="#" onclick="click_activity('spam','{{result.uid.id}}')">Flag as spam</a></li>
-              <li><a href="#" onclick="click_activity('follow','{{result.user.username}}')">Follow on Twitter</a></li>
+              {% if reply_result.user.username != userinfo.username %}
+              <li><a href="#" onclick="click_activity('spam','{{reply_result.uid.id}}')">Flag as spam</a></li>
+              <li><a href="#" onclick="click_activity('follow','{{reply_result.user.username}}')">Follow on Twitter</a></li>
               {% endif %}
-              <li><a href="/profile/{{result.user.username}}/">View full profile</a></li> 
+              <li><a href="/profile/{{reply_result.user.username}}/">View full profile</a></li> 
             </ul>
           </div>  
 
 
             <div class="header">
-                <strong class="pull-left" style="margin-right: 10px;"><a href="/profile/{{result.user.username}}">{{result.user.name}}</a></strong> 
+                <strong class="pull-left" style="margin-right: 10px;"><a href="/profile/{{reply_result.user.username}}">{{reply_result.user.name}}</a></strong> 
 
           {% if type_user|length == 0 or type_user|first == '' %}
           {% else %}
-          {% if result.sign_up_as == "Business" %}
+          {% if reply_result.sign_up_as == "Business" %}
             <div class="tags tags-biztype">  
-              {% for tag in result.type_user  %}
+              {% for tag in reply_result.type_user  %}
                 <a href="/activity/?b={{tag}}">{{tag}}</a>
               {% endfor %}
             </div> 
@@ -267,41 +268,41 @@
             </div>
 
             <p>
-                {{result.status}}
+                {{reply_result.status}}
             </p>
 
               <div class="meta small text-muted">
                <i class="fa fa-map-marker"></i>
-                {{result.user.address}}
+                {{reply_result.user.address}}
 
                  <!-- if logged in or you've allows html5 browser location -->
-                 <a href="http://maps.google.com/maps?saddr={{userinfo.lat}},{{userinfo.lon}}&daddr={{result.location.coordinates.1}},{{result.location.coordinates.0}}" 
+                 <a href="http://maps.google.com/maps?saddr={{userinfo.lat}},{{userinfo.lon}}&daddr={{reply_result.location.coordinates.1}},{{reply_result.location.coordinates.0}}" 
                     target="_blank" data-placement="top" data-toggle="tooltip" 
                     class="text-muted" 
                     rel="tooltip" 
                     title="Get directions"> 
-                 <i class="fa fa-location-arrow"></i> {{result.distance_text}}  
+                 <i class="fa fa-location-arrow"></i> {{reply_result.distance_text}}  
                  </a>
                 <!--  // if logged in or you've allows html5 browser location -->
 
                 <span class="pull-right time_ago">
-                   <a href="/profile/{{result.user.username}}/" class="text-muted"><i class="fa fa-clock-o"></i> {{result.time_elapsed}}</a> 
+                   <a href="/profile/{{reply_result.user.username}}/" class="text-muted"><i class="fa fa-clock-o"></i> {{reply_result.time_elapsed}}</a> 
                 </span>
               </div> 
 
         </div>
 
         <div class="reply well well-sm" style="margin:0;"> 
-          <input class="form-control input-sm enterhandler"  {% if not user.is_authenticated %} rel="tooltip" title="Please login to use this feature." {% endif %} type="text" id="replyid_{{forloop.counter}}" placeholder="Reply to @{{result.user.username}}" onfocus="ShowReply('replyid_{{forloop.counter}}', '@{{result.user.username}}')" onblur="BlurReply('replyid_{{forloop.counter}}', '@{{result.user.username}}')">
+          <input class="form-control input-sm enterhandler" data-tweet-id = "{{reply_result.tweetuid}}" data-main = "reply" {% if not user.is_authenticated %} rel="tooltip" title="Please login to use this feature." {% endif %} type="text" id="replyid_{{reply_result.tweetuid}}" placeholder="Reply to @{{result.user.username}} {{reply_result.mentions}}" onfocus="ShowReply('replyid_{{reply_result.tweetuid}}', '@{{result.user.username}} {{reply_result.mentions}}')" onblur="BlurReply('replyid_{{reply_result.tweetuid}}', '@{{result.user.username}} {{reply_result.mentions}}')">
         </div>
     </li>
 
-       
+         {% endfor %}
         
 </ul>
 </li>
 
-     {% endif %}
+{% endif %}
   {% endfor %}
     {% endif %}
 </ul> 

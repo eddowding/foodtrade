@@ -298,11 +298,28 @@ $('.enterhandler').bind('keypress', function(e) {
 		   {
 		   		return;
 		   }
-		   ajax_request("post_tweet", 'CloseNewPostModal', {message: status_msg});
+		    var tweet_id = $(this).attr("data-tweet-id");
+		   ajax_request("post_tweet", 'CloseNewPostModal', {message: status_msg, parentid:tweet_id});
 		   this.value = "";
-		 $(this).focus();
-		 }
+
+	activity_html = $('#status_template').html();
+	activity_html = activity_html.replace('===status===',status_msg);
+	var input_type = $(this).attr("data-main");
+	if(input_type=="reply")
+	{
+		$(this).parent().parent().html($(this).parent().parent().html()+activity_html);
+
 	}
+	else
+	{
+		$(this).parent().parent().next().children().html($(this).parent().parent().next().children().html()+activity_html);
+	}
+	
+		  
+		$(this).focus();
+		 
+	}
+}
 	else{
 		/*$('#btn_must_be_logged').click();*/
 		/*$('#' + String(this.attributes.id.value)).tooltip('show');*/
@@ -310,6 +327,7 @@ $('.enterhandler').bind('keypress', function(e) {
 		  window.location = '/accounts/twitter/login/?process=login';
 	}
 });
+
 
 
 
