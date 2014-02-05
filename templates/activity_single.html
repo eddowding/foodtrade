@@ -57,9 +57,9 @@
          </div> <!-- meta -->
   
       </div><!-- end header middle -->
-{% comment %}
+
       <div id="contact_info" class="col-md-3">
- 
+ {% comment %}
       <!-- if logged in users = individual --> 
       <button class="btn btn-default btn-block" data-toggle="modal" data-target="#modal_customer">
         <i class="fa fa-smile-o text-muted"></i> I am a customer
@@ -76,7 +76,7 @@
         </label> 
       </div>
  
-
+{% endcomment %}
       <!-- Button trigger modal -->
       <button class="btn btn-primary btn-block" data-toggle="modal" data-target="#modal_contact">
         Contact
@@ -86,6 +86,60 @@
       <button class="btn btn-default btn-block" data-toggle="modal" data-target="#sharer">
         <i class="fa fa-share-square-o text-muted"></i> Share
       </button>
+
+       <!-- modal_contact -->
+      <div class="modal fade" id="modal_contact" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+              <h4 class="modal-title" id="myModalLabel">Contact {{userinfo.name}}</h4>
+            </div>
+            <div class="modal-body">
+            <div class="container-responsive">
+              <div class="row">
+                <div class="col-sm-4">
+             
+                  <address>
+                    
+          <a href="mailto:{{email}}" class="dotdotdot" target="_blank"><i class="fa fa-envelope text-muted fa-fw"></i> {{s_userinfo.email}} </a><br />
+          <a href="http://twitter.com/{{screen_name}}"  target="_blank"><i class="fa fa-twitter text-muted fa-fw"></i> {{s_userinfo.twitter_user}}</a><br />
+          {% if s_userinfo.phone_number %}
+          <a href="callto:{{phone_number}}"><i class="fa fa-phone text-muted fa-fw"></i> {{phone_number}}</a>
+          {% endif %}
+                  </address>
+                </div>
+                
+                <div class="col-sm-8 contact-form">
+                  <form id="contact" method="post" class="form" role="form">
+                    <div class="row">
+                      <div class="col-xs-6 col-md-6 form-group">
+                        <input class="form-control" id="sender_name" name="name" placeholder="Name" type="text" required autofocus value = "{{userinfo.full_name}}"/>
+                      </div>
+                      <div class="col-xs-6 col-md-6 form-group">
+                        <input class="form-control" id="sender_email" name="email" placeholder="Email" type="email" required value = "{{userinfo.email}}" />
+                      </div>
+                    </div> 
+                    <textarea class="form-control" id="email_message" placeholder="Type in your message" rows="5"></textarea>
+                    <h6 class="pull-right" id="contact_counter">120 characters remaining</h6>
+                     
+                  </form>
+                </div>
+              </div>
+            </div>
+ 
+   
+            </div>
+            <div class="modal-footer"> 
+              <button type="button" id="contact_tweet" class="btn btn-info" onclick="post_contact_tweet('{{screen_name}}')"><i class="fa fa-fw fa-twitter"></i> Tweet it</button>
+              <button type="button" class="btn btn-success" onclick="send_email('{{email}}')"><i class="fa fa-envelope fa-fw"></i> Email it</button>
+            </div>
+          </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+      </div><!-- /.modal -->
+
+
+
 
       <!--SHARER  Modal -->
       <div class="modal fade" id="sharer" tabindex="-1" role="dialog" aria-labelledby="sharer" aria-hidden="true">
@@ -144,7 +198,7 @@
           </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
       </div><!-- /.modal -->
-
+{% comment %}
       <div class="icons text-center" style="font-size:25px">
         <a href="#"><i class="fa fa-facebook-square"></i></a>
         <a href="#"><i class="fa fa-twitter-square"></i></a> 
@@ -156,13 +210,13 @@
         <a href="#"><i class="fa fa-linkedin-square"></i></a> 
       </div> 
 
-
+{% endcomment %}
       
 
 
  
       </div><!-- end header last -->
-{% endcomment %}
+
     </div>
     </div> 
 
@@ -178,7 +232,7 @@
            
 
                 <span class="input-group-btn">
-                    <button type="submit" class="btn btn-success"> Post</button>
+                    <button type="submit" class="btn btn-success" onclick="single_post_content_new_post()"> Post</button>
                 </span>
               </div>
           

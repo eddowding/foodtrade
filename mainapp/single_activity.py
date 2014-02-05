@@ -54,10 +54,11 @@ def get_post_parameters(request, tweet_id):
                     replies[j]['mentions'] = mentions + " " + replies[j]['mentions']
                 # print results[i]['replies']
                 results[i]['replies'] = replies
-
+    single_tweet['user']['profile_img'] = single_tweet['user']['profile_img'].replace("normal","bigger")
     parameters['results'] = results
     parameters['json_data'] = json.dumps(results)
     parameters['parent_tweet'] = single_tweet
+    parameters['s_userinfo'] = UserInfo(single_tweet['useruid'])
     return parameters
 def home(request, username, tweet_id):
     
