@@ -14,40 +14,44 @@
     <div id="header_box" class="clearfix">
 
 
-      <div class="col-md-2" id="avatar">
+      <div class="col-md-2 hidden-sm hidden-xs" id="avatar">
         <img class="img-thumbnail center-block" src="{{parent_tweet.user.profile_img}}"  />
       </div>
+
      
       <div class="col-md-7">
 
-         <p style="font-size: 20px; font-weight: 200; padding-top: 20px;">
-          {{parent_tweet.status}}</p>        
 
- <hr />
 
-         <h1><a href="#">{{parent_tweet.user.name}}</a></h1>
+         <h1 style="font-size: 26px;"><a href="#">{{parent_tweet.user.name}}</a></h1>
+
+
+
+         <div class="ftstrip ftstrip-mini"></div>
+
+         <p class="lead" style="padding: 20px 0 0 0;">
+          {{parent_tweet.status}}
+         </p>
+
+         <div class="ftstrip ftstrip-mini"></div>
 
         {% if parent_tweet.type_user|length == 0 or parent_tweet.type_user|first == '' %}
           {% else %}
-          <div class="tags tags-biztype  ">  
+          <div class="tags tags-biztype" style="padding: 20px 0 0 0;">  
             {% for eachtype in parent_tweet.type_user %}
            <a href="/activity/?b={{eachtype}}">{{eachtype}}</a>
            {% endfor %}
-          </div> {% endif %}
+          </div> 
+        {% endif %}
 
-          <!-- <div class="tags tags-biztype  ">  
-           <a href="/type/livestock-farm">Bakery</a>
-           <a href="/type/buther">Wholesale</a>  
-           <a href="/type/buther">Distribution</a>  
-           <a href="/type/buther">Livestock Farm</a>  
-          </div>  -->
    
      
          <div class="meta small text-muted">
-            <i class="fa fa-map-marker"></i> <a href="http://maps.google.com/maps?saddr={{userinfo.lat}},{{userinfo.lon}}&daddr={{parent_tweet.location.coordinates.1}},{{parent_tweet.location.coordinates.0}}" target="_blank" data-placement="top" data-toggle="tooltip" title="Get directions" class="text-muted">{{parent_tweet.user.address}}</a>  
+            <i class="fa fa-map-marker"></i> <a href="http://maps.google.com/maps?saddr={{userinfo.lat}},{{userinfo.lon}}&daddr={{parent_tweet.location.coordinates.1}},{{parent_tweet.location.coordinates.0}}" target="_blank" rel="tooltip" title="Get directions" class="text-muted">{{parent_tweet.user.address}}</a>  
             
-            <!-- if logged in or you've allows html5 browser location -->
-            <i class="fa fa-location-arrow" style="margin-left: 20px;"></i> {{parent_tweet.distance_text}} miles  
+            <span class="pull-right">
+              <i class="fa fa-location-arrow" style="margin-left: 20px;"></i> {{parent_tweet.distance_text}}    
+            </span>
 
   
          </div> <!-- meta -->
@@ -168,7 +172,7 @@
         <div id="update" class="well well-sm">
           
               <div class="input-group"> 
-               <input id="main_post_input" class="form-control input-sm reply_input" data-tweet-id = "{{parent_tweet.tweetuid}}" data-main = "{{position}}"   {% if userinfo.user.username %} rel="tooltip" title="Please login to use this feature." {% endif %} type="text" placeholder="Reply to @{{parent_tweet.user.username}}" data-mentions = "@{{parent_tweet.user.username}}">
+               <input id="main_post_input" class="form-control reply_input" data-tweet-id="{{parent_tweet.tweetuid}}" data-main="{{position}}"   {% if userinfo.user.username %} rel="tooltip" title="Please login to use this feature." {% endif %} type="text" placeholder="Reply to @{{parent_tweet.user.username}}" data-mentions="@{{parent_tweet.user.username}}">
 
 
            
