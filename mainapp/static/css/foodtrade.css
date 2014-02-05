@@ -1061,6 +1061,25 @@ h2 {
   margin-right: 5px;
 }
 
+ul.tagit li.tagit-choice {
+  -moz-border-radius: 0px !important;
+  border-radius: 0 !important;
+  -webkit-border-radius: 0 !important;
+  border: 1px solid #CAD8F3;
+  background: none;
+  background-color: #DEE7F8;
+  font-weight: normal;
+  font-size: 13px;
+} 
+
+ul.tagit li.tagit-choice-editable {
+  padding: 0px 18px 0px 2px !important;
+}
+
+.tagit-new input {
+  font-size: 13px;
+}
+
 /********************************/
 /**  ACTIVITY                  **/
 /********************************/

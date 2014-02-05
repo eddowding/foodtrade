@@ -168,10 +168,14 @@
         <div id="update" class="well well-sm">
           
               <div class="input-group"> 
+<<<<<<< HEAD
                <input id="main_post_input" class="form-control input-sm reply_input" data-tweet-id = "{{parent_tweet.tweetuid}}" data-main = "{{position}}"   {% if userinfo.user.username %} rel="tooltip" title="Please login to use this feature." {% endif %} type="text" placeholder="Reply to @{{parent_tweet.user.username}}" data-mentions = "@{{parent_tweet.user.username}}">
 
 
            
+=======
+               <input class="form-control reply_input" data-tweet-id = "{{parent_tweet.tweetuid}}" data-main = "{{position}}"   {% if userinfo.user.username %} rel="tooltip" title="Please login to use this feature." {% endif %} type="text" placeholder="Reply to @{{parent_tweet.user.username}}" data-mentions = "@{{parent_tweet.user.username}}"> 
+>>>>>>> 2754e5c9bdad9c72f59f901fb7de845dd8e5556e
 
                 <span class="input-group-btn">
                     <button type="submit" class="btn btn-success"> Post</button>

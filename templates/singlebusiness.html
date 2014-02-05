@@ -23,7 +23,7 @@
   <link rel="stylesheet" href="/static/css/chosen.min.css">
 
 <link href="{% static "css/jquery.tagit.css" %}" rel="stylesheet" type="text/css">
-    <link href="{% static "css/tagit.ui-zendesk.css" %}" rel="stylesheet" type="text/css">
+<link href="{% static "css/tagit.ui-zendesk.css" %}" rel="stylesheet" type="text/css">
 
 <style type="text/css" media="all">
     /* fix rtl for demo */
@@ -336,6 +336,7 @@
                   <!-- <li>Tag1</li>
                   <li>Tag2</li> -->
                   </ul>
+                  <p class="help-block small">Eg "free range, organic, bramley". Use commas to separate tags.</p>
                   
                   </div>
                 </div>
@@ -835,7 +836,10 @@
 $( document ).ready(function() {
 
 
-  $("#myTags").tagit({placeholderText: 'Add tags to your food...'});
+  $("#myTags").tagit({
+      placeholderText: 'Add tags to your food...',
+      allowSpaces: true
+    });
 
   tweetlistener('email_message', 'contact_counter', 'contact_tweet');
 // activating tooltips
