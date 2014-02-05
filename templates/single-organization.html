@@ -438,13 +438,12 @@
 connections = {{members_str | safe}};
 
 var name = "{{userprof.full_name}}";
-      
+      var description = "{{userprof.description}}";
       var photo =  "{{userprof.profileimg}}";
       var username = "{{userprof.username}}";
       var type = "{{userprof.type}}".split(',');
       var latitude =  {{userprof.lat}};
           var longitude =  {{userprof.lon}};
-          var description = "{{userprof.description |safe}}";
     </script>
     <script src="{% static "js/organisation-map.js" %}"></script>
      <script src="{% static "js/contact.js" %}"></script>
