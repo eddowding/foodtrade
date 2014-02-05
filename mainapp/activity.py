@@ -117,7 +117,7 @@ def home(request):
     keyword = request.GET.get('q',"")
     sort = request.GET.get('sort',"time")
     my_lon = request.GET.get('lon',"")
-    my_lat = request.GET.get('lat',"")
+    my_lat = request.GET.get('lat',"") 
     location = request.GET.get('location',default_location)
     biz_request = request.GET.get('b',"")
     food_request = request.GET.get('f',"")

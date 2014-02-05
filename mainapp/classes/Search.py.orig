@@ -437,6 +437,7 @@ class Search():
         return up.agg(agg_pipeline)[0]['results']
 
 
+<<<<<<< HEAD
 
     def get_direct_children(self, root_id):
         try:
@@ -447,6 +448,8 @@ class Search():
 
 
 
+=======
+>>>>>>> ae06125dc382cb3632f42979cfb991bde536ca40
     def get_all_children(self,root_id):
     
         try:
