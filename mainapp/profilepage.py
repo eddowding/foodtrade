@@ -18,7 +18,7 @@ from mainapp.produce import *
 import random
 import time
 from mainapp.forms import FoodForm
-
+from bson import json_util
 def resolve_profile(request, username):
     user_profile = UserProfile()
     userprof = user_profile.get_profile_by_username(str(username))
@@ -46,7 +46,9 @@ def display_profile(request, username):
     parameters['all_tags'] = foo.get_tags()
     user_profile = UserProfile()
     userprof = user_profile.get_profile_by_username(str(username))
-    parameters['userprof'] = UserInfo(userprof['useruid'])
+    uinfo = UserInfo(userprof['useruid'])
+    uinfo.description = uinfo.description.replace("\r\n"," ")
+    parameters['userprof'] = uinfo
     parameters['profile_id'] = userprof['useruid']
     parameters['sign_up_as'] = userprof['sign_up_as']
     parameters['address'] = userprof['address']
@@ -54,7 +56,7 @@ def display_profile(request, username):
     parameters['name'] = userprof['name']
     parameters['description'] = userprof['description']
     parameters['pic_url'] = userprof['profile_img'].replace("normal","bigger")
-    print userprof
+
     parameters['loc'] = {'lat':userprof['latlng']['coordinates'][1], 'lon':userprof['latlng']['coordinates'][0]}
     parameters['email'] = userprof['email']
     parameters['screen_name'] = "@" + userprof['screen_name']
@@ -107,6 +109,7 @@ def display_profile(request, username):
         parameters['loggedin_coord'] = {'lat':user_profile['latlng']['coordinates'][1], 'lon':user_profile['latlng']['coordinates'][0]}
         user_info = UserInfo(user_id)
         parameters['userinfo'] = user_info
+
         parameters['user_id'] = request.user.id
         lon2 = user_info.lon
         lat2 = user_info.lat
