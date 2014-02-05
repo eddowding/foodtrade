@@ -27,8 +27,7 @@ $("#filtered_content").on('keypress', '.reply_input', function(e) {
   if(validate_login()['status'] == '1'){
     var code = e.keyCode || e.which;
      if(code == 13) { //Enter keycode
-      alert("sujit");
-      return;
+
        //Do something
        status_msg =this.value;
        if(status_msg=="")
@@ -36,24 +35,24 @@ $("#filtered_content").on('keypress', '.reply_input', function(e) {
           return;
        }
         var tweet_id = $(this).attr("data-tweet-id");
-       ajax_request("post_tweet", 'CloseNewPostModal', {message: status_msg, parentid:tweet_id});
-       this.value = "";
+       ajax_request("post_tweet", 'make_search', {message: status_msg, parentid:tweet_id});
+       // this.value = "";
 
-  activity_html = $('#status_template').html();
-  activity_html = activity_html.replace('===status===',status_msg);
-  var input_type = $(this).attr("data-main");
-  if(input_type=="reply")
-  {
-    $(this).parent().parent().html($(this).parent().parent().html()+activity_html);
+  // activity_html = $('#status_template').html();
+  // activity_html = activity_html.replace('===status===',status_msg);
+  // var input_type = $(this).attr("data-main");
+  // if(input_type=="reply")
+  // {
+  //   $(this).parent().parent().html($(this).parent().parent().html()+activity_html);
 
-  }
-  else
-  {
-    $(this).parent().parent().next().children().html($(this).parent().parent().next().children().html()+activity_html);
-  }
+  // }
+  // else
+  // {
+  //   $(this).parent().parent().next().children().html($(this).parent().parent().next().children().html()+activity_html);
+  // }
   
       
-    $(this).focus();
+  //   $(this).focus();
      
   }
 }
@@ -65,7 +64,37 @@ $("#filtered_content").on('keypress', '.reply_input', function(e) {
   }
 });
 
+$('#newstatus').bind('keypress', function(e) {
+  
+    var code = e.keyCode || e.which;
+     if(code == 13) { //Enter keycode
+       //Do something
+       message = $('#newstatus').val();
+  if(message=="")
+  {
+    alert("You can't post empty status.");
+    return;
+  }
+  if(validate_login()['status'] == '1'){
+    ajax_request("post_tweet", 'clear_input', {message: message});
+  }
+  else{
+    /*$('#btn_must_be_logged').click();*/
+    /*$('#btn_update_activity').tooltip('show');*/
+    window.location('/accounts/twitter/login/?process=?login');
+  } 
+      
+     }
+  
+  
+});
 
+function clear_input()
+{
+  $('#newstatus').val('');
+  make_search();
+
+}
 
  function login_redirect(){
             window.location = '/accounts/twitter/login/?process=login';
@@ -355,7 +384,7 @@ for(var i = 0; i < organisation_filters.length;i++){
           var keyword = $("#keyword").val();
           var s_lon = $("#lon").val();
           var s_lat = $("#lat").val();
-          var sort_type = $("#sortby").val();
+          var sort_type = $("#current_sort_order").val();
 
 
            ajax_request("ajax_search", 'show_ajax_results', {q:keyword, lon:s_lon, lat:s_lat, foods:JSON.stringify(foods), businesses:JSON.stringify(businesses), organisations:JSON.stringify(organisations), sort: sort_type});
@@ -412,19 +441,12 @@ function success_activity_handle(data){
 }
 
 
-function sort_by(sort)
+function sort_by(sort,that)
 {
-   $("#sortby").val(sort);
+   $("#current_sort_order").val(sort);
    make_search();
-   if(sort == "distance")
-   {
-    var sort_text = '<i class="fa fa-location-arrow fa-fw"></i> Distance from {% if search %} {{ search.place }} {% endif %} {% if not search %} {{userinfo.zip_code}}{% endif %}';
-   }
-   else
-   {
-    var sort_text = '<i class="fa fa-clock-o fa-fw"></i> Time posted';
-   }
-   $("#current_sort_text").html(sort_text);
+  
+   $("#current_sort_text").html($(that).html());
    
 
 }

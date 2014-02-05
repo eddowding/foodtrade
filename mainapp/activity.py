@@ -14,7 +14,7 @@ import time
 from classes.DataConnector import UserInfo
 
 from django.template import RequestContext
-from mainapp.classes.AjaxHandle import AjaxHandle
+
 from django.views.decorators.csrf import csrf_exempt
 
 def get_time(time_val):
@@ -84,8 +84,7 @@ def set_time_date(single_result,keyword):
     single_result['distance_text'] = distance_text
     return single_result
 
-@csrf_exempt
-def home(request):
+def get_search_parameters(request):
     parameters = {}
 
     default_location = ""
@@ -115,10 +114,10 @@ def home(request):
         default_lon = float(location_info['longitude'])
         default_lat = float(location_info['latitude'])
 
-    keyword = request.GET.get('q',"")
-    sort = request.GET.get('sort',"time")
-    my_lon = request.GET.get('lon',"")
-    my_lat = request.GET.get('lat',"") 
+    keyword = request.GET.get('q',request.POST.get('q',""))
+    sort = request.GET.get('sort',request.POST.get('sort',"time"))
+    my_lon = request.GET.get('lon',request.POST.get('lon',""))
+    my_lat = request.GET.get('lat',request.POST.get('lat',"") ) 
     location = request.GET.get('location',default_location)
     biz_request = request.GET.get('b',"")
     food_request = request.GET.get('f',"")
@@ -230,7 +229,9 @@ def home(request):
             organisation_filters_count = organisation_filters_count + f['value']
     parameters['organisation_filter'] = json.dumps(organisation_filters)
     parameters['organisation_count'] = int(organisation_filters_count)
+    return parameters
 
-
-    return render_to_response('activity.html',parameters ,context_instance=RequestContext(request))
+@csrf_exempt
+def home(request): 
+    return render_to_response('activity.html',get_search_parameters(request) ,context_instance=RequestContext(request))
 

@@ -265,68 +265,6 @@ function CloseNewPostModal()
 	$('#newtwitterpost').modal('hide');
 }
 
-function ShowReply(reply_id, mentions)
-{
-	if(validate_login()['status'] == '1'){
-		if($('#'+reply_id).val()=="")
-		{
-		$('#'+reply_id).val(mentions+" ");
-		}
-	}
-	else{
-		window.location='/accounts/twitter/login/?process=login'
-	}
-}
-
-
-function BlurReply(reply_id, mentions)
-{
-	if($('#'+reply_id).val().trim()==mentions){
-		$('#'+reply_id).val("");
-	}
-}
-
-
-var nnn;
-$('.enterhandler').bind('keypress', function(e) {
-	if(validate_login()['status'] == '1'){
-		var code = e.keyCode || e.which;
-		 if(code == 13) { //Enter keycode
-		   //Do something
-		   status_msg =this.value;
-		   if(status_msg=="")
-		   {
-		   		return;
-		   }
-		    var tweet_id = $(this).attr("data-tweet-id");
-		   ajax_request("post_tweet", 'CloseNewPostModal', {message: status_msg, parentid:tweet_id});
-		   this.value = "";
-
-	activity_html = $('#status_template').html();
-	activity_html = activity_html.replace('===status===',status_msg);
-	var input_type = $(this).attr("data-main");
-	if(input_type=="reply")
-	{
-		$(this).parent().parent().html($(this).parent().parent().html()+activity_html);
-
-	}
-	else
-	{
-		$(this).parent().parent().next().children().html($(this).parent().parent().next().children().html()+activity_html);
-	}
-	
-		  
-		$(this).focus();
-		 
-	}
-}
-	else{
-		/*$('#btn_must_be_logged').click();*/
-		/*$('#' + String(this.attributes.id.value)).tooltip('show');*/
-		  /*alert("roshan");*/
-		  window.location = '/accounts/twitter/login/?process=login';
-	}
-});
 
 
 
@@ -338,16 +276,8 @@ $('.enterhandler').bind('keypress', function(e) {
 
 
 
-$('#newstatus').bind('keypress', function(e) {
-	
-		var code = e.keyCode || e.which;
-		 if(code == 13) { //Enter keycode
-		   //Do something
-		   UpdateActivity('newstatus');
-		 }
-	
-	
-});
+
+
 
 /*function ajax_success_validate_logged_in(data){
 	alert(data);
