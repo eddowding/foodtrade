@@ -546,7 +546,8 @@ class Invites():
         self.db_object.create_table(self.table_name,'username')
 
     def save_invites(self,doc):
-        return self.db_object.insert_one(self.table_name,doc)
+        return self.db_object.update_upsert(self.table_name,
+            {'to_screenname':doc['to_screenname'],'from_username':doc['from_username']},doc)
 
     def check_invitees(self, screen_name):
         return self.db_object.get_all(self.table_name, 

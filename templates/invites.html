@@ -71,6 +71,7 @@
 <script src="{% static "js/jquery.js" %}"></script>
 <script type="text/javascript">
 var invite_id = String('{{invite_id|safe}}');
+var search =0;
 var domain = document.domain;
 var tweet = String('{{invite_tweet|safe}}');
 var countVal = {{friend_count|safe}};
@@ -227,7 +228,16 @@ function update_ul_invites_inc(){
 }
 
 function parse_friends_ajax(data){
-	friends = jQuery.parseJSON(data);
+	data = jQuery.parseJSON(data);
+	if (search == 1){
+		friends = data['result'];
+		countVal = data['result_count'];
+		CURRENT =1;
+	}
+	else{
+		friends = data;	
+	}
+	
 	/*alert(friends);*/
 	var str ='';
 	$('#myFriendsLi').html('');
@@ -262,6 +272,7 @@ $('#btnFindFriends').click(function(){
 
 $('#inputFindFriends').bind('keypress', function(e) {
 	if(validate_login()['status'] == '1'){
+		search =1;
 		var code = e.keyCode || e.which;
 		 if(code == 13) {
 		   status_msg = this.value;
