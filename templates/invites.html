@@ -93,7 +93,7 @@ function validate_tweets (argument, count) {
 	var chkbx_status = document.getElementById('checkbox' + String(count)).checked;
 	if(chkbx_status == false){
 			countVal = countVal + 1;
-			tweet = tweet.replace(' @' + String(argument)+' ','');
+			tweet = tweet.replace('@' + String(argument) + ' ','');
 			send_list.pop(count);
 			users.pop('@' + argument);
 			$('#tweetMessage1').val(tweet);
