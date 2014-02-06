@@ -1,24 +1,41 @@
 {% for eachfood in all_foods %}
               <tr id="row{{forloop.counter}}">
                   <td>
-                  <a href="/activity/?f={{eachfood.food_name}}">{{eachfood.food_name}}</a> 
-                  <a href="" data-toggle="modal" data-target="#modal_food_detail" class="showonhover" data-container="body" onClick="get_food_detail('{{profile_id}}', '{{eachfood.food_name}}', '{{eachfood.description}}', '{{eachfood.food_tags}}')">Add details</a>
-                  </td>  
+
+                  <div class="clearfix">   
+          
+
+                <a href="/activity/?f={{eachfood.food_name}}" >  
                   
-                  <td>  
+                  {{eachfood.food_name}}
+                </a>   
 
-
+                  </div>
+ 
+                  </td>
+ 
+                  <td nowrap="nowrap">  
                    <div class="pull-right">
 
                    {% ifequal profile_id user_id %}
+
+                     <a href="" data-toggle="modal" data-target="#modal_food_detail" class="btn btn-sm btn-default" data-container="body" onClick="get_food_detail('{{profile_id}}', '{{eachfood.food_name}}', '{{eachfood.description}}', '{{eachfood.food_tags}}', '{{eachfood.photo_url}}')"><i class="fa fa-edit" title="Edit" ></i></a>
+
                      <a class="btn btn-danger btn-sm"><i class="fa fa-trash-o" title="Delete" onClick="delete_food({{profile_id}}, '{{eachfood.food_name}}', this)"></i></a>
 
                    {% endifequal %}
-                        {% if user.is_authenticated %}
-                    <a class="btn btn-default btn-sm" title="Recommend this to others" onclick="recommend_food({{user_id}}, '{{eachfood.food_name}}', {{profile_id}}, '{{screen_name}}'); return null;" data-toggle="modal" data-target="#modal_tweet_recomm">
-                      <i class="fa fa-thumbs-o-up tltip" >
-                      </i>
-                    </a> {% endif %}
+
+
+                   {% if user.is_authenticated %}
+
+                     {% ifnotequal profile_id user_id %}
+                      <a class="btn btn-default btn-sm" title="Recommend this to others" onclick="recommend_food({{user_id}}, '{{eachfood.food_name}}', {{profile_id}}, '{{screen_name}}'); return null;" data-toggle="modal" data-target="#modal_tweet_recomm">
+                        <i class="fa fa-thumbs-o-up tltip" >
+                        </i>
+                      </a> 
+
+                     {% endifnotequal %}
+                   {% endif %}
                      
                    
                    </div>
@@ -38,4 +55,17 @@
                    </div>
                   </td>  
               </tr> 
+
+              {% if eachfood.description %}
+              <tr>
+                <td colspan="3">
+                  <div class="produce_detail">  
+                    <img src="{{eachfood.photo_url}}" alt="{{eachfood.food_name}}" class="img-rounded img-responsive produce_large img-thumbnail " /> 
+
+                    <span class="text-muted   ">{{eachfood.description}}</span>
+                  </div> 
+                </td>
+              </tr>
+              {% endif %} 
+
               {% endfor %}

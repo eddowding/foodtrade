@@ -73,9 +73,13 @@
 var invite_id = String('{{invite_id|safe}}');
 var domain = document.domain;
 var tweet = String('{{invite_tweet|safe}}');
-var countVal = 0;
+var countVal = {{friend_count|safe}};
 var send_list = [];
 var users = [];
+
+var pg_count = {{page_count|safe}};
+var CURRENT = {{current_page_number|safe}};
+
 $(document).ready(function(){
 	$('#tweetMessage1').html(tweet);
 });
@@ -88,11 +92,11 @@ function validate_tweets (argument, count) {
 	var len = tweet.length;
 	var chkbx_status = document.getElementById('checkbox' + String(count)).checked;
 	if(chkbx_status == false){
+			countVal = countVal + 1;
 			tweet = tweet.replace(' @' + String(argument)+' ','');
 			send_list.pop(count);
 			users.pop('@' + argument);
 			$('#tweetMessage1').val(tweet);
-			countVal = countVal - 1;
 			for_page_counter = for_page_counter - 1;
 			$('#btnSendTweet1').html("Send " + "selected" + ' invites');
 			$('#btnSendTweet2').html("Send " + "selected" + ' invites');
@@ -100,9 +104,9 @@ function validate_tweets (argument, count) {
 			$('#charsRem').html(String(140-tweet.length) + ' characters remaining.')
 	}
 	else{
+		countVal = countVal - 1;
 		if (argument.length + len < 140 ) {
 			tweet = tweet + ' ' + '@' + String(argument) +' ';
-			countVal = countVal + 1;
 			for_page_counter = for_page_counter + 1;
 			send_list.push(count);
 			users.push('@' + argument);
@@ -137,21 +141,21 @@ function invites_handler (data) {
 			$('#li' + String(send_list[val])).hide();
 			tweet = tweet.replace(users[val], '');
 		}
-		if (for_page_counter >= 15){
-			update_ul_invites(pg_clicked+1);
-		}
+		
 		send_list = []; 
 		users = [];
 		$('#successDiv').show(2000);
 		$('#successDiv').delay(5000).fadeOut('slow');
+		if(countVal <= 0){
+			window.location='/invite/?page=' +String(CURRENT+1);
+		}
 	}
 }
 function send_invite () {
-	if (countVal == 0){
+	if (send_list.length == 0){
 		alert('Please select someone to invite');
 	}
 	else{
-		countVal = 0;
 		ajax_request(
 			'post_tweet',
 			'invites_handler',
@@ -177,7 +181,6 @@ function check_limit(){
 var mx_count = 5;
 var mn_count = 0;
 /*var pg_count = {{page_count}};*/
-var pg_count = {{page_count|safe}};
 $(document).ready(function(){
 	var str = '<li><a id="invite_page_dec" onclick="update_ul_invites_dec()">&laquo;</a></li>';
 	for (var i =0; i<5; i++){
@@ -238,6 +241,7 @@ function parse_friends_ajax(data){
 
 var old=0;
 function update_ul_invites(cur_page){
+	window.location = '/invite/?page=' +String(cur_page);
 	pg_clicked = cur_page;
 	$('#pg_' +String(old)).removeClass('active');
 	$('#pg_' +String(cur_page)).addClass('active');

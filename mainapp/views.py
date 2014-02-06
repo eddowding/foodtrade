@@ -186,8 +186,14 @@ def trends(request):
 
 
 def invite(request):
-    page_num = 1
+    if request.GET.get('page')==None:
+        page_num =1
+    else:
+        page_num = int(request.GET.get('page'))
+
     parameters = {}
+    parameters['current_page_number'] = page_num
+
     tweetfeed_obj = TweetFeed()
     if not request.user.is_authenticated():
         return HttpResponseRedirect('/') 
@@ -282,6 +288,7 @@ def invite(request):
 
     parameters['friend'] = friend_list
     parameters['page_count'] = page_count
+    parameters['friend_count'] = len(friend_list)
 
     user_profile_obj = UserProfile()
     userprofile = user_profile_obj.get_profile_by_id(request.user.id)
@@ -385,4 +392,4 @@ def unclaimed_profiles(request):
         parameters['unclaimed_profiles_json'] = json.dumps(unclaimed_profiles)
         parameters['page'] = page_num
         
-    return render_to_response('unclaimed1.html', parameters, context_instance=RequestContext(request))
+    return render_to_response('unclaimed.html', parameters, context_instance=RequestContext(request))
