@@ -19,6 +19,8 @@ import random
 import time
 from mainapp.forms import FoodForm
 from bson import json_util
+from collections import Counter
+
 def resolve_profile(request, username):
     user_profile = UserProfile()
     userprof = user_profile.get_profile_by_username(str(username))
@@ -266,12 +268,23 @@ def edit_profile(request, username):
 
         return HttpResponseRedirect('/')
 
+def get_tags_freq(food_name):
+    foods_list = foo.get_foods_by_food_name(each[food_name])
+    all_tags = []
+    for eachfoo in foods_list:
+        if eachfoo.get('food_tags')!= None:
+            all_tags.extend(eachfoo.get('food_tags').split(','))
+    tags_freq = Counter(all_tags).most_common()
+    return tags_freq
+
 def get_all_foods(user_id):
     foo = Food()
     all_foods = foo.get_foods_by_userid(user_id)
     recomm = RecommendFood()
     final_foods = []
     for each in all_foods:
+        # get common tags for each foods
+        tags_freq = get_tags_freq(each['food_name'])
         all_rec = recomm.get_recomm(user_id, each['food_name'])
         recomm_details =  []
         for each_rec in all_rec:
@@ -289,6 +302,7 @@ def get_all_foods(user_id):
         if each.get('description')!=None:
             data['description'] = each.get('description')
         if each.get('food_tags')!=None:
+            # tags_list = each.get('food_tags').split(',')
             data['food_tags'] = each.get('food_tags')
         if each.get('photo_url')== None or each.get('photo_url')== '':
             data['photo_url'] = ''
