@@ -46,7 +46,7 @@
                 <div class="panel-heading">
                     <span class="glyphicon glyphicon-lock"></span> Login</div>
                 <div class="panel-body">
-                    <form class="signup form-horizontal" id="signup_form" method="post" action="{% url 'socialaccount_signup' %}" role="form">
+                    <form class="signup form-horizontal" id="signup_form" method="post" action="{% url 'socialaccount_signup' %}" role="form" onSubmit="return check_type()">
                       {% csrf_token %}
                       <!-- {{ form.as_p }} -->
 
@@ -196,7 +196,21 @@ function dataradio(value){
         }
     }
 }
+function check_type(){
+if ($('#option2').prop('checked')){
+  if($('.chosen-select').val()==null){
+    alert('You must enter a business type')
+    return false
+  }
+  else{
+    return true
+  }
+}  
+}
+
 function copydata(){
+
+
 var all_values = '';
 var elements = document.getElementsByClassName('search-choice');
     for(i=0;i<elements.length;i++){
