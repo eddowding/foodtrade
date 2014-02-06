@@ -886,6 +886,16 @@ function validate_login(){
   ajax_request('validate_logged_in', 'ajax_success_validate_logged_in','');*/
 }
 
+</script>
+
+<script type="text/javascript">
+   $(function() {
+    var hash = window.location.hash;
+
+    // do some validation on the hash here
+
+    hash && $('ul.nav a[href="' + hash + '"]').tab('show');
+});
 </script>    
 
 <script>
