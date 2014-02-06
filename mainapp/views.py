@@ -374,10 +374,15 @@ def unclaimed_profiles(request):
         return HttpResponseRedirect('/')
 
     if request.method == 'GET':
+        if request.GET.get('page') == None:
+            page_num =1
+        else:
+            page_num = int(request.GET['page'])
+
         user_profile_obj = UserProfile()
-        unclaimed_profiles = user_profile_obj.get_unclaimed_profile_paginated(1)
+        unclaimed_profiles = user_profile_obj.get_unclaimed_profile_paginated(page_num)
         parameters['unclaimed_profiles'] = unclaimed_profiles
+        parameters['unclaimed_profiles_json'] = json.dumps(unclaimed_profiles)
+        parameters['page'] = page_num
         
-    return render_to_response('unclaimed.html', parameters, context_instance=RequestContext(request))    
-
-
+    return render_to_response('unclaimed1.html', parameters, context_instance=RequestContext(request))

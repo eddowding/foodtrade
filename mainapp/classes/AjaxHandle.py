@@ -57,7 +57,7 @@ class AjaxHandle(AjaxSearch):
                 'name' : invited_friend['friends']['name'],
                 'phone_number' : '',
                 'profile_img':invited_friend['friends']['profile_image_url'],
-                'sign_up_as': 'Individual',
+                'sign_up_as': 'unclaimed',
                 'type_user':[],
                 'updates': [],
                 'screen_name': invited_friend['friends']['screen_name'],
@@ -67,8 +67,7 @@ class AjaxHandle(AjaxSearch):
             }
             try:
                 location_res = Geocoder.geocode(invited_friend['friends']['location'])
-                data['latlng'] = {"type":"Point",
-                    "coordinates":list([float(location_res.longitude) ,float(location_res.latitude)])}
+                data['latlng'] = {"type":"Point","coordinates":[float(location_res.longitude) ,float(location_res.latitude)]}
                 print data['latlng'], "Roshan"
                 data['zip_code'] = str(location_res.postal_code)
             except:
@@ -748,22 +747,39 @@ class AjaxHandle(AjaxSearch):
 
     def unclaimed_profiles_bulk_update(self, request):
         if request.user.is_authenticated and request.user.is_superuser and request.method =="POST":
-            print request.POST
-            type_user = request.POST['type']
-            lat = request.POST['lat']
-            lng = request.POST['lng']
-            formatted_address = request.POST['formatted_address']
-            sign_up_as = request.POST['sign_up_as']
-            users = request.POST['users'].split(',')
-            for eachUser in users:
-                user_profile_obj = UserProfile()
-                user_profile_obj.update_profile_fields({'username':eachUser}, 
-                    {'latlng.coordinates':list([float(lng),float(lat)]), 
-                    'address':str(formatted_address),
-                    'sign_up_as':sign_up_as,
-                    'type_user':list(type_user[0].split(',')),
-                    'recently_updated':'true'})
-            return HttpResponse(json.dumps({'users':users, 'status':'1'}))
+            #print request.POST
+            uname = request.POST['uname'].split(',')
+            data = eval(request.POST['data'])
+            for eachUser in uname:
+                try:
+                    sua = data[eachUser]['sign_up_as']
+                    formatted_address = data[eachUser]['address']
+                    name = data[eachUser]['name']
+                    
+                    type_user = data[eachUser]['type'].split(',')
+                    n_type_user = []
+                    for eachType in type_user:
+                        if eachType == '':
+                            n_type_user.append(eachType)
+                    try:
+                        add_res = Geocoder.geocode(str(formatted_address))
+                    except:
+                        add_res = Geocoder.geocode(str("London, UK"))
+
+                    print sua, formatted_address, name, type_user, add_res
+
+                    user_profile_obj = UserProfile()
+                    user_profile_obj.update_profile_fields({'username':eachUser},
+                        {'latlng.coordinates':list([float(add_res[0].longitude),float(add_res[0].latitude)]),
+                        'address':str(formatted_address),
+                        'sign_up_as':str(sua),
+                        'type_user':type_user,
+                        'zip_code': str(add_res[0].postal_code),
+                        'name':str(name),
+                        'recently_updated':'true'})
+                except:
+                    continue
+            return HttpResponse(json.dumps({'users':uname, 'status':'1'}))
         else:
             return HttpResponse(json.dumps({'status':0, 
                 'message':'You are not authorized to perform this action.'}))
