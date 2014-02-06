@@ -8,6 +8,9 @@
   .typeempty{
   display:none;
   }   
+  .ip_address{
+
+  }
     .panel-body input[type=checkbox]:checked + label { 
         color: #c00; 
     } 
@@ -29,7 +32,7 @@
     .li-height{
     }
     .margin-button{
-    	margin-top: 18%;
+    	margin-top: 2%;
     }
     .margin-type{
 		float: left;
@@ -81,25 +84,49 @@
 			  			</a>
 			  		</td>
 			  		<td>
-			  			<input type="text" id='ip_name{{each.name}}' class="form-control" value="{{each.name}}"/>
+			  			<input type="text" id='ip_name{{each.username}}' class="form-control" value="{{each.name}}"/>
 			  		</td>
 			  		<td>
-				          <label class="btn btn-default"> 
-				              <input type="radio" checked="checked" name="sign_up_as_{{each.username}}" id="buss_{{each.username}}" value="Individual" onchange="dataradio('Individual')"> Individual 
-				          </label> 
-				          <label class="btn btn-default">  
-				              <input type="radio" name="sign_up_as_{{each.username}}"  id="buss_{{each.username}}" value="Business" onchange="dataradio('Business')"> Business 
-				          </label>
-				          <label class="btn btn-default" >
-				              <input type="radio"  name="sign_up_as_{{each.username}}" id="option3" id="org_{{each.username}}" value="Organisation" onchange="dataradio('Organisation')"> Organisation
-				          </label>
+					    <div class="form-group">
+					      <div class="col-sm-5">
+					        <div class="btn-group" style="width: 301px;" data-toggle="buttons">
+					          <label id="label_option_1_{{each.username}}" class="btn btn-default active"> 
+					              <input type="radio" name="sign_up_as_{{each.username}}" checked="checked" id="option_1_{{each.username}}" value="Individual" onchange="dataradio('Individual', '{{each.username}}')"> Individual 
+					          </label> 
+					          <label id="label_option_2_{{each.username}}" class="btn btn-default">  
+					              <input type="radio"  id="option_2_{{each.username}}" value="Business" onchange="dataradio('Business', '{{each.username}}')"> Business 
+					          </label>
+					          <label id="label_option_3_{{each.username}}" class="btn btn-default">
+					              <input type="radio" name="sign_up_as_{{each.username}}" id="option_3_{{each.username}}" value="Organisation" onchange="dataradio('Organisation', '{{each.username}}')"> Organisation
+					          </label>
+					        </div>
+					      </div>
+					      </div>
+
+						  <div class="form-group margin-type typeempty" id="type_user_id_{{each.username}}"> 
+						        <label for="id_type_user_{{each.username}}" class="col-sm-2 control-label">Business type</label>
+						        <div class="col-sm-5">
+						          <select id= "dropdown_{{each.username}}" data-placeholder="Farm, wholesaler, restaurant..." multiple  class="chosen-select" tabindex="6">
+						              <option value=""></option>
+						              {% for each in all_tags %}
+						              <optgroup label={{each.node}}>
+						                {% if each.childrens %}
+						                  {% for eachchild in each.childrens %}
+						                  <option>{{eachchild.node}}</option>
+						                  {% endfor %}
+						                {% else %}
+						                <option>{{each.node}}</option>
+						                {% endif %}
+						              </optgroup>
+						              {% endfor %}
+						            </select>
+						        </div>
+					      </div>
 			  		</td>
 			  		<td>
-			      		<input type="text" id="address" required class="form-control" placeholder="Enter your address" name="address" value="{{each.address}}">
-			      		<input id="find" type="hidden" value="find" />
-			      		<input name="lat" id="lat" type="hidden" value=""  class="form-control">
-			      		<input name="lng" id="lng" type="hidden" value=""  class="form-control">
-			      		<input name="formatted_address" type="hidden" value="" id="formatted_address" class="form-control">
+					  	<div class="form-group">
+						      <input type="text" id="address_{{each.username}}" required class="form-control ip_address" placeholder="Enter your address" value="{{each.address}}">
+					    </div>
 			  		</td>
 		  		</tr>
 		  	{% endfor %}
@@ -128,22 +155,19 @@
 
 <script type="text/javascript">
 
-function dataradio(value){
-    // var result_val = $("input[name=options]:checked").val();
+function dataradio(value, username){
     business_type = value;
     if (value == "Business"){
-        if ( $('#type_user_id').hasClass('typeempty') ){
-          $('#type_user_id').removeClass('typeempty');
-          /*$('#dropdown3').attr('required','true');*/
+        if ( $('#type_user_id_' + String(username)).hasClass('typeempty') ){
+          $('#type_user_id_' + String(username)).removeClass('typeempty');
         }
     }
     else{
-        if ( $('#type_user_id').hasClass('typeempty') ){
+        if ( $('#type_user_id_' + String(username)).hasClass('typeempty') ){
           }
         else{
-            $('#type_user_id').addClass('typeempty');
+            $('#type_user_id_' + String(username)).addClass('typeempty');
         }
-        /*$('#dropdown3').removeAttr('required');*/
     }
 }
 var config = {
@@ -153,114 +177,57 @@ var config = {
       '.chosen-select-no-results': {no_results_text:'Oops, nothing found!'},
       '.chosen-select-width'     : {width:"350px"}
     }
-    for (var selector in config) {
-      $(selector).chosen(config[selector]);
-    }
-    $('#dropdown3').chosen().ready(function(){
-      $('.search-field input').attr('style', 'width:192px;height:30px;');
-    });
-
-function copydata(){
-    var all_values = '';
-    var elements = document.getElementsByClassName('search-choice');
-    for(i=0;i<elements.length;i++){
-      if(all_values==''){
-        all_values = all_values + elements[i].children[0].innerHTML;  
-      }
-      else{
-      all_values = all_values + ',' + elements[i].children[0].innerHTML;
-      }
-    }
-    document.getElementById('hidden_type').value = all_values;
+for (var selector in config) {
+  $(selector).chosen(config[selector]);
 }
+
 
  $(function(){
-      $("#address").geocomplete({
-        map: ".map_canvas",
-        details: "form ",
-        markerOptions: {
-          draggable: true
-        }
-      });
-      
-      $("#address").bind("geocode:dragged", function(event, latLng){
-          lat = latLng.lat();
-          lng = latLng.lng();
+      $(".ip_address").geocomplete({details: "form "});
+  });
 
-          $("input[name=lat]").val(lat);
-          $("input[name=lng]").val(lng);
-          $("#reset").show();
-
-          var mylatlng = new google.maps.LatLng(lat,lng);
-          geo_code(mylatlng);
-      });
-      
-      
-      $("#find").click(function(){
-        $("#address").trigger("geocode");
-      }).click();
-
-    });
-
- function geo_code(latlng){
-    geocoder = new google.maps.Geocoder();
-    geocoder.geocode({'latLng': latlng}, function(results, status) {
-            if (status == google.maps.GeocoderStatus.OK) {
-              if (results[1]) {
-                var formatted_address = results[1].formatted_address;
-                $('#address').val('');
-                $('#address').val(formatted_address);
-                $('#formatted_address').val(formatted_address);
-              } 
-            } 
-          });
-}
-var update_of = [];
-function bulk_update(username, count){
-	var chkbx_status = document.getElementById('checkbox' + String(count)).checked;
-	if(chkbx_status == false){
-		update_of.pop(username);
-	}
-	else{
-		update_of.push(username);
-	}
-}
 
 function update_clicked(){
-	if (update_of.length >0 )
-	{
-	  copydata();
-	  formatted_address = $('#address').val();
-	  lat = $("#lat").val();
-	  lng = $("#lng").val();
-	  type = $("#hidden_type").val();
-	  sign_up_as = $('input[name=sign_up_as]').val();
-	  ajax_request('unclaimed_profiles_bulk_update', 'unclaimed_profiles_bulk_update_success',{
-	  	'lat':lat,
-	  	'lng':lng,
-	  	'formatted_address':formatted_address,
-	  	'users':String(update_of),
-	  	'type':type,
-	  	'sign_up_as':sign_up_as
-	  })
+	var myData = {};
+	var uname = [];
+	var unclaimed_profiles = jQuery.parseJSON(JSON.stringify({{unclaimed_profiles_json|safe}}));
+	for (var i =0; i < unclaimed_profiles.length;i++){
+		var newDict = {};
+		newDict['name'] = $('#ip_name' + String(unclaimed_profiles[i]['username'])).val();
+		newDict['address'] = $('#address_' + String(unclaimed_profiles[i]['username'])).val();
+		if($('#option_1_'+ String(unclaimed_profiles[i]['username']))[0].checked){
+			newDict['sign_up_as'] = 'Individual';
+		}
+		else if($('#option_2_'+ String(unclaimed_profiles[i]['username']))[0].checked){
+			newDict['sign_up_as'] = 'Business';
+		}
+		else{
+			newDict['sign_up_as'] = 'Organisation';
+		}
+		 var type_ = '';
+		for (var j =0; j <$('#dropdown_' + unclaimed_profiles[i]['username'] + '_chosen')[0].children[0].children.length; j++){
+			
+			type_ = type_ + String($('#dropdown_' + unclaimed_profiles[i]['username'] + '_chosen')[0].children[0].children[j].children[0].innerHTML)+',';
+		}
+		type_ = type_.substring(0,type_.length-1)
+		newDict['type'] = type_;
+		myData[String(unclaimed_profiles[i]['username'])] = newDict;
+		uname.push(String(unclaimed_profiles[i]['username']));
 	}
-	else{
-		alert("Please select someone.");
-	}
-	
+	ajax_request('unclaimed_profiles_bulk_update','update_bulk_success', {'data':JSON.stringify(myData), 'uname':String(uname)});
 }
 
-var current_page = 1;
-function unclaimed_profiles_bulk_update_success(data){
+function update_bulk_success(data){
 	data = jQuery.parseJSON(data);
-	if(data['status']=='1'){
-		get_new_page(current_page);
+	if (data['status'] == '1'){
+		window.location = '.';
 	}
 }
 
+var current_page = {{page|safe}};
 function get_new_page(page){
 	if(page==1){
-		current_page = current_page +1;
+		current_page = current_page + 1;
 	}
 	else{
 		if(current_page <= 0){
@@ -270,36 +237,40 @@ function get_new_page(page){
 		current_page = current_page -1;	
 		}
 	}
-	ajax_request('get_unclaimed_paginated', 'success_unclaimed_paginated',{'current_page':current_page});
+	window.location = '/unclaimed-profiles/?' + 'page=' + String(current_page);
 }
 
-function success_unclaimed_paginated(data){
-	data = jQuery.parseJSON(data);
-	unclaimed_profiles = data['unclaimed_profiles'];
-	$('#myFriendsLi').html('');
-	var str = '';
-		for (each in unclaimed_profiles){
-	    	str = str +  '<li id = "li"' + String(unclaimed_profiles[each]['username']) +'" class="list-group-item li-height">';
-	        str = str + '<div class="checkbox">';
+$(document).ready(function(){
+	var unclaimed_profiles = jQuery.parseJSON(JSON.stringify({{unclaimed_profiles_json|safe}}));
+	for (var i =0; i < unclaimed_profiles.length;i++){
+		if(unclaimed_profiles[i]['sign_up_as'] == 'Individual'){
+			$('#option_1_'+ String(unclaimed_profiles[i]['username'])).checked = true;
+			$('#label_option_1_'+ String(unclaimed_profiles[i]['username'])).addClass('active');
+			$('#option_2_'+ String(unclaimed_profiles[i]['username'])).checked = false;
+			$('#label_option_2_'+ String(unclaimed_profiles[i]['username'])).removeClass('active');
+			$('#option_3_'+ String(unclaimed_profiles[i]['username']))[0].checked = false;
+			$('#label_option_3_'+ String(unclaimed_profiles[i]['username'])).removeClass('active');			
 
-	        if (String(unclaimed_profiles[each]['recently_updated'])=='true'){
-	        	str = str + '<i class="glyphicon glyphicon-ok" title="Recently Updated"></i>';
-	        }
-	        
-	        str = str + '<input type="checkbox" id="checkbox"'+ String(each)  + 'onclick="bulk_update(\''; 
-	        str = str + String(unclaimed_profiles[each]['username']) + '\',\'' + String(each) + '\')" />';
-      		str = str + '<a href="/profile/' + String(unclaimed_profiles[each]['username']) + '/">';
-      		str = str + '<img src="' + String(unclaimed_profiles[each]['profile_img']);
-      		str = str + '" title="' + String(unclaimed_profiles[each]['name']) + '" class="img-responsive pull-left" style="width:20px; margin-right: 5px;" /></a>';
-      		str = str + String(unclaimed_profiles[each]['name']) + '&nbsp;<span class="text-muted small">@';
-      		str = str + String(unclaimed_profiles[each]['screen_name']) + '</span>';
-      		str = str + '<span class="pull-right"><i class="glyphicon glyphicon-edit"></i><a href="/editprofile/';
-      		str = str + String(unclaimed_profiles[each]['username']) + '/">Edit</a></span>';
-	        str = str + '</div>';
-	    	str = str + '</li>';
 		}
-	$('#myFriendsLi').html(str);
-}
+		else if(unclaimed_profiles[i]['sign_up_as'] == 'Business'){
 
+			$('#option_1_'+ String(unclaimed_profiles[i]['username'])).checked = false;
+			$('#label_option_1_'+ String(unclaimed_profiles[i]['username'])).removeClass('active');
+			$('#option_2_'+ String(unclaimed_profiles[i]['username'])).checked = true;
+			$('#label_option_2_'+ String(unclaimed_profiles[i]['username'])).addClass('active');
+			$('#option_3_'+ String(unclaimed_profiles[i]['username'])).checked = false;
+			$('#label_option_3_'+ String(unclaimed_profiles[i]['username'])).removeClass('active');
+		}
+		else{
+
+			$('#option_1_'+ String(unclaimed_profiles[i]['username'])).checked = false;
+			$('#label_option_1_'+ String(unclaimed_profiles[i]['username'])).removeClass('active');
+			$('#option_2_'+ String(unclaimed_profiles[i]['username'])).checked = false;
+			$('#label_option_2_'+ String(unclaimed_profiles[i]['username'])).removeClass('active');
+			$('#option_3_'+ String(unclaimed_profiles[i]['username'])).checked = true;
+			$('#label_option_3_'+ String(unclaimed_profiles[i]['username'])).addClass('active');
+		}
+	}
+});
 </script>
 {% endblock %}
