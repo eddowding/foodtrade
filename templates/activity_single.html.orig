@@ -14,52 +14,48 @@
     <div id="header_box" class="clearfix">
 
 
-      <div class="col-md-2 hidden-sm hidden-xs" id="avatar">
+      <div class="col-md-2" id="avatar">
         <img class="img-thumbnail center-block" src="{{parent_tweet.user.profile_img}}"  />
       </div>
-
      
       <div class="col-md-7">
 
+         <p style="font-size: 20px; font-weight: 200; padding-top: 20px;">
+          {{parent_tweet.status}}</p>        
 
+ <hr />
 
-         <h1 style="font-size: 26px;"><a href="#">{{parent_tweet.user.name}}</a></h1>
-
-
-
-         <div class="ftstrip ftstrip-mini"></div>
-
-         <p class="lead" style="padding: 20px 0 0 0;">
-          {{parent_tweet.status}}
-         </p>
-
-         <div class="ftstrip ftstrip-mini"></div>
+         <h1><a href="#">{{parent_tweet.user.name}}</a></h1>
 
         {% if parent_tweet.type_user|length == 0 or parent_tweet.type_user|first == '' %}
           {% else %}
-          <div class="tags tags-biztype" style="padding: 20px 0 0 0;">  
+          <div class="tags tags-biztype  ">  
             {% for eachtype in parent_tweet.type_user %}
            <a href="/activity/?b={{eachtype}}">{{eachtype}}</a>
            {% endfor %}
-          </div> 
-        {% endif %}
+          </div> {% endif %}
 
+          <!-- <div class="tags tags-biztype  ">  
+           <a href="/type/livestock-farm">Bakery</a>
+           <a href="/type/buther">Wholesale</a>  
+           <a href="/type/buther">Distribution</a>  
+           <a href="/type/buther">Livestock Farm</a>  
+          </div>  -->
    
      
          <div class="meta small text-muted">
-            <i class="fa fa-map-marker"></i> <a href="http://maps.google.com/maps?saddr={{userinfo.lat}},{{userinfo.lon}}&daddr={{parent_tweet.location.coordinates.1}},{{parent_tweet.location.coordinates.0}}" target="_blank" rel="tooltip" title="Get directions" class="text-muted">{{parent_tweet.user.address}}</a>  
+            <i class="fa fa-map-marker"></i> <a href="http://maps.google.com/maps?saddr={{userinfo.lat}},{{userinfo.lon}}&daddr={{parent_tweet.location.coordinates.1}},{{parent_tweet.location.coordinates.0}}" target="_blank" data-placement="top" data-toggle="tooltip" title="Get directions" class="text-muted">{{parent_tweet.user.address}}</a>  
             
-            <span class="pull-right">
-              <i class="fa fa-location-arrow" style="margin-left: 20px;"></i> {{parent_tweet.distance_text}}    
-            </span>
+            <!-- if logged in or you've allows html5 browser location -->
+            <i class="fa fa-location-arrow" style="margin-left: 20px;"></i> {{parent_tweet.distance_text}} miles  
 
   
          </div> <!-- meta -->
   
       </div><!-- end header middle -->
-
+{% comment %}
       <div id="contact_info" class="col-md-3">
- {% comment %}
+ 
       <!-- if logged in users = individual --> 
       <button class="btn btn-default btn-block" data-toggle="modal" data-target="#modal_customer">
         <i class="fa fa-smile-o text-muted"></i> I am a customer
@@ -76,7 +72,7 @@
         </label> 
       </div>
  
-{% endcomment %}
+
       <!-- Button trigger modal -->
       <button class="btn btn-primary btn-block" data-toggle="modal" data-target="#modal_contact">
         Contact
@@ -86,60 +82,6 @@
       <button class="btn btn-default btn-block" data-toggle="modal" data-target="#sharer">
         <i class="fa fa-share-square-o text-muted"></i> Share
       </button>
-
-       <!-- modal_contact -->
-      <div class="modal fade" id="modal_contact" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-              <h4 class="modal-title" id="myModalLabel">Contact {{userinfo.name}}</h4>
-            </div>
-            <div class="modal-body">
-            <div class="container-responsive">
-              <div class="row">
-                <div class="col-sm-4">
-             
-                  <address>
-                    
-          <a href="mailto:{{email}}" class="dotdotdot" target="_blank"><i class="fa fa-envelope text-muted fa-fw"></i> {{s_userinfo.email}} </a><br />
-          <a href="http://twitter.com/{{screen_name}}"  target="_blank"><i class="fa fa-twitter text-muted fa-fw"></i> {{s_userinfo.twitter_user}}</a><br />
-          {% if s_userinfo.phone_number %}
-          <a href="callto:{{phone_number}}"><i class="fa fa-phone text-muted fa-fw"></i> {{phone_number}}</a>
-          {% endif %}
-                  </address>
-                </div>
-                
-                <div class="col-sm-8 contact-form">
-                  <form id="contact" method="post" class="form" role="form">
-                    <div class="row">
-                      <div class="col-xs-6 col-md-6 form-group">
-                        <input class="form-control" id="sender_name" name="name" placeholder="Name" type="text" required autofocus value = "{{userinfo.full_name}}"/>
-                      </div>
-                      <div class="col-xs-6 col-md-6 form-group">
-                        <input class="form-control" id="sender_email" name="email" placeholder="Email" type="email" required value = "{{userinfo.email}}" />
-                      </div>
-                    </div> 
-                    <textarea class="form-control" id="email_message" placeholder="Type in your message" rows="5"></textarea>
-                    <h6 class="pull-right" id="contact_counter">120 characters remaining</h6>
-                     
-                  </form>
-                </div>
-              </div>
-            </div>
- 
-   
-            </div>
-            <div class="modal-footer"> 
-              <button type="button" id="contact_tweet" class="btn btn-info" onclick="post_contact_tweet('{{screen_name}}')"><i class="fa fa-fw fa-twitter"></i> Tweet it</button>
-              <button type="button" class="btn btn-success" onclick="send_email('{{email}}')"><i class="fa fa-envelope fa-fw"></i> Email it</button>
-            </div>
-          </div><!-- /.modal-content -->
-        </div><!-- /.modal-dialog -->
-      </div><!-- /.modal -->
-
-
-
 
       <!--SHARER  Modal -->
       <div class="modal fade" id="sharer" tabindex="-1" role="dialog" aria-labelledby="sharer" aria-hidden="true">
@@ -198,7 +140,7 @@
           </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
       </div><!-- /.modal -->
-{% comment %}
+
       <div class="icons text-center" style="font-size:25px">
         <a href="#"><i class="fa fa-facebook-square"></i></a>
         <a href="#"><i class="fa fa-twitter-square"></i></a> 
@@ -210,29 +152,33 @@
         <a href="#"><i class="fa fa-linkedin-square"></i></a> 
       </div> 
 
-{% endcomment %}
+
       
 
 
  
       </div><!-- end header last -->
-
+{% endcomment %}
     </div>
     </div> 
 
     <div class="row" style="margin-top: 30px;">
-      <div class="col-md-6  reply_text" id="single_post_content">
+      <div class="col-md-6  reply_text">
 
         <div id="update" class="well well-sm">
           
               <div class="input-group"> 
-               <input id="main_post_input" class="form-control reply_input" data-tweet-id="{{parent_tweet.tweetuid}}" data-main="{{position}}"   {% if userinfo.user.username %} rel="tooltip" title="Please login to use this feature." {% endif %} type="text" placeholder="Reply to @{{parent_tweet.user.username}}" data-mentions="@{{parent_tweet.user.username}}">
+<<<<<<< HEAD
+               <input id="main_post_input" class="form-control input-sm reply_input" data-tweet-id = "{{parent_tweet.tweetuid}}" data-main = "{{position}}"   {% if userinfo.user.username %} rel="tooltip" title="Please login to use this feature." {% endif %} type="text" placeholder="Reply to @{{parent_tweet.user.username}}" data-mentions = "@{{parent_tweet.user.username}}">
 
 
            
+=======
+               <input class="form-control reply_input" data-tweet-id = "{{parent_tweet.tweetuid}}" data-main = "{{position}}"   {% if userinfo.user.username %} rel="tooltip" title="Please login to use this feature." {% endif %} type="text" placeholder="Reply to @{{parent_tweet.user.username}}" data-mentions = "@{{parent_tweet.user.username}}"> 
+>>>>>>> 2754e5c9bdad9c72f59f901fb7de845dd8e5556e
 
                 <span class="input-group-btn">
-                    <button type="submit" class="btn btn-success" onclick="single_post_content_new_post()"> Post</button>
+                    <button type="submit" class="btn btn-success"> Post</button>
                 </span>
               </div>
           

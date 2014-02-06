@@ -357,10 +357,7 @@ class Search():
         group_fields["organisation_count"] = {"$sum":{"$cond": [{"$eq": ['$sign_up_as', "Organisation"]}, 1, 0]}}
         group_fields["update_count"] = {"$sum": 1}
 
-   
         result_type = "updates.status"
-   
-        
         group_fields["results"] = self.get_result_fields(result_type)
         
         agg_pipeline.append({"$group": group_fields})

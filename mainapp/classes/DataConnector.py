@@ -75,7 +75,7 @@ class UserInfo():
         user_profile = UserProfile()
         userprof = user_profile.get_profile_by_id(user_id)
         self.email = userprof['email']
-        twitter_user = userprof['screen_name']
+        self.twitter_user = userprof['screen_name']
         self.lon = userprof['latlng']['coordinates'][0]
         self.lat = userprof['latlng']['coordinates'][1]
         self.user_type = userprof['sign_up_as']

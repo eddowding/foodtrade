@@ -1,0 +1,99 @@
+{% extends 'tbase.html' %}
+{% load staticfiles %} 
+{% load socialaccount %}
+{% load url from future %}
+{% load i18n %}
+{% include "socialaccount/snippets/login_extra.html" %}
+{% load account %}
+
+{% block content %} 
+<div class="col-md-10  {% if not user.is_authenticated %} col-md-offset-1 {% endif %}" id="pricing">
+
+<div class="container-responsive block-center showcase">
+
+<div class="row hero white" style="background-image: url('/static/images/pot.jpg'); padding: 80px 0;">
+  <div class="col-sm-12 text-center">
+     
+    <h1>FOOD WASTE</h1> 
+    <h3 class="text-center">Let's make the best of a bad situation</h3> 
+  </div>
+</div> 
+<div class="text-right small photocredit white">Photo credit: <a href="http://kirstymorris.com/" target="_blank">Kirsty Morris</a></div>
+
+
+<div class="container-responsive">
+ 
+<div class="row">  
+  <div class="col-md-7 lead">
+ 
+     <h1>1. Tweet us your surplus</h1>
+     
+      <p class="lead">You're busy and don't want to spend ages online updating websites or making calls. So  <a href="#" target="_blank" rel="tooltip" title="" data-original-title="Registered users can just tweet @FoodTradeHQ, and the message appears on the maps and timeline, search engine, and in regular personalised newsletters">just tweet @foodtradeHQ including '#surplus'</a> and we'll spread the word.</p>
+ 
+  </div>
+  <div class="col-md-5 block-vertical text-center">
+    <img src="/static/images/tweet_to_sell.png" class="img-responsive img-thumbnail" />
+  </div>
+</div>
+
+<div class="row"> 
+  <div class="col-md-4 block-vertical">
+    <img src="/static/images/search.png" class="img-responsive   img-thumbnail" />
+  </div> 
+  <div class="col-md-8 lead block-vertical">
+ 
+     <h1>2. We'll match you to local projects &amp; businesses</h1>
+   <p>We're building a database of who can use what, where. And it's not just community projects who can use surplus.<strong> Startup businesses can turn surplus into livelihoods and healthy food, too.</strong> 
+</p>You can:
+- say who you're working with
+- tweet in requests, Or responded to local opportunities
+- engage new members and businesses
+- subscribe for updates (actually that's coming soon)
+- put yourself on the map with a profile </p>
+  </div>
+</div> 
+ 
+
+<div class="row">  
+  <div class="col-md-8 lead">
+     <h1>3. In real time, brilliantly</h1>
+    <p>
+    And because it's connected to the rest of the FoodTrade database for real-time food trading, we can help streamline logistics, distribute large volumes between many people, and unlock more potential. 
+    </p>  
+  </div>
+  <div class="col-sm-4 block-vertical text-center">
+    <img src="/static/images/stockists.png" class="img-responsive img-thumbnail" />
+  </div>
+</div>
+  
+<div class="row hero white" style="background-image: url('/static/images/apples2.jpg');">
+  <div class="col-sm-12 text-center">
+    <blockquote>Numerous industries have been radically transformed by ‘disruptive technology’, but to date there has been little technology innovation in the grocery industry which can be considered truly disruptive. That may all be about to change…</blockquote>
+    <cite><img class="img-thumbnail" src="/static/images/logos/grocer.jpg"></cite>
+  </div>
+</div>
+ 
+{% if not user.is_authenticated %}   
+<div class="ftstrip ftstrip-mid" style="  margin-top: 50px;" ></div>
+<div style="padding: 20px 0; " class="text-center">
+
+  <span class="lead" style="position: relative;
+top: 5px;
+margin-right: 0px;">You're obviously interested. You should definitely </span>
+  <a type="button" class="btn btn-success btn-lg" href="{% provider_login_url "twitter" process="login" %}"  >  <strong>sign up now &raquo;</strong>
+  </a>
+
+</div>
+<div class="ftstrip ftstrip-mid"></div>
+{% endif %}
+ 
+
+
+
+
+
+</div><!-- container -->
+</div><!-- col10 --> 
+
+
+  {% endblock %}  

@@ -97,6 +97,8 @@ class AjaxHandle(AjaxSearch):
         noappend = request.POST.get('noappend')
         parent_tweet_id = int(request.POST.get("parentid",0))
 
+        only_foodtrade = request.POST.get('foodtrade_only',"false")
+
         prof_url = " http://"+request.META['HTTP_HOST']+"/profile/"+request.user.username
 
         url = shorten_url(prof_url)
@@ -137,16 +139,19 @@ class AjaxHandle(AjaxSearch):
                             'new_invite_tweet':new_invite_tweet}))
                 return HttpResponse(json.dumps({'status':1}))
             else:
-                tweet = user_twitter.update_status(status = message+url, in_reply_to_status_id=parent_tweet_id)
+                pic_url_list = []
+                if only_foodtrade == "false":
+                    tweet = user_twitter.update_status(status = message+url, in_reply_to_status_id=parent_tweet_id)
+                    tweet_id = str(tweet['id'])
+                    if tweet['entities'].get('media')!= None:
+                        for each in tweet['entities'].get('media'):
+                            pic_url_list.append(each['media_url'])
+                else:
+                    import uuid
+                    tweet_id = uuid.uuid4()
+
             tweet_feed = TweetFeed()
-
-            pic_url_list = []
-            if tweet['entities'].get('media')!= None:
-                for each in tweet['entities'].get('media'):
-                    pic_url_list.append(each['media_url'])
-
-
-            data = {'tweet_id': str(tweet['id']),
+            data = {'tweet_id': str(tweet_id),
                     'parent_tweet_id': str(parent_tweet_id),
                     'status': message,
                     

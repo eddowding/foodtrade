@@ -1,0 +1,27 @@
+{% load activity_tags %}
+
+{% if results %}
+
+{% for result in results %}
+{% if result.user.username == result.result_type %}
+
+{% single_activity userinfo result "status" "main" %}
+
+     <li>
+      <ul>
+      {% for reply_result in result.replies %}
+
+{% single_activity userinfo reply_result "status" "main" %}
+
+         {% endfor %}
+        
+</ul>
+</li>
+
+{% endif %}
+  {% endfor %}
+    {% endif %}
+
+    <script type="text/javascript">
+new_connections = {{json_data | safe}};
+    </script>

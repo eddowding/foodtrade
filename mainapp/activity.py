@@ -14,7 +14,7 @@ import time
 from classes.DataConnector import UserInfo
 
 from django.template import RequestContext
-from mainapp.classes.AjaxHandle import AjaxHandle
+
 from django.views.decorators.csrf import csrf_exempt
 
 def get_time(time_val):
@@ -38,6 +38,7 @@ def get_time(time_val):
 
 def set_time_date(single_result,keyword):
     distance_text = ""
+
 
     # try:
     lonlat_distance = single_result['distance'] * 0.621371 #distance(my_lon, my_lat, single_result['location']['coordinates'][0],single_result['location']['coordinates'][1])
@@ -83,8 +84,7 @@ def set_time_date(single_result,keyword):
     single_result['distance_text'] = distance_text
     return single_result
 
-@csrf_exempt
-def home(request):
+def get_search_parameters(request):
     parameters = {}
 
     default_location = ""
@@ -114,10 +114,10 @@ def home(request):
         default_lon = float(location_info['longitude'])
         default_lat = float(location_info['latitude'])
 
-    keyword = request.GET.get('q',"")
-    sort = request.GET.get('sort',"time")
-    my_lon = request.GET.get('lon',"")
-    my_lat = request.GET.get('lat',"") 
+    keyword = request.GET.get('q',request.POST.get('q',""))
+    sort = request.GET.get('sort',request.POST.get('sort',"time"))
+    my_lon = request.GET.get('lon',request.POST.get('lon',""))
+    my_lat = request.GET.get('lat',request.POST.get('lat',"") ) 
     location = request.GET.get('location',default_location)
     biz_request = request.GET.get('b',"")
     food_request = request.GET.get('f',"")
@@ -156,6 +156,8 @@ def home(request):
 
     for i in range(len(results)):
         results[i] = set_time_date(results[i],keyword)
+        results[i]['mentions'] = "@" + results[i]['user']['username'] 
+
         if results[i]["result_type"] == results[i]["user"]["username"]:
             tweet_id = results[i]["tweetuid"]
             replies = search_handle.get_all_children([tweet_id])
@@ -164,6 +166,7 @@ def home(request):
             replies = sorted(replies, key=lambda k: k['time_stamp']) 
             for j in range(len(replies)):
                 replies[j] = set_time_date(replies[j],keyword)
+                replies[j]['mentions'] = "@" + results[i]['user']['username'] + " " + replies[j]['mentions']
             # print results[i]['replies']
             results[i]['replies'] = replies
     
@@ -226,7 +229,9 @@ def home(request):
             organisation_filters_count = organisation_filters_count + f['value']
     parameters['organisation_filter'] = json.dumps(organisation_filters)
     parameters['organisation_count'] = int(organisation_filters_count)
+    return parameters
 
-
-    return render_to_response('activity.html',parameters ,context_instance=RequestContext(request))
+@csrf_exempt
+def home(request): 
+    return render_to_response('activity.html',get_search_parameters(request) ,context_instance=RequestContext(request))
 
