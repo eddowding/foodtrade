@@ -124,8 +124,9 @@ function validate_tweets (argument, count) {
 			$('#charsRem').html(String(140-tweet.length) + ' characters remaining.')			
 		}
 		else{
-			alert('Character Length 140 of Tweets exceeded');
+			countVal = countVal + 1;
 			document.getElementById('checkbox' + String(count)).checked = false;
+			alert('Character Length 140 of Tweets exceeded');
 		}		
 	}
 }
