@@ -31,8 +31,46 @@ L.circle([map_lat,map_lon], 160934, {
 			fill: 0,
 		}).addTo(map);
 
- 
+ var name = self_info.user.name;
+			var status =  self_info.status;
+			var profile_img = self_info.user.profile_img;
+			var username = self_info.user.username;
+			var description = self_info.user.description;
+			var type_user = self_info.type_user;
+			var sign_up_as = self_info.sign_up_as;
+			if(!type_user)
+			{
+				type_user = [];
+			}
+			// if(sign_up_as != "Business")
+			// {
+			// 	continue;
+			// }
 
+var card_str = '<div class="card-box"><div class="content"><div class="pull-left"><a href="/profile/'+username+'"><img src="'+profile_img+'" alt="'+name+'" class="img-rounded img-responsive" style="width:40px;" /></a>';
+
+                
+                      card_str += '</div><div class="text"><h5><a href="/profile/'+username+'">'+name+'</a></h5>';
+
+                      card_str += '<p class="small">'+description+'</p></div></div>';
+                      if(type_user.length>0)
+                      {
+                    card_str += '<div class="numbers clearfix"><div class="tags tags-biztype pull-left">';
+                    for(var j=0;j<type_user.length;j++)
+                    {  
+                      
+                      card_str +=  '<a href="/activity/?b='+type_user[j]+'">'+type_user[j]+'</a>';
+                     }
+                      card_str += '</div></div>';
+                }
+                  card_str += '</div> ';
+
+			var ctrl = L.marker([map_lat,map_lon], {icon: redIcon}).addTo(map).bindPopup(card_str);
+			
+
+
+
+			
 var map_controls = [];
 
 
@@ -51,13 +89,13 @@ function reload_controls()
 		for(i=0;i<connections.length;i++)
 		{
 			var con = connections[i];
-			var name = con.user.name;
-			var status =  con.status;
-			var profile_img = con.user.profile_img;
-			var username = con.user.username;
-			var description = con.user.description;
-			var type_user = con.type_user;
-			var sign_up_as = con.sign_up_as;
+			var name = self_info.user.name;
+			var status =  self_info.status;
+			var profile_img = self_info.user.profile_img;
+			var username = self_info.user.username;
+			var description = self_info.user.description;
+			var type_user = self_info.type_user;
+			var sign_up_as = self_info.sign_up_as;
 			if(!type_user)
 			{
 				type_user = [];

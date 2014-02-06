@@ -151,7 +151,7 @@
             <div class="col-sm-6">
               <a href="#" class="btn btn-block  btn-social btn-facebook" onclick="window.open(
               'https://www.facebook.com/sharer/sharer.php?s=100&amp;p[url]='+encodeURIComponent('{{ request.build_absolute_uri }}') +'&amp;p[images][0]='+encodeURIComponent('{{parent_tweet.user.profile_img}}')+'&amp;p[title]='+encodeURIComponent('{{parent_tweet.user.name}} on FoodTrade')+'&amp;p[summary]='+encodeURIComponent('{{parent_tweet.status}}')+'&amp;u='+encodeURIComponent('{{ request.build_absolute_uri }}') +'&amp;t='+encodeURIComponent('{{parent_tweet.user.name}} on FoodTrade'),
-                    'facebook-share-dialog', 
+                    'facebook-share-dialog',
                     'width=626,height=436,top='+((screen.height - 436) / 2)+',left='+((screen.width - 626)/2 )); 
                   return false;">
 
@@ -297,14 +297,15 @@
         <script type="text/javascript">
     map_lat={{parent_tweet.location.coordinates.1}};
     map_lon = {{parent_tweet.location.coordinates.0}};
+    self_info = {{parent_json |safe}};
 
 
-{% if results %}
-connections = {{json_data | safe}};
-    {% endif %}
+
+connections = {% if results %}{{json_data | safe}}{% else %} [];
+{% endif %}
    
     </script>
-     <script src="{% static "js/activity-map.js" %}"></script>
+     <script src="{% static "js/singlepost-map.js" %}"></script>
 
    {% endblock %}
 
