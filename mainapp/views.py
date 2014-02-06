@@ -392,4 +392,4 @@ def unclaimed_profiles(request):
         parameters['unclaimed_profiles_json'] = json.dumps(unclaimed_profiles)
         parameters['page'] = page_num
         
-    return render_to_response('unclaimed1.html', parameters, context_instance=RequestContext(request))
+    return render_to_response('unclaimed.html', parameters, context_instance=RequestContext(request))
