@@ -58,6 +58,7 @@ def get_post_parameters(request, tweet_id):
     parameters['results'] = results
     parameters['json_data'] = json.dumps(results)
     parameters['parent_tweet'] = single_tweet
+    parameters['parent_json'] = json.dumps(single_tweet)
     parameters['s_userinfo'] = UserInfo(single_tweet['useruid'])
     return parameters
 def home(request, username, tweet_id):
