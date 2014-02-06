@@ -127,17 +127,17 @@ def get_search_parameters(request):
     if len(biz_request)>0:
         businesses = [biz_request]
     else:
-        businesses = []
+        businesses = json.loads(request.POST.get('businesses',"[]"))
 
     if len(food_request)>0:
         foods = [food_request]
     else:
-        foods = []
+        foods = json.loads(request.POST.get('foods',"[]"))
 
     if len(organisation_request)>0:
         organisations = [organisation_request]
     else:
-        organisations = []
+        organisations = json.loads(request.POST.get('organisations',"[]"))
 
 
 
