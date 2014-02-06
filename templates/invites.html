@@ -106,7 +106,13 @@ function validate_tweets (argument, count) {
 	else{
 		countVal = countVal - 1;
 		if (argument.length + len < 140 ) {
-			tweet = tweet + ' ' + '@' + String(argument) +' ';
+			if(users.length == 0){
+				tweet = tweet + ' ' + '@' + String(argument) +' ';	
+			}
+			else{
+				tweet = tweet + '@' + String(argument) +' ';
+			}
+			
 			for_page_counter = for_page_counter + 1;
 			send_list.push(count);
 			users.push('@' + argument);
