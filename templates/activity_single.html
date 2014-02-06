@@ -150,7 +150,7 @@
           <div class="row">
             <div class="col-sm-6">
               <a href="#" class="btn btn-block  btn-social btn-facebook" onclick="window.open(
-              'https://www.facebook.com/sharer/sharer.php?s=100&amp;p[url]='+encodeURIComponent('{{ request.build_absolute_uri }}') +'&amp;p[images][0]='+encodeURIComponent('{{parent_tweet.user.profile_img}}')+'&amp;p[title]='+encodeURIComponent('{{parent_tweet.user.name}} on FoodTrade')+'&amp;p[summary]='+encodeURIComponent('Hey, see my profile on FoodTrade')+'&amp;u='+encodeURIComponent('{{ request.build_absolute_uri }}') +'&amp;t='+encodeURIComponent('{{parent_tweet.user.name}} on FoodTrade'),
+              'https://www.facebook.com/sharer/sharer.php?s=100&amp;p[url]='+encodeURIComponent('{{ request.build_absolute_uri }}') +'&amp;p[images][0]='+encodeURIComponent('{{parent_tweet.user.profile_img}}')+'&amp;p[title]='+encodeURIComponent('{{parent_tweet.user.name}} on FoodTrade')+'&amp;p[summary]='+encodeURIComponent('{{parent_tweet.status}}')+'&amp;u='+encodeURIComponent('{{ request.build_absolute_uri }}') +'&amp;t='+encodeURIComponent('{{parent_tweet.user.name}} on FoodTrade'),
                     'facebook-share-dialog', 
                     'width=626,height=436,top='+((screen.height - 436) / 2)+',left='+((screen.width - 626)/2 )); 
                   return false;">
@@ -158,14 +158,14 @@
                 <i class="fa fa-facebook"></i>  Share on Facebook
               </a>
               <a href="#" class="btn btn-block  btn-social btn-twitter" onclick="window.open(
-                    'https://twitter.com/share?url='+encodeURIComponent('{{ request.build_absolute_uri }}')+'&amp;text='+encodeURIComponent('{{parent_tweet.user.username}} on @foodtradeHQ') + '&amp;count=none/', 
+                    'https://twitter.com/share?url='+encodeURIComponent('{{ request.build_absolute_uri }}')+'&amp;text='+encodeURIComponent('{{parent_tweet.status}} @foodtradeHQ') + '&amp;count=none/', 
                     'twitter-share-dialog', 
                     'width=626,height=436,top='+((screen.height - 436) / 2)+',left='+((screen.width - 626)/2 )); 
                   return false;">
                 <i class="fa fa-twitter"></i>  Share on Twitter
               </a>
   
-              <a class="btn  btn-block  btn-social btn-pinterest" href="http://pinterest.com/pin/create/button/?url={{ request.build_absolute_uri|urlencode }}&media={{parent_tweet.user.profile_img|urlencode}}&description={{parent_tweet.user.username|urlencode}}{{' on FoodTrade'|urlencode}}" class="pin-it-button" count-layout="horizontal">
+              <a class="btn  btn-block  btn-social btn-pinterest" href="http://pinterest.com/pin/create/button/?url={{ request.build_absolute_uri|urlencode }}&media={{parent_tweet.user.profile_img|urlencode}}&description={{parent_tweet.status|urlencode}}{{'#FoodTrade'|urlencode}}" class="pin-it-button" count-layout="horizontal">
                 <i class="fa fa-pinterest"></i>
                 Share on Pinterest
               </a>
@@ -180,7 +180,7 @@
                 Share on Tumblr
               </a>
                  
-              <a  class="btn btn-block  btn-social btn-bitbucket" href="http://www.linkedin.com/shareArticle?mini=true&url={{ request.build_absolute_uri|urlencode}}&title={{parent_tweet.user.username}} on FoodTrade&summary=Hey, view my profile on Foodtrade.&source=">
+              <a  class="btn btn-block  btn-social btn-bitbucket" href="http://www.linkedin.com/shareArticle?mini=true&url={{ request.build_absolute_uri|urlencode}}&title={{parent_tweet.user.username}} on FoodTrade&summary={{parent_tweet.status}}&source=">
                 <i class="fa fa-linkedin"></i>
                 Share on LinkedIn
               </a>

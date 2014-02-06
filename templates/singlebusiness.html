@@ -326,7 +326,7 @@
                       {{form.food_name.as_hidden}}
                       {{form.profile_id.as_hidden}}
                 {{form.food_tags.as_hidden}}
-                
+               {{form.food_duplicate.as_hidden}} 
                     </div>
                   <!-- end code -->
                 </div>
@@ -928,7 +928,7 @@ function get_food_detail(profile_id, food_name, description, food_tags, photo_ur
     }
     $('#food_photo').attr('src', photo_url);
     $(".food_details_counted").charCounter(300,{container: "#counter"});    
-    
+    $('#id_food_duplicate').val(photo_url);
 }
     
   </script>

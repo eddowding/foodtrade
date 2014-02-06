@@ -21,6 +21,8 @@ class FoodForm(forms.Form):
 
     food_photo = forms.ImageField(required=False)
 
+    food_duplicate = forms.CharField(required=False)
+
     def __init__(self, *args, **kwargs):
         super(FoodForm, self).__init__(*args, **kwargs)
 
@@ -31,9 +33,12 @@ class FoodForm(forms.Form):
         food_name = self.cleaned_data['food_name']
         food_detail = Food()
         food_photo = self.cleaned_data['food_photo']
+        food_duplicate = self.cleaned_data['food_duplicate']
         data = {'food_name': food_name, 'useruid': profile_id, 'description': food_description,
         'food_tags': food_tags, 'photo_url': ''}
         if food_photo == None:
+            if food_duplicate != '':
+                data['photo_url'] = food_duplicate
             food_detail.update_food(data)
         else:
             photo_model = FoodPhoto(food_photo = food_photo)
@@ -104,10 +109,10 @@ class SignupForm(forms.Form):
         data = {
                 'is_unknown_profile':'false',
                 'useruid': int(user.id), 'sign_up_as': str(self.cleaned_data['sign_up_as']),
-        		'type_user': str(self.cleaned_data['type_user']).split(","), 
+                'type_user': str(self.cleaned_data['type_user']).split(","), 
                 'zip_code': str(postal_code),
                 'latlng' : {"type" : "Point", "coordinates" : [float(lon),float(lat)] },
-        		'address': address,
+                'address': address,
                 'name': social_account.extra_data['name'],
                 'email': str(self.cleaned_data['email']), 
                 'description': social_account.extra_data['description'],
