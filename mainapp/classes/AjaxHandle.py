@@ -72,11 +72,9 @@ class AjaxHandle(AjaxSearch):
             except:
                 lat, lon, addr,postal_code = 51.5072 , -0.1275, "3 Whitehall, London SW1A 2EL, UK", "SW1 A 2EL"
                 data['address'] = addr
-                data['latlng'] = {"type":"Point","coordinates" : [float(lon),float(lat)]},
-            try:
-                user_profile_obj.create_profile(data)
-            except:
-                pass
+                data['latlng'] = {"type":"Point","coordinates" : [float(lon),float(lat)]}
+                data['location_default_on_error'] = 'true'
+            user_profile_obj.create_profile(data)
             return {'status':1}
         else:
             return {'status':0}
@@ -105,7 +103,6 @@ class AjaxHandle(AjaxSearch):
         url = shorten_url(prof_url)
 
         if message != None and message != "":
-            print "Roshan ROshan"
             '''For invitation message only.'''
             if noappend == 'noappend':
                 tweet = user_twitter.update_status(status = message)
