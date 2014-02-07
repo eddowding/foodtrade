@@ -56,7 +56,7 @@ $(".reply_text").on("mouseover",".singleresult",function(e){
   if(String(map_controls[i].options.tweet_id).trim() == String(result_id).trim())
   {
     console.log(map_controls[i].options.tweet_id);
-    map.removeLayer(map_controls[i]);
+    map_controls[i].openPopup();
   }
  }
   
