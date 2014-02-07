@@ -569,7 +569,7 @@ class AjaxHandle(AjaxSearch):
             if task == 'delete':
             	'''Deleting a Tweet'''
                 #print change_id
-                tweet_feed_obj.delete_tweet(request.user.id,int(change_id))
+                tweet_feed_obj.delete_tweet(request.user.id,str(change_id))
                 return HttpResponse(json.dumps({'status':'1', 'activity':'deleteTweet', '_id':change_id}))
 
             if task == 'follow':

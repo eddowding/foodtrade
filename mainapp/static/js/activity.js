@@ -22,6 +22,30 @@ $(".reply_text").on('blur', '.reply_input', function(e) {
   }
 });
 
+
+
+
+$(".reply_text").on("click",".deletetweet",function(e){
+
+  
+  var tweet_id = $(this).attr("data-tweet-id");
+  var that = $(this);
+  $.ajax({
+    type: "POST",
+    url: "/ajax-handler/activity_handle",
+    data: {'changeID':tweet_id, 'task':'delete'},
+    success: function(data) {
+      var data_json = jQuery.parseJSON(data);
+      if(data_json['status'] == '1')
+      {
+        that.parent().parent().parent().parent().parent().remove();
+      }
+      
+    }
+    });
+  
+});
+
 var nnn;
 $("#filtered_content").on('keypress', '.reply_input', function(e) {
   if(validate_login()['status'] == '1'){
@@ -365,7 +389,7 @@ for(var i = 0; i < business_filters.length;i++){
 
             function organisation_changed(ref,organisation)
           {
-for(var i = 0; i < organisation_filters.length;i++){
+          for(var i = 0; i < organisation_filters.length;i++){
           if(organisation_filters[i].uid==organisation)
           {
             var status = ref.checked;
@@ -488,8 +512,10 @@ $('#organisation_filter').keyup( function() {
 
 
 
+
 function click_activity(activity, changeID){
   ajax_request('activity_handle','success_activity_handle',{'user':'{{userinfo.username}}', 'changeID':changeID, 'task':activity});
+
 }
 function success_activity_handle(data){
   data = jQuery.parseJSON(data);
@@ -505,6 +531,7 @@ function success_activity_handle(data){
     (data['activity'] == 'spam' && data['status'] == 0)){
    alert(data['message']); 
   }
+
 }
 
 

@@ -16,6 +16,7 @@ function initialize() {
   // Listen for the event fired when the user selects an item from the
   // pick list. Retrieve the matching places for that item.
   google.maps.event.addListener(searchBox, 'places_changed', function() {
+    loading_latlng = true;
   var places = searchBox.getPlaces();
     placeCord = places[0].geometry.location;
     $("#lon").val(placeCord.lng());
