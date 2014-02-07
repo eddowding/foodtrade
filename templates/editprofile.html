@@ -251,8 +251,8 @@ function validateFeedback(){
     geocoder = new google.maps.Geocoder();
     geocoder.geocode({'latLng': latlng}, function(results, status) {
             if (status == google.maps.GeocoderStatus.OK) {
-              if (results[1]) {
-                var formatted_address = results[1].formatted_address;
+              if (results[0]) {
+                var formatted_address = results[0].formatted_address;
                 $('#address').val('');
                 $('#address').val(formatted_address);
                 $('#formatted_address').val(formatted_address);

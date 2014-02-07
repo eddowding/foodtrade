@@ -114,7 +114,7 @@ background: #eee;
         </div> 
          
         <div class="col-sm-5 col-md-4 visible-sm visible-md visible-lg">
-          <form action="/activity" class="navbar-form" role="search" data-step="1" data-intro="Search for anyhing, anywhere"
+          <form action="/activity" class="navbar-form"  onsubmit="return formSubmit(this);"  role="search" data-step="1" data-intro="Search for anyhing, anywhere"
           style="border: 0;">
  
             <div class="form-group" style="margin-right:5px;"> 
@@ -134,7 +134,7 @@ background: #eee;
         </div>
 
         <div class="col-xs-4 visible-xs "> 
-          <form action="/activity" class="navbar-form" role="search" style="border: 0;">
+          <form action="/activity"   onsubmit="return formSubmit(this);"  class="navbar-form" role="search" style="border: 0;">
           <div class="input-group"> 
               <input type="text" name="q" id="keyword" class="form-control" value="{{ search.query }}" placeholder="Search">  
 
@@ -885,6 +885,29 @@ function validate_login(){
   {% endif %}
   /*
   ajax_request('validate_logged_in', 'ajax_success_validate_logged_in','');*/
+}
+
+
+
+function formSubmit(form) {
+
+  var input = (document.getElementById('pac-input'));
+    geocoder = new google.maps.Geocoder();
+    geocoder.geocode({'address': input.value}, function(results, status) {
+            if (status == google.maps.GeocoderStatus.OK) {
+              if (results[0]) {
+                var formatted_address = results[0].formatted_address;
+
+                 $("#lon").val(results[0].geometry.location.lng());
+      $("#lat").val(results[0].geometry.location.lat());
+              } 
+            } 
+          });
+
+    setTimeout(function() {   
+        form.submit();
+    }, 3000);  // 3 seconds
+    return false;
 }
 
 </script>
