@@ -8,19 +8,14 @@ from pygeocoder import Geocoder
 import datetime,time
 from mainapp.classes.TweetFeed import Food
 from mainapp.models import FoodPhoto
+from mainapp.classes.mailchimp import MailChimp
 
 class FoodForm(forms.Form):
-
     food_description = forms.CharField(required=False, widget=forms.Textarea(attrs={'class' : 'form-control'})) 
-
     food_tags = forms.CharField(required=False, widget=forms.TextInput(attrs={'class' : 'form-control'})) 
-
     profile_id = forms.CharField(required=False, widget=forms.TextInput(attrs={'class' : 'form-control'})) 
-
     food_name = forms.CharField(required=False, widget=forms.TextInput(attrs={'class' : 'form-control'}))
-
     food_photo = forms.ImageField(required=False)
-
     food_duplicate = forms.CharField(required=False)
 
     def __init__(self, *args, **kwargs):
@@ -123,9 +118,12 @@ class SignupForm(forms.Form):
                 'foods':[],
                 'organisations':[]
         }
-
+        
         userprofile.update_profile_upsert({'screen_name':social_account.extra_data['screen_name'],
             'is_unknown_profile':'true', 'username':social_account.extra_data['screen_name']},data)
+
+        mailchimp_obj = MailChimp()
+        print mailchimp_obj.subscribe(data)
 
         if invite_id != '':
             invititation_to = user.username

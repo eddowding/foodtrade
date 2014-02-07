@@ -1,0 +1,12 @@
+BIT LY
+-----------------------
+access_token = '6d2e7698597e642b16e78f3f73ead15da94697ee'
+
+IP ADDRESS TO LATLNG
+-----------------------
+
+
+MAILCHIMP
+-----------------------
+api_key = 'e9294366710f56f159569b82660f9df3-us3'
+list_id = '53c16fcfcb'
