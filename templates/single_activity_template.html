@@ -79,6 +79,6 @@
         </div>
 
         <div class="reply well well-sm" style="margin:0;"> 
-          <input class="form-control input-sm enterhandler reply_input" {% if result_type == "status" %}data-tweet-id = "{{result.tweetuid}}" {% endif %} data-main = "{{position}}"   {% if userinfo.user.username %} rel="tooltip" title="Please login to use this feature." {% endif %} type="text" placeholder="Reply to {{result.mentions}}" data-mentions = "{{result.mentions}}">
+          <input class="form-control input-sm enterhandler reply_input" {% if result_type == "status" %}data-tweet-id = "{{result.tweetuid}}" {% endif %} data-main = "{{position}}"   {% if not userinfo.username %} data-toggle="tooltip" data-placement="top" title="Please login to use this feature." {% endif %} type="text" placeholder="Reply to {{result.mentions}}" data-mentions = "{{result.mentions}}">
         </div>
     </li>
