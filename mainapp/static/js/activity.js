@@ -28,7 +28,7 @@ $(".reply_text").on('blur', '.reply_input', function(e) {
 $(".reply_text").on("click",".deletetweet",function(e){
 
   
-  var tweet_id = $(this).attr("data-tweet-id");
+ 
   var that = $(this);
   $.ajax({
     type: "POST",
@@ -43,6 +43,22 @@ $(".reply_text").on("click",".deletetweet",function(e){
       
     }
     });
+  
+});
+
+
+$(".reply_text").on("mouseover",".singleresult",function(e){
+ var result_id = $(this).attr("data-id");
+   // console.log(result_id);
+ for(var i = 0; i<map_controls.length;i++)
+ {
+    // console.log(map_controls[i].options.tweet_id);
+  if(String(map_controls[i].options.tweet_id).trim() == String(result_id).trim())
+  {
+    console.log(map_controls[i].options.tweet_id);
+    map_controls[i].openPopup();
+  }
+ }
   
 });
 
