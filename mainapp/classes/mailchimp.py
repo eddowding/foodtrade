@@ -15,7 +15,6 @@ class MailChimp():
 
     def subscribe(self, doc):
         try:
-            print doc
             try:
                 first, last = doc['name'].split(' ')[0], doc['name'].split(' ')[1]
             except:
@@ -30,7 +29,6 @@ class MailChimp():
             return {'status':1}
 
         except mailchimp.ListAlreadySubscribedError:
-            print "Already subscribed"
             return {'status':0,'message':'Already subscribed'}
 
 
