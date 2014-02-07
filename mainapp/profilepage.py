@@ -315,6 +315,7 @@ def get_all_foods(user_id):
             data['photo_url'] = each.get('photo_url')
         data['recomm_tags'] = tags_freq
         final_foods.append(data)
+    final_foods = sorted(final_foods, key=lambda x: -x['vouch_count'])
     return final_foods
 
 def get_customers(user_id, logged_id=None):
