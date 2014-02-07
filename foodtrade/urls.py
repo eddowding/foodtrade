@@ -38,6 +38,6 @@ urlpatterns = patterns('',
     url(r'^pricing/$', 'mainapp.pricing.home'),
     url(r'^inbox/$', 'mainapp.views.notifications'),
     url(r'^unclaimed-profiles/', 'mainapp.views.unclaimed_profiles'),
-    url(r'^(?P<username>[-\w]+)/post/(?P<tweet_id>[-\d]+)/$', 'mainapp.single_activity.home', name='single_activity')
+    url(r'^(?P<username>[-\w]+)/post/(?P<tweet_id>[-\w]+)/$', 'mainapp.single_activity.home', name='single_activity')
 
 )

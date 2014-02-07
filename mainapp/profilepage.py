@@ -276,7 +276,12 @@ def get_tags_freq(food_name):
         if eachfoo.get('food_tags')!= None:
             all_tags.extend(eachfoo.get('food_tags').split(','))
     tags_freq = Counter(all_tags).most_common()
-    return tags_freq
+    only_tags = []
+    for each in tags_freq:
+        only_tags.append(str(each[0]))
+    only_tags = ','.join(only_tags)
+    print only_tags
+    return only_tags
 
 def get_all_foods(user_id):
     foo = Food()
@@ -309,6 +314,7 @@ def get_all_foods(user_id):
             data['photo_url'] = ''
         else:
             data['photo_url'] = each.get('photo_url')
+        data['recomm_tags'] = tags_freq
         final_foods.append(data)
     return final_foods
 
