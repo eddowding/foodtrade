@@ -6,3 +6,4 @@ pymongo
 pygeocoder
 requests
 pillow
+mailchimp

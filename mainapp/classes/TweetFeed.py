@@ -111,7 +111,6 @@ class TweetFeed():
         for f in f_results:
             f_list.append(f['food_name'])
        
-
         orgn = Organisation()
         organisations = orgn.get_organisations_by_mem_id(user_id)
         org_list = []
