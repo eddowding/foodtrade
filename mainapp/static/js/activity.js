@@ -62,6 +62,21 @@ $(".reply_text").on("mouseover",".singleresult",function(e){
   
 });
 
+$(".reply_text").on("mouseout",".singleresult",function(e){
+ var result_id = $(this).attr("data-id");
+   // console.log(result_id);
+ for(var i = 0; i<map_controls.length;i++)
+ {
+    // console.log(map_controls[i].options.tweet_id);
+  if(String(map_controls[i].options.tweet_id).trim() == String(result_id).trim())
+  {
+    console.log(map_controls[i].options.tweet_id);
+    map_controls[i].closePopup();
+  }
+ }
+  
+});
+
 var nnn;
 $("#filtered_content").on('keypress', '.reply_input', function(e) {
   if(validate_login()['status'] == '1'){
