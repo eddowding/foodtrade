@@ -13,7 +13,7 @@ from Foods import AdminFoods
 from mainapp.classes.TweetFeed import TradeConnection, UserProfile, Food, Customer, Organisation, Team, RecommendFood, Notification, Friends, Spam, InviteId, Invites
 from AjaxSearch import AjaxSearch
 from pygeocoder import Geocoder
-from mainapp.profilepage import get_connections, get_all_foods
+from mainapp.profilepage import get_connections, get_all_foods, get_organisations
 from mainapp.views import get_twitter_obj
 import datetime, time
 from bson.objectid import ObjectId
@@ -283,7 +283,10 @@ class AjaxHandle(AjaxSearch):
         data = eval(request.POST.get('data'))
         if data !=None and data !="":
             org.create_member(data)
-            
+            parameters = {}
+            parameters['organisations'] = get_organisations(int(data['memberuid']))
+            parameters['profile_id'], parameters['user_id'] = int(data['memberuid']), request.user.id
+
             notification_obj = Notification()
             user_profile_obj = UserProfile()
             try:
@@ -301,8 +304,21 @@ class AjaxHandle(AjaxSearch):
                         })
             except:
                 pass
+            return render_to_response('ajax_org.html', parameters, context_instance=RequestContext(request))
+            # return HttpResponse("{'status':1}")
+        else:
+            return HttpResponse("{'status':0}")
 
-            return HttpResponse("{'status':1}")
+    def third_party_delete_org(self, request):
+        org = Organisation()
+        data = eval(request.POST.get('data'))
+        if data !=None and data !="":
+            org.delete_member(orguid = data['orguid'], member_id = data['memberuid'])
+            
+            parameters = {}
+            parameters['organisations'] = get_organisations(int(data['memberuid']))
+            parameters['profile_id'], parameters['user_id'] = int(data['memberuid']), request.user.id
+            return render_to_response('ajax_org.html', parameters, context_instance=RequestContext(request))
         else:
             return HttpResponse("{'status':0}")
 
@@ -569,7 +585,7 @@ class AjaxHandle(AjaxSearch):
             if task == 'delete':
             	'''Deleting a Tweet'''
                 #print change_id
-                tweet_feed_obj.delete_tweet(request.user.id,int(change_id))
+                tweet_feed_obj.delete_tweet(request.user.id,str(change_id))
                 return HttpResponse(json.dumps({'status':'1', 'activity':'deleteTweet', '_id':change_id}))
 
             if task == 'follow':

@@ -106,8 +106,8 @@ var card_str = '<div class="card-box"><div class="content"><div class="pull-left
                       card_str += '</div></div>';
                 }
                   card_str += '</div> ';
-
-			var ctrl = L.marker([parseFloat(current_lat), parseFloat(current_lon)], {icon: redIcon}).addTo(map).bindPopup(card_str);
+                  	var tweet_id = (con.result_type == username)?con.tweetuid:username;
+			var ctrl = L.marker([parseFloat(current_lat), parseFloat(current_lon)],{tweet_id:tweet_id,icon: redIcon}).addTo(map).bindPopup(card_str);
 			
 			map_controls.push(ctrl);
 
