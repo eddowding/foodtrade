@@ -5,6 +5,7 @@ from classes.DataConnector import UserInfo
 from classes.Search import Search
 from activity import set_time_date
 from django.core.context_processors import csrf
+from geolocation import get_addr_from_ip
 import json
 
 
@@ -61,6 +62,9 @@ def get_post_parameters(request, tweet_id):
     parameters['parent_json'] = json.dumps(single_tweet)
     parameters['s_userinfo'] = UserInfo(single_tweet['useruid'])
     return parameters
+
+
+
 def home(request, username, tweet_id):
     
     return render_to_response('activity_single.html',get_post_parameters(request,tweet_id),context_instance=RequestContext(request))

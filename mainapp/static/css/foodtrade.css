@@ -1628,3 +1628,9 @@ ol.example li.placeholder:before {
   margin: 5px 0;
 }
 
+.myowntagit{
+border: 1px solid #CAD8F3;
+background: none;
+background-color: #DEE7F8;
+font-weight: normal;
+}

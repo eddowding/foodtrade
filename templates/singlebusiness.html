@@ -335,6 +335,11 @@
                   <div class="form-group">
                     {{form.food_description}}
                   </div>
+                  <div class="form-group" id="recommend_main" style="display:none;">
+                    <div id="recomm_tags">
+                    </div>
+                    
+                  </div>
                   <div class="form-group">
                   <ul id="myTags">
                   <!-- Existing list items will be pre-added to the tags -->
@@ -481,7 +486,7 @@
 
                    {% ifequal profile_id user_id %}
 
-                     <a href="" data-toggle="modal" data-target="#modal_food_detail" class="btn btn-sm btn-default" data-container="body" onClick="get_food_detail('{{profile_id}}', '{{eachfood.food_name}}', '{{eachfood.description}}', '{{eachfood.food_tags}}', '{{eachfood.photo_url}}')"><i class="fa fa-edit" title="Edit" ></i></a>
+                     <a href="" data-toggle="modal" data-target="#modal_food_detail" class="btn btn-sm btn-default" data-container="body" onClick="get_food_detail('{{profile_id}}', '{{eachfood.food_name}}', '{{eachfood.description}}', '{{eachfood.food_tags}}', '{{eachfood.photo_url}}', '{{eachfood.recomm_tags|safe}}')"><i class="fa fa-edit" title="Edit" ></i></a>
 
                      <a class="btn btn-danger btn-sm"><i class="fa fa-trash-o" title="Delete" onClick="delete_food({{profile_id}}, '{{eachfood.food_name}}', this)"></i></a>
 
@@ -910,7 +915,7 @@ function set_width(){
   $('#buss_chosen_chosen').attr("style", "width:350px;");
 }
 
-function get_food_detail(profile_id, food_name, description, food_tags, photo_url){
+function get_food_detail(profile_id, food_name, description, food_tags, photo_url, recomm_tags){
     $("#myTags").tagit("removeAll");
     $('#food_detail_title').text('Add details to '+ food_name);
     var placeholder = "What makes your " + food_name + " special? This is where it's completely fine to show-off! Remember to name any variety names, special techniques, or unique properties - and how it tastes is the most important thing."
@@ -929,6 +934,29 @@ function get_food_detail(profile_id, food_name, description, food_tags, photo_ur
     $('#food_photo').attr('src', photo_url);
     $(".food_details_counted").charCounter(300,{container: "#counter"});    
     $('#id_food_duplicate').val(photo_url);
+    $('#recommend_main').show();
+    var recomm_tags_list = recomm_tags.split(',');
+    $('#recomm_tags').html('');
+    console.log('recomm_tags_list', recomm_tags_list);
+    console.log('tags_list', tags_list);
+    var count = 0;
+    for(i=0;i<recomm_tags_list.length;i++){
+      // appendtext += '<span class="myowntagit">'+ String(recomm_tags_list[i]) + '</span>';
+      // if(!(String(recomm_tags_list[i]) in tags_list)){
+        if(tags_list.indexOf(recomm_tags_list[i]) == -1){
+          count = count+1;
+          $('#recomm_tags').append('<span class="myowntagit">'+ String(recomm_tags_list[i]) + '</span> ');
+        }
+    }
+    if(count != 0){
+    $('#recommend_main').append('<p class="help-block small">Recommend Tags for your food. Click to add.</p>');}
+    $('#recomm_tags').on('click', '.myowntagit', function(e){
+        var tag_text =$(this).html();
+        $(this).remove();
+        $("#myTags").tagit('createTag', tag_text);
+    });
+    // $('#recomm_tags').append(appendtext);
+
 }
     
   </script>

@@ -1,17 +1,6 @@
 {% extends 'tbase.html' %}
 {% load staticfiles %}
-{% block head %}
-	<style type="text/css">    
-	    .panel-body input[type=checkbox]:checked + label { 
-	        color: #c00; 
-	    } 
-	    .mymargin{
-	    	margin-top:2.5%;
-	    }
-	    .newmargin{
-	    	margin-right: 1.5%;
-	    }
-	</style>
+{% block head %} 
 {% endblock %}
 
 
@@ -19,32 +8,36 @@
 {% block content %}
 
 
-<div class="col-md-10" >
-	<div class="panel panel-default">
-	<div class="panel-heading clearfix">
-	<div class="alert alert-success" style="display:none" id="successDiv"><b>Cool! Your invitations have been sent, thank you! Why not invite some more? Together we can rewire the food system.</b> </div>
-	<button id="btnSendTweet1" onclick="send_invite()" class="btn btn-primary pull-right newmargin">Send invites</button>
-			<div class="col-md-6">
-	          <div class="input-group">
-	            <!-- USE TWITTER TYPEAHEAD JSON WITH API TO SEARCH -->
-	            <input class="form-control" id="inputFindFriends" name="q" placeholder="Search for" required>
-	            <span class="input-group-btn">
-	                <button  type="submit" id="btnFindFriends" class="btn btn-default"><i class="glyphicon glyphicon-search"></i></button>
-	            </span>
-	          </div>
-    		</div>
+<div class="col-sm-10" >
 
- 	<div class="panel-body mymargin">
+  <div class="alert alert-success lead"><strong>You earn one free month for everyone you invite that subscribes to FoodTrade</strong>. It's our way of saying 'thank you' for creating a revolution in food trade.</div>
 
-    <div class="form-group"> 
- 	<textarea id="tweetMessage1"  onkeyup="check_limit()" class="form-control counted-invite" name="message" placeholder="Type in your message" rows="3" >Join the #realfood search engine:  </textarea>
- 	</div>
- 	<button id="btnSendTweet2" onclick="send_invite()" class="btn btn-primary pull-right">Send invites</button>
-      <h6 id="charsRem" class="pull-left" id="counter">140 characters remaining</h6> 
- 	</div>
+  
 
-	<ul class="list-group"> 
+  <div class="panel panel-default"> 
+  <div class="panel-heading">
+   <div class="clearfix">
+      <div class="alert alert-success" style="display:none" id="successDiv"><strong>Cool! Your invitations have been sent, thank you! Why not invite some more? Together we can rewire the food system.</strong> </div> 
+
+      <div class="form-group"> 
+        <textarea id="tweetMessage1"  onkeyup="check_limit()" class="form-control counted-invite" name="message" placeholder="Type in your message" rows="3" >Join the #realfood search engine:  </textarea>
+      </div>
+        <button id="btnSendTweet2" onclick="send_invite()" class="btn btn-primary pull-right">Send invites</button>
+        <h6 id="charsRem" class="pull-left" id="counter">140 characters remaining</h6> 
+  </div>
+    <div class="input-group col-sm-4" style="margin-top: 10px;"> 
+      <input class="form-control " id="inputFindFriends" name="q" placeholder="Search your followers..." required>
+      <span class="input-group-btn">
+        <button type="submit" id="btnFindFriends" class="btn btn-default">
+          <i class="glyphicon glyphicon-search"></i>
+        </button>
+      </span>
+    </div>
+  </div>  
+ 	
+ 
 	  <ul class="list-group-item" id ="myFriendsLi">
+
 	   {% for each in friend %}
 	    <li id= "li{{forloop.counter}}" class="list-group-item">
 	      <!-- only show this if checkbox selected --> 
@@ -58,14 +51,19 @@
 	    </li>   
 	    {% endfor %}
 	  </ul>
+    
 
-	  <li class="list-group-item clearfix" style="background: #eee;">
-		<ul class="pagination pull-left mymargin">
-		</ul>	  
-        <button id="btnSendTweet3" onclick="send_invite()" class="btn btn-primary pull-right mymargin">Send invites</button>
-      </li>
+  <div class="panel-footer clearfix">
 
-	  </ul> 
+  <button id="btnSendTweet3" onclick="send_invite()" class="btn btn-primary pull-right mymargin">Send invites</button>
+  <ul class="pagination pu ll-left">
+  </ul>   
+  </div>
+
+	</div>
+	
+	  </ul>
+    </div> 
 </div>
 </div>
 <script src="{% static "js/jquery.js" %}"></script>
