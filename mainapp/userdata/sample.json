@@ -1,0 +1,41 @@
+{
+    "apikey": "example apikey",
+    "id": "example id",
+    "email": {
+        "email": "example email",
+        "euid": "example euid",
+        "leid": "example leid"
+    },
+    "merge_vars": {
+        "new-email": "example new-email",
+        "groupings": [
+            {
+                "id": 42,
+                "name": "example name",
+                "groups": [
+                    "..."
+                ]
+            }
+        ],
+        "optin_ip": "example optin_ip",
+        "optin_time": "example optin_time",
+        "mc_location": {
+            "latitude": "example latitude",
+            "longitude": "example longitude",
+            "anything": "example anything"
+        },
+        "mc_language": "example mc_language",
+        "mc_notes": [
+            {
+                "note": "example note",
+                "id": 42,
+                "action": "example action"
+            }
+        ]
+    },
+    "email_type": "example email_type",
+    "double_optin": true,
+    "update_existing": true,
+    "replace_interests": true,
+    "send_welcome": true
+}

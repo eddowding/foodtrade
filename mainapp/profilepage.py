@@ -269,7 +269,8 @@ def edit_profile(request, username):
         return HttpResponseRedirect('/')
 
 def get_tags_freq(food_name):
-    foods_list = foo.get_foods_by_food_name(each[food_name])
+    foo = Food()
+    foods_list = foo.get_foods_by_food_name(food_name)
     all_tags = []
     for eachfoo in foods_list:
         if eachfoo.get('food_tags')!= None:

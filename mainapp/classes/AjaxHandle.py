@@ -68,17 +68,16 @@ class AjaxHandle(AjaxSearch):
             try:
                 location_res = Geocoder.geocode(invited_friend['friends']['location'])
                 data['latlng'] = {"type":"Point","coordinates":[float(location_res.longitude) ,float(location_res.latitude)]}
-                print data['latlng'], "Roshan"
                 data['zip_code'] = str(location_res.postal_code)
             except:
                 lat, lon, addr,postal_code = 51.5072 , -0.1275, "3 Whitehall, London SW1A 2EL, UK", "SW1 A 2EL"
                 data['address'] = addr
-                data['latlng'] = {"type":"Point","coordinates" : [float(lon),float(lat)]},
-            
+                data['latlng'] = {"type":"Point","coordinates" : [float(lon),float(lat)]}
+                data['location_default_on_error'] = 'true'
             user_profile_obj.create_profile(data)
-            return {'status':0}
-        else:
             return {'status':1}
+        else:
+            return {'status':0}
 
     def post_tweet(self, request):
         if not request.user.is_authenticated():
@@ -104,7 +103,6 @@ class AjaxHandle(AjaxSearch):
         url = shorten_url(prof_url)
 
         if message != None and message != "":
-            print "Roshan ROshan"
             '''For invitation message only.'''
             if noappend == 'noappend':
                 tweet = user_twitter.update_status(status = message)
@@ -538,7 +536,8 @@ class AjaxHandle(AjaxSearch):
         if request.method == 'POST' and request.user.is_authenticated:
             query = request.POST['query']
             friends_obj = Friends()
-            return HttpResponse(json.dumps(friends_obj.search_friends(request.user.username, query)))
+            result = friends_obj.search_friends(request.user.username, query)
+            return HttpResponse(json.dumps({'result':result, 'result_count':len(result)}))
         else:
             return HttpResponse(json.dumps({'status':'0'}))
 
