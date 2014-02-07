@@ -129,16 +129,6 @@ class TweetFeed():
     
 
     def update_tweets(self, username, first_name, last_name, description, address, sign_up_as,  lat, lon,type_user=[]):
-        # try:
-        #     results = Geocoder.geocode(zip_code)
-        #     #print str(results), zip_code
-        #     lon = results.longitude
-        #     lat = results.latitude
-        #     #print lon, lat
-        # except:
-        #     results = Geocoder.geocode('sp5 1nr')
-        #     lon = results.longitude
-        #     lat = results.latitude
         results = address
         return self.db_object.update(self.table_name,
             {'user.username':username}, 
@@ -187,6 +177,8 @@ class UserProfile():
         self.table_name = 'userprofile'
         self.db_object.create_table(self.table_name,'useruid')
 
+    def get_all_profiles(self):
+        return self.db_object.get_all_vals(self.table_name)
   
     def get_profile_by_id(self,user_id):
         return self.db_object.get_one(self.table_name,{'useruid': int(user_id)})
