@@ -680,7 +680,7 @@
           </div> <!--  end connections -->
 
           <div class="tab-pane fade" id="organisations">
-            <!-- <div class="well well-sm">  
+            <div class="well well-sm">  
             <div class="form-inline"  role="form">
               <div class="form-group">
               <select id="org_chosen" data-placeholder="Type orgainsation..." class="chosen-select col-xs-4 col-sm-4" multiple>
@@ -695,11 +695,12 @@
 
               </div>
               
-              <button class="btn btn-success" id="ad_cons_id" {% if not user.is_authenticated %} title="Please login to use this feature" {% endif %} onClick="add_orgainsation({{profile_id}})">Add</button>
+              <button class="btn btn-success" id="ad_cons_id" {% if not user.is_authenticated %} title="Please login to use this feature" {% endif %} onClick="add_org_to_biz({{profile_id}})">Add</button>
 
      
             </div>
-          </div> -->
+          </div>
+          <div id="organisations_list">
             {% if user.is_authenticated %}
             {% else %}
              <p class="alert alert-warning"><a href="{% provider_login_url "twitter" process="login" %}" class="">Login</a> or <a href="{% provider_login_url "twitter" process="login" %}" class="">sign up free</a> to see the organisations or groups they belong to. </p>
@@ -714,6 +715,12 @@
                     </div>
 
                     <div class="text">
+                      {% ifequal profile_id user_id %}
+                      <button type="button" class="close" aria-hidden="true" onclick="del_org_from_biz({{profile_id}}, {{each.id}})">&times;</button>
+                      
+                      <!-- <button type="button" class="close" aria-hidden="true">&times;</button> -->
+                      {% endifequal %}
+
                       <h5><a href="/profile/{{each.username}}">{{each.name}}</a></h5> 
                       <p class="small">{{each.description}}</p> 
                     </div>
@@ -723,6 +730,7 @@
                   </div>
                 </div> 
                 {% endfor %}
+            </div>
           </div> <!-- end organisations -->
 
           <div class="tab-pane fade" id="customers">

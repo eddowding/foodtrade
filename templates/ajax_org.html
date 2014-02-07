@@ -1,0 +1,35 @@
+{% load socialaccount %}
+{% load url from future %}
+{% load i18n %}
+{% include "socialaccount/snippets/login_extra.html" %}
+{% load account %}
+
+            {% if user.is_authenticated %}
+            {% else %}
+             <p class="alert alert-warning"><a href="{% provider_login_url "twitter" process="login" %}" class="">Login</a> or <a href="{% provider_login_url "twitter" process="login" %}" class="">sign up free</a> to see the organisations or groups they belong to. </p>
+
+            {% endif %}
+          {% for each in organisations %}
+                <div class="card card-organisation">
+                  <div class="content">
+                    <div class=" pull-left">
+                      <img src="{{each.photo}}" alt="{{each.name}}"
+                      class="img-rounded img-responsive" style="width:40px;" /> 
+                    </div>
+
+                    <div class="text">
+                      {% ifequal profile_id user_id %}
+                      <button type="button" class="close" aria-hidden="true" onclick="del_org_from_biz({{profile_id}}, {{each.id}})">&times;</button>
+                      
+                      <!-- <button type="button" class="close" aria-hidden="true">&times;</button> -->
+                      {% endifequal %}
+
+                      <h5><a href="/profile/{{each.username}}">{{each.name}}</a></h5> 
+                      <p class="small">{{each.description}}</p> 
+                    </div>
+                  </div>
+                  <div class="numbers clearfix">
+                    <i class="fa fa-group"></i> <small class="text-muted">Organisation</small>
+                  </div>
+                </div> 
+                {% endfor %}

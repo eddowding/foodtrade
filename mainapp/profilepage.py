@@ -280,7 +280,6 @@ def get_tags_freq(food_name):
     for each in tags_freq:
         only_tags.append(str(each[0]))
     only_tags = ','.join(only_tags)
-    print only_tags
     return only_tags
 
 def get_all_foods(user_id):

@@ -15,10 +15,19 @@ function ajax_request(s_handler, c_handler, input_data)
 function add_org_to_biz(member_id){
 	var org_ids_list = $('#org_chosen').val();
 	for(i=0;i<org_ids_list.length;i++){
-		ajax_request("third_party_add_org", 'org_ajax', {data: "{'memberuid': " + prof_id + ",'orguid': " + org_ids_list[i] +"}"});
+		ajax_request("third_party_add_org", 'org_ajax', {data: "{'memberuid': " + member_id + ",'orguid': " + org_ids_list[i] +"}"});
 	}
 }
 
+function del_org_from_biz(member_id, org_id){
+ajax_request("third_party_delete_org", 'org_ajax', {data: "{'memberuid': " + member_id + ",'orguid': " + org_id +"}"});
+}
+
+function org_ajax(data){
+$('.search-choice').remove();
+$("#org_chosen").val('').trigger('chosen:updated');
+$('#organisations_list').html(data);
+}
 function conn_handler(value, prof_id, conn_id)
 {
 	conn_id = typeof conn_id !== 'undefined' ? conn_id : 0;
