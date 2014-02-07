@@ -49,11 +49,11 @@ $(".reply_text").on("click",".deletetweet",function(e){
 
 $(".reply_text").on("mouseover",".singleresult",function(e){
  var result_id = $(this).attr("data-id");
-  
+   // console.log(result_id);
  for(var i = 0; i<map_controls.length;i++)
  {
-
-  if(map_controls[i].options.tweet_id == result_id)
+    // console.log(map_controls[i].options.tweet_id);
+  if(String(map_controls[i].options.tweet_id).trim() == String(result_id).trim())
   {
     console.log(map_controls[i].options.tweet_id);
     map.removeLayer(map_controls[i]);
