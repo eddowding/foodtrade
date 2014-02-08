@@ -6,6 +6,7 @@ from twython import Twython
 import json
 from django.conf import settings
 from mainapp.classes.TweetFeed import TweetFeed, UserProfile, Friends, TwitterError, Invites, InviteId, Notification
+from mainapp.classes.mailchimp import MailChimp, MailChimpException
 from mainapp.classes.Tags import Tags
 from search import search_general
 from streaming import MyStreamer
@@ -378,3 +379,20 @@ def unclaimed_profiles(request):
         parameters['page'] = page_num
         
     return render_to_response('unclaimed.html', parameters, context_instance=RequestContext(request))
+
+
+@user_passes_test(lambda u: u.is_superuser)    
+def transport_mailchimp(request):
+    if request.user.is_authenticated:
+        user_profile_obj = UserProfile()
+        all_users = user_profile_obj.get_all_profiles()
+        for eachUser in all_users:
+            try:
+                if eachUser['email'] == '':
+                    continue
+                m = MailChimp()
+                m.subscribe(eachUser)
+            except:
+                mail_excep_obj = MailChimpException()
+                mail_excep_obj.save_mailchimp_exception(eachUser)
+

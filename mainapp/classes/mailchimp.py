@@ -20,6 +20,7 @@ class MailChimp():
             except:
                 first, last = doc['name'].split(' ')[0], ''
             m = get_mailchimp_api()
+            print doc['email']
             response = m.lists.subscribe(list_id, email = {'email':str(doc['email'])}, 
                 merge_vars = {"FNAME":str(first),"LNAME":str(last),
                 "groupings": [{"name": "Foodtrade Group","groups": [str(doc["sign_up_as"])]}],
@@ -30,5 +31,15 @@ class MailChimp():
 
         except mailchimp.ListAlreadySubscribedError:
             return {'status':0,'message':'Already subscribed'}
+
+class MailChimpException():
+    """This class is used to make api calls to the MailChimp"""
+    def __init__(self):
+        self.db_object = MongoConnection("localhost",27017,'foodtrade')
+        self.table_name = 'mailchimpException'
+        self.db_object.create_table(self.table_name,'_id')
+
+    def save_mailchimp_exception(self, doc):
+        self.db_object.insert_one(self.table_name, doc)
 
 
