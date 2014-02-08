@@ -46,7 +46,7 @@ $(".reply_text").on("click",".deletetweet",function(e){
   
 });
 
-
+var result_mouseout = true;
 $(".reply_text").on("mouseover",".singleresult",function(e){
  var result_id = $(this).attr("data-id");
    // console.log(result_id);
@@ -55,7 +55,8 @@ $(".reply_text").on("mouseover",".singleresult",function(e){
     // console.log(map_controls[i].options.tweet_id);
   if(String(map_controls[i].options.tweet_id).trim() == String(result_id).trim())
   {
-    console.log(map_controls[i].options.tweet_id);
+    result_mouseout = false;
+
     map_controls[i].openPopup();
   }
  }
@@ -70,8 +71,16 @@ $(".reply_text").on("mouseout",".singleresult",function(e){
     // console.log(map_controls[i].options.tweet_id);
   if(String(map_controls[i].options.tweet_id).trim() == String(result_id).trim())
   {
-    console.log(map_controls[i].options.tweet_id);
-    map_controls[i].closePopup();
+    result_mouseout = true;
+    highlighted_marker = map_controls[i];
+    setTimeout(function() {   
+        if(result_mouseout)
+        {
+          highlighted_marker.closePopup();
+        }
+    }, 1000);
+    break;
+    
   }
  }
   
