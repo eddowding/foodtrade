@@ -45,15 +45,14 @@
 	<div class="panel-heading clearfix">
 
 
-	<div class="col-md-6">
+<!-- 	<div class="col-md-6">
 	  <div class="input-group">
-	    <!-- USE TWITTER TYPEAHEAD JSON WITH API TO SEARCH -->
 	    <input class="form-control" id="inputFindFriends" name="q" placeholder="Search for" required>
 	    <span class="input-group-btn">
-	        <button  type="submit" id="btnFindFriends" class="btn btn-default"><i class="glyphicon glyphicon-search"></i></button>
+	        <button  type="submit" id="btnFind" class="btn btn-default"><i class="glyphicon glyphicon-search"></i></button>
 	    </span>
 	  </div>
-	</div>
+	</div> -->
 
 	  <ul class="nav nav-tabs">
       <li id="liUnEdited" class="active"><a href="#unedited" onclick="update_list('unedited')" data-toggle="tab"> Unedited <span class="badge" id = "spanUnedited">{{unedited_count}}</span></a> </li>
@@ -143,5 +142,9 @@ $(document).ready(function(){
     $('#liUnEdited').removeClass('active'); 
   }
 });
+/*$('#btnFind').click(function(){
+  q = $('#btnFind').val();
+  window.location = '/unclaimed-profiles/?q=' + String(q) + '&edit=0&page=1'
+});*/
 </script>
 {% endblock %}
