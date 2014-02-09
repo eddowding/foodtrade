@@ -107,11 +107,11 @@ function invite_connect(prof_username, logged_username){
 	ajax_request("post_tweet_admin", 'create_conn', {message: message});
 }
 
-function add_food(prof_id){
+function add_food(prof_id, user_id){
 	if (validate_login()['status'] == '1'){
 		var elements = document.getElementsByClassName('search-choice');
 	    var food = elements[0].children[0].innerHTML;
-		var data = {useruid: prof_id, food_name: food};
+		var data = {useruid: prof_id, food_name: food, created_by: user_id};
 		ajax_request("addfood", 'food_ajax', {data: JSON.stringify(data)});
 		
 	}

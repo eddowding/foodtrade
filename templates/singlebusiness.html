@@ -431,7 +431,7 @@
                               <div class="pull-left">
                             <span class="input-group-btn">
                     
-                                <button class="btn btn-success" id="adfoo_id" onClick="add_food({{profile_id}})" {% if not user.is_authenticated %} title="Please log in to use this feature." {% endif %} > Add</button>
+                                <button class="btn btn-success" id="adfoo_id" onClick="add_food({{profile_id}}, {{user_id}})" {% if not user.is_authenticated %} title="Please log in to use this feature." {% endif %} > Add</button>
                             </span></div>
                           </div>  
                           
@@ -869,6 +869,15 @@
 // });
 
 $( document ).ready(function() {
+// $('.create-option').on('click', '.active-result', function(e){
+  // alert('sdkdkfj');
+  $('.create-option').on('click', function(evt, params) {
+      var text = $('.create-option').text();
+    var word = text.split('"')[1];
+    alert(word);
+  });
+
+// });  
 
 
   $("#myTags").tagit({
@@ -896,6 +905,14 @@ $('#myselect').chosen({create_option: true, skip_no_results: true, create_option
     $('#myselect').chosen().ready(function(){
       $('.search-field input').attr('style', 'width:192px;height:30px;');
     });
+    // document.getElementById('#myselect').addEventListener("DOMSubtreeModified", function(){alert('dom changed of select');}, false);
+    // $('#myselect').bind("DOMSubtreeModified", function() {
+      // alert('hahaha');
+    // });
+document.getElementById("myselect").addEventListener("DOMSubtreeModified", function(e) {
+  // Record the occurrence
+  alert('dom modified');
+}, false);
 // chosen config code
 // var config = {
 //       '.chosen-select'           : {},
