@@ -705,3 +705,24 @@ class Spam():
         return self.db_object.update_upsert(self.table_name, 
             {'tweet_id':ObjectId(tweet_id)}, {'spam_by':spam_by})  
 
+class Analytics():
+    """This class saves user behaviors and analytics data"""
+    def __init__ (self):
+    self.db_object = MongoConnection("localhost",27017,'foodtrade')
+    self.table_name = 'analytics'
+    self.db_object.create_table(self.table_name,'_id') 
+
+    def save_data(self, data):
+        self.db_object.insert_one(self.table_name, data)
+
+class PreNotification():
+    """docstring for data for pre-notification."""
+    def __init__(self):
+        self.db_object = MongoConnection("localhost",27017,'foodtrade')
+        self.table_name = 'prenotification'
+        self.db_object.create_table(self.table_name,'_id') 
+
+    def save_notice(self, data)
+        self.db_object.insert_one(self.table_name, data)
+
+

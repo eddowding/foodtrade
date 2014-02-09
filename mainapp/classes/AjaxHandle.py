@@ -10,7 +10,7 @@ from mainapp.classes.TweetFeed import TweetFeed
 from mainapp.classes.Email import Email
 from Tags import Tags
 from Foods import AdminFoods
-from mainapp.classes.TweetFeed import TradeConnection, UserProfile, Food, Customer, Organisation, Team, RecommendFood, Notification, Friends, Spam, InviteId, Invites
+from mainapp.classes.TweetFeed import TradeConnection, UserProfile, Food, Customer, Organisation, Team, RecommendFood, Notification, Friends, Spam, InviteId, Invites, PreNotification
 from AjaxSearch import AjaxSearch
 from pygeocoder import Geocoder
 from mainapp.profilepage import get_connections, get_all_foods, get_organisations
@@ -327,6 +327,18 @@ class AjaxHandle(AjaxSearch):
         data = eval(request.POST.get('data'))
         if data !=None and data !="":
             foo.create_food(data)
+            pre_notice_obj = PreNotification()
+
+            pre_notification_obj.save_notification({
+                    'notification_to':seller['username'], 
+                    'notification_message':'@' + str(cust['username']) + ' said, he is your customer. You can connect to him and increase your business value.', 
+                    'notification_time':time.mktime(datetime.datetime.now().timetuple()),
+                    'notification_type':'Added Customer',
+                    'notification_view_status':'false',
+                    'notification_archived_status':'false',
+                    'notifying_user':str(cust['username'])
+                    })
+
             parameters = {}
             parameters['all_foods'] = get_all_foods(int(data['useruid']), request.user.id)
             parameters['profile_id'], parameters['user_id'] = int(data['useruid']), request.user.id
