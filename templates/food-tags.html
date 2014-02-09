@@ -26,7 +26,7 @@ We'll add merge tags later, I'm just adding the icon since I'm here.
             <input type="text" class="form-control" id="termInput"  placeholder="Terms">
           </div> 
 
-  <button type="button" class="btn btn-sm btn-success" onclick="AddTerm()">Add term</button>
+  <button type="button" class="btn btn-sm btn-success" onclick="AddTerm('termInput')">Add term</button>
 
         </div><!-- col md 5 -->
         <div class="col-md-6">
@@ -41,6 +41,17 @@ We'll add merge tags later, I'm just adding the icon since I'm here.
         </div><!-- col md 5 -->
       </div>
 </form>
+<div class="row">
+  <div class="col-md-6"><h3>Unapproved Foods</h3>
+    <p class="help-block small">Click to approve.</p>
+{% for each in unapproved_foods %}
+<button id="newfood_{{forloop.counter}}" class="btn btn-info" value="{{each.food_name}}" onClick="approve_food('newfood_{{forloop.counter}}', '{{each.useruid}}')">{{each.food_name}}</button>
+{% empty %}
+    <p>Sorry, no unapproved foods.</p>
+{% endfor %}
+</div> <!-- end col-md-6 -->
+</div> <!-- row -->
+
  <div class="row">
   <div class="col-md-6"><h3>All tags</h3></div>
   <div class="col-md-6"><button type="button"  style="float:right;" class="btn btn-sm btn-success" onclick="SaveTagAdmin()">Save Tags</button></div> 
@@ -70,6 +81,7 @@ We'll add merge tags later, I'm just adding the icon since I'm here.
       <script src="{% static "js/jquery-sortable.js" %}"></script>
   <script type="text/javascript">
 
+unapproved_food_list = [];
 
 var oldContainer
 $("ul.tag_admin").sortable({
@@ -90,11 +102,16 @@ $("ul.tag_admin").sortable({
 ZebraStrip();
   }
 });
-
-
-function AddTerm()
+function approve_food(input, useruid){
+  input_val = $("#" + input).val();
+  data = {useruid: useruid, food_name: input_val}
+  unapproved_food_list.push(data);
+  AddTerm(input);
+}
+function AddTerm(termInput)
 {
-  input_val = $("#termInput").val();
+  
+  input_val = $("#" + termInput).val();
   if(input_val=="")
   {
     alert("You cannot add an empty term");
@@ -107,7 +124,9 @@ function AddTerm()
      $("#termInput").val('');
 
   // $("ol.tag_admin").
-
+    if(termInput.indexOf('newfood')!=-1){
+      $('#'+termInput).remove();
+    }
 }
 function RemoveTag(my_this){
 that = my_this;
@@ -145,8 +164,11 @@ function SaveTagAdmin()
    parent_tags = $('ul.tag_admin').children('li');
    h_tags = GetTags(parent_tags,0);
    ajax_request("save_adminfoods", 'tags_saved', {tags:JSON.stringify(h_tags)});
-
-
+   // remove the new foods from unapproved
+   console.log(unapproved_food_list);
+   for(i=0;i<unapproved_food_list.length;i++){
+     ajax_request("delete_unapproved_food", 'empty', {data: JSON.stringify(unapproved_food_list[i])});
+   }
 }
 function GetTags(tags, parentid)
 {
