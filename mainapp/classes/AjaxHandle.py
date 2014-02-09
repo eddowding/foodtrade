@@ -328,15 +328,20 @@ class AjaxHandle(AjaxSearch):
         if data !=None and data !="":
             foo.create_food(data)
             pre_notice_obj = PreNotification()
+            user_profile_obj = UserProfile()
+            # print data
+            created_by = user_profile_obj.get_profile_by_id(int(request.user.id))
+            created_on  = user_profile_obj.get_profile_by_id(int(data['useruid']))
 
-            pre_notification_obj.save_notification({
-                    'notification_to':seller['username'], 
-                    'notification_message':'@' + str(cust['username']) + ' said, he is your customer. You can connect to him and increase your business value.', 
+            pre_notice_obj.save_notice({
+                    'notification_to':created_on['username'], 
+                    'notification_message':'@' + str(created_by['username']) + ' added ' + str(data['food_name'] + 'on your profile.'), 
                     'notification_time':time.mktime(datetime.datetime.now().timetuple()),
-                    'notification_type':'Added Customer',
+                    'notification_type':'Added Food',
+                    'food_name':data['food_name'],
                     'notification_view_status':'false',
                     'notification_archived_status':'false',
-                    'notifying_user':str(cust['username'])
+                    'notifying_user':str(created_by['username'])
                     })
 
             parameters = {}
@@ -469,7 +474,7 @@ class AjaxHandle(AjaxSearch):
             try:
                 notification_obj.save_notification({
                         'notification_to':org['username'], 
-                        'notification_message':'@' + str(mem['username']) + ' said he/she works inyour Organisation.', 
+                        'notification_message':'@' + str(mem['username']) + ' said he/she works in your Organisation.', 
                         'notification_time':time.mktime(datetime.datetime.now().timetuple()),
                         'notification_type':'Added Team',
                         'notification_view_status':'false',
