@@ -799,7 +799,7 @@ class AjaxHandle(AjaxSearch):
                         'type_user':type_user,
                         'zip_code': str(add_res[0].postal_code),
                         'name':str(name),
-                        'recently_updated':'true'})
+                        'recently_updated_by_super_user':'true'})
                 except:
                     continue
             return HttpResponse(json.dumps({'users':uname, 'status':'1'}))

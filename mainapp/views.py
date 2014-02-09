@@ -368,15 +368,23 @@ def unclaimed_profiles(request):
 
     if request.method == 'GET':
         if request.GET.get('page') == None:
-            page_num =1
+            page_num = 1
+            edit_value = 0
         else:
             page_num = int(request.GET['page'])
+            edit_value = int(request.GET['edit'])
+        if page_num <=0:
+            page_num = 1
 
         user_profile_obj = UserProfile()
-        unclaimed_profiles = user_profile_obj.get_unclaimed_profile_paginated(page_num)
+        unclaimed_profiles = user_profile_obj.get_unclaimed_profile_paginated(page_num, edit_value)
         parameters['unclaimed_profiles'] = unclaimed_profiles
+        parameters['edit_value'] = edit_value
+        parameters['unedited_count'] = user_profile_obj.get_unclaimed_unedited_profile_count()
+        parameters['edited_count'] = user_profile_obj.get_unclaimed_edited_profile_count()
+
         parameters['unclaimed_profiles_json'] = json.dumps(unclaimed_profiles)
-        parameters['page'] = page_num
+        parameters['page_number'] = page_num
         
     return render_to_response('unclaimed.html', parameters, context_instance=RequestContext(request))
 
