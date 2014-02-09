@@ -708,9 +708,9 @@ class Spam():
 class Analytics():
     """This class saves user behaviors and analytics data"""
     def __init__ (self):
-    self.db_object = MongoConnection("localhost",27017,'foodtrade')
-    self.table_name = 'analytics'
-    self.db_object.create_table(self.table_name,'_id') 
+        self.db_object = MongoConnection("localhost",27017,'foodtrade')
+        self.table_name = 'analytics'
+        self.db_object.create_table(self.table_name,'_id') 
 
     def save_data(self, data):
         self.db_object.insert_one(self.table_name, data)
@@ -721,8 +721,8 @@ class PreNotification():
         self.db_object = MongoConnection("localhost",27017,'foodtrade')
         self.table_name = 'prenotification'
         self.db_object.create_table(self.table_name,'_id') 
-
-    def save_notice(self, data)
+    
+    def save_notice(self, data):
         self.db_object.insert_one(self.table_name, data)
 
 
