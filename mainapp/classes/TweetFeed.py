@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+# encoding: utf-8
 from MongoConnection import MongoConnection
 from datetime import datetime
 from bson.objectid import ObjectId
@@ -208,25 +210,47 @@ class UserProfile():
              'phone_number':str(phone)}
              )
 
-    def update_profile_by_username(self, username, description, address, type_usr, sign_up_as, phone, lat, lon, postal_code, name):
-        return self.db_object.update(self.table_name,
-             {'username':username},
-             {'zip_code':str(postal_code),
-             'description':str(description),
-             'latlng.coordinates.1':float(lat),
-             'latlng.coordinates.0':float(lon),
-             'address':str(address),
-             'type_user':type_usr,
-             'sign_up_as':sign_up_as, 
-             'phone_number':str(phone),
-             'name':name
-             })        
+    def update_profile_by_username(self, username, description, address, type_usr, sign_up_as, phone, lat, lon, postal_code, name, is_superuser):
+        if not is_superuser: 
+            return self.db_object.update(self.table_name,
+                 {'username':username},
+                 {'zip_code':str(postal_code),
+                 'description':description,
+                 'latlng.coordinates.1':float(lat),
+                 'latlng.coordinates.0':float(lon),
+                 'address':str(address),
+                 'type_user':type_usr,
+                 'sign_up_as':sign_up_as, 
+                 'phone_number':str(phone),
+                 'name':name
+                 })
+        else:
+            return self.db_object.update(self.table_name,
+                 {'username':username},
+                 {'zip_code':str(postal_code),
+                 'description':description,
+                 'latlng.coordinates.1':float(lat),
+                 'latlng.coordinates.0':float(lon),
+                 'address':str(address),
+                 'type_user':type_usr,
+                 'sign_up_as':sign_up_as, 
+                 'phone_number':str(phone),
+                 'recently_updated_by_super_user':'true',
+                 'name':name
+                 })
     def update_profile_upsert(self, where, what):
         return self.db_object.update_upsert(self.table_name, where, what)
 
-    def get_unclaimed_profile_paginated(self, pagenum = 1):
+
+    def get_unclaimed_unedited_profile_count(self):
+        return self.db_object.get_count(self.table_name, {'is_unknown_profile':'true', 'recently_updated_by_super_user':'false'})
+
+    def get_unclaimed_edited_profile_count(self):
+        return self.db_object.get_count(self.table_name, {'is_unknown_profile':'true', 'recently_updated_by_super_user':'true'})
+
+    def get_unclaimed_profile_paginated(self, pagenum = 1, edit_value = 0):
         return self.db_object.get_paginated_values(self.table_name, 
-            conditions = {'is_unknown_profile':'true'}, pageNumber = pagenum)
+            conditions = {'is_unknown_profile':'true','recently_updated_by_super_user':str(bool(edit_value)).lower()}, pageNumber = pagenum)
 
     def search_profiles(self):
         mapper = Code("""
@@ -674,10 +698,32 @@ class Spam():
         self.db_object.create_table(self.table_name,'screen_name') 
 
     def check_spam_by(self, tweet_id, user_id):
-        result = self.db_object.get_one(self.table_name, {'tweet_id':ObjectId(tweet_id),'spam_by':user_id})
+        result = self.db_object.get_one(self.table_name, {'tweet_id':str(tweet_id),'spam_by':user_id})
         return result
 
     def mark_spam(self, spam_by, tweet_id):
-        return self.db_object.update_upsert(self.table_name, 
-            {'tweet_id':ObjectId(tweet_id)}, {'spam_by':spam_by})  
+        return self.db_object.insert_one(self.table_name, 
+            {'tweet_id':str(tweet_id), 'spam_by':spam_by})  
+
+class Analytics():
+    """This class saves user behaviors and analytics data"""
+    def __init__ (self):
+        self.db_object = MongoConnection("localhost",27017,'foodtrade')
+        self.table_name = 'analytics'
+        self.db_object.create_table(self.table_name,'_id') 
+
+    def save_data(self, data):
+        self.db_object.insert_one(self.table_name, data)
+
+class PreNotification():
+    """docstring for data for pre-notification."""
+    def __init__(self):
+        self.db_object = MongoConnection("localhost",27017,'foodtrade')
+        self.table_name = 'prenotification'
+        self.db_object.create_table(self.table_name,'_id') 
+    
+    def save_notice(self, data):
+        if (data['notification_type'] == 'Added Food'):
+            self.db_object.update_upsert(self.table_name,{'food_name':data['food_name']},data)
+
 

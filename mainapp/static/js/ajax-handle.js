@@ -1,4 +1,5 @@
 global_this = '';
+vouch_this = '';
 var friends;
 function ajax_request(s_handler, c_handler, input_data)
 {
@@ -106,11 +107,11 @@ function invite_connect(prof_username, logged_username){
 	ajax_request("post_tweet_admin", 'create_conn', {message: message});
 }
 
-function add_food(prof_id){
+function add_food(prof_id, user_id){
 	if (validate_login()['status'] == '1'){
 		var elements = document.getElementsByClassName('search-choice');
 	    var food = elements[0].children[0].innerHTML;
-		var data = {useruid: prof_id, food_name: food};
+		var data = {useruid: prof_id, food_name: food, created_by: user_id};
 		ajax_request("addfood", 'food_ajax', {data: JSON.stringify(data)});
 		
 	}
@@ -120,38 +121,23 @@ function add_food(prof_id){
 
 }
 
-function food_detail(){
-var links = $('.food-popover').popover({trigger: 'manual', html: true});
-defaultWidth = links.width();
-links.mouseenter(function (event) {
-    
-        var link = $(this);
-        link.popover('show').width(180);
-    
-        $('.popover').mouseleave(function () {
-            link.popover('hide').width(defaultWidth);
-        });   
-    });
-        
-    links.mouseleave(function (event) {
-        if (event.toElement === document.body) {
-            $(this).popover('hide').width(defaultWidth);
-        }           
-    });
-}
-
 function food_ajax(data){
 $('.search-choice').remove();
 $("#myselect").val('').trigger('chosen:updated');
 $('#food_tbody').html(data);
-food_detail();
 }
-function recommend_food(logged_in_id, food_name, prof_id, username){
-	var data = {recommender_id: logged_in_id, food_name: food_name, business_id: prof_id}
-	ajax_request("vouch_for_food", 'empty', {data: JSON.stringify(data)});
-	var url = window.location.href;
-	msg = "I've just vouched for " + food_name + " from " + username + " " + url;
-	$('#tweet-recomm').val(msg);
+function recommend_food(logged_in_id, food_name, prof_id, username, my_this){
+	var data = {recommender_id: logged_in_id, food_name: food_name, business_id: prof_id, action: 'add'};
+	vouch_this = my_this;
+	if(vouch_this.checked){
+		var url = window.location.href;
+		msg = "I've just vouched for #" + food_name.toLocaleLowerCase() + " from " + username + " " + url;
+		$('#tweet-recomm').val(msg);
+	}
+	else{
+		data['action'] = 'remove';
+	}
+	ajax_request("vouch_for_food", 'food_ajax', {data: JSON.stringify(data)});
 }
 
 function empty(){}

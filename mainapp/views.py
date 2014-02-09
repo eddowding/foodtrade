@@ -5,7 +5,7 @@ from allauth.socialaccount.models import SocialToken, SocialAccount
 from twython import Twython
 import json
 from django.conf import settings
-from mainapp.classes.TweetFeed import TweetFeed, UserProfile, Friends, TwitterError, Invites, InviteId, Notification
+from mainapp.classes.TweetFeed import TweetFeed, UserProfile, Friends, TwitterError, Invites, InviteId, Notification, Analytics
 from mainapp.classes.mailchimp import MailChimp, MailChimpException
 from mainapp.classes.Tags import Tags
 from search import search_general
@@ -292,6 +292,13 @@ def invite(request):
 
 def handle_invitation_hit(request, invite_id):
     request.session['invite_id'] = str(invite_id)
+    analytics_obj = Analytics()
+    analytics_obj.save({
+        'site_visit_time':time.mktime(datetime.datetime.now().timetuple()),
+        'invitation_id':str(invite_id),
+        'Analytics Type':'Site Visit',
+        'request_obj':str(request)
+        })
     return HttpResponseRedirect('/')
 
 def notifications(request):
@@ -368,15 +375,23 @@ def unclaimed_profiles(request):
 
     if request.method == 'GET':
         if request.GET.get('page') == None:
-            page_num =1
+            page_num = 1
+            edit_value = 0
         else:
             page_num = int(request.GET['page'])
+            edit_value = int(request.GET['edit'])
+        if page_num <= 0:
+            page_num = 1
 
         user_profile_obj = UserProfile()
-        unclaimed_profiles = user_profile_obj.get_unclaimed_profile_paginated(page_num)
+        unclaimed_profiles = user_profile_obj.get_unclaimed_profile_paginated(page_num, edit_value)
         parameters['unclaimed_profiles'] = unclaimed_profiles
+        parameters['edit_value'] = edit_value
+        parameters['unedited_count'] = user_profile_obj.get_unclaimed_unedited_profile_count()
+        parameters['edited_count'] = user_profile_obj.get_unclaimed_edited_profile_count()
+
         parameters['unclaimed_profiles_json'] = json.dumps(unclaimed_profiles)
-        parameters['page'] = page_num
+        parameters['page_number'] = page_num
         
     return render_to_response('unclaimed.html', parameters, context_instance=RequestContext(request))
 

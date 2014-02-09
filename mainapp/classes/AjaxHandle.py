@@ -10,7 +10,7 @@ from mainapp.classes.TweetFeed import TweetFeed
 from mainapp.classes.Email import Email
 from Tags import Tags
 from Foods import AdminFoods
-from mainapp.classes.TweetFeed import TradeConnection, UserProfile, Food, Customer, Organisation, Team, RecommendFood, Notification, Friends, Spam, InviteId, Invites
+from mainapp.classes.TweetFeed import TradeConnection, UserProfile, Food, Customer, Organisation, Team, RecommendFood, Notification, Friends, Spam, InviteId, Invites, PreNotification
 from AjaxSearch import AjaxSearch
 from pygeocoder import Geocoder
 from mainapp.profilepage import get_connections, get_all_foods, get_organisations
@@ -327,8 +327,25 @@ class AjaxHandle(AjaxSearch):
         data = eval(request.POST.get('data'))
         if data !=None and data !="":
             foo.create_food(data)
+            pre_notice_obj = PreNotification()
+            user_profile_obj = UserProfile()
+            # print data
+            created_by = user_profile_obj.get_profile_by_id(int(request.user.id))
+            created_on  = user_profile_obj.get_profile_by_id(int(data['useruid']))
+
+            pre_notice_obj.save_notice({
+                    'notification_to':created_on['username'], 
+                    'notification_message':'@' + str(created_by['username']) + ' added ' + str(data['food_name'] + 'on your profile.'), 
+                    'notification_time':time.mktime(datetime.datetime.now().timetuple()),
+                    'notification_type':'Added Food',
+                    'food_name':data['food_name'],
+                    'notification_view_status':'false',
+                    'notification_archived_status':'false',
+                    'notifying_user':str(created_by['username'])
+                    })
+
             parameters = {}
-            parameters['all_foods'] = get_all_foods(int(data['useruid']))
+            parameters['all_foods'] = get_all_foods(int(data['useruid']), request.user.id)
             parameters['profile_id'], parameters['user_id'] = int(data['useruid']), request.user.id
             return render_to_response('ajax_food.html', parameters, context_instance=RequestContext(request))
             # return HttpResponse("{'status':1}")
@@ -341,7 +358,7 @@ class AjaxHandle(AjaxSearch):
         if data !=None and data !="":
             foo.delete_food(useruid = data['useruid'], food_name = data['food_name']);
             parameters = {}
-            parameters['all_foods'] = get_all_foods(int(data['useruid']))
+            parameters['all_foods'] = get_all_foods(int(data['useruid']), request.user.id)
             parameters['profile_id'], parameters['user_id'] = int(data['useruid']), request.user.id
             return render_to_response('ajax_food.html', parameters, context_instance=RequestContext(request))
             # return HttpResponse("{'status':1}")
@@ -457,7 +474,7 @@ class AjaxHandle(AjaxSearch):
             try:
                 notification_obj.save_notification({
                         'notification_to':org['username'], 
-                        'notification_message':'@' + str(mem['username']) + ' said he/she works inyour Organisation.', 
+                        'notification_message':'@' + str(mem['username']) + ' said he/she works in your Organisation.', 
                         'notification_time':time.mktime(datetime.datetime.now().timetuple()),
                         'notification_type':'Added Team',
                         'notification_view_status':'false',
@@ -498,25 +515,33 @@ class AjaxHandle(AjaxSearch):
         #print request.POST.get('data')
         data = eval(request.POST.get('data'))
         if data !=None and data !="":
-            recomm.create_recomm(data)
+            if data['action'] == 'add':
+                recomm.create_recomm(data)
 
-            notification_obj = Notification()
-            user_profile_obj = UserProfile()
-            try:
-                busss  = user_profile_obj.get_profile_by_id(int(data['business_id']))
-                rec  = user_profile_obj.get_profile_by_id(int(data['recommender_id']))
-                notification_obj.save_notification({
-                        'notification_to':busss['username'], 
-                        'notification_message':'@' + str(rec['username']) + ' vouched for your food ' + str(data['food_name']) + '.', 
-                        'notification_time':time.mktime(datetime.datetime.now().timetuple()),
-                        'notification_type':'Vouched Food',
-                        'notification_view_status':'false',
-                        'notification_archived_status':'false',
-                        'notifying_user':str(rec['username'])
-                        })            
-            except:
-                pass
-            return HttpResponse("{'status':1}")
+                notification_obj = Notification()
+                user_profile_obj = UserProfile()
+                try:
+                    busss  = user_profile_obj.get_profile_by_id(int(data['business_id']))
+                    rec  = user_profile_obj.get_profile_by_id(int(data['recommender_id']))
+                    notification_obj.save_notification({
+                            'notification_to':busss['username'], 
+                            'notification_message':'@' + str(rec['username']) + ' vouched for your food ' + str(data['food_name']) + '.', 
+                            'notification_time':time.mktime(datetime.datetime.now().timetuple()),
+                            'notification_type':'Vouched Food',
+                            'notification_view_status':'false',
+                            'notification_archived_status':'false',
+                            'notifying_user':str(rec['username'])
+                            })            
+                except:
+                    pass
+            else:
+                recomm.delete_recomm(data['business_id'], data['food_name'], data['recommender_id'])
+
+            parameters = {}
+            parameters['all_foods'] = get_all_foods(int(data['business_id']), request.user.id)
+            parameters['profile_id'], parameters['user_id'] = int(data['business_id']), request.user.id
+            return render_to_response('ajax_food.html', parameters, context_instance=RequestContext(request))
+            # return HttpResponse("{'status':1}")
         else:
             return HttpResponse("{'status':0}")
 
@@ -791,7 +816,7 @@ class AjaxHandle(AjaxSearch):
                         'type_user':type_user,
                         'zip_code': str(add_res[0].postal_code),
                         'name':str(name),
-                        'recently_updated':'true'})
+                        'recently_updated_by_super_user':'true'})
                 except:
                     continue
             return HttpResponse(json.dumps({'users':uname, 'status':'1'}))
