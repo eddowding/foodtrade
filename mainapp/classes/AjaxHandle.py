@@ -94,7 +94,7 @@ class AjaxHandle(AjaxSearch):
         bot_twitter = get_twitter_obj(settings.BOT_ACCESS_TOKEN, settings.BOT_ACCESS_TOKEN_SECRET)
         message = request.POST.get('message')
         noappend = request.POST.get('noappend')
-        parent_tweet_id = int(request.POST.get("parentid",0))
+        parent_tweet_id = request.POST.get("parentid",0)
 
         only_foodtrade = request.POST.get('foodtrade_only',"false")
 
