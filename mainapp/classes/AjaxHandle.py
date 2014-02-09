@@ -10,7 +10,7 @@ from mainapp.classes.TweetFeed import TweetFeed
 from mainapp.classes.Email import Email
 from Tags import Tags
 from Foods import AdminFoods
-from mainapp.classes.TweetFeed import TradeConnection, UserProfile, Food, Customer, Organisation, Team, RecommendFood, Notification, Friends, Spam, InviteId, Invites
+from mainapp.classes.TweetFeed import TradeConnection, UserProfile, Food, Customer, Organisation, Team, RecommendFood, Notification, Friends, Spam, InviteId, Invites, PreNotification
 from AjaxSearch import AjaxSearch
 from pygeocoder import Geocoder
 from mainapp.profilepage import get_connections, get_all_foods, get_organisations
@@ -94,7 +94,7 @@ class AjaxHandle(AjaxSearch):
         bot_twitter = get_twitter_obj(settings.BOT_ACCESS_TOKEN, settings.BOT_ACCESS_TOKEN_SECRET)
         message = request.POST.get('message')
         noappend = request.POST.get('noappend')
-        parent_tweet_id = int(request.POST.get("parentid",0))
+        parent_tweet_id = request.POST.get("parentid",0)
 
         only_foodtrade = request.POST.get('foodtrade_only',"false")
 
@@ -327,6 +327,23 @@ class AjaxHandle(AjaxSearch):
         data = eval(request.POST.get('data'))
         if data !=None and data !="":
             foo.create_food(data)
+            pre_notice_obj = PreNotification()
+            user_profile_obj = UserProfile()
+            # print data
+            created_by = user_profile_obj.get_profile_by_id(int(request.user.id))
+            created_on  = user_profile_obj.get_profile_by_id(int(data['useruid']))
+
+            pre_notice_obj.save_notice({
+                    'notification_to':created_on['username'], 
+                    'notification_message':'@' + str(created_by['username']) + ' added ' + str(data['food_name'] + 'on your profile.'), 
+                    'notification_time':time.mktime(datetime.datetime.now().timetuple()),
+                    'notification_type':'Added Food',
+                    'food_name':data['food_name'],
+                    'notification_view_status':'false',
+                    'notification_archived_status':'false',
+                    'notifying_user':str(created_by['username'])
+                    })
+
             parameters = {}
             parameters['all_foods'] = get_all_foods(int(data['useruid']), request.user.id)
             parameters['profile_id'], parameters['user_id'] = int(data['useruid']), request.user.id
@@ -457,7 +474,7 @@ class AjaxHandle(AjaxSearch):
             try:
                 notification_obj.save_notification({
                         'notification_to':org['username'], 
-                        'notification_message':'@' + str(mem['username']) + ' said he/she works inyour Organisation.', 
+                        'notification_message':'@' + str(mem['username']) + ' said he/she works in your Organisation.', 
                         'notification_time':time.mktime(datetime.datetime.now().timetuple()),
                         'notification_type':'Added Team',
                         'notification_view_status':'false',

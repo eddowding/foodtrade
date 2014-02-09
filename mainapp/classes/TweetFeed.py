@@ -698,12 +698,34 @@ class Spam():
         self.db_object.create_table(self.table_name,'screen_name') 
 
     def check_spam_by(self, tweet_id, user_id):
-        result = self.db_object.get_one(self.table_name, {'tweet_id':ObjectId(tweet_id),'spam_by':user_id})
+        result = self.db_object.get_one(self.table_name, {'tweet_id':str(tweet_id),'spam_by':user_id})
         return result
 
     def mark_spam(self, spam_by, tweet_id):
-        return self.db_object.update_upsert(self.table_name, 
-            {'tweet_id':ObjectId(tweet_id)}, {'spam_by':spam_by})  
+        return self.db_object.insert_one(self.table_name, 
+            {'tweet_id':str(tweet_id), 'spam_by':spam_by})  
+
+class Analytics():
+    """This class saves user behaviors and analytics data"""
+    def __init__ (self):
+        self.db_object = MongoConnection("localhost",27017,'foodtrade')
+        self.table_name = 'analytics'
+        self.db_object.create_table(self.table_name,'_id') 
+
+    def save_data(self, data):
+        self.db_object.insert_one(self.table_name, data)
+
+class PreNotification():
+    """docstring for data for pre-notification."""
+    def __init__(self):
+        self.db_object = MongoConnection("localhost",27017,'foodtrade')
+        self.table_name = 'prenotification'
+        self.db_object.create_table(self.table_name,'_id') 
+    
+    def save_notice(self, data):
+        if (data['notification_type'] == 'Added Food'):
+            self.db_object.update_upsert(self.table_name,{'food_name':data['food_name']},data)
+
 
 class UnapprovedFood():
     """docstring for UnapprovedFood"""

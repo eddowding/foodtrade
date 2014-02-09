@@ -33,7 +33,7 @@ $(".reply_text").on("click",".deletetweet",function(e){
   $.ajax({
     type: "POST",
     url: "/ajax-handler/activity_handle",
-    data: {'changeID':tweet_id, 'task':'delete'},
+    data: {'changeID':that.attr("data-tweet-id"), 'task':'delete'},
     success: function(data) {
       var data_json = jQuery.parseJSON(data);
       if(data_json['status'] == '1')

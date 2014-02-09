@@ -1,4 +1,4 @@
-    <li class="left clearfix singleresult {{result.result_class}}" data-id="{% if result_type == "status" %}{{result.tweetuid}} {% else %}{{result.user.username}}" {% endif %} "><span class="chat-img pull-left">
+    <li class="left clearfix singleresult {{result.result_class}}" data-id="{% if result_type == "status" %}{{result.tweetuid}} {% else %}{{result.user.username}}{% endif %}"><span class="chat-img pull-left">
     <img src="{{result.user.profile_img}}" alt="{{result.user.name}}" class="img-thumbnail" />
     </span>
         <div class="chat-body clearfix">
@@ -29,7 +29,7 @@
               <li><a class="deletetweet" data-tweet-id = "{{result.tweetuid}}">Delete</a></li>
               {% endifequal %}
               {% if result.user.username != userinfo.username %}
-              <li><a href="#" onclick="click_activity('spam','{{result.uid.id}}')">Flag as spam</a></li>
+              <li><a href="#" onclick="click_activity('spam','{% if result_type == "status" %}{{result.tweetuid}} {% else %}{{result.user.username}}{% endif %}')">Flag as spam</a></li>
               <li><a href="#" onclick="click_activity('follow','{{result.user.username}}')">Follow on Twitter</a></li>
               {% endif %}
               <li><a href="/profile/{{result.user.username}}/">View full profile</a></li> 
