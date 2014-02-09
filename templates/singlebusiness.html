@@ -911,11 +911,9 @@ document.getElementById("myselect").addEventListener("DOMSubtreeModified", funct
     var text = $('.create-option').text();
     var word = text.split('"')[1];
     //alert(word);
-    // var data = {useruid: {{profile_id|safe}}, food_name: word, created_by: {{user_id|safe}}};
-    // ajax_request("addfood", 'food_ajax', {data: JSON.stringify(data)});
     // add the word to new collection of unapproved foods
-
-  
+    var data = {useruid: {{profile_id|safe}}, food_name: word, created_by: {{user_id|safe}}};
+    ajax_request("addnewfood", 'empty', {data: JSON.stringify(data)}); 
 }, false);
 // chosen config code
 // var config = {

@@ -739,6 +739,9 @@ class UnapprovedFood():
     def get_all_foods(self, key, condition, initial, reducer):
         return self.db_object.group(self.table_name,key, condition, initial, reducer)
 
+    def get_all_new_foods(self):
+        return self.db_object.get_all(self.table_name, {'deleted': 0})
+
     def create_food (self, value):
         value['deleted'] =0
         # self.db_object.insert_one(self.table_name,value)
