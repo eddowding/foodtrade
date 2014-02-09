@@ -496,10 +496,17 @@
                    {% if user.is_authenticated %}
 
                      {% ifnotequal profile_id user_id %}
-                      <a class="btn btn-default btn-sm" title="Recommend this to others" onclick="recommend_food({{user_id}}, '{{eachfood.food_name}}', {{profile_id}}, '{{screen_name}}'); return null;" data-toggle="modal" data-target="#modal_tweet_recomm">
-                        <i class="fa fa-thumbs-o-up tltip" >
-                        </i>
-                      </a> 
+                       <div class="btn-block" data-toggle="buttons">
+                       {% if eachfood.logged_recommender %}
+                            <label class="fa fa-thumbs-o-up tltip btn btn-default btn-sm active" title="Recommend this to others">
+                              <input type="checkbox" checked="checked" onchange="recommend_food({{user_id}}, '{{eachfood.food_name}}', {{profile_id}}, '{{screen_name}}', this); return null;">
+                            </label>
+                        {% else %}
+                            <label class="fa fa-thumbs-o-up tltip btn btn-default btn-sm" title="Recommend this to others" data-toggle="modal" data-target="#modal_tweet_recomm">
+                              <input type="checkbox" onchange="recommend_food({{user_id}}, '{{eachfood.food_name}}', {{profile_id}}, '{{screen_name}}', this); return null;">
+                            </label>
+                        {% endif %}
+                        </div>
 
                      {% endifnotequal %}
                    {% endif %}

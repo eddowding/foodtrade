@@ -328,7 +328,7 @@ class AjaxHandle(AjaxSearch):
         if data !=None and data !="":
             foo.create_food(data)
             parameters = {}
-            parameters['all_foods'] = get_all_foods(int(data['useruid']))
+            parameters['all_foods'] = get_all_foods(int(data['useruid']), request.user.id)
             parameters['profile_id'], parameters['user_id'] = int(data['useruid']), request.user.id
             return render_to_response('ajax_food.html', parameters, context_instance=RequestContext(request))
             # return HttpResponse("{'status':1}")
@@ -341,7 +341,7 @@ class AjaxHandle(AjaxSearch):
         if data !=None and data !="":
             foo.delete_food(useruid = data['useruid'], food_name = data['food_name']);
             parameters = {}
-            parameters['all_foods'] = get_all_foods(int(data['useruid']))
+            parameters['all_foods'] = get_all_foods(int(data['useruid']), request.user.id)
             parameters['profile_id'], parameters['user_id'] = int(data['useruid']), request.user.id
             return render_to_response('ajax_food.html', parameters, context_instance=RequestContext(request))
             # return HttpResponse("{'status':1}")
@@ -498,25 +498,33 @@ class AjaxHandle(AjaxSearch):
         #print request.POST.get('data')
         data = eval(request.POST.get('data'))
         if data !=None and data !="":
-            recomm.create_recomm(data)
+            if data['action'] == 'add':
+                recomm.create_recomm(data)
 
-            notification_obj = Notification()
-            user_profile_obj = UserProfile()
-            try:
-                busss  = user_profile_obj.get_profile_by_id(int(data['business_id']))
-                rec  = user_profile_obj.get_profile_by_id(int(data['recommender_id']))
-                notification_obj.save_notification({
-                        'notification_to':busss['username'], 
-                        'notification_message':'@' + str(rec['username']) + ' vouched for your food ' + str(data['food_name']) + '.', 
-                        'notification_time':time.mktime(datetime.datetime.now().timetuple()),
-                        'notification_type':'Vouched Food',
-                        'notification_view_status':'false',
-                        'notification_archived_status':'false',
-                        'notifying_user':str(rec['username'])
-                        })            
-            except:
-                pass
-            return HttpResponse("{'status':1}")
+                notification_obj = Notification()
+                user_profile_obj = UserProfile()
+                try:
+                    busss  = user_profile_obj.get_profile_by_id(int(data['business_id']))
+                    rec  = user_profile_obj.get_profile_by_id(int(data['recommender_id']))
+                    notification_obj.save_notification({
+                            'notification_to':busss['username'], 
+                            'notification_message':'@' + str(rec['username']) + ' vouched for your food ' + str(data['food_name']) + '.', 
+                            'notification_time':time.mktime(datetime.datetime.now().timetuple()),
+                            'notification_type':'Vouched Food',
+                            'notification_view_status':'false',
+                            'notification_archived_status':'false',
+                            'notifying_user':str(rec['username'])
+                            })            
+                except:
+                    pass
+            else:
+                recomm.delete_recomm(data['business_id'], data['food_name'], data['recommender_id'])
+
+            parameters = {}
+            parameters['all_foods'] = get_all_foods(int(data['business_id']), request.user.id)
+            parameters['profile_id'], parameters['user_id'] = int(data['business_id']), request.user.id
+            return render_to_response('ajax_food.html', parameters, context_instance=RequestContext(request))
+            # return HttpResponse("{'status':1}")
         else:
             return HttpResponse("{'status':0}")
 

@@ -137,7 +137,7 @@ def display_profile(request, username):
     if parameters['sign_up_as'] == 'Business':
         if request.user.is_authenticated():
             parameters['connections'], parameters['logged_conn'] = get_connections(userprof['useruid'], request.user.id)
-            parameters['all_foods'] = get_all_foods(userprof['useruid'])
+            parameters['all_foods'] = get_all_foods(userprof['useruid'], request.user.id)
             parameters['organisations'] = get_organisations(userprof['useruid'])
             parameters['customers'], parameters['logged_customer'] = get_customers(userprof['useruid'], request.user.id)
         else:
@@ -286,7 +286,7 @@ def get_tags_freq(food_name):
     only_tags = ','.join(only_tags)
     return only_tags
 
-def get_all_foods(user_id):
+def get_all_foods(user_id, logged_in_id = None):
     foo = Food()
     all_foods = foo.get_foods_by_userid(user_id)
     recomm = RecommendFood()
@@ -296,7 +296,11 @@ def get_all_foods(user_id):
         tags_freq = get_tags_freq(each['food_name'])
         all_rec = recomm.get_recomm(user_id, each['food_name'])
         recomm_details =  []
+        logged_recommender = False
+
         for each_rec in all_rec:
+            if logged_in_id != None and each_rec['recommenderuid'] == logged_in_id:
+                logged_recommender=True
             myid = each_rec['recommenderuid']
             try:
                 account = SocialAccount.objects.get(user__id = myid)
@@ -307,7 +311,8 @@ def get_all_foods(user_id):
             except:
                 pass
         random.shuffle(recomm_details)
-        data = {'food_name': each['food_name'], 'vouch_count': len(all_rec), 'recomm_details': recomm_details[:8]}
+        data = {'food_name': each['food_name'], 'vouch_count': len(all_rec), 'recomm_details': recomm_details[:8],
+        'logged_recommender': logged_recommender}
         if each.get('description')!=None:
             data['description'] = each.get('description')
         if each.get('food_tags')!=None:
@@ -319,6 +324,7 @@ def get_all_foods(user_id):
             data['photo_url'] = each.get('photo_url')
         data['recomm_tags'] = tags_freq
         final_foods.append(data)
+    final_foods = sorted(final_foods, key=lambda x: -x['vouch_count'])
     return final_foods
 
 def get_customers(user_id, logged_id=None):
