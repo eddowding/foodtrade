@@ -496,6 +496,8 @@ class AjaxHandle(AjaxSearch):
     def vouch_for_food(self, request):
         recomm = RecommendFood()
         #print request.POST.get('data')
+        data = request.POST.get('data')
+        print 'vouch data', type(data), data
         data = eval(request.POST.get('data'))
         if data !=None and data !="":
             if data['action'] == 'add':

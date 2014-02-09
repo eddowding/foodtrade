@@ -871,11 +871,7 @@
 $( document ).ready(function() {
 // $('.create-option').on('click', '.active-result', function(e){
   // alert('sdkdkfj');
-  $('.create-option').on('click', function(evt, params) {
-      var text = $('.create-option').text();
-    var word = text.split('"')[1];
-    alert(word);
-  });
+  
 
 // });  
 
@@ -911,7 +907,15 @@ $('#myselect').chosen({create_option: true, skip_no_results: true, create_option
     // });
 document.getElementById("myselect").addEventListener("DOMSubtreeModified", function(e) {
   // Record the occurrence
-  alert('dom modified');
+  
+    var text = $('.create-option').text();
+    var word = text.split('"')[1];
+    //alert(word);
+    // var data = {useruid: {{profile_id|safe}}, food_name: word, created_by: {{user_id|safe}}};
+    // ajax_request("addfood", 'food_ajax', {data: JSON.stringify(data)});
+    // add the word to new collection of unapproved foods
+
+  
 }, false);
 // chosen config code
 // var config = {
