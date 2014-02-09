@@ -745,8 +745,7 @@ class UnapprovedFood():
     def create_food (self, value):
         value['deleted'] =0
         # self.db_object.insert_one(self.table_name,value)
-        self.db_object.update_upsert(self.table_name, {'food_name': value['food_name'], 
-            'useruid': value['useruid']}, {'deleted': 0})
+        self.db_object.update_upsert(self.table_name, {'food_name': value['food_name']}, {'useruid': value['useruid'], 'deleted': 0})
         twt = TweetFeed()
         twt.update_data(value['useruid'])
 
@@ -759,7 +758,7 @@ class UnapprovedFood():
             {'food_name':food_name})
 
     def delete_food(self, useruid, food_name):
-        self.db_object.update(self.table_name,{'useruid': useruid, 'food_name': food_name}, {'deleted':1})
+        self.db_object.update(self.table_name,{'food_name': food_name}, {'useruid': useruid, 'deleted':1})
         # also delete recommendations of the food
         table_name = 'recommendfood'
         self.db_object.create_table(table_name,'food_name')
