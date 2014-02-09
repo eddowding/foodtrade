@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+# encoding: utf-8
 from MongoConnection import MongoConnection
 from datetime import datetime
 from bson.objectid import ObjectId
@@ -208,25 +210,47 @@ class UserProfile():
              'phone_number':str(phone)}
              )
 
-    def update_profile_by_username(self, username, description, address, type_usr, sign_up_as, phone, lat, lon, postal_code, name):
-        return self.db_object.update(self.table_name,
-             {'username':username},
-             {'zip_code':str(postal_code),
-             'description':str(description),
-             'latlng.coordinates.1':float(lat),
-             'latlng.coordinates.0':float(lon),
-             'address':str(address),
-             'type_user':type_usr,
-             'sign_up_as':sign_up_as, 
-             'phone_number':str(phone),
-             'name':name
-             })        
+    def update_profile_by_username(self, username, description, address, type_usr, sign_up_as, phone, lat, lon, postal_code, name, is_superuser):
+        if not is_superuser: 
+            return self.db_object.update(self.table_name,
+                 {'username':username},
+                 {'zip_code':str(postal_code),
+                 'description':description,
+                 'latlng.coordinates.1':float(lat),
+                 'latlng.coordinates.0':float(lon),
+                 'address':str(address),
+                 'type_user':type_usr,
+                 'sign_up_as':sign_up_as, 
+                 'phone_number':str(phone),
+                 'name':name
+                 })
+        else:
+            return self.db_object.update(self.table_name,
+                 {'username':username},
+                 {'zip_code':str(postal_code),
+                 'description':description,
+                 'latlng.coordinates.1':float(lat),
+                 'latlng.coordinates.0':float(lon),
+                 'address':str(address),
+                 'type_user':type_usr,
+                 'sign_up_as':sign_up_as, 
+                 'phone_number':str(phone),
+                 'recently_updated_by_super_user':'true',
+                 'name':name
+                 })
     def update_profile_upsert(self, where, what):
         return self.db_object.update_upsert(self.table_name, where, what)
 
-    def get_unclaimed_profile_paginated(self, pagenum = 1):
+
+    def get_unclaimed_unedited_profile_count(self):
+        return self.db_object.get_count(self.table_name, {'is_unknown_profile':'true', 'recently_updated_by_super_user':'false'})
+
+    def get_unclaimed_edited_profile_count(self):
+        return self.db_object.get_count(self.table_name, {'is_unknown_profile':'true', 'recently_updated_by_super_user':'true'})
+
+    def get_unclaimed_profile_paginated(self, pagenum = 1, edit_value = 0):
         return self.db_object.get_paginated_values(self.table_name, 
-            conditions = {'is_unknown_profile':'true'}, pageNumber = pagenum)
+            conditions = {'is_unknown_profile':'true','recently_updated_by_super_user':str(bool(edit_value)).lower()}, pageNumber = pagenum)
 
     def search_profiles(self):
         mapper = Code("""

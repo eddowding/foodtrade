@@ -231,6 +231,7 @@ def edit_profile(request, username):
         else:
             return HttpResponseRedirect('/')
 
+        
 
         first_name = request.POST['first_name']
         last_name = request.POST['last_name']
@@ -263,8 +264,11 @@ def edit_profile(request, username):
         else:
             usr_type = []
 
+        if request.user.is_superuser:
+            is_superuser = True
+
         user_profile.update_profile_by_username(userprof['username'], description, address, 
-            usr_type, sign_up_as, phone, lat, lon, postal_code, name)
+            usr_type, sign_up_as, phone, lat, lon, postal_code, name, is_superuser)
 
         return HttpResponseRedirect('/')
 
