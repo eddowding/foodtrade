@@ -38,6 +38,9 @@ DJSTRIPE_PLANS = {
     }
 }
 
+
+
+
 # old ones of myfoodtrade
 # admin_access_token = '2248425234-EgPSi3nDAZ1VXjzRpPGMChkQab5P0V4ZeG1d7KN'
 # admin_access_token_secret = 'ST8W9TWqqHpyskMADDSpZ5r9hl7ND6sEfaLvhcqNfk1v4'
@@ -53,5 +56,15 @@ ACCOUNT_UNIQUE_EMAIL = True
 ACCOUNT_SIGNUP_PASSWORD_VERIFICATION = True
 SOCIALACCOUNT_AUTO_SIGNUP = True
 LOGIN_REDIRECT_URL = "/activity"
-ACCOUNT_SIGNUP_FORM_CLASS = 'mainapp.forms.SignupForm'
+# ACCOUNT_SIGNUP_FORM_CLASS = 'mainapp.forms.SignupForm'
 ACCOUNT_LOGOUT_ON_GET = True
+
+
+# AUTHENTICATION_BACKENDS = (
+#     "django.contrib.auth.backends.ModelBackend",
+#     "allauth.account.auth_backends.AuthenticationBackend",
+# )
+# ACCOUNT_AUTHENTICATION_METHOD = "username"
+# ACCOUNT_EMAIL_REQUIRED = True
+# ACCOUNT_EMAIL_VERIFICATION = "mandatory"
+ACCOUNT_SIGNUP_FORM_CLASS = "djstripe.forms.StripeSubscriptionSignupForm"
