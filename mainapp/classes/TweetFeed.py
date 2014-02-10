@@ -87,7 +87,6 @@ class TweetFeed():
             }
             """)
         result = self.db_object.map_reduce(self.table_name, mapper, reducer, query = {})[0:10]
-        print result
         return result
 
     def aggregrate(self, conditions):
