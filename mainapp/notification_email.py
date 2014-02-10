@@ -126,6 +126,6 @@ def send_daily_email():
         email_obj = Email()
         # print to_email
         # if to_email == 'ed@foodtrade.com':
-        to_email = 'brishi98@gmail.com'
+        # to_email = 'brishi98@gmail.com'
         print email_obj.send_mail(to_email, subject, message_body)
 send_daily_email()
