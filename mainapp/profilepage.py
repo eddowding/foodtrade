@@ -5,7 +5,6 @@ from django.template import RequestContext
 from django.contrib.auth.models import User
 from django.core.context_processors import csrf
 from django.http import Http404
-
 from mainapp.classes.TweetFeed import TweetFeed
 from geolocation import get_addr_from_ip
 from classes.DataConnector import UserInfo
@@ -277,8 +276,8 @@ def get_tags_freq(food_name):
     foods_list = foo.get_foods_by_food_name(food_name)
     all_tags = []
     for eachfoo in foods_list:
-        if eachfoo.get('food_tags')!= None:
-            all_tags.extend(eachfoo.get('food_tags').split(','))
+        if eachfoo.get('approved_food_tags')!= None:
+            all_tags.extend(eachfoo.get('approved_food_tags').split(','))
     tags_freq = Counter(all_tags).most_common()
     only_tags = []
     for each in tags_freq:

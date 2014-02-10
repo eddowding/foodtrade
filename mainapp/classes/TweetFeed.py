@@ -368,6 +368,8 @@ class Food():
     def get_all_foods(self, key, condition, initial, reducer):
         return self.db_object.group(self.table_name,key, condition, initial, reducer)
 
+    def get_all_new_foods(self):
+        return self.db_object.get_all(self.table_name, {'deleted': 0})
 
     def create_food (self, value):
         value['deleted'] =0
@@ -393,8 +395,14 @@ class Food():
         self.db_object.update_multi(table_name,{'business_id': useruid, 'food_name': food_name}, {'deleted':1})
 
     def update_food(self, data):
+        update_data = {}
+        if data.get('approved_food_tags') != None:
+            update_data['approved_food_tags'] = data['approved_food_tags']
+        else:
+            update_data = {'description':data['description'], 'food_tags': data['food_tags'], 'photo_url': data['photo_url']}
+          
         self.db_object.update(self.table_name,{'food_name': data['food_name'], 'useruid': data['useruid'], 'deleted': 0},
-         {'description':data['description'], 'food_tags': data['food_tags'], 'photo_url': data['photo_url']})
+             update_data)
 
 
 class Customer():
