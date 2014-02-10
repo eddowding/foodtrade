@@ -265,6 +265,8 @@ def edit_profile(request, username):
 
         if request.user.is_superuser:
             is_superuser = True
+        else:
+            is_superuser = False
 
         user_profile.update_profile_by_username(userprof['username'], description, address, 
             usr_type, sign_up_as, phone, lat, lon, postal_code, name, is_superuser)
