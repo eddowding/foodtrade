@@ -83,6 +83,8 @@ def food_tags(request):
         new_foods = newfoo.get_all_new_foods()
         parameters['unapproved_foods'] = new_foods
 
+        # aggregate pipeline to display all tags of all foods
+
     foods = AdminFoods()
     tags = foods.get_tags()
     parameters['tags'] = json.dumps(tags)
