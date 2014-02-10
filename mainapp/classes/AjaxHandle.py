@@ -10,7 +10,7 @@ from mainapp.classes.TweetFeed import TweetFeed
 from mainapp.classes.Email import Email
 from Tags import Tags
 from Foods import AdminFoods
-from mainapp.classes.TweetFeed import TradeConnection, UserProfile, Food, Customer, Organisation, Team, RecommendFood, Notification, Friends, Spam, InviteId, Invites, UnapprovedFood, PreNotification
+from mainapp.classes.TweetFeed import TradeConnection, UserProfile, Food, Customer, Organisation, Team, RecommendFood, Notification, Friends, Spam, InviteId, Invites, UnapprovedFood
 from AjaxSearch import AjaxSearch
 from pygeocoder import Geocoder
 from mainapp.profilepage import get_connections, get_all_foods, get_organisations
@@ -514,6 +514,20 @@ class AjaxHandle(AjaxSearch):
             return HttpResponse("{'status':1}")
         else:
             return HttpResponse("{'status':0}")
+
+    def approve_tag(self, request):
+        foo = Food()
+        data = eval(request.POST.get('data'))
+        if data !=None and data !="":
+            myfood = foo.get_food_by_uid_food_name(data['food_name'], data['useruid'])
+            print 'new tag ', data['approved_food_tags'], ' approved !!'
+            if myfood.get('approved_food_tags') !=None:
+                data['approved_food_tags'] +=','+myfood['approved_food_tags']
+            foo.update_food(data)
+            return HttpResponse("{'status':1}")
+        else:
+            return HttpResponse("{'status':0}")
+
 
     def send_email(self, request):        
         sender_name = request.POST.get('name')

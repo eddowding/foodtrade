@@ -277,8 +277,8 @@ def get_tags_freq(food_name):
     foods_list = foo.get_foods_by_food_name(food_name)
     all_tags = []
     for eachfoo in foods_list:
-        if eachfoo.get('food_tags')!= None:
-            all_tags.extend(eachfoo.get('food_tags').split(','))
+        if eachfoo.get('approved_food_tags')!= None:
+            all_tags.extend(eachfoo.get('approved_food_tags').split(','))
     tags_freq = Counter(all_tags).most_common()
     only_tags = []
     for each in tags_freq:
