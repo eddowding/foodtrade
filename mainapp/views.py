@@ -84,33 +84,36 @@ def tweets(request):
     mentions = HQ_twitter.get_mentions_timeline(count = 200, contributer_details = True, since_id = max_tweet_id)
     tweet_list = []
     user_profile = UserProfile()
-    display_tweets = []    
+    display_tweets = [] 
+
     for tweet in mentions:
         try:
             usr = SocialAccount.objects.get(uid = tweet['user']['id'])
+
             pic_url_list = []
             if tweet['entities'].get('media')!= None:
                 for each in tweet['entities'].get('media'):
                     pic_url_list.append(each['media_url'])
-                tweet_id = str(tweet['id'])
-                parent_tweet_id = 0 if tweet['in_reply_to_status_id'] == None else tweet['in_reply_to_status_id']
-                tweet_feed = TweetFeed()
-                data = {'tweet_id': str(tweet_id),
-                'parent_tweet_id': str(parent_tweet_id),
-                'status': message,                    
-                'picture': pic_url_list,                    
-                }           
-                tweet_feed.insert_tweet(int(usr.user.id),data)
+
+
+            tweet_id = str(tweet['id'])
+            parent_tweet_id = 0 if tweet['in_reply_to_status_id'] == None else tweet['in_reply_to_status_id']
+            tweet_feed = TweetFeed()
+            data = {'tweet_id': str(tweet_id),
+            'parent_tweet_id': str(parent_tweet_id),
+            'status': str(tweet['text']),                    
+            'picture': pic_url_list,                    
+            }          
+            tweet_feed.insert_tweet(int(usr.user.id),data)
 
             tweet_list.append(tweet['id'])
-            tweet_feed.insert_tweet(data)
             display_tweets.append(data)
         except:
-            text = "@" + tweet['user']['screen_name'] + " Thanks! Please confirm your post by clicking this http://fresh.foodtrade.com/?" + tweet['id_str'] + " You'll only have to do this once."
-            # try:
-            #     bot_twitter.update_status(status = text, in_reply_to_status_id = tweet['id'])
-            # except:
-            #     pass
+            text = "@" + tweet['user']['screen_name'] + " Thanks! Please confirm your post by clicking this http://foodtrade.com/?tweetid=" + str(tweet_id) + " You'll only have to do this once."
+            try:
+                bot_twitter.update_status(status = text, in_reply_to_status_id = tweet['id'])
+            except:
+                pass
 
     if len(tweet_list)!=0:
         max_id.max_tweet_id = max(tweet_list)
