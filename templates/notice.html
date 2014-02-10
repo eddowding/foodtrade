@@ -391,7 +391,10 @@ function notification_view_success(data){
   data = jQuery.parseJSON(data);
   if(data['status'] == 1){
     ajax_request('get_notification_counts', 'parse_notification_counts');
-    $('#li' + String(data['notification_id'])).hide();    
+    if(not_type != 'all'){
+    $('#li' + String(data['notification_id'])).hide();      
+    }
+    
   }
 }
 </script>

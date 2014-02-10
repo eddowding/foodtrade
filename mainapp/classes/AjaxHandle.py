@@ -327,13 +327,13 @@ class AjaxHandle(AjaxSearch):
         data = eval(request.POST.get('data'))
         if data !=None and data !="":
             foo.create_food(data)
-            pre_notice_obj = PreNotification()
+            notice_obj = Notification()
             user_profile_obj = UserProfile()
-            # print data
+            
             created_by = user_profile_obj.get_profile_by_id(int(request.user.id))
             created_on  = user_profile_obj.get_profile_by_id(int(data['useruid']))
 
-            pre_notice_obj.save_notice({
+            notice_obj.save_notice({
                     'notification_to':created_on['username'], 
                     'notification_message':'@' + str(created_by['username']) + ' added ' + str(data['food_name'] + 'on your profile.'), 
                     'notification_time':time.mktime(datetime.datetime.now().timetuple()),

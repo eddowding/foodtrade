@@ -7,3 +7,4 @@ pygeocoder
 requests
 pillow
 mailchimp
+urllib3
