@@ -288,8 +288,6 @@ def invite(request):
     parameters ['invite_tweet'] = invite_tweet
     return render_to_response('invites.html', parameters, context_instance=RequestContext(request))
 
-
-
 def handle_invitation_hit(request, invite_id):
     request.session['invite_id'] = str(invite_id)
     analytics_obj = Analytics()

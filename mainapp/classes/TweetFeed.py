@@ -18,7 +18,8 @@ import re
 from django.conf import settings
 # from mainapp.views import get_twitter_obj
 import json
-
+import datetime,time
+import pprint
 ACCESS_TOKEN = ''
 ACCESS_TOKEN_SECRET =''
 
@@ -606,6 +607,33 @@ class Notification():
     def get_notification_by_id(self, notification_id):
         return self.db_object.get_one(self.table_name, {'_id':ObjectId(str(notification_id))})
 
+    def get_all_notification_to_send(self):
+        aggregation_pipeline = []
+        yesterday = datetime.datetime.now() - datetime.timedelta(1)
+        aggregation_pipeline.append({"$match":{'notification_time':{'$gt':time.mktime(yesterday.timetuple())}}})
+        aggregation_pipeline.append({
+            "$group":
+                {"_id": "$notification_to", 
+                "results":
+                {'$push':{
+                "notification_time":"$notification_time", 
+                "notification_to":"$notification_to", 
+                "notification_type":"$notification_type", 
+                "notifying_user":"$notifying_user", 
+                "notification_message":"$notification_message"}
+                }
+                }
+            })
+        aggregation_pipeline.append({
+            '$group':{
+                '_id':"$notification_to",
+                'full_result_set':
+                    {'$push':
+                        {'notification_to':'$_id','results':'$results'}
+                    }
+                }})
+        return self.db_object.aggregrate_all(self.table_name, aggregation_pipeline)
+
     def change_notification_view_status(self, notification_id):
         self.db_object.update_multi(self.table_name, 
             {'_id':ObjectId(notification_id)}, 
@@ -715,15 +743,15 @@ class Analytics():
     def save_data(self, data):
         self.db_object.insert_one(self.table_name, data)
 
-class PreNotification():
-    """docstring for data for pre-notification."""
-    def __init__(self):
-        self.db_object = MongoConnection("localhost",27017,'foodtrade')
-        self.table_name = 'prenotification'
-        self.db_object.create_table(self.table_name,'_id') 
+# class PreNotification():
+#     """docstring for data for pre-notification."""
+#     def __init__(self):
+#         self.db_object = MongoConnection("localhost",27017,'foodtrade')
+#         self.table_name = 'prenotification'
+#         self.db_object.create_table(self.table_name,'_id') 
     
-    def save_notice(self, data):
-        if (data['notification_type'] == 'Added Food'):
-            self.db_object.update_upsert(self.table_name,{'food_name':data['food_name']},data)
+#     def save_notice(self, data):
+#         if (data['notification_type'] == 'Added Food'):
+#             self.db_object.update_upsert(self.table_name,{'food_name':data['food_name']},data)
 
 
