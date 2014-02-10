@@ -42,4 +42,7 @@ urlpatterns = patterns('',
     url(r'^mailchimp-migrate/$', 'mainapp.views.transport_mailchimp'),
 
 
+
+    url(r'^payments/', include('djstripe.urls', namespace="djstripe")),
+
 )
