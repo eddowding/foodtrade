@@ -265,6 +265,8 @@ def edit_profile(request, username):
 
         if request.user.is_superuser:
             is_superuser = True
+        else:
+            is_superuser = False
 
         user_profile.update_profile_by_username(userprof['username'], description, address, 
             usr_type, sign_up_as, phone, lat, lon, postal_code, name, is_superuser)
@@ -276,8 +278,8 @@ def get_tags_freq(food_name):
     foods_list = foo.get_foods_by_food_name(food_name)
     all_tags = []
     for eachfoo in foods_list:
-        if eachfoo.get('food_tags')!= None:
-            all_tags.extend(eachfoo.get('food_tags').split(','))
+        if eachfoo.get('approved_food_tags')!= None:
+            all_tags.extend(eachfoo.get('approved_food_tags').split(','))
     tags_freq = Counter(all_tags).most_common()
     only_tags = []
     for each in tags_freq:
