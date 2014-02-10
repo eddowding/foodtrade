@@ -8,7 +8,8 @@ def error(value, args):
     to = ['santosh.ghimire33@gmail.com', 'ed@foodtrade.com', 'sujit@phunka.com', 'brishi98@gmail.com']
     subject = args + ' Error in Foodtrade'
     msg = 'Foodtrade just encountered a ' + args + ' ' + 'error at ' + value +'. Please fix this as soon as you can.'
-    print to, subject, msg
+    # print to, subject, msg
     for each_receipent in to:
-	    email.send_mail(each_receipent, subject , msg)
+    	pass
+	    # email.send_mail(each_receipent, subject , msg)
     return ''
