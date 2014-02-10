@@ -15,5 +15,5 @@ mongodump
 mysql -u root -proot foodtrade > foodtrade.sql 
 
 #run daily email sending script
-python /srv/www/foodtrade-env/foodtrade/mainapp/notification-email.py
+#python /srv/www/foodtrade-env/foodtrade/mainapp/notification-email.py
 

@@ -74,7 +74,7 @@ def aggregrate_all(conditions={}):
 
 def get_all_notification_to_send():
     aggregation_pipeline = []
-    yesterday = datetime.datetime.now() - datetime.timedelta(3)
+    yesterday = datetime.datetime.now() - datetime.timedelta(1)
     aggregation_pipeline.append({"$match":{'notification_time':{'$gt':time.mktime(yesterday.timetuple())}}})
     aggregation_pipeline.append({
         "$group":
