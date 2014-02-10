@@ -5,7 +5,6 @@ from django.template import RequestContext
 from django.contrib.auth.models import User
 from django.core.context_processors import csrf
 from django.http import Http404
-
 from mainapp.classes.TweetFeed import TweetFeed
 from geolocation import get_addr_from_ip
 from classes.DataConnector import UserInfo
