@@ -24,8 +24,8 @@ class Email():
         pass
 
     def send_mail(self, to, subject, message):
-        sender = 'ed@foodtrade.com'
-        passwd = 'NwotnhPk1Nprc6OX0Wq6vA'
+        sender = 'brishi98@gmail.com'
+        passwd = 'DS3yEW4HdOzqHGXOiXGPkg'
 
         server = smtplib.SMTP('smtp.mandrillapp.com', 587)
         server.ehlo()
@@ -46,7 +46,7 @@ class Email():
 
         body = '\r\n'.join([
                             'To: %s' % to,
-                            # 'From: %s' % sender,
+                            # # 'From: %s' % sender,
                             'X-MC-Template: %s' % "foodtrade-master|main",
                             # 'X-MC-Metadata: %s' % json.dumps(template_content),
                             'Subject: %s' % subject,
@@ -74,7 +74,7 @@ def aggregrate_all(conditions={}):
 
 def get_all_notification_to_send():
     aggregation_pipeline = []
-    yesterday = datetime.datetime.now() - datetime.timedelta(7)
+    yesterday = datetime.datetime.now() - datetime.timedelta(3)
     aggregation_pipeline.append({"$match":{'notification_time':{'$gt':time.mktime(yesterday.timetuple())}}})
     aggregation_pipeline.append({
         "$group":
@@ -114,24 +114,18 @@ def send_daily_email():
         json_doc = json.dumps(list(to),default=json_util.default)
         # to_email = json.loads(json_doc)[0]['email']
 
-        subject = 'Test email for Notification.'
+        subject = 'You have message in your Foodtrade Inbox.'
 
         count = 0
-        message_body = 'We are happy to inform you that you have following message in your <a href="http://foodtrade.com/inbox">Foodtrade Inbox.</a>\n\n\t'
+        message_body = ''
         for eachMessage in eachMessageList['results']:
             count += 1
             message_body = message_body + str(count) + '. ' + eachMessage['notification_message'].split('.')[0] + '.\n\t'
-
-        message_body = message_body + '\nPlease check your inbox for more details by clicking the following link:-\n'
-        message_body = message_body + '<a href="http://foodtrade.com/inbox">My Foodtrade Inbox. </a>'
-
-        message_body = message_body + '\n\nThank You, \nEd-Dowding,\n<a href="http://foodtrade.com">Foodtrade</a>'
-        print message_body, '\n\n\n'
+        #print message_body, '\n\n\n'
 
         email_obj = Email()
         # print to_email
         # if to_email == 'ed@foodtrade.com':
         to_email = 'brishi98@gmail.com'
         print email_obj.send_mail(to_email, subject, message_body)
-
 send_daily_email()
