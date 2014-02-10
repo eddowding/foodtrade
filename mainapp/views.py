@@ -81,7 +81,7 @@ def tweets(request):
         max_id = MaxTweetId(max_tweet_id = 12345)
         max_id.save()
     max_tweet_id = int(max_id.max_tweet_id)
-    mentions = HQ_twitter.get_mentions_timeline(count = 200, contributer_details = True, since_id = max_tweet_id-10000)
+    mentions = HQ_twitter.get_mentions_timeline(count = 200, contributer_details = True, since_id = max_tweet_id)
     tweet_list = []
     user_profile = UserProfile()
     display_tweets = [] 
