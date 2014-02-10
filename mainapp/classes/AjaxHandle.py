@@ -10,7 +10,7 @@ from mainapp.classes.TweetFeed import TweetFeed
 from mainapp.classes.Email import Email
 from Tags import Tags
 from Foods import AdminFoods
-from mainapp.classes.TweetFeed import TradeConnection, UserProfile, Food, Customer, Organisation, Team, RecommendFood, Notification, Friends, Spam, InviteId, Invites, PreNotification
+from mainapp.classes.TweetFeed import TradeConnection, UserProfile, Food, Customer, Organisation, Team, RecommendFood, Notification, Friends, Spam, InviteId, Invites, UnapprovedFood
 from AjaxSearch import AjaxSearch
 from pygeocoder import Geocoder
 from mainapp.profilepage import get_connections, get_all_foods, get_organisations
@@ -327,13 +327,13 @@ class AjaxHandle(AjaxSearch):
         data = eval(request.POST.get('data'))
         if data !=None and data !="":
             foo.create_food(data)
-            pre_notice_obj = PreNotification()
+            notice_obj = Notification()
             user_profile_obj = UserProfile()
-            # print data
+            
             created_by = user_profile_obj.get_profile_by_id(int(request.user.id))
             created_on  = user_profile_obj.get_profile_by_id(int(data['useruid']))
 
-            pre_notice_obj.save_notice({
+            notice_obj.save_notice({
                     'notification_to':created_on['username'], 
                     'notification_message':'@' + str(created_by['username']) + ' added ' + str(data['food_name'] + 'on your profile.'), 
                     'notification_time':time.mktime(datetime.datetime.now().timetuple()),
@@ -352,6 +352,16 @@ class AjaxHandle(AjaxSearch):
         else:
             return HttpResponse("{'status':0}")
 
+    def addnewfood(self, request):
+        foo = UnapprovedFood()
+        data = eval(request.POST.get('data'))
+        if data !=None and data !="":
+            foo.create_food(data)
+            print 'new food ', data['food_name'], ' created !!'
+            return HttpResponse("{'status':1}")
+        else:
+            return HttpResponse("{'status':0}")
+
     def deletefood(self, request):
         foo = Food()
         data = eval(request.POST.get('data'))
@@ -364,6 +374,15 @@ class AjaxHandle(AjaxSearch):
             # return HttpResponse("{'status':1}")
         else:
             return HttpResponse("{'status':0}")    
+
+    def delete_unapproved_food(self, request):
+        foo = UnapprovedFood()
+        data = eval(request.POST.get('data'))
+        if data !=None and data !="":
+            foo.delete_food(useruid = int(data['useruid']), food_name = data['food_name']);
+            return HttpResponse("{'status':1}")
+        else:
+            return HttpResponse("{'status':0}")            
 
     def save_tags(self, request):
         if request.user.is_authenticated():
@@ -496,6 +515,20 @@ class AjaxHandle(AjaxSearch):
         else:
             return HttpResponse("{'status':0}")
 
+    def approve_tag(self, request):
+        foo = Food()
+        data = eval(request.POST.get('data'))
+        if data !=None and data !="":
+            myfood = foo.get_food_by_uid_food_name(data['food_name'], data['useruid'])
+            print 'new tag ', data['approved_food_tags'], ' approved !!'
+            if myfood.get('approved_food_tags') !=None:
+                data['approved_food_tags'] +=','+myfood['approved_food_tags']
+            foo.update_food(data)
+            return HttpResponse("{'status':1}")
+        else:
+            return HttpResponse("{'status':0}")
+
+
     def send_email(self, request):        
         sender_name = request.POST.get('name')
         receiver_email = request.POST.get('receiver')
@@ -513,6 +546,8 @@ class AjaxHandle(AjaxSearch):
     def vouch_for_food(self, request):
         recomm = RecommendFood()
         #print request.POST.get('data')
+        data = request.POST.get('data')
+        print 'vouch data', type(data), data
         data = eval(request.POST.get('data'))
         if data !=None and data !="":
             if data['action'] == 'add':

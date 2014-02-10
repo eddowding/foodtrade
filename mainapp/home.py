@@ -4,7 +4,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from allauth.socialaccount.models import SocialToken, SocialAccount
 from twython import Twython
 import json
-from mainapp.classes.TweetFeed import TweetFeed, Invites, Notification, UserProfile
+from mainapp.classes.TweetFeed import TweetFeed, Invites, Notification, UserProfile, UnapprovedFood
 from search import search_general
 from streaming import MyStreamer
 from models import MaxTweetId
@@ -13,8 +13,10 @@ import time
 import json
 from mainapp.classes.Foods import AdminFoods
 from mainapp.classes.Tags import Tags
-
+from mainapp.classes.MongoConnection import MongoConnection
 from django.contrib.auth.decorators import user_passes_test
+import pprint
+from collections import Counter
 
 consumer_key = 'seqGJEiDVNPxde7jmrk6dQ'
 consumer_secret = 'sI2BsZHPk86SYB7nRtKy0nQpZX3NP5j5dLfcNiP14'
@@ -65,6 +67,25 @@ def admin_tags(request):
 
     return render_to_response('admin_tags.html', parameters, context_instance=RequestContext(request))
 
+def food_pipeline():
+    aggregation_pipeline = []
+    aggregation_pipeline.append({"$match":{'food_tags':{'$exists':True}}})
+    aggregation_pipeline.append({"$match":{'food_tags': {'$ne': ''}}})
+    aggregation_pipeline.append({
+    "$group":
+        {"_id": "$food_name", 
+        "results":
+        {'$push':{
+        "food_tags":"$food_tags",
+        "useruid": "$useruid",
+        "approved_food_tags": "$approved_food_tags"
+        }
+        }}
+    })
+    mongo = MongoConnection("localhost",27017,'foodtrade')
+    results = mongo.aggregrate_all('food', aggregation_pipeline)
+    return results
+
 @user_passes_test(lambda u: u.is_superuser)
 def food_tags(request):
     parameters = {}
@@ -79,6 +100,38 @@ def food_tags(request):
         parameters['userprofile'] = UserProfile
 
         parameters['userinfo'] = user_info
+        newfoo = UnapprovedFood()
+        new_foods = newfoo.get_all_new_foods()
+        parameters['unapproved_foods'] = new_foods
+
+        # aggregate pipeline to display all tags of all foods
+        results = food_pipeline()
+        processed_results = []
+        for each in results:
+            mytags = {}
+            for e in each['results']:
+                t_list = e['food_tags'].split(',')
+                app_tags = e.get('approved_food_tags').split(',') if e.get('approved_food_tags')!=None else False
+                if app_tags!=False:
+                    if Counter(t_list)==Counter(app_tags):
+                        continue
+                for eachtts in t_list:
+                    if app_tags!=False:
+                        if eachtts not in app_tags:
+                            if eachtts not in mytags.keys():
+                                mytags[eachtts] = [e['useruid']]
+                            else:
+                                mytags[eachtts].append(e['useruid'])
+                    else:
+                        if eachtts not in mytags.keys():
+                            mytags[eachtts] = [e['useruid']]
+                        else:
+                            mytags[eachtts].append(e['useruid'])
+
+            processed_results.append({'food_name': each['uid'], 'results': mytags}) if mytags!={} else False
+        pprint.pprint(processed_results)
+        parameters['tags_and_foods'] = processed_results
+
     foods = AdminFoods()
     tags = foods.get_tags()
     parameters['tags'] = json.dumps(tags)

@@ -7,5 +7,4 @@ pygeocoder
 requests
 pillow
 mailchimp
-django-stripe-payments
-django-forms-bootstrap
+urllib3

@@ -871,11 +871,7 @@
 $( document ).ready(function() {
 // $('.create-option').on('click', '.active-result', function(e){
   // alert('sdkdkfj');
-  $('.create-option').on('click', function(evt, params) {
-      var text = $('.create-option').text();
-    var word = text.split('"')[1];
-    alert(word);
-  });
+  
 
 // });  
 
@@ -911,7 +907,13 @@ $('#myselect').chosen({create_option: true, skip_no_results: true, create_option
     // });
 document.getElementById("myselect").addEventListener("DOMSubtreeModified", function(e) {
   // Record the occurrence
-  alert('dom modified');
+  
+    var text = $('.create-option').text();
+    var word = text.split('"')[1];
+    //alert(word);
+    // add the word to new collection of unapproved foods
+    var data = {useruid: {{profile_id|safe}}, food_name: word, created_by: {{user_id|safe}}};
+    ajax_request("addnewfood", 'empty', {data: JSON.stringify(data)}); 
 }, false);
 // chosen config code
 // var config = {
@@ -973,15 +975,14 @@ function get_food_detail(profile_id, food_name, description, food_tags, photo_ur
     console.log('tags_list', tags_list);
     var count = 0;
     for(i=0;i<recomm_tags_list.length;i++){
-      // appendtext += '<span class="myowntagit">'+ String(recomm_tags_list[i]) + '</span>';
-      // if(!(String(recomm_tags_list[i]) in tags_list)){
+      
         if(tags_list.indexOf(recomm_tags_list[i]) == -1){
           count = count+1;
           $('#recomm_tags').append('<span class="myowntagit">'+ String(recomm_tags_list[i]) + '</span> ');
         }
     }
-    if(count != 0){
-    $('#recommend_main').append('<p class="help-block small">Recommend Tags for your food. Click to add.</p>');}
+    if(count != 0 && $('#recomm_help_text').text() == ''){
+    $('#recommend_main').append('<p id="recomm_help_text" class="help-block small">Recommend Tags for your food. Click to add.</p>');}
     $('#recomm_tags').on('click', '.myowntagit', function(e){
         var tag_text =$(this).html();
         $(this).remove();

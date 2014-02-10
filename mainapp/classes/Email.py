@@ -1,5 +1,3 @@
-
-
 import smtplib
 import json
 
@@ -8,9 +6,6 @@ class Email():
         pass
 
     def send_mail(self, to, subject, message):
-    
-
-        # mandrill Sign In
         sender = 'ed@foodtrade.com'
         passwd = 'NwotnhPk1Nprc6OX0Wq6vA'
 
@@ -47,3 +42,7 @@ class Email():
         except:
             server.quit()
             return False
+
+
+m = Email()
+m.send_mail("sujitmhj@gmail.com","test","test")
