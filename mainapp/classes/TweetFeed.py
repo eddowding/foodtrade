@@ -18,7 +18,8 @@ import re
 from django.conf import settings
 # from mainapp.views import get_twitter_obj
 import json
-
+import datetime,time
+import pprint
 ACCESS_TOKEN = ''
 ACCESS_TOKEN_SECRET =''
 
@@ -606,6 +607,33 @@ class Notification():
     def get_notification_by_id(self, notification_id):
         return self.db_object.get_one(self.table_name, {'_id':ObjectId(str(notification_id))})
 
+    def get_all_notification_to_send(self):
+        aggregation_pipeline = []
+        yesterday = datetime.datetime.now() - datetime.timedelta(1)
+        aggregation_pipeline.append({"$match":{'notification_time':{'$gt':time.mktime(yesterday.timetuple())}}})
+        aggregation_pipeline.append({
+            "$group":
+                {"_id": "$notification_to", 
+                "results":
+                {'$push':{
+                "notification_time":"$notification_time", 
+                "notification_to":"$notification_to", 
+                "notification_type":"$notification_type", 
+                "notifying_user":"$notifying_user", 
+                "notification_message":"$notification_message"}
+                }
+                }
+            })
+        aggregation_pipeline.append({
+            '$group':{
+                '_id':"$notification_to",
+                'full_result_set':
+                    {'$push':
+                        {'notification_to':'$_id','results':'$results'}
+                    }
+                }})
+        return self.db_object.aggregrate_all(self.table_name, aggregation_pipeline)
+
     def change_notification_view_status(self, notification_id):
         self.db_object.update_multi(self.table_name, 
             {'_id':ObjectId(notification_id)}, 
@@ -715,15 +743,55 @@ class Analytics():
     def save_data(self, data):
         self.db_object.insert_one(self.table_name, data)
 
-class PreNotification():
-    """docstring for data for pre-notification."""
+# class PreNotification():
+#     """docstring for data for pre-notification."""
+#     def __init__(self):
+#         self.db_object = MongoConnection("localhost",27017,'foodtrade')
+#         self.table_name = 'prenotification'
+#         self.db_object.create_table(self.table_name,'_id') 
+    
+#     def save_notice(self, data):
+#         if (data['notification_type'] == 'Added Food'):
+#             self.db_object.update_upsert(self.table_name,{'food_name':data['food_name']},data)
+
+
+class UnapprovedFood():
+    """docstring for UnapprovedFood"""
     def __init__(self):
         self.db_object = MongoConnection("localhost",27017,'foodtrade')
-        self.table_name = 'prenotification'
-        self.db_object.create_table(self.table_name,'_id') 
-    
-    def save_notice(self, data):
-        if (data['notification_type'] == 'Added Food'):
-            self.db_object.update_upsert(self.table_name,{'food_name':data['food_name']},data)
+        self.table_name = 'unapprovedfood'
+        self.db_object.create_table(self.table_name,'food_name')
+    def get_foods_by_userid(self,useruid):
+        return self.db_object.get_all(self.table_name,{'useruid': useruid, 'deleted': 0})
 
+    def get_all_foods(self, key, condition, initial, reducer):
+        return self.db_object.group(self.table_name,key, condition, initial, reducer)
 
+    def get_all_new_foods(self):
+        return self.db_object.get_all(self.table_name, {'deleted': 0})
+
+    def create_food (self, value):
+        value['deleted'] =0
+        # self.db_object.insert_one(self.table_name,value)
+        self.db_object.update_upsert(self.table_name, {'food_name': value['food_name']}, {'useruid': value['useruid'], 'deleted': 0})
+        twt = TweetFeed()
+        twt.update_data(value['useruid'])
+
+    def get_food_by_uid_food_name(self, food_name, user_id):
+        return self.db_object.get_one(self.table_name, 
+            {'useruid':user_id, 'food_name':food_name})
+
+    def get_foods_by_food_name(self, food_name):
+        return self.db_object.get_all(self.table_name, 
+            {'food_name':food_name})
+
+    def delete_food(self, useruid, food_name):
+        self.db_object.update(self.table_name,{'food_name': food_name}, {'useruid': useruid, 'deleted':1})
+        # also delete recommendations of the food
+        table_name = 'recommendfood'
+        self.db_object.create_table(table_name,'food_name')
+        self.db_object.update_multi(table_name,{'business_id': useruid, 'food_name': food_name}, {'deleted':1})
+
+    def update_food(self, data):
+        self.db_object.update(self.table_name,{'food_name': data['food_name'], 'useruid': data['useruid'], 'deleted': 0},
+         {'description':data['description'], 'food_tags': data['food_tags'], 'photo_url': data['photo_url']})

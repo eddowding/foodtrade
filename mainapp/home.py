@@ -4,7 +4,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from allauth.socialaccount.models import SocialToken, SocialAccount
 from twython import Twython
 import json
-from mainapp.classes.TweetFeed import TweetFeed, Invites, Notification, UserProfile
+from mainapp.classes.TweetFeed import TweetFeed, Invites, Notification, UserProfile, UnapprovedFood
 from search import search_general
 from streaming import MyStreamer
 from models import MaxTweetId
@@ -79,6 +79,10 @@ def food_tags(request):
         parameters['userprofile'] = UserProfile
 
         parameters['userinfo'] = user_info
+        newfoo = UnapprovedFood()
+        new_foods = newfoo.get_all_new_foods()
+        parameters['unapproved_foods'] = new_foods
+
     foods = AdminFoods()
     tags = foods.get_tags()
     parameters['tags'] = json.dumps(tags)
