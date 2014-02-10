@@ -85,7 +85,7 @@ def tweets(request):
     tweet_list = []
     user_profile = UserProfile()
     display_tweets = [] 
-    print mentions   
+
     for tweet in mentions:
         try:
             usr = SocialAccount.objects.get(uid = tweet['user']['id'])
@@ -109,7 +109,7 @@ def tweets(request):
             tweet_list.append(tweet['id'])
             display_tweets.append(data)
         except:
-            text = "@" + tweet['user']['screen_name'] + " Thanks! Please confirm your post by clicking this http://fresh.foodtrade.com/?" + tweet['id_str'] + " You'll only have to do this once."
+            text = "@" + tweet['user']['screen_name'] + " Thanks! Please confirm your post by clicking this http://foodtrade.com/?tweetid=" + str(tweet_id) + " You'll only have to do this once."
             try:
                 bot_twitter.update_status(status = text, in_reply_to_status_id = tweet['id'])
             except:
