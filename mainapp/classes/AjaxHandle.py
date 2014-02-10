@@ -10,7 +10,7 @@ from mainapp.classes.TweetFeed import TweetFeed
 from mainapp.classes.Email import Email
 from Tags import Tags
 from Foods import AdminFoods
-from mainapp.classes.TweetFeed import TradeConnection, UserProfile, Food, Customer, Organisation, Team, RecommendFood, Notification, Friends, Spam, InviteId, Invites, PreNotification
+from mainapp.classes.TweetFeed import TradeConnection, UserProfile, Food, Customer, Organisation, Team, RecommendFood, Notification, Friends, Spam, InviteId, Invites, UnapprovedFood, PreNotification
 from AjaxSearch import AjaxSearch
 from pygeocoder import Geocoder
 from mainapp.profilepage import get_connections, get_all_foods, get_organisations
@@ -352,6 +352,16 @@ class AjaxHandle(AjaxSearch):
         else:
             return HttpResponse("{'status':0}")
 
+    def addnewfood(self, request):
+        foo = UnapprovedFood()
+        data = eval(request.POST.get('data'))
+        if data !=None and data !="":
+            foo.create_food(data)
+            print 'new food ', data['food_name'], ' created !!'
+            return HttpResponse("{'status':1}")
+        else:
+            return HttpResponse("{'status':0}")
+
     def deletefood(self, request):
         foo = Food()
         data = eval(request.POST.get('data'))
@@ -364,6 +374,15 @@ class AjaxHandle(AjaxSearch):
             # return HttpResponse("{'status':1}")
         else:
             return HttpResponse("{'status':0}")    
+
+    def delete_unapproved_food(self, request):
+        foo = UnapprovedFood()
+        data = eval(request.POST.get('data'))
+        if data !=None and data !="":
+            foo.delete_food(useruid = int(data['useruid']), food_name = data['food_name']);
+            return HttpResponse("{'status':1}")
+        else:
+            return HttpResponse("{'status':0}")            
 
     def save_tags(self, request):
         if request.user.is_authenticated():
@@ -513,6 +532,8 @@ class AjaxHandle(AjaxSearch):
     def vouch_for_food(self, request):
         recomm = RecommendFood()
         #print request.POST.get('data')
+        data = request.POST.get('data')
+        print 'vouch data', type(data), data
         data = eval(request.POST.get('data'))
         if data !=None and data !="":
             if data['action'] == 'add':
