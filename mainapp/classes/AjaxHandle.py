@@ -333,7 +333,7 @@ class AjaxHandle(AjaxSearch):
             created_by = user_profile_obj.get_profile_by_id(int(request.user.id))
             created_on  = user_profile_obj.get_profile_by_id(int(data['useruid']))
 
-            notice_obj.save_notice({
+            notice_obj.save_notification({
                     'notification_to':created_on['username'], 
                     'notification_message':'@' + str(created_by['username']) + ' added ' + str(data['food_name'] + 'on your profile.'), 
                     'notification_time':time.mktime(datetime.datetime.now().timetuple()),
