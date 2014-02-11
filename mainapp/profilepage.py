@@ -67,8 +67,9 @@ def display_profile(request, username):
 
     try:
         tweet_feed_obj = TweetFeed()
-        user_profile = tweet_feed_obj.get_tweet_by_user_id(userprof['useruid'])
-        updates = user_profile["updates"]
+        user_updates = tweet_feed_obj.get_tweet_by_user_id(userprof['useruid'])
+        user_updates["updates"].reverse()
+        updates = user_updates["updates"][0:10]
 
         for i in range(len(updates)):
             time_elapsed = int(time.time()) - updates[i]['time_stamp']

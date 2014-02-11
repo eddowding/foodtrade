@@ -24,8 +24,8 @@ class Email():
         pass
 
     def send_mail(self, to, subject, message):
-        sender = 'brishi98@gmail.com'
-        passwd = 'DS3yEW4HdOzqHGXOiXGPkg'
+        sender = 'ed@foodtrade.com'
+        passwd = 'NwotnhPk1Nprc6OX0Wq6vA'
 
         server = smtplib.SMTP('smtp.mandrillapp.com', 587)
         server.ehlo()
