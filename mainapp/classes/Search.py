@@ -73,6 +73,7 @@ class Search():
         "sign_up_as":"$sign_up_as",
         "zip_code":"$zip_code",
         "time_stamp":"$updates.time_stamp",
+        "tweet_pictures":"$updates.picture",
         "result_type":result_type,
         }}
 

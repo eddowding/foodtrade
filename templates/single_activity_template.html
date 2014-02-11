@@ -76,6 +76,17 @@
                 {% endif %}
               </div> 
 
+
+              {% if result_type == "status" %}
+              <div class="tweet-picture">
+              <ul>
+                {% for picture in result.tweet_pictures %}
+                <li><img src="{{picture}}" height="50px" width="50px"></li>
+                {% endfor %}
+              </ul>
+              </div>
+              {% endif %}
+
         </div>
 
         <div class="reply well well-sm" style="margin:0;"> 
