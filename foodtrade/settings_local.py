@@ -48,23 +48,23 @@ DJSTRIPE_PLANS = {
 
 # For Django All Auth
 SITE_ID = 1
-ACCOUNT_AUTHENTICATION_METHOD = "username_email"
-ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS = 7
-ACCOUNT_EMAIL_REQUIRED = True
-ACCOUNT_EMAIL_VERIFICATION = "none"
-ACCOUNT_UNIQUE_EMAIL = True
-ACCOUNT_SIGNUP_PASSWORD_VERIFICATION = True
-SOCIALACCOUNT_AUTO_SIGNUP = True
-LOGIN_REDIRECT_URL = "/activity"
-# ACCOUNT_SIGNUP_FORM_CLASS = 'mainapp.forms.SignupForm'
-ACCOUNT_LOGOUT_ON_GET = True
-
-
-# AUTHENTICATION_BACKENDS = (
-#     "django.contrib.auth.backends.ModelBackend",
-#     "allauth.account.auth_backends.AuthenticationBackend",
-# )
-# ACCOUNT_AUTHENTICATION_METHOD = "username"
+# ACCOUNT_AUTHENTICATION_METHOD = "username_email"
+# ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS = 7
 # ACCOUNT_EMAIL_REQUIRED = True
-# ACCOUNT_EMAIL_VERIFICATION = "mandatory"
+# ACCOUNT_EMAIL_VERIFICATION = "none"
+# ACCOUNT_UNIQUE_EMAIL = True
+# ACCOUNT_SIGNUP_PASSWORD_VERIFICATION = True
+# SOCIALACCOUNT_AUTO_SIGNUP = True
+# LOGIN_REDIRECT_URL = "/activity"
+# # ACCOUNT_SIGNUP_FORM_CLASS = 'mainapp.forms.SignupForm'
+# ACCOUNT_LOGOUT_ON_GET = True
+
+
+AUTHENTICATION_BACKENDS = (
+    "django.contrib.auth.backends.ModelBackend",
+    "allauth.account.auth_backends.AuthenticationBackend",
+)
+ACCOUNT_AUTHENTICATION_METHOD = "username"
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_EMAIL_VERIFICATION = "mandatory"
 ACCOUNT_SIGNUP_FORM_CLASS = "djstripe.forms.StripeSubscriptionSignupForm"

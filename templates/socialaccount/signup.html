@@ -1,253 +1,36 @@
-{% extends "socialaccount/signup_base.html" %}
-{% load url from future %}
-{% load staticfiles %}
-{% load i18n %}
+{% extends "account/base.html" %}
 
+{% load url from future %}
 {% load i18n crispy_forms_tags %}
 
 {% block head_title %}{% trans "Signup" %}{% endblock %}
 
 {% block content %}
+<div class="container">
+  <div class="row">
+    <div class="col-md-5">
+      <h2>{% trans "Sign Up" %}</h2>
 
-<link rel="stylesheet" href="/static/css/docsupport/style.css">
-  <link rel="stylesheet" href="/static/css/docsupport/prism.css">
-<link rel="stylesheet" href="/static/css/chosen.min.css">
+      <p>{% blocktrans %}Already have an account? Then please <a href="{{ login_url }}">sign in</a>.{% endblocktrans %}</p>
 
-<style type="text/css" media="all">
-    /* fix rtl for demo */
-    .chosen-rtl .chosen-drop { left: -9000px; }
-  </style>
+      <form class="signup" id="signup_form" method="post" action="{% url 'account_signup' %}">
+        {% csrf_token %}
+        {{ form|crispy }}
+        {% if redirect_field_value %}
+        <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+        {% endif %}
+        <span class="stripe-errors"></span>
+        <button class="btn" type="submit">{% trans "Sign Up" %} &raquo;</button>
+      </form>
 
-<style typ="text/css">
-  body { 
-    background: url(http://upload.wikimedia.org/wikipedia/commons/5/5a/Milan_Vegetable_Market.jpg) no-repeat center center fixed; 
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-size: cover;
-  }
-  
-  .panel-default {
-  opacity: 0.95;
-  margin-top:30px;
-  }
-  .form-group.last { margin-bottom:0px; }
-.typeempty{
-  display:none;
-}
-.error{
-  color:red;
-  font-size:12px;
-} 
-</style>
-  
-    <div class="signup-container">
-    <div class="row">
-        <div class="col-md-6 col-md-offset-3">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <span class="glyphicon glyphicon-lock"></span> Login</div>
-                <div class="panel-body">
-                    <form class="signup form-horizontal" id="signup_form" method="post" action="{% url 'socialaccount_signup' %}" role="form" onSubmit="return check_type()">
-                      {% csrf_token %}
-                      <!-- {{ form.as_p }} -->
-
-                        <div class="form-group">
-                        
-                        <label for="id_sign_up_as" class="col-sm-3 control-label">
-                             Sign up as</label>
-                            {{form.sign_up_as.as_hidden}}
-                            <div class="col-sm-9">
-                          <div class="btn-group" data-toggle="buttons">
-                            <label class="btn btn-default">
-                              <input type="radio" name="options" id="option1" onchange="dataradio('Individual')"> Individual
-                            </label>
-
-                            <!-- on click show the BUSIENSS TYPE field -->
-                            <label class="btn btn-default">
-                              <input type="radio" name="options" id="option2" onchange="dataradio('Business')"> Business
-                            </label>
-                            <label class="btn btn-default">
-                              <input type="radio" name="options" id="option3" onchange="dataradio('Organisation')"> Organisation
-                            </label>
-                          </div>
-
-                          <label class="error">{{ form.sign_up_as.errors.as_text }}</label>
-                          
-                        </div>
-
-                        </div>
-                            {{form.type_user.as_hidden}}
-                    <div class="form-group" id="type_user_id">
-                        
-                        <label for="id_type_user" class="col-sm-3 control-label">Type</label>
-                        <div class="col-sm-9">
-                        <select data-placeholder="Farm, wholesaler, bakery..." style="width:100%;height:30px;" class="chosen-select" multiple>
-                        <option value=""></option>
-                          {% for each in all_tags %}
-                          <optgroup label={{each.node}}>
-                          {% if each.childrens %}
-                          {% for eachchild in each.childrens %}
-                          <option>{{eachchild.node}}</option>
-                          {% endfor %}
-                    {% else %}
-                        <option>{{each.node}}</option>
-                    {% endif %}
-                        </optgroup>
-                        {% endfor %}
-
-                        </select>
-
-
-                        </div>
-                        <label class="error">{{ form.type_user.errors.as_text }}</label>
-                    </div>
-
-
-                    <div class="form-group">
-                        <label for="id_email" class="col-sm-3 control-label">
-                            Email</label>
-                        <div class="col-sm-9">
-                          {{form.email}}
-
-                          {% if form.email.errors.as_text %} 
-                          <label class="error">{{ form.email.errors.as_text }}</label>
-                          {% endif %}
-                        </div>
-                    </div>
-
-                    {{form.lat.as_hidden}}
-                    {{form.lng.as_hidden}}
-                    <!-- {{form.formatted_address.as_hidden}} -->
-
-                    <div class="form-group">
-                        <label for="id_address" class="col-sm-3 control-label">
-                            Address</label>
-                        <div class="col-sm-9">
-                            {{form.address}}
-
-
-                        <p class="small help-block" style="margin-bottom:0;">Select nearest address, then drag the marker to the exact location.</p>
-                       
-                        {% if form.address.errors.as_text %} <label class="error">{{ form.address.errors.as_text}}</label>{% endif %}
-                        </div>
-                    </div>
-                    <div class="form-group">
-                      <div class="col-sm-12 block-center">
-                        <input id="find" type="hidden" value="find" />
-                        <!--<p class="small" style="margin:0;">Please drag and drop the marker to change your location.</p> -->
-                        <div class="map_canvas" id="myMap" style="width: 100%;height: 200px; margin-top:3%;"></div>
-                      </div>
-                    </div>
-                    <div class="form-group">
-                          <!--<label for="id_username" class="col-sm-3 control-label">
-                            Username</label> -->
-                        <div class="col-sm-9">
-                          {{form.username.as_hidden}}
-                          <!-- <label class="error">{{ form.username.errors.as_text }}</label> -->
-                        </div>
-                    </div>
-                               
-                    <div class="form-group last">
-                        <div class="col-sm-offset-3 col-sm-9">
-                                {% if redirect_field_value %}
-                          <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
-                          {% endif %}
-                          <button type="submit" class="btn btn-success btn-lg" onclick="copydata()" style="text-shadow: 1px 1px 1px rgba(0,0,0,0.8);">
-                                    {% trans "Sign Up" %} &raquo;</button>
-                                     <button type="reset" class="btn btn-default">
-                                    Reset</button>
-                        </div>
-                    </div>
-                    </form>
-                </div>
-                <div class="panel-footer">
-                    <p class="small">By signing up you agree to the  <a href="/pages/terms" target="blank">terms of use</a> and <a href="/pages/privacy" target="blank">privacy policy</a>.</p>
-                </div>
-            </div>
-        </div>
     </div>
+  </div>
 </div>
-
- 
-    </div><!-- col10 --> 
-  <script src="/static/js/chosen.jquery.min.js" type="text/javascript"></script>
-  <script src="/static/css/docsupport/prism.js" type="text/javascript" charset="utf-8"></script>
-  <script type="text/javascript">
-  // A $( document ).ready() block.
-$( document ).ready(function() {
-    $('#type_user_id').toggleClass('typeempty');
-    $('.chosen-select').chosen().ready(function(){
-      $('.search-field input').attr('style', 'width:350px;height:30px;');
-    });
-});
-function dataradio(value){
-    // var result_val = $("input[name=options]:checked").val();
-    document.getElementById('id_sign_up_as').value = value;
-    if (value == "Business"){
-
-        if ( $('#type_user_id').hasClass('typeempty') ){
-          $('#type_user_id').removeClass('typeempty');
-        }
-    }
-    else{
-        if ( $('#type_user_id').hasClass('typeempty') ){
-          }
-        else{
-            $('#type_user_id').addClass('typeempty');
-        }
-    }
-}
-function check_type(){
-if ($('#option2').prop('checked')){
-  if($('.chosen-select').val()==null){
-    alert('You must enter a business type')
-    return false
-  }
-  else{
-    return true
-  }
-}  
-}
-
-function copydata(){
-
-
-var all_values = '';
-var elements = document.getElementsByClassName('search-choice');
-    for(i=0;i<elements.length;i++){
-      if(all_values==''){
-        all_values = all_values + elements[i].children[0].innerHTML;  
-      }
-      else{
-      all_values = all_values + ',' + elements[i].children[0].innerHTML;
-      }
-    }
-    document.getElementById('id_type_user').value = all_values;
-  }
-  </script>
-
-{% endblock %}
-{% block footer %}
-  <script type="text/javascript">
-    var config = {
-      '.chosen-select'           : {max_selected_options: 3},
-      '.chosen-select-deselect'  : {allow_single_deselect:true},
-      '.chosen-select-no-single' : {disable_search_threshold:10},
-      '.chosen-select-no-results': {no_results_text:'Oops, nothing found!'},
-      '.chosen-select-width'     : {width:"95%"}
-    }
-    for (var selector in config) {
-      $(selector).chosen(config[selector]);
-    }
-  </script>
-
-
 
 
 
 {{ block.super }}
-  <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
+<script type="text/javascript" src="https://js.stripe.com/v2/"></script>
 <script type="text/javascript">
 
   jQuery(function($) {
@@ -297,4 +80,4 @@ var elements = document.getElementsByClassName('search-choice');
     };
   });
 </script>
-{% endblock %}
+{% endblock content %}
