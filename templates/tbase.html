@@ -16,15 +16,12 @@
 
     <meta property="og:site_name" content="FoodTrade" />
     <meta property="og:description" content="FoodTrade is the tool foodies, artisans, and real food businesses have been waiting for. It helps you find your nearest producers and stockists, connect with collaborators, map your local food web, share knowledge about provenance, and trade in real-time." />
-    <meta property="og:type" content="website" /><!-- 
-    <meta property="og:type" content="{% block ogtype %}website{% endblock %}" /> -->
+    <meta property="og:type" content="{% block ogtype %}website{% endblock %}" />
     <meta property="fb:admins" content="732525050" />
     <meta property="fb:app_id" content="1400801613504478" /> 
     <meta property="og:url" content="http://{{request.META.HTTP_HOST}}{{request.path}}" />
     
-    <meta property="og:image" content="http://{{request.META.HTTP_HOST}}/static/images/foodtrade_og_default.gif" />
-
-  <!--   <meta property="og:image" content="{% block ogimg %}{% if 'business' in request.path or 'organisation' in request.path or 'person' in request.path %}{{userinfo.profileimg}}{% else %}http://{{request.META.HTTP_HOST}}/static/images/foodtrade_og_default.gif{% endif %}{% endblock %}" /> -->
+    <meta property="og:image" content="{% block ogimg %}http://{{request.META.HTTP_HOST}}/static/images/foodtrade_og_default.gif{% endblock %}" />
 
     <meta property="og:title" content="{% block titlecontent %}Home{% endblock %} - FoodTrade" />
     <meta property="og:latitude" content="{% block fblat %}{{userinfo.lat}}{% endblock %}" />
@@ -724,8 +721,8 @@ tweetlistener('tweetMessage', 'counter', 'contact_tweet', 'newtweet_btn');
 });
     </script>
 
-<!--Start of Zopim Live Chat Script-->
-<script type="text/javascript">window.$zopim||(function(d,s){var z=$zopim=function(c){z._.push(c)},$=z.s=d.createElement(s),e=d.getElementsByTagName(s)[0];z.set=function(o){z.set._.push(o)};z._=[];z.set._=[];$.async=!0;$.setAttribute('charset','utf-8');$.src='//cdn.zopim.com/?1MlPpsDpWc6md7n2dz3Sp1n9UEpY0Og7';z.t=+new Date;$.type='text/javascript';e.parentNode.insertBefore($,e)})(document,'script');</script><script>$zopim(function(){$zopim.livechat.set({name:'Ed Dowding',email:'ed@foodtrade.com'});});$zopim(function(){})</script><!--End of Zopim Live Chat Script-->
+<!--Start of Zopim Live Chat Script
+<script type="text/javascript">window.$zopim||(function(d,s){var z=$zopim=function(c){z._.push(c)},$=z.s=d.createElement(s),e=d.getElementsByTagName(s)[0];z.set=function(o){z.set._.push(o)};z._=[];z.set._=[];$.async=!0;$.setAttribute('charset','utf-8');$.src='//cdn.zopim.com/?1MlPpsDpWc6md7n2dz3Sp1n9UEpY0Og7';z.t=+new Date;$.type='text/javascript';e.parentNode.insertBefore($,e)})(document,'script');</script><script>$zopim(function(){$zopim.livechat.set({name:'Ed Dowding',email:'ed@foodtrade.com'});});$zopim(function(){})</script>End of Zopim Live Chat Script-->
 
     <script type="text/javascript">
       $('.tip').tooltip();

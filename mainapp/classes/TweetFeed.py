@@ -73,10 +73,16 @@ class TweetFeed():
         else:
             query_str = query_str + """if(current.deleted != 1){"""
 
-        query_str = query_str + """items = current.status.split(' ');for(var j = 0; j < items.length; j++ ) {if(items[j].indexOf('#')==0){emit(items[j], 1);}}}}}"""
-        pprint.pprint(query_str)
+        query_str = query_str + """
+            items = current.status.split(' ');
+            for(var j = 0; j < items.length; j++ ) {
+                if(items[j].indexOf('#')==0){
+                    emit(items[j], 1);
+                    }
+                }
+            }
+            }}"""
         mapper = Code(query_str)
-
         reducer = Code("""
             function (key, values) { 
              var sum = 0;
@@ -113,9 +119,7 @@ class TweetFeed():
 
     def get_near_people(self, query):
         return self.db_object.get_distinct(self.table_name,'username',query)['count']
-
     
-
     def update_tweets(self, username, first_name, last_name, description, address, sign_up_as,  lat, lon,type_user=[]):
         results = address
         return self.db_object.update(self.table_name,
@@ -196,34 +200,31 @@ class UserProfile():
              'phone_number':str(phone)}
              )
 
-    def update_profile_by_username(self, username, description, address, type_usr, sign_up_as, phone, lat, lon, postal_code, name, is_superuser):
+    def update_profile_by_username(self, username, description, address, type_usr, sign_up_as, phone, lat, lon, postal_code, name, is_superuser,
+      company_num, website_url, facebook_page, deliverables):
+        data = {'zip_code':str(postal_code),
+                 'description':description,
+                 'latlng.coordinates.1':float(lat),
+                 'latlng.coordinates.0':float(lon),
+                 'address':str(address),
+                 'type_user':type_usr,
+                 'sign_up_as':sign_up_as, 
+                 'phone_number':str(phone),
+                 'name':name,
+                 'company_num': company_num,
+                 'website_url': website_url,
+                 'facebook_page': facebook_page,
+                 'deliverables': deliverables
+                 }
         if not is_superuser: 
             return self.db_object.update(self.table_name,
                  {'username':username},
-                 {'zip_code':str(postal_code),
-                 'description':description,
-                 'latlng.coordinates.1':float(lat),
-                 'latlng.coordinates.0':float(lon),
-                 'address':str(address),
-                 'type_user':type_usr,
-                 'sign_up_as':sign_up_as, 
-                 'phone_number':str(phone),
-                 'name':name
-                 })
+                 data)
         else:
+            data['recently_updated_by_super_user'] = 'true'
             return self.db_object.update(self.table_name,
                  {'username':username},
-                 {'zip_code':str(postal_code),
-                 'description':description,
-                 'latlng.coordinates.1':float(lat),
-                 'latlng.coordinates.0':float(lon),
-                 'address':str(address),
-                 'type_user':type_usr,
-                 'sign_up_as':sign_up_as, 
-                 'phone_number':str(phone),
-                 'recently_updated_by_super_user':'true',
-                 'name':name
-                 })
+                 data)
     def update_profile_upsert(self, where, what):
         return self.db_object.update_upsert(self.table_name, where, what)
 

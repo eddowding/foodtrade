@@ -67,8 +67,9 @@ def display_profile(request, username):
 
     try:
         tweet_feed_obj = TweetFeed()
-        user_profile = tweet_feed_obj.get_tweet_by_user_id(userprof['useruid'])
-        updates = user_profile["updates"]
+        user_updates = tweet_feed_obj.get_tweet_by_user_id(userprof['useruid'])
+        user_updates["updates"].reverse()
+        updates = user_updates["updates"][0:10]
 
         for i in range(len(updates)):
             time_elapsed = int(time.time()) - updates[i]['time_stamp']
@@ -191,6 +192,13 @@ def edit_profile(request, username):
 
             #parameters['profile_id'] = request.user.id
             parameters['sign_up_as'] = userprof['sign_up_as']
+            
+            parameters['company_num'] = userprof.get('company_num') if userprof.get('company_num')!=None else ''
+            parameters['website_url'] = userprof.get('website_url') if userprof.get('website_url')!=None else ''
+            print 'website_url', parameters['website_url']
+            parameters['facebook_page'] = userprof.get('facebook_page') if userprof.get('facebook_page')!=None else ''
+            parameters['deliverables'] = userprof.get('deliverables') if userprof.get('deliverables')!=None else ''
+
             if userprof['sign_up_as'] == 'Business':
                 parameters['type_user'] = str(','.join(userprof['type_user']))
             else:
@@ -231,6 +239,10 @@ def edit_profile(request, username):
             return HttpResponseRedirect('/')
 
         
+        company_num = request.POST.get('company_num') if request.POST.get('company_num')!=None else ''
+        website_url = request.POST.get('website_url') if request.POST.get('website_url')!=None else ''
+        facebook_page = request.POST.get('facebook_page') if request.POST.get('facebook_page')!=None else ''
+        deliverables = request.POST.get('deliverables') if request.POST.get('deliverables')!=None else ''
 
         first_name = request.POST['first_name']
         last_name = request.POST['last_name']
@@ -269,7 +281,8 @@ def edit_profile(request, username):
             is_superuser = False
 
         user_profile.update_profile_by_username(userprof['username'], description, address, 
-            usr_type, sign_up_as, phone, lat, lon, postal_code, name, is_superuser)
+            usr_type, sign_up_as, phone, lat, lon, postal_code, name, is_superuser, company_num,
+            website_url, facebook_page, deliverables)
 
         return HttpResponseRedirect('/')
 
