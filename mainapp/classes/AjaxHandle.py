@@ -274,7 +274,6 @@ class AjaxHandle(AjaxSearch):
             parameters['connections_str'] = json.dumps(parameters['connections'])
             parameters['profile_id'], parameters['user_id'] = int(data['prof_id']), request.user.id
             return render_to_response('conn_ajax.html', parameters)
-            # return HttpResponse("{'status':1}")
         else:
             return HttpResponse("{'status':0}")
 
