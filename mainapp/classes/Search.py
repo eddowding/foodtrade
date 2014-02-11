@@ -70,6 +70,7 @@ class Search():
         "organisations":"$organisations",
         "foods":"$foods",
         "sign_up_as":"$sign_up_as",
+        "zip_code":"$zip_code",
         "time_stamp":"$updates.time_stamp",
         "result_type":result_type,
         }}
