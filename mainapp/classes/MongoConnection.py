@@ -94,8 +94,7 @@ class MongoConnection():
 
     def get_distinct(self,table_name, distinct_val, query):
         all_doc = self.db[table_name].find(query).distinct(distinct_val)
-        count = len(all_doc)
-        
+        count = len(all_doc)        
         parameter = {}
         parameter['count'] = count
         parameter['results'] = all_doc

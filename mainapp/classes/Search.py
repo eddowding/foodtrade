@@ -39,7 +39,7 @@ class UserProfile():
 class Search():
 
     """docstring for UserConnections"""
-    def __init__(self, keyword="", lon = "", lat ="", place = "", foods="", business="", organisation="",sort=""):
+    def __init__(self, keyword="", lon = "", lat ="", place = "", foods="", business="", organisation="",sort="", search_global=False):
         self.keyword = str(keyword)
         self.lon = lon
         self.lat = lat
@@ -48,6 +48,7 @@ class Search():
         self.business = business
         self.organisation = organisation
         self.sort = sort
+        self.search_global = search_global
     def get_result_fields(self,type_result):
         if type_result == "description":
             result_type = "$useruid"
@@ -70,7 +71,9 @@ class Search():
         "organisations":"$organisations",
         "foods":"$foods",
         "sign_up_as":"$sign_up_as",
+        "zip_code":"$zip_code",
         "time_stamp":"$updates.time_stamp",
+        "tweet_pictures":"$updates.picture",
         "result_type":result_type,
         }}
 
@@ -206,7 +209,8 @@ class Search():
 
 
         # Limit distance within 200 miles
-        and_query.append({"distance":{"$lte":1609.34}})
+        if not self.search_global:
+            and_query.append({"distance":{"$lte":1609.34}})
 
 
         # check food filters
@@ -221,8 +225,8 @@ class Search():
         if len(self.organisation) > 0:
             and_query.append({"organisations":{"$all":self.organisation}})
 
-
-        query_string["$and"] = and_query
+        if len(and_query)>0:
+            query_string["$and"] = and_query
         if self.keyword !="":
             query_string["$or"] = or_conditions
 
@@ -242,7 +246,8 @@ class Search():
 
         agg_pipeline.append(geo_near)
 
-        agg_pipeline.append({ '$match':query_string})
+        if len(and_query)>0 or self.keyword != "":
+            agg_pipeline.append({ '$match':query_string})
 
 
         if search_type == 0:

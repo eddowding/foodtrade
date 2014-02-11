@@ -73,10 +73,16 @@ class TweetFeed():
         else:
             query_str = query_str + """if(current.deleted != 1){"""
 
-        query_str = query_str + """items = current.status.split(' ');for(var j = 0; j < items.length; j++ ) {if(items[j].indexOf('#')==0){emit(items[j], 1);}}}}}"""
-        pprint.pprint(query_str)
+        query_str = query_str + """
+            items = current.status.split(' ');
+            for(var j = 0; j < items.length; j++ ) {
+                if(items[j].indexOf('#')==0){
+                    emit(items[j], 1);
+                    }
+                }
+            }
+            }}"""
         mapper = Code(query_str)
-
         reducer = Code("""
             function (key, values) { 
              var sum = 0;
@@ -113,9 +119,7 @@ class TweetFeed():
 
     def get_near_people(self, query):
         return self.db_object.get_distinct(self.table_name,'username',query)['count']
-
     
-
     def update_tweets(self, username, first_name, last_name, description, address, sign_up_as,  lat, lon,type_user=[]):
         results = address
         return self.db_object.update(self.table_name,

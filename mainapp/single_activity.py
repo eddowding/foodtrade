@@ -9,14 +9,11 @@ from geolocation import get_addr_from_ip
 import json
 
 
-
 def get_post_parameters(request, tweet_id):
     parameters={}
     user_profile_obj = UserProfile()
-    # post_profile = user_profile_obj.get_profile_by_username(str(username))
     parameters.update(csrf(request))
     if request.user.is_authenticated():
-        # parameters['user'] = request.user
         user_id = request.user.id
         user_profile = user_profile_obj.get_profile_by_id(str(user_id))       
         default_lon = float(user_profile['latlng']['coordinates'][0])
@@ -53,12 +50,13 @@ def get_post_parameters(request, tweet_id):
                 for j in range(len(replies)):
                     replies[j] = set_time_date(replies[j],keyword)
                     replies[j]['mentions'] = mentions + " " + replies[j]['mentions']
-                # print results[i]['replies']
                 results[i]['replies'] = replies
     single_tweet['user']['profile_img'] = single_tweet['user']['profile_img'].replace("normal","bigger")
     parameters['results'] = results
     parameters['json_data'] = json.dumps(results)
     parameters['parent_tweet'] = single_tweet
+    addr = single_tweet['user']['address'].split(',')
+    parameters['tweet_country'] = addr[len(addr)-1].strip()
     parameters['parent_json'] = json.dumps(single_tweet)
     parameters['s_userinfo'] = UserInfo(single_tweet['useruid'])
     return parameters
