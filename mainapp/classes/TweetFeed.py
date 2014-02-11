@@ -211,34 +211,31 @@ class UserProfile():
              'phone_number':str(phone)}
              )
 
-    def update_profile_by_username(self, username, description, address, type_usr, sign_up_as, phone, lat, lon, postal_code, name, is_superuser):
+    def update_profile_by_username(self, username, description, address, type_usr, sign_up_as, phone, lat, lon, postal_code, name, is_superuser,
+      company_num, website_url, facebook_page, deliverables):
+        data = {'zip_code':str(postal_code),
+                 'description':description,
+                 'latlng.coordinates.1':float(lat),
+                 'latlng.coordinates.0':float(lon),
+                 'address':str(address),
+                 'type_user':type_usr,
+                 'sign_up_as':sign_up_as, 
+                 'phone_number':str(phone),
+                 'name':name,
+                 'company_num': company_num,
+                 'website_url': website_url,
+                 'facebook_page': facebook_page,
+                 'deliverables': deliverables
+                 }
         if not is_superuser: 
             return self.db_object.update(self.table_name,
                  {'username':username},
-                 {'zip_code':str(postal_code),
-                 'description':description,
-                 'latlng.coordinates.1':float(lat),
-                 'latlng.coordinates.0':float(lon),
-                 'address':str(address),
-                 'type_user':type_usr,
-                 'sign_up_as':sign_up_as, 
-                 'phone_number':str(phone),
-                 'name':name
-                 })
+                 data)
         else:
+            data['recently_updated_by_super_user'] = 'true'
             return self.db_object.update(self.table_name,
                  {'username':username},
-                 {'zip_code':str(postal_code),
-                 'description':description,
-                 'latlng.coordinates.1':float(lat),
-                 'latlng.coordinates.0':float(lon),
-                 'address':str(address),
-                 'type_user':type_usr,
-                 'sign_up_as':sign_up_as, 
-                 'phone_number':str(phone),
-                 'recently_updated_by_super_user':'true',
-                 'name':name
-                 })
+                 data)
     def update_profile_upsert(self, where, what):
         return self.db_object.update_upsert(self.table_name, where, what)
 

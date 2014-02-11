@@ -78,7 +78,32 @@
             </select>
         </div>
       </div>
-      
+    
+    <div class="form-group" id="company_charity">
+      <label for="company_num_txt" class="col-sm-2 control-label">Company/Charity Number</label>
+      <div class="col-sm-5">
+        <input type="text" class="form-control" id="company_num_txt" name="company_num" rows="5" placeholder="Your govt issued registration number." value="{{company_num}}"></input>
+      </div>
+    </div>
+
+    <div class="form-group" id="website_group">
+      <label for="website_txt" class="col-sm-2 control-label">Website</label>
+      <div class="col-sm-5">
+        <input type="url" class="form-control" id="website_txt" name="website_url" value="{{website_url}}" placeholder="Enter the whole thing, eg http://www.foodtrade.com."></input>
+      </div>
+    </div>
+    <div class="form-group" id="fb_page_group">
+      <label for="facebook_page_txt" class="col-sm-2 control-label">Facebook Page</label>
+      <div class="col-sm-5">
+        <input type="text" class="form-control" id="facebook_page_txt" name="facebook_page" placeholder="Your page or group on facebook, eg http://facebook.com/foodtradeHQ." value="{{facebook_page}}"></input>
+      </div>
+    </div>
+    <div class="form-group" id="deliverables_group">
+      <label for="deliverables_txt" class="col-sm-2 control-label">Deliverables</label>
+      <div class="col-sm-5">
+        <textarea class="form-control" id="deliverables_txt" name="deliverables" placeholder="How do you deliver? Where? How often? Any guide prices?" rows="5">{{deliverables}}</textarea>
+      </div>
+    </div>
     <div class="form-group">
       <label for="user_desc_txt" class="col-sm-2 control-label">Description</label>
       <div class="col-sm-5">
@@ -132,6 +157,10 @@ var business_type = '{{sign_up_as}}';
 $( document ).ready(function() {
   if('{{sign_up_as}}'!="Business"){
     $('#type_user_id').toggleClass('typeempty');
+    $('#company_charity').toggleClass('typeempty');
+    $('#website_group').toggleClass('typeempty');
+    $('#fb_page_group').toggleClass('typeempty');
+    $('#deliverables_group').toggleClass('typeempty');
     /*$('#dropdown3').attr('required','flase');*/
     /*$('#dropdown3').removeAttr('required');*/
     }
@@ -146,14 +175,52 @@ function dataradio(value){
     if (value == "Business"){
         if ( $('#type_user_id').hasClass('typeempty') ){
           $('#type_user_id').removeClass('typeempty');
-          /*$('#dropdown3').attr('required','true');*/
+        }
+        if ( $('#company_charity').hasClass('typeempty') ){
+          $('#company_charity').removeClass('typeempty');
+        }
+        if ( $('#website_group').hasClass('typeempty') ){
+          $('#website_group').removeClass('typeempty');
+        }
+        if ( $('#deliverables_group').hasClass('typeempty') ){
+          $('#deliverables_group').removeClass('typeempty');
+        }
+        if ( $('#fb_page_group').hasClass('typeempty') ){
+          $('#fb_page_group').removeClass('typeempty');
+        }
+    }
+    else if (value == "Organisation"){
+        if (!($('#type_user_id').hasClass('typeempty'))){
+          $('#type_user_id').addClass('typeempty');
+        }
+        if (!($('#deliverables_group').hasClass('typeempty'))){
+          $('#deliverables_group').addClass('typeempty');
+        }
+        if ( $('#company_charity').hasClass('typeempty') ){
+          $('#company_charity').removeClass('typeempty');
+        }
+        if ( $('#website_group').hasClass('typeempty') ){
+          $('#website_group').removeClass('typeempty');
+        }
+        if ( $('#fb_page_group').hasClass('typeempty') ){
+          $('#fb_page_group').removeClass('typeempty');
         }
     }
     else{
-        if ( $('#type_user_id').hasClass('typeempty') ){
-          }
-        else{
-            $('#type_user_id').addClass('typeempty');
+        if (!($('#type_user_id').hasClass('typeempty'))){
+          $('#type_user_id').addClass('typeempty');
+        }
+        if (!($('#deliverables_group').hasClass('typeempty'))){
+          $('#deliverables_group').addClass('typeempty');
+        }
+        if (!($('#company_charity').hasClass('typeempty'))){
+          $('#company_charity').addClass('typeempty');
+        }
+        if (!($('#website_group').hasClass('typeempty'))){
+          $('#website_group').addClass('typeempty');
+        }
+        if (!($('#fb_page_group').hasClass('typeempty'))){
+          $('#fb_page_group').addClass('typeempty');
         }
         /*$('#dropdown3').removeAttr('required');*/
     }
