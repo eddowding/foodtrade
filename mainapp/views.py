@@ -114,7 +114,7 @@ def tweets(request):
             tweet_id = str(tweet['id'])
             text = "@" + tweet['user']['screen_name'] + " Thanks! Please confirm your post by clicking this http://foodtrade.com/?tweetid=" + str(tweet_id) + " You'll only have to do this once."
             try:
-                # bot_twitter.update_status(status = text, in_reply_to_status_id = tweet['id'])
+                bot_twitter.update_status(status = text, in_reply_to_status_id = tweet['id'])
                 pass
             except:
                 pass
