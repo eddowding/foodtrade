@@ -20,20 +20,13 @@ STRIPE_PUBLIC_KEY = os.environ.get("STRIPE_PUBLIC_KEY", "pk_test_cIjJbOYUbVYnvnS
 STRIPE_SECRET_KEY = os.environ.get("STRIPE_SECRET_KEY", "sk_test_dj0ArFwwcCljH8n1aioJ6jtV")
 
 DJSTRIPE_PLANS = {
-    "monthly": {
-        "stripe_plan_id": "pro-monthly",
-        "name": "Web App Pro ($25/month)",
-        "description": "The monthly subscription plan to WebApp",
-        "price": 2500,  # $25.00
-        "currency": "usd",
-        "interval": "month"
-    },
+
     "yearly": {
         "stripe_plan_id": "pro-yearly",
-        "name": "Web App Pro ($199/year)",
-        "description": "The annual subscription plan to WebApp",
-        "price": 19900,  # $19900
-        "currency": "usd",
+        "name": "Web App Pro ($45/year)",
+        "description": "The annual subscription plan to FoodTrade",
+        "price": 4500,  # $19900
+        "currency": "gbp",
         "interval": "year"
     }
 }
@@ -48,23 +41,16 @@ DJSTRIPE_PLANS = {
 
 # For Django All Auth
 SITE_ID = 1
-# ACCOUNT_AUTHENTICATION_METHOD = "username_email"
-# ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS = 7
-# ACCOUNT_EMAIL_REQUIRED = True
-# ACCOUNT_EMAIL_VERIFICATION = "none"
-# ACCOUNT_UNIQUE_EMAIL = True
-# ACCOUNT_SIGNUP_PASSWORD_VERIFICATION = True
-# SOCIALACCOUNT_AUTO_SIGNUP = True
-# LOGIN_REDIRECT_URL = "/activity"
-# # ACCOUNT_SIGNUP_FORM_CLASS = 'mainapp.forms.SignupForm'
-# ACCOUNT_LOGOUT_ON_GET = True
-
-
-AUTHENTICATION_BACKENDS = (
-    "django.contrib.auth.backends.ModelBackend",
-    "allauth.account.auth_backends.AuthenticationBackend",
-)
-ACCOUNT_AUTHENTICATION_METHOD = "username"
+ACCOUNT_AUTHENTICATION_METHOD = "username_email"
+ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS = 7
 ACCOUNT_EMAIL_REQUIRED = True
-ACCOUNT_EMAIL_VERIFICATION = "mandatory"
-ACCOUNT_SIGNUP_FORM_CLASS = "djstripe.forms.StripeSubscriptionSignupForm"
+ACCOUNT_EMAIL_VERIFICATION = "none"
+ACCOUNT_UNIQUE_EMAIL = True
+ACCOUNT_SIGNUP_PASSWORD_VERIFICATION = True
+SOCIALACCOUNT_AUTO_SIGNUP = True
+LOGIN_REDIRECT_URL = "/activity"
+ACCOUNT_SIGNUP_FORM_CLASS = 'mainapp.forms.SignupForm'
+ACCOUNT_LOGOUT_ON_GET = True
+
+
+# ACCOUNT_SIGNUP_FORM_CLASS = "djstripe.forms.StripeSubscriptionSignupForm"
