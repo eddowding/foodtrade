@@ -95,14 +95,16 @@ def tweets(request):
                 for each in tweet['entities'].get('media'):
                     pic_url_list.append(each['media_url'])
 
-
+            import HTMLParser
+            h = HTMLParser.HTMLParser()
+            
             tweet_id = str(tweet['id'])
             parent_tweet_id = 0 if tweet['in_reply_to_status_id'] == None else tweet['in_reply_to_status_id']
             tweet_feed = TweetFeed()
             data = {'tweet_id': str(tweet_id),
             'parent_tweet_id': str(parent_tweet_id),
-            'status': str(tweet['text']),                    
-            'picture': pic_url_list,                    
+            'status': str(h.unescape(str(tweet['text']))),                    
+            'picture': pic_url_list,
             }          
             tweet_feed.insert_tweet(int(usr.user.id),data)
 
