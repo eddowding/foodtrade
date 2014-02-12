@@ -39,7 +39,7 @@ class UserProfile():
 class Search():
     """docstring for UserConnections"""
     def __init__(self, keyword="", lon = "", lat ="", place = "", foods="", business="", organisation="",sort="", search_global=False):
-        self.keyword = str(keyword)
+        self.keyword = str(keyword.strip())
         self.lon = lon
         self.lat = lat
         self.place = place

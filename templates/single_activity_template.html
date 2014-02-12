@@ -1,4 +1,5 @@
 {% load recognise_name %}
+{{request.user.username}}
     <li class="left clearfix singleresult {{result.result_class}}" data-id="{% if result_type == "status" %}{{result.tweetuid}} {% else %}{{result.user.username}}{% endif %}"><span class="chat-img pull-left">
     <img src="{{result.user.profile_img}}" alt="{{result.user.name}}" class="img-thumbnail" />
     </span>
@@ -26,9 +27,9 @@
               <li><a href="#" onclick="click_activity('markCustomer', '{{result.user.username}}')">I'm a customer</a></li>
               {% endif %}
               <li class="divider"></li>
-              {% ifequal result.user.username userinfo.username %}
-              <li><a class="deletetweet" data-tweet-id = "{{result.tweetuid}}">Delete</a></li>
-              {% endifequal %}
+              {% if result.user.username == userinfo.username or userinfo.is_superuser %}
+              <li><a href="#" class="deletetweet" data-tweet-id = "{{result.tweetuid}}">Delete</a></li>
+              {% endif %}
               {% if result.user.username != userinfo.username %}
               <li><a href="#" onclick="click_activity('spam','{% if result_type == "status" %}{{result.tweetuid}} {% else %}{{result.user.username}}{% endif %}')">Flag as spam</a></li>
               <li><a href="#" onclick="click_activity('follow','{{result.user.username}}')">Follow on Twitter</a></li>
