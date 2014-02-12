@@ -115,6 +115,7 @@ def get_search_parameters(request):
         default_lat = float(location_info['latitude'])
 
     keyword = request.GET.get('q',request.POST.get('q',""))
+    keyword = keyword.strip()
     sort = request.GET.get('sort',request.POST.get('sort',"time"))
     my_lon = request.GET.get('lon',request.POST.get('lon',""))
     my_lat = request.GET.get('lat',request.POST.get('lat',"") ) 
