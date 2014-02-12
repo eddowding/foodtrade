@@ -140,6 +140,7 @@ def tweets(request):
                     user_email = user_emails[0][0]
                     str_text = str_text.replace(user_email, "")
                     location = str_text.strip()
+                    create_profile_from_mention(user_email, location, tweet)
 
 
 
@@ -461,33 +462,38 @@ def send_newsletter(request):
         print eachUser
         #m.send_mail("brishi98@gmail.com", "You have the follow new messages in your inbox", message_body)
 
-def create_profile_from_mentions(email, location, data):
+def create_profile_from_mention(email, location, data):
     signup_data = {}
     try:
         location_res = Geocoder.geocode(location)
         signup_data['latlng'] = {"type":"Point","coordinates":[float(location_res.longitude) ,float(location_res.latitude)]}
-        signup_data['zip_code'] = str(location_res.postal_code)
+        user_address = location
+        postal_code = location_res.postal_code
     except:
         try:
             location_res = Geocoder.geocode(data['user']['location'])
             lat, lon, addr,postal_code = location_res.latitude, location_res.longitude, location_res.postal_code
-            signup_data['address'] = addr
             signup_data['latlng'] = {"type":"Point","coordinates" : [float(lon),float(lat)]}
             signup_data['location_default_on_error'] = 'true'
+            user_address = data['user']['location']
+
 
         except:
                 lat, lon, addr,postal_code = 51.5072 , -0.1275, "3 Whitehall, London SW1A 2EL, UK", "SW1 A 2EL"
                 signup_data['address'] = addr
                 signup_data['latlng'] = {"type":"Point","coordinates" : [float(lon),float(lat)]}
                 signup_data['location_default_on_error'] = 'true'
+                user_address = addr
+
     
 
     signup_data = {
             'is_unknown_profile': 'false',
             'from_mentions': 'true',
-            'address' : data['user']['address'],
+            'address' : user_address,
             'email' : email,
-            'description' : data['user']['description']
+            'zip_code': str(postal_code),
+            'description' : data['user']['description'],
             'foods': [],
             'name' : data['user']['name'],
             'phone_number' : '',
