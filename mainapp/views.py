@@ -122,7 +122,8 @@ def tweets(request):
 
             h = HTMLParser.HTMLParser()
             str_text = h.unescape(tweet['text']).encode('utf-8')
-
+            str_text = str_text.replace("#signup","#join")
+            str_text = str_text.replace("#register","#join")
             if "#join" in str_text:
                 str_text = str_text.lower()
                 str_text = str_text.strip()
