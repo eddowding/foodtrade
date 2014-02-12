@@ -376,9 +376,9 @@
      <div class="col-md-12">
         <ul class="nav nav-tabs">
           <li class="active"><a href="#produce" data-toggle="tab">Foods <span class="badge">{{userprof.food_no}}</span></a></li>
-          <li><a href="#connections" data-toggle="tab" onclick="set_width()">Connections <span class="badge">{{userprof.trade_connections_no}}</span></a> </li>
+          <li><a href="#connections" data-toggle="tab" onclick="set_width()">Links <span class="badge">{{userprof.trade_connections_no}}</span></a> </li>
 
-          <li><a href="#organisations" data-toggle="tab">Organisation <span class="badge">{{userprof.organisation_connection_no}}</span></a></li> 
+          <li><a href="#organisations" data-toggle="tab">Orgs <span class="badge">{{userprof.organisation_connection_no}}</span></a></li> 
           <li><a href="#activity" data-toggle="tab">Updates  <span class="badge">{{updates_count}}</span></a></li>  
           <li><a href="#customers" tabindex="-1" data-toggle="tab">Customers <span class="badge">{{customers|length}}</span></a></li>
         </ul>
@@ -516,12 +516,12 @@
                    
                    {% for eachdet in eachfood.recomm_details %}
                     <div class="pull-right">
-                      <img class="pull-left tltip" style="margin:3px 4px 0 0; width:25px" src={{eachdet.photo}} title="{{eachdet.name}}"/>
+                      <img class="pull-left" style="margin:0px 4px 0 0; width:25px" src={{eachdet.photo}} title="{{eachdet.name}}"/>
                     </div>
                    {% endfor %}
                  {% ifnotequal eachfood.vouch_count 0 %}
                    <div class="pull-right">
-                     <span class="badge badge-default tltip" style="margin:6px 4px 0 0;" title="{{eachfood.vouch_count}} recommendations on {{eachfood.food_name}}">{{eachfood.vouch_count}}</span>
+                     <span class="badge badge-default tltip" style="margin:3px 4px 0 0;" title="{{eachfood.vouch_count}} recommendations on {{eachfood.food_name}}">{{eachfood.vouch_count}}</span>
                   </div>
                   {% endifnotequal %}
               
@@ -690,7 +690,7 @@
             <div class="well well-sm">  
             <div class="form-inline"  role="form">
               <div class="form-group">
-              <select id="org_chosen" data-placeholder="Type orgainsation..." class="chosen-select col-xs-4 col-sm-4" multiple>
+              <select id="org_chosen" data-placeholder="Type organisation..." class="chosen-select col-xs-4 col-sm-4" multiple>
                             <option value=""></option>
                             {% for each in all_organisation %}
                             
