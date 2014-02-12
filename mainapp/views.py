@@ -21,6 +21,7 @@ import pprint
 from django.contrib.auth.models import User
 from mainapp.bitly import construct_invite_tweet
 from django.contrib.auth.decorators import user_passes_test
+import HTMLParser
 
 next_cursor = -1
 ACCESS_TOKEN = ''
@@ -95,7 +96,6 @@ def tweets(request):
                 for each in tweet['entities'].get('media'):
                     pic_url_list.append(each['media_url'])
 
-            import HTMLParser
             h = HTMLParser.HTMLParser()
             
             tweet_id = str(tweet['id'])
@@ -113,11 +113,38 @@ def tweets(request):
         except:
             tweet_id = str(tweet['id'])
             text = "@" + tweet['user']['screen_name'] + " Thanks! Please confirm your post by clicking this http://foodtrade.com/?tweetid=" + str(tweet_id) + " You'll only have to do this once."
-            try:
-                bot_twitter.update_status(status = text, in_reply_to_status_id = tweet['id'])
-                pass
-            except:
-                pass
+
+            h = HTMLParser.HTMLParser()
+            str_text = str(h.unescape(str(tweet['text'])))
+
+            if "#join" in str_text:
+                str_text = str_text.lower()
+                str_text = str_text.strip()
+                str_text = str_text.replace('@foodtradehq',"")
+                str_text = str_text.strip()
+                str_text = str_text.replace("#join","")
+                str_text = str_text.strip()
+                import re
+                 
+                regex = re.compile(("([a-z0-9!#$%&'*+\/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+\/=?^_`"
+                                    "{|}~-]+)*(@|\sat\s)(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?(\.|"
+                                    "\sdot\s))+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?)"))
+
+                user_emails = re.findall(regex, str_text)
+
+
+                if len(user_emails)>0:
+                    user_email = user_emails[0][0]
+                    str_text = str_text.replace(user_email, "")
+                    location = str_text.strip()
+
+
+
+            # try:
+            #     bot_twitter.update_status(status = text, in_reply_to_status_id = tweet['id'])
+            #     pass
+            # except:
+            #     pass
 
     if len(tweet_list)!=0:
         max_id.max_tweet_id = max(tweet_list)
