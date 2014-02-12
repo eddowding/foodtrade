@@ -17,6 +17,16 @@ from django.template import RequestContext
 
 from django.views.decorators.csrf import csrf_exempt
 
+
+
+from django.contrib.auth.models import AbstractUser
+from django.db import models
+from django.utils.functional import cached_property
+
+
+
+
+
 def get_time(time_val):
     time_elapsed = int(time.time()) - time_val         
     if time_elapsed<60:
@@ -85,12 +95,19 @@ def set_time_date(single_result,keyword):
     return single_result
 
 def get_search_parameters(request):
+    # from mainapp.models import FoodTrader
+    # current_user = FoodTrader.objects.get(id=request.user.id)
+
+        
     parameters = {}
 
     default_location = ""
 
     if request.user.is_authenticated():
-        # parameters['user'] = request.user
+
+
+
+
         user_id = request.user.id
         user_profile_obj = UserProfile()
         user_profile = user_profile_obj.get_profile_by_id(str(user_id))
@@ -99,6 +116,8 @@ def get_search_parameters(request):
         default_lat = float(user_profile['latlng']['coordinates'][1])
         user_info = UserInfo(user_id)
         parameters['userinfo'] = user_info
+                    
+            
         default_location = user_profile['zip_code']
 
 
@@ -237,5 +256,31 @@ def get_search_parameters(request):
 
 @csrf_exempt
 def home(request): 
-    return render_to_response('activity.html',get_search_parameters(request) ,context_instance=RequestContext(request))
+    if request.user.is_authenticated():
+        user_id = request.user.id
+        user_profile_obj = UserProfile()
+        user_profile = user_profile_obj.get_profile_by_id(str(user_id))
+        
+        user_info = UserInfo(user_id)
+        from djstripe.models import Customer
+        # Get or create the customer object
+        customer, created = Customer.get_or_create(request.user)
+
+        # If new customer, return false
+        # If existing customer but inactive return false
+        if user_info.user_type == "Business":
+            subscription_paid = False
+            try:
+                current_subscription = customer.current_subscription
+                if current_subscription.status == "active":
+                    subscription_paid = True
+            except:
+                pass
+
+            if not subscription_paid:
+                return HttpResponseRedirect("/payments/")
+    http_response = render_to_response('activity.html',get_search_parameters(request) ,context_instance=RequestContext(request))
+    return http_response
+
+
 

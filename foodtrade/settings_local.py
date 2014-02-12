@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 # app credentials
 CONSUMER_KEY = 'waBmigQf9LIqYXkhMNeMdQ'
@@ -22,10 +23,10 @@ STRIPE_SECRET_KEY = os.environ.get("STRIPE_SECRET_KEY", "sk_test_dj0ArFwwcCljH8n
 DJSTRIPE_PLANS = {
 
     "yearly": {
-        "stripe_plan_id": "pro-yearly",
-        "name": "Web App Pro ($45/year)",
+        "stripe_plan_id": "business-yearly",
+        "name": "FoodTrade Business(£45/year)",
         "description": "The annual subscription plan to FoodTrade",
-        "price": 4500,  # $19900
+        "price": 4500,  # £19900
         "currency": "gbp",
         "interval": "year"
     }
