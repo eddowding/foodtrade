@@ -204,6 +204,22 @@ tr:hover .showonhover {
   display: inline-block;
 }
 
+
+
+/********************************/
+/**  ACTIVITY PICTURE          **/
+/********************************/ 
+
+.tweet-picture {
+  margin-top: 5px;
+}
+
+.tweet-picture img {
+  width: auto;
+  max-height: 200px;
+  max-width: 100%;
+}
+
 /********************************/
 /**  FULL HEIGHT SIDEBAR       **/
 /********************************/ 
