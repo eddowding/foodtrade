@@ -149,6 +149,7 @@ def tweets(request):
 
 
             # try:
+
             #     bot_twitter.update_status(status = text, in_reply_to_status_id = tweet['id'])
             #     pass
             # except:
@@ -484,10 +485,10 @@ def create_profile_from_mention(email, location, data):
 
 
         except:
-                lat, lon, addr,postal_code = 51.5072 , -0.1275, "3 Whitehall, London SW1A 2EL, UK", "SW1 A 2EL"
-                latlng = {"type":"Point","coordinates" : [float(lon),float(lat)]}
-                signup_data['location_default_on_error'] = 'true'
-                user_address = addr
+            text = "We cannot recognise your location please try again with a postal code or from http://foodtrade.com"
+            HQ_twitter = get_twitter_obj(settings.HQ_ACCESS_TOKEN, settings.HQ_ACCESS_TOKEN_SECRET)
+            HQ_twitter.update_status(status = text, in_reply_to_status_id = data['id'])
+            return 
 
     
 
