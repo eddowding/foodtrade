@@ -56,7 +56,9 @@ class TweetFeed():
         else:
             self.db_object.update( self.table_name, { "useruid":int(user_id), "updates.tweet_id": str(tweet_id) }, {"updates.$.deleted" : 1})
 
-
+    def get_user_by_tweet(self, tweet_id):        
+        return self.db_object.get_one( self.table_name, { "updates.tweet_id": str(tweet_id) })
+        
     def get_tweet_by_user_id(self, user_id):
         return self.db_object.get_one(self.table_name,{'useruid':int(user_id), 'updates':{"$elemMatch":{'deleted':0}}})
 

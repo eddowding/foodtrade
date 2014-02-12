@@ -100,6 +100,11 @@ class AjaxHandle(AjaxSearch):
 
         prof_url = " http://"+request.META['HTTP_HOST']+"/profile/"+request.user.username
 
+        if parent_tweet_id != 0:
+            tf_obj = TweetFeed()
+            tf_user = tf_obj.get_user_by_tweet(str(parent_tweet_id))
+            parent_username = tf_user['username']
+            prof_url = " http://"+request.META['HTTP_HOST']+"/"+str(parent_username)+"/post/"+str(parent_tweet_id)
         url = shorten_url(prof_url)
 
         if message != None and message != "":
