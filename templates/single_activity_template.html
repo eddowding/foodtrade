@@ -1,3 +1,4 @@
+{% load recognise_name %}
     <li class="left clearfix singleresult {{result.result_class}}" data-id="{% if result_type == "status" %}{{result.tweetuid}} {% else %}{{result.user.username}}{% endif %}"><span class="chat-img pull-left">
     <img src="{{result.user.profile_img}}" alt="{{result.user.name}}" class="img-thumbnail" />
     </span>
@@ -53,7 +54,7 @@
             </div>
 
             <p>
-                {{result.status}}
+                {{result.status|recognise_name|safe}}
             </p>
 
               <div class="meta small text-muted">
