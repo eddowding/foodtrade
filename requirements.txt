@@ -7,7 +7,6 @@ pygeocoder
 requests
 pillow
 mailchimp
-urllib3
---index-url https://code.stripe.com --upgrade stripe
 dj-stripe
 django-floppyforms
+urllib3
