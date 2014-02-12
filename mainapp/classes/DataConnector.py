@@ -71,8 +71,12 @@ class UserConnections():
 class UserInfo():
     def __init__ (self,user_id):
         self.user_id = user_id
-        usr = User.objects.get(id=user_id)
-        self.is_superuser = usr.is_superuser
+        try:
+            usr = User.objects.get(id=user_id)
+            self.is_superuser = usr.is_superuser
+        except:
+            self.is_superuser = False
+
         user_profile = UserProfile()
         userprof = user_profile.get_profile_by_id(user_id)
         self.email = userprof['email']

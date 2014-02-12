@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+# encoding: utf-8
 # Create your views here.
 from django.shortcuts import render_to_response
 from django.http import HttpResponse, HttpResponseRedirect
@@ -17,6 +19,7 @@ from django.template import RequestContext
 import datetime
 from django.core.context_processors import csrf
 import time
+from pygeocoder import Geocoder
 from mainapp.classes.DataConnector import UserInfo
 import pprint
 from django.contrib.auth.models import User
@@ -91,14 +94,14 @@ def tweets(request):
 
     for tweet in mentions:
         try:
-            usr = SocialAccount.objects.get(uid = tweet['user']['id'])
+            user_profile = UserProfile()
+            usr = user_profile.get_profile_by_username(tweet['user']['screen_name'])
 
             pic_url_list = []
             if tweet['entities'].get('media')!= None:
                 for each in tweet['entities'].get('media'):
                     pic_url_list.append(each['media_url'])
 
-            import HTMLParser
             h = HTMLParser.HTMLParser()
             
             tweet_id = str(tweet['id'])
@@ -106,19 +109,19 @@ def tweets(request):
             tweet_feed = TweetFeed()
             data = {'tweet_id': str(tweet_id),
             'parent_tweet_id': str(parent_tweet_id),
-            'status': str(h.unescape(str(tweet['text']))),                    
+            'status': h.unescape(tweet['text']),                    
             'picture': pic_url_list,
             }          
-            tweet_feed.insert_tweet(int(usr.user.id),data)
+            tweet_feed.insert_tweet(usr['useruid'],data)
 
-            tweet_list.append(tweet['id'])
+            
             display_tweets.append(data)
         except:
             tweet_id = str(tweet['id'])
             text = "@" + tweet['user']['screen_name'] + " Thanks! Please confirm your post by clicking this http://foodtrade.com/?tweetid=" + str(tweet_id) + " You'll only have to do this once."
 
             h = HTMLParser.HTMLParser()
-            str_text = str(h.unescape(str(tweet['text'])))
+            str_text = h.unescape(tweet['text']).encode('utf-8')
 
             if "#join" in str_text:
                 str_text = str_text.lower()
@@ -149,6 +152,7 @@ def tweets(request):
             #     pass
             # except:
             #     pass
+        tweet_list.append(tweet['id'])
 
     if len(tweet_list)!=0:
         max_id.max_tweet_id = max(tweet_list)
@@ -466,31 +470,34 @@ def create_profile_from_mention(email, location, data):
     signup_data = {}
     try:
         location_res = Geocoder.geocode(location)
-        signup_data['latlng'] = {"type":"Point","coordinates":[float(location_res.longitude) ,float(location_res.latitude)]}
+        latlng = {"type":"Point","coordinates":[float(location_res.longitude) ,float(location_res.latitude)]}
         user_address = location
         postal_code = location_res.postal_code
     except:
         try:
             location_res = Geocoder.geocode(data['user']['location'])
             lat, lon, addr,postal_code = location_res.latitude, location_res.longitude, location_res.postal_code
-            signup_data['latlng'] = {"type":"Point","coordinates" : [float(lon),float(lat)]}
+            latlng = {"type":"Point","coordinates" : [float(lon),float(lat)]}
             signup_data['location_default_on_error'] = 'true'
             user_address = data['user']['location']
 
 
         except:
                 lat, lon, addr,postal_code = 51.5072 , -0.1275, "3 Whitehall, London SW1A 2EL, UK", "SW1 A 2EL"
-                signup_data['address'] = addr
-                signup_data['latlng'] = {"type":"Point","coordinates" : [float(lon),float(lat)]}
+                latlng = {"type":"Point","coordinates" : [float(lon),float(lat)]}
                 signup_data['location_default_on_error'] = 'true'
                 user_address = addr
 
     
 
+    user_profile_obj = UserProfile()
+    min_user_id = int(user_profile_obj.get_minimum_id_of_user()[0]['minId']) -1
+
     signup_data = {
             'is_unknown_profile': 'false',
             'from_mentions': 'true',
             'address' : user_address,
+            'latlng':latlng,
             'email' : email,
             'zip_code': str(postal_code),
             'description' : data['user']['description'],
@@ -503,12 +510,11 @@ def create_profile_from_mention(email, location, data):
             'updates': [],
             'screen_name': data['user']['screen_name'],
             'Organisations':[],
-            'useruid': -1,
+            'useruid': min_user_id,
             'username':data['user']['screen_name']
         }
     
-    user_profile_obj = UserProfile()
-    user_profile_obj.create_profile(data)
+    user_profile_obj.create_profile(signup_data)
 
     return {'status':1}
 

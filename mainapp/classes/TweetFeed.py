@@ -183,6 +183,9 @@ class UserProfile():
                 users.append(eachUser)
         return users
   
+    def get_minimum_id_of_user(self):
+        return self.db_object.aggregrate_all(self.table_name, [ { '$group': { '_id':0, 'minId': { '$min': "$useruid"} } } ] )
+
     def get_profile_by_id(self,user_id):
         return self.db_object.get_one(self.table_name,{'useruid': int(user_id)})
 
@@ -801,3 +804,7 @@ class UnapprovedFood():
     def update_food(self, data):
         self.db_object.update(self.table_name,{'food_name': data['food_name'], 'useruid': data['useruid'], 'deleted': 0},
          {'description':data['description'], 'food_tags': data['food_tags'], 'photo_url': data['photo_url']})
+
+
+
+
