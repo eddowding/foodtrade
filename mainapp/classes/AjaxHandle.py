@@ -34,6 +34,7 @@ class AjaxHandle(AjaxSearch):
     """docstring for AjaxHandle"""
     def __init__(self):
         pass
+        
     def create_fake_profile(self, invitee_name, username):
         '''
             This function checks if the invited user is already a member or not.Then
@@ -44,7 +45,6 @@ class AjaxHandle(AjaxSearch):
         '''
         user_profile_obj = UserProfile()
         registered_user = user_profile_obj.get_profile_by_username(invitee_name)
-
         if registered_user == None or len(registered_user) == 0:
             friend_obj = Friends()
             invited_friend = friend_obj.get_friend_from_screen_name(invitee_name.replace('@',''), username)

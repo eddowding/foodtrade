@@ -546,6 +546,7 @@ def get_all_orgs(prof_id):
     return final_organisation    
 
 from math import radians, cos, sin, asin, sqrt
+
 def distance(lon1, lat1, lon2, lat2):
     """
     Calculate the great circle distance between two points 

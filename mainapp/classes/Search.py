@@ -37,7 +37,6 @@ class UserProfile():
 
 
 class Search():
-
     """docstring for UserConnections"""
     def __init__(self, keyword="", lon = "", lat ="", place = "", foods="", business="", organisation="",sort="", search_global=False):
         self.keyword = str(keyword.strip())
@@ -49,6 +48,7 @@ class Search():
         self.organisation = organisation
         self.sort = sort
         self.search_global = search_global
+        
     def get_result_fields(self,type_result):
         if type_result == "description":
             result_type = "$useruid"
@@ -104,7 +104,7 @@ class Search():
         return [{"uid":value,"value":label} for value, label in sorted_counter]
 
 
-    def search_all(self,):
+    def search_all(self):
         statuses = self.get_search_type(0)
         profiles = self.get_search_type(1)
 
@@ -123,23 +123,15 @@ class Search():
                 return {"foods":[], "businesses":[], "organisations":[],"results":[], "business_counter":0, "organisation_counter":0, "update_counter":0}
 
 
-        
-  
-
-
         foods_list = results["foods"]
-
         foods_counter = self.item_counter(foods_list)
         results["foods"] = foods_counter
-
         businesses_list = results["businesses"]
         businesses_counter = self.item_counter(businesses_list)
         results["businesses"] = businesses_counter
-
         organisations_list = results["organisations"]
         organisations_counter = self.item_counter(organisations_list)
         results["organisations"] = organisations_counter
-
         try:
             results["business_counter"] = profiles[0]["business_count"]
             results["organisation_counter"] = profiles[0]["organisation_count"]
@@ -147,14 +139,9 @@ class Search():
             results["business_counter"] = 0
             results["organisation_counter"] = 0
         try:
-
             results["update_counter"] = statuses[0]["update_count"]
         except:
             results["update_counter"] = 0
-
-        # print len(results['results'])
-        # print json.dumps(results)
-        # print results
         return results
 
     def get_search_type(self, search_type):
@@ -476,7 +463,9 @@ class Search():
 
 
 
-
+# search_handle = Search( lon = 45, lat =45)
+# search_results = search_handle.search_all()
+# results = search_results['results'][:40]
 
 
         

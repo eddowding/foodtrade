@@ -22,8 +22,11 @@ import pprint
 from django.contrib.auth.models import User
 from mainapp.bitly import construct_invite_tweet
 from django.contrib.auth.decorators import user_passes_test
+<<<<<<< HEAD
 import HTMLParser
+=======
 from mainapp.classes.Search import Search
+>>>>>>> fd97c779d2106b2a7ee057d557b7f10e06d018fb
 
 next_cursor = -1
 ACCESS_TOKEN = ''
@@ -98,7 +101,6 @@ def tweets(request):
                 for each in tweet['entities'].get('media'):
                     pic_url_list.append(each['media_url'])
 
-            import HTMLParser
             h = HTMLParser.HTMLParser()
             
             tweet_id = str(tweet['id'])
