@@ -26,7 +26,7 @@ def aggregrate_all(conditions={}):
 
 def get_all_notification_to_send():
     aggregation_pipeline = []
-    yesterday = datetime.datetime.now() - datetime.timedelta(1)
+    yesterday = datetime.datetime.now() - datetime.timedelta(10)
     aggregation_pipeline.append({"$match":{'notification_time':{'$gt':time.mktime(yesterday.timetuple())}}})
     aggregation_pipeline.append({
         "$group":
@@ -56,7 +56,7 @@ def send_daily_email():
     conn = Connection(SERVER,PORT)
     db = conn[DB_NAME]
     notices = get_all_notification_to_send()
-
+    print notices
     full_result_set = notices[0]
     for eachMessageList in full_result_set['full_result_set']:
         notification_to_user = str(eachMessageList['notification_to'])
@@ -67,10 +67,15 @@ def send_daily_email():
 
         count = 0
         message_body = ''
+        message_body = '<table><tr><td>From</td><td>Activity</td><td>Action</td></tr>'
         for eachMessage in eachMessageList['results']:
             count += 1
-            message_body = message_body + str(count) + '. ' + eachMessage['notification_message'].split('.')[0] + '.\n\t'
+            message_body = message_body + '<tr>'
+            message_body = message_body + '<td>@' + eachMessage['notifying_user'] + '</td><td>' + eachMessage['notification_message'].split('.')[0] + '</td>'
+            message_body = message_body + '<td><a href="http://foodtrade.com/inbox">read</a><a href="http://foodtrade.com/inbox">reply</a></td>'
+            message_body = message_body + '</tr>'
 
         email_obj = Email()
-        email_obj.send_mail(to_email, subject, message_body)
+        message_body = message_body + '</table>'
+        email_obj.send_mail("brishi98@gmail.com", subject, message_body)
 send_daily_email()

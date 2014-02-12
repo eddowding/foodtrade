@@ -170,7 +170,13 @@ class UserProfile():
         self.db_object.create_table(self.table_name,'useruid')
 
     def get_all_profiles(self):
-        return self.db_object.get_all_vals(self.table_name)
+        users = []
+        user_pages_count = int(self.db_object.get_count(self.table_name)/15)+ 1
+        for i in range(0,user_pages_count, 1):
+            pag_users = self.db_object.get_paginated_values(self.table_name, pageNumber = int(i+1))
+            for eachUser in pag_users:
+                users.append(eachUser)
+        return users
   
     def get_profile_by_id(self,user_id):
         return self.db_object.get_one(self.table_name,{'useruid': int(user_id)})
@@ -225,6 +231,7 @@ class UserProfile():
             return self.db_object.update(self.table_name,
                  {'username':username},
                  data)
+
     def update_profile_upsert(self, where, what):
         return self.db_object.update_upsert(self.table_name, where, what)
 

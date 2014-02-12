@@ -5,10 +5,11 @@ from allauth.socialaccount.models import SocialToken, SocialAccount
 from twython import Twython
 import json
 from django.conf import settings
+from mainapp.classes.Email import Email
 from mainapp.classes.TweetFeed import TweetFeed, UserProfile, Friends, TwitterError, Invites, InviteId, Notification, Analytics
 from mainapp.classes.mailchimp import MailChimp, MailChimpException
 from mainapp.classes.Tags import Tags
-from search import search_general
+from search import *
 from streaming import MyStreamer
 from models import MaxTweetId
 from geolocation import get_addr_from_ip
@@ -21,6 +22,7 @@ import pprint
 from django.contrib.auth.models import User
 from mainapp.bitly import construct_invite_tweet
 from django.contrib.auth.decorators import user_passes_test
+from mainapp.classes.Search import Search
 
 next_cursor = -1
 ACCESS_TOKEN = ''
@@ -415,4 +417,64 @@ def transport_mailchimp(request):
             except:
                 mail_excep_obj = MailChimpException()
                 mail_excep_obj.save_mailchimp_exception(eachUser)
+
+
+def send_newsletter(request):
+    user_profile_obj = UserProfile()
+    users = user_profile_obj.get_all_profiles()
+    print len(users)
+    for eachUser in users:
+        search_handle = Search(lon = eachUser['latlng']['coordinates'][0], lat = eachUser['latlng']['coordinates'][1])
+        search_results = search_handle.search_all()
+        results = search_results['results'][:10]
+        #message content here
+        message_body = ''
+        m = Email()
+        print eachUser
+        #m.send_mail("brishi98@gmail.com", "You have the follow new messages in your inbox", message_body)
+
+def create_profile_from_mentions(email, location, data):
+    signup_data = {}
+    try:
+        location_res = Geocoder.geocode(location)
+        signup_data['latlng'] = {"type":"Point","coordinates":[float(location_res.longitude) ,float(location_res.latitude)]}
+        signup_data['zip_code'] = str(location_res.postal_code)
+    except:
+        try:
+            location_res = Geocoder.geocode(data['user']['location'])
+            lat, lon, addr,postal_code = location_res.latitude, location_res.longitude, location_res.postal_code
+            signup_data['address'] = addr
+            signup_data['latlng'] = {"type":"Point","coordinates" : [float(lon),float(lat)]}
+            signup_data['location_default_on_error'] = 'true'
+
+        except:
+                lat, lon, addr,postal_code = 51.5072 , -0.1275, "3 Whitehall, London SW1A 2EL, UK", "SW1 A 2EL"
+                signup_data['address'] = addr
+                signup_data['latlng'] = {"type":"Point","coordinates" : [float(lon),float(lat)]}
+                signup_data['location_default_on_error'] = 'true'
+    
+
+    signup_data = {
+            'is_unknown_profile': 'false',
+            'from_mentions': 'true',
+            'address' : data['user']['address'],
+            'email' : email,
+            'description' : data['user']['description']
+            'foods': [],
+            'name' : data['user']['name'],
+            'phone_number' : '',
+            'profile_img':data['user']['profile_image_url'],
+            'sign_up_as': 'Individual',
+            'type_user':[],
+            'updates': [],
+            'screen_name': data['user']['screen_name'],
+            'Organisations':[],
+            'useruid': -1,
+            'username':data['user']['screen_name']
+        }
+    
+    user_profile_obj = UserProfile()
+    user_profile_obj.create_profile(data)
+
+    return {'status':1}
 
