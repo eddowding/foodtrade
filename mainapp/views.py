@@ -111,7 +111,7 @@ def tweets(request):
             }          
             tweet_feed.insert_tweet(int(usr.user.id),data)
 
-            tweet_list.append(tweet['id'])
+            
             display_tweets.append(data)
         except:
             tweet_id = str(tweet['id'])
@@ -119,6 +119,7 @@ def tweets(request):
 
             h = HTMLParser.HTMLParser()
             str_text = str(h.unescape(str(tweet['text'])))
+        
 
             if "#join" in str_text:
                 str_text = str_text.lower()
@@ -149,6 +150,7 @@ def tweets(request):
             #     pass
             # except:
             #     pass
+        tweet_list.append(tweet['id'])
 
     if len(tweet_list)!=0:
         max_id.max_tweet_id = max(tweet_list)
