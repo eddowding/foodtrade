@@ -42,7 +42,3 @@ class Email():
         except:
             server.quit()
             return False
-
-
-m = Email()
-m.send_mail("sujitmhj@gmail.com","test","test")
