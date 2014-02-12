@@ -8,7 +8,7 @@ from pygeocoder import Geocoder
 from bson.code import Code
 from bson import BSON
 from bson import json_util
-
+from django.contrib.auth.models import User
 from twython import Twython
 from allauth.socialaccount.models import SocialToken, SocialAccount
 from django.http import HttpResponse, HttpResponseRedirect
@@ -50,7 +50,12 @@ class TweetFeed():
         return self.db_object.get_all(self.table_name,{'parent_tweet_id':parent_tweet_id, 'deleted':0}, 'time_stamp')
 
     def delete_tweet(self, user_id,tweet_id):
-        self.db_object.update( self.table_name, { "useruid":int(user_id), "updates.tweet_id": str(tweet_id) }, {"updates.$.deleted" : 1})
+        usr = User.objects.get(id=user_id)
+        if usr.is_superuser:
+            self.db_object.update( self.table_name, { "updates.tweet_id": str(tweet_id) }, {"updates.$.deleted" : 1})
+        else:
+            self.db_object.update( self.table_name, { "useruid":int(user_id), "updates.tweet_id": str(tweet_id) }, {"updates.$.deleted" : 1})
+
 
     def get_tweet_by_user_id(self, user_id):
         return self.db_object.get_one(self.table_name,{'useruid':int(user_id), 'updates':{"$elemMatch":{'deleted':0}}})
