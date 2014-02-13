@@ -1254,6 +1254,10 @@ ul.tagit li.tagit-choice-editable {
     color: #777777;
 }
 
+.chat li ul li {
+  list-style: none;
+}
+
 .panel .slidedown .glyphicon, .chat .glyphicon
 {
     margin-right: 5px;
