@@ -117,7 +117,7 @@ class Search():
                 profiles[0]["results"].extend(statuses[0]["results"][:30])
             results = profiles[0]
         else:
-            if len(statuses)>0: 
+            if len(statuses)>0:
                 results = statuses[0]
             else:
                 return {"foods":[], "businesses":[], "organisations":[],"results":[], "business_counter":0, "organisation_counter":0, "update_counter":0}
@@ -160,14 +160,11 @@ class Search():
             
             for search_item in search_variables:
                 or_conditions.append({search_item:reg_expression})
-
-            
-
             # Searches keyword as food
             or_conditions.append({'foods':reg_expression})
 
 
-            or_conditions.append({'businesses':reg_expression})
+            or_conditions.append({'type_user':reg_expression})
 
             
             # Only for Status
@@ -223,7 +220,7 @@ class Search():
                                     "maxDistance": 160.934,
                                     # "query": query_string,
                                     "includeLocs": "latlng",
-                                    "uniqueDocs": True,  
+                                    "uniqueDocs": True,
                                     "spherical":True,
                                     "limit":5000,
                                     "distanceMultiplier":6371
