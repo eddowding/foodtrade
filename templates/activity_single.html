@@ -1,7 +1,7 @@
 {% extends 'tbase.html' %}
 {% load staticfiles %}
 
-{% block ogtype %}{% if parent_tweet.sign_up_as == "Business" %}Profile{%endif%}{% if parent_tweet.sign_up_as == "Individual" %}Profile{%endif%}{% if parent_tweet.sign_up_as == "Organisation" %}Profile{%endif%}{% endblock %}
+{% block ogtype %}{% if parent_tweet.sign_up_as == "Business" %}business.business{%endif%}{% if parent_tweet.sign_up_as == "Individual" %}Profile{%endif%}{% if parent_tweet.sign_up_as == "Organisation" %}Profile{%endif%}{% endblock %}
 {% block titlecontent %}{{parent_tweet.status}}{% endblock %}
 {% block fblat %}{{parent_tweet.location.coordinates.1}}{% endblock %}
 {% block fblon %}{{parent_tweet.location.coordinates.0}}{% endblock %}
