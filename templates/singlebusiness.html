@@ -16,7 +16,7 @@
 {% block fbcountry %}{{userprof.country}}{% endblock %}
 {% block ogimg %}{{userprof.profileimg}}{% endblock %}
 {% block contact %}
-  {% if userprof.user_type == 'Business' or if userprof.user_type == 'Organisation'%}
+  {% if userprof.user_type == 'Business' or userprof.user_type == 'Organisation'%}
   <meta property="business:contact_data:postal_code"    content="{{userprof.zip_code}}" /> 
   <meta property="business:contact_data:country_name"   content="{{userprof.country}}" /> 
   <meta property="business:contact_data:street_address" content="{{userprof.address}}" /> 
