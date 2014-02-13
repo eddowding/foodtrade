@@ -242,8 +242,10 @@ class Search():
 
 
         if search_type == 0:
-            agg_pipeline.append({ '$match':{"updates.status":reg_expression, "updates.deleted":{"$ne":1},"updates.parent_tweet_id":"0"}})
-
+            if self.keyword != "":
+                agg_pipeline.append({ '$match':{"updates.status":reg_expression, "updates.deleted":{"$ne":1},"updates.parent_tweet_id":"0"}})
+            else:
+                agg_pipeline.append({ '$match':{"updates.deleted":{"$ne":1},"updates.parent_tweet_id":"0"}})
        
         # agg_pipeline.append({ '$match':{"updates":{"$size":0}}})
         if self.sort == "time":
