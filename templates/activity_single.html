@@ -9,9 +9,11 @@
 {% block fbcountry %}{{tweet_country}}{% endblock %}
 {% block ogimg %}{{parent_tweet.user.profile_img}}{% endblock %}
 {% block contact %}
-{% if userprof.user_type == 'Business' %}
-  <meta property="business:contact_data:postal_code"    content="{{userprof.zip_code}}" /> 
-  <meta property="business:contact_data:country_name"   content="{{userprof.country}}" /> 
+{% if parent_tweet.sign_up_as == 'Business' %}
+  <meta property="business:contact_data:street_address" content="" /> 
+  <meta property="business:contact_data:locality"       content="" /> 
+  <meta property="business:contact_data:postal_code"    content="{{parent_tweet.zip_code}}" /> 
+  <meta property="business:contact_data:country_name"   content="{{tweet_country}}" /> 
   {% endif %}
 {% endblock %}
 
