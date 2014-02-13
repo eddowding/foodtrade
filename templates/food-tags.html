@@ -42,25 +42,21 @@ We'll add merge tags later, I'm just adding the icon since I'm here.
       </div>
 </form>
 <div class="row">
-  <div class="col-md-6"><h3>Unapproved Foods</h3>
+  <div class="col-md-7"><h3>Unapproved Foods</h3>
     <p class="help-block small">Click to approve.</p>
     <div class="row">
     <div class="btn-group">
 {% for each in unapproved_foods %}
 
-    <button id="newfood_{{forloop.counter}}" class="btn btn-info" value="{{each.food_name}}" onClick="approve_food('newfood_{{forloop.counter}}', '{{each.useruid}}')">{{each.food_name}}</button>
-    {% if forloop.counter|divisibleby:"3" %}
-    <div class="clearfix"></div>
-    <div class="clearfix"></div>
-    {% endif %}
-        <!-- <li{% cycle '' '' '' ' class="clear"' %}> {{p.title}} </li>  -->
+    <button id="newfood_{{forloop.counter}}" class="btn btn-default" value="{{each.food_name}}" onClick="approve_food('newfood_{{forloop.counter}}', '{{each.useruid}}')">{{each.food_name}}</button>
+
 {% empty %}
     <p>Sorry, no unapproved foods.</p>
 {% endfor %}
 </div></div>
 </div> <!-- end col-md-6 -->
 
-    <div class="col-md-6">
+    <div class="col-md-5">
         <h3>Food Tags</h3>
         <p class="help-block small">Click to approve/disapprove.</p>
         {% for each in tags_and_foods %}

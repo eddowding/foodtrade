@@ -98,7 +98,8 @@ def fix_new_foods():
     #create master list of foods
     final_master = []
     for each in master_foods:
-        final_master.extend([str(i['node']) for i in each['childrens']])
+        if each.get('childrens')!=None:
+            final_master.extend([str(i['node']) for i in each['childrens']])
 
     aggregation_pipeline = []
     aggregation_pipeline.append({
