@@ -107,7 +107,7 @@ class TweetFeed():
 
     def update_data(self,user_id):
         food = Food()
-        f_results = food.get_foods_by_userid(user_id)
+        f_results = food.get_approved_foods_by_useruid(user_id)
         f_list = []
         for f in f_results:
             f_list.append(f['food_name'])
@@ -380,15 +380,20 @@ class Food():
         self.db_object = MongoConnection("localhost",27017,'foodtrade')
         self.table_name = 'food'
         self.db_object.create_table(self.table_name,'food_name')
+
     def get_foods_by_userid(self,useruid):
+        return self.db_object.get_all(self.table_name,{'useruid': useruid, 'deleted': 0})
+
+    def get_approved_foods_by_useruid(self, useruid):
         result = self.db_object.get_all(self.table_name,{'useruid': useruid, 'deleted': 0})
+        pprint.pprint(result)
         myfoo = UnapprovedFood()
         final_result = []
         for each in result:
-            if myfoo.get_foods_by_food_name(each['food_name'])==None:
+            unapprov = myfoo.get_foods_by_food_name(str(each['food_name']))
+            if unapprov==[]:
                 final_result.append(each)
         return final_result
-        # return self.db_object.get_all(self.table_name,{'useruid': useruid, 'deleted': 0})
 
     def get_all_foods(self, key, condition, initial, reducer):
         return self.db_object.group(self.table_name,key, condition, initial, reducer)
