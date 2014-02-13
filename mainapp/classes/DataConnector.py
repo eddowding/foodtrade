@@ -88,7 +88,7 @@ class UserInfo():
         self.address = userprof['address']
         self.type = userprof['type_user']
         try:
-            self.country = userprof['address'].split(',')[len(userprof['address'].split(','))]
+            self.country = userprof['address'].split(',')[len(userprof['address'].split(','))-1]
         except:
             self.country = ''
 
