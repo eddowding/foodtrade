@@ -205,12 +205,13 @@ def edit_profile(request, username):
                 parameters['type_user'] = ''
             parameters['address'] = userprof['address']
             
-            try:
-                parameters['first_name'] = userprof['name'].split(' ')[0]
-                parameters['last_name']  = userprof['name'].split(' ')[1]
-            except:
-                parameters['first_name']  = userprof['name']
-                parameters['last_name']  = ''
+            # try:
+            #     parameters['first_name'] = userprof['name'].split(' ')[0]
+            #     parameters['last_name']  = userprof['name'].split(' ')[1]
+            # except:
+            #     parameters['first_name']  = userprof['name']
+            #     parameters['last_name']  = ''
+            parameters['display_name'] = userprof['name']
             parameters['description'] = userprof['description']
             try:
                 parameters['phone'] = userprof['phone_number']
@@ -245,9 +246,10 @@ def edit_profile(request, username):
         deliverables = request.POST.get('deliverables') if request.POST.get('deliverables')!=None else ''
         business_org_name = request.POST.get('business_org_name') if request.POST.get('business_org_name')!=None else ''
 
-        first_name = request.POST['first_name']
-        last_name = request.POST['last_name']
-        name = first_name + " " + last_name
+        # first_name = request.POST['first_name']
+        # last_name = request.POST['last_name']
+        display_name = request.POST['display_name']
+        # name = first_name + " " + last_name
         description = request.POST['description']
         try:
             lat = request.POST['lat']
@@ -282,7 +284,7 @@ def edit_profile(request, username):
             is_superuser = False
 
         user_profile.update_profile_by_username(userprof['username'], description, address, 
-            usr_type, sign_up_as, phone, lat, lon, postal_code, name, is_superuser, company_num,
+            usr_type, sign_up_as, phone, lat, lon, postal_code, display_name, is_superuser, company_num,
             website_url, facebook_page, deliverables, business_org_name)
 
         return HttpResponseRedirect('/')

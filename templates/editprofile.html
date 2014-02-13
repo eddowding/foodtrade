@@ -22,8 +22,13 @@
   <form class="form-horizontal" name="myform" role="form" onsubmit="return validate_business_type()" method="POST" action=".">
   {% csrf_token %}
  
-    
     <div class="form-group">
+      <label for="display_name_txt" class="col-sm-2 control-label">Your Name</label>
+      <div class="col-sm-5">
+        <input type="text" id="display_name_txt" class="form-control" placeholder="Display Name" value="{{display_name}}" name="display_name">
+      </div>
+    </div>    
+    <!-- <div class="form-group">
       <label for="user_fname_txt" class="col-sm-2 control-label">First Name</label>
       <div class="col-sm-5">
         <input type="text" id="user_fname_txt" class="form-control" placeholder="First name" value="{{first_name}}" name="first_name">
@@ -35,7 +40,7 @@
       <div class="col-sm-5">
         <input type="text" id="user_lname_txt" class="form-control" placeholder="Last name" value="{{last_name}}" name="last_name">
       </div>
-    </div>
+    </div> -->
     <div class="form-group">
       <label for="username_txt" class="col-sm-2 control-label">Username</label>
       <div class="col-sm-5">
