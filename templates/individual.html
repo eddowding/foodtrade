@@ -14,7 +14,10 @@
 {% block fbzipcode %}{{userprof.zip_code}}{% endblock %}
 {% block fbcountry %}{{userprof.country}}{% endblock %}
 {% block ogimg %}{{userprof.profileimg}}{% endblock %}
-
+{% if userprof.user_type == 'Business' %}
+<meta property="business:contact_data:postal_code"    content="{{userprof.zip_code}}" /> 
+<meta property="business:contact_data:country_name"   content="{{userprof.country}}" /> 
+{% endif %}
 {% block content %}
 {% include 'modal_invite.html' %}
 <style type="text/css" media="all">
