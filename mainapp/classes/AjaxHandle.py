@@ -50,6 +50,7 @@ class AjaxHandle(AjaxSearch):
             invited_friend = friend_obj.get_friend_from_screen_name(invitee_name.replace('@',''), username)
             data = {
                 'is_unknown_profile': 'true',
+                'recently_updated_by_super_user': 'false',
                 'address' : invited_friend['friends']['location'],
                 'email' : '',
                 'description' : invited_friend['friends']['description'],

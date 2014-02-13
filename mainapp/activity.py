@@ -20,19 +20,19 @@ from django.views.decorators.csrf import csrf_exempt
 def get_time(time_val):
     time_elapsed = int(time.time()) - time_val         
     if time_elapsed<60:
-        time_text = str(time_elapsed) + 'seconds'
+        time_text = str(time_elapsed) + ' seconds'
     elif time_elapsed < 3600:
         minutes = time_elapsed/60
-        time_text = str(minutes) + 'minutes'
+        time_text = str(minutes) + ' minutes'
     elif time_elapsed < 3600*24:
         hours = time_elapsed/3600
-        time_text = str(hours) + 'hours'
+        time_text = str(hours) + ' hours'
     elif time_elapsed < 3600*24*365:
         days = time_elapsed/3600/24
-        time_text = str(days) + 'days'
+        time_text = str(days) + ' days'
     else:
         years = time_elapsed/3600/24/365
-        time_text = str(years) + 'years'
+        time_text = str(years) + ' years'
     return time_text
 
 
