@@ -34,6 +34,7 @@ class AjaxHandle(AjaxSearch):
     """docstring for AjaxHandle"""
     def __init__(self):
         pass
+        
     def create_fake_profile(self, invitee_name, username):
         '''
             This function checks if the invited user is already a member or not.Then
@@ -44,12 +45,12 @@ class AjaxHandle(AjaxSearch):
         '''
         user_profile_obj = UserProfile()
         registered_user = user_profile_obj.get_profile_by_username(invitee_name)
-
         if registered_user == None or len(registered_user) == 0:
             friend_obj = Friends()
             invited_friend = friend_obj.get_friend_from_screen_name(invitee_name.replace('@',''), username)
             data = {
                 'is_unknown_profile': 'true',
+                'recently_updated_by_super_user': 'false',
                 'address' : invited_friend['friends']['location'],
                 'email' : '',
                 'description' : invited_friend['friends']['description'],
@@ -100,6 +101,11 @@ class AjaxHandle(AjaxSearch):
 
         prof_url = " http://"+request.META['HTTP_HOST']+"/profile/"+request.user.username
 
+        if parent_tweet_id != 0:
+            tf_obj = TweetFeed()
+            tf_user = tf_obj.get_user_by_tweet(str(parent_tweet_id))
+            parent_username = tf_user['username']
+            prof_url = " http://"+request.META['HTTP_HOST']+"/"+str(parent_username)+"/post/"+str(parent_tweet_id)
         url = shorten_url(prof_url)
 
         if message != None and message != "":
@@ -652,7 +658,8 @@ class AjaxHandle(AjaxSearch):
             if task == 'delete':
             	'''Deleting a Tweet'''
                 #print change_id
-                tweet_feed_obj.delete_tweet(request.user.id,str(change_id))
+                if request.user.is_superuser or request.user.is_authenticated:
+                    tweet_feed_obj.delete_tweet(request.user.id,str(change_id))
                 return HttpResponse(json.dumps({'status':'1', 'activity':'deleteTweet', '_id':change_id}))
 
             if task == 'follow':

@@ -11,7 +11,6 @@ from datetime import datetime
 from bson.objectid import ObjectId
 import time, datetime
 from mainapp.classes.TweetFeed import TweetFeed, Food, TradeConnection, Customer, TradeConnection, UserProfile, Organisation, Team, Notification
-
 class UserConnections():
     """docstring for UserConnections"""
     def __init__(self, user_id):
@@ -72,6 +71,12 @@ class UserConnections():
 class UserInfo():
     def __init__ (self,user_id):
         self.user_id = user_id
+        try:
+            usr = User.objects.get(id=user_id)
+            self.is_superuser = usr.is_superuser
+        except:
+            self.is_superuser = False
+
         user_profile = UserProfile()
         userprof = user_profile.get_profile_by_id(user_id)
         self.email = userprof['email']
@@ -82,6 +87,10 @@ class UserInfo():
         self.zip_code = userprof['zip_code']
         self.address = userprof['address']
         self.type = userprof['type_user']
+        try:
+            self.country = userprof['address'].split(',')[len(userprof['address'].split(','))-1]
+        except:
+            self.country = ''
 
         user_connection =  UserConnections(user_id)
 

@@ -1,14 +1,21 @@
 {% extends 'tbase.html' %}
 {% load staticfiles %}
 
-{% block ogtype %}{% if parent_tweet.sign_up_as == "Business" %}Business{%endif%}{% if parent_tweet.sign_up_as == "Individual" %}Profile{%endif%}{% if parent_tweet.sign_up_as == "Organisation" %}Group{%endif%}{% endblock %}
-
+{% block ogtype %}{% if parent_tweet.sign_up_as == "Business" %}business.business{%endif%}{% if parent_tweet.sign_up_as == "Individual" %}Profile{%endif%}{% if parent_tweet.sign_up_as == "Organisation" %}business.business{%endif%}{% endblock %}
 {% block titlecontent %}{{parent_tweet.status}}{% endblock %}
 {% block fblat %}{{parent_tweet.location.coordinates.1}}{% endblock %}
 {% block fblon %}{{parent_tweet.location.coordinates.0}}{% endblock %}
 {% block fbzipcode %}{{parent_tweet.zip_code}}{% endblock %}
 {% block fbcountry %}{{tweet_country}}{% endblock %}
 {% block ogimg %}{{parent_tweet.user.profile_img}}{% endblock %}
+{% block contact %}
+  {% if parent_tweet.sign_up_as == 'Business' or parent_tweet.sign_up_as == 'Organisation'%}
+  <meta property="business:contact_data:street_address" content="{{parent_tweet.user.address}}" /> 
+  <meta property="business:contact_data:locality"       content="{{parent_tweet.user.address}}" /> 
+  <meta property="business:contact_data:postal_code"    content="{{parent_tweet.zip_code}}" /> 
+  <meta property="business:contact_data:country_name"   content="{{tweet_country}}" /> 
+  {% endif %}
+{% endblock %}
 
 {% block content %}
 {% load activity_tags %}
