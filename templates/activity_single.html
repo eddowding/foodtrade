@@ -8,10 +8,12 @@
 {% block fbzipcode %}{{parent_tweet.zip_code}}{% endblock %}
 {% block fbcountry %}{{tweet_country}}{% endblock %}
 {% block ogimg %}{{parent_tweet.user.profile_img}}{% endblock %}
+{% block contact %}
 {% if userprof.user_type == 'Business' %}
-<meta property="business:contact_data:postal_code"    content="{{userprof.zip_code}}" /> 
-<meta property="business:contact_data:country_name"   content="{{userprof.country}}" /> 
-{% endif %}
+  <meta property="business:contact_data:postal_code"    content="{{userprof.zip_code}}" /> 
+  <meta property="business:contact_data:country_name"   content="{{userprof.country}}" /> 
+  {% endif %}
+{% endblock %}
 
 {% block content %}
 {% load activity_tags %}

@@ -28,7 +28,7 @@
     <meta property="og:longitude" content="{% block fblon %}{{userinfo.lon}}{% endblock %}" />
     <meta property="og:postal-code" content="{% block fbzipcode %}{{userinfo.zip_code}}{% endblock %}" />
     <meta property="og:country-name" content="{% block fbcountry %}{{userinfo.country}}{% endblock %}" />
-
+    
     <link rel="shortcut icon" href="/static/images/favicon.ico">
     <title>FoodTrade</title>
     <!-- CSS -->
@@ -36,7 +36,8 @@
     <link href="{% static "css/foodtrade.css" %}" rel="stylesheet"> 
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places"></script>
     <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
-
+    {% block contact %}
+    {% endblock %}
 
     
    
