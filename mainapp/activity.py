@@ -17,6 +17,7 @@ from django.template import RequestContext
 
 from django.views.decorators.csrf import csrf_exempt
 
+
 def get_time(time_val):
     time_elapsed = int(time.time()) - time_val         
     if time_elapsed<60:
@@ -238,5 +239,7 @@ def get_search_parameters(request):
 
 @csrf_exempt
 def home(request): 
+    from mainapp.home import fix_new_foods
+    fix_new_foods()
     return render_to_response('activity.html',get_search_parameters(request) ,context_instance=RequestContext(request))
 

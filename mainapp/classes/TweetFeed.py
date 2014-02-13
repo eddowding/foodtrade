@@ -797,28 +797,24 @@ class UnapprovedFood():
     def create_food (self, value):
         value['deleted'] =0
         # self.db_object.insert_one(self.table_name,value)
-        self.db_object.update_upsert(self.table_name, {'food_name': value['food_name']}, {'useruid': value['useruid'], 'deleted': 0})
-        twt = TweetFeed()
-        twt.update_data(value['useruid'])
-
-    def get_food_by_uid_food_name(self, food_name, user_id):
-        return self.db_object.get_one(self.table_name, 
-            {'useruid':user_id, 'food_name':food_name})
+        self.db_object.update_upsert(self.table_name, {'food_name': value['food_name']}, {'deleted': 0})
+        # twt = TweetFeed()
+        # twt.update_data(value['useruid'])
 
     def get_foods_by_food_name(self, food_name):
         return self.db_object.get_all(self.table_name, 
             {'food_name':food_name})
 
-    def delete_food(self, useruid, food_name):
-        self.db_object.update(self.table_name,{'food_name': food_name}, {'useruid': useruid, 'deleted':1})
+    def delete_food(self, food_name):
+        self.db_object.update(self.table_name,{'food_name': food_name}, {'deleted':1})
         # also delete recommendations of the food
-        table_name = 'recommendfood'
-        self.db_object.create_table(table_name,'food_name')
-        self.db_object.update_multi(table_name,{'business_id': useruid, 'food_name': food_name}, {'deleted':1})
+        # table_name = 'recommendfood'
+        # self.db_object.create_table(table_name,'food_name')
+        # self.db_object.update_multi(table_name,{'business_id': useruid, 'food_name': food_name}, {'deleted':1})
 
-    def update_food(self, data):
-        self.db_object.update(self.table_name,{'food_name': data['food_name'], 'useruid': data['useruid'], 'deleted': 0},
-         {'description':data['description'], 'food_tags': data['food_tags'], 'photo_url': data['photo_url']})
+    # def update_food(self, data):
+    #     self.db_object.update(self.table_name,{'food_name': data['food_name'], 'useruid': data['useruid'], 'deleted': 0},
+    #      {'description':data['description'], 'food_tags': data['food_tags'], 'photo_url': data['photo_url']})
 
 class ApprovedFoodTags():
     """docstring for ApprovedFoodTags"""

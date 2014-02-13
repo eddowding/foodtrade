@@ -384,7 +384,7 @@ class AjaxHandle(AjaxSearch):
         foo = UnapprovedFood()
         data = eval(request.POST.get('data'))
         if data !=None and data !="":
-            foo.delete_food(useruid = int(data['useruid']), food_name = data['food_name']);
+            foo.delete_food(food_name = data['food_name']);
             return HttpResponse("{'status':1}")
         else:
             return HttpResponse("{'status':0}")            
