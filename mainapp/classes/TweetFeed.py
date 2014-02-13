@@ -8,7 +8,7 @@ from pygeocoder import Geocoder
 from bson.code import Code
 from bson import BSON
 from bson import json_util
-
+from django.contrib.auth.models import User
 from twython import Twython
 from allauth.socialaccount.models import SocialToken, SocialAccount
 from django.http import HttpResponse, HttpResponseRedirect
@@ -50,8 +50,15 @@ class TweetFeed():
         return self.db_object.get_all(self.table_name,{'parent_tweet_id':parent_tweet_id, 'deleted':0}, 'time_stamp')
 
     def delete_tweet(self, user_id,tweet_id):
-        self.db_object.update( self.table_name, { "useruid":int(user_id), "updates.tweet_id": str(tweet_id) }, {"updates.$.deleted" : 1})
+        usr = User.objects.get(id=user_id)
+        if usr.is_superuser:
+            self.db_object.update( self.table_name, { "updates.tweet_id": str(tweet_id) }, {"updates.$.deleted" : 1})
+        else:
+            self.db_object.update( self.table_name, { "useruid":int(user_id), "updates.tweet_id": str(tweet_id) }, {"updates.$.deleted" : 1})
 
+    def get_user_by_tweet(self, tweet_id):        
+        return self.db_object.get_one( self.table_name, { "updates.tweet_id": str(tweet_id) })
+        
     def get_tweet_by_user_id(self, user_id):
         return self.db_object.get_one(self.table_name,{'useruid':int(user_id), 'updates':{"$elemMatch":{'deleted':0}}})
 
@@ -170,8 +177,17 @@ class UserProfile():
         self.db_object.create_table(self.table_name,'useruid')
 
     def get_all_profiles(self):
-        return self.db_object.get_all_vals(self.table_name)
+        users = []
+        user_pages_count = int(self.db_object.get_count(self.table_name)/15)+ 1
+        for i in range(0,user_pages_count, 1):
+            pag_users = self.db_object.get_paginated_values(self.table_name, pageNumber = int(i+1))
+            for eachUser in pag_users:
+                users.append(eachUser)
+        return users
   
+    def get_minimum_id_of_user(self):
+        return self.db_object.aggregrate_all(self.table_name, [ { '$group': { '_id':0, 'minId': { '$min': "$useruid"} } } ] )
+
     def get_profile_by_id(self,user_id):
         return self.db_object.get_one(self.table_name,{'useruid': int(user_id)})
 
@@ -225,6 +241,7 @@ class UserProfile():
             return self.db_object.update(self.table_name,
                  {'username':username},
                  data)
+
     def update_profile_upsert(self, where, what):
         return self.db_object.update_upsert(self.table_name, where, what)
 
@@ -789,3 +806,7 @@ class UnapprovedFood():
     def update_food(self, data):
         self.db_object.update(self.table_name,{'food_name': data['food_name'], 'useruid': data['useruid'], 'deleted': 0},
          {'description':data['description'], 'food_tags': data['food_tags'], 'photo_url': data['photo_url']})
+
+
+
+

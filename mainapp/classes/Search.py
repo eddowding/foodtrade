@@ -37,10 +37,9 @@ class UserProfile():
 
 
 class Search():
-
     """docstring for UserConnections"""
     def __init__(self, keyword="", lon = "", lat ="", place = "", foods="", business="", organisation="",sort="", search_global=False):
-        self.keyword = str(keyword)
+        self.keyword = str(keyword.strip())
         self.lon = lon
         self.lat = lat
         self.place = place
@@ -49,6 +48,7 @@ class Search():
         self.organisation = organisation
         self.sort = sort
         self.search_global = search_global
+        
     def get_result_fields(self,type_result):
         if type_result == "description":
             result_type = "$useruid"
@@ -104,7 +104,7 @@ class Search():
         return [{"uid":value,"value":label} for value, label in sorted_counter]
 
 
-    def search_all(self,):
+    def search_all(self):
         statuses = self.get_search_type(0)
         profiles = self.get_search_type(1)
 
@@ -117,29 +117,21 @@ class Search():
                 profiles[0]["results"].extend(statuses[0]["results"][:30])
             results = profiles[0]
         else:
-            if len(statuses)>0: 
+            if len(statuses)>0:
                 results = statuses[0]
             else:
                 return {"foods":[], "businesses":[], "organisations":[],"results":[], "business_counter":0, "organisation_counter":0, "update_counter":0}
 
 
-        
-  
-
-
         foods_list = results["foods"]
-
         foods_counter = self.item_counter(foods_list)
         results["foods"] = foods_counter
-
         businesses_list = results["businesses"]
         businesses_counter = self.item_counter(businesses_list)
         results["businesses"] = businesses_counter
-
         organisations_list = results["organisations"]
         organisations_counter = self.item_counter(organisations_list)
         results["organisations"] = organisations_counter
-
         try:
             results["business_counter"] = profiles[0]["business_count"]
             results["organisation_counter"] = profiles[0]["organisation_count"]
@@ -147,14 +139,9 @@ class Search():
             results["business_counter"] = 0
             results["organisation_counter"] = 0
         try:
-
             results["update_counter"] = statuses[0]["update_count"]
         except:
             results["update_counter"] = 0
-
-        # print len(results['results'])
-        # print json.dumps(results)
-        # print results
         return results
 
     def get_search_type(self, search_type):
@@ -173,14 +160,11 @@ class Search():
             
             for search_item in search_variables:
                 or_conditions.append({search_item:reg_expression})
-
-            
-
             # Searches keyword as food
             or_conditions.append({'foods':reg_expression})
 
 
-            or_conditions.append({'businesses':reg_expression})
+            or_conditions.append({'type_user':reg_expression})
 
             
             # Only for Status
@@ -205,7 +189,7 @@ class Search():
 
         # for profile search
         if search_type==1:
-            and_query.append({"sign_up_as":{"$ne":"Individual"}})
+            and_query.append({"sign_up_as":{"$ne":"Individual"},"sign_up_as":{"$ne":"unclaimed"}})
 
 
         # Limit distance within 200 miles
@@ -236,7 +220,7 @@ class Search():
                                     "maxDistance": 160.934,
                                     # "query": query_string,
                                     "includeLocs": "latlng",
-                                    "uniqueDocs": True,  
+                                    "uniqueDocs": True,
                                     "spherical":True,
                                     "limit":5000,
                                     "distanceMultiplier":6371
@@ -255,8 +239,10 @@ class Search():
 
 
         if search_type == 0:
-            agg_pipeline.append({ '$match':{"updates.deleted":{"$ne":1},"updates.parent_tweet_id":"0"}})
-
+            if self.keyword != "":
+                agg_pipeline.append({ '$match':{"updates.status":reg_expression, "updates.deleted":{"$ne":1},"updates.parent_tweet_id":"0"}})
+            else:
+                agg_pipeline.append({ '$match':{"updates.deleted":{"$ne":1},"updates.parent_tweet_id":"0"}})
        
         # agg_pipeline.append({ '$match':{"updates":{"$size":0}}})
         if self.sort == "time":
@@ -476,7 +462,9 @@ class Search():
 
 
 
-
+# search_handle = Search( lon = 45, lat =45)
+# search_results = search_handle.search_all()
+# results = search_results['results'][:40]
 
 
         

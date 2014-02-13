@@ -197,37 +197,6 @@ def tweets(request):
     max_id.max_tweet_id = max(tweet_list)
     max_id.save()
 
-    ''' kaam chhaina '''
-        # print json.dumps(data, sort_keys = True, indent = 4)
-        # tweet_list.append(Twython.html_for_tweet(tweet))
-        # tweet_list.append(tweet)
-    # print tweet_list
-    # print json.dumps(mentions[0], sort_keys = True, indent = 4)
-    # parameters['tweet_list'] = mentions
-    # final_list = []
-    # # since_id should be mentions[0]['id']
-    # for each in mentions:
-    #     final_list.append({'created_at': each['created_at'],
-    #         'tweet_id': each['id'],
-    #         'parent_tweet_id': each['in_reply_to_status_id'],
-    #         'tweet_message': each['text'],
-    #         'twitter_uid': each['user']['id']
-    #         })
-    # tweet_feed = TweetFeed()
-    # # tweet_feed.insert_tweet({'parent_tweet_id': 2, 'user_id': 3, 'tweet_message': 'Hello there'})
-    # print tweet_feed.get_tweet_by_parent_id(2)
-
-    # search_results = twitter.search(q="#nepal")
-    # print search_results
-    # print json.dumps(search_results, sort_keys = True, indent = 4)
-    # search_results = search_general(twitter, hashtags = ['#Nepal'])
-    # search_results = twitter.search(q = '@SantoshGhimire ')
-    # print json.dumps(search_results, sort_keys = True, indent = 4)
-    # for result in search_results:
-    #     print result['text']
-    #     # print json.dumps(result, sort_keys = True, indent = 4)
-    # print len(search_results['statuses'])
-    # search_results = []
     parameters['tweet_list'] = mentions
     user_profile_obj = UserProfile()
     userprofile = user_profile_obj.get_profile_by_id(user_id)

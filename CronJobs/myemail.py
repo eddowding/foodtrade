@@ -28,7 +28,7 @@ class Email():
 
         body = '\r\n'.join([
                             'To: %s' % to,
-                            # 'From: %s' % sender,
+                            # # 'From: %s' % sender,
                             'X-MC-Template: %s' % "foodtrade-master|main",
                             # 'X-MC-Metadata: %s' % json.dumps(template_content),
                             'Subject: %s' % subject,

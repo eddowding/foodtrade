@@ -42,3 +42,7 @@ class Email():
         except:
             server.quit()
             return False
+<<<<<<< HEAD
+
+=======
+>>>>>>> master

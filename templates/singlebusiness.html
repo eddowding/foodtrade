@@ -7,7 +7,7 @@
 {% load account %}
 
 
-{% block ogtype %}{% if userprof.user_type == "Business" %}Business{%endif%}{% if userprof.user_type == "Individual" %}Profile{%endif%}{% if userprof.user_type == "Organisation" %}Group{%endif%}{% endblock %}
+{% block ogtype %}{% if userprof.user_type == "Business" %}business.business{%endif%}{% if userprof.user_type == "Individual" %}Profile{%endif%}{% if userprof.user_type == "Organisation" %}Profile{%endif%}{% endblock %}
 
 {% block titlecontent %}{{userprof.full_name}}{% endblock %}
 {% block fblat %}{{userprof.lat}}{% endblock %}
@@ -15,7 +15,15 @@
 {% block fbzipcode %}{{userprof.zip_code}}{% endblock %}
 {% block fbcountry %}{{userprof.country}}{% endblock %}
 {% block ogimg %}{{userprof.profileimg}}{% endblock %}
-<!-- <meta property="og:image" content="{% block imageurl %}{{userinfo.profileimg}}{% endblock %}" /> -->
+{% block contact %}
+  {% if userprof.user_type == 'Business' %}
+  <meta property="business:contact_data:postal_code"    content="{{userprof.zip_code}}" /> 
+  <meta property="business:contact_data:country_name"   content="{{userprof.country}}" /> 
+  <meta property="business:contact_data:street_address" content="{{userprof.address}}" /> 
+  <meta property="business:contact_data:locality"       content="{{userprof.address}}" /> 
+  {% endif %}
+{% endblock %}
+
 {% block content %}
 {% include 'modal_invite.html' %}
 <!-- <link rel="stylesheet" href="/static/css/docsupport/style.css"> -->
@@ -376,9 +384,9 @@
      <div class="col-md-12">
         <ul class="nav nav-tabs">
           <li class="active"><a href="#produce" data-toggle="tab">Foods <span class="badge">{{userprof.food_no}}</span></a></li>
-          <li><a href="#connections" data-toggle="tab" onclick="set_width()">Connections <span class="badge">{{userprof.trade_connections_no}}</span></a> </li>
+          <li><a href="#connections" data-toggle="tab" onclick="set_width()">Links <span class="badge">{{userprof.trade_connections_no}}</span></a> </li>
 
-          <li><a href="#organisations" data-toggle="tab">Organisation <span class="badge">{{userprof.organisation_connection_no}}</span></a></li> 
+          <li><a href="#organisations" data-toggle="tab">Orgs <span class="badge">{{userprof.organisation_connection_no}}</span></a></li> 
           <li><a href="#activity" data-toggle="tab">Updates  <span class="badge">{{updates_count}}</span></a></li>  
           <li><a href="#customers" tabindex="-1" data-toggle="tab">Customers <span class="badge">{{customers|length}}</span></a></li>
         </ul>
@@ -397,44 +405,45 @@
           <div class=" well well-sm clearfix">
 <div class="row">
             <div class="col-md-8 col-sm-8 col-xs-7">
-                      <div class="input-group">
-                      <!-- link this to open food facts --> 
-                            <!-- <input class="typeahead form-control" name="addfood" data-source='' data-provide="typeahead" autocomplete="off" id = "addfood_id" style="width:400px;" placeholder="Add foods you can buy here."> -->
-                            <div class='pull-left'>
-                            <select id="myselect" data-placeholder="Add foods you can buy here." style="height:30px; width: 192px" multiple class="chosen-select" >
-                            <option value=""></option>
+              {% if user.is_authenticated %}
+                  <div class="input-group">
+                  <!-- link this to open food facts --> 
+                        <!-- <input class="typeahead form-control" name="addfood" data-source='' data-provide="typeahead" autocomplete="off" id = "addfood_id" style="width:400px;" placeholder="Add foods you can buy here."> -->
+                        <div class='pull-left'>
+                        <select id="myselect" data-placeholder="Add foods you can buy here." style="height:30px; width: 192px" multiple class="chosen-select" >
+                        <option value=""></option>
 <!--                             {% for each in food_list %}
-                            <optgroup label={{each.node}}>
-                            {% if each.children %}
-                            {% for eachchild in each.children %}
-                            <option>{{eachchild}}</option>
-                            {% endfor %}
-                            {% else %}
-                            <option>{{each.node}}</option>
-                            {% endif %}
-                            </optgroup>
-                            {% endfor %}
- -->
-                           {% for each in all_tags %}
-                                          <optgroup label={{each.node}}>
-                                          {% if each.childrens %}
-                                          {% for eachchild in each.childrens %}
-                                          <option>{{eachchild.node}}</option>
-                                          {% endfor %}
-                                    {% else %}
-                                        <option>{{each.node}}</option>
-                              {% endif %}
-                            </optgroup>
-                            {% endfor %}
-                            </select></div>
+                        <optgroup label={{each.node}}>
+                        {% if each.children %}
+                        {% for eachchild in each.children %}
+                        <option>{{eachchild}}</option>
+                        {% endfor %}
+                        {% else %}
+                        <option>{{each.node}}</option>
+                        {% endif %}
+                        </optgroup>
+                        {% endfor %}
+-->
+                       {% for each in all_tags %}
+                          <optgroup label={{each.node}}>
+                          {% if each.childrens %}
+                          {% for eachchild in each.childrens %}
+                          <option>{{eachchild.node}}</option>
+                          {% endfor %}
+                        {% else %}
+                          <option>{{each.node}}</option>
+                        {% endif %}
+                          </optgroup>
+                        {% endfor %}
+                        </select></div>
 
-                              <div class="pull-left">
-                            <span class="input-group-btn">
-                    
-                                <button class="btn btn-success" id="adfoo_id" onClick="add_food({{profile_id}}, {{user_id}})" {% if not user.is_authenticated %} title="Please log in to use this feature." {% endif %} > Add</button>
-                            </span></div>
-                          </div>  
-                          
+                          <div class="pull-left">
+                        <span class="input-group-btn">
+                
+                            <button class="btn btn-success" id="adfoo_id" onClick="add_food({{profile_id}}, {{user_id}})" {% if not user.is_authenticated %} title="Please log in to use this feature." {% endif %} > Add</button>
+                        </span></div>
+                      </div>  
+              {% endif %}
             </div>
 
             <div class="col-md-4 col-sm-4 col-xs-5">
@@ -516,12 +525,12 @@
                    
                    {% for eachdet in eachfood.recomm_details %}
                     <div class="pull-right">
-                      <img class="pull-left tltip" style="margin:3px 4px 0 0; width:25px" src={{eachdet.photo}} title="{{eachdet.name}}"/>
+                      <img class="pull-left" style="margin:0px 4px 0 0; width:25px" src={{eachdet.photo}} title="{{eachdet.name}}"/>
                     </div>
                    {% endfor %}
                  {% ifnotequal eachfood.vouch_count 0 %}
                    <div class="pull-right">
-                     <span class="badge badge-default tltip" style="margin:6px 4px 0 0;" title="{{eachfood.vouch_count}} recommendations on {{eachfood.food_name}}">{{eachfood.vouch_count}}</span>
+                     <span class="badge badge-default tltip" style="margin:3px 4px 0 0;" title="{{eachfood.vouch_count}} recommendations on {{eachfood.food_name}}">{{eachfood.vouch_count}}</span>
                   </div>
                   {% endifnotequal %}
               
@@ -690,7 +699,7 @@
             <div class="well well-sm">  
             <div class="form-inline"  role="form">
               <div class="form-group">
-              <select id="org_chosen" data-placeholder="Type orgainsation..." class="chosen-select col-xs-4 col-sm-4" multiple>
+              <select id="org_chosen" data-placeholder="Type organisation..." class="chosen-select col-xs-4 col-sm-4" multiple>
                             <option value=""></option>
                             {% for each in all_organisation %}
                             

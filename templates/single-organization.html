@@ -7,13 +7,21 @@
 {% load account %}
 
 
-{% block ogtype %}{% if userprof.user_type == "Business" %}Business{%endif%}{% if userprof.user_type == "Individual" %}Profile{%endif%}{% if userprof.user_type == "Organisation" %}Group{%endif%}{% endblock %}
+{% block ogtype %}{% if userprof.user_type == "Business" %}business.business{%endif%}{% if userprof.user_type == "Individual" %}Profile{%endif%}{% if userprof.user_type == "Organisation" %}Profile{%endif%}{% endblock %}
 {% block titlecontent %}{{userprof.full_name}}{% endblock %}
 {% block fblat %}{{userprof.lat}}{% endblock %}
 {% block fblon %}{{userprof.lon}}{% endblock %}
 {% block fbzipcode %}{{userprof.zip_code}}{% endblock %}
 {% block fbcountry %}{{userprof.country}}{% endblock %}
 {% block ogimg %}{{userprof.profileimg}}{% endblock %}
+{% block contact %}
+  {% if userprof.user_type == 'Business' %}
+  <meta property="business:contact_data:postal_code"    content="{{userprof.zip_code}}" /> 
+  <meta property="business:contact_data:country_name"   content="{{userprof.country}}" /> 
+  <meta property="business:contact_data:street_address" content="{{userprof.address}}" /> 
+  <meta property="business:contact_data:locality"       content="{{userprof.address}}" /> 
+  {% endif %}
+{% endblock %}
 
 {% block content %}
 {% include 'modal_invite.html' %}

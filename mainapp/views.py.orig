@@ -121,9 +121,13 @@ def tweets(request):
             text = "@" + tweet['user']['screen_name'] + " Thanks! Please confirm your post by clicking this http://foodtrade.com/?tweetid=" + str(tweet_id) + " You'll only have to do this once."
 
             h = HTMLParser.HTMLParser()
+<<<<<<< HEAD
+            str_text = str(h.unescape(str(tweet['text'])))
+        
+=======
             str_text = h.unescape(tweet['text']).encode('utf-8')
-            str_text = str_text.replace("#signup","#join")
-            str_text = str_text.replace("#register","#join")
+>>>>>>> 4fbba5a0470f1ef44b528e65be967cb7069b5dbb
+
             if "#join" in str_text:
                 str_text = str_text.lower()
                 str_text = str_text.strip()
@@ -149,7 +153,6 @@ def tweets(request):
 
 
             # try:
-
             #     bot_twitter.update_status(status = text, in_reply_to_status_id = tweet['id'])
             #     pass
             # except:
@@ -334,13 +337,13 @@ def invite(request):
 
 def handle_invitation_hit(request, invite_id):
     request.session['invite_id'] = str(invite_id)
-    # analytics_obj = Analytics()
-    # analytics_obj.save({
-    #     'site_visit_time':time.mktime(datetime.datetime.now().timetuple()),
-    #     'invitation_id':str(invite_id),
-    #     'Analytics Type':'Site Visit',
-    #     'request_obj':str(request)
-    #     })
+    analytics_obj = Analytics()
+    analytics_obj.save({
+        'site_visit_time':time.mktime(datetime.datetime.now().timetuple()),
+        'invitation_id':str(invite_id),
+        'Analytics Type':'Site Visit',
+        'request_obj':str(request)
+        })
     return HttpResponseRedirect('/')
 
 def notifications(request):
@@ -485,10 +488,10 @@ def create_profile_from_mention(email, location, data):
 
 
         except:
-            text = "We cannot recognise your location please try again with a postal code or from http://foodtrade.com"
-            HQ_twitter = get_twitter_obj(settings.HQ_ACCESS_TOKEN, settings.HQ_ACCESS_TOKEN_SECRET)
-            HQ_twitter.update_status(status = text, in_reply_to_status_id = data['id'])
-            return 
+                lat, lon, addr,postal_code = 51.5072 , -0.1275, "3 Whitehall, London SW1A 2EL, UK", "SW1 A 2EL"
+                latlng = {"type":"Point","coordinates" : [float(lon),float(lat)]}
+                signup_data['location_default_on_error'] = 'true'
+                user_address = addr
 
     
 

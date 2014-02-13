@@ -204,6 +204,22 @@ tr:hover .showonhover {
   display: inline-block;
 }
 
+
+
+/********************************/
+/**  ACTIVITY PICTURE          **/
+/********************************/ 
+
+.tweet-picture {
+  margin-top: 5px;
+}
+
+.tweet-picture img {
+  width: auto;
+  max-height: 200px;
+  max-width: 100%;
+}
+
 /********************************/
 /**  FULL HEIGHT SIDEBAR       **/
 /********************************/ 
@@ -1238,6 +1254,10 @@ ul.tagit li.tagit-choice-editable {
     color: #777777;
 }
 
+.chat li ul li {
+  list-style: none;
+}
+
 .panel .slidedown .glyphicon, .chat .glyphicon
 {
     margin-right: 5px;
@@ -1539,7 +1559,7 @@ margin-bottom: 0px !important;
       border-color: #4d90fe;
       margin-left: -1px;
       padding-left: 14px;  /* Regular padding-left + 1. */
-      width: 200px;
+     
     }
     #keyword:focus {
       border-color: #4d90fe;
