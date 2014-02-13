@@ -280,7 +280,7 @@ def home(request):
 
             if not subscription_paid:
                 return HttpResponseRedirect("/payments/subscribe/")
-    http_response = render_to_response('activity.html',get_search_parameters(request) ,context_instance=RequestContext(request))
+    http_response = render_to_response('activity.html',get_search_parameters(request),context_instance=RequestContext(request))
     return http_response
 
 
