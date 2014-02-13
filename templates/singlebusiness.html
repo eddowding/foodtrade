@@ -7,7 +7,7 @@
 {% load account %}
 
 
-{% block ogtype %}{% if userprof.user_type == "Business" %}Business{%endif%}{% if userprof.user_type == "Individual" %}Profile{%endif%}{% if userprof.user_type == "Organisation" %}Group{%endif%}{% endblock %}
+{% block ogtype %}{% if userprof.user_type == "Business" %} Profile {%endif%}{% if userprof.user_type == "Individual" %}Profile{%endif%}{% if userprof.user_type == "Organisation" %}Profile{%endif%}{% endblock %}
 
 {% block titlecontent %}{{userprof.full_name}}{% endblock %}
 {% block fblat %}{{userprof.lat}}{% endblock %}
