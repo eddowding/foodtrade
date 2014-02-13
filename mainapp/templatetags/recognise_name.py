@@ -7,7 +7,6 @@ register = template.Library()
 def recognise_name(value):
     result = re.findall(r'(?<=^|(?<=[^a-zA-Z0-9-_\.]))@([A-Za-z]+[A-Za-z0-9]+)', value, re.M|re.I)
     if result:
-        print result
         for each in result:
             try:
                 usr = User.objects.get(username = str(each))

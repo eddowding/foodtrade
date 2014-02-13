@@ -4,7 +4,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from allauth.socialaccount.models import SocialToken, SocialAccount
 from twython import Twython
 import json
-from mainapp.classes.TweetFeed import TweetFeed, Invites, Notification, UserProfile, UnapprovedFood
+from mainapp.classes.TweetFeed import TweetFeed, Invites, Notification, UserProfile, UnapprovedFood, ApprovedFoodTags
 from search import search_general
 from streaming import MyStreamer
 from models import MaxTweetId
@@ -77,8 +77,8 @@ def food_pipeline():
         "results":
         {'$push':{
         "food_tags":"$food_tags",
-        "useruid": "$useruid",
-        "approved_food_tags": "$approved_food_tags"
+        "useruid": "$useruid"
+        # "approved_food_tags": "$approved_food_tags"
         }
         }}
     })
@@ -107,29 +107,32 @@ def food_tags(request):
         # aggregate pipeline to display all tags of all foods
         results = food_pipeline()
         processed_results = []
+
+        approved_tags = ApprovedFoodTags()
+        all_approved = approved_tags.get_all_approved_foods()
+
         for each in results:
             mytags = {}
             for e in each['results']:
                 t_list = e['food_tags'].split(',')
-                app_tags = e.get('approved_food_tags').split(',') if e.get('approved_food_tags')!=None else False
-                if app_tags!=False:
-                    if Counter(t_list)==Counter(app_tags):
-                        continue
+                app_tags = approved_tags.get_food_by_name(each['uid'])
+                app_tags = app_tags['tags'].split(',') if app_tags!=None else []
+                # app_tags = e.get('approved_food_tags').split(',') if e.get('approved_food_tags')!=None else False
+                # if app_tags!=None:
+                #     if Counter(t_list)==Counter(app_tags):
+                #         continue
                 for eachtts in t_list:
-                    if app_tags!=False:
+                    if app_tags!=None:
                         if eachtts not in app_tags:
                             if eachtts not in mytags.keys():
-                                mytags[eachtts] = [e['useruid']]
-                            else:
-                                mytags[eachtts].append(e['useruid'])
+                                mytags[eachtts] = 'unapproved'
+                        else:
+                            mytags[eachtts] ='approved'
                     else:
                         if eachtts not in mytags.keys():
-                            mytags[eachtts] = [e['useruid']]
-                        else:
-                            mytags[eachtts].append(e['useruid'])
+                            mytags[eachtts] = 'unapproved'
 
             processed_results.append({'food_name': each['uid'], 'results': mytags}) if mytags!={} else False
-        pprint.pprint(processed_results)
         parameters['tags_and_foods'] = processed_results
 
     foods = AdminFoods()
