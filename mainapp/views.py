@@ -93,9 +93,12 @@ def tweets(request):
     display_tweets = [] 
 
     for tweet in mentions:
+        tweet_list.append(tweet['id'])
         try:
             user_profile = UserProfile()
             usr = user_profile.get_profile_by_username(tweet['user']['screen_name'])
+            if usr['useruid'] == -1:
+                continue
 
             pic_url_list = []
             if tweet['entities'].get('media')!= None:
@@ -112,7 +115,7 @@ def tweets(request):
             'status': h.unescape(tweet['text']),                    
             'picture': pic_url_list,
             }          
-            tweet_feed.insert_tweet(usr['useruid'],data)
+            tweet_feed.insert_tweet_by_username(usr['username'],data)
 
             
             display_tweets.append(data)
@@ -154,7 +157,7 @@ def tweets(request):
             #     pass
             # except:
             #     pass
-        tweet_list.append(tweet['id'])
+        
 
     if len(tweet_list)!=0:
         max_id.max_tweet_id = max(tweet_list)
@@ -457,16 +460,14 @@ def transport_mailchimp(request):
 def send_newsletter(request):
     user_profile_obj = UserProfile()
     users = user_profile_obj.get_all_profiles()
-    print len(users)
     for eachUser in users:
         search_handle = Search(lon = eachUser['latlng']['coordinates'][0], lat = eachUser['latlng']['coordinates'][1])
         search_results = search_handle.search_all()
         results = search_results['results'][:10]
-        #message content here
-        message_body = ''
+        template_content = render_to_response('activity-email.html',results, context_instance=RequestContext(request))
+        print template_content
         m = Email()
-        print eachUser
-        #m.send_mail("brishi98@gmail.com", "You have the follow new messages in your inbox", message_body)
+        m.send_mail("You have the follow new messages in your inbox", template_content, [{'email':'brishi98@gmail.com'}])
 
 def create_profile_from_mention(email, location, data):
     signup_data = {}

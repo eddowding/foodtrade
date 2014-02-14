@@ -69,6 +69,12 @@ class TweetFeed():
         tweet['deleted'] =0
         tweet['time_stamp'] = int(time.time())
         self.db_object.update_push(self.table_name,{"useruid":int(user_id)},{"updates":tweet})
+
+    def insert_tweet_by_username(self, user_name, tweet):
+        tweet['deleted'] =0
+        tweet['time_stamp'] = int(time.time())
+        self.db_object.update_push(self.table_name,{"username":str(user_name)},{"updates":tweet})
+
         
     def get_tweet_by_user_ids(self, user_ids):
         return self.db_object.get_all(self.table_name,{"user_id": {"$in": user_ids},'deleted':0}, 'time_stamp')    
