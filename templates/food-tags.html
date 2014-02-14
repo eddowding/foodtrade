@@ -26,7 +26,7 @@ We'll add merge tags later, I'm just adding the icon since I'm here.
             <input type="text" class="form-control" id="termInput"  placeholder="Terms">
           </div> 
 
-  <button type="button" class="btn btn-sm btn-success" onclick="AddTerm('termInput')">Add term</button>
+  <button type="button" class="btn btn-sm btn-success" onclick="AddTerm('termInput')">Add food</button>
 
         </div><!-- col md 5 -->
         <div class="col-md-6">
@@ -42,31 +42,56 @@ We'll add merge tags later, I'm just adding the icon since I'm here.
       </div>
 </form>
 <div class="row">
-  <div class="col-md-6"><h3>Unapproved Foods</h3>
+  <div class="col-md-7"><h3>Unapproved Foods</h3>
     <p class="help-block small">Click to approve.</p>
+    <div class="row">
+    <!-- <div class="btn-group"> -->
+ <div class="btn-toolbar">   
 {% for each in unapproved_foods %}
-<button id="newfood_{{forloop.counter}}" class="btn btn-info" value="{{each.food_name}}" onClick="approve_food('newfood_{{forloop.counter}}', '{{each.useruid}}')">{{each.food_name}}</button>
+<div class="btn-group" id="newfood_{{forloop.counter}}">
+    <button class="btn btn-default" value="{{each.food_name}}" onClick="approve_food('newfood_{{forloop.counter}}', '{{each.useruid}}')">{{each.food_name}}
+</button>
+<button class="btn" aria-hidden="true" onclick="trash_unapproved('newfood_{{forloop.counter}}', '{{each.food_name}}')" title="Delete {{each.food_name}}">&times;</button>
+
+</div>
 {% empty %}
     <p>Sorry, no unapproved foods.</p>
 {% endfor %}
+<div class="clear" style="clear:both;"></div>
+</div>
+</div>
 </div> <!-- end col-md-6 -->
-      <div class="col-md-6">
-        <h3>Unapproved Tags</h3>
-        <p class="help-block small">Click to approve.</p>
+
+    <div class="col-md-5">
+        <h3>Food Tags</h3>
+        <p class="help-block small">Click to approve/disapprove.</p>
         {% for each in tags_and_foods %}
-          <p><strong><h4>{{each.food_name}}: </h4></strong>
+          <p><strong><h4>{{each.food_name}}: </h4></strong></p>
+            <div>
           {% for key, value in each.results.items %}
-              <button class="btn btn-default btn-sm" id="tag_{{forloop.parentloop.counter}}_{{forloop.counter}}" value="{{key}}" onClick="approve_tags('{{each.food_name}}', '{{value}}', '{{key}}', 'tag_{{forloop.parentloop.counter}}_{{forloop.counter}}');">{{key}}</button>
+
+              <div class="pull-left" data-toggle="buttons">
+
+                {% ifequal value "approved" %}
+                <label class="btn btn-default btn-sm active">
+              <input type="checkbox" checked="checked" id="tag_{{forloop.parentloop.counter}}_{{forloop.counter}}" onchange="approve_tags('{{each.food_name}}', '{{key}}', 'tag_{{forloop.parentloop.counter}}_{{forloop.counter}}')">{{key}}</label>
+              {% else %}
+              <label class="btn btn-default btn-sm">
+              <input type="checkbox" id="tag_{{forloop.parentloop.counter}}_{{forloop.counter}}" onchange="approve_tags('{{each.food_name}}', '{{key}}', 'tag_{{forloop.parentloop.counter}}_{{forloop.counter}}')">{{key}}</label>
+              {% endifequal %}
+            </div>
+            
           {% endfor %}
-          </p>
+        </div>
+        <div class="clear" style="clear:both;"></div>
         {% endfor %}
       </div>
 
 </div> <!-- row -->
 
  <div class="row">
-  <div class="col-md-6"><h3>All tags</h3></div>
-  <div class="col-md-6"><button type="button"  style="float:right;" class="btn btn-sm btn-success" onclick="SaveTagAdmin()">Save Tags</button></div> 
+  <div class="col-md-6"><h3>All Foods</h3></div>
+  <div class="col-md-6"><button type="button"  style="float:right;" class="btn btn-sm btn-success" onclick="SaveTagAdmin()">Save Foods</button></div> 
   </div> 
   
 
@@ -115,25 +140,46 @@ ZebraStrip();
   }
 });
 function approve_food(input, useruid){
-  input_val = $("#" + input).val();
-  data = {useruid: useruid, food_name: input_val}
+  // input_val = $("#" + input).val();
+  food_name = $('#newfood_1').children(":first").val();
+  data = {useruid: useruid, food_name: food_name}
   unapproved_food_list.push(data);
   AddTerm(input);
 }
 
-function approve_tags(food_name, id_list, tag, tag_element){
+function trash_unapproved(termInput, food_name){
+  data = {'food_name': food_name}
+  ajax_request("trash_unapproved_food", 'empty', {data: JSON.stringify(data)});
+  $('#'+termInput).remove();
+}
+// function approve_tags(food_name, id_list, tag, tag_element){
+  function approve_tags(food_name, tags, tag_element){
+    console.log(food_name);
+    console.log(tags);
+    console.log(tag_element);
 // console.log(food_name, id_list, tag, tag_element);
-  $('#'+tag_element).remove();
-  id_list = jQuery.parseJSON(id_list);
-  for(i=0;i<id_list.length;i++){
-    data = {food_name: food_name, useruid: id_list[i], approved_food_tags: tag};
-    ajax_request("approve_tag", 'empty', {data: JSON.stringify(data)});
+  if($('#'+ tag_element).prop('checked')){
+    data = {food_name: food_name, tags: tags, status: 'add'}
   }
+  else{
+   data = {food_name: food_name, tags: tags, status: 'delete'} 
+  }
+  ajax_request("approve_tag", 'empty', {data: JSON.stringify(data)});
+  // $('#'+tag_element).remove();
+  // id_list = jQuery.parseJSON(id_list);
+  // for(i=0;i<id_list.length;i++){
+  //   data = {food_name: food_name, useruid: id_list[i], approved_food_tags: tag};
+  //   ajax_request("approve_tag", 'empty', {data: JSON.stringify(data)});
+  // }
 }
 function AddTerm(termInput)
 {
-  
+  if (termInput.indexOf('newfood')!=-1){
+    input_val = $('#newfood_1').children(":first").val();
+  }
+  else{
   input_val = $("#" + termInput).val();
+  }
   if(input_val=="")
   {
     alert("You cannot add an empty term");

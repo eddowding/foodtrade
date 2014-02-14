@@ -22,8 +22,13 @@
   <form class="form-horizontal" name="myform" role="form" onsubmit="return validate_business_type()" method="POST" action=".">
   {% csrf_token %}
  
-    
     <div class="form-group">
+      <label for="display_name_txt" class="col-sm-2 control-label">Your Name</label>
+      <div class="col-sm-5">
+        <input type="text" id="display_name_txt" class="form-control" placeholder="Display Name" value="{{display_name}}" name="display_name">
+      </div>
+    </div>    
+    <!-- <div class="form-group">
       <label for="user_fname_txt" class="col-sm-2 control-label">First Name</label>
       <div class="col-sm-5">
         <input type="text" id="user_fname_txt" class="form-control" placeholder="First name" value="{{first_name}}" name="first_name">
@@ -34,6 +39,12 @@
       <label for="user_lname_txt" class="col-sm-2 control-label">Last Name</label>
       <div class="col-sm-5">
         <input type="text" id="user_lname_txt" class="form-control" placeholder="Last name" value="{{last_name}}" name="last_name">
+      </div>
+    </div> -->
+    <div class="form-group">
+      <label for="username_txt" class="col-sm-2 control-label">Username</label>
+      <div class="col-sm-5">
+        <input type="text" id="username_txt" class="form-control" value="{{username}}" name="username" readonly>
       </div>
     </div>
     <div class="form-group">
@@ -58,7 +69,12 @@
       </div>
 
       </div>
-      
+      <div class="form-group" id="buss_org_group">
+      <label for="buss_org_name_txt" id="buss_org_label" class="col-sm-2 control-label">Business Name</label>
+      <div class="col-sm-5">
+        <input type="text" id="buss_org_name_txt" class="form-control" placeholder="Business Name" value="{{business_org_name}}" name="business_org_name">
+      </div>
+    </div>
       <div class="form-group" id="type_user_id"> 
         <label for="id_type_user" class="col-sm-2 control-label">Business type</label>
         <div class="col-sm-5">
@@ -157,17 +173,26 @@
 
 var business_type = '{{sign_up_as}}';
 $( document ).ready(function() {
-  if('{{sign_up_as}}'!="Business"){
+  if('{{sign_up_as}}'=="Individual"){
     $('#type_user_id').toggleClass('typeempty');
     $('#company_charity').toggleClass('typeempty');
     $('#website_group').toggleClass('typeempty');
     $('#fb_page_group').toggleClass('typeempty');
     $('#deliverables_group').toggleClass('typeempty');
+    $('#buss_org_group').toggleClass('typeempty');
     /*$('#dropdown3').attr('required','flase');*/
     /*$('#dropdown3').removeAttr('required');*/
     }
-  else{
+  else if('{{sign_up_as}}'=="Organisation"){
+    $('#type_user_id').toggleClass('typeempty');
+    $('#deliverables_group').toggleClass('typeempty');
+    $('#buss_org_label').text('Organisation Name');
+    $('#buss_org_name_txt').prop('placeholder', 'Organisation Name');
     /*$('#dropdown3').attr('required','true');*/
+  }
+  else{
+    $('#buss_org_label').text('Business Name');
+    $('#buss_org_name_txt').prop('placeholder', 'Business Name');
   }
 });
 
@@ -190,6 +215,11 @@ function dataradio(value){
         if ( $('#fb_page_group').hasClass('typeempty') ){
           $('#fb_page_group').removeClass('typeempty');
         }
+        if ( $('#buss_org_group').hasClass('typeempty') ){
+          $('#buss_org_group').removeClass('typeempty');
+        }
+        $('#buss_org_label').text('Business Name');
+        $('#buss_org_name_txt').prop('placeholder', 'Business Name');
     }
     else if (value == "Organisation"){
         if (!($('#type_user_id').hasClass('typeempty'))){
@@ -207,6 +237,11 @@ function dataradio(value){
         if ( $('#fb_page_group').hasClass('typeempty') ){
           $('#fb_page_group').removeClass('typeempty');
         }
+        if ( $('#buss_org_group').hasClass('typeempty') ){
+          $('#buss_org_group').removeClass('typeempty');
+        }
+        $('#buss_org_label').text('Organisation Name');
+        $('#buss_org_name_txt').prop('placeholder', 'Organisation Name');
     }
     else{
         if (!($('#type_user_id').hasClass('typeempty'))){
@@ -223,6 +258,9 @@ function dataradio(value){
         }
         if (!($('#fb_page_group').hasClass('typeempty'))){
           $('#fb_page_group').addClass('typeempty');
+        }
+        if (!($('#buss_org_group').hasClass('typeempty'))){
+          $('#buss_org_group').addClass('typeempty');
         }
         /*$('#dropdown3').removeAttr('required');*/
     }

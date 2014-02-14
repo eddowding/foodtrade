@@ -43,9 +43,14 @@ class FoodForm(forms.Form):
             food_detail.update_food(data)
 
 class SignupForm(forms.Form):
+    display_name = forms.CharField(widget=forms.TextInput(attrs={'placeholder': u'Eg "Leonardo D. Vinci"',
+     'class' : 'form-control'})) 
 
     username = forms.CharField(widget=forms.TextInput(attrs={'placeholder': u'Username',
      'class' : 'form-control'})) 
+
+    buss_org_name = forms.CharField(required=False, widget=forms.TextInput(attrs={'placeholder': u'Business Name',
+        'class' : 'form-control'}))
 
     email = forms.EmailField(widget=forms.TextInput(attrs={'placeholder': u'Email',
      'class' : 'form-control'}))
@@ -105,7 +110,9 @@ class SignupForm(forms.Form):
                 'zip_code': str(postal_code),
                 'latlng' : {"type" : "Point", "coordinates" : [float(lon),float(lat)] },
                 'address': address,
-                'name': social_account.extra_data['name'],
+                # 'name': social_account.extra_data['name'],
+                'business_org_name': self.cleaned_data['buss_org_name'],
+                'name': self.cleaned_data['display_name'],
                 'email': str(self.cleaned_data['email']), 
                 'description': social_account.extra_data['description'],
                 'username' : user.username,

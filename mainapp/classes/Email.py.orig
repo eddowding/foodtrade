@@ -1,40 +1,30 @@
-import smtplib
-import json
+import mandrill 
 
 class Email():
     def __init__ (self):
         pass
 
-    def send_mail(self, to, subject, message):
-        sender = 'ed@foodtrade.com'
-        passwd = 'NwotnhPk1Nprc6OX0Wq6vA'
+    def send_mail(self, subject, template_content=[{}], to = [{}]):
+        # sender = 'ed@foodtrade.com'
+        # passwd = 'NwotnhPk1Nprc6OX0Wq6vA'
+        md = mandrill.Mandrill('DS3yEW4HdOzqHGXOiXGPkg')
+        mes = mandrill.Messages(md)
 
-        server = smtplib.SMTP('smtp.mandrillapp.com', 587)
-        server.ehlo()
-        server.starttls()
-        server.login(sender, passwd)
-
-        template_content = {"template_content": [
-        {
-            "name": "title",
-            "content": "<h2>Your Order is Complete</h2>"
-        },
-        {
-            "name": "main",
-            "content": "We appreciate your business. Your order information is below."
+        message ={
+            'auto_html': False,
+            'auto_text': False,
+            'to':to,
+            'from_email':'no-reply@foodtrade.com', 
+            'from_name':'FoodTrade', 
+            'important':'true',
+            'track_click':'true',
+            'subject':subject,
         }
-    ]}
-    
 
-        body = '\r\n'.join([
-                            'To: %s' % to,
-                            # 'From: %s' % sender,
-                            'X-MC-Template: %s' % "foodtrade-master|main",
-                            # 'X-MC-Metadata: %s' % json.dumps(template_content),
-                            'Subject: %s' % subject,
-                            '', message
-                            ])
-
+<<<<<<< HEAD
+        template_content = template_content
+        mes.send_template('foodtrade-master', template_content, message)
+=======
         try:
             server.sendmail(sender, [to], body)
             server.quit()
@@ -42,9 +32,6 @@ class Email():
         except:
             server.quit()
             return False
-<<<<<<< HEAD
 
 
-
-=======
->>>>>>> 957b249ed8d5faccc2931a47924d26200b2db99c
+>>>>>>> cb0d16f229608014d31f2952c0aa37f5625d46ed

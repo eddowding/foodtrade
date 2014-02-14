@@ -10,7 +10,7 @@ from mainapp.classes.TweetFeed import TweetFeed
 from mainapp.classes.Email import Email
 from Tags import Tags
 from Foods import AdminFoods
-from mainapp.classes.TweetFeed import TradeConnection, UserProfile, Food, Customer, Organisation, Team, RecommendFood, Notification, Friends, Spam, InviteId, Invites, UnapprovedFood
+from mainapp.classes.TweetFeed import TradeConnection, UserProfile, Food, Customer, Organisation, Team, RecommendFood, Notification, Friends, Spam, InviteId, Invites, UnapprovedFood, ApprovedFoodTags
 from AjaxSearch import AjaxSearch
 from pygeocoder import Geocoder
 from mainapp.profilepage import get_connections, get_all_foods, get_organisations
@@ -384,11 +384,28 @@ class AjaxHandle(AjaxSearch):
         foo = UnapprovedFood()
         data = eval(request.POST.get('data'))
         if data !=None and data !="":
-            foo.delete_food(useruid = int(data['useruid']), food_name = data['food_name']);
+            foo.delete_food(food_name = data['food_name']);
             return HttpResponse("{'status':1}")
         else:
             return HttpResponse("{'status':0}")            
 
+    def trash_unapproved_food(self, request):
+        foo = UnapprovedFood()
+        foods = Food()
+        data = eval(request.POST.get('data'))
+        if data !=None and data !="":
+            # delete from unapproved
+            foo.delete_food(food_name = data['food_name']);
+            print 'unapproved food ', data['food_name'], ' deleted'
+            all_foods = foods.get_foods_by_food_name(data['food_name'])
+            # delete all foods with this name
+            for each in all_foods:
+                foods.delete_food(food_name = each['food_name'], useruid = each['useruid']);
+                print each['useruid'] , ' user food ', each['food_name'], ' deleted'
+            return HttpResponse("{'status':1}")
+        else:
+            return HttpResponse("{'status':0}")                    
+    
     def save_tags(self, request):
         if request.user.is_authenticated():
             tags = request.POST.get('tags')
@@ -521,14 +538,22 @@ class AjaxHandle(AjaxSearch):
             return HttpResponse("{'status':0}")
 
     def approve_tag(self, request):
-        foo = Food()
+        foo = ApprovedFoodTags()
         data = eval(request.POST.get('data'))
         if data !=None and data !="":
-            myfood = foo.get_food_by_uid_food_name(data['food_name'], data['useruid'])
-            print 'new tag ', data['approved_food_tags'], ' approved !!'
-            if myfood.get('approved_food_tags') !=None:
-                data['approved_food_tags'] +=','+myfood['approved_food_tags']
-            foo.update_food(data)
+            myfood = foo.get_food_by_name(str(data['food_name']))
+            print 'new tag ', data['tags'], ' approved !!'
+            if myfood == None:
+                foo.create_food(data)
+            else:
+                if data['status'] == 'add':
+                    data['tags'] +=','+myfood['tags']
+                else:
+                    tags_list = myfood['tags'].split(',')
+                    if data['tags'] in tags_list:
+                        tags_list.remove(data['tags'])
+                        data['tags'] = ','.join(tags_list)
+                foo.update_food(data['food_name'], data['tags'])
             return HttpResponse("{'status':1}")
         else:
             return HttpResponse("{'status':0}")

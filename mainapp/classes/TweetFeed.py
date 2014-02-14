@@ -113,7 +113,7 @@ class TweetFeed():
 
     def update_data(self,user_id):
         food = Food()
-        f_results = food.get_foods_by_userid(user_id)
+        f_results = food.get_approved_foods_by_useruid(user_id)
         f_list = []
         for f in f_results:
             f_list.append(f['food_name'])
@@ -223,7 +223,7 @@ class UserProfile():
              )
 
     def update_profile_by_username(self, username, description, address, type_usr, sign_up_as, phone, lat, lon, postal_code, name, is_superuser,
-      company_num, website_url, facebook_page, deliverables):
+      company_num, website_url, facebook_page, deliverables, business_org_name):
         data = {'zip_code':str(postal_code),
                  'description':description,
                  'latlng.coordinates.1':float(lat),
@@ -236,7 +236,8 @@ class UserProfile():
                  'company_num': company_num,
                  'website_url': website_url,
                  'facebook_page': facebook_page,
-                 'deliverables': deliverables
+                 'deliverables': deliverables,
+                 'business_org_name': business_org_name
                  }
         if not is_superuser: 
             return self.db_object.update(self.table_name,
@@ -385,8 +386,19 @@ class Food():
         self.db_object = MongoConnection("localhost",27017,'foodtrade')
         self.table_name = 'food'
         self.db_object.create_table(self.table_name,'food_name')
+
     def get_foods_by_userid(self,useruid):
         return self.db_object.get_all(self.table_name,{'useruid': useruid, 'deleted': 0})
+
+    def get_approved_foods_by_useruid(self, useruid):
+        result = self.db_object.get_all(self.table_name,{'useruid': useruid, 'deleted': 0})
+        myfoo = UnapprovedFood()
+        final_result = []
+        for each in result:
+            unapprov = myfoo.get_foods_by_food_name(str(each['food_name']))
+            if unapprov==[]:
+                final_result.append(each)
+        return final_result
 
     def get_all_foods(self, key, condition, initial, reducer):
         return self.db_object.group(self.table_name,key, condition, initial, reducer)
@@ -404,11 +416,11 @@ class Food():
 
     def get_food_by_uid_food_name(self, food_name, user_id):
         return self.db_object.get_one(self.table_name, 
-            {'useruid':user_id, 'food_name':food_name})
+            {'useruid':user_id, 'food_name':food_name, 'deleted': 0})
 
     def get_foods_by_food_name(self, food_name):
         return self.db_object.get_all(self.table_name, 
-            {'food_name':food_name})
+            {'food_name':food_name, 'deleted': 0})
 
     def delete_food(self, useruid, food_name):
         self.db_object.update(self.table_name,{'useruid': useruid, 'food_name': food_name}, {'deleted':1})
@@ -790,29 +802,44 @@ class UnapprovedFood():
     def create_food (self, value):
         value['deleted'] =0
         # self.db_object.insert_one(self.table_name,value)
-        self.db_object.update_upsert(self.table_name, {'food_name': value['food_name']}, {'useruid': value['useruid'], 'deleted': 0})
-        twt = TweetFeed()
-        twt.update_data(value['useruid'])
-
-    def get_food_by_uid_food_name(self, food_name, user_id):
-        return self.db_object.get_one(self.table_name, 
-            {'useruid':user_id, 'food_name':food_name})
+        self.db_object.update_upsert(self.table_name, {'food_name': value['food_name']}, {'deleted': 0})
+        # twt = TweetFeed()
+        # twt.update_data(value['useruid'])
 
     def get_foods_by_food_name(self, food_name):
         return self.db_object.get_all(self.table_name, 
             {'food_name':food_name})
 
-    def delete_food(self, useruid, food_name):
-        self.db_object.update(self.table_name,{'food_name': food_name}, {'useruid': useruid, 'deleted':1})
+    def delete_food(self, food_name):
+        self.db_object.update(self.table_name,{'food_name': food_name}, {'deleted':1})
         # also delete recommendations of the food
-        table_name = 'recommendfood'
-        self.db_object.create_table(table_name,'food_name')
-        self.db_object.update_multi(table_name,{'business_id': useruid, 'food_name': food_name}, {'deleted':1})
+        # table_name = 'recommendfood'
+        # self.db_object.create_table(table_name,'food_name')
+        # self.db_object.update_multi(table_name,{'business_id': useruid, 'food_name': food_name}, {'deleted':1})
 
-    def update_food(self, data):
-        self.db_object.update(self.table_name,{'food_name': data['food_name'], 'useruid': data['useruid'], 'deleted': 0},
-         {'description':data['description'], 'food_tags': data['food_tags'], 'photo_url': data['photo_url']})
+    # def update_food(self, data):
+    #     self.db_object.update(self.table_name,{'food_name': data['food_name'], 'useruid': data['useruid'], 'deleted': 0},
+    #      {'description':data['description'], 'food_tags': data['food_tags'], 'photo_url': data['photo_url']})
 
+class ApprovedFoodTags():
+    """docstring for ApprovedFoodTags"""
+    def __init__(self):
+        self.db_object = MongoConnection("localhost",27017,'foodtrade')
+        self.table_name = 'approvedfoodtags'
+        self.db_object.create_table(self.table_name,'food_name')
 
+    def create_food (self, value):
+        value['deleted'] =0
+        self.db_object.update_upsert(self.table_name, {'food_name': value['food_name']}, {'tags': value['tags'],'deleted': 0})
 
+    def get_food_by_name(self, food_name):
+        return self.db_object.get_one(self.table_name, {'food_name':food_name})
 
+    def get_all_approved_foods(self):
+        return self.db_object.get_all(self.table_name, {'deleted': 0})
+
+    def update_food(self, food_name, tags):
+        self.db_object.update(self.table_name,{'food_name': food_name}, {'tags': tags, 'deleted':0})
+
+    def delete_food(self, food_name):
+        self.db_object.update(self.table_name,{'food_name': food_name}, {'deleted':1})

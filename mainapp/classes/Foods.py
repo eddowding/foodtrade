@@ -18,7 +18,7 @@ class AdminFoods():
             self.db_object.insert_one(self.table_name,val)
             return self.db_object.get_one(self.table_name,{"parent":1})['adminfoods']
 
-            return self.db_object.get_one(self.table_name,{})['adminfoods']
+            # return self.db_object.get_one(self.table_name,{})['adminfoods']
 
     def set_tags(self,adminfoods):
         try:

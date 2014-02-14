@@ -8,7 +8,7 @@ from django.http import Http404
 from mainapp.classes.TweetFeed import TweetFeed
 from geolocation import get_addr_from_ip
 from classes.DataConnector import UserInfo
-from mainapp.classes.TweetFeed import Food, TradeConnection, Customer, TradeConnection, UserProfile, Organisation, Team, RecommendFood
+from mainapp.classes.TweetFeed import Food, TradeConnection, Customer, TradeConnection, UserProfile, Organisation, Team, RecommendFood, ApprovedFoodTags
 from mainapp.classes.Tags import Tags
 from mainapp.classes.Foods import AdminFoods
 from pygeocoder import Geocoder
@@ -192,12 +192,12 @@ def edit_profile(request, username):
 
             #parameters['profile_id'] = request.user.id
             parameters['sign_up_as'] = userprof['sign_up_as']
-            
+            parameters['username'] = username
             parameters['company_num'] = userprof.get('company_num') if userprof.get('company_num')!=None else ''
             parameters['website_url'] = userprof.get('website_url') if userprof.get('website_url')!=None else ''
-            print 'website_url', parameters['website_url']
             parameters['facebook_page'] = userprof.get('facebook_page') if userprof.get('facebook_page')!=None else ''
             parameters['deliverables'] = userprof.get('deliverables') if userprof.get('deliverables')!=None else ''
+            parameters['business_org_name'] = userprof.get('business_org_name') if userprof.get('business_org_name')!=None else ''
 
             if userprof['sign_up_as'] == 'Business':
                 parameters['type_user'] = str(','.join(userprof['type_user']))
@@ -205,12 +205,13 @@ def edit_profile(request, username):
                 parameters['type_user'] = ''
             parameters['address'] = userprof['address']
             
-            try:
-                parameters['first_name'] = userprof['name'].split(' ')[0]
-                parameters['last_name']  = userprof['name'].split(' ')[1]
-            except:
-                parameters['first_name']  = userprof['name']
-                parameters['last_name']  = ''
+            # try:
+            #     parameters['first_name'] = userprof['name'].split(' ')[0]
+            #     parameters['last_name']  = userprof['name'].split(' ')[1]
+            # except:
+            #     parameters['first_name']  = userprof['name']
+            #     parameters['last_name']  = ''
+            parameters['display_name'] = userprof['name']
             parameters['description'] = userprof['description']
             try:
                 parameters['phone'] = userprof['phone_number']
@@ -243,10 +244,12 @@ def edit_profile(request, username):
         website_url = request.POST.get('website_url') if request.POST.get('website_url')!=None else ''
         facebook_page = request.POST.get('facebook_page') if request.POST.get('facebook_page')!=None else ''
         deliverables = request.POST.get('deliverables') if request.POST.get('deliverables')!=None else ''
+        business_org_name = request.POST.get('business_org_name') if request.POST.get('business_org_name')!=None else ''
 
-        first_name = request.POST['first_name']
-        last_name = request.POST['last_name']
-        name = first_name + " " + last_name
+        # first_name = request.POST['first_name']
+        # last_name = request.POST['last_name']
+        display_name = request.POST['display_name']
+        # name = first_name + " " + last_name
         description = request.POST['description']
         try:
             lat = request.POST['lat']
@@ -281,23 +284,26 @@ def edit_profile(request, username):
             is_superuser = False
 
         user_profile.update_profile_by_username(userprof['username'], description, address, 
-            usr_type, sign_up_as, phone, lat, lon, postal_code, name, is_superuser, company_num,
-            website_url, facebook_page, deliverables)
+            usr_type, sign_up_as, phone, lat, lon, postal_code, display_name, is_superuser, company_num,
+            website_url, facebook_page, deliverables, business_org_name)
 
         return HttpResponseRedirect('/')
 
 def get_tags_freq(food_name):
-    foo = Food()
-    foods_list = foo.get_foods_by_food_name(food_name)
-    all_tags = []
-    for eachfoo in foods_list:
-        if eachfoo.get('approved_food_tags')!= None:
-            all_tags.extend(eachfoo.get('approved_food_tags').split(','))
-    tags_freq = Counter(all_tags).most_common()
-    only_tags = []
-    for each in tags_freq:
-        only_tags.append(str(each[0]))
-    only_tags = ','.join(only_tags)
+    foo = ApprovedFoodTags()
+    foods_list = foo.get_food_by_name(food_name)
+    print foods_list
+    only_tags = foods_list['tags'] if foods_list!=None else ''
+    # all_tags = []
+    # for eachfoo in foods_list:
+    #     if eachfoo.get('approved_food_tags')!= None:
+    #         all_tags.extend(eachfoo.get('approved_food_tags').split(','))
+    # tags_freq = Counter(all_tags).most_common()
+    # only_tags = []
+    # for each in tags_freq:
+    #     only_tags.append(str(each[0]))
+    # only_tags = ','.join(only_tags)
+    print only_tags
     return only_tags
 
 def get_all_foods(user_id, logged_in_id = None):

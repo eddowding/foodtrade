@@ -23,3 +23,4 @@ class Email():
 
         template_content = template_content
         mes.send_template('foodtrade-master', template_content, message)
+
