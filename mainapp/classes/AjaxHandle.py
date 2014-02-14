@@ -389,6 +389,23 @@ class AjaxHandle(AjaxSearch):
         else:
             return HttpResponse("{'status':0}")            
 
+    def trash_unapproved_food(self, request):
+        foo = UnapprovedFood()
+        foods = Food()
+        data = eval(request.POST.get('data'))
+        if data !=None and data !="":
+            # delete from unapproved
+            foo.delete_food(food_name = data['food_name']);
+            print 'unapproved food ', data['food_name'], ' deleted'
+            all_foods = foods.get_foods_by_food_name(data['food_name'])
+            # delete all foods with this name
+            for each in all_foods:
+                foods.delete_food(food_name = each['food_name'], useruid = each['useruid']);
+                print each['useruid'] , ' user food ', each['food_name'], ' deleted'
+            return HttpResponse("{'status':1}")
+        else:
+            return HttpResponse("{'status':0}")                    
+    
     def save_tags(self, request):
         if request.user.is_authenticated():
             tags = request.POST.get('tags')

@@ -386,7 +386,6 @@ class Food():
 
     def get_approved_foods_by_useruid(self, useruid):
         result = self.db_object.get_all(self.table_name,{'useruid': useruid, 'deleted': 0})
-        pprint.pprint(result)
         myfoo = UnapprovedFood()
         final_result = []
         for each in result:
@@ -411,11 +410,11 @@ class Food():
 
     def get_food_by_uid_food_name(self, food_name, user_id):
         return self.db_object.get_one(self.table_name, 
-            {'useruid':user_id, 'food_name':food_name})
+            {'useruid':user_id, 'food_name':food_name, 'deleted': 0})
 
     def get_foods_by_food_name(self, food_name):
         return self.db_object.get_all(self.table_name, 
-            {'food_name':food_name})
+            {'food_name':food_name, 'deleted': 0})
 
     def delete_food(self, useruid, food_name):
         self.db_object.update(self.table_name,{'useruid': useruid, 'food_name': food_name}, {'deleted':1})

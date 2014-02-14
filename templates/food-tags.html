@@ -45,15 +45,21 @@ We'll add merge tags later, I'm just adding the icon since I'm here.
   <div class="col-md-7"><h3>Unapproved Foods</h3>
     <p class="help-block small">Click to approve.</p>
     <div class="row">
-    <div class="btn-group">
+    <!-- <div class="btn-group"> -->
+ <div class="btn-toolbar">   
 {% for each in unapproved_foods %}
+<div class="btn-group" id="newfood_{{forloop.counter}}">
+    <button class="btn btn-default" value="{{each.food_name}}" onClick="approve_food('newfood_{{forloop.counter}}', '{{each.useruid}}')">{{each.food_name}}
+</button>
+<button class="btn" aria-hidden="true" onclick="trash_unapproved('newfood_{{forloop.counter}}', '{{each.food_name}}')" title="Delete {{each.food_name}}">&times;</button>
 
-    <button id="newfood_{{forloop.counter}}" class="btn btn-default" value="{{each.food_name}}" onClick="approve_food('newfood_{{forloop.counter}}', '{{each.useruid}}')">{{each.food_name}}</button>
-
+</div>
 {% empty %}
     <p>Sorry, no unapproved foods.</p>
 {% endfor %}
-</div></div>
+<div class="clear" style="clear:both;"></div>
+</div>
+</div>
 </div> <!-- end col-md-6 -->
 
     <div class="col-md-5">
@@ -134,12 +140,18 @@ ZebraStrip();
   }
 });
 function approve_food(input, useruid){
-  input_val = $("#" + input).val();
-  data = {useruid: useruid, food_name: input_val}
+  // input_val = $("#" + input).val();
+  food_name = $('#newfood_1').children(":first").val();
+  data = {useruid: useruid, food_name: food_name}
   unapproved_food_list.push(data);
   AddTerm(input);
 }
 
+function trash_unapproved(termInput, food_name){
+  data = {'food_name': food_name}
+  ajax_request("trash_unapproved_food", 'empty', {data: JSON.stringify(data)});
+  $('#'+termInput).remove();
+}
 // function approve_tags(food_name, id_list, tag, tag_element){
   function approve_tags(food_name, tags, tag_element){
     console.log(food_name);
@@ -162,8 +174,12 @@ function approve_food(input, useruid){
 }
 function AddTerm(termInput)
 {
-  
+  if (termInput.indexOf('newfood')!=-1){
+    input_val = $('#newfood_1').children(":first").val();
+  }
+  else{
   input_val = $("#" + termInput).val();
+  }
   if(input_val=="")
   {
     alert("You cannot add an empty term");

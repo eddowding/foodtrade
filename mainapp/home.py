@@ -102,6 +102,7 @@ def fix_new_foods():
             final_master.extend([str(i['node']) for i in each['childrens']])
 
     aggregation_pipeline = []
+    aggregation_pipeline.append({"$match":{'deleted': 0}})
     aggregation_pipeline.append({
     "$group":
         {"_id": "$food_name"}
@@ -109,6 +110,7 @@ def fix_new_foods():
     mongo = MongoConnection("localhost",27017,'foodtrade')
     food_results = mongo.aggregrate_all('food', aggregation_pipeline)
 
+    
     for eachfood in food_results:
         if str(eachfood['uid']) not in final_master and str(eachfood['uid']) not in unapproved:
             new_foods.create_food({'food_name': eachfood['uid']})
