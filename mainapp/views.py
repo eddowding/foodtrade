@@ -463,11 +463,13 @@ def send_newsletter(request):
     for eachUser in users:
         search_handle = Search(lon = eachUser['latlng']['coordinates'][0], lat = eachUser['latlng']['coordinates'][1])
         search_results = search_handle.search_all()
-        results = search_results['results'][:10]
-        template_content = render_to_response('activity-email.html',results, context_instance=RequestContext(request))
-        print template_content
+        results = search_results['results'][:5]
+        tem_con = str(render_to_response('activity-email.html',{'results':results}, context_instance=RequestContext(request)))
+        tem_con = tem_con.replace('Content-Type: text/html; charset=utf-8', '')
         m = Email()
-        m.send_mail("You have the follow new messages in your inbox", template_content, [{'email':'brishi98@gmail.com'}])
+        m.send_mail("Test Activity News Letter", [{'name':'main', 'content':tem_con}], [{'email':'ed@foodtrade.com'}])
+        break
+    return HttpResponse(json.dumps({'status':'1'}))        
 
 def create_profile_from_mention(email, location, data):
     signup_data = {}
