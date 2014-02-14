@@ -223,13 +223,13 @@ def get_search_parameters(request):
 
     business_filters_temp = []
     for f in business_filters:        
-
         if f["uid"]=="":
             continue
         else:
             business_filters_count = business_filters_count + f['value']
         if (f["uid"] == biz_request or f["uid"].lower() == keyword) and f["uid"]!="":
             f["prev"] = True
+
 
         business_filters_temp.append(f)
     business_filters = business_filters_temp
@@ -264,22 +264,29 @@ def home(request):
         
         user_info = UserInfo(user_id)
         from djstripe.models import Customer
-        # Get or create the customer object
+
         customer, created = Customer.get_or_create(request.user)
+        if created:
+            return redirect("djstripe:subscribe")
 
-        # If new customer, return false
-        # If existing customer but inactive return false
-        if user_info.user_type == "Business":
-            subscription_paid = False
-            try:
-                current_subscription = customer.current_subscription
-                if current_subscription.status == "active":
-                    subscription_paid = True
-            except:
-                pass
+        if not customer.has_active_subscription():
+            return redirect("djstripe:subscribe")
+        # Get or create the customer object
+        # customer, created = Customer.get_or_create(request.user)
 
-            if not subscription_paid:
-                return HttpResponseRedirect("/payments/subscribe/")
+        # # If new customer, return false
+        # # If existing customer but inactive return false
+        # if user_info.user_type == "Business":
+        #     subscription_paid = False
+        #     try:
+        #         current_subscription = customer.current_subscription
+        #         if current_subscription.status == "active":
+        #             subscription_paid = True
+        #     except:
+        #         pass
+
+        #     if not subscription_paid:
+        #         return HttpResponseRedirect("/payments/subscribe/")
     http_response = render_to_response('activity.html',get_search_parameters(request),context_instance=RequestContext(request))
     return http_response
 
