@@ -60,6 +60,11 @@ urlpatterns = patterns("",
         views.HistoryView.as_view(),
         name="admin_panel"
     ),
+    url(
+        r"^apply_coupon$",
+        views.ApplyCoupon.as_view(),
+        name="apply_coupon"
+    ),
 
 
     # Web services

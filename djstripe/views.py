@@ -102,6 +102,49 @@ class StripeAdminView(LoginRequiredMixin, PaymentsContextMixin, DetailView):
         return redirect("djstripe:account")
 
 
+class ApplyCoupon(LoginRequiredMixin, PaymentsContextMixin, DetailView):
+    # TODO - needs tests
+    # Needs a form
+    # Not done yet
+    template_name = "djstripe/stripe_admin.html"
+
+    def get_object(self):
+        if hasattr(self, "customer"):
+            return self.customer
+        self.customer, created = Customer.get_or_create(self.request.user)
+        return self.customer
+
+    def post(self, request, *args, **kwargs):
+        customer = self.get_object()
+        try:
+            coupon = request.POST.get("coupon","")
+
+            if coupon!="":
+                cus = self.get_object()
+                cus.stripe_id
+
+
+            send_invoice = customer.card_fingerprint == ""
+            customer.update_card(
+                request.POST.get("stripe_token")
+            )
+            if send_invoice:
+                customer.send_invoice()
+            customer.retry_unpaid_invoices()
+        except stripe.CardError as e:
+            messages.info(request, "Stripe Error")
+            return render(
+                request,
+                self.template_name,
+                {
+                    "customer": self.get_object(),
+                    "stripe_error": e.message
+                }
+            )
+        messages.info(request, "Your card is now updated.")
+        return redirect("djstripe:account")
+
+
 class CancelSubscriptionView(LoginRequiredMixin, PaymentsContextMixin, FormView):
     # TODO - needs tests
     template_name = "djstripe/cancel_subscription.html"
