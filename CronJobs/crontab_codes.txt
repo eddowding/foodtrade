@@ -1,0 +1,2 @@
+ 0 15 * * * /srv/www/live/foodtrade-env/foodtrade/CronJobs/daily.sh
+ 0 15 5 * * /srv/www/live/foodtrade-env/foodtrade/CronJobs/weekly.sh
