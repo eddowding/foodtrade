@@ -68,11 +68,9 @@ def send_daily_email():
         json_doc = json.dumps(list(to),default=json_util.default)
         subject = 'You have message in your Foodtrade Inbox.'
 
-        count = 0
         message_body = ''
         message_body = '<table><tr><td>From</td><td>Activity</td><td>Action</td></tr>'
         for eachMessage in eachMessageList['results']:
-            count += 1
             message_body = message_body + '<tr>'
             message_body = message_body + '<td>@' + eachMessage['notifying_user'] + '</td><td>' + eachMessage['notification_message'].split('.')[0] + '</td>'
             message_body = message_body + '<td><a href="http://foodtrade.com/inbox">reply</a></td>'

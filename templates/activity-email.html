@@ -2,13 +2,13 @@
 <h1 style="text-align:center">Foodtrade activities going around you</h1>
 {% for result in results %}
 
-    <li class="left clearfix singleresult" data-id="{% if result_type == "status" %}{{result.tweetuid}} {% else %}{{result.user.username}}{% endif %}">
+    <li  data-id="{% if result_type == "status" %}{{result.tweetuid}} {% else %}{{result.user.username}}{% endif %}">
     <span class="chat-img float: left !important;">
-    <img src="{{result.user.profile_img}}" alt="{{result.user.name}}" class="img-thumbnail" />
+    <img src="{{result.user.profile_img}}" alt="{{result.user.name}}"  />
     </span>
-        <div class="chat-body clearfix">  
+        <div>  
             <div class="header">
-                <strong class="pull-left" style="margin-right: 10px;"><a href="http://foodtrade.com/profile/{{result.user.username}}">{{result.user.name}}</a></strong> 
+                <strong style="margin-right: 10px;"><a href="http://foodtrade.com/profile/{{result.user.username}}">{{result.user.name}}</a></strong> 
 
           {% if type_user|length == 0 or type_user|first == '' %}
           {% else %}
@@ -26,7 +26,7 @@
                 {{result.status|recognise_name|safe}}
             </p>
 
-              <div class="meta small text-muted">
+              <div>
                 <span class="hidden-sm hidden-xs">
                   <i class="fa fa-map-marker"></i>
                   {{result.user.address}}

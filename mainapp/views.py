@@ -104,9 +104,7 @@ def tweets(request):
             if tweet['entities'].get('media')!= None:
                 for each in tweet['entities'].get('media'):
                     pic_url_list.append(each['media_url'])
-
             h = HTMLParser.HTMLParser()
-            
             tweet_id = str(tweet['id'])
             parent_tweet_id = 0 if tweet['in_reply_to_status_id'] == None else tweet['in_reply_to_status_id']
             tweet_feed = TweetFeed()
@@ -148,16 +146,6 @@ def tweets(request):
                     str_text = str_text.replace(user_email, "")
                     location = str_text.strip()
                     create_profile_from_mention(user_email, location, tweet)
-
-
-
-            # try:
-
-            #     bot_twitter.update_status(status = text, in_reply_to_status_id = tweet['id'])
-            #     pass
-            # except:
-            #     pass
-        
 
     if len(tweet_list)!=0:
         max_id.max_tweet_id = max(tweet_list)
@@ -457,9 +445,12 @@ def transport_mailchimp(request):
                 mail_excep_obj.save_mailchimp_exception(eachUser)
 
 
-def send_newsletter(request):
+def send_newsletter(request, substype):
     user_profile_obj = UserProfile()
-    users = user_profile_obj.get_all_profiles()
+    if substype == 'subscribed':
+        users = user_profile_obj.get_all_profiles('subscribed')
+    elif substype == 'non':
+        users = user_profile_obj.get_all_profiles('unsubscribed')
     for eachUser in users:
         search_handle = Search(lon = eachUser['latlng']['coordinates'][0], lat = eachUser['latlng']['coordinates'][1])
         search_results = search_handle.search_all()['results']
@@ -477,7 +468,7 @@ def send_newsletter(request):
         m = Email()
         m.send_mail("Test Activity News Letter", [{'name':'main', 'content':tem_con}], [{'email':'brishi98@gmail.com'}])
         break
-    return HttpResponse(json.dumps({'status':'1'}))        
+    return HttpResponse(json.dumps({'status':'1'}))
 
 def create_profile_from_mention(email, location, data):
     signup_data = {}
