@@ -449,6 +449,7 @@ def transport_mailchimp(request):
 def sms_receiver(request):
     # message = request.POST.get('message')
     print request
+    return HttpResponse("test")
     # eml = Email()
     # eml.send_mail("sujitmhj@gmail.com", "request.post", json.dumps(request.POST))
 
