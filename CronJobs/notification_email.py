@@ -26,7 +26,7 @@ def aggregrate_all(conditions={}):
 
 def get_all_notification_to_send():
     aggregation_pipeline = []
-    yesterday = datetime.datetime.now() - datetime.timedelta(1)
+    yesterday = datetime.datetime.now() - datetime.timedelta(5)
     aggregation_pipeline.append({"$match":{'notification_time':{'$gt':time.mktime(yesterday.timetuple())}}})
     aggregation_pipeline.append({"$match":{'notification_type':'Added Food'}})
     aggregation_pipeline.append({
@@ -68,18 +68,15 @@ def send_daily_email():
         json_doc = json.dumps(list(to),default=json_util.default)
         subject = 'You have message in your Foodtrade Inbox.'
 
-        count = 0
         message_body = ''
-        message_body = '<table><tr><td>From</td><td>Activity</td><td>Action</td></tr>'
+        message_body = '<table><tr style="background-color:green;"><td style="width:30%;">From</td><tdstyle="width:50%;">Activity</td><td style="width:20%;">Action</td></tr>'
         for eachMessage in eachMessageList['results']:
-            count += 1
             message_body = message_body + '<tr>'
-            message_body = message_body + '<td>@' + eachMessage['notifying_user'] + '</td><td>' + eachMessage['notification_message'].split('.')[0] + '</td>'
-            message_body = message_body + '<td><a href="http://foodtrade.com/inbox">reply</a></td>'
+            message_body = message_body + '<td style="width:30%;">@' + eachMessage['notifying_user'] + '</td><td style="width:50%;">' + eachMessage['notification_message'].split('.')[0] + '</td>'
+            message_body = message_body + '<td style="width:20%;"><a href="http://foodtrade.com/inbox">reply</a></td>'
             message_body = message_body + '</tr>'
         email_obj = Email()
         message_body = message_body + '</table>'
-        print message_body
         email_obj.send_mail(
             subject, 
             [{'name':'main', 'content':message_body},{'name':'inbox','content':'''<p>Please check your inbox for more details by clicking the following link</p><p><a href="http://foodtrade.com/inbox">My Foodtrade Inbox. </a></p>'''}], 
