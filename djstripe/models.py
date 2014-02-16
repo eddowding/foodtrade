@@ -309,13 +309,48 @@ class TransferChargeFee(TimeStampedModel):
     kind = models.CharField(max_length=150)
 
 
-class Customer(StripeObject):
 
+
+class Coupon(StripeObject):
+    percent_off = models.DecimalField(decimal_places=2, max_digits=4),
+    duration= models.CharField(max_length=4, blank=True),
+    duration_in_months = 3,
+    coupon_id = models.CharField(max_length=8, blank=True)
+
+    objects = CustomerManager()
+
+    def __unicode__(self):
+        return unicode(self.coupon_id)
+
+    def create_coupon():
+        try:
+            stripe.Coupon.create(
+                  percent_off = int(self.percent_off),
+                  duration= self.duration,
+                  duration_in_months = int(self.duration_in_months),
+                  id = self.coupon_id)
+            return True
+        except:
+            return False
+
+
+    def delete_coupon():
+        try:
+            cpn = stripe.Coupon.retrieve(self.coupon_id)
+            cpnself.delete()
+            return True
+        except:
+            return False
+        
+    
+
+class Customer(StripeObject):
     user = models.OneToOneField(getattr(settings, 'AUTH_USER_MODEL', 'auth.User'), null=True)
     card_fingerprint = models.CharField(max_length=200, blank=True)
     card_last_4 = models.CharField(max_length=4, blank=True)
     card_kind = models.CharField(max_length=50, blank=True)
     date_purged = models.DateTimeField(null=True, editable=False)
+    coupon = models.ForeignKey(Coupon, null=True)
 
     objects = CustomerManager()
 
