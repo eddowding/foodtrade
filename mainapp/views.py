@@ -448,64 +448,75 @@ def transport_mailchimp(request):
 
 def sms_receiver(request):
     # message = request.POST.get('message')
-    print request
-    return HttpResponse("test")
-    # eml = Email()
-    # eml.send_mail("sujitmhj@gmail.com", "request.post", json.dumps(request.POST))
-
-#     user_profile = UserProfile()
-#     usr = user_profile.get_profile_by_username(tweet['user']['screen_name'])
-#     if usr['useruid'] == -1:
-#         continue
-
-#     pic_url_list = []
-#     if tweet['entities'].get('media')!= None:
-#         for each in tweet['entities'].get('media'):
-#             pic_url_list.append(each['media_url'])
-
-#     h = HTMLParser.HTMLParser()
+    body = request.GET.get('Body',"")
+    msg_from = request.GET.get('From','')   
+    from twilio.rest import TwilioRestClient 
+ 
     
-#     tweet_id = str(tweet['id'])
-#     parent_tweet_id = 0 if tweet['in_reply_to_status_id'] == None else tweet['in_reply_to_status_id']
-#     tweet_feed = TweetFeed()
-#     data = {'tweet_id': str(tweet_id),
-#     'parent_tweet_id': str(parent_tweet_id),
-#     'status': h.unescape(tweet['text']),                    
-#     'picture': pic_url_list,
-#     }          
-#     tweet_feed.insert_tweet_by_username(usr['username'],data)
+    user_profile = UserProfile()
 
-    
-#     display_tweets.append(data)
-# except:
-#     tweet_id = str(tweet['id'])
-#     text = "@" + tweet['user']['screen_name'] + " Thanks! Please confirm your post by clicking this http://foodtrade.com/?tweetid=" + str(tweet_id) + " You'll only have to do this once."
-
-#     h = HTMLParser.HTMLParser()
-#     str_text = h.unescape(tweet['text']).encode('utf-8')
-#     str_text = str_text.replace("#signup","#join")
-#     str_text = str_text.replace("#register","#join")
-#     if "#join" in str_text:
-#         str_text = str_text.lower()
-#         str_text = str_text.strip()
-#         str_text = str_text.replace('@foodtradehq',"")
-#         str_text = str_text.strip()
-#         str_text = str_text.replace("#join","")
-#         str_text = str_text.strip()
-#         import re
-         
-#         regex = re.compile(("([a-z0-9!#$%&'*+\/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+\/=?^_`"
-#                             "{|}~-]+)*(@|\sat\s)(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?(\.|"
-#                             "\sdot\s))+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?)"))
-
-#         user_emails = re.findall(regex, str_text)
+    try:
+        usr = user_profile.get_profile_by_username(msg_from)
+        if usr['useruid'] == -1:
+            continue
 
 
-#         if len(user_emails)>0:
-#             user_email = user_emails[0][0]
-#             str_text = str_text.replace(user_email, "")
-#             location = str_text.strip()
-#             create_profile_from_mention(user_email, location, tweet)
+
+        pic_url_list = []
+        if tweet['entities'].get('media')!= None:
+            for each in tweet['entities'].get('media'):
+                pic_url_list.append(each['media_url'])
+
+        h = HTMLParser.HTMLParser()
+        
+        tweet_id = str(tweet['id'])
+        parent_tweet_id = 0 if tweet['in_reply_to_status_id'] == None else tweet['in_reply_to_status_id']
+        tweet_feed = TweetFeed()
+        data = {'tweet_id': str(tweet_id),
+        'parent_tweet_id': str(parent_tweet_id),
+        'status': h.unescape(tweet['text']),                    
+        'picture': pic_url_list,
+        }          
+        tweet_feed.insert_tweet_by_username(usr['username'],data)
+
+        
+        display_tweets.append(data)
+    except:
+        tweet_id = str(tweet['id'])
+        
+        h = HTMLParser.HTMLParser()
+        str_text = body
+        if "#join" in str_text:
+            str_text = str_text.lower()
+            str_text = str_text.strip()
+            str_text = str_text.strip()
+            str_text = str_text.replace("#join","")
+            str_text = str_text.strip()
+            import re
+             
+            regex = re.compile(("([a-z0-9!#$%&'*+\/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+\/=?^_`"
+                                "{|}~-]+)*(@|\sat\s)(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?(\.|"
+                                "\sdot\s))+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?)"))
+
+            user_emails = re.findall(regex, str_text)
+
+
+            if len(user_emails)>0:
+                user_email = user_emails[0][0]
+                str_text = str_text.replace(user_email, "")
+                location = str_text.strip()
+                create_profile_from_mention(user_email, location, tweet)
+                # put your own credentials here 
+                ACCOUNT_SID = "ACc54d95fd16aa5e6e35dbe60d44f3cc94" 
+                AUTH_TOKEN = "69e49be54014f34904e5c08715e0791e" 
+                 
+                client = TwilioRestClient(ACCOUNT_SID, AUTH_TOKEN) 
+                 
+                client.messages.create(
+                    to=msg_from, 
+                    from_="+442380000486", 
+                    body="You have joined FoodTrade",  
+                )
 
 
 
