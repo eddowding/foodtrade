@@ -21,6 +21,22 @@ class Email():
             'subject':subject,
         }
 
+<<<<<<< HEAD
         template_content = template_content
         mes.send_template('foodtrade-master', template_content, message)
+=======
+        try:
+            server.sendmail(sender, [to], body)
+            server.quit()
+            return True
+        except:
+            server.quit()
+            return False
 
+<<<<<<< HEAD
+=======
+>>>>>>> master
+=======
+
+>>>>>>> cb0d16f229608014d31f2952c0aa37f5625d46ed
+>>>>>>> 02fb4592d215c02a3d24730515a7f736d60ea3b4

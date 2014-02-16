@@ -26,8 +26,9 @@ def aggregrate_all(conditions={}):
 
 def get_all_notification_to_send():
     aggregation_pipeline = []
-    yesterday = datetime.datetime.now() - datetime.timedelta(10)
+    yesterday = datetime.datetime.now() - datetime.timedelta(5)
     aggregation_pipeline.append({"$match":{'notification_time':{'$gt':time.mktime(yesterday.timetuple())}}})
+    aggregation_pipeline.append({"$match":{'notification_type':'Added Food'}})
     aggregation_pipeline.append({
         "$group":
             {"_id": "$notification_to", 
@@ -56,8 +57,10 @@ def send_daily_email():
     conn = Connection(SERVER,PORT)
     db = conn[DB_NAME]
     notices = get_all_notification_to_send()
-    print notices
-    full_result_set = notices[0]
+    try:
+        full_result_set = notices[0]
+    except:
+        return
     for eachMessageList in full_result_set['full_result_set']:
         notification_to_user = str(eachMessageList['notification_to'])
         
@@ -65,17 +68,17 @@ def send_daily_email():
         json_doc = json.dumps(list(to),default=json_util.default)
         subject = 'You have message in your Foodtrade Inbox.'
 
-        count = 0
         message_body = ''
-        message_body = '<table><tr><td>From</td><td>Activity</td><td>Action</td></tr>'
+        message_body = '<table><tr style="background-color:green;"><td style="width:30%;">From</td><tdstyle="width:50%;">Activity</td><td style="width:20%;">Action</td></tr>'
         for eachMessage in eachMessageList['results']:
-            count += 1
             message_body = message_body + '<tr>'
-            message_body = message_body + '<td>@' + eachMessage['notifying_user'] + '</td><td>' + eachMessage['notification_message'].split('.')[0] + '</td>'
-            message_body = message_body + '<td><a href="http://foodtrade.com/inbox">read</a><a href="http://foodtrade.com/inbox">reply</a></td>'
+            message_body = message_body + '<td style="width:30%;">@' + eachMessage['notifying_user'] + '</td><td style="width:50%;">' + eachMessage['notification_message'].split('.')[0] + '</td>'
+            message_body = message_body + '<td style="width:20%;"><a href="http://foodtrade.com/inbox">reply</a></td>'
             message_body = message_body + '</tr>'
-
         email_obj = Email()
         message_body = message_body + '</table>'
-        email_obj.send_mail("brishi98@gmail.com", subject, message_body)
+        email_obj.send_mail(
+            subject, 
+            [{'name':'main', 'content':message_body},{'name':'inbox','content':'''<p>Please check your inbox for more details by clicking the following link</p><p><a href="http://foodtrade.com/inbox">My Foodtrade Inbox. </a></p>'''}], 
+            [{'email':'brishi98@gmail.com'}])
 send_daily_email()

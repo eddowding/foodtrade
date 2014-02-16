@@ -93,17 +93,18 @@ def tweets(request):
     display_tweets = [] 
 
     for tweet in mentions:
+        tweet_list.append(tweet['id'])
         try:
             user_profile = UserProfile()
             usr = user_profile.get_profile_by_username(tweet['user']['screen_name'])
+            if usr['useruid'] == -1:
+                continue
 
             pic_url_list = []
             if tweet['entities'].get('media')!= None:
                 for each in tweet['entities'].get('media'):
                     pic_url_list.append(each['media_url'])
-
             h = HTMLParser.HTMLParser()
-            
             tweet_id = str(tweet['id'])
             parent_tweet_id = 0 if tweet['in_reply_to_status_id'] == None else tweet['in_reply_to_status_id']
             tweet_feed = TweetFeed()
@@ -112,7 +113,7 @@ def tweets(request):
             'status': h.unescape(tweet['text']),                    
             'picture': pic_url_list,
             }          
-            tweet_feed.insert_tweet(usr['useruid'],data)
+            tweet_feed.insert_tweet_by_username(usr['username'],data)
 
             
             display_tweets.append(data)
@@ -145,16 +146,6 @@ def tweets(request):
                     str_text = str_text.replace(user_email, "")
                     location = str_text.strip()
                     create_profile_from_mention(user_email, location, tweet)
-
-
-
-            # try:
-
-            #     bot_twitter.update_status(status = text, in_reply_to_status_id = tweet['id'])
-            #     pass
-            # except:
-            #     pass
-        tweet_list.append(tweet['id'])
 
     if len(tweet_list)!=0:
         max_id.max_tweet_id = max(tweet_list)
@@ -454,19 +445,30 @@ def transport_mailchimp(request):
                 mail_excep_obj.save_mailchimp_exception(eachUser)
 
 
-def send_newsletter(request):
+def send_newsletter(request, substype):
     user_profile_obj = UserProfile()
-    users = user_profile_obj.get_all_profiles()
-    print len(users)
+    if substype == 'subscribed':
+        users = user_profile_obj.get_all_profiles('subscribed')
+    elif substype == 'non':
+        users = user_profile_obj.get_all_profiles('unsubscribed')
     for eachUser in users:
         search_handle = Search(lon = eachUser['latlng']['coordinates'][0], lat = eachUser['latlng']['coordinates'][1])
-        search_results = search_handle.search_all()
-        results = search_results['results'][:10]
-        #message content here
-        message_body = ''
+        search_results = search_handle.search_all()['results']
+        temp_result = []
+        no_of_results = 10
+        for res in search_results:
+            if res["result_type"] == res["user"]["username"]:
+                temp_result.append(res)
+            if len(temp_result) >= no_of_results:
+                break
+
+        results = temp_result
+        tem_con = str(render_to_response('activity-email.html',{'results':results}, context_instance=RequestContext(request)))
+        tem_con = tem_con.replace('Content-Type: text/html; charset=utf-8', '')
         m = Email()
-        print eachUser
-        #m.send_mail("brishi98@gmail.com", "You have the follow new messages in your inbox", message_body)
+        m.send_mail("Test Activity News Letter", [{'name':'main', 'content':tem_con}], [{'email':'brishi98@gmail.com'}])
+        break
+    return HttpResponse(json.dumps({'status':'1'}))
 
 def create_profile_from_mention(email, location, data):
     signup_data = {}

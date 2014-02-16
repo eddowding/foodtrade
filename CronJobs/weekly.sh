@@ -1,0 +1,1 @@
+python /srv/www/live/foodtrade-env/foodtrade/CronJobs/weekly.py
