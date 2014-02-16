@@ -447,10 +447,10 @@ def transport_mailchimp(request):
                 mail_excep_obj.save_mailchimp_exception(eachUser)
 
 def sms_receiver(request):
-    message = request.POST.get('message')
-
-    eml = Email()
-    eml.send_mail("sujitmhj@gmail.com", "request.post", json.dumps(request.POST))
+    # message = request.POST.get('message')
+    print request
+    # eml = Email()
+    # eml.send_mail("sujitmhj@gmail.com", "request.post", json.dumps(request.POST))
 
 #     user_profile = UserProfile()
 #     usr = user_profile.get_profile_by_username(tweet['user']['screen_name'])
