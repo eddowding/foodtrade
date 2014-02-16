@@ -459,7 +459,7 @@ def send_newsletter(request, substype):
         for res in search_results:
             if res["result_type"] == res["user"]["username"]:
                 temp_result.append(res)
-            if len(temp_result) > no_of_results:
+            if len(temp_result) >= no_of_results:
                 break
 
         results = temp_result
