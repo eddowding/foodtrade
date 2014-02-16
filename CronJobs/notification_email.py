@@ -69,11 +69,11 @@ def send_daily_email():
         subject = 'You have message in your Foodtrade Inbox.'
 
         message_body = ''
-        message_body = '<table><tr><td>From</td><td>Activity</td><td>Action</td></tr>'
+        message_body = '<table><tr style="background-color:green;"><td style="width:30%;">From</td><tdstyle="width:50%;">Activity</td><td style="width:20%;">Action</td></tr>'
         for eachMessage in eachMessageList['results']:
             message_body = message_body + '<tr>'
-            message_body = message_body + '<td>@' + eachMessage['notifying_user'] + '</td><td>' + eachMessage['notification_message'].split('.')[0] + '</td>'
-            message_body = message_body + '<td><a href="http://foodtrade.com/inbox">reply</a></td>'
+            message_body = message_body + '<td style="width:30%;">@' + eachMessage['notifying_user'] + '</td><td style="width:50%;">' + eachMessage['notification_message'].split('.')[0] + '</td>'
+            message_body = message_body + '<td style="width:20%;"><a href="http://foodtrade.com/inbox">reply</a></td>'
             message_body = message_body + '</tr>'
         email_obj = Email()
         message_body = message_body + '</table>'
