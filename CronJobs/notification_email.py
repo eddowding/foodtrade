@@ -26,7 +26,7 @@ def aggregrate_all(conditions={}):
 
 def get_all_notification_to_send():
     aggregation_pipeline = []
-    yesterday = datetime.datetime.now() - datetime.timedelta(1)
+    yesterday = datetime.datetime.now() - datetime.timedelta(5)
     aggregation_pipeline.append({"$match":{'notification_time':{'$gt':time.mktime(yesterday.timetuple())}}})
     aggregation_pipeline.append({"$match":{'notification_type':'Added Food'}})
     aggregation_pipeline.append({
@@ -77,7 +77,6 @@ def send_daily_email():
             message_body = message_body + '</tr>'
         email_obj = Email()
         message_body = message_body + '</table>'
-        print message_body
         email_obj.send_mail(
             subject, 
             [{'name':'main', 'content':message_body},{'name':'inbox','content':'''<p>Please check your inbox for more details by clicking the following link</p><p><a href="http://foodtrade.com/inbox">My Foodtrade Inbox. </a></p>'''}], 
