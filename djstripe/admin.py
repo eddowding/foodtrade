@@ -7,7 +7,7 @@ from django.contrib import admin
 from django.db.models.fields import FieldDoesNotExist
 
 from .models import Event, EventProcessingException, Transfer, Charge
-from .models import Invoice, InvoiceItem, CurrentSubscription, Customer
+from .models import Invoice, InvoiceItem, CurrentSubscription, Customer, Coupon
 
 from .settings import User
 
@@ -147,6 +147,18 @@ admin.site.register(
         "data"
     ],
 )
+
+admin.site.register(
+    Coupon,
+    # raw_id_fields=["coupon_id"],
+    readonly_fields = ('created',),
+    list_display=[
+        "coupon_id",
+        "percent_off",
+        "duration",
+        "duration_in_months"
+    ],
+    )
 
 admin.site.register(
     Event,

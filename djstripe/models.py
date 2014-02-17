@@ -310,34 +310,49 @@ class TransferChargeFee(TimeStampedModel):
 
 
 
+DURATION_CHOICES = (
+    ('once', 'Once'),
+    ('repeating', 'Repeating'),
+    ('forever', 'Forever'),
+)
 
-class Coupon(StripeObject):
-    percent_off = models.DecimalField(decimal_places=2, max_digits=4),
-    duration= models.CharField(max_length=4, blank=True),
-    duration_in_months = 3,
-    coupon_id = models.CharField(max_length=8, blank=True)
+class Coupon(TimeStampedModel):
+    coupon_id = models.CharField(max_length=25, blank=True, unique=True)
+    percent_off = models.DecimalField(decimal_places=2, max_digits=4)
+    duration= models.CharField(max_length=25, blank=True, choices = DURATION_CHOICES)
+    duration_in_months = models.CharField(max_length=4, null=True, blank=True)
 
-    objects = CustomerManager()
+    # objects = models.Manager()
 
     def __unicode__(self):
         return unicode(self.coupon_id)
 
-    def create_coupon():
+
+
+    def create_coupon(self):
         try:
-            stripe.Coupon.create(
+            if self.duration == 'repeating':
+                stripe.Coupon.create(
                   percent_off = int(self.percent_off),
                   duration= self.duration,
                   duration_in_months = int(self.duration_in_months),
                   id = self.coupon_id)
+            else:
+                stripe.Coupon.create(
+                  percent_off = int(self.percent_off),
+                  duration= self.duration,
+                  id = self.coupon_id)
             return True
         except:
             return False
+   
 
 
-    def delete_coupon():
+    def delete_coupon(self):
         try:
             cpn = stripe.Coupon.retrieve(self.coupon_id)
             cpnself.delete()
+            self.purge()
             return True
         except:
             return False

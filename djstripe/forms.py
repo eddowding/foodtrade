@@ -4,7 +4,7 @@ from django.utils.translation import ugettext as _
 
 import stripe
 
-from .models import Customer
+from .models import Customer, Coupon
 from .settings import PLAN_CHOICES, PASSWORD_INPUT_RENDER_VALUE, \
     PASSWORD_MIN_LENGTH
 
@@ -115,3 +115,32 @@ if StripeWidget and setup_user_email:
                 # handle error here
                 raise e
 
+
+class CouponForm(forms.Form):
+    DURATION_CHOICES = (
+    ('once', 'Once'),
+    ('repeating', 'Repeating'),
+    ('forever', 'Forever'),
+    )
+    coupon_id = forms.CharField(required=True, widget=forms.TextInput(attrs={'placeholder': 'Promo Code like 25OOF','class' : 'form-control'})) 
+    percent_off = forms.IntegerField(required=True, widget=forms.TextInput(attrs={'placeholder': 'Discount Percent','class' : 'form-control'})) 
+    duration = forms.ChoiceField(choices=DURATION_CHOICES, widget=forms.Select(attrs={'class' : 'form-control'}))
+    duration_in_months = forms.IntegerField(required=False, widget=forms.TextInput(attrs={'placeholder': 'No. of months','class' : 'form-control'})) 
+    
+    def __init__(self, *args, **kwargs):
+        super(CouponForm, self).__init__(*args, **kwargs)
+
+    def save(self):
+        # try:
+        cpn = Coupon(
+        coupon_id = self.cleaned_data['coupon_id'],
+        percent_off = self.cleaned_data['percent_off'],
+        duration = self.cleaned_data['duration'],
+        duration_in_months = self.cleaned_data['duration_in_months']
+        )
+        try:
+            cpn.save()
+            cpn.create_coupon()
+            return cpn
+        except:
+            return False

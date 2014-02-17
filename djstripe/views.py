@@ -15,18 +15,21 @@ from braces.views import FormValidMessageMixin
 from braces.views import LoginRequiredMixin
 from braces.views import SelectRelatedMixin
 import stripe
-
-from .forms import PlanForm, CancelSubscriptionForm
+from django.forms.models import modelformset_factory
+from .forms import PlanForm, CancelSubscriptionForm, CouponForm
 from .mixins import PaymentsContextMixin, SubscriptionMixin
 from .models import CurrentSubscription
 from .models import Customer
 from .models import Event
+from .models import Coupon
 from .models import EventProcessingException
 from .settings import PLAN_LIST
 from .settings import PY3
 from .settings import User
 from .sync import sync_customer
-
+from django.db import models
+from django.forms import ModelForm
+from django.contrib.auth.decorators import user_passes_test
 
 class ChangeCardView(LoginRequiredMixin, PaymentsContextMixin, DetailView):
     # TODO - needs tests
@@ -102,6 +105,75 @@ class StripeAdminView(LoginRequiredMixin, PaymentsContextMixin, DetailView):
         return redirect("djstripe:account")
 
 
+class CouponView(LoginRequiredMixin, PaymentsContextMixin, DetailView):
+    template_name = "djstripe/coupons.html"
+    def get(self, request, *args, **kwargs):
+        if not request.user.is_superuser:
+            return redirect("djstripe:account")
+
+        cpns = Coupon.objects.filter()
+        return render(
+                request,
+                self.template_name,
+                {
+                    "coupons":cpns
+                }
+            )
+
+class AddCoupon(LoginRequiredMixin, PaymentsContextMixin, DetailView):
+    # TODO - needs tests
+    # Needs a form
+    # Not done yet
+    template_name = "djstripe/add_coupon.html"
+    form = CouponForm
+    
+    # def get_object(self):
+    #     if hasattr(self, "customer"):
+    #         return self.customer
+    #     self.customer, created = Customer.get_or_create(self.request.user)
+    #     return self.customer
+
+    def get(self, request, *args, **kwargs):
+        # if request.POST:
+        # print "test"
+        if not request.user.is_superuser:
+            return redirect("djstripe:account")
+
+        form = CouponForm()
+        return render(
+                request,
+                self.template_name,
+                {
+                    "form":form
+                }
+            )
+
+    def post(self, request, *args, **kwargs):
+        if not request.user.is_superuser:
+            return redirect("djstripe:account")
+        form = CouponForm(request.POST)
+        form.is_valid()
+        cpn = form.save()
+
+        if cpn:
+            return redirect("/payments/admin/coupon")
+
+        else:
+            form = CouponForm()
+       
+
+            return render(
+                    request,
+                    self.template_name,
+                    {
+                        "form":form
+                    }
+                )
+
+        
+
+        
+
 class ApplyCoupon(LoginRequiredMixin, PaymentsContextMixin, DetailView):
     # TODO - needs tests
     # Needs a form
@@ -115,34 +187,36 @@ class ApplyCoupon(LoginRequiredMixin, PaymentsContextMixin, DetailView):
         return self.customer
 
     def post(self, request, *args, **kwargs):
+        promo_code = request.POST.get("promo_code","")
+
         customer = self.get_object()
+
         try:
-            coupon = request.POST.get("coupon","")
+            cpn = Coupon.objects.get(coupon_id=promo_code)
 
-            if coupon!="":
-                cus = self.get_object()
-                cus.stripe_id
+            customer.coupon = cpn
+            customer.save()
 
+            
+            coupon = stripe.Coupon.retrieve(promo_code)
 
-            send_invoice = customer.card_fingerprint == ""
-            customer.update_card(
-                request.POST.get("stripe_token")
-            )
-            if send_invoice:
-                customer.send_invoice()
-            customer.retry_unpaid_invoices()
-        except stripe.CardError as e:
-            messages.info(request, "Stripe Error")
-            return render(
-                request,
-                self.template_name,
-                {
-                    "customer": self.get_object(),
-                    "stripe_error": e.message
-                }
-            )
-        messages.info(request, "Your card is now updated.")
-        return redirect("djstripe:account")
+           
+            cu = stripe.Customer.retrieve(customer.stripe_id)
+            cu.coupon = coupon
+
+            cu.save()
+            res = {}
+            res['status'] = "success"
+            res['message'] = "You will have "+str(int(cpn.percent_off))+" percent discount in your subscription"
+            
+            return HttpResponse(json.dumps(res))
+
+        except:
+            res = {}
+            res['status'] = "fail"
+            res['message'] = "Sorry, could not add the coupon"
+            
+            return HttpResponse(json.dumps(res)) 
 
 
 class CancelSubscriptionView(LoginRequiredMixin, PaymentsContextMixin, FormView):

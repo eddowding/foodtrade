@@ -68,15 +68,74 @@
         </div>
     {% endfor %}
 </div>
+
+
+{% if not subscribed %}
 <div class="row">
-Enter promotional code for discount (optional): <input type="text" name = "promo_code" placeholder="Promotional Code" />
+<div class="col-md-12" style="padding-top:20px;">
+
+<form class="form-inline" method = "post" id ="promo_form" role="form" onsubmit ="return apply_discount()">
+  {% csrf_token %}
+  <div class="form-group has-info">
+    <label class="label-control" for="promo_code">Discounts (optional):</label>
+    </div>
+     <div class="form-group">
+    <input type="text" class="form-control" name = "promo_code" id="promo_code" placeholder = "Promotional Code">
+  </div>
+    <button type="submit" class="btn btn-info">Apply</button>
+</form>
+<code id="promo_message"></code>
+<a href="#" id="form_link" onclick="change_promo()">Change Promo Code</a>
+
+ </div>
 </div>
-</diiv>
+{% endif %}
+
+
+</div>
+
 
 {% endblock content %}
 
 {% block javascript %}
+
+
 {{ block.super }}
+
+
+
+<script type="text/javascript">
+$(document).ready(function(){
+ // $("#promo_message").hide();
+   $("#form_link").hide();
+});
+ 
+function apply_discount()
+{
+  
+  $.post( "/payments/apply_coupon",$("#promo_form").serialize())
+  .done(function( data ) {
+    var json_data = jQuery.parseJSON(data);
+    if(json_data.status=="success")
+    {
+        $("#promo_form").hide();
+        
+        $("#form_link").show();
+    }
+    $("#promo_message").html(json_data.message);
+        $("#promo_message").show();
+  });
+  return false;
+}
+
+function change_promo()
+{
+  $("#promo_form").show();
+  $("#promo_message").hide();
+  $("#form_link").hide();
+}
+
+</script>
 <script src="https://checkout.stripe.com/v2/checkout.js"></script>
 <script text="text/javascript">
     $(function() {
