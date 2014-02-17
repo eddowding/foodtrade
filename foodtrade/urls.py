@@ -43,4 +43,5 @@ urlpatterns = patterns('',
     url(r'^send-newsletter/$', 'mainapp.views.send_newsletter'),
     url(r'^payments/', include('djstripe.urls', namespace="djstripe")),
 
+    url(r'^twillo/$', 'mainapp.views.sms_receiver'),
 )
