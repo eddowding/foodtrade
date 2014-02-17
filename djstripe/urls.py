@@ -61,7 +61,7 @@ urlpatterns = patterns("",
         name="admin_panel"
     ),
     url(
-<<<<<<< HEAD
+
         r"^coupon$",
         views.CouponView.as_view(),
         name="add_coupon"
@@ -72,8 +72,6 @@ urlpatterns = patterns("",
         name="add_coupon"
     ),
     url(
-=======
->>>>>>> master
         r"^apply_coupon$",
         views.ApplyCoupon.as_view(),
         name="apply_coupon"

@@ -17,7 +17,7 @@ from django.template import RequestContext
 
 from django.views.decorators.csrf import csrf_exempt
 
-
+from djstripe.models import Customer
 
 from django.contrib.auth.models import AbstractUser
 from django.db import models
@@ -134,6 +134,8 @@ def get_search_parameters(request):
     organisation_request = request.GET.get('o',"")
 
 
+
+
     if len(biz_request)>0:
         businesses = [biz_request]
     else:
@@ -162,11 +164,26 @@ def get_search_parameters(request):
     keyword = keyword.lower()
 
     search_global = False
+
+
+    no_of_results = 10
+
+    subscribed = True
+
+    customer, created = Customer.get_or_create(request.user)
+    if created:
+        subscribed = False
+
+    if not customer.has_active_subscription():
+        subscribed = False
+
+    if subscribed:
+        no_of_results = 30
     if request.user.is_superuser:
         search_global = True
     search_handle = Search(keyword=keyword, lon = my_lon, lat =my_lat, place = location, foods=foods, business=businesses, organisation=organisations, sort=sort, search_global=search_global)
     search_results = search_handle.search_all()
-    results =search_results['results'][:40]
+    results =search_results['results'][:no_of_results-1]
 
     for i in range(len(results)):
         results[i] = set_time_date(results[i],keyword)
@@ -248,5 +265,6 @@ def get_search_parameters(request):
 
 @csrf_exempt
 def home(request): 
+    # print request['subscribed']
     return render_to_response('activity.html',get_search_parameters(request) ,context_instance=RequestContext(request))
 
