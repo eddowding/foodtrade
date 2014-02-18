@@ -457,8 +457,8 @@ def sms_receiver(request):
 
     try:
         usr = user_profile.get_profile_by_username(msg_from)
-        if usr['useruid'] == -1:
-            continue
+        # if usr['useruid'] == -1:
+        #     continue
 
 
 

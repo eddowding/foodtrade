@@ -586,7 +586,7 @@ class AjaxHandle(AjaxSearch):
         if sender_name!="" and receiver_email != "" and sender_email != "" and message != "":
             body = "Hi!" +'\r\n\r\n' + message +'\r\n\r\n'+sender_name +'\r\n' +sender_email
             email = Email()
-            if email.send_mail(subject, template_content = [{'name':'main', 'content':body}], to=[{'email':receiver}]):
+            if email.send_mail(subject, template_content = [{'name':'main', 'content':body}], to=[{'email':receiver_email}]):
                 return HttpResponse("{'status':1}")
         return HttpResponse("{'status':0}")
 
