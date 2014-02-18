@@ -348,7 +348,7 @@ class AjaxHandle(AjaxSearch):
             if created_on['username'] != created_by['username']:
                 notice_obj.save_notification({
                         'notification_to':created_on['username'], 
-                        'notification_message':'@' + str(created_by['username']) + ' added ' + str(data['food_name'] + 'on your profile.'), 
+                        'notification_message':'@' + str(created_by['username']) + ' added ' + str(data['food_name'] + ' on your profile.'), 
                         'notification_time':time.mktime(datetime.datetime.now().timetuple()),
                         'notification_type':'Added Food',
                         'food_name':data['food_name'],
@@ -586,9 +586,8 @@ class AjaxHandle(AjaxSearch):
         if sender_name!="" and receiver_email != "" and sender_email != "" and message != "":
             body = "Hi!" +'\r\n\r\n' + message +'\r\n\r\n'+sender_name +'\r\n' +sender_email
             email = Email()
-            if email.send_mail(receiver_email, subject, body):
+            if email.send_mail(subject, template_content = [{'name':'main', 'content':body}], to=[{'email':receiver}]):
                 return HttpResponse("{'status':1}")
-        
         return HttpResponse("{'status':0}")
 
     def vouch_for_food(self, request):
