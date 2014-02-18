@@ -457,7 +457,6 @@ def sms_receiver(request):
 
     try:
         usr = user_profile.get_profile_by_username(msg_from)
-
         pic_url_list = []
         if tweet['entities'].get('media')!= None:
             for each in tweet['entities'].get('media'):
