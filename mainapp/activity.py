@@ -98,6 +98,7 @@ def get_search_parameters(request):
     parameters = {}
 
     default_location = ""
+    no_of_results = 10
 
     if request.user.is_authenticated():
         user_id = request.user.id
@@ -110,6 +111,20 @@ def get_search_parameters(request):
         parameters['userinfo'] = user_info
         default_location = user_profile['zip_code']
 
+
+
+
+        subscribed = True
+
+        customer, created = Customer.get_or_create(request.user)
+        if created:
+            subscribed = False
+
+        if not customer.has_active_subscription():
+            subscribed = False
+
+        if subscribed:
+            no_of_results = 30
 
 
     else:
@@ -166,19 +181,7 @@ def get_search_parameters(request):
     search_global = False
 
 
-    no_of_results = 10
 
-    subscribed = True
-
-    customer, created = Customer.get_or_create(request.user)
-    if created:
-        subscribed = False
-
-    if not customer.has_active_subscription():
-        subscribed = False
-
-    if subscribed:
-        no_of_results = 30
     if request.user.is_superuser:
         search_global = True
     search_handle = Search(keyword=keyword, lon = my_lon, lat =my_lat, place = location, foods=foods, business=businesses, organisation=organisations, sort=sort, search_global=search_global)
