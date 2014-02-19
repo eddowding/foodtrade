@@ -455,63 +455,63 @@ def sms_receiver(request):
     
     user_profile = UserProfile()
 
-    try:
-        usr = user_profile.get_profile_by_username(msg_from)
-        pic_url_list = []
-        if tweet['entities'].get('media')!= None:
-            for each in tweet['entities'].get('media'):
-                pic_url_list.append(each['media_url'])
+    # try:
+    #     usr = user_profile.get_profile_by_username(msg_from)
+    #     pic_url_list = []
+    #     if tweet['entities'].get('media')!= None:
+    #         for each in tweet['entities'].get('media'):
+    #             pic_url_list.append(each['media_url'])
 
-        h = HTMLParser.HTMLParser()
+    #     h = HTMLParser.HTMLParser()
         
-        tweet_id = str(tweet['id'])
-        parent_tweet_id = 0 if tweet['in_reply_to_status_id'] == None else tweet['in_reply_to_status_id']
-        tweet_feed = TweetFeed()
-        data = {'tweet_id': str(tweet_id),
-        'parent_tweet_id': str(parent_tweet_id),
-        'status': h.unescape(tweet['text']),                    
-        'picture': pic_url_list,
-        }          
-        tweet_feed.insert_tweet_by_username(usr['username'],data)
+    #     tweet_id = str(tweet['id'])
+    #     parent_tweet_id = 0 if tweet['in_reply_to_status_id'] == None else tweet['in_reply_to_status_id']
+    #     tweet_feed = TweetFeed()
+    #     data = {'tweet_id': str(tweet_id),
+    #     'parent_tweet_id': str(parent_tweet_id),
+    #     'status': h.unescape(tweet['text']),                    
+    #     'picture': pic_url_list,
+    #     }          
+    #     tweet_feed.insert_tweet_by_username(usr['username'],data)
 
         
-        display_tweets.append(data)
-    except:
-        tweet_id = str(tweet['id'])
+    #     display_tweets.append(data)
+    # except:
+    #     tweet_id = str(tweet['id'])
         
-        h = HTMLParser.HTMLParser()
-        str_text = body
-        if "#join" in str_text:
-            str_text = str_text.lower()
-            str_text = str_text.strip()
-            str_text = str_text.strip()
-            str_text = str_text.replace("#join","")
-            str_text = str_text.strip()
-            import re
+    #     h = HTMLParser.HTMLParser()
+    #     str_text = body
+    #     if "#join" in str_text:
+    #         str_text = str_text.lower()
+    #         str_text = str_text.strip()
+    #         str_text = str_text.strip()
+    #         str_text = str_text.replace("#join","")
+    #         str_text = str_text.strip()
+    #         import re
              
-            regex = re.compile(("([a-z0-9!#$%&'*+\/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+\/=?^_`"
-                                "{|}~-]+)*(@|\sat\s)(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?(\.|"
-                                "\sdot\s))+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?)"))
+    #         regex = re.compile(("([a-z0-9!#$%&'*+\/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+\/=?^_`"
+    #                             "{|}~-]+)*(@|\sat\s)(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?(\.|"
+    #                             "\sdot\s))+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?)"))
 
-            user_emails = re.findall(regex, str_text)
+    #         user_emails = re.findall(regex, str_text)
 
 
-            if len(user_emails)>0:
-                user_email = user_emails[0][0]
-                str_text = str_text.replace(user_email, "")
-                location = str_text.strip()
-                create_profile_from_mention(user_email, location, tweet)
-                # put your own credentials here 
-                ACCOUNT_SID = "ACc54d95fd16aa5e6e35dbe60d44f3cc94" 
-                AUTH_TOKEN = "69e49be54014f34904e5c08715e0791e" 
+    #         if len(user_emails)>0:
+    #             user_email = user_emails[0][0]
+    #             str_text = str_text.replace(user_email, "")
+    #             location = str_text.strip()
+    #             create_profile_from_mention(user_email, location, tweet)
+    #             # put your own credentials here 
+    #             ACCOUNT_SID = "ACc54d95fd16aa5e6e35dbe60d44f3cc94" 
+    #             AUTH_TOKEN = "69e49be54014f34904e5c08715e0791e" 
                  
-                client = TwilioRestClient(ACCOUNT_SID, AUTH_TOKEN) 
+    #             client = TwilioRestClient(ACCOUNT_SID, AUTH_TOKEN) 
                  
-                client.messages.create(
-                    to=msg_from, 
-                    from_="+442380000486", 
-                    body="You have joined FoodTrade",  
-                )
+    #             client.messages.create(
+    #                 to=msg_from, 
+    #                 from_="+442380000486", 
+    #                 body="You have joined FoodTrade",  
+    #             )
 
 
 
