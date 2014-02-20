@@ -469,11 +469,11 @@ def sms_receiver(request):
     # message = request.POST.get('message')
     body = request.GET.get('Body',"")
     msg_from = request.GET.get('From','')   
-    
+    print body
  
     
     user_profile = UserProfile()
-
+    http_response = ""
     try:
         usr = user_profile.get_profile_by_username(msg_from)
         username = usr['username']
@@ -490,9 +490,10 @@ def sms_receiver(request):
         'picture': [],
         }          
         tweet_feed.insert_tweet_by_username(msg_from,data)
-
+        http_response = http_response +"appended new tweet"
     except:
         str_text = body
+
         if "#join" in str_text:
             str_text = str_text.lower()
             str_text = str_text.strip()
@@ -512,7 +513,7 @@ def sms_receiver(request):
                 user_email = user_emails[0][0]
                 str_text = str_text.replace(user_email, "")
                 location = str_text.strip()
-                create_profile_from_mention(user_email, location, tweet)
+
                
                 signup_data = {}
                 try:
@@ -561,7 +562,8 @@ def sms_receiver(request):
                     }
                 
                 user_profile_obj.create_profile(signup_data)
-    return HttpResponse("{'status':1}")
+                http_response = http_response +"appended new tweet"
+    return HttpResponse(http_response)
 
 
 
