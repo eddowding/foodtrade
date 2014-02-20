@@ -253,11 +253,6 @@ class UserProfile():
     def check_valid_email(self, username, email):
         user = self.db_object.get_one(self.table_name, {'username':username})
         new_email_user = self.db_object.get_one(self.table_name, {'email':email})
-        print user['email'], email
-
-        if email == 'a@b.com':
-            return False
-
         if  new_email_user!= None:
             if user['email'] == email:
                 return True

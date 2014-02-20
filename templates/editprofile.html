@@ -314,11 +314,12 @@ function validateFeedback(){
     document.getElementById('hidden_type').value = all_values;
     }
 
+  var email_valid;
+  var username= '{{username|safe}}';
   function validate_email(){
     email = document.getElementById("email").value;
-    ajax_request('check_email_address', 'success_validate_email',{'email':email});
+    ajax_request('check_email_address', 'success_validate_email',{'email':email,'username':username});
   }
-  var email_valid;
   function success_validate_email(data){
     data = jQuery.parseJSON(data);
     email_valid = data;
@@ -351,7 +352,7 @@ function validateFeedback(){
     else{
       return false;
     }
-    
+
     if (business_type == 'Business' && $('#hidden_type').val().length == 0){
       alert("Please select atleast one Business Type!");
       return false;

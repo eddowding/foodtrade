@@ -18,8 +18,6 @@ class Email():
         pass
 
     def send_mail(self, subject, template_content=[{}], to = [{}]):
-        # sender = 'ed@foodtrade.com'
-        # passwd = 'NwotnhPk1Nprc6OX0Wq6vA'
         #md = mandrill.Mandrill('DS3yEW4HdOzqHGXOiXGPkg')
         md = mandrill.Mandrill('NwotnhPk1Nprc6OX0Wq6vA')
         mes = mandrill.Messages(md)
