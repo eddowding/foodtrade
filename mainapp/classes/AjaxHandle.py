@@ -20,7 +20,7 @@ from bson.objectid import ObjectId
 from mainapp.views import calculate_time_ago
 from django.contrib.auth.models import User
 from mainapp.bitly import construct_invite_tweet, shorten_url
-
+# from validate_email import validate_email
 # consumer_key = 'seqGJEiDVNPxde7jmrk6dQ'
 # consumer_secret = 'sI2BsZHPk86SYB7nRtKy0nQpZX3NP5j5dLfcNiP14'
 ACCESS_TOKEN = ''
@@ -348,7 +348,7 @@ class AjaxHandle(AjaxSearch):
             if created_on['username'] != created_by['username']:
                 notice_obj.save_notification({
                         'notification_to':created_on['username'], 
-                        'notification_message':'@' + str(created_by['username']) + ' added ' + str(data['food_name'] + 'on your profile.'), 
+                        'notification_message':'@' + str(created_by['username']) + ' added ' + str(data['food_name'] + ' on your profile.'), 
                         'notification_time':time.mktime(datetime.datetime.now().timetuple()),
                         'notification_type':'Added Food',
                         'food_name':data['food_name'],
@@ -586,9 +586,8 @@ class AjaxHandle(AjaxSearch):
         if sender_name!="" and receiver_email != "" and sender_email != "" and message != "":
             body = "Hi!" +'\r\n\r\n' + message +'\r\n\r\n'+sender_name +'\r\n' +sender_email
             email = Email()
-            if email.send_mail(receiver_email, subject, body):
+            if email.send_mail(subject, template_content = [{'name':'main', 'content':body}], to=[{'email':receiver_email}]):
                 return HttpResponse("{'status':1}")
-        
         return HttpResponse("{'status':0}")
 
     def vouch_for_food(self, request):
@@ -910,3 +909,18 @@ class AjaxHandle(AjaxSearch):
         else:
             return HttpResponse(json.dumps({'status':0, 
                 'message':'You are not authorized to perform this action.'}))
+
+    def check_email_address(self, request):
+        if request.user.is_authenticated:
+            user_profile_obj = UserProfile()
+            email = request.POST.get('email')
+            username = request.user.username
+            # if validate_email(email) != True:
+            #     return HttpResponse(json.dumps({'status':1, 'valid':'no'}))
+            if user_profile_obj.check_valid_email(username, email):
+                return HttpResponse(json.dumps({'status':1, 'valid':'yes'}))
+            else:
+                return HttpResponse(json.dumps({'status':1, 'valid':'no'}))
+        else:
+            return HttpResponse(json.dumps({'status':0, 'message':'You are not authorized to perform this action.'}))
+

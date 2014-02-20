@@ -114,7 +114,7 @@ if StripeWidget and setup_user_email:
             except stripe.StripeError as e:
                 # handle error here
                 raise e
-
+import datetime
 
 class CouponForm(forms.Form):
     DURATION_CHOICES = (
@@ -126,7 +126,8 @@ class CouponForm(forms.Form):
     percent_off = forms.IntegerField(required=True, widget=forms.TextInput(attrs={'placeholder': 'Discount Percent','class' : 'form-control'})) 
     duration = forms.ChoiceField(choices=DURATION_CHOICES, widget=forms.Select(attrs={'class' : 'form-control'}))
     duration_in_months = forms.IntegerField(required=False, widget=forms.TextInput(attrs={'placeholder': 'No. of months','class' : 'form-control'})) 
-    
+    max_redemptions = forms.IntegerField(required=False, widget=forms.TextInput(attrs={'placeholder': 'No. of months','class' : 'form-control'}))
+    redeem_by = forms.DateField(required=True, initial=datetime.date.today, widget=forms.TextInput(attrs={'placeholder': 'No. of months','class' : 'form-control'}))
     def __init__(self, *args, **kwargs):
         super(CouponForm, self).__init__(*args, **kwargs)
 
@@ -136,7 +137,9 @@ class CouponForm(forms.Form):
         coupon_id = self.cleaned_data['coupon_id'],
         percent_off = self.cleaned_data['percent_off'],
         duration = self.cleaned_data['duration'],
-        duration_in_months = self.cleaned_data['duration_in_months']
+        duration_in_months = self.cleaned_data['duration_in_months'],
+        max_redemptions = self.cleaned_data['max_redemptions'],
+        redeem_by = self.cleaned_data['redeem_by']
         )
         try:
             cpn.save()

@@ -22,10 +22,7 @@ import datetime,time
 import pprint
 ACCESS_TOKEN = ''
 ACCESS_TOKEN_SECRET =''
-
-
 import json
-
 
 def get_twitter_obj(token, secret):
     return Twython(
@@ -223,7 +220,7 @@ class UserProfile():
              )
 
     def update_profile_by_username(self, username, description, address, type_usr, sign_up_as, phone, lat, lon, postal_code, name, is_superuser,
-      company_num, website_url, facebook_page, deliverables, business_org_name):
+      company_num, website_url, facebook_page, deliverables, business_org_name, email):
         data = {'zip_code':str(postal_code),
                  'description':description,
                  'latlng.coordinates.1':float(lat),
@@ -237,7 +234,8 @@ class UserProfile():
                  'website_url': website_url,
                  'facebook_page': facebook_page,
                  'deliverables': deliverables,
-                 'business_org_name': business_org_name
+                 'business_org_name': business_org_name,
+                 'email':email
                  }
         if not is_superuser: 
             return self.db_object.update(self.table_name,
@@ -252,6 +250,20 @@ class UserProfile():
     def update_profile_upsert(self, where, what):
         return self.db_object.update_upsert(self.table_name, where, what)
 
+    def check_valid_email(self, username, email):
+        user = self.db_object.get_one(self.table_name, {'username':username})
+        new_email_user = self.db_object.get_one(self.table_name, {'email':email})
+        print user['email'], email
+
+        if email == 'a@b.com':
+            return False
+
+        if  new_email_user!= None:
+            if user['email'] == email:
+                return True
+            return False
+        else:
+            return True
 
     def get_unclaimed_unedited_profile_count(self):
         return self.db_object.get_count(self.table_name, {'is_unknown_profile':'true', 'recently_updated_by_super_user':'false'})

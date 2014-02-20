@@ -46,8 +46,8 @@ class SignupForm(forms.Form):
     display_name = forms.CharField(widget=forms.TextInput(attrs={'placeholder': u'Eg "Leonardo D. Vinci"',
      'class' : 'form-control'})) 
 
-    username = forms.CharField(widget=forms.TextInput(attrs={'placeholder': u'Username',
-     'class' : 'form-control'})) 
+    # username = forms.CharField(widget=forms.TextInput(attrs={'placeholder': u'Username',
+     # 'class' : 'form-control'})) 
 
     buss_org_name = forms.CharField(required=False, widget=forms.TextInput(attrs={'placeholder': u'Business Name',
         'class' : 'form-control'}))
@@ -74,7 +74,7 @@ class SignupForm(forms.Form):
     def __init__(self, request, *args, **kwargs):
         self.request = request
         super(SignupForm, self).__init__(*args, **kwargs)
-        self.fields['username'].widget.attrs['readonly'] = True
+        # self.fields['username'].widget.attrs['readonly'] = True
         self.fields['email'].widget.attrs['class'] = 'form-control'
 
     def save(self, user):
