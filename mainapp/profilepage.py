@@ -205,13 +205,8 @@ def edit_profile(request, username):
                 parameters['type_user'] = ''
             parameters['address'] = userprof['address']
             
-            # try:
-            #     parameters['first_name'] = userprof['name'].split(' ')[0]
-            #     parameters['last_name']  = userprof['name'].split(' ')[1]
-            # except:
-            #     parameters['first_name']  = userprof['name']
-            #     parameters['last_name']  = ''
             parameters['display_name'] = userprof['name']
+            parameters['email'] = userprof['email']
             parameters['description'] = userprof['description']
             try:
                 parameters['phone'] = userprof['phone_number']
@@ -249,6 +244,7 @@ def edit_profile(request, username):
         # first_name = request.POST['first_name']
         # last_name = request.POST['last_name']
         display_name = request.POST['display_name']
+        display_name = request.POST['email']
         # name = first_name + " " + last_name
         description = request.POST['description']
         try:
@@ -285,7 +281,7 @@ def edit_profile(request, username):
 
         user_profile.update_profile_by_username(userprof['username'], description, address, 
             usr_type, sign_up_as, phone, lat, lon, postal_code, display_name, is_superuser, company_num,
-            website_url, facebook_page, deliverables, business_org_name)
+            website_url, facebook_page, deliverables, business_org_name, email)
 
         return HttpResponseRedirect('/')
 

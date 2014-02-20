@@ -9,3 +9,5 @@ pillow
 mailchimp
 urllib3
 mandrill
+pyDNS
+validate_email

@@ -11,6 +11,12 @@
   .typeempty{
   display:none;
   }
+  .form-margin{
+    margin-top: 1%;
+  }
+  .email-margin{
+    margin-top: 0.5%;
+  }
 
 </style>
 
@@ -19,7 +25,7 @@
 {% block content %}
 
 <div class="col-xs-10"> 
-  <form class="form-horizontal" name="myform" role="form" onsubmit="return validate_business_type()" method="POST" action=".">
+  <form class="form-horizontal form-margin" name="myform" role="form" onsubmit="return validate_business_type()" method="POST" action=".">
   {% csrf_token %}
  
     <div class="form-group">
@@ -27,24 +33,25 @@
       <div class="col-sm-5">
         <input type="text" id="display_name_txt" class="form-control" placeholder="Display Name" value="{{display_name}}" name="display_name">
       </div>
-    </div>    
-    <!-- <div class="form-group">
-      <label for="user_fname_txt" class="col-sm-2 control-label">First Name</label>
-      <div class="col-sm-5">
-        <input type="text" id="user_fname_txt" class="form-control" placeholder="First name" value="{{first_name}}" name="first_name">
-      </div>
-    </div>
-
-    <div class="form-group">
-      <label for="user_lname_txt" class="col-sm-2 control-label">Last Name</label>
-      <div class="col-sm-5">
-        <input type="text" id="user_lname_txt" class="form-control" placeholder="Last name" value="{{last_name}}" name="last_name">
-      </div>
-    </div> -->
+    </div> 
     <div class="form-group">
       <label for="username_txt" class="col-sm-2 control-label">Username</label>
       <div class="col-sm-5">
         <input type="text" id="username_txt" class="form-control" value="{{username}}" name="username" readonly>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="email" class="col-sm-2 control-label">Email</label>
+      <div class="col-sm-5">
+        <input type="email" id="email" class="form-control" value="{{email}}" name="email" required onblur="validate_email()">
+      </div>
+      <div id="notification_email">
+        <div class="hidden" id="email-ok">
+          <span class="glyphicon glyphicon-ok email-margin"></span> OK
+        </div>
+        <div class="hidden" id='email-nok'>
+          <span class="glyphicon glyphicon-remove email-margin" ></span> Already Taken
+        </div>
       </div>
     </div>
     <div class="form-group">
@@ -307,9 +314,26 @@ function validateFeedback(){
     document.getElementById('hidden_type').value = all_values;
     }
 
-  function validate_address(){
-    address = document.getElementById("phone").value;
-    ajax_request('check_valid_address', 'success_validate_address',{'address':address});
+  function validate_email(){
+    email = document.getElementById("email").value;
+    ajax_request('check_email_address', 'success_validate_email',{'email':email});
+  }
+var ema;
+  function success_validate_email(data){
+    data = jQuery.parseJSON(data);
+    ema = data;
+    if (data['status'] == 1 && data['valid'] == 'yes'){
+     $('#email-nok').removeClass('active'); 
+     $('#email-nok').addClass('hidden');
+     $('#email-ok').removeClass('hidden');
+     $('#email-ok').addClass('active');
+    }
+    else{
+     $('#email-nok').removeClass('hidden'); 
+     $('#email-nok').addClass('active');
+     $('#email-ok').removeClass('active');
+     $('#email-ok').addClass('hidden');
+    }
   }
 
   function success_validate_address(data){
@@ -367,5 +391,6 @@ function validateFeedback(){
             } 
           });
 }
+
 </script>
 {% endblock %}

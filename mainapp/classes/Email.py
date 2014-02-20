@@ -1,5 +1,18 @@
+#!/usr/bin/env python
+# encoding: utf-8
+from MongoConnection import MongoConnection
 import mandrill 
 
+class EmailBackLogs(object):
+    """docstring for EmailBackLogs"""
+    def __init__ (self):
+        self.db_object = MongoConnection("localhost",27017,'foodtrade')
+        self.table_name = 'emailbacklogs'
+        self.db_object.create_table(self.table_name,'_id')
+
+    def save_backlogs(self,doc):
+        self.db_object.insert_one(self.table_name, doc)
+        
 class Email():
     def __init__ (self):
         pass
@@ -21,7 +34,9 @@ class Email():
             'track_click':'true',
             'subject':subject,
         }
-
+        
         template_content = template_content
+        eb = EmailBackLogs()
+        eb.save_backlogs({'message':message, 'template_content':template_content})
         mes.send_template('foodtrade-master', template_content, message)
 
