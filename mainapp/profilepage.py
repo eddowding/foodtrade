@@ -47,6 +47,8 @@ def display_profile(request, username):
     userprof = user_profile.get_profile_by_username(str(username))
     uinfo = UserInfo(userprof['useruid'])
     uinfo.description = uinfo.description.replace("\r\n"," ")
+    
+    parameters['prof_subscribed'] = uinfo.subscribed
     parameters['userprof'] = uinfo
     parameters['profile_id'] = userprof['useruid']
     parameters['sign_up_as'] = userprof['sign_up_as']

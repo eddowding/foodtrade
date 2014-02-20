@@ -122,10 +122,15 @@ class UserInfo():
         notification_obj = Notification()
         self.notification_count = notification_obj.get_notification_count(self.username)
         
-        subscribed = True
-        customer, created = Customer.get_or_create(usr)
-        if created:
-            subscribed = False
+        self.subscribed = True
+        try:
+            usr = User.objects.get(id=user_id)
+            customer, created = Customer.get_or_create(usr)
+            if created:
+                self.subscribed = False
 
-        if not customer.has_active_subscription():
-            subscribed = False
+            if not customer.has_active_subscription():
+                self.subscribed = False
+        except:
+            self.subscribed = False
+        
