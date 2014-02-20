@@ -29,10 +29,29 @@ import HTMLParser
 from mainapp.classes.Search import Search
 from mainapp.classes.Email import Email
 import uuid
+from twilio.rest import TwilioRestClient 
+
+
 
 next_cursor = -1
 ACCESS_TOKEN = ''
 ACCESS_TOKEN_SECRET =''
+
+
+def send_sms(to,body):
+    # put your own credentials here 
+    ACCOUNT_SID = "ACc54d95fd16aa5e6e35dbe60d44f3cc94" 
+    AUTH_TOKEN = "69e49be54014f34904e5c08715e0791e" 
+     
+    client = TwilioRestClient(ACCOUNT_SID, AUTH_TOKEN) 
+     
+    client.messages.create(
+        to=to, 
+        from_="+442380000486", 
+        body=body,  
+    )
+    return True
+
 
 def calculate_time_ago(calc_time):
     time_elapsed = int(time.time()) - calc_time
@@ -450,7 +469,7 @@ def sms_receiver(request):
     # message = request.POST.get('message')
     body = request.GET.get('Body',"")
     msg_from = request.GET.get('From','')   
-    from twilio.rest import TwilioRestClient 
+    
  
     
     user_profile = UserProfile()
@@ -468,16 +487,11 @@ def sms_receiver(request):
         data = {'tweet_id': str(tweet_id),
         'parent_tweet_id': str(parent_tweet_id),
         'status': h.unescape(body),                    
-        'picture': pic_url_list,
+        'picture': [],
         }          
-        tweet_feed.insert_tweet_by_username(usr['username'],data)
+        tweet_feed.insert_tweet_by_username(msg_from,data)
 
-        
-        display_tweets.append(data)
     except:
-        tweet_id = str(tweet['id'])
-        
-        h = HTMLParser.HTMLParser()
         str_text = body
         if "#join" in str_text:
             str_text = str_text.lower()
@@ -499,17 +513,56 @@ def sms_receiver(request):
                 str_text = str_text.replace(user_email, "")
                 location = str_text.strip()
                 create_profile_from_mention(user_email, location, tweet)
-                # put your own credentials here 
-                ACCOUNT_SID = "ACc54d95fd16aa5e6e35dbe60d44f3cc94" 
-                AUTH_TOKEN = "69e49be54014f34904e5c08715e0791e" 
-                 
-                client = TwilioRestClient(ACCOUNT_SID, AUTH_TOKEN) 
-                 
-                client.messages.create(
-                    to=msg_from, 
-                    from_="+442380000486", 
-                    body="You have joined FoodTrade",  
-                )
+               
+                signup_data = {}
+                try:
+                    location_res = Geocoder.geocode(location)
+                    latlng = {"type":"Point","coordinates":[float(location_res.longitude) ,float(location_res.latitude)]}
+                    user_address = location
+                    postal_code = location_res.postal_code
+                except:
+                    try:
+                        location_res = Geocoder.geocode(data['user']['location'])
+                        lat, lon, addr,postal_code = location_res.latitude, location_res.longitude, location_res.postal_code
+                        latlng = {"type":"Point","coordinates" : [float(lon),float(lat)]}
+                        signup_data['location_default_on_error'] = 'true'
+                        user_address = data['user']['location']
+
+
+                    except:
+                        text = "We cannot recognise your location please try again with a postal code or from http://foodtrade.com"
+                        send_sms(msg_from,text)
+                        return 
+
+                
+
+                user_profile_obj = UserProfile()
+                min_user_id = int(user_profile_obj.get_minimum_id_of_user()[0]['minId']) -1
+
+                signup_data = {
+                        'is_unknown_profile': 'false',
+                        'from_mentions': 'true',
+                        'address' : user_address,
+                        'latlng':latlng,
+                        'email' : user_email,
+                        'zip_code': str(postal_code),
+                        'description' : "",
+                        'foods': [],
+                        'name' : msg_from,
+                        'phone_number' : '',
+                        'profile_img':"http://pbs.twimg.com/profile_images/378800000141996074/6a363e3c4f2a84a956c3cb27c50b2ca0_normal.png",
+                        'sign_up_as': 'Individual',
+                        'type_user':[],
+                        'updates': [],
+                        'screen_name': msg_from,
+                        'Organisations':[],
+                        'useruid': min_user_id,
+                        'username':msg_from
+                    }
+                
+                user_profile_obj.create_profile(signup_data)
+    return HttpResponse("{'status':1}")
+
 
 
 
@@ -519,6 +572,7 @@ def send_newsletter(request, substype):
         users = user_profile_obj.get_all_profiles('subscribed')
     elif substype == 'non':
         users = user_profile_obj.get_all_profiles('unsubscribed')
+
     for eachUser in users:
         search_handle = Search(lon = eachUser['latlng']['coordinates'][0], lat = eachUser['latlng']['coordinates'][1])
         search_results = search_handle.search_all()['results']

@@ -40,7 +40,7 @@ urlpatterns = patterns('',
     url(r'^unclaimed-profiles/', 'mainapp.views.unclaimed_profiles'),
     url(r'^(?P<username>[-\w]+)/post/(?P<tweet_id>[-\w]+)/$', 'mainapp.single_activity.home', name='single_activity'),
     url(r'^mailchimp-migrate/$', 'mainapp.views.transport_mailchimp'),
-    url(r'^send-newsletter/subscribed$', 'mainapp.views.send_newsletter'),
+    url(r'^send-newsletter/$', 'mainapp.views.send_newsletter'),
     url(r'^payments/', include('djstripe.urls', namespace="djstripe")),
 
     url(r'^twillo/$', 'mainapp.views.sms_receiver'),
