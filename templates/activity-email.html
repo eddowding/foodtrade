@@ -1,43 +1,44 @@
 {% load recognise_name %}
 <h1 style="text-align:center">Foodtrade activities going around you</h1>
+<table style="border:0;" cellpadding="2" >
+
 {% for result in results %}
+<tr>
+    <td data-id="{% if result_type == "status" %}{{result.tweetuid}} {% else %}{{result.user.username}}{% endif %}">
+      <span class="chat-img">
+      <img src="{{result.user.profile_img}}" alt="{{result.user.name}}"  />
+      </span>
+    </td>
+    <td>  
+      <strong style="margin-right: 10px;"><a href="http://foodtrade.com/profile/{{result.user.username}}" style="color: #6C7F40; text-decoration: none;">{{result.user.name}}</a></strong> 
 
-    <li  data-id="{% if result_type == "status" %}{{result.tweetuid}} {% else %}{{result.user.username}}{% endif %}">
-    <span class="chat-img float: left !important;">
-    <img src="{{result.user.profile_img}}" alt="{{result.user.name}}"  />
-    </span>
-        <div>  
-            <div class="header">
-                <strong style="margin-right: 10px;"><a href="http://foodtrade.com/profile/{{result.user.username}}">{{result.user.name}}</a></strong> 
+      {% if type_user|length == 0 or type_user|first == '' %}
+      {% else %}
+      {% if result.sign_up_as == "Business" %}
+        <div class="tags tags-biztype">  
+          {% for tag in result.type_user  %}
+            <a href="http://foodtrade.com/activity/?b={{tag}}" style="text-decoration: none; color: #ccc; border: 1px solid #eee; padding: 2px; ">{{tag}}</a>
+          {% endfor %}
+        </div> 
+        {% endif %}
+      {% endif %}
 
-          {% if type_user|length == 0 or type_user|first == '' %}
-          {% else %}
-          {% if result.sign_up_as == "Business" %}
-            <div class="tags tags-biztype">  
-              {% for tag in result.type_user  %}
-                <a href="http://foodtrade.com/activity/?b={{tag}}">{{tag}}</a>
-              {% endfor %}
-            </div> 
-            {% endif %}
-          {% endif %}
-            </div>
+      <p style="font-size: 12px; color: #444;">
+          {{result.status|recognise_name|safe}}
+      </p>
 
-            <p>
-                {{result.status|recognise_name|safe}}
-            </p>
-
-              <div>
-                <span class="hidden-sm hidden-xs">
-                  <i class="fa fa-map-marker"></i>
+              <p style="font-size:11px; color: #ccc;">
+                <span style="color: #ccc;"> 
                   {{result.user.address}}
                 </span>
                 <!--  // if logged in or you've allows html5 browser location -->
                 {% if result_type == "status" %}
-                <span class="pull-right time_ago">
-                   <a href="http://foodtrade.com/{{result.user.username}}/post/{{result.tweetuid}}" class="text-muted"><i class="fa fa-clock-o"></i> {{result.time_elapsed}}</a> 
+                <span style="float:right; color: #ccc;">
+                   <a href="http://foodtrade.com/{{result.user.username}}/post/{{result.tweetuid}}" class="text-muted"> {{result.time_elapsed}}</a> 
                 </span>
                 {% endif %}
-              </div> 
-        </div>
-    </li>
+              </p> 
+    </td>
+  </tr>
 {% endfor %}
+</table>

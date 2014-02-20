@@ -24,7 +24,7 @@ DJSTRIPE_PLANS = {
 
     "yearly": {
         "stripe_plan_id": "business-yearly",
-        "name": "FoodTrade Business(£45/year)",
+        "name": "Basic (£45 / yr)",
         "description": "The annual subscription plan to FoodTrade",
         "price": 4500,  # £19900
         "currency": "gbp",
