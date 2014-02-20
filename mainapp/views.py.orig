@@ -27,6 +27,8 @@ from mainapp.bitly import construct_invite_tweet
 from django.contrib.auth.decorators import user_passes_test
 import HTMLParser
 from mainapp.classes.Search import Search
+from mainapp.classes.Email import Email
+
 
 next_cursor = -1
 ACCESS_TOKEN = ''
@@ -93,17 +95,18 @@ def tweets(request):
     display_tweets = [] 
 
     for tweet in mentions:
+        tweet_list.append(tweet['id'])
         try:
             user_profile = UserProfile()
             usr = user_profile.get_profile_by_username(tweet['user']['screen_name'])
+            if usr['useruid'] == -1:
+                continue
 
             pic_url_list = []
             if tweet['entities'].get('media')!= None:
                 for each in tweet['entities'].get('media'):
                     pic_url_list.append(each['media_url'])
-
             h = HTMLParser.HTMLParser()
-            
             tweet_id = str(tweet['id'])
             parent_tweet_id = 0 if tweet['in_reply_to_status_id'] == None else tweet['in_reply_to_status_id']
             tweet_feed = TweetFeed()
@@ -112,7 +115,7 @@ def tweets(request):
             'status': h.unescape(tweet['text']),                    
             'picture': pic_url_list,
             }          
-            tweet_feed.insert_tweet(usr['useruid'],data)
+            tweet_feed.insert_tweet_by_username(usr['username'],data)
 
             
             display_tweets.append(data)
@@ -121,13 +124,9 @@ def tweets(request):
             text = "@" + tweet['user']['screen_name'] + " Thanks! Please confirm your post by clicking this http://foodtrade.com/?tweetid=" + str(tweet_id) + " You'll only have to do this once."
 
             h = HTMLParser.HTMLParser()
-<<<<<<< HEAD
-            str_text = str(h.unescape(str(tweet['text'])))
-        
-=======
             str_text = h.unescape(tweet['text']).encode('utf-8')
->>>>>>> 4fbba5a0470f1ef44b528e65be967cb7069b5dbb
-
+            str_text = str_text.replace("#signup","#join")
+            str_text = str_text.replace("#register","#join")
             if "#join" in str_text:
                 str_text = str_text.lower()
                 str_text = str_text.strip()
@@ -149,15 +148,6 @@ def tweets(request):
                     str_text = str_text.replace(user_email, "")
                     location = str_text.strip()
                     create_profile_from_mention(user_email, location, tweet)
-
-
-
-            # try:
-            #     bot_twitter.update_status(status = text, in_reply_to_status_id = tweet['id'])
-            #     pass
-            # except:
-            #     pass
-        tweet_list.append(tweet['id'])
 
     if len(tweet_list)!=0:
         max_id.max_tweet_id = max(tweet_list)
@@ -337,13 +327,13 @@ def invite(request):
 
 def handle_invitation_hit(request, invite_id):
     request.session['invite_id'] = str(invite_id)
-    analytics_obj = Analytics()
-    analytics_obj.save({
-        'site_visit_time':time.mktime(datetime.datetime.now().timetuple()),
-        'invitation_id':str(invite_id),
-        'Analytics Type':'Site Visit',
-        'request_obj':str(request)
-        })
+    # analytics_obj = Analytics()
+    # analytics_obj.save({
+    #     'site_visit_time':time.mktime(datetime.datetime.now().timetuple()),
+    #     'invitation_id':str(invite_id),
+    #     'Analytics Type':'Site Visit',
+    #     'request_obj':str(request)
+    #     })
     return HttpResponseRedirect('/')
 
 def notifications(request):
@@ -456,20 +446,110 @@ def transport_mailchimp(request):
                 mail_excep_obj = MailChimpException()
                 mail_excep_obj.save_mailchimp_exception(eachUser)
 
+def sms_receiver(request):
+    # message = request.POST.get('message')
+    body = request.GET.get('Body',"")
+    msg_from = request.GET.get('From','')   
+    from twilio.rest import TwilioRestClient 
+ 
+    
+    user_profile = UserProfile()
 
-def send_newsletter(request):
+<<<<<<< HEAD
+    # try:
+    #     usr = user_profile.get_profile_by_username(msg_from)
+    #     pic_url_list = []
+    #     if tweet['entities'].get('media')!= None:
+    #         for each in tweet['entities'].get('media'):
+    #             pic_url_list.append(each['media_url'])
+
+    #     h = HTMLParser.HTMLParser()
+=======
+    try:
+        usr = user_profile.get_profile_by_username(msg_from)
+        pic_url_list = []
+        if tweet['entities'].get('media')!= None:
+            for each in tweet['entities'].get('media'):
+                pic_url_list.append(each['media_url'])
+
+        h = HTMLParser.HTMLParser()
+>>>>>>> 374b9e9ffe9741fc268fa87a686c9b40c9e51c0c
+        
+    #     tweet_id = str(tweet['id'])
+    #     parent_tweet_id = 0 if tweet['in_reply_to_status_id'] == None else tweet['in_reply_to_status_id']
+    #     tweet_feed = TweetFeed()
+    #     data = {'tweet_id': str(tweet_id),
+    #     'parent_tweet_id': str(parent_tweet_id),
+    #     'status': h.unescape(tweet['text']),                    
+    #     'picture': pic_url_list,
+    #     }          
+    #     tweet_feed.insert_tweet_by_username(usr['username'],data)
+
+        
+    #     display_tweets.append(data)
+    # except:
+    #     tweet_id = str(tweet['id'])
+        
+    #     h = HTMLParser.HTMLParser()
+    #     str_text = body
+    #     if "#join" in str_text:
+    #         str_text = str_text.lower()
+    #         str_text = str_text.strip()
+    #         str_text = str_text.strip()
+    #         str_text = str_text.replace("#join","")
+    #         str_text = str_text.strip()
+    #         import re
+             
+    #         regex = re.compile(("([a-z0-9!#$%&'*+\/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+\/=?^_`"
+    #                             "{|}~-]+)*(@|\sat\s)(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?(\.|"
+    #                             "\sdot\s))+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?)"))
+
+    #         user_emails = re.findall(regex, str_text)
+
+
+    #         if len(user_emails)>0:
+    #             user_email = user_emails[0][0]
+    #             str_text = str_text.replace(user_email, "")
+    #             location = str_text.strip()
+    #             create_profile_from_mention(user_email, location, tweet)
+    #             # put your own credentials here 
+    #             ACCOUNT_SID = "ACc54d95fd16aa5e6e35dbe60d44f3cc94" 
+    #             AUTH_TOKEN = "69e49be54014f34904e5c08715e0791e" 
+                 
+    #             client = TwilioRestClient(ACCOUNT_SID, AUTH_TOKEN) 
+                 
+    #             client.messages.create(
+    #                 to=msg_from, 
+    #                 from_="+442380000486", 
+    #                 body="You have joined FoodTrade",  
+    #             )
+
+
+
+def send_newsletter(request, substype):
     user_profile_obj = UserProfile()
-    users = user_profile_obj.get_all_profiles()
-    print len(users)
+    if substype == 'subscribed':
+        users = user_profile_obj.get_all_profiles('subscribed')
+    elif substype == 'non':
+        users = user_profile_obj.get_all_profiles('unsubscribed')
     for eachUser in users:
         search_handle = Search(lon = eachUser['latlng']['coordinates'][0], lat = eachUser['latlng']['coordinates'][1])
-        search_results = search_handle.search_all()
-        results = search_results['results'][:10]
-        #message content here
-        message_body = ''
+        search_results = search_handle.search_all()['results']
+        temp_result = []
+        no_of_results = 10
+        for res in search_results:
+            if res["result_type"] == res["user"]["username"]:
+                temp_result.append(res)
+            if len(temp_result) >= no_of_results:
+                break
+
+        results = temp_result
+        tem_con = str(render_to_response('activity-email.html',{'results':results}, context_instance=RequestContext(request)))
+        tem_con = tem_con.replace('Content-Type: text/html; charset=utf-8', '')
         m = Email()
-        print eachUser
-        #m.send_mail("brishi98@gmail.com", "You have the follow new messages in your inbox", message_body)
+        m.send_mail("Activity News Letter", [{'name':'main', 'content':tem_con}], [{'email':'brishi98@gmail.com'}])
+        
+    return HttpResponse(json.dumps({'status':'1'}))
 
 def create_profile_from_mention(email, location, data):
     signup_data = {}
@@ -488,10 +568,10 @@ def create_profile_from_mention(email, location, data):
 
 
         except:
-                lat, lon, addr,postal_code = 51.5072 , -0.1275, "3 Whitehall, London SW1A 2EL, UK", "SW1 A 2EL"
-                latlng = {"type":"Point","coordinates" : [float(lon),float(lat)]}
-                signup_data['location_default_on_error'] = 'true'
-                user_address = addr
+            text = "We cannot recognise your location please try again with a postal code or from http://foodtrade.com"
+            HQ_twitter = get_twitter_obj(settings.HQ_ACCESS_TOKEN, settings.HQ_ACCESS_TOKEN_SECRET)
+            HQ_twitter.update_status(status = text, in_reply_to_status_id = data['id'])
+            return 
 
     
 

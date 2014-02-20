@@ -26,7 +26,7 @@ def aggregrate_all(conditions={}):
 
 def get_all_notification_to_send():
     aggregation_pipeline = []
-    yesterday = datetime.datetime.now() - datetime.timedelta(5)
+    yesterday = datetime.datetime.now() - datetime.timedelta(1)
     aggregation_pipeline.append({"$match":{'notification_time':{'$gt':time.mktime(yesterday.timetuple())}}})
     aggregation_pipeline.append({"$match":{'notification_type':'Added Food'}})
     aggregation_pipeline.append({
@@ -63,11 +63,13 @@ def send_daily_email():
         return
     for eachMessageList in full_result_set['full_result_set']:
         notification_to_user = str(eachMessageList['notification_to'])
-        
+        to_user = db.userprofile.find({'username':str(notification_to_user)})
         to = db.userprofile.find({'username':notification_to_user})
         json_doc = json.dumps(list(to),default=json_util.default)
         subject = 'You have message in your Foodtrade Inbox.'
-
+        to_user = json.dumps(list(to_user),default=json_util.default)
+        to_user = json.loads(to_user)
+        #print to_user[0]['email']
         message_body = ''
         message_body = '<table><tr style="background-color:green;"><td style="width:30%;">From</td><tdstyle="width:50%;">Activity</td><td style="width:20%;">Action</td></tr>'
         for eachMessage in eachMessageList['results']:
@@ -80,5 +82,5 @@ def send_daily_email():
         email_obj.send_mail(
             subject, 
             [{'name':'main', 'content':message_body},{'name':'inbox','content':'''<p>Please check your inbox for more details by clicking the following link</p><p><a href="http://foodtrade.com/inbox">My Foodtrade Inbox. </a></p>'''}], 
-            [{'email':'brishi98@gmail.com'}])
+            [{'email':to_user[0]['email']}])
 send_daily_email()
