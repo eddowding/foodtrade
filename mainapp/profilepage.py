@@ -244,7 +244,7 @@ def edit_profile(request, username):
         # first_name = request.POST['first_name']
         # last_name = request.POST['last_name']
         display_name = request.POST['display_name']
-        display_name = request.POST['email']
+        email = request.POST['email']
         # name = first_name + " " + last_name
         description = request.POST['description']
         try:
