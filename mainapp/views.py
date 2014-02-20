@@ -328,12 +328,12 @@ def invite(request):
 def handle_invitation_hit(request, invite_id):
     request.session['invite_id'] = str(invite_id)
     analytics_obj = Analytics()
-    analytics_obj.save({
-        'site_visit_time':time.mktime(datetime.datetime.now().timetuple()),
-        'invitation_id':str(invite_id),
-        'Analytics Type':'Site Visit',
-        'request_obj':str(request)
-        })    
+    # analytics_obj.save({
+    #     'site_visit_time':time.mktime(datetime.datetime.now().timetuple()),
+    #     'invitation_id':str(invite_id),
+    #     'Analytics Type':'Site Visit',
+    #     'request_obj':str(request)
+    #     })    
     return HttpResponseRedirect('/')
 
 def notifications(request):
