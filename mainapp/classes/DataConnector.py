@@ -123,7 +123,7 @@ class UserInfo():
         self.notification_count = notification_obj.get_notification_count(self.username)
         
         subscribed = True
-        customer, created = Customer.get_or_create(request.user)
+        customer, created = Customer.get_or_create(usr)
         if created:
             subscribed = False
 
