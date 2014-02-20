@@ -156,7 +156,7 @@ class AddCoupon(LoginRequiredMixin, PaymentsContextMixin, DetailView):
         cpn = form.save()
 
         if cpn:
-            return redirect("/payments/admin/coupon")
+            return redirect("/payments/coupon")
 
         else:
             form = CouponForm()
