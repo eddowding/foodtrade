@@ -17,7 +17,12 @@
   .email-margin{
     margin-top: 0.5%;
   }
-
+.email-warning{
+  color:red;
+}
+.email-go{
+  color: green;
+}
 </style>
 
 {% endblock %}
@@ -47,10 +52,10 @@
       </div>
       <div id="notification_email">
         <div class="hidden" id="email-ok">
-          <span class="glyphicon glyphicon-ok email-margin"></span> OK
+          <span class="glyphicon glyphicon-ok email-margin  email-go"></span> OK
         </div>
         <div class="hidden" id='email-nok'>
-          <span class="glyphicon glyphicon-remove email-margin" ></span> Already Taken
+          <span class="glyphicon glyphicon-remove email-margin email-warning" ></span> Already Taken
         </div>
       </div>
     </div>
