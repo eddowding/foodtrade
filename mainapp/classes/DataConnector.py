@@ -11,6 +11,9 @@ from datetime import datetime
 from bson.objectid import ObjectId
 import time, datetime
 from mainapp.classes.TweetFeed import TweetFeed, Food, TradeConnection, Customer, TradeConnection, UserProfile, Organisation, Team, Notification
+from djstripe.models import Customer
+
+
 class UserConnections():
     """docstring for UserConnections"""
     def __init__(self, user_id):
@@ -118,3 +121,11 @@ class UserInfo():
 
         notification_obj = Notification()
         self.notification_count = notification_obj.get_notification_count(self.username)
+        
+        subscribed = True
+        customer, created = Customer.get_or_create(request.user)
+        if created:
+            subscribed = False
+
+        if not customer.has_active_subscription():
+            subscribed = False
