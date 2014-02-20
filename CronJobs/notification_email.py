@@ -81,6 +81,9 @@ def send_daily_email():
         message_body = message_body + '</table>'
         email_obj.send_mail(
             subject, 
-            [{'name':'main', 'content':message_body},{'name':'inbox','content':'''<p>Please check your inbox for more details by clicking the following link</p><p><a href="http://foodtrade.com/inbox">My Foodtrade Inbox. </a></p>'''}], 
+            [
+                {'name':'main', 'content':message_body},
+                {'name':'inbox','content':'''<p>Please check your inbox for more details by clicking the following link</p><p><a href="http://foodtrade.com/inbox">My Foodtrade Inbox. </a></p>'''}
+            ], 
             [{'email':to_user[0]['email']}])
 send_daily_email()

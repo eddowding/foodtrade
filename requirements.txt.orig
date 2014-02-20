@@ -11,7 +11,10 @@ mailchimp
 dj-stripe
 django-floppyforms
 urllib3
+mandrill
 =======
 urllib3
 mandrill
->>>>>>> 02fb4592d215c02a3d24730515a7f736d60ea3b4
+pyDNS
+validate_email
+>>>>>>> master
