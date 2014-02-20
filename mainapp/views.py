@@ -468,10 +468,9 @@ def transport_mailchimp(request):
 def sms_receiver(request):
     # message = request.POST.get('message')
     body = request.GET.get('Body',"")
-    msg_from = request.GET.get('From','')   
-    print body
- 
-    
+    cell_no = request.GET.get('From','')  
+    msg_from = cell_no.replace('+',"")  
+   
     user_profile = UserProfile()
     http_response = ""
     try:
@@ -532,7 +531,7 @@ def sms_receiver(request):
 
                     except:
                         text = "We cannot recognise your location please try again with a postal code or from http://foodtrade.com"
-                        send_sms(msg_from,text)
+                        send_sms(cell_no,text)
                         return 
 
                 
@@ -550,7 +549,7 @@ def sms_receiver(request):
                         'description' : "",
                         'foods': [],
                         'name' : msg_from,
-                        'phone_number' : '',
+                        'phone_number' : cell_no,
                         'profile_img':"http://pbs.twimg.com/profile_images/378800000141996074/6a363e3c4f2a84a956c3cb27c50b2ca0_normal.png",
                         'sign_up_as': 'Individual',
                         'type_user':[],
