@@ -59,17 +59,6 @@ class ChangeCardView(LoginRequiredMixin, PaymentsContextMixin, DetailView):
         return self.customer
 
 
-    def get(self, request, *args, **kwargs):
-        
-        if not has_history(request.user):
-            return redirect("djstripe:subscribe")
-
-        return render(
-                request,
-                self.template_name,
-                
-            )
-
     def post(self, request, *args, **kwargs):
         customer = self.get_object()
         try:
@@ -364,18 +353,12 @@ class AccountView(LoginRequiredMixin, SelectRelatedMixin, TemplateView):
         return self.customer
 
 
-    def get(self, request, *args, **kwargs):
-        if not has_history(request.user):
-            return redirect("djstripe:subscribe")
-
-        return render(
-                request,
-                self.template_name,
-                
-            )
+  
 
     def get_context_data(self, *args, **kwargs):
         context = super(AccountView, self).get_context_data(**kwargs)
+        if not has_history(self.request.user):
+            return redirect("djstripe:subscribe")
         customer, created = Customer.get_or_create(self.request.user)
         context['customer'] = customer
         try:
