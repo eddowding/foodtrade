@@ -7,6 +7,7 @@
             <th>Transaction ID</th>
             <th>Date</th>
             <th>Amount</th>
+            <th>Subscription Expiry Date</th>
             
         </tr>
     </thead>
@@ -28,6 +29,7 @@
                     </p>
                 {% endif %}
             </td>
+            <td>{{ invoice.period_end|date:"M d" }}</td>
         </tr>
     {% empty %}
         <tr>
