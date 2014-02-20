@@ -13,3 +13,4 @@ urllib3
 mandrill
 pyDNS
 validate_email
+twilio

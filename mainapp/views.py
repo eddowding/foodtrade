@@ -476,7 +476,7 @@ def sms_receiver(request):
 
     try:
         usr = user_profile.get_profile_by_username(msg_from)
-        
+        username = usr['username']
 
         h = HTMLParser.HTMLParser()
         
