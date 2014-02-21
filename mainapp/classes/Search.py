@@ -54,9 +54,11 @@ class Search():
             result_type = "$useruid"
         else:
             result_type = "$username"
+
         return { "$push": {
 
         "user":{"name":"$name", 
+        "business_org_name": "$business_org_name",
         "address":"$address",
         "profile_img":"$profile_img",
         "description":"$description",
