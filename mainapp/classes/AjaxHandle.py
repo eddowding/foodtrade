@@ -914,9 +914,10 @@ class AjaxHandle(AjaxSearch):
         if request.user.is_authenticated:
             user_profile_obj = UserProfile()
             email = request.POST.get('email')
-            username = request.user.username
-            # if validate_email(email) != True:
-            #     return HttpResponse(json.dumps({'status':1, 'valid':'no'}))
+            if request.user.is_superuser:
+                username = request.POST.get('username')
+            else:
+                username = request.user.username
             if user_profile_obj.check_valid_email(username, email):
                 return HttpResponse(json.dumps({'status':1, 'valid':'yes'}))
             else:

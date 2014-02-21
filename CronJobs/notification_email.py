@@ -71,11 +71,20 @@ def send_daily_email():
         to_user = json.loads(to_user)
         #print to_user[0]['email']
         message_body = ''
-        message_body = '<table><tr style="background-color:green;"><td style="width:30%;">From</td><tdstyle="width:50%;">Activity</td><td style="width:20%;">Action</td></tr>'
+        message_body = '\
+        <table>\
+            <tr style="background-color:green;">\
+                <td style="width:30%;">From</td>\
+                <td style="width:50%;">Activity</td>\
+                <td style="width:20%;">Action</td>\
+            </tr>'
         for eachMessage in eachMessageList['results']:
             message_body = message_body + '<tr>'
-            message_body = message_body + '<td style="width:30%;">@' + eachMessage['notifying_user'] + '</td><td style="width:50%;">' + eachMessage['notification_message'].split('.')[0] + '</td>'
-            message_body = message_body + '<td style="width:20%;"><a href="http://foodtrade.com/inbox">reply</a></td>'
+            message_body = message_body + '<td style="width:30%;">@' + eachMessage['notifying_user'] + 
+                '</td><td style="width:50%;">' + 
+                eachMessage['notification_message'].split('.')[0] + '</td>'
+            message_body = message_body + '<td style="width:20%;">\
+            <a href="http://foodtrade.com/inbox">reply</a></td>'
             message_body = message_body + '</tr>'
         email_obj = Email()
         message_body = message_body + '</table>'

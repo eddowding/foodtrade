@@ -17,7 +17,12 @@
   .email-margin{
     margin-top: 0.5%;
   }
-
+.email-warning{
+  color:red;
+}
+.email-go{
+  color: green;
+}
 </style>
 
 {% endblock %}
@@ -47,10 +52,10 @@
       </div>
       <div id="notification_email">
         <div class="hidden" id="email-ok">
-          <span class="glyphicon glyphicon-ok email-margin"></span> OK
+          <span class="glyphicon glyphicon-ok email-margin  email-go"></span> OK
         </div>
         <div class="hidden" id='email-nok'>
-          <span class="glyphicon glyphicon-remove email-margin" ></span> Already Taken
+          <span class="glyphicon glyphicon-remove email-margin email-warning" ></span> Already Taken
         </div>
       </div>
     </div>
@@ -140,6 +145,14 @@
       <label for="phone" class="col-sm-2 control-label">Phone</label>
       <div class="col-sm-5">
         <input  id="phone" type="tel" class="form-control" placeholder="Phone number" value="{{phone}}" name="phone"  onblur="validateFeedback()" reqired="required">
+      </div>
+      <div id="notification_phone">
+        <div class="hidden" id="phone-ok">
+          <span class="glyphicon glyphicon-ok email-margin  email-go"></span> OK
+        </div>
+        <div class="hidden" id='phone-nok'>
+          <span class="glyphicon glyphicon-remove email-margin email-warning" ></span> Not Valid
+        </div>
       </div>
     </div>
 
@@ -294,9 +307,11 @@ function validateFeedback(){
         ph = String(ph.value).replace('+','');
     if(!RE.test(phone.value))
     {
-        alert("You have entered an invalid phone number");
+        
+        $('#phone-nok').removeClass('hidden');
         return false;
     }
+    $('#phone-nok').addClass('hidden');
     return true;
 }
 
@@ -314,14 +329,15 @@ function validateFeedback(){
     document.getElementById('hidden_type').value = all_values;
     }
 
+  var email_valid;
+  var username= '{{username|safe}}';
   function validate_email(){
     email = document.getElementById("email").value;
-    ajax_request('check_email_address', 'success_validate_email',{'email':email});
+    ajax_request('check_email_address', 'success_validate_email',{'email':email,'username':username});
   }
-var ema;
   function success_validate_email(data){
     data = jQuery.parseJSON(data);
-    ema = data;
+    email_valid = data;
     if (data['status'] == 1 && data['valid'] == 'yes'){
      $('#email-nok').removeClass('active'); 
      $('#email-nok').addClass('hidden');
@@ -336,14 +352,16 @@ var ema;
     }
   }
 
-  function success_validate_address(data){
-    data = jQuery.parseJSON(data);
-    if (data['valid'] != 'true'){
-      alert('Invalid Address!!');
+
+function validate_business_type(){
+    validate_email();
+    if(email_valid['status'] = 1 && email_valid['valid'] =='yes'){
+
     }
-  }
-   
-  function validate_business_type(){
+    else{
+      return false;
+    }
+
     if (business_type == 'Business' && $('#hidden_type').val().length == 0){
       alert("Please select atleast one Business Type!");
       return false;
