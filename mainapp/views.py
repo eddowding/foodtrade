@@ -597,7 +597,7 @@ def send_newsletter(request, substype):
         tem_con = str(render_to_response('activity-email.html',{'results':results}, context_instance=RequestContext(request)))
         tem_con = tem_con.replace('Content-Type: text/html; charset=utf-8', '')
         m = Email()
-        m.send_mail("Recent FoodTrade activity near you", [{'name':'main', 'content':tem_con}], [{'email':'brishi98@gmail.com'}])
+        m.send_mail("Recent FoodTrade activity near you", [{'name':'main', 'content':tem_con}], [{'email':eachUser['email']}])
 
 
         
