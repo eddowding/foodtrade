@@ -553,14 +553,14 @@ def sms_receiver(request):
                 email_object = Email()
                 template_content = str(render_to_response('notice-mail.html', {'data':signup_data,'register_request_type':'SMS', 'phone':cell_no}))
                 template_content = template_content.replace('Content-Type: text/html; charset=utf-8', '')
-                email_object.send_mail('Please confirm your Account on Foodtrade !!!', template_content=[{'name':'main', 'content':template_content}], to = [{'email':email}])
+                email_object.send_mail('Please confirm your account', template_content=[{'name':'main', 'content':template_content}], to = [{'email':email}])
 
                 '''Transport the user to MailChimp'''
                 mailchimp_obj = MailChimp()
                 mailchimp_obj.subscribe(signup_data)
 
                 '''Send Confirmation SMS'''
-                send_sms(cell_no, 'You have successfully Joined Foodtrade. Please visit http://foodtrade.com Thank You.')
+                send_sms(cell_no, 'You have successfully joined FoodTrade. Please visit http://foodtrade.com ASAP! Thanks!')
 
                 http_response = http_response +"appended new tweet"
     return HttpResponse(http_response)
