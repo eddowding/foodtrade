@@ -237,7 +237,7 @@ class ApplyCoupon(LoginRequiredMixin, PaymentsContextMixin, DetailView):
             res = {}
             res['status'] = "fail"
             res['message'] = "Sorry, could not add the coupon"
-            
+        
             return HttpResponse(json.dumps(res)) 
 
 
@@ -335,6 +335,7 @@ class SyncHistoryView(CsrfExemptMixin, LoginRequiredMixin, View):
                 
             )
 
+
     def post(self, request, *args, **kwargs):
         return render(
             request,
@@ -352,6 +353,15 @@ class AccountView(LoginRequiredMixin, SelectRelatedMixin, TemplateView):
         self.customer, created = Customer.get_or_create(self.request.user)
         return self.customer
 
+    def get(self, request, *args, **kwargs):
+        if not has_history(request.user):
+            return redirect("djstripe:subscribe")
+
+        return render(
+                request,
+                self.template_name,
+                self.get_context_data(self,*args,**kwargs)
+            )
 
   
 
@@ -359,6 +369,7 @@ class AccountView(LoginRequiredMixin, SelectRelatedMixin, TemplateView):
         context = super(AccountView, self).get_context_data(**kwargs)
         if not has_history(self.request.user):
             return redirect("djstripe:subscribe")
+
         customer, created = Customer.get_or_create(self.request.user)
         context['customer'] = customer
         try:

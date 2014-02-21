@@ -47,14 +47,17 @@ def display_profile(request, username):
     userprof = user_profile.get_profile_by_username(str(username))
     uinfo = UserInfo(userprof['useruid'])
     uinfo.description = uinfo.description.replace("\r\n"," ")
-    
+
     parameters['prof_subscribed'] = uinfo.subscribed
     parameters['userprof'] = uinfo
     parameters['profile_id'] = userprof['useruid']
     parameters['sign_up_as'] = userprof['sign_up_as']
     parameters['address'] = userprof['address']
     parameters['type_user'] = userprof['type_user']
-    parameters['name'] = userprof['name']
+    
+    parameters['name'] = userprof['business_org_name'] if userprof['sign_up_as'] == 'Business' or userprof['sign_up_as'] == 'Organisation' else userprof['name']
+
+    # parameters['name'] = userprof['name']
     parameters['description'] = userprof['description']
     parameters['pic_url'] = userprof['profile_img'].replace("normal","bigger")
 
@@ -208,7 +211,7 @@ def edit_profile(request, username):
             else:
                 parameters['type_user'] = ''
             parameters['address'] = userprof['address']
-            
+            parameters['newsletter_freq'] = userprof.get('newsletter_freq') if userprof.get('newsletter_freq')!=None else ''
             parameters['display_name'] = userprof['name']
             parameters['email'] = userprof['email']
             parameters['description'] = userprof['description']
@@ -239,14 +242,19 @@ def edit_profile(request, username):
             return HttpResponseRedirect('/')
 
         
+        try:
+            sign_up_as = request.POST['sign_up_as']
+        except:
+            sign_up_as = userprof['sign_up_as']
         company_num = request.POST.get('company_num') if request.POST.get('company_num')!=None else ''
         website_url = request.POST.get('website_url') if request.POST.get('website_url')!=None else ''
         facebook_page = request.POST.get('facebook_page') if request.POST.get('facebook_page')!=None else ''
         deliverables = request.POST.get('deliverables') if request.POST.get('deliverables')!=None else ''
         business_org_name = request.POST.get('business_org_name') if request.POST.get('business_org_name')!=None else ''
-
+        print 'business_org_name', business_org_name
         # first_name = request.POST['first_name']
         # last_name = request.POST['last_name']
+        newsletter_freq = request.POST['newsletter_freq']
         display_name = request.POST['display_name']
         email = request.POST['email']
         # name = first_name + " " + last_name
@@ -267,10 +275,6 @@ def edit_profile(request, username):
 
         if len(address) == 0:
             address = userprof['address']
-        try:
-            sign_up_as = request.POST['sign_up_as']
-        except:
-            sign_up_as = userprof['sign_up_as']
 
         phone = request.POST['phone']
 
@@ -286,14 +290,13 @@ def edit_profile(request, username):
 
         user_profile.update_profile_by_username(userprof['username'], description, address, 
             usr_type, sign_up_as, phone, lat, lon, postal_code, display_name, is_superuser, company_num,
-            website_url, facebook_page, deliverables, business_org_name, email)
+            website_url, facebook_page, deliverables, business_org_name, email, newsletter_freq)
 
         return HttpResponseRedirect('/')
 
 def get_tags_freq(food_name):
     foo = ApprovedFoodTags()
     foods_list = foo.get_food_by_name(food_name)
-    print foods_list
     only_tags = foods_list['tags'] if foods_list!=None else ''
     # all_tags = []
     # for eachfoo in foods_list:
@@ -304,7 +307,6 @@ def get_tags_freq(food_name):
     # for each in tags_freq:
     #     only_tags.append(str(each[0]))
     # only_tags = ','.join(only_tags)
-    print only_tags
     return only_tags
 
 def get_all_foods(user_id, logged_in_id = None):

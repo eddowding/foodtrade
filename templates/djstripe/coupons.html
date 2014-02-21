@@ -11,8 +11,7 @@
   <div class="row form-horizontal">
 
          
-  <p> List of active coupons </p>
-           
+  <p> List of active coupons </p>       
 
 
     </div>
@@ -29,6 +28,8 @@
           <th>Percent OFF</th>
           <th>Duration</th>
           <th>Duration in months</th>
+          <th>No. can be reused</th>
+          <th>Expiration Date</th>
           <th>Created On</th>
         </tr>
       </thead>
@@ -39,9 +40,11 @@
 <tr>
           <td>{{forloop.counter}}</td>
           <td>{{coupon.coupon_id}}</td>
-          <td>{{coupon.percent_off}}</td>
+          <td>{{coupon.percent_off |floatformat}}</td>
           <td>{{coupon.duration}}</td>
           <td>{{coupon.duration_in_months}}</td>
+          <td>{{coupon.max_redemptions|floatformat }}</td>
+          <td>{{coupon.redeem_by}}</td>
           <td>{{coupon.created}}</td>
         </tr>
 {% endfor %}

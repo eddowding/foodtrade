@@ -9,6 +9,7 @@ import datetime,time
 from mainapp.classes.TweetFeed import Food
 from mainapp.models import FoodPhoto
 from mainapp.classes.mailchimp import MailChimp
+from django.conf import settings
 
 class FoodForm(forms.Form):
     food_description = forms.CharField(required=False, widget=forms.Textarea(attrs={'class' : 'form-control'})) 
@@ -173,4 +174,8 @@ class SignupForm(forms.Form):
                         })
             except:
                 return HttpResponseRedirect('/activity/')
-        return HttpResponseRedirect('/activity/')
+        if str(self.cleaned_data['sign_up_as']) == "Business":
+            settings.LOGIN_REDIRECT_URL = "/payments/subscribe"
+            return HttpResponseRedirect('/payments/subscribe')
+        else:
+            return HttpResponseRedirect('/activity/')
