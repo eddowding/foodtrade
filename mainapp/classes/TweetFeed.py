@@ -74,7 +74,7 @@ class TweetFeed():
         sender = usr_profile.get_profile_by_id(user_id)
         email_text = sender['username'] + " has metioned you in his post <a href='http://foodtrade.com/"+sender['username']+"/post/"+tweet['tweet_id']+"/'>"+tweet['status']+"</a>"
         sms_text = sender['username'] + " has metioned you in his post as "+tweet['status']+" in FoodTrade"
-        email_subject = sender['username']+" has mentioned you in FoodTrade"
+        email_subject = sender['username']+" has mentioned you in FoodTrade."
         if result:
             for each in result:
                 try:
