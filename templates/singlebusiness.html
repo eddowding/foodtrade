@@ -222,7 +222,7 @@
                 Share on Tumblr
               </a>
                  
-              <a  class="btn btn-block  btn-social btn-bitbucket" href="http://www.linkedin.com/shareArticle?mini=true&url={{ request.build_absolute_uri|urlencode}}&title={{screen_name}} on FOodTrade&summary=Hey, view my profile on Foodtrade.&source=">
+              <a  class="btn btn-block  btn-social btn-bitbucket" href="http://www.linkedin.com/shareArticle?mini=true&url={{ request.build_absolute_uri|urlencode}}&title={{screen_name}} on FoodTrade&summary=Hey, view my profile on Foodtrade.&source=">
                 <i class="fa fa-linkedin"></i>
                 Share on LinkedIn
               </a>
@@ -235,14 +235,23 @@
         </div><!-- /.modal-dialog -->
       </div><!-- /.modal -->
       <div class="icons text-center" style="font-size:25px">
+
+      {% if facebook_page %}
         <a href="{{facebook_page}}"><i class="fa fa-facebook-square"></i></a>
-        <a href="#"><i class="fa fa-twitter-square"></i></a> 
-        <a href="#"><i class="fa fa-phone-square"></i></a> 
-        <a href="#"><i class="fa fa-rss-square"></i></a> 
-        <a href="#"><i class="fa fa-envelope"></i></a> 
-        <a href="{{website_url}}"><i class="fa fa-globe"></i></a> 
-        <a href="#"><i class="fa fa-youtube"></i></a> 
-        <a href="#"><i class="fa fa-linkedin-square"></i></a> 
+      {% endif %} 
+      {% if userinfo.username %}
+        <a href="http://twitter.com/{{userinfo.username}}"><i class="fa fa-twitter-square"></i></a> 
+      {% endif %} 
+      {% if phone_number %}
+        <a href="callto:{{phone_number}}"><i class="fa fa-phone-square"></i></a>  
+      {% endif %}   
+      {% if website_url %}
+        <a href="{{website_url}}"><i class="fa fa-globe"></i></a>  
+      {% endif %} 
+      {% if company_num %}
+        <a href="https://www.duedil.com/company/{{company_num}}"><i class="fa fa-legal"></i></a>  
+      {% endif %} 
+ 
       </div>  
       
      <!-- modal_contact -->
@@ -410,6 +419,15 @@
 
         <div class="tab-content">
           <div class="tab-pane active fade in " id="produce">
+
+          
+      {% if deliverables %}
+      <div class="small alert alert-info" id="deliveries">
+        <h5 style="margin-top: 0;"><i class="fa fa-truck"></i>  Deliveries</h5>
+        {{deliverables|linebreaks}}
+      </div>
+      {% endif %}
+
  
           <div class="row">
           <div class="col-md-12 ">

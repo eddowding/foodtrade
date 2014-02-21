@@ -158,16 +158,26 @@
           </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
       </div><!-- /.modal -->
-      <!-- <div class="icons text-center" style="font-size:25px">
-        <a href="#"><i class="fa fa-facebook-square"></i></a>
-        <a href="#"><i class="fa fa-twitter-square"></i></a> 
-        <a href="#"><i class="fa fa-phone-square"></i></a> 
-        <a href="#"><i class="fa fa-rss-square"></i></a> 
-        <a href="#"><i class="fa fa-envelope"></i></a> 
-        <a href="#"><i class="fa fa-globe"></i></a> 
-        <a href="#"><i class="fa fa-youtube"></i></a> 
-        <a href="#"><i class="fa fa-linkedin-square"></i></a> 
-      </div>  -->
+
+      <div class="icons text-center" style="font-size:25px">
+
+      {% if facebook_page %}
+        <a href="{{facebook_page}}"><i class="fa fa-facebook-square"></i></a>
+      {% endif %} 
+      {% if userinfo.username %}
+        <a href="http://twitter.com/{{userinfo.username}}"><i class="fa fa-twitter-square"></i></a> 
+      {% endif %} 
+      {% if phone_number %}
+        <a href="callto:{{phone_number}}"><i class="fa fa-phone-square"></i></a>  
+      {% endif %}   
+      {% if website_url %}
+        <a href="{{website_url}}"><i class="fa fa-globe"></i></a>  
+      {% endif %} 
+      {% if company_num %}
+        <a href="https://www.duedil.com/company/{{company_num}}"><i class="fa fa-legal"></i></a>  
+      {% endif %} 
+ 
+      </div>  
       
      <!-- modal_contact -->
       <div class="modal fade" id="modal_contact" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
