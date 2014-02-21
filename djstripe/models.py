@@ -18,7 +18,7 @@ from django.contrib.sites.models import Site
 from jsonfield.fields import JSONField
 from model_utils.models import TimeStampedModel
 import stripe
-
+import time
 from . import exceptions
 from .managers import CustomerManager, ChargeManager, TransferManager
 from .settings import PAYMENTS_PLANS, INVOICE_FROM_EMAIL
@@ -340,16 +340,16 @@ class Coupon(TimeStampedModel):
                   duration= self.duration,
                   duration_in_months = int(self.duration_in_months),
                   id = self.coupon_id,
-                  max_redemptions=self.max_redemptions,
-                  redeem_by=self.redeem_by
+                  max_redemptions=int(self.max_redemptions),
+                  redeem_by=time.mktime(self.redeem_by.timetuple())
                   )
             else:
                 stripe.Coupon.create(
                   percent_off = int(self.percent_off),
                   duration= self.duration,
                   id = self.coupon_id,
-                  max_redemptions=self.max_redemptions,
-                  redeem_by=self.redeem_by
+                  max_redemptions=int(self.max_redemptions),
+                  redeem_by=time.mktime(self.redeem_by.timetuple())
                   )
             return True
         except:
