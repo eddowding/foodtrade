@@ -321,6 +321,9 @@ class Coupon(TimeStampedModel):
     percent_off = models.DecimalField(decimal_places=2, max_digits=4)
     duration= models.CharField(max_length=25, blank=True, choices = DURATION_CHOICES)
     duration_in_months = models.CharField(max_length=4, null=True, blank=True)
+    percent_off = models.DecimalField(decimal_places=2, max_digits=4)
+    max_redemptions = models.DecimalField(decimal_places=2, max_digits=4)
+    redeem_by = models.DateTimeField()
 
     # objects = models.Manager()
 
@@ -336,12 +339,18 @@ class Coupon(TimeStampedModel):
                   percent_off = int(self.percent_off),
                   duration= self.duration,
                   duration_in_months = int(self.duration_in_months),
-                  id = self.coupon_id)
+                  id = self.coupon_id,
+                  max_redemptions=self.max_redemptions,
+                  redeem_by=self.redeem_by
+                  )
             else:
                 stripe.Coupon.create(
                   percent_off = int(self.percent_off),
                   duration= self.duration,
-                  id = self.coupon_id)
+                  id = self.coupon_id,
+                  max_redemptions=self.max_redemptions,
+                  redeem_by=self.redeem_by
+                  )
             return True
         except:
             return False

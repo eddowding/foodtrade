@@ -7,9 +7,14 @@ pygeocoder
 requests
 pillow
 mailchimp
+
 dj-stripe
 django-floppyforms
 urllib3
 mandrill
+
+urllib3
+mandrill
 pyDNS
 validate_email
+twilio

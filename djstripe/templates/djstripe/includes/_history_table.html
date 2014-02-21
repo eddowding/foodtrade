@@ -1,12 +1,14 @@
 {% load static %}
 <div id="history-table">
-<h2>Payment History <img class="in-progress-gif" src="{% static 'img/in-progress.gif' %}" /></h2>
+<h3>Payment History <img class="in-progress-gif" src="{% static 'img/in-progress.gif' %}" /></h3>
+<hr />
 <table class="table table-striped">
     <thead>
         <tr>
-            <th>Transaction ID</th>
+            <th>#</th>
             <th>Date</th>
             <th>Amount</th>
+            <th>Renewal Date</th>
             
         </tr>
     </thead>
@@ -28,6 +30,7 @@
                     </p>
                 {% endif %}
             </td>
+            <td>{{ invoice.period_end|date:"M d" }}</td>
         </tr>
     {% empty %}
         <tr>

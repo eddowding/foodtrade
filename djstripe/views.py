@@ -31,6 +31,21 @@ from django.db import models
 from django.forms import ModelForm
 from django.contrib.auth.decorators import user_passes_test
 
+
+def has_history(user):
+    customer, created = Customer.get_or_create(user)
+    if len(customer.invoices.all()) > 0:
+        return True
+    cu = customer.stripe_customer
+    customer.sync(cu=cu)
+    customer.sync_current_subscription(cu=cu)
+    customer.sync_invoices(cu=cu)
+    customer.sync_charges(cu=cu)
+    if len(customer.invoices.all()) > 0:
+        return True
+
+    return False
+
 class ChangeCardView(LoginRequiredMixin, PaymentsContextMixin, DetailView):
     # TODO - needs tests
     # Needs a form
@@ -42,6 +57,7 @@ class ChangeCardView(LoginRequiredMixin, PaymentsContextMixin, DetailView):
             return self.customer
         self.customer, created = Customer.get_or_create(self.request.user)
         return self.customer
+
 
     def post(self, request, *args, **kwargs):
         customer = self.get_object()
@@ -107,6 +123,12 @@ class StripeAdminView(LoginRequiredMixin, PaymentsContextMixin, DetailView):
 
 class CouponView(LoginRequiredMixin, PaymentsContextMixin, DetailView):
     template_name = "djstripe/coupons.html"
+    def get_object(self):
+        if hasattr(self, "customer"):
+            return self.customer
+        self.customer, created = Customer.get_or_create(self.request.user)
+        return self.customer
+
     def get(self, request, *args, **kwargs):
         if not request.user.is_superuser:
             return redirect("djstripe:account")
@@ -224,6 +246,7 @@ class CancelSubscriptionView(LoginRequiredMixin, PaymentsContextMixin, FormView)
     template_name = "djstripe/cancel_subscription.html"
     form_class = CancelSubscriptionForm
 
+
     def form_valid(self, form):
         customer, created = Customer.get_or_create(self.request.user)
         # TODO - pass in setting to control at_period_end boolean
@@ -273,12 +296,45 @@ class HistoryView(LoginRequiredMixin, SelectRelatedMixin, DetailView):
     select_related = ["invoice"]
 
     def get_object(self):
+        if hasattr(self, "customer"):
+            return self.customer
+        self.customer, created = Customer.get_or_create(self.request.user)
+        return self.customer
+
+    def get(self, request, *args, **kwargs):
+        if not has_history(request.user):
+            return redirect("djstripe:subscribe")
+
+        return render(
+                request,
+                self.template_name,
+                
+            )
+
+    def get_object(self):
         customer, created = Customer.get_or_create(self.request.user)
         return customer
 
 
 class SyncHistoryView(CsrfExemptMixin, LoginRequiredMixin, View):
     # TODO - needs tests
+
+    def get_object(self):
+        if hasattr(self, "customer"):
+            return self.customer
+        self.customer, created = Customer.get_or_create(self.request.user)
+        return self.customer
+
+    def get(self, request, *args, **kwargs):
+        if not has_history(request.user):
+            return redirect("djstripe:subscribe")
+
+        return render(
+                request,
+                self.template_name,
+                
+            )
+
     def post(self, request, *args, **kwargs):
         return render(
             request,
@@ -290,9 +346,19 @@ class SyncHistoryView(CsrfExemptMixin, LoginRequiredMixin, View):
 class AccountView(LoginRequiredMixin, SelectRelatedMixin, TemplateView):
     # TODO - needs tests
     template_name = "djstripe/account.html"
+    def get_object(self):
+        if hasattr(self, "customer"):
+            return self.customer
+        self.customer, created = Customer.get_or_create(self.request.user)
+        return self.customer
+
+
+  
 
     def get_context_data(self, *args, **kwargs):
         context = super(AccountView, self).get_context_data(**kwargs)
+        if not has_history(self.request.user):
+            return redirect("djstripe:subscribe")
         customer, created = Customer.get_or_create(self.request.user)
         context['customer'] = customer
         try:
@@ -345,10 +411,22 @@ class ChangePlanView(LoginRequiredMixin,
                         SubscriptionMixin,
                         FormView):
 
+
     form_class = PlanForm
     template_name = "djstripe/subscribe_form.html"
     success_url = reverse_lazy("djstripe:history")
     form_valid_message = "You've just changed your plan!"
+
+    def get(self, request, *args, **kwargs):
+        customer = self.get_object()
+        if len(customer.invoices.all()) == 0:
+            return redirect("djstripe:subscribe")
+
+        return render(
+                request,
+                self.template_name,
+                
+            )
 
     def post(self, request, *args, **kwargs):
         form = PlanForm(request.POST)
