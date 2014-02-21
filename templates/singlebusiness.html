@@ -52,7 +52,6 @@
 
           <!-- certificate -->
           {% if prof_subscribed %}
-          
           <span class="fa-stack fa-lg pull-right" id="verified" rel="tooltip" title="Verified profile">
             <i class="fa fa-certificate fa-stack-2x" style="color: #1DBD3C;"></i>
             <i class="fa fa-check fa-stack-1x" style="color: #fff;"></i>
@@ -420,19 +419,23 @@
         <div class="tab-content">
           <div class="tab-pane active fade in " id="produce">
 
-          
+
+      {% if user.is_authenticated %}
       {% if deliverables %}
       <div class="small alert alert-info" id="deliveries">
         <h5 style="margin-top: 0;"><i class="fa fa-truck"></i>  Deliveries</h5>
         {{deliverables|linebreaks}}
       </div>
       {% endif %}
+      {% endif %}
 
- 
+
+
+          {% if user.is_authenticated %}
           <div class="row">
           <div class="col-md-12 ">
           <div class=" well well-sm clearfix">
-<div class="row">
+          <div class="row">
             <div class="col-md-8 col-sm-8 col-xs-7">
               {% if user.is_authenticated %}
                   <div class="input-group">
@@ -473,7 +476,7 @@
                         </span></div>
                       </div>  
               {% endif %}
-            </div>
+            </div> 
 
             <div class="col-md-4 col-sm-4 col-xs-5">
              <form action="#" method="get">
@@ -490,6 +493,7 @@
           </div>
           </div>
           </div>
+          {% endif %}
 
 
       <table class="table table-list-search table-condensed">
@@ -497,7 +501,7 @@
           <thead>
             <tr>
               <td colspan="2">
-                <p class="alert alert-warning"><a href="{% provider_login_url "twitter" process="login" %}" class="">Login</a> or <a href="{% provider_login_url "twitter" process="login" %}" class="">sign up free</a> to see all their foods, and any that you know are missing. </p>
+                <p class="alert alert-warning"><a href="{% provider_login_url "twitter" process="login" %}" class="">Login</a> or <a href="{% provider_login_url "twitter" process="login" %}" class="">sign up free</a> to see all their full profile. </p>
               </td>
             </tr>
           </thead>
@@ -592,6 +596,7 @@
           </div> <!-- end produce -->
 
           <div class="tab-pane fade" id="connections">
+          {% if user.is_authenticated %}
             <div class="well well-sm">  
             <div class="form-inline"  role="form">
               <div class="form-group">
@@ -635,6 +640,7 @@
      
             </div>
           </div>
+          {% endif %}
                       
 <div id="all-connections">
 <div class="clearfix">
@@ -728,6 +734,7 @@
           </div> <!--  end connections -->
 
           <div class="tab-pane fade" id="organisations">
+          {% if user.is_authenticated %}
             <div class="well well-sm">  
             <div class="form-inline"  role="form">
               <div class="form-group">
@@ -747,7 +754,9 @@
 
      
             </div>
-          </div>
+            </div>
+            {% endif %}
+
           <div id="organisations_list">
             {% if user.is_authenticated %}
             {% else %}

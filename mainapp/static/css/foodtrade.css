@@ -1159,7 +1159,13 @@ ul.tagit li.tagit-choice-editable {
   margin-top: 10px;
 }
 
+.verified { 
+}
 
+/*
+.nextaction:hover + ul.dropdown-menu {
+   display: block;   
+}*/
 
 /********************************/
 /**  SIDEBAR                   **/
