@@ -43,21 +43,31 @@ def display_profile(request, username):
     parameters['form'] = food_form
     foo = AdminFoods()
     parameters['all_tags'] = foo.get_tags()
-    usr_profile = UserProfile()
-    userprof = usr_profile.get_profile_by_username(str(username))
+
+    user_profile = UserProfile()
+    userprof = user_profile.get_profile_by_username(str(username))
+
     uinfo = UserInfo(userprof['useruid'])
     uinfo.description = uinfo.description.replace("\r\n"," ")
 
     parameters['prof_subscribed'] = uinfo.subscribed
     parameters['userprof'] = uinfo
+
     parameters['profile_id'] = userprof['useruid']
     parameters['sign_up_as'] = userprof['sign_up_as']
     parameters['address'] = userprof['address']
     parameters['type_user'] = userprof['type_user']
+    try:
+        parameters['company_num'] = userprof.get('company_num') if userprof.get('company_num')!=None else ''
+        parameters['website_url'] = userprof.get('website_url') if userprof.get('website_url')!=None else ''
+        parameters['facebook_page'] = userprof.get('facebook_page') if userprof.get('facebook_page')!=None else ''
+        parameters['deliverables'] = userprof.get('deliverables') if userprof.get('deliverables')!=None else ''
+        parameters['business_org_name'] = userprof.get('business_org_name') if userprof.get('business_org_name')!=None else ''    
+    except:
+        pass
     
     parameters['name'] = userprof.get('business_org_name') if userprof['sign_up_as'] == 'Business' or userprof['sign_up_as'] == 'Organisation' else userprof['name']
 
-    # parameters['name'] = userprof['name']
     parameters['description'] = userprof['description']
     parameters['pic_url'] = userprof['profile_img'].replace("normal","bigger")
 
@@ -65,6 +75,7 @@ def display_profile(request, username):
     parameters['email'] = userprof['email']
     parameters['screen_name'] = "@" + userprof['screen_name']
     parameters['username'] = userprof['username']
+
     try:
         parameters['is_unknown_profile'] = userprof['is_unknown_profile']
     except:
@@ -74,7 +85,14 @@ def display_profile(request, username):
         tweet_feed_obj = TweetFeed()
         user_updates = tweet_feed_obj.get_tweet_by_user_id(userprof['useruid'])
         user_updates["updates"].reverse()
-        updates = user_updates["updates"][0:10]
+        updates = user_updates["updates"]
+        new_updates = []
+
+        '''Show only undeleted posts'''
+        for eachUpdate in updates:
+            if eachUpdate['deleted'] == 0:
+                new_updates.append(eachUpdate)
+        updates = new_updates[0:10]
 
         for i in range(len(updates)):
             time_elapsed = int(time.time()) - updates[i]['time_stamp']
@@ -147,6 +165,7 @@ def display_profile(request, username):
             parameters['customers'], parameters['logged_customer'] = get_customers(userprof['useruid'], request.user.id)
         else:
             conn_limited, parameters['logged_conn'] = get_connections(userprof['useruid'])
+
             # if not logged in show limited
             parameters['connections'] = conn_limited[:5]
             parameters['all_foods'] = get_all_foods(userprof['useruid'])[:3]
@@ -156,9 +175,7 @@ def display_profile(request, username):
 
         parameters['connections_str'] = json.dumps(parameters['connections'])
         parameters['customers_str'] = json.dumps(parameters['customers'])
-        # get all organisations
         return render_to_response('singlebusiness.html', parameters, context_instance=RequestContext(request))
-        # return render_to_response('typeahead.html', parameters, context_instance=RequestContext(request))
 
     elif parameters['sign_up_as'] == 'Organisation':
         parameters['members_foods'], parameters['food_count'] = get_foods_from_org_members(userprof['useruid'])
@@ -205,7 +222,7 @@ def edit_profile(request, username):
             parameters['facebook_page'] = userprof.get('facebook_page') if userprof.get('facebook_page')!=None else ''
             parameters['deliverables'] = userprof.get('deliverables') if userprof.get('deliverables')!=None else ''
             parameters['business_org_name'] = userprof.get('business_org_name') if userprof.get('business_org_name')!=None else ''
-
+            print parameters['deliverables']
             if userprof['sign_up_as'] == 'Business':
                 parameters['type_user'] = str(','.join(userprof['type_user']))
             else:

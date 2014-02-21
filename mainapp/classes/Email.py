@@ -2,7 +2,6 @@
 # encoding: utf-8
 from MongoConnection import MongoConnection
 import mandrill 
-
         
 class Email():
     def __init__ (self):        
@@ -14,6 +13,7 @@ class Email():
         self.db_object.insert_one(self.table_name, doc)        
 
     def send_mail(self, subject, template_content=[{}], to = [{}]):
+        #md = mandrill.Mandrill('DS3yEW4HdOzqHGXOiXGPkg')
         md = mandrill.Mandrill('NwotnhPk1Nprc6OX0Wq6vA')
         mes = mandrill.Messages(md)
 
@@ -25,7 +25,7 @@ class Email():
             'from_name':'FoodTrade', 
             'important':'true',
             'track_click':'true',
-            'subject':subject,
+            'subject':subject
         }
         
         template_content = template_content

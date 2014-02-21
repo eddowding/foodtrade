@@ -101,7 +101,7 @@ class SignupForm(forms.Form):
             invite_id = ''
 
         address = addr 
-
+        '''Get user from the SocialAccount MySql'''
         userprofile = UserProfile()
         social_account = SocialAccount.objects.get(user__id = user.id)
         data = {
@@ -123,13 +123,16 @@ class SignupForm(forms.Form):
                 'foods':[],
                 'organisations':[]
         }
-        
+
+        '''Transport  user from MySql to Mongo'''
         userprofile.update_profile_upsert({'screen_name':social_account.extra_data['screen_name'],
             'is_unknown_profile':'true', 'username':social_account.extra_data['screen_name']},data)
 
+        '''Transport user to MailChimp List'''
         mailchimp_obj = MailChimp()
         mailchimp_obj.subscribe(data)
 
+        '''Invitation Tracking and Notifying the user who invites the user'''
         if invite_id != '':
             invititation_to = user.username
             screen_name = social_account.extra_data['screen_name']
@@ -143,7 +146,7 @@ class SignupForm(forms.Form):
                     
                     notification_obj = Notification()
                     invites_obj = Invites()
-                     
+                    '''If the joined user is invited Send notification to who invited'''
                     notification_obj.save_notification({
                         'notification_to':str(invited_by), 
                         'notification_message':'@' + str(screen_name) + ' has accepted your invitation and joined FoodTrade. You can connect and add him to your contacts.', 
