@@ -94,7 +94,29 @@ class UserInfo():
             self.country = userprof['address'].split(',')[len(userprof['address'].split(','))-1]
         except:
             self.country = ''
+        try:
+            self.facebook_page = userprof['facebook_page']
+        except:
+            self.facebook_page = ''
 
+        try:
+            self.webiste_url = userprof['webiste_url']
+        except:
+            self.webiste_url = ''
+        try:
+            self.company_num = userprof['company_num']
+        except:
+            self.facebook_page = ''
+        try:
+            self.deliverables = userprof['deliverables']
+        except:
+            self.deliverables = ''
+        try:
+            self.business_org_name = userprof['business_org_name']
+        except:
+            self.business_org_name = ''            
+
+        
         user_connection =  UserConnections(user_id)
 
         self.full_name = userprof['business_org_name'] if userprof['sign_up_as'] == 'Business' or userprof['sign_up_as'] == 'Organisation' else userprof['name']

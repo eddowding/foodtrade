@@ -2,7 +2,6 @@
 # encoding: utf-8
 from MongoConnection import MongoConnection
 import mandrill 
-
         
 class Email():
     def __init__ (self):        
@@ -25,7 +24,7 @@ class Email():
             'from_name':'FoodTrade', 
             'important':'true',
             'track_click':'true',
-            'subject':subject,
+            'subject':subject
         }
         
         template_content = template_content
