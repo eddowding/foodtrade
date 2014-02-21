@@ -30,6 +30,7 @@ from mainapp.classes.Search import Search
 from mainapp.classes.Email import Email
 import uuid
 from twilio.rest import TwilioRestClient 
+from mainapp.classes.mailchimp import MailChimp
 
 
 
@@ -466,7 +467,6 @@ def transport_mailchimp(request):
                 mail_excep_obj.save_mailchimp_exception(eachUser)
 
 def sms_receiver(request):
-    # message = request.POST.get('message')
     body = request.GET.get('Body',"")
     cell_no = request.GET.get('From','')  
     msg_from = cell_no.replace('+',"")  
@@ -561,6 +561,20 @@ def sms_receiver(request):
                     }
                 
                 user_profile_obj.create_profile(signup_data)
+
+                '''Send Email to confirm Account SignUp via SMS'''
+                email_object = Email()
+                template_content = str(render_to_response('notice-mail.html', {'data':signup_data,'register_request_type':'SMS', 'phone':cell_no}))
+                template_content = template_content.replace('Content-Type: text/html; charset=utf-8', '')
+                email_object.send_mail('Please confirm your Account on Foodtrade !!!', template_content=[{'name':'main', 'content':template_content}], to = [{'email':email}])
+
+                '''Transport the user to MailChimp'''
+                mailchimp_obj = MailChimp()
+                mailchimp_obj.subscribe(signup_data)
+
+                '''Send Confirmation SMS'''
+                send_sms(cell_no, 'You have successfully Joined Foodtrade. Please visit http://foodtrade.com Thank You.')
+
                 http_response = http_response +"appended new tweet"
     return HttpResponse(http_response)
 
@@ -568,11 +582,16 @@ def sms_receiver(request):
 
 
 def send_newsletter(request, substype):
+    if request.GET.get('code') != '11foodtradeESRS22':
+        return HttpResponseRedirect('/')
+
     user_profile_obj = UserProfile()
-    if substype == 'subscribed':
-        users = user_profile_obj.get_all_profiles('subscribed')
-    elif substype == 'non':
-        users = user_profile_obj.get_all_profiles('unsubscribed')
+    if substype == 'daily':
+        users = user_profile_obj.get_all_profiles('daily')
+    elif substype == 'weekly' or substype == 'none':
+        users = user_profile_obj.get_all_profiles(substype)
+    elif substype == 'monthly':
+        users = user_profile_obj.get_all_profiles('monthly')
 
     for eachUser in users:
         search_handle = Search(lon = eachUser['latlng']['coordinates'][0], lat = eachUser['latlng']['coordinates'][1])
@@ -590,6 +609,7 @@ def send_newsletter(request, substype):
         tem_con = tem_con.replace('Content-Type: text/html; charset=utf-8', '')
         m = Email()
         m.send_mail("Activity News Letter", [{'name':'main', 'content':tem_con}], [{'email':'brishi98@gmail.com'}])
+
         
     return HttpResponse(json.dumps({'status':'1'}))
 
@@ -644,10 +664,15 @@ def create_profile_from_mention(email, location, data):
     user_profile_obj.create_profile(signup_data)
 
     '''Send Email to confirm Account SignUp via Twitter'''
-    email_object = Email()
     template_content = str(render_to_response('notice-mail.html', {'data':signup_data,'register_request_type':'Twitter'}))
     template_content = template_content.replace('Content-Type: text/html; charset=utf-8', '')
+    email_object = Email()
     email_object.send_mail('Please confirm your Account on Foodtrade !!!', 
         template_content=[{'name':'main', 'content':template_content}], to = [{'email':email}])
+
+    '''Transport the user to MailChimp'''
+    mailchimp_obj = MailChimp()
+    mailchimp_obj.subscribe(signup_data)
+
     return {'status':1}
 

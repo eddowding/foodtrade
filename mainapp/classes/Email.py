@@ -2,7 +2,6 @@
 # encoding: utf-8
 from MongoConnection import MongoConnection
 import mandrill 
-
         
 class Email():
     def __init__ (self):        

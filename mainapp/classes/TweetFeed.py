@@ -16,7 +16,6 @@ import json
 from pymongo import Connection
 import re
 from django.conf import settings
-# from mainapp.views import get_twitter_obj
 import json
 import datetime,time
 import pprint
@@ -183,7 +182,10 @@ class UserProfile():
         users = []
         user_pages_count = int(self.db_object.get_count(self.table_name, {})/15)+ 1
         for i in range(0,user_pages_count, 1):
-            pag_users = self.db_object.get_paginated_values(self.table_name, {}, pageNumber = int(i+1))
+            if status == 'none':
+                pag_users = self.db_object.get_paginated_values(self.table_name, {'$exists':{'newsletter_freq':False}}, pageNumber = int(i+1))
+            else:    
+                pag_users = self.db_object.get_paginated_values(self.table_name, {'newsletter_freq':status}, pageNumber = int(i+1))
             for eachUser in pag_users:
                 users.append(eachUser)
         return users
