@@ -36,7 +36,14 @@
 
 
 
-         <h1 style="font-size: 26px;"><a href="/profile/{{parent_tweet.user.username}}">{{parent_tweet.user.name}}</a></h1>
+         <h1 style="font-size: 26px;"><a href="/profile/{{parent_tweet.user.username}}">
+                {% if parent_tweet.sign_up_as == "Business" or parent_tweet.sign_up_as == "Organisation" %}
+                  {{parent_tweet.user.business_org_name}}
+                {% else %}
+                  {{parent_tweet.user.name}}
+                {% endif %}
+
+        </a></h1>
 
 
 

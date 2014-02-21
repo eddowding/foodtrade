@@ -89,7 +89,8 @@ function reload_controls()
 		for(i=0;i<connections.length;i++)
 		{
 			var con = connections[i];
-			var name = self_info.user.name;
+			// var name = self_info.user.name;
+			var name = self_info.sign_up_as =="Business" || self_info.sign_up_as == "Organisation" ? self_info.user.business_org_name: self_info.user.name;
 			var status =  self_info.status;
 			var profile_img = self_info.user.profile_img;
 			var username = self_info.user.username;

@@ -29,29 +29,19 @@ import HTMLParser
 from mainapp.classes.Search import Search
 from mainapp.classes.Email import Email
 import uuid
+<<<<<<< HEAD
 from twilio.rest import TwilioRestClient 
 from mainapp.classes.mailchimp import MailChimp
 
+=======
+from mainapp.classes.SendSms import send_sms
+>>>>>>> ed4bad078f6e24117b55d3128a6403b6cdc7063b
 
 
 next_cursor = -1
 ACCESS_TOKEN = ''
 ACCESS_TOKEN_SECRET =''
 
-
-def send_sms(to,body):
-    # put your own credentials here 
-    ACCOUNT_SID = "ACc54d95fd16aa5e6e35dbe60d44f3cc94" 
-    AUTH_TOKEN = "69e49be54014f34904e5c08715e0791e" 
-     
-    client = TwilioRestClient(ACCOUNT_SID, AUTH_TOKEN) 
-     
-    client.messages.create(
-        to=to, 
-        from_="+442380000486", 
-        body=body,  
-    )
-    return True
 
 
 def calculate_time_ago(calc_time):

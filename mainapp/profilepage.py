@@ -21,8 +21,8 @@ from bson import json_util
 from collections import Counter
 
 def resolve_profile(request, username):
-    user_profile = UserProfile()
-    userprof = user_profile.get_profile_by_username(str(username))
+    usr_profile = UserProfile()
+    userprof = usr_profile.get_profile_by_username(str(username))
     if userprof['sign_up_as'] == 'unclaimed':
         return HttpResponseRedirect('/')
     elif userprof['sign_up_as'] == 'Business':
@@ -43,9 +43,14 @@ def display_profile(request, username):
     parameters['form'] = food_form
     foo = AdminFoods()
     parameters['all_tags'] = foo.get_tags()
+<<<<<<< HEAD
     user_profile = UserProfile()
     userprof = user_profile.get_profile_by_username(str(username))
 
+=======
+    usr_profile = UserProfile()
+    userprof = usr_profile.get_profile_by_username(str(username))
+>>>>>>> ed4bad078f6e24117b55d3128a6403b6cdc7063b
     uinfo = UserInfo(userprof['useruid'])
     uinfo.description = uinfo.description.replace("\r\n"," ")
 
@@ -65,7 +70,7 @@ def display_profile(request, username):
     except:
         pass
     
-    parameters['name'] = userprof['business_org_name'] if userprof['sign_up_as'] == 'Business' or userprof['sign_up_as'] == 'Organisation' else userprof['name']
+    parameters['name'] = userprof.get('business_org_name') if userprof['sign_up_as'] == 'Business' or userprof['sign_up_as'] == 'Organisation' else userprof['name']
 
     parameters['description'] = userprof['description']
     parameters['pic_url'] = userprof['profile_img'].replace("normal","bigger")
@@ -126,10 +131,10 @@ def display_profile(request, username):
     parameters['all_organisation'] = get_all_orgs(userprof['useruid'])
     if request.user.is_authenticated():
         user_id = request.user.id
-        user_profile_obj = UserProfile()
-        user_profile = user_profile_obj.get_profile_by_id(str(user_id))
-        parameters['loggedin_signupas'] = user_profile['sign_up_as']
-        parameters['loggedin_coord'] = {'lat':user_profile['latlng']['coordinates'][1], 'lon':user_profile['latlng']['coordinates'][0]}
+        usr_profile_obj = UserProfile()
+        usr_profile = usr_profile_obj.get_profile_by_id(str(user_id))
+        parameters['loggedin_signupas'] = usr_profile['sign_up_as']
+        parameters['loggedin_coord'] = {'lat':usr_profile['latlng']['coordinates'][1], 'lon':usr_profile['latlng']['coordinates'][0]}
         user_info = UserInfo(user_id)
         parameters['userinfo'] = user_info
 
@@ -198,17 +203,17 @@ def edit_profile(request, username):
         tags = Tags()
         parameters['all_tags'] = tags.get_tags()
         if request.user.is_authenticated():
-            user_profile = UserProfile()
+            usr_profile = UserProfile()
             '''
                 If the user is is_authenticated and is super user then he/she can 
                 edit all unclaimed accounts.Else he/she can edit only his profile.
             '''
             if request.user.is_superuser:
-                userprof = user_profile.get_profile_by_username(str(username))
+                userprof = usr_profile.get_profile_by_username(str(username))
                 # if userprof.get('is_unknown_profile') == None or userprof.get('is_unknown_profile')=='false':
-                #     userprof = user_profile.get_profile_by_username(str(request.user.username))
+                #     userprof = usr_profile.get_profile_by_username(str(request.user.username))
             else:
-                userprof = user_profile.get_profile_by_username(str(request.user.username))
+                userprof = usr_profile.get_profile_by_username(str(request.user.username))
 
 
             #parameters['profile_id'] = request.user.id
@@ -244,16 +249,16 @@ def edit_profile(request, username):
             return HttpResponseRedirect('/')
 
     else:
-        user_profile = UserProfile()
+        usr_profile = UserProfile()
         '''
             If the user is is_authenticated and is super user then he/she can 
             edit all unclaimed accounts.Else he/she can edit only his profile.       
         '''
         if request.user.is_authenticated:
             if request.user.is_superuser:
-                userprof = user_profile.get_profile_by_username(str(username))
+                userprof = usr_profile.get_profile_by_username(str(username))
             else:
-                userprof = user_profile.get_profile_by_username(request.user.username)
+                userprof = usr_profile.get_profile_by_username(request.user.username)
         else:
             return HttpResponseRedirect('/')
 
@@ -304,7 +309,7 @@ def edit_profile(request, username):
         else:
             is_superuser = False
 
-        user_profile.update_profile_by_username(userprof['username'], description, address, 
+        usr_profile.update_profile_by_username(userprof['username'], description, address, 
             usr_type, sign_up_as, phone, lat, lon, postal_code, display_name, is_superuser, company_num,
             website_url, facebook_page, deliverables, business_org_name, email, newsletter_freq)
 
@@ -326,6 +331,8 @@ def get_tags_freq(food_name):
     return only_tags
 
 def get_all_foods(user_id, logged_in_id = None):
+    usr_profile = UserProfile()
+    
     foo = Food()
     all_foods = foo.get_foods_by_userid(user_id)
     recomm = RecommendFood()
@@ -341,10 +348,13 @@ def get_all_foods(user_id, logged_in_id = None):
             if logged_in_id != None and each_rec['recommenderuid'] == logged_in_id:
                 logged_recommender=True
             myid = each_rec['recommenderuid']
+
+            userprof = usr_profile.get_profile_by_id(myid)
             try:
                 account = SocialAccount.objects.get(user__id = myid)
                 recomm_details.append({'id': myid,
-                    'name': account.extra_data['name'],
+                    'name': userprof.get('business_org_name') if userprof['sign_up_as'] == 'Business' or userprof['sign_up_as'] == 'Organisation' else userprof['name'],
+                    # 'name': account.extra_data['name'],
                     'screen_name': account.extra_data['screen_name'],
                     'photo': account.extra_data['profile_image_url']})
             except:
@@ -367,6 +377,7 @@ def get_all_foods(user_id, logged_in_id = None):
     return final_foods
 
 def get_customers(user_id, logged_id=None):
+    usr_profile = UserProfile()
     cust = Customer()
     all_customers = cust.get_customers_by_userid(user_id)
     final_customers = []
@@ -378,7 +389,8 @@ def get_customers(user_id, logged_id=None):
         if logged_id!=None and each['customeruid'] == logged_id:
             logged_customer = True
         final_customers.append({'id': each['customeruid'],
-         'name': account.extra_data['name'],
+         'name': usr_pr.get('business_org_name') if usr_pr['sign_up_as'] == 'Business' or usr_pr['sign_up_as'] == 'Organisation' else usr_pr['name'],
+         # 'name': account.extra_data['name'],
          'description': account.extra_data['description'],
          'photo': account.extra_data['profile_image_url'],
          'username' : account.extra_data['screen_name'],
@@ -402,7 +414,8 @@ def get_connections(user_id, logged_in_id = None):
             if logged_in_id!=None and each['c_useruid'] == logged_in_id:
                 logged_conn = 'buyer'
             final_connections.append({'id': each['c_useruid'],
-             'name': account.extra_data['name'],
+             # 'name': account.extra_data['name'],
+             'name': usr_pr['business_org_name'] if usr_pr['sign_up_as'] == 'Business' or usr_pr['sign_up_as'] == 'Organisation' else usr_pr['name'],
              'description': account.extra_data['description'],
              'photo': account.extra_data['profile_image_url'],
              'username' : account.extra_data['screen_name'],
@@ -423,7 +436,8 @@ def get_connections(user_id, logged_in_id = None):
             user_info = UserInfo(each['b_useruid'])
             
             data = {'id': each['b_useruid'],
-             'name': account.extra_data['name'],
+             # 'name': account.extra_data['name'],
+             'name': userprof.get('business_org_name') if userprof['sign_up_as'] == 'Business' or userprof['sign_up_as'] == 'Organisation' else userprof['name'],
              'description': account.extra_data['description'],
              'photo': account.extra_data['profile_image_url'],
              'username' : account.extra_data['screen_name'],
@@ -463,7 +477,8 @@ def get_members(user_id, logged_in_id = None):
             if logged_in_id!=None and each['memberuid'] == logged_in_id:
                     logged_member = True
             final_members.append({'id': each['memberuid'],
-             'name': account.extra_data['name'],
+             # 'name': account.extra_data['name'],
+             'name': usr_pr.get('business_org_name') if usr_pr['sign_up_as'] == 'Business' or usr_pr['sign_up_as'] == 'Organisation' else usr_pr['name'],
              'description': account.extra_data['description'],
              'photo': account.extra_data['profile_image_url'],
              'username' : account.extra_data['screen_name'],
@@ -479,13 +494,16 @@ def get_members(user_id, logged_in_id = None):
     return final_members, logged_member
 
 def get_organisations(user_id):
+    userprof = UserProfile()
     org = Organisation()
     organisations = org.get_organisations_by_mem_id(user_id)
     final_orgs = []
     for each in organisations:
+        usr_pr = userprof.get_profile_by_id(str(each['orguid']))
         account = SocialAccount.objects.get(user__id = each['orguid'])
         final_orgs.append({'id': each['orguid'],
-         'name': account.extra_data['name'],
+         # 'name': account.extra_data['name'],
+         'name': usr_pr.get('business_org_name') if usr_pr['sign_up_as'] == 'Business' or usr_pr['sign_up_as'] == 'Organisation' else usr_pr['name'],
          'description': account.extra_data['description'],
          'photo': account.extra_data['profile_image_url'],
          'username' : account.extra_data['screen_name']
@@ -494,6 +512,7 @@ def get_organisations(user_id):
 
 def get_foods_from_org_members(user_id):
     org = Organisation()
+    userprof = UserProfile()
     members = org.get_members_by_orgid(user_id)
     foo = Food()
     foods_count = []
@@ -501,10 +520,12 @@ def get_foods_from_org_members(user_id):
     for each in members:
         try:
             account = SocialAccount.objects.get(user__id = each['memberuid'])
+            usr_pr = userprof.get_profile_by_id(str(each['memberuid']))    
             mem_foods = foo.get_foods_by_userid(each['memberuid'])
             foods_count.extend(mem_foods)
             all_foods.append({'id': each['memberuid'],
-             'name': account.extra_data['name'],
+             # 'name': account.extra_data['name'],
+             'name': usr_pr.get('business_org_name') if usr_pr['sign_up_as'] == 'Business' or usr_pr['sign_up_as'] == 'Organisation' else usr_pr['name'],
              'photo': account.extra_data['profile_image_url'],
              'username' : account.extra_data['screen_name'],
              'foods': mem_foods
@@ -515,16 +536,19 @@ def get_foods_from_org_members(user_id):
 
 def get_team(user_id, logged_in_id=None):
     team = Team()
+    userprof = UserProfile()
     teams = team.get_members_by_orgid(user_id)
     final_teams = []
     logged_team = False
     for each in teams:
         try:
+            usr_pr = userprof.get_profile_by_id(str(each['memberuid']))    
             account = SocialAccount.objects.get(user__id = each['memberuid'])
             if logged_in_id!=None and each['memberuid'] == logged_in_id:
                     logged_team = True
             final_teams.append({'id': each['memberuid'],
-             'name': account.extra_data['name'],
+             # 'name': account.extra_data['name'],
+             'name': usr_pr.get('business_org_name') if usr_pr['sign_up_as'] == 'Business' or usr_pr['sign_up_as'] == 'Organisation' else usr_pr['name'],
              'description': account.extra_data['description'],
              'photo': account.extra_data['profile_image_url'],
              'username' : account.extra_data['screen_name']
@@ -541,15 +565,19 @@ def get_all_business(prof_id):
     for each in all_business:
         try:
             account = SocialAccount.objects.get(user__id = each['useruid'])
+            print 'all business ', account.extra_data['name']
+            usr_pr = userpro.get_profile_by_id(each['useruid'])
             if prof_id != int(each['useruid']):
                 final_business.append({'id': each['useruid'],
-                    'name': account.extra_data['name'],
+                    # 'name': account.extra_data['name'],
+                    'name': usr_pr.get('business_org_name') if usr_pr['sign_up_as'] == 'Business' or usr_pr['sign_up_as'] == 'Organisation' else usr_pr['name'],
                     'description': account.extra_data['description'],
                     'photo': account.extra_data['profile_image_url'],
                     'username' : account.extra_data['screen_name']
                     })
         except:
             pass
+    print 'final_business', final_business
     return final_business
 
 def get_all_orgs(prof_id):
@@ -559,9 +587,11 @@ def get_all_orgs(prof_id):
     for each in all_organisation:
         try:
             account = SocialAccount.objects.get(user__id = each['useruid'])
+            usr_pr = userprof.get_profile_by_id(str(each['useruiduid']))    
             if prof_id != int(each['useruid']):
                 final_organisation.append({'id': each['useruid'],
-                    'name': account.extra_data['name'],
+                    # 'name': account.extra_data['name'],
+                    'name': usr_pr.get('business_org_name') if usr_pr['sign_up_as'] == 'Business' or usr_pr['sign_up_as'] == 'Organisation' else usr_pr['name'],
                     'description': account.extra_data['description'],
                     'photo': account.extra_data['profile_image_url'],
                     'username' : account.extra_data['screen_name']

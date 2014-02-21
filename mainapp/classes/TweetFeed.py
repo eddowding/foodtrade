@@ -16,6 +16,11 @@ import json
 from pymongo import Connection
 import re
 from django.conf import settings
+<<<<<<< HEAD
+=======
+from mainapp.classes.Email import Email
+# from mainapp.views import get_twitter_obj
+>>>>>>> ed4bad078f6e24117b55d3128a6403b6cdc7063b
 import json
 import datetime,time
 import pprint
@@ -64,6 +69,27 @@ class TweetFeed():
     def insert_tweet(self, user_id, tweet):
         tweet['deleted'] =0
         tweet['time_stamp'] = int(time.time())
+        
+        value = tweet['status']
+        result = re.findall(r'(?<=^|(?<=[^a-zA-Z0-9-_\.]))@([A-Za-z]+[A-Za-z0-9]+)', value, re.M|re.I)
+        usr_profile = UserProfile()
+
+        sender = usr_profile.get_profile_by_id(user_id)
+        email_text = sender['username'] + " has metioned you in his post <a href='http://foodtrade.com/"+sender['username']+"/post/"+tweet['tweet_id']+"/'>"+tweet['status']+"</a>"
+        sms_text = sender['username'] + " has metioned you in his post as "+tweet['status']+" in FoodTrade"
+        email_subject = sender['username']+" has mentioned you in FoodTrade."
+        if result:
+            for each in result:
+                try:
+                    mentioned = usr_profile.get_profile_by_username(each)
+                    email_object = Email()
+                    email_object.send_mail(email_subject, 
+                    template_content=[{'name':'main', 'content':email_text}], to = [{'email':mentioned['email']}])
+                    if len(mentioned['phone_number']) > 5:
+                        send_sms(mentioned['phone_number'],sms_text)
+                except:
+                    pass
+
         self.db_object.update_push(self.table_name,{"useruid":int(user_id)},{"updates":tweet})
 
     def insert_tweet_by_username(self, user_name, tweet):
