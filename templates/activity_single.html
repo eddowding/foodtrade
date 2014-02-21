@@ -178,7 +178,7 @@
                 <i class="fa fa-facebook"></i>  Share on Facebook
               </a>
               <a href="#" class="btn btn-block  btn-social btn-twitter" onclick="window.open(
-                    'https://twitter.com/share?url='+encodeURIComponent('{{ request.build_absolute_uri }}')+'&amp;text='+encodeURIComponent('{{parent_tweet.status}} @foodtradeHQ') + '&amp;count=none/', 
+                    'https://twitter.com/share?url='+encodeURIComponent('{{ request.build_absolute_uri }}')+'&amp;text='+encodeURIComponent('{{parent_tweet.status}} @{{parent_tweet.user.username}}') + '&amp;count=none/', 
                     'twitter-share-dialog', 
                     'width=626,height=436,top='+((screen.height - 436) / 2)+',left='+((screen.width - 626)/2 )); 
                   return false;">
