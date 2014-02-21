@@ -237,7 +237,7 @@ class ApplyCoupon(LoginRequiredMixin, PaymentsContextMixin, DetailView):
             res = {}
             res['status'] = "fail"
             res['message'] = "Sorry, could not add the coupon"
-            
+        
             return HttpResponse(json.dumps(res)) 
 
 
