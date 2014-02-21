@@ -220,7 +220,7 @@ class UserProfile():
              )
 
     def update_profile_by_username(self, username, description, address, type_usr, sign_up_as, phone, lat, lon, postal_code, name, is_superuser,
-      company_num, website_url, facebook_page, deliverables, business_org_name, email):
+      company_num, website_url, facebook_page, deliverables, business_org_name, email, newsletter_freq):
         data = {'zip_code':str(postal_code),
                  'description':description,
                  'latlng.coordinates.1':float(lat),
@@ -235,7 +235,8 @@ class UserProfile():
                  'facebook_page': facebook_page,
                  'deliverables': deliverables,
                  'business_org_name': business_org_name,
-                 'email':email
+                 'email':email,
+                 'newsletter_freq': newsletter_freq
                  }
         if not is_superuser: 
             return self.db_object.update(self.table_name,
@@ -418,8 +419,10 @@ class Food():
         # self.db_object.insert_one(self.table_name,value)
         self.db_object.update_upsert(self.table_name, {'food_name': value['food_name'], 
             'useruid': value['useruid']}, {'deleted': 0})
+        print 'inside creating food', value['useruid']
         twt = TweetFeed()
         twt.update_data(value['useruid'])
+        print 'food should be updated to UserProfile'
 
     def get_food_by_uid_food_name(self, food_name, user_id):
         return self.db_object.get_one(self.table_name, 
@@ -811,8 +814,10 @@ class UnapprovedFood():
         print 'food ', value['food_name'] , ' called'
         # self.db_object.insert_one(self.table_name,value)
         self.db_object.update_upsert(self.table_name, {'food_name': value['food_name']}, {'deleted': 0})
-        twt = TweetFeed()
-        twt.update_data(value['useruid'])
+        print 'here is the mess', value['useruid']
+
+        # twt = TweetFeed()
+        # twt.update_data(value['useruid'])
 
     def get_foods_by_food_name(self, food_name):
         return self.db_object.get_all(self.table_name, 
