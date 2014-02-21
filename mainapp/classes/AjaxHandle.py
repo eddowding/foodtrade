@@ -918,8 +918,6 @@ class AjaxHandle(AjaxSearch):
                 username = request.POST.get('username')
             else:
                 username = request.user.username
-            # if validate_email(email) != True:
-            #     return HttpResponse(json.dumps({'status':1, 'valid':'no'}))
             if user_profile_obj.check_valid_email(username, email):
                 return HttpResponse(json.dumps({'status':1, 'valid':'yes'}))
             else:

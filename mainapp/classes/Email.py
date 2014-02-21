@@ -3,26 +3,21 @@
 from MongoConnection import MongoConnection
 import mandrill 
 
-class EmailBackLogs(object):
-    """docstring for EmailBackLogs"""
-    def __init__ (self):
+        
+class Email():
+    def __init__ (self):        
         self.db_object = MongoConnection("localhost",27017,'foodtrade')
         self.table_name = 'emailbacklogs'
         self.db_object.create_table(self.table_name,'_id')
 
     def save_backlogs(self,doc):
-        self.db_object.insert_one(self.table_name, doc)
-        
-class Email():
-    def __init__ (self):
-        pass
+        self.db_object.insert_one(self.table_name, doc)        
 
     def send_mail(self, subject, template_content=[{}], to = [{}]):
-        #md = mandrill.Mandrill('DS3yEW4HdOzqHGXOiXGPkg')
         md = mandrill.Mandrill('NwotnhPk1Nprc6OX0Wq6vA')
         mes = mandrill.Messages(md)
 
-        message ={
+        message = {
             'auto_html': False,
             'auto_text': False,
             'to':to,
@@ -34,7 +29,5 @@ class Email():
         }
         
         template_content = template_content
-        eb = EmailBackLogs()
-        eb.save_backlogs({'message':message, 'template_content':template_content})
+        self.save_backlogs({'message':message, 'template_content':template_content})
         mes.send_template('foodtrade-master', template_content, message)
-

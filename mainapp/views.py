@@ -590,5 +590,14 @@ def create_profile_from_mention(email, location, data):
     
     user_profile_obj.create_profile(signup_data)
 
+    '''Send Email to confirm Account SignUp via Twitter'''
+    email_object = Email()
+    template_content = str(render_to_response('notice-register.html', 
+        {'data':signup_data,'register_request_type':'Twitter'},
+        context_instance=RequestContext(request)))
+    template_content = template_content.replace('Content-Type: text/html; charset=utf-8', '')
+    email_object.send_mail('Please confirm your Account on Twitter!!!', 
+        template_content=[{'name':main, 'content':template_content}], to = [{'email':email}])
+
     return {'status':1}
 

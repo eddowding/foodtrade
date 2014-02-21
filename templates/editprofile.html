@@ -146,6 +146,14 @@
       <div class="col-sm-5">
         <input  id="phone" type="tel" class="form-control" placeholder="Phone number" value="{{phone}}" name="phone"  onblur="validateFeedback()" reqired="required">
       </div>
+      <div id="notification_phone">
+        <div class="hidden" id="phone-ok">
+          <span class="glyphicon glyphicon-ok email-margin  email-go"></span> OK
+        </div>
+        <div class="hidden" id='phone-nok'>
+          <span class="glyphicon glyphicon-remove email-margin email-warning" ></span> Not Valid
+        </div>
+      </div>
     </div>
 
     <div class="form-group">
@@ -299,9 +307,11 @@ function validateFeedback(){
         ph = String(ph.value).replace('+','');
     if(!RE.test(phone.value))
     {
-        alert("You have entered an invalid phone number");
+        
+        $('#phone-nok').removeClass('hidden');
         return false;
     }
+    $('#phone-nok').addClass('hidden');
     return true;
 }
 
@@ -342,14 +352,8 @@ function validateFeedback(){
     }
   }
 
-  function success_validate_address(data){
-    data = jQuery.parseJSON(data);
-    if (data['valid'] != 'true'){
-      alert('Invalid Address!!');
-    }
-  }
-   
-  function validate_business_type(){
+
+function validate_business_type(){
     validate_email();
     if(email_valid['status'] = 1 && email_valid['valid'] =='yes'){
 
