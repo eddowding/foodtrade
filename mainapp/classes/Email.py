@@ -24,7 +24,7 @@ class Email():
             'from_name':'FoodTrade', 
             'important':'true',
             'track_click':'true',
-            'subject':subject,
+            'subject':subject
         }
         
         template_content = template_content
