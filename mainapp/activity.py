@@ -98,7 +98,7 @@ def get_search_parameters(request):
     parameters = {}
 
     default_location = ""
-    no_of_results = 10
+    no_of_results = 5
 
     if request.user.is_authenticated():
         user_id = request.user.id
@@ -113,7 +113,7 @@ def get_search_parameters(request):
 
 
 
-
+        no_of_results = 10
         subscribed = True
 
         customer, created = Customer.get_or_create(request.user)
