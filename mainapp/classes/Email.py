@@ -13,6 +13,7 @@ class Email():
         self.db_object.insert_one(self.table_name, doc)        
 
     def send_mail(self, subject, template_content=[{}], to = [{}]):
+        #md = mandrill.Mandrill('DS3yEW4HdOzqHGXOiXGPkg')
         md = mandrill.Mandrill('NwotnhPk1Nprc6OX0Wq6vA')
         mes = mandrill.Messages(md)
 

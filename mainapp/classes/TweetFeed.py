@@ -201,13 +201,14 @@ class UserProfile():
         self.db_object.create_table(self.table_name,'useruid')
 
     def get_all_profiles(self, status):
-        print status
         users = []
-        user_pages_count = int(self.db_object.get_count(self.table_name, {})/15)+ 1
+        if status == 'None':
+            user_pages_count = int(self.db_object.get_count(self.table_name, {'newsletter_freq':{'$exists':False}})/15)+ 1
+        else:
+            user_pages_count = int(self.db_object.get_count(self.table_name, {'newsletter_freq':status})/15)+ 1
         for i in range(0,user_pages_count, 1):
             if status == 'None':
-                print "Roshan"
-                pag_users = self.db_object.get_paginated_values(self.table_name, {'$exists':{'newsletter_freq':False}}, pageNumber = int(i+1))
+                pag_users = self.db_object.get_paginated_values(self.table_name, {'newsletter_freq':{'$exists':False}}, pageNumber = int(i+1))
             else:    
                 pag_users = self.db_object.get_paginated_values(self.table_name, {'newsletter_freq':status}, pageNumber = int(i+1))
             for eachUser in pag_users:

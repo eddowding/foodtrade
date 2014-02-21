@@ -31,8 +31,8 @@
                 <span style="color: #ccc;"> 
                   {{result.user.address}}
                 </span>
-                <span style="color: #ccc;" > 
-                  {{result.distance_text}} away
+                <span style="color: #ccc; float:right;" > 
+                  {{result.distance|floatformat:2}} miles away.
                 </span>
                 
                 <!--  // if logged in or you've allows html5 browser location -->
