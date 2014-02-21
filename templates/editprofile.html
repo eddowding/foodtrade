@@ -40,20 +40,8 @@
       </div>
     </div> 
     
-    <div class="form-group">
-      <label for="email" class="col-sm-2 control-label">Email</label>
-      <div class="col-sm-5">
-        <input type="email" id="email" class="form-control" value="{{email}}" name="email" required onblur="validate_email()">
-      </div>
-      <div id="notification_email">
-        <div class="hidden" id="email-ok">
-          <span class="glyphicon glyphicon-ok email-margin  email-go"></span> OK
-        </div>
-        <div class="hidden" id='email-nok'>
-          <span class="glyphicon glyphicon-remove email-margin email-warning" ></span> Already Taken
-        </div>
-      </div>
-    </div>
+    
+
     <div class="form-group">
       <label for="id_sign_up_as" class="col-sm-2 control-label">Sign up as</label>
         {{form.sign_up_as.as_hidden}}
@@ -101,11 +89,27 @@
             </select>
         </div>
       </div>
-    
-    <div class="form-group" id="company_charity">
-      <label for="company_num_txt" class="col-sm-2 control-label">Company Number</label>
+
+
+    <div class="form-group">
+      <label for="user_desc_txt" class="col-sm-2 control-label">Description</label>
       <div class="col-sm-5">
-        <input type="text" class="form-control" id="company_num_txt" name="company_num" rows="5" placeholder="Your govt issued company or number." value="{{company_num}}"></input>
+        <textarea class="form-control" id="user_desc_txt" name="description" rows="5">{{description}}</textarea>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="email" class="col-sm-2 control-label">Contact email</label>
+      <div class="col-sm-5">
+        <input type="email" id="email" class="form-control" value="{{email}}" name="email" required onblur="validate_email()">
+      </div>
+      <div id="notification_email">
+        <div class="hidden" id="email-ok">
+          <span class="glyphicon glyphicon-ok email-margin  email-go"></span> OK
+        </div>
+        <div class="hidden" id='email-nok'>
+          <span class="glyphicon glyphicon-remove email-margin email-warning" ></span> Already Taken
+        </div>
       </div>
     </div>
 
@@ -116,25 +120,6 @@
       </div>
     </div>
 
-
-    <div class="form-group" id="fb_page_group">
-      <label for="facebook_page_txt" class="col-sm-2 control-label">Facebook</label>
-      <div class="col-sm-5"> 
-        <input type="text" class="form-control" id="facebook_page_txt" name="facebook_page" placeholder="Your page or group on facebook, eg http://facebook.com/foodtradeHQ." value="{{facebook_page}}"></input>
-      </div>
-    </div>
-    <div class="form-group" id="deliverables_group">
-      <label for="deliverables_txt" class="col-sm-2 control-label">Deliveries</label>
-      <div class="col-sm-5">
-        <textarea class="form-control" id="deliverables_txt" name="deliverables" placeholder="How do you deliver? Where? How often? Any guide prices?" rows="5">{{deliverables}}</textarea>
-      </div>
-    </div>
-    <div class="form-group">
-      <label for="user_desc_txt" class="col-sm-2 control-label">Description</label>
-      <div class="col-sm-5">
-        <textarea class="form-control" id="user_desc_txt" name="description" rows="5">{{description}}</textarea>
-      </div>
-    </div>
 
     <div class="form-group">
       <label for="phone" class="col-sm-2 control-label">Phone</label>
@@ -151,14 +136,37 @@
       </div>
     </div>
 
+
+    <div class="form-group" id="fb_page_group">
+      <label for="facebook_page_txt" class="col-sm-2 control-label">Facebook</label>
+      <div class="col-sm-5"> 
+        <input type="text" class="form-control" id="facebook_page_txt" name="facebook_page" placeholder="Your page or group on facebook, eg http://facebook.com/foodtradeHQ." value="{{facebook_page}}"></input>
+      </div>
+    </div>
+    
+    <div class="form-group" id="company_charity">
+      <label for="company_num_txt" class="col-sm-2 control-label">Company Number</label>
+      <div class="col-sm-5">
+        <input type="text" class="form-control" id="company_num_txt" name="company_num" rows="5" placeholder="Your govt issued company or number." value="{{company_num}}"></input>
+      </div>
+    </div>
+
+    <div class="form-group" id="deliverables_group">
+      <label for="deliverables_txt" class="col-sm-2 control-label">Deliveries</label>
+      <div class="col-sm-5">
+        <textarea class="form-control" id="deliverables_txt" name="deliverables" placeholder="How do you deliver? Where? How often? Any guide prices?" rows="5">{{deliverables}}</textarea>
+      </div>
+    </div>
+
+
 <div class="form-group">
-      <label for="newsletter_freq_txt" class="col-sm-2 control-label">NewsLetter Update</label>
+      <label for="newsletter_freq_txt" class="col-sm-2 control-label">Local activity newsletter</label>
       <div class="col-sm-5">
 
 <select id="newsletter_freq_txt" class="form-control" name="newsletter_freq" tabindex="6">
               <option value="Never">Never</option>
               <option value="Monthly">Monthly</option>
-              <option value="Weekly">Weekly</option>
+              <option value="Weekly">Weekly (7 day delay)</option>
               {% if subscribed %}
               <option value="Daily">Daily</option>
               {% else %}
@@ -166,7 +174,7 @@
               {% endif %}
             </select>
             {% if not subscribed %}
-            <p class="help-block small">Upgrade to get daily newsletter updates.</p>
+            <p class="help-block small">We'll email you all the local activity near you so you never miss a thing. <a href="/payments" style="text-decoration:underline;">Upgrade</a> for daily updates.</p>
             {% endif %}
         <!-- <input type="text" id="newsletter_freq_txt" class="form-control" value="{{newsletter_freq}}" name="newsletter_freq"> -->
       </div>
