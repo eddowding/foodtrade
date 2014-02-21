@@ -327,13 +327,13 @@ def invite(request):
 
 def handle_invitation_hit(request, invite_id):
     request.session['invite_id'] = str(invite_id)
-    # analytics_obj = Analytics()
+    analytics_obj = Analytics()
     # analytics_obj.save({
     #     'site_visit_time':time.mktime(datetime.datetime.now().timetuple()),
     #     'invitation_id':str(invite_id),
     #     'Analytics Type':'Site Visit',
     #     'request_obj':str(request)
-    #     })
+    #     })    
     return HttpResponseRedirect('/')
 
 def notifications(request):
@@ -590,5 +590,11 @@ def create_profile_from_mention(email, location, data):
     
     user_profile_obj.create_profile(signup_data)
 
+    '''Send Email to confirm Account SignUp via Twitter'''
+    email_object = Email()
+    template_content = str(render_to_response('notice-mail.html', {'data':signup_data,'register_request_type':'Twitter'}))
+    template_content = template_content.replace('Content-Type: text/html; charset=utf-8', '')
+    email_object.send_mail('Please confirm your Account on Foodtrade !!!', 
+        template_content=[{'name':'main', 'content':template_content}], to = [{'email':email}])
     return {'status':1}
 

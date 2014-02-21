@@ -11,7 +11,18 @@
   .typeempty{
   display:none;
   }
-
+  .form-margin{
+    margin-top: 1%;
+  }
+  .email-margin{
+    margin-top: 0.5%;
+  }
+.email-warning{
+  color:red;
+}
+.email-go{
+  color: green;
+}
 </style>
 
 {% endblock %}
@@ -19,7 +30,7 @@
 {% block content %}
 
 <div class="col-xs-10"> 
-  <form class="form-horizontal" name="myform" role="form" onsubmit="return validate_business_type()" method="POST" action=".">
+  <form class="form-horizontal form-margin" name="myform" role="form" onsubmit="return validate_business_type()" method="POST" action=".">
   {% csrf_token %}
  
     <div class="form-group">
@@ -27,24 +38,25 @@
       <div class="col-sm-5">
         <input type="text" id="display_name_txt" class="form-control" placeholder="Display Name" value="{{display_name}}" name="display_name">
       </div>
-    </div>    
-    <!-- <div class="form-group">
-      <label for="user_fname_txt" class="col-sm-2 control-label">First Name</label>
-      <div class="col-sm-5">
-        <input type="text" id="user_fname_txt" class="form-control" placeholder="First name" value="{{first_name}}" name="first_name">
-      </div>
-    </div>
-
-    <div class="form-group">
-      <label for="user_lname_txt" class="col-sm-2 control-label">Last Name</label>
-      <div class="col-sm-5">
-        <input type="text" id="user_lname_txt" class="form-control" placeholder="Last name" value="{{last_name}}" name="last_name">
-      </div>
-    </div> -->
+    </div> 
     <div class="form-group">
       <label for="username_txt" class="col-sm-2 control-label">Username</label>
       <div class="col-sm-5">
         <input type="text" id="username_txt" class="form-control" value="{{username}}" name="username" readonly>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="email" class="col-sm-2 control-label">Email</label>
+      <div class="col-sm-5">
+        <input type="email" id="email" class="form-control" value="{{email}}" name="email" required onblur="validate_email()">
+      </div>
+      <div id="notification_email">
+        <div class="hidden" id="email-ok">
+          <span class="glyphicon glyphicon-ok email-margin  email-go"></span> OK
+        </div>
+        <div class="hidden" id='email-nok'>
+          <span class="glyphicon glyphicon-remove email-margin email-warning" ></span> Already Taken
+        </div>
       </div>
     </div>
     <div class="form-group">
@@ -133,6 +145,14 @@
       <label for="phone" class="col-sm-2 control-label">Phone</label>
       <div class="col-sm-5">
         <input  id="phone" type="tel" class="form-control" placeholder="Phone number" value="{{phone}}" name="phone"  onblur="validateFeedback()" reqired="required">
+      </div>
+      <div id="notification_phone">
+        <div class="hidden" id="phone-ok">
+          <span class="glyphicon glyphicon-ok email-margin  email-go"></span> OK
+        </div>
+        <div class="hidden" id='phone-nok'>
+          <span class="glyphicon glyphicon-remove email-margin email-warning" ></span> Not Valid
+        </div>
       </div>
     </div>
 
@@ -287,9 +307,11 @@ function validateFeedback(){
         ph = String(ph.value).replace('+','');
     if(!RE.test(phone.value))
     {
-        alert("You have entered an invalid phone number");
+        
+        $('#phone-nok').removeClass('hidden');
         return false;
     }
+    $('#phone-nok').addClass('hidden');
     return true;
 }
 
@@ -307,19 +329,39 @@ function validateFeedback(){
     document.getElementById('hidden_type').value = all_values;
     }
 
-  function validate_address(){
-    address = document.getElementById("phone").value;
-    ajax_request('check_valid_address', 'success_validate_address',{'address':address});
+  var email_valid;
+  var username= '{{username|safe}}';
+  function validate_email(){
+    email = document.getElementById("email").value;
+    ajax_request('check_email_address', 'success_validate_email',{'email':email,'username':username});
   }
-
-  function success_validate_address(data){
+  function success_validate_email(data){
     data = jQuery.parseJSON(data);
-    if (data['valid'] != 'true'){
-      alert('Invalid Address!!');
+    email_valid = data;
+    if (data['status'] == 1 && data['valid'] == 'yes'){
+     $('#email-nok').removeClass('active'); 
+     $('#email-nok').addClass('hidden');
+     $('#email-ok').removeClass('hidden');
+     $('#email-ok').addClass('active');
+    }
+    else{
+     $('#email-nok').removeClass('hidden'); 
+     $('#email-nok').addClass('active');
+     $('#email-ok').removeClass('active');
+     $('#email-ok').addClass('hidden');
     }
   }
-   
-  function validate_business_type(){
+
+
+function validate_business_type(){
+    validate_email();
+    if(email_valid['status'] = 1 && email_valid['valid'] =='yes'){
+
+    }
+    else{
+      return false;
+    }
+
     if (business_type == 'Business' && $('#hidden_type').val().length == 0){
       alert("Please select atleast one Business Type!");
       return false;
@@ -367,5 +409,6 @@ function validateFeedback(){
             } 
           });
 }
+
 </script>
 {% endblock %}

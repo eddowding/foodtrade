@@ -196,6 +196,8 @@ def edit_profile(request, username):
 
 
             #parameters['profile_id'] = request.user.id
+            if request.user.username != username:
+                parameters['superuser_edit_other'] = True
             parameters['sign_up_as'] = userprof['sign_up_as']
             parameters['username'] = username
             parameters['company_num'] = userprof.get('company_num') if userprof.get('company_num')!=None else ''
@@ -210,13 +212,8 @@ def edit_profile(request, username):
                 parameters['type_user'] = ''
             parameters['address'] = userprof['address']
             
-            # try:
-            #     parameters['first_name'] = userprof['name'].split(' ')[0]
-            #     parameters['last_name']  = userprof['name'].split(' ')[1]
-            # except:
-            #     parameters['first_name']  = userprof['name']
-            #     parameters['last_name']  = ''
             parameters['display_name'] = userprof['name']
+            parameters['email'] = userprof['email']
             parameters['description'] = userprof['description']
             try:
                 parameters['phone'] = userprof['phone_number']
@@ -258,6 +255,7 @@ def edit_profile(request, username):
         # first_name = request.POST['first_name']
         # last_name = request.POST['last_name']
         display_name = request.POST['display_name']
+        email = request.POST['email']
         # name = first_name + " " + last_name
         description = request.POST['description']
         try:
@@ -266,11 +264,12 @@ def edit_profile(request, username):
             address = request.POST['formatted_address']
             addr_check = Geocoder.reverse_geocode(float(lat),float(lon))
             postal_code = str(addr_check.postal_code)
+            print userprof['latlng']['coordinates'][0]
         except:
             address = userprof['address']
             except_address = Geocoder.geocode(address)
-            lat = userprof['latlng.coordinates.0']
-            lon = userprof['latlng.coordinates.1']
+            lat = userprof['latlng']['coordinates'][0]
+            lon = userprof['latlng']['coordinates'][1]
             postal_code = userprof['zip_code']
 
         if len(address) == 0:
@@ -290,7 +289,7 @@ def edit_profile(request, username):
 
         user_profile.update_profile_by_username(userprof['username'], description, address, 
             usr_type, sign_up_as, phone, lat, lon, postal_code, display_name, is_superuser, company_num,
-            website_url, facebook_page, deliverables, business_org_name)
+            website_url, facebook_page, deliverables, business_org_name, email)
 
         return HttpResponseRedirect('/')
 

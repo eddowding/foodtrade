@@ -20,7 +20,7 @@ from bson.objectid import ObjectId
 from mainapp.views import calculate_time_ago
 from django.contrib.auth.models import User
 from mainapp.bitly import construct_invite_tweet, shorten_url
-
+# from validate_email import validate_email
 # consumer_key = 'seqGJEiDVNPxde7jmrk6dQ'
 # consumer_secret = 'sI2BsZHPk86SYB7nRtKy0nQpZX3NP5j5dLfcNiP14'
 ACCESS_TOKEN = ''
@@ -909,3 +909,19 @@ class AjaxHandle(AjaxSearch):
         else:
             return HttpResponse(json.dumps({'status':0, 
                 'message':'You are not authorized to perform this action.'}))
+
+    def check_email_address(self, request):
+        if request.user.is_authenticated:
+            user_profile_obj = UserProfile()
+            email = request.POST.get('email')
+            if request.user.is_superuser:
+                username = request.POST.get('username')
+            else:
+                username = request.user.username
+            if user_profile_obj.check_valid_email(username, email):
+                return HttpResponse(json.dumps({'status':1, 'valid':'yes'}))
+            else:
+                return HttpResponse(json.dumps({'status':1, 'valid':'no'}))
+        else:
+            return HttpResponse(json.dumps({'status':0, 'message':'You are not authorized to perform this action.'}))
+
