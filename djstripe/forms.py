@@ -127,7 +127,7 @@ class CouponForm(forms.Form):
     duration = forms.ChoiceField(choices=DURATION_CHOICES, widget=forms.Select(attrs={'class' : 'form-control'}))
     duration_in_months = forms.IntegerField(required=False, widget=forms.TextInput(attrs={'placeholder': 'No. of months','class' : 'form-control'})) 
     max_redemptions = forms.IntegerField(required=True, widget=forms.TextInput(attrs={'placeholder': 'No. of uses','class' : 'form-control'}))
-    redeem_by = forms.DateField(required=True, initial=datetime.date.today, widget=forms.TextInput(attrs={'placeholder': 'YYYY-MM-DD','class' : 'form-control'}))
+    redeem_by = forms.DateField(label=u'redeem by', input_formats=['%Y-%m-%d', '%Y-%d-%m',], required=True, widget=forms.DateInput(format = '%Y-%m-%d', attrs={'placeholder': 'YYYY-MM-DD','class' : 'form-control'})) #forms.DateField(required=True, initial=datetime.date.today,) # widget=forms.TextInput(attrs={'placeholder': 'YYYY-MM-DD','class' : 'form-control'}))
     def __init__(self, *args, **kwargs):
         super(CouponForm, self).__init__(*args, **kwargs)
 

@@ -341,7 +341,7 @@ class Coupon(TimeStampedModel):
                   duration_in_months = int(self.duration_in_months),
                   id = self.coupon_id,
                   max_redemptions=int(self.max_redemptions),
-                  redeem_by=time.mktime(self.redeem_by.timetuple())
+                  redeem_by=int(time.mktime(self.redeem_by.timetuple()))
                   )
             else:
                 stripe.Coupon.create(
@@ -349,7 +349,7 @@ class Coupon(TimeStampedModel):
                   duration= self.duration,
                   id = self.coupon_id,
                   max_redemptions=int(self.max_redemptions),
-                  redeem_by=time.mktime(self.redeem_by.timetuple())
+                  redeem_by=int(time.mktime(self.redeem_by.timetuple()))
                   )
             return True
         except:
