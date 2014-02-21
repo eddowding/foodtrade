@@ -78,17 +78,15 @@ class TweetFeed():
         if result:
             for each in result:
                 try:
-                    mentioned = usr.get_profile_by_username(each)
-                    eml = Email()
+                    mentioned = usr_profile.get_profile_by_username(each)
+                    email_object = Email()
                     email_object.send_mail(email_subject, 
                     template_content=[{'name':'main', 'content':email_text}], to = [{'email':mentioned['email']}])
                     if len(mentioned['phone_number']) > 5:
                         send_sms(mentioned['phone_number'],sms_text)
-
-
                 except:
                     pass
-        return value
+
         self.db_object.update_push(self.table_name,{"useruid":int(user_id)},{"updates":tweet})
 
     def insert_tweet_by_username(self, user_name, tweet):
