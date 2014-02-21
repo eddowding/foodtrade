@@ -801,10 +801,11 @@ class UnapprovedFood():
 
     def create_food (self, value):
         value['deleted'] =0
+        print 'food ', value['food_name'] , ' called'
         # self.db_object.insert_one(self.table_name,value)
         self.db_object.update_upsert(self.table_name, {'food_name': value['food_name']}, {'deleted': 0})
-        # twt = TweetFeed()
-        # twt.update_data(value['useruid'])
+        twt = TweetFeed()
+        twt.update_data(value['useruid'])
 
     def get_foods_by_food_name(self, food_name):
         return self.db_object.get_all(self.table_name, 

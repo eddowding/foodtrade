@@ -118,7 +118,7 @@ def fix_new_foods():
 @user_passes_test(lambda u: u.is_superuser)
 def food_tags(request):
     parameters = {}
-    fix_new_foods()
+    # fix_new_foods()
     if request.user.is_authenticated():
         # parameters['user'] = request.user
         user_id = request.user.id
