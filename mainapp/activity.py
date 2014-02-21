@@ -17,6 +17,15 @@ from django.template import RequestContext
 
 from django.views.decorators.csrf import csrf_exempt
 
+from djstripe.models import Customer
+
+from django.contrib.auth.models import AbstractUser
+from django.db import models
+from django.utils.functional import cached_property
+
+
+
+
 
 def get_time(time_val):
     time_elapsed = int(time.time()) - time_val         
@@ -89,9 +98,9 @@ def get_search_parameters(request):
     parameters = {}
 
     default_location = ""
+    no_of_results = 10
 
     if request.user.is_authenticated():
-        # parameters['user'] = request.user
         user_id = request.user.id
         user_profile_obj = UserProfile()
         user_profile = user_profile_obj.get_profile_by_id(str(user_id))
@@ -102,6 +111,20 @@ def get_search_parameters(request):
         parameters['userinfo'] = user_info
         default_location = user_profile['zip_code']
 
+
+
+
+        subscribed = True
+
+        customer, created = Customer.get_or_create(request.user)
+        if created:
+            subscribed = False
+
+        if not customer.has_active_subscription():
+            subscribed = False
+
+        if subscribed:
+            no_of_results = 30
 
 
     else:
@@ -124,6 +147,8 @@ def get_search_parameters(request):
     biz_request = request.GET.get('b',"")
     food_request = request.GET.get('f',"")
     organisation_request = request.GET.get('o',"")
+
+
 
 
     if len(biz_request)>0:
@@ -154,11 +179,14 @@ def get_search_parameters(request):
     keyword = keyword.lower()
 
     search_global = False
+
+
+
     if request.user.is_superuser:
         search_global = True
     search_handle = Search(keyword=keyword, lon = my_lon, lat =my_lat, place = location, foods=foods, business=businesses, organisation=organisations, sort=sort, search_global=search_global)
     search_results = search_handle.search_all()
-    results =search_results['results'][:40]
+    results =search_results['results'][:no_of_results-1]
 
     for i in range(len(results)):
         results[i] = set_time_date(results[i],keyword)
@@ -213,6 +241,7 @@ def get_search_parameters(request):
         if (f["uid"] == biz_request or f["uid"].lower() == keyword) and f["uid"]!="":
             f["prev"] = True
 
+
         business_filters_temp.append(f)
     business_filters = business_filters_temp
 
@@ -239,7 +268,6 @@ def get_search_parameters(request):
 
 @csrf_exempt
 def home(request): 
-    from mainapp.home import fix_new_foods
-    fix_new_foods()
+    # print request['subscribed']
     return render_to_response('activity.html',get_search_parameters(request) ,context_instance=RequestContext(request))
 

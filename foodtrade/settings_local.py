@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 # app credentials
 CONSUMER_KEY = 'waBmigQf9LIqYXkhMNeMdQ'
@@ -14,6 +15,35 @@ HQ_ACCESS_TOKEN_SECRET = 'xGB1Wl4kHnBdxZIDufXTKDQNZPPxbj3PWjMTqH4X802mr'
 # old ones of my twitter app
 # CONSUMER_KEY = 'seqGJEiDVNPxde7jmrk6dQ'
 # CONSUMER_SECRET = 'sI2BsZHPk86SYB7nRtKy0nQpZX3NP5j5dLfcNiP14'
+
+import os
+# Test stripe account from sujit
+STRIPE_PUBLIC_KEY = os.environ.get("STRIPE_PUBLIC_KEY", "pk_test_cIjJbOYUbVYnvnSn1QyeMD7r")
+STRIPE_SECRET_KEY = os.environ.get("STRIPE_SECRET_KEY", "sk_test_dj0ArFwwcCljH8n1aioJ6jtV")
+
+
+# # Test stripe account from Ed
+# STRIPE_PUBLIC_KEY = os.environ.get("STRIPE_PUBLIC_KEY", "pk_test_oSOpaxq2GleFxB6MBelA5S3o")
+# STRIPE_SECRET_KEY = os.environ.get("STRIPE_SECRET_KEY", "sk_test_hmGuDVayPPKB81MKCPKnyfK1")
+
+# # live stripe account from sujit
+# STRIPE_PUBLIC_KEY = os.environ.get("STRIPE_PUBLIC_KEY", "pk_live_9BlCZzoxIYjEPaIdwBWLjRjR")
+# STRIPE_SECRET_KEY = os.environ.get("STRIPE_SECRET_KEY", "sk_live_nobdUwMzfapMBkwn3CKcD0Eg")
+
+DJSTRIPE_PLANS = {
+
+    "yearly": {
+        "stripe_plan_id": "business-yearly",
+        "name": "Basic (£45 / yr)",
+        "description": "The annual subscription plan to FoodTrade",
+        "price": 4500,  # £19900
+        "currency": "gbp",
+        "interval": "year"
+    }
+}
+
+
+
 
 # old ones of myfoodtrade
 # admin_access_token = '2248425234-EgPSi3nDAZ1VXjzRpPGMChkQab5P0V4ZeG1d7KN'
@@ -32,3 +62,6 @@ SOCIALACCOUNT_AUTO_SIGNUP = True
 LOGIN_REDIRECT_URL = "/activity"
 ACCOUNT_SIGNUP_FORM_CLASS = 'mainapp.forms.SignupForm'
 ACCOUNT_LOGOUT_ON_GET = True
+
+
+# ACCOUNT_SIGNUP_FORM_CLASS = "djstripe.forms.StripeSubscriptionSignupForm"

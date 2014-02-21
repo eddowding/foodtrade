@@ -197,11 +197,10 @@
       </a>
 
           <ul class="dropdown-menu">
-              <li><a href="/editprofile/{{userinfo.username}}"><i class="fa fa-user fa-fw"></i> Edit profile</a></li>
-            <!--   <li><a href="/invite/"><i class="fa fa-twitter fa-fw"></i> Invite friends</a></li>
-              <li><a href="#" id="help"><i class="fa fa-question-circle fa-fw"></i> Help guide</a></li>
-              <li class="divider"></li> -->
-              <li>
+              <li class=" pull-left"><a href="/editprofile/{{userinfo.username}}"><i class="fa fa-user fa-fw"></i> Edit profile</a></li>
+
+              <li class=" pull-left"><a href="/payments"><i class="fa fa-credit-card fa-fw"></i> Billing</a></li> 
+              <li class=" pull-left">
                 <a src = "/accounts/logout" onclick="logout()" >
               <i class="fa fa-power-off fa-fw"></i> Logout</a></li>
           </ul>
@@ -663,6 +662,9 @@ function tweetlistener(input, counter, button){
 
          {% block footer %}
  {% endblock %}
+
+          {% block javascript %}
+ {% endblock %}
      <script type="text/javascript">
 $(document).ready(function() {
 
@@ -921,6 +923,7 @@ function formSubmit(form) {
   ga('send', 'pageview');
 
 </script>
+
 
   </body>
 </html>

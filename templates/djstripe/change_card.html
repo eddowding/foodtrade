@@ -1,0 +1,107 @@
+{% extends "djstripe/base.html" %}
+
+{% block title %}Change Card{% endblock title %}
+
+{% block content %}
+<div class="col-md-9 col-sm-9  {% if not user.is_authenticated %} col-md-offset-1 {% endif %}" id="single"> 
+
+<div class="row">
+    <div class="col-sm-10 col-sm-offset-2" style="margin-top: 50px;"> 
+        <p class="lead">
+            {% if request.user.customer.card_kind and request.user.customer.card_last_4 %}
+                Current card on file is a <strong>{{ request.user.customer.card_kind }}</strong>
+                ending in the digits <strong>{{ request.user.customer.card_last_4 }}</strong>.
+            {% else %}
+                You do not currently have a card on file.
+            {% endif %}
+        </p>
+        
+        {% if stripe_error %}
+            <div class="alert alert-error">{{ stripe_error }}</div>
+        {% endif %}
+        
+            
+        <form action="{% url 'djstripe:change_card' %}" method="POST"  class="form-horizontal" id="change-card-form">
+        {% csrf_token %}
+          <span class="payment-errors"></span>
+
+          <div class="form-group">
+            <label class="col-sm-3 control-label">Card number</label>
+            <div class="col-sm-6">
+              <input type="text" class="form-control" placeholder="Card number" pattern="\d*" autocomplete="off" data-stripe="number"/>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="col-sm-3 control-label">CVV</label>
+            <div class="col-sm-2">
+              <input type="text" class="form-control" placeholder="CVV" pattern="\d*" data-stripe="cvc"/>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="col-sm-3 control-label">Expiry (mm/yyyy)</label>
+            <div class="col-sm-2">
+              <input type="text" class="form-control pull-left" placeholder="mm" pattern="\d*" autocomplete="off" data-stripe="exp-month" />
+            </div> 
+            <div class="col-sm-2">
+              <input type="text" class="form-control col-xs-2 col-md-2" placeholder="yyyy" pattern="\d*" autocomplete="off" data-stripe="exp-year"/>
+            </div>
+
+          </div>
+
+
+          <div class="form-group">
+            <div class="col-sm-offset-3 col-sm-10">
+              <button class="btn btn-primary change-card" type="submit">Change Card</button>
+            </div>
+          </div>
+
+ 
+
+        </form>
+    </div>
+</div>
+</div>
+{% endblock content %}
+
+
+{% block javascript %}
+{{ block.super }}
+<script type="text/javascript" src="https://js.stripe.com/v2/"></script>
+<script type="text/javascript">
+  // This identifies your website in the createToken call below
+  Stripe.setPublishableKey('{{ STRIPE_PUBLIC_KEY }}');
+  jQuery(function($) {
+    $('#change-card-form').submit(function(event) {
+        var $form = $(this);
+
+        // Disable the submit button to prevent repeated clicks
+        $form.find('button').prop('disabled', true);
+
+        Stripe.createToken($form, stripeResponseHandler);
+
+        // Prevent the form from submitting with the default action
+        return false;
+    });
+
+    var stripeResponseHandler = function(status, response) {
+      var $form = $('#change-card-form');
+
+      if (response.error) {
+        // Show the errors on the form
+        $form.find('.payment-errors').text(response.error.message);
+        $form.find('button').prop('disabled', false);
+      } else {
+        // token contains id, last4, and card type
+        var token = response.id;
+        // Insert the token into the form so it gets submitted to the server
+        $form.append($('<input type="hidden" name="stripe_token" />').val(token));
+        // and submit
+        $form.get(0).submit();
+      }
+    };
+});
+</script>
+
+{% endblock javascript %}

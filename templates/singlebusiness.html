@@ -49,6 +49,17 @@
       </div>
      
       <div class="col-md-6 col-sm-8 col-xs-8">
+
+          <!-- certificate -->
+          {% if prof_subscribed %}
+          
+          <span class="fa-stack fa-lg pull-right" id="verified" rel="tooltip" title="Verified profile">
+            <i class="fa fa-certificate fa-stack-2x" style="color: #1DBD3C;"></i>
+            <i class="fa fa-check fa-stack-1x" style="color: #fff;"></i>
+          </span>
+          {% endif %}
+          <!-- certificate -->
+
          <h1>
           <img class="visible-sm visible-xs" style="width: 30px; margin-right: 10px; float:left;" src={{pic_url}}  />
          <a href="#">{{name}}</a></h1>
@@ -494,9 +505,12 @@
                    <div class="pull-right">
 
                    {% ifequal profile_id user_id %}
+                      {% if prof_subscribed %}
 
                      <a href="" data-toggle="modal" data-target="#modal_food_detail" class="btn btn-sm btn-default" data-container="body" onClick="get_food_detail('{{profile_id}}', '{{eachfood.food_name}}', '{{eachfood.description}}', '{{eachfood.food_tags}}', '{{eachfood.photo_url}}', '{{eachfood.recomm_tags|safe}}')"><i class="fa fa-edit" title="Edit" ></i></a>
-
+                     {% else %}
+                     <a class="btn btn-sm btn-default" data-container="body" rel="tooltip" title="Upgrade your account to add details"><i class="fa fa-edit" title="Edit" ></i></a>
+                     {% endif %}
                      <a class="btn btn-danger btn-sm"><i class="fa fa-trash-o" title="Delete" onClick="delete_food({{profile_id}}, '{{eachfood.food_name}}', this)"></i></a>
 
                    {% endifequal %}

@@ -983,6 +983,10 @@ h2 {
 	color: #444;
 }
 
+#verified {
+  position: relative; 
+  top: 18px;
+}
 
 
 /********************************/

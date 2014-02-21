@@ -28,11 +28,14 @@
     <div class="col-md-6 col-sm-7  {% if not user.is_authenticated %} col-md-offset-1 {% endif %}" id="single">
     <div class="container-responsive">
     <div id="header_box" class="clearfix organisation">
-      <div class="col-md-2" id="avatar">
-        <img class="img-thumbnail center-block" src={{pic_url}}  />
+
+
+       <div class="col-md-2 hidden-sm hidden-xs" id="avatar">
+        <img class="img-thumbnail center-block" src="{{pic_url}}"  />
       </div>
+      
      
-      <div class="col-md-7">
+      <div class="col-md-6 col-sm-8 col-xs-8"> 
          <h1><a href="#">{{name}}</a></h1>
      
          <hr />
@@ -56,7 +59,7 @@
          </div> <!-- meta -->
   
       </div><!-- end header middle -->
-      <div id="contact_info" class="col-md-3">
+      <div id="contact_info" class="col-md-4 col-sm-4  col-xs-4">
        {% ifequal profile_id user_id %}
         <a href="/editprofile/{{userinfo.username}}" class="btn btn-danger btn-block">
            Edit my profile
@@ -154,16 +157,17 @@
           </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
       </div><!-- /.modal -->
-      <!-- <div class="icons text-center" style="font-size:25px">
-        <a href="#"><i class="fa fa-facebook-square"></i></a>
+      <!--
+      <div class="icons text-center" style="font-size:25px">
+        <a href="{{facebook_page}}"><i class="fa fa-facebook-square"></i></a>
         <a href="#"><i class="fa fa-twitter-square"></i></a> 
-        <a href="#"><i class="fa fa-phone-square"></i></a> 
-        <a href="#"><i class="fa fa-rss-square"></i></a> 
+        <a href="#"><i class="fa fa-phone-square"></i></a>  
         <a href="#"><i class="fa fa-envelope"></i></a> 
         <a href="#"><i class="fa fa-globe"></i></a> 
         <a href="#"><i class="fa fa-youtube"></i></a> 
         <a href="#"><i class="fa fa-linkedin-square"></i></a> 
-      </div>  -->
+      </div>  
+      -->
       
      <!-- modal_contact -->
       <div class="modal fade" id="modal_contact" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">

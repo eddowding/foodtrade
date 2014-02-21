@@ -1,0 +1,20 @@
+django
+django-allauth
+twython
+pyyaml
+pymongo
+pygeocoder
+requests
+pillow
+mailchimp
+<<<<<<< HEAD
+dj-stripe
+django-floppyforms
+urllib3
+mandrill
+=======
+urllib3
+mandrill
+pyDNS
+validate_email
+>>>>>>> master
