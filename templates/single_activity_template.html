@@ -14,7 +14,7 @@
             </button> 
             <ul class="dropdown-menu" role="menu">
               <li><a href="http://www.facebook.com/sharer/sharer.php?u=http://foodtrade.com/{% if result_type == "status" %}{{result.user.username}}/post/{{result.tweetuid}}{% else %}profile/{{result.user.username}}{% endif %}" target="_blank"><i class="fa fa-facebook fa-fw"></i> Share on Facebook</a></li>
-              <li><a href="http://twitter.com/home?status=http://foodtrade.com/{% if result_type == "status" %}{{result.user.username}}/post/{{result.tweetuid}}{% else %}profile/{{result.user.username}}{% endif %}" target="_blank"><i class="fa fa-twitter fa-fw"></i> Share on Twitter</a></li>
+              <li><a href="http://twitter.com/home?status={{result.status|safe}}%20http://foodtrade.com/{% if result_type == "status" %}{{result.user.username}}/post/{{result.tweetuid}}{% else %}profile/{{result.user.username}}{% endif %}" target="_blank"><i class="fa fa-twitter fa-fw"></i> Share on Twitter</a></li>
               <li class="divider"></li>
               {%  if userinfo.user_type == "Business" and result.sign_up_as == "Business" and result.user.username != userinfo.username %}
               <li><a href="#" onclick="click_activity('buyFrom','{{result.useruid}}')">I buy from</a></li>
