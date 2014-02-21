@@ -211,7 +211,7 @@ def edit_profile(request, username):
             else:
                 parameters['type_user'] = ''
             parameters['address'] = userprof['address']
-            
+            parameters['newsletter_freq'] = userprof.get('newsletter_freq') if userprof.get('newsletter_freq')!=None else ''
             parameters['display_name'] = userprof['name']
             parameters['email'] = userprof['email']
             parameters['description'] = userprof['description']
@@ -254,6 +254,7 @@ def edit_profile(request, username):
         print 'business_org_name', business_org_name
         # first_name = request.POST['first_name']
         # last_name = request.POST['last_name']
+        newsletter_freq = request.POST['newsletter_freq']
         display_name = request.POST['display_name']
         email = request.POST['email']
         # name = first_name + " " + last_name
@@ -289,7 +290,7 @@ def edit_profile(request, username):
 
         user_profile.update_profile_by_username(userprof['username'], description, address, 
             usr_type, sign_up_as, phone, lat, lon, postal_code, display_name, is_superuser, company_num,
-            website_url, facebook_page, deliverables, business_org_name, email)
+            website_url, facebook_page, deliverables, business_org_name, email, newsletter_freq)
 
         return HttpResponseRedirect('/')
 
