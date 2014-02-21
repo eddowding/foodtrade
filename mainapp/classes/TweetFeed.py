@@ -16,11 +16,7 @@ import json
 from pymongo import Connection
 import re
 from django.conf import settings
-<<<<<<< HEAD
-=======
 from mainapp.classes.Email import Email
-# from mainapp.views import get_twitter_obj
->>>>>>> ed4bad078f6e24117b55d3128a6403b6cdc7063b
 import json
 import datetime,time
 import pprint

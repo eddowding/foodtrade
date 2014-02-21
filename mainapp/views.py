@@ -29,13 +29,10 @@ import HTMLParser
 from mainapp.classes.Search import Search
 from mainapp.classes.Email import Email
 import uuid
-<<<<<<< HEAD
 from twilio.rest import TwilioRestClient 
 from mainapp.classes.mailchimp import MailChimp
-
-=======
 from mainapp.classes.SendSms import send_sms
->>>>>>> ed4bad078f6e24117b55d3128a6403b6cdc7063b
+
 
 
 next_cursor = -1

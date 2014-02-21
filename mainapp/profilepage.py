@@ -43,14 +43,10 @@ def display_profile(request, username):
     parameters['form'] = food_form
     foo = AdminFoods()
     parameters['all_tags'] = foo.get_tags()
-<<<<<<< HEAD
+
     user_profile = UserProfile()
     userprof = user_profile.get_profile_by_username(str(username))
 
-=======
-    usr_profile = UserProfile()
-    userprof = usr_profile.get_profile_by_username(str(username))
->>>>>>> ed4bad078f6e24117b55d3128a6403b6cdc7063b
     uinfo = UserInfo(userprof['useruid'])
     uinfo.description = uinfo.description.replace("\r\n"," ")
 
