@@ -1,13 +1,21 @@
 import mandrill 
-
+import pymongo
+from pymongo import Connection
+#..................Server Settings............................
+SERVER = 'localhost'
+PORT = 27017
+DB_NAME = 'foodtrade'
+table_name = 'notification'
+#..................Server Settings............................
 class Email():
     def __init__ (self):        
-        self.db_object = MongoConnection("localhost",27017,'foodtrade')
+        self.conn = Connection(SERVER,PORT)
+        self.db = conn[DB_NAME]
         self.table_name = 'emailbacklogs'
         self.db_object.create_table(self.table_name,'_id')
 
     def save_backlogs(self,doc):
-        self.db_object.insert_one(self.table_name, doc)          
+        self.db.emailbacklogs.insert(doc)          
 
     def send_mail(self, subject, template_content=[{}], to = [{}]):
         # sender = 'ed@foodtrade.com'

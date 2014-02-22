@@ -594,7 +594,7 @@ def send_newsletter(request, substype):
         else:
             search_handle = Search(lon = eachUser['latlng']['coordinates'][0], lat = eachUser['latlng']['coordinates'][1])
         search_results = search_handle.search_all()['results']
-        pprint.pprint(search_results)
+        #pprint.pprint(search_results)
         temp_result = []
         no_of_results = 10
         for res in search_results:
