@@ -173,7 +173,11 @@ class Search():
             for search_item in search_variables:
                 or_conditions.append({search_item:reg_expression})
             # Searches keyword as food
-            or_conditions.append({'foods':reg_expression})
+            food_attributes = ["food_name","description","food_tags"]
+
+            for fd_attr in food_attributes:
+
+                or_conditions.append({'foods':{"$elemMatch":{fd_attr:reg_expression}}})
 
 
             or_conditions.append({'type_user':reg_expression})
