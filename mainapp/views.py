@@ -544,7 +544,9 @@ def sms_receiver(request):
                         'screen_name': msg_from,
                         'Organisations':[],
                         'useruid': min_user_id,
-                        'username':msg_from
+                        'username':msg_from,
+                        'subscribed':0,
+                        'newsletter_freq':'Weekly'
                     }
                 
                 user_profile_obj.create_profile(signup_data)
@@ -648,7 +650,9 @@ def create_profile_from_mention(email, location, data):
             'screen_name': data['user']['screen_name'],
             'Organisations':[],
             'useruid': min_user_id,
-            'username':data['user']['screen_name']
+            'username':data['user']['screen_name'],
+            'subscribed':0,
+            'newsletter_freq':'Weekly'            
         }
     
     user_profile_obj.create_profile(signup_data)
@@ -665,4 +669,3 @@ def create_profile_from_mention(email, location, data):
     mailchimp_obj.subscribe(signup_data)
 
     return {'status':1}
-
