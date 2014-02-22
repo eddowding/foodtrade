@@ -131,11 +131,8 @@ class TweetFeed():
 
     def update_data(self,user_id):
         food = Food()
-        f_results = food.get_approved_foods_by_useruid(user_id)
-        f_list = []
-        for f in f_results:
-            f_list.append(f['food_name'])
-       
+        f_list = food.get_approved_foods_by_useruid(user_id)
+        print f_list
         orgn = Organisation()
         organisations = orgn.get_organisations_by_mem_id(user_id)
         org_list = []
@@ -464,6 +461,8 @@ class Food():
         table_name = 'recommendfood'
         self.db_object.create_table(table_name,'food_name')
         self.db_object.update_multi(table_name,{'business_id': useruid, 'food_name': food_name}, {'deleted':1})
+        twt = TweetFeed()
+        twt.update_data(value['useruid'])
 
     def update_food(self, data):
         update_data = {}
@@ -844,10 +843,12 @@ class UnapprovedFood():
 
     def get_foods_by_food_name(self, food_name):
         return self.db_object.get_all(self.table_name, 
-            {'food_name':food_name})
+            {'food_name':food_name,'deleted': 0})
 
     def delete_food(self, food_name):
         self.db_object.update(self.table_name,{'food_name': food_name}, {'deleted':1})
+        twt = TweetFeed()
+        twt.update_data(value['useruid'])
         # also delete recommendations of the food
         # table_name = 'recommendfood'
         # self.db_object.create_table(table_name,'food_name')

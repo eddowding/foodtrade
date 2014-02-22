@@ -126,7 +126,17 @@ class Search():
 
 
         foods_list = results["foods"]
-        foods_counter = self.item_counter(foods_list)
+        foods_array = []
+        print foods_list
+
+        for fds in foods_list:
+            fd_list = []
+            for fd in fds:
+                fd_list.append(fd['food_name'])
+            foods_array.append(fd_list)
+
+
+        foods_counter = self.item_counter(foods_array)
         results["foods"] = foods_counter
         businesses_list = results["businesses"]
         businesses_counter = self.item_counter(businesses_list)
@@ -200,8 +210,11 @@ class Search():
 
 
         # check food filters
+        foods_match = []
+        for fd in self.foods:
+            foods_match.append({ "$elemMatch" : { "food_name": fd}})
         if len(self.foods) > 0:
-            and_query.append({"foods": {"$all":self.foods}})
+            and_query.append({"foods": {"$all":foods_match}})
         
         # Check business filter
         if len(self.business) > 0:
@@ -343,7 +356,7 @@ class Search():
 
         group_fields = {}
         group_fields["_id"] = "all"
-        group_fields["foods"] = { "$push": "$foods" }
+        group_fields["foods"] = { "$push": "$foods.foods_match" }
         group_fields["businesses"] = { "$push": "$type_user"}
         group_fields["organisations"] = { "$push": "$organisations"}
         group_fields["business_count"] = {"$sum":{"$cond": [{"$eq": ['$sign_up_as', "Business"]}, 1, 0]}}
