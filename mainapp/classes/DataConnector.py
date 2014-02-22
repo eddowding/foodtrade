@@ -119,7 +119,10 @@ class UserInfo():
         
         user_connection =  UserConnections(user_id)
 
-        self.full_name = userprof['business_org_name'] if userprof['sign_up_as'] == 'Business' or userprof['sign_up_as'] == 'Organisation' else userprof['name']
+        try:
+            self.full_name = userprof['business_org_name'] if userprof['sign_up_as'] == 'Business' or userprof['sign_up_as'] == 'Organisation' else userprof['name']
+        except:
+            self.full_name = userprof['name']
 
         self.username = userprof['screen_name']
         self.description = userprof['description']

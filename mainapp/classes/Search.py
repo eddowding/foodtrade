@@ -133,7 +133,10 @@ class Search():
         for fds in foods_list:
             fd_list = []
             for fd in fds:
-                fd_list.append(fd['food_name'])
+                try:
+                    fd_list.append(fd['food_name'])
+                except:
+                    pass
             foods_array.append(fd_list)
 
 
