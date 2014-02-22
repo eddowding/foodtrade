@@ -14,15 +14,17 @@ def user_info(request):
         if not customer.has_active_subscription():
             subscribed = False
         user_id = request.user.id
+
         try:
+
             user_info = UserInfo(user_id)
-            tf = TweetFeed()
+            ft = TweetFeed()
             has_tweet = ft.has_tweet_in_week(request.user.id)
             can_tweet = False
-            
-            if subscribed or not has_tweet:
+
+            if subscribed or (not has_tweet):
                 can_tweet = True
-            print can_tweet
+
             return {'userinfo' : user_info, "subscribed": subscribed, "can_tweet":can_tweet}
         except:
             return {'userinfo':""}
