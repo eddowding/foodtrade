@@ -322,8 +322,8 @@ class Coupon(TimeStampedModel):
     duration= models.CharField(max_length=25, blank=True, choices = DURATION_CHOICES)
     duration_in_months = models.CharField(max_length=4, null=True, blank=True)
     percent_off = models.DecimalField(decimal_places=2, max_digits=4)
-    max_redemptions = models.DecimalField(decimal_places=2, max_digits=4,null=True)
-    redeem_by = models.DateTimeField(null=True)
+    max_redemptions = models.DecimalField(decimal_places=2, max_digits=4,null=True,blank=True)
+    redeem_by = models.DateTimeField(null=True, blank=True)
 
     # objects = models.Manager()
 
@@ -333,38 +333,46 @@ class Coupon(TimeStampedModel):
 
 
     def create_coupon(self):
+    # try:
+        
+     
+        coupon_dict ={
+          "id" : self.coupon_id,
+          "percent_off" : int(self.percent_off),
+          "duration" : self.duration,
+        }
         try:
-            if self.duration == 'repeating':
-                stripe.Coupon.create(
-                  percent_off = int(self.percent_off),
-                  duration= self.duration,
-                  duration_in_months = int(self.duration_in_months),
-                  id = self.coupon_id,
-                  max_redemptions=int(self.max_redemptions),
-                  redeem_by=int(time.mktime(self.redeem_by.timetuple()))
-                  )
-            else:
-                stripe.Coupon.create(
-                  percent_off = int(self.percent_off),
-                  duration= self.duration,
-                  id = self.coupon_id,
-                  max_redemptions=int(self.max_redemptions),
-                  redeem_by=int(time.mktime(self.redeem_by.timetuple()))
-                  )
-            return True
+            coupon_dict['duration_in_months'] = int(self.duration_in_months)
         except:
-            return False
+            pass
+        try:
+            coupon_dict['max_redemptions'] = int(self.max_redemptions)
+        except:
+            pass
+        try:
+            coupon_dict['redeem_by'] = int(time.mktime(self.redeem_by.timetuple()))
+        except:
+            pass
+              
+        
+        stripe.Coupon.create(**coupon_dict)
+        return True
+    # except:
+    #     return False
    
 
 
     def delete_coupon(self):
         try:
             cpn = stripe.Coupon.retrieve(self.coupon_id)
-            cpnself.delete()
-            self.purge()
-            return True
+            cpn.delete()
         except:
-            return False
+            pass
+        try:            
+            self.purge()
+        except:
+            pass
+        return True
         
     
 
