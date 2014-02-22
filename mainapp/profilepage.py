@@ -66,7 +66,8 @@ def display_profile(request, username):
     except:
         pass
     
-    parameters['name'] = userprof.get('business_org_name') if userprof['sign_up_as'] == 'Business' or userprof['sign_up_as'] == 'Organisation' else userprof['name']
+    parameters['name'] = userprof.get('business_org_name') if (userprof['sign_up_as'] == 'Business' or userprof['sign_up_as'] == 'Organisation') \
+    and userprof.get('business_org_name')!='' else userprof['name']
 
     parameters['description'] = userprof['description']
     parameters['pic_url'] = userprof['profile_img'].replace("normal","bigger")
@@ -349,7 +350,9 @@ def get_all_foods(user_id, logged_in_id = None):
             try:
                 account = SocialAccount.objects.get(user__id = myid)
                 recomm_details.append({'id': myid,
-                    'name': userprof.get('business_org_name') if userprof['sign_up_as'] == 'Business' or userprof['sign_up_as'] == 'Organisation' else userprof['name'],
+                    'name': userprof.get('business_org_name') if (userprof['sign_up_as'] == 'Business' or userprof['sign_up_as'] == 'Organisation') \
+                        and userprof.get('business_org_name')!='' else userprof['name'],
+                    # 'name': userprof.get('business_org_name') if userprof['sign_up_as'] == 'Business' or userprof['sign_up_as'] == 'Organisation' else userprof['name'],
                     # 'name': account.extra_data['name'],
                     'screen_name': account.extra_data['screen_name'],
                     'photo': account.extra_data['profile_image_url']})
@@ -385,7 +388,9 @@ def get_customers(user_id, logged_id=None):
         if logged_id!=None and each['customeruid'] == logged_id:
             logged_customer = True
         final_customers.append({'id': each['customeruid'],
-         'name': usr_pr.get('business_org_name') if usr_pr['sign_up_as'] == 'Business' or usr_pr['sign_up_as'] == 'Organisation' else usr_pr['name'],
+        'name': usr_pr.get('business_org_name') if (usr_pr['sign_up_as'] == 'Business' or usr_pr['sign_up_as'] == 'Organisation') \
+                        and usr_pr.get('business_org_name')!='' else usr_pr['name'],
+         # 'name': usr_pr.get('business_org_name') if usr_pr['sign_up_as'] == 'Business' or usr_pr['sign_up_as'] == 'Organisation' else usr_pr['name'],
          # 'name': account.extra_data['name'],
          'description': account.extra_data['description'],
          'photo': account.extra_data['profile_image_url'],
@@ -411,7 +416,8 @@ def get_connections(user_id, logged_in_id = None):
                 logged_conn = 'buyer'
             final_connections.append({'id': each['c_useruid'],
              # 'name': account.extra_data['name'],
-             'name': usr_pr['business_org_name'] if usr_pr['sign_up_as'] == 'Business' or usr_pr['sign_up_as'] == 'Organisation' else usr_pr['name'],
+             'name': usr_pr.get('business_org_name') if (usr_pr['sign_up_as'] == 'Business' or usr_pr['sign_up_as'] == 'Organisation') \
+                        and usr_pr.get('business_org_name')!='' else usr_pr['name'],
              'description': account.extra_data['description'],
              'photo': account.extra_data['profile_image_url'],
              'username' : account.extra_data['screen_name'],
@@ -433,7 +439,8 @@ def get_connections(user_id, logged_in_id = None):
             
             data = {'id': each['b_useruid'],
              # 'name': account.extra_data['name'],
-             'name': userprof.get('business_org_name') if userprof['sign_up_as'] == 'Business' or userprof['sign_up_as'] == 'Organisation' else userprof['name'],
+             'name': usr_pr.get('business_org_name') if (usr_pr['sign_up_as'] == 'Business' or usr_pr['sign_up_as'] == 'Organisation') \
+                        and usr_pr.get('business_org_name')!='' else usr_pr['name'],
              'description': account.extra_data['description'],
              'photo': account.extra_data['profile_image_url'],
              'username' : account.extra_data['screen_name'],
@@ -474,7 +481,8 @@ def get_members(user_id, logged_in_id = None):
                     logged_member = True
             final_members.append({'id': each['memberuid'],
              # 'name': account.extra_data['name'],
-             'name': usr_pr.get('business_org_name') if usr_pr['sign_up_as'] == 'Business' or usr_pr['sign_up_as'] == 'Organisation' else usr_pr['name'],
+             'name': usr_pr.get('business_org_name') if (usr_pr['sign_up_as'] == 'Business' or usr_pr['sign_up_as'] == 'Organisation') \
+                        and usr_pr.get('business_org_name')!='' else usr_pr['name'],
              'description': account.extra_data['description'],
              'photo': account.extra_data['profile_image_url'],
              'username' : account.extra_data['screen_name'],
@@ -499,7 +507,8 @@ def get_organisations(user_id):
         account = SocialAccount.objects.get(user__id = each['orguid'])
         final_orgs.append({'id': each['orguid'],
          # 'name': account.extra_data['name'],
-         'name': usr_pr.get('business_org_name') if usr_pr['sign_up_as'] == 'Business' or usr_pr['sign_up_as'] == 'Organisation' else usr_pr['name'],
+         'name': usr_pr.get('business_org_name') if (usr_pr['sign_up_as'] == 'Business' or usr_pr['sign_up_as'] == 'Organisation') \
+                        and usr_pr.get('business_org_name')!='' else usr_pr['name'],
          'description': account.extra_data['description'],
          'photo': account.extra_data['profile_image_url'],
          'username' : account.extra_data['screen_name']
@@ -521,7 +530,8 @@ def get_foods_from_org_members(user_id):
             foods_count.extend(mem_foods)
             all_foods.append({'id': each['memberuid'],
              # 'name': account.extra_data['name'],
-             'name': usr_pr.get('business_org_name') if usr_pr['sign_up_as'] == 'Business' or usr_pr['sign_up_as'] == 'Organisation' else usr_pr['name'],
+             'name': usr_pr.get('business_org_name') if (usr_pr['sign_up_as'] == 'Business' or usr_pr['sign_up_as'] == 'Organisation') \
+                        and usr_pr.get('business_org_name')!='' else usr_pr['name'],
              'photo': account.extra_data['profile_image_url'],
              'username' : account.extra_data['screen_name'],
              'foods': mem_foods
@@ -544,7 +554,8 @@ def get_team(user_id, logged_in_id=None):
                     logged_team = True
             final_teams.append({'id': each['memberuid'],
              # 'name': account.extra_data['name'],
-             'name': usr_pr.get('business_org_name') if usr_pr['sign_up_as'] == 'Business' or usr_pr['sign_up_as'] == 'Organisation' else usr_pr['name'],
+             'name': usr_pr.get('business_org_name') if (usr_pr['sign_up_as'] == 'Business' or usr_pr['sign_up_as'] == 'Organisation') \
+                        and usr_pr.get('business_org_name')!='' else usr_pr['name'],
              'description': account.extra_data['description'],
              'photo': account.extra_data['profile_image_url'],
              'username' : account.extra_data['screen_name']
@@ -566,7 +577,8 @@ def get_all_business(prof_id):
             if prof_id != int(each['useruid']):
                 final_business.append({'id': each['useruid'],
                     # 'name': account.extra_data['name'],
-                    'name': usr_pr.get('business_org_name') if usr_pr['sign_up_as'] == 'Business' or usr_pr['sign_up_as'] == 'Organisation' else usr_pr['name'],
+                    'name': usr_pr.get('business_org_name') if (usr_pr['sign_up_as'] == 'Business' or usr_pr['sign_up_as'] == 'Organisation') \
+                        and usr_pr.get('business_org_name')!='' else usr_pr['name'],
                     'description': account.extra_data['description'],
                     'photo': account.extra_data['profile_image_url'],
                     'username' : account.extra_data['screen_name']
@@ -587,7 +599,8 @@ def get_all_orgs(prof_id):
             if prof_id != int(each['useruid']):
                 final_organisation.append({'id': each['useruid'],
                     # 'name': account.extra_data['name'],
-                    'name': usr_pr.get('business_org_name') if usr_pr['sign_up_as'] == 'Business' or usr_pr['sign_up_as'] == 'Organisation' else usr_pr['name'],
+                    'name': usr_pr.get('business_org_name') if (usr_pr['sign_up_as'] == 'Business' or usr_pr['sign_up_as'] == 'Organisation') \
+                        and usr_pr.get('business_org_name')!='' else usr_pr['name'],
                     'description': account.extra_data['description'],
                     'photo': account.extra_data['profile_image_url'],
                     'username' : account.extra_data['screen_name']
