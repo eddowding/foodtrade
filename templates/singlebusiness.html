@@ -1,6 +1,7 @@
 {% extends 'tbase.html' %}
 {% load staticfiles %}
 {% load socialaccount %}
+{% load activity_tags %}
 {% load url from future %}
 {% load i18n %}
 {% include "socialaccount/snippets/login_extra.html" %}
@@ -849,7 +850,7 @@
                                           <a href="/{{username}}/post/{{eachUpdate.tweetuid}}/"><span class="glyphicon glyphicon-time"></span>{{eachUpdate.time_elapsed}} ago</a></small>
                                       </div>
                                       <p>
-                                         {{eachUpdate.status}}
+                                         {{eachUpdate.status|recognise_name|safe}}
                                       </p>
                                   </div>
                               </li>

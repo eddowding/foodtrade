@@ -107,7 +107,7 @@
           style="border: 0;">
  
             <div class="form-group" style="margin-right:5px;"> 
-              <input type="text" name="q" id="keyword" class="form-control  pac-input" value="{{ search.query }}" placeholder="What?"> 
+              <input type="text" name="q" id="keyword" class="form-control  pac-input" value="{{ search.query }}" placeholder="Search for.."> 
             </div> 
             <div class="form-group" style="margin-right:5px;">
               <input type="text" name="location" id="pac-input" value="{% if search %}{{ search.place }}{% endif %}{% if not search %}{{userinfo.zip_code}}{% endif %}" class="pac-input form-control  " placeholder="Where?">
