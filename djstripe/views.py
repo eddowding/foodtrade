@@ -31,6 +31,7 @@ from django.db import models
 from django.forms import ModelForm
 from django.contrib.auth.decorators import user_passes_test
 
+from mainapp.classes.TweetFeed import UserProfile
 
 def has_history(user):
     customer, created = Customer.get_or_create(user)
@@ -407,6 +408,8 @@ class SubscribeFormView(
                 customer, created = Customer.get_or_create(self.request.user)
                 customer.update_card(self.request.POST.get("stripe_token"))
                 customer.subscribe(form.cleaned_data["plan"])
+                user_profile = UserProfile()
+                user_profile.subscribe(request.user.id)
             except stripe.StripeError as e:
                 # add form error here
                 self.error = e.args[0]

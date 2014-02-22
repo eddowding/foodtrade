@@ -179,7 +179,7 @@ class Search():
 
                 or_conditions.append({'foods':{"$elemMatch":{fd_attr:reg_expression}}})
 
-
+            # search by business type
             or_conditions.append({'type_user':reg_expression})
 
             

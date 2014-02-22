@@ -111,6 +111,7 @@ class SignupForm(forms.Form):
                 'zip_code': str(postal_code),
                 'latlng' : {"type" : "Point", "coordinates" : [float(lon),float(lat)] },
                 'address': address,
+                'subscribed':0,
                 # 'name': social_account.extra_data['name'],
                 'business_org_name': self.cleaned_data['buss_org_name'],
                 'name': self.cleaned_data['display_name'],
