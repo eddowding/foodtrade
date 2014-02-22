@@ -12,7 +12,6 @@ class Email():
         self.conn = Connection(SERVER,PORT)
         self.db = self.conn[DB_NAME]
         self.table_name = 'emailbacklogs'
-        self.db_object.create_table(self.table_name,'_id')
 
     def save_backlogs(self,doc):
         self.db.emailbacklogs.insert(doc)          
