@@ -10,7 +10,7 @@ table_name = 'notification'
 class Email():
     def __init__ (self):        
         self.conn = Connection(SERVER,PORT)
-        self.db = conn[DB_NAME]
+        self.db = self.conn[DB_NAME]
         self.table_name = 'emailbacklogs'
         self.db_object.create_table(self.table_name,'_id')
 
