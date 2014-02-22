@@ -1,6 +1,7 @@
 
 from DataConnector import UserInfo
 from djstripe.models import Customer
+from mainapp.classes.TweetFeed import TweetFeed
 def user_info(request):
     if request.user.is_authenticated():
 
@@ -15,7 +16,14 @@ def user_info(request):
         user_id = request.user.id
         try:
             user_info = UserInfo(user_id)
-            return {'userinfo' : user_info, "subscribed": subscribed}
+            tf = TweetFeed()
+            has_tweet = ft.has_tweet_in_week(request.user.id)
+            can_tweet = False
+            
+            if subscribed or not has_tweet:
+                can_tweet = True
+            print can_tweet
+            return {'userinfo' : user_info, "subscribed": subscribed, "can_tweet":can_tweet}
         except:
             return {'userinfo':""}
     return {}
