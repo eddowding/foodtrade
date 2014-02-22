@@ -99,24 +99,24 @@
                               Add <acronym rel="tooltip" title="Not just 'apples' but 'Ashton Bitters, great for cider, and 100% organically grown in rural Dorset'" style="border-bottom: 1px dotted #444;">produce details</acronym>, photos,  and tags
                             </td>
                         </tr>
-                        <tr class="active">
+                        <tr >
                             <td>
                               Customers <acronym rel="tooltip" title="Think of it as 'facebook likes' for good food. Customers can recommend your produce - great proof to encourage more business sales and improve your margins"> <span style="border: 1px solid #999; padding: 1px 4px 1px 4px; border-radius: 5px;"> <i class="fa fa-thumbs-o-up"></i> vouch</span> and <span style="border-bottom: 1px dotted #444;">share on facebook and twitter</span></acronym>
   
                             </td>
                         </tr>
  
-                        <tr>
+                        <tr class="active">
                           <td> 
                             Unlimited <acronym rel="tooltip" title="Post wants and offers to be shared with relevant businesses on the site, in newsletters, and on twitter" style="border-bottom: 1px dotted #444;">status updates</acronym> 
                           </td>
                         </tr>
-                        <tr class="active">
+                        <tr >
                             <td>
                                    30 results per search 
                             </td>
                         </tr>
-                        <tr>
+                        <tr class="active">
                             <td>
                                 Advanced search filters
                             </td>
@@ -178,7 +178,7 @@
 <!--                   {% with image=plan.image|default:"img/default-plan-image.png" %}
                     <img src="{% static image %}" class="img-thumbnail" />
                   {% endwith %} -->
-                  Upgrade - {{plan.price|djdiv:100}} {{plan.currency}}
+                  Upgrade -  &pound;45 / yr
                 </button>
 
               {% if not customer.current_subscription or customer.current_subscription.status == CurrentSubscription.STATUS_CANCELLED %}
@@ -275,7 +275,7 @@
   </div>
     <button type="submit" class="btn btn-info btn-lg">Apply</button>
 </form>
-<code id="promo_message"></code>
+<div id="promo_message"></div>
 <a href="#" id="form_link" onclick="change_promo()">Change Promo Code</a>
 
  </div>
