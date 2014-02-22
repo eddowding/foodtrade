@@ -58,7 +58,7 @@ class TweetFeed():
 
     def has_tweet_in_week(self,useruid):
         week_ago = int(time.time()) - 7*24*3600
-        results = self.db_object.get_one( self.table_name, {"useruid":useruid, "updates.time_stamp": {"$gte":week_ago} })
+        results = self.db_object.get_all( self.table_name, {"useruid":useruid, "updates.time_stamp": {"$gte":week_ago} })
         if len(results)>0:
             return True
         return False

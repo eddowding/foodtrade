@@ -2,6 +2,7 @@
 {% load staticfiles %}
 {% load socialaccount %}
 {% load activity_tags %}
+{% load recognise_name %}
 {% load url from future %}
 {% load i18n %}
 {% include "socialaccount/snippets/login_extra.html" %}
@@ -645,6 +646,7 @@
                       
 <div id="all-connections">
 <div class="clearfix">
+{% if connections %}
           <h4>We buy from <small>these suppliers</small></h4>
           <hr /> 
            <div class="pull-left" id="buyers-cards">
@@ -686,9 +688,11 @@
                   {% endif %}
                   {% endfor %}
                 </div>
+                {% endif %}
           </div>
 
           <div class="clearfix">
+          {% if connections %}
           <h4 style="margin-top: 50px;">We sell to <small>these stockists</small></h4> 
           <hr /> 
            <div class="pull-left" id="seller-cards">
@@ -729,7 +733,9 @@
                   </div> 
                   {% endif %}
                   {% endfor %}
-                </div></div>
+                </div>
+ {% endif %}
+                </div>
 </div>  <!-- end all-connections -->
 
           </div> <!--  end connections -->
