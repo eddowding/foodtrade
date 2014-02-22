@@ -107,7 +107,7 @@
           style="border: 0;">
  
             <div class="form-group" style="margin-right:5px;"> 
-              <input type="text" name="q" id="keyword" class="form-control  pac-input" value="{{ search.query }}" placeholder="What?"> 
+              <input type="text" name="q" id="keyword" class="form-control  pac-input" value="{{ search.query }}" placeholder="Search for.."> 
             </div> 
             <div class="form-group" style="margin-right:5px;">
               <input type="text" name="location" id="pac-input" value="{% if search %}{{ search.place }}{% endif %}{% if not search %}{{userinfo.zip_code}}{% endif %}" class="pac-input form-control  " placeholder="Where?">
@@ -199,7 +199,7 @@
           <ul class="dropdown-menu">
               <li class=" pull-left"><a href="/editprofile/{{userinfo.username}}"><i class="fa fa-user fa-fw"></i> Edit profile</a></li>
 
-              <li class=" pull-left"><a href="/payments"><i class="fa fa-credit-card fa-fw"></i> Billing</a></li> 
+              <li class=" pull-left"><a href="/payments"><i class="fa fa-credit-card fa-fw"></i> Account &amp; billing</a></li> 
               <li class=" pull-left">
                 <a src = "/accounts/logout" onclick="logout()" >
               <i class="fa fa-power-off fa-fw"></i> Logout</a></li>
@@ -235,7 +235,7 @@
     </nav>
     
     <div id="beta">
-     Please <a href="/invite">invite your friends</a> - and then why not upgrade? <a href="/payments">Membership from just &pound;45/yr</a>. We're stronger when we're connected.
+     Please <a href="/invite">invite your friends</a> - and then why not upgrade? <a href="/payments">Membership from just &pound;45</a>. We're stronger when we're connected.
     </div>
 
 
@@ -501,11 +501,43 @@ hidden
         </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
+<div class="ftstrip" style="margin-bottom:40px;"></div>
+
+<div class="row" id="logos">  
+  <div class="text-center block-center clearfix">
+    <div class="thumbnail pull-le ft "> 
+      <img class="img-responsive" alt="Wired Magazine top 100 edition" src="/static/images/logos/wired.jpg" >
+    </div> 
+    <div class="thumbnail pull-le ft "> 
+      <img class="img-responsive" alt="The Grocer" src="/static/images/logos/grocer.jpg" >
+    </div>
+    <div class="thumbnail pull- left "> 
+      <img class="img-responsive" alt="Huffington Post" src="/static/images/logos/huffpo.png" > 
+    </div>
+    <div class="thumbnail pul -left "> 
+      <img class="img-responsive" alt="Fast Company" src="/static/images/logos/fastcompany.jpg" >  
+    </div>
+    <div class="thumbnail pull -left "> 
+      <img class="img-responsive" alt="Virgin Unite" src="/static/images/logos/virgin.png" >  
+    </div>
+    <div class="thumbnail pul l-left "> 
+      <img class="img-responsive" alt="Modern Farmer" src="/static/images/logos/modernfarmer.png" >  
+    </div>
+    <div class="thumbnail pul l-left "> 
+      <img class="img-responsive" alt="BBC Food Programme" src="/static/images/logos/bbcr4.png" >  
+    </div>
+    <div class="thumbnail pul l-left "> 
+      <img class="img-responsive" alt="Financial Times" src="/static/images/logos/financialtimes.png" >  
+    </div>
+  </div>
+</div>
+
+
 <!-- FOOTER --> 
 <div class="container-responsive clearfix" id="footer">    
   <div class="row">
     <div class="col-lg-12">
-        <div class="ftstrip"></div>
+        <div class="ftstrip ftstrip-mini"></div>
     </div>
   </div>
   <div class="row">
