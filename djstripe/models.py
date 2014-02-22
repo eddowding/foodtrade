@@ -322,8 +322,8 @@ class Coupon(TimeStampedModel):
     duration= models.CharField(max_length=25, blank=True, choices = DURATION_CHOICES)
     duration_in_months = models.CharField(max_length=4, null=True, blank=True)
     percent_off = models.DecimalField(decimal_places=2, max_digits=4)
-    max_redemptions = models.DecimalField(decimal_places=2, max_digits=4)
-    redeem_by = models.DateTimeField()
+    max_redemptions = models.DecimalField(decimal_places=2, max_digits=4,null=True)
+    redeem_by = models.DateTimeField(null=True)
 
     # objects = models.Manager()
 
