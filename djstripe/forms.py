@@ -126,24 +126,31 @@ class CouponForm(forms.Form):
     percent_off = forms.IntegerField(required=True, widget=forms.TextInput(attrs={'placeholder': 'Discount Percent','class' : 'form-control'})) 
     duration = forms.ChoiceField(choices=DURATION_CHOICES, widget=forms.Select(attrs={'class' : 'form-control'}))
     duration_in_months = forms.IntegerField(required=False, widget=forms.TextInput(attrs={'placeholder': 'No. of months','class' : 'form-control'})) 
-    max_redemptions = forms.IntegerField(required=True, widget=forms.TextInput(attrs={'placeholder': 'No. of uses','class' : 'form-control'}))
-    redeem_by = forms.DateField(label=u'redeem by', input_formats=['%Y-%m-%d', '%Y-%d-%m',], required=True, widget=forms.DateInput(format = '%Y-%m-%d', attrs={'placeholder': 'YYYY-MM-DD','class' : 'form-control'})) #forms.DateField(required=True, initial=datetime.date.today,) # widget=forms.TextInput(attrs={'placeholder': 'YYYY-MM-DD','class' : 'form-control'}))
+    max_redemptions = forms.IntegerField(required=False,widget=forms.TextInput(attrs={'placeholder': 'No. of uses','class' : 'form-control'}))
+    redeem_by = forms.DateField(input_formats=['%Y-%m-%d', '%Y-%d-%m',], required=False, widget=forms.DateInput(format = '%Y-%m-%d', attrs={'placeholder': 'YYYY-MM-DD','class' : 'form-control'})) #forms.DateField(required=True, initial=datetime.date.today,) # widget=forms.TextInput(attrs={'placeholder': 'YYYY-MM-DD','class' : 'form-control'}))
     def __init__(self, *args, **kwargs):
         super(CouponForm, self).__init__(*args, **kwargs)
 
     def save(self):
         # try:
+        val = self.cleaned_data['max_redemptions']
         cpn = Coupon(
         coupon_id = self.cleaned_data['coupon_id'],
         percent_off = self.cleaned_data['percent_off'],
         duration = self.cleaned_data['duration'],
         duration_in_months = self.cleaned_data['duration_in_months'],
-        max_redemptions = self.cleaned_data['max_redemptions'],
+        max_redemptions = val,
         redeem_by = self.cleaned_data['redeem_by']
         )
+    # try:
+        cpn.save()
         try:
-            cpn.save()
             cpn.create_coupon()
-            return cpn
         except:
+            cpn.delete_coupon()
             return False
+        
+        
+        return cpn
+    # except:
+            # return False

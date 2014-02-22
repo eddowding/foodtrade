@@ -7,7 +7,7 @@ from bson.objectid import ObjectId
 from MongoConnection import MongoConnection
 import json
 import operator
-
+import datetime,time
 
 class UserProfile():
     def __init__ (self):
@@ -38,7 +38,7 @@ class UserProfile():
 
 class Search():
     """docstring for UserConnections"""
-    def __init__(self, keyword="", lon = "", lat ="", place = "", foods="", business="", organisation="",sort="", search_global=False):
+    def __init__(self, keyword="", lon = "", lat ="", place = "", foods="", business="", organisation="",sort="", search_global=False,news="new"):
         self.keyword = str(keyword.strip())
         self.lon = lon
         self.lat = lat
@@ -48,6 +48,7 @@ class Search():
         self.organisation = organisation
         self.sort = sort
         self.search_global = search_global
+        self.news = news
         
     def get_result_fields(self,type_result):
         if type_result == "description":
@@ -132,7 +133,10 @@ class Search():
         for fds in foods_list:
             fd_list = []
             for fd in fds:
-                fd_list.append(fd['food_name'])
+                try:
+                    fd_list.append(fd['food_name'])
+                except:
+                    pass
             foods_array.append(fd_list)
 
 
@@ -179,7 +183,7 @@ class Search():
 
                 or_conditions.append({'foods':{"$elemMatch":{fd_attr:reg_expression}}})
 
-
+            # search by business type
             or_conditions.append({'type_user':reg_expression})
 
             
@@ -262,7 +266,12 @@ class Search():
                 agg_pipeline.append({ '$match':{"updates.status":reg_expression, "updates.deleted":{"$ne":1},"updates.parent_tweet_id":"0"}})
             else:
                 agg_pipeline.append({ '$match':{"updates.deleted":{"$ne":1},"updates.parent_tweet_id":"0"}})
-       
+        
+
+        if search_type == 0 and self.news == "old":
+            week_ago = int(time.time()) - 7*24*3600
+            agg_pipeline.append({ '$match':{"updates.time_stamp": {"$lte":week_ago} }})
+
         # agg_pipeline.append({ '$match':{"updates":{"$size":0}}})
         if self.sort == "time":
             sort_text = "updates.time_stamp"

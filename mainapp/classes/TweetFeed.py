@@ -55,6 +55,14 @@ class TweetFeed():
 
     def get_user_by_tweet(self, tweet_id):        
         return self.db_object.get_one( self.table_name, { "updates.tweet_id": str(tweet_id) })
+
+    def has_tweet_in_week(self,useruid):
+        week_ago = int(time.time()) - 7*24*3600
+        results = self.db_object.get_all( self.table_name, {"useruid":useruid, "updates.time_stamp": {"$gte":week_ago} })
+        if len(results)>0:
+            return True
+        return False
+
         
     def get_tweet_by_user_id(self, user_id):
         return self.db_object.get_one(self.table_name,{'useruid':int(user_id), 'updates':{"$elemMatch":{'deleted':0}}})
@@ -63,6 +71,12 @@ class TweetFeed():
         return self.db_object.get_all(self.table_name, query, 'time_stamp')
 
     def insert_tweet(self, user_id, tweet):
+        usr_profile = UserProfile()
+        usr_profile.get_profile_by_id(user_id)
+
+        if self.has_tweet_in_week(user_id) and up['subscribed'] != 1:
+            return
+
         tweet['deleted'] =0
         tweet['time_stamp'] = int(time.time())
         
@@ -229,6 +243,9 @@ class UserProfile():
 
     def update_profile_fields(self, where, what):
         self.db_object.update(self.table_name, where, what)
+
+    def subscribe(self, useruid):
+        self.db_object.update(self.table_name, {"useruid":useruid}, {"subscribed":1})
 
     def update_profile(self, userid, description, address, type_usr, sign_up_as, phone, lat, lon, postal_code):
         return self.db_object.update(self.table_name,
@@ -473,6 +490,8 @@ class Food():
           
         self.db_object.update(self.table_name,{'food_name': data['food_name'], 'useruid': data['useruid'], 'deleted': 0},
              update_data)
+        twt = TweetFeed()
+        twt.update_data(value['useruid'])
 
 
 class Customer():
