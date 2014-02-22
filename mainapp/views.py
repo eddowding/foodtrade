@@ -544,7 +544,9 @@ def sms_receiver(request):
                         'screen_name': msg_from,
                         'Organisations':[],
                         'useruid': min_user_id,
-                        'username':msg_from
+                        'username':msg_from,
+                        'subscribed':0,
+                        'newsletter_freq':'Weekly'
                     }
                 
                 user_profile_obj.create_profile(signup_data)
@@ -583,7 +585,14 @@ def send_newsletter(request, substype):
         users = user_profile_obj.get_all_profiles('Monthly')
     
     for eachUser in users:
-        search_handle = Search(lon = eachUser['latlng']['coordinates'][0], lat = eachUser['latlng']['coordinates'][1])
+        try:
+            subscription_status = eachUser['subscribed']
+        except:
+            subscription_status = 0
+        if subscription_status == 0:
+            search_handle = Search(lon = eachUser['latlng']['coordinates'][0], lat = eachUser['latlng']['coordinates'][1], news="old")
+        else:
+            search_handle = Search(lon = eachUser['latlng']['coordinates'][0], lat = eachUser['latlng']['coordinates'][1])
         search_results = search_handle.search_all()['results']
         temp_result = []
         no_of_results = 10
@@ -598,6 +607,7 @@ def send_newsletter(request, substype):
         tem_con = tem_con.replace('Content-Type: text/html; charset=utf-8', '')
         m = Email()
         m.send_mail("Recent FoodTrade activity near you", [{'name':'main', 'content':tem_con}], [{'email':eachUser['email']}])
+        
 
 
         
@@ -648,7 +658,9 @@ def create_profile_from_mention(email, location, data):
             'screen_name': data['user']['screen_name'],
             'Organisations':[],
             'useruid': min_user_id,
-            'username':data['user']['screen_name']
+            'username':data['user']['screen_name'],
+            'subscribed':0,
+            'newsletter_freq':'Weekly'            
         }
     
     user_profile_obj.create_profile(signup_data)
@@ -665,4 +677,3 @@ def create_profile_from_mention(email, location, data):
     mailchimp_obj.subscribe(signup_data)
 
     return {'status':1}
-
