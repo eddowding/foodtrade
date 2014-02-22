@@ -51,7 +51,7 @@ function reload_controls()
 		for(i=0;i<connections.length;i++)
 		{
 			var con = connections[i];
-			var name = con.sign_up_as =="Business" || con.sign_up_as == "Organisation" ? con.user.business_org_name: con.user.name;
+			var name = (con.sign_up_as =="Business" || con.sign_up_as == "Organisation") && con.user.business_org_name!= '' ? con.user.business_org_name: con.user.name;
 			// var name = con.user.name;
 			var status =  con.status;
 			var profile_img = con.user.profile_img;

@@ -4,18 +4,17 @@ from django.http import HttpResponse, HttpResponseRedirect
 from allauth.socialaccount.models import SocialToken, SocialAccount
 from twython import Twython
 import json
+from django.contrib.auth.models import User
 
 from MongoConnection import MongoConnection
 from datetime import datetime
 from bson.objectid import ObjectId
-import time
-<<<<<<< HEAD
-from mainapp.classes.TweetFeed import TradeConnection, Food
-=======
-from mainapp.TweetFeed import TradeConnection, Food, Organisation
->>>>>>> 49c6be85d3c3ff66b983f9bf0d05c3fe1bb47422
-class UserConnections():
+import time, datetime
+from mainapp.classes.TweetFeed import TweetFeed, Food, TradeConnection, Customer, TradeConnection, UserProfile, Organisation, Team, Notification
+from djstripe.models import Customer
 
+
+class UserConnections():
     """docstring for UserConnections"""
     def __init__(self, user_id):
         self.db_object = MongoConnection("localhost",27017,'foodtrade')
@@ -43,26 +42,126 @@ class UserConnections():
         organisations = org.get_organisations_by_mem_id(self.user_id)
         return len(organisations)
 
-    def get_nearby_individuals_no(self):
-        return 78
+    def get_nearby_individuals_no(self, lon, lat):
+        query_string = {}
+        
+        query_string['latlng'] = {"$near":{"$geometry":{"type":"Point", "coordinates":[float(lon), float(lat)]}, "$maxDistance":160934}}
 
-    def get_nearby_businesses_no(self):
-        return 79
+        query_string['sign_up_as'] ='Individual'
+       
+        tweet_search_object = TweetFeed()
+        count = tweet_search_object.get_near_people(query_string)
+
+        return count
+
+    def get_nearby_businesses_no(self, lon, lat):
+        query_string = {}
+        
+        query_string['latlng'] = {"$near":{"$geometry":{"type":"Point", "coordinates":[float(lon), float(lat)]}, "$maxDistance":160934}}
+
+        query_string['sign_up_as'] ='Business'
+       
+        tweet_search_object = TweetFeed()
+        count = tweet_search_object.get_near_people(query_string)
+
+        return count
+
+    def get_award_no(self):
+        
+
+        return 0
 
 class UserInfo():
     def __init__ (self,user_id):
         self.user_id = user_id
-        twitter_user = SocialAccount.objects.get(user__id = user_id)
+        try:
+            usr = User.objects.get(id=user_id)
+            self.is_superuser = usr.is_superuser
+        except:
+            self.is_superuser = False
+
+        user_profile = UserProfile()
+        userprof = user_profile.get_profile_by_id(user_id)
+        self.email = userprof['email']
+        self.twitter_user = userprof['screen_name']
+        self.lon = userprof['latlng']['coordinates'][0]
+        self.lat = userprof['latlng']['coordinates'][1]
+        self.user_type = userprof['sign_up_as']
+        self.zip_code = userprof['zip_code']
+        self.address = userprof['address']
+        self.type = userprof['type_user']
+        try:
+            self.country = userprof['address'].split(',')[len(userprof['address'].split(','))-1]
+        except:
+            self.country = ''
+        try:
+            self.facebook_page = userprof['facebook_page']
+        except:
+            self.facebook_page = ''
+
+        try:
+            self.webiste_url = userprof['webiste_url']
+        except:
+            self.webiste_url = ''
+        try:
+            self.company_num = userprof['company_num']
+        except:
+            self.facebook_page = ''
+        try:
+            self.deliverables = userprof['deliverables']
+        except:
+            self.deliverables = ''
+        try:
+            self.business_org_name = userprof['business_org_name']
+        except:
+            self.business_org_name = ''            
+
+        
         user_connection =  UserConnections(user_id)
 
-        self.full_name = twitter_user.extra_data['name']
-        self.username = twitter_user.extra_data['screen_name']
-        self.profileimg = twitter_user.extra_data['profile_image_url_https']
-        # print 'hello'+twitter_user.extra_data['profile_image_url_https']
+<<<<<<< HEAD
+        self.full_name = userprof.get('business_org_name') if (userprof['sign_up_as'] == 'Business' or userprof['sign_up_as'] == 'Organisation') \
+        and  userprof.get('business_org_name')!='' else userprof['name']
+=======
+        try:
+            self.full_name = userprof['business_org_name'] if userprof['sign_up_as'] == 'Business' or userprof['sign_up_as'] == 'Organisation' else userprof['name']
+        except:
+            self.full_name = userprof['name']
+>>>>>>> 5b9f07bf91a89453f7f714ee9d7516ed56b67a8a
+
+        self.username = userprof['screen_name']
+        self.description = userprof['description']
+        self.profileimg = userprof['profile_img']
+        
         self.trade_connections_no = user_connection.get_trade_connection_no()
         self.food_no = user_connection.get_food_connection_no()
-        self.nearby_businesses_no = user_connection.get_nearby_businesses_no()
-        self.nearby_individuals_no = user_connection.get_nearby_individuals_no()
+        self.nearby_businesses_no = user_connection.get_nearby_businesses_no(self.lon,self.lat)
+        self.nearby_individuals_no = user_connection.get_nearby_individuals_no(self.lon,self.lat)
         self.organisation_connection_no = user_connection.get_organisation_connection_no()
+        self.award_no = user_connection.get_award_no()
 
+        start_time = datetime.date.today() - datetime.timedelta(7)
+        end_time = datetime.date.today()
+        t_feed_obj = TweetFeed()
 
+        hashtags_this_week = t_feed_obj.get_trending_hashtags(start_time, end_time)
+        self.hashtagsthis = hashtags_this_week
+
+        hashtags_all_time = t_feed_obj.get_trending_hashtags("", "")
+        self.hashtagsall = hashtags_all_time
+
+        notification_obj = Notification()
+        self.notification_count = notification_obj.get_notification_count(self.username)
+        
+        self.subscribed = True
+        try:
+            usr = User.objects.get(id=user_id)
+            customer, created = Customer.get_or_create(usr)
+            if created:
+                self.subscribed = False
+
+            if not customer.has_active_subscription():
+                self.subscribed = False
+        except:
+            self.subscribed = False
+        

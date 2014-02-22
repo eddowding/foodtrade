@@ -75,7 +75,8 @@ function reload_connections()
 		for(var i=0;i<connections.length;i++)
 		{
 			var con = connections[i];
-			var name = con.business_org_name;
+			var name = con.user.business_org_name!= '' ? con.user.business_org_name: con.user.name;
+			// var name = con.business_org_name;
 			var description = con.description;
 			var photo =  con.photo;
 			var username = con.username;
