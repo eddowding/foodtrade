@@ -90,10 +90,26 @@
                     </div>
                     <table class="table">
                         <tr>
-                            <td> 
-                                30 <acronym title="">posts</acronym> / month on the local 'trade-wall' for wants, offers,  &amp; sharing opportunities. <br />
-                                <small class="text-muted">Tweet updates at photos to @myfoodtrade</small>
+                          <td>
+                            "<acronym rel="tooltip" title="Just include '@foodtradeHQ' in your tweet and we'll  push it to  relevant businesses" style="border-bottom: 1px dotted #444;">Tweet to Trade</acronym>" in real-time  
+                          </td>
+                        </tr>
+                        <tr class="active">
+                            <td>
+                              Add <acronym rel="tooltip" title="Not just 'apples' but 'Ashton Bitters, great for cider, and 100% organically grown in rural Dorset'" style="border-bottom: 1px dotted #444;">produce details</acronym>, photos,  and tags
                             </td>
+                        </tr>
+                        <tr class="active">
+                            <td>
+                              Customers <acronym rel="tooltip" title="Think of it as 'facebook likes' for good food. Customers can recommend your produce - great proof to encourage more business sales and improve your margins"> <span style="border: 1px solid #999; padding: 1px 4px 1px 4px; border-radius: 5px;"> <i class="fa fa-thumbs-o-up"></i> vouch</span> and <span style="border-bottom: 1px dotted #444;">share on facebook and twitter</span></acronym>
+  
+                            </td>
+                        </tr>
+ 
+                        <tr>
+                          <td> 
+                            Unlimited <acronym rel="tooltip" title="Post wants and offers to be shared with relevant businesses on the site, in newsletters, and on twitter" style="border-bottom: 1px dotted #444;">status updates</acronym> 
+                          </td>
                         </tr>
                         <tr class="active">
                             <td>
@@ -105,11 +121,6 @@
                                 Advanced search filters
                             </td>
                         </tr>
-                        <tr class="active">
-                            <td>
-                               List unlimited <acronym title="eg carrots, lamb, stilton cheese, cider..">foods &amp; drinks</acronym>, with individual  <acronym title="Customers can recommend your produce - great proof to encourage more business sales and improve your margins">social sharing <i class="fa fa-thumbs-up-o fa-border"></i></acronym> 
-                            </td>
-                        </tr>
                         <tr>
                             <td>
                                 Integrate with other apps <br />
@@ -118,7 +129,11 @@
                         </tr>
                         <tr class="active">
                             <td>  
-                               <i class="fa fa-rocket"></i> Verfied status 
+                               Verfied status
+                               <span class="fa-stack verified" rel="tooltip" title="Verified profile">
+                                <i class="fa fa-certificate fa-stack-2x" style="color: #1DBD3C;"></i>
+                                <i class="fa fa-check fa-stack-1x" style="color: #fff;"></i>
+                              </span> 
                             </td>
                         </tr>
                     </table>
@@ -163,7 +178,7 @@
 <!--                   {% with image=plan.image|default:"img/default-plan-image.png" %}
                     <img src="{% static image %}" class="img-thumbnail" />
                   {% endwith %} -->
-                  Awesome upgrade
+                  Upgrade - {{plan.price|djdiv:100}} {{plan.currency}}
                 </button>
 
               {% if not customer.current_subscription or customer.current_subscription.status == CurrentSubscription.STATUS_CANCELLED %}
