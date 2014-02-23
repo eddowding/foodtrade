@@ -116,8 +116,11 @@ class Search():
                 profiles[0]["foods"].extend(statuses[0]["foods"])
                 profiles[0]["businesses"].extend(statuses[0]["businesses"])
                 profiles[0]["organisations"].extend(statuses[0]["organisations"])
-                profiles[0]["results"] = profiles[0]["results"][:30]
-                profiles[0]["results"].extend(statuses[0]["results"][:30])
+                if not search_global:
+                    profiles[0]["results"] = profiles[0]["results"][:15]
+                    profiles[0]["results"].extend(statuses[0]["results"][:15])
+                else:
+                    profiles[0]["results"].extend(statuses[0]["results"])
             results = profiles[0]
         else:
             if len(statuses)>0:
