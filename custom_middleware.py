@@ -39,9 +39,7 @@ class XsSharing(object):
             if request.user.is_authenticated() and "/accounts/twitter/login/callback/" in request.path:
                 social_account = SocialAccount.objects.get(user__id = request.user.id)
                 extra_data = social_account.extra_data
-                image_desc = {'description': social_account.extra_data['description'],
-                            'profile_img': extra_data['profile_image_url']
-                            }
+                image_desc = {'profile_img': extra_data['profile_image_url']}
                 up = UserProfile()
                 up.update_profile_fields({"useruid":request.user.id}, image_desc)
         except:
