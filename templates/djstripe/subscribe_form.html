@@ -312,7 +312,7 @@ function apply_discount()
         $("#promo_form").hide();
         
         $("#form_link").show();
-        var amount = 45 - 0.45*parseInt(json_data.percent);
+        var amount = parseFloat(45 - 0.45*parseInt(json_data.percent)).toFixed(2);
         $("#discounted_amt").html(amount);
     }
     $("#promo_message").html(json_data.message);
