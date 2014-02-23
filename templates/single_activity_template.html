@@ -51,11 +51,14 @@
           <!-- certificate -->
                 <strong class="pull-left" style="margin-right: 10px;">
                 <a href="/profile/{{result.user.username}}">
-
-                {% if result.sign_up_as == "Business" and result.user.business_org_name != '' or result.sign_up_as == "Organisation" and result.user.business_org_name != '' %}
-                  {{result.user.business_org_name}}
+                  {% if result.user.business_org_name != None %}
+                      {% if result.sign_up_as == "Business" and result.user.business_org_name != '' or result.sign_up_as == "Organisation" and result.user.business_org_name != '' %}
+                        {{result.user.business_org_name}}
+                      {% else %}
+                        {{result.user.name}}
+                      {% endif %}
                 {% else %}
-                  {{result.user.name}}
+                    {{result.user.name}}
                 {% endif %}
                 </a> 
                 </strong> 

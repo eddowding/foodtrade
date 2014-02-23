@@ -17,6 +17,7 @@ from mainapp.classes.MongoConnection import MongoConnection
 from django.contrib.auth.decorators import user_passes_test
 import pprint
 from collections import Counter
+from django.contrib.auth.models import User
 
 consumer_key = 'seqGJEiDVNPxde7jmrk6dQ'
 consumer_secret = 'sI2BsZHPk86SYB7nRtKy0nQpZX3NP5j5dLfcNiP14'
@@ -236,3 +237,24 @@ def tweets(request):
     parameters['userprofile'] = UserProfile
     return render_to_response('home.html', parameters)
 
+@user_passes_test(lambda u: u.is_superuser)
+def all_users(request):
+    parameters = {}
+    all_users = User.objects.all().order_by('-date_joined')
+    final_list = []
+    user_prof = UserProfile()
+    for each in all_users:
+        try:
+            print each.username
+            usr_pro = user_prof.get_profile_by_username(str(each.username))
+            final_list.append({
+                'date_joined': each.date_joined,
+                'username': each.username,
+                'sign_up_as': usr_pro['sign_up_as']
+                })
+        except:
+            continue
+    print final_list
+    parameters['all_users'] = final_list
+    return render_to_response('all_users.html', parameters, context_instance=RequestContext(request))
+    # return render_to_response('all_users.html', parameters)

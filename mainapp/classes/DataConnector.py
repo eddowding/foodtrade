@@ -118,9 +118,14 @@ class UserInfo():
 
         
         user_connection =  UserConnections(user_id)
-
-        self.full_name = userprof.get('business_org_name') if (userprof['sign_up_as'] == 'Business' or userprof['sign_up_as'] == 'Organisation') \
-        and  userprof.get('business_org_name')!='' else userprof['name']
+        if userprof.get('business_org_name')!=None:
+            self.full_name= userprof.get('business_org_name') if (userprof['sign_up_as'] == 'Business' or userprof['sign_up_as'] == 'Organisation') \
+            and userprof.get('business_org_name')!='' else userprof['name']
+        else :
+            self.full_name = userprof['name']    
+        # parameters['name'] = userprof['name']
+        # self.full_name = userprof.get('business_org_name') if (userprof['sign_up_as'] == 'Business' or userprof['sign_up_as'] == 'Organisation') \
+        # and  userprof.get('business_org_name')!='' else userprof['name']
 
         self.username = userprof['screen_name']
         self.description = userprof['description']

@@ -1,0 +1,20 @@
+{% extends 'tbase.html' %}
+{% load staticfiles %}
+{% block content %}
+<div class="container">
+<table border="1px">
+	<th>S.N.</th>
+	<th>Username</th>
+	<th>Date Joined</th>
+	<th>Type</th>
+{% for each in all_users %}
+<tr>
+<td>{{forloop.counter}}</td>
+<td>{{each.username}}</td>
+<td>{{each.date_joined}}</td>
+<td>{{each.sign_up_as}}</td>
+</tr>
+{% endfor %}
+</table>
+</div>
+{% endblock %}
