@@ -131,7 +131,7 @@ class Search():
 
         foods_list = results["foods"]
         foods_array = []
-        print foods_list
+
 
         for fds in foods_list:
             fd_list = []

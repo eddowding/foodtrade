@@ -45,4 +45,5 @@ urlpatterns = patterns('',
 
     url(r'^twillo/$', 'mainapp.views.sms_receiver'),
     url(r'^all_users/$', 'mainapp.home.all_users'),
+    url(r'^merge-data/$', 'mainapp.merge_data.merge'),
 )
