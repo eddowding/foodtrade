@@ -41,6 +41,8 @@ class XsSharing(object):
                 extra_data = social_account.extra_data
                 image_desc = {'profile_img': extra_data['profile_image_url']}
                 up = UserProfile()
+
+                
                 up.update_profile_fields({"useruid":request.user.id}, image_desc)
         except:
             pass
