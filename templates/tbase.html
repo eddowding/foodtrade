@@ -234,9 +234,11 @@
     <div class="ftstrip ftstrip-mini"></div>
     </nav>
     
+   {% if user.is_authenticated %} 
     <div id="beta">
      Please <a href="/invite">invite your friends</a> - and then why not upgrade? <a href="/payments">Membership from just &pound;45</a>. We're stronger when we're connected.
     </div>
+   {% endif %}
 
 
 
