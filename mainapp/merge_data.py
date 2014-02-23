@@ -42,5 +42,5 @@ def merge(request):
         for user in business_users:
             twt = TweetFeed()
             twt.update_data(user)
-		return HttpResponse("success"+json.dumps(business_users))
+        return HttpResponse("success"+json.dumps(business_users))
     return HttpResponse("sorry")
