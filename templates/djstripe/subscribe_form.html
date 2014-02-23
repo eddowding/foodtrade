@@ -178,7 +178,7 @@
 <!--                   {% with image=plan.image|default:"img/default-plan-image.png" %}
                     <img src="{% static image %}" class="img-thumbnail" />
                   {% endwith %} -->
-                  Upgrade -  &pound;45 / yr
+                  Upgrade -  &pound;<span id="discounted_amt">45</span> / yr
                 </button>
 
               {% if not customer.current_subscription or customer.current_subscription.status == CurrentSubscription.STATUS_CANCELLED %}
@@ -312,6 +312,8 @@ function apply_discount()
         $("#promo_form").hide();
         
         $("#form_link").show();
+        var amount = 45 - 0.45*parseInt(json_data.percent);
+        $("#discounted_amt").html(amount);
     }
     $("#promo_message").html(json_data.message);
         $("#promo_message").show();

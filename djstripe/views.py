@@ -230,6 +230,7 @@ class ApplyCoupon(LoginRequiredMixin, PaymentsContextMixin, DetailView):
             cu.save()
             res = {}
             res['status'] = "success"
+            res['percent'] = int(cpn.percent_off)
             res['message'] = "You'll have "+str(int(cpn.percent_off))+" percent discount when you pay"
             
             return HttpResponse(json.dumps(res))
