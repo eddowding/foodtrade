@@ -11,32 +11,34 @@
 
  {% csrf_token %}
   <div class="form-group">
-    <label for="coupon_id">Coupon Id</label>
+    <label for="coupon_id">Coupon ID</label>
     {{form.coupon_id}}
   </div> 
 
   <div class="form-group">
-    <label for="percent_off">Percent Off</label>
+    <label for="percent_off">Percentage discount</label>
     {{form.percent_off}}
   </div>
 
   <div class="form-group">
     <label for="duration">Duration</label>
    {{form.duration}}
+   <p class="help-block">How long the coupon will last once applied to the customer</p>
   </div>
 
    <div class="form-group" id="hide_show">
-    <label for="months">Number of months</label>
+    <label for="months">Duration in months</label>
     {{form.duration_in_months}}
+   <p class="help-block text-danger">Only applies if duration=repeating!!</p>
   </div>
 
    <div class="form-group">
-    <label for="months">No. of reuse</label>
+    <label for="months">Max redemptions</label>
     {{form.max_redemptions}}
   </div>
 
    <div class="form-group">
-    <label for="months">Expiry Date</label>
+    <label for="months">Redeem by</label>
     {{form.redeem_by}}
   </div>
 
