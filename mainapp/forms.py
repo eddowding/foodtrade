@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.models import User
-from mainapp.classes.TweetFeed import UserProfile, Notification, Invites, InviteAccept
+from mainapp.classes.TweetFeed import UserProfile, Notification, Invites, InviteAccept, TradeConnection
 from allauth.socialaccount.models import SocialToken, SocialAccount
 from django.http import HttpResponse, HttpResponseRedirect
 from classes.Tags import Tags
@@ -129,6 +129,15 @@ class SignupForm(forms.Form):
         '''Transport  user from MySql to Mongo'''
         userprofile.update_profile_upsert({'screen_name':social_account.extra_data['screen_name'],
             'is_unknown_profile':'true', 'username':social_account.extra_data['screen_name']},data)
+
+        conn = TradeConnection()
+        if self.cleaned_data['sign_up_as'] == "Business":
+            try:
+                usr = User.objects.get(id=99)
+                data = {'c_useruid': int(user.id), 'b_useruid': 99}
+                conn.create_connection(data)
+            except:
+                pass
 
         '''Transport user to MailChimp List'''
         mailchimp_obj = MailChimp()

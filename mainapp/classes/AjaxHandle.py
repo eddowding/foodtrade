@@ -395,6 +395,10 @@ class AjaxHandle(AjaxSearch):
         data = eval(request.POST.get('data'))
         if data !=None and data !="":
             foo.delete_food(food_name = data['food_name']);
+            
+            twt = TweetFeed()
+            twt.update_data(data['useruid'])
+
             return HttpResponse("{'status':1}")
         else:
             return HttpResponse("{'status':0}")            
@@ -434,6 +438,7 @@ class AjaxHandle(AjaxSearch):
             insert_val = {'parent':1, 'adminfoods':json_tags}
             foods = AdminFoods()
             foods.set_tags(insert_val)
+            
             # print foods.get_tags()
             return HttpResponse("1")
         else:

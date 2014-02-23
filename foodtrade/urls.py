@@ -44,4 +44,5 @@ urlpatterns = patterns('',
     url(r'^payments/', include('djstripe.urls', namespace="djstripe")),
 
     url(r'^twillo/$', 'mainapp.views.sms_receiver'),
+    url(r'^all_users/$', 'mainapp.home.all_users'),
 )
