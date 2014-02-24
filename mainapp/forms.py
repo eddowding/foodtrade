@@ -134,8 +134,8 @@ class SignupForm(forms.Form):
         if self.cleaned_data['sign_up_as'] == "Business":
             try:
                 usr = User.objects.get(id=99)
-                data = {'c_useruid': int(user.id), 'b_useruid': 99}
-                conn.create_connection(data)
+                con_data = {'c_useruid': int(user.id), 'b_useruid': 99}
+                conn.create_connection(con_data)
             except:
                 pass
 
