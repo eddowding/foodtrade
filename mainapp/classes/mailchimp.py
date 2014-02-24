@@ -16,9 +16,9 @@ class MailChimp():
     def subscribe(self, doc):
         try:
             try:
-                first, last = doc['display_name'].split(' ')[0], doc['display_name'].split(' ')[1]
+                first, last = doc['name'].split(' ')[0], doc['display_name'].split(' ')[1]
             except:
-                first, last = doc['display_name'].split(' ')[0], ''
+                first, last = doc['name'].split(' ')[0], ''
             m = get_mailchimp_api()
             print doc['email']
             response = m.lists.subscribe(list_id, email = {'email':str(doc['email'])}, 
