@@ -62,7 +62,7 @@ def get_post_parameters(request, tweet_id):
     parameters['s_userinfo'] = UserInfo(single_tweet['useruid'])
     pprint.pprint(single_tweet)
     print 's_userinfo'
-    pprint.pprint(s_userinfo)
+    pprint.pprint(parameters['s_userinfo'])
 
     return parameters
 
