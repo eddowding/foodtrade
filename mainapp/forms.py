@@ -128,7 +128,7 @@ class SignupForm(forms.Form):
 
         '''Transport  user from MySql to Mongo'''
         userprofile.update_profile_upsert({'screen_name':social_account.extra_data['screen_name'],
-            'is_unknown_profile':'true', 'username':social_account.extra_data['screen_name']},data)
+                 'username':social_account.extra_data['screen_name']},data)
 
         conn = TradeConnection()
         if self.cleaned_data['sign_up_as'] == "Business":

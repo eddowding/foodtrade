@@ -258,8 +258,8 @@ class Search():
 
         # for profile search
         if search_type==1:
-            only_business_org = {"sign_up_as":{"$ne":"Individual"},"sign_up_as":{"$ne":"unclaimed"}}
-            agg_pipeline.append({ '$match':only_business_org})
+            only_business_org = [{"sign_up_as":{"$ne":"Individual"}},{"sign_up_as":{"$ne":"unclaimed"}}]
+            agg_pipeline.append({ '$match': {"$and": only_business_org}})
 
 
         if search_type == 0:
