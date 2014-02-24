@@ -60,9 +60,6 @@ def get_post_parameters(request, tweet_id):
     parameters['tweet_country'] = addr[len(addr)-1].strip()
     parameters['parent_json'] = json.dumps(single_tweet)
     parameters['s_userinfo'] = UserInfo(single_tweet['useruid'])
-    pprint.pprint(single_tweet)
-    print 's_userinfo'
-    pprint.pprint(parameters['s_userinfo'])
 
     return parameters
 
