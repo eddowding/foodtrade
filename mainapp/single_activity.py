@@ -7,7 +7,7 @@ from activity import set_time_date
 from django.core.context_processors import csrf
 from geolocation import get_addr_from_ip
 import json
-
+import pprint
 
 def get_post_parameters(request, tweet_id):
     parameters={}
@@ -52,6 +52,7 @@ def get_post_parameters(request, tweet_id):
                     replies[j]['mentions'] = mentions + " " + replies[j]['mentions']
                 results[i]['replies'] = replies
     single_tweet['user']['profile_img'] = single_tweet['user']['profile_img'].replace("normal","bigger")
+    single_tweet['user']['business_org_name'] = str(single_tweet['user']['business_org_name'])
     parameters['results'] = results
     parameters['json_data'] = json.dumps(results)
     single_tweet['status'] = single_tweet['status'].replace("'","\'")
@@ -60,6 +61,7 @@ def get_post_parameters(request, tweet_id):
     parameters['tweet_country'] = addr[len(addr)-1].strip()
     parameters['parent_json'] = json.dumps(single_tweet)
     parameters['s_userinfo'] = UserInfo(single_tweet['useruid'])
+
     return parameters
 
 
