@@ -178,7 +178,7 @@ def get_search_parameters(request):
 
     keyword = keyword.lower()
 
-    search_global = False
+    search_global = True
 
 
 

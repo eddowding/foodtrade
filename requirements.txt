@@ -7,7 +7,6 @@ pygeocoder
 requests
 pillow
 mailchimp
-
 dj-stripe
 django-floppyforms
 urllib3

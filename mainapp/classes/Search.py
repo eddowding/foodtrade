@@ -211,9 +211,6 @@ class Search():
 
         and_query =[]
 
-        # for profile search
-        if search_type==1:
-            and_query.append({"sign_up_as":{"$ne":"Individual"},"sign_up_as":{"$ne":"unclaimed"}})
 
 
         # Limit distance within 200 miles
@@ -260,6 +257,11 @@ class Search():
         if len(and_query)>0 or self.keyword != "":
             agg_pipeline.append({ '$match':query_string})
 
+        # for profile search
+        if search_type==1:
+            only_business_org = {"sign_up_as":{"$ne":"Individual"},"sign_up_as":{"$ne":"unclaimed"}}
+            agg_pipeline.append({ '$match':only_business_org})
+
 
         if search_type == 0:
             agg_pipeline.append({"$unwind": "$updates"})
@@ -289,12 +291,6 @@ class Search():
             sort_order = 1
 
         agg_pipeline.append({"$sort": SON([(sort_text, sort_order), ("time_stamp", -1)])})
-
-        # next_index = 5
-        # if len(or_conditions) > 0:
-        #     next_index = 6
-        #     agg_pipeline.append({ '$match':{"$or":or_conditions}})
-
 
         group_fields = {}
         group_fields["_id"] = "all"
