@@ -54,6 +54,7 @@ def get_post_parameters(request, tweet_id):
     single_tweet['user']['profile_img'] = single_tweet['user']['profile_img'].replace("normal","bigger")
     parameters['results'] = results
     parameters['json_data'] = json.dumps(results)
+    single_tweet['status'] = single_tweet['status'].replace("'","\'")
     parameters['parent_tweet'] = single_tweet
     addr = single_tweet['user']['address'].split(',')
     parameters['tweet_country'] = addr[len(addr)-1].strip()
