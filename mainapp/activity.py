@@ -149,7 +149,7 @@ def get_search_parameters(request):
     organisation_request = request.GET.get('o',"")
 
 
-
+    no_of_results = 30
 
     if len(biz_request)>0:
         businesses = [biz_request]
