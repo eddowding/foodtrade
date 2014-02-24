@@ -52,6 +52,7 @@ def get_post_parameters(request, tweet_id):
                     replies[j]['mentions'] = mentions + " " + replies[j]['mentions']
                 results[i]['replies'] = replies
     single_tweet['user']['profile_img'] = single_tweet['user']['profile_img'].replace("normal","bigger")
+    single_tweet['user']['business_org_name'] = str(single_tweet['user']['business_org_name'])
     parameters['results'] = results
     parameters['json_data'] = json.dumps(results)
     parameters['parent_tweet'] = single_tweet
@@ -60,6 +61,9 @@ def get_post_parameters(request, tweet_id):
     parameters['parent_json'] = json.dumps(single_tweet)
     parameters['s_userinfo'] = UserInfo(single_tweet['useruid'])
     pprint.pprint(single_tweet)
+    print 's_userinfo'
+    pprint.pprint(s_userinfo)
+
     return parameters
 
 

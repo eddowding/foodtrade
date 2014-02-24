@@ -42,12 +42,15 @@
 
            <h1 style="font-size: 26px;"><a href="/profile/{{parent_tweet.user.username}}">
                   
-                
+                {% ifequal parent_tweet.user.business_org_name None %}
+                    {{parent_tweet.user.name}}
+                {% else %}
                     {% if parent_tweet.sign_up_as == "Business" and parent_tweet.user.business_org_name != '' or parent_tweet.sign_up_as == "Organisation" and parent_tweet.user.business_org_name" != '' %}
                       {{parent_tweet.user.business_org_name}}
                     {% else %}
                       {{parent_tweet.user.name}}
-                    {% endif %}
+                    {% endif %}  
+                {% endifequal %}
 
         </a></h1>
 
