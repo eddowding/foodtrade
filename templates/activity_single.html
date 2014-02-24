@@ -33,14 +33,23 @@
 
      
       <div class="col-md-7 col-xs-8">
+          {% if parent_tweet.subscribed %}
+          <span class="fa-stack fa-lg pull-right" id="verified" rel="tooltip" title="Verified profile">
+            <i class="fa fa-certificate fa-stack-2x" style="color: #1DBD3C;"></i>
+            <i class="fa fa-check fa-stack-1x" style="color: #fff;"></i>
+          </span>
+          {% endif %}
 
+           <h1 style="font-size: 26px;"><a href="/profile/{{parent_tweet.user.username}}">
 
-
-         <h1 style="font-size: 26px;"><a href="/profile/{{parent_tweet.user.username}}">
-                {% if parent_tweet.sign_up_as == "Business" and parent_tweet.user.business_org_name != '' or parent_tweet.sign_up_as == "Organisation" and parent_tweet.user.business_org_name" != '' %}
-                  {{parent_tweet.user.business_org_name}}
+                  {% if parent_tweet.user.business_org_name != None %}
+                    {% if parent_tweet.sign_up_as == "Business" and parent_tweet.user.business_org_name != '' or parent_tweet.sign_up_as == "Organisation" and parent_tweet.user.business_org_name" != '' %}
+                      {{parent_tweet.user.business_org_name}}
+                    {% else %}
+                      {{parent_tweet.user.name}}
+                    {% endif %}  
                 {% else %}
-                  {{parent_tweet.user.name}}
+                    {{parent_tweet.user.name}}
                 {% endif %}
 
         </a></h1>

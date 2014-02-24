@@ -78,6 +78,7 @@ class Search():
         "time_stamp":"$updates.time_stamp",
         "tweet_pictures":"$updates.picture",
         "result_type":result_type,
+        "subscribed": "$subscribed"
         }}
 
 
