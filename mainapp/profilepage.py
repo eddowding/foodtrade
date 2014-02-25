@@ -633,7 +633,7 @@ def get_all_orgs(prof_id):
     for each in all_organisation:
         try:
             account = SocialAccount.objects.get(user__id = each['useruid'])
-            usr_pr = userprof.get_profile_by_id(str(each['useruid']))    
+            usr_pr = userprof.get_profile_by_id(int(each['useruid']))    
             if prof_id != int(each['useruid']):
                 if usr_pr.get('business_org_name')!=None:
                     myname = usr_pr.get('business_org_name') if (usr_pr['sign_up_as'] == 'Business' or usr_pr['sign_up_as'] == 'Organisation') \
