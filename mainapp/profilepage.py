@@ -632,8 +632,10 @@ def get_all_orgs(prof_id):
     final_organisation = []
     for each in all_organisation:
         try:
-            account = SocialAccount.objects.get(user__id = each['useruid'])
+            account = SocialAccount.objects.get(user__id = int(each['useruid']))
+            print 'social account obtained'
             usr_pr = userprof.get_profile_by_id(int(each['useruid']))    
+            print 'userprofile obtained'
             if prof_id != int(each['useruid']):
                 if usr_pr.get('business_org_name')!=None:
                     myname = usr_pr.get('business_org_name') if (usr_pr['sign_up_as'] == 'Business' or usr_pr['sign_up_as'] == 'Organisation') \
@@ -647,8 +649,10 @@ def get_all_orgs(prof_id):
                     'photo': account.extra_data['profile_image_url'],
                     'username' : account.extra_data['screen_name']
                     })
+                print 'organisation ', myname, ' added'
         except:
             pass
+    print 'final_organisation', final_organisation
     return final_organisation    
 
 from math import radians, cos, sin, asin, sqrt
