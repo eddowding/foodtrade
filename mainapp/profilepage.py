@@ -606,7 +606,6 @@ def get_all_business(prof_id):
     for each in all_business:
         try:
             account = SocialAccount.objects.get(user__id = each['useruid'])
-            print 'all business ', account.extra_data['name']
             usr_pr = userpro.get_profile_by_id(each['useruid'])
             if usr_pr.get('business_org_name')!=None:
                 myname = usr_pr.get('business_org_name') if (usr_pr['sign_up_as'] == 'Business' or usr_pr['sign_up_as'] == 'Organisation') \
@@ -623,7 +622,6 @@ def get_all_business(prof_id):
                     })
         except:
             pass
-    print 'final_business', final_business
     return final_business
 
 def get_all_orgs(prof_id):
@@ -632,8 +630,8 @@ def get_all_orgs(prof_id):
     final_organisation = []
     for each in all_organisation:
         try:
-            account = SocialAccount.objects.get(user__id = each['useruid'])
-            usr_pr = userprof.get_profile_by_id(str(each['useruiduid']))    
+            account = SocialAccount.objects.get(user__id = int(each['useruid']))
+            usr_pr = userpro.get_profile_by_id(int(each['useruid']))
             if prof_id != int(each['useruid']):
                 if usr_pr.get('business_org_name')!=None:
                     myname = usr_pr.get('business_org_name') if (usr_pr['sign_up_as'] == 'Business' or usr_pr['sign_up_as'] == 'Organisation') \
@@ -647,6 +645,7 @@ def get_all_orgs(prof_id):
                     'photo': account.extra_data['profile_image_url'],
                     'username' : account.extra_data['screen_name']
                     })
+                print 'organisation ', myname, ' added'
         except:
             pass
     return final_organisation    
