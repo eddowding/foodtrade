@@ -128,9 +128,7 @@ def display_profile(request, username):
         parameters['phone_number'] = pno
     
     parameters['all_business'] = get_all_business(userprof['useruid'])
-    
-    
-    parameters['all_organisation'] = userprof.get_profile_by_type("Organisation")
+    parameters['all_organisation'] = get_all_orgs(userprof['useruid'])
     if request.user.is_authenticated():
         user_id = request.user.id
         usr_profile_obj = UserProfile()
