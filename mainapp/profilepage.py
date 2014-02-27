@@ -404,9 +404,9 @@ def get_customers(user_id, logged_id=None):
         'name': myname,
          # 'name': usr_pr.get('business_org_name') if usr_pr['sign_up_as'] == 'Business' or usr_pr['sign_up_as'] == 'Organisation' else usr_pr['name'],
          # 'name': account.extra_data['name'],
-         'description': user_pr['description'],
-         'photo': user_pr['profile_img'],
-         'username' : user_pr['username'],
+         'description': usr_pr['description'],
+         'photo': usr_pr['profile_img'],
+         'username' : usr_pr['username'],
          'latitude': usr_pr['latlng']['coordinates'][1],
          'longitude': usr_pr['latlng']['coordinates'][0]
          })
