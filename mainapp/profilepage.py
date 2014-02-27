@@ -634,12 +634,12 @@ def get_all_orgs():
     for each in all_organisation:
         # try:
             # account = SocialAccount.objects.get(user__id = int(each['useruid']))
-        usr_pr = userpro.get_profile_by_id(int(each['useruid']))
-        if usr_pr.get('business_org_name')!=None:
-            myname = usr_pr.get('business_org_name') if (usr_pr['sign_up_as'] == 'Business' or usr_pr['sign_up_as'] == 'Organisation') \
-            and usr_pr.get('business_org_name')!='' else usr_pr['name']
+        # usr_pr = userpro.get_profile_by_id(int(each['useruid']))
+        if each.get('business_org_name')!=None:
+            myname = each.get('business_org_name') if (each['sign_up_as'] == 'Business' or each['sign_up_as'] == 'Organisation') \
+            and each.get('business_org_name')!='' else each['name']
         else:
-            myname = usr_pr['name']                                            
+            myname = each['name']                                            
         final_organisation.append({'id': each['useruid'],
             # 'name': account.extra_data['name'],
             'name':myname
