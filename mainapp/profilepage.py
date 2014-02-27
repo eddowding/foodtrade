@@ -128,7 +128,7 @@ def display_profile(request, username):
         parameters['phone_number'] = pno
     
     parameters['all_business'] = get_all_business(userprof['useruid'])
-    parameters['all_organisation'] = get_all_orgs(userprof['useruid'])
+    parameters['all_organisation'] = get_all_orgs()
     if request.user.is_authenticated():
         user_id = request.user.id
         usr_profile_obj = UserProfile()
@@ -624,13 +624,14 @@ def get_all_business(prof_id):
             pass
     return final_business
 
-def get_all_orgs(prof_id):
+def get_all_orgs():
     userpro = UserProfile()
     all_organisation = userpro.get_profile_by_type("Organisation")
+    print len(all_organisation), 'length of orgs'
     final_organisation = []
     for each in all_organisation:
         try:
-            account = SocialAccount.objects.get(user__id = int(each['useruid']))
+            # account = SocialAccount.objects.get(user__id = int(each['useruid']))
             usr_pr = userpro.get_profile_by_id(int(each['useruid']))
             if prof_id != int(each['useruid']):
                 if usr_pr.get('business_org_name')!=None:
@@ -640,14 +641,14 @@ def get_all_orgs(prof_id):
                     myname = usr_pr['name']                                            
                 final_organisation.append({'id': each['useruid'],
                     # 'name': account.extra_data['name'],
-                    'name':myname,
-                    'description': account.extra_data['description'],
-                    'photo': account.extra_data['profile_image_url'],
-                    'username' : account.extra_data['screen_name']
+                    'name':myname
+                    # 'description': account.extra_data['description'],
+                    # 'photo': account.extra_data['profile_image_url'],
+                    # 'username' : account.extra_data['screen_name']
                     })
-                print 'organisation ', myname, ' added'
         except:
             pass
+    print len(final_organisation)
     return final_organisation    
 
 from math import radians, cos, sin, asin, sqrt
