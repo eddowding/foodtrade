@@ -628,29 +628,17 @@ def get_all_business(prof_id):
 def get_all_orgs():
     userpro = UserProfile()
     all_organisation = userpro.get_profile_by_type("Organisation")
-    print len(all_organisation), 'length of orgs'
-    pprint.pprint(all_organisation)
     final_organisation = []
     for each in all_organisation:
-        # try:
-            # account = SocialAccount.objects.get(user__id = int(each['useruid']))
-        # usr_pr = userpro.get_profile_by_id(int(each['useruid']))
+        
         if each.get('business_org_name')!=None:
             myname = each.get('business_org_name') if (each['sign_up_as'] == 'Business' or each['sign_up_as'] == 'Organisation') \
             and each.get('business_org_name')!='' else each['name']
         else:
             myname = each['name']                                            
         final_organisation.append({'id': each['useruid'],
-            # 'name': account.extra_data['name'],
             'name':myname
-            # 'description': account.extra_data['description'],
-            # 'photo': account.extra_data['profile_image_url'],
-            # 'username' : account.extra_data['screen_name']
             })
-        # except:
-        #     pass
-    print len(final_organisation), ' processed'
-    pprint.pprint(final_organisation)
 
     return final_organisation    
 
