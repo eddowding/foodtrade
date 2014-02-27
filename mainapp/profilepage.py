@@ -630,24 +630,24 @@ def get_all_orgs():
     print len(all_organisation), 'length of orgs'
     final_organisation = []
     for each in all_organisation:
-        try:
+        # try:
             # account = SocialAccount.objects.get(user__id = int(each['useruid']))
-            usr_pr = userpro.get_profile_by_id(int(each['useruid']))
-            if prof_id != int(each['useruid']):
-                if usr_pr.get('business_org_name')!=None:
-                    myname = usr_pr.get('business_org_name') if (usr_pr['sign_up_as'] == 'Business' or usr_pr['sign_up_as'] == 'Organisation') \
-                    and usr_pr.get('business_org_name')!='' else usr_pr['name']
-                else:
-                    myname = usr_pr['name']                                            
-                final_organisation.append({'id': each['useruid'],
-                    # 'name': account.extra_data['name'],
-                    'name':myname
-                    # 'description': account.extra_data['description'],
-                    # 'photo': account.extra_data['profile_image_url'],
-                    # 'username' : account.extra_data['screen_name']
-                    })
-        except:
-            pass
+        usr_pr = userpro.get_profile_by_id(int(each['useruid']))
+        if prof_id != int(each['useruid']):
+            if usr_pr.get('business_org_name')!=None:
+                myname = usr_pr.get('business_org_name') if (usr_pr['sign_up_as'] == 'Business' or usr_pr['sign_up_as'] == 'Organisation') \
+                and usr_pr.get('business_org_name')!='' else usr_pr['name']
+            else:
+                myname = usr_pr['name']                                            
+            final_organisation.append({'id': each['useruid'],
+                # 'name': account.extra_data['name'],
+                'name':myname
+                # 'description': account.extra_data['description'],
+                # 'photo': account.extra_data['profile_image_url'],
+                # 'username' : account.extra_data['screen_name']
+                })
+        # except:
+        #     pass
     print len(final_organisation)
     return final_organisation    
 
