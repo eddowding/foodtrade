@@ -45,6 +45,10 @@ class AjaxHandle(AjaxSearch):
         '''
         user_profile_obj = UserProfile()
         registered_user = user_profile_obj.get_profile_by_username(invitee_name)
+
+
+        min_user_id = int(user_profile_obj.get_minimum_id_of_user()[0]['minId']) -1
+
         if registered_user == None or len(registered_user) == 0:
             friend_obj = Friends()
             invited_friend = friend_obj.get_friend_from_screen_name(invitee_name.replace('@',''), username)
@@ -63,8 +67,10 @@ class AjaxHandle(AjaxSearch):
                 'updates': [],
                 'screen_name': invited_friend['friends']['screen_name'],
                 'Organisations':[],
-                'useruid': -1,
-                'username':invited_friend['friends']['screen_name']
+                'useruid': min_user_id,
+                'username':invited_friend['friends']['screen_name'],
+                'subscribed':0,
+                'newsletter_freq':'Weekly'
             }
             try:
                 location_res = Geocoder.geocode(invited_friend['friends']['location'])

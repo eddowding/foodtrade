@@ -106,7 +106,8 @@ class SignupForm(forms.Form):
         social_account = SocialAccount.objects.get(user__id = user.id)
         data = {
                 'is_unknown_profile':'false',
-                'useruid': int(user.id), 'sign_up_as': str(self.cleaned_data['sign_up_as']),
+                'useruid': int(user.id), 
+                'sign_up_as': str(self.cleaned_data['sign_up_as']),
                 'type_user': str(self.cleaned_data['type_user']).split(","), 
                 'zip_code': str(postal_code),
                 'latlng' : {"type" : "Point", "coordinates" : [float(lon),float(lat)] },
