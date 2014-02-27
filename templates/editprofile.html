@@ -381,11 +381,14 @@ function validateFeedback(){
 
 function validate_business_type(){
     validate_email();
-    if(email_valid['status'] = 1 && email_valid['valid'] =='yes'){
+    var s_edit = '{{superuser_edit_other %}';
+    if (s_edit == 'True'){     
+        if(email_valid['status'] = 1 && email_valid['valid'] =='yes'){
 
-    }
-    else{
-      return false;
+        }
+        else{
+          return false;
+        } 
     }
 
     if (business_type == 'Business' && $('#hidden_type').val().length == 0){
