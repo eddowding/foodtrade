@@ -19,6 +19,7 @@ import time
 from mainapp.forms import FoodForm
 from bson import json_util
 from collections import Counter
+import pprint
 
 def resolve_profile(request, username):
     usr_profile = UserProfile()
@@ -628,6 +629,7 @@ def get_all_orgs():
     userpro = UserProfile()
     all_organisation = userpro.get_profile_by_type("Organisation")
     print len(all_organisation), 'length of orgs'
+    pprint.pprint(all_organisation)
     final_organisation = []
     for each in all_organisation:
         # try:
@@ -647,7 +649,9 @@ def get_all_orgs():
             })
         # except:
         #     pass
-    print len(final_organisation)
+    print len(final_organisation), ' processed'
+    pprint.pprint(final_organisation)
+
     return final_organisation    
 
 from math import radians, cos, sin, asin, sqrt
