@@ -19,6 +19,7 @@ import time
 from mainapp.forms import FoodForm
 from bson import json_util
 from collections import Counter
+import pprint
 
 def resolve_profile(request, username):
     usr_profile = UserProfile()
@@ -128,7 +129,7 @@ def display_profile(request, username):
         parameters['phone_number'] = pno
     
     parameters['all_business'] = get_all_business(userprof['useruid'])
-    parameters['all_organisation'] = get_all_orgs(userprof['useruid'])
+    parameters['all_organisation'] = get_all_orgs()
     if request.user.is_authenticated():
         user_id = request.user.id
         usr_profile_obj = UserProfile()
@@ -351,7 +352,7 @@ def get_all_foods(user_id, logged_in_id = None):
 
             userprof = usr_profile.get_profile_by_id(myid)
             try:
-                account = SocialAccount.objects.get(user__id = myid)
+                # account = SocialAccount.objects.get(user__id = myid)
                 if userprof.get('business_org_name')!=None:
                     myname = userprof.get('business_org_name') if (userprof['sign_up_as'] == 'Business' or userprof['sign_up_as'] == 'Organisation') \
                     and userprof.get('business_org_name')!='' else userprof['name']
@@ -361,8 +362,8 @@ def get_all_foods(user_id, logged_in_id = None):
                     'name': myname,
                     # 'name': userprof.get('business_org_name') if userprof['sign_up_as'] == 'Business' or userprof['sign_up_as'] == 'Organisation' else userprof['name'],
                     # 'name': account.extra_data['name'],
-                    'screen_name': account.extra_data['screen_name'],
-                    'photo': account.extra_data['profile_image_url']})
+                    'screen_name': userprof['screen_name'],
+                    'photo': userprof['profile_img']})
             except:
                 pass
         random.shuffle(recomm_details)
@@ -390,7 +391,7 @@ def get_customers(user_id, logged_id=None):
     userprof = UserProfile()
     logged_customer = False
     for each in all_customers:
-        account = SocialAccount.objects.get(user__id = each['customeruid'])
+        # account = SocialAccount.objects.get(user__id = each['customeruid'])
         usr_pr = userprof.get_profile_by_id(str(each['customeruid']))
         if logged_id!=None and each['customeruid'] == logged_id:
             logged_customer = True
@@ -403,9 +404,9 @@ def get_customers(user_id, logged_id=None):
         'name': myname,
          # 'name': usr_pr.get('business_org_name') if usr_pr['sign_up_as'] == 'Business' or usr_pr['sign_up_as'] == 'Organisation' else usr_pr['name'],
          # 'name': account.extra_data['name'],
-         'description': account.extra_data['description'],
-         'photo': account.extra_data['profile_image_url'],
-         'username' : account.extra_data['screen_name'],
+         'description': usr_pr['description'],
+         'photo': usr_pr['profile_img'],
+         'username' : usr_pr['username'],
          'latitude': usr_pr['latlng']['coordinates'][1],
          'longitude': usr_pr['latlng']['coordinates'][0]
          })
@@ -420,7 +421,7 @@ def get_connections(user_id, logged_in_id = None):
     logged_conn = 'none'
     for each in b_conn:
         try:
-            account = SocialAccount.objects.get(user__id = each['c_useruid'])
+            # account = SocialAccount.objects.get(user__id = each['c_useruid'])
             usr_pr = userprof.get_profile_by_id(str(each['c_useruid']))
             user_info = UserInfo(each['c_useruid'])
             if logged_in_id!=None and each['c_useruid'] == logged_in_id:
@@ -433,9 +434,9 @@ def get_connections(user_id, logged_in_id = None):
             final_connections.append({'id': each['c_useruid'],
              # 'name': account.extra_data['name'],
              'name': myname,
-             'description': account.extra_data['description'],
-             'photo': account.extra_data['profile_image_url'],
-             'username' : account.extra_data['screen_name'],
+             'description': usr_pr['description'],
+             'photo': usr_pr['profile_img'],
+             'username' : usr_pr['username'],
              'type': usr_pr['type_user'][:3],
              'trade_conn_no': user_info.trade_connections_no,
              'food_no': user_info.food_no,
@@ -448,7 +449,7 @@ def get_connections(user_id, logged_in_id = None):
             pass
     for each in c_conn:
         try:
-            account = SocialAccount.objects.get(user__id = each['b_useruid'])
+            # account = SocialAccount.objects.get(user__id = each['b_useruid'])
             usr_pr = userprof.get_profile_by_id(str(each['b_useruid']))
             user_info = UserInfo(each['b_useruid'])
             if usr_pr.get('business_org_name')!=None:
@@ -459,9 +460,9 @@ def get_connections(user_id, logged_in_id = None):
             data = {'id': each['b_useruid'],
              # 'name': account.extra_data['name'],
              'name': myname,
-             'description': account.extra_data['description'],
-             'photo': account.extra_data['profile_image_url'],
-             'username' : account.extra_data['screen_name'],
+             'description': usr_pr['description'],
+             'photo': usr_pr['profile_img'],
+             'username' : usr_pr['username'],
              'type': usr_pr['type_user'][:3],
              'trade_conn_no': user_info.trade_connections_no,
              'food_no': user_info.food_no,
@@ -492,7 +493,7 @@ def get_members(user_id, logged_in_id = None):
     logged_member = False
     for each in members:
         try:
-            account = SocialAccount.objects.get(user__id = each['memberuid'])
+            # account = SocialAccount.objects.get(user__id = each['memberuid'])
             usr_pr = userprof.get_profile_by_id(str(each['memberuid']))
             user_info = UserInfo(each['memberuid'])
             if logged_in_id!=None and each['memberuid'] == logged_in_id:
@@ -505,9 +506,9 @@ def get_members(user_id, logged_in_id = None):
             final_members.append({'id': each['memberuid'],
              # 'name': account.extra_data['name'],
              'name': myname,
-             'description': account.extra_data['description'],
-             'photo': account.extra_data['profile_image_url'],
-             'username' : account.extra_data['screen_name'],
+             'description': usr_pr['description'],
+             'photo': usr_pr['profile_img'],
+             'username' : usr_pr['username'],
              'type': usr_pr['type_user'],
              'trade_conn_no': user_info.trade_connections_no,
              'food_no': user_info.food_no,
@@ -526,7 +527,7 @@ def get_organisations(user_id):
     final_orgs = []
     for each in organisations:
         usr_pr = userprof.get_profile_by_id(str(each['orguid']))
-        account = SocialAccount.objects.get(user__id = each['orguid'])
+        # account = SocialAccount.objects.get(user__id = each['orguid'])
         if usr_pr.get('business_org_name')!=None:
             myname = usr_pr.get('business_org_name') if (usr_pr['sign_up_as'] == 'Business' or usr_pr['sign_up_as'] == 'Organisation') \
             and usr_pr.get('business_org_name')!='' else usr_pr['name']
@@ -535,9 +536,9 @@ def get_organisations(user_id):
         final_orgs.append({'id': each['orguid'],
          # 'name': account.extra_data['name'],
          'name': myname,
-         'description': account.extra_data['description'],
-         'photo': account.extra_data['profile_image_url'],
-         'username' : account.extra_data['screen_name']
+         'description': usr_pr['description'],
+         'photo': usr_pr['profile_img'],
+         'username' : usr_pr['username']
          })
     return final_orgs[:10]
 
@@ -550,7 +551,7 @@ def get_foods_from_org_members(user_id):
     all_foods = []
     for each in members:
         try:
-            account = SocialAccount.objects.get(user__id = each['memberuid'])
+            # account = SocialAccount.objects.get(user__id = each['memberuid'])
             usr_pr = userprof.get_profile_by_id(str(each['memberuid']))    
             mem_foods = foo.get_foods_by_userid(each['memberuid'])
             foods_count.extend(mem_foods)
@@ -562,8 +563,8 @@ def get_foods_from_org_members(user_id):
             all_foods.append({'id': each['memberuid'],
              # 'name': account.extra_data['name'],
              'name': myname,
-             'photo': account.extra_data['profile_image_url'],
-             'username' : account.extra_data['screen_name'],
+             'photo': usr_pr['profile_img'],
+             'username' : usr_pr['username'],
              'foods': mem_foods
              })
         except:
@@ -579,7 +580,7 @@ def get_team(user_id, logged_in_id=None):
     for each in teams:
         try:
             usr_pr = userprof.get_profile_by_id(str(each['memberuid']))    
-            account = SocialAccount.objects.get(user__id = each['memberuid'])
+            # account = SocialAccount.objects.get(user__id = each['memberuid'])
             if logged_in_id!=None and each['memberuid'] == logged_in_id:
                     logged_team = True
             if usr_pr.get('business_org_name')!=None:
@@ -590,9 +591,9 @@ def get_team(user_id, logged_in_id=None):
             final_teams.append({'id': each['memberuid'],
              # 'name': account.extra_data['name'],
              'name': myname,
-             'description': account.extra_data['description'],
-             'photo': account.extra_data['profile_image_url'],
-             'username' : account.extra_data['screen_name']
+             'description': usr_pr['description'],
+             'photo': usr_pr['profile_img'],
+             'username' : usr_pr['username']
              })
         except:
             pass
@@ -605,8 +606,7 @@ def get_all_business(prof_id):
     final_business = []
     for each in all_business:
         try:
-            account = SocialAccount.objects.get(user__id = each['useruid'])
-            print 'all business ', account.extra_data['name']
+            # account = SocialAccount.objects.get(user__id = each['useruid'])
             usr_pr = userpro.get_profile_by_id(each['useruid'])
             if usr_pr.get('business_org_name')!=None:
                 myname = usr_pr.get('business_org_name') if (usr_pr['sign_up_as'] == 'Business' or usr_pr['sign_up_as'] == 'Organisation') \
@@ -617,42 +617,29 @@ def get_all_business(prof_id):
                 final_business.append({'id': each['useruid'],
                     # 'name': account.extra_data['name'],
                     'name': myname,
-                    'description': account.extra_data['description'],
-                    'photo': account.extra_data['profile_image_url'],
-                    'username' : account.extra_data['screen_name']
+                     'description': usr_pr['description'],
+                     'photo': usr_pr['profile_img'],
+                     'username' : usr_pr['username']
                     })
         except:
             pass
-    print 'final_business', final_business
     return final_business
 
-def get_all_orgs(prof_id):
+def get_all_orgs():
     userpro = UserProfile()
     all_organisation = userpro.get_profile_by_type("Organisation")
     final_organisation = []
     for each in all_organisation:
-        try:
-            account = SocialAccount.objects.get(user__id = int(each['useruid']))
-            print 'social account obtained'
-            usr_pr = userprof.get_profile_by_id(int(each['useruid']))    
-            print 'userprofile obtained'
-            if prof_id != int(each['useruid']):
-                if usr_pr.get('business_org_name')!=None:
-                    myname = usr_pr.get('business_org_name') if (usr_pr['sign_up_as'] == 'Business' or usr_pr['sign_up_as'] == 'Organisation') \
-                    and usr_pr.get('business_org_name')!='' else usr_pr['name']
-                else:
-                    myname = usr_pr['name']                                            
-                final_organisation.append({'id': each['useruid'],
-                    # 'name': account.extra_data['name'],
-                    'name':myname,
-                    'description': account.extra_data['description'],
-                    'photo': account.extra_data['profile_image_url'],
-                    'username' : account.extra_data['screen_name']
-                    })
-                print 'organisation ', myname, ' added'
-        except:
-            pass
-    print 'final_organisation', final_organisation
+        
+        if each.get('business_org_name')!=None:
+            myname = each.get('business_org_name') if (each['sign_up_as'] == 'Business' or each['sign_up_as'] == 'Organisation') \
+            and each.get('business_org_name')!='' else each['name']
+        else:
+            myname = each['name']                                            
+        final_organisation.append({'id': each['useruid'],
+            'name':myname
+            })
+
     return final_organisation    
 
 from math import radians, cos, sin, asin, sqrt
