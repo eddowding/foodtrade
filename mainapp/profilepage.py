@@ -526,7 +526,9 @@ def get_organisations(user_id):
     organisations = org.get_organisations_by_mem_id(user_id)
     final_orgs = []
     for each in organisations:
-        usr_pr = each
+        if int(each['orguid']) == -1:
+            continue
+        usr_pr = userprof.get_profile_by_id(str(each['orguid']))
         # account = SocialAccount.objects.get(user__id = each['orguid'])
         if usr_pr.get('business_org_name')!=None:
             myname = usr_pr.get('business_org_name') if (usr_pr['sign_up_as'] == 'Business' or usr_pr['sign_up_as'] == 'Organisation') \
