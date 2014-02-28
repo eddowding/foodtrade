@@ -16,16 +16,17 @@ from classes.MongoConnection import MongoConnection
 def update_all_values(old_useruid, new_useruid):
     '''This function updates all other affected collections when unclaimed profile changes to claimed'''
     mongo_connection_object = MongoConnection("localhost",27017,'foodtrade')
-    mongo_connection_object.update_multi('tradeconnection', {'b_useruid': old_useruid}, {'b_useruid':new_useruid})
-    mongo_connection_object.update_multi('tradeconnection', {'c_useruid': old_useruid}, {'c_useruid':new_useruid})
-    mongo_connection_object.update_multi('food', {'useruid':old_useruid}, {'useruid':new_useruid})
-    mongo_connection_object.update_multi('customer', {'useruid':old_useruid}, {'useruid':new_useruid})
-    mongo_connection_object.update_multi('organisation', {'orguid':old_useruid}, {'orguid':new_useruid})
-    mongo_connection_object.update_multi('team', {'orguid':old_useruid}, {'orguid':new_useruid})
-    mongo_connection_object.update_multi('recommendfood', {'business_id':old_useruid}, {'business_id':new_useruid})
+    try:
+        mongo_connection_object.update_multi('tradeconnection', {'b_useruid': old_useruid}, {'b_useruid':new_useruid})
+        mongo_connection_object.update_multi('tradeconnection', {'c_useruid': old_useruid}, {'c_useruid':new_useruid})
+        mongo_connection_object.update_multi('food', {'useruid':old_useruid}, {'useruid':new_useruid})
+        mongo_connection_object.update_multi('customer', {'useruid':old_useruid}, {'useruid':new_useruid})
+        mongo_connection_object.update_multi('organisation', {'orguid':old_useruid}, {'orguid':new_useruid})
+        mongo_connection_object.update_multi('team', {'orguid':old_useruid}, {'orguid':new_useruid})
+        mongo_connection_object.update_multi('recommendfood', {'business_id':old_useruid}, {'business_id':new_useruid})
+    except:
+        pass
     return True
-
-
 
 
 class FoodForm(forms.Form):
