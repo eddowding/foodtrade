@@ -149,7 +149,6 @@ class TweetFeed():
     def update_data(self,user_id):
         food = Food()
         f_list = food.get_approved_foods_by_useruid(user_id)
-        print "inside update_data ", f_list
         orgn = Organisation()
         organisations = orgn.get_organisations_by_mem_id(user_id)
         org_list = []
