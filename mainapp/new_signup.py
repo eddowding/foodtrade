@@ -50,6 +50,8 @@ class SignupView(RedirectAuthenticatedUserMixin, CloseableSignupMixin,
                         account=self.sociallogin.account))
         tags = Tags()
         ret['all_tags'] = tags.get_tags()
+        # print type(self.sociallogin.account)
+        #ret['user'] = SocialAccount.objects.get(user__id = request.user.id)
         return ret
 
     def get_authenticated_redirect_url(self):

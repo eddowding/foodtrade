@@ -10,6 +10,7 @@ from mainapp.classes.TweetFeed import Food
 from mainapp.models import FoodPhoto
 from mainapp.classes.mailchimp import MailChimp
 from django.conf import settings
+import pprint
 
 class FoodForm(forms.Form):
     food_description = forms.CharField(required=False, widget=forms.Textarea(attrs={'class' : 'form-control'})) 
@@ -75,6 +76,16 @@ class SignupForm(forms.Form):
     def __init__(self, request, *args, **kwargs):
         self.request = request
         super(SignupForm, self).__init__(*args, **kwargs)
+        try:
+            username =  self.sociallogin.account.extra_data['screen_name']
+            user_prof_obj  = UserProfile()
+            user = user_prof_obj.get_profile_by_username(str(username))
+            pprint.pprint(user)
+            self.fields['email'].widget.attrs['value'] = user['email']
+            self.fields['address'].widget.attrs['value'] = user['address']
+
+        except:
+            pass
         # self.fields['username'].widget.attrs['readonly'] = True
         self.fields['email'].widget.attrs['class'] = 'form-control'
 
