@@ -236,7 +236,8 @@ class UserProfile():
         return self.db_object.get_one(self.table_name,{'useruid': int(user_id)})
 
     def get_profile_by_username(self, username):
-        return self.db_object.get_one(self.table_name,{'username': str(username)})
+        # return self.db_object.get_one(self.table_name,{'username': str(username)})
+        return self.db_object.get_one(self.table_name,{'username': { "$regex" : str(username), "$options" : "-i" }})
 
     def get_profile_by_type(self, type_usr):
         return self.db_object.get_all(self.table_name,{'sign_up_as':type_usr})
