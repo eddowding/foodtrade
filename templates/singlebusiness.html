@@ -646,7 +646,7 @@
                       
 <div id="all-connections">
 <div class="clearfix">
-{% if connections %}
+{% if userprof.b_conn_no != 0 %}
           <h4>We buy from <small>these suppliers</small></h4>
           <hr /> 
            <div class="pull-left" id="buyers-cards">
@@ -692,7 +692,7 @@
           </div>
 
           <div class="clearfix">
-          {% if connections %}
+          {% if userprof.c_conn_no != 0 %}
           <h4 style="margin-top: 50px;">We sell to <small>these stockists</small></h4> 
           <hr /> 
            <div class="pull-left" id="seller-cards">
