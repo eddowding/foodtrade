@@ -132,8 +132,10 @@ class SignupForm(forms.Form):
         '''Get user from the SocialAccount MySql'''
         userprofile = UserProfile()
         social_account = SocialAccount.objects.get(user__id = user.id)
-        old_useruid = userprofile.get_profile_by_username(str(social_account.extra_data['screen_name']))['useruid']
-
+        try:
+            old_useruid = userprofile.get_profile_by_username(str(social_account.extra_data['screen_name']))['useruid']
+            '''update all other affected collections when unclaimed profile changes to claimed'''
+            update_all_values(int(old_useruid), int(user.id))
         data = {
                 'is_unknown_profile':'false',
                 'useruid': int(user.id), 
@@ -161,8 +163,7 @@ class SignupForm(forms.Form):
         userprofile.update_profile_upsert({'screen_name':social_account.extra_data['screen_name'],
                  'username':social_account.extra_data['screen_name']},data)
 
-        '''update all other affected collections when unclaimed profile changes to claimed'''
-        update_all_values(int(old_useruid), int(user.id))
+        
 
         conn = TradeConnection()
         if self.cleaned_data['sign_up_as'] == "Business":
