@@ -670,7 +670,7 @@ def create_profile_from_mention(email, location, data):
     template_content = str(render_to_response('notice-mail.html', {'data':signup_data,'register_request_type':'Twitter'}))
     template_content = template_content.replace('Content-Type: text/html; charset=utf-8', '')
     email_object = Email()
-    email_object.send_mail('Please confirm your Account on Foodtrade !!!', 
+    email_object.send_mail('Please confirm your account', 
         template_content=[{'name':'main', 'content':template_content}], to = [{'email':email}])
 
     '''Transport the user to MailChimp'''
