@@ -152,11 +152,18 @@ class TweetFeed():
         orgn = Organisation()
         organisations = orgn.get_organisations_by_mem_id(user_id)
         org_list = []
+        user_prof = UserProfile()
         for org in organisations:
-            twitter_user = SocialAccount.objects.get(user__id = org['orguid'])
-            
-            full_name = twitter_user.extra_data['name']
-            org_list.append(full_name)
+            # twitter_user = SocialAccount.objects.get(user__id = org['orguid'])
+            usr_pr = user_prof.get_profile_by_id(int(user_id))
+
+            if usr_pr.get('business_org_name')!=None:
+                myname = usr_pr.get('business_org_name') if (usr_pr['sign_up_as'] == 'Business' or usr_pr['sign_up_as'] == 'Organisation') \
+                and usr_pr.get('business_org_name')!='' else usr_pr['name']
+            else:
+                myname = usr_pr['name']
+            # full_name = myname
+            org_list.append(myname)
 
         self.db_object.update(self.table_name, {'useruid':int(user_id)}, {'foods':f_list,'organisations':org_list})
         
