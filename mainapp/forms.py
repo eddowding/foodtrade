@@ -11,6 +11,22 @@ from mainapp.models import FoodPhoto
 from mainapp.classes.mailchimp import MailChimp
 from django.conf import settings
 import pprint
+from classes.MongoConnection import MongoConnection
+
+def update_all_values(old_useruid, new_useruid):
+    '''This function updates all other affected collections when unclaimed profile changes to claimed'''
+    mongo_connection_object = MongoConnection("localhost",27017,'foodtrade')
+    mongo_connection_object.update_multi('tradeconnection', {'b_useruid': old_useruid}, {'b_useruid':new_useruid})
+    mongo_connection_object.update_multi('tradeconnection', {'c_useruid': old_useruid}, {'c_useruid':new_useruid})
+    mongo_connection_object.update_multi('food', {'useruid':old_useruid}, {'useruid':new_useruid})
+    mongo_connection_object.update_multi('customer', {'useruid':old_useruid}, {'useruid':new_useruid})
+    mongo_connection_object.update_multi('organisation', {'orguid':old_useruid}, {'orguid':new_useruid})
+    mongo_connection_object.update_multi('team', {'orguid':old_useruid}, {'orguid':new_useruid})
+    mongo_connection_object.update_multi('recommendfood', {'business_id':old_useruid}, {'business_id':new_useruid})
+    return True
+
+
+
 
 class FoodForm(forms.Form):
     food_description = forms.CharField(required=False, widget=forms.Textarea(attrs={'class' : 'form-control'})) 
@@ -115,6 +131,8 @@ class SignupForm(forms.Form):
         '''Get user from the SocialAccount MySql'''
         userprofile = UserProfile()
         social_account = SocialAccount.objects.get(user__id = user.id)
+        old_useruid = userprofile.get_profile_by_username(str(social_account.extra_data['screen_name']))['useruid']
+
         data = {
                 'is_unknown_profile':'false',
                 'useruid': int(user.id), 
@@ -141,6 +159,9 @@ class SignupForm(forms.Form):
         '''Transport  user from MySql to Mongo'''
         userprofile.update_profile_upsert({'screen_name':social_account.extra_data['screen_name'],
                  'username':social_account.extra_data['screen_name']},data)
+
+        '''update all other affected collections when unclaimed profile changes to claimed'''
+        update_all_values(int(old_useruid), int(user.id))
 
         conn = TradeConnection()
         if self.cleaned_data['sign_up_as'] == "Business":

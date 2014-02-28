@@ -101,7 +101,7 @@
     <div class="form-group">
       <label for="email" class="col-sm-2 control-label">Contact email</label>
       <div class="col-sm-5">
-        <input type="email" id="email" class="form-control" value="{{email}}" name="email" '{% if not superuser_edit_other %}' required onblur="validate_email()" '{% endif %}' >
+        <input type="email" id="email" class="form-control" value="{{email}}" name="email" '{% if not superuser_edit_other %}' required onblur="validate_email()" '{% endif %}'>
       </div>
 
       <div id="notification_email">
