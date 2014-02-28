@@ -430,7 +430,7 @@ def get_connections(user_id, logged_in_id = None):
                 myname = usr_pr.get('business_org_name') if (usr_pr['sign_up_as'] == 'Business' or usr_pr['sign_up_as'] == 'Organisation') \
                 and usr_pr.get('business_org_name')!='' else usr_pr['name']
             else:
-                myname = user_pr['name']                            
+                myname = usr_pr['name']                            
             final_connections.append({'id': each['c_useruid'],
              # 'name': account.extra_data['name'],
              'name': myname,

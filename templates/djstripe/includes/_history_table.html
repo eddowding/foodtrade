@@ -18,7 +18,7 @@
             <td>{{ invoice.date|date:"d M, Y" }}</td>
             
             <td>
-                {% if invoice.paid and invoice.total > 0 %}
+                {% if invoice.paid and invoice.total >= 0 %}
                     <p>
                         <span class="label label-success">Paid</span> £{{ invoice.total|floatformat:"2" }}
                     </p>

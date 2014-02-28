@@ -101,14 +101,16 @@
     <div class="form-group">
       <label for="email" class="col-sm-2 control-label">Contact email</label>
       <div class="col-sm-5">
-        <input type="email" id="email" class="form-control" value="{{email}}" name="email" required onblur="validate_email()">
+        <input type="email" id="email" class="form-control" value="{{email}}" name="email" '{% if not superuser_edit_other %}' required onblur="validate_email()" '{% endif %}'>
       </div>
+
       <div id="notification_email">
         <div class="hidden" id="email-ok">
           <span class="glyphicon glyphicon-ok email-margin  email-go"></span> OK
         </div>
+
         <div class="hidden" id='email-nok'>
-          <span class="glyphicon glyphicon-remove email-margin email-warning" ></span> Already Taken
+          <span class="glyphicon glyphicon-remove email-margin email-warning" ></span> Not Available
         </div>
       </div>
     </div>
@@ -381,11 +383,14 @@ function validateFeedback(){
 
 function validate_business_type(){
     validate_email();
-    if(email_valid['status'] = 1 && email_valid['valid'] =='yes'){
+    var s_edit = '{{superuser_edit_other %}';
+    if (s_edit == 'True'){     
+        if(email_valid['status'] = 1 && email_valid['valid'] =='yes'){
 
-    }
-    else{
-      return false;
+        }
+        else{
+          return false;
+        } 
     }
 
     if (business_type == 'Business' && $('#hidden_type').val().length == 0){

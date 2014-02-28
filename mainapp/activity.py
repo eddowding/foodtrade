@@ -187,6 +187,7 @@ def get_search_parameters(request):
     search_handle = Search(keyword=keyword, lon = my_lon, lat =my_lat, place = location, foods=foods, business=businesses, organisation=organisations, sort=sort, search_global=search_global)
     search_results = search_handle.search_all()
     results =search_results['results'][:no_of_results-1]
+    results =search_results['results']
     if request.user.is_superuser:
         results =search_results['results']
 
@@ -207,6 +208,7 @@ def get_search_parameters(request):
             results[i]['replies'] = replies
     
     parameters['results'] = results
+    # print len(results)
     parameters['json_data'] = json.dumps(results)
     parameters['results_business_count'] = search_results["business_counter"]
     parameters['results_organisation_count'] = search_results["organisation_counter"]
