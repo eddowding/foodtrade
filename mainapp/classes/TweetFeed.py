@@ -61,7 +61,7 @@ class TweetFeed():
 
     def has_tweet_in_week(self,useruid):
         week_ago = int(time.time()) - 7*24*3600
-        results = self.db_object.get_all( self.table_name, {"useruid":useruid, "updates.time_stamp": {"$gte":week_ago} })
+        results = self.db_object.get_all( self.table_name, {"useruid":useruid,"updates.parent_tweet_id":"0", "updates.time_stamp": {"$gte":week_ago} })
         if len(results)>0:
             return True
         return False
@@ -76,11 +76,15 @@ class TweetFeed():
     def insert_tweet(self, user_id, tweet):
         usr_profile = UserProfile()
         up = usr_profile.get_profile_by_id(user_id)
+        try: 
+            subscribed = up['subscribed']
+        except:
+            subscribed = 0
 
-        if self.has_tweet_in_week(user_id) and up['subscribed'] != 1:
+        if tweet['parent_tweet_id'] == "0" and self.has_tweet_in_week(user_id) and subscribed != 1:
             return
 
-        tweet['deleted'] =0
+        tweet['deleted'] = 0
         tweet['time_stamp'] = int(time.time())
         
         value = tweet['status']
