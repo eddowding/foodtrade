@@ -66,22 +66,22 @@ def send_daily_email():
         to_user = db.userprofile.find({'username':str(notification_to_user)})
         to = db.userprofile.find({'username':notification_to_user})
         json_doc = json.dumps(list(to),default=json_util.default)
-        subject = 'You have message in your Foodtrade Inbox.'
+        subject = 'You have message in your FoodTrade inbox'
         to_user = json.dumps(list(to_user),default=json_util.default)
         to_user = json.loads(to_user)
         #print to_user[0]['email']
         message_body = ''
         message_body = '\
-        <table>\
-            <tr style="background-color:green;">\
-                <td style="width:30%;">From</td>\
-                <td style="width:50%;">Activity</td>\
-                <td style="width:20%;">Action</td>\
+        <table cellpadding="2" cellspacing="0">\
+            <tr style="background-color:#6C7F40;">\
+                <td style="width:30%; color: #fff;">From</td>\
+                <td style="width:50%; color: #fff;">Activity</td>\
+                <td style="width:20%; color: #fff;">Action</td>\
             </tr>'
         for eachMessage in eachMessageList['results']:
             message_body = message_body + '<tr>'
-            message_body = message_body + '<td style="width:30%;">@' + eachMessage['notifying_user'] + '</td><td style="width:50%;">' + eachMessage['notification_message'].split('.')[0] + '</td>'
-            message_body = message_body + '<td style="width:20%;">\
+            message_body = message_body + '<td style="width:30%; font-size: 11px; color: #444;">@' + eachMessage['notifying_user'] + '</td><td style="width:50%; font-size: 11px; color: #444;">' + eachMessage['notification_message'].split('.')[0] + '</td>'
+            message_body = message_body + '<td style="width:20%; font-size: 11px; color: #444;">\
             <a href="http://foodtrade.com/inbox">reply</a></td>'
             message_body = message_body + '</tr>'
         email_obj = Email()
