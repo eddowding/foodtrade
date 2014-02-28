@@ -75,7 +75,7 @@ class TweetFeed():
 
     def insert_tweet(self, user_id, tweet):
         usr_profile = UserProfile()
-        usr_profile.get_profile_by_id(user_id)
+        up = usr_profile.get_profile_by_id(user_id)
 
         if self.has_tweet_in_week(user_id) and up['subscribed'] != 1:
             return
