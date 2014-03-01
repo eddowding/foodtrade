@@ -583,7 +583,8 @@ def send_newsletter(request, substype):
         users = user_profile_obj.get_all_profiles(substype)
     elif substype == 'Monthly':
         users = user_profile_obj.get_all_profiles('Monthly')
-    
+
+    count =0
     for eachUser in users:
         try:
             subscription_status = eachUser['subscribed']
@@ -605,13 +606,18 @@ def send_newsletter(request, substype):
         results = temp_result
         tem_con = str(render_to_response('activity-email.html',{'results':results}, context_instance=RequestContext(request)))
         tem_con = tem_con.replace('Content-Type: text/html; charset=utf-8', '')
-        if len(results) > 0:
-            m = Email()
-            try:
-                m.send_mail("Recent FoodTrade activity near you", [{'name':'main', 'content':tem_con}], [{'email':eachUser['email']}])
-            except:
-                continue                
-                
+        try:
+            if len(results) > 0:
+                m = Email()
+                if len(eachUser['email'])>0:
+                    m.send_mail("Recent FoodTrade activity near you", [{'name':'main', 'content':tem_con}], [{'email':eachUser['email']}])
+                    #count = count + 1
+                    #print count
+
+                else:
+                    continue
+        except:
+            continue
     return HttpResponse(json.dumps({'status':'1'}))
 
 def create_profile_from_mention(email, location, data):

@@ -96,7 +96,6 @@ class SignupForm(forms.Form):
             username =  self.sociallogin.account.extra_data['screen_name']
             user_prof_obj  = UserProfile()
             user = user_prof_obj.get_profile_by_username(str(username))
-            pprint.pprint(user)
             self.fields['email'].widget.attrs['value'] = user['email']
             self.fields['address'].widget.attrs['value'] = user['address']
 
