@@ -8,6 +8,7 @@ from django.core.context_processors import csrf
 from geolocation import get_addr_from_ip
 import json
 import pprint
+from django.http import Http404
 
 def get_post_parameters(request, tweet_id):
     parameters={}
@@ -15,7 +16,7 @@ def get_post_parameters(request, tweet_id):
     parameters.update(csrf(request))
     if request.user.is_authenticated():
         user_id = request.user.id
-        user_profile = user_profile_obj.get_profile_by_id(str(user_id))       
+        user_profile = user_profile_obj.get_profile_by_id(str(user_id))
         default_lon = float(user_profile['latlng']['coordinates'][0])
         default_lat = float(user_profile['latlng']['coordinates'][1])
         user_info = UserInfo(user_id)
@@ -31,7 +32,11 @@ def get_post_parameters(request, tweet_id):
         default_lat = float(location_info['latitude'])
 
     search_handle = Search(lon = default_lon, lat =default_lat)
-    single_tweet = search_handle.get_single_tweet(str(tweet_id))
+    try:
+        single_tweet = search_handle.get_single_tweet(str(tweet_id))
+        a = single_tweet[0]
+    except:
+        raise Http404
     keyword = ''
     single_tweet = set_time_date(single_tweet[0],keyword)
     results = search_handle.get_direct_children([str(tweet_id)])
