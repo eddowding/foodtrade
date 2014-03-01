@@ -719,13 +719,13 @@ class AjaxHandle(AjaxSearch):
 
             if task == 'buyFrom' or task == 'sellTo':
                 tc_object = TradeConnection()
-                if task == 'buyFrom':
-                    '''Marks buys from'''
+                if task == 'sellTo':
+                    '''If adds as sells to'''
                     b_id = int(change_id)
                     c_id = int(request.user.id)
 
-                elif task == 'sellTo':
-                    '''If adds as sells to'''
+                elif task == 'buyFrom':
+                    '''Marks buys from'''
                     b_id = int(request.user.id)
                     c_id = int(change_id)
 
