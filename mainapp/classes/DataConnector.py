@@ -30,7 +30,7 @@ class UserConnections():
         b_conn = trade_conn.get_connection_by_business(self.user_id)
         c_conn = trade_conn.get_connection_by_customer(self.user_id)
         total_conn = len(b_conn) + len(c_conn)
-        return total_conn
+        return len(b_conn), len(c_conn)
         # return self.db_object.get_all_count(self.table_name,{"$or":[{'buyer':self.twitter_user_id},{'seller':self.twitter_user_id}]}, 'time_stamp')
     def get_food_connection_no(self):
         foo = Food()
@@ -130,8 +130,10 @@ class UserInfo():
         self.username = userprof['screen_name']
         self.description = userprof['description']
         self.profileimg = userprof['profile_img']
-        
-        self.trade_connections_no = user_connection.get_trade_connection_no()
+        b_conn_len, c_conn_len = user_connection.get_trade_connection_no()
+        self.trade_connections_no = b_conn_len + c_conn_len
+        self.b_conn_no = b_conn_len
+        self.c_conn_no = c_conn_len
         self.food_no = user_connection.get_food_connection_no()
         self.nearby_businesses_no = user_connection.get_nearby_businesses_no(self.lon,self.lat)
         self.nearby_individuals_no = user_connection.get_nearby_individuals_no(self.lon,self.lat)

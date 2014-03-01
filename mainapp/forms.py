@@ -16,16 +16,17 @@ from classes.MongoConnection import MongoConnection
 def update_all_values(old_useruid, new_useruid):
     '''This function updates all other affected collections when unclaimed profile changes to claimed'''
     mongo_connection_object = MongoConnection("localhost",27017,'foodtrade')
-    mongo_connection_object.update_multi('tradeconnection', {'b_useruid': old_useruid}, {'b_useruid':new_useruid})
-    mongo_connection_object.update_multi('tradeconnection', {'c_useruid': old_useruid}, {'c_useruid':new_useruid})
-    mongo_connection_object.update_multi('food', {'useruid':old_useruid}, {'useruid':new_useruid})
-    mongo_connection_object.update_multi('customer', {'useruid':old_useruid}, {'useruid':new_useruid})
-    mongo_connection_object.update_multi('organisation', {'orguid':old_useruid}, {'orguid':new_useruid})
-    mongo_connection_object.update_multi('team', {'orguid':old_useruid}, {'orguid':new_useruid})
-    mongo_connection_object.update_multi('recommendfood', {'business_id':old_useruid}, {'business_id':new_useruid})
+    try:
+        mongo_connection_object.update_multi('tradeconnection', {'b_useruid': old_useruid}, {'b_useruid':new_useruid})
+        mongo_connection_object.update_multi('tradeconnection', {'c_useruid': old_useruid}, {'c_useruid':new_useruid})
+        mongo_connection_object.update_multi('food', {'useruid':old_useruid}, {'useruid':new_useruid})
+        mongo_connection_object.update_multi('customer', {'useruid':old_useruid}, {'useruid':new_useruid})
+        mongo_connection_object.update_multi('organisation', {'orguid':old_useruid}, {'orguid':new_useruid})
+        mongo_connection_object.update_multi('team', {'orguid':old_useruid}, {'orguid':new_useruid})
+        mongo_connection_object.update_multi('recommendfood', {'business_id':old_useruid}, {'business_id':new_useruid})
+    except:
+        pass
     return True
-
-
 
 
 class FoodForm(forms.Form):
@@ -130,8 +131,12 @@ class SignupForm(forms.Form):
         '''Get user from the SocialAccount MySql'''
         userprofile = UserProfile()
         social_account = SocialAccount.objects.get(user__id = user.id)
-        old_useruid = userprofile.get_profile_by_username(str(social_account.extra_data['screen_name']))['useruid']
-
+        try:
+            old_useruid = userprofile.get_profile_by_username(str(social_account.extra_data['screen_name']))['useruid']
+            '''update all other affected collections when unclaimed profile changes to claimed'''
+            update_all_values(int(old_useruid), int(user.id))
+        except:
+            pass
         data = {
                 'is_unknown_profile':'false',
                 'useruid': int(user.id), 
@@ -159,8 +164,7 @@ class SignupForm(forms.Form):
         userprofile.update_profile_upsert({'screen_name':social_account.extra_data['screen_name'],
                  'username':social_account.extra_data['screen_name']},data)
 
-        '''update all other affected collections when unclaimed profile changes to claimed'''
-        update_all_values(int(old_useruid), int(user.id))
+        
 
         conn = TradeConnection()
         if self.cleaned_data['sign_up_as'] == "Business":

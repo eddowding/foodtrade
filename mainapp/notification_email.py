@@ -114,7 +114,7 @@ def send_daily_email():
         json_doc = json.dumps(list(to),default=json_util.default)
         # to_email = json.loads(json_doc)[0]['email']
 
-        subject = 'You have message in your Foodtrade Inbox.'
+        subject = 'You have message in your FoodTrade inbox'
 
         count = 0
         message_body = ''
