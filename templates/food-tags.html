@@ -141,7 +141,7 @@ ZebraStrip();
 });
 function approve_food(input, useruid){
   // input_val = $("#" + input).val();
-  food_name = $('#newfood_1').children(":first").val();
+  food_name = $('#'+input).children(":first").val();
   data = {useruid: useruid, food_name: food_name}
   unapproved_food_list.push(data);
   AddTerm(input);
@@ -175,7 +175,7 @@ function trash_unapproved(termInput, food_name){
 function AddTerm(termInput)
 {
   if (termInput.indexOf('newfood')!=-1){
-    input_val = $('#newfood_1').children(":first").val();
+    input_val = $('#'+termInput).children(":first").val();
   }
   else{
   input_val = $("#" + termInput).val();

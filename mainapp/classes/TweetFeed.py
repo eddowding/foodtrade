@@ -169,7 +169,7 @@ class TweetFeed():
             # full_name = myname
             org_list.append(myname)
 
-        self.db_object.update(self.table_name, {'useruid':int(user_id)}, {'foods':f_list,'organisations':org_list})
+        self.db_object.update(self.table_name, {'useruid':user_id}, {'foods':f_list,'organisations':org_list})
         
 
     def get_near_people(self, query):
