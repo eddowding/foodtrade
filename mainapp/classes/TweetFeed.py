@@ -61,7 +61,7 @@ class TweetFeed():
 
     def has_tweet_in_week(self,useruid):
         week_ago = int(time.time()) - 7*24*3600
-        results = self.db_object.get_all( self.table_name, {"useruid":useruid, "updates.time_stamp": {"$gte":week_ago} })
+        results = self.db_object.get_all( self.table_name, {"useruid":useruid,"updates.parent_tweet_id":"0", "updates.time_stamp": {"$gte":week_ago} })
         if len(results)>0:
             return True
         return False
@@ -75,12 +75,16 @@ class TweetFeed():
 
     def insert_tweet(self, user_id, tweet):
         usr_profile = UserProfile()
-        usr_profile.get_profile_by_id(user_id)
+        up = usr_profile.get_profile_by_id(user_id)
+        try: 
+            subscribed = up['subscribed']
+        except:
+            subscribed = 0
 
-        if self.has_tweet_in_week(user_id) and up['subscribed'] != 1:
+        if tweet['parent_tweet_id'] == "0" and self.has_tweet_in_week(user_id) and subscribed != 1:
             return
 
-        tweet['deleted'] =0
+        tweet['deleted'] = 0
         tweet['time_stamp'] = int(time.time())
         
         value = tweet['status']
@@ -165,7 +169,7 @@ class TweetFeed():
             # full_name = myname
             org_list.append(myname)
 
-        self.db_object.update(self.table_name, {'useruid':int(user_id)}, {'foods':f_list,'organisations':org_list})
+        self.db_object.update(self.table_name, {'useruid':user_id}, {'foods':f_list,'organisations':org_list})
         
 
     def get_near_people(self, query):
@@ -223,12 +227,12 @@ class UserProfile():
     def get_all_profiles(self, status):
         users = []
         if status == 'None':
-            user_pages_count = int(self.db_object.get_count(self.table_name, {'newsletter_freq':{'$exists':False}})/15)+ 1
+            user_pages_count = int(self.db_object.get_count(self.table_name, {'newsletter_freq':{'$exists':False}, 'email':{'$ne':''}})/15)+ 1
         else:
             user_pages_count = int(self.db_object.get_count(self.table_name, {'newsletter_freq':status})/15)+ 1
         for i in range(0,user_pages_count, 1):
             if status == 'None':
-                pag_users = self.db_object.get_paginated_values(self.table_name, {'newsletter_freq':{'$exists':False}}, pageNumber = int(i+1))
+                pag_users = self.db_object.get_paginated_values(self.table_name, {'newsletter_freq':{'$exists':False}, 'email':{'$ne':''}}, pageNumber = int(i+1))
             else:    
                 pag_users = self.db_object.get_paginated_values(self.table_name, {'newsletter_freq':status}, pageNumber = int(i+1))
             for eachUser in pag_users:
@@ -243,7 +247,7 @@ class UserProfile():
 
     def get_profile_by_username(self, username):
         # return self.db_object.get_one(self.table_name,{'username': str(username)})
-        return self.db_object.get_one(self.table_name,{'username': { "$regex" : str(username), "$options" : "-i" }})
+        return self.db_object.get_one(self.table_name,{'username': { "$regex" : re.compile("^"+str(username)+"$", re.IGNORECASE), "$options" : "-i" }})
 
     def get_profile_by_type(self, type_usr):
         return self.db_object.get_all(self.table_name,{'sign_up_as':type_usr})

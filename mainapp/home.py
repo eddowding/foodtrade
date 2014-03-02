@@ -101,6 +101,10 @@ def fix_new_foods():
     for each in master_foods:
         if each.get('childrens')!=None:
             final_master.extend([str(i['node']) for i in each['childrens']])
+        else:
+            final_master.extend([str(each['node'])])
+        # if each.get('childrens') == None:
+        #     final_master.extend([str(each['node'])])
 
     aggregation_pipeline = []
     aggregation_pipeline.append({"$match":{'deleted': 0}})
@@ -110,7 +114,6 @@ def fix_new_foods():
     })
     mongo = MongoConnection("localhost",27017,'foodtrade')
     food_results = mongo.aggregrate_all('food', aggregation_pipeline)
-
     
     for eachfood in food_results:
         if str(eachfood['uid']) not in final_master and str(eachfood['uid']) not in unapproved:
@@ -119,7 +122,7 @@ def fix_new_foods():
 @user_passes_test(lambda u: u.is_superuser)
 def food_tags(request):
     parameters = {}
-    # fix_new_foods()
+    fix_new_foods()
     if request.user.is_authenticated():
         # parameters['user'] = request.user
         user_id = request.user.id

@@ -131,8 +131,8 @@
       <!-- if logged in users = business --> 
       {% ifequal loggedin_signupas "Business" %}
       <div class="btn-group btn-block" data-toggle="buttons">
-          {% if logged_conn == "buyer" or logged_conn == "both" %}
-          
+        {% if logged_conn == "seller"  or logged_conn == "both" %}
+                    
         <label class="btn btn-default active" style="width:50%;" title="{{userinfo.full_name}} buys from {{name}}">
           <input type="checkbox" checked id="buy_from" onchange="conn_handler('buy_from', {{profile_id}})"> Buy from
           {% else %}
@@ -146,7 +146,8 @@
 
         </label>
         <!-- showing active mode if button is selected -->
-          {% if logged_conn == "seller"  or logged_conn == "both" %}
+        {% if logged_conn == "buyer" or logged_conn == "both" %}
+          
         <label class="btn btn-default active" style="width:50%;" title="{{userinfo.full_name}} sells to {{name}}" >
           
           <input type="checkbox" checked id="sell_to" onchange="conn_handler('sell_to', {{profile_id}})"> Sell to
