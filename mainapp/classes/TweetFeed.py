@@ -47,7 +47,7 @@ class TweetFeed():
         return self.db_object.get_distinct(self.table_name, "useruid", {"sign_up_as":"Business"})["results"]
 
     def get_all_users(self):
-        return self.db_object.get_distinct(self.table_name, "useruid", {})["results"]
+        return self.db_object.get_distinct(self.table_name, "useruid", {n})["results"]
 
     def get_tweet_by_parent_id(self, parent_tweet_id):
         return self.db_object.get_all(self.table_name,{'parent_tweet_id':parent_tweet_id, 'deleted':0}, 'time_stamp')
@@ -162,7 +162,7 @@ class TweetFeed():
         user_prof = UserProfile()
         for org in organisations:
             # twitter_user = SocialAccount.objects.get(user__id = org['orguid'])
-            usr_pr = user_prof.get_profile_by_id(int(user_id))
+            usr_pr = user_prof.get_profile_by_id(org['orguid'])
 
             if usr_pr.get('business_org_name')!=None:
                 myname = usr_pr.get('business_org_name') if (usr_pr['sign_up_as'] == 'Business' or usr_pr['sign_up_as'] == 'Organisation') \
