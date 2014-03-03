@@ -38,7 +38,7 @@ class UserProfile():
 
 class Search():
     """docstring for UserConnections"""
-    def __init__(self, keyword="", lon = "", lat ="", place = "", foods="", business="", organisation="",sort="", search_global=False,news="new"):
+    def __init__(self, keyword="", lon = "", lat ="", place = "", foods="", business="", organisation="",sort="", search_global=False,news="notfornews"):
         self.keyword = str(keyword.strip())
         self.lon = lon
         self.lat = lat
@@ -274,9 +274,22 @@ class Search():
                 agg_pipeline.append({ '$match':{"updates.deleted":{"$ne":1},"updates.parent_tweet_id":"0"}})
         
 
-        if search_type == 0 and self.news == "old":
-            week_ago = int(time.time()) - 7*24*3600
-            agg_pipeline.append({ '$match':{"updates.time_stamp": {"$lte":week_ago} }})
+        if search_type == 0:
+            if  self.news == "old"
+                start_time = int(time.time()) - 14*24*3600
+                end_time = int(time.time()) - 7*24*3600
+            elif  self.news == "daily"
+                start_time = int(time.time()) - 1*24*3600
+                end_time = int(time.time())
+            elif  self.news == "weekly"
+                start_time = int(time.time()) - 7*24*3600
+                end_time = int(time.time()) 
+            elif  self.news == "monthly"
+                start_time = int(time.time()) - 30*24*3600
+                end_time = int(time.time()) 
+            
+            
+            agg_pipeline.append({ '$match':{"updates.time_stamp": {"$lte":end_time,"$gte":start_time} }})
 
         # agg_pipeline.append({ '$match':{"updates":{"$size":0}}})
         if self.sort == "time":

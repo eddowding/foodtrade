@@ -593,10 +593,11 @@ def send_newsletter(request, substype):
         if subscription_status == 0:
             search_handle = Search(lon = eachUser['latlng']['coordinates'][0], lat = eachUser['latlng']['coordinates'][1], news="old")
         else:
-            search_handle = Search(lon = eachUser['latlng']['coordinates'][0], lat = eachUser['latlng']['coordinates'][1])
+            search_handle = Search(lon = eachUser['latlng']['coordinates'][0], lat = eachUser['latlng']['coordinates'][1], news=substype)
         search_results = search_handle.search_all()['results']
         temp_result = []
         no_of_results = 10
+        count = 0
         for res in search_results:
             if res["result_type"] == res["user"]["username"] and eachUser["username"] != res["user"]["username"]:
                 temp_result.append(res)
@@ -610,9 +611,9 @@ def send_newsletter(request, substype):
             if len(results) > 0:
                 m = Email()
                 if len(eachUser['email'])>0:
-                    m.send_mail("Recent FoodTrade activity near you", [{'name':'main', 'content':tem_con}], [{'email':eachUser['email']}])
-                    #count = count + 1
-                    #print count
+                    # m.send_mail("Recent FoodTrade activity near you", [{'name':'main', 'content':tem_con}], [{'email':eachUser['email']}])
+                    count = count + 1
+                    print count
                 else:
                     continue
         except:
