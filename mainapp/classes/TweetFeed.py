@@ -46,6 +46,9 @@ class TweetFeed():
     def get_business_users(self):
         return self.db_object.get_distinct(self.table_name, "useruid", {"sign_up_as":"Business"})["results"]
 
+    def get_all_users(self):
+        return self.db_object.get_distinct(self.table_name, "useruid", {})["results"]
+
     def get_tweet_by_parent_id(self, parent_tweet_id):
         return self.db_object.get_all(self.table_name,{'parent_tweet_id':parent_tweet_id, 'deleted':0}, 'time_stamp')
 
@@ -159,7 +162,7 @@ class TweetFeed():
         user_prof = UserProfile()
         for org in organisations:
             # twitter_user = SocialAccount.objects.get(user__id = org['orguid'])
-            usr_pr = user_prof.get_profile_by_id(int(user_id))
+            usr_pr = user_prof.get_profile_by_id(org['orguid'])
 
             if usr_pr.get('business_org_name')!=None:
                 myname = usr_pr.get('business_org_name') if (usr_pr['sign_up_as'] == 'Business' or usr_pr['sign_up_as'] == 'Organisation') \
@@ -169,7 +172,7 @@ class TweetFeed():
             # full_name = myname
             org_list.append(myname)
 
-        self.db_object.update(self.table_name, {'useruid':int(user_id)}, {'foods':f_list,'organisations':org_list})
+        self.db_object.update(self.table_name, {'useruid':user_id}, {'foods':f_list,'organisations':org_list})
         
 
     def get_near_people(self, query):
@@ -247,7 +250,7 @@ class UserProfile():
 
     def get_profile_by_username(self, username):
         # return self.db_object.get_one(self.table_name,{'username': str(username)})
-        return self.db_object.get_one(self.table_name,{'username': { "$regex" : str(username), "$options" : "-i" }})
+        return self.db_object.get_one(self.table_name,{'username': { "$regex" : re.compile("^"+str(username)+"$", re.IGNORECASE), "$options" : "-i" }})
 
     def get_profile_by_type(self, type_usr):
         return self.db_object.get_all(self.table_name,{'sign_up_as':type_usr})

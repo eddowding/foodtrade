@@ -32,7 +32,11 @@ def profile_url_resolve(request, username):
             
 def resolve_profile(request, username):
     usr_profile = UserProfile()
-    userprof = usr_profile.get_profile_by_username(str(username))
+    try:
+        userprof = usr_profile.get_profile_by_username(str(username))
+        a = userprof['sign_up_as']
+    except:
+        raise Http404
     if userprof['sign_up_as'] == 'unclaimed':
         return HttpResponseRedirect('/')
     elif userprof['sign_up_as'] == 'Business':
@@ -55,8 +59,11 @@ def display_profile(request, username):
     parameters['all_tags'] = foo.get_tags()
 
     user_profile = UserProfile()
-    userprof = user_profile.get_profile_by_username(str(username))
-
+    try:
+        userprof = user_profile.get_profile_by_username(str(username))
+        a = userprof['sign_up_as']
+    except:
+        raise Http404
     uinfo = UserInfo(userprof['useruid'])
     uinfo.description = uinfo.description.replace("\r\n"," ")
 
@@ -219,7 +226,11 @@ def edit_profile(request, username):
                 edit all unclaimed accounts.Else he/she can edit only his profile.
             '''
             if request.user.is_superuser:
-                userprof = usr_profile.get_profile_by_username(str(username))
+                try:
+                    userprof = usr_profile.get_profile_by_username(str(username))
+                    a = userprof['sign_up_as']
+                except:
+                    raise Http404
                 # if userprof.get('is_unknown_profile') == None or userprof.get('is_unknown_profile')=='false':
                 #     userprof = usr_profile.get_profile_by_username(str(request.user.username))
             else:

@@ -38,7 +38,7 @@ def merge(request):
     token = request.GET.get("token")
     if token == "update":
         tweet_feed = TweetFeed()
-        business_users = tweet_feed.get_business_users()
+        business_users = tweet_feed.get_all_users()
         for user in business_users:
             twt = TweetFeed()
             twt.update_data(user)
