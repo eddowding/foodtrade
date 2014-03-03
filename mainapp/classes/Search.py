@@ -274,7 +274,7 @@ class Search():
                 agg_pipeline.append({ '$match':{"updates.deleted":{"$ne":1},"updates.parent_tweet_id":"0"}})
         
 
-        if search_type == 0:
+        if search_type == 0 and self.news != "notfornews":
             if  self.news == "old" or self.news == "none":
                 start_time = int(time.time()) - 14*24*3600
                 end_time = int(time.time()) - 7*24*3600
@@ -286,9 +286,7 @@ class Search():
                 end_time = int(time.time()) 
             elif  self.news == "monthly":
                 start_time = int(time.time()) - 30*24*3600
-                end_time = int(time.time()) 
-            
-            
+                end_time = int(time.time())             
             agg_pipeline.append({ '$match':{"updates.time_stamp": {"$lte":end_time,"$gte":start_time} }})
 
         # agg_pipeline.append({ '$match':{"updates":{"$size":0}}})
