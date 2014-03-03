@@ -23,14 +23,23 @@ import pprint
 from django.http import Http404
 
 def profile_url_resolve(request, username):
+    if username == 'me':
+        if request.user.is_authenticated:
+            username = request.user.username
+
     usr_profile = UserProfile()
     userprof = usr_profile.get_profile_by_username(str(username))
+
     if userprof!= None:
         return display_profile(request, userprof['username'])
     else:
         raise Http404()
             
 def resolve_profile(request, username):
+    if username == 'me':
+        if request.user.is_authenticated:
+            username = request.user.username
+            return display_profile(request, username)    
     usr_profile = UserProfile()
     try:
         userprof = usr_profile.get_profile_by_username(str(username))
