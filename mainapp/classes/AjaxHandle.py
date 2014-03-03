@@ -225,7 +225,7 @@ class AjaxHandle(AjaxSearch):
                     if cust['username'] != str(request.user.username):
                         notification_obj.save_notification({
                                 'notification_to':cust['username'],
-                                'notification_message':'@' + str(cust['username']) + ' said he sells products tp you. You can add contacts, connect and share your business products.', 
+                                'notification_message':'@' + str(cust['username']) + ' said he sells products to you. You can add contacts, connect and share your business products.', 
                                 'notification_time':time.mktime(datetime.datetime.now().timetuple()),
                                 'notification_type':'Added Seller',
                                 'notification_view_status':'false',

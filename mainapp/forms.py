@@ -137,6 +137,7 @@ class SignupForm(forms.Form):
             update_all_values(int(old_useruid), int(user.id))
         except:
             pass
+            
         data = {
                 'is_unknown_profile':'false',
                 'useruid': int(user.id), 

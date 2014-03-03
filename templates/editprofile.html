@@ -168,7 +168,7 @@
 <select id="newsletter_freq_txt" class="form-control" name="newsletter_freq" tabindex="6">
               <option value="Never">Never</option>
               <option value="Monthly">Monthly</option>
-              <option value="Weekly">Weekly (7 day delay)</option>
+              <option value="Weekly">Weekly {% if not subscribed %}(7 day delay){% endif %}</option>
               {% if subscribed %}
               <option value="Daily">Daily</option>
               {% else %}
