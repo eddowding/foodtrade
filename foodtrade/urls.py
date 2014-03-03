@@ -46,4 +46,5 @@ urlpatterns = patterns('',
     url(r'^twillo/$', 'mainapp.views.sms_receiver'),
     url(r'^all_users/$', 'mainapp.home.all_users'),
     url(r'^merge-data/$', 'mainapp.merge_data.merge'),
+    url(r'^(?P<username>\w{1,40})/$', 'mainapp.profilepage.profile_url_resolve'),
 )

@@ -20,7 +20,16 @@ from mainapp.forms import FoodForm
 from bson import json_util
 from collections import Counter
 import pprint
+from django.http import Http404
 
+def profile_url_resolve(request, username):
+    usr_profile = UserProfile()
+    userprof = usr_profile.get_profile_by_username(str(username))
+    if userprof!= None:
+        return display_profile(request, userprof['username'])
+    else:
+        raise Http404()
+            
 def resolve_profile(request, username):
     usr_profile = UserProfile()
     userprof = usr_profile.get_profile_by_username(str(username))
