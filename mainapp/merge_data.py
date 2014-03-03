@@ -33,7 +33,7 @@ from twilio.rest import TwilioRestClient
 from mainapp.classes.mailchimp import MailChimp
 from mainapp.classes.SendSms import send_sms
 from twython import Twython
-
+from mainapp.views import get_twitter_obj
 def merge(request):
     token = request.GET.get("token")
     if token == "update":
