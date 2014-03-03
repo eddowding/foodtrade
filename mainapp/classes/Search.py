@@ -275,16 +275,16 @@ class Search():
         
 
         if search_type == 0:
-            if  self.news == "old"
+            if  self.news == "old" or self.news == "none":
                 start_time = int(time.time()) - 14*24*3600
                 end_time = int(time.time()) - 7*24*3600
-            elif  self.news == "daily"
+            elif  self.news == "daily":
                 start_time = int(time.time()) - 1*24*3600
                 end_time = int(time.time())
-            elif  self.news == "weekly"
+            elif  self.news == "weekly":
                 start_time = int(time.time()) - 7*24*3600
                 end_time = int(time.time()) 
-            elif  self.news == "monthly"
+            elif  self.news == "monthly":
                 start_time = int(time.time()) - 30*24*3600
                 end_time = int(time.time()) 
             

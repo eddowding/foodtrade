@@ -590,30 +590,37 @@ def send_newsletter(request, substype):
             subscription_status = eachUser['subscribed']
         except:
             subscription_status = 0
+
+        '''Generate activity for newsletter'''
         if subscription_status == 0:
             search_handle = Search(lon = eachUser['latlng']['coordinates'][0], lat = eachUser['latlng']['coordinates'][1], news="old")
         else:
-            search_handle = Search(lon = eachUser['latlng']['coordinates'][0], lat = eachUser['latlng']['coordinates'][1], news=substype)
+            search_handle = Search(lon = eachUser['latlng']['coordinates'][0], lat = eachUser['latlng']['coordinates'][1], news=substype.lower())
         search_results = search_handle.search_all()['results']
+        
+        '''Make Default value of newsletter 10'''
         temp_result = []
         no_of_results = 10
-        count = 0
         for res in search_results:
             if res["result_type"] == res["user"]["username"] and eachUser["username"] != res["user"]["username"]:
                 temp_result.append(res)
             if len(temp_result) >= no_of_results:
                 break
-
         results = temp_result
+
+        '''Generate content for newsletter from activity'''
         tem_con = str(render_to_response('activity-email.html',{'results':results}, context_instance=RequestContext(request)))
         tem_con = tem_con.replace('Content-Type: text/html; charset=utf-8', '')
+
+        print len(results)
+
         try:
             if len(results) > 0:
                 m = Email()
+                '''Do not send empty newsletter'''
                 if len(eachUser['email'])>0:
-                    # m.send_mail("Recent FoodTrade activity near you", [{'name':'main', 'content':tem_con}], [{'email':eachUser['email']}])
-                    count = count + 1
-                    print count
+                    m.send_mail("Recent FoodTrade activity near you", [{'name':'main', 'content':tem_con}], [{'email':eachUser['email']}])                    
+                    pass
                 else:
                     continue
         except:
