@@ -47,7 +47,7 @@ class TweetFeed():
         return self.db_object.get_distinct(self.table_name, "useruid", {"sign_up_as":"Business"})["results"]
 
     def get_all_users(self):
-        return self.db_object.get_distinct(self.table_name, "useruid", {n})["results"]
+        return self.db_object.get_distinct(self.table_name, "useruid", {})["results"]
 
     def get_tweet_by_parent_id(self, parent_tweet_id):
         return self.db_object.get_all(self.table_name,{'parent_tweet_id':parent_tweet_id, 'deleted':0}, 'time_stamp')
