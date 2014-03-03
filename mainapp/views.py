@@ -598,7 +598,7 @@ def send_newsletter(request, substype):
         temp_result = []
         no_of_results = 10
         for res in search_results:
-            if res["result_type"] == res["user"]["username"]:
+            if res["result_type"] == res["user"]["username"] and eachUser["username"] != res["user"]["username"]:
                 temp_result.append(res)
             if len(temp_result) >= no_of_results:
                 break
@@ -613,7 +613,6 @@ def send_newsletter(request, substype):
                     m.send_mail("Recent FoodTrade activity near you", [{'name':'main', 'content':tem_con}], [{'email':eachUser['email']}])
                     #count = count + 1
                     #print count
-
                 else:
                     continue
         except:
