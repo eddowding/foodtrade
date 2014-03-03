@@ -7,7 +7,7 @@ from bson.objectid import ObjectId
 from MongoConnection import MongoConnection
 import json
 import operator
-
+import datetime,time
 
 class UserProfile():
     def __init__ (self):
@@ -37,10 +37,9 @@ class UserProfile():
 
 
 class Search():
-
     """docstring for UserConnections"""
-    def __init__(self, keyword="", lon = "", lat ="", place = "", foods="", business="", organisation="",sort=""):
-        self.keyword = str(keyword)
+    def __init__(self, keyword="", lon = "", lat ="", place = "", foods="", business="", organisation="",sort="", search_global=False,news="notfornews"):
+        self.keyword = str(keyword.strip())
         self.lon = lon
         self.lat = lat
         self.place = place
@@ -48,14 +47,19 @@ class Search():
         self.business = business
         self.organisation = organisation
         self.sort = sort
+        self.search_global = search_global
+        self.news = news
+        
     def get_result_fields(self,type_result):
         if type_result == "description":
             result_type = "$useruid"
         else:
             result_type = "$username"
+
         return { "$push": {
 
         "user":{"name":"$name", 
+        "business_org_name": "$business_org_name",
         "address":"$address",
         "profile_img":"$profile_img",
         "description":"$description",
@@ -70,8 +74,11 @@ class Search():
         "organisations":"$organisations",
         "foods":"$foods",
         "sign_up_as":"$sign_up_as",
+        "zip_code":"$zip_code",
         "time_stamp":"$updates.time_stamp",
+        "tweet_pictures":"$updates.picture",
         "result_type":result_type,
+        "subscribed": "$subscribed"
         }}
 
 
@@ -101,7 +108,7 @@ class Search():
         return [{"uid":value,"value":label} for value, label in sorted_counter]
 
 
-    def search_all(self,):
+    def search_all(self):
         statuses = self.get_search_type(0)
         profiles = self.get_search_type(1)
 
@@ -110,33 +117,41 @@ class Search():
                 profiles[0]["foods"].extend(statuses[0]["foods"])
                 profiles[0]["businesses"].extend(statuses[0]["businesses"])
                 profiles[0]["organisations"].extend(statuses[0]["organisations"])
-                profiles[0]["results"] = profiles[0]["results"][:30]
-                profiles[0]["results"].extend(statuses[0]["results"][:30])
+                if not self.search_global:
+                    profiles[0]["results"] = profiles[0]["results"][:15]
+                    profiles[0]["results"].extend(statuses[0]["results"][:15])
+                else:
+                    profiles[0]["results"].extend(statuses[0]["results"])
             results = profiles[0]
         else:
-            if len(statuses)>0: 
+            if len(statuses)>0:
                 results = statuses[0]
             else:
                 return {"foods":[], "businesses":[], "organisations":[],"results":[], "business_counter":0, "organisation_counter":0, "update_counter":0}
 
 
-        
-  
-
-
         foods_list = results["foods"]
+        foods_array = []
 
-        foods_counter = self.item_counter(foods_list)
+
+        for fds in foods_list:
+            fd_list = []
+            for fd in fds:
+                try:
+                    fd_list.append(fd['food_name'])
+                except:
+                    pass
+            foods_array.append(fd_list)
+
+
+        foods_counter = self.item_counter(foods_array)
         results["foods"] = foods_counter
-
         businesses_list = results["businesses"]
         businesses_counter = self.item_counter(businesses_list)
         results["businesses"] = businesses_counter
-
         organisations_list = results["organisations"]
         organisations_counter = self.item_counter(organisations_list)
         results["organisations"] = organisations_counter
-
         try:
             results["business_counter"] = profiles[0]["business_count"]
             results["organisation_counter"] = profiles[0]["organisation_count"]
@@ -144,14 +159,9 @@ class Search():
             results["business_counter"] = 0
             results["organisation_counter"] = 0
         try:
-
             results["update_counter"] = statuses[0]["update_count"]
         except:
             results["update_counter"] = 0
-
-        # print len(results['results'])
-        # print json.dumps(results)
-        # print results
         return results
 
     def get_search_type(self, search_type):
@@ -170,14 +180,15 @@ class Search():
             
             for search_item in search_variables:
                 or_conditions.append({search_item:reg_expression})
-
-            
-
             # Searches keyword as food
-            or_conditions.append({'foods':reg_expression})
+            food_attributes = ["food_name","description","food_tags"]
 
+            for fd_attr in food_attributes:
 
-            or_conditions.append({'businesses':reg_expression})
+                or_conditions.append({'foods':{"$elemMatch":{fd_attr:reg_expression}}})
+
+            # search by business type
+            or_conditions.append({'type_user':reg_expression})
 
             
             # Only for Status
@@ -200,18 +211,19 @@ class Search():
 
         and_query =[]
 
-        # for profile search
-        if search_type==1:
-            and_query.append({"sign_up_as":{"$ne":"Individual"}})
 
 
         # Limit distance within 200 miles
-        and_query.append({"distance":{"$lte":1609.34}})
+        if not self.search_global:
+            and_query.append({"distance":{"$lte":1609.34}})
 
 
         # check food filters
+        foods_match = []
+        for fd in self.foods:
+            foods_match.append({ "$elemMatch" : { "food_name": fd}})
         if len(self.foods) > 0:
-            and_query.append({"foods": {"$all":self.foods}})
+            and_query.append({"foods": {"$all":foods_match}})
         
         # Check business filter
         if len(self.business) > 0:
@@ -221,8 +233,8 @@ class Search():
         if len(self.organisation) > 0:
             and_query.append({"organisations":{"$all":self.organisation}})
 
-
-        query_string["$and"] = and_query
+        if len(and_query)>0:
+            query_string["$and"] = and_query
         if self.keyword !="":
             query_string["$or"] = or_conditions
 
@@ -232,7 +244,7 @@ class Search():
                                     "maxDistance": 160.934,
                                     # "query": query_string,
                                     "includeLocs": "latlng",
-                                    "uniqueDocs": True,  
+                                    "uniqueDocs": True,
                                     "spherical":True,
                                     "limit":5000,
                                     "distanceMultiplier":6371
@@ -242,7 +254,13 @@ class Search():
 
         agg_pipeline.append(geo_near)
 
-        agg_pipeline.append({ '$match':query_string})
+        if len(and_query)>0 or self.keyword != "":
+            agg_pipeline.append({ '$match':query_string})
+
+        # for profile search
+        if search_type==1:
+            only_business_org = [{"sign_up_as":{"$ne":"Individual"}},{"sign_up_as":{"$ne":"unclaimed"}}]
+            agg_pipeline.append({ '$match': {"$and": only_business_org}})
 
 
         if search_type == 0:
@@ -250,9 +268,33 @@ class Search():
 
 
         if search_type == 0:
-            agg_pipeline.append({ '$match':{"updates.deleted":{"$ne":1},"updates.parent_tweet_id":"0"}})
+            if self.keyword != "":
+                agg_pipeline.append({ '$match':{"updates.status":reg_expression, "updates.deleted":{"$ne":1},"updates.parent_tweet_id":"0"}})
+            else:
+                agg_pipeline.append({ '$match':{"updates.deleted":{"$ne":1},"updates.parent_tweet_id":"0"}})
+        
 
-       
+        if search_type == 0:
+<<<<<<< HEAD
+            if  self.news == "old" or self.news == "none":
+=======
+            if  self.news == "old":
+>>>>>>> 2d5a8a3086cdf076b5c690920575f645e776c4f6
+                start_time = int(time.time()) - 14*24*3600
+                end_time = int(time.time()) - 7*24*3600
+            elif  self.news == "daily":
+                start_time = int(time.time()) - 1*24*3600
+                end_time = int(time.time())
+            elif  self.news == "weekly":
+                start_time = int(time.time()) - 7*24*3600
+                end_time = int(time.time()) 
+            elif  self.news == "monthly":
+                start_time = int(time.time()) - 30*24*3600
+                end_time = int(time.time()) 
+            
+            
+            agg_pipeline.append({ '$match':{"updates.time_stamp": {"$lte":end_time,"$gte":start_time} }})
+
         # agg_pipeline.append({ '$match':{"updates":{"$size":0}}})
         if self.sort == "time":
             sort_text = "updates.time_stamp"
@@ -266,12 +308,6 @@ class Search():
             sort_order = 1
 
         agg_pipeline.append({"$sort": SON([(sort_text, sort_order), ("time_stamp", -1)])})
-
-        # next_index = 5
-        # if len(or_conditions) > 0:
-        #     next_index = 6
-        #     agg_pipeline.append({ '$match':{"$or":or_conditions}})
-
 
         group_fields = {}
         group_fields["_id"] = "all"
@@ -350,17 +386,14 @@ class Search():
 
         group_fields = {}
         group_fields["_id"] = "all"
-        group_fields["foods"] = { "$push": "$foods" }
+        group_fields["foods"] = { "$push": "$foods.foods_match" }
         group_fields["businesses"] = { "$push": "$type_user"}
         group_fields["organisations"] = { "$push": "$organisations"}
         group_fields["business_count"] = {"$sum":{"$cond": [{"$eq": ['$sign_up_as', "Business"]}, 1, 0]}}
         group_fields["organisation_count"] = {"$sum":{"$cond": [{"$eq": ['$sign_up_as', "Organisation"]}, 1, 0]}}
         group_fields["update_count"] = {"$sum": 1}
 
-   
         result_type = "updates.status"
-   
-        
         group_fields["results"] = self.get_result_fields(result_type)
         
         agg_pipeline.append({"$group": group_fields})
@@ -437,7 +470,6 @@ class Search():
         return up.agg(agg_pipeline)[0]['results']
 
 
-<<<<<<< HEAD
 
     def get_direct_children(self, root_id):
         try:
@@ -448,8 +480,6 @@ class Search():
 
 
 
-=======
->>>>>>> ae06125dc382cb3632f42979cfb991bde536ca40
     def get_all_children(self,root_id):
     
         try:
@@ -477,7 +507,9 @@ class Search():
 
 
 
-
+# search_handle = Search( lon = 45, lat =45)
+# search_results = search_handle.search_all()
+# results = search_results['results'][:40]
 
 
         
