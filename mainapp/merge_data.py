@@ -32,7 +32,7 @@ import uuid
 from twilio.rest import TwilioRestClient 
 from mainapp.classes.mailchimp import MailChimp
 from mainapp.classes.SendSms import send_sms
-
+from twython import Twython
 
 def merge(request):
     token = request.GET.get("token")
@@ -42,5 +42,25 @@ def merge(request):
         for user in business_users:
             twt = TweetFeed()
             twt.update_data(user)
+            if int(user) > 1:
+
+                up = UserProfile()
+                user_details = up.get_profile_by_id(user)
+
+                st = SocialToken.objects.get(account__user__id=user)
+
+                ACCESS_TOKEN = st.token
+                ACCESS_TOKEN_SECRET = st.token_secret
+                
+                user_twitter = get_twitter_obj(ACCESS_TOKEN, ACCESS_TOKEN_SECRET)
+
+
+
+                details = user_twitter.show_user(screen_name=user_details['username'])
+                image_desc = {'profile_img': details['profile_image_url']}
+
+                up.update_profile_fields({"useruid":user}, image_desc)
+                
         return HttpResponse("success"+json.dumps(business_users))
+
     return HttpResponse("sorry")

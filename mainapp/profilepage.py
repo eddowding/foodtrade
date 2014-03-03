@@ -285,7 +285,6 @@ def edit_profile(request, username):
         facebook_page = request.POST.get('facebook_page') if request.POST.get('facebook_page')!=None else ''
         deliverables = request.POST.get('deliverables') if request.POST.get('deliverables')!=None else ''
         business_org_name = request.POST.get('business_org_name') if request.POST.get('business_org_name')!=None else ''
-        print 'business_org_name', business_org_name
         # first_name = request.POST['first_name']
         # last_name = request.POST['last_name']
         newsletter_freq = request.POST['newsletter_freq']
@@ -325,6 +324,8 @@ def edit_profile(request, username):
         usr_profile.update_profile_by_username(userprof['username'], description, address, 
             usr_type, sign_up_as, phone, lat, lon, postal_code, display_name, is_superuser, company_num,
             website_url, facebook_page, deliverables, business_org_name, email, newsletter_freq)
+        twt = TweetFeed()
+        twt.update_data(userprof['useruid'])
 
         return HttpResponseRedirect('/')
 
