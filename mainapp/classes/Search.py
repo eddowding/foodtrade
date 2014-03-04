@@ -495,22 +495,3 @@ class Search():
             return total_results
         except:
             return None
-
-
-
-
-
-
-# search_handle = Search( lon = 45, lat =45)
-# search_results = search_handle.search_all()
-# results = search_results['results'][:40]
-
-
-        
-
-
-
-# sh = Search(keyword="sujit", lon = 85.3363578, lat=27.7059892, place = "", foods=[], business=['Compost','Animal Feed'], organisation=[],sort="")
-# res = sh.get_all_children([9800])
-# print len(res)
-# print res
