@@ -1,7 +1,7 @@
 #!/bin/bash
 
 sudo -i
-cd /backups
+cd /backup
 unzip $(date +%F)
 cd $(date +%F)
 cd dump

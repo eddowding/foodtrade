@@ -1,7 +1,7 @@
 #!/bin/bash
 
 sudo -i
-cd /backups
+cd /backup
 mkdir $(date +%F)
 cd $(date +%F)
 mongodump
