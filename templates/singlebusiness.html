@@ -242,7 +242,7 @@
         <a href="{{facebook_page}}"><i class="fa fa-facebook-square"></i></a>
       {% endif %} 
       {% if userinfo.username %}
-        <a href="http://twitter.com/{{userinfo.username}}"><i class="fa fa-twitter-square"></i></a> 
+        <a href="http://twitter.com/{{userprof.username}}"><i class="fa fa-twitter-square"></i></a> 
       {% endif %} 
       {% if phone_number %}
         <a href="callto:{{phone_number}}"><i class="fa fa-phone-square"></i></a>  
@@ -405,8 +405,10 @@
     <div class="row">
      <div class="col-md-12">
         <ul class="nav nav-tabs">
+          {% if show_foods %}
           <li class="active"><a href="#produce" data-toggle="tab">Foods <span class="badge">{{userprof.food_no}}</span></a></li>
-          <li><a href="#connections" data-toggle="tab" onclick="set_width()">Links <span class="badge">{{userprof.trade_connections_no}}</span></a> </li>
+          {% endif %}
+          <li {% if not show_foods %} class="active" {% endif %}><a href="#connections" data-toggle="tab" onclick="set_width()">Links <span class="badge">{{userprof.trade_connections_no}}</span></a> </li>
 
           <li><a href="#organisations" data-toggle="tab">Orgs <span class="badge">{{userprof.organisation_connection_no}}</span></a></li> 
           <li><a href="#activity" data-toggle="tab">Updates  <span class="badge">{{updates_count}}</span></a></li>  
@@ -415,11 +417,13 @@
      </div>
     </div>
 
+
     <div class="row">
       <div class="col-md-12">
         <div class="container-responsive clearfix">
 
         <div class="tab-content">
+          {% if show_foods %}
           <div class="tab-pane active fade in " id="produce">
 
 
@@ -597,8 +601,9 @@
 
 
           </div> <!-- end produce -->
+          {% endif %}
 
-          <div class="tab-pane fade" id="connections">
+          <div class="tab-pane fade {% if not show_foods %} in active {% endif %}" id="connections">
           {% if user.is_authenticated %}
             <div class="well well-sm">  
             <div class="form-inline"  role="form">
@@ -960,10 +965,11 @@ $('#myselect').chosen({create_option: true, skip_no_results: true, create_option
     $('#myselect').chosen().ready(function(){
       $('.search-field input').attr('style', 'width:192px;height:30px;');
     });
-    // document.getElementById('#myselect').addEventListener("DOMSubtreeModified", function(){alert('dom changed of select');}, false);
-    // $('#myselect').bind("DOMSubtreeModified", function() {
-      // alert('hahaha');
-    // });
+
+
+if (jQuery.contains(document, $('#myselect'))) {
+    
+
 document.getElementById("myselect").addEventListener("DOMSubtreeModified", function(e) {
   // Record the occurrence
   
@@ -974,6 +980,8 @@ document.getElementById("myselect").addEventListener("DOMSubtreeModified", funct
     var data = {useruid: {{profile_id|safe}}, food_name: word, created_by: {{user_id|safe}}};
     ajax_request("addnewfood", 'empty', {data: JSON.stringify(data)}); 
 }, false);
+
+}
 // chosen config code
 // var config = {
 //       '.chosen-select'           : {},

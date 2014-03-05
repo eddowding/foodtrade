@@ -153,13 +153,28 @@
       </div>
     </div>
 
-    <div class="form-group" id="deliverables_group">
+    <div class="form-group" id="food_tab_group">
+      <label for="food_tab_txt" class="col-sm-2 control-label">Show Foods</label>
+      <div class="col-sm-5">
+        <div class="btn-group" data-toggle="buttons">
+          <label class="btn btn-default {% if show_foods %} active {% endif %}"> 
+              <input type="radio" {% if show_foods %} checked="checked" {% endif %} name="show_foods" id="show_foods_1" value="Yes"> Yes
+          </label> 
+          <label class="btn btn-default {% if not show_foods %} active {% endif %}"> 
+              <input type="radio" {% if not show_foods %} checked="checked" {% endif %} name="show_foods" id="show_foods_2" value="No"> No 
+          </label> 
+        </div>
+
+
+      </div>
+    </div>
+
+<div class="form-group" id="deliverables_group">
       <label for="deliverables_txt" class="col-sm-2 control-label">Deliveries</label>
       <div class="col-sm-5">
         <textarea class="form-control" id="deliverables_txt" name="deliverables" placeholder="How do you deliver? Where? How often? Any guide prices?" rows="5">{{deliverables}}</textarea>
       </div>
     </div>
-
 
 <div class="form-group">
       <label for="newsletter_freq_txt" class="col-sm-2 control-label">Local activity newsletter</label>
@@ -219,6 +234,8 @@
 
 var business_type = '{{sign_up_as}}';
 $( document ).ready(function() {
+
+
     $("#newsletter_freq_txt").val("{{newsletter_freq|safe}}");
 
   if('{{sign_up_as}}'=="Individual"){
@@ -243,6 +260,7 @@ $( document ).ready(function() {
     $('#buss_org_name_txt').prop('placeholder', 'Business Name');
   }
 });
+
 
 function dataradio(value){
     // var result_val = $("input[name=options]:checked").val();

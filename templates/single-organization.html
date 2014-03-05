@@ -36,6 +36,15 @@
       
      
       <div class="col-md-6 col-sm-8 col-xs-8"> 
+        <!-- certificate -->
+          {% if prof_subscribed %}
+          <span class="fa-stack fa-lg pull-right" id="verified" rel="tooltip" title="Verified profile">
+            <i class="fa fa-certificate fa-stack-2x" style="color: #1DBD3C;"></i>
+            <i class="fa fa-check fa-stack-1x" style="color: #fff;"></i>
+          </span>
+          {% endif %}
+          <!-- certificate -->
+          
          <h1><a href="#">{{name}}</a></h1>
      
          <hr />

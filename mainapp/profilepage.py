@@ -78,6 +78,10 @@ def display_profile(request, username):
 
     parameters['prof_subscribed'] = uinfo.subscribed
     parameters['userprof'] = uinfo
+    try:
+        parameters['show_foods'] = userprof['show_foods']
+    except:
+        parameters['show_foods'] = True
 
     parameters['profile_id'] = userprof['useruid']
     parameters['sign_up_as'] = userprof['sign_up_as']
@@ -220,6 +224,10 @@ def display_profile(request, username):
         parameters['members_str'] = json.dumps(parameters['members'])
         return render_to_response('single-organization.html', parameters, context_instance=RequestContext(request))
     elif parameters['sign_up_as'] == 'Individual':
+        if request.user.is_authenticated():
+            parameters['all_foods'] = get_all_foods(userprof['useruid'], request.user.id)
+        else:
+            parameters['all_foods'] = get_all_foods(userprof['useruid'])[:3]
         return render_to_response('individual.html', parameters, context_instance=RequestContext(request))
         
 
@@ -270,7 +278,10 @@ def edit_profile(request, username):
                 parameters['phone'] = userprof['phone_number']
             except:
                 parameters['phone'] = ''
-
+            try:
+                parameters['show_foods'] = userprof['show_foods']
+            except:
+                parameters['show_foods'] = False
             parameters.update(csrf(request))
             user_info = UserInfo(request.user.id)
             parameters['userinfo'] = user_info
@@ -333,6 +344,10 @@ def edit_profile(request, username):
         else:
             usr_type = []
 
+        show_foods = request.POST['show_foods']
+        show_food_db = True if show_foods == 'Yes' else False
+        print 'show_food_db', show_food_db
+
         if request.user.is_superuser:
             is_superuser = True
         else:
@@ -340,7 +355,7 @@ def edit_profile(request, username):
 
         usr_profile.update_profile_by_username(userprof['username'], description, address, 
             usr_type, sign_up_as, phone, lat, lon, postal_code, display_name, is_superuser, company_num,
-            website_url, facebook_page, deliverables, business_org_name, email, newsletter_freq)
+            website_url, facebook_page, deliverables, business_org_name, email, newsletter_freq, show_food_db)
         twt = TweetFeed()
         twt.update_data(userprof['useruid'])
 
