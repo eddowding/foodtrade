@@ -281,7 +281,7 @@ def edit_profile(request, username):
             try:
                 parameters['show_foods'] = userprof['show_foods']
             except:
-                parameters['show_foods'] = False
+                parameters['show_foods'] = True
             parameters.update(csrf(request))
             user_info = UserInfo(request.user.id)
             parameters['userinfo'] = user_info
