@@ -100,6 +100,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     "allauth.account.context_processors.account",
     "allauth.socialaccount.context_processors.socialaccount",
     'djstripe.context_processors.djstripe_settings',
+    'mainapp.classes.context_processors.user_info',
 )
 
 # List of callables that know how to import templates from various sources.
@@ -115,6 +116,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
+    'custom_middleware.XsSharing',
     # Uncomment the next line for simple clickjacking protection:
     # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
     # 'djstripe.middleware.SubscriptionPaymentMiddleware',
@@ -185,7 +187,8 @@ LOGGING = {
 }
 
 from settings_local import *
-
-
 # django.contrib.sites is also necessary
 
+
+STRIPE_PUBLIC_KEY = os.environ.get("STRIPE_PUBLIC_KEY", "pk_test_cIjJbOYUbVYnvnSn1QyeMD7r")
+STRIPE_SECRET_KEY = os.environ.get("STRIPE_SECRET_KEY", "sk_test_dj0ArFwwcCljH8n1aioJ6jtV")

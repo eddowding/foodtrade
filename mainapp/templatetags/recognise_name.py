@@ -1,6 +1,7 @@
 from django import template
 from django.contrib.auth.models import User
 import re
+from mainapp.classes.Foods import AdminFoods
 register = template.Library()
 
 @register.filter
@@ -17,4 +18,19 @@ def recognise_name(value):
                 value = value.replace("@"+each, '<a href="/profile/'+each+'/">@'+each+'</a>')
             except:
                 pass
+
+    admin_foods = AdminFoods()
+    master_foods = admin_foods.get_tags()
+    #create master list of foods
+    final_master = []
+    for each in master_foods:
+        if each.get('childrens')!=None:
+            final_master.extend([str(i['node']) for i in each['childrens']])
+        else:
+            final_master.extend([str(each['node'])])
+
+    val_list = value.split()
+    for each in val_list:
+        if each in final_master:
+            value = value.replace(each, '<a href="/activity/?q=%23'+each+'">'+each+'</a>')
     return value
