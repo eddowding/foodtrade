@@ -32,6 +32,14 @@ def get_twitter_obj(token, secret):
         oauth_token_secret = secret
         )
 
+class TweeterUser():
+    def __init__ (self):
+        self.db_object = MongoConnection("localhost",27017,'foodtrade')
+        self.table_name = 'tweeteruser'
+        self.db_object.create_table(self.table_name,'_id')
+
+    def save_tweeter_user(self,doc):
+        return self.db_object.update_upsert(self.table_name,{'screen_name':doc['screen_name']}, doc)
 
 class TweetFeed():
     def __init__ (self):
@@ -203,6 +211,19 @@ class TweetFeed():
         user_twitter = get_twitter_obj(ACCESS_TOKEN, ACCESS_TOKEN_SECRET)
         friends = user_twitter.get_friends_list(screen_name = screen_name, count=200, cursor = next_cursor)
         return friends
+
+
+    def search_tweeter_users (self, user_id, q= ""):
+        st = SocialToken.objects.get(account__user__id=user_id)
+        ACCESS_TOKEN = st.token
+        ACCESS_TOKEN_SECRET = st.token_secret        
+        user_twitter = get_twitter_obj(ACCESS_TOKEN, ACCESS_TOKEN_SECRET)        
+        results = user_twitter.search_users(q=q, page=1, count=15)
+        for eachResult in results:
+            #print eachResult['screen_name']
+            tweeteruser_obj = TweeterUser()
+            tweeteruser_obj.save_tweeter_user(eachResult)
+        return results
 
     def get_followers(self, twitter_id):
         pass

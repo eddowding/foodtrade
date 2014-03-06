@@ -1,13 +1,11 @@
 #!/bin/bash
-
-sudo -i
-cd /backup
-unzip $(date +%F)
+cd ~/backups
+sudo unzip $(date +%F)
 cd $(date +%F)
 cd dump
-mongorestore foodtrade/
-mysql -u root -proot foodtrade < foodtrade.sql 
+sudo mongo foodtrade --eval "db.dropDatabase()"
+sudo mongorestore foodtrade/
 cd ..
-logout 
-
-
+sudo mysql -u root -proot foodtrade < foodtrade.sql 
+cd ..
+sudo rm -r $(date +%F)/

@@ -936,3 +936,13 @@ class AjaxHandle(AjaxSearch):
         else:
             return HttpResponse(json.dumps({'status':0, 'message':'You are not authorized to perform this action.'}))
 
+    def search_users(self, request):
+        if request.user.is_authenticated:
+            q = request.POST.get('q')
+            user_id = request.user.id
+            tweet_feed_obj = TweetFeed()
+            results = tweet_feed_obj.search_tweeter_users(user_id, q)
+            return HttpResponse(json.dumps({'results':results}))
+        else:
+            return HttpResponse(json.dumps({'status':0, 'message':'You are not authorized to perform this action.'}))        
+

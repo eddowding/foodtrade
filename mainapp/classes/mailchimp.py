@@ -20,8 +20,8 @@ class MailChimp():
             except:
                 first, last = doc['name'].split(' ')[0], ''
             m = get_mailchimp_api()
-            print doc['email']
             response = m.lists.subscribe(list_id, email = {'email':str(doc['email'])}, 
+                double_optin = False,
                 merge_vars = {"FNAME":str(first),"LNAME":str(last),
                 "groupings": [{"name": "Foodtrade Group","groups": [str(doc["sign_up_as"])]}],
                 "mc_location":{"latitude":str(doc["latlng"]["coordinates"][1]),"longitude":str((doc["latlng"]["coordinates"][1]))}},
@@ -41,5 +41,7 @@ class MailChimpException():
 
     def save_mailchimp_exception(self, doc):
         self.db_object.insert_one(self.table_name, doc)
+
+
 
 
