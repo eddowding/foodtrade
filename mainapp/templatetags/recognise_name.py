@@ -25,12 +25,12 @@ def recognise_name(value):
     final_master = []
     for each in master_foods:
         if each.get('childrens')!=None:
-            final_master.extend([str(i['node']) for i in each['childrens']])
+            final_master.extend([str(i['node']).lower() for i in each['childrens']])
         else:
-            final_master.extend([str(each['node'])])
+            final_master.extend([str(each['node']).lower()])
 
     val_list = value.split()
     for each in val_list:
-        if each in final_master:
-            value = value.replace(each, '<a href="/activity/?q=%23'+each+'">'+each+'</a>')
+        if each.lower() in final_master:
+            value = value.replace(each, '<a href="/activity/?f='+each.title()+'">'+each+'</a>')
     return value

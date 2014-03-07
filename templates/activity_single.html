@@ -1,5 +1,6 @@
 {% extends 'tbase.html' %}
 {% load staticfiles %}
+{% load recognise_name %}
 
 {% block ogtype %}{% if parent_tweet.sign_up_as == "Business" %}business.business{%endif%}{% if parent_tweet.sign_up_as == "Individual" %}Profile{%endif%}{% if parent_tweet.sign_up_as == "Organisation" %}business.business{%endif%}{% endblock %}
 {% block titlecontent %}{{parent_tweet.status}}{% endblock %}
@@ -59,7 +60,7 @@
          <div class="ftstrip ftstrip-mini"></div>
 
          <p class="lead" style="padding: 20px 0 0 0;">
-          {{parent_tweet.status}}
+          {{parent_tweet.status|recognise_name|safe}}
          </p>
 
          <div class="ftstrip ftstrip-mini"></div>
