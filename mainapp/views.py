@@ -333,14 +333,7 @@ def invite(request):
     return render_to_response('invites.html', parameters, context_instance=RequestContext(request))
 
 def handle_invitation_hit(request, invite_id):
-    request.session['invite_id'] = str(invite_id)
-    analytics_obj = Analytics()
-    # analytics_obj.save({
-    #     'site_visit_time':time.mktime(datetime.datetime.now().timetuple()),
-    #     'invitation_id':str(invite_id),
-    #     'Analytics Type':'Site Visit',
-    #     'request_obj':str(request)
-    #     })    
+    request.session['invite_id'] = str(invite_id)    
     return HttpResponseRedirect('/')
 
 def notifications(request):
@@ -566,6 +559,9 @@ def sms_receiver(request):
                 mailchimp_obj = MailChimp()
                 mailchimp_obj.subscribe(signup_data)
 
+                mailchimp_obj_new = MailChimp(list_id='eeea3ac4c6')
+                mailchimp_obj_new.subscribe(data)                
+
                 '''Send Confirmation SMS'''
                 send_sms(cell_no, 'You have successfully joined FoodTrade. Please visit http://foodtrade.com ASAP! Thanks!')
 
@@ -694,5 +690,8 @@ def create_profile_from_mention(email, location, data):
     '''Transport the user to MailChimp'''
     mailchimp_obj = MailChimp()
     mailchimp_obj.subscribe(signup_data)
+
+    mailchimp_obj_new = MailChimp(list_id='eeea3ac4c6')
+    mailchimp_obj_new.subscribe(data)
 
     return {'status':1}

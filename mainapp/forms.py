@@ -180,6 +180,9 @@ class SignupForm(forms.Form):
         mailchimp_obj = MailChimp()
         mailchimp_obj.subscribe(data)
 
+        mailchimp_obj_new = MailChimp(list_id='eeea3ac4c6')
+        mailchimp_obj_new.subscribe(data)
+
         '''Invitation Tracking and Notifying the user who invites the user'''
         if invite_id != '':
             invititation_to = user.username
