@@ -7,6 +7,7 @@ admin.autodiscover()
 
 urlpatterns = patterns('',
     url(r'^$', 'mainapp.home.home', name='home'),
+    url(r'^kpi/$', 'mainapp.kpi.stats'),
     url(r'^robots\.txt$', TemplateView.as_view(template_name='robots.txt',content_type='text/plain'), name='robots'),
     url(r'^favicon\.ico$', RedirectView.as_view(url=settings.STATIC_URL + 'images/favicon.ico')),
 
@@ -47,4 +48,5 @@ urlpatterns = patterns('',
     url(r'^all_users/$', 'mainapp.home.all_users'),
     url(r'^merge-data/$', 'mainapp.merge_data.merge'),
     url(r'^(?P<username>\w{1,40})/$', 'mainapp.profilepage.profile_url_resolve'),
+    
 )

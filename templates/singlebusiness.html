@@ -177,7 +177,14 @@
            
 {% else %}
       <!-- if not logged in show login prompt -->
+<div class="btn-group btn-block">
+    <label class="btn btn-default" style="width:50%;" rel="tooltip" title="Login to connect to {{name}}" >
+          Buy from</label>
+<label class="btn btn-default" style="width:50%;" rel="tooltip" title="Login to connect to {{name}}" >
+          Sell to</label>
+</div>
       <a href="{% provider_login_url "twitter" process="login" %}" class="btn btn-success btn-block">Login for more</a>
+
 {% endif %}
       {% endifnotequal %}
       <button class="btn btn-default btn-block" data-toggle="modal" data-target="#sharer">
