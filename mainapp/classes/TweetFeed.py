@@ -41,6 +41,9 @@ class TweeterUser():
     def save_tweeter_user(self,doc):
         return self.db_object.update_upsert(self.table_name,{'screen_name':doc['screen_name']}, doc)
 
+    def get_tweeter_user(self, screen_name):
+        return self.db_object.get_one(self.table_name,{'screen_name': str(screen_name)})
+
 class TweetFeed():
     def __init__ (self):
         self.db_object = MongoConnection("localhost",27017,'foodtrade')
@@ -218,12 +221,20 @@ class TweetFeed():
         ACCESS_TOKEN = st.token
         ACCESS_TOKEN_SECRET = st.token_secret        
         user_twitter = get_twitter_obj(ACCESS_TOKEN, ACCESS_TOKEN_SECRET)        
-        results = user_twitter.search_users(q=q, page=1, count=15)
+        results = user_twitter.search_users(q=q, page=1, count=20)
+        return_results = []
         for eachResult in results:
-            #print eachResult['screen_name']
+            '''Update upsert if the profile doesnot exists in our TweeterUser collection'''
             tweeteruser_obj = TweeterUser()
             tweeteruser_obj.save_tweeter_user(eachResult)
-        return results
+
+            '''Check if the profile exists'''
+            userprofile = UserProfile()
+            res = userprofile.get_profile_by_username(eachResult['screen_name'])
+            if res == None:
+                return_results.append(eachResult)
+                
+        return return_results
 
     def get_followers(self, twitter_id):
         pass

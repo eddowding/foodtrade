@@ -10,7 +10,7 @@ from mainapp.classes.TweetFeed import TweetFeed
 from mainapp.classes.Email import Email
 from Tags import Tags
 from Foods import AdminFoods
-from mainapp.classes.TweetFeed import TradeConnection, UserProfile, Food, Customer, Organisation, Team, RecommendFood, Notification, Friends, Spam, InviteId, Invites, UnapprovedFood, ApprovedFoodTags
+from mainapp.classes.TweetFeed import TradeConnection, UserProfile, Food, Customer, Organisation, Team, RecommendFood, Notification, Friends, Spam, InviteId, Invites, UnapprovedFood, ApprovedFoodTags, TweeterUser
 from AjaxSearch import AjaxSearch
 from pygeocoder import Geocoder
 from mainapp.profilepage import get_connections, get_all_foods, get_organisations
@@ -35,7 +35,7 @@ class AjaxHandle(AjaxSearch):
     def __init__(self):
         pass
         
-    def create_fake_profile(self, invitee_name, username):
+    def create_fake_profile(self, invitee_name, username, tweeter_or_friend,sign_up_as):
         '''
             This function checks if the invited user is already a member or not.Then
             If it is already a member it bypasses that and if not then it creates a 
@@ -50,8 +50,14 @@ class AjaxHandle(AjaxSearch):
         min_user_id = int(user_profile_obj.get_minimum_id_of_user()[0]['minId']) -1
 
         if registered_user == None or len(registered_user) == 0:
-            friend_obj = Friends()
-            invited_friend = friend_obj.get_friend_from_screen_name(invitee_name.replace('@',''), username)
+            if tweeter_or_friend == 'friend':
+                friend_obj = Friends()            
+                invited_friend = friend_obj.get_friend_from_screen_name(invitee_name.replace('@',''), username)
+            else:
+                tweeter_user_obj = TweeterUser()
+                invited_friend = {}
+                invited_friend['friends'] = tweeter_user_obj.get_tweeter_user(invitee_name.replace('@',''))
+
             data = {
                 'is_unknown_profile': 'true',
                 'recently_updated_by_super_user': 'false',
@@ -62,7 +68,6 @@ class AjaxHandle(AjaxSearch):
                 'name' : invited_friend['friends']['name'],
                 'phone_number' : '',
                 'profile_img':invited_friend['friends']['profile_image_url'],
-                'sign_up_as': 'unclaimed',
                 'type_user':[],
                 'updates': [],
                 'screen_name': invited_friend['friends']['screen_name'],
@@ -71,7 +76,13 @@ class AjaxHandle(AjaxSearch):
                 'username':invited_friend['friends']['screen_name'],
                 'subscribed':0,
                 'newsletter_freq':'Weekly'
-            }
+            }   
+
+            if sign_up_as == 'unclaimed':
+                data['sign_up_as'] = 'unclaimed'
+            else:
+                data['sign_up_as'] = str(sign_up_as)
+
             try:
                 location_res = Geocoder.geocode(invited_friend['friends']['location'])
                 data['latlng'] = {"type":"Point","coordinates":[float(location_res.longitude) ,float(location_res.latitude)]}
@@ -80,6 +91,7 @@ class AjaxHandle(AjaxSearch):
                 lat, lon, addr,postal_code = 51.5072 , -0.1275, "3 Whitehall, London SW1A 2EL, UK", "SW1 A 2EL"
                 data['address'] = addr
                 data['latlng'] = {"type":"Point","coordinates" : [float(lon),float(lat)]}
+                data['zip_code'] = postal_code
                 data['location_default_on_error'] = 'true'
             user_profile_obj.create_profile(data)
             return {'status':1}
@@ -120,9 +132,11 @@ class AjaxHandle(AjaxSearch):
                 tweet = user_twitter.update_status(status = message)
                 if 'invite' in request.POST:
                     if request.POST['invite'] == 'true':
+
                         invite_id_obj = InviteId()
                         invite_obj = Invites()
                         invitees = request.POST['to'].split(',')
+
                         for eachInvitee in invitees:
                             doc = {
                                     'to_screenname':str(eachInvitee), 
@@ -130,11 +144,18 @@ class AjaxHandle(AjaxSearch):
                                     'sent_time':str(time.mktime(datetime.datetime.now().timetuple())),
                                     'invite_id':ObjectId(str(request.POST['invite_id'])), 
                                     'message':str(message)}
+                        
                             '''Save the invited ones to invites collection'''
                             invite_obj.save_invites(doc)
                             
                             ''' Creating the unused profile of each Invited. '''
-                            self.create_fake_profile(str(eachInvitee), request.user.username)
+                            if 'friend_invite' in request.POST:
+                                '''Check friend or Twitter User'''                                
+                                if request.POST['friend_invite'] == 'false':
+                                    sign_up_as =  request.POST['sign_up_as']
+                                    self.create_fake_profile(str(eachInvitee), request.user.username,'user', sign_up_as)
+                            else:        
+                                self.create_fake_profile(str(eachInvitee), request.user.username, 'friend', 'unclaimed')
 
                         '''Change the used status flag of the invite ID generated.'''
                         invite_id_obj.change_used_status(request.user.id, request.POST['invite_id'])
@@ -145,8 +166,9 @@ class AjaxHandle(AjaxSearch):
                         '''Construct New Invite URL.'''
                         new_invite_tweet = construct_invite_tweet(request, new_invite_id)
                         return HttpResponse(json.dumps({'status':'1', 
-                            'new_invite_id':new_invite_id['uid']['id'], 
+                            'new_invite_id':new_invite_id, 
                             'new_invite_tweet':new_invite_tweet}))
+
                 return HttpResponse(json.dumps({'status':1}))
             else:
                 pic_url_list = []

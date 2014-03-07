@@ -34,8 +34,16 @@
     <!-- CSS -->
     <link href="{% static "css/bootstrap.css" %}" rel="stylesheet">
     <link href="{% static "css/foodtrade.css" %}" rel="stylesheet"> 
+    <link rel="stylesheet" href="/static/css/docsupport/prism.css">
+    <link rel="stylesheet" href="/static/css/chosen.min.css">
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places"></script>
     <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+    <style type="text/css">
+      .margin-invite{
+          margin-left: 77%;
+          margin-top: -19%;
+        }
+    </style>
     {% block contact %}
       
     {% endblock %}
@@ -72,7 +80,6 @@
          });
          var redIcon = new RedIcon();
 </script>
-
 
  
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -241,6 +248,38 @@
    {% endif %}
 
 
+       <!-- New post Modal -->
+      <div class="modal fade" id="modal-tweeter-user" tabindex="-1" role="dialog" aria-labelledby="newtwitterpost" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content"> 
+            <div class="modal-body">
+              <h2>Know someone who should be on FoodTrade? Invite them here:</h2>
+        <span class="input-group-btn">
+              <div class='pull-left'>
+                          <select id="select-invite" name="q" data-placeholder="Search tweeter users..."  style="height:30px; width: 192px" multiple class="chosen-select pull-left my-width" required>
+                          <option value=""></option>
+                          </select>
+                        </div>
+          <button type="submit" id="btnSearchTweeterUsers" onclick="search_tweeter_users()" class="btn btn-default pull-left">
+          <i class="glyphicon glyphicon-search"></i>
+          </button>
+        </span>
+            <textarea id="invite_tweeter_user_text"  onkeyup="check_limit()" class="form-control counted-invite margin-ta" name="message" placeholder="Type in your message" rows="3">Join the #realfood search engine:  </textarea>
+            </div>
+
+            <div class="modal-footer">
+              <button id="btnClose" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <button id="dropdown-tweeter-user" class="dropdown-toggle btn btn-primary" data-toggle="dropdown">Invite<b class="caret"></b></button>
+                  <ul class="dropdown-menu margin-invite" role="menu" aria-labelledby="drop2">
+                    <li role="presentation"><a role="menuitem" onclick="invite_tweeter_user('Individual')" tabindex="-1">As Individual</a></li>
+                    <li role="presentation"><a role="menuitem" onclick="invite_tweeter_user('Business')" tabindex="-1">As Business</a></li>
+                    <li role="presentation"><a role="menuitem" onclick="invite_tweeter_user('Organisation')" tabindex="-1">As Organisation</a></li>
+                    <li role="presentation" class="divider"></li>
+                  </ul>
+            </div>
+          </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+      </div><!-- /.modal -->
 
        <!-- New post Modal -->
           <div class="modal fade" id="newtwitterpost" tabindex="-1" role="dialog" aria-labelledby="newtwitterpost" aria-hidden="true">
@@ -353,8 +392,10 @@ hidden
    
           <p><a href="/activity"><i class="fa fa-dot-circle-o fa-fw"></i> Near me</a></p> 
  
-          <p data-step="4" data-intro="Building a better food system is going to take all of us. Please invite your suppliers, stockists, customers, friends.. everyone! For everyone you invite who signs up, we'll give you a month free, too." rel="tooltip" title="For everyone you invite who signs up, we'll give you a month free!"><a href="/invite/" ><i class="fa fa-twitter fa-fw"></i> Invite</a></p>
-
+          <p data-step="4" data-intro="Building a better food system is going to take all of us. Please invite your suppliers, stockists, customers, friends.. everyone! For everyone you invite who signs up, we'll give you a month free, too." rel="tooltip" title="For everyone you invite who signs up, we'll give you a month free!">
+            <a data-toggle="modal" data-target="#modal-tweeter-user"><i class="fa fa-twitter fa-fw"></i> Invite</a>
+          </p>
+          
           <p><a href="#" id="help"><i class="fa fa-question-circle fa-fw"></i> Help</a></p> 
           <p><a href="/inbox/" id="inbox" title="Inbox"><i class="fa fa-envelope fa-fw"></i> Inbox <span id="spanInbox" class="badge pull-right">{{userinfo.notification_count}}</span></a></p>
           {% if user.is_superuser %}
@@ -634,7 +675,7 @@ hidden
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
- 
+
 <!-- UserVoice JavaScript SDK (only needed once on a page) -->
 <script>(function(){var uv=document.createElement('script');uv.type='text/javascript';uv.async=true;uv.src='//widget.uservoice.com/HloB2aRxdk7fbhWMOI5AlQ.js';var s=document.getElementsByTagName('script')[0];s.parentNode.insertBefore(uv,s)})()</script>
 
@@ -691,13 +732,100 @@ function tweetlistener(input, counter, button){
     <script src="{% static "js/jquery.geocomplete.js" %}"></script>
 
     <script src="{% static "js/tag-it.js" %}"></script>
+    <script src="/static/js/chosen.jquery.min.js" type="text/javascript"></script>
+<script src="/static/css/docsupport/prism.js" type="text/javascript" charset="utf-8"></script>
 
-         {% block footer %}
+
+ {% block footer %}
  {% endblock %}
 
-          {% block javascript %}
+ {% block javascript %}
  {% endblock %}
-     <script type="text/javascript">
+ <script type="text/javascript">
+var invite_id = String('{{invite_id|safe}}');
+var tweet = String('{{invite_tweet|safe}}');
+
+$(document).ready(function(){
+  $('#select-invite').chosen({skip_no_results: true});
+  $('#invite_tweeter_user_text').html(tweet);
+  $('#select-invite').chosen().ready(function(){
+      $('.search-field input').attr('style', 'width:192px;height:30px;');
+    });
+});
+
+$('#select-invite').on('chosen:ready', function(evt, params) {
+    $('.default').attr('onkeyup', 'search_tweeter_users()');
+    $('.default').attr('id', 'tUserSearch');
+  });
+function search_tweeter_users(){
+  q = $('#tUserSearch').val();
+  if (q.length>=3){
+  ajax_request('search_users', 'search_users_success', {'q':q});
+  }
+    
+}
+
+function search_users_success(data){
+  data = jQuery.parseJSON(data);
+  results = data['results'];
+  for (var i=0;i<results.length;i++){
+    str = $('#select-invite').html();
+    str = str = str + '<option value="' + String(results[i].screen_name) + '">' + String(results[i].screen_name) + '</option>'
+    $('#select-invite').html(str);
+  }
+
+  $('#select-invite').trigger('chosen:updated'); 
+}
+
+var invite_users = [];
+$('#select-invite').on('change', function(evt, params) {
+    var text = $('#invite_tweeter_user_text').html();
+    selected_text = $('#select-invite :selected').val();
+
+    var new_text = text + ' @' + String(selected_text);
+    if (new_text.length < 140){     
+      $('#select-invite :selected').remove();    
+      $('#select-invite').trigger('chosen:updated');
+      invite_users.push('@'+ selected_text);
+      $('#invite_tweeter_user_text').html(new_text);      
+    }
+    else{     
+      $('#select-invite :selected').remove();    
+      $('#select-invite').trigger('chosen:updated');
+      $('#select-invite').html('<option value="' + String(selected_text)+ '">' + String(selected_text) + '</option>');
+    }
+
+});
+
+function invite_tweeter_user(sign_up_as){
+  if (invite_users.length >0){   
+    text = $('#invite_tweeter_user_text').html();
+    ajax_request(
+      'post_tweet','success_tweeter_user_invite',
+      {'message':text, 'invite':'true', 'friend_invite':'false',
+      'to':String(invite_users), 'invite_id':invite_id,'noappend':'noappend', 'sign_up_as':sign_up_as}
+      ); 
+  }
+  else{
+    alert('Please search and select someone to invite !!');
+  }
+}
+
+function success_tweeter_user_invite(data){
+  data = jQuery.parseJSON(data);
+  if (data['status'] == 1){
+    tweet = data['new_invite_tweet'];
+    invite_id = data['new_invite_id'];
+    $('#invite_tweeter_user_text').html(data['new_invite_tweet']);
+    $('#btnClose').click();    
+  }
+  var url = document.URL;
+  if (url.indexOf("invite") != -1){
+    $('#tweetMessage1').val(tweet);
+  }
+}
+</script> 
+<script type="text/javascript">
 $(document).ready(function() {
 
 tweetlistener('tweetMessage', 'counter', 'contact_tweet', 'newtweet_btn');
@@ -955,7 +1083,5 @@ function formSubmit(form) {
   ga('send', 'pageview');
 
 </script>
-
-
-  </body>
+</body>
 </html>

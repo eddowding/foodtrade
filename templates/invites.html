@@ -12,8 +12,6 @@
 {% endblock %}
 
 {% block content %}
-<link rel="stylesheet" href="/static/css/docsupport/prism.css">
-  <link rel="stylesheet" href="/static/css/chosen.min.css">
 
 <div class="col-sm-10" >
   <div class="alert alert-success lead"><strong>You earn one free month for everyone you invite that subscribes to FoodTrade</strong>. It's our way of saying 'thank you' for creating a revolution in food trade.</div>
@@ -25,37 +23,8 @@
       <div class="form-group"> 
         <textarea id="tweetMessage1"  onkeyup="check_limit()" class="form-control counted-invite" name="message" placeholder="Type in your message" rows="3" >Join the #realfood search engine:  </textarea>
       </div>
+
         <button id="btnSendTweet2" onclick="send_invite()" class="btn btn-primary pull-right">Send invites</button>
-
-  	<button id="btnSearchUser" type="button" class="btn btn-primary pull-right"  data-toggle="modal" data-target="#myModal">
-          Not a friend..still invite?  
-    </button>  
-
-       <!-- New post Modal -->
-      <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="newtwitterpost" aria-hidden="true">
-        <div class="modal-dialog">
-          <div class="modal-content"> 
-            <div class="modal-body">
-				<span class="input-group-btn">
-					    <div class='pull-left'>
-                        	<select id="myselect" name="q" data-placeholder="Search tweeter users..."  style="height:30px; width: 192px" multiple class="chosen-select pull-left my-width" required>
-                        	<option value=""></option>
-                        	</select>
-                        </div>
-					<button type="submit" id="btnSearchTweeterUsers" onclick="search_tweeter_users()" class="btn btn-default pull-left">
-					<i class="glyphicon glyphicon-search"></i>
-					</button>
-				</span>
-        		<textarea id="invite_tweeter_user_text"  onkeyup="check_limit()" class="form-control counted-invite margin-ta" name="message" placeholder="Type in your message" rows="3">Join the #realfood search engine:  </textarea>
-            </div>
-
-            <div class="modal-footer">
-              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-              <button id="newtweet_btn" type="button" class="btn btn-primary" onclick="UpdateStatus('tweetMessage')">Post update</button>
-            </div>
-          </div><!-- /.modal-content -->
-        </div><!-- /.modal-dialog -->
-      </div><!-- /.modal -->
 
         <h6 id="charsRem" class="pull-left" id="counter">140 characters remaining</h6> 
   </div>
@@ -117,26 +86,14 @@ var tweet = String('{{invite_tweet|safe}}');
 var countVal = {{friend_count|safe}};
 var send_list = [];
 var users = [];
-
 var pg_count = {{page_count|safe}};
 var CURRENT = {{current_page_number|safe}};
-
-$(document).ready(function(){
-	$('#myselect').chosen({create_option: true, skip_no_results: true, create_option_text: 'Add'});
-	$('#tweetMessage1').html(tweet);
-	$('#invite_tweeter_user_text').html(tweet);
-	$('#myselect').chosen().ready(function(){
-      $('.search-field input').attr('style', 'width:192px;height:30px;');
-    });
-});
-
-$('#myselect').on('chosen:ready', function(evt, params) {
-    $('.default').attr('onkeyup', 'search_tweeter_users()');
-  });
-
 var pg_clicked = 1;
 var for_page_counter = 0;
 
+$(document).ready(function(){
+  $('#tweetMessage1').html(tweet);
+});
 function validate_tweets (argument, count) {
 	tweet = $('#tweetMessage1').val();
 	var len = tweet.length;
@@ -193,6 +150,7 @@ function invites_handler (data) {
 		$('#btnSendTweet2').html("Send invites");			
 		$('#btnSendTweet3').html("Send invites");
 		$('#tweetMessage1').val(tweet);
+		$('#invite_tweeter_user_text').html(tweet);
 		/*$('#btnSendTweet1').html('');*/		
 		for (var val in send_list){
 			$('#li' + String(send_list[val])).hide();
@@ -340,33 +298,6 @@ $('#inputFindFriends').bind('keypress', function(e) {
 	}
 });
 
-function search_tweeter_users(){
-	q = $('.default').val();
-	if (q.length>=3){
-	ajax_request('search_users', 'search_users_success', {'q':q});
-	}
-		
-}
-
-
-function search_users_success(data){
-	data = jQuery.parseJSON(data);
-	results = data['results'];
-	for (var i=0;i<results.length;i++){
-		str = $('#myselect').html();
-		str = str = str + '<option value="' + String(results[i].screen_name) + '">' + String(results[i].screen_name) + '</option>'
-		$('#myselect').html(str);
-	}
-
-	$('#myselect').trigger('chosen:updated');	
-}
-var evt,par;
-  $('#myselect').on('change', function(evt, params) {
-  	evt = evt;
-  	par = params;
-    var text = $('invite_tweeter_user_text').html();
-     
-  });
 
 </script>
 
