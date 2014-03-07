@@ -255,7 +255,7 @@
             <div class="modal-body">
               <h2>Know someone who should be on FoodTrade? Invite them here:</h2>
         <span class="input-group-btn">
-              <div class='pull-left'>
+              <div class='pull-left' id="my_twitter_search">
                           <select id="select-invite" name="q" data-placeholder="Search tweeter users..."  style="height:30px; width: 192px" multiple class="chosen-select pull-left my-width" required>
                           <option value=""></option>
                           </select>
@@ -393,7 +393,7 @@ hidden
           <p><a href="/activity"><i class="fa fa-dot-circle-o fa-fw"></i> Near me</a></p> 
  
           <p data-step="4" data-intro="Building a better food system is going to take all of us. Please invite your suppliers, stockists, customers, friends.. everyone! For everyone you invite who signs up, we'll give you a month free, too." rel="tooltip" title="For everyone you invite who signs up, we'll give you a month free!">
-            <a data-toggle="modal" data-target="#modal-tweeter-user"><i class="fa fa-twitter fa-fw"></i> Invite</a>
+            <a data-toggle="modal" id="my_invite_twitter" data-target="#modal-tweeter-user"><i class="fa fa-twitter fa-fw"></i> Invite</a>
           </p>
           
           <p><a href="#" id="help"><i class="fa fa-question-circle fa-fw"></i> Help</a></p> 
@@ -754,8 +754,9 @@ $(document).ready(function(){
 });
 
 $('#select-invite').on('chosen:ready', function(evt, params) {
-    $('.default').attr('onkeyup', 'search_tweeter_users()');
-    $('.default').attr('id', 'tUserSearch');
+  $('#select_invite_chosen ul li input').attr('onkeyup', 'search_tweeter_users()');
+    // $('.default').attr('onkeyup', 'search_tweeter_users()');
+    $('#select_invite_chosen ul li input').attr('id', 'tUserSearch');
   });
 function search_tweeter_users(){
   q = $('#tUserSearch').val();

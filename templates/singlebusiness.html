@@ -921,23 +921,6 @@
      <script src="{% static "js/typeahead.min.js" %}"></script>
 
   <script type="text/javascript">
-// document.observe('dom:loaded', function(evt) {
-//     var config = {
-//       '.chosen-select'           : {create_option: true, skip_no_results: true},
-//       '.chosen-select-deselect'  : {allow_single_deselect:true},
-//       '.chosen-select-no-single' : {disable_search_threshold:10},
-//       '.chosen-select-no-results': {no_results_text: "Oops, nothing found!"},
-//       '.chosen-select-width'     : {width: "95%"}
-//     }
-//     var results = [];
-//     for (var selector in config) {
-//       var elements = $$(selector);
-//       for (var i = 0; i < elements.length; i++) {
-//         results.push(new Chosen(elements[i],config[selector]));
-//       }      
-//     }
-//     return results;
-// });
 
 $( document ).ready(function() {
 // $('.create-option').on('click', '.active-result', function(e){
@@ -976,7 +959,7 @@ $('#myselect').chosen({create_option: true, skip_no_results: true, create_option
 if (jQuery.contains(document, $('#myselect'))) {    
 document.getElementById("myselect").addEventListener("DOMSubtreeModified", function(e) {
   // Record the occurrence
-  
+  alert('worked in foods');
     var text = $('.create-option').text();
     var word = text.split('"')[1];
     //alert(word);
@@ -986,21 +969,20 @@ document.getElementById("myselect").addEventListener("DOMSubtreeModified", funct
 }, false);
 }
 
-if (jQuery.contains(document, $('#buss_chosen'))) {
-    
 
 document.getElementById("buss_chosen").addEventListener("DOMSubtreeModified", function(e) {
   // Record the occurrence
-  
-    var text = $('.create-option').text();
-    var word = text.split('"')[1];
+  // alert('clicked');
+  $('#my_invite_twitter').click();
+    // var text = $('.create-option').text();
+    // var word = text.split('"')[1];
     //alert(word);
     // add the word to new collection of unapproved foods
     // var data = {useruid: {{profile_id|safe}}, food_name: word, created_by: {{user_id|safe}}};
     // ajax_request("addnewfood", 'empty', {data: JSON.stringify(data)}); 
+  $('#buss_chosen_chosen ul .search-choice').remove();
 }, false);
 
-}
 
 
 // chosen config code
