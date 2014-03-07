@@ -248,7 +248,7 @@
       {% if facebook_page %}
         <a href="{{facebook_page}}"><i class="fa fa-facebook-square"></i></a>
       {% endif %} 
-      {% if userinfo.username %}
+      {% if userprof.username %}
         <a href="http://twitter.com/{{userprof.username}}"><i class="fa fa-twitter-square"></i></a> 
       {% endif %} 
       {% if phone_number %}
@@ -655,6 +655,16 @@
      
             </div>
           </div>
+
+          {% else %}
+              <thead>
+            <tr>
+              <td colspan="2">
+                <p class="alert alert-warning"><a href="{% provider_login_url "twitter" process="login" %}" class="">Login</a> or <a href="{% provider_login_url "twitter" process="login" %}" class="">sign up free</a> to see all their full profile. </p>
+              </td>
+            </tr>
+          </thead>
+
           {% endif %}
                       
 <div id="all-connections">
@@ -921,23 +931,6 @@
      <script src="{% static "js/typeahead.min.js" %}"></script>
 
   <script type="text/javascript">
-// document.observe('dom:loaded', function(evt) {
-//     var config = {
-//       '.chosen-select'           : {create_option: true, skip_no_results: true},
-//       '.chosen-select-deselect'  : {allow_single_deselect:true},
-//       '.chosen-select-no-single' : {disable_search_threshold:10},
-//       '.chosen-select-no-results': {no_results_text: "Oops, nothing found!"},
-//       '.chosen-select-width'     : {width: "95%"}
-//     }
-//     var results = [];
-//     for (var selector in config) {
-//       var elements = $$(selector);
-//       for (var i = 0; i < elements.length; i++) {
-//         results.push(new Chosen(elements[i],config[selector]));
-//       }      
-//     }
-//     return results;
-// });
 
 $( document ).ready(function() {
 // $('.create-option').on('click', '.active-result', function(e){
@@ -959,8 +952,8 @@ $( document ).ready(function() {
 // food popover
 
 // food_detail();
-$('#buss_chosen').chosen();
-$('#org_chosen').chosen();
+$('#buss_chosen').chosen({create_option: true, skip_no_results: true, create_option_text: 'Search twitter for '});
+$('#org_chosen').chosen({create_option: true, skip_no_results: true, create_option_text: 'Search twitter for '});
 
 // $("#buss_chosen").chosen({max_selected_options: 1});
 $('#myselect').chosen({create_option: true, skip_no_results: true, create_option_text: 'Add'});
@@ -973,13 +966,10 @@ $('#myselect').chosen({create_option: true, skip_no_results: true, create_option
       $('.search-field input').attr('style', 'width:192px;height:30px;');
     });
 
-
-if (jQuery.contains(document, $('#myselect'))) {
-    
-
+if (jQuery.contains(document, $('#myselect'))) {    
 document.getElementById("myselect").addEventListener("DOMSubtreeModified", function(e) {
   // Record the occurrence
-  
+  alert('worked in foods');
     var text = $('.create-option').text();
     var word = text.split('"')[1];
     //alert(word);
@@ -987,8 +977,23 @@ document.getElementById("myselect").addEventListener("DOMSubtreeModified", funct
     var data = {useruid: {{profile_id|safe}}, food_name: word, created_by: {{user_id|safe}}};
     ajax_request("addnewfood", 'empty', {data: JSON.stringify(data)}); 
 }, false);
-
 }
+
+
+document.getElementById("buss_chosen").addEventListener("DOMSubtreeModified", function(e) {
+  // Record the occurrence
+  $('#my_invite_twitter').click();
+
+  $('#buss_chosen_chosen ul .search-choice').remove();
+}, false);
+document.getElementById("org_chosen").addEventListener("DOMSubtreeModified", function(e) {
+  // Record the occurrence
+  $('#my_invite_twitter').click();
+
+  $('#org_chosen_chosen ul .search-choice').remove();
+}, false);
+
+
 // chosen config code
 // var config = {
 //       '.chosen-select'           : {},

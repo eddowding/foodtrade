@@ -200,7 +200,7 @@ def display_profile(request, username):
             conn_limited, parameters['logged_conn'] = get_connections(userprof['useruid'])
 
             # if not logged in show limited
-            parameters['connections'] = conn_limited[:5]
+            parameters['connections'] = conn_limited
             parameters['all_foods'] = get_all_foods(userprof['useruid'])[:3]
             parameters['organisations'] = get_organisations(userprof['useruid'])[:3]
             all_customers, parameters['logged_customer'] = get_customers(userprof['useruid'])
@@ -463,8 +463,10 @@ def get_connections(user_id, logged_in_id = None):
     c_conn = trade_conn.get_connection_by_customer(user_id)
     final_connections = []
     logged_conn = 'none'
-    for each in b_conn:
+    for count, each in enumerate(b_conn):
         try:
+            if logged_in_id == None and count == 5:
+                break
             # account = SocialAccount.objects.get(user__id = each['c_useruid'])
             usr_pr = userprof.get_profile_by_id(str(each['c_useruid']))
             user_info = UserInfo(each['c_useruid'])
@@ -489,10 +491,13 @@ def get_connections(user_id, logged_in_id = None):
              'longitude': usr_pr['latlng']['coordinates'][0],
              'relation': 'buyer'
              })
+            
         except:
             pass
-    for each in c_conn:
+    for count, each in enumerate(c_conn):
         try:
+            if logged_in_id == None and count == 5:
+                break
             # account = SocialAccount.objects.get(user__id = each['b_useruid'])
             usr_pr = userprof.get_profile_by_id(str(each['b_useruid']))
             user_info = UserInfo(each['b_useruid'])
@@ -525,6 +530,7 @@ def get_connections(user_id, logged_in_id = None):
                 final_connections[index]['relation'] = 'both'
                 if logged_in_id!=None and each['b_useruid'] == logged_in_id:
                     logged_conn = 'both'
+            
         except:
             pass
     return final_connections, logged_conn
