@@ -153,8 +153,9 @@
       </div>
     </div>
 
+    {% if sign_up_as == 'Individual' or sign_up_as == 'Business' %}
     <div class="form-group" id="food_tab_group">
-      <label for="food_tab_txt" class="col-sm-2 control-label">Show Foods</label>
+      <label for="food_tab_txt" class="col-sm-2 control-label">Show produce for sale</label>
       <div class="col-sm-5">
         <div class="btn-group" data-toggle="buttons">
           <label class="btn btn-default {% if show_foods %} active {% endif %}"> 
@@ -168,7 +169,7 @@
 
       </div>
     </div>
-
+    {% endif %}
 <div class="form-group" id="deliverables_group">
       <label for="deliverables_txt" class="col-sm-2 control-label">Deliveries</label>
       <div class="col-sm-5">

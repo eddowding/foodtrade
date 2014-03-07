@@ -342,8 +342,10 @@ def edit_profile(request, username):
             usr_type = request.POST['type'].split(",")
         else:
             usr_type = []
-
-        show_foods = request.POST['show_foods']
+        try:
+            show_foods = request.POST['show_foods']
+        except:
+            show_foods = 'Yes'
         show_food_db = True if show_foods == 'Yes' else False
         print 'show_food_db', show_food_db
 
