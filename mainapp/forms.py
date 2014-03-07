@@ -226,4 +226,5 @@ class SignupForm(forms.Form):
             settings.LOGIN_REDIRECT_URL = "/payments/subscribe"
             return HttpResponseRedirect('/payments/subscribe')
         else:
+            # settings.LOGIN_REDIRECT_URL = "/activity"
             return HttpResponseRedirect('/activity/')

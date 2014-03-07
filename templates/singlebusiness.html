@@ -959,8 +959,8 @@ $( document ).ready(function() {
 // food popover
 
 // food_detail();
-$('#buss_chosen').chosen();
-$('#org_chosen').chosen();
+$('#buss_chosen').chosen({create_option: true, skip_no_results: true, create_option_text: 'Search twitter for '});
+$('#org_chosen').chosen({create_option: true, skip_no_results: true, create_option_text: 'Search twitter for '});
 
 // $("#buss_chosen").chosen({max_selected_options: 1});
 $('#myselect').chosen({create_option: true, skip_no_results: true, create_option_text: 'Add'});
@@ -973,10 +973,7 @@ $('#myselect').chosen({create_option: true, skip_no_results: true, create_option
       $('.search-field input').attr('style', 'width:192px;height:30px;');
     });
 
-
-if (jQuery.contains(document, $('#myselect'))) {
-    
-
+if (jQuery.contains(document, $('#myselect'))) {    
 document.getElementById("myselect").addEventListener("DOMSubtreeModified", function(e) {
   // Record the occurrence
   
@@ -987,8 +984,25 @@ document.getElementById("myselect").addEventListener("DOMSubtreeModified", funct
     var data = {useruid: {{profile_id|safe}}, food_name: word, created_by: {{user_id|safe}}};
     ajax_request("addnewfood", 'empty', {data: JSON.stringify(data)}); 
 }, false);
+}
+
+if (jQuery.contains(document, $('#buss_chosen'))) {
+    
+
+document.getElementById("buss_chosen").addEventListener("DOMSubtreeModified", function(e) {
+  // Record the occurrence
+  
+    var text = $('.create-option').text();
+    var word = text.split('"')[1];
+    //alert(word);
+    // add the word to new collection of unapproved foods
+    // var data = {useruid: {{profile_id|safe}}, food_name: word, created_by: {{user_id|safe}}};
+    // ajax_request("addnewfood", 'empty', {data: JSON.stringify(data)}); 
+}, false);
 
 }
+
+
 // chosen config code
 // var config = {
 //       '.chosen-select'           : {},
