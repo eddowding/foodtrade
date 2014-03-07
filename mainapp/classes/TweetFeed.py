@@ -3,7 +3,7 @@
 from MongoConnection import MongoConnection
 from datetime import datetime
 from bson.objectid import ObjectId
-import time
+# import time
 from pygeocoder import Geocoder
 from bson.code import Code
 from bson import BSON
@@ -938,3 +938,15 @@ class ApprovedFoodTags():
 
     def delete_food(self, food_name):
         self.db_object.update(self.table_name,{'food_name': food_name}, {'deleted':1})
+
+
+class KPI():
+    """ Class for Key Performance Indicators"""
+    def __init__(self):
+        self.db_object = MongoConnection("localhost",27017,'foodtrade')
+        self.table_name = 'kpi'
+        self.db_object.create_table(self.table_name,'_id')
+
+    def create_kpi(self, value):
+        value['time_stamp'] = time.mktime(datetime.datetime.now().timetuple())
+        self.db_object.insert_one(self.table_name, value)

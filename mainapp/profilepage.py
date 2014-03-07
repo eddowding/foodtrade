@@ -26,7 +26,6 @@ def profile_url_resolve(request, username):
     if username == 'me':
         if request.user.is_authenticated:
             username = request.user.username
-
     usr_profile = UserProfile()
     userprof = usr_profile.get_profile_by_username(str(username))
 
