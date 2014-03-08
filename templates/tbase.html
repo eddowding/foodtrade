@@ -805,6 +805,10 @@ function search_users_success(data){
     var input_width = (input_val.length * 11) +"px";
     
     $('#tUserSearch').css( "width", input_width );
+    var event = jQuery.Event('keypress');
+event.which = 0; 
+event.keyCode = 35; //keycode to trigger this for simulating enter
+jQuery(this).trigger(event);
 
 }
 
