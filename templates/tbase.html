@@ -801,10 +801,10 @@ function search_users_success(data){
   $('#select-invite').trigger('chosen:updated');
   $('#tUserSearch').val(input_val);
 
- $('#tUserSearch').focus();
-    var input_width = (input_val.length * 11) +"px";
-    
-    $('#tUserSearch').css( "width", input_width );
+  document.getElementById("tUserSearch").focus();
+  var input_width = (input_val.length * 11) +"px";
+  
+  $('#tUserSearch').css( "width", input_width );
 
 
 var keyEvent = jQuery.Event("keydown");
