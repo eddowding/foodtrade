@@ -10,7 +10,7 @@ from mainapp.classes.TweetFeed import TweetFeed, UserProfile, Friends, TwitterEr
 from django.template import RequestContext
 import datetime
 import time
-
+from django.views.decorators.csrf import csrf_exempt
 
 from twython import Twython
 from mainapp.views import get_twitter_obj
@@ -38,7 +38,7 @@ def merge(request):
 
     return HttpResponse("sorry")
 
-
+@csrf_exempt
 def update_image(request):
     img_url = request.POST.get('img')
 
