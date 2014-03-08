@@ -31,9 +31,7 @@ def merge(request):
 @csrf_exempt
 def update_image(request):
     img_url = request.POST.get('img')
-
-
-
+    print img_url
     up = UserProfile()
     user_details = up.get_profile_by_profile_img(img_url)
     bot_twitter = get_twitter_obj(settings.BOT_ACCESS_TOKEN, settings.BOT_ACCESS_TOKEN_SECRET)

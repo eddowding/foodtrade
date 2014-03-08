@@ -752,6 +752,7 @@ function tweetlistener(input, counter, button){
  <script type="text/javascript">
 $(".img-thumbnail").bind('error', function (e) {
   var img_src = this.src;
+  console.log(img_src);
     $.post( "/update-image/", { img: img_src });
 });
  </script>
