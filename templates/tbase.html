@@ -791,7 +791,6 @@ function search_users_success(data){
   $('#select-invite').trigger('chosen:updated');
 
 
-
   for (var i=0;i<results.length;i++){
     str = str + '<option value="' + String(results[i].screen_name) + '">' + String(results[i].screen_name) + '</option>';
   }
@@ -799,8 +798,8 @@ function search_users_success(data){
  
   invite_users=[];
  
-  $('#tUserSearch').val(input_val);
  $('#select-invite').trigger('chosen:updated');
+  $('#tUserSearch').val(input_val);
   document.getElementById("tUserSearch").focus();
   var input_width = (input_val.length * 11) +"px";
   
