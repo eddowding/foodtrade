@@ -758,7 +758,7 @@ $(".img-thumbnail").bind('error', function (e) {
 var invite_id = String('{{invite_id|safe}}');
 var tweet = String('{{invite_tweet|safe}}');
 var invite_users = [];
-
+var input_val;
 $(document).ready(function(){
   $('#select-invite').chosen({skip_no_results: true});
   $('#invite_tweeter_user_text').html(tweet);
@@ -814,8 +814,8 @@ $('#select-invite').on('change', function(evt, params) {
 });
 
 $('#select-invite').on('chosen:no_results', function(evt, params) {
-    q = $('#tUserSearch').val();
-    ajax_request('search_users', 'search_users_success', {'q':q});
+    input_val = $('#tUserSearch').val();
+    ajax_request('search_users', 'search_users_success', {'q':input_val});
 });
 
 function invite_tweeter_user(sign_up_as){
@@ -833,6 +833,7 @@ function invite_tweeter_user(sign_up_as){
 }
 
 function success_tweeter_user_invite(data){
+  $('#tUserSearch').html(input_val);
   data = jQuery.parseJSON(data);
   if (data['status'] == 1){
     tweet = data['new_invite_tweet'];
@@ -844,6 +845,7 @@ function success_tweeter_user_invite(data){
   if (url.indexOf("invite") != -1){
     $('#tweetMessage1').val(tweet);
   }
+  $('#tUserSearch').html(input_val);
 }
 </script> 
 <script type="text/javascript">
