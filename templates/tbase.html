@@ -792,8 +792,10 @@ function search_users_success(data){
     str = str + '<option value="' + String(results[i].screen_name) + '">' + String(results[i].screen_name) + '</option>';
   }
   $('#select-invite').html(str);
+  $('#tUserSearch').val(input_val);
   invite_users=[];
   $('#select-invite').trigger('chosen:updated'); 
+  $('#tUserSearch').val(input_val);
 }
 
 $('#select-invite').on('change', function(evt, params) {
@@ -835,7 +837,6 @@ function invite_tweeter_user(sign_up_as){
 }
 
 function success_tweeter_user_invite(data){
-  $('#tUserSearch').html(input_val);
   data = jQuery.parseJSON(data);
   if (data['status'] == 1){
     tweet = data['new_invite_tweet'];
@@ -847,7 +848,6 @@ function success_tweeter_user_invite(data){
   if (url.indexOf("invite") != -1){
     $('#tweetMessage1').val(tweet);
   }
-  $('#tUserSearch').html(input_val);
 }
 </script> 
 <script type="text/javascript">
