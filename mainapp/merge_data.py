@@ -26,18 +26,31 @@ def merge(request):
 
                 up = UserProfile()
                 user_details = up.get_profile_by_id(user)
-
                 st = SocialToken.objects.get(account__user__id=user)
-
                 ACCESS_TOKEN = st.token
                 ACCESS_TOKEN_SECRET = st.token_secret
-                
                 user_twitter = get_twitter_obj(ACCESS_TOKEN, ACCESS_TOKEN_SECRET)
                 details = user_twitter.show_user(screen_name=user_details['username'])
                 image_desc = {'profile_img': details['profile_image_url']}
-
                 up.update_profile_fields({"useruid":user}, image_desc)
 
         return HttpResponse("success"+json.dumps(business_users))
 
+    return HttpResponse("sorry")
+
+
+def update_image(request):
+    img_url = request.POST.get('img')
+
+
+
+    up = UserProfile()
+    user_details = up.get_profile_by_profile_img(img_url)
+    st = SocialToken.objects.get(account__user__id=user)
+    ACCESS_TOKEN = st.token
+    ACCESS_TOKEN_SECRET = st.token_secret
+    user_twitter = get_twitter_obj(ACCESS_TOKEN, ACCESS_TOKEN_SECRET)
+    details = user_twitter.show_user(screen_name=user_details['username'])
+    image_desc = {'profile_img': details['profile_image_url']}
+    up.update_profile_fields({"useruid":user}, image_desc)
     return HttpResponse("sorry")
