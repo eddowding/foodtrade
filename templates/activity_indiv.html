@@ -5,7 +5,6 @@
   <p>More produce, businesses, and organisations are signing up every day so check back soon.</p>
 </div>
 {% endif %}
-
         <ul class="chat">
 
  
@@ -13,28 +12,10 @@
 {% if results %}
 
 {% for result in results %}
-{% if result.user.username == result.result_type %}
-
-{% single_activity userinfo result "status" "main" %}
-
-     <li>
-      <ul>
-      {% for reply_result in result.replies %}
-
-{% single_activity userinfo reply_result "status" "main" %}
-
-         {% endfor %}
-        
-</ul>
-</li>
-
-{% endif %}
+{% if result.user.username != result.result_type and result.sign_up_as == "Individual" %}
+{% single_activity userinfo result "profile" "main" %}
+    
+    {% endif %}
   {% endfor %}
     {% endif %}
-</ul>
-<script type="text/javascript">
-  
-{% if results %}
-connections = {{json_data | safe}};
-    {% endif %}
-</script>
+</ul> 

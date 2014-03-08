@@ -528,12 +528,14 @@ for(var i = 0; i < business_filters.length;i++){
        {
         var data_json = jQuery.parseJSON(data);
          $('#activity_updates').html(data_json.updates);
+         $('#activity_indiv').html(data_json.indiv);
          $('#activity_biz').html(data_json.biz);
          $('#activity_org').html(data_json.org);
          $('#update_count').html(data_json.results_updates_count);
+         $('#individual_count').html(data_json.results_individual_count);
          $('#business_count').html(data_json.results_business_count);
          $('#organisation_count').html(data_json.results_organisation_count);
-         connections = ajax_connections;
+         // connections = ajax_connections;
          reload_controls();
 
        }

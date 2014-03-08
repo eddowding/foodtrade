@@ -70,6 +70,7 @@
  
 <script src="{% static "js/label-leaflet.js" %}"></script> 
 <script type="text/javascript">
+
    var RedIcon = L.Icon.Default.extend({
             options: {
                   iconUrl:'/static/images/map_marker.png',
@@ -1078,6 +1079,10 @@ function formSubmit(form) {
 </script>
 
 <script type="text/javascript">
+$("<img/>")
+    .load(function() { "console.log("image loaded correctly");" })
+    .error(function() { console.log("error loading image"); console.log($(this).attr("src")); })
+;
    $(function() {
     var hash = window.location.hash;
 
@@ -1086,6 +1091,9 @@ function formSubmit(form) {
     hash && $('ul.nav a[href="' + hash + '"]').tab('show');
 });
 </script>    
+
+
+
 
 <script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){

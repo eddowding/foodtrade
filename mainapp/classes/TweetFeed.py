@@ -167,10 +167,12 @@ class TweetFeed():
     def update_data(self,user_id):
         food = Food()
         f_list = food.get_approved_foods_by_useruid(user_id)
+        
         orgn = Organisation()
         organisations = orgn.get_organisations_by_mem_id(user_id)
         org_list = []
         user_prof = UserProfile()
+
         for org in organisations:
             # twitter_user = SocialAccount.objects.get(user__id = org['orguid'])
             usr_pr = user_prof.get_profile_by_id(org['orguid'])
@@ -182,8 +184,16 @@ class TweetFeed():
                 myname = usr_pr['name']
             # full_name = myname
             org_list.append(myname)
-
-        self.db_object.update(self.table_name, {'useruid':user_id}, {'foods':f_list,'organisations':org_list})
+        
+        updating_value = {}
+        updating_value['foods'] = f_list
+        updating_value['organisations'] = org_list
+        
+        # update individual business type if user has food.
+        updating_user = user_prof.get_profile_by_id(int(user_id))
+        if updating_user['sign_up_as'] == 'Individual' and len(f_list)>0:
+            updating_value['type_user'] = ["Individual"]
+        self.db_object.update(self.table_name, {'useruid':user_id}, updating_value)
         
 
     def get_near_people(self, query):

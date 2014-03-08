@@ -183,11 +183,11 @@
            
 {% else %}
       <!-- if not logged in show login prompt -->
-<div class="btn-group btn-block">
-    <label class="btn btn-default" style="width:50%;" rel="tooltip" title="Login to connect to {{name}}" >
-          Buy from</label>
-<label class="btn btn-default" style="width:50%;" rel="tooltip" title="Login to connect to {{name}}" >
-          Sell to</label>
+<div class="btn-group btn-block" rel="tooltip" title="Login to connect to {{name}}">
+    <button class="btn btn-default" style="width:50%;" disabled>
+          Buy from</button>
+<button class="btn btn-default"  style="width:50%;" disabled>
+          Sell to</button>
 </div>
       <a href="{% provider_login_url "twitter" process="login" %}" class="btn btn-success btn-block">Login for more</a>
 
@@ -666,7 +666,7 @@
               <thead>
             <tr>
               <td colspan="2">
-                <p class="alert alert-warning"><a href="{% provider_login_url "twitter" process="login" %}" class="">Login</a> or <a href="{% provider_login_url "twitter" process="login" %}" class="">sign up free</a> to see all their full profile. </p>
+                <p class="alert alert-warning"><a href="{% provider_login_url "twitter" process="login" %}" class="">Login</a> or <a href="{% provider_login_url "twitter" process="login" %}" class="">sign up free</a> to see all their connections.</p>
               </td>
             </tr>
           </thead>
