@@ -12,11 +12,17 @@
 {% block ogtype %}{% if userprof.user_type == "Business" %}business.business{%endif%}{% if userprof.user_type == "Individual" %}Profile{%endif%}{% if userprof.user_type == "Organisation" %}business.business{%endif%}{% endblock %}
 
 {% block titlecontent %}{{userprof.full_name}}{% endblock %}
+{% block description %}{{userprof.description}}{% endblock %}
+
 {% block fblat %}{{userprof.lat}}{% endblock %}
 {% block fblon %}{{userprof.lon}}{% endblock %}
 {% block fbzipcode %}{{userprof.zip_code}}{% endblock %}
 {% block fbcountry %}{{userprof.country}}{% endblock %}
 {% block ogimg %}{{userprof.profileimg}}{% endblock %}
+
+{% block metatitle %}{{userprof.full_name}}{% endblock %}
+{% block metadescription %}{{userprof.description}}{% endblock %}
+
 {% block contact %}
   {% if userprof.user_type == 'Business' or userprof.user_type == 'Organisation'%}
   <meta property="business:contact_data:postal_code"    content="{{userprof.zip_code}}" /> 
