@@ -291,7 +291,7 @@ class UserProfile():
         return self.db_object.get_one(self.table_name,{'useruid': int(user_id)})
 
     def get_profile_by_profile_img(self, img):
-        return self.db_object.get_one(self.table_name,{'profile_image_url': img})
+        return self.db_object.get_one(self.table_name,{'profile_img': img})
 
     def get_profile_by_username(self, username):
         # return self.db_object.get_one(self.table_name,{'username': str(username)})
