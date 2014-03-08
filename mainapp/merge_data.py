@@ -22,17 +22,7 @@ def merge(request):
         for user in business_users:
             twt = TweetFeed()
             twt.update_data(user)
-            if int(user) > 1:
-
-                up = UserProfile()
-                user_details = up.get_profile_by_id(user)
-                st = SocialToken.objects.get(account__user__id=user)
-                ACCESS_TOKEN = st.token
-                ACCESS_TOKEN_SECRET = st.token_secret
-                user_twitter = get_twitter_obj(ACCESS_TOKEN, ACCESS_TOKEN_SECRET)
-                details = user_twitter.show_user(screen_name=user_details['username'])
-                image_desc = {'profile_img': details['profile_image_url']}
-                up.update_profile_fields({"useruid":user}, image_desc)
+            
 
         return HttpResponse("success"+json.dumps(business_users))
 
@@ -47,7 +37,7 @@ def update_image(request):
     up = UserProfile()
     user_details = up.get_profile_by_profile_img(img_url)
     bot_twitter = get_twitter_obj(settings.BOT_ACCESS_TOKEN, settings.BOT_ACCESS_TOKEN_SECRET)
-    details = user_twitter.show_user(screen_name=user_details['username'])
+    details = bot_twitter.show_user(screen_name=user_details['username'])
     image_desc = {'profile_img': details['profile_image_url']}
     up.update_profile_fields({"useruid":user_details['useruid']}, image_desc)
     return HttpResponse("sorry")
