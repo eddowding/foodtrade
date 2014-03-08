@@ -127,7 +127,7 @@ class Search():
             if len(statuses)>0:
                 results = statuses[0]
             else:
-                return {"foods":[], "businesses":[], "organisations":[],"results":[], "business_counter":0, "organisation_counter":0, "update_counter":0}
+                return {"foods":[], "businesses":[], "organisations":[],"results":[], "individual_counter":0, "business_counter":0, "organisation_counter":0, "update_counter":0}
 
 
         foods_list = results["foods"]
