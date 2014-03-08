@@ -798,14 +798,13 @@ function search_users_success(data){
   $('#select-invite').append(str);
  
   invite_users=[];
-  $('#select-invite').trigger('chosen:updated'); 
+  $('#select-invite').trigger('chosen:updated');
   $('#tUserSearch').val(input_val);
 
  $('#tUserSearch').focus();
-    var str_len = input_val.length;
+    var input_width = (input_val.length * 11) +"px";
     
-    $('#tUserSearch').caret(str_len,str_len);   
-
+    $('#tUserSearch').css( "width", input_width );
 
 }
 
