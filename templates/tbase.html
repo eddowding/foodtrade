@@ -794,7 +794,7 @@ function search_users_success(data){
   for (var i=0;i<results.length;i++){
     str = str + '<option value="' + String(results[i].screen_name) + '">' + String(results[i].screen_name) + '</option>';
   }
-  $('#select-invite').append(str);
+  $('#select-invite').html(str);
  
   invite_users=[];
  
