@@ -151,11 +151,23 @@
                     </table>
                 </div>
                 <div class="panel-footer">
-                 
-                  <a href="/payments/subscribe/" class="btn btn-success btn-lg" role="button">
+                 {% if not user.is_authenticated %} 
+          <a type="button" class="btn btn-success btn-lg"data-toggle="modal" data-target="#modal_signup">
+           Try it now
+          </a>
+         {% else %}
+          {% if subscribed == 0 %}
+                  <a href="{/payments/subscribe/" class="btn btn-success btn-lg" role="button">
                   <i class="fa fa-shopping-cart"></i>
                   &pound;45 / yr 
                   </a> 
+                   {% else %}
+                   <a class="btn btn-success btn-lg" role="button">
+                 
+                  Your Plan
+                  </a>
+                   {% endif %}
+                  {% endif %}
                 </div>
             </div>
         </div>
