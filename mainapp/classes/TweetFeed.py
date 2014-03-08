@@ -244,7 +244,7 @@ class TweetFeed():
             if res == None:
                 return_results.append(eachResult)
                 
-        return return_results
+        return return_results[0:10]
 
     def get_followers(self, twitter_id):
         pass

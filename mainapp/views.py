@@ -447,7 +447,7 @@ def transport_mailchimp(request):
                 count = count + 1
                 print count
             except:
-                mail_excep_obj = MailChimpException()
+                mail_excep_obj = MailChimpException(list_id='eeea3ac4c6')
                 mail_excep_obj.save_mailchimp_exception(eachUser)
         return HttpResponse(json.dumps({'success':'True'}))
 
