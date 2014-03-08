@@ -153,6 +153,7 @@ class Search():
         organisations_counter = self.item_counter(organisations_list)
         results["organisations"] = organisations_counter
         try:
+            results["individual_counter"] = profiles[0]["individual_count"]
             results["business_counter"] = profiles[0]["business_count"]
             results["organisation_counter"] = profiles[0]["organisation_count"]
         except:
@@ -259,7 +260,7 @@ class Search():
 
         # for profile search
         if search_type==1:
-            only_business_org = [{"sign_up_as":{"$ne":"Individual"}},{"sign_up_as":{"$ne":"unclaimed"}}]
+            only_business_org = [{"sign_up_as":{"$ne":"unclaimed"}}]
             agg_pipeline.append({ '$match': {"$and": only_business_org}})
 
 
@@ -308,6 +309,7 @@ class Search():
         group_fields["foods"] = { "$push": "$foods" }
         group_fields["businesses"] = { "$push": "$type_user"}
         group_fields["organisations"] = { "$push": "$organisations"}
+        group_fields["individual_count"] = {"$sum":{"$cond": [{"$eq": ['$sign_up_as', "Individual"]}, 1, 0]}}
         group_fields["business_count"] = {"$sum":{"$cond": [{"$eq": ['$sign_up_as', "Business"]}, 1, 0]}}
         group_fields["organisation_count"] = {"$sum":{"$cond": [{"$eq": ['$sign_up_as', "Organisation"]}, 1, 0]}}
         group_fields["update_count"] = {"$sum": 1}

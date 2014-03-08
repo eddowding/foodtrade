@@ -66,18 +66,25 @@
   </div> 
  
 <ul class="nav nav-tabs">
-  <li {% if results_updates_count != 0  or results_business_count == 0 and results_organisation_count == 0  %}class="active"{% endif %}>
+  <li {% if results_updates_count != 0  or results_individual_count == 0 and results_business_count == 0 and results_organisation_count == 0  %}class="active"{% endif %}>
     <a href="#near_me" data-toggle="tab">Updates 
       <span class="badge" id="update_count">{{results_updates_count}}</span>
     </a>
   </li >
-  <li {% if results_updates_count == 0  and results_organisation_count == 0 and results_business_count != 0 %}class="active"{% endif %}>
+
+    <li {% if results_updates_count == 0  and results_business_count == 0 results_organisation_count == 0 and results_individual_count != 0 %}class="active"{% endif %}>
+    <a href="#indiv" data-toggle="tab">Individuals 
+    <span class="badge" id="individual_count">{{results_individual_count}}</span>
+    </a>
+  </li>
+
+  <li {% if results_updates_count == 0 and results_individual_count == 0  and results_organisation_count == 0 and results_business_count != 0 %}class="active"{% endif %}>
     <a href="#biz" data-toggle="tab">Business 
     <span class="badge" id="business_count">{{results_business_count}}</span>
     </a>
   </li> 
 
-    <li {% if results_updates_count == 0 and results_business_count == 0 and results_organisation_count != 0 %}class="active"{% endif %}>
+    <li {% if results_updates_count == 0 and results_individual_count == 0 and results_business_count == 0 and results_organisation_count != 0 %}class="active"{% endif %}>
     <a href="#org" data-toggle="tab">Orgs
     <span class="badge" id="organisation_count">{{results_organisation_count}}</span>
     </a>
@@ -109,7 +116,7 @@
 
 
 <div class="activity" id="activity_updates"> 
-{% if results_updates_count == 0 and results_business_count == 0 and results_organisation_count == 0 %}
+{% if results_updates_count == 0 and results_individual_count == 0 and results_business_count == 0 and results_organisation_count == 0 %}
 <div class="alert alert-warning text-center">
   <p><strong>Sorry, we've found nothing for this search... yet!</strong></p>
   <p>More produce, businesses, and organisations are signing up every day so check back soon.</p>
@@ -148,11 +155,41 @@
 
 
 
+  <div class="tab-pane {% if results_updates_count == 0 and results_business_count == 0  and results_organisation_count == 0 and results_individual_count != 0 %}active{% endif %}" id="indiv">
+ 
+  <div class="activity" id="activity_indiv"> 
+  {% if results_updates_count == 0 and results_individual_count == 0 and results_business_count == 0 and results_organisation_count == 0 %}
+<div class="alert alert-warning text-center">
+  <p><strong>Sorry, we've found nothing for this search... yet!</strong></p>
+  <p>More produce, businesses, and organisations are signing up every day so check back soon.</p>
+</div>
+{% endif %}
+        <ul class="chat">
 
-  <div class="tab-pane {% if results_updates_count == 0  and results_organisation_count == 0 and results_business_count != 0 %}active{% endif %}" id="biz">
+ 
+
+{% if results %}
+
+{% for result in results %}
+{% if result.user.username != result.result_type and result.sign_up_as == "Individual" %}
+{% single_activity userinfo result "profile" "main" %}
+    
+    {% endif %}
+  {% endfor %}
+    {% endif %}
+</ul> 
+  </div>
+
+
+  </div> 
+
+
+
+
+  <div class="tab-pane {% if results_updates_count == 0 and results_individual_count == 0  and results_organisation_count == 0 and results_business_count != 0 %}active{% endif %}" id="biz">
  
   <div class="activity" id="activity_biz"> 
-  {% if results_updates_count == 0 and results_business_count == 0 and results_organisation_count == 0 %}
+  {% if results_updates_count == 0 and results_individual_count == 0 and results_business_count == 0 and results_organisation_count == 0 %}
 <div class="alert alert-warning text-center">
   <p><strong>Sorry, we've found nothing for this search... yet!</strong></p>
   <p>More produce, businesses, and organisations are signing up every day so check back soon.</p>
@@ -179,10 +216,10 @@
 
 
 
-  <div class="tab-pane {% if results_updates_count == 0 and results_business_count == 0 and results_organisation_count != 0 %}active{% endif %}" id="org">
+  <div class="tab-pane {% if results_updates_count == 0 and results_individual_count == 0 and results_business_count == 0 and results_organisation_count != 0 %}active{% endif %}" id="org">
  
   <div class="activity" id="activity_org"> 
-  {% if results_updates_count == 0 and results_business_count == 0 and results_organisation_count == 0 %}
+  {% if results_updates_count == 0 and results_individual_count == 0 and results_business_count == 0 and results_organisation_count == 0 %}
 <div class="alert alert-warning text-center">
   <p><strong>Sorry, we've found nothing for this search... yet!</strong></p>
   <p>More produce, businesses, and organisations are signing up every day so check back soon.</p>

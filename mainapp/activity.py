@@ -211,6 +211,7 @@ def get_search_parameters(request):
     # print len(results)
     parameters['json_data'] = json.dumps(results)
     parameters['results_business_count'] = search_results["business_counter"]
+    parameters['results_individual_count'] = search_results["individual_counter"]
     parameters['results_organisation_count'] = search_results["organisation_counter"]
     parameters['results_updates_count'] = search_results["update_counter"]
 
