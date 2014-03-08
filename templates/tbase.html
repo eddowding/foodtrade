@@ -798,9 +798,9 @@ function search_users_success(data){
   $('#select-invite').append(str);
  
   invite_users=[];
-  $('#select-invite').trigger('chosen:updated');
+ 
   $('#tUserSearch').val(input_val);
-
+ $('#select-invite').trigger('chosen:updated');
   document.getElementById("tUserSearch").focus();
   var input_width = (input_val.length * 11) +"px";
   
