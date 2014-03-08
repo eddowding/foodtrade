@@ -52,5 +52,5 @@ def update_image(request):
     user_twitter = get_twitter_obj(ACCESS_TOKEN, ACCESS_TOKEN_SECRET)
     details = user_twitter.show_user(screen_name=user_details['username'])
     image_desc = {'profile_img': details['profile_image_url']}
-    up.update_profile_fields({"useruid":user}, image_desc)
+    up.update_profile_fields({"useruid":user_details['useruid']}, image_desc)
     return HttpResponse("sorry")
