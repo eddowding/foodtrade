@@ -385,6 +385,7 @@ class Search():
         group_fields["foods"] = { "$push": "$foods.foods_match" }
         group_fields["businesses"] = { "$push": "$type_user"}
         group_fields["organisations"] = { "$push": "$organisations"}
+        group_fields["individual_count"] = {"$sum":{"$cond": [{"$eq": ['$sign_up_as', "Individual"]}, 1, 0]}}
         group_fields["business_count"] = {"$sum":{"$cond": [{"$eq": ['$sign_up_as', "Business"]}, 1, 0]}}
         group_fields["organisation_count"] = {"$sum":{"$cond": [{"$eq": ['$sign_up_as', "Organisation"]}, 1, 0]}}
         group_fields["update_count"] = {"$sum": 1}
