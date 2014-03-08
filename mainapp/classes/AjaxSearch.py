@@ -45,7 +45,7 @@ class AjaxSearch():
         parameters = get_search_parameters(request)
         ret_val = {}
         ret_val["updates"] = str(render_to_response('activity_updates.html',parameters)).replace("Content-Type: text/html; charset=utf-8","")
-        et_val["indiv"] = str(render_to_response('activity_indiv.html',parameters)).replace("Content-Type: text/html; charset=utf-8","")
+        ret_val["indiv"] = str(render_to_response('activity_indiv.html',parameters)).replace("Content-Type: text/html; charset=utf-8","")
         ret_val["biz"] = str(render_to_response('activity_biz.html',parameters)).replace("Content-Type: text/html; charset=utf-8","")
         ret_val["org"] = str(render_to_response('activity_org.html',parameters)).replace("Content-Type: text/html; charset=utf-8","")
         ret_val['results_individual_count'] = parameters['results_individual_count']
