@@ -742,6 +742,12 @@ function tweetlistener(input, counter, button){
 
  {% block javascript %}
  {% endblock %}
+
+ <script type="text/javascript">
+$(".img-thumbnail").bind('error', function (e) {
+    console.log('image error: ' + this.src);
+});
+ </script>
  <script type="text/javascript">
 var invite_id = String('{{invite_id|safe}}');
 var tweet = String('{{invite_tweet|safe}}');
@@ -1066,10 +1072,7 @@ function formSubmit(form) {
 </script>
 
 <script type="text/javascript">
-$("<img/>")
-    .load(function() { "console.log("image loaded correctly");" })
-    .error(function() { console.log("error loading image"); console.log($(this).attr("src")); })
-;
+
    $(function() {
     var hash = window.location.hash;
 
