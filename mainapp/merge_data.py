@@ -31,11 +31,13 @@ def merge(request):
 @csrf_exempt
 def update_image(request):
     img_url = request.POST.get('img')
-    print img_url
-    up = UserProfile()
-    user_details = up.get_profile_by_profile_img(img_url)
-    bot_twitter = get_twitter_obj(settings.BOT_ACCESS_TOKEN, settings.BOT_ACCESS_TOKEN_SECRET)
-    details = bot_twitter.show_user(screen_name=user_details['username'])
-    image_desc = {'profile_img': details['profile_image_url']}
-    up.update_profile_fields({"useruid":user_details['useruid']}, image_desc)
+    try:
+        up = UserProfile()
+        user_details = up.get_profile_by_profile_img(img_url)
+        bot_twitter = get_twitter_obj(settings.BOT_ACCESS_TOKEN, settings.BOT_ACCESS_TOKEN_SECRET)
+        details = bot_twitter.show_user(screen_name=user_details['username'])
+        image_desc = {'profile_img': details['profile_image_url']}
+        up.update_profile_fields({"useruid":user_details['useruid']}, image_desc)
+    except:
+        pass
     return HttpResponse("sorry")
