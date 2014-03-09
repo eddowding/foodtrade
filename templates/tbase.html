@@ -785,17 +785,30 @@ function search_tweeter_users(){
 function search_users_success(data){
   data = jQuery.parseJSON(data);
   results = data['results'];
-  str = $('#select-invite').html();
-  $('#select-invite').html('');
+  // str = $('#select-invite').html();
+  // $('#select-invite').html('');
+  var str = "";
   $('#select-invite').trigger('chosen:updated');
+
+
   for (var i=0;i<results.length;i++){
     str = str + '<option value="' + String(results[i].screen_name) + '">' + String(results[i].screen_name) + '</option>';
   }
   $('#select-invite').html(str);
   invite_users=[];
-  $('#select-invite').trigger('chosen:updated'); 
+ 
+ $('#select-invite').trigger('chosen:updated');
   $('#tUserSearch').val(input_val);
   $('#tUserSearch').focus();
+  document.getElementById("tUserSearch").focus();
+  var input_width = (input_val.length * 11) +"px";
+  
+  $('#tUserSearch').css( "width", input_width );
+
+
+var keyEvent = jQuery.Event("keydown");
+keyEvent.keyCode = 18;
+$('#tUserSearch').trigger(keyEvent);
 }
 
 $('#select-invite').on('change', function(evt, params) {
