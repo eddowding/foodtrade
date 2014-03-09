@@ -792,10 +792,10 @@ function search_users_success(data){
     str = str + '<option value="' + String(results[i].screen_name) + '">' + String(results[i].screen_name) + '</option>';
   }
   $('#select-invite').html(str);
-  $('#tUserSearch').val(input_val);
   invite_users=[];
   $('#select-invite').trigger('chosen:updated'); 
   $('#tUserSearch').val(input_val);
+  $('#tUserSearch').focus();
 }
 
 $('#select-invite').on('change', function(evt, params) {

@@ -7,4 +7,4 @@ live root
 30 2 * * * sh /srv/www/live/foodtrade-env/foodtrade/CronJobs/backup_script_live.sh
 
 staging foodtrade
-30 2 * * * sh /srv/www/live/foodtrade-env/foodtrade/CronJobs/backup_script_staging.sh
+30 3 * * * sh /srv/www/live/foodtrade-env/foodtrade/CronJobs/backup_script_staging.sh
