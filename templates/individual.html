@@ -627,6 +627,7 @@ s
   <script src="/static/css/docsupport/prism.js" type="text/javascript" charset="utf-8"></script>
     <script type="text/javascript">
 
+        $('#myselect').chosen({create_option: true, skip_no_results: true, create_option_text: 'Add'});
     $("#myTags").tagit({
           placeholderText: 'Add tags to your food...',
           allowSpaces: true
@@ -634,7 +635,6 @@ s
     $('.tltip').tooltip();
         $('#adfoo_id').tooltip();
 
-        $('#myselect').chosen({create_option: true, skip_no_results: true, create_option_text: 'Add'});
     // chosen on change event
         $('#myselect').chosen().change(function(){
         add_food({{profile_id}}, {{user_id}});
