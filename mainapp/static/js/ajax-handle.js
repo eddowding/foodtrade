@@ -111,13 +111,20 @@ function invite_connect(prof_username, logged_username){
 	ajax_request("post_tweet_admin", 'create_conn', {message: message});
 }
 
-function add_food(prof_id, user_id){
+function add_food(prof_id, user_id, ind_status){
 	if (validate_login()['status'] == '1'){
+		// if(ind_status == 'individual'){
+		// 	alert('{{all_foods}}');
+		// 	prepend_warning = '<thead id="warning_produce"><tr><td colspan="2"><p class="alert alert-warning">Please <a href="/payments" class="">upgrade</a> to add more produce. </p></td></tr></thead>';
+		// 	$('#produce').prepend(prepend_warning);
+		// 	$('#myselect').prop('disabled', true).trigger("chosen:updated");
+		// 	$('#adfoo_id').prop('disabled', true);
+		// }
 		var elements = document.getElementsByClassName('search-choice');
 	    var food = elements[0].children[0].innerHTML;
 		var data = {useruid: prof_id, food_name: food, created_by: user_id};
 		ajax_request("addfood", 'food_ajax', {data: JSON.stringify(data)});
-		
+
 	}
 	else{
 		$('#adfoo_id').tooltip('show');
