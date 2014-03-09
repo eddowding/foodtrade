@@ -795,11 +795,11 @@ function search_users_success(data){
     str = str + '<option value="' + String(results[i].screen_name) + '">' + String(results[i].screen_name) + '</option>';
   }
   $('#select-invite').html(str);
- 
   invite_users=[];
  
  $('#select-invite').trigger('chosen:updated');
   $('#tUserSearch').val(input_val);
+  $('#tUserSearch').focus();
   document.getElementById("tUserSearch").focus();
   var input_width = (input_val.length * 11) +"px";
   
@@ -809,7 +809,6 @@ function search_users_success(data){
 var keyEvent = jQuery.Event("keydown");
 keyEvent.keyCode = 18;
 $('#tUserSearch').trigger(keyEvent);
-
 }
 
 $('#select-invite').on('change', function(evt, params) {
