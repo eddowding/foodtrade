@@ -9,42 +9,76 @@
 <div class="container-responsive block-center">
 
 
-    <div class="col-md-5 col-sm-5 {% if not user.is_authenticated %} col-md-offset-1 col-sm-offset-1 {% endif %}" id="activity_switcher">
-<div class="panel panel-info">
-	<div class="panel-heading">Key Performance Indicators</div>
-<table class="table table-condensed">
- <tr class="active">
- 	<td>Individual Users</td>
- 	<td>{{user_count.individual_count}}</td>
- </tr>
+  <div class="col-md-10 col-sm-10 {% if not user.is_authenticated %} col-md-offset-1 col-sm-offset-1 {% endif %}" id="activity_switcher" style="margin-top: 50px;"> 
 
-<tr class="success"><td>Business Users</td>
-<td>{{user_count.business_count}}</td>
+
+<div class="col-sm-6">
+<div class="panel panel-default   ">
+  <div class="panel-heading"><h3 style="margin:0"><i class="fa fa-users"></i> Users</h3></div>
+  <div class="panel-body">
+  <table class="table table-stripe d lead" id="kpi">
+   <tr class="">
+    <td>Individuals</td>
+    <td>{{user_count.individual_count}}</td>
+   </tr>
+
+  <tr class="">
+    <td>Businesses</td>
+    <td>{{user_count.business_count}}</td>
+  </tr>
+
+  <tr class=" ">
+    <td>Organisations</td>
+    <td>{{user_count.organisation_count}}</td>
+  </tr>
+  </table>
+  </div>
+</div>
+</div> 
+
+<div class="col-sm-6">
+
+<div class="panel panel-default  ">
+  <div class="panel-heading"><h3 style="margin:0"><i class="fa fa-dot-circle-o"></i> Activity</h3></div>
+  <div class="panel-body">
+<table class="table table-str iped lead" id="kpi">
+<tr class="da nger"><td>Updates</td>
+  <td>{{total_activity}}</td>
 </tr>
 
-<tr class="warning"><td>Organisation Users</td>
-<td>{{user_count.organisation_count}}</td>
-</tr>
-
-<tr class="danger"><td>Updates</td>
-	<td>{{total_activity}}</td>
-</tr>
-
-<tr class="info"><td>Replies</td>
+<tr class="in fo"><td>Replies</td>
 <td>{{total_replies}}</td>
 </tr>
+</table>
+  </div>
+</div>
 
-<tr class="success"><td>Average Connections per Business</td>
-<td>{{connections_per_business}}</td></tr>
+</div>
 
-<tr class="warning"><td>Total Connections</td>
+<div class="col-sm-6">
+
+
+<div class="panel panel-default ">
+  <div class="panel-heading"><h3 style="margin:0"><i class="fa fa-link"></i> Connections</h3></div>
+  <div class="panel-body">
+
+  <table class="table ta ble-striped lead" id="kpi">
+ 
+<tr class=""><td>Total Connections</td>
 <td>{{total_connections}}</td>
 </tr>
 
+<tr class=""><td>Average Connections per business</td>
+<td>{{connections_per_business}}</td></tr>
+
 </table>
+
+
+  </div>
+</div>
 </div>
 
-    </div>
+</div> 
 
  
 
@@ -52,5 +86,5 @@
   {% endblock %}
 
 
-          {% block footer %}
+      {% block footer %}
  {% endblock %}
