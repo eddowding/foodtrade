@@ -24,7 +24,7 @@ from django.http import Http404
 
 def profile_url_resolve(request, username):
     if username == 'me':
-        if request.user.is_authenticated:
+        if request.user.is_authenticated():
             username = request.user.username
         if request.user.id == None:
             return HttpResponseRedirect('/accounts/twitter/login/?process=login')
@@ -40,7 +40,7 @@ def profile_url_resolve(request, username):
             
 def resolve_profile(request, username):
     if username == 'me':
-        if request.user.is_authenticated:
+        if request.user.is_authenticated():
             username = request.user.username
             return display_profile(request, username)    
     usr_profile = UserProfile()
