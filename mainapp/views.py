@@ -574,58 +574,43 @@ def sms_receiver(request):
 def send_newsletter(request, substype):
     if request.GET.get('code') != '11foodtradeESRS22':
         return HttpResponseRedirect('/')
-
     user_profile_obj = UserProfile()
     substype = substype.capitalize()
-
-    if substype == 'Daily':
-        users = user_profile_obj.get_all_profiles('Daily')
-    elif substype == 'Weekly' or substype == 'None':
-        users = user_profile_obj.get_all_profiles(substype)
-    elif substype == 'Monthly':
-        users = user_profile_obj.get_all_profiles('Monthly')
-
+    email_to_user = user_profile_obj.get_profile_by_username(str(request.GET.get('username')))
     count =0
-    for eachUser in users:
-        try:
-            subscription_status = eachUser['subscribed']
-        except:
-            subscription_status = 0
-
-        '''Generate activity for newsletter'''
-        if subscription_status == 0:
-            search_handle = Search(lon = eachUser['latlng']['coordinates'][0], lat = eachUser['latlng']['coordinates'][1], news="old")
-        else:
-            search_handle = Search(lon = eachUser['latlng']['coordinates'][0], lat = eachUser['latlng']['coordinates'][1], news=substype.lower())
-        search_results = search_handle.search_all()['results']
-        
-        '''Make Default value of newsletter 10'''
-        temp_result = []
-        no_of_results = 10
-        for res in search_results:
-            if res["result_type"] == res["user"]["username"] and eachUser["username"] != res["user"]["username"]:
-                temp_result.append(res)
-            if len(temp_result) >= no_of_results:
-                break
-        results = temp_result
-
-        '''Generate content for newsletter from activity'''
-        tem_con = str(render_to_response('activity-email.html',{'results':results}, context_instance=RequestContext(request)))
-        tem_con = tem_con.replace('Content-Type: text/html; charset=utf-8', '')
-
-        print len(results)
-
-        try:
-            if len(results) > 0:
-                m = Email()
-                '''Do not send empty newsletter'''
-                if len(eachUser['email'])>0:
-                    m.send_mail("Recent FoodTrade activity near you", [{'name':'main', 'content':tem_con}], [{'email':eachUser['email']}])                    
-                    pass
-                else:
-                    continue
-        except:
-            continue
+    try:
+        subscription_status = email_to_user['subscribed']
+    except:
+        subscription_status = 0
+    '''Generate activity for newsletter'''
+    if subscription_status == 0:
+        search_handle = Search(lon = email_to_user['latlng']['coordinates'][0], lat = email_to_user['latlng']['coordinates'][1], news="old")
+    else:
+        search_handle = Search(lon = email_to_user['latlng']['coordinates'][0], lat = email_to_user['latlng']['coordinates'][1], news=substype.lower())
+    search_results = search_handle.search_all()['results']
+    '''Make Default value of newsletter 10'''
+    temp_result = []
+    no_of_results = 10
+    for res in search_results:
+        if res["result_type"] == res["user"]["username"] and email_to_user["username"] != res["user"]["username"]:
+            temp_result.append(res)
+        if len(temp_result) >= no_of_results:
+            break
+    results = temp_result
+    '''Generate content for newsletter from activity'''
+    tem_con = str(render_to_response('activity-email.html',{'results':results}, context_instance=RequestContext(request)))
+    tem_con = tem_con.replace('Content-Type: text/html; charset=utf-8', '')
+    print len(results)
+    try:
+        if len(results) > 0:
+            m = Email()
+            '''Do not send empty newsletter'''
+            if len(email_to_user['email'])>0:
+                m.send_mail("Recent FoodTrade activity near you", [{'name':'main', 'content':tem_con}], [{'email':eachUser['email']}])
+            else:
+                return HttpResponse(json.dumps({'status':'0'}))
+    except:
+        return HttpResponse(json.dumps({'status':'0'}))
     return HttpResponse(json.dumps({'status':'1'}))
 
 def create_profile_from_mention(email, location, data):

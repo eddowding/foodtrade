@@ -8,3 +8,4 @@ sudo mongorestore foodtrade/
 cd ..
 sudo mysql -u root -proot foodtrade < foodtrade.sql 
 cd ..
+sudo rm -r $(date --date="1 day ago" +%F)
