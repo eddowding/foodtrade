@@ -1,3 +1,5 @@
+@import url(http://fonts.googleapis.com/css?family=Permanent+Marker); 
+
 html,
 body {
   overflow-x: hidden; /* Prevent scroll on narrow devices */
@@ -31,6 +33,10 @@ h1 {
 h2 {
 	font-family: "tradegothicbold"!important;
 	text-transform: uppercase;
+}
+
+.handwriting {
+  font-family: 'Permanent Marker', cursive !important;
 }
 
 #footer {
@@ -1690,3 +1696,7 @@ background-color: #DEE7F8;
 font-weight: normal;
 }
  
+
+acronym {
+  border-bottom: 1px dotted ;
+}

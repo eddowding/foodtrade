@@ -10,6 +10,8 @@
 {% block ogtype %}{% if userprof.user_type == "Business" %}Profile{%endif%}{% if userprof.user_type == "Individual" %}business.business{%endif%}{% if userprof.user_type == "Organisation" %}business.business{%endif%}{% endblock %}
 s
 {% block titlecontent %}{{userprof.full_name}}{% endblock %}
+{% block titlemain %}{{userprof.full_name}}{% endblock %}
+
 {% block description %}{{userprof.description}}{% endblock %}
 
 {% block fblat %}{{userprof.lat}}{% endblock %}
@@ -185,8 +187,8 @@ s
       {% if facebook_page %}
         <a href="{{facebook_page}}"><i class="fa fa-facebook-square"></i></a>
       {% endif %} 
-      {% if userinfo.username %}
-        <a href="http://twitter.com/{{userinfo.username}}"><i class="fa fa-twitter-square"></i></a> 
+      {% if userprof.username %}
+        <a href="http://twitter.com/{{userprof.username}}"><i class="fa fa-twitter-square"></i></a> 
       {% endif %} 
       {% if phone_number %}
         <a href="callto:{{phone_number}}"><i class="fa fa-phone-square"></i></a>  
