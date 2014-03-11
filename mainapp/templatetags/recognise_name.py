@@ -2,6 +2,7 @@ from django import template
 from django.contrib.auth.models import User
 import re
 from mainapp.classes.Foods import AdminFoods
+from mainapp.classes.TweetFeed import UserProfile
 register = template.Library()
 
 @register.filter
@@ -12,10 +13,13 @@ def recognise_name(value):
     	for each_tag in tags:
     		value = value.replace("#"+each_tag, '<a href="/activity/?q=%23'+each_tag+'">#'+each_tag+'</a>')
     if result:
+        user_prof = UserProfile()
         for each in result:
             try:
-                usr = User.objects.get(username = str(each))
-                value = value.replace("@"+each, '<a href="/profile/'+each+'/">@'+each+'</a>')
+                # usr = User.objects.get(username = str(each))
+                usr_pr = user_prof.get_profile_by_username(each)
+                if usr_pr['sign_up_as'] != 'unclaimed':
+                    value = value.replace("@"+each, '<a href="/profile/'+each+'/">@'+each+'</a>')
             except:
                 pass
 
