@@ -812,17 +812,12 @@ $('#tUserSearch').trigger(keyEvent);
 }
 
 function add_user(username){
-
-    var text = $('#invite_tweeter_user_text').html();
-   
-
+    var text = $('#invite_tweeter_user_text').html();   
     var new_text = text + ' @' + username;
     if (new_text.length < 140){     
-      invite_users.push('@'+ selected_text);
-      $('#invite_tweeter_user_text').html(new_text);
-      $('#invite_tweeter_user').html("");      
-    }
-    
+      $('#invite_tweeter_user_text').val(new_text);
+      $('#invite_tweeter_user').val("");      
+    }    
 }
 
 
@@ -853,10 +848,9 @@ function invite_tweeter_user(sign_up_as){
     alert('Please search and select someone to invite !!');
   }
 }
-var dat;
+
 function success_tweeter_user_invite(data){
   data = jQuery.parseJSON(data);
-  dat = data;
   if (data['status'] == "1"){
     tweet = data['new_invite_tweet'];
     invite_id = data['new_invite_id'];
