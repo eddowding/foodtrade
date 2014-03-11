@@ -26,7 +26,7 @@ def profile_url_resolve(request, username):
     if username == 'me':
         if request.user.is_authenticated():
             username = request.user.username
-        if request.user.id == None:
+        else:
             return HttpResponseRedirect('/accounts/twitter/login/?process=login')
             
 
