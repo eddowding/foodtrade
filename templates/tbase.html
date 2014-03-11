@@ -52,11 +52,7 @@
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places"></script>
     <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
     <style type="text/css">
-      .margin-invite{
-          margin-left: 77%;
-          margin-top: -19%;
-        }
-        
+  
       .margin-ta{
         margin-top: 1.5%;
       }
@@ -273,7 +269,7 @@
         <div class="modal-dialog">
           <div class="modal-content"> 
             <div class="modal-body">
-              <h2>Know someone who should be on FoodTrade? Invite them here:</h2>
+              <h3>Invite someone to join FoodTrade:</h3>
         <span class="input-group-btn">
               <div class='pull-left twitter-user-suggestions' id="my_twitter_search">
 
@@ -289,14 +285,18 @@
 
             <div class="modal-footer">
               <button id="btnClose" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-          <button id="dropdown-tweeter-user" class="dropdown-toggle btn btn-primary" data-toggle="dropdown">Invite<b class="caret"></b></button>
-                  <ul class="dropdown-menu margin-invite" role="menu" aria-labelledby="drop2">
-                    <li role="presentation"><a role="menuitem" onclick="invite_tweeter_user('Individual')" tabindex="-1">As Individual</a></li>
-                    <li role="presentation"><a role="menuitem" onclick="invite_tweeter_user('Business')" tabindex="-1">As Business</a></li>
-                    <li role="presentation"><a role="menuitem" onclick="invite_tweeter_user('Organisation')" tabindex="-1">As Organisation</a></li>
-                    <li role="presentation" class="divider"></li>
-                  </ul>
+
+
+              <div class="btn-group">
+              <button id="dropdown-tweeter-user" class="dropdown-toggle btn btn-primary" data-toggle="dropdown">Invite <b class="caret"></b></button>
+                <ul class="dropdown-menu text-left" role="menu" aria-labelledby="drop2">
+                  <li role="presentation"><a role="menuitem" onclick="invite_tweeter_user('Individual')" tabindex="-1">As Individual</a></li>
+                  <li role="presentation"><a role="menuitem" onclick="invite_tweeter_user('Business')" tabindex="-1">As Business</a></li>
+                  <li role="presentation"><a role="menuitem" onclick="invite_tweeter_user('Organisation')" tabindex="-1">As Organisation</a></li>
+                </ul>
+              </div> 
             </div>
+
           </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
       </div><!-- /.modal -->
@@ -826,8 +826,8 @@ $('#tUserSearch').trigger(keyEvent);
 
 
 function add_user(username){
-    var text = $('#invite_tweeter_user_text').html();   
-    var new_text = text + ' @' + username;
+    var text = $('#invite_tweeter_user_text').val();   
+    var new_text = text +" "+ username;
     if (new_text.length < 140){     
       $('#invite_tweeter_user_text').val(new_text);
       $('#invite_tweeter_user').val("");      
@@ -861,6 +861,7 @@ function invite_tweeter_user(sign_up_as){
 }
 
 function success_tweeter_user_invite(data){
+  $('#invite_tweeter_user').val("");  
   data = jQuery.parseJSON(data);
   if (data['status'] == "1"){
     tweet = data['new_invite_tweet'];

@@ -1696,7 +1696,9 @@ background-color: #DEE7F8;
 font-weight: normal;
 }
  
-
+acronym {
+  border-bottom: 1px dotted;
+}
 
  .result-container
  {
