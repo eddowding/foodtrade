@@ -1690,3 +1690,46 @@ background-color: #DEE7F8;
 font-weight: normal;
 }
  
+
+
+ .result-container
+ {
+  
+ }
+ .result-name
+ {
+  font-weight: bold;
+  padding-left: 10px;
+ }
+  .result-img
+ {
+  font-weight: bold;
+
+ }
+
+ .result-screen-name
+ {
+  font-size: 9px;
+ }
+
+ .tt-dataset-twitter-oss
+ {
+  background: #fefefe;
+ }
+ .tt-suggestion
+ {
+  padding: 5px 5px;
+
+
+ }
+
+  .tt-suggestions div:hover
+ {
+  background: #BEB5B5;
+
+
+ }
+
+ .tt-hint {
+visibility: hidden;
+}

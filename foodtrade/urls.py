@@ -47,11 +47,14 @@ urlpatterns = patterns('',
     url(r'^twillo/$', 'mainapp.views.sms_receiver'),
     url(r'^all_users/$', 'mainapp.home.all_users'),
     
-    url(r'^(?P<username>\w{1,40})/$', 'mainapp.profilepage.profile_url_resolve'),
 
+    url(r'^twitteruser/queries/$', 'mainapp.twitter_search.search_users'),
 
     # Temporary urls
     url(r'^merge-data/$', 'mainapp.merge_data.merge'),
     url(r'^update-image/$', 'mainapp.merge_data.update_image'),
+
+    ## any user
     
+    url(r'^(?P<username>\w{1,40})/$', 'mainapp.profilepage.profile_url_resolve'),
 )
