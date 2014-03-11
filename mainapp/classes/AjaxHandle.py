@@ -166,7 +166,7 @@ class AjaxHandle(AjaxSearch):
                         '''Construct New Invite URL.'''
                         new_invite_tweet = construct_invite_tweet(request, new_invite_id)
                         return HttpResponse(json.dumps({'status':'1', 
-                            'new_invite_id':new_invite_id, 
+                            'new_invite_id':new_invite_id['uid']['id'], 
                             'new_invite_tweet':new_invite_tweet}))
 
                 return HttpResponse(json.dumps({'status':1}))
@@ -259,7 +259,9 @@ class AjaxHandle(AjaxSearch):
                 except:
                     pass
             parameters = {}
-            parameters['connections'], parameters['conn'] = get_connections(int(data['prof_id']))
+            # parameters['connections'], parameters['logged_conn'] = get_connections(userprof['useruid'], request.user.id)
+
+            parameters['connections'], parameters['conn'] = get_connections(int(data['prof_id']), request.user.id)
             parameters['connections_str'] = str(json.dumps(parameters['connections']))
             parameters['profile_id'], parameters['user_id'] = int(data['prof_id']), request.user.id
             return render_to_response('conn_ajax.html', parameters)
@@ -275,7 +277,7 @@ class AjaxHandle(AjaxSearch):
             else:
                 trade_conn.delete_connection(b_useruid = request.user.id, c_useruid = int(data['prof_id']))
             parameters = {}
-            parameters['connections'], parameters['conn'] = get_connections(int(data['prof_id']))
+            parameters['connections'], parameters['conn'] = get_connections(int(data['prof_id']), request.user.id)
             parameters['connections_str'] = json.dumps(parameters['connections'])
             parameters['profile_id'], parameters['user_id'] = int(data['prof_id']), request.user.id
             return render_to_response('conn_ajax.html', parameters)            
@@ -291,7 +293,7 @@ class AjaxHandle(AjaxSearch):
             else:
                 trade_conn.delete_connection(b_useruid = int(data['conn_id']), c_useruid = int(data['prof_id']))
             parameters = {}
-            parameters['connections'], parameters['conn'] = get_connections(int(data['prof_id']))
+            parameters['connections'], parameters['conn'] = get_connections(int(data['prof_id']), request.user.id)
             parameters['connections_str'] = json.dumps(parameters['connections'])
             parameters['profile_id'], parameters['user_id'] = int(data['prof_id']), request.user.id
             return render_to_response('conn_ajax.html', parameters)            
@@ -310,7 +312,7 @@ class AjaxHandle(AjaxSearch):
 
             # add parameters
             parameters = {}
-            parameters['connections'], parameters['conn'] = get_connections(int(data['prof_id']))
+            parameters['connections'], parameters['conn'] = get_connections(int(data['prof_id']), request.user.id)
             parameters['connections_str'] = json.dumps(parameters['connections'])
             parameters['profile_id'], parameters['user_id'] = int(data['prof_id']), request.user.id
             return render_to_response('conn_ajax.html', parameters)
@@ -670,7 +672,7 @@ class AjaxHandle(AjaxSearch):
 
     def change_notification_status(self, request):
     	'''Changes the status of Notification'''
-        if request.method == 'POST' and request.user.is_authenticated:
+        if request.method == 'POST' and request.user.is_authenticated():
             notification_obj = Notification()
             return notification_obj.change_notification_status(request.user.username)
         else:
@@ -678,13 +680,13 @@ class AjaxHandle(AjaxSearch):
 
     def validate_logged_in(self,request):
     	'''Validates if the user is logged in or not.'''
-        if request.user.is_authenticated:
+        if request.user.is_authenticated():
             return HttpResponse(json.dumps({'status':'1'}))
         return HttpResponse(json.dumps({'status':'0'}))
 
     def get_friends_paginated(self,request):
     	'''Returns a list of pagiated friends'''
-        if request.method == 'POST' and request.user.is_authenticated:
+        if request.method == 'POST' and request.user.is_authenticated():
             page_num = request.POST['pgnum']
             friends_obj = Friends()
             return HttpResponse(json.dumps(friends_obj.get_paginated_friends(request.user.username, page_num)))
@@ -692,7 +694,7 @@ class AjaxHandle(AjaxSearch):
             return HttpResponse(json.dumps({'status':'0'}))
     def search_friend(self, request):
     	'''This function is used to search friends from the invite page'''
-        if request.method == 'POST' and request.user.is_authenticated:
+        if request.method == 'POST' and request.user.is_authenticated():
             query = request.POST['query']
             friends_obj = Friends()
             result = friends_obj.search_friends(request.user.username, query)
@@ -728,7 +730,7 @@ class AjaxHandle(AjaxSearch):
             if task == 'delete':
             	'''Deleting a Tweet'''
                 #print change_id
-                if request.user.is_superuser or request.user.is_authenticated:
+                if request.user.is_superuser or request.user.is_authenticated():
                     tweet_feed_obj.delete_tweet(request.user.id,str(change_id))
                 return HttpResponse(json.dumps({'status':'1', 'activity':'deleteTweet', '_id':change_id}))
 
@@ -792,7 +794,7 @@ class AjaxHandle(AjaxSearch):
         '''This function is used to archive a notification.'''
         notification_id = request.POST['notification_id']
         notifying_user_name = request.POST['notifying_user_name']
-        if request.user.is_authenticated:
+        if request.user.is_authenticated():
             notification_obj = Notification()
             result = notification_obj.change_notification_archived_status(notification_id)
             return HttpResponse(json.dumps(result))
@@ -804,7 +806,7 @@ class AjaxHandle(AjaxSearch):
         page_num = request.POST['pgnum']
         n_type = request.POST['n_type']
 
-        if request.user.is_authenticated:
+        if request.user.is_authenticated():
             parameters ={}
             user_name = request.user.username
             notices = Notification()
@@ -847,7 +849,7 @@ class AjaxHandle(AjaxSearch):
 
     def change_notification_view_status(self, request):
         '''This function changes the notification status from read to unread.'''
-        if request.user.is_authenticated:
+        if request.user.is_authenticated():
             notice_obj = Notification()
             notification_id = request.POST['notification_id']
             this_not = notice_obj.get_notification_by_id(notification_id)
@@ -867,7 +869,7 @@ class AjaxHandle(AjaxSearch):
 
     def un_archive_notification(self, request):
         '''This function un-archives a notification.'''
-        if request.user.is_authenticated:
+        if request.user.is_authenticated():
             notice_obj = Notification()
             notification_id = request.POST['notification_id']
             notice_obj.un_archive_notification(notification_id)            
@@ -944,7 +946,7 @@ class AjaxHandle(AjaxSearch):
                 'message':'You are not authorized to perform this action.'}))
 
     def check_email_address(self, request):
-        if request.user.is_authenticated:
+        if request.user.is_authenticated():
             user_profile_obj = UserProfile()
             email = request.POST.get('email')
             if request.user.is_superuser:
@@ -959,7 +961,7 @@ class AjaxHandle(AjaxSearch):
             return HttpResponse(json.dumps({'status':0, 'message':'You are not authorized to perform this action.'}))
 
     def search_users(self, request):
-        if request.user.is_authenticated:
+        if request.user.is_authenticated():
             q = request.POST.get('q')
             user_id = request.user.id
             tweet_feed_obj = TweetFeed()

@@ -20,7 +20,9 @@
 {% block fbcountry %}{{userprof.country}}{% endblock %}
 {% block ogimg %}{{userprof.profileimg}}{% endblock %}
 
+{% block titlemain %}{{userprof.full_name}}{% endblock %}
 {% block metatitle %}{{userprof.full_name}}{% endblock %}
+
 {% block metadescription %}{{userprof.description}}{% endblock %}
 
 {% block contact %}
@@ -183,7 +185,7 @@
            
 {% else %}
       <!-- if not logged in show login prompt -->
-<div class="btn-group btn-block" rel="tooltip" title="Login to connect to {{name}}">
+<div class="btn-group btn-block" rel="tooltip" data-placement="top" title="Login to connect to {{name}}">
     <button class="btn btn-default" style="width:50%;" disabled>
           Buy from</button>
 <button class="btn btn-default"  style="width:50%;" disabled>
@@ -492,7 +494,7 @@
                           <div class="pull-left">
                         <span class="input-group-btn">
                 
-                            <button class="btn btn-success" id="adfoo_id" onClick="add_food({{profile_id}}, {{user_id}})" {% if not user.is_authenticated %} title="Please log in to use this feature." {% endif %} > Add</button>
+                            <button class="btn btn-success" id="adfoo_id" rel="tooltip" onClick="add_food({{profile_id}}, {{user_id}})" {% if not user.is_authenticated %} title="Please log in to use this feature." {% endif %} > Add</button>
                         </span></div>
                       </div>  
               {% endif %}
@@ -563,11 +565,11 @@
                      {% ifnotequal profile_id user_id %}
                        <div class="btn-block" data-toggle="buttons">
                        {% if eachfood.logged_recommender %}
-                            <label class="fa fa-thumbs-o-up tltip btn btn-default btn-sm active" title="Recommend this to others">
+                            <label class="fa fa-thumbs-o-up btn btn-default btn-sm active" rel="tooltip" title="Recommend this to others">
                               <input type="checkbox" checked="checked" onchange="recommend_food({{user_id}}, '{{eachfood.food_name}}', {{profile_id}}, '{{screen_name}}', this); return null;">
                             </label>
                         {% else %}
-                            <label class="fa fa-thumbs-o-up tltip btn btn-default btn-sm" title="Recommend this to others" data-toggle="modal" data-target="#modal_tweet_recomm">
+                            <label class="fa fa-thumbs-o-up btn btn-default btn-sm" rel="tooltip" title="Recommend this to others" data-toggle="modal" data-target="#modal_tweet_recomm">
                               <input type="checkbox" onchange="recommend_food({{user_id}}, '{{eachfood.food_name}}', {{profile_id}}, '{{screen_name}}', this); return null;">
                             </label>
                         {% endif %}
@@ -581,12 +583,12 @@
                    
                    {% for eachdet in eachfood.recomm_details %}
                     <div class="pull-right">
-                      <img class="pull-left" style="margin:0px 4px 0 0; width:25px" src={{eachdet.photo}} title="{{eachdet.name}}"/>
+                      <img class="pull-left" style="margin:0px 4px 0 0; width:25px" src={{eachdet.photo}} rel="tooltip" title="{{eachdet.name}}"/>
                     </div>
                    {% endfor %}
                  {% ifnotequal eachfood.vouch_count 0 %}
                    <div class="pull-right">
-                     <span class="badge badge-default tltip" style="margin:3px 4px 0 0;" title="{{eachfood.vouch_count}} recommendations on {{eachfood.food_name}}">{{eachfood.vouch_count}}</span>
+                     <span class="badge badge-default" style="margin:3px 4px 0 0;" rel="tooltip" title="{{eachfood.vouch_count}} recommendations on {{eachfood.food_name}}">{{eachfood.vouch_count}}</span>
                   </div>
                   {% endifnotequal %}
               
@@ -953,7 +955,6 @@ $( document ).ready(function() {
 
   tweetlistener('email_message', 'contact_counter', 'contact_tweet');
 // activating tooltips
-    $('.tltip').tooltip();
     $('#adfoo_id').tooltip();
 // food popover
 

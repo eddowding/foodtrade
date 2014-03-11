@@ -433,7 +433,7 @@ def unclaimed_profiles(request):
 
 @user_passes_test(lambda u: u.is_superuser)    
 def transport_mailchimp(request):
-    if request.user.is_authenticated:
+    if request.user.is_authenticated():
         user_profile_obj = UserProfile()
         all_users = user_profile_obj.get_all_profiles('None')
         print len(all_users)
