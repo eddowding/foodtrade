@@ -457,7 +457,7 @@ hidden
     <div data-step="3" data-intro="Just start typing to search for specific foods, business type, or filter by organisation membership" data-position="right">
     <form role="form" >
       <div class="form-group"> 
-        <input type="text" class="form-control input-sm" id="food_filter" placeholder="Refine by food or drink">
+        <input type="text" class="form-control" id="food_filter" placeholder="Refine by food or drink">
       </div>
     </form>
     
@@ -473,7 +473,7 @@ hidden
     
     <form role="form">
       <div class="form-group"> 
-        <input type="email" class="form-control input-sm" id="business_filter" placeholder="Filter by business type">
+        <input type="email" class="form-control " id="business_filter" placeholder="Filter by business type">
       </div>
     </form>
     <ul class="foodtrade-tag-list">
@@ -490,7 +490,7 @@ hidden
 
      <form role="form">
       <div class="form-group"> 
-        <input type="email" class="form-control input-sm" id="organisation_filter" placeholder="Show only members of...">
+        <input type="email" class="form-control " id="organisation_filter" placeholder="Show only members of...">
       </div>
     </form>
     <ul class="foodtrade-tag-list">
@@ -819,8 +819,7 @@ function add_user(username){
       $('#invite_tweeter_user').val("");      
     }    
 }
-
-
+    
 $('#select-invite').on('chosen:no_results', function(evt, params) {
     input_val = $('#tUserSearch').val();
     ajax_request('search_users', 'search_users_success', {'q':input_val});
@@ -828,7 +827,6 @@ $('#select-invite').on('chosen:no_results', function(evt, params) {
 
 function invite_tweeter_user(sign_up_as){
   text = $('#invite_tweeter_user_text').val();
-  alert(text);
   var invite_users = [];
   text_content = text.split(' ');
   for (var i =0; i<text_content.length; i++){
@@ -836,7 +834,6 @@ function invite_tweeter_user(sign_up_as){
         invite_users.push(text_content[i]);
       }
     }
-  alert(invite_users);    
   if (invite_users.length >0){   
     ajax_request(
       'post_tweet','success_tweeter_user_invite',
@@ -848,7 +845,10 @@ function invite_tweeter_user(sign_up_as){
     alert('Please search and select someone to invite !!');
   }
 }
+<<<<<<< HEAD
 
+=======
+>>>>>>> 11edecd833ed2038f4e6fbba7c96064eafbe9890
 function success_tweeter_user_invite(data){
   data = jQuery.parseJSON(data);
   if (data['status'] == "1"){
