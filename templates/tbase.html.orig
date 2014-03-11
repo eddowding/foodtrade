@@ -32,7 +32,7 @@
 
 
     <link rel="shortcut icon" href="/static/images/favicon.ico">
-    <title>FoodTrade</title>
+    <title>{% block titlemain %}{% if 'activity' in request.path %}{% else %}Home {% endif %}{% endblock %} {% if 'activity' not in request.path %}-{% endif %} FoodTrade</title>
     <!-- CSS -->
     <link href="{% static "css/bootstrap.css" %}" rel="stylesheet">
     <link href="{% static "css/foodtrade.css" %}" rel="stylesheet"> 
@@ -262,10 +262,10 @@
             <div class="modal-body">
               <h2>Know someone who should be on FoodTrade? Invite them here:</h2>
         <span class="input-group-btn">
-              <div class='pull-left' id="my_twitter_search">
-                          <select id="select-invite" name="q" data-placeholder="Search twitter users.."  style="height:30px; width: 192px" multiple class="chosen-select pull-left my-width" required>
-                          <option value=""></option>
-                          </select>
+              <div class='pull-left twitter-user-suggestions' id="my_twitter_search">
+
+  <input class="typeahead form-control" id="invite_tweeter_user" style="width:310px;" type="text" placeholder="Search Twitter users">
+                         
                         </div>
           <button type="submit" id="btnSearchTweeterUsers" onclick="search_tweeter_users()" class="btn btn-default pull-left">
           <i class="glyphicon glyphicon-search"></i>
@@ -737,8 +737,10 @@ function tweetlistener(input, counter, button){
     <script src="{% static "js/ajax-handle.js" %}"></script> 
     <script src="{% static "js/intro.min.js" %}"></script>
     <script src="{% static "js/jquery.geocomplete.js" %}"></script>
+     <script src="http://twitter.github.io/typeahead.js/js/handlebars.js"></script>
 
     <script src="{% static "js/tag-it.js" %}"></script>
+    <script src="{% static "js/twitter-typeahead.js" %}"></script>
     <script src="/static/js/chosen.jquery.min.js" type="text/javascript"></script>
 <script src="/static/css/docsupport/prism.js" type="text/javascript" charset="utf-8"></script>
 
@@ -759,7 +761,6 @@ $(".img-thumbnail").bind('error', function (e) {
  <script type="text/javascript">
 var invite_id = String('{{invite_id|safe}}');
 var tweet = String('{{invite_tweet|safe}}');
-var invite_users = [];
 var input_val;
 $(document).ready(function(){
   $('#select-invite').chosen({skip_no_results: true});
@@ -795,17 +796,10 @@ function search_users_success(data){
     str = str + '<option value="' + String(results[i].screen_name) + '">' + String(results[i].screen_name) + '</option>';
   }
   $('#select-invite').html(str);
-<<<<<<< HEAD
-=======
- 
->>>>>>> bcbf575e729a358770d459d5ef07a3443fa79051
-  invite_users=[];
  
  $('#select-invite').trigger('chosen:updated');
   $('#tUserSearch').val(input_val);
-<<<<<<< HEAD
   $('#tUserSearch').focus();
-=======
   document.getElementById("tUserSearch").focus();
   var input_width = (input_val.length * 11) +"px";
   
@@ -815,28 +809,39 @@ function search_users_success(data){
 var keyEvent = jQuery.Event("keydown");
 keyEvent.keyCode = 18;
 $('#tUserSearch').trigger(keyEvent);
-
->>>>>>> bcbf575e729a358770d459d5ef07a3443fa79051
 }
 
-$('#select-invite').on('change', function(evt, params) {
-    var text = $('#invite_tweeter_user_text').html();
-    selected_text = $('#select-invite :selected').val();
+<<<<<<< HEAD
+function add_user(username){
 
-    var new_text = text + ' @' + String(selected_text);
+    var text = $('#invite_tweeter_user_text').html();
+   
+=======
+$('#select-invite').on('change', function(evt, params) {
+    var text = $('#invite_tweeter_user_text').val();
+    selected_text = $('#select-invite :selected').val();
+>>>>>>> 66ef1a22b62c82fe1d0fffcbc23145037186df8b
+
+    var new_text = text + ' @' + username;
     if (new_text.length < 140){     
+<<<<<<< HEAD
+      invite_users.push('@'+ selected_text);
+      $('#invite_tweeter_user_text').html(new_text);
+      $('#invite_tweeter_user').html("");      
+=======
       $('#select-invite :selected').remove();    
       $('#select-invite').trigger('chosen:updated');
-      invite_users.push('@'+ selected_text);
-      $('#invite_tweeter_user_text').html(new_text);      
+      $('#invite_tweeter_user_text').val(new_text);      
     }
     else{     
       $('#select-invite :selected').remove();    
       $('#select-invite').trigger('chosen:updated');
       $('#select-invite').html('<option value="' + String(selected_text)+ '">' + String(selected_text) + '</option>');
+>>>>>>> 66ef1a22b62c82fe1d0fffcbc23145037186df8b
     }
+    
+}
 
-});
 
 $('#select-invite').on('chosen:no_results', function(evt, params) {
     input_val = $('#tUserSearch').val();
@@ -844,8 +849,17 @@ $('#select-invite').on('chosen:no_results', function(evt, params) {
 });
 
 function invite_tweeter_user(sign_up_as){
+  text = $('#invite_tweeter_user_text').val();
+  alert(text);
+  var invite_users = [];
+  text_content = text.split(' ');
+  for (var i =0; i<text_content.length; i++){
+      if (text_content[i].indexOf('@')!=-1){
+        invite_users.push(text_content[i]);
+      }
+    }
+  alert(invite_users);    
   if (invite_users.length >0){   
-    text = $('#invite_tweeter_user_text').html();
     ajax_request(
       'post_tweet','success_tweeter_user_invite',
       {'message':text, 'invite':'true', 'friend_invite':'false',
@@ -856,14 +870,28 @@ function invite_tweeter_user(sign_up_as){
     alert('Please search and select someone to invite !!');
   }
 }
+<<<<<<< HEAD
 
+
+
+
+
+
+
+
+
+
+=======
+var dat;
+>>>>>>> 66ef1a22b62c82fe1d0fffcbc23145037186df8b
 function success_tweeter_user_invite(data){
   data = jQuery.parseJSON(data);
-  if (data['status'] == 1){
+  dat = data;
+  if (data['status'] == "1"){
     tweet = data['new_invite_tweet'];
     invite_id = data['new_invite_id'];
-    $('#invite_tweeter_user_text').html(data['new_invite_tweet']);
-    $('#btnClose').click();    
+    $('#invite_tweeter_user_text').val(data['new_invite_tweet']);
+    $('#btnClose').click();
   }
   var url = document.URL;
   if (url.indexOf("invite") != -1){
@@ -926,7 +954,7 @@ tweetlistener('tweetMessage', 'counter', 'contact_tweet', 'newtweet_btn');
 
     <script type="text/javascript">
       $('.tip').tooltip();
-      $('[rel=tooltip]').tooltip();
+      $('[rel=tooltip]').tooltip({container: 'body'});
 
    
 
@@ -1120,7 +1148,14 @@ function formSubmit(form) {
 });
 </script>    
 
-
+<script type="text/javascript">
+  var $mcGoal = {'settings':{'uuid':'79e1467c02512dbd83bddab5f','dc':'us2'}};
+  (function() {
+     var sp = document.createElement('script'); sp.type = 'text/javascript'; sp.async = true; sp.defer = true;
+    sp.src = ('https:' == document.location.protocol ? 'https://s3.amazonaws.com/downloads.mailchimp.com' : 'http://downloads.mailchimp.com') + '/js/goal.min.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(sp, s);
+  })(); 
+</script>
 
 
 <script>
