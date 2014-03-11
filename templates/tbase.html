@@ -260,7 +260,7 @@
         <div class="modal-dialog">
           <div class="modal-content"> 
             <div class="modal-body">
-              <h2>Know someone who should be on FoodTrade? Invite them here:</h2>
+              <h3>Invite someone to join FoodTrade:</h3>
         <span class="input-group-btn">
               <div class='pull-left twitter-user-suggestions' id="my_twitter_search">
 
@@ -811,20 +811,16 @@ keyEvent.keyCode = 18;
 $('#tUserSearch').trigger(keyEvent);
 }
 
+
 function add_user(username){
-
-    var text = $('#invite_tweeter_user_text').html();
-   
-
+    var text = $('#invite_tweeter_user_text').html();   
     var new_text = text + ' @' + username;
     if (new_text.length < 140){     
-      $('#invite_tweeter_user_text').html(new_text);
-      // $('#invite_tweeter_user').val("");      
-    }
-    
+      $('#invite_tweeter_user_text').val(new_text);
+      $('#invite_tweeter_user').val("");      
+    }    
 }
-
-
+    
 $('#select-invite').on('chosen:no_results', function(evt, params) {
     input_val = $('#tUserSearch').val();
     ajax_request('search_users', 'search_users_success', {'q':input_val});
@@ -850,6 +846,7 @@ function invite_tweeter_user(sign_up_as){
     alert('Please search and select someone to invite !!');
   }
 }
+
 function success_tweeter_user_invite(data){
   data = jQuery.parseJSON(data);
   if (data['status'] == "1"){
