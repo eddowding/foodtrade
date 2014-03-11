@@ -814,7 +814,7 @@ $('#tUserSearch').trigger(keyEvent);
 
 function add_user(username){
     var text = $('#invite_tweeter_user_text').html();   
-    var new_text = text + ' @' + username;
+    var new_text = text + username;
     if (new_text.length < 140){     
       $('#invite_tweeter_user_text').val(new_text);
       $('#invite_tweeter_user').val("");      

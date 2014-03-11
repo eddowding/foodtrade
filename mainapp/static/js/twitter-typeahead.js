@@ -1674,9 +1674,9 @@ $('.twitter-user-suggestions .typeahead').typeahead(null, {
   source: repos.ttAdapter(),
   templates: {
     suggestion: Handlebars.compile([
-      '<a class="result-container"><span class="result-img"><img height="32px" width="32px" src="{{profile_image_url_https}}"></span>',
+      '<span class="result-container"><span class="result-img"><img height="32px" width="32px" src="{{profile_image_url_https}}"></span>',
       '<span class="result-name">{{name}}</span> ',
-      '<span class="result-screen-name"> @{{screen_name}}</span></a>'     
+      '<span class="result-screen-name"> @{{screen_name}}</span></span>'     
     ].join(''))
   }
 });
@@ -1684,5 +1684,5 @@ $('.twitter-user-suggestions .typeahead').typeahead(null, {
 $('.modal-content').on('click', '.tt-suggestion', function(){
 var username = this.getElementsByClassName('result-screen-name')[0].textContent;
 add_user(username);
-alert("gone here");
+
 });
