@@ -259,7 +259,9 @@ class AjaxHandle(AjaxSearch):
                 except:
                     pass
             parameters = {}
-            parameters['connections'], parameters['conn'] = get_connections(int(data['prof_id']))
+            # parameters['connections'], parameters['logged_conn'] = get_connections(userprof['useruid'], request.user.id)
+
+            parameters['connections'], parameters['conn'] = get_connections(int(data['prof_id']), request.user.id)
             parameters['connections_str'] = str(json.dumps(parameters['connections']))
             parameters['profile_id'], parameters['user_id'] = int(data['prof_id']), request.user.id
             return render_to_response('conn_ajax.html', parameters)
@@ -275,7 +277,7 @@ class AjaxHandle(AjaxSearch):
             else:
                 trade_conn.delete_connection(b_useruid = request.user.id, c_useruid = int(data['prof_id']))
             parameters = {}
-            parameters['connections'], parameters['conn'] = get_connections(int(data['prof_id']))
+            parameters['connections'], parameters['conn'] = get_connections(int(data['prof_id']), request.user.id)
             parameters['connections_str'] = json.dumps(parameters['connections'])
             parameters['profile_id'], parameters['user_id'] = int(data['prof_id']), request.user.id
             return render_to_response('conn_ajax.html', parameters)            
@@ -291,7 +293,7 @@ class AjaxHandle(AjaxSearch):
             else:
                 trade_conn.delete_connection(b_useruid = int(data['conn_id']), c_useruid = int(data['prof_id']))
             parameters = {}
-            parameters['connections'], parameters['conn'] = get_connections(int(data['prof_id']))
+            parameters['connections'], parameters['conn'] = get_connections(int(data['prof_id']), request.user.id)
             parameters['connections_str'] = json.dumps(parameters['connections'])
             parameters['profile_id'], parameters['user_id'] = int(data['prof_id']), request.user.id
             return render_to_response('conn_ajax.html', parameters)            
@@ -310,7 +312,7 @@ class AjaxHandle(AjaxSearch):
 
             # add parameters
             parameters = {}
-            parameters['connections'], parameters['conn'] = get_connections(int(data['prof_id']))
+            parameters['connections'], parameters['conn'] = get_connections(int(data['prof_id']), request.user.id)
             parameters['connections_str'] = json.dumps(parameters['connections'])
             parameters['profile_id'], parameters['user_id'] = int(data['prof_id']), request.user.id
             return render_to_response('conn_ajax.html', parameters)
