@@ -13,13 +13,11 @@ def recognise_name(value):
     		value = value.replace("#"+each_tag, '<a href="/activity/?q=%23'+each_tag+'">#'+each_tag+'</a>')
     if result:
         for each in result:
-            print 'doing for ', each
             try:
                 usr = User.objects.get(username = str(each))
                 value = value.replace("@"+each, '<a href="/profile/'+each+'/">@'+each+'</a>')
             except:
                 pass
-            print 'done: ', value
 
 
     admin_foods = AdminFoods()
