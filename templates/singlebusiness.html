@@ -989,17 +989,29 @@ document.getElementById("myselect").addEventListener("DOMSubtreeModified", funct
 
 document.getElementById("buss_chosen").addEventListener("DOMSubtreeModified", function(e) {
   // Record the occurrence
+  var new_biz = $('#buss_chosen_chosen .chosen-choices input').val();
+  $('#invite_tweeter_user').val(new_biz);  
   $('#my_invite_twitter').click();
 
   $('#buss_chosen_chosen ul .search-choice').remove();
 }, false);
 document.getElementById("org_chosen").addEventListener("DOMSubtreeModified", function(e) {
   // Record the occurrence
+  var new_org = $('#org_chosen_chosen .chosen-choices input').val();
+  $('#invite_tweeter_user').val(new_org);
   $('#my_invite_twitter').click();
 
   $('#org_chosen_chosen ul .search-choice').remove();
 }, false);
 
+
+ $('#org_chosen').chosen().change(function(){
+    $('#org_chosen_chosen .chosen-choices li.search-choice').remove();
+    });
+
+  $('#buss_chosen').chosen().change(function(){
+    $('#org_chosen_chosen .chosen-choices li.search-choice').remove();
+    });
 
 // chosen config code
 // var config = {
