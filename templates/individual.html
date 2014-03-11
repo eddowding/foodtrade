@@ -10,6 +10,8 @@
 {% block ogtype %}{% if userprof.user_type == "Business" %}Profile{%endif%}{% if userprof.user_type == "Individual" %}business.business{%endif%}{% if userprof.user_type == "Organisation" %}business.business{%endif%}{% endblock %}
 s
 {% block titlecontent %}{{userprof.full_name}}{% endblock %}
+{% block titlemain %}{{userprof.full_name}}{% endblock %}
+
 {% block description %}{{userprof.description}}{% endblock %}
 
 {% block fblat %}{{userprof.lat}}{% endblock %}
