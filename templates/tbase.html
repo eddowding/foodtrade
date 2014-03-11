@@ -262,10 +262,10 @@
             <div class="modal-body">
               <h3>Invite someone to join FoodTrade:</h3>
         <span class="input-group-btn">
-              <div class='pull-left' id="my_twitter_search">
-                          <select id="select-invite" name="q" data-placeholder="Search twitter users.."  style="height:30px; width: 192px" multiple class="chosen-select pull-left my-width" required>
-                          <option value=""></option>
-                          </select>
+              <div class='pull-left twitter-user-suggestions' id="my_twitter_search">
+
+  <input class="typeahead form-control" id="invite_tweeter_user" style="width:310px;" type="text" placeholder="Search Twitter users">
+                         
                         </div>
           <button type="submit" id="btnSearchTweeterUsers" onclick="search_tweeter_users()" class="btn btn-default pull-left">
           <i class="glyphicon glyphicon-search"></i>
@@ -737,8 +737,10 @@ function tweetlistener(input, counter, button){
     <script src="{% static "js/ajax-handle.js" %}"></script> 
     <script src="{% static "js/intro.min.js" %}"></script>
     <script src="{% static "js/jquery.geocomplete.js" %}"></script>
+     <script src="http://twitter.github.io/typeahead.js/js/handlebars.js"></script>
 
     <script src="{% static "js/tag-it.js" %}"></script>
+    <script src="{% static "js/twitter-typeahead.js" %}"></script>
     <script src="/static/js/chosen.jquery.min.js" type="text/javascript"></script>
 <script src="/static/css/docsupport/prism.js" type="text/javascript" charset="utf-8"></script>
 
@@ -809,24 +811,16 @@ keyEvent.keyCode = 18;
 $('#tUserSearch').trigger(keyEvent);
 }
 
-$('#select-invite').on('change', function(evt, params) {
-    var text = $('#invite_tweeter_user_text').val();
-    selected_text = $('#select-invite :selected').val();
 
-    var new_text = text + ' @' + String(selected_text);
+function add_user(username){
+    var text = $('#invite_tweeter_user_text').html();   
+    var new_text = text + ' @' + username;
     if (new_text.length < 140){     
-      $('#select-invite :selected').remove();    
-      $('#select-invite').trigger('chosen:updated');
-      $('#invite_tweeter_user_text').val(new_text);      
-    }
-    else{     
-      $('#select-invite :selected').remove();    
-      $('#select-invite').trigger('chosen:updated');
-      $('#select-invite').html('<option value="' + String(selected_text)+ '">' + String(selected_text) + '</option>');
-    }
-
-});
-
+      $('#invite_tweeter_user_text').val(new_text);
+      $('#invite_tweeter_user').val("");      
+    }    
+}
+    
 $('#select-invite').on('chosen:no_results', function(evt, params) {
     input_val = $('#tUserSearch').val();
     ajax_request('search_users', 'search_users_success', {'q':input_val});
@@ -834,7 +828,6 @@ $('#select-invite').on('chosen:no_results', function(evt, params) {
 
 function invite_tweeter_user(sign_up_as){
   text = $('#invite_tweeter_user_text').val();
-  alert(text);
   var invite_users = [];
   text_content = text.split(' ');
   for (var i =0; i<text_content.length; i++){
@@ -842,7 +835,6 @@ function invite_tweeter_user(sign_up_as){
         invite_users.push(text_content[i]);
       }
     }
-  alert(invite_users);    
   if (invite_users.length >0){   
     ajax_request(
       'post_tweet','success_tweeter_user_invite',
@@ -854,10 +846,9 @@ function invite_tweeter_user(sign_up_as){
     alert('Please search and select someone to invite !!');
   }
 }
-var dat;
+
 function success_tweeter_user_invite(data){
   data = jQuery.parseJSON(data);
-  dat = data;
   if (data['status'] == "1"){
     tweet = data['new_invite_tweet'];
     invite_id = data['new_invite_id'];

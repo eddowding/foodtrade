@@ -1697,6 +1697,10 @@ font-weight: normal;
 }
  
 
+<<<<<<< HEAD
+acronym {
+  border-bottom: 1px dotted ;
+=======
 
  .result-container
  {
@@ -1738,6 +1742,5 @@ font-weight: normal;
 
  .tt-hint {
 visibility: hidden;
-acronym {
-  border-bottom: 1px dotted ;
+>>>>>>> 037e1e4a63f733d4e9d6244d09c23a0eb1d6c0b7
 }
