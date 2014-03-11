@@ -31,6 +31,10 @@ def search_users(request):
         user_id = request.user.id
         tweet_feed_obj = TweetFeed()
         results = tweet_feed_obj.search_tweeter_users(user_id, query)
+        temp_result = []
+        for res in results:
+        	temp_result.append({'name':res['name'], 'screen_name':res['screen_name'], 'profile_image_url_https':res['profile_image_url_https']})
+        results = temp_result
         return HttpResponse(json.dumps(results))
     else:
         return HttpResponse(json.dumps({'status':0, 'message':'You are not authorized to perform this action.'}))        
