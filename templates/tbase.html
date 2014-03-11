@@ -848,6 +848,7 @@ function invite_tweeter_user(sign_up_as){
 }
 
 function success_tweeter_user_invite(data){
+  $('#invite_tweeter_user').val("");  
   data = jQuery.parseJSON(data);
   if (data['status'] == "1"){
     tweet = data['new_invite_tweet'];
