@@ -24,6 +24,7 @@ ACCESS_TOKEN = ''
 ACCESS_TOKEN_SECRET =''
 import json
 
+from datetime import datetime, timedelta
 def get_twitter_obj(token, secret):
     return Twython(
         app_key = settings.CONSUMER_KEY,
@@ -74,7 +75,11 @@ class TweetFeed():
         return self.db_object.get_one( self.table_name, { "updates.tweet_id": str(tweet_id) })
 
     def has_tweet_in_week(self,useruid):
-        week_ago = int(time.time()) - 7*24*3600
+        # now_instant = time.time() - 4*24*3600
+        # week_ago = now_instant - (now_instant%(7*24*3600)) + 4*24*3600
+        a = datetime.now()
+        start = a - timedelta(days = a.weekday())
+        week_ago =int(start.strftime("%s"))
         results = self.db_object.get_all( self.table_name, {"useruid":useruid,"updates.parent_tweet_id":"0", "updates.time_stamp": {"$gte":week_ago} })
         if len(results)>0:
             return True
