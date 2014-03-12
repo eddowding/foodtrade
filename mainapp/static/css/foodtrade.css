@@ -14,6 +14,10 @@ a {
   color: #468517;
 }
 
+a:hover, a:focus {
+  color: #C94926;
+}
+
 @font-face {
     font-family: 'tradegothicbold';
     src: url('/static/fonts/trade_gothic_bold_condensed_no._20-webfont.eot');
@@ -825,10 +829,7 @@ font-weight: bold;
   color: #fff;
   text-decoration: none;
 }
-
-.slide p {
-  margin-bottom: 0;
-}
+ 
 
  
 
@@ -1697,7 +1698,25 @@ font-weight: normal;
 }
  
 acronym {
-  border-bottom: 1px dotted;
+  border-bottom: 1px dotted #468517;
+  color: #468517;
+}
+
+#homenav {
+  background: #eee;
+}
+
+#homenav a {
+  border-radius: 0; 
+  line-height: 1;
+}
+
+#homenav a small {
+  font-size: .7em;
+}
+
+#reload_warning .alert {
+  margin-bottom: 0;
 }
 
  .result-container
