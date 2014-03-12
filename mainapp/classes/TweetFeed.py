@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # encoding: utf-8
 from MongoConnection import MongoConnection
-from datetime import datetime
+
 from bson.objectid import ObjectId
 # import time
 from pygeocoder import Geocoder
@@ -18,7 +18,7 @@ import re
 from django.conf import settings
 from mainapp.classes.Email import Email
 import json
-import datetime,time
+
 import pprint
 ACCESS_TOKEN = ''
 ACCESS_TOKEN_SECRET =''
@@ -760,7 +760,7 @@ class Notification():
 
     def get_all_notification_to_send(self):
         aggregation_pipeline = []
-        yesterday = datetime.datetime.now() - datetime.timedelta(1)
+        yesterday = datetime.now() - timedelta(1)
         aggregation_pipeline.append({"$match":{'notification_time':{'$gt':time.mktime(yesterday.timetuple())}}})
         aggregation_pipeline.append({
             "$group":
@@ -977,5 +977,5 @@ class KPI():
         self.db_object.create_table(self.table_name,'_id')
 
     def create_kpi(self, value):
-        value['time_stamp'] = time.mktime(datetime.datetime.now().timetuple())
+        value['time_stamp'] = time.mktime(datetime.now().timetuple())
         self.db_object.insert_one(self.table_name, value)
