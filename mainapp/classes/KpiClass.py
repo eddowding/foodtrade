@@ -25,7 +25,7 @@ class KPIStats():
         self.table_name = 'userprofile'
         agg_pipeline = []
         agg_pipeline.append({"$unwind": "$updates"})
-        agg_pipeline.append({ '$match':{"updates.deleted": 0}})
+        agg_pipeline.append({ '$match':{"updates.deleted": 0,"updates.parent_tweet_id":"0"}})
         mongo = MongoConnection("localhost",27017,'foodtrade')
         results = mongo.aggregrate_all(self.table_name, agg_pipeline)
         return len(results)
