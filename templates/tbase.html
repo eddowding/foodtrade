@@ -32,7 +32,18 @@
 
 
     <link rel="shortcut icon" href="/static/images/favicon.ico">
-    <title>{% block titlemain %}{% if 'activity' in request.path %}{% else %}Home {% endif %}{% endblock %} {% if 'activity' not in request.path %}-{% endif %} FoodTrade</title>
+    <title>
+      {% block titlemain %}
+        {% ifequal request.path '/' %}
+          Welcome to FoodTrade - Login, Signup, become the part of Food revolution
+        {% endifequal %}
+        {% if 'activity' in request.path %}      
+        Home
+        {% endif %}
+      {% endblock %}{% if request.path != '/' %} -FoodTrade{% endif %}
+      
+
+    </title>
     <!-- CSS -->
     <link href="{% static "css/bootstrap.css" %}" rel="stylesheet">
     <link href="{% static "css/foodtrade.css" %}" rel="stylesheet"> 
@@ -44,6 +55,8 @@
   
       .margin-ta{
         margin-top: 1.5%;
+      }
+      .acronym{        
       }
     </style>
     {% block contact %}
@@ -856,6 +869,7 @@ function success_tweeter_user_invite(data){
     tweet = data['new_invite_tweet'];
     invite_id = data['new_invite_id'];
     $('#invite_tweeter_user_text').val(data['new_invite_tweet']);
+    $('#invite_tweeter_user').val('');
     $('#btnClose').click();
   }
   var url = document.URL;
@@ -921,7 +935,7 @@ tweetlistener('tweetMessage', 'counter', 'contact_tweet', 'newtweet_btn');
       $('.tip').tooltip();
       $('[rel=tooltip]').tooltip({container: 'body'});
 
-   
+      $('.acronym').tooltip();
 
       $('[data-toggle=offcanvas]').click(function() {
         $('.row-offcanvas').toggleClass('active');
