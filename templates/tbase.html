@@ -37,9 +37,24 @@
         {% ifequal request.path '/' %}
           Welcome to FoodTrade - Login, Signup, become the part of Food revolution
         {% endifequal %}
-        {% if 'activity' in request.path %}      
-        Home
+        {% if 'payments' in request.path %}
+          Subscription
         {% endif %}
+        {% if 'inbox' in request.path %}
+          Inbox
+        {% endif %}
+        {% if 'invite' in request.path %}      
+          Invite
+        {% endif %}
+        {% if 'unclaimed-profiles' in request.path %}      
+          Unclaimed-Profiles
+        {% endif %}
+        {% if 'pricing' in request.path %}      
+          Pricing
+        {% endif %}
+        {% if 'activity' in request.path %}      
+          Home
+        {% endif %}        
       {% endblock %}{% if request.path != '/' %} -FoodTrade{% endif %}
       
 
@@ -256,7 +271,12 @@
 
     <div class="ftstrip ftstrip-mini"></div>
     </nav>
-    
+
+<span id="reload_warning">
+
+</span>
+
+
    {% if user.is_authenticated %} 
     <div id="beta">
      Please <a href="/invite">invite your friends</a> - and then why not upgrade? <a href="/payments">Membership from just &pound;45</a>. We're stronger when we're connected.
@@ -848,7 +868,7 @@ function invite_tweeter_user(sign_up_as){
         invite_users.push(text_content[i]);
       }
     }
-  if (invite_users.length >0){   
+  if (invite_users.length >0){
     ajax_request(
       'post_tweet','success_tweeter_user_invite',
       {'message':text, 'invite':'true', 'friend_invite':'false',
@@ -860,6 +880,8 @@ function invite_tweeter_user(sign_up_as){
   }
 }
 
+
+var profile_page = false;
 function success_tweeter_user_invite(data){
   $('#invite_tweeter_user').val("");  
   data = jQuery.parseJSON(data);
@@ -873,6 +895,11 @@ function success_tweeter_user_invite(data){
   var url = document.URL;
   if (url.indexOf("invite") != -1){
     $('#tweetMessage1').val(tweet);
+  }
+  if(profile_page)
+  {
+    var html_content = '<div class="alert alert-warning alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><strong>Thanks for sharing!</strong> Reload the page to connect to your invitees - or just keep inviting more people! (NB we are making this part smoother!)</div>';
+    $("#reload_warning").html(html_content);
   }
 }
 </script> 
