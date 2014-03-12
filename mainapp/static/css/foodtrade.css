@@ -1715,6 +1715,10 @@ acronym {
   font-size: .7em;
 }
 
+#reload_warning .alert {
+  margin-bottom: 0;
+}
+
  .result-container
  {
   

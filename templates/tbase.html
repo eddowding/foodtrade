@@ -272,16 +272,15 @@
     <div class="ftstrip ftstrip-mini"></div>
     </nav>
 
-<span id="reload_warning">
-
-</span>
-
-
+ 
    {% if user.is_authenticated %} 
     <div id="beta">
      Please <a href="/invite">invite your friends</a> - and then why not upgrade? <a href="/payments">Membership from just &pound;45</a>. We're stronger when we're connected.
     </div>
    {% endif %}
+
+   <span id="reload_warning"> 
+</span>
 
 
        <!-- New post Modal -->
@@ -898,7 +897,7 @@ function success_tweeter_user_invite(data){
   }
   if(profile_page)
   {
-    var html_content = '<div class="alert alert-warning alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><strong>Thanks for sharing!</strong> Reload the page to connect to your invitees - or just keep inviting more people! (NB we are making this part smoother!)</div>';
+    var html_content = '<div class="alert alert-success alert-dismissable text-center" style="border-bottom: 1px solid #444;"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><strong>Thanks for sharing!</strong> Reload the page to connect to your invitees - or just keep inviting more people! (NB we are making this part smoother!)</div>';
     $("#reload_warning").html(html_content);
   }
 }
