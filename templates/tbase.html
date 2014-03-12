@@ -37,8 +37,20 @@
         {% ifequal request.path '/' %}
           Welcome to FoodTrade - Login, Signup, become the part of Food revolution
         {% endifequal %}
-        {% if 'activity' in request.path %}      
-        Home
+        {% if 'payments' in request.path %}
+          Subscription
+        {% endif %}
+        {% if 'inbox' in request.path %}
+          Inbox
+        {% endif %}
+        {% if 'invite' in request.path %}      
+          Invite
+        {% endif %}
+        {% if 'unclaimed-profiles' in request.path %}      
+          Unclaimed-Profiles
+        {% endif %}
+        {% if 'pricing' in request.path %}      
+          Pricing
         {% endif %}
       {% endblock %}{% if request.path != '/' %} -FoodTrade{% endif %}
       
