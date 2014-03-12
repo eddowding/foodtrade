@@ -992,25 +992,37 @@ document.getElementById("buss_chosen").addEventListener("DOMSubtreeModified", fu
   var new_biz = $('#buss_chosen_chosen .chosen-choices input').val();
   $('#invite_tweeter_user').val(new_biz);  
   $('#my_invite_twitter').click();
-
+   profile_page = true;
+  remove_from_input = true;
   $('#buss_chosen_chosen ul .search-choice').remove();
 }, false);
+
+var remove_from_input = false;
 document.getElementById("org_chosen").addEventListener("DOMSubtreeModified", function(e) {
   // Record the occurrence
   var new_org = $('#org_chosen_chosen .chosen-choices input').val();
   $('#invite_tweeter_user').val(new_org);
   $('#my_invite_twitter').click();
-
+  profile_page = true;
+  remove_from_input = true;
   $('#org_chosen_chosen ul .search-choice').remove();
 }, false);
 
 
  $('#org_chosen').chosen().change(function(){
+  if(remove_from_input)
+  {
     $('#org_chosen_chosen .chosen-choices li.search-choice').remove();
+  }
+  remove_from_input = false;
     });
 
   $('#buss_chosen').chosen().change(function(){
+    if(remove_from_input)
+    {
     $('#buss_chosen_chosen .chosen-choices li.search-choice').remove();
+    }
+    remove_from_input = false;
     });
 
 // chosen config code
