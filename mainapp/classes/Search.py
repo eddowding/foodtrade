@@ -157,6 +157,7 @@ class Search():
             results["business_counter"] = profiles[0]["business_count"]
             results["organisation_counter"] = profiles[0]["organisation_count"]
         except:
+            results["individual_counter"] = 0
             results["business_counter"] = 0
             results["organisation_counter"] = 0
         try:
