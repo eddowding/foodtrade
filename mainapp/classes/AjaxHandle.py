@@ -45,57 +45,58 @@ class AjaxHandle(AjaxSearch):
         '''
         user_profile_obj = UserProfile()
         registered_user = user_profile_obj.get_profile_by_username(invitee_name)
-
-
         min_user_id = int(user_profile_obj.get_minimum_id_of_user()[0]['minId']) -1
 
-        if registered_user == None or len(registered_user) == 0:
-            if tweeter_or_friend == 'friend':
-                friend_obj = Friends()            
-                invited_friend = friend_obj.get_friend_from_screen_name(invitee_name.replace('@',''), username)
+        try:
+            if registered_user == None or len(registered_user) == 0:
+                if tweeter_or_friend == 'friend':
+                    friend_obj = Friends()            
+                    invited_friend = friend_obj.get_friend_from_screen_name(invitee_name.replace('@',''), username)
+                else:
+                    tweeter_user_obj = TweeterUser()
+                    invited_friend = {}
+                    invited_friend['friends'] = tweeter_user_obj.get_tweeter_user(invitee_name.replace('@',''))
+
+                data = {
+                    'is_unknown_profile': 'true',
+                    'recently_updated_by_super_user': 'false',
+                    'address' : invited_friend['friends']['location'],
+                    'email' : '',
+                    'description' : invited_friend['friends']['description'],
+                    'foods': [],
+                    'name' : invited_friend['friends']['name'],
+                    'phone_number' : '',
+                    'profile_img':invited_friend['friends']['profile_image_url'],
+                    'type_user':[],
+                    'updates': [],
+                    'screen_name': invited_friend['friends']['screen_name'],
+                    'Organisations':[],
+                    'useruid': min_user_id,
+                    'username':invited_friend['friends']['screen_name'],
+                    'subscribed':0,
+                    'newsletter_freq':'Weekly'
+                }   
+
+                if sign_up_as == 'unclaimed':
+                    data['sign_up_as'] = 'unclaimed'
+                else:
+                    data['sign_up_as'] = str(sign_up_as)
+
+                try:
+                    location_res = Geocoder.geocode(invited_friend['friends']['location'])
+                    data['latlng'] = {"type":"Point","coordinates":[float(location_res.longitude) ,float(location_res.latitude)]}
+                    data['zip_code'] = str(location_res.postal_code)
+                except:
+                    lat, lon, addr,postal_code = 51.5072 , -0.1275, "3 Whitehall, London SW1A 2EL, UK", "SW1 A 2EL"
+                    data['address'] = addr
+                    data['latlng'] = {"type":"Point","coordinates" : [float(lon),float(lat)]}
+                    data['zip_code'] = postal_code
+                    data['location_default_on_error'] = 'true'
+                user_profile_obj.create_profile(data)
+                return {'status':1}
             else:
-                tweeter_user_obj = TweeterUser()
-                invited_friend = {}
-                invited_friend['friends'] = tweeter_user_obj.get_tweeter_user(invitee_name.replace('@',''))
-
-            data = {
-                'is_unknown_profile': 'true',
-                'recently_updated_by_super_user': 'false',
-                'address' : invited_friend['friends']['location'],
-                'email' : '',
-                'description' : invited_friend['friends']['description'],
-                'foods': [],
-                'name' : invited_friend['friends']['name'],
-                'phone_number' : '',
-                'profile_img':invited_friend['friends']['profile_image_url'],
-                'type_user':[],
-                'updates': [],
-                'screen_name': invited_friend['friends']['screen_name'],
-                'Organisations':[],
-                'useruid': min_user_id,
-                'username':invited_friend['friends']['screen_name'],
-                'subscribed':0,
-                'newsletter_freq':'Weekly'
-            }   
-
-            if sign_up_as == 'unclaimed':
-                data['sign_up_as'] = 'unclaimed'
-            else:
-                data['sign_up_as'] = str(sign_up_as)
-
-            try:
-                location_res = Geocoder.geocode(invited_friend['friends']['location'])
-                data['latlng'] = {"type":"Point","coordinates":[float(location_res.longitude) ,float(location_res.latitude)]}
-                data['zip_code'] = str(location_res.postal_code)
-            except:
-                lat, lon, addr,postal_code = 51.5072 , -0.1275, "3 Whitehall, London SW1A 2EL, UK", "SW1 A 2EL"
-                data['address'] = addr
-                data['latlng'] = {"type":"Point","coordinates" : [float(lon),float(lat)]}
-                data['zip_code'] = postal_code
-                data['location_default_on_error'] = 'true'
-            user_profile_obj.create_profile(data)
-            return {'status':1}
-        else:
+                return {'status':0}
+        except:
             return {'status':0}
 
     def post_tweet(self, request):
@@ -153,9 +154,15 @@ class AjaxHandle(AjaxSearch):
                                 '''Check friend or Twitter User'''                                
                                 if request.POST['friend_invite'] == 'false':
                                     sign_up_as =  request.POST['sign_up_as']
-                                    self.create_fake_profile(str(eachInvitee), request.user.username,'user', sign_up_as)
+                                    try:
+                                        self.create_fake_profile(str(eachInvitee), request.user.username,'user', sign_up_as)
+                                    except:
+                                        pass
                             else:        
-                                self.create_fake_profile(str(eachInvitee), request.user.username, 'friend', 'unclaimed')
+                                try:
+                                    self.create_fake_profile(str(eachInvitee), request.user.username, 'friend', 'unclaimed')
+                                except:
+                                    pass
 
                         '''Change the used status flag of the invite ID generated.'''
                         invite_id_obj.change_used_status(request.user.id, request.POST['invite_id'])
