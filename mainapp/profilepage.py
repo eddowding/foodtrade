@@ -21,6 +21,8 @@ from bson import json_util
 from collections import Counter
 import pprint
 from django.http import Http404
+import re
+from mainapp.classes.MongoConnection import MongoConnection
 
 def profile_url_resolve(request, username):
     if username == 'me':
@@ -160,8 +162,8 @@ def display_profile(request, username):
     else:
         parameters['phone_number'] = pno
     
-    parameters['all_business'] = get_all_business(userprof['useruid'])
-    parameters['all_organisation'] = get_all_orgs()
+    # parameters['all_business'] = get_all_business(userprof['useruid'])
+    # parameters['all_organisation'] = get_all_orgs()
     if request.user.is_authenticated():
         user_id = request.user.id
         usr_profile_obj = UserProfile()
@@ -698,6 +700,52 @@ def get_all_orgs():
 
     return final_organisation    
 
+def search_orgs_business(request, type_user):
+    if request.user.is_authenticated():
+        query = request.GET.get("q")
+        user_id = request.user.id
+
+        referal_url = request.META.get('HTTP_REFERER')
+        split_user = referal_url.split('/')
+        profile_user = split_user[-2] if split_user[-2] != 'me' else request.user.username
+
+        userpro = UserProfile()
+        profile_user_obj = userpro.get_profile_by_username(profile_user)
+        if type_user == 'Business':
+            profile_data = get_connections(profile_user_obj['useruid'], request.user.id)[0]
+        else:
+            profile_data = get_organisations(profile_user_obj['useruid'])
+        data_list = [int(each['id']) for each in profile_data]
+        keyword_like = re.compile(query + '+', re.IGNORECASE)
+        reg_expression = {"$regex": keyword_like, '$options': '-i'}
+
+        search_variables = ["name", "business_org_name", "screen_name"]
+        or_conditions = []
+        for search_item in search_variables:
+            or_conditions.append({search_item:reg_expression})
+
+        query_mongo = {'$or': or_conditions, 'sign_up_as': type_user, 'useruid': {'$nin': data_list}}
+        mongo = MongoConnection("localhost",27017,'foodtrade')
+        results = mongo.get_all('userprofile', query_mongo)
+        
+        final_organisation = []
+        if len(results) == 0:
+            final_organisation.append({'id': 'search', 'name': 'Search all users from twitter', 'screen_name': 'twitter',
+             'profile_image_url_https':'https://pbs.twimg.com/profile_images/2284174758/v65oai7fxn47qv9nectx_bigger.png'})
+        for each in results:
+            if each.get('business_org_name')!=None:
+                myname = each.get('business_org_name') if (each['sign_up_as'] == 'Business' or each['sign_up_as'] == 'Organisation') \
+                and each.get('business_org_name')!='' else each['name']
+            else:
+                myname = each['name']                                            
+            # final_organisation.append({'id': each['useruid'],
+            #     'name':myname
+            #     })
+            final_organisation.append({'id': each['useruid'], 'name':myname, 'screen_name':each['screen_name'], 'profile_image_url_https':each['profile_img']})
+        return HttpResponse(json.dumps(final_organisation))
+    else:
+        return HttpResponse(json.dumps({'status':0, 'message':'You are not authorized to perform this action.'}))        
+
 from math import radians, cos, sin, asin, sqrt
 
 def distance(lon1, lat1, lon2, lat2):
@@ -714,3 +762,4 @@ def distance(lon1, lat1, lon2, lat2):
     c = 2 * asin(sqrt(a)) 
     km = 6367 * c
     return km
+  

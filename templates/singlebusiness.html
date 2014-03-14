@@ -639,26 +639,24 @@
                 </div> 
               </div> 
               <div class="form-group">
-                <!-- <label class="sr-only" for="exampleInputEmail2">Trade partnter</label>
-                <input type="text" class="form-control" style="min-width:250px;" id="trade" placeholder="Type business..."> -->
-                <!-- <select id="ddl_try">
-                  {% for each in all_business %}
-                  <option value="{{each.id}}">{{each.name}}</option>
-                  {% endfor %}
-              </select> -->
-              <select id="buss_chosen" data-placeholder="Type business..." class="chosen-select col-xs-4 col-sm-4" multiple>
+                
+              <!-- <select id="buss_chosen" data-placeholder="Type business..." class="chosen-select col-xs-4 col-sm-4" multiple>
                             <option value=""></option>
                             {% for each in all_business %}
                             
                               <option value={{each.id}}>{{each.name}}</option>
                             
                             {% endfor %}
-                            </select>              
+                            </select>               -->
                   
+              <div id="buss_remote">
+                <input class="typeahead form-control" id="new_buss_typeahead" {% if not user.is_authenticated %} rel="tooltip" title="Please login to use this feature" {% endif %} style="width:310px;" type="text" placeholder="Type business..."></div>                  
+
+              
 
               </div>
               
-              <button class="btn btn-success" id="ad_cons_id" {% if not user.is_authenticated %} title="Please login to use this feature" {% endif %} onClick="third_party_connection({{profile_id}})" >Add</button>
+              <!-- <button class="btn btn-success" id="ad_cons_id" {% if not user.is_authenticated %} title="Please login to use this feature" {% endif %} onClick="third_party_connection({{profile_id}})" >Add</button> -->
 
      
             </div>
@@ -776,19 +774,19 @@
             <div class="well well-sm">  
             <div class="form-inline"  role="form">
               <div class="form-group">
-              <select id="org_chosen" data-placeholder="Type organisation..." class="chosen-select col-xs-4 col-sm-4" multiple>
+              <!-- <select id="org_chosen" data-placeholder="Type organisation..." class="chosen-select col-xs-4 col-sm-4" multiple>
                             <option value=""></option>
                             {% for each in all_organisation %}
                             
                               <option value={{each.id}}>{{each.name}}</option>
                             
                             {% endfor %}
-                            </select>              
-                  
-
+                            </select>               -->
+<div id="orgs_remote">
+<input class="typeahead form-control" id="new_orgs_typeahead" {% if not user.is_authenticated %} rel="tooltip" title="Please login to use this feature" {% endif %} style="width:310px;" type="text" placeholder="Type organisation..."></div>                  
               </div>
               
-              <button class="btn btn-success" id="ad_cons_id" {% if not user.is_authenticated %} title="Please login to use this feature" {% endif %} onClick="add_org_to_biz({{profile_id}})">Add</button>
+              <!-- <button class="btn btn-success" id="ad_cons_id" {% if not user.is_authenticated %} title="Please login to use this feature" {% endif %} onClick="add_org_to_biz({{profile_id}})">Add</button> -->
 
      
             </div>
@@ -960,7 +958,7 @@ $( document ).ready(function() {
 
 // food_detail();
 $('#buss_chosen').chosen({create_option: true, skip_no_results: true, create_option_text: 'Search twitter for '});
-$('#org_chosen').chosen({create_option: true, skip_no_results: true, create_option_text: 'Search twitter for '});
+// $('#org_chosen').chosen({create_option: true, skip_no_results: true, create_option_text: 'Search twitter for '});
 
 // $("#buss_chosen").chosen({max_selected_options: 1});
 $('#myselect').chosen({create_option: true, skip_no_results: true, create_option_text: 'Add'});
@@ -987,43 +985,43 @@ document.getElementById("myselect").addEventListener("DOMSubtreeModified", funct
 }
 
 
-document.getElementById("buss_chosen").addEventListener("DOMSubtreeModified", function(e) {
-  // Record the occurrence
-  var new_biz = $('#buss_chosen_chosen .chosen-choices input').val();
-  $('#invite_tweeter_user').val(new_biz);  
-  $('#my_invite_twitter').click();
-   profile_page = true;
-  remove_from_input = true;
-  $('#buss_chosen_chosen ul .search-choice').remove();
-}, false);
+// document.getElementById("buss_chosen").addEventListener("DOMSubtreeModified", function(e) {
+//   // Record the occurrence
+//   var new_biz = $('#buss_chosen_chosen .chosen-choices input').val();
+//   $('#invite_tweeter_user').val(new_biz);  
+//   $('#my_invite_twitter').click();
+//    profile_page = true;
+//   remove_from_input = true;
+//   $('#buss_chosen_chosen ul .search-choice').remove();
+// }, false);
 
 var remove_from_input = false;
-document.getElementById("org_chosen").addEventListener("DOMSubtreeModified", function(e) {
-  // Record the occurrence
-  var new_org = $('#org_chosen_chosen .chosen-choices input').val();
-  $('#invite_tweeter_user').val(new_org);
-  $('#my_invite_twitter').click();
-  profile_page = true;
-  remove_from_input = true;
-  $('#org_chosen_chosen ul .search-choice').remove();
-}, false);
+// document.getElementById("org_chosen").addEventListener("DOMSubtreeModified", function(e) {
+//   // Record the occurrence
+//   var new_org = $('#org_chosen_chosen .chosen-choices input').val();
+//   $('#invite_tweeter_user').val(new_org);
+//   $('#my_invite_twitter').click();
+//   profile_page = true;
+//   remove_from_input = true;
+//   $('#org_chosen_chosen ul .search-choice').remove();
+// }, false);
 
 
- $('#org_chosen').chosen().change(function(){
-  if(remove_from_input)
-  {
-    $('#org_chosen_chosen .chosen-choices li.search-choice').remove();
-  }
-  remove_from_input = false;
-    });
+ // $('#org_chosen').chosen().change(function(){
+ //  if(remove_from_input)
+ //  {
+ //    $('#org_chosen_chosen .chosen-choices li.search-choice').remove();
+ //  }
+ //  remove_from_input = false;
+ //    });
 
-  $('#buss_chosen').chosen().change(function(){
-    if(remove_from_input)
-    {
-    $('#buss_chosen_chosen .chosen-choices li.search-choice').remove();
-    }
-    remove_from_input = false;
-    });
+ //  $('#buss_chosen').chosen().change(function(){
+ //    if(remove_from_input)
+ //    {
+ //    $('#buss_chosen_chosen .chosen-choices li.search-choice').remove();
+ //    }
+ //    remove_from_input = false;
+ //    });
 
 // chosen config code
 // var config = {
@@ -1053,6 +1051,39 @@ document.getElementById("org_chosen").addEventListener("DOMSubtreeModified", fun
     // }
 // chosen config code ends
 
+});
+// adding organisations to business
+$('#organisations').on('click', '.tt-suggestion', function(){
+  var organisation_id = this.getElementsByClassName('result-name')[0];
+  var org_var = $(organisation_id).attr('data-id');
+  if(org_var == 'search'){
+    $('#my_invite_twitter').click();
+  }
+  else{
+    add_org_to_biz('{{profile_id}}', org_var)
+    $('#new_orgs_typeahead').val('');
+    $('.tt-hint').val('');
+  }
+});
+$('#new_orgs_typeahead').on('blur', function(){
+  $('#new_orgs_typeahead').val('');
+});
+
+// adding links to business
+$('#connections').on('click', '.tt-suggestion', function(){
+  var business_id = this.getElementsByClassName('result-name')[0];
+  var buss_var = $(business_id).attr('data-id');
+  if(buss_var == 'search'){
+    $('#my_invite_twitter').click();
+  }
+  else{
+    third_party_connection('{{profile_id}}', buss_var)
+    $('#new_buss_typeahead').val('');
+    $('.tt-hint').val('');
+  }
+});
+$('#new_buss_typeahead').on('blur', function(){
+  $('#new_buss_typeahead').val('');
 });
 
 function set_width(){

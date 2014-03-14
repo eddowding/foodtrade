@@ -13,11 +13,11 @@ function ajax_request(s_handler, c_handler, input_data)
 });
 }
 
-function add_org_to_biz(member_id){
-	var org_ids_list = $('#org_chosen').val();
-	for(i=0;i<org_ids_list.length;i++){
-		ajax_request("third_party_add_org", 'org_ajax', {data: "{'memberuid': " + member_id + ",'orguid': " + org_ids_list[i] +"}"});
-	}
+function add_org_to_biz(member_id, orguid){
+	// var org_ids_list = $('#org_chosen').val();
+	// for(i=0;i<org_ids_list.length;i++){
+	ajax_request("third_party_add_org", 'org_ajax', {data: "{'memberuid': " + member_id + ",'orguid': " + parseInt(orguid) +"}"});
+	// }
 }
 
 function del_org_from_biz(member_id, org_id){
@@ -75,23 +75,23 @@ function conn_handler(value, prof_id, conn_id)
 	}
 }
 
-function third_party_connection(prof_id){
+function third_party_connection(prof_id, buss_var){
 	// var business_id = $('#buss_chosen').val().join('');
-	var business_ids_list = $('#buss_chosen').val();
+	// var business_ids_list = $('#buss_chosen').val();
 
-	for(i=0;i<business_ids_list.length;i++){
-		// buyer checked
-		if($('#option1_conn').is(':checked') && business_ids_list[i]!=""){
-			// var conn_data = {prof_id: prof_id, status: 'buy_from', buss_id: businesses_id };
-			ajax_request("third_party_conn", 'conn_ajax', {conn_data: "{'prof_id': " + prof_id + ",'buss_id': " + business_ids_list[i] + ",'status': 'buy_from'}"});
-			
-		}
-		// seller checked
-		if($('#option2_conn').is(':checked') && business_ids_list[i]!=""){
-			// var conn_data = {prof_id: prof_id, status: 'sell_to', buss_id: businesses_id };
-			ajax_request("third_party_conn", 'conn_ajax', {conn_data: "{'prof_id': " + prof_id + ",'buss_id': " + business_ids_list[i] + ",'status': 'sell_to'}"});
-		}
+	// for(i=0;i<business_ids_list.length;i++){
+	// buyer checked
+	if($('#option1_conn').is(':checked') && buss_var!=""){
+		// var conn_data = {prof_id: prof_id, status: 'buy_from', buss_id: businesses_id };
+		ajax_request("third_party_conn", 'conn_ajax', {conn_data: "{'prof_id': " + prof_id + ",'buss_id': " + parseInt(buss_var) + ",'status': 'buy_from'}"});
+		
 	}
+	// seller checked
+	if($('#option2_conn').is(':checked') && buss_var!=""){
+		// var conn_data = {prof_id: prof_id, status: 'sell_to', buss_id: businesses_id };
+		ajax_request("third_party_conn", 'conn_ajax', {conn_data: "{'prof_id': " + prof_id + ",'buss_id': " + parseInt(buss_var) + ",'status': 'sell_to'}"});
+	}
+	// }
 	
 }
 function conn_ajax(data){

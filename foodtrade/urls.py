@@ -49,6 +49,7 @@ urlpatterns = patterns('',
     
 
     url(r'^twitteruser/queries/$', 'mainapp.twitter_search.search_users'),
+    url(r'^queries/(?P<type_user>[-\w]+)/$', 'mainapp.profilepage.search_orgs_business'),
 
     # Temporary urls
     url(r'^merge-data/$', 'mainapp.merge_data.merge'),
