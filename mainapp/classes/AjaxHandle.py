@@ -317,6 +317,20 @@ class AjaxHandle(AjaxSearch):
             elif data['status'] == 'sell_to':
                 trade_conn.create_connection({'b_useruid': int(data['buss_id']), 'c_useruid': int(data['prof_id'])})
 
+            user_pro = UserProfile()
+            pro_obj = user_pro.get_profile_by_id(int(data['prof_id']))
+            buss_obj = user_pro.get_profile_by_id(int(data['buss_id']))
+            # if any party is unclaimed user, change it into business
+            if pro_obj['sign_up_as'] == 'unclaimed':
+                print pro_obj['name'], ' unclaimed'
+                user_pro.update_profile_fields({'useruid': int(data['prof_id'])}, {'sign_up_as': 'Business',
+                    'recently_updated_by_super_user': 'true'})
+            elif buss_obj['sign_up_as'] == 'unclaimed':
+                print buss_obj['name'], ' unclaimed'
+                user_pro.update_profile_fields({'useruid': int(data['buss_id'])}, {'sign_up_as': 'Business',
+                    'recently_updated_by_super_user': 'true'})
+            else:
+                print 'no unclaimed user in new link'
             # add parameters
             parameters = {}
             parameters['connections'], parameters['conn'] = get_connections(int(data['prof_id']), request.user.id)
@@ -331,6 +345,16 @@ class AjaxHandle(AjaxSearch):
         data = eval(request.POST.get('data'))
         if data !=None and data !="":
             org.create_member(data)
+            # if any party is unclaimed user, change it into organisation
+            user_pro = UserProfile()
+            org_obj = user_pro.get_profile_by_id(int(data['orguid']))
+            # if any party is unclaimed user, change it into business
+            if org_obj['sign_up_as'] == 'unclaimed':
+                user_pro.update_profile_fields({'useruid': int(data['orguid'])}, {'sign_up_as': 'Organisation',
+                    'recently_updated_by_super_user': 'true'})
+            else:
+                print 'no unclaimed user in new organisation'
+
             parameters = {}
             parameters['organisations'] = get_organisations(int(data['memberuid']))
             parameters['profile_id'], parameters['user_id'] = int(data['memberuid']), request.user.id

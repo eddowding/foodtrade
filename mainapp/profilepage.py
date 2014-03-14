@@ -470,12 +470,14 @@ def get_connections(user_id, logged_in_id = None):
     b_conn = trade_conn.get_connection_by_business(user_id)
     c_conn = trade_conn.get_connection_by_customer(user_id)
     final_connections = []
+    print 'b_conn: ', len(b_conn), 'c_conn: ', len(c_conn)
     logged_conn = 'none'
     for count, each in enumerate(b_conn):
         try:
             if logged_in_id == None and count == 5:
                 break
             # account = SocialAccount.objects.get(user__id = each['c_useruid'])
+            
             usr_pr = userprof.get_profile_by_id(str(each['c_useruid']))
             user_info = UserInfo(each['c_useruid'])
             if logged_in_id!=None and each['c_useruid'] == logged_in_id:
@@ -506,7 +508,7 @@ def get_connections(user_id, logged_in_id = None):
         try:
             if logged_in_id == None and count == 5:
                 break
-            # account = SocialAccount.objects.get(user__id = each['b_useruid'])
+
             usr_pr = userprof.get_profile_by_id(str(each['b_useruid']))
             user_info = UserInfo(each['b_useruid'])
             if usr_pr.get('business_org_name')!=None:
@@ -724,7 +726,9 @@ def search_orgs_business(request, type_user):
         for search_item in search_variables:
             or_conditions.append({search_item:reg_expression})
 
-        query_mongo = {'$or': or_conditions, 'sign_up_as': type_user, 'useruid': {'$nin': data_list}}
+        type_list = ['unclaimed']
+        type_list.append(type_user)
+        query_mongo = {'$or': or_conditions, 'sign_up_as': {'$in': type_list}, 'useruid': {'$nin': data_list}}
         mongo = MongoConnection("localhost",27017,'foodtrade')
         results = mongo.get_all('userprofile', query_mongo)
         
