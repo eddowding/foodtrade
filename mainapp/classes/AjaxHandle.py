@@ -74,7 +74,7 @@ class AjaxHandle(AjaxSearch):
                     'useruid': min_user_id,
                     'username':invited_friend['friends']['screen_name'],
                     'subscribed':0,
-                    'newsletter_freq':'Weekly'
+                    'newsletter_freq':'Never'
                 }   
 
                 if sign_up_as == 'unclaimed':
@@ -92,6 +92,7 @@ class AjaxHandle(AjaxSearch):
                     data['latlng'] = {"type":"Point","coordinates" : [float(lon),float(lat)]}
                     data['zip_code'] = postal_code
                     data['location_default_on_error'] = 'true'
+                                    
                 user_profile_obj.create_profile(data)
                 return {'status':1}
             else:

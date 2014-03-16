@@ -546,7 +546,10 @@ def sms_receiver(request):
                         'subscribed':0,
                         'newsletter_freq':'Weekly'
                     }
-                
+                    
+                join_time = datetime.datetime.now()
+                join_time = time.mktime(join_time.timetuple())
+                signup_data['join_time'] = int(join_time)                
                 user_profile_obj.create_profile(signup_data)
 
                 '''Send Email to confirm Account SignUp via SMS'''
@@ -662,7 +665,7 @@ def create_profile_from_mention(email, location, data):
             'subscribed':0,
             'newsletter_freq':'Weekly'            
         }
-        
+
     join_time = datetime.datetime.now()
     join_time = time.mktime(join_time.timetuple())
     signup_data['join_time'] = int(join_time)

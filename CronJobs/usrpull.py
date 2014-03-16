@@ -72,7 +72,7 @@ def register_user_to_mongo(eachFriend):
     join_time = datetime.datetime.now()
     join_time = time.mktime(join_time.timetuple())
     data['join_time'] = int(join_time)
-
+    print data['screen_name']
     '''Register User to Mongo'''
     userprofile = UserProfile()
     userprofile.update_profile_upsert({'screen_name':eachFriend['screen_name'],
@@ -96,10 +96,10 @@ def process_friends_or_followers(eachUser, friend_or_follower):
                 if next_cursor != 0:
                     users = get_friends(eachUser['username'], next_cursor, friend_or_follower)
     except:
-        print "Inside Exception"
         twitter_err_obj = TwitterError()
         twitter_err_obj.save_error({'username':eachUser['username'],'error_type':'cron',
             'next_cursor':next_cursor, 'error_solve_stat':'false','user_type':friend_or_follower})
+        print "Inside Exception", next_cursor        
 
 def create_users(arg):
     if arg=='all':
