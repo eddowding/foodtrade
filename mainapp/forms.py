@@ -161,12 +161,15 @@ class SignupForm(forms.Form):
                 'newsletter_freq':'Weekly'
         }
 
+        join_time = datetime.datetime.now()
+        join_time = time.mktime(join_time.timetuple())
+        data['join_time'] = int(join_time)
+
         '''Transport  user from MySql to Mongo'''
         userprofile.update_profile_upsert({'screen_name':social_account.extra_data['screen_name'],
                  'username':social_account.extra_data['screen_name']},data)
 
         
-
         conn = TradeConnection()
         if self.cleaned_data['sign_up_as'] == "Business":
             try:

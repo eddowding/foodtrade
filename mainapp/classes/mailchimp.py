@@ -1,5 +1,4 @@
 import mailchimp
-from mainapp.mc_utils import *
 from pymongo import Connection
 from MongoConnection import MongoConnection
 
