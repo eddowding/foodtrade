@@ -152,9 +152,6 @@ function recommend_food(logged_in_id, food_name, prof_id, username, my_this){
 }
 
 function empty(){}
-function reload_page(){
-	window.location.reload();
-}
 
 
 function delete_food(prof_id, food_name, my_this){
