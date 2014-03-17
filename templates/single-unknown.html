@@ -134,8 +134,13 @@
 </div><!-- col10 --> 
 <script type="text/javascript">
   function change_sign_up(sign_up_as, username){
-    
+    data = {'sign_up_as': sign_up_as, 'username': username};
+    ajax_request('convert_unknown', 'reload_page', {data: JSON.stringify(data)});
   }
+  function reload_page(){
+  window.location.reload();
+}
+
 </script>
    
 {% endblock %}

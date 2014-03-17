@@ -1002,3 +1002,17 @@ class AjaxHandle(AjaxSearch):
         else:
             return HttpResponse(json.dumps({'status':0, 'message':'You are not authorized to perform this action.'}))        
 
+    def convert_unknown(self, request):
+        if request.user.is_authenticated():
+            data = eval(request.POST.get('data'))
+            user_pro = UserProfile()
+            my_obj = user_pro.get_profile_by_username(str(data['username']))
+            # if any party is unclaimed user, change it into business
+            if my_obj['sign_up_as'] == 'unclaimed':
+                user_pro.update_profile_fields({'username': str(data['username'])}, {'sign_up_as': str(data['sign_up_as']),
+                    'recently_updated_by_super_user': 'true'})
+            else:
+                print 'no unclaimed user in new organisation'            
+            return HttpResponse(json.dumps({'status':1}))
+        else:
+            return HttpResponse(json.dumps({'status':0, 'message':'You are not authorized to perform this action.'}))                

@@ -153,6 +153,7 @@ function recommend_food(logged_in_id, food_name, prof_id, username, my_this){
 
 function empty(){}
 
+
 function delete_food(prof_id, food_name, my_this){
 	var data = {useruid: prof_id, food_name: food_name};
 	ajax_request("deletefood", 'food_ajax', {data: JSON.stringify(data)});
