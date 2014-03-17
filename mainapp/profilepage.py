@@ -29,9 +29,7 @@ def profile_url_resolve(request, username):
         if request.user.is_authenticated():
             username = request.user.username
         else:
-            return HttpResponseRedirect('/accounts/twitter/login/?process=login')
-            
-
+            return HttpResponseRedirect('/accounts/twitter/login/?process=login')            
     usr_profile = UserProfile()
     userprof = usr_profile.get_profile_by_username(str(username))
 
@@ -52,7 +50,7 @@ def resolve_profile(request, username):
     except:
         raise Http404
     if userprof['sign_up_as'] == 'unclaimed':
-        return HttpResponseRedirect('/')
+        return HttpResponseRedirect('/unclaimed/' + username)
     elif userprof['sign_up_as'] == 'Business':
         return HttpResponseRedirect('/business/'+username)
     elif userprof['sign_up_as'] == 'Individual':
@@ -234,6 +232,9 @@ def display_profile(request, username):
         else:
             parameters['all_foods'] = get_all_foods(userprof['useruid'])[:3]
         return render_to_response('individual.html', parameters, context_instance=RequestContext(request))
+        
+    elif parameters['sign_up_as']=='unclaimed':
+        return render_to_response('single-unknown.html', parameters, context_instance=RequestContext(request))
         
 
 def edit_profile(request, username):

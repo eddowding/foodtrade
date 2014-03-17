@@ -63,7 +63,8 @@ def register_user_to_mongo(eachFriend):
         'newsletter_freq':'Never'
     }
     try:
-        location_res = Geocoder.geocode(invited_friend['friends']['location'])
+        location_res = Geocoder.geocode(eachFriend['location'])
+        data['address'] = str(location_res)
         data['latlng'] = {"type":"Point","coordinates":[float(location_res.longitude) ,float(location_res.latitude)]}
         data['zip_code'] = str(location_res.postal_code)
     except:
