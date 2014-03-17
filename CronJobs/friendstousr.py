@@ -20,7 +20,7 @@ import settings_local
 from twython import Twython
 from pygeocoder import Geocoder
 
-
+#bgr = pygeocoder.Geocoder('471653599669-qht8a4r1mrhqma4902f1iag4i6if4tuf.apps.googleusercontent.com', 'hU7DLea2DXvkYzoaXhNtkHfF')
 def register_user_to_mongo(eachFriend):
     user_profile_obj = UserProfile()
     min_user_id = int(user_profile_obj.get_minimum_id_of_user()[0]['minId']) -1
@@ -64,6 +64,7 @@ def register_user_to_mongo(eachFriend):
         'username':eachFriend['screen_name']},data)
     return True
 
+
 class Friends():
     def __init__ (self):
         self.db_object = MongoConnection("localhost",27017,'foodtrade')
@@ -72,10 +73,15 @@ class Friends():
 
     def register_all_friends(self):
         user_pages_count = int(self.db_object.get_count(self.table_name, {})/15)+ 1
+        count = 0
         for i in range(0,user_pages_count, 1):
             pag_users = self.db_object.get_paginated_values(self.table_name, {}, pageNumber = int(i+1))
             for eachUser in pag_users:
-                register_user_to_mongo(eachUser['friends'])
+                count = count + 1
+                user_profile_obj = UserProfile()
+                check = user_profile_obj.get_profile_by_username(eachUser['friends']['screen_name'])
+                if check == None:
+                    register_user_to_mongo(eachUser['friends'])
 
 fr = Friends()        
 fr.register_all_friends()
