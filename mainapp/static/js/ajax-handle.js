@@ -152,6 +152,10 @@ function recommend_food(logged_in_id, food_name, prof_id, username, my_this){
 }
 
 function empty(){}
+function reload(){
+	window.location.reload();
+}
+
 
 function delete_food(prof_id, food_name, my_this){
 	var data = {useruid: prof_id, food_name: food_name};
