@@ -69,12 +69,10 @@
       <div id="contact_info" class="col-md-3 cell">
         
       <!-- if they dont't have an account yet --> 
-      <button class="btn btn-primary btn-block" style="margin-top:40px;" data-toggle="modal" {% if request.user.is_authenticated %}data-target="#modal_invite" {% else %} rel="tooltip" tite="You must be logged in to use this feature!"{% endif %}>
+      <button class="btn btn-primary btn-block" style="margin-top:40px;" data-toggle="modal" {% if request.user.is_authenticated %} data-target="#modal_invite" {% else %} disabled="disabled" {% endif %}>
          Invite to connect
       </button> 
-      
       </div><!-- end header last -->
-
     </div>
     </div>
 
@@ -89,8 +87,8 @@
       <ul class="thumbnails list-unstyled">
         <li class="col-md-3">
           <div class="thumbnail" style="padding: 0">  
-            <div class="modal-header text-center">
-              <button type="button" class="btn btn-lg btn-primary" {% if request.user.is_authenticated %} onclick="change_sign_up('Business','{{userprof.username}}')" {% endif %}>Food business</button>
+            <div class="modal-header text-center">            
+              <button type="button" class="btn btn-lg btn-primary" {% if request.user.is_authenticated %} onclick="change_sign_up('Business','{{userprof.username}}')" {% else %} disabled="disabled" {% endif %}>Food business</button>
             </div>
             <div class="caption"> 
               <p><span class="help-block">Eg. Farms, restaurants, caterers, bakers, schools, hospitals...</span></p>
@@ -102,8 +100,8 @@
 
         <li class="col-md-3">
           <div class="thumbnail" style="padding: 0">  
-            <div class="modal-header text-center">
-              <button type="button" class="btn btn-lg btn-primary" {% if request.user.is_authenticated %} onclick="change_sign_up('Organisation','{{userprof.username}}')" {% endif %}>Organisation</button>
+            <div class="modal-header text-center">            
+              <button type="button" class="btn btn-lg btn-primary"  {% if request.user.is_authenticated %} onclick="change_sign_up('Organisation','{{userprof.username}}')" {% else%} disabled="disabled" {% endif %}>Organisation</button>
             </div>
             <div class="caption"> 
               <p><span class="help-block">Eg. Soil Assocation, Slow Food, LEAF, The SRA, Catering Mark...</span></p>
@@ -116,7 +114,7 @@
         <li class="col-md-3">
           <div class="thumbnail" style="padding: 0">  
             <div class="modal-header text-center">
-              <button type="button" class="btn btn-lg btn-primary" {% if request.user.is_authenticated %} onclick="change_sign_up('Individual','{{userprof.username}}')" {% endif %}>Individual</button>
+              <button type="button" class="btn btn-lg btn-primary" {% if request.user.is_authenticated %} onclick="change_sign_up('Individual','{{userprof.username}}')" {% else %} disabled="disabled" {% endif %}>Individual</button>
             </div>
             <div class="caption"> 
               <p><span class="help-block">Eg. most of us: customers, chefs, bloggers, consultants... </span></p>

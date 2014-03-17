@@ -47,7 +47,8 @@ class UserProfile():
         user_pages_count = int(self.db_object.get_count(self.table_name, {'join_time':{'$gt':start}, 'is_unknown_profile': 'false'}))
         for i in range(0,user_pages_count, 1):
             pag_users = self.db_object.get_paginated_values(self.table_name, {'join_time':{'$gt':start}, 'is_unknown_profile': 'false'}, pageNumber = int(i+1))
-            users.append(eachUser)
+            for eachUser in pag_users:
+                users.append(eachUser)
         return users 
 
     def get_minimum_id_of_user(self):

@@ -78,10 +78,11 @@ class Friends():
             pag_users = self.db_object.get_paginated_values(self.table_name, {}, pageNumber = int(i+1))
             for eachUser in pag_users:
                 count = count + 1
-                user_profile_obj = UserProfile()
-                check = user_profile_obj.get_profile_by_username(eachUser['friends']['screen_name'])
-                if check == None:
-                    register_user_to_mongo(eachUser['friends'])
+                if count < 1000:
+                    user_profile_obj = UserProfile()
+                    check = user_profile_obj.get_profile_by_username(eachUser['friends']['screen_name'])
+                    if check == None:
+                        register_user_to_mongo(eachUser['friends'])
 
 fr = Friends()        
 fr.register_all_friends()

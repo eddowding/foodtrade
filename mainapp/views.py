@@ -558,19 +558,24 @@ def sms_receiver(request):
                 template_content = template_content.replace('Content-Type: text/html; charset=utf-8', '')
                 email_object.send_mail('Please confirm your account', template_content=[{'name':'main', 'content':template_content}], to = [{'email':email}])
 
-                '''Transport the user to MailChimp'''
-                mailchimp_obj = MailChimp()
-                mailchimp_obj.subscribe(signup_data)
+                try:
+                    '''Transport the user to MailChimp'''
+                    mailchimp_obj = MailChimp()
+                    mailchimp_obj.subscribe(signup_data)
+                except:
+                    pass
 
-                mailchimp_obj_new = MailChimp(list_id='eeea3ac4c6')
-                mailchimp_obj_new.subscribe(data)                
+                try:
+                    mailchimp_obj_new = MailChimp(list_id='eeea3ac4c6')
+                    mailchimp_obj_new.subscribe(data)                
+                except:
+                    pass
 
                 '''Send Confirmation SMS'''
                 send_sms(cell_no, 'You have successfully joined FoodTrade. Please visit http://foodtrade.com ASAP! Thanks!')
 
                 http_response = http_response +"appended new tweet"
     return HttpResponse(http_response)
-
 
 
 
@@ -678,11 +683,17 @@ def create_profile_from_mention(email, location, data):
     email_object.send_mail('Please confirm your account', 
         template_content=[{'name':'main', 'content':template_content}], to = [{'email':email}])
 
-    '''Transport the user to MailChimp'''
-    mailchimp_obj = MailChimp()
-    mailchimp_obj.subscribe(signup_data)
+    try:
+        '''Transport the user to MailChimp'''
+        mailchimp_obj = MailChimp()
+        mailchimp_obj.subscribe(signup_data)
+    except:
+        pass
 
-    mailchimp_obj_new = MailChimp(list_id='eeea3ac4c6')
-    mailchimp_obj_new.subscribe(data)
+    try:
+        mailchimp_obj_new = MailChimp(list_id='eeea3ac4c6')
+        mailchimp_obj_new.subscribe(data)
+    except:
+        pass
 
     return {'status':1}
