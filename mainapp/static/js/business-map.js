@@ -87,8 +87,13 @@ function reload_connections()
          	var longitude =  con.longitude;
 
 
+
 			var current_lat = parseFloat(latitude);
 			var current_lon = parseFloat(longitude);
+			if(current_lon == def_lon && current_lat == def_lat)
+         	{
+         		continue;
+         	}
 			if(current_lat>max_lat)
 			{
 				max_lat = current_lat;

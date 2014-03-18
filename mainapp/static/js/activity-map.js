@@ -74,6 +74,10 @@ function reload_controls()
 
 			var current_lat = parseFloat(con.location.coordinates[1]);
 			var current_lon = parseFloat(con.location.coordinates[0]);
+			if(current_lon == def_lon && current_lat == def_lat)
+         	{
+         		continue;
+         	}
 			if(current_lat>max_lat)
 			{
 				max_lat = current_lat;

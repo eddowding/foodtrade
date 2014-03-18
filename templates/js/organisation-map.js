@@ -69,6 +69,11 @@ function reload_connections()
 			var latitude =  con.latitude;
          	var longitude =  con.longitude;
 
+         	if(longitude == def_lon && latitude == def_lat)
+         	{
+         		continue;
+         	}
+
 
 			var current_lat = parseFloat(latitude);
 			var current_lon = parseFloat(longitude);

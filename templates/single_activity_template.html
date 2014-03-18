@@ -86,6 +86,8 @@
                 </span>
 
                  <!-- if logged in or you've allows html5 browser location -->
+                 {% if result.distance_text != "NA" %}
+
                  <a href="http://maps.google.com/maps?saddr={{userinfo.lat}},{{userinfo.lon}}&daddr={{result.location.coordinates.1}},{{result.location.coordinates.0}}" 
                     target="_blank" data-placement="top" data-toggle="tooltip" 
                     class="text-muted" 
@@ -93,6 +95,10 @@
                     title="Get directions"> 
                  <i class="fa fa-location-arrow"></i> {{result.distance_text}}  
                  </a>
+                 {% else %}
+                 <i class="fa fa-location-arrow"></i> {{result.distance_text}}  
+                 {% endif %}
+
                 <!--  // if logged in or you've allows html5 browser location -->
                 {% if result_type == "status" %}
                 <span class="pull-right time_ago">
