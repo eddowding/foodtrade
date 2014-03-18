@@ -546,7 +546,10 @@ def sms_receiver(request):
                         'subscribed':0,
                         'newsletter_freq':'Weekly'
                     }
-                
+                    
+                join_time = datetime.datetime.now()
+                join_time = time.mktime(join_time.timetuple())
+                signup_data['join_time'] = int(join_time)                
                 user_profile_obj.create_profile(signup_data)
 
                 '''Send Email to confirm Account SignUp via SMS'''
@@ -555,19 +558,24 @@ def sms_receiver(request):
                 template_content = template_content.replace('Content-Type: text/html; charset=utf-8', '')
                 email_object.send_mail('Please confirm your account', template_content=[{'name':'main', 'content':template_content}], to = [{'email':email}])
 
-                '''Transport the user to MailChimp'''
-                mailchimp_obj = MailChimp()
-                mailchimp_obj.subscribe(signup_data)
+                try:
+                    '''Transport the user to MailChimp'''
+                    mailchimp_obj = MailChimp()
+                    mailchimp_obj.subscribe(signup_data)
+                except:
+                    pass
 
-                mailchimp_obj_new = MailChimp(list_id='eeea3ac4c6')
-                mailchimp_obj_new.subscribe(data)                
+                try:
+                    mailchimp_obj_new = MailChimp(list_id='eeea3ac4c6')
+                    mailchimp_obj_new.subscribe(data)                
+                except:
+                    pass
 
                 '''Send Confirmation SMS'''
                 send_sms(cell_no, 'You have successfully joined FoodTrade. Please visit http://foodtrade.com ASAP! Thanks!')
 
                 http_response = http_response +"appended new tweet"
     return HttpResponse(http_response)
-
 
 
 
@@ -600,13 +608,13 @@ def send_newsletter(request, substype):
     '''Generate content for newsletter from activity'''
     tem_con = str(render_to_response('activity-email.html',{'results':results}, context_instance=RequestContext(request)))
     tem_con = tem_con.replace('Content-Type: text/html; charset=utf-8', '')
-    print len(results)
     try:
         if len(results) > 0:
             m = Email()
             '''Do not send empty newsletter'''
             if len(email_to_user['email'])>0:
-                m.send_mail("Recent FoodTrade activity near you", [{'name':'main', 'content':tem_con}], [{'email':eachUser['email']}])
+                if email_to_user['email']:
+                    m.send_mail("Recent FoodTrade activity near you", [{'name':'main', 'content':tem_con}], [{'email':email_to_user['email']}])
             else:
                 return HttpResponse(json.dumps({'status':'0'}))
     except:
@@ -662,7 +670,10 @@ def create_profile_from_mention(email, location, data):
             'subscribed':0,
             'newsletter_freq':'Weekly'            
         }
-    
+
+    join_time = datetime.datetime.now()
+    join_time = time.mktime(join_time.timetuple())
+    signup_data['join_time'] = int(join_time)
     user_profile_obj.create_profile(signup_data)
 
     '''Send Email to confirm Account SignUp via Twitter'''
@@ -672,11 +683,17 @@ def create_profile_from_mention(email, location, data):
     email_object.send_mail('Please confirm your account', 
         template_content=[{'name':'main', 'content':template_content}], to = [{'email':email}])
 
-    '''Transport the user to MailChimp'''
-    mailchimp_obj = MailChimp()
-    mailchimp_obj.subscribe(signup_data)
+    try:
+        '''Transport the user to MailChimp'''
+        mailchimp_obj = MailChimp()
+        mailchimp_obj.subscribe(signup_data)
+    except:
+        pass
 
-    mailchimp_obj_new = MailChimp(list_id='eeea3ac4c6')
-    mailchimp_obj_new.subscribe(data)
+    try:
+        mailchimp_obj_new = MailChimp(list_id='eeea3ac4c6')
+        mailchimp_obj_new.subscribe(data)
+    except:
+        pass
 
     return {'status':1}

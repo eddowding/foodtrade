@@ -38,4 +38,3 @@ def search_users(request):
         return HttpResponse(json.dumps(results))
     else:
         return HttpResponse(json.dumps({'status':0, 'message':'You are not authorized to perform this action.'}))        
-

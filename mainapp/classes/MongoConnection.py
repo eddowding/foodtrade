@@ -5,12 +5,14 @@ import json
 from bson import BSON
 from bson import json_util
 
+
 class MongoConnection():
-    def __init__ (self, host="localhost",port=27017, db_name='indexer'):
+    def __init__ (self, host="localhost",port=27017, db_name='indexer', conn_type="local", username='roshan', password='bhandari'):
         self.host = host
         self.port = port
-        self.client = MongoClient(self.host, self.port)
-        self.db = self.client[db_name]
+        self.conn = Connection(self.host, self.port)
+        self.db = self.conn[db_name]
+        self.db.authenticate(username, password)
 
     def ensure_index(self, table_name, index=None):
         self.db[table_name].ensure_index([(index,pymongo.GEOSPHERE)])

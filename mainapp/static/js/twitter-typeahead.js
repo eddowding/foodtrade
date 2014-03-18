@@ -1686,3 +1686,46 @@ var username = this.getElementsByClassName('result-screen-name')[0].textContent;
 add_user(username);
 
 });
+
+// code for organisation addition in single business
+var orgs = new Bloodhound({
+  datumTokenizer: function(d) { return d.tokens; },
+  queryTokenizer: Bloodhound.tokenizers.whitespace,
+  remote: '/queries/Organisation/?q=%QUERY'
+});
+orgs.initialize();
+ 
+$('#orgs_remote .typeahead').typeahead(null, {
+  name: 'twitter-oss',
+  displayKey: 'name',
+  source: orgs.ttAdapter(),
+  templates: {
+    suggestion: Handlebars.compile([
+      '<span class="result-container"><span class="result-img"><img height="32px" width="32px" src="{{profile_image_url_https}}"></span>',
+      '<span data-id="{{id}}" class="result-name">{{name}}</span> ',
+      '<span class="result-screen-name"> @{{screen_name}}</span></span>'     
+    ].join(''))
+  }
+});
+
+
+// code for links addition in single business
+var buss = new Bloodhound({
+  datumTokenizer: function(d) { return d.tokens; },
+  queryTokenizer: Bloodhound.tokenizers.whitespace,
+  remote: '/queries/Business/?q=%QUERY'
+});
+buss.initialize();
+ 
+$('#buss_remote .typeahead').typeahead(null, {
+  name: 'twitter-oss',
+  displayKey: 'name',
+  source: buss.ttAdapter(),
+  templates: {
+    suggestion: Handlebars.compile([
+      '<span class="result-container"><span class="result-img"><img height="32px" width="32px" src="{{profile_image_url_https}}"></span>',
+      '<span data-id="{{id}}" class="result-name">{{name}}</span> ',
+      '<span class="result-screen-name"> @{{screen_name}}</span></span>'     
+    ].join(''))
+  }
+});

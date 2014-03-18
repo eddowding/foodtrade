@@ -85,6 +85,9 @@ def set_time_date(single_result,keyword):
     # else:
     #     distance_text = str(lonlat_distance*1000) + " m"
     distance_text = str(lonlat_distance) + " miles"
+    if single_result['location']['coordinates'][0] == -135.00000000000001 and single_result['location']['coordinates'][1] == -82.86275189999999:
+        distance_text = "NA"
+        single_result['user']['address'] = "NA"
     try:
         single_result['time_elapsed'] = get_time(single_result['time_stamp'])
 
@@ -104,7 +107,7 @@ def get_search_parameters(request):
         user_id = request.user.id
         user_profile_obj = UserProfile()
         user_profile = user_profile_obj.get_profile_by_id(str(user_id))
-        
+
         default_lon = float(user_profile['latlng']['coordinates'][0])
         default_lat = float(user_profile['latlng']['coordinates'][1])
         user_info = UserInfo(user_id)
@@ -194,6 +197,8 @@ def get_search_parameters(request):
     for i in range(len(results)):
         results[i] = set_time_date(results[i],keyword)
         results[i]['mentions'] = "@" + results[i]['user']['username'] 
+        user_loc = results[i]['location']
+
 
         if results[i]["result_type"] == results[i]["user"]["username"]:
             tweet_id = results[i]["tweetuid"]

@@ -20,6 +20,7 @@ urlpatterns = patterns('',
     url(r'^(?i)person/(?P<username>[-\w]+)/$', 'mainapp.profilepage.display_profile', name='profile'),
     url(r'^(?i)business/(?P<username>[-\w]+)/$', 'mainapp.profilepage.display_profile', name='profile'),
     url(r'^(?i)organisation/(?P<username>[-\w]+)/$', 'mainapp.profilepage.display_profile', name='profile'),
+    url(r'^(?i)unclaimed/(?P<username>[-\w]+)/$', 'mainapp.profilepage.display_profile', name='profile'),
     # url(r'^foodtrade/', include('foodtrade.foo.urls')),
     url(r'^accounts/social/signup/', 'mainapp.signup_views.signup_view', name = 'account_signup'),
     url(r'^accounts/', include('allauth.urls')),
@@ -43,18 +44,13 @@ urlpatterns = patterns('',
     url(r'^mailchimp-migrate/$', 'mainapp.views.transport_mailchimp'),
     url(r'^send-newsletter/(?P<substype>[-\w]+)/$', 'mainapp.views.send_newsletter'),
     url(r'^payments/', include('djstripe.urls', namespace="djstripe")),
-
     url(r'^twillo/$', 'mainapp.views.sms_receiver'),
     url(r'^all_users/$', 'mainapp.home.all_users'),
-    
-
     url(r'^twitteruser/queries/$', 'mainapp.twitter_search.search_users'),
-
+    url(r'^queries/(?P<type_user>[-\w]+)/$', 'mainapp.profilepage.search_orgs_business'),
     # Temporary urls
     url(r'^merge-data/$', 'mainapp.merge_data.merge'),
     url(r'^update-image/$', 'mainapp.merge_data.update_image'),
-
-    ## any user
-    
+    ## any user    
     url(r'^(?P<username>\w{1,40})/$', 'mainapp.profilepage.profile_url_resolve'),
 )

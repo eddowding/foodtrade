@@ -1,4 +1,4 @@
-{% load staticfiles %}
+1{% load staticfiles %}
 {% load staticfiles %}  
 {% load socialaccount %}
 {% load url from future %}
@@ -54,8 +54,29 @@
         {% endif %}
         {% if 'activity' in request.path %}      
           Home
-        {% endif %}        
-      {% endblock %}{% if request.path != '/' %} -FoodTrade{% endif %}
+        {% endif %}  
+        {% if 'pricing' in request.path %}      
+          Pricing
+        {% endif %}  
+        {% if 'about' in request.path %}      
+          About
+        {% endif %} 
+        {% if 'individuals' in request.path %}      
+          Individuals
+        {% endif %}  
+        {% if 'organisation' in request.path %}      
+          Organisation
+        {% endif %}   
+        {% if 'business' in request.path %}      
+          Business
+        {% endif %}             
+        {% if 'foodwaste' in request.path %}      
+          Foodwaste
+        {% endif %} 
+        {% if 'editprofile' in request.path %}      
+          Editprofile
+        {% endif %}         
+      {% endblock %}{% if request.path != '/' %} - FoodTrade{% endif %}
       
 
     </title>
@@ -110,6 +131,9 @@
             }
          });
          var redIcon = new RedIcon();
+         var def_lon = -135.00000000000001;
+         var def_lat = -82.86275189999999;
+         
 </script>
 
  
@@ -713,6 +737,11 @@ hidden
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
+
+
+
+
+
 
 
 <!-- UserVoice JavaScript SDK (only needed once on a page) -->
