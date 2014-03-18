@@ -16,8 +16,8 @@ HQ_ACCESS_TOKEN_SECRET = 'xGB1Wl4kHnBdxZIDufXTKDQNZPPxbj3PWjMTqH4X802mr'
 REMOTE_SERVER = 'ftstaging.cloudapp.net' 
 # REMOTE_SERVER = 'localhost' 
 REMOTE_MONGO_DBNAME = 'foodtrade'
-REMOTE_MONGO_USERNAME = 'root'
-REMOTE_MONGO_PASSWORD = 'root'
+REMOTE_MONGO_USERNAME = 'Everest'
+REMOTE_MONGO_PASSWORD = 'Everest is our pride'
 #..................Server Settings............................
 
 
