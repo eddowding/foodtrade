@@ -4,13 +4,22 @@ from pymongo import Connection
 import json
 from bson import BSON
 from bson import json_util
+from foodtrade.settings_local import *
 
 class MongoConnection():
-    def __init__ (self, host="localhost",port=27017, db_name='indexer'):
-        self.host = host
-        self.port = port
-        self.client = MongoClient(self.host, self.port)
-        self.db = self.client[db_name]
+    def __init__ (self, host="localhost",port=27017, db_name='indexer', conn_type="local", username=REMOTE_MONGO_USERNAME, password=REMOTE_MONGO_PASSWORD):
+        if conn_type == 'remote':
+            self.host = host
+            self.port = port
+            self.conn = Connection(self.host, self.port)
+            self.db = self.conn[db_name]
+            self.db.authenticate(username, password)
+        else:
+            self.host = host
+            self.port = port
+            self.client = MongoClient(self.host, self.port)
+            self.db = self.client[db_name]
+
 
     def ensure_index(self, table_name, index=None):
         self.db[table_name].ensure_index([(index,pymongo.GEOSPHERE)])

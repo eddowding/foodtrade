@@ -54,8 +54,26 @@
         {% endif %}
         {% if 'activity' in request.path %}      
           Home
-        {% endif %}        
-      {% endblock %}{% if request.path != '/' %} -FoodTrade{% endif %}
+        {% endif %}  
+        {% if 'pricing' in request.path %}      
+          Pricing
+        {% endif %}  
+        {% if 'about' in request.path %}      
+          About
+        {% endif %} 
+        {% if 'individuals' in request.path %}      
+          Individuals
+        {% endif %}  
+        {% if 'organisation' in request.path %}      
+          Organisation
+        {% endif %}   
+        {% if 'business' in request.path %}      
+          Business
+        {% endif %}             
+        {% if 'foodwaste' in request.path %}      
+          Foodwaste
+        {% endif %} 
+      {% endblock %}{% if request.path != '/' %} - FoodTrade{% endif %}
       
 
     </title>

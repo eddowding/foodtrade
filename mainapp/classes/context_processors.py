@@ -11,7 +11,10 @@ def user_info(request):
         invite_id = invite_id_obj.get_unused_id(request.user.id)
 
         '''Construct New Invite URL.'''
-        invite_tweet = construct_invite_tweet(request, invite_id)
+        try:
+            invite_tweet = construct_invite_tweet(request, invite_id)
+        except:
+            pass
 
         subscribed = True
         customer, created = Customer.get_or_create(request.user)

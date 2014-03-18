@@ -16,13 +16,14 @@ from MongoConnection import MongoConnection
 from TwitterError import TwitterError
 from UserProfile import UserProfile
 from MySQLConnect import MySQLConnect
-import settings_local
+from settings_local import *
 from twython import Twython
 from pygeocoder import Geocoder
 
 #bgr = pygeocoder.Geocoder('471653599669-qht8a4r1mrhqma4902f1iag4i6if4tuf.apps.googleusercontent.com', 'hU7DLea2DXvkYzoaXhNtkHfF')
 def register_user_to_mongo(eachFriend):
-    user_profile_obj = UserProfile()
+    user_profile_obj = UserProfile(host=REMOTE_SERVER, port=27017, db_name=REMOTE_MONGO_DBNAME, 
+        conn_type='remote', username=REMOTE_MONGO_USERNAME, password=REMOTE_MONGO_PASSWORD)
     min_user_id = int(user_profile_obj.get_minimum_id_of_user()[0]['minId']) -1
     if eachFriend['location']=='':
         return
@@ -51,23 +52,25 @@ def register_user_to_mongo(eachFriend):
         data['latlng'] = {"type":"Point","coordinates":[float(location_res.longitude) ,float(location_res.latitude)]}
         data['zip_code'] = str(location_res.postal_code)
     except:
-        return
+        data['address'] = str('Antartica')
+        data['latlng'] = {"type":"Point","coordinates":[float(-135.00000000000001) ,float(-82.86275189999999)]}
+        data['zip_code'] = str('')
 
     join_time = datetime.datetime.now()
     join_time = time.mktime(join_time.timetuple())
     data['join_time'] = int(join_time)
 
     print data['screen_name']
-    '''Register User to Mongo'''
-    userprofile = UserProfile()
-    userprofile.update_profile_upsert({'screen_name':eachFriend['screen_name'],
+    '''Register User to Mongo'''    
+    user_profile_obj.update_profile_upsert({'screen_name':eachFriend['screen_name'],
         'username':eachFriend['screen_name']},data)
     return True
 
 
 class Friends():
     def __init__ (self):
-        self.db_object = MongoConnection("localhost",27017,'foodtrade')
+        self.db_object = MongoConnection(host=REMOTE_SERVER, port=27017, db_name=REMOTE_MONGO_DBNAME, 
+        conn_type='remote', username=REMOTE_MONGO_USERNAME, password=REMOTE_MONGO_PASSWORD)
         self.table_name = 'friends'
         self.db_object.create_table(self.table_name,'username')
 
@@ -83,6 +86,7 @@ class Friends():
                     check = user_profile_obj.get_profile_by_username(eachUser['friends']['screen_name'])
                     if check == None:
                         register_user_to_mongo(eachUser['friends'])
+                        #print eachUser['friends']['screen_name']
 
 fr = Friends()        
 fr.register_all_friends()

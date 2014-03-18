@@ -106,7 +106,7 @@ def get_search_parameters(request):
         user_id = request.user.id
         user_profile_obj = UserProfile()
         user_profile = user_profile_obj.get_profile_by_id(str(user_id))
-        
+
         default_lon = float(user_profile['latlng']['coordinates'][0])
         default_lat = float(user_profile['latlng']['coordinates'][1])
         user_info = UserInfo(user_id)

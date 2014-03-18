@@ -608,13 +608,13 @@ def send_newsletter(request, substype):
     '''Generate content for newsletter from activity'''
     tem_con = str(render_to_response('activity-email.html',{'results':results}, context_instance=RequestContext(request)))
     tem_con = tem_con.replace('Content-Type: text/html; charset=utf-8', '')
-    print len(results)
     try:
         if len(results) > 0:
             m = Email()
             '''Do not send empty newsletter'''
             if len(email_to_user['email'])>0:
-                m.send_mail("Recent FoodTrade activity near you", [{'name':'main', 'content':tem_con}], [{'email':eachUser['email']}])
+                if email_to_user['email']:
+                    m.send_mail("Recent FoodTrade activity near you", [{'name':'main', 'content':tem_con}], [{'email':email_to_user['email']}])
             else:
                 return HttpResponse(json.dumps({'status':'0'}))
     except:
