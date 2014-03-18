@@ -31,4 +31,3 @@ def send_newsletter(substype):
             import urllib2
             baseurl = "http://foodtrade.com/send-newsletter/" + str(substype.lower())+ "?username=" + str(eachUser['username']) + "&code=11foodtradeESRS22"
             response = urllib2.urlopen(baseurl)
-

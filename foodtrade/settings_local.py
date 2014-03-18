@@ -12,6 +12,15 @@ BOT_ACCESS_TOKEN_SECRET = '9Hb8qd7OQfYDTt4fgl113Xue0hopbFbwkIA94E0X2PZBs'
 HQ_ACCESS_TOKEN = '384361932-BdKtwhhRDILj4YeHU1G3UN1QtvlrD8LfsqsK6lDF'
 HQ_ACCESS_TOKEN_SECRET = 'xGB1Wl4kHnBdxZIDufXTKDQNZPPxbj3PWjMTqH4X802mr'
 
+#..................Server Settings............................
+REMOTE_SERVER = 'ftstaging.cloudapp.net' 
+# REMOTE_SERVER = 'localhost' 
+REMOTE_MONGO_DBNAME = 'foodtrade'
+REMOTE_MONGO_USERNAME = 'root'
+REMOTE_MONGO_PASSWORD = 'root'
+#..................Server Settings............................
+
+
 # old ones of my twitter app
 # CONSUMER_KEY = 'seqGJEiDVNPxde7jmrk6dQ'
 # CONSUMER_SECRET = 'sI2BsZHPk86SYB7nRtKy0nQpZX3NP5j5dLfcNiP14'

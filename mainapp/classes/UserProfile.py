@@ -5,10 +5,17 @@ from MongoConnection import MongoConnection
 from bson.objectid import ObjectId
 
 class UserProfile():
-    def __init__ (self):
-        self.db_object = MongoConnection("localhost",27017,'foodtrade')
-        self.table_name = 'userprofile'
-        self.db_object.create_table(self.table_name,'useruid')
+    def __init__ (self, host="localhost", port=27017,             
+                db_name='foodtrade', conn_type='local', username='', password=''):
+        if conn_type =='local':
+            self.db_object = MongoConnection(host,port,db_name)
+            self.table_name = 'userprofile'
+            self.db_object.create_table(self.table_name,'useruid')
+        else:
+            self.db_object = MongoConnection(host=host, port=port,             
+                db_name=db_name, conn_type=conn_type, username=username, password=password)
+            self.table_name = 'userprofile'
+            self.db_object.create_table(self.table_name, 'useruid')
 
     def get_all_profiles(self, status):
         users = []

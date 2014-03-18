@@ -283,7 +283,7 @@ class UserProfile():
         for i in range(0,user_pages_count, 1):
             if status == 'None':
                 pag_users = self.db_object.get_paginated_values(self.table_name, {'newsletter_freq':{'$exists':False}, 'email':{'$ne':''}}, pageNumber = int(i+1))
-            else:    
+            else:
                 pag_users = self.db_object.get_paginated_values(self.table_name, {'newsletter_freq':status}, pageNumber = int(i+1))
             for eachUser in pag_users:
                 users.append(eachUser)

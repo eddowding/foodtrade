@@ -16,10 +16,11 @@ from MongoConnection import MongoConnection
 from TwitterError import TwitterError
 from UserProfile import UserProfile
 from MySQLConnect import MySQLConnect
-import settings_local
+from settings_local import *
 from twython import Twython
 from pygeocoder import Geocoder
 
+    
 def get_twitter_obj(token, secret):
     return Twython(
         app_key = settings_local.CONSUMER_KEY,
@@ -75,7 +76,8 @@ def register_user_to_mongo(eachFriend):
     data['join_time'] = int(join_time)
     print data['screen_name']
     '''Register User to Mongo'''
-    userprofile = UserProfile()
+    userprofile = UserProfile(host=REMOTE_SERVER, port=27017, db_name=REMOTE_MONGO_DBNAME, 
+        conn_type='remote', username=REMOTE_MONGO_USERNAME, password=REMOTE_MONGO_PASSWORD)
     userprofile.update_profile_upsert({'screen_name':eachFriend['screen_name'],
         'username':eachFriend['screen_name']},data)
     return True
@@ -104,7 +106,8 @@ def process_friends_or_followers(eachUser, friend_or_follower):
 
 def create_users(arg):
     if arg=='all':
-        user_profile_obj = UserProfile()
+        user_profile_obj = UserProfile(host=REMOTE_SERVER, port=27017, db_name=REMOTE_MONGO_DBNAME, 
+        conn_type='remote', username=REMOTE_MONGO_USERNAME, password=REMOTE_MONGO_PASSWORD)
         users = user_profile_obj.get_all_users()
     else:    
         '''get all newly registered users and process their friends and followers'''
@@ -157,6 +160,6 @@ def solve_errors():
                 twitter_err_obj.save_error({'username':eachError['username'],'error_type':'cron',
                     'next_cursor_str':next_cursor, 'error_solve_stat':'false','user_type':'followers'})
 
-create_users('new')                                
+create_users('all')                                
 #solve_errors()
 
