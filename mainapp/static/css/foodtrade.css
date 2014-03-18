@@ -1719,46 +1719,50 @@ acronym {
   margin-bottom: 0;
 }
 
- .result-container
- {
-  
- }
- .result-name
- {
+.result-container
+{
+
+}
+.result-name
+{
   font-weight: bold;
   padding-left: 10px;
- }
-  .result-img
- {
-  font-weight: bold;
+}
+.result-img
+{
+  font-weight: bold; 
+}
 
- }
-
- .result-screen-name
- {
+.result-screen-name
+{
   font-size: 9px;
- }
+}
 
- .tt-dataset-twitter-oss
- {
+.tt-dataset-twitter-oss
+{
   background: #fefefe;
- }
- .tt-suggestion
- {
-  padding: 5px 5px;
+  border: 1px solid #ccc;
+}
+.tt-suggestion
+{
+  padding: 5px;
+  border-bottom: 1px solid #eee;
+}
 
-
- }
-
-  .tt-suggestions div:hover
- {
+.tt-suggestions div:hover
+{
   background: #BEB5B5;
+}
+
+.typeahead {
+  background: #fff !important;
+}
+
+.tt-hint {
+  visibility: hidden;
+}
 
 
- }
-
- .tt-hint {
-visibility: hidden;
 acronym {
-  border-bottom: 1px dotted ;
+border-bottom: 1px dotted ;
 }
