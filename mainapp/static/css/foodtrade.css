@@ -128,8 +128,31 @@ h2 {
 }
 
 .nav-tabs  {
-	background: #fff;
-	margin:40px 0 20px 0;
+	background: #eee;
+  margin: 0px 0 20px 0;
+  border-left: 1px solid #ccc;
+  border-right: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
+}
+
+.nav-tabs > li {
+  border-right: 1px solid #cdcdcd;
+}
+
+.nav-tabs > li > a {
+  border-radius: 0;
+  margin-right: 0;
+}
+
+.nav-tabs > li > a:hover {
+  background: #fff;
+  color: green;
+}
+
+.nav-tabs > li.active > a, 
+.nav-tabs > li.active > a:hover, 
+.nav-tabs > li.active > a:focus {
+  border-top-color: transparent;
 }
 
 #activity_switcher .nav-tabs {
@@ -1766,3 +1789,21 @@ acronym {
 acronym {
 border-bottom: 1px dotted ;
 }
+
+
+
+
+
+/********************************/
+/**  Modal Blur not logged in  **/
+/********************************/
+
+body.modal-open #main_page{
+    -webkit-filter: blur(7px);
+    -moz-filter: blur(15px);
+    -o-filter: blur(15px);
+    -ms-filter: blur(15px);
+    filter: blur(15px);
+}
+  
+.modal-backdrop {background: #f7f7f7;}

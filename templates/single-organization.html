@@ -254,6 +254,8 @@
         </div><!-- /.modal-dialog -->
       </div><!-- /.modal -->
       <!-- modal_customer -->
+
+      {% if request.user.is_authenticated %}
       <div class="modal fade" id="modal_customer" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog">
           <div class="modal-content">
@@ -275,7 +277,7 @@
           </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
       </div><!-- /.modal -->
- 
+ {% endif %}
       </div><!-- end header last -->
     </div>
     </div>
@@ -482,7 +484,8 @@
       
    
 {% endblock %}
-{% block footer %}        
+{% block footer %}  
+{% include "includes/not_logged_in_modal.html" %}
         <script type="text/javascript">
   tweetlistener('email_message', 'contact_counter', 'contact_tweet');
     map_lat={{ loc.lat }};

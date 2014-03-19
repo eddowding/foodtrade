@@ -1717,6 +1717,7 @@ var buss = new Bloodhound({
 });
 buss.initialize();
  
+ 
 $('#buss_remote .typeahead').typeahead(null, {
   name: 'twitter-oss',
   displayKey: 'name',
@@ -1729,3 +1730,4 @@ $('#buss_remote .typeahead').typeahead(null, {
     ].join(''))
   }
 });
+

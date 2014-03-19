@@ -66,11 +66,6 @@ var card_str = '<div class="card-box"><div class="content"><div class="pull-left
                   card_str += '</div> ';
 
 			var ctrl = L.marker([map_lat,map_lon], {icon: redIcon}).addTo(map).bindPopup(card_str);
-			
-
-
-
-			
 var map_controls = [];
 
 
