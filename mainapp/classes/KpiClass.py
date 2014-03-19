@@ -19,7 +19,8 @@ class KPIStats():
         individual_count = self.db_object.get_count(self.table_name, {'sign_up_as': 'Individual'})
         business_count = self.db_object.get_count(self.table_name, {'sign_up_as': 'Business'})
         organisation_count = self.db_object.get_count(self.table_name, {'sign_up_as': 'Organisation'})
-        return {'individual_count': individual_count,'business_count': business_count,'organisation_count': organisation_count}
+        unknown_count = self.db_object.get_count(self.table_name, {'sign_up_as': 'unclaimed'})
+        return {'individual_count': individual_count,'business_count': business_count,'organisation_count': organisation_count,'unknown_count': unknown_count}
 
     def activity_count(self):
         self.table_name = 'userprofile'
