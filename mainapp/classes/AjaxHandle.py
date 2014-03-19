@@ -87,10 +87,9 @@ class AjaxHandle(AjaxSearch):
                     data['latlng'] = {"type":"Point","coordinates":[float(location_res.longitude) ,float(location_res.latitude)]}
                     data['zip_code'] = str(location_res.postal_code)
                 except:
-                    lat, lon, addr,postal_code = 51.5072 , -0.1275, "3 Whitehall, London SW1A 2EL, UK", "SW1 A 2EL"
-                    data['address'] = addr
-                    data['latlng'] = {"type":"Point","coordinates" : [float(lon),float(lat)]}
-                    data['zip_code'] = postal_code
+                    data['address'] = str('Antartica')
+                    data['latlng'] = {"type":"Point","coordinates":[float(-135.10000000000002) ,float(-82.86275189999999)]}
+                    data['zip_code'] = str('')
                     data['location_default_on_error'] = 'true'
                                     
                 user_profile_obj.create_profile(data)

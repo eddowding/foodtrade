@@ -69,7 +69,10 @@ def register_user_to_mongo(eachFriend):
         data['latlng'] = {"type":"Point","coordinates":[float(location_res.longitude) ,float(location_res.latitude)]}
         data['zip_code'] = str(location_res.postal_code)
     except:
-        return True
+        data['address'] = str('Antartica')
+        data['latlng'] = {"type":"Point","coordinates":[float(-135.10000000000002) ,float(-82.86275189999999)]}
+        data['zip_code'] = str('')
+        data['location_default_on_error'] = 'true'
 
     join_time = datetime.datetime.now()
     join_time = time.mktime(join_time.timetuple())
