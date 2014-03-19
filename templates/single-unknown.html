@@ -76,7 +76,7 @@
   
       </div><!-- end header middle -->
 
-      <div id="contact_info" class="col-md-6 col-sm-4 col-xs-4">
+      <div id="contact_info" class="col-md-2 col-sm-2 col-xs-2">
         
       <!-- if they dont't have an account yet --> 
       <button class="btn btn-primary btn-block" style="margin-top:40px;" data-toggle="modal" {% if request.user.is_authenticated %} data-target="#modal_invite" {% else %} disabled="disabled" {% endif %}>
@@ -85,9 +85,9 @@
       </div><!-- end header last -->
     </div>
     </div>
+ 
 
-    <div class="row" style="margin-top: 30px;">
-     <div class="col-md-12">
+     <div class="container-responsive">
 
 <div class="well well-sm">
   <h3 class="text-center"> Hi! What is @{{userprof.username}}? </h3>
@@ -140,7 +140,7 @@
   <h4 class="text-center"> <small> <strong>This only shows once!</strong> As soon as we know what it is, others can start adding information to it. </small></h4> 
 </div>
 </div>
-</div>
+
 </div><!-- col10 --> 
 <script type="text/javascript">
   function change_sign_up(sign_up_as, username){
