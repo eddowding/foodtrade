@@ -15,6 +15,7 @@ HQ_ACCESS_TOKEN_SECRET = 'xGB1Wl4kHnBdxZIDufXTKDQNZPPxbj3PWjMTqH4X802mr'
 #..................Server Settings............................
 REMOTE_SERVER = 'foodtradelite.cloudapp.net' 
 #REMOTE_SERVER = 'localhost' 
+# REMOTE_SERVER = 'ftstaging.cloudapp.net' 
 REMOTE_MONGO_DBNAME = 'foodtrade'
 REMOTE_MONGO_USERNAME = 'ftroot'
 REMOTE_MONGO_PASSWORD = 'ftroot'

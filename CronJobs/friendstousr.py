@@ -50,8 +50,9 @@ def register_user_to_mongo(eachFriend):
         data['zip_code'] = str(location_res.postal_code)
     except:
         data['address'] = str('Antartica')
-        data['latlng'] = {"type":"Point","coordinates":[float(-135.00000000000001) ,float(-82.86275189999999)]}
+        data['latlng'] = {"type":"Point","coordinates":[float(-135.10000000000002) ,float(-82.86275189999999)]}
         data['zip_code'] = str('')
+        data['location_default_on_error'] = 'true'
 
     join_time = datetime.datetime.now()
     join_time = time.mktime(join_time.timetuple())
@@ -83,8 +84,8 @@ class Friends():
         conn_type='remote', username=REMOTE_MONGO_USERNAME, password=REMOTE_MONGO_PASSWORD)
                     check = user_profile_obj.get_profile_by_username(eachUser['friends']['screen_name'])
                     if check == None:
-                        #register_user_to_mongo(eachUser['friends'])
-                        print eachUser['friends']['screen_name']
+                        register_user_to_mongo(eachUser['friends'])
+                        #print eachUser['friends']['screen_name']
 
 fr = Friends()        
 fr.register_all_friends()

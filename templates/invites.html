@@ -46,7 +46,7 @@
 	        <input type="checkbox" id="checkbox{{forloop.counter}}" onclick="validate_tweets('{{each.friends.screen_name}}', {{forloop.counter}})" />
 	        <label for="checkbox{{forloop.counter}}">
 	          <img src="{{each.friends.profile_image_url}}" title="{{each.friends.name}}" class="img-responsive pull-left" style="width:20px; margin-right: 5px;" /> 
-	          {{each.friends.name}} &nbsp;<span class="text-muted small">@{{each.friends.screen_name}}</span>
+	          <a href="/{{each.friends.screen_name}}/">{{each.friends.name}} &nbsp;<span class="text-muted small">@{{each.friends.screen_name}}</a></span>
 	          </label>
 	      </div>
 	    </li>   
