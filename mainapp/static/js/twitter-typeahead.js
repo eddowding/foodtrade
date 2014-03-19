@@ -1729,3 +1729,4 @@ $('#buss_remote .typeahead').typeahead(null, {
     ].join(''))
   }
 });
+
