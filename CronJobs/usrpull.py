@@ -79,10 +79,13 @@ def register_user_to_mongo(eachFriend):
     data['join_time'] = int(join_time)
     print data['screen_name']
     '''Register User to Mongo'''
+
     userprofile = UserProfile(host=REMOTE_SERVER, port=27017, db_name=REMOTE_MONGO_DBNAME, 
         conn_type='remote', username=REMOTE_MONGO_USERNAME, password=REMOTE_MONGO_PASSWORD)
-    userprofile.update_profile_upsert({'screen_name':eachFriend['screen_name'],
-        'username':eachFriend['screen_name']},data)
+    check = userprofile.get_profile_by_username(eachUser['screen_name'])
+    if check ==None:
+        userprofile.update_profile_upsert({'screen_name':eachFriend['screen_name'],
+            'username':eachFriend['screen_name']},data)
     return True
 
 
@@ -122,7 +125,7 @@ def create_users(arg):
         users = user_profile_obj.get_all_profiles_by_time(start_time)
 
     for eachUser in users:
-        print eachUser['screen_name']
+        #print eachUser['screen_name']
         process_friends_or_followers(eachUser, 'friends')
         process_friends_or_followers(eachUser, 'followers')
         
@@ -163,6 +166,6 @@ def solve_errors():
                 twitter_err_obj.save_error({'username':eachError['username'],'error_type':'cron',
                     'next_cursor_str':next_cursor, 'error_solve_stat':'false','user_type':'followers'})
 
-create_users('all')                                
+create_users('new')                                
 #solve_errors()
 
