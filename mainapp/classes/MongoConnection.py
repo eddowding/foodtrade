@@ -7,7 +7,7 @@ from bson import json_util
 
 
 class MongoConnection():
-    def __init__ (self, host="localhost",port=27017, db_name='indexer', conn_type="local", username='root', password='root'):
+    def __init__ (self, host="localhost",port=27017, db_name='indexer', conn_type="local", username='roshan', password='bhandari'):
         self.host = host
         self.port = port
         self.conn = Connection(self.host, self.port)
