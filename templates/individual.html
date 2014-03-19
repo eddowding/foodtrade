@@ -1,409 +1,375 @@
-{% extends 'tbase.html' %}
-{% load staticfiles %}
-{% load socialaccount %}
-{% load url from future %}
-{% load i18n %}
-{% include "socialaccount/snippets/login_extra.html" %}
-{% load account %}
-
-
-{% block ogtype %}{% if userprof.user_type == "Business" %}Profile{%endif%}{% if userprof.user_type == "Individual" %}business.business{%endif%}{% if userprof.user_type == "Organisation" %}business.business{%endif%}{% endblock %}
-s
-{% block titlecontent %}{{userprof.full_name}}{% endblock %}
-{% block titlemain %}{{userprof.full_name}}{% endblock %}
-
-{% block description %}{{userprof.description}}{% endblock %}
-
-{% block fblat %}{{userprof.lat}}{% endblock %}
-{% block fblon %}{{userprof.lon}}{% endblock %}
-{% block fbzipcode %}{{userprof.zip_code}}{% endblock %}
-{% block fbcountry %}{{userprof.country}}{% endblock %}
-{% block ogimg %}{{userprof.profileimg}}{% endblock %}
-
-{% block metatitle %}{{userprof.full_name}}{% endblock %}
-{% block metadescription %}{{userprof.description}}{% endblock %}
-
-
-{% block contact %}
-  {% if userprof.user_type == 'Business' or userprof.user_type == 'Organisation'%}
-  <meta property="business:contact_data:postal_code"    content="{{userprof.zip_code}}" /> 
-  <meta property="business:contact_data:country_name"   content="{{userprof.country}}" /> 
-  <meta property="business:contact_data:street_address" content="{{userprof.address}}" /> 
-  <meta property="business:contact_data:locality"       content="{{userprof.address}}" /> 
-  {% endif %}
-{% endblock %}
-{% block content %}
-{% include 'modal_invite.html' %}
+{% extends 'tbase.html' %} {% load staticfiles %} {% load socialaccount %} {% load url from future %} {% load i18n %} {% include "socialaccount/snippets/login_extra.html" %} {% load account %} {% block ogtype %}{% if userprof.user_type == "Business" %}Profile{%endif%}{% if userprof.user_type == "Individual" %}business.business{%endif%}{% if userprof.user_type == "Organisation" %}business.business{%endif%}{% endblock %} s {% block titlecontent %}{{userprof.full_name}}{% endblock %} {% block titlemain %}{{userprof.full_name}}{% endblock %} {% block description %}{{userprof.description}}{% endblock %} {% block fblat %}{{userprof.lat}}{% endblock %} {% block fblon %}{{userprof.lon}}{% endblock %} {% block fbzipcode %}{{userprof.zip_code}}{% endblock %} {% block fbcountry %}{{userprof.country}}{% endblock %} {% block ogimg %}{{userprof.profileimg}}{% endblock %} {% block metatitle %}{{userprof.full_name}}{% endblock %} {% block metadescription %}{{userprof.description}}{% endblock %} {% block contact %} {% if userprof.user_type == 'Business' or userprof.user_type == 'Organisation'%}
+<meta property="business:contact_data:postal_code" content="{{userprof.zip_code}}" />
+<meta property="business:contact_data:country_name" content="{{userprof.country}}" />
+<meta property="business:contact_data:street_address" content="{{userprof.address}}" />
+<meta property="business:contact_data:locality" content="{{userprof.address}}" />{% endif %} {% endblock %} {% block content %} {% include 'modal_invite.html' %}
 <link rel="stylesheet" href="/static/css/docsupport/prism.css">
-  <link rel="stylesheet" href="/static/css/chosen.min.css">
+<link rel="stylesheet" href="/static/css/chosen.min.css">
 
-<link href="{% static "css/jquery.tagit.css" %}" rel="stylesheet" type="text/css">
-<link href="{% static "css/tagit.ui-zendesk.css" %}" rel="stylesheet" type="text/css">
+<link href="{% static " css/jquery.tagit.css " %}" rel="stylesheet" type="text/css">
+<link href="{% static " css/tagit.ui-zendesk.css " %}" rel="stylesheet" type="text/css">
 <style type="text/css" media="all">
-    /* fix rtl for demo */
-    .chosen-rtl .chosen-drop { left: -9000px; }
-  </style>
+/* fix rtl for demo */
+ .chosen-rtl .chosen-drop {
+    left: -9000px;
+}
+</style>
 
 
-    <div class="col-md-6 col-sm-7 {% if not user.is_authenticated %} col-md-offset-1 {% endif %}" id="single">
+<div class="col-md-6 col-sm-7 {% if not user.is_authenticated %} col-md-offset-1 {% endif %}" id="single">
     <div class="container-responsive">
-    <div id="header_box" class="clearfix individual">
-      <div class="col-md-2 hidden-sm hidden-xs" id="avatar">
-        <img class="img-thumbnail center-block" src={{pic_url}}  />
-      </div>
-     
-      <div class="col-md-6 col-sm-8 col-xs-8">
-        <!-- certificate -->
-          {% if prof_subscribed %}
-          <span class="fa-stack fa-lg pull-right" id="verified" rel="tooltip" title="Verified profile">
-            <i class="fa fa-certificate fa-stack-2x" style="color: #1DBD3C;"></i>
-            <i class="fa fa-check fa-stack-1x" style="color: #fff;"></i>
-          </span>
-          {% endif %}
-          <!-- certificate -->
-         <h1><a href="#">{{name}}</a></h1>
- 
-<!--           <div class="tags tags-biztype  ">  
+        <div id="header_box" class="clearfix individual">
+            <div class="col-md-2 hidden-sm hidden-xs" id="avatar">
+                <img class="img-thumbnail center-block" src="{{pic_url}}" />
+            </div>
+
+            <div class="col-md-6 col-sm-8 col-xs-8">
+                <!-- certificate -->
+                {% if prof_subscribed %}
+                <span class="fa-stack fa-lg pull-right" id="verified" rel="tooltip" title="Verified profile">
+                    <i class="fa fa-certificate fa-stack-2x" style="color: #1DBD3C;"></i>
+                    <i class="fa fa-check fa-stack-1x" style="color: #fff;"></i>
+                </span>
+                {% endif %}
+                <!-- certificate -->
+                <h1><a href="#">{{name}}</a>
+                </h1>
+
+                <!--           <div class="tags tags-biztype  ">  
             {% for eachtype in type_user %}
            <a href="/activity/?q={{eachtype}}">{{eachtype}}</a>
            {% endfor %}
 
           </div>  -->
-         <hr />
-         <p>{{description}}</p>        
+                <hr />
+                <p>{{description}}</p>
 
-         
-         <!--  <div class="tags">  
+
+                <!--  <div class="tags">  
            <a href="/tag/TAG">Box Scheme</a>
            <a href="/tag/TAG">Butcher</a>
            <a href="/tag/TAG">family</a>
            <a href="/tag/TAG">organic</a> 
           </div> -->
-         <hr /> 
-     
-         <div class="meta small text-muted">
-            {% if loc.lat == -82.86275189999999 and loc.lon == -135.10000000000002 %}
-              <i class="fa fa-map-marker"></i> <a > NA</a>
-              <i class="fa fa-location-arrow" style="margin-left: 20px;"></i> NA
-            {% else %}
-            <i class="fa fa-map-marker"></i> <a href="http://maps.google.com/maps?saddr={{loggedin_coord.lat}},{{loggedin_coord.lon}}&daddr={{loc.lat}},{{loc.lon}}" target="_blank" data-placement="top" data-toggle="tooltip" title="Get directions" class="text-muted">
+                <hr />
+
+                <div class="meta small text-muted">
+                    {% if loc.lat == -82.86275189999999 and loc.lon == -135.10000000000002 %}
+                    <i class="fa fa-map-marker"></i>  <a> NA</a>
+                    <i class="fa fa-location-arrow" style="margin-left: 20px;"></i> NA {% else %}
+                    <i class="fa fa-map-marker"></i>  <a href="http://maps.google.com/maps?saddr={{loggedin_coord.lat}},{{loggedin_coord.lon}}&daddr={{loc.lat}},{{loc.lon}}" target="_blank" data-placement="top" data-toggle="tooltip" title="Get directions" class="text-muted">
               {{address}}
-          </a>   
-            <!-- if logged in or you've allows html5 browser location -->
-            <i class="fa fa-location-arrow" style="margin-left: 20px;"></i> {{distance}} miles
-          {% endif %}
-            <!--  // if logged in or you've allows html5 browser location -->
-            <!-- <i class="fa fa-bullseye" style="margin-left: 20px;"></i> 20.1 miles -->
-  
-         </div> <!-- meta -->
-  
-      </div><!-- end header middle -->
-      <div id="contact_info" class="col-md-4 col-sm-4  col-xs-4">
-      {% ifequal profile_id user_id %}
-        <a href="/editprofile/{{userinfo.username}}" class="btn btn-danger btn-block">
+          </a> 
+                    <!-- if logged in or you've allows html5 browser location -->
+                    <i class="fa fa-location-arrow" style="margin-left: 20px;"></i> {{distance}} miles {% endif %}
+                    <!--  // if logged in or you've allows html5 browser location -->
+                    <!-- <i class="fa fa-bullseye" style="margin-left: 20px;"></i> 20.1 miles -->
+
+                </div>
+                <!-- meta -->
+
+            </div>
+            <!-- end header middle -->
+            <div id="contact_info" class="col-md-4 col-sm-4  col-xs-4">
+                {% ifequal profile_id user_id %}
+                <a href="/editprofile/{{userinfo.username}}" class="btn btn-danger btn-block">
            Edit my profile
         </a>
-      {% endifequal %}
-      {% ifnotequal profile_id user_id %}
-      <!-- if they dont't have an account yet -->
-<!--       {% if not user.is_authenticated %}
+                {% endifequal %} {% ifnotequal profile_id user_id %}
+                <!-- if they dont't have an account yet -->
+                <!--       {% if not user.is_authenticated %}
       <button class="btn btn-primary btn-block">Invite to connect</button>
      {% endif %} -->
-      <!-- Button trigger modal -->
-      {% if user.is_authenticated %}
-          {% ifequal is_unknown_profile 'false' %}
-          <button class="btn btn-primary btn-block" data-toggle="modal" data-target="#modal_contact">Contact</button>
-          {% else %}
-            <button class="btn btn-primary btn-block" style="margin-top:40px;" data-toggle="modal" data-target="#modal_invite">Invite to connect</button> 
-          {% endifequal %}
+                <!-- Button trigger modal -->
+                {% if user.is_authenticated %} {% ifequal is_unknown_profile 'false' %}
+                <button class="btn btn-primary btn-block" data-toggle="modal" data-target="#modal_contact">Contact</button>
+                {% else %}
+                <button class="btn btn-primary btn-block" style="margin-top:40px;" data-toggle="modal" data-target="#modal_invite">Invite to connect</button>
+                {% endifequal %} {% if user.is_superuser %}
+                <a href="/editprofile/{{username}}/" class="btn btn-primary btn-block">Edit</a>
+                {% endif %} {% else %}
+                <!-- if not logged in show login prompt -->
+                <a href="{% provider_login_url " twitter " process="login " %}" class="btn btn-primary btn-block">Login for more</a>
+                {% endif %} {% endifnotequal %}
+                <button class="btn btn-default btn-block" data-toggle="modal" data-target="#sharer">
+                    <i class="fa fa-share-square-o text-muted"></i> Share
+                </button>
+                <!--SHARER  Modal -->
+                <div class="modal fade" id="sharer" tabindex="-1" role="dialog" aria-labelledby="sharer" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-body">
+                                <div class="container-responsive">
+                                    <div class="row">
+                                        <div class="col-sm-6">
 
-          {% if user.is_superuser %}
-            <a href="/editprofile/{{username}}/" class="btn btn-primary btn-block">Edit</a>
-          {% endif %}
-
-      {% else %}
-      <!-- if not logged in show login prompt -->
-      <a href="{% provider_login_url "twitter" process="login" %}" class="btn btn-primary btn-block">Login for more</a>
-      {% endif %}
-      {% endifnotequal %}
-      <button class="btn btn-default btn-block" data-toggle="modal" data-target="#sharer">
-        <i class="fa fa-share-square-o text-muted"></i> Share
-      </button>
-      <!--SHARER  Modal -->
-      <div class="modal fade" id="sharer" tabindex="-1" role="dialog" aria-labelledby="sharer" aria-hidden="true">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-body"> 
-        <div class="container-responsive">
-          <div class="row">
-            <div class="col-sm-6">
-
-                            <a href="#" class="btn btn-block  btn-social btn-facebook" onclick="window.open(
+                                            <a href="#" class="btn btn-block  btn-social btn-facebook" onclick="window.open(
               'https://www.facebook.com/sharer/sharer.php?s=100&amp;p[url]='+encodeURIComponent('{{ request.build_absolute_uri }}') +'&amp;p[images][0]='+encodeURIComponent('{{pic_url}}')+'&amp;p[title]='+encodeURIComponent('{{name}} on FoodTrade')+'&amp;p[summary]='+encodeURIComponent('Hey, see my profile on FoodTrade')+'&amp;u='+encodeURIComponent('{{ request.build_absolute_uri }}') +'&amp;t='+encodeURIComponent('{{name}} on FoodTrade'),
                     'facebook-share-dialog', 
                     'width=626,height=436,top='+((screen.height - 436) / 2)+',left='+((screen.width - 626)/2 )); 
                   return false;">
 
-                <i class="fa fa-facebook"></i>  Share on Facebook
-              </a>
+                                                <i class="fa fa-facebook"></i> Share on Facebook
+                                            </a>
 
-              <!-- <div class="fb-share-button" data-href="http://developers.facebook.com/docs/plugins/" data-type="link"></div> -->
-              
-              
-              <a href="#" class="btn btn-block  btn-social btn-twitter" onclick="window.open(
+                                            <!-- <div class="fb-share-button" data-href="http://developers.facebook.com/docs/plugins/" data-type="link"></div> -->
+
+
+                                            <a href="#" class="btn btn-block  btn-social btn-twitter" onclick="window.open(
                     'https://twitter.com/share?url='+encodeURIComponent('{{ request.build_absolute_uri }}')+'&amp;text='+encodeURIComponent('{{screen_name}} on @foodtradeHQ') + '&amp;count=none/', 
                     'twitter-share-dialog', 
                     'width=626,height=436,top='+((screen.height - 436) / 2)+',left='+((screen.width - 626)/2 )); 
                   return false;">
-                <i class="fa fa-twitter"></i>  Share on Twitter
-              </a>
-  
-              <a class="btn  btn-block  btn-social btn-pinterest" href="http://pinterest.com/pin/create/button/?url={{ request.build_absolute_uri|urlencode }}&media={{pic_url|urlencode}}&description={{screen_name|urlencode}}{{' on FoodTrade'|urlencode}}" class="pin-it-button" count-layout="horizontal">
-                <i class="fa fa-pinterest"></i>
-                Share on Pinterest
-              </a>
-            </div>
-            <div class="col-sm-6">
-              <a  class="btn btn-social btn-block btn-google-plus" href="https://plus.google.com/share?url={{ request.build_absolute_uri|urlencode }}">
-                <i class="fa fa-google-plus"></i>
-                Share on Google+
-              </a>
-              <a  class="btn btn-block btn-social btn-tumblr" href="http://www.tumblr.com/share" title="Share on Tumblr">
-                <i class="fa fa-tumblr"></i>
-                Share on Tumblr
-              </a>
-                 
-              <a  class="btn btn-block  btn-social btn-bitbucket" href="http://www.linkedin.com/shareArticle?mini=true&url={{ request.build_absolute_uri|urlencode}}&title={{screen_name}} on FOodTrade&summary=Hey, view my profile on Foodtrade.&source=">
-                <i class="fa fa-linkedin"></i>
-                Share on LinkedIn
-              </a>
-            </div>
-            </div>
-            </div>
-              <script type="text/javascript" src="http://platform.tumblr.com/v1/share.js"></script>
-            </div> 
-          </div><!-- /.modal-content -->
-        </div><!-- /.modal-dialog -->
-      </div><!-- /.modal -->
+                                                <i class="fa fa-twitter"></i> Share on Twitter
+                                            </a>
 
-      <div class="icons text-center" style="font-size:25px">
+                                            <a class="btn  btn-block  btn-social btn-pinterest" href="http://pinterest.com/pin/create/button/?url={{ request.build_absolute_uri|urlencode }}&media={{pic_url|urlencode}}&description={{screen_name|urlencode}}{{' on FoodTrade'|urlencode}}" class="pin-it-button" count-layout="horizontal">
+                                                <i class="fa fa-pinterest"></i>
+                                                Share on Pinterest
+                                            </a>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <a class="btn btn-social btn-block btn-google-plus" href="https://plus.google.com/share?url={{ request.build_absolute_uri|urlencode }}">
+                                                <i class="fa fa-google-plus"></i>
+                                                Share on Google+
+                                            </a>
+                                            <a class="btn btn-block btn-social btn-tumblr" href="http://www.tumblr.com/share" title="Share on Tumblr">
+                                                <i class="fa fa-tumblr"></i>
+                                                Share on Tumblr
+                                            </a>
 
-      {% if facebook_page %}
-        <a href="{{facebook_page}}"><i class="fa fa-facebook-square"></i></a>
-      {% endif %} 
-      {% if userprof.username %}
-        <a href="http://twitter.com/{{userprof.username}}"><i class="fa fa-twitter-square"></i></a> 
-      {% endif %} 
-      {% if phone_number %}
-        <a href="callto:{{phone_number}}"><i class="fa fa-phone-square"></i></a>  
-      {% endif %}   
-      {% if website_url %}
-        <a href="{{website_url}}"><i class="fa fa-globe"></i></a>  
-      {% endif %} 
-      {% if company_num %}
-        <a href="https://www.duedil.com/company/{{company_num}}"><i class="fa fa-legal"></i></a>  
-      {% endif %} 
- 
-      </div>  
-      
-     <!-- modal_contact -->
-      <div class="modal fade" id="modal_contact" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-              <h4 class="modal-title" id="myModalLabel">Contact {{userinfo.name}}</h4>
-            </div>
-            <div class="modal-body">
-            <div class="container-responsive">
-              <div class="row">
-                <div class="col-sm-4">
-             
-                  <address> 
-
-          <a href="mailto:{{email}}" class="dotdotdot" target="_blank"><i class="fa fa-envelope text-muted fa-fw"></i> {{email}} </a><br />
-          <a href="http://twitter.com/{{screen_name}}"  target="_blank"><i class="fa fa-twitter text-muted fa-fw"></i> {{screen_name}}</a><br /> 
-         
-         
-                  </address>
-                </div>
-                
-                <div class="col-sm-8 contact-form">
-                  <form id="contact" method="post" class="form" role="form">
-                    <div class="row">
-                      <div class="col-xs-6 col-md-6 form-group">
-                        <input class="form-control" id="sender_name" name="name" placeholder="Name" type="text" required autofocus value = "{{userinfo.full_name}}"/>
-                      </div>
-                      <div class="col-xs-6 col-md-6 form-group">
-                        <input class="form-control" id="sender_email" name="email" placeholder="Email" type="email" required value = "{{userinfo.email}}" />
-                      </div>
-                    </div> 
-                    <textarea class="form-control" id="email_message" placeholder="Type in your message" rows="5"></textarea>
-                    <h6 class="pull-right" id="contact_counter">120 characters remaining</h6>
-                     
-                  </form>
-                </div>
-              </div>
-            </div>
- 
-   
-            </div>
-            <div class="modal-footer">  
-              <button type="button" id="contact_tweet" class="btn btn-info" onclick="post_contact_tweet('{{screen_name}}')"><i class="fa fa-fw fa-twitter"></i> Tweet it</button>
-              <button type="button" class="btn btn-success" onclick="send_email('{{email}}')"><i class="fa fa-envelope fa-fw"></i> Email it</button>
-            </div>
-          </div><!-- /.modal-content -->
-        </div><!-- /.modal-dialog -->
-      </div><!-- /.modal -->
-      <!-- modal_customer -->
-      
-      <div class="modal fade" id="modal_tweet_recomm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-              <h4 class="modal-title" id="myModalLabel">Tell others what you have just recommended !</h4>
-            </div>
-            <div class="modal-body">
-               <form accept-charset="UTF-8" action="" method="POST">
-                      <textarea id="tweet-recomm" class="form-control counted" name="message" placeholder="Type in your message" rows="5" ></textarea>
-                  </form> 
-   
-            </div>
-            <div class="modal-footer"> 
-              <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-              {% if user.is_authenticated %}
-              <button type="button" class="btn btn-success" data-dismiss="modal" onclick="UpdateStatus('tweet-recomm', 'noappend')">Tweet</button>
-              {% else %}
-              <button type="button" class="btn btn-success" data-dismiss="modal">Tweet</button>
-              {% endif %}
-            </div>
-          </div><!-- /.modal-content -->
-        </div><!-- /.modal-dialog -->
-      </div><!-- /.modal -->
- 
-<div class="modal fade" id="modal_food_detail" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-              <h4 class="modal-title" id="food_detail_title">Add details to </h4>
-            </div>
-            <div class="modal-body">
-              <form accept-charset="UTF-8" action="." role="form" method="POST" enctype="multipart/form-data">
-               {% csrf_token %}
-               <div class="row">
-                <div class="col-xs-12 col-md-4"> 
-                  <a href="#" rel="tooltip" title="Change the photo">
-                    <img src="http://placehold.it/100x100&text=Upload an image" class="img-responsive img-thumbnail" id="food_photo" style="width:100px;height:100px;">
-                  </a>
-                  <!-- show this in another modal? -->
-                  <!-- can we use html5 drag and drop to upload? -->
-                    <div class="form-group">
-                      <label for="food_photo">Upload a photo</label>
-                      {{form.food_photo}}
-                      {{form.food_name.as_hidden}}
-                      {{form.profile_id.as_hidden}}
-                {{form.food_tags.as_hidden}}
-               {{form.food_duplicate.as_hidden}} 
+                                            <a class="btn btn-block  btn-social btn-bitbucket" href="http://www.linkedin.com/shareArticle?mini=true&url={{ request.build_absolute_uri|urlencode}}&title={{screen_name}} on FOodTrade&summary=Hey, view my profile on Foodtrade.&source=">
+                                                <i class="fa fa-linkedin"></i>
+                                                Share on LinkedIn
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <script type="text/javascript" src="http://platform.tumblr.com/v1/share.js"></script>
+                            </div>
+                        </div>
+                        <!-- /.modal-content -->
                     </div>
-                  <!-- end code -->
+                    <!-- /.modal-dialog -->
                 </div>
-                
-                <div class="col-xs-12 col-md-8">
-                  <div class="form-group">
-                    {{form.food_description}}
-                  </div>
-                  <div class="form-group" id="recommend_main" style="display:none;">
-                    <div id="recomm_tags">
+                <!-- /.modal -->
+
+                <div class="icons text-center" style="font-size:25px">
+
+                    {% if facebook_page %}
+                    <a href="{{facebook_page}}"><i class="fa fa-facebook-square"></i></a>
+                    {% endif %} {% if userprof.username %}
+                    <a href="http://twitter.com/{{userprof.username}}"><i class="fa fa-twitter-square"></i></a> {% endif %} {% if phone_number %}
+                    <a href="callto:{{phone_number}}"><i class="fa fa-phone-square"></i></a> {% endif %} {% if website_url %}
+                    <a href="{{website_url}}"><i class="fa fa-globe"></i></a> {% endif %} {% if company_num %}
+                    <a href="https://www.duedil.com/company/{{company_num}}"><i class="fa fa-legal"></i></a> {% endif %}
+
+                </div>
+
+                <!-- modal_contact -->
+                <div class="modal fade" id="modal_contact" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                <h4 class="modal-title" id="myModalLabel">Contact {{userinfo.name}}</h4>
+                            </div>
+                            <div class="modal-body">
+                                <div class="container-responsive">
+                                    <div class="row">
+                                        <div class="col-sm-4">
+
+                                            <address>
+
+                                                <a href="mailto:{{email}}" class="dotdotdot" target="_blank"><i class="fa fa-envelope text-muted fa-fw"></i> {{email}} </a>
+                                                <br />
+                                                <a href="http://twitter.com/{{screen_name}}" target="_blank"><i class="fa fa-twitter text-muted fa-fw"></i> {{screen_name}}</a>
+                                                <br />
+
+
+                                            </address>
+                                        </div>
+
+                                        <div class="col-sm-8 contact-form">
+                                            <form id="contact" method="post" class="form" role="form">
+                                                <div class="row">
+                                                    <div class="col-xs-6 col-md-6 form-group">
+                                                        <input class="form-control" id="sender_name" name="name" placeholder="Name" type="text" required autofocus value="{{userinfo.full_name}}" />
+                                                    </div>
+                                                    <div class="col-xs-6 col-md-6 form-group">
+                                                        <input class="form-control" id="sender_email" name="email" placeholder="Email" type="email" required value="{{userinfo.email}}" />
+                                                    </div>
+                                                </div>
+                                                <textarea class="form-control" id="email_message" placeholder="Type in your message" rows="5"></textarea>
+                                                <h6 class="pull-right" id="contact_counter">120 characters remaining</h6>
+
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" id="contact_tweet" class="btn btn-info" onclick="post_contact_tweet('{{screen_name}}')"><i class="fa fa-fw fa-twitter"></i> Tweet it</button>
+                                <button type="button" class="btn btn-success" onclick="send_email('{{email}}')"><i class="fa fa-envelope fa-fw"></i> Email it</button>
+                            </div>
+                        </div>
+                        <!-- /.modal-content -->
                     </div>
-                    
-                  </div>
-                  <div class="form-group">
-                  <ul id="myTags">
-                  <!-- Existing list items will be pre-added to the tags -->
-                  <!-- <li>Tag1</li>
+                    <!-- /.modal-dialog -->
+                </div>
+                <!-- /.modal -->
+                <!-- modal_customer -->
+
+                <div class="modal fade" id="modal_tweet_recomm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                <h4 class="modal-title" id="myModalLabel">Tell others what you have just recommended !</h4>
+                            </div>
+                            <div class="modal-body">
+                                <form accept-charset="UTF-8" action="" method="POST">
+                                    <textarea id="tweet-recomm" class="form-control counted" name="message" placeholder="Type in your message" rows="5"></textarea>
+                                </form>
+
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                                {% if user.is_authenticated %}
+                                <button type="button" class="btn btn-success" data-dismiss="modal" onclick="UpdateStatus('tweet-recomm', 'noappend')">Tweet</button>
+                                {% else %}
+                                <button type="button" class="btn btn-success" data-dismiss="modal">Tweet</button>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <!-- /.modal-content -->
+                    </div>
+                    <!-- /.modal-dialog -->
+                </div>
+                <!-- /.modal -->
+
+                <div class="modal fade" id="modal_food_detail" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                <h4 class="modal-title" id="food_detail_title">Add details to</h4>
+                            </div>
+                            <div class="modal-body">
+                                <form accept-charset="UTF-8" action="." role="form" method="POST" enctype="multipart/form-data">
+                                    {% csrf_token %}
+                                    <div class="row">
+                                        <div class="col-xs-12 col-md-4">
+                                            <a href="#" rel="tooltip" title="Change the photo">
+                                                <img src="http://placehold.it/100x100&text=Upload an image" class="img-responsive img-thumbnail" id="food_photo" style="width:100px;height:100px;">
+                                            </a>
+                                            <!-- show this in another modal? -->
+                                            <!-- can we use html5 drag and drop to upload? -->
+                                            <div class="form-group">
+                                                <label for="food_photo">Upload a photo</label>
+                                                {{form.food_photo}} {{form.food_name.as_hidden}} {{form.profile_id.as_hidden}} {{form.food_tags.as_hidden}} {{form.food_duplicate.as_hidden}}
+                                            </div>
+                                            <!-- end code -->
+                                        </div>
+
+                                        <div class="col-xs-12 col-md-8">
+                                            <div class="form-group">
+                                                {{form.food_description}}
+                                            </div>
+                                            <div class="form-group" id="recommend_main" style="display:none;">
+                                                <div id="recomm_tags">
+                                                </div>
+
+                                            </div>
+                                            <div class="form-group">
+                                                <ul id="myTags">
+                                                    <!-- Existing list items will be pre-added to the tags -->
+                                                    <!-- <li>Tag1</li>
                   <li>Tag2</li> -->
-                  </ul>
-                  <p class="help-block small">Eg "free range, organic, bramley". Use commas to separate tags.</p>
-                  
-                  </div>
+                                                </ul>
+                                                <p class="help-block small">Eg "free range, organic, bramley". Use commas to separate tags.</p>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- row -->
+
+
+                            </div>
+                            <!-- modal body -->
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                                {% if user.is_authenticated %}
+                                <button type="submit" class="btn btn-success" onClick="var tags =$('#myTags').tagit('assignedTags'); $('#id_food_tags').val(tags);">Save</button>
+                                {% else %}
+                                <button type="submit" class="btn btn-success">Save</button>
+                                {% endif %}
+                            </div>
+                            </form>
+                        </div>
+                        <!-- /.modal-content -->
+                    </div>
+                    <!-- /.modal-dialog -->
                 </div>
-               </div><!-- row -->
+                <!-- /.modal -->
 
-               
-            </div><!-- modal body -->
-            <div class="modal-footer"> 
-              <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-              {% if user.is_authenticated %}
-              <button type="submit" class="btn btn-success" onClick="var tags =$('#myTags').tagit('assignedTags'); $('#id_food_tags').val(tags);">Save</button>
-              {% else %}
-              <button type="submit" class="btn btn-success">Save</button>
-              {% endif %}
+
+
+
+
             </div>
-            </form>
-          </div><!-- /.modal-content -->
-        </div><!-- /.modal-dialog -->
-      </div><!-- /.modal -->
-
-
-
-
- 
-      </div><!-- end header last -->
+            <!-- end header last -->
+        </div>
     </div>
-    </div>
-<div class="row">
-     <div class="col-md-12">
-        <ul class="nav nav-tabs ">
-          {% if show_foods %}
-          <li class="active"><a href="#produce" data-toggle="tab">Foods <span class="badge">{{userprof.food_no}}</span></a></li>
-          {% endif %}
+    <div class="row">
+        <div class="col-md-12">
+            <ul class="nav nav-tabs ">
+                {% if show_foods %}
+                <li class="active"><a href="#produce" data-toggle="tab">Foods <span class="badge">{{userprof.food_no}}</span></a>
+                </li>
+                {% endif %}
 
-          <li {% if not show_foods %} class="active" {% endif %}><a href="#activity" data-toggle="tab">Updates <span class="badge ">{{updates_count}}</span></a></li>
-        </ul>
-     </div>
+                <li {% if not show_foods %} class="active" {% endif %}><a href="#activity" data-toggle="tab">Updates <span class="badge ">{{updates_count}}</span></a>
+                </li>
+            </ul>
+        </div>
     </div>
 
     <div class="row">
-      <div class="col-md-12">
-        <div class="container-responsive clearfix">
+        <div class="col-md-12">
+            <div class="container-responsive clearfix">
 
-        <div class="tab-content">
+                <div class="tab-content">
 
-{% if show_foods %}
-          <div class="tab-pane active fade in " id="produce">
-
-
-
-      {% if user.is_authenticated %}
-      {% if deliverables %}
-      <div class="small alert alert-info" id="deliveries">
-        <h5 style="margin-top: 0;"><i class="fa fa-truck"></i>  Deliveries</h5>
-        {{deliverables|linebreaks}}
-      </div>
-      {% endif %}
-      {% endif %}
+                    {% if show_foods %}
+                    <div class="tab-pane active fade in " id="produce">
 
 
 
-          {% if user.is_authenticated %}
-          <div class="row">
-          <div class="col-md-12 ">
-          <div class=" well well-sm clearfix">
-          <div class="row">
-            <div class="col-md-8 col-sm-8 col-xs-7">
-              {% if user.is_authenticated %}
+                        {% if user.is_authenticated %} {% if deliverables %}
+                        <div class="small alert alert-info" id="deliveries">
+                            <h5 style="margin-top: 0;"><i class="fa fa-truck"></i> Deliveries</h5>
+                            {{deliverables|linebreaks}}
+                        </div>
+                        {% endif %} {% endif %} {% if user.is_authenticated %}
+                        <div class="row">
+                            <div class="col-md-12 ">
+                                <div class=" well well-sm clearfix">
+                                    <div class="row">
+                                        <div class="col-md-8 col-sm-8 col-xs-7">
+                                            {% if user.is_authenticated %}
 
 
-                  <div class="input-group">
-                  <!-- link this to open food facts --> 
-                        <!-- <input class="typeahead form-control" name="addfood" data-source='' data-provide="typeahead" autocomplete="off" id = "addfood_id" style="width:400px;" placeholder="Add foods you can buy here."> -->
-                        <div class='pull-left'>
+                                            <div class="input-group">
+                                                <!-- link this to open food facts -->
+                                                <!-- <input class="typeahead form-control" name="addfood" data-source='' data-provide="typeahead" autocomplete="off" id = "addfood_id" style="width:400px;" placeholder="Add foods you can buy here."> -->
+                                                <div class='pull-left'>
 
-                        <select id="myselect" data-placeholder="Add foods they sell" style="height:30px; width: 192px" multiple class="chosen-select" >
-                        <option value=""></option>
-<!--                             {% for each in food_list %}
+                                                    <select id="myselect" data-placeholder="Add foods they sell" style="height:30px; width: 192px" multiple class="chosen-select">
+                                                        <option value=""></option>
+                                                        <!--                             {% for each in food_list %}
                         <optgroup label={{each.node}}>
                         {% if each.children %}
                         {% for eachchild in each.children %}
@@ -415,159 +381,150 @@ s
                         </optgroup>
                         {% endfor %}
 -->
-                       {% for each in all_tags %}
-                          <optgroup label={{each.node}}>
-                          {% if each.childrens %}
-                          {% for eachchild in each.childrens %}
-                          <option>{{eachchild.node}}</option>
-                          {% endfor %}
-                        {% else %}
-                          <option>{{each.node}}</option>
+                                                        {% for each in all_tags %}
+                                                        <optgroup label={{each.node}}>
+                                                            {% if each.childrens %} {% for eachchild in each.childrens %}
+                                                            <option>{{eachchild.node}}</option>
+                                                            {% endfor %} {% else %}
+                                                            <option>{{each.node}}</option>
+                                                            {% endif %}
+                                                        </optgroup>
+                                                        {% endfor %}
+                                                    </select>
+                                                </div>
+
+                                                <div class="pull-left">
+                                                    <span class="input-group-btn">
+
+                                                        <button class="btn btn-success" id="adfoo_id" rel="tooltip" onClick="add_food({{profile_id}}, {{user_id}}, 'individual')" {% if not user.is_authenticated %} title="Please log in to use this feature." {% endif %}>Add</button>
+                                                    </span>
+                                                </div>
+
+                                            </div>
+
+                                            {% endif %}
+                                        </div>
+
+                                        <div class="col-md-4 col-sm-4 col-xs-5">
+                                            <form action="#" method="get">
+                                                <div class="input-group">
+                                                    <input class="form-control" id="system-search" name="q" placeholder="Search foods..." required>
+                                                    <span class="input-group-btn">
+                                                        <button type="submit" class="btn btn-default"><i class="glyphicon glyphicon-search"></i>
+                                                        </button>
+                                                    </span>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
                         {% endif %}
-                          </optgroup>
-                        {% endfor %}
-                        </select></div>
-
-                          <div class="pull-left">
-                        <span class="input-group-btn">
-                
-                            <button class="btn btn-success" id="adfoo_id" rel="tooltip" onClick="add_food({{profile_id}}, {{user_id}}, 'individual')" {% if not user.is_authenticated %} title="Please log in to use this feature." {% endif %} > Add</button>
-                        </span></div>
-                        
-                      </div>  
-                      
-              {% endif %}
-            </div> 
-                      
-            <div class="col-md-4 col-sm-4 col-xs-5">
-             <form action="#" method="get">
-              <div class="input-group">
-                  <input class="form-control" id="system-search" name="q" placeholder="Search foods..." required>
-                  <span class="input-group-btn">
-                      <button type="submit" class="btn btn-default"><i class="glyphicon glyphicon-search"></i></button>
-                  </span>
-              </div>
-             </form>
-            </div>
-            </div>
-
-          </div>
-          </div>
-          </div>
-          {% endif %}
 
 
-      <table class="table table-list-search table-condensed">
-        {% if not user.is_authenticated %}
-          <thead>
-            <tr>
-              <td colspan="2">
-                <p class="alert alert-warning"><a href="{% provider_login_url "twitter" process="login" %}" class="">Login</a> or <a href="{% provider_login_url "twitter" process="login" %}" class="">sign up free</a> to see all their full profile. </p>
-              </td>
-            </tr>
-          </thead>
-          {% endif %}
-          <tbody id="food_tbody">
-            {% for eachfood in all_foods %}
-              <tr id="row{{forloop.counter}}">
-                  <td>
+                        <table class="table table-list-search table-condensed">
+                            {% if not user.is_authenticated %}
+                            <thead>
+                                <tr>
+                                    <td colspan="2">
+                                        <p class="alert alert-warning"><a href="{% provider_login_url " twitter " process="login " %}" class="">Login</a> or <a href="{% provider_login_url " twitter " process="login " %}" class="">sign up free</a> to see all their full profile.</p>
+                                    </td>
+                                </tr>
+                            </thead>
+                            {% endif %}
+                            <tbody id="food_tbody">
+                                {% for eachfood in all_foods %}
+                                <tr id="row{{forloop.counter}}">
+                                    <td>
 
-                  <div class="clearfix">   
-          
+                                        <div class="clearfix">
 
-                <a href="/activity/?f={{eachfood.food_name}}" >  
+
+                                            <a href="/activity/?f={{eachfood.food_name}}">  
                   
                   {{eachfood.food_name}}
-                </a>   
+                </a> 
 
-                  </div>
- 
-                  </td>
- 
-                  <td nowrap="nowrap">  
-                   <div class="pull-right">
+                                        </div>
 
-                   {% ifequal profile_id user_id %}
-                      {% if prof_subscribed %}
+                                    </td>
 
-                     <a href="" data-toggle="modal" data-target="#modal_food_detail" class="btn btn-sm btn-default" data-container="body" onClick="get_food_detail('{{profile_id}}', '{{eachfood.food_name}}', '{{eachfood.description}}', '{{eachfood.food_tags}}', '{{eachfood.photo_url}}', '{{eachfood.recomm_tags|safe}}')"><i class="fa fa-edit" title="Edit" ></i> edit details</a>
-                     {% else %}
-                     <a class="btn btn-sm btn-default" data-container="body" rel="tooltip" title="Upgrade your account to add details"><i class="fa fa-edit" title="Edit" > edit details</i></a>
-                     {% endif %}
-                     <a class="btn btn-danger btn-sm"><i class="fa fa-trash-o" title="Delete" onClick="delete_food({{profile_id}}, '{{eachfood.food_name}}', this)"></i></a>
+                                    <td nowrap="nowrap">
+                                        <div class="pull-right">
 
-                   {% endifequal %}
+                                            {% ifequal profile_id user_id %} {% if prof_subscribed %}
+
+                                            <a href="" data-toggle="modal" data-target="#modal_food_detail" class="btn btn-sm btn-default" data-container="body" onClick="get_food_detail('{{profile_id}}', '{{eachfood.food_name}}', '{{eachfood.description}}', '{{eachfood.food_tags}}', '{{eachfood.photo_url}}', '{{eachfood.recomm_tags|safe}}')"><i class="fa fa-edit" title="Edit" ></i> edit details</a>
+                                            {% else %}
+                                            <a class="btn btn-sm btn-default" data-container="body" rel="tooltip" title="Upgrade your account to add details"><i class="fa fa-edit" title="Edit" > edit details</i></a>
+                                            {% endif %}
+                                            <a class="btn btn-danger btn-sm"><i class="fa fa-trash-o" title="Delete" onClick="delete_food({{profile_id}}, '{{eachfood.food_name}}', this)"></i></a>
+                                            {% endifequal %} {% if user.is_authenticated %} {% ifnotequal profile_id user_id %}
+                                            <div class="btn-block" data-toggle="buttons">
+                                                {% if eachfood.logged_recommender %}
+                                                <label class="fa fa-thumbs-o-up btn btn-default btn-sm active" rel="tooltip" title="Recommend this to others">
+                                                    <input type="checkbox" checked="checked" onchange="recommend_food({{user_id}}, '{{eachfood.food_name}}', {{profile_id}}, '{{screen_name}}', this); return null;">
+                                                </label>
+                                                {% else %}
+                                                <label class="fa fa-thumbs-o-up btn btn-default btn-sm" rel="tooltip" title="Recommend this to others" data-toggle="modal" data-target="#modal_tweet_recomm">
+                                                    <input type="checkbox" onchange="recommend_food({{user_id}}, '{{eachfood.food_name}}', {{profile_id}}, '{{screen_name}}', this); return null;">
+                                                </label>
+                                                {% endif %}
+                                            </div>
+
+                                            {% endifnotequal %} {% endif %}
 
 
-                   {% if user.is_authenticated %}
+                                        </div>
 
-                     {% ifnotequal profile_id user_id %}
-                       <div class="btn-block" data-toggle="buttons">
-                       {% if eachfood.logged_recommender %}
-                            <label class="fa fa-thumbs-o-up btn btn-default btn-sm active" rel="tooltip" title="Recommend this to others">
-                              <input type="checkbox" checked="checked" onchange="recommend_food({{user_id}}, '{{eachfood.food_name}}', {{profile_id}}, '{{screen_name}}', this); return null;">
-                            </label>
-                        {% else %}
-                            <label class="fa fa-thumbs-o-up btn btn-default btn-sm" rel="tooltip" title="Recommend this to others" data-toggle="modal" data-target="#modal_tweet_recomm">
-                              <input type="checkbox" onchange="recommend_food({{user_id}}, '{{eachfood.food_name}}', {{profile_id}}, '{{screen_name}}', this); return null;">
-                            </label>
-                        {% endif %}
-                        </div>
+                                        {% for eachdet in eachfood.recomm_details %}
+                                        <div class="pull-right">
+                                            <img class="pull-left" style="margin:0px 4px 0 0; width:25px" src={{eachdet.photo}} title="{{eachdet.name}}" />
+                                        </div>
+                                        {% endfor %} {% ifnotequal eachfood.vouch_count 0 %}
+                                        <div class="pull-right">
+                                            <span class="badge badge-default" style="margin:3px 4px 0 0;" rel="tooltip" title="{{eachfood.vouch_count}} recommendations on {{eachfood.food_name}}">{{eachfood.vouch_count}}</span>
+                                        </div>
+                                        {% endifnotequal %}
 
-                     {% endifnotequal %}
-                   {% endif %}
-                     
-                   
-                   </div>
-                   
-                   {% for eachdet in eachfood.recomm_details %}
-                    <div class="pull-right">
-                      <img class="pull-left" style="margin:0px 4px 0 0; width:25px" src={{eachdet.photo}} title="{{eachdet.name}}"/>
+
                     </div>
-                   {% endfor %}
-                 {% ifnotequal eachfood.vouch_count 0 %}
-                   <div class="pull-right">
-                     <span class="badge badge-default" style="margin:3px 4px 0 0;" rel="tooltip" title="{{eachfood.vouch_count}} recommendations on {{eachfood.food_name}}">{{eachfood.vouch_count}}</span>
-                  </div>
-                  {% endifnotequal %}
-              
+                    </td>
+                    </tr>
 
-                   </div>
-                  </td>  
-              </tr> 
+                    {% if eachfood.description %}
+                    <tr>
+                        <td colspan="3">
+                            <div class="produce_detail">
+                                <img src="{{eachfood.photo_url}}" alt="{{eachfood.food_name}}" class="img-rounded img-responsive produce_large img-thumbnail " />
 
-              {% if eachfood.description %}
-              <tr>
-                <td colspan="3">
-                  <div class="produce_detail">  
-                    <img src="{{eachfood.photo_url}}" alt="{{eachfood.food_name}}" class="img-rounded img-responsive produce_large img-thumbnail " /> 
+                                <span class="text-muted   ">{{eachfood.description}}</span>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endif %} {% endfor %}
+                    </tbody>
 
-                    <span class="text-muted   ">{{eachfood.description}}</span>
-                  </div> 
-                </td>
-              </tr>
-              {% endif %} 
-
-              {% endfor %}
-          </tbody>
-          
-      </table>    
+                    </table>
 
 
-          </div> <!-- end produce -->
-          {% endif %}
+                </div>
+                <!-- end produce -->
+                {% endif %}
 
 
-<div class="tab-pane fade {% if not show_foods %} in active {% endif %}" id="activity">
+                <div class="tab-pane fade {% if not show_foods %} in active {% endif %}" id="activity">
 
-          <div class="container-responsive">
-          <div class="row">
-              <div class="col-md-12">
-            {% if user.is_authenticated %}
-                  <div>
+                    <div class="container-responsive">
+                        <div class="row">
+                            <div class="col-md-12">
+                                {% if user.is_authenticated %}
+                                <div>
 
-                      <!-- if this is the profile of the logged in user -->
-                      <!-- <div class="well well-sm">
+                                    <!-- if this is the profile of the logged in user -->
+                                    <!-- <div class="well well-sm">
                           <div class="input-group">
                               <input id="btn-input" type="text" class="form-control input-sm" placeholder="Send an update..." />
                               <span class="input-group-btn">
@@ -576,95 +533,122 @@ s
                               </span>
                           </div>
                       </div> -->
-                      <!-- // if this is the profile of the logged in user -->
-                      <div>
-                          <ul class="chat">
-                          
-                          {% for eachUpdate in updates %}
-                              <li class="left clearfix"><span class="chat-img pull-left">
-                                  <img src="{{userprof.profileimg}}" />
-                              </span>
-                                  <div class="chat-body clearfix">
-                                      <div class="header">                                                                                                                                                                                                                                                                                                                                                        
-                                          <strong class="primary-font">{{eachUpdate.user.name}}</strong> 
-                                          <small class="pull-right text-muted">
-                                          <a href="/{{username}}/post/{{eachUpdate.tweetuid}}/"><span class="glyphicon glyphicon-time"></span>{{eachUpdate.time_elapsed}} ago</a></small>
-                                      </div>
-                                      <p>
-                                         {{eachUpdate.status}}
-                                      </p>
-                                  </div>
-                              </li>
-                          {% endfor %}    
-                          </ul>
-                      </div>
-                  </div>
-              {% else %}
-                <p class="alert alert-warning"><a href="{% provider_login_url "twitter" process="login" %}" class="">Login</a> or <a href="{% provider_login_url "twitter" process="login" %}" class="">sign up free</a> to see updates and activity. </p>
-              {% endif %}
+                                    <!-- // if this is the profile of the logged in user -->
+                                    <div>
+                                        <ul class="chat">
 
-              </div>
+                                            {% for eachUpdate in updates %}
+                                            <li class="left clearfix">
+                                                <span class="chat-img pull-left">
+                                                    <img src="{{userprof.profileimg}}" />
+                                                </span>
+                                                <div class="chat-body clearfix">
+                                                    <div class="header">
+                                                        <strong class="primary-font">{{eachUpdate.user.name}}</strong>
+                                                        <small class="pull-right text-muted">
+                                                            <a href="/{{username}}/post/{{eachUpdate.tweetuid}}/">
+                                                                <span class="glyphicon glyphicon-time"></span>{{eachUpdate.time_elapsed}} ago</a>
+                                                        </small>
+                                                    </div>
+                                                    <p>
+                                                        {{eachUpdate.status}}
+                                                    </p>
+                                                </div>
+                                            </li>
+                                            {% endfor %}
+                                        </ul>
+                                    </div>
+                                </div>
+                                {% else %}
+                                <p class="alert alert-warning"><a href="{% provider_login_url " twitter " process="login " %}" class="">Login</a> or <a href="{% provider_login_url " twitter " process="login " %}" class="">sign up free</a> to see updates and activity.</p>
+                                {% endif %}
 
-          </div>
+                            </div>
 
-          </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
         </div>
-</div></div></div></div>
+    </div>
+</div>
 
 
 </div>
 <div class="col-md-4 col-sm-3 {% if loc.lat == -82.86275189999999 and loc.lon == -135.10000000000002 %} hidden {% endif %}">
     <div style="width:100%; z-index: 100;" id="map">
-      <div class="alert alert-warning">
-          <p>This map shows 
-          Customers as points
-          Stockist as organge lines and 
-          Supplieras as purple lines</p>
-          <p>There are radius lines at 15, 30, and 100 miles.</p>
+        <div class="alert alert-warning">
+            <p>This map shows Customers as points Stockist as organge lines and Supplieras as purple lines</p>
+            <p>There are radius lines at 15, 30, and 100 miles.</p>
         </div>
-           </div> 
-           </div>
+    </div>
+</div>
 
-    {% include "includes/not_logged_in_modal.html" %}
- {% endblock %}
-    {% block footer %}
-     <script src="{% static "js/contact.js" %}"></script>
-     <script src="/static/js/chosen.jquery.min.js" type="text/javascript"></script>
-  <script src="/static/css/docsupport/prism.js" type="text/javascript" charset="utf-8"></script>
-    <script type="text/javascript">
+{% include "includes/not_logged_in_modal.html" %} {% endblock %} {% block footer %}
+<script src="{% static " js/contact.js " %}"></script>
+<script src="/static/js/chosen.jquery.min.js" type="text/javascript"></script>
+<script src="/static/css/docsupport/prism.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+$('#myselect').chosen({
+    create_option: true,
+    skip_no_results: true,
+    create_option_text: 'Add'
+});
+$("#myTags").tagit({
+    placeholderText: 'Add tags to your food...',
+    allowSpaces: true
+});
+$('#adfoo_id').tooltip();
 
-        $('#myselect').chosen({create_option: true, skip_no_results: true, create_option_text: 'Add'});
-    $("#myTags").tagit({
-          placeholderText: 'Add tags to your food...',
-          allowSpaces: true
-        });
-        $('#adfoo_id').tooltip();
+// chosen on change event
+$('#myselect').chosen().change(function() {
+    add_food({
+        {
+            profile_id
+        }
+    }, {
+        {
+            user_id
+        }
+    });
+});
 
-    // chosen on change event
-        $('#myselect').chosen().change(function(){
-        add_food({{profile_id}}, {{user_id}});
-        });
-        
-        $('#myselect').chosen().ready(function(){
-          $('.search-field input').attr('style', 'width:192px;height:30px;');
-        });
+$('#myselect').chosen().ready(function() {
+    $('.search-field input').attr('style', 'width:192px;height:30px;');
+});
 
-  if (jQuery.contains(document, $('#myselect'))) {
+if (jQuery.contains(document, $('#myselect'))) {
     document.getElementById("myselect").addEventListener("DOMSubtreeModified", function(e) {
-      // Record the occurrence
-      
+        // Record the occurrence
+
         var text = $('.create-option').text();
         var word = text.split('"')[1];
         //alert(word);
         // add the word to new collection of unapproved foods
-        var data = {useruid: {{profile_id|safe}}, food_name: word, created_by: {{user_id|safe}}};
-        ajax_request("addnewfood", 'empty', {data: JSON.stringify(data)}); 
-    }, false);}    
+        var data = {
+            useruid: {
+                {
+                    profile_id | safe
+                }
+            },
+            food_name: word,
+            created_by: {
+                {
+                    user_id | safe
+                }
+            }
+        };
+        ajax_request("addnewfood", 'empty', {
+            data: JSON.stringify(data)
+        });
+    }, false);
+}
 
 
-function get_food_detail(profile_id, food_name, description, food_tags, photo_url, recomm_tags){
+function get_food_detail(profile_id, food_name, description, food_tags, photo_url, recomm_tags) {
     $("#myTags").tagit("removeAll");
-    $('#food_detail_title').text('Add details to '+ food_name);
+    $('#food_detail_title').text('Add details to ' + food_name);
     var placeholder = "What makes your " + food_name + " special? This is where it's completely fine to show-off! Remember to name any variety names, special techniques, or unique properties - and how it tastes is the most important thing."
     $('#id_food_description').attr('placeholder', placeholder);
     $('#id_food_description').addClass('food_details_counted');
@@ -675,11 +659,13 @@ function get_food_detail(profile_id, food_name, description, food_tags, photo_ur
     $('#id_profile_id').val(profile_id);
     $('#id_food_description').val(description);
     var tags_list = food_tags.split(',');
-    for(i=0;i<tags_list.length;i++){
-      $("#myTags").tagit('createTag', tags_list[i]);
+    for (i = 0; i < tags_list.length; i++) {
+        $("#myTags").tagit('createTag', tags_list[i]);
     }
     $('#food_photo').attr('src', photo_url);
-    $(".food_details_counted").charCounter(300,{container: "#counter"});    
+    $(".food_details_counted").charCounter(300, {
+        container: "#counter"
+    });
     $('#id_food_duplicate').val(photo_url);
     $('#recommend_main').show();
     var recomm_tags_list = recomm_tags.split(',');
@@ -687,17 +673,18 @@ function get_food_detail(profile_id, food_name, description, food_tags, photo_ur
     console.log('recomm_tags_list', recomm_tags_list);
     console.log('tags_list', tags_list);
     var count = 0;
-    for(i=0;i<recomm_tags_list.length;i++){
-      
-        if(tags_list.indexOf(recomm_tags_list[i]) == -1){
-          count = count+1;
-          $('#recomm_tags').append('<span class="myowntagit">'+ String(recomm_tags_list[i]) + '</span> ');
+    for (i = 0; i < recomm_tags_list.length; i++) {
+
+        if (tags_list.indexOf(recomm_tags_list[i]) == -1) {
+            count = count + 1;
+            $('#recomm_tags').append('<span class="myowntagit">' + String(recomm_tags_list[i]) + '</span> ');
         }
     }
-    if(count != 0 && $('#recomm_help_text').text() == ''){
-    $('#recommend_main').append('<p id="recomm_help_text" class="help-block small">Recommend Tags for your food. Click to add.</p>');}
-    $('#recomm_tags').on('click', '.myowntagit', function(e){
-        var tag_text =$(this).html();
+    if (count != 0 && $('#recomm_help_text').text() == '') {
+        $('#recommend_main').append('<p id="recomm_help_text" class="help-block small">Recommend Tags for your food. Click to add.</p>');
+    }
+    $('#recomm_tags').on('click', '.myowntagit', function(e) {
+        var tag_text = $(this).html();
         $(this).remove();
         $("#myTags").tagit('createTag', tag_text);
     });
@@ -705,17 +692,33 @@ function get_food_detail(profile_id, food_name, description, food_tags, photo_ur
 
 }
 
-    tweetlistener('email_message', 'contact_counter', 'contact_tweet');
-    map_lat={{ loc.lat }};
-    map_lon = {{ loc.lon }};
-    var name = "{{userprof.full_name}}";
-      var description = "{{userprof.description}}";
-      var photo =  "{{userprof.profileimg}}";
-      var username = "{{userprof.username}}";
-      var type = "{{userprof.type}}".split(',');
-      var latitude =  {{userprof.lat}};
-          var longitude =  {{userprof.lon}};
-    </script>
-          <script src="{% static "js/individual-map.js" %}"></script>
-          
+tweetlistener('email_message', 'contact_counter', 'contact_tweet');
+map_lat = {
+    {
+        loc.lat
+    }
+};
+map_lon = {
+    {
+        loc.lon
+    }
+};
+var name = "{{userprof.full_name}}";
+var description = "{{userprof.description}}";
+var photo = "{{userprof.profileimg}}";
+var username = "{{userprof.username}}";
+var type = "{{userprof.type}}".split(',');
+var latitude = {
+    {
+        userprof.lat
+    }
+};
+var longitude = {
+    {
+        userprof.lon
+    }
+};
+</script>
+<script src="{% static " js/individual-map.js " %}"></script>
+
 {% endblock %}
