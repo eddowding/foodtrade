@@ -38,16 +38,19 @@
 {% include 'modal_invite.html' %}
 
  
-    <div class="col-md-6 col-sm-7 col-xs-12 {% if not user.is_authenticated %} col-md-offset-1 {% endif %}" id="single">
+    <div class="col-md-offset-1" id="single">
 
     <div class="container-responsive">
     <div id="header_box" class="clearfix">
-      <div class="cell col-md-2" id="avatar">
+      <div class="col-md-2 hidden-sm hidden-xs" id="avatar">
         <img class="img-thumbnail center-block" src="{{pic_url}}"  />
       </div>
      
-      <div class="col-md-7 cell" >
-         <h1><a href="/{{userprof.username}}/">{{userprof.full_name}}</a></h1>
+      <div class="col-md-6 col-sm-8 col-xs-8" >
+         
+         <h1>
+          <img class="visible-sm visible-xs" style="width: 30px; margin-right: 10px; float:left;" src={{pic_url}}  />
+         <a href="#">{{name}}</a></h1>
 
          <hr />
          <p>{{userprof.description}}</p>        
