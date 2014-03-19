@@ -82,12 +82,16 @@ s
          <hr /> 
      
          <div class="meta small text-muted">
-            
-            <i class="fa fa-map-marker"></i> <a href="http://maps.google.com/maps?saddr={{loggedin_coord.lat}},{{loggedin_coord.lon}}&daddr={{loc.lat}},{{loc.lon}}" target="_blank" data-placement="top" data-toggle="tooltip" title="Get directions" class="text-muted">{{address}}</a>  
-            
+            {% if loc.lat == -82.86275189999999 and loc.lon == -135.10000000000002 %}
+              <i class="fa fa-map-marker"></i> <a > NA</a>
+              <i class="fa fa-location-arrow" style="margin-left: 20px;"></i> NA
+            {% else %}
+            <i class="fa fa-map-marker"></i> <a href="http://maps.google.com/maps?saddr={{loggedin_coord.lat}},{{loggedin_coord.lon}}&daddr={{loc.lat}},{{loc.lon}}" target="_blank" data-placement="top" data-toggle="tooltip" title="Get directions" class="text-muted">
+              {{address}}
+          </a>   
             <!-- if logged in or you've allows html5 browser location -->
             <i class="fa fa-location-arrow" style="margin-left: 20px;"></i> {{distance}} miles
-
+          {% endif %}
             <!--  // if logged in or you've allows html5 browser location -->
             <!-- <i class="fa fa-bullseye" style="margin-left: 20px;"></i> 20.1 miles -->
   
@@ -609,7 +613,7 @@ s
 
 
 </div>
-<div class="col-md-4 col-sm-3">
+<div class="col-md-4 col-sm-3 {% if loc.lat == -82.86275189999999 and loc.lon == -135.10000000000002 %} hidden {% endif %}">
     <div style="width:100%; z-index: 100;" id="map">
       <div class="alert alert-warning">
           <p>This map shows 
