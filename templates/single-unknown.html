@@ -37,8 +37,8 @@
 {% block content %}
 {% include 'modal_invite.html' %}
 
-    <div  class="container">
-    <div class="col-md-10" id="single">
+ 
+    <div class="col-md-6 col-sm-7 col-xs-12 {% if not user.is_authenticated %} col-md-offset-1 {% endif %}" id="single">
 
     <div class="container-responsive">
     <div id="header_box" class="clearfix">
@@ -56,10 +56,17 @@
      
          <div class="meta small text-muted">
             
-            <i class="fa fa-map-marker"></i> <a href="http://maps.google.com/maps?saddr=current+location&daddr={{userprof.address}}" target="_blank" data-placement="top" data-toggle="tooltip" title="Get directions" class="text-muted">{{userprof.address}}</a>  
+            {% if loc.lat == -82.86275189999999 and loc.lon == -135.10000000000002 %}
+              <i class="fa fa-map-marker"></i> <a > NA</a>
+              <i class="fa fa-location-arrow" style="margin-left: 20px;"></i> NA
+            {% else %}
+            <i class="fa fa-map-marker"></i> <a href="http://maps.google.com/maps?saddr={{loggedin_coord.lat}},{{loggedin_coord.lon}}&daddr={{loc.lat}},{{loc.lon}}" target="_blank" data-placement="top" data-toggle="tooltip" title="Get directions" class="text-muted">
+              {{address}}
+          </a>  
             
             <!-- if logged in or you've allows html5 browser location -->
             <i class="fa fa-location-arrow" style="margin-left: 20px;"></i> {{distance}} miles  
+            {% endif %}
             <!--  // if logged in or you've allows html5 browser location -->
   
          </div> <!-- meta -->

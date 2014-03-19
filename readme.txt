@@ -16,3 +16,14 @@
 5. python manage.py loaddata mainapp/fixtures/social_account.yaml
 
 6. python manage.py loaddata mainapp/fixtures/my_json.json
+
+
+
+#### To set user in mongodb
+
+=> mongo
+=> use admin
+=> db.addUser({"user":"ftroot","pwd":"ftroot","roles":["readWrite", "dbAdmin"]})
+=> db.auth({"user":"ftroot","pwd":"ftroot","roles":["readWrite", "dbAdmin"]})
+=> use foodtrade
+=> db.addUser({"user":"ftroot","pwd":"ftroot","roles":["readWrite", "dbAdmin"]})

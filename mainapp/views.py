@@ -697,3 +697,4 @@ def create_profile_from_mention(email, location, data):
         pass
 
     return {'status':1}
+    
