@@ -25,9 +25,6 @@ def register_user_to_mongo(eachFriend):
     user_profile_obj = UserProfile(host=REMOTE_SERVER, port=27017, db_name=REMOTE_MONGO_DBNAME, 
         conn_type='remote', username=REMOTE_MONGO_USERNAME, password=REMOTE_MONGO_PASSWORD)
     min_user_id = int(user_profile_obj.get_minimum_id_of_user()[0]['minId']) -1
-    if eachFriend['location']=='':
-        return
-
     data = {
         'is_unknown_profile':'true',
         'recently_updated_by_super_user': 'false', 

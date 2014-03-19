@@ -12,7 +12,7 @@ class MongoConnection():
         self.port = port
         self.conn = Connection(self.host, self.port)
         self.db = self.conn[db_name]
-        #self.db.authenticate(username, password)
+        self.db.authenticate(username, password)
 
     def ensure_index(self, table_name, index=None):
         self.db[table_name].ensure_index([(index,pymongo.GEOSPHERE)])
