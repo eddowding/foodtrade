@@ -49,7 +49,7 @@
       <div class="col-md-6 col-sm-8 col-xs-8" >
          
          <h1>
-          <img class="visible-sm visible-xs" style="width: 30px; margin-right: 10px; float:left;" src={{pic_url}}  />
+          <img class="visible-sm visible-xs" style="width: 30px; margin-right: 10px; float:left;" src="{{pic_url}}" />
          <a href="#">{{name}}</a></h1>
 
          <hr />
@@ -76,7 +76,7 @@
   
       </div><!-- end header middle -->
 
-      <div id="contact_info" class="col-md-3 cell">
+      <div id="contact_info" class="col-md-6 col-sm-4 col-xs-4">
         
       <!-- if they dont't have an account yet --> 
       <button class="btn btn-primary btn-block" style="margin-top:40px;" data-toggle="modal" {% if request.user.is_authenticated %} data-target="#modal_invite" {% else %} disabled="disabled" {% endif %}>
