@@ -86,8 +86,8 @@ class Friends():
         conn_type='remote', username=REMOTE_MONGO_USERNAME, password=REMOTE_MONGO_PASSWORD)
                     check = user_profile_obj.get_profile_by_username(eachUser['friends']['screen_name'])
                     if check == None:
-                        register_user_to_mongo(eachUser['friends'])
-                        #print eachUser['friends']['screen_name']
+                        #register_user_to_mongo(eachUser['friends'])
+                        print eachUser['friends']['screen_name']
 
 fr = Friends()        
 fr.register_all_friends()
