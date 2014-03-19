@@ -11,6 +11,7 @@ CLASS_PATH = APP_ROOT + '/mainapp/classes'
 SETTINGS_PATH = APP_ROOT + '/foodtrade'
 sys.path.insert(0, CLASS_PATH)
 sys.path.insert(1,SETTINGS_PATH)
+print SETTINGS_PATH
 
 from MongoConnection import MongoConnection
 from TwitterError import TwitterError
@@ -23,8 +24,8 @@ from pygeocoder import Geocoder
     
 def get_twitter_obj(token, secret):
     return Twython(
-        app_key = settings_local.CONSUMER_KEY,
-        app_secret = settings_local.CONSUMER_SECRET,
+        app_key = CONSUMER_KEY,
+        app_secret = CONSUMER_SECRET,
         oauth_token = token,
         oauth_token_secret = secret
         )
@@ -90,11 +91,11 @@ def register_user_to_mongo(eachFriend):
 
 
 def process_friends_or_followers(eachUser, friend_or_follower):
-    try:
-        friends = get_friends(eachUser['username'], -1, friend_or_follower)
-    except:
-        return
+
+    friends = get_friends(eachUser['username'], -1, friend_or_follower)
+
     next_cursor = friend_or_follower,friends['next_cursor']
+    print next_cursor, len(friends)
     try:
         while(next_cursor !='0'):
             next_cursor = friends['next_cursor']
