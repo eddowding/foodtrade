@@ -627,12 +627,25 @@ s
 
     
  {% endblock %}
+
+
+
     {% block footer %}
     {% include "includes/not_logged_in_modal.html" %}
      <script src="{% static "js/contact.js" %}"></script>
      <script src="/static/js/chosen.jquery.min.js" type="text/javascript"></script>
   <script src="/static/css/docsupport/prism.js" type="text/javascript" charset="utf-8"></script>
     <script type="text/javascript">
+        tweetlistener('email_message', 'contact_counter', 'contact_tweet');
+    map_lat={{ loc.lat }};
+    map_lon = {{ loc.lon }};
+    var name = "{{userprof.full_name}}";
+      var description = "{{userprof.description}}";
+      var photo =  "{{userprof.profileimg}}";
+      var username = "{{userprof.username}}";
+      var type = "{{userprof.type}}".split(',');
+      var latitude =  {{userprof.lat}};
+          var longitude =  {{userprof.lon}};
 
         $('#myselect').chosen({create_option: true, skip_no_results: true, create_option_text: 'Add'});
     $("#myTags").tagit({
@@ -652,6 +665,7 @@ s
           $('.search-field input').attr('style', 'width:192px;height:30px;');
         });
 
+{% if request.user.is_authenticated %}
   if (jQuery.contains(document, $('#myselect'))) {
     document.getElementById("myselect").addEventListener("DOMSubtreeModified", function(e) {
       // Record the occurrence
@@ -660,9 +674,11 @@ s
         var word = text.split('"')[1];
         //alert(word);
         // add the word to new collection of unapproved foods
-        var data = {useruid: {{profile_id|safe}}, food_name: word, created_by: {{user_id|safe}}};
+        var data = {useruid: {{profile_id|safe}}, food_name: word, created_by: {{user_id|safe}} };
         ajax_request("addnewfood", 'empty', {data: JSON.stringify(data)}); 
-    }, false);}    
+    }, false);
+}
+{% endif %}   
 
 
 function get_food_detail(profile_id, food_name, description, food_tags, photo_url, recomm_tags){
@@ -708,16 +724,7 @@ function get_food_detail(profile_id, food_name, description, food_tags, photo_ur
 
 }
 
-    tweetlistener('email_message', 'contact_counter', 'contact_tweet');
-    map_lat={{ loc.lat }};
-    map_lon = {{ loc.lon }};
-    var name = "{{userprof.full_name}}";
-      var description = "{{userprof.description}}";
-      var photo =  "{{userprof.profileimg}}";
-      var username = "{{userprof.username}}";
-      var type = "{{userprof.type}}".split(',');
-      var latitude =  {{userprof.lat}};
-          var longitude =  {{userprof.lon}};
+
     </script>
           <script src="{% static "js/individual-map.js" %}"></script>
           
