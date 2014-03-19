@@ -625,9 +625,10 @@ s
            </div> 
            </div>
 
-    {% include "includes/not_logged_in_modal.html" %}
+    
  {% endblock %}
     {% block footer %}
+    {% include "includes/not_logged_in_modal.html" %}
      <script src="{% static "js/contact.js" %}"></script>
      <script src="/static/js/chosen.jquery.min.js" type="text/javascript"></script>
   <script src="/static/css/docsupport/prism.js" type="text/javascript" charset="utf-8"></script>
@@ -642,7 +643,9 @@ s
 
     // chosen on change event
         $('#myselect').chosen().change(function(){
+            {% if request.user.is_authenticated %}
         add_food({{profile_id}}, {{user_id}});
+        {% endif %}
         });
         
         $('#myselect').chosen().ready(function(){

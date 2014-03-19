@@ -178,7 +178,7 @@
 
       </div>
     </div>
-    {% include "includes/not_logged_in_modal.html" %}
+    </div>
     <script type="text/javascript">
     map_lat={{ search.lat }};
     map_lon = {{ search.lon }};
@@ -195,6 +195,7 @@
 
 
           {% block footer %}
+    {% include "includes/not_logged_in_modal.html" %}
            <script src="{% static "js/activity.js" %}"></script>
            <script type="text/javascript">
 show_food_filters(food_filters, 0);

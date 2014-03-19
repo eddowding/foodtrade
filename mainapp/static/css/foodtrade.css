@@ -1789,3 +1789,21 @@ acronym {
 acronym {
 border-bottom: 1px dotted ;
 }
+
+
+
+
+
+/********************************/
+/**  Modal Blur not logged in  **/
+/********************************/
+
+body.modal-open #main_page{
+    -webkit-filter: blur(7px);
+    -moz-filter: blur(15px);
+    -o-filter: blur(15px);
+    -ms-filter: blur(15px);
+    filter: blur(15px);
+}
+  
+.modal-backdrop {background: #f7f7f7;}
