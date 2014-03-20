@@ -1,5 +1,5 @@
 
-var map = L.map('map').setView([map_lat,map_lon], 7);
+var map = L.map('map').setView([map_lat,map_lon], 9);
 
  
 		L.tileLayer('http://{s}.tile.cloudmade.com/0c670d97b5984ce79b34deb902915b3e/110167/256/{z}/{x}/{y}.png', {
