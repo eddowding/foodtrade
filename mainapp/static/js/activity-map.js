@@ -1,51 +1,11 @@
 
-  
-    var map, 
-      OSHQ = {
-        WGS84: [50.936715, -1.4701989],
-        OSGB: [437324, 115386]
-      };
-
-
-  
-
-      /* L.Map with OS options */
-      // map = new L.Map('map', {
-      //   crs: L.OSOpenSpace.getCRS(),
-      //   continuousWorld: true,
-      //   worldCopyJump: false,
-      //   minZoom: 0,
-      //   maxZoom: L.OSOpenSpace.RESOLUTIONS.length - 1,
-      // });
-
-      /* New L.TileLayer.OSOpenSpace with API Key */
-      // openspaceLayer = L.tileLayer.osopenspace("EC9EDE7DAD732ABAE0430C6CA40AB812", {debug: true}); 
-
-      // map.addLayer(openspaceLayer);
-      // map.setView(OSHQ.WGS84, 1);
-
-
-// var map = L.map('map').setView([map_lat,map_lon], 7);
+var map = L.map('map').setView([map_lat,map_lon], 7);
 
  
-		var base_layer = L.tileLayer('http://{s}.tile.cloudmade.com/0c670d97b5984ce79b34deb902915b3e/110167/256/{z}/{x}/{y}.png', {
+		L.tileLayer('http://{s}.tile.cloudmade.com/0c670d97b5984ce79b34deb902915b3e/110167/256/{z}/{x}/{y}.png', {
 			maxZoom: 18,
 			attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://cloudmade.com">CloudMade</a>'
-		});
- var openspaceLayer = L.tileLayer.osopenspace("EC9EDE7DAD732ABAE0430C6CA40AB812", {debug: true}); 
-
-      // map.addLayer(openspaceLayer);
-
-
-var map = new L.map('map', {
-    center: new L.LatLng(map_lat,map_lon),
-    // crs: L.OSOpenSpace.getCRS(),
-    zoom: 7,
-      continuousWorld: false,
-        worldCopyJump: false,
-    layers: [base_layer]
-});
- // map.setView(OSHQ.WGS84, 1);
+		}).addTo(map);
 
 
 L.circle([map_lat,map_lon], 24140.2, {
@@ -71,36 +31,10 @@ L.circle([map_lat,map_lon], 160934, {
 			fill: 0,
 		}).addTo(map);
 
-
- base_layer.on('loading', function(e) {
-    console.log("test");
-map.options.crs = L.CRS.EPSG3857;
-    // alert("e.latlng"); // e is an event object (MouseEvent in this case)
-});
-openspaceLayer.on('tileloadstart', function(e) {
-    console.log("test");
-map.options.crs = L.OSOpenSpace.getCRS();
-    // alert("e.latlng"); // e is an event object (MouseEvent in this case)
-});
+ 
 
 var map_controls = [];
 
-var baseMaps = {
-    "Minimal": base_layer, 
-    "OS": openspaceLayer
-};
-var layer_controls = L.control.layers(baseMaps);
-layer_controls.addTo(map);
-var vv;
-map.on('baselayerchange', function(e) {
-    if(e.name!="OS")
-    {
-    	map.options.crs = L.CRS.EPSG3857;
-    	map.setView(OSHQ.WGS84, 1);
-    }
-// map.options.crs = L.CRS.EPSG3857;
-    // alert("e.latlng"); // e is an event object (MouseEvent in this case)
-});
 
 
 function reload_controls()
