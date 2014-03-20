@@ -30,7 +30,7 @@ class Friends():
     def register_all_friends(self):
         user_pages_count = int(self.db_object.get_count(self.table_name)/15)+ 1
         for i in range(0,user_pages_count, 1):
-            pag_users = self.db_object.get_paginated_values(self.table_name}, pageNumber = int(i+1))
+            pag_users = self.db_object.get_paginated_values(self.table_name, pageNumber = int(i+1))
             for eachUser in pag_users:
                 user_profile_obj = UserProfile(host=REMOTE_SERVER_LITE, port=27017, db_name=REMOTE_MONGO_DBNAME, 
     conn_type='remote', username=REMOTE_MONGO_USERNAME, password=REMOTE_MONGO_PASSWORD)
