@@ -3,7 +3,7 @@
 cd /backup
 mkdir $(date +%F)
 cd $(date +%F)
-mongodump
+mongodump -uftroot -pftroot --db foodtrade
 mysqldump -u root -proot foodtrade > foodtrade.sql 
 cd ..
 zip -r $(date +%F).zip $(date +%F)/
