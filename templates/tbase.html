@@ -75,7 +75,10 @@
         {% endif %} 
         {% if 'editprofile' in request.path %}      
           Editprofile
-        {% endif %}         
+        {% endif %}
+        {% if 'kpi' in request.path %}      
+          KPI
+        {% endif %}                 
       {% endblock %}{% if request.path != '/' %} - FoodTrade{% endif %}
       
 
