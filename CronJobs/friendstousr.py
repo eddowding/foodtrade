@@ -20,6 +20,7 @@ from settings_local import *
 from twython import Twython
 from pygeocoder import Geocoder
 
+#mongo -uftroot -pftroot foodtrade
 #bgr = pygeocoder.Geocoder('471653599669-qht8a4r1mrhqma4902f1iag4i6if4tuf.apps.googleusercontent.com', 'hU7DLea2DXvkYzoaXhNtkHfF')
 # db.userprofile.update( {'address':'Antartica'},{ $set: {'latlng.coordinates.0':-135.10000000000002}},{ multi: true })
 
@@ -75,9 +76,9 @@ class Friends():
         self.db_object.create_table(self.table_name,'username')
 
     def register_all_friends(self):
-        user_pages_count = int(self.db_object.get_count(self.table_name, {'$exists':{'added_as_user':False}})/15)+ 1
+        user_pages_count = int(self.db_object.get_count(self.table_name, {'friends.added_as_user':{'$exists':False}})/15)+ 1
         for i in range(0,user_pages_count, 1):
-            pag_users = self.db_object.get_paginated_values(self.table_name, {'$exists':{'added_as_user':False}}, pageNumber = int(i+1))
+            pag_users = self.db_object.get_paginated_values(self.table_name, {'friends.added_as_user':{'$exists':False}}, pageNumber = int(i+1))
             for eachUser in pag_users:
                 user_profile_obj = UserProfile(host=REMOTE_SERVER_LITE, port=27017, db_name=REMOTE_MONGO_DBNAME, 
     conn_type='remote', username=REMOTE_MONGO_USERNAME, password=REMOTE_MONGO_PASSWORD)
