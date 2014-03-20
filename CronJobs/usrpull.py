@@ -19,7 +19,7 @@ from MySQLConnect import MySQLConnect
 from settings_local import *
 from twython import Twython
 from pygeocoder import Geocoder
-
+from friends import Friends
     
 def get_twitter_obj(token, secret):
     return Twython(
@@ -42,7 +42,7 @@ def get_friends(screen_name, next_cursor, friend_or_follower):
         followers = user_twitter.get_followers_list(screen_name = screen_name, count=200, cursor = next_cursor)
         return followers
 
-def register_user_to_mongo(eachFriend):
+def register_user_to_mongo(eachFriend, username=''):
     user_profile_obj = UserProfile()
     min_user_id = int(user_profile_obj.get_minimum_id_of_user()[0]['minId']) -1
     data = {
@@ -81,6 +81,9 @@ def register_user_to_mongo(eachFriend):
     '''Register User to Mongo'''
     userprofile = UserProfile(host=REMOTE_SERVER_LITE, port=27017, db_name=REMOTE_MONGO_DBNAME, 
         conn_type='remote', username=REMOTE_MONGO_USERNAME, password=REMOTE_MONGO_PASSWORD)
+
+    friend_obj = Friend()
+    friend_obj.save_friend({'username':username, 'friends':data})
     check = userprofile.get_profile_by_username(eachFriend['screen_name'])
     if check ==None:
         userprofile.update_profile_upsert({'screen_name':eachFriend['screen_name'],'username':eachFriend['screen_name']},data)
@@ -98,8 +101,7 @@ def process_friends_or_followers(eachUser, friend_or_follower):
             next_cursor = friends['next_cursor']
             for eachFriend in friends['users']:
                 '''Register this user'''
-                if eachFriend['location']!='':
-                    register_user_to_mongo(eachFriend)
+                register_user_to_mongo(eachFriend, eachUser['username'])
             if next_cursor != 0:
                 users = get_friends(eachUser['username'], next_cursor, friend_or_follower)
     except:
