@@ -23,7 +23,22 @@
 
 => mongo
 => use admin
-=> db.addUser({"user":"ftroot","pwd":"ftroot","roles":["readWrite", "dbAdmin"]})
-=> db.auth({"user":"ftroot","pwd":"ftroot","roles":["readWrite", "dbAdmin"]})
+=> db.addUser({"user":"ftroot","pwd":"ftroot","roles":["readWrite", "dbAdmin", "clusterAdmin", "userAdmin"]})
+=> db.auth({"user":"ftroot","pwd":"ftroot","roles":["readWrite", "dbAdmin", "userAdmin", "clusterAdmin"]})
 => use foodtrade
-=> db.addUser({"user":"ftroot","pwd":"ftroot","roles":["readWrite", "dbAdmin"]})
+=> db.addUser({"user":"ftrootAdmin","pwd":"ftrootAdmin","roles":["readWrite", "dbAdmin","clusterAdmin"]})
+
+
+###### Restoring database from the backup file on local
+=>mongo -uftroot -pftroot foodtrade
+=>db.dropDatabase()
+Extract the backup zip file and inside the folder in terminal type
+=>mysl -u root -p root
+=>drop database foodtrade;
+=>create database foodtrade;
+=>exit;
+Inside the extracted folder where the backup file lies type
+=>mysql -u root -p root foodtrade < foodtrade.sql
+Go to the dump folder and in terminal type
+=>mongorestore -uftroot -pftroot foodtrade/
+

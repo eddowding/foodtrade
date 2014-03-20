@@ -20,6 +20,7 @@ from settings_local import *
 from twython import Twython
 from pygeocoder import Geocoder
 
+#mongo -uftroot -pftroot foodtrade
 #bgr = pygeocoder.Geocoder('471653599669-qht8a4r1mrhqma4902f1iag4i6if4tuf.apps.googleusercontent.com', 'hU7DLea2DXvkYzoaXhNtkHfF')
 # db.userprofile.update( {'address':'Antartica'},{ $set: {'latlng.coordinates.0':-135.10000000000002}},{ multi: true })
 
@@ -75,14 +76,20 @@ class Friends():
         self.db_object.create_table(self.table_name,'username')
 
     def register_all_friends(self):
-        user_pages_count = int(self.db_object.get_count(self.table_name, {'$exists':{'added_as_user':False}})/15)+ 1
+        count = 0
+        user_pages_count = int(self.db_object.get_count(self.table_name, {'friends.added_as_user':{'$exists':False}})/15)+ 1
         for i in range(0,user_pages_count, 1):
-            pag_users = self.db_object.get_paginated_values(self.table_name, {'$exists':{'added_as_user':False}}, pageNumber = int(i+1))
+            pag_users = self.db_object.get_paginated_values(self.table_name, {'friends.added_as_user':{'$exists':False}}, pageNumber = int(i+1))
+            if count > 2000:
+                break
             for eachUser in pag_users:
                 user_profile_obj = UserProfile(host=REMOTE_SERVER_LITE, port=27017, db_name=REMOTE_MONGO_DBNAME, 
     conn_type='remote', username=REMOTE_MONGO_USERNAME, password=REMOTE_MONGO_PASSWORD)
-                check = user_profile_obj.get_profile_by_username(eachUser['friends']['screen_name'])                
+                check = user_profile_obj.get_profile_by_username(eachUser['friends']['screen_name'])                                
                 if check == None:
+                    count = count + 1
+                    if count > 2000:
+                        break
                     register_user_to_mongo(eachUser['friends'])
                 else:                    
                     self.update_friend(eachUser['friends']['screen_name'], eachUser['username'])
