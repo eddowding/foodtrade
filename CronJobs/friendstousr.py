@@ -91,6 +91,8 @@ class Friends():
                     if count > 2000:
                         break
                     register_user_to_mongo(eachUser['friends'])
+                    self.update_friend(eachUser['friends']['screen_name'], eachUser['username'])
+                    print "Field Updated", eachUser['friends']['screen_name']                    
                 else:                    
                     self.update_friend(eachUser['friends']['screen_name'], eachUser['username'])
                     print "Field Updated", eachUser['friends']['screen_name']
