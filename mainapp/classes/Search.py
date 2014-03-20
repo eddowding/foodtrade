@@ -243,7 +243,7 @@ class Search():
         geo_near = {
                         "$geoNear": {"near": [float(self.lon), float(self.lat)],
                                     "distanceField": "distance",
-                                    "maxDistance": 160.934,
+                                    "maxDistance": 0.025260398681,
                                     # "query": query_string,
                                     "includeLocs": "latlng",
                                     "uniqueDocs": True,
