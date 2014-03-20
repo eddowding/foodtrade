@@ -240,11 +240,14 @@ class Search():
         if self.keyword !="":
             query_string["$or"] = or_conditions
 
+
+        pre_condition = {"sign_up_as":{"$ne":"unclaimed"}}
+
         geo_near = {
                         "$geoNear": {"near": [float(self.lon), float(self.lat)],
                                     "distanceField": "distance",
-                                    "maxDistance": 160.934,
-                                    # "query": query_string,
+                                    "maxDistance": 0.025260398681,
+                                    "query": pre_condition,
                                     "includeLocs": "latlng",
                                     "uniqueDocs": True,
                                     "spherical":True,
@@ -260,9 +263,9 @@ class Search():
             agg_pipeline.append({ '$match':query_string})
 
         # for profile search
-        if search_type==1:
-            only_business_org = [{"sign_up_as":{"$ne":"unclaimed"}}]
-            agg_pipeline.append({ '$match': {"$and": only_business_org}})
+        # if search_type==1:
+        #     only_business_org = [{"sign_up_as":{"$ne":"unclaimed"}}]
+        #     agg_pipeline.append({ '$match': {"$and": only_business_org}})
 
 
         if search_type == 0:
@@ -275,7 +278,8 @@ class Search():
             else:
                 agg_pipeline.append({ '$match':{"updates.deleted":{"$ne":1},"updates.parent_tweet_id":"0"}})
         
-
+        start_time = int(time.time()) - 7*24*3600
+        end_time = int(time.time()) 
         if search_type == 0 and self.news != "notfornews":
             if  self.news == "old" or self.news == "none":
                 start_time = int(time.time()) - 14*24*3600
