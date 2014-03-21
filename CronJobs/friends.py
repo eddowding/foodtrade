@@ -42,8 +42,12 @@ class Friends():
                     self.update_friend(eachUser['friends']['screen_name'], eachUser['username'])
 
     def update_friend(self, friend_name, username):
-        self.db_object.update(self.table_name,{'username':username,'friends.screen_name':friend_name}, 
+        return self.db_object.update(self.table_name,{'username':username,'friends.screen_name':friend_name}, 
             {'friends.added_as_user':'true'})
+
+    def get_friend(self, friend_name):
+        return self.db_object.get_one(self.table_name,{'friends.screen_name':friend_name})
 
     def save_friend(self,doc):
         return self.db_object.update_upsert(self.table_name,{'username':doc['username'],'friends.screen_name':doc['friends']['screen_name']},doc)
+
