@@ -19,6 +19,7 @@ from MySQLConnect import MySQLConnect
 from settings_local import *
 from twython import Twython
 from pygeocoder import Geocoder
+from friends import Friends
 
 #mongo -uftroot -pftroot foodtrade
 #bgr = pygeocoder.Geocoder('471653599669-qht8a4r1mrhqma4902f1iag4i6if4tuf.apps.googleusercontent.com', 'hU7DLea2DXvkYzoaXhNtkHfF')
@@ -66,38 +67,6 @@ def register_user_to_mongo(eachFriend):
     user_profile_obj.update_profile_upsert({'screen_name':eachFriend['screen_name'],
         'username':eachFriend['screen_name']},data)
     return True
-
-
-class Friends():
-    def __init__ (self):
-        self.db_object = MongoConnection(host=REMOTE_SERVER_LITE, port=27017, db_name=REMOTE_MONGO_DBNAME, 
-        conn_type='remote', username=REMOTE_MONGO_USERNAME, password=REMOTE_MONGO_PASSWORD)
-        self.table_name = 'friends'
-        self.db_object.create_table(self.table_name,'username')
-
-    def register_all_friends(self):
-        count = 0
-        user_pages_count = int(self.db_object.get_count(self.table_name, {'friends.added_as_user':{'$exists':False}})/15)+ 1
-        for i in range(0,user_pages_count, 1):
-            pag_users = self.db_object.get_paginated_values(self.table_name, {'friends.added_as_user':{'$exists':False}}, pageNumber = int(i+1))
-            if count > 2000:
-                break
-            for eachUser in pag_users:
-                user_profile_obj = UserProfile(host=REMOTE_SERVER_LITE, port=27017, db_name=REMOTE_MONGO_DBNAME, 
-    conn_type='remote', username=REMOTE_MONGO_USERNAME, password=REMOTE_MONGO_PASSWORD)
-                check = user_profile_obj.get_profile_by_username(eachUser['friends']['screen_name'])                                
-                if check == None:
-                    count = count + 1
-                    if count > 2000:
-                        break
-                    register_user_to_mongo(eachUser['friends'])
-                else:                    
-                    self.update_friend(eachUser['friends']['screen_name'], eachUser['username'])
-                    print "Field Updated", eachUser['friends']['screen_name']
-
-    def update_friend(self, friend_name, username):
-        self.db_object.update(self.table_name,{'username':username,'friends.screen_name':friend_name}, 
-            {'friends.added_as_user':'true'})
 
 fr = Friends()        
 fr.register_all_friends()
