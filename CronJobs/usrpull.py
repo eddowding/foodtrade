@@ -66,7 +66,7 @@ def register_user_to_mongo(eachFriend, username=''):
     try:
         location_res = Geocoder.geocode(eachFriend['location'])
         data['address'] = str(location_res)
-        data['latlng'] = {"type":"Point","coordinates":[float(location_res.longitude) ,float(location_res.latitude)]}
+        data['latlng'] = {"type":"Point","coordinates":[float(location_res.longitude),float(location_res.latitude)]}
         data['zip_code'] = str(location_res.postal_code)
     except:
         data['address'] = str('Antartica')
@@ -111,10 +111,28 @@ def process_friends_or_followers(eachUser, friend_or_follower):
 
 
 def create_users(arg):
+    user_profile_obj = UserProfile(host=REMOTE_SERVER_LITE, port=27017, db_name=REMOTE_MONGO_DBNAME, 
+    conn_type='remote', username=REMOTE_MONGO_USERNAME, password=REMOTE_MONGO_PASSWORD)
     if arg=='all':
-        user_profile_obj = UserProfile(host=REMOTE_SERVER_LITE, port=27017, db_name=REMOTE_MONGO_DBNAME, 
-        conn_type='remote', username=REMOTE_MONGO_USERNAME, password=REMOTE_MONGO_PASSWORD)
         users = user_profile_obj.get_all_users()
+    elif arg=='Antartica':
+        users = user_profile_obj.get_all_antartic_users()
+        for eachUser in users:
+            friend_obj = Friends()
+            fr = friend_obj.get_friend(eachUser['username'])
+            fr_address = fr['friends']['location']
+            data = {}
+            try:
+                if fr_address !='':
+                    location_res = Geocoder.geocode(fr_address)
+                    data['address'] = str(location_res)
+                    data['latlng'] = {"type":"Point","coordinates":[float(location_res.longitude),float(location_res.latitude)]}
+                    data['zip_code'] = str(location_res.postal_code)           
+                user_profile_obj.change_address(eachUser['username'], data)
+            except:
+                print "Exception"
+                pass
+        return {'status':1}
     else:    
         '''get all newly registered users and process their friends and followers'''
         start_time = datetime.datetime.now() - datetime.timedelta(1)
@@ -167,7 +185,8 @@ def solve_errors():
                 twitter_err_obj.save_error({'username':eachError['username'],'error_type':'cron',
                     'next_cursor_str':next_cursor, 'error_solve_stat':'false','user_type':'followers'})
 
-create_users('new')
-
+# create_users('new')
 #solve_errors()
+create_users('Antartica')
+
 

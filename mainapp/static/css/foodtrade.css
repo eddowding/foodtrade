@@ -207,6 +207,9 @@ background: #eee;
   color: rgba(255,255,255,0.9);
   text-align: center;
   box-shadow: 0 0 20px rgba(0,0,0,0.5) inset;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
 }
 
 #beta a {
@@ -271,12 +274,27 @@ tr:hover .showonhover {
 }
    
 #sidebar {
-	border-right: 1px solid #ccc;
-	background-image: url('/static/images/double_stripe.png');
+	border-right: 1px solid #ccc; 
+  background: #444;
 	padding-top: 30px;
 	margin-top: 0px;
 	padding-left: 25px; 
   height: calc(100% - 58px);
+}
+
+#sidebar li, 
+#sidebar a {
+  color: #fff !important;
+}
+ 
+
+#sidebar input {
+  background: rgba(255,255,255,0.97);
+}
+
+#sidebar input:hover, 
+#sidebar input:focus  {
+  background: #fff;
 }
 
 .sidebar .alert {
@@ -389,9 +407,12 @@ article .content h4 {
 	margin-top: 3px;
 }
 
-#newpost {
-  margin-right: 10px; 
-  margin-left: 30px;
+#newpost { 
+}
+
+.navbar-default .navbar-nav > li > a:hover, 
+.navbar-default .navbar-nav > li > a:focus {
+  background: rgba(0,0,0,0.1);
 }
 
 @media screen and (max-width: 769px) {
