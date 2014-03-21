@@ -46,8 +46,19 @@ class UserProfile():
             for eachUser in pag_users:
                 if eachUser not in users:
                     users.append(eachUser)                        
-        print len(users)
         return users
+
+    def get_all_antartic_users(self):
+        users = []
+        user_pages_count = int(self.db_object.get_count(self.table_name, {'address':'Antartica'})/15)+ 1
+        for i in range(0,user_pages_count, 1):
+            pag_users = self.db_object.get_paginated_values(self.table_name, {'address':'Antartica'}, pageNumber = int(i+1))
+            for eachUser in pag_users:
+                users.append(eachUser)
+        return users
+
+    def change_address(self, username, data):
+        return self.db_object.update(self.table_name, {'username':username}, data)
 
     def get_all_profiles_by_time(self, start):
         users = []

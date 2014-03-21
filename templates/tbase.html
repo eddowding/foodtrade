@@ -486,7 +486,7 @@ hidden
           style="border: 0;">
   
             <div class="form-group" style="margin-right:5px;">
-              <input type="text" name="location" id="pac-input" value="{% if search %}{{ search.place }}{% endif %}{% if not search %}{{userinfo.zip_code}}{% endif %}" class="pac-input form-control  " placeholder="Where?">
+              <input type="text" name="location" id="food_search" value="{% if search %}{{ search.place }}{% endif %}{% if not search %}{{userinfo.zip_code}}{% endif %}" class="pac-input form-control  " placeholder="Where?">
             </div>
             <input type="hidden" name="lon" id="lon" value="{{search.lon}}"/>
             <input type="hidden" name="lat" id="lat" value="{{search.lat}}"/>
@@ -1137,7 +1137,7 @@ function validate_login(){
 
 function formSubmit(form) {
 
-  var input = (document.getElementById('pac-input'));
+  var input = (document.getElementById('food_search'));
     geocoder = new google.maps.Geocoder();
     geocoder.geocode({'address': input.value}, function(results, status) {
             if (status == google.maps.GeocoderStatus.OK) {
