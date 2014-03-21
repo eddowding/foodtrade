@@ -121,7 +121,6 @@ def create_users(arg):
             friend_obj = Friends()
             fr = friend_obj.get_friend(eachUser['username'])
             fr_address = fr['friends']['location']
-            break
             data = {}
             try:
                 if fr_address !='':
