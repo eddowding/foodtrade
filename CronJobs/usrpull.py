@@ -118,9 +118,10 @@ def create_users(arg):
     elif arg=='Antartica':
         users = user_profile_obj.get_all_antartic_users()
         for eachUser in users:
-            friend_obj = Friend()
+            friend_obj = Friends()
             fr = friend_obj.get_friend(eachUser['username'])
-            fr_address = fr['friends.location']
+            fr_address = fr['friends']['location']
+            break
             data = {}
             try:
                 if fr_address !='':
