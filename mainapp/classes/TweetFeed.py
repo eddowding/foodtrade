@@ -163,7 +163,7 @@ class TweetFeed():
              return parseInt(sum);
             }
             """)
-        result = self.db_object.map_reduce(self.table_name, mapper, reducer, query = {})[0:10]
+        result = self.db_object.map_reduce(self.table_name, mapper, reducer, query = {"username":"ignoreme"})[0:10]
         return result
 
     def aggregrate(self, conditions):
