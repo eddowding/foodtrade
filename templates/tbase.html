@@ -146,13 +146,15 @@
       <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
     <![endif]-->
   </head>
-  <body>
+  <body> 
     <!-- Fixed navbar -->
+ 
+
     <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
       <div class="ftstrip"></div>
-      <div class="container-responsive">
+      <div class="container-respo nsive">
 
-        <div class="navbar-header col-xs-2 col-sm-2 col-md-3"> 
+        <div class="navbar-header"> 
 
           <div class="visible-xs visible-sm">
             <span data-toggle="offcanvas" style="top: 10px; position:relative;">
@@ -162,98 +164,69 @@
           </div>
 
           <a href="/" class="navbar-brand visible-md visible-lg">
-            <img src="{% static "images/logo.png" %}" alt="FoodTrade logo"   />
+            <img src="{% static "images/logo.png" %}" alt="FoodTrade logo" /> 
           </a>
 
-        </div> 
-         
-        <div class="col-sm-5 col-md-4 visible-sm visible-md visible-lg">
-          <form action="/activity" class="navbar-form"  onsubmit="return formSubmit(this);"  role="search" data-step="1" data-intro="Search for anyhing, anywhere"
-          style="border: 0;">
- 
-            <div class="form-group" style="margin-right:5px;"> 
-              <input type="text" name="q" id="keyword" class="form-control  pac-input" value="{{ search.query }}" placeholder="Search for.."> 
+        </div>  
+          
+       
+        <form action="/activity" onsubmit="return formSubmit(this);" class="navbar-form navbar-left" role="search" style="bo rder: 0;">
+          <div class="input-group input-group-sm" style="max-width:360px;">
+            <input type="text" name="q" id="keyword" class="form-control" value="{{ search.query }}" placeholder="Search">   
+            <div class="input-group-btn">
+              <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
             </div> 
-            <div class="form-group" style="margin-right:5px;">
-              <input type="text" name="location" id="pac-input" value="{% if search %}{{ search.place }}{% endif %}{% if not search %}{{userinfo.zip_code}}{% endif %}" class="pac-input form-control  " placeholder="Where?">
-            </div>
-            <input type="hidden" name="lon" id="lon" value="{{search.lon}}"/>
-            <input type="hidden" name="lat" id="lat" value="{{search.lat}}"/>
- 
-
-            <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
- 
-            
-          </form>
-        </div>
-
-        <div class="col-xs-4 visible-xs "> 
-          <form action="/activity"   onsubmit="return formSubmit(this);"  class="navbar-form" role="search" style="border: 0;">
-          <div class="input-group"> 
-              <input type="text" name="q" id="keyword" class="form-control" value="{{ search.query }}" placeholder="Search">  
-
-
-              <div class="input-group-btn">
-                  <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
-              </div> 
           </div>
           <input type="hidden" name="location" id="pac-input" value="{% if search %} {{ search.place }} {% endif %} {% if not search %} {{userinfo.zip_code}}{% endif %} ">
           <input type="hidden" name="lon" id="lon" value="{{search.lon}}"/>
           <input type="hidden" name="lat" id="lat" value="{{search.lat}}"/>
-          </form>
-        </div>
+        </form>
+         
 
-
-        {% if user.is_authenticated %}
-        <div class="col-xs-4 col-sm-5  text-right">
-          <ul class="nav navbar-nav pull-right">
-
-                <li class="visible-md visible-lg"><a href="/pricing">Pricing</a></li> 
-
-
-    <li class="dropdown" data-step="5" data-intro="See what's active">
- 
-      <a href="#" class="dropdown-toggle visible-md visible-lg" data-toggle="dropdown">
-      Trending
-      </a>
-
-      <ul class="dropdown-menu">
-        <li><a href="#"><h5>Trends this week</h5></a></li>
-          {% for eachVal in userinfo.hashtagsthis %}
-            <li><a href="/activity/?q=%23{{eachVal.uid|slice:"1:"}}&location=++None+&lon=&lat=">{{eachVal.uid}} <span class="badge pull-right">{{eachVal.value|floatformat:"0"}}</span></a></li>
-          {% endfor %}
-
-
-          <li><a href="#"><h5>Trends all time</h5></a></li>
-          {% for eachVal in userinfo.hashtagsall %}
-            <li><a href="/activity/?q=%23{{eachVal.uid|slice:"1:"}}&location=++None+&lon=&lat=">{{eachVal.uid}} <span class="badge pull-right">{{eachVal.value|floatformat:"0"}}</span></a></li>
-          {% endfor %}
-      </ul>
-    </li>
-  
-
-      <li class="">
-        <button data-step="2" data-intro="Post an update from any screen" data-position="left" type="button" class="btn btn-default navbar-btn" id="newpost"  data-toggle="modal" data-target="#newtwitterpost">
-          <i class="fa fa-edit fa-fw"></i>  
-        </button> 
-      </li>
-
-      <li id="divNotification" onclick="clear_notification()" class="hidden">
-        <button  class="btn btn-default navbar-btn  dropdown-toggle margin-notices" data-toggle="dropdown" type="button" class="dropdown-toggle" data-toggle="dropdown">
-           <i class="fa fa-bell-o" title="Notifications"></i> {{notification.notification_count}} 
-        </button>
-        <!-- <a id= "notification" href="#" class="dropdown-toggle" data-toggle="dropdown">
-        {{notification.notification_count}} <b class="caret"></b></a> -->
-        <ul id="liNotification" class="dropdown-menu">
-          <li><a href="#">No notifications.</a></li>
+        <ul class="nav navbar-nav">
+          <li>
+            <a href="/"><i class="glyphicon glyphicon-home"></i> Home</a>
+          </li>
+          <li> 
+            <a href="#" class="dropdown-toggle visible-md visible-lg" id="newpost"  data-step="2" data-intro="Post an update from any screen" data-position="left" data-toggle="modal" data-target="#newtwitterpost"> 
+             <i class="fa fa-edit"></i>  Post 
+            </a> 
+          </li>
+          <li><a href="/inbox/" id="inbox" title="Inbox"><i class="fa fa-comments-o fa-fw fa-lg"></i>  <span id="spanInbox" class="badge">{{userinfo.notification_count}}</span> </a></li>
+          
         </ul>
-      </li><!-- /btn-group -->
+
+ 
+
+        {% if user.is_authenticated %} 
+
+          <ul class="nav navbar-nav pull-right" style="margin-right: 50px;">  
+       
+  
+ <li>
+            <a href="#" class="dropdown-toggle visible-md visible-lg" data-toggle="dropdown"><span class="badge">#trending</span></a>
+
+            <ul class="dropdown-menu" style="min-width:220px;">
+              <li><a href="#" class="hidden"><h5>Trends this week</h5></a></li>
+                {% for eachVal in userinfo.hashtagsthis %}
+                  <li><a href="/activity/?q=%23{{eachVal.uid|slice:"1:"}}&location=++None+&lon=&lat=">{{eachVal.uid}} <span class="badge pull-right">{{eachVal.value|floatformat:"0"}}</span></a></li>
+                {% endfor %}
+
+
+                <li class="hidden"><a href="#"><h5>Trends all time</h5></a></li>
+                {% for eachVal in userinfo.hashtagsall %}
+                  <li><a href="/activity/?q=%23{{eachVal.uid|slice:"1:"}}&location=++None+&lon=&lat=">{{eachVal.uid}} <span class="badge pull-right">{{eachVal.value|floatformat:"0"}}</span></a></li>
+                {% endfor %}
+            </ul>
+          </li>
+        
+       
 
       <li class="dropdown">
 
       <!-- bigger screens --> 
       <a href="#" class="dropdown-toggle visible-md visible-lg" data-toggle="dropdown" style="padding: 5px">
-      <img class="img-thum bnail  img-round ed" style="  width:40px"  src="{{userinfo.profileimg}}"  /> <b class="caret"></b>
+      <img style="width:40px"  src="{{userinfo.profileimg}}" class="img-rounded img-thumbnail"  /> <b class="caret"></b>
       </a>
 
       <!-- smaller screens --> 
@@ -265,13 +238,15 @@
               <li class=" pull-left"><a href="/editprofile/{{userinfo.username}}"><i class="fa fa-user fa-fw"></i> Edit profile</a></li>
 
               <li class=" pull-left"><a href="/payments"><i class="fa fa-credit-card fa-fw"></i> Account &amp; billing</a></li> 
+              <li data-step="4" data-intro="Building a better food system is going to take all of us. Please invite your suppliers, stockists, customers, friends.. everyone! For everyone you invite who signs up, we'll give you a month free, too." rel="tooltip" title="For everyone you invite who signs up, we'll give you a month free!">
+                <a data-toggle="modal" id="my_invite_twitter" data-target="#modal-tweeter-user"><i class="fa fa-twitter fa-fw"></i> Invite</a>
+              </li>
               <li class=" pull-left">
                 <a src = "/accounts/logout" onclick="logout()" >
               <i class="fa fa-power-off fa-fw"></i> Logout</a></li>
           </ul>
       </li>
-  </ul>  
-</div>
+  </ul>   
 
             <script type="text/javascript">
             function logout()
@@ -456,14 +431,8 @@ hidden
 
         <div style="margin-left: 18px;">
    
-          <p><a href="/activity"><i class="fa fa-dot-circle-o fa-fw"></i> Near me</a></p> 
- 
-          <p data-step="4" data-intro="Building a better food system is going to take all of us. Please invite your suppliers, stockists, customers, friends.. everyone! For everyone you invite who signs up, we'll give you a month free, too." rel="tooltip" title="For everyone you invite who signs up, we'll give you a month free!">
-            <a data-toggle="modal" id="my_invite_twitter" data-target="#modal-tweeter-user"><i class="fa fa-twitter fa-fw"></i> Invite</a>
-          </p>
-          
           <p><a href="#" id="help"><i class="fa fa-question-circle fa-fw"></i> Help</a></p> 
-          <p><a href="/inbox/" id="inbox" title="Inbox"><i class="fa fa-envelope fa-fw"></i> Inbox <span id="spanInbox" class="badge pull-right">{{userinfo.notification_count}}</span></a></p>
+          
           {% if user.is_superuser %}
           <p><a href="/unclaimed-profiles/" id="unclaimed" title="Unclaimed Profiles"><i class="glyphicon glyphicon-certificate"></i> Unclaimed Profiles <!-- <span id="spanInbox" class="badge pull-right">{{userinfo.notification_count}}</span> --></a></p>  
           {% endif %}
@@ -512,6 +481,21 @@ hidden
     <div class="foodtrade-sidebar">
     
     <hr>
+
+   <form action="/activity" class="navbar-form"  onsubmit="return formSubmit(this);"  role="search" data-step="1" data-intro="Search for anyhing, anywhere"
+          style="border: 0;">
+  
+            <div class="form-group" style="margin-right:5px;">
+              <input type="text" name="location" id="pac-input" value="{% if search %}{{ search.place }}{% endif %}{% if not search %}{{userinfo.zip_code}}{% endif %}" class="pac-input form-control  " placeholder="Where?">
+            </div>
+            <input type="hidden" name="lon" id="lon" value="{{search.lon}}"/>
+            <input type="hidden" name="lat" id="lat" value="{{search.lat}}"/>
+ 
+
+            <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+ 
+            
+          </form>
      
     <div data-step="3" data-intro="Just start typing to search for specific foods, business type, or filter by organisation membership" data-position="right">
     <form role="form" >
@@ -745,50 +729,7 @@ hidden
 
 
 
-
-
-<!-- UserVoice JavaScript SDK (only needed once on a page) -->
-<script>(function(){var uv=document.createElement('script');uv.type='text/javascript';uv.async=true;uv.src='//widget.uservoice.com/HloB2aRxdk7fbhWMOI5AlQ.js';var s=document.getElementsByTagName('script')[0];s.parentNode.insertBefore(uv,s)})()</script>
-
-<!-- A tab to launch the Classic Widget -->
-<script>
-UserVoice = window.UserVoice || [];
-UserVoice.push(['showTab', 'classic_widget', {
-  mode: 'full',
-  primary_color: '#ff9900',
-  link_color: '#7fc836',
-  default_mode: 'feedback',
-  forum_id: 231923,
-  tab_label: 'Feedback & Support',
-  tab_color: '#66A12B',
-  tab_position: 'bottom-left',
-  tab_inverted: false
-}]);
-</script>
-<script type="text/javascript">
-function checktweet(input, counter, button){
-        var tweettext = $("#"+input).val();
-        var char = 120- parseInt(tweettext.length);
-        if(char <= 0){
-            $("#"+counter).text('');
-            $('#'+button).attr('disabled', 'disabled');
-        }
-        else{
-            $("#"+counter).text(char+' characters remaining');
-            $('#'+button).removeAttr('disabled');
-        }
-    }
-function tweetlistener(input, counter, button){
-    $('#'+input).change(function(){
-        checktweet(input, counter, button);
-    });
-    $('#'+input).keyup(function(){
-        checktweet(input, counter, button);
-    });
-}
-
-</script>
-
+ 
 
 
     <!-- Bootstrap core JavaScript
@@ -1115,6 +1056,49 @@ $(function() {
 {% endif %}
 <!-- // TOUR SCRIPT --> 
 
+   <script>
+// Include the UserVoice JavaScript SDK (only needed once on a page)
+UserVoice=window.UserVoice||[];(function(){var uv=document.createElement('script');uv.type='text/javascript';uv.async=true;uv.src='//widget.uservoice.com/HloB2aRxdk7fbhWMOI5AlQ.js';var s=document.getElementsByTagName('script')[0];s.parentNode.insertBefore(uv,s)})();
+
+//
+// UserVoice Javascript SDK developer documentation:
+// https://www.uservoice.com/o/javascript-sdk
+//
+
+// Set colors
+UserVoice.push(['set', {
+  accent_color: '#6aba2e',
+  trigger_color: 'white',
+  trigger_background_color: '#6aba2e'
+}]);
+
+// Identify the user and pass traits
+// To enable, replace sample data with actual user traits and uncomment the line
+UserVoice.push(['identify', {
+  //email:      'john.doe@example.com', // User’s email address
+  //name:       'John Doe', // User’s real name
+  //created_at: 1364406966, // Unix timestamp for the date the user signed up
+  //id:         123, // Optional: Unique id of the user (if set, this should not change)
+  //type:       'Owner', // Optional: segment your users by type
+  //account: {
+  //  id:           123, // Optional: associate multiple users with a single account
+  //  name:         'Acme, Co.', // Account name
+  //  created_at:   1364406966, // Unix timestamp for the date the account was created
+  //  monthly_rate: 9.99, // Decimal; monthly rate of the account
+  //  ltv:          1495.00, // Decimal; lifetime value of the account
+  //  plan:         'Enhanced' // Plan name for the account
+  //}
+}]);
+
+// Add default trigger to the bottom-right corner of the window:
+UserVoice.push(['addTrigger', { mode: 'contact', trigger_position: 'top-right' }]);
+
+// Or, use your own custom trigger:
+//UserVoice.push(['addTrigger', '#id', { mode: 'contact' }]);
+
+// Autoprompt for Satisfaction and SmartVote (only displayed under certain conditions)
+UserVoice.push(['autoprompt', {}]);
+</script>
 
 
 

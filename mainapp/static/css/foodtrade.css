@@ -389,9 +389,12 @@ article .content h4 {
 	margin-top: 3px;
 }
 
-#newpost {
-  margin-right: 10px; 
-  margin-left: 30px;
+#newpost { 
+}
+
+.navbar-default .navbar-nav > li > a:hover, 
+.navbar-default .navbar-nav > li > a:focus {
+  background: rgba(0,0,0,0.1);
 }
 
 @media screen and (max-width: 769px) {
