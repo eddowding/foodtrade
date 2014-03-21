@@ -37,13 +37,14 @@
       // map.addLayer(openspaceLayer);
 
 
+
 var map = new L.map('map', {
     center: new L.LatLng(map_lat,map_lon),
     // crs: L.OSOpenSpace.getCRS(),
     zoom: 7,
       continuousWorld: false,
         worldCopyJump: false,
-    layers: [base_layer]
+    layers: [openspaceLayer,base_layer]
 });
  // map.setView(OSHQ.WGS84, 1);
 
@@ -72,37 +73,74 @@ L.circle([map_lat,map_lon], 160934, {
 		}).addTo(map);
 
 
- base_layer.on('loading', function(e) {
-    console.log("test");
-map.options.crs = L.CRS.EPSG3857;
-    // alert("e.latlng"); // e is an event object (MouseEvent in this case)
-});
-openspaceLayer.on('tileloadstart', function(e) {
-    console.log("test");
-map.options.crs = L.OSOpenSpace.getCRS();
-    // alert("e.latlng"); // e is an event object (MouseEvent in this case)
-});
+//  base_layer.on('loading', function(e) {
+//     console.log("test");
+// map.options.crs = L.CRS.EPSG3857;
+//     // alert("e.latlng"); // e is an event object (MouseEvent in this case)
+// });
+// openspaceLayer.on('tileloadstart', function(e) {
+//     console.log("test");
+// map.options.crs = L.OSOpenSpace.getCRS();
+//     // alert("e.latlng"); // e is an event object (MouseEvent in this case)
+// });
 
 var map_controls = [];
 
-var baseMaps = {
-    "Minimal": base_layer, 
-    "OS": openspaceLayer
-};
-var layer_controls = L.control.layers(baseMaps);
-layer_controls.addTo(map);
-var vv;
+// var baseMaps = {
+//     "Minimal": base_layer, 
+//     "OS": openspaceLayer
+// };
+// var layer_controls = L.control.layers(baseMaps);
+// layer_controls.addTo(map);
+// var vv;
+current_layer = "Minimal";
 map.on('baselayerchange', function(e) {
-    if(e.name!="OS")
-    {
-    	map.options.crs = L.CRS.EPSG3857;
-    	map.setView(OSHQ.WGS84, 1);
-    }
+    
+    	current_layer = e.name;
+    
 // map.options.crs = L.CRS.EPSG3857;
     // alert("e.latlng"); // e is an event object (MouseEvent in this case)
 });
 
+map.on('zoomend', function() {
+    // here's where you decided what zoom levels the layer should and should
+    // not be available for: use javascript comparisons like < and > if
+    // you want something other than just one zoom level, like
+    // (map.getZoom > 10)
+    
+    	var current_center = map.getCenter();
+    	var cent_lon = current_center.lng;
+    	var cent_lat = current_center.lat;
 
+    if (map.getZoom() > 7) {
+
+    	if(cent_lat>49.89193 && cent_lat<61.08466 && cent_lon>-9.38053 && cent_lon<2.07316)
+    	{
+    	if(true){
+    		map.options.crs=L.OSOpenSpace.getCRS();
+    		openspaceLayer.bringToFront();
+    		map.setView([cent_lat,cent_lon],map.getZoom());
+    	}
+    	}
+    }
+    else
+    {
+    	if(true)
+    	{
+    	map.options.crs = L.CRS.EPSG3857;
+    	base_layer.bringToFront();
+    	map.setView([cent_lat,cent_lon],map.getZoom());
+    }
+    }
+        // setFilter is available on L.mapbox.featureLayers only. Here
+        // we're hiding and showing the default marker layer that's attached
+        // to the map - change the reference if you want to hide or show a
+        // different featureLayer.
+        // If you want to hide or show a different kind of layer, you can use
+        // similar methods like .setOpacity(0) and .setOpacity(1)
+        // to hide or show it.
+        
+});
 function reload_controls()
 {
 	for(var i = 0;i<map_controls.length;i++)
