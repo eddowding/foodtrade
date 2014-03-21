@@ -143,8 +143,4 @@ var card_str = '<div class="card-box"><div class="content"><div class="pull-left
 
 
 }
-
-
-
-
 setTimeout(function(){reload_controls()},3000);
