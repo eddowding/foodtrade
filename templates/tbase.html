@@ -481,7 +481,7 @@ hidden
    <form action="/activity" class="navbar-form"  onsubmit="return formSubmit(this);"  role="search" data-step="1" data-intro="Search for anyhing, anywhere"
           style="padding: 0;">
   
-            <div class="input-group">
+            <div class="input-group  input-group-sm">
 
               <span class="input-group-addon"><i class="fa fa-dot-circle-o"></i></span>
               <input type="text" name="location" id="pac-input" value="{% if search %}{{ search.place }}{% endif %}{% if not search %}{{userinfo.zip_code}}{% endif %}" class="pac-input form-control  " placeholder="Where?">
@@ -501,7 +501,7 @@ hidden
     <div data-step="3" data-intro="Just start typing to search for specific foods, business type, or filter by organisation membership" data-position="right">
     <form role="form" >
       <div class="form-group"> 
-        <input type="text" class="form-control" id="food_filter" placeholder="Refine by food or drink">
+        <input type="text" class="form-control input-sm" id="food_filter" placeholder="Refine by food or drink">
       </div>
     </form>
     
@@ -517,7 +517,7 @@ hidden
     
     <form role="form">
       <div class="form-group"> 
-        <input type="email" class="form-control " id="business_filter" placeholder="Filter by business type">
+        <input type="email" class="form-control  input-sm" id="business_filter" placeholder="Filter by business type">
       </div>
     </form>
     <ul class="foodtrade-tag-list">
@@ -534,7 +534,7 @@ hidden
 
      <form role="form">
       <div class="form-group"> 
-        <input type="email" class="form-control " id="organisation_filter" placeholder="Show only members of...">
+        <input type="email" class="form-control  input-sm" id="organisation_filter" placeholder="Show only members of...">
       </div>
     </form>
     <ul class="foodtrade-tag-list">

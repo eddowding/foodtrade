@@ -286,6 +286,16 @@ tr:hover .showonhover {
 #sidebar a {
   color: #fff !important;
 }
+ 
+
+#sidebar input {
+  background: rgba(255,255,255,0.97);
+}
+
+#sidebar input:hover, 
+#sidebar input:focus  {
+  background: #fff;
+}
 
 .sidebar .alert {
 	padding: 5px
