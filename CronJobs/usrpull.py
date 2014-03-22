@@ -37,9 +37,11 @@ def get_friends(screen_name, next_cursor, friend_or_follower):
     user_twitter = get_twitter_obj(ACCESS_TOKEN, ACCESS_TOKEN_SECRET)
     if friend_or_follower == 'friends':
         friends = user_twitter.get_friends_list(screen_name = screen_name, count=200, cursor = next_cursor)
+        print "friends find =>", len(friends)
         return friends
     else:
         followers = user_twitter.get_followers_list(screen_name = screen_name, count=200, cursor = next_cursor)
+        print "followers find =>", len(followers)
         return followers
 
 def register_user_to_mongo(eachFriend, username=''):
@@ -101,6 +103,7 @@ def process_friends_or_followers(eachUser, friend_or_follower):
             next_cursor = friends['next_cursor']
             for eachFriend in friends['users']:
                 '''Register this user'''
+                print "Inside Parse, Next Cursor => ", next_cursor
                 register_user_to_mongo(eachFriend, eachUser['username'])
             if next_cursor != 0:
                 users = get_friends(eachUser['username'], next_cursor, friend_or_follower)
@@ -144,7 +147,7 @@ def create_users(arg):
         users = user_profile_obj.get_all_profiles_by_time(start_time)
 
     for eachUser in users:
-        #print eachUser['screen_name']
+        print eachUser['screen_name'], "Create User"
         process_friends_or_followers(eachUser, 'friends')
         process_friends_or_followers(eachUser, 'followers')
         
