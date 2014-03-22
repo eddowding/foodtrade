@@ -961,7 +961,6 @@ $( document ).ready(function() {
       allowSpaces: true
     });
 
-  tweetlistener('email_message', 'contact_counter', 'contact_tweet');
 // activating tooltips
     $('#adfoo_id').tooltip();
 // food popover
@@ -1145,6 +1144,7 @@ function get_food_detail(profile_id, food_name, description, food_tags, photo_ur
     
   </script>
 
+     <script src="{% static "js/contact.js" %}"></script>
         <script type="text/javascript">
     map_lat={{ loc.lat }};
     map_lon = {{ loc.lon }};
@@ -1162,9 +1162,10 @@ customers = {{customers_str | safe}};
 
       var current_lat = parseFloat(latitude);
       var current_lon = parseFloat(longitude);
+  tweetlistener('email_message', 'contact_counter', 'contact_tweet');
+      
     </script>
      <script src="{% static "js/business-map.js" %}"></script>
-     <script src="{% static "js/contact.js" %}"></script>
      
  {% endblock %}
 

@@ -636,7 +636,7 @@ s
      <script src="/static/js/chosen.jquery.min.js" type="text/javascript"></script>
   <script src="/static/css/docsupport/prism.js" type="text/javascript" charset="utf-8"></script>
     <script type="text/javascript">
-        tweetlistener('email_message', 'contact_counter', 'contact_tweet');
+       
     map_lat={{ loc.lat }};
     map_lon = {{ loc.lon }};
     var name = "{{userprof.full_name}}";
@@ -724,7 +724,7 @@ function get_food_detail(profile_id, food_name, description, food_tags, photo_ur
 
 }
 
-
+ tweetlistener('email_message', 'contact_counter', 'contact_tweet');
     </script>
           <script src="{% static "js/individual-map.js" %}"></script>
           

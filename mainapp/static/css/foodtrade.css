@@ -1816,7 +1816,7 @@ border-bottom: 1px dotted ;
 /**  Modal Blur not logged in  **/
 /********************************/
 
-body.modal-open #main_page{
+#body_blur #main_page{
     -webkit-filter: blur(7px);
     -moz-filter: blur(15px);
     -o-filter: blur(15px);
