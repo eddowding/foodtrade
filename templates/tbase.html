@@ -155,16 +155,18 @@
           <div class="modal-content"> 
             <div class="modal-body">
               <h3>Invite someone to join FoodTrade:</h3>
-        <span class="input-group-btn">
-              <div class='pull-left twitter-user-suggestions' id="my_twitter_search">
 
-  <input class="typeahead form-control" id="invite_tweeter_user" style="width:310px;" type="text" placeholder="Search Twitter users">
-                         
-                        </div>
-          <button type="submit" id="btnSearchTweeterUsers" onclick="search_tweeter_users()" class="btn btn-default pull-left">
-          <i class="glyphicon glyphicon-search"></i>
-          </button>
-        </span>
+
+   
+
+            <div class="input-group twitter-u ser-suggestions" id="my_twitter_search">
+                <input class="typeahead form-control" id="invite_tweeter_user"  type="text" placeholder="Search Twitter users"> 
+                <div class="input-group-btn">
+                  <button type="submit" id="btnSearchTweeterUsers" onclick="search_tweeter_users()" class="btn btn-default pull-left"><i class="glyphicon glyphicon-search"></i></button>
+                </div>
+            </div>
+             
+
             <textarea id="invite_tweeter_user_text"  onkeyup="check_limit()" class="form-control counted-invite margin-ta" name="message" placeholder="Type in your message" rows="3">Join the #realfood search engine:  </textarea>
             </div>
 
@@ -444,7 +446,7 @@ hidden
       <div>
 
         <div class="navbar-header"> 
-          <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".navbar-collapse" style="margin-right:50px;">
+          <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".navbar-collapse" style="margin-right:60px;">
             <span class="sr-only">Toggle</span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
@@ -527,21 +529,23 @@ hidden
           </a>
 
               <ul class="dropdown-menu">
+                <li class=" text-center">
+                  <div class="">
+                    <img src="{{userinfo.profileimg}}" class="img-circle img-thumbnail" />
+                  </div>
+                  <span class="text-muted">{{userinfo.username}}</span>
+                </li>
+                <li class="divider"></li>
+                
+                <li class=" pull-left"><a href="/editprofile/{{userinfo.username}}"><i class="fa fa-user fa-fw"></i> Edit profile</a></li>
 
-                    <div class="avatar">
-                      <img src="{{userinfo.profileimg}}" class="img-rounded img-thumbnail" />
-                    </div>
-                    <span>John Smith</span>
-                  
-                  <li class=" pull-left"><a href="/editprofile/{{userinfo.username}}"><i class="fa fa-user fa-fw"></i> Edit profile</a></li>
-
-                  <li class=" pull-left"><a href="/payments"><i class="fa fa-credit-card fa-fw"></i> Account &amp; billing</a></li> 
-                  <li data-step="4" data-intro="Building a better food system is going to take all of us. Please invite your suppliers, stockists, customers, friends.. everyone! For everyone you invite who signs up, we'll give you a month free, too." rel="tooltip" title="For everyone you invite who signs up, we'll give you a month free!">
-                    <a data-toggle="modal" id="my_invite_twitter" data-target="#modal-tweeter-user"><i class="fa fa-twitter fa-fw"></i> Invite</a>
-                  </li>
-                  <li class=" pull-left">
-                    <a src = "/accounts/logout" onclick="logout()" >
-                  <i class="fa fa-power-off fa-fw"></i> Logout</a></li>
+                <li class=" pull-left"><a href="/payments"><i class="fa fa-credit-card fa-fw"></i> Account &amp; billing</a></li> 
+                <li data-step="4" data-intro="Building a better food system is going to take all of us. Please invite your suppliers, stockists, customers, friends.. everyone! For everyone you invite who signs up, we'll give you a month free, too." rel="tooltip" title="For everyone you invite who signs up, we'll give you a month free!">
+                  <a data-toggle="modal" id="my_invite_twitter" data-target="#modal-tweeter-user"><i class="fa fa-twitter fa-fw"></i> Invite</a>
+                </li>
+                <li class=" pull-left">
+                  <a src = "/accounts/logout" onclick="logout()" >
+                <i class="fa fa-power-off fa-fw"></i> Logout</a></li>
               </ul>
           </li>
         </ul>   
