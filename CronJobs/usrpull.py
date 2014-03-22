@@ -77,7 +77,6 @@ def register_user_to_mongo(eachFriend, username=''):
     join_time = datetime.datetime.now()
     join_time = time.mktime(join_time.timetuple())
     data['join_time'] = int(join_time)
-    print data['screen_name']
     '''Register User to Mongo'''
     userprofile = UserProfile(host=REMOTE_SERVER_LITE, port=27017, db_name=REMOTE_MONGO_DBNAME, 
         conn_type='remote', username=REMOTE_MONGO_USERNAME, password=REMOTE_MONGO_PASSWORD)
@@ -87,6 +86,7 @@ def register_user_to_mongo(eachFriend, username=''):
     check = userprofile.get_profile_by_username(eachFriend['screen_name'])
     if check ==None:
         userprofile.update_profile_upsert({'screen_name':eachFriend['screen_name'],'username':eachFriend['screen_name']},data)
+        print data['screen_name']
     return True
 
 
