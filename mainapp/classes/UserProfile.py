@@ -38,14 +38,7 @@ class UserProfile():
         for i in range(0,user_pages_count, 1):
             pag_users = self.db_object.get_paginated_values(self.table_name, {'is_unknown_profile':'false'}, pageNumber = int(i+1))
             for eachUser in pag_users:
-                users.append(eachUser)
-
-        user_pages_count = int(self.db_object.get_count(self.table_name, {'is_unknown_profile':{'$exists':'false'}})/15)+ 1        
-        for i in range(0,user_pages_count, 1):
-            pag_users = self.db_object.get_paginated_values(self.table_name, {'is_unknown_profile':{'$exists':'false'}}, pageNumber = int(i+1))
-            for eachUser in pag_users:
-                if eachUser not in users:
-                    users.append(eachUser)                        
+                users.append(eachUser)                     
         return users
 
     def get_all_antartic_users(self):

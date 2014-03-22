@@ -115,6 +115,7 @@ def create_users(arg):
     conn_type='remote', username=REMOTE_MONGO_USERNAME, password=REMOTE_MONGO_PASSWORD)
     if arg=='all':
         users = user_profile_obj.get_all_users()
+        print len(users)
     elif arg=='Antartica':
         users = user_profile_obj.get_all_antartic_users()
         for eachUser in users:
@@ -187,6 +188,6 @@ def solve_errors():
 
 # create_users('new')
 #solve_errors()
-create_users('Antartica')
+create_users('all')
 
 
