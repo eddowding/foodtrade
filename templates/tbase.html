@@ -147,139 +147,7 @@
     <![endif]-->
   </head>
   <body> 
-    <!-- Fixed navbar -->
- 
-
-    <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
-      <div class="ftstrip"></div>
-      <div>
-
-        <div class="navbar-header"> 
-
-          <div class="visible-xs visible-sm">
-            <span data-toggle="offcanvas" style="top: 10px; position:relative;">
-                  <span class="sr-only">Toggle navigation</span>
-                  <img src="{% static "images/logo_icon_menu.png" %}" alt="FoodTrade logo" width="" />
-            </span>
-          </div>
-
-          <a href="/" class="navbar-brand visible-md visible-lg">
-            <img src="{% static "images/logo.png" %}" alt="FoodTrade logo" /> 
-          </a>
-
-        </div>  
-          
-       
-        <form action="/activity" onsubmit="return formSubmit(this);" class="navbar-form navbar-left" role="search" style="bo rder: 0;">
-          <div class="input-group input-group-sm" style="max-width:360px;">
-            <input type="text" name="q" id="keyword" class="form-control" value="{{ search.query }}" placeholder="Search">   
-            <div class="input-group-btn">
-              <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
-            </div> 
-          </div>
-          <input type="hidden" name="location" id="new_search" value="{% if search %} {{ search.place }} {% endif %} {% if not search %} {{userinfo.zip_code}}{% endif %} ">
-        </form>
-         
-
-        <ul class="nav navbar-nav">
-          <li>
-            <a href="/"><i class="glyphicon glyphicon-home"></i> Home</a>
-          </li>
-          <li> 
-            <a href="#" class="dropdown-toggle visible-md visible-lg" id="newpost"  data-step="2" data-intro="Post an update from any screen" data-position="left" data-toggle="modal" data-target="#newtwitterpost"> 
-             <i class="fa fa-edit"></i>  Post 
-            </a> 
-          </li>
-          <li><a href="/inbox/" id="inbox" title="Inbox"><i class="fa fa-comments-o fa-fw fa-lg"></i>  <span id="spanInbox" class="badge">{{userinfo.notification_count}}</span> </a></li>
-          
-        </ul>
-
- 
-
-        {% if user.is_authenticated %} 
-
-          <ul class="nav navbar-nav pull-right" style="margin-right: 50px;">  
-       
-  
- <li>
-            <a href="#" class="dropdown-toggle visible-md visible-lg" data-toggle="dropdown"><span class="badge">#trending</span></a>
-
-            <ul class="dropdown-menu" style="min-width:220px;">
-              <li><a href="#" class="hidden"><h5>Trends this week</h5></a></li>
-                {% for eachVal in userinfo.hashtagsthis %}
-                  <li><a href="/activity/?q=%23{{eachVal.uid|slice:"1:"}}&location=++None+&lon=&lat=">{{eachVal.uid}} <span class="badge pull-right">{{eachVal.value|floatformat:"0"}}</span></a></li>
-                {% endfor %}
-
-
-                <li class="hidden"><a href="#"><h5>Trends all time</h5></a></li>
-                {% for eachVal in userinfo.hashtagsall %}
-                  <li><a href="/activity/?q=%23{{eachVal.uid|slice:"1:"}}&location=++None+&lon=&lat=">{{eachVal.uid}} <span class="badge pull-right">{{eachVal.value|floatformat:"0"}}</span></a></li>
-                {% endfor %}
-            </ul>
-          </li>
-        
-       
-
-      <li class="dropdown">
-
-      <!-- bigger screens --> 
-      <a href="#" class="dropdown-toggle visible-md visible-lg" data-toggle="dropdown" style="padding: 5px">
-      <img style="width:40px"  src="{{userinfo.profileimg}}" class="img-rounded img-thumbnail"  /> <b class="caret"></b>
-      </a>
-
-      <!-- smaller screens --> 
-      <a href="#" class="dropdown-toggle visible-sm visible-xs" data-toggle="dropdown" style="padding: 2px;" >
-      <img class="img-thumbnail" style=" width:40px" style="padding: 2px;"  src="{{userinfo.profileimg}}"  />  <b class="caret"></b>
-      </a>
-
-          <ul class="dropdown-menu">
-              <li class=" pull-left"><a href="/editprofile/{{userinfo.username}}"><i class="fa fa-user fa-fw"></i> Edit profile</a></li>
-
-              <li class=" pull-left"><a href="/payments"><i class="fa fa-credit-card fa-fw"></i> Account &amp; billing</a></li> 
-              <li data-step="4" data-intro="Building a better food system is going to take all of us. Please invite your suppliers, stockists, customers, friends.. everyone! For everyone you invite who signs up, we'll give you a month free, too." rel="tooltip" title="For everyone you invite who signs up, we'll give you a month free!">
-                <a data-toggle="modal" id="my_invite_twitter" data-target="#modal-tweeter-user"><i class="fa fa-twitter fa-fw"></i> Invite</a>
-              </li>
-              <li class=" pull-left">
-                <a src = "/accounts/logout" onclick="logout()" >
-              <i class="fa fa-power-off fa-fw"></i> Logout</a></li>
-          </ul>
-      </li>
-  </ul>   
-
-            <script type="text/javascript">
-            function logout()
-            {
-              window.location = '/accounts/logout';
-            }
-            </script>
-      
-        {% endif %}
-         
-          
-          
- 
-         {% if not user.is_authenticated %} 
-          <a type="button" class="btn btn-success navbar-btn navbar-right" style="margin-right: 15px;" data-toggle="modal" data-target="#modal_signup">
-            <i class="fa fa-user fa-fw"></i><strong>Sign up</strong>
-          </a>
-         <a type="button" href="{% provider_login_url "twitter" process="login" %}" class="btn btn-success navbar-btn navbar-right" style="margin-right: 15px;">
-            <i class="fa fa-user fa-fw"></i> <strong>Login</strong>
-          </a>
-         {% endif %}
-          
-      </div>
-      <div class="row">
-      <div class="col-sm-12">
-    <div class="ftstrip ftstrip-mini"></div>
-    </div></div>
-
-    </nav> 
- 
-
-
-   <span id="reload_warning"> 
-  </span>
-
+    
 
        <!-- New post Modal -->
       <div class="modal fade" id="modal-tweeter-user" tabindex="-1" role="dialog" aria-labelledby="newtwitterpost" aria-hidden="true">
@@ -287,16 +155,18 @@
           <div class="modal-content"> 
             <div class="modal-body">
               <h3>Invite someone to join FoodTrade:</h3>
-        <span class="input-group-btn">
-              <div class='pull-left twitter-user-suggestions' id="my_twitter_search">
 
-  <input class="typeahead form-control" id="invite_tweeter_user" style="width:310px;" type="text" placeholder="Search Twitter users">
-                         
-                        </div>
-          <button type="submit" id="btnSearchTweeterUsers" onclick="search_tweeter_users()" class="btn btn-default pull-left">
-          <i class="glyphicon glyphicon-search"></i>
-          </button>
-        </span>
+
+   
+
+            <div class="input-group twitter-u ser-suggestions" id="my_twitter_search">
+                <input class="typeahead form-control" id="invite_tweeter_user"  type="text" placeholder="Search Twitter users"> 
+                <div class="input-group-btn">
+                  <button type="submit" id="btnSearchTweeterUsers" onclick="search_tweeter_users()" class="btn btn-default pull-left"><i class="glyphicon glyphicon-search"></i></button>
+                </div>
+            </div>
+             
+
             <textarea id="invite_tweeter_user_text"  onkeyup="check_limit()" class="form-control counted-invite margin-ta" name="message" placeholder="Type in your message" rows="3">Join the #realfood search engine:  </textarea>
             </div>
 
@@ -400,7 +270,7 @@
 {% if not user.is_authenticated %} 
 hidden
 {% endif %}
-" role="navigation">
+" role="navigation" >
 
 {% if not user.is_authenticated %} 
 <div class="alert alert-info  ">
@@ -568,6 +438,154 @@ hidden
 
        {% endif %}
     </div>
+    
+<!-- Fixed navbar -->
+    <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+
+      <div class="ftstrip"></div>
+      <div>
+
+        <div class="navbar-header"> 
+          <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".navbar-collapse" style="margin-right:60px;">
+            <span class="sr-only">Toggle</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+
+          <div class="visible-xs visible-sm">
+            <span data-toggle="offcanvas" style="top: 10px; position:relative;">
+              <span class="sr-only">Toggle navigation</span>
+              <img src="{% static 'images/logo_icon_menu.png' %}" alt="FoodTrade logo" width="" />
+            </span>
+          </div>
+
+          <a href="/" class="navbar-brand visible-md visible-lg">
+            <img src="{% static "images/logo.png" %}" alt="FoodTrade logo" /> 
+          </a>
+  
+          </div>
+  
+          <form action="/activity" onsubmit="return formSubmit(this);" class="navbar-form navbar-left" role="search">
+            <div class="input-group">
+              <input type="text" name="q" id="keyword" class="form-control" value="{{ search.query }}" placeholder="eg apples, surplus...">   
+              <div class="input-group-btn">
+                <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+              </div> 
+            </div>
+            <input type="hidden" name="location" id="new_search" value="{% if search %} {{ search.place }} {% endif %} {% if not search %} {{userinfo.zip_code}}{% endif %} ">
+          </form>
+          
+       
+      <nav class="collapse navbar-collapse" role="navigation">
+ 
+        <ul class="nav navbar-nav">
+          <li>
+            <a href="/" class="dropdown-toggle visible-md visible-lg"><i class="glyphicon glyphicon-home"></i> Home</a>
+            <a href="/" class="dropdown-toggle visible-sm visible-xs"><i class="glyphicon glyphicon-home"></i></a>
+          </li>
+          <li> 
+            <a href="#" class="dropdown-toggle visible-md visible-lg" data-step="2" data-intro="Post an update from any screen" data-position="left" data-toggle="modal" data-target="#newtwitterpost"> 
+             <i class="fa fa-edit"></i>  Post 
+            </a> 
+            <a href="#" class="dropdown-toggle visible-sm visible-xs" data-toggle="modal" data-target="#newtwitterpost"> 
+             <i class="fa fa-edit"></i>  
+            </a> 
+          </li>
+          <li><a href="/inbox/" id="inbox" title="Inbox"><i class="fa fa-comments-o fa-fw fa-lg"></i>  <span id="spanInbox" class="label label-success">{{userinfo.notification_count}}</span> </a></li>
+        </ul>
+
+ 
+
+        {% if user.is_authenticated %} 
+
+          <ul class="nav navbar-nav pull-right" style="margin-right: 50px;">  
+           <li>
+            <a href="#" class="dropdown-toggle visible-md visible-lg" data-toggle="dropdown"><span class="badge">#trends</span></a>
+
+            <ul class="dropdown-menu" style="min-width:220px;">
+              <li><a href="#" class="hidden"><h5>Trends this week</h5></a></li>
+                {% for eachVal in userinfo.hashtagsthis %}
+                  <li><a href="/activity/?q=%23{{eachVal.uid|slice:"1:"}}&location=++None+&lon=&lat=">{{eachVal.uid}} <span class="badge pull-right">{{eachVal.value|floatformat:"0"}}</span></a></li>
+                {% endfor %}
+
+
+                <li class="hidden"><a href="#"><h5>Trends all time</h5></a></li>
+                {% for eachVal in userinfo.hashtagsall %}
+                  <li><a href="/activity/?q=%23{{eachVal.uid|slice:"1:"}}&location=++None+&lon=&lat=">{{eachVal.uid}} <span class="badge pull-right">{{eachVal.value|floatformat:"0"}}</span></a></li>
+                {% endfor %}
+            </ul>
+          </li>
+         
+          <li class="dropdown">
+            <!-- bigger screens --> 
+            <a href="#" class="dropdown-toggle visible-md visible-lg" data-toggle="dropdown" style="padding: 5px">
+            <img style="width:40px"  src="{{userinfo.profileimg}}" class="img-rounded img-thumbnail"  /> <b class="caret"></b>
+            </a>
+
+            <!-- smaller screens --> 
+            <a href="#" class="dropdown-toggle visible-sm visible-xs" data-toggle="dropdown" style="padding: 2px;" >
+            <img class="img-thumbnail" style=" width:40px" style="padding: 2px;"  src="{{userinfo.profileimg}}"  />  <b class="caret"></b>
+          </a>
+
+              <ul class="dropdown-menu">
+                <li class=" text-center">
+                  <div class="">
+                    <img src="{{userinfo.profileimg}}" class="img-circle img-thumbnail" />
+                  </div>
+                  <span class="text-muted">{{userinfo.username}}</span>
+                </li>
+                <li class="divider"></li>
+                
+                <li class=" pull-left"><a href="/editprofile/{{userinfo.username}}"><i class="fa fa-user fa-fw"></i> Edit profile</a></li>
+
+                <li class=" pull-left"><a href="/payments"><i class="fa fa-credit-card fa-fw"></i> Account &amp; billing</a></li> 
+                <li data-step="4" data-intro="Building a better food system is going to take all of us. Please invite your suppliers, stockists, customers, friends.. everyone! For everyone you invite who signs up, we'll give you a month free, too." rel="tooltip" title="For everyone you invite who signs up, we'll give you a month free!">
+                  <a data-toggle="modal" id="my_invite_twitter" data-target="#modal-tweeter-user"><i class="fa fa-twitter fa-fw"></i> Invite</a>
+                </li>
+                <li class=" pull-left">
+                  <a src = "/accounts/logout" onclick="logout()" >
+                <i class="fa fa-power-off fa-fw"></i> Logout</a></li>
+              </ul>
+          </li>
+        </ul>   
+        </nav>
+
+            <script type="text/javascript">
+            function logout()
+            {
+              window.location = '/accounts/logout';
+            }
+            </script>
+      
+        {% endif %}
+         
+          
+          
+ 
+         {% if not user.is_authenticated %} 
+          <a type="button" class="btn btn-success navbar-btn navbar-right" style="margin-right: 15px;" data-toggle="modal" data-target="#modal_signup">
+            <i class="fa fa-user fa-fw"></i><strong>Sign up</strong>
+          </a>
+         <a type="button" href="{% provider_login_url "twitter" process="login" %}" class="btn btn-success navbar-btn navbar-right" style="margin-right: 15px;">
+            <i class="fa fa-user fa-fw"></i> <strong>Login</strong>
+          </a>
+         {% endif %}
+          
+      </div>
+      <div class="row">
+      <div class="col-sm-12">
+    <div class="ftstrip ftstrip-mini"></div>
+    </div></div>
+
+    </nav> 
+
+   <span id="reload_warning"> 
+  </span>
+
+
+
+
  {% block content %}
  {% endblock %}  
 </div>

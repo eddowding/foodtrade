@@ -407,9 +407,6 @@ article .content h4 {
 	margin-top: 3px;
 }
 
-#newpost { 
-}
-
 .navbar-default .navbar-nav > li > a:hover, 
 .navbar-default .navbar-nav > li > a:focus {
   background: rgba(0,0,0,0.1);
@@ -1819,7 +1816,7 @@ border-bottom: 1px dotted ;
 /**  Modal Blur not logged in  **/
 /********************************/
 
-body.modal-open #main_page{
+#body_blur #main_page{
     -webkit-filter: blur(7px);
     -moz-filter: blur(15px);
     -o-filter: blur(15px);

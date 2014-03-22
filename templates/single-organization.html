@@ -486,8 +486,10 @@
 {% endblock %}
 {% block footer %}  
 {% include "includes/not_logged_in_modal.html" %}
+
+   
+     <script src="{% static "js/contact.js" %}"></script>
         <script type="text/javascript">
-  tweetlistener('email_message', 'contact_counter', 'contact_tweet');
     map_lat={{ loc.lat }};
     map_lon = {{ loc.lon }};
 connections = {{members_str | safe}};
@@ -499,8 +501,8 @@ var name = "{{userprof.full_name}}";
       var type = "{{userprof.type}}".split(',');
       var latitude =  {{userprof.lat}};
           var longitude =  {{userprof.lon}};
+  tweetlistener('email_message', 'contact_counter', 'contact_tweet');
     </script>
-    <script src="{% static "js/organisation-map.js" %}"></script>
-     <script src="{% static "js/contact.js" %}"></script>
+     <script src="{% static "js/organisation-map.js" %}"></script>
 
 {% endblock %}
