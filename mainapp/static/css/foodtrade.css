@@ -196,6 +196,10 @@ background: #eee;
   color: green;
 }
 
+.chosen-container-multi .chosen-choices li.search-field input[type=text] {
+  padding: 15px 5px !important;
+}
+
 .chosen-container li.highlighted a { 
   color: #fff;
 }
