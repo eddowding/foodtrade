@@ -13,7 +13,7 @@ HQ_ACCESS_TOKEN = '384361932-BdKtwhhRDILj4YeHU1G3UN1QtvlrD8LfsqsK6lDF'
 HQ_ACCESS_TOKEN_SECRET = 'xGB1Wl4kHnBdxZIDufXTKDQNZPPxbj3PWjMTqH4X802mr'
 
 #..................Server Settings............................
-REMOTE_SERVER_LITE = 'ftstaging.cloudapp.net' 
+REMOTE_SERVER_LITE = 'localhost' 
 LOCAL_SERVER = 'localhost' 
 REMOTE_SERVER_STAGING = 'ftstaging.cloudapp.net' 
 REMOTE_MONGO_DBNAME = 'foodtrade'
