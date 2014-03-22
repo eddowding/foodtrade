@@ -122,16 +122,16 @@ def create_users(arg):
             fr = friend_obj.get_friend(eachUser['username'])
             fr_address = fr['friends']['location']
             data = {}
-            try:
-                if fr_address !='':
+            print eachUser['screen_name'], fr_address
+            if fr_address !='':
+                try:
                     location_res = Geocoder.geocode(fr_address)
-                    data['address'] = str(location_res)
-                    data['latlng'] = {"type":"Point","coordinates":[float(location_res.longitude),float(location_res.latitude)]}
-                    data['zip_code'] = str(location_res.postal_code)           
+                except:
+                    continue
+                data['address'] = str(location_res)
+                data['latlng'] = {"type":"Point","coordinates":[float(location_res.longitude),float(location_res.latitude)]}
+                data['zip_code'] = str(location_res.postal_code)           
                 user_profile_obj.change_address(eachUser['username'], data)
-            except:
-                print "Exception"
-                pass
         return {'status':1}
     else:    
         '''get all newly registered users and process their friends and followers'''
