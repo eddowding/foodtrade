@@ -37,11 +37,9 @@ def get_friends(screen_name, next_cursor, friend_or_follower):
     user_twitter = get_twitter_obj(ACCESS_TOKEN, ACCESS_TOKEN_SECRET)
     if friend_or_follower == 'friends':
         friends = user_twitter.get_friends_list(screen_name = screen_name, count=200, cursor = next_cursor)
-        print "friends find =>", len(friends)
         return friends
     else:
         followers = user_twitter.get_followers_list(screen_name = screen_name, count=200, cursor = next_cursor)
-        print "followers find =>", len(followers)
         return followers
 
 def register_user_to_mongo(eachFriend, username=''):
@@ -83,12 +81,12 @@ def register_user_to_mongo(eachFriend, username=''):
     userprofile = UserProfile(host=REMOTE_SERVER_LITE, port=27017, db_name=REMOTE_MONGO_DBNAME, 
         conn_type='remote', username=REMOTE_MONGO_USERNAME, password=REMOTE_MONGO_PASSWORD)
 
-    friend_obj = Friend()
+    friend_obj = Friends()
     friend_obj.save_friend({'username':username, 'friends':data})
     check = userprofile.get_profile_by_username(eachFriend['screen_name'])
     if check ==None:
         userprofile.update_profile_upsert({'screen_name':eachFriend['screen_name'],'username':eachFriend['screen_name']},data)
-        print data['screen_name']
+    print data['screen_name']
     return True
 
 
@@ -103,7 +101,6 @@ def process_friends_or_followers(eachUser, friend_or_follower):
             next_cursor = friends['next_cursor']
             for eachFriend in friends['users']:
                 '''Register this user'''
-                print "Inside Parse, Next Cursor => ", next_cursor
                 register_user_to_mongo(eachFriend, eachUser['username'])
             if next_cursor != 0:
                 users = get_friends(eachUser['username'], next_cursor, friend_or_follower)
@@ -118,7 +115,6 @@ def create_users(arg):
     conn_type='remote', username=REMOTE_MONGO_USERNAME, password=REMOTE_MONGO_PASSWORD)
     if arg=='all':
         users = user_profile_obj.get_all_users()
-        print len(users)
     elif arg=='Antartica':
         users = user_profile_obj.get_all_antartic_users()
         for eachUser in users:
@@ -147,7 +143,6 @@ def create_users(arg):
         users = user_profile_obj.get_all_profiles_by_time(start_time)
 
     for eachUser in users:
-        print eachUser['screen_name'], "Create User"
         process_friends_or_followers(eachUser, 'friends')
         process_friends_or_followers(eachUser, 'followers')
         
