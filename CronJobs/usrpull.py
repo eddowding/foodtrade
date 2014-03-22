@@ -45,6 +45,7 @@ def get_friends(screen_name, next_cursor, friend_or_follower):
 def register_user_to_mongo(eachFriend, username=''):
     user_profile_obj = UserProfile()
     min_user_id = int(user_profile_obj.get_minimum_id_of_user()[0]['minId']) -1
+    print min_user_id
     data = {
         'is_unknown_profile':'true',
         'recently_updated_by_super_user': 'false', 
@@ -82,11 +83,11 @@ def register_user_to_mongo(eachFriend, username=''):
         conn_type='remote', username=REMOTE_MONGO_USERNAME, password=REMOTE_MONGO_PASSWORD)
 
     friend_obj = Friends()
-    friend_obj.save_friend({'username':username, 'friends':data})
+    friend_obj.save_friend({'username':username, 'friends':eachFriend})
     check = userprofile.get_profile_by_username(eachFriend['screen_name'])
     if check ==None:
         userprofile.update_profile_upsert({'screen_name':eachFriend['screen_name'],'username':eachFriend['screen_name']},data)
-    print data['screen_name']
+        print data['screen_name']
     return True
 
 
