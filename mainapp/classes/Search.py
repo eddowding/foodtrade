@@ -248,7 +248,6 @@ class Search():
 
 
         
-        print query_string
         geo_near = {
                         "$geoNear": {"near": [float(self.lon), float(self.lat)],
                                     "distanceField": "distance",
