@@ -26,7 +26,7 @@
 => db.addUser({"user":"ftroot","pwd":"ftroot","roles":["readWrite", "dbAdmin", "clusterAdmin", "userAdmin"]})
 => db.auth({"user":"ftroot","pwd":"ftroot","roles":["readWrite", "dbAdmin", "userAdmin", "clusterAdmin"]})
 => use foodtrade
-=> db.addUser({"user":"ftrootAdmin","pwd":"ftrootAdmin","roles":["readWrite", "dbAdmin","clusterAdmin"]})
+=> db.addUser({"user":"ftroot","pwd":"ftroot","roles":["readWrite", "dbAdmin","clusterAdmin", "userAdmin"]})
 
 
 ###### Restoring database from the backup file on local
@@ -42,3 +42,5 @@ Inside the extracted folder where the backup file lies type
 Go to the dump folder and in terminal type
 =>mongorestore -uftroot -pftroot foodtrade/
 
+#########DO NOT TRY
+=>mongo -u ftroot -p ftroot foodtrade --eval "db.auth('ftroot','ftroot');db.dropDatabase();"

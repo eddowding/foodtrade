@@ -432,11 +432,19 @@
           {% if show_foods %}
           <li class="active"><a href="#produce" data-toggle="tab">Foods <span class="badge">{{userprof.food_no}}</span></a></li>
           {% endif %}
-          <li {% if not show_foods %} class="active" {% endif %}><a href="#connections" data-toggle="tab" onclick="set_width()">Links <span class="badge">{{userprof.trade_connections_no}}</span></a> </li>
+          <li  {% if not show_foods %} class="active" {% endif %}>
+            <a href="#connections" data-toggle="tab" onclick="set_width()">Connections <span class="badge">{{userprof.trade_connections_no}}</span></a> 
+          </li>
 
-          <li><a href="#organisations" data-toggle="tab">Orgs <span class="badge">{{userprof.organisation_connection_no}}</span></a></li> 
-          <li><a href="#activity" data-toggle="tab">Updates  <span class="badge">{{updates_count}}</span></a></li>  
-          <li><a href="#customers" tabindex="-1" data-toggle="tab">Customers <span class="badge">{{customers|length}}</span></a></li>
+          
+          <li><a href="#activity" data-toggle="tab">Updates  <span class="badge">{{updates_count}}</span></a></li>     
+          <li class="dropdown">
+            <a href="#" id="more" class="dropdown-toggle" data-toggle="dropdown">More <b class="caret"></b></a>
+            <ul class="dropdown-menu" role="menu" aria-labelledby="more">
+              <li><a href="#organisations" data-toggle="tab">Organisations <span class="badge pull-right">{{userprof.organisation_connection_no}}</span></a></li> 
+              <li><a href="#customers" tabindex="-1" data-toggle="tab">Customers <span class="badge pull-right">{{customers|length}}</span></a></li> 
+            </ul>
+          </li>
         </ul>
      </div>
     </div>
@@ -473,7 +481,7 @@
                   <!-- link this to open food facts --> 
                         <!-- <input class="typeahead form-control" name="addfood" data-source='' data-provide="typeahead" autocomplete="off" id = "addfood_id" style="width:400px;" placeholder="Add foods you can buy here."> -->
                         <div class='pull-left'>
-                        <select id="myselect" data-placeholder="Add foods you can buy here." style="height:30px; width: 192px" multiple class="chosen-select" >
+                        <select id="myselect" data-placeholder="Add foods you can buy here." style="height:30px; width: 192px; padding: 15px 5px;" multiple class="chosen-select" >
                         <option value=""></option>
 <!--                             {% for each in food_list %}
                         <optgroup label={{each.node}}>
@@ -636,7 +644,7 @@
 
                  <img 
                  style="width: 35px; margin-right: 5px;" 
-                 class="" src={{pic_url}}  />
+                 class="" src="{{pic_url}}"  />
       
                 <div class="btn-group" data-toggle="buttons">
                   <label class="btn btn-default">
@@ -647,25 +655,13 @@
                   </label> 
                 </div> 
               </div> 
-              <div class="form-group">
-                
-              <!-- <select id="buss_chosen" data-placeholder="Type business..." class="chosen-select col-xs-4 col-sm-4" multiple>
-                            <option value=""></option>
-                            {% for each in all_business %}
-                            
-                              <option value={{each.id}}>{{each.name}}</option>
-                            
-                            {% endfor %}
-                            </select>               -->
+              <div class="form-group"> 
                   
-              <div id="buss_remote">
-                <input class="typeahead form-control" id="new_buss_typeahead" {% if not user.is_authenticated %} rel="tooltip" title="Please login to use this feature" {% endif %} style="width:310px;" type="text" placeholder="Type business..."></div>                  
+              <div id="buss_remote" >
+                <input class="typeahead form-control  " id="new_buss_typeahead" {% if not user.is_authenticated %} rel="tooltip" title="Please login to use this feature" {% endif %} style="width:310px;" type="text" placeholder="Type business..."> 
+              </div>                  
 
-              
-
-              </div>
-              
-              <!-- <button class="btn btn-success" id="ad_cons_id" {% if not user.is_authenticated %} title="Please login to use this feature" {% endif %} onClick="third_party_connection({{profile_id}})" >Add</button> -->
+              </div> 
 
      
             </div>
@@ -683,10 +679,12 @@
           {% endif %}
                       
 <div id="all-connections">
+ 
+
 <div class="clearfix">
 {% if userprof.b_conn_no != 0 %}
-          <h4>We buy from <small>these suppliers</small></h4>
-          <hr /> 
+          <h4><a name="buyfrom"></a>We buy from <small>these suppliers</small></h4>
+          <div class="ftstrip ftstrip-mini"></div>
            <div class="pull-left" id="buyers-cards">
           {% for each in connections %}
               {% if each.relation == "buyer" or each.relation == "both" %}
@@ -731,8 +729,9 @@
 
           <div class="clearfix">
           {% if userprof.c_conn_no != 0 %}
-          <h4 style="margin-top: 50px;">We sell to <small>these stockists</small></h4> 
-          <hr /> 
+          <h4 style="margin-top: 50px;">We sell to <small>these stockists</small></h4>  
+
+          <div class="ftstrip ftstrip-mini"></div>
            <div class="pull-left" id="seller-cards">
           {% for each in connections %}
               {% if each.relation == "seller" or each.relation == "both" %}
@@ -961,7 +960,6 @@ $( document ).ready(function() {
       allowSpaces: true
     });
 
-  tweetlistener('email_message', 'contact_counter', 'contact_tweet');
 // activating tooltips
     $('#adfoo_id').tooltip();
 // food popover
@@ -1145,6 +1143,7 @@ function get_food_detail(profile_id, food_name, description, food_tags, photo_ur
     
   </script>
 
+     <script src="{% static "js/contact.js" %}"></script>
         <script type="text/javascript">
     map_lat={{ loc.lat }};
     map_lon = {{ loc.lon }};
@@ -1162,9 +1161,10 @@ customers = {{customers_str | safe}};
 
       var current_lat = parseFloat(latitude);
       var current_lon = parseFloat(longitude);
+  tweetlistener('email_message', 'contact_counter', 'contact_tweet');
+      
     </script>
      <script src="{% static "js/business-map.js" %}"></script>
-     <script src="{% static "js/contact.js" %}"></script>
      
  {% endblock %}
 

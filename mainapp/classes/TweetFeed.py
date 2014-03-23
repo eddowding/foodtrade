@@ -138,33 +138,33 @@ class TweetFeed():
         return self.db_object.get_all(self.table_name,{"user_id": {"$in": user_ids},'deleted':0}, 'time_stamp')    
 
     def get_trending_hashtags(self, start_time_stamp, end_time_stamp):
-        query_str = """function () {for(var i = 0; i < this.updates.length; i++) {var current = this.updates[i];"""
-        if start_time_stamp != "" and end_time_stamp != "":
-            query_str = query_str + """if(current.deleted != 1 && current.time_stamp >= """ + str(time.mktime(start_time_stamp.timetuple())) + """ && current.time_stamp <= """ + str(time.mktime(end_time_stamp.timetuple())) + """ ){"""
-        else:
-            query_str = query_str + """if(current.deleted != 1){"""
+        # query_str = """function () {for(var i = 0; i < this.updates.length; i++) {var current = this.updates[i];"""
+        # if start_time_stamp != "" and end_time_stamp != "":
+        #     query_str = query_str + """if(current.deleted != 1 && current.time_stamp >= """ + str(time.mktime(start_time_stamp.timetuple())) + """ && current.time_stamp <= """ + str(time.mktime(end_time_stamp.timetuple())) + """ ){"""
+        # else:
+        #     query_str = query_str + """if(current.deleted != 1){"""
 
-        query_str = query_str + """
-            items = current.status.split(' ');
-            for(var j = 0; j < items.length; j++ ) {
-                if(items[j].indexOf('#')==0){
-                    emit(items[j], 1);
-                    }
-                }
-            }
-            }}"""
-        mapper = Code(query_str)
-        reducer = Code("""
-            function (key, values) { 
-             var sum = 0;
-             for (var i =0; i<values.length; i++){
-                    sum = sum + parseInt(values[i]);
-             }
-             return parseInt(sum);
-            }
-            """)
-        result = self.db_object.map_reduce(self.table_name, mapper, reducer, query = {})[0:10]
-        return result
+        # query_str = query_str + """
+        #     items = current.status.split(' ');
+        #     for(var j = 0; j < items.length; j++ ) {
+        #         if(items[j].indexOf('#')==0){
+        #             emit(items[j], 1);
+        #             }
+        #         }
+        #     }
+        #     }}"""
+        # mapper = Code(query_str)
+        # reducer = Code("""
+        #     function (key, values) { 
+        #      var sum = 0;
+        #      for (var i =0; i<values.length; i++){
+        #             sum = sum + parseInt(values[i]);
+        #      }
+        #      return parseInt(sum);
+        #     }
+        #     """)
+        # result = self.db_object.map_reduce(self.table_name, mapper, reducer, query = {"username":"ignoreme"})[0:10]
+        return []
 
     def aggregrate(self, conditions):
         return self.db_object.aggregrate_all(self.table_name,conditions)

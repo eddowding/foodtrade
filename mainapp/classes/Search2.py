@@ -16,7 +16,7 @@ class UserProfile():
         self.db_object.create_table(self.table_name,'useruid')
         self.db_object.ensure_index(self.table_name,'latlng')
 
-  
+
     def get_profile_by_id(self,user_id):
         return self.db_object.get_one(self.table_name,{'useruid': user_id})
 
@@ -200,16 +200,7 @@ class Search2():
                 or_conditions.append(status_query)
 
 
-            # Only for profile Search
-            # status_query ={'':{"$elemMatch":{'status':reg_expression}}}
-
-
-
-
-        # if(self.lon != "" and self.lat != ""):
-        #     query_string['latlng'] = {"$near":{"$geometry":{"type":"Point", "coordinates":[float(self.lon), float(self.lat)]}, "$maxDistance":1609340}} #{ "$near" : [ float(self.lon), float(self.lat)] , "$maxDistance": 160.934 } #('$near', {'lat': float(self.lat), 'long': float(self.lon)}), ('$maxDistance', 160.934)]) 
-            # query_string['location'] = {"$near":{"$geometry":{"type":"Point", "coordinates":[float(self.lon), float(self.lat)]}, "$maxDistance":160.934}}
-
+        
 
         and_query =[]
 
