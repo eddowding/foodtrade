@@ -29,7 +29,7 @@
 
  
 		var base_layer = L.tileLayer('http://{s}.tile.cloudmade.com/0c670d97b5984ce79b34deb902915b3e/110167/256/{z}/{x}/{y}.png', {
-			maxZoom: 18,
+			maxZoom: 9,
 			attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://cloudmade.com">CloudMade</a>'
 		});
  var openspaceLayer = L.tileLayer.osopenspace("EC9EDE7DAD732ABAE0430C6CA40AB812", {debug: true}); 
@@ -43,7 +43,7 @@ var map = new L.map('map', {
     zoom: 7,
       continuousWorld: false,
         worldCopyJump: false,
-    layers: [base_layer]
+    layers: [openspaceLayer,base_layer]
 });
  // map.setView(OSHQ.WGS84, 1);
 
@@ -129,7 +129,7 @@ map.on('zoomend', function() {
     	map.options.crs = L.CRS.EPSG3857;
     	base_layer.bringToFront();
     	map.setView([cent_lat,cent_lon],map.getZoom());
-    }
+    	}
     }
         // setFilter is available on L.mapbox.featureLayers only. Here
         // we're hiding and showing the default marker layer that's attached
