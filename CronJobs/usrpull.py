@@ -43,13 +43,9 @@ def get_friends(screen_name, next_cursor, friend_or_follower):
         return followers
 
 def register_user_to_mongo(eachFriend, username=''):
-    user_profile_obj = UserProfile()
-    min_user_id = int(user_profile_obj.get_minimum_id_of_user()[0]['minId']) -1
-    print min_user_id
     data = {
         'is_unknown_profile':'true',
         'recently_updated_by_super_user': 'false', 
-        'useruid': int(min_user_id),
         'sign_up_as': str('unclaimed'),
         'type_user': [], 
         'name': eachFriend['name'],
@@ -78,12 +74,17 @@ def register_user_to_mongo(eachFriend, username=''):
     join_time = datetime.datetime.now()
     join_time = time.mktime(join_time.timetuple())
     data['join_time'] = int(join_time)
+
     '''Register User to Mongo'''
-    userprofile = UserProfile(host=REMOTE_SERVER_LITE, port=27017, db_name=REMOTE_MONGO_DBNAME, 
-        conn_type='remote', username=REMOTE_MONGO_USERNAME, password=REMOTE_MONGO_PASSWORD)
 
     friend_obj = Friends()
+    print data['screen_name'], "updating Friend"
     friend_obj.save_friend({'username':username, 'friends':eachFriend})
+    userprofile = UserProfile(host=REMOTE_SERVER_LITE, port=27017, db_name=REMOTE_MONGO_DBNAME, 
+        conn_type='remote', username=REMOTE_MONGO_USERNAME, password=REMOTE_MONGO_PASSWORD)
+    min_user_id = int(userprofile.get_minimum_id_of_user()[0]['minId']) -1
+    print min_user_id
+    data['useruid'] = min_user_id
     check = userprofile.get_profile_by_username(eachFriend['screen_name'])
     if check ==None:
         userprofile.update_profile_upsert({'screen_name':eachFriend['screen_name'],'username':eachFriend['screen_name']},data)
@@ -104,7 +105,7 @@ def process_friends_or_followers(eachUser, friend_or_follower):
                 '''Register this user'''
                 register_user_to_mongo(eachFriend, eachUser['username'])
             if next_cursor != 0:
-                users = get_friends(eachUser['username'], next_cursor, friend_or_follower)
+                friends = get_friends(eachUser['username'], next_cursor, friend_or_follower)
     except:
         twitter_err_obj = TwitterError()
         twitter_err_obj.save_error({'username':eachUser['username'],'error_type':'cron',
@@ -143,7 +144,7 @@ def create_users(arg):
         user_profile_obj = UserProfile()
         users = user_profile_obj.get_all_profiles_by_time(start_time)
 
-    for eachUser in users:
+    for eachUser in users:        
         process_friends_or_followers(eachUser, 'friends')
         process_friends_or_followers(eachUser, 'followers')
         
