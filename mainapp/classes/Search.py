@@ -216,10 +216,16 @@ class Search():
 
 
         # Limit distance within 200 miles
-        if not self.search_global:
-            and_query.append({"distance":{"$lte":1609.34}})
+        # if not self.search_global:
+        #     and_query.append({"distance":{"$lte":1609.34}})
 
 
+        pre_condition = {"sign_up_as":{"$ne":"unclaimed"}}
+
+        and_query.append(pre_condition)
+
+        if search_type == 0:
+            and_query.append({'updates.1': {"$exists": True}})
         # check food filters
         foods_match = []
         for fd in self.foods:
@@ -241,17 +247,17 @@ class Search():
             query_string["$or"] = or_conditions
 
 
-        pre_condition = {"sign_up_as":{"$ne":"unclaimed"}}
-
+        
+        print query_string
         geo_near = {
                         "$geoNear": {"near": [float(self.lon), float(self.lat)],
                                     "distanceField": "distance",
-                                    "maxDistance": 0.025260398681,
-                                    "query": pre_condition,
+                                    # "maxDistance": 0.025260398681,
+                                    "query": query_string,
                                     "includeLocs": "latlng",
                                     "uniqueDocs": True,
                                     "spherical":True,
-                                    "limit":5000,
+                                    "limit":20,
                                     "distanceMultiplier":6371
                                   }
                       }
