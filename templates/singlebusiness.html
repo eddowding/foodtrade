@@ -481,7 +481,7 @@
                   <!-- link this to open food facts --> 
                         <!-- <input class="typeahead form-control" name="addfood" data-source='' data-provide="typeahead" autocomplete="off" id = "addfood_id" style="width:400px;" placeholder="Add foods you can buy here."> -->
                         <div class='pull-left'>
-                        <select id="myselect" data-placeholder="Add foods you can buy here." style="height:30px; width: 192px; padding: 15px 5px;" multiple class="chosen-select" >
+                        <select id="myselect" data-placeholder="Add foods you can buy here." style="height:20px; width: 192px; padding: 15px 5px;" multiple class="chosen-select" >
                         <option value=""></option>
 <!--                             {% for each in food_list %}
                         <optgroup label={{each.node}}>
@@ -508,11 +508,11 @@
                         {% endfor %}
                         </select></div>
 
-                          <div class="pull-left">
+                          <!-- <div class="pull-left">
                         <span class="input-group-btn">
                 
                             <button class="btn btn-success" id="adfoo_id" rel="tooltip" onClick="add_food({{profile_id}}, {{user_id}})" {% if not user.is_authenticated %} title="Please log in to use this feature." {% endif %} > Add</button>
-                        </span></div>
+                        </span></div> -->
                       </div>  
               {% endif %}
             </div> 
@@ -948,25 +948,16 @@
   <script type="text/javascript">
 
 $( document ).ready(function() {
-// $('.create-option').on('click', '.active-result', function(e){
-  // alert('sdkdkfj');
-  
-
-// });  
-
-
   $("#myTags").tagit({
       placeholderText: 'Add tags to your food...',
       allowSpaces: true
     });
 
 // activating tooltips
-    $('#adfoo_id').tooltip();
+    // $('#adfoo_id').tooltip();
 // food popover
 
 // food_detail();
-$('#buss_chosen').chosen({create_option: true, skip_no_results: true, create_option_text: 'Search twitter for '});
-// $('#org_chosen').chosen({create_option: true, skip_no_results: true, create_option_text: 'Search twitter for '});
 
 // $("#buss_chosen").chosen({max_selected_options: 1});
 $('#myselect').chosen({create_option: true, skip_no_results: true, create_option_text: 'Add'});
@@ -976,13 +967,12 @@ $('#myselect').chosen({create_option: true, skip_no_results: true, create_option
     });
     
     $('#myselect').chosen().ready(function(){
-      $('.search-field input').attr('style', 'width:192px;height:30px;');
+      $('.search-field input').attr('style', 'width:192px;height:20px;');
     });
 
 if (jQuery.contains(document, $('#myselect'))) {    
 document.getElementById("myselect").addEventListener("DOMSubtreeModified", function(e) {
   // Record the occurrence
-  alert('worked in foods');
     var text = $('.create-option').text();
     var word = text.split('"')[1];
     //alert(word);
@@ -992,72 +982,7 @@ document.getElementById("myselect").addEventListener("DOMSubtreeModified", funct
 }, false);
 }
 
-
-// document.getElementById("buss_chosen").addEventListener("DOMSubtreeModified", function(e) {
-//   // Record the occurrence
-//   var new_biz = $('#buss_chosen_chosen .chosen-choices input').val();
-//   $('#invite_tweeter_user').val(new_biz);  
-//   $('#my_invite_twitter').click();
-//    profile_page = true;
-//   remove_from_input = true;
-//   $('#buss_chosen_chosen ul .search-choice').remove();
-// }, false);
-
 var remove_from_input = false;
-// document.getElementById("org_chosen").addEventListener("DOMSubtreeModified", function(e) {
-//   // Record the occurrence
-//   var new_org = $('#org_chosen_chosen .chosen-choices input').val();
-//   $('#invite_tweeter_user').val(new_org);
-//   $('#my_invite_twitter').click();
-//   profile_page = true;
-//   remove_from_input = true;
-//   $('#org_chosen_chosen ul .search-choice').remove();
-// }, false);
-
-
- // $('#org_chosen').chosen().change(function(){
- //  if(remove_from_input)
- //  {
- //    $('#org_chosen_chosen .chosen-choices li.search-choice').remove();
- //  }
- //  remove_from_input = false;
- //    });
-
- //  $('#buss_chosen').chosen().change(function(){
- //    if(remove_from_input)
- //    {
- //    $('#buss_chosen_chosen .chosen-choices li.search-choice').remove();
- //    }
- //    remove_from_input = false;
- //    });
-
-// chosen config code
-// var config = {
-//       '.chosen-select'           : {},
-//       '.chosen-select-deselect'  : {allow_single_deselect:true},
-//       '.chosen-select-no-single' : {disable_search_threshold:10},
-//       '.chosen-select-no-results': {no_results_text:'Oops, nothing found!'},
-//       '.chosen-select-width'     : {width:"95%"},
-//       '.chosen-select-height'     : {height: "30px"}
-//     }
-
-  //     $(".chosen-select").chosen({
-  //   // disable_search_threshold: 10,
-  //   // no_results_text: "Oops, nothing found!",
-  //   // width: "95%",
-  //   create_option: true,
-  //   // persistent_create_option decides if you can add any term, even if part
-  //   // of the term is also found, or only unique, not overlapping terms
-  //   persistent_create_option: true,
-  //   // with the skip_no_results option you can disable the 'No results match..' 
-  //   // message, which is somewhat redundant when option adding is enabled
-  //   skip_no_results: false,
-  //   create_option_text: 'Create category'
-  // });
-    // for (var selector in config) {
-    //   $(selector).chosen(config[selector]);
-    // }
-// chosen config code ends
 
 });
 // adding organisations to business
@@ -1120,8 +1045,6 @@ function get_food_detail(profile_id, food_name, description, food_tags, photo_ur
     $('#recommend_main').show();
     var recomm_tags_list = recomm_tags.split(',');
     $('#recomm_tags').html('');
-    console.log('recomm_tags_list', recomm_tags_list);
-    console.log('tags_list', tags_list);
     var count = 0;
     for(i=0;i<recomm_tags_list.length;i++){
       
@@ -1137,8 +1060,6 @@ function get_food_detail(profile_id, food_name, description, food_tags, photo_ur
         $(this).remove();
         $("#myTags").tagit('createTag', tag_text);
     });
-    // $('#recomm_tags').append(appendtext);
-
 }
     
   </script>
