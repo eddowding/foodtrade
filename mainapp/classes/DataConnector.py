@@ -12,6 +12,7 @@ from bson.objectid import ObjectId
 import time, datetime
 from mainapp.classes.TweetFeed import TweetFeed, Food, TradeConnection, Customer, TradeConnection, UserProfile, Organisation, Team, Notification
 from djstripe.models import Customer
+from mainapp.classes.trends import TrendsThisWeek, TrendsAllTime
 
 
 class UserConnections():
@@ -140,15 +141,11 @@ class UserInfo():
         self.organisation_connection_no = user_connection.get_organisation_connection_no()
         self.award_no = user_connection.get_award_no()
 
-        start_time = datetime.date.today() - datetime.timedelta(7)
-        end_time = datetime.date.today()
-        t_feed_obj = TweetFeed()
-
-        hashtags_this_week = t_feed_obj.get_trending_hashtags(start_time, end_time)
-        self.hashtagsthis = hashtags_this_week
-
-        hashtags_all_time = t_feed_obj.get_trending_hashtags("", "")
-        self.hashtagsall = hashtags_all_time
+        '''Trends'''
+        trends_this_week = TrendsThisWeek(host='localhost', port=27017,db_name='foodtrade', username='ftroot', password='ftroot')
+        trends_all_time = TrendsAllTime(host='localhost', port=27017,db_name='foodtrade', username='ftroot', password='ftroot')
+        self.hashtagsthis = trends_this_week.get_trends_this_week()
+        self.hashtagsall = trends_all_time.get_trends_all_time()
 
         notification_obj = Notification()
         self.notification_count = notification_obj.get_notification_count(self.username)
