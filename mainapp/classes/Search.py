@@ -355,6 +355,8 @@ class Search():
         agg_pipeline = []
 
 
+        parent_tweet_query = {"updates.parent_tweet_id":str(parent_tweet_id),'updates.1': {"$exists": True},"sign_up_as":{"$ne":"unclaimed"}}
+
         geo_near = {
                         "$geoNear": {"near": [float(self.lon), float(self.lat)],
                                     "distanceField": "distance",

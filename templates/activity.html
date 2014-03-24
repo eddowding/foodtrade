@@ -192,7 +192,6 @@
       organisation_filters = {{organisation_filter |safe}};
     </script>
       
-     <script src="{% static "js/activity-map.js" %}"></script>
 
   {% endblock %}
 
@@ -208,3 +207,7 @@ show_business_filters(business_filters, 0);
            </script>
 
  {% endblock %}
+ {% block javascript %}
+     <script src="{% static "js/activity-map.js" %}"></script>
+
+{% endblock %}

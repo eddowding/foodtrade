@@ -29,21 +29,33 @@
 
  
 		var base_layer = L.tileLayer('http://{s}.tile.cloudmade.com/0c670d97b5984ce79b34deb902915b3e/110167/256/{z}/{x}/{y}.png', {
-			maxZoom: 9,
+			maxZoom: 18,
 			attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://cloudmade.com">CloudMade</a>'
 		});
  var openspaceLayer = L.tileLayer.osopenspace("EC9EDE7DAD732ABAE0430C6CA40AB812", {debug: true}); 
 
       // map.addLayer(openspaceLayer);
 
+if(map_lat>49.89193 && map_lat<61.08466 && map_lon>-9.38053 && map_lon<2.07316)
+{
+	var default_csr = L.OSOpenSpace.getCRS();
+	current_base_layer = openspaceLayer;
+	var default_zoom = 4;
+}
+else
+{
+	var default_csr = L.CRS.EPSG3857;
+	current_base_layer = base_layer;
+	var default_zoom = 9;
+}
 
 var map = new L.map('map', {
     center: new L.LatLng(map_lat,map_lon),
-    // crs: L.OSOpenSpace.getCRS(),
-    zoom: 7,
+    crs: default_csr,
+    zoom: default_zoom,
       continuousWorld: false,
         worldCopyJump: false,
-    layers: [openspaceLayer,base_layer]
+    layers: [current_base_layer]
 });
  // map.setView(OSHQ.WGS84, 1);
 
@@ -54,14 +66,14 @@ L.circle([map_lat,map_lon], 24140.2, {
 			opacity:0.5,
 			weight:2,
 			fill: 0,
-		}).addTo(map);
+}).addTo(map);
 L.circle([map_lat,map_lon], 48280.3, {
 			stroke: 1,
 			color: '#ff9900',
 			opacity:0.5,
 			weight:2,
 			fill: 0,
-		}).addTo(map);
+}).addTo(map);
 	
 L.circle([map_lat,map_lon], 160934, {
 			stroke: 1,
@@ -92,45 +104,99 @@ var map_controls = [];
 // var layer_controls = L.control.layers(baseMaps);
 // layer_controls.addTo(map);
 // var vv;
-current_layer = "Minimal";
-map.on('baselayerchange', function(e) {
+// current_layer = "Minimal";
+// map.on('baselayerchange', function(e) {
     
-    	current_layer = e.name;
+//     	current_layer = e.name;
     
-// map.options.crs = L.CRS.EPSG3857;
-    // alert("e.latlng"); // e is an event object (MouseEvent in this case)
-});
+// // map.options.crs = L.CRS.EPSG3857;
+//     // alert("e.latlng"); // e is an event object (MouseEvent in this case)
+// });
 
-map.on('zoomend', function() {
+
+$("#map").on('click dblclick keyup mousedown mousewheel', function() {
     // here's where you decided what zoom levels the layer should and should
     // not be available for: use javascript comparisons like < and > if
     // you want something other than just one zoom level, like
     // (map.getZoom > 10)
+
+
     
     	var current_center = map.getCenter();
     	var cent_lon = current_center.lng;
     	var cent_lat = current_center.lat;
 
-    if (map.getZoom() > 7) {
+    	var is_current_base = (map.options.crs == L.CRS.EPSG3857);
 
-    	if(cent_lat>49.89193 && cent_lat<61.08466 && cent_lon>-9.38053 && cent_lon<2.07316)
+	if(cent_lat>49.89193 && cent_lat<61.08466 && cent_lon>-9.38053 && cent_lon<2.07316)
+    {
+
+    	if(is_current_base)
     	{
-    	if(true){
-    		map.options.crs=L.OSOpenSpace.getCRS();
-    		openspaceLayer.bringToFront();
-    		map.setView([cent_lat,cent_lon],map.getZoom());
+    		var over_zoom = map.getZoom()%5;
+    		if(over_zoom>0)
+    		{
+    			map.options.crs=L.OSOpenSpace.getCRS();
+	    		map.removeLayer(base_layer)
+	    		map.addLayer(openspaceLayer);
+				map.setView([cent_lat,cent_lon],over_zoom);
+
+    		}
     	}
-    	}
+    	 else
+	    {
+
+	    	if(map.getZoom()<1)
+	    	{
+	    			    	
+	    		map.options.crs=L.CRS.EPSG3857;
+	    		map.removeLayer(openspaceLayer)
+	    		map.addLayer(base_layer);
+    			map.setView([cent_lat,cent_lon],5);
+	    	}
+	    	
+	    }
     }
     else
     {
-    	if(true)
+    	if(map.getZoom()<1&&(!is_current_base))
     	{
-    	map.options.crs = L.CRS.EPSG3857;
-    	base_layer.bringToFront();
-    	map.setView([cent_lat,cent_lon],map.getZoom());
+    		map.options.crs=L.CRS.EPSG3857;
+    		map.removeLayer(openspaceLayer)
+    		map.addLayer(base_layer);
+			map.setView([cent_lat,cent_lon],5);
     	}
     }
+
+
+
+
+
+    	    		
+   
+
+    	    		
+
+    // if (map.getZoom() > 7) {
+
+    // 	if(cent_lat>49.89193 && cent_lat<61.08466 && cent_lon>-9.38053 && cent_lon<2.07316)
+    // 	{
+    // 	if(true){
+    // 		map.options.crs=L.OSOpenSpace.getCRS();
+    // 		openspaceLayer.bringToFront();
+    // 		map.setView([cent_lat,cent_lon],map.getZoom());
+    // 	}
+    // 	}
+    // }
+    // else
+    // {
+    // 	if(true)
+    // 	{
+    // 	map.options.crs = L.CRS.EPSG3857;
+    // 	base_layer.bringToFront();
+    // 	map.setView([cent_lat,cent_lon],map.getZoom());
+    // 	}
+    // }
         // setFilter is available on L.mapbox.featureLayers only. Here
         // we're hiding and showing the default marker layer that's attached
         // to the map - change the reference if you want to hide or show a
