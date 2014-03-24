@@ -114,7 +114,7 @@ def process_friends_or_followers(eachUser, friend_or_follower):
 
 def create_users(arg):
     user_profile_obj = UserProfile(host=REMOTE_SERVER_LITE, port=27017, db_name=REMOTE_MONGO_DBNAME, 
-    conn_type='remote', username=REMOTE_MONGO_USERNAME, password=REMOTE_MONGO_PASSWORD)
+    username=REMOTE_MONGO_USERNAME, password=REMOTE_MONGO_PASSWORD)
     if arg=='all':
         users = user_profile_obj.get_all_users()
     elif arg=='Antartica':
