@@ -39,7 +39,6 @@ class UserProfile():
     def get_all_antartic_users(self):
         users = []
         user_pages_count = int(self.db_object.get_count(self.table_name, {'address':'Antartica'})/15)+ 1
-        print user_pages_count
         for i in range(0,user_pages_count, 1):
             pag_users = self.db_object.get_paginated_values(self.table_name, {'address':'Antartica'}, pageNumber = int(i+1))
             for eachUser in pag_users:
