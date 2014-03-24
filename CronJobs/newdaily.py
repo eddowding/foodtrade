@@ -19,7 +19,7 @@ import settingslocal
 
 def send_newsletter(substype):
     substype = substype.capitalize()
-    user_profile_obj = UserProfile()
+    user_profile_obj = UserProfile(host='localhost', port=27017,db_name='foodtrade', username=settingslocal.REMOTE_MONGO_USERNAME, password=settingslocal.REMOTE_MONGO_PASSWORD)
 
     if substype == 'Daily':
         users = user_profile_obj.get_all_profiles('Daily')
