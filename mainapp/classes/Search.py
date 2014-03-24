@@ -423,25 +423,25 @@ class Search():
 
 
     def get_single_tweet(self, tweet_id):
-        
+        print tweet_id
         agg_pipeline = []
+        query_string = {'updates':{"$elemMatch":{'tweet_id':tweet_id}}}
+        
 
 
         geo_near = {
                         "$geoNear": {"near": [float(self.lon), float(self.lat)],
                                     "distanceField": "distance",
                                     "maxDistance": 160.934,
-                                    # "query": query_string,
+                                    "query": query_string,
                                     "includeLocs": "latlng",
                                     "uniqueDocs": True,  
                                     "spherical":True,
-                                    "limit":5000,
+                                    "limit":1,
                                     "distanceMultiplier":6371
                                   }
                       }
         agg_pipeline.append(geo_near)
-        query_string = {'updates':{"$elemMatch":{'tweet_id':tweet_id}}}
-        agg_pipeline.append({ '$match':query_string})
 
         agg_pipeline.append({"$unwind": "$updates"})
 

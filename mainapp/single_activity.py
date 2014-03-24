@@ -32,11 +32,11 @@ def get_post_parameters(request, tweet_id):
         default_lat = float(location_info['latitude'])
 
     search_handle = Search(lon = default_lon, lat =default_lat)
-    try:
-        single_tweet = search_handle.get_single_tweet(str(tweet_id))
-        a = single_tweet[0]
-    except:
-        raise Http404
+    # try:
+    single_tweet = search_handle.get_single_tweet(str(tweet_id))
+    a = single_tweet[0]
+    # except:
+    #     raise Http404
     keyword = ''
     single_tweet = set_time_date(single_tweet[0],keyword)
     results = search_handle.get_direct_children([str(tweet_id)])
