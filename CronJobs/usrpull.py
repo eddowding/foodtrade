@@ -123,10 +123,13 @@ def create_users(arg):
             friend_obj = Friends()
             fr = friend_obj.get_friend(eachUser['username'])
             data = {}
+            try:
+                fr_address = fr['friends']['location']
+                print eachUser['screen_name'], fr_address
+            except:
+                continue
             if fr_address !='':
                 try:
-                    fr_address = fr['friends']['location']
-                    print eachUser['screen_name'], fr_address
                     location_res = Geocoder.geocode(fr_address)
                 except:
                     continue
