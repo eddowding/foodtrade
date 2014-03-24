@@ -38,8 +38,8 @@ def send_newsletter(substype):
 def trending_hash_tags():
     start_time = datetime.date.today() - datetime.timedelta(7)
     end_time = datetime.date.today()
-    # user_profile_obj = UserProfile(host=settingslocal.REMOTE_SERVER_LITE, port=27017,db_name='foodtrade', username=settingslocal.REMOTE_MONGO_USERNAME, password=settingslocal.REMOTE_MONGO_USERNAME)
-    user_profile_obj = UserProfile(host=settingslocal.LOCAL_SERVER, port=27017,db_name='foodtrade', username=settingslocal.REMOTE_MONGO_USERNAME, password=settingslocal.REMOTE_MONGO_USERNAME)
+    user_profile_obj = UserProfile(host=settingslocal.REMOTE_SERVER_LITE, port=27017,db_name='foodtrade', username=settingslocal.REMOTE_MONGO_USERNAME, password=settingslocal.REMOTE_MONGO_USERNAME)
+    # user_profile_obj = UserProfile(host=settingslocal.LOCAL_SERVER, port=27017,db_name='foodtrade', username=settingslocal.REMOTE_MONGO_USERNAME, password=settingslocal.REMOTE_MONGO_USERNAME)
     user_profile_obj.calculate_trending_hashtags(start_time, end_time)
     user_profile_obj.calculate_trending_hashtags("", "")
     return {'status':1}
