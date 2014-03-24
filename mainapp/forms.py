@@ -110,6 +110,7 @@ class SignupForm(forms.Form):
             addr = self.cleaned_data['address']
             lat = self.cleaned_data['lat']
             lon = self.cleaned_data['lng']
+
             if len(lat) == 0 and len(lon) == 0:
                 addr_geo = Geocoder.geocode(addr.strip())
                 lat = float(addr_geo.latitude)
@@ -137,7 +138,7 @@ class SignupForm(forms.Form):
             update_all_values(int(old_useruid), int(user.id))
         except:
             pass
-            
+                 
         data = {
                 'is_unknown_profile':'false',
                 'useruid': int(user.id), 

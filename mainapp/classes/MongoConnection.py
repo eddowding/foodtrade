@@ -54,21 +54,11 @@ class MongoConnection():
         self.db[table_name].update(where,{"$set":what},upsert=True)
         
 
-    def map_reduce(self, table_name, mapper, reducer,query, sort = -1, limit = 20):
-        if sort == 1:
-            sort_direction = pymongo.ASCENDING
-        else:
-            sort_direction = pymongo.DESCENDING
-        myresult = self.db[table_name].map_reduce(mapper,reducer,'results', query)
-        results = self.db['results'].find().sort("value", sort_direction).limit(limit)
-        json_doc = json.dumps(list(results),default=json_util.default)
-        json_doc = json_doc.replace("$oid", "id")
-        json_doc = json_doc.replace("_id", "uid")
-        return json.loads(str(json_doc))
-
+    def map_reduce(self, table_name, mapper, reducer, query, result_table_name):
+        myresult = self.db[table_name].map_reduce(mapper, reducer, result_table_name, query)
+        return myresult
 
     def map_reduce_search(self, table_name, mapper, reducer,query, sort_by, sort = -1, limit = 20):
-
         if sort_by == "distance":
             sort_direction = pymongo.ASCENDING
         else:

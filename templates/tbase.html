@@ -504,13 +504,13 @@ hidden
             <a href="#" class="dropdown-toggle visible-md visible-lg" data-toggle="dropdown"><span class="badge">#trends</span></a>
 
             <ul class="dropdown-menu" style="min-width:220px;">
-              <li><a href="#" class="hidden"><h5>Trends this week</h5></a></li>
+              <li><a href="#" class=""><h5>Trends this week</h5></a></li>
                 {% for eachVal in userinfo.hashtagsthis %}
                   <li><a href="/activity/?q=%23{{eachVal.uid|slice:"1:"}}&location=++None+&lon=&lat=">{{eachVal.uid}} <span class="badge pull-right">{{eachVal.value|floatformat:"0"}}</span></a></li>
                 {% endfor %}
 
 
-                <li class="hidden"><a href="#"><h5>Trends all time</h5></a></li>
+                <li class=""><a href="#"><h5>Trends all time</h5></a></li>
                 {% for eachVal in userinfo.hashtagsall %}
                   <li><a href="/activity/?q=%23{{eachVal.uid|slice:"1:"}}&location=++None+&lon=&lat=">{{eachVal.uid}} <span class="badge pull-right">{{eachVal.value|floatformat:"0"}}</span></a></li>
                 {% endfor %}
