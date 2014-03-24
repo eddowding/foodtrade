@@ -13,6 +13,15 @@ function ajax_request(s_handler, c_handler, input_data)
 });
 }
 
+function tweetlistener(input, counter, button){
+    $('#'+input).change(function(){
+        checktweet(input, counter, button);
+    });
+    $('#'+input).keyup(function(){
+        checktweet(input, counter, button);
+    });
+}
+
 function add_org_to_biz(member_id, orguid){
 	// var org_ids_list = $('#org_chosen').val();
 	// for(i=0;i<org_ids_list.length;i++){

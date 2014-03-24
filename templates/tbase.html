@@ -793,18 +793,18 @@ var invite_id = String('{{invite_id|safe}}');
 var tweet = String('{{invite_tweet|safe}}');
 var input_val;
 $(document).ready(function(){
-  $('#select-invite').chosen({skip_no_results: true});
+  // $('#select-invite').chosen({skip_no_results: true});
   $('#invite_tweeter_user_text').html(tweet);
-  $('#select-invite').chosen().ready(function(){
-      $('.search-field input').attr('style', 'width:192px;height:30px;');
-    });
+  // $('#select-invite').chosen().ready(function(){
+  //     $('.search-field input').attr('style', 'width:192px;height:30px;');
+  //   });
 });
 
-$('#select-invite').on('chosen:ready', function(evt, params) {
+// $('#select-invite').on('chosen:ready', function(evt, params) {
   /*$('#select_invite_chosen ul li input').attr('onkeyup', 'search_tweeter_users()');*/
     // $('.default').attr('onkeyup', 'search_tweeter_users()');
-    $('#select_invite_chosen ul li input').attr('id', 'tUserSearch');
-  });
+    // $('#select_invite_chosen ul li input').attr('id', 'tUserSearch');
+  // });
 function search_tweeter_users(){
   q = $('#tUserSearch').val();
   /*if (q.length>=3){*/
@@ -819,7 +819,7 @@ function search_users_success(data){
   // str = $('#select-invite').html();
   // $('#select-invite').html('');
   var str = "";
-  $('#select-invite').trigger('chosen:updated');
+  // $('#select-invite').trigger('chosen:updated');
 
 
   for (var i=0;i<results.length;i++){
@@ -827,7 +827,7 @@ function search_users_success(data){
   }
   $('#select-invite').html(str);
  
- $('#select-invite').trigger('chosen:updated');
+ // $('#select-invite').trigger('chosen:updated');
   $('#tUserSearch').val(input_val);
   $('#tUserSearch').focus();
   document.getElementById("tUserSearch").focus();
