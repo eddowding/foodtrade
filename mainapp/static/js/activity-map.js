@@ -32,7 +32,7 @@
 			maxZoom: 18,
 			attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://cloudmade.com">CloudMade</a>'
 		});
- var openspaceLayer = L.tileLayer.osopenspace("EC9EDE7DAD732ABAE0430C6CA40AB812", {debug: true}); 
+ var openspaceLayer = L.tileLayer.osopenspace("F481BBF739A5038DE0430B6CA40AB6D2", {debug: true}); 
 
       // map.addLayer(openspaceLayer);
 
