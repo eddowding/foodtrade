@@ -36,7 +36,7 @@
 
       // map.addLayer(openspaceLayer);
 
-if(map_lat>49.89193 && map_lat<61.08466 && map_lon>-9.38053 && map_lon<2.07316)
+if(map_lat>49.89193 && map_lat<61.08466 && map_lon>-9.38053 && map_lon<2.07316&&false)
 {
 	var default_csr = L.OSOpenSpace.getCRS();
 	current_base_layer = openspaceLayer;
@@ -128,7 +128,7 @@ $("#map").on('click dblclick keyup mousedown mousewheel', function() {
 
     	var is_current_base = (map.options.crs == L.CRS.EPSG3857);
 
-	if(cent_lat>49.89193 && cent_lat<61.08466 && cent_lon>-9.38053 && cent_lon<2.07316)
+	if(cent_lat>49.89193 && cent_lat<61.08466 && cent_lon>-9.38053 && cent_lon<2.07316 && false)
     {
 
     	if(is_current_base)
