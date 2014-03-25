@@ -5,14 +5,14 @@
     </span>
         <div class="chat-body clearfix">
  
-          
-
-        <div class="btn-group pull-right" style="margin-left: 5px;">
-            <button type="button" class="btn btn-default dropdown-toggle btn-xs pull-left nextaction" data-toggle="dropdown">
-              <i class="fa fa-bars fa-large text-muted"></i>
-                
-            </button> 
-            <ul class="dropdown-menu" role="menu">
+           
+        <div class="btn-group pull-right  " style="margin-left: 5px;">
+              <button type="button" class="btn btn-info btn-xs">Reply</button>
+              <button type="button" class="btn btn-info  btn-xs dropdown-toggle" data-toggle="dropdown">
+                <span class="caret"></span>
+                <span class="sr-only">Toggle Dropdown</span>
+              </button>
+              <ul class="dropdown-menu" role="menu">  
               <li><a href="http://www.facebook.com/sharer/sharer.php?u=http://foodtrade.com/{% if result_type == "status" %}{{result.user.username}}/post/{{result.tweetuid}}{% else %}profile/{{result.user.username}}{% endif %}" target="_blank"><i class="fa fa-facebook fa-fw"></i> Share on Facebook</a></li>
               <li><a href="http://twitter.com/home?status={{result.status|urlencode}}%20http://foodtrade.com/{% if result_type == "status" %}{{result.user.username}}/post/{{result.tweetuid}}{% else %}profile/{{result.user.username}}{% endif %}" target="_blank"><i class="fa fa-twitter fa-fw"></i> Share on Twitter</a></li>
               <li class="divider"></li>
@@ -36,7 +36,7 @@
               <li><a href="#" onclick="click_activity('follow','{{result.user.username}}')">Follow on Twitter</a></li>
               {% endif %}
               <li><a href="/profile/{{result.user.username}}/">View full profile</a></li> 
-            </ul>
+            </ul> 
           </div>  
 
 
