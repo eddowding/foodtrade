@@ -59,8 +59,7 @@ class AjaxHandle(AjaxSearch):
 
                 data = {
                     'is_unknown_profile': 'true',
-                    'recently_updated_by_super_user': 'false',
-                    'address' : invited_friend['friends']['location'],
+                    'recently_updated_by_super_user': 'false',                    
                     'email' : '',
                     'description' : invited_friend['friends']['description'],
                     'foods': [],
@@ -84,6 +83,7 @@ class AjaxHandle(AjaxSearch):
 
                 try:
                     location_res = Geocoder.geocode(invited_friend['friends']['location'])
+                    data['address'] = str(location_res)
                     data['latlng'] = {"type":"Point","coordinates":[float(location_res.longitude) ,float(location_res.latitude)]}
                     data['zip_code'] = str(location_res.postal_code)
                 except:

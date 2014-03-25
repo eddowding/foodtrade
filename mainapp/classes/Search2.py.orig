@@ -16,7 +16,11 @@ class UserProfile():
         self.db_object.create_table(self.table_name,'useruid')
         self.db_object.ensure_index(self.table_name,'latlng')
 
+<<<<<<< HEAD
   
+=======
+
+>>>>>>> b5ede9591936e5d018938a254ff3e10f680d5cbd
     def get_profile_by_id(self,user_id):
         return self.db_object.get_one(self.table_name,{'useruid': user_id})
 
@@ -36,7 +40,7 @@ class UserProfile():
         return self.db_object.get_all(table_name=self.table_name,conditions=query, sort_index ='_id', limit=5000)
 
 
-class Search():
+class Search2():
     """docstring for UserConnections"""
     def __init__(self, keyword="", lon = "", lat ="", place = "", foods="", business="", organisation="",sort="", search_global=False,news="notfornews"):
         self.keyword = str(keyword.strip())
@@ -200,6 +204,7 @@ class Search():
                 or_conditions.append(status_query)
 
 
+<<<<<<< HEAD
             # Only for profile Search
             # status_query ={'':{"$elemMatch":{'status':reg_expression}}}
 
@@ -210,22 +215,19 @@ class Search():
         #     query_string['latlng'] = {"$near":{"$geometry":{"type":"Point", "coordinates":[float(self.lon), float(self.lat)]}, "$maxDistance":1609340}} #{ "$near" : [ float(self.lon), float(self.lat)] , "$maxDistance": 160.934 } #('$near', {'lat': float(self.lat), 'long': float(self.lon)}), ('$maxDistance', 160.934)]) 
             # query_string['location'] = {"$near":{"$geometry":{"type":"Point", "coordinates":[float(self.lon), float(self.lat)]}, "$maxDistance":160.934}}
 
+=======
+        
+>>>>>>> b5ede9591936e5d018938a254ff3e10f680d5cbd
 
         and_query =[]
 
 
 
         # Limit distance within 200 miles
-        # if not self.search_global:
-        #     and_query.append({"distance":{"$lte":1609.34}})
+        if not self.search_global:
+            and_query.append({"distance":{"$lte":1609.34}})
 
 
-        pre_condition = {"sign_up_as":{"$ne":"unclaimed"}}
-
-        and_query.append(pre_condition)
-
-        if search_type == 0:
-            and_query.append({'updates.1': {"$exists": True}})
         # check food filters
         foods_match = []
         for fd in self.foods:
@@ -247,18 +249,22 @@ class Search():
             query_string["$or"] = or_conditions
 
 
-        
-        geo_near = {
-                        "$geoNear": {"near": [float(self.lon), float(self.lat)],
+        pre_condition = {"sign_up_as":{"$ne":"unclaimed"}}
+
+        geo_near_query = {"near": [float(self.lon), float(self.lat)],
                                     "distanceField": "distance",
-                                    # "maxDistance": 0.025260398681,
-                                    "query": query_string,
+                                    "maxDistance": 0.025260398681,
+                                    "query": pre_condition,
                                     "includeLocs": "latlng",
                                     "uniqueDocs": True,
                                     "spherical":True,
-                                    "limit":20,
+                                    "limit":5000,
                                     "distanceMultiplier":6371
-                                  }
+                                }
+
+
+        geo_near = {
+                        "$geoNear": geo_near_query
                       }
 
 
@@ -355,8 +361,6 @@ class Search():
         agg_pipeline = []
 
 
-        parent_tweet_query = {"updates.parent_tweet_id":str(parent_tweet_id),'updates.1': {"$exists": True},"sign_up_as":{"$ne":"unclaimed"}}
-
         geo_near = {
                         "$geoNear": {"near": [float(self.lon), float(self.lat)],
                                     "distanceField": "distance",
@@ -423,25 +427,25 @@ class Search():
 
 
     def get_single_tweet(self, tweet_id):
-        print tweet_id
-        agg_pipeline = []
-        query_string = {'updates':{"$elemMatch":{'tweet_id':tweet_id}}}
         
+        agg_pipeline = []
 
 
         geo_near = {
                         "$geoNear": {"near": [float(self.lon), float(self.lat)],
                                     "distanceField": "distance",
                                     "maxDistance": 160.934,
-                                    "query": query_string,
+                                    # "query": query_string,
                                     "includeLocs": "latlng",
                                     "uniqueDocs": True,  
                                     "spherical":True,
-                                    "limit":1,
+                                    "limit":5000,
                                     "distanceMultiplier":6371
                                   }
                       }
         agg_pipeline.append(geo_near)
+        query_string = {'updates':{"$elemMatch":{'tweet_id':tweet_id}}}
+        agg_pipeline.append({ '$match':query_string})
 
         agg_pipeline.append({"$unwind": "$updates"})
 

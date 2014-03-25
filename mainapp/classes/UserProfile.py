@@ -3,19 +3,14 @@
 import re
 from MongoConnection import MongoConnection
 from bson.objectid import ObjectId
+import time, datetime
+from bson.code import Code
 
 class UserProfile():
-    def __init__ (self, host="localhost", port=27017,             
-                db_name='foodtrade', conn_type='local', username='', password=''):
-        if conn_type =='local':
-            self.db_object = MongoConnection(host,port,db_name)
-            self.table_name = 'userprofile'
-            self.db_object.create_table(self.table_name,'useruid')
-        else:
-            self.db_object = MongoConnection(host=host, port=port,             
-                db_name=db_name, conn_type=conn_type, username=username, password=password)
-            self.table_name = 'userprofile'
-            self.db_object.create_table(self.table_name, 'useruid')
+    def __init__ (self, host="localhost", port=27017,db_name='foodtrade', username='', password=''):
+        self.db_object = MongoConnection(host=host, port=port, db_name=db_name, username=username, password=password)
+        self.table_name = 'userprofile'
+        self.db_object.create_table(self.table_name, 'useruid')
 
     def get_all_profiles(self, status):
         users = []
@@ -44,7 +39,6 @@ class UserProfile():
     def get_all_antartic_users(self):
         users = []
         user_pages_count = int(self.db_object.get_count(self.table_name, {'address':'Antartica'})/15)+ 1
-        print user_pages_count
         for i in range(0,user_pages_count, 1):
             pag_users = self.db_object.get_paginated_values(self.table_name, {'address':'Antartica'}, pageNumber = int(i+1))
             for eachUser in pag_users:
@@ -243,3 +237,35 @@ class UserProfile():
             }
             """)
         return self.db_object.map_reduce(self.table_name, mapper, reducer, query, -1, 200)
+
+    def calculate_trending_hashtags(self, start_time_stamp, end_time_stamp):
+        query_str = """function () {for(var i = 0; i < this.updates.length; i++) {var current = this.updates[i];"""
+        if start_time_stamp != "" and end_time_stamp != "":
+            query_str = query_str + """if(current.deleted != 1 && current.time_stamp >= """ + str(time.mktime(start_time_stamp.timetuple())) + """ && current.time_stamp <= """ + str(time.mktime(end_time_stamp.timetuple())) + """ ){"""
+        else:
+            query_str = query_str + """if(current.deleted != 1){"""
+
+        query_str = query_str + """
+            items = current.status.split(' ');
+            for(var j = 0; j < items.length; j++ ) {
+                if(items[j].indexOf('#')==0){
+                    emit(items[j], 1);
+                    }
+                }
+            }
+            }}"""
+        mapper = Code(query_str)
+        reducer = Code("""
+            function (key, values) { 
+             var sum = 0;
+             for (var i =0; i<values.length; i++){
+                    sum = sum + parseInt(values[i]);
+             }
+             return parseInt(sum);
+            }
+            """)
+        if start_time_stamp !="" and end_time_stamp !="":
+            result = self.db_object.map_reduce(self.table_name, mapper, reducer,{}, result_table_name = 'trendingthisweek')[0:10]
+        else:
+            result = self.db_object.map_reduce(self.table_name, mapper, reducer,{},result_table_name = 'trendingalltime')[0:10]
+        return result
