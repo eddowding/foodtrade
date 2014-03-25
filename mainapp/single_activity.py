@@ -73,6 +73,5 @@ def get_post_parameters(request, tweet_id):
 
 
 
-def home(request, username, tweet_id):
-    
+def home(request, username, tweet_id):    
     return render_to_response('activity_single.html',get_post_parameters(request,tweet_id),context_instance=RequestContext(request))

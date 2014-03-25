@@ -354,7 +354,6 @@ def edit_profile(request, username):
         except:
             show_foods = 'Yes'
         show_food_db = True if show_foods == 'Yes' else False
-        print 'show_food_db', show_food_db
 
         if request.user.is_superuser:
             is_superuser = True

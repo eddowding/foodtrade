@@ -114,7 +114,7 @@ def process_friends_or_followers(eachUser, friend_or_follower):
 
 def create_users(arg):
     user_profile_obj = UserProfile(host=REMOTE_SERVER_LITE, port=27017, db_name=REMOTE_MONGO_DBNAME, 
-    conn_type='remote', username=REMOTE_MONGO_USERNAME, password=REMOTE_MONGO_PASSWORD)
+    username=REMOTE_MONGO_USERNAME, password=REMOTE_MONGO_PASSWORD)
     if arg=='all':
         users = user_profile_obj.get_all_users()
     elif arg=='Antartica':
@@ -122,9 +122,12 @@ def create_users(arg):
         for eachUser in users:
             friend_obj = Friends()
             fr = friend_obj.get_friend(eachUser['username'])
-            fr_address = fr['friends']['location']
             data = {}
-            print eachUser['screen_name'], fr_address
+            try:
+                fr_address = fr['friends']['location']
+                print eachUser['screen_name'], fr_address
+            except:
+                continue
             if fr_address !='':
                 try:
                     location_res = Geocoder.geocode(fr_address)
@@ -187,7 +190,8 @@ def solve_errors():
                     'next_cursor_str':next_cursor, 'error_solve_stat':'false','user_type':'followers'})
 
 # create_users('new')
+create_users('Antartica')
 #solve_errors()
-create_users('all')
+#create_users('all')
 
 
