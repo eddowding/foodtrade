@@ -22,17 +22,21 @@ def send_newsletter(substype):
     user_profile_obj = UserProfile(host='localhost', port=27017,db_name='foodtrade', username=settingslocal.REMOTE_MONGO_USERNAME, password=settingslocal.REMOTE_MONGO_PASSWORD)
 
     if substype == 'Daily':
-        users = user_profile_obj.get_all_profiles('Daily')
+        user_profile_obj.send_newsletter('Daily')
+        #pass
+
     elif substype == 'Weekly' or substype == 'None':
-        users = user_profile_obj.get_all_profiles(substype)
+        pass
+        #users = user_profile_obj.get_all_profiles(substype)
     elif substype == 'Monthly':
-        users = user_profile_obj.get_all_profiles('Monthly')
-    count = 0
-    for eachUser in users:
-        if len(eachUser['email'])>0:
-            import urllib2
-            baseurl = "http://foodtrade.com/send-newsletter/" + str(substype.lower())+ "?username=" + str(eachUser['username']) + "&code=11foodtradeESRS22"
-            response = urllib2.urlopen(baseurl)
+        pass
+        #users = user_profile_obj.get_all_profiles('Monthly')
+    # count = 0
+    # for eachUser in users:
+    #     if len(eachUser['email'])>0:
+    #         import urllib2
+    #         baseurl = "http://foodtrade.com/send-newsletter/" + str(substype.lower())+ "?username=" + str(eachUser['username']) + "&code=11foodtradeESRS22"
+    #         response = urllib2.urlopen(baseurl)
 
 
 def trending_hash_tags():
