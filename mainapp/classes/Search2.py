@@ -35,7 +35,8 @@ class UserProfile():
     def find (self, query):
         return self.db_object.get_all(table_name=self.table_name,conditions=query, sort_index ='_id', limit=5000)
 
-
+    def get_count(self,query):
+        return self.db_object.get_count(table_name=self.table_name,conditions=query)
 class Search2():
     """docstring for UserConnections"""
     def __init__(self, keyword="", lon = "", lat ="", place = "", foods="", business="", organisation="",sort="", search_global=False,news="notfornews"):
@@ -107,10 +108,28 @@ class Search2():
         sorted_counter = sorted(counter.iteritems(), key=operator.itemgetter(1),reverse=True)
         return [{"uid":value,"value":label} for value, label in sorted_counter]
 
+    def merge_array(self, a, b):
+        if len(a)>0:
+            if len(b)>0:               
+                a[0]["foods"].extend(b[0]["foods"])
+                a[0]["businesses"].extend(b[0]["businesses"])
+                a[0]["organisations"].extend(b[0]["organisations"])
+
+                a[0]["results"].extend(b[0]["results"])
+            return a
+        else:
+            return b
+
 
     def search_all(self):
-        statuses = self.get_search_type(0)
-        profiles = self.get_search_type(1)
+        statuses = self.get_search_type(0,0)
+        print statuses
+        profile_individual = self.get_search_type(1,0)
+        profile_business = self.get_search_type(1,1)
+        profile_organisation = self.get_search_type(1,2)
+        profiles = self.merge_array(profile_individual, profile_business)
+        profiles = self.merge_array(profiles, profile_organisation)
+
 
         if len(profiles)>0:
             if len(statuses)>0:               
@@ -166,7 +185,7 @@ class Search2():
             results["update_counter"] = 0
         return results
 
-    def get_search_type(self, search_type):
+    def get_search_type(self, search_type, profile = 0):
         query_string = {}
         agg_pipeline = []
         or_conditions = []
@@ -203,12 +222,20 @@ class Search2():
         
 
         and_query =[]
+        profile_types = ['Individual','Business','Organisation']
+        if search_type == 0:
+            pre_condition = {"sign_up_as":{"$ne":"unclaimed"}}
+        elif search_type == 1:
+            pre_condition = {"sign_up_as":profile_types[profile]}
 
 
+        and_query.append(pre_condition)
+        if search_type == 0:
+            and_query.append({'updates.1': {"$exists": True}})
 
         # Limit distance within 200 miles
-        if not self.search_global:
-            and_query.append({"distance":{"$lte":1609.34}})
+        # if not self.search_global:
+        #     and_query.append({"distance":{"$lte":1609.34}})
 
 
         # check food filters
@@ -232,29 +259,29 @@ class Search2():
             query_string["$or"] = or_conditions
 
 
-        pre_condition = {"sign_up_as":{"$ne":"unclaimed"}}
+
 
         geo_near_query = {"near": [float(self.lon), float(self.lat)],
                                     "distanceField": "distance",
-                                    "maxDistance": 0.025260398681,
-                                    "query": pre_condition,
+                                    # "maxDistance": 0.025260398681,
+                                    "query": query_string,
                                     "includeLocs": "latlng",
                                     "uniqueDocs": True,
                                     "spherical":True,
-                                    "limit":5000,
+                                    "limit":20,
                                     "distanceMultiplier":6371
                                 }
 
 
         geo_near = {
                         "$geoNear": geo_near_query
-                      }
+                    }
 
 
         agg_pipeline.append(geo_near)
 
-        if len(and_query)>0 or self.keyword != "":
-            agg_pipeline.append({ '$match':query_string})
+        # if len(and_query)>0 or self.keyword != "":
+        #     agg_pipeline.append({ '$match':query_string})
 
         # for profile search
         # if search_type==1:
@@ -302,6 +329,7 @@ class Search2():
             sort_order = 1
 
         agg_pipeline.append({"$sort": SON([(sort_text, sort_order), ("time_stamp", -1)])})
+        agg_pipeline.append({ "$limit" : 20 })
 
         group_fields = {}
         group_fields["_id"] = "all"
@@ -324,7 +352,7 @@ class Search2():
         
 
         
-        agg_pipeline.append({ "$limit" : 30 })
+        
 
         
 
@@ -373,6 +401,9 @@ class Search2():
 
         agg_pipeline.append({"$sort": SON([(sort_text, sort_order), ("time_stamp", -1)])})
 
+        if search_type == 0:
+            agg_pipeline.append({"$limit":20})
+
         # next_index = 5
         # if len(or_conditions) > 0:
         #     next_index = 6
@@ -393,12 +424,7 @@ class Search2():
         group_fields["results"] = self.get_result_fields(result_type)
         
         agg_pipeline.append({"$group": group_fields})
-        
-
-        
-        agg_pipeline.append({ "$limit" : 30 })
-
-        
+            
 
         up = UserProfile()
         return up.agg(agg_pipeline)
