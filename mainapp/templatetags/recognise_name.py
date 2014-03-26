@@ -14,7 +14,7 @@ def recognise_name(value):
     links = re.findall("((http:|https:)//[^ \<]*[^ \<\.])",value)
     if links:
         for each_link in links:
-            value = value.replace(str(each_link[0]), '<a href="'+str(each_link[0])+'" target="_blank">'+ str(each_link[0]) + '</a>')
+            value = value.replace(str(each_link[0]), '<a href="'+str(each_link[0])+'" target="_blank">'+ str(each_link[0]) + '</a>').encode('utf-8').strip()
     if tags:
     	for each_tag in tags:
     		value = value.replace("#"+each_tag, '<a href="/activity/?q=%23'+each_tag+'">#'+each_tag+'</a>')
