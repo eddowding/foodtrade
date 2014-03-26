@@ -66,16 +66,26 @@
          
   
   </div> 
- 
+<div class="row" style="margin: 10px 0;">
+<div class="ftstrip ftstrip-mini"></div>
+</div>
+
 <ul class="nav nav-tabs">
-  <li {% if results_updates_count != 0  or results_individual_count == 0 and results_business_count == 0 and results_organisation_count == 0  %}class="active"{% endif %}>
-    <a href="#near_me" data-toggle="tab">Updates 
+  <li {% if results_updates_count != 0  or results_individual_count == 0 and results_business_count == 0 and results_organisation_count == 0  %}class="active dropdown"{% endif %}>
+    <a href="#" id="more" class="dropdown-toggle" data-toggle="dropdown">Updates 
       <span class="badge" id="update_count">{{results_updates_count}}</span>
+      <b class="caret"></b>
     </a>
-  </li >
+    <ul class="dropdown-menu" role="menu" aria-labelledby="more">
+      <li><a href="/activity">All <span class="badge pull-right">0</span></a></li> 
+      <li><a href="/activity/?q=%23sell" tabindex="-1" data-to ggle="ta b">Sell <span class="badge pull-right">0</span></a></li> 
+      <li><a href="/activity/?q=%23buy" tabindex="-1" data-tog gle="tab">buy <span class="badge pull-right">0</span></a></li> 
+    </ul>
+  </li> 
+ 
 
     <li {% if results_updates_count == 0  and results_business_count == 0 and results_organisation_count == 0 and results_individual_count != 0 %}class="active"{% endif %}>
-    <a href="#indiv" data-toggle="tab">Individuals 
+    <a href="#indiv" data-toggle="tab">People 
     <span class="badge" id="individual_count">{{results_individual_count}}</span>
     </a>
   </li>
@@ -98,12 +108,22 @@
  
    <div id="sortby" class="clearfix">
 
+      <div class="pull-left">
+        <p class="text-muted" style="margin:0;">Filter:
+          <a href="/activity/?q=%23buy" class="text-muted">#buy</a>
+          <span class="text-muted">/</span>
+          <a href="/activity/?q=%23sell" class="text-muted">#sell</a>
+          <span class="text-muted">/</span>
+          <a href="/activity/?q=%23surplus" class="text-muted">#surplus</a>
+        </p>
+      </div>
+
       <div class="btn-group pull-right">
       <input type="hidden" id="current_sort_order" value="time" />
-        <span class="pull-left" style="position: relative; top: 5px; margin-right: 5px;">Sort by </span>
-        <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown">
-          <span  id="current_sort_text"><i class="fa fa-clock-o fa-fw"></i> Time posted</span>
-          <span class="caret"></span>
+        <span class="pull-left small text-muted" style="position: relative; top: 3px; margin-right: 2px;">Sort by </span>
+        <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
+          <span  id="current_sort_text" class="text-muted"><i class="fa fa-clock-o fa-fw"></i> Time posted</span>
+          <span class="caret text-muted"></span>
         </button>
         <ul class="dropdown-menu">
           <li><a onclick="sort_by('distance',this)"><i class="fa fa-location-arrow fa-fw"></i> Distance from {% if search %} {{ search.place }} {% endif %} {% if not search %} {{userinfo.zip_code}}{% endif %}</a></li>

@@ -592,10 +592,10 @@ def send_newsletter(request, substype):
         subscription_status = 0
     '''Generate activity for newsletter'''
     if subscription_status == 0:
-        search_handle = Search(lon = email_to_user['latlng']['coordinates'][0], lat = email_to_user['latlng']['coordinates'][1], news=substype.lower())
+        search_handle = Search(lon = email_to_user['latlng']['coordinates'][0], lat = email_to_user['latlng']['coordinates'][1], news='daily')
         # search_handle = Search(lon = email_to_user['latlng']['coordinates'][0], lat = email_to_user['latlng']['coordinates'][1], news="old")
     else:
-        search_handle = Search(lon = email_to_user['latlng']['coordinates'][0], lat = email_to_user['latlng']['coordinates'][1], news=substype.lower())
+        search_handle = Search(lon = email_to_user['latlng']['coordinates'][0], lat = email_to_user['latlng']['coordinates'][1], news='daily')
     search_results = search_handle.search_all()['results']
     '''Make Default value of newsletter 10'''
     temp_result = []
@@ -616,6 +616,7 @@ def send_newsletter(request, substype):
             if len(email_to_user['email'])>0:
                 if email_to_user['email']:
                     m.send_mail("Recent FoodTrade activity near you", [{'name':'main', 'content':tem_con}], [{'email':email_to_user['email']}])
+                    #pass
             else:
                 return HttpResponse(json.dumps({'status':'0'}))
     except:

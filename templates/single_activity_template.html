@@ -78,18 +78,14 @@
                 {{result.status|recognise_name|safe}}
             </p>
 
-              <div class="meta small text-muted">
-                <span class="hidden-sm hidden-xs">
-                  <i class="fa fa-map-marker"></i>
-                  {{result.user.address}}
-                </span>
+              <div class="meta small text-muted ">
 
                  <!-- if logged in or you've allows html5 browser location -->
                  {% if result.distance_text != "NA" %}
 
                  <a href="http://maps.google.com/maps?saddr={{userinfo.lat}},{{userinfo.lon}}&daddr={{result.location.coordinates.1}},{{result.location.coordinates.0}}" 
                     target="_blank" data-placement="top" data-toggle="tooltip" 
-                    class="text-muted" 
+                    class="text-muted pull-left" 
                     rel="tooltip" 
                     title="Get directions"> 
                  <i class="fa fa-location-arrow"></i> {{result.distance_text}}  
@@ -97,6 +93,12 @@
                  {% else %}
                  <i class="fa fa-location-arrow"></i> {{result.distance_text}}  
                  {% endif %}
+
+                 
+                  <span class="hidden-sm hidden-xs pull-left truncate100" >
+                    <i class="fa fa-map-marker"></i>
+                    {{result.user.address}}
+                  </span>
 
                 <!--  // if logged in or you've allows html5 browser location -->
                 {% if result_type == "status" %}
@@ -121,7 +123,7 @@
         </div>
 
         <div class="reply">
-        <div class=" well well-sm" style="margin:0;"> 
+        <div class="alert alert-info" style="margin:0;"> 
           <input class="form-control input-sm enterhandler reply_input" {% if result_type == "status" %}data-tweet-id = "{{result.tweetuid}}" {% endif %} data-main = "{{position}}"   {% if not userinfo.username %} data-toggle="tooltip" data-placement="top" title="Please login to use this feature." {% endif %} type="text" placeholder="Reply to {{result.mentions}}" data-mentions = "{{result.mentions}}">
         </div>
         </div>
