@@ -112,16 +112,29 @@ class Search():
         statuses = self.get_search_type(0)
         profiles = self.get_search_type(1)
 
+        result_profiles = []
+        profile_counts = {"Individual":0, "Business":0, "Organisation":0}
+        if len(profiles)>0:
+            for prf in profiles[0]['results']:
+                if profile_counts[prf['sign_up_as']] < 20:
+                    result_profiles.append(prf)
+                    profile_counts[prf['sign_up_as']] = profile_counts[prf['sign_up_as']] +1
+
+                if len(result_profiles) > 60:
+                    break
+
+            profiles[0]['results'] = result_profiles
+
         if len(profiles)>0:
             if len(statuses)>0:               
                 profiles[0]["foods"].extend(statuses[0]["foods"])
                 profiles[0]["businesses"].extend(statuses[0]["businesses"])
                 profiles[0]["organisations"].extend(statuses[0]["organisations"])
-                if not self.search_global:
-                    profiles[0]["results"] = profiles[0]["results"][:15]
-                    profiles[0]["results"].extend(statuses[0]["results"][:15])
-                else:
-                    profiles[0]["results"].extend(statuses[0]["results"])
+                # if not self.search_global:
+                    # profiles[0]["results"] = profiles[0]["results"][:15]
+                profiles[0]["results"].extend(statuses[0]["results"][:20])
+                # else:
+                #     profiles[0]["results"].extend(statuses[0]["results"])
             results = profiles[0]
         else:
             if len(statuses)>0:
@@ -189,10 +202,12 @@ class Search():
 
                 or_conditions.append({'foods':{"$elemMatch":{fd_attr:reg_expression}}})
 
+
+
             # search by business type
             or_conditions.append({'type_user':reg_expression})
+        
 
-            
             # Only for Status
             if search_type==0:
                 or_conditions.append({'updates.status':reg_expression})
@@ -225,7 +240,10 @@ class Search():
         and_query.append(pre_condition)
 
         if search_type == 0:
-            and_query.append({'updates.1': {"$exists": True}})
+            check_update = {'updates.0': {"$exists": True}}
+            and_query.append(check_update)
+
+
         # check food filters
         foods_match = []
         for fd in self.foods:
@@ -251,14 +269,14 @@ class Search():
         geo_near = {
                         "$geoNear": {"near": [float(self.lon), float(self.lat)],
                                     "distanceField": "distance",
-                                    # "maxDistance": 0.025260398681,
+                                    # "maxDistance": 0.425260398681,
                                     "query": query_string,
                                     "includeLocs": "latlng",
                                     "uniqueDocs": True,
                                     "spherical":True,
-                                    "limit":20,
+                                    "limit":5000,
                                     "distanceMultiplier":6371
-                                  }
+                                }
                       }
 
 
@@ -278,10 +296,12 @@ class Search():
 
 
         if search_type == 0:
-            if self.keyword != "":
-                agg_pipeline.append({ '$match':{"updates.status":reg_expression, "updates.deleted":{"$ne":1},"updates.parent_tweet_id":"0"}})
-            else:
-                agg_pipeline.append({ '$match':{"updates.deleted":{"$ne":1},"updates.parent_tweet_id":"0"}})
+            new_q_string = dict(query_string)
+            new_and = and_query[:]
+            new_and.remove(check_update)
+            new_and.append({"updates.deleted":{"$ne":1},"updates.parent_tweet_id":"0"})
+            new_q_string["$and"] = new_and
+            agg_pipeline.append({ '$match':new_q_string})
         
         start_time = int(time.time()) - 7*24*3600
         end_time = int(time.time()) 
@@ -360,12 +380,12 @@ class Search():
         geo_near = {
                         "$geoNear": {"near": [float(self.lon), float(self.lat)],
                                     "distanceField": "distance",
-                                    "maxDistance": 160.934,
-                                    # "query": query_string,
+                                    # "maxDistance": 160.934,
+                                    "query": parent_tweet_query,
                                     "includeLocs": "latlng",
                                     "uniqueDocs": True,  
                                     "spherical":True,
-                                    "limit":5000,
+                                    "limit":10,
                                     "distanceMultiplier":6371
                                   }
                       }

@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+# encoding: utf-8
 from django import template
 from django.contrib.auth.models import User
 import re
@@ -7,6 +9,7 @@ register = template.Library()
 
 @register.filter
 def recognise_name(value):
+    value = value.encode('utf-8').strip()
     result = re.findall(r'(?<=^|(?<=[^a-zA-Z0-9-_\.]))@([A-Za-z]+[A-Za-z0-9]+)', value, re.M|re.I)
     tags = re.findall(r'(?<=^|(?<=[^a-zA-Z0-9-_\.]))#([A-Za-z]+[A-Za-z0-9]+)', value, re.M|re.I)
     links = re.findall("((http:|https:)//[^ \<]*[^ \<\.])",value)

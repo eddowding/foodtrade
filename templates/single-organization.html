@@ -106,13 +106,13 @@
   padding: 8px 12px;" title="{{userinfo.full_name}} is member of {{name}}" >
       <input type="checkbox" checked="checked" class="member-chkbx" onchange="add_member({{profile_id}}, {{user_id}})"><span>I'm a member!</span>
       {% else %}
-      <label class="fa fa-smile-o text-muted btn btn-default btn-block" style="width:100%;" title="{{userinfo.full_name}} is member of {{name}}" >
+      <label class="fa fa-smile-o fa-fw text-muted btn btn-default btn-block" style="width:100%;" title="{{userinfo.full_name}} is member of {{name}}" >
       <input type="checkbox" class="member-chkbx" onchange="add_member({{profile_id}}, {{user_id}})"><span>I'm a member!</span>
   {% endif %}
  </label></div>
       <!-- Button trigger modal -->
       {% ifequal is_unknown_profile 'false' %}
-      <button class="btn btn-primary btn-block" data-toggle="modal" data-target="#modal_contact">Contact</button>
+      <button class="btn btn-primary btn-block" data-toggle="modal" data-target="#modal_contact"><i class="fa fa-fw fa-envelope-o"></i> Contact</button>
       {% else %}
         <button class="btn btn-primary btn-block" style="margin-top:40px;" data-toggle="modal" data-target="#modal_invite">Invite to connect</button> 
       {% endifequal %}
@@ -472,13 +472,7 @@
   </div>
   <div class="col-md-4 col-sm-3 {% if loc.lat == -82.86275189999999 and loc.lon == -135.10000000000002 %} hidden {% endif %}">
     <div style="width:100%; z-index: 100;" id="map">
-      <div class="alert alert-warning">
-          <p>This map shows 
-          Customers as points
-          Stockist as organge lines and 
-          Supplieras as purple lines</p>
-          <p>There are radius lines at 15, 30, and 100 miles.</p>
-        </div>
+     
            </div> 
            </div>
       

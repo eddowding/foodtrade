@@ -6,6 +6,7 @@ from twython import Twython
 import json
 from classes.TweetFeed import TweetFeed, UserProfile
 from classes.Search import Search
+from classes.Search2 import Search2
 from search import search_general
 from streaming import MyStreamer
 from models import MaxTweetId

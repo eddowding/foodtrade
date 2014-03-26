@@ -182,7 +182,7 @@
       {% endifequal %}
  
           {% ifequal is_unknown_profile 'false' %}
-          <button class="btn btn-primary btn-block" data-toggle="modal" data-target="#modal_contact">Contact</button>
+          <button class="btn btn-primary btn-block" data-toggle="modal" data-target="#modal_contact"><i class="fa fa-envelope-o"></i>  Contact</button>
           {% else %}
             <button class="btn btn-primary btn-block" style="margin-top:40px;" data-toggle="modal" data-target="#modal_invite">Invite to connect</button> 
           {% endifequal %}
@@ -508,11 +508,11 @@
                         {% endfor %}
                         </select></div>
 
-                          <!-- <div class="pull-left">
+                          <div class="pull-left">
                         <span class="input-group-btn">
                 
-                            <button class="btn btn-success" id="adfoo_id" rel="tooltip" onClick="add_food({{profile_id}}, {{user_id}})" {% if not user.is_authenticated %} title="Please log in to use this feature." {% endif %} > Add</button>
-                        </span></div> -->
+                            <button class="btn btn-success" id="adfoo_id" rel="tooltip" style="height:38px;" onClick="add_food({{profile_id}}, {{user_id}})" {% if not user.is_authenticated %} title="Please log in to use this feature." {% endif %} > Add</button>
+                        </span></div>
                       </div>  
               {% endif %}
             </div> 

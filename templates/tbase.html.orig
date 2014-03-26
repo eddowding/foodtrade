@@ -498,6 +498,10 @@ hidden
           <a href="/inbox/" id="inbox" title="Inbox"><i class="fa fa-comments-o fa-fw fa-lg"></i>  <span id="spanInbox" class="label label-success">{{userinfo.notification_count}}</span> </a>
           {% endif %}
           </li>
+<<<<<<< HEAD
+=======
+          <li><a href="/inbox/" id="inbox" title="Inbox"><i class="fa fa-comments-o fa-fw fa-lg"></i> Inbox  <span id="spanInbox" class="label label-success">{{userinfo.notification_count}}</span> </a></li>
+>>>>>>> e624e2a1eb81f9e540bc484f9414548dbc057030
         </ul>
 
  
