@@ -6,49 +6,48 @@
         <div class="chat-body clearfix">
  
            
-        <div class="btn-group pull-right  " style="margin-left: 5px;">
-              <button type="button" class="btn btn-info btn-xs">Reply</button>
-              <button type="button" class="btn btn-info  btn-xs dropdown-toggle" data-toggle="dropdown">
+        <div class="btn-group pull-right" style="margin-left: 5px;">
+
+          {% if result.subscribed %} 
+          <button type="button" rel="tooltip" title="Verified profile" class="btn btn-default btn-sm" style=" background: #fff;"><i class="fa fa-check-circle fa-lg" style="color: #1DBD3C;"></i></button>
+          {% endif %}
+              <button type="button" class="btn btn-info btn-sm messagebtn text-muted"><i class="fa fa-reply"></i> Reply</button> 
+              <a type="button" href="/profile/{{result.user.username}}/" class="btn btn-default btn-sm"><i class="fa fa-info-circle fa-lg text-muted"></i></a>
+              <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown">
                 <span class="caret"></span>
                 <span class="sr-only">Toggle Dropdown</span>
               </button>
               <ul class="dropdown-menu" role="menu">  
-              <li><a href="http://www.facebook.com/sharer/sharer.php?u=http://foodtrade.com/{% if result_type == "status" %}{{result.user.username}}/post/{{result.tweetuid}}{% else %}profile/{{result.user.username}}{% endif %}" target="_blank"><i class="fa fa-facebook fa-fw"></i> Share on Facebook</a></li>
-              <li><a href="http://twitter.com/home?status={{result.status|urlencode}}%20http://foodtrade.com/{% if result_type == "status" %}{{result.user.username}}/post/{{result.tweetuid}}{% else %}profile/{{result.user.username}}{% endif %}" target="_blank"><i class="fa fa-twitter fa-fw"></i> Share on Twitter</a></li>
-              <li class="divider"></li>
-              {%  if userinfo.user_type == "Business" and result.sign_up_as == "Business" and result.user.username != userinfo.username %}
-              <li><a href="#" onclick="click_activity('buyFrom','{{result.useruid}}')">I buy from</a></li>
-              <li><a href="#"onclick="click_activity('sellTo','{{result.useruid}}')">I sell to</a></li> 
-              <li class="divider"></li>
-              {% endif %}
-              {% if result.sign_up_as == "Organisation" %}
-              <li><a href="#" onclick="click_activity('markMember', '{{result.useruid}}')">I'm a member</a></li>
-              {% endif %}
-              {% if userinfo.user_type == "Individual" and result.sign_up_as == "Business" %}
-              <li><a href="#" onclick="click_activity('markCustomer', '{{result.user.username}}')">I'm a customer</a></li>
-              {% endif %}
-              <li class="divider"></li>
-              {% if result.user.username == userinfo.username or userinfo.is_superuser %}
-              <li><a href="#" class="deletetweet" data-tweet-id = "{{result.tweetuid}}">Delete</a></li>
-              {% endif %}
-              {% if result.user.username != userinfo.username %}
-              <li><a href="#" onclick="click_activity('spam','{% if result_type == "status" %}{{result.tweetuid}} {% else %}{{result.user.username}}{% endif %}')">Flag as spam</a></li>
-              <li><a href="#" onclick="click_activity('follow','{{result.user.username}}')">Follow on Twitter</a></li>
-              {% endif %}
-              <li><a href="/profile/{{result.user.username}}/">View full profile</a></li> 
-            </ul> 
+                <li><a href="http://www.facebook.com/sharer/sharer.php?u=http://foodtrade.com/{% if result_type == "status" %}{{result.user.username}}/post/{{result.tweetuid}}{% else %}profile/{{result.user.username}}{% endif %}" target="_blank"><i class="fa fa-facebook fa-fw facebook"></i> Share on Facebook</a></li>
+                <li><a href="http://twitter.com/home?status={{result.status|urlencode}}%20http://foodtrade.com/{% if result_type == "status" %}{{result.user.username}}/post/{{result.tweetuid}}{% else %}profile/{{result.user.username}}{% endif %}" target="_blank"><i class="fa fa-twitter fa-fw twitter"></i> Share on Twitter</a></li>
+                <li class="divider"></li>
+                {%  if userinfo.user_type == "Business" and result.sign_up_as == "Business" and result.user.username != userinfo.username %}
+                <li><a href="#" onclick="click_activity('buyFrom','{{result.useruid}}')">I buy from</a></li>
+                <li><a href="#"onclick="click_activity('sellTo','{{result.useruid}}')">I sell to</a></li> 
+                <li class="divider"></li>
+                {% endif %}
+                {% if result.sign_up_as == "Organisation" %}
+                <li><a href="#" onclick="click_activity('markMember', '{{result.useruid}}')"><i class="fa fa-group"></i>  I'm a member</a></li>
+                {% endif %}
+                {% if userinfo.user_type == "Individual" and result.sign_up_as == "Business" %}
+                <li><a href="#" onclick="click_activity('markCustomer', '{{result.user.username}}')"><i class="fa fa-shopping-cart"></i>  I'm a customer</a></li>
+                {% endif %}
+                <li class="divider"></li>
+                {% if result.user.username == userinfo.username or userinfo.is_superuser %}
+                <li><a href="#" class="deletetweet" data-tweet-id = "{{result.tweetuid}}"> Delete</a></li>
+                {% endif %}
+                {% if result.user.username != userinfo.username %}
+                <li><a href="#" onclick="click_activity('follow','{{result.user.username}}')"><i class="fa fa-star-o"></i>  Follow on Twitter</a></li>
+                {% endif %}
+                <li class="divider"></li>
+                <li><a href="#" onclick="click_activity('spam','{% if result_type == "status" %}{{result.tweetuid}} {% else %}{{result.user.username}}{% endif %}')" class=" "><i class="fa fa-flag-o flag"></i> Report</a></li>
+              </ul>  
+
           </div>  
 
 
-            <div class="header">
-            <!-- certificate -->
-          {% if result.subscribed %}
-          <span class="fa-stack pull-right verified" rel="tooltip" title="Verified profile">
-            <i class="fa fa-certificate fa-stack-2x" style="color: #1DBD3C;"></i>
-            <i class="fa fa-check fa-stack-1x" style="color: #fff;"></i>
-          </span>
-          {% endif %}
-          <!-- certificate -->
+
+            <div class="header"> 
                 <strong class="pull-left" style="margin-right: 10px;">
                 <a href="/profile/{{result.user.username}}">
                   {% if result.user.business_org_name != None %}
@@ -121,7 +120,9 @@
 
         </div>
 
-        <div class="reply well well-sm" style="margin:0;"> 
+        <div class="reply">
+        <div class=" well well-sm" style="margin:0;"> 
           <input class="form-control input-sm enterhandler reply_input" {% if result_type == "status" %}data-tweet-id = "{{result.tweetuid}}" {% endif %} data-main = "{{position}}"   {% if not userinfo.username %} data-toggle="tooltip" data-placement="top" title="Please login to use this feature." {% endif %} type="text" placeholder="Reply to {{result.mentions}}" data-mentions = "{{result.mentions}}">
+        </div>
         </div>
     </li>

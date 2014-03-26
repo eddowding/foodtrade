@@ -491,7 +491,7 @@ hidden
              <i class="fa fa-edit"></i>  
             </a> 
           </li>
-          <li><a href="/inbox/" id="inbox" title="Inbox"><i class="fa fa-comments-o fa-fw fa-lg"></i>  <span id="spanInbox" class="label label-success">{{userinfo.notification_count}}</span> </a></li>
+          <li><a href="/inbox/" id="inbox" title="Inbox"><i class="fa fa-comments-o fa-fw fa-lg"></i> Inbox  <span id="spanInbox" class="label label-success">{{userinfo.notification_count}}</span> </a></li>
         </ul>
 
  
@@ -969,6 +969,14 @@ $(document).ready(function() {
         });
 
 
+$('.reply').hide();
+
+$('.messagebtn').click(function() {
+    $(this).parent().parent().next(".reply").slideToggle(); 
+});
+
+
+
 
       /**
  *
@@ -1193,6 +1201,8 @@ function formSubmit(form) {
 
     hash && $('ul.nav a[href="' + hash + '"]').tab('show');
 });
+
+
 </script>    
 
 <script type="text/javascript">
