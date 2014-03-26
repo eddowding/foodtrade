@@ -484,14 +484,20 @@ hidden
             <a href="/" class="dropdown-toggle visible-sm visible-xs"><i class="glyphicon glyphicon-home"></i></a>
           </li>
           <li> 
+          {% if request.user.is_authenticated %}
             <a href="#" class="dropdown-toggle visible-md visible-lg" data-step="2" data-intro="Post an update from any screen" data-position="left" data-toggle="modal" data-target="#newtwitterpost"> 
              <i class="fa fa-edit"></i>  Post 
             </a> 
             <a href="#" class="dropdown-toggle visible-sm visible-xs" data-toggle="modal" data-target="#newtwitterpost"> 
              <i class="fa fa-edit"></i>  
-            </a> 
+            </a>
+          {% endif %} 
           </li>
-          <li><a href="/inbox/" id="inbox" title="Inbox"><i class="fa fa-comments-o fa-fw fa-lg"></i>  <span id="spanInbox" class="label label-success">{{userinfo.notification_count}}</span> </a></li>
+          <li>
+          {% if request.user.is_authenticated %}
+          <a href="/inbox/" id="inbox" title="Inbox"><i class="fa fa-comments-o fa-fw fa-lg"></i>  <span id="spanInbox" class="label label-success">{{userinfo.notification_count}}</span> </a>
+          {% endif %}
+          </li>
         </ul>
 
  
