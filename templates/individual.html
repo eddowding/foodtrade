@@ -3,6 +3,7 @@
 {% load socialaccount %}
 {% load url from future %}
 {% load i18n %}
+{% load recognise_name %}
 {% include "socialaccount/snippets/login_extra.html" %}
 {% load account %}
 
@@ -591,7 +592,7 @@ s
                                           <a href="/{{username}}/post/{{eachUpdate.tweetuid}}/"><span class="glyphicon glyphicon-time"></span>{{eachUpdate.time_elapsed}} ago</a></small>
                                       </div>
                                       <p>
-                                         {{eachUpdate.status}}
+                                         {{eachUpdate.status|recognise_name|safe}}
                                       </p>
                                   </div>
                               </li>
