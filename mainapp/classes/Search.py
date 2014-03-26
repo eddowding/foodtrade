@@ -371,32 +371,32 @@ class Search():
 
 
     def get_tweet_by_parent(self, parent_tweet_id):
-        
+        print parent_tweet_id
         agg_pipeline = []
 
 
-        parent_tweet_query = {"updates.parent_tweet_id":str(parent_tweet_id),'updates.1': {"$exists": True},"sign_up_as":{"$ne":"unclaimed"}}
+        parent_tweet_query = {'updates.0': {"$exists": True},"sign_up_as":{"$ne":"unclaimed"}, "updates.parent_tweet_id":{"$in":parent_tweet_id}}
 
         geo_near = {
                         "$geoNear": {"near": [float(self.lon), float(self.lat)],
                                     "distanceField": "distance",
-                                    # "maxDistance": 160.934,
+                                    "maxDistance": 160.934,
                                     "query": parent_tweet_query,
                                     "includeLocs": "latlng",
                                     "uniqueDocs": True,  
                                     "spherical":True,
-                                    "limit":10,
+                                    "limit":1,
                                     "distanceMultiplier":6371
-                                  }
+                                }
                       }
         agg_pipeline.append(geo_near)
-        query_string = {'updates':{"$elemMatch":{'parent_tweet_id':{"$in":parent_tweet_id}}}}
-        agg_pipeline.append({ '$match':query_string})
+        # query_string = {'updates':{"$elemMatch":{'parent_tweet_id':parent_tweet_id}}}
+        # agg_pipeline.append({ '$match':query_string})
 
         agg_pipeline.append({"$unwind": "$updates"})
 
 
-        agg_pipeline.append({ '$match':{"updates.deleted":{"$ne":1}, "updates.parent_tweet_id":{"$in":parent_tweet_id}}})
+        # agg_pipeline.append({ '$match':{"updates.deleted":{"$ne":1}, "updates.parent_tweet_id":{"$in":parent_tweet_id}}})
 
        
         # agg_pipeline.append({ '$match':{"updates":{"$size":0}}})
