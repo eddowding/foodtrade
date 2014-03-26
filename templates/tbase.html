@@ -465,9 +465,76 @@ hidden
   
           </div>
   
-          <form action="/activity" onsubmit="return formSubmit(this);" class="navbar-form navbar-left" role="search" style="width: 240px;">
+          <form action="/activity" onsubmit="return formSubmit(this);" class="navbar-form navbar-left" role="search" style="width: 380px;">
             <div class="input-group">
+            <div class="input-group-btn">
+              <button type="button" class="btn btn-default dropdown-toggle text-muted" data-toggle="dropdown">Quick find <span class="caret"></span></button>
+               <ul class="dropdown-menu dropdown-menu-large row">
+          <li class="col-sm-3">
+            <ul>
+              <li class="dropdown-header">Foods</li>
+              <li><a href="/activity/?q=sausages">Sausages</a></li> 
+              <li><a href="/activity/?q=chicken">Chicken</a></li> 
+              <li><a href="/activity/?q=bread">Bread</a></li>  
+              <li><a href="/activity/?q=brownie">Brownies</a></li> 
+              <li><a href="/activity/?q=salad">Salad</a></li>  
+              <li class="dropdown-header">Drink</li>
+              <li><a href="/activity/?q=cider">Cider</a></li> 
+              <li><a href="/activity/?q=beer">Beer</a></li> 
+              <li><a href="/activity/?q=juice">Juice</a></li>  
+              <li><a href="/activity/?q=porter">Porter</a></li>  
+            </ul>
+          </li>
+          <li class="col-sm-4">
+            <ul>
+              <li class="dropdown-header">Biz. Types</li>
+              <li><a href="/activity/?b=Livestock%20Farm">Livestock farm</a></li> 
+              <li><a href="/activity/?q=Baker">Baker</a></li> 
+              <li><a href="/activity/?q=Food%20Stall">Food Stall</a></li> 
+              <li><a href="/activity/?q=Box%20Scheme">Box Scheme</a></li> 
+              <li><a href="/activity/?q=Food%20Manufacturer">Manufacturer</a></li> 
+              <li><a href="/activity/?q=Grower">Grower</a></li> 
+            </ul>
+          </li>
+          <li class="col-sm-5">
+            <ul>
+              <li class="dropdown-header">Organisations</li>
+              <li><a href="/slowfooduk">
+              <span class="result-container" style="white-space: nowrap;">
+              <span class="result-img"><img height="22px" width="22px" src="http://pbs.twimg.com/profile_images/1690823879/Screen_shot_2011-12-13_at_12.21.20_bigger.png"></span>
+              <span>Slow Food UK</span> 
+              </span></a></li> 
+              <li><a href="/soilassociation">
+              <span class="result-container" style="white-space: nowrap;">
+              <span class="result-img"><img height="22px" width="22px" src="http://pbs.twimg.com/profile_images/432822201436229632/Pw5oT1FG_normal.jpeg"></span>
+              <span>Soil Association</span> 
+              </span>
+              </a>
+              </li>
+
+              <li><a href="/FairtradeUK">
+              <span class="result-container" style="white-space: nowrap;">
+              <span class="result-img"><img height="22px" width="22px" src="http://pbs.twimg.com/profile_images/422786454478405632/aSt2mgAO_bigger.png"></span>
+              <span>Fairtrade Foundation</span> 
+              </span></a></li> 
+
+              <li><a href="/farmdrop">
+              <span class="result-container" style="white-space: nowrap;">
+              <span class="result-img"><img height="22px" width="22px" src="http://pbs.twimg.com/profile_images/446219768450650112/ELiLvM6E_bigger.jpeg"></span>
+              <span>FarmDrop</span> 
+              </span></a></li> 
+
+              <li><a href="/slowfoodlondon">
+              <span class="result-container" style="white-space: nowrap;">
+              <span class="result-img"><img height="22px" width="22px" src="http://pbs.twimg.com/profile_images/3376104397/9edf0480e8b1a610b54a62e50e619156_bigger.png"></span>
+              <span>Slow Food London</span> 
+              </span></a></li>  
+            </ul>
+          </li> 
+        </ul>
+        </div> 
               <input type="text" name="q" id="keyword" class="form-control" value="{{ search.query }}" placeholder="eg 'apples', 'surplus'...">   
+               
               <div class="input-group-btn">
                 <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
               </div> 
@@ -475,75 +542,13 @@ hidden
             <input type="hidden" name="location" id="new_search" value="{% if search %} {{ search.place }} {% endif %} {% if not search %} {{userinfo.zip_code}}{% endif %} ">
           </form>
            
-    <ul class="nav navbar-nav">
-      <li class="dropdown dropdown-large">
-        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
-        
-        <ul class="dropdown-menu dropdown-menu-large row">
-          <li class="col-sm-3">
-            <ul>
-              <li class="dropdown-header">Glyphicons</li>
-              <li><a href="#">Available glyphs</a></li>
-              <li class="disabled"><a href="#">How to use</a></li>
-              <li><a href="#">Examples</a></li>
-              <li class="divider"></li>
-              <li class="dropdown-header">Dropdowns</li>
-              <li><a href="#">Example</a></li>
-              <li><a href="#">Aligninment options</a></li>
-              <li><a href="#">Headers</a></li>
-              <li><a href="#">Disabled menu items</a></li>
-            </ul>
-          </li>
-          <li class="col-sm-3">
-            <ul>
-              <li class="dropdown-header">Button groups</li>
-              <li><a href="#">Basic example</a></li>
-              <li><a href="#">Button toolbar</a></li>
-              <li><a href="#">Sizing</a></li>
-              <li><a href="#">Nesting</a></li>
-              <li><a href="#">Vertical variation</a></li>
-              <li class="divider"></li>
-              <li class="dropdown-header">Button dropdowns</li>
-              <li><a href="#">Single button dropdowns</a></li>
-            </ul>
-          </li>
-          <li class="col-sm-3">
-            <ul>
-              <li class="dropdown-header">Input groups</li>
-              <li><a href="#">Basic example</a></li>
-              <li><a href="#">Sizing</a></li>
-              <li><a href="#">Checkboxes and radio addons</a></li>
-              <li class="divider"></li>
-              <li class="dropdown-header">Navs</li>
-              <li><a href="#">Tabs</a></li>
-              <li><a href="#">Pills</a></li>
-              <li><a href="#">Justified</a></li>
-            </ul>
-          </li>
-          <li class="col-sm-3">
-            <ul>
-              <li class="dropdown-header">Navbar</li>
-              <li><a href="#">Default navbar</a></li>
-              <li><a href="#">Buttons</a></li>
-              <li><a href="#">Text</a></li>
-              <li><a href="#">Non-nav links</a></li>
-              <li><a href="#">Component alignment</a></li>
-              <li><a href="#">Fixed to top</a></li>
-              <li><a href="#">Fixed to bottom</a></li>
-              <li><a href="#">Static top</a></li>
-              <li><a href="#">Inverted navbar</a></li>
-            </ul>
-          </li>
-        </ul>
-        
-      </li>
-    </ul>
      
-          
-       
       <nav class="collapse navbar-collapse" role="navigation">
+
+
  
         <ul class="nav navbar-nav">
+        
           <li>
             <a href="/" class="dropdown-toggle visible-md visible-lg"><i class="glyphicon glyphicon-home"></i> Home</a>
             <a href="/" class="dropdown-toggle visible-sm visible-xs"><i class="glyphicon glyphicon-home"></i></a>
@@ -559,12 +564,19 @@ hidden
           {% endif %} 
           </li>
           <li>
+
+
           {% if request.user.is_authenticated %}
-          <a href="/inbox/" id="inbox" title="Inbox"><i class="fa fa-comments-o fa-fw fa-lg"></i>  <span id="spanInbox" class="label label-success">{{userinfo.notification_count}}</span> </a>
+          <a href="/inbox/" id="inbox" title="Inbox">
+            <i class="fa fa-comments-o fa-fw fa-lg"></i> Inbox  
+            {% if userinfo.notification_count != 0 %}
+            <span id="spanInbox" class="label label-success">{{userinfo.notification_count}}</span> 
+            {% endif %}
+          </a>
           {% endif %}
           </li>
         </ul>
-
+ 
  
 
         {% if user.is_authenticated %} 

@@ -154,7 +154,10 @@ h2 {
   border-top-color: transparent;
 }
 
-
+#single .nav-tabs > li:hover > .dropdown-menu,
+.navbar-nav > li:hover > .dropdown-menu {
+  display: block;
+}
 
 #activity_switcher .nav-tabs {
 	margin: 0;
@@ -1874,6 +1877,10 @@ border-bottom: 1px dotted ;
   margin-right: 16px;
   padding: 20px 0px;
 }
+
+.open > .dropdown-menu-large {
+  width: 700px;
+}
 .dropdown-menu-large > li > ul {
   padding: 0;
   margin: 0;
@@ -1910,9 +1917,13 @@ border-bottom: 1px dotted ;
   cursor: not-allowed;
 }
 .dropdown-menu-large .dropdown-header {
-  color: #428bca;
-  font-size: 18px;
-}
+  color: #3AA149;
+  font-size: 14px;
+  text-transform: uppercase;
+  font-weight: bold;  
+  border-bottom: 1px solid;
+  }
+
 @media (max-width: 768px) {
   .dropdown-menu-large {
     margin-left: 0 ;
