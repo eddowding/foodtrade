@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+# encoding: utf-8
 from django import template
 from django.contrib.auth.models import User
 import re
@@ -7,12 +9,13 @@ register = template.Library()
 
 @register.filter
 def recognise_name(value):
+    value = value.encode('utf-8').strip()
     result = re.findall(r'(?<=^|(?<=[^a-zA-Z0-9-_\.]))@([A-Za-z]+[A-Za-z0-9]+)', value, re.M|re.I)
     tags = re.findall(r'(?<=^|(?<=[^a-zA-Z0-9-_\.]))#([A-Za-z]+[A-Za-z0-9]+)', value, re.M|re.I)
-    # links = re.findall("((http:|https:)//[^ \<]*[^ \<\.])",value)
-    # if links:
-    #     for each_link in links:
-    #         value = value.replace(str(each_link[0]), '<a href="'+str(each_link[0])+'" target="_blank">'+ str(each_link[0]) + '</a>')
+    links = re.findall("((http:|https:)//[^ \<]*[^ \<\.])",value)
+    if links:
+        for each_link in links:
+            value = value.replace(str(each_link[0]), '<a href="'+str(each_link[0])+'" target="_blank">'+ str(each_link[0]) + '</a>')
     if tags:
     	for each_tag in tags:
     		value = value.replace("#"+each_tag, '<a href="/activity/?q=%23'+each_tag+'">#'+each_tag+'</a>')
