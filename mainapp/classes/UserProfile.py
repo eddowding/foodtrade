@@ -37,14 +37,15 @@ class UserProfile():
         return users
 
     def send_newsletter(self, substype):
-        user_pages_count = int(self.db_object.get_count(self.table_name, {'email':{'$neq':''}})/15)+ 1
+        user_pages_count = int(self.db_object.get_count(self.table_name, {'email':{'$ne':''}})/15)+ 1
         for i in range(0,user_pages_count, 1):
-            pag_users = self.db_object.get_paginated_values(self.table_name, {'email':{'$neq':''}}, pageNumber = int(i+1))
+            pag_users = self.db_object.get_paginated_values(self.table_name, {'email':{'$ne':''}}, pageNumber = int(i+1))
             for eachUser in pag_users:
                 if len(eachUser['email'])>0:
                     import urllib2
                     baseurl = "http://foodtrade.com/send-newsletter/" + str(substype.lower())+ "?username=" + str(eachUser['username']) + "&code=11foodtradeESRS22"
                     response = urllib2.urlopen(baseurl)
+                    print str(response)
         return True
 
     def get_all_antartic_users(self):
