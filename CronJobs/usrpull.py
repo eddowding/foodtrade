@@ -189,9 +189,7 @@ def solve_errors():
                 twitter_err_obj.save_error({'username':eachError['username'],'error_type':'cron',
                     'next_cursor_str':next_cursor, 'error_solve_stat':'false','user_type':'followers'})
 
-# create_users('new')
-create_users('Antartica')
-#solve_errors()
+create_users('new')
 #create_users('all')
 
 
