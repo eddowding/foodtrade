@@ -43,7 +43,7 @@ class UserProfile():
             for eachUser in pag_users:
                 if len(eachUser['email'])>0:
                     import urllib2
-                    baseurl = "http://localhost:8000/send-newsletter/" + str(substype.lower())+ "?username=" + str(eachUser['username']) + "&code=11foodtradeESRS22"
+                    baseurl = "http://foodtrade.com/send-newsletter/" + str(substype.lower())+ "?username=" + str(eachUser['username']) + "&code=11foodtradeESRS22"
                     response = urllib2.urlopen(baseurl)
                     print str(response)
         return True
