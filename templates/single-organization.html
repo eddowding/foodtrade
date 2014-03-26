@@ -285,10 +285,11 @@
     <div class="row">
      <div class="col-md-12">
         <ul class="nav nav-tabs ">
-          <li class="active"><a href="#members" data-toggle="tab">Members <span class="badge ">{{members|length}}</span></a></li>
-          <li><a href="#foods" data-toggle="tab">Foods  <span class="badge">{{food_count}}</span></a></li> 
-          <li><a href="#people" data-toggle="tab">Team <span class="badge ">{{teams|length}}</span></a></li>
-          <li><a href="#updates" data-toggle="tab">Updates <span class="badge ">{{updates_count}}</span></a></li>
+          <li class="active"><a href="#members" data-toggle="tab">Members 
+            {% if members|length != 0 %}<span class="badge ">{{members|length}}{% endif %}</span></a></li>
+          <li><a href="#foods" data-toggle="tab">Foods  {% if food_count != 0 %}<span class="badge">{{food_count}}</span>{% endif %}</a></li> 
+          <li><a href="#people" data-toggle="tab">Team {% if teams|length != 0 %}<span class="badge ">{{teams|length}}</span>{% endif %}</a></li>
+          <li><a href="#updates" data-toggle="tab">Updates {% if updates_count != 0 %}<span class="badge ">{{updates_count}}</span>{% endif %}</a></li>
         </ul>
      </div>
     </div>
