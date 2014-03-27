@@ -6,9 +6,9 @@
 {% if result.user.username == result.result_type %}
 
 {% single_activity userinfo result "status" "main" %}
-
+    {% if result.replies  %}
      <li>
-     {% result.replies %}
+ 
       <ul>
       {% for reply_result in result.replies %}
 
@@ -17,9 +17,9 @@
          {% endfor %}
         
 </ul>
-{% endif %}
-</li>
 
+</li>
+{% endif %}
 {% endif %}
   {% endfor %}
     {% endif %}
