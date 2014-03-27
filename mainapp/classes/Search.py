@@ -382,12 +382,12 @@ class Search():
         geo_near = {
                         "$geoNear": {"near": [float(self.lon), float(self.lat)],
                                     "distanceField": "distance",
-                                    "maxDistance": 160.934,
+                                    # "maxDistance": 160.934,
                                     "query": parent_tweet_query,
                                     "includeLocs": "latlng",
                                     "uniqueDocs": True,  
                                     "spherical":True,
-                                    "limit":1,
+                                    "limit":10,
                                     "distanceMultiplier":6371
                                 }
                       }
@@ -428,29 +428,13 @@ class Search():
         group_fields["results"] = self.get_result_fields(result_type)
         
         agg_pipeline.append({"$group": group_fields})
-        
-
-        
         agg_pipeline.append({ "$limit" : 30 })
-
-        
-
         up = UserProfile()
         return up.agg(agg_pipeline)
 
-
-
-
-
-
-
     def get_single_tweet(self, tweet_id):
-        print tweet_id
         agg_pipeline = []
         query_string = {'updates':{"$elemMatch":{'tweet_id':tweet_id}}}
-        
-
-
         geo_near = {
                         "$geoNear": {"near": [float(self.lon), float(self.lat)],
                                     "distanceField": "distance",
@@ -464,25 +448,14 @@ class Search():
                                   }
                       }
         agg_pipeline.append(geo_near)
-
         agg_pipeline.append({"$unwind": "$updates"})
-
-
         agg_pipeline.append({ '$match':{"updates.deleted":{"$ne":1}, "updates.tweet_id":tweet_id}})
-
-       
-        # agg_pipeline.append({ '$match':{"updates":{"$size":0}}})
-
         sort_text = "updates.time_stamp"
         sort_order = -1
 
         agg_pipeline.append({"$sort": SON([(sort_text, sort_order), ("time_stamp", -1)])})
 
-        # next_index = 5
-        # if len(or_conditions) > 0:
-        #     next_index = 6
-        #     agg_pipeline.append({ '$match':{"$or":or_conditions}})
-
+ 
 
         group_fields = {}
         group_fields["_id"] = "all"
@@ -493,10 +466,6 @@ class Search():
         group_fields["results"] = self.get_result_fields(result_type)
         
         agg_pipeline.append({"$group": group_fields})
-        
-
-        
-
         up = UserProfile()
         return up.agg(agg_pipeline)[0]['results']
 
