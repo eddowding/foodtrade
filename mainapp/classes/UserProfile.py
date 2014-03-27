@@ -7,7 +7,7 @@ import time, datetime
 from bson.code import Code
 
 class UserProfile():
-    def __init__ (self, host="localhost", port=27017,db_name='foodtrade', username='', password=''):
+    def __init__ (self, host="localhost", port=27017,db_name='foodtrade', username='ftroot', password='ftroot'):
         self.db_object = MongoConnection(host=host, port=port, db_name=db_name, username=username, password=password)
         self.table_name = 'userprofile'
         self.db_object.create_table(self.table_name, 'useruid')
