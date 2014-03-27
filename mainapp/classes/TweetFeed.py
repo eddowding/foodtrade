@@ -101,7 +101,7 @@ class TweetFeed():
             subscribed = up['subscribed']
         except:
             subscribed = 0
-
+        # subscribed = 1
         if tweet['parent_tweet_id'] == "0" and self.has_tweet_in_week(user_id) and subscribed != 1:
             return
 
