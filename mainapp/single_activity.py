@@ -39,7 +39,7 @@ def get_post_parameters(request, tweet_id):
         raise Http404
     keyword = ''
     single_tweet = set_time_date(single_tweet[0],keyword)
-    results = search_handle.get_direct_children([str(tweet_id)])
+    results = search_handle.get_direct_children(str(tweet_id))
     if results!= None:
         for i in range(len(results)):
             results[i] = set_time_date(results[i],keyword)
