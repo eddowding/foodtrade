@@ -615,7 +615,7 @@ def send_newsletter(request, substype):
             '''Do not send empty newsletter'''
             if len(email_to_user['email'])>0:
                 if email_to_user['email']:
-                    m.send_mail("Recent FoodTrade activity near you", [{'name':'main', 'content':tem_con}], [{'email':email_to_user['email']}])
+                    m.send_mail("New opportunities near you", [{'name':'main', 'content':tem_con}], [{'email':email_to_user['email']}])
                     #pass
             else:
                 return HttpResponse(json.dumps({'status':'0'}))

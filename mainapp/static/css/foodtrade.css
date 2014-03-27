@@ -193,8 +193,7 @@ background: #eee;
 
 .truncate100 {
   width: 100px; 
-  overflow: hidden; 
-  height: 1em;  
+  overflow: hidden;  
   margin-left: 0.5em;
   text-overflow: ellipsis;
   white-space: nowrap;
