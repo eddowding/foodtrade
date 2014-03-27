@@ -203,9 +203,10 @@ def get_search_parameters(request):
 
         if results[i]["result_type"] == results[i]["user"]["username"]:
             tweet_id = results[i]["tweetuid"]
-            replies = search_handle.get_all_children([tweet_id])
+            replies = search_handle.get_all_children(tweet_id)
             if replies == None:
                 continue
+                print "reply present"
             replies = sorted(replies, key=lambda k: k['time_stamp']) 
             for j in range(len(replies)):
                 replies[j] = set_time_date(replies[j],keyword)

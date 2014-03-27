@@ -76,10 +76,12 @@ function reload_connections()
 			var description = con.description;
 			var photo =  con.photo;
 			var username = con.username;
+			var profile_img = con.photo;
 			var type = con.type;
 			var relation = con.relation;
 			var latitude =  con.latitude;
          	var longitude =  con.longitude;
+         	var type_user = con.type;
 
 
 			var current_lat = parseFloat(latitude);
@@ -125,6 +127,27 @@ function reload_connections()
 			// }).addTo(map);
 			// map_controls.push(polyline);
 
+var card_str = '<div class="card-box"><div class="content"><div class="pull-left"><a href="/profile/'+username+'"><img src="'+profile_img+'" alt="'+name+'" class="img-rounded img-responsive" style="width:40px;" /></a>';
+
+                
+                      card_str += '</div><div class="text"><h5><a href="/profile/'+username+'">'+name+'</a></h5>';
+
+                      card_str += '<p class="small">'+description+'</p></div></div>';
+                      if(type_user.length>0)
+                      {
+                    card_str += '<div class="numbers clearfix"><div class="tags tags-biztype pull-left">';
+                    for(var j=0;j<type_user.length;j++)
+                    {  
+                      card_str +=  '<a href="/activity/?b='+type_user[j]+'">'+type_user[j]+'</a>';
+                     }
+                      card_str += '</div></div>';
+                }
+                  card_str += '</div> ';
+              
+
+
+
+
 
 
 			var dot = L.circleMarker([parseFloat(latitude), parseFloat(longitude)],  {
@@ -137,7 +160,7 @@ function reload_connections()
 			fillColor: "#FF4700",
 			fillOpacity: 0.8,
 
-		}).addTo(map);
+		}).addTo(map).bindPopup(card_str);
 			map_controls.push(dot);
 
 }

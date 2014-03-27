@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+# encoding: utf-8
 import re
 
 # from TweetFeed import TweetFeed, UserProfile
@@ -39,6 +41,7 @@ class UserProfile():
 class Search():
     """docstring for UserConnections"""
     def __init__(self, keyword="", lon = "", lat ="", place = "", foods="", business="", organisation="",sort="", search_global=False,news="notfornews"):
+        keyword = keyword.encode('utf-8')
         self.keyword = str(keyword.strip())
         self.lon = lon
         self.lat = lat
@@ -371,32 +374,31 @@ class Search():
 
 
     def get_tweet_by_parent(self, parent_tweet_id):
-        
         agg_pipeline = []
 
 
-        parent_tweet_query = {"updates.parent_tweet_id":str(parent_tweet_id),'updates.1': {"$exists": True},"sign_up_as":{"$ne":"unclaimed"}}
+        parent_tweet_query = {"sign_up_as":{"$ne":"unclaimed"}, 'updates':{"$elemMatch":{'parent_tweet_id':parent_tweet_id}}}
 
         geo_near = {
                         "$geoNear": {"near": [float(self.lon), float(self.lat)],
                                     "distanceField": "distance",
-                                    # "maxDistance": 160.934,
+                                    "maxDistance": 160.934,
                                     "query": parent_tweet_query,
                                     "includeLocs": "latlng",
                                     "uniqueDocs": True,  
                                     "spherical":True,
-                                    "limit":10,
+                                    "limit":1,
                                     "distanceMultiplier":6371
-                                  }
+                                }
                       }
         agg_pipeline.append(geo_near)
-        query_string = {'updates':{"$elemMatch":{'parent_tweet_id':{"$in":parent_tweet_id}}}}
-        agg_pipeline.append({ '$match':query_string})
+        # query_string = {'updates':{"$elemMatch":{'parent_tweet_id':parent_tweet_id}}}
+        # agg_pipeline.append({ '$match':query_string})
 
         agg_pipeline.append({"$unwind": "$updates"})
 
 
-        agg_pipeline.append({ '$match':{"updates.deleted":{"$ne":1}, "updates.parent_tweet_id":{"$in":parent_tweet_id}}})
+        agg_pipeline.append({ '$match':{"updates.deleted":{"$ne":1}, "updates.parent_tweet_id":parent_tweet_id}})
 
        
         # agg_pipeline.append({ '$match':{"updates":{"$size":0}}})
@@ -521,7 +523,7 @@ class Search():
                 result['mentions'] = mentions
                 # tweet_ids.append(result['tweetuid'])
 
-                childrens = self.get_all_children([result['tweetuid']])
+                childrens = self.get_all_children(result['tweetuid'])
 
                 if childrens != None:
                     for child in childrens:

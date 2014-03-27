@@ -19,7 +19,7 @@
               </button>
               <ul class="dropdown-menu" role="menu">  
                 <li><a href="http://www.facebook.com/sharer/sharer.php?u=http://foodtrade.com/{% if result_type == "status" %}{{result.user.username}}/post/{{result.tweetuid}}{% else %}profile/{{result.user.username}}{% endif %}" target="_blank"><i class="fa fa-facebook fa-fw facebook"></i> Share on Facebook</a></li>
-                <li><a href="http://twitter.com/home?status={{result.status|urlencode}}%20http://foodtrade.com/{% if result_type == "status" %}{{result.user.username}}/post/{{result.tweetuid}}{% else %}profile/{{result.user.username}}{% endif %}" target="_blank"><i class="fa fa-twitter fa-fw twitter"></i> Share on Twitter</a></li>
+                <li><a href="http://twitter.com/home?status={{result.status|urlencode}}%20http://foodtrade.com/{% if result_type == "status" %}{{result.user.username}}/post/{{result.tweetuid}}{% else %}profile/{{result.user.username}}{% endif %}" target="_blank"><i class="fa fa-twitter fa-fw twitter "></i> Share on Twitter</a></li>
                 <li class="divider"></li>
                 {%  if userinfo.user_type == "Business" and result.sign_up_as == "Business" and result.user.username != userinfo.username %}
                 <li><a href="#" onclick="click_activity('buyFrom','{{result.useruid}}')">I buy from</a></li>
@@ -27,20 +27,20 @@
                 <li class="divider"></li>
                 {% endif %}
                 {% if result.sign_up_as == "Organisation" %}
-                <li><a href="#" onclick="click_activity('markMember', '{{result.useruid}}')"><i class="fa fa-group"></i>  I'm a member</a></li>
+                <li><a href="#" onclick="click_activity('markMember', '{{result.useruid}}')"><i class="fa fa-fw fa-group"></i>  I'm a member</a></li>
                 {% endif %}
                 {% if userinfo.user_type == "Individual" and result.sign_up_as == "Business" %}
-                <li><a href="#" onclick="click_activity('markCustomer', '{{result.user.username}}')"><i class="fa fa-shopping-cart"></i>  I'm a customer</a></li>
+                <li><a href="#" onclick="click_activity('markCustomer', '{{result.user.username}}')"><i class="fa fa-fw fa-shopping-cart"></i>  I'm a customer</a></li>
+                {% endif %}
+                <li class="divider"></li>
+                {% if result.user.username != userinfo.username %}
+                <li><a href="#" onclick="click_activity('follow','{{result.user.username}}')"><i class="fa fa-star-o fa-fw"></i>  Follow on Twitter</a></li>
                 {% endif %}
                 <li class="divider"></li>
                 {% if result.user.username == userinfo.username or userinfo.is_superuser %}
-                <li><a href="#" class="deletetweet" data-tweet-id = "{{result.tweetuid}}"> Delete</a></li>
+                <li><a href="#" class="deletetweet" data-tweet-id = "{{result.tweetuid}}"><i class="fa fa-trash-o fa-fw flag"></i> Delete</a></li>
                 {% endif %}
-                {% if result.user.username != userinfo.username %}
-                <li><a href="#" onclick="click_activity('follow','{{result.user.username}}')"><i class="fa fa-star-o"></i>  Follow on Twitter</a></li>
-                {% endif %}
-                <li class="divider"></li>
-                <li><a href="#" onclick="click_activity('spam','{% if result_type == "status" %}{{result.tweetuid}} {% else %}{{result.user.username}}{% endif %}')" class=" "><i class="fa fa-flag-o flag"></i> Report</a></li>
+                <li><a href="#" onclick="click_activity('spam','{% if result_type == "status" %}{{result.tweetuid}} {% else %}{{result.user.username}}{% endif %}')" class=" "><i class="fa fa-flag-o flag fa-fw"></i> Report</a></li>
               </ul>  
 
           </div>  
@@ -78,18 +78,14 @@
                 {{result.status|recognise_name|safe}}
             </p>
 
-              <div class="meta small text-muted">
-                <span class="hidden-sm hidden-xs">
-                  <i class="fa fa-map-marker"></i>
-                  {{result.user.address}}
-                </span>
+              <div class="meta small text-muted ">
 
                  <!-- if logged in or you've allows html5 browser location -->
                  {% if result.distance_text != "NA" %}
 
                  <a href="http://maps.google.com/maps?saddr={{userinfo.lat}},{{userinfo.lon}}&daddr={{result.location.coordinates.1}},{{result.location.coordinates.0}}" 
                     target="_blank" data-placement="top" data-toggle="tooltip" 
-                    class="text-muted" 
+                    class="text-muted pull-left" 
                     rel="tooltip" 
                     title="Get directions"> 
                  <i class="fa fa-location-arrow"></i> {{result.distance_text}}  
@@ -97,6 +93,12 @@
                  {% else %}
                  <i class="fa fa-location-arrow"></i> {{result.distance_text}}  
                  {% endif %}
+
+
+                  <span class="hidden-sm hidden-xs pull-left truncate100" >
+                    <i class="fa fa-map-marker"></i>
+                    {{result.user.address}}
+                  </span>
 
                 <!--  // if logged in or you've allows html5 browser location -->
                 {% if result_type == "status" %}
@@ -121,7 +123,7 @@
         </div>
 
         <div class="reply">
-        <div class=" well well-sm" style="margin:0;"> 
+        <div class="alert alert-info" style="margin:0;"> 
           <input class="form-control input-sm enterhandler reply_input" {% if result_type == "status" %}data-tweet-id = "{{result.tweetuid}}" {% endif %} data-main = "{{position}}"   {% if not userinfo.username %} data-toggle="tooltip" data-placement="top" title="Please login to use this feature." {% endif %} type="text" placeholder="Reply to {{result.mentions}}" data-mentions = "{{result.mentions}}">
         </div>
         </div>

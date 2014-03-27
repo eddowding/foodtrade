@@ -430,19 +430,20 @@
      <div class="col-md-12">
         <ul class="nav nav-tabs">
           {% if show_foods %}
-          <li class="active"><a href="#produce" data-toggle="tab">Foods <span class="badge">{{userprof.food_no}}</span></a></li>
-          {% endif %}
+          <li class="active"><a href="#produce" data-toggle="tab">Foods {% if userprof.food_no != 0 %}<span class="badge">{{userprof.food_no}}</span>{% endif %}</a></li>
+          {% endif %} 
+
           <li  {% if not show_foods %} class="active" {% endif %}>
-            <a href="#connections" data-toggle="tab" onclick="set_width()">Connections <span class="badge">{{userprof.trade_connections_no}}</span></a> 
+            <a href="#connections" data-toggle="tab" onclick="set_width()">Connections {% if userprof.trade_connections_no != 0 %}<span class="badge">{{userprof.trade_connections_no}}</span>{% endif %}</a> 
           </li>
 
           
-          <li><a href="#activity" data-toggle="tab">Updates  <span class="badge">{{updates_count}}</span></a></li>     
+          <li><a href="#activity" data-toggle="tab">Updates  {% if updates_count != 0 %}<span class="badge">{{updates_count}}</span>{% endif %}</a></li>     
           <li class="dropdown">
             <a href="#" id="more" class="dropdown-toggle" data-toggle="dropdown">More <b class="caret"></b></a>
             <ul class="dropdown-menu" role="menu" aria-labelledby="more">
-              <li><a href="#organisations" data-toggle="tab">Organisations <span class="badge pull-right">{{userprof.organisation_connection_no}}</span></a></li> 
-              <li><a href="#customers" tabindex="-1" data-toggle="tab">Customers <span class="badge pull-right">{{customers|length}}</span></a></li> 
+              <li><a href="#organisations" data-toggle="tab">Organisations {% if userprof.organisation_connection_no != 0 %}<span class="badge pull-right">{{userprof.organisation_connection_no}}</span>{% endif %}</a></li> 
+              <li><a href="#customers" tabindex="-1" data-toggle="tab">Customers {% if customers|length != 0 %}<span class="badge pull-right">{{customers|length}}</span>{% endif %}</a></li> 
             </ul>
           </li>
         </ul>
@@ -511,7 +512,7 @@
                           <div class="pull-left">
                         <span class="input-group-btn">
                 
-                            <button class="btn btn-success" id="adfoo_id" rel="tooltip" style="height:38px;" onClick="add_food({{profile_id}}, {{user_id}})" {% if not user.is_authenticated %} title="Please log in to use this feature." {% endif %} > Add</button>
+                            <button class="btn btn-success btn-sm" id="adfoo_id" rel="tooltip" style="height:34px;" onClick="add_food({{profile_id}}, {{user_id}})" {% if not user.is_authenticated %} title="Please log in to use this feature." {% endif %} > Add</button>
                         </span></div>
                       </div>  
               {% endif %}
