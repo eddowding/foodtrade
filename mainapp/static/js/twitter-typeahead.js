@@ -1731,3 +1731,26 @@ $('#buss_remote .typeahead').typeahead(null, {
   }
 });
 
+
+// code for member addition in organisation profile
+var member = new Bloodhound({
+  datumTokenizer: function(d) { return d.tokens; },
+  queryTokenizer: Bloodhound.tokenizers.whitespace,
+  remote: '/queries/Member/?q=%QUERY'
+});
+member.initialize();
+ 
+ 
+$('#member_remote .typeahead').typeahead(null, {
+  name: 'twitter-oss',
+  displayKey: 'name',
+  source: member.ttAdapter(),
+  templates: {
+    suggestion: Handlebars.compile([
+      '<span class="result-container"><span class="result-img"><img height="32px" width="32px" src="{{profile_image_url_https}}"></span>',
+      '<span data-id="{{id}}" class="result-name">{{name}}</span> ',
+      '<span class="result-screen-name"> @{{screen_name}}</span></span>'     
+    ].join(''))
+  }
+});
+
