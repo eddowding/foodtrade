@@ -28,11 +28,18 @@ from django.contrib.auth.decorators import user_passes_test
 import HTMLParser
 from mainapp.classes.Search import Search
 from mainapp.classes.Email import Email
+import uuid
+from twilio.rest import TwilioRestClient 
+from mainapp.classes.mailchimp import MailChimp
+from mainapp.classes.SendSms import send_sms
+
 
 
 next_cursor = -1
 ACCESS_TOKEN = ''
 ACCESS_TOKEN_SECRET =''
+
+
 
 def calculate_time_ago(calc_time):
     time_elapsed = int(time.time()) - calc_time
@@ -326,14 +333,7 @@ def invite(request):
     return render_to_response('invites.html', parameters, context_instance=RequestContext(request))
 
 def handle_invitation_hit(request, invite_id):
-    request.session['invite_id'] = str(invite_id)
-    # analytics_obj = Analytics()
-    # analytics_obj.save({
-    #     'site_visit_time':time.mktime(datetime.datetime.now().timetuple()),
-    #     'invitation_id':str(invite_id),
-    #     'Analytics Type':'Site Visit',
-    #     'request_obj':str(request)
-    #     })
+    request.session['invite_id'] = str(invite_id)    
     return HttpResponseRedirect('/')
 
 def notifications(request):
@@ -433,122 +433,204 @@ def unclaimed_profiles(request):
 
 @user_passes_test(lambda u: u.is_superuser)    
 def transport_mailchimp(request):
-    if request.user.is_authenticated:
+    if request.user.is_authenticated():
         user_profile_obj = UserProfile()
-        all_users = user_profile_obj.get_all_profiles()
+        all_users = user_profile_obj.get_all_profiles('None')
+        print len(all_users)
+        count = 0
         for eachUser in all_users:
             try:
                 if eachUser['email'] == '':
                     continue
                 m = MailChimp()
                 m.subscribe(eachUser)
+                count = count + 1
+                print count
             except:
-                mail_excep_obj = MailChimpException()
+                mail_excep_obj = MailChimpException(list_id='eeea3ac4c6')
                 mail_excep_obj.save_mailchimp_exception(eachUser)
+        return HttpResponse(json.dumps({'success':'True'}))
 
 def sms_receiver(request):
-    # message = request.POST.get('message')
     body = request.GET.get('Body',"")
-    msg_from = request.GET.get('From','')   
-    from twilio.rest import TwilioRestClient 
- 
-    
+    cell_no = request.GET.get('From','')  
+    msg_from = cell_no.replace('+',"")  
+   
     user_profile = UserProfile()
-
-<<<<<<< HEAD
-    # try:
-    #     usr = user_profile.get_profile_by_username(msg_from)
-    #     pic_url_list = []
-    #     if tweet['entities'].get('media')!= None:
-    #         for each in tweet['entities'].get('media'):
-    #             pic_url_list.append(each['media_url'])
-
-    #     h = HTMLParser.HTMLParser()
-=======
+    http_response = ""
     try:
         usr = user_profile.get_profile_by_username(msg_from)
-        pic_url_list = []
-        if tweet['entities'].get('media')!= None:
-            for each in tweet['entities'].get('media'):
-                pic_url_list.append(each['media_url'])
+        username = usr['username']
 
         h = HTMLParser.HTMLParser()
->>>>>>> 374b9e9ffe9741fc268fa87a686c9b40c9e51c0c
         
-    #     tweet_id = str(tweet['id'])
-    #     parent_tweet_id = 0 if tweet['in_reply_to_status_id'] == None else tweet['in_reply_to_status_id']
-    #     tweet_feed = TweetFeed()
-    #     data = {'tweet_id': str(tweet_id),
-    #     'parent_tweet_id': str(parent_tweet_id),
-    #     'status': h.unescape(tweet['text']),                    
-    #     'picture': pic_url_list,
-    #     }          
-    #     tweet_feed.insert_tweet_by_username(usr['username'],data)
 
-        
-    #     display_tweets.append(data)
-    # except:
-    #     tweet_id = str(tweet['id'])
-        
-    #     h = HTMLParser.HTMLParser()
-    #     str_text = body
-    #     if "#join" in str_text:
-    #         str_text = str_text.lower()
-    #         str_text = str_text.strip()
-    #         str_text = str_text.strip()
-    #         str_text = str_text.replace("#join","")
-    #         str_text = str_text.strip()
-    #         import re
+        tweet_id = str(uuid.uuid4())
+        parent_tweet_id = 0 
+        tweet_feed = TweetFeed()
+        data = {'tweet_id': str(tweet_id),
+        'parent_tweet_id': str(parent_tweet_id),
+        'status': h.unescape(body),                    
+        'picture': [],
+        }          
+        tweet_feed.insert_tweet_by_username(msg_from,data)
+        http_response = http_response +"appended new tweet"
+    except:
+        str_text = body
+
+        if "#join" in str_text:
+            str_text = str_text.lower()
+            str_text = str_text.strip()
+            str_text = str_text.strip()
+            str_text = str_text.replace("#join","")
+            str_text = str_text.strip()
+            import re
              
-    #         regex = re.compile(("([a-z0-9!#$%&'*+\/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+\/=?^_`"
-    #                             "{|}~-]+)*(@|\sat\s)(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?(\.|"
-    #                             "\sdot\s))+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?)"))
+            regex = re.compile(("([a-z0-9!#$%&'*+\/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+\/=?^_`"
+                                "{|}~-]+)*(@|\sat\s)(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?(\.|"
+                                "\sdot\s))+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?)"))
 
-    #         user_emails = re.findall(regex, str_text)
+            user_emails = re.findall(regex, str_text)
 
 
-    #         if len(user_emails)>0:
-    #             user_email = user_emails[0][0]
-    #             str_text = str_text.replace(user_email, "")
-    #             location = str_text.strip()
-    #             create_profile_from_mention(user_email, location, tweet)
-    #             # put your own credentials here 
-    #             ACCOUNT_SID = "ACc54d95fd16aa5e6e35dbe60d44f3cc94" 
-    #             AUTH_TOKEN = "69e49be54014f34904e5c08715e0791e" 
-                 
-    #             client = TwilioRestClient(ACCOUNT_SID, AUTH_TOKEN) 
-                 
-    #             client.messages.create(
-    #                 to=msg_from, 
-    #                 from_="+442380000486", 
-    #                 body="You have joined FoodTrade",  
-    #             )
+            if len(user_emails)>0:
+                user_email = user_emails[0][0]
+                str_text = str_text.replace(user_email, "")
+                location = str_text.strip()
+
+               
+                signup_data = {}
+                try:
+                    location_res = Geocoder.geocode(location)
+                    latlng = {"type":"Point","coordinates":[float(location_res.longitude) ,float(location_res.latitude)]}
+                    user_address = location
+                    postal_code = location_res.postal_code
+                except:
+                    try:
+                        location_res = Geocoder.geocode(data['user']['location'])
+                        lat, lon, addr,postal_code = location_res.latitude, location_res.longitude, location_res.postal_code
+                        latlng = {"type":"Point","coordinates" : [float(lon),float(lat)]}
+                        signup_data['location_default_on_error'] = 'true'
+                        user_address = data['user']['location']
+
+
+                    except:
+                        text = "We cannot recognise your location please try again with a postal code or from http://foodtrade.com"
+                        send_sms(cell_no,text)
+                        return 
+
+                
+
+                user_profile_obj = UserProfile()
+                min_user_id = int(user_profile_obj.get_minimum_id_of_user()[0]['minId']) -1
+
+                signup_data = {
+                        'is_unknown_profile': 'false',
+                        'from_mentions': 'true',
+                        'address' : user_address,
+                        'latlng':latlng,
+                        'email' : user_email,
+                        'zip_code': str(postal_code),
+                        'description' : "",
+                        'foods': [],
+                        'name' : msg_from,
+                        'phone_number' : cell_no,
+                        'profile_img':"http://pbs.twimg.com/profile_images/378800000141996074/6a363e3c4f2a84a956c3cb27c50b2ca0_normal.png",
+                        'sign_up_as': 'Individual',
+                        'type_user':[],
+                        'updates': [],
+                        'screen_name': msg_from,
+                        'Organisations':[],
+                        'useruid': min_user_id,
+                        'username':msg_from,
+                        'subscribed':0,
+                        'newsletter_freq':'Weekly'
+                    }
+                    
+                join_time = datetime.datetime.now()
+                join_time = time.mktime(join_time.timetuple())
+                signup_data['join_time'] = int(join_time)                
+                user_profile_obj.create_profile(signup_data)
+
+                '''Send Email to confirm Account SignUp via SMS'''
+                email_object = Email()
+                template_content = str(render_to_response('notice-mail.html', {'data':signup_data,'register_request_type':'SMS', 'phone':cell_no}))
+                template_content = template_content.replace('Content-Type: text/html; charset=utf-8', '')
+                email_object.send_mail('Please confirm your account', template_content=[{'name':'main', 'content':template_content}], to = [{'email':email}])
+
+                try:
+                    '''Transport the user to MailChimp'''
+                    mailchimp_obj = MailChimp()
+                    mailchimp_obj.subscribe(signup_data)
+                except:
+                    pass
+
+                try:
+                    mailchimp_obj_new = MailChimp(list_id='eeea3ac4c6')
+                    mailchimp_obj_new.subscribe(data)                
+                except:
+                    pass
+
+                '''Send Confirmation SMS'''
+                send_sms(cell_no, 'You have successfully joined FoodTrade. Please visit http://foodtrade.com ASAP! Thanks!')
+
+                http_response = http_response +"appended new tweet"
+    return HttpResponse(http_response)
 
 
 
 def send_newsletter(request, substype):
+    if request.GET.get('code') != '11foodtradeESRS22':
+        return HttpResponseRedirect('/')
     user_profile_obj = UserProfile()
-    if substype == 'subscribed':
-        users = user_profile_obj.get_all_profiles('subscribed')
-    elif substype == 'non':
-        users = user_profile_obj.get_all_profiles('unsubscribed')
-    for eachUser in users:
-        search_handle = Search(lon = eachUser['latlng']['coordinates'][0], lat = eachUser['latlng']['coordinates'][1])
-        search_results = search_handle.search_all()['results']
-        temp_result = []
-        no_of_results = 10
-        for res in search_results:
-            if res["result_type"] == res["user"]["username"]:
-                temp_result.append(res)
-            if len(temp_result) >= no_of_results:
-                break
+    substype = substype.capitalize()
+    email_to_user = user_profile_obj.get_profile_by_username(str(request.GET.get('username')))
+    count =0
+    try:
+        subscription_status = email_to_user['subscribed']
+    except:
+        subscription_status = 0
+    '''Generate activity for newsletter'''
+    if subscription_status == 0:
+        search_handle = Search(lon = email_to_user['latlng']['coordinates'][0], lat = email_to_user['latlng']['coordinates'][1], news='daily')
+        # search_handle = Search(lon = email_to_user['latlng']['coordinates'][0], lat = email_to_user['latlng']['coordinates'][1], news="old")
+    else:
+        search_handle = Search(lon = email_to_user['latlng']['coordinates'][0], lat = email_to_user['latlng']['coordinates'][1], news='daily')
+    search_results = search_handle.search_all()['results']
+    '''Make Default value of newsletter 10'''
+    temp_result = []
+    no_of_results = 10
+    for res in search_results:
+        if res["result_type"] == res["user"]["username"] and email_to_user["username"] != res["user"]["username"]:
+            temp_result.append(res)
+        if len(temp_result) >= no_of_results:
+            break
+    results = temp_result
+    '''Generate content for newsletter from activity'''
+    tem_con = str(render_to_response('activity-email.html',{'results':results}, context_instance=RequestContext(request)))
+    tem_con = tem_con.replace('Content-Type: text/html; charset=utf-8', '')
+    try:
+        if len(results) > 0:
+            m = Email()
+            '''Do not send empty newsletter'''
+            if len(email_to_user['email'])>0:
+<<<<<<< HEAD
+                change_pref_link = '<a href="http://www.foodtrade.com/editprofile/' +  str(email_to_user['username']) + '/"' +'\
+                style="color: #336699;font-weight: normal;text-decoration: underline;">Update subscription preferences</a>&nbsp;<br/>'
 
-        results = temp_result
-        tem_con = str(render_to_response('activity-email.html',{'results':results}, context_instance=RequestContext(request)))
-        tem_con = tem_con.replace('Content-Type: text/html; charset=utf-8', '')
-        m = Email()
-        m.send_mail("Activity News Letter", [{'name':'main', 'content':tem_con}], [{'email':'brishi98@gmail.com'}])
-        
+                m.send_mail("Recent FoodTrade activity near you", 
+                    [{'name':'main', 'content':tem_con}, {'name':'update-preferences', 'content':change_pref_link}], 
+                    [{'email':email_to_user['email']}])
+                #pass
+=======
+                if email_to_user['email']:
+                    m.send_mail("New opportunities near you", [{'name':'main', 'content':tem_con}], [{'email':email_to_user['email']}])
+                    #pass
+>>>>>>> d03b69348ba72cd4288230654e2f70dcc95e2623
+            else:
+                return HttpResponse(json.dumps({'status':'0'}))
+    except:
+        return HttpResponse(json.dumps({'status':'0'}))
     return HttpResponse(json.dumps({'status':'1'}))
 
 def create_profile_from_mention(email, location, data):
@@ -596,10 +678,35 @@ def create_profile_from_mention(email, location, data):
             'screen_name': data['user']['screen_name'],
             'Organisations':[],
             'useruid': min_user_id,
-            'username':data['user']['screen_name']
+            'username':data['user']['screen_name'],
+            'subscribed':0,
+            'newsletter_freq':'Weekly'            
         }
-    
+
+    join_time = datetime.datetime.now()
+    join_time = time.mktime(join_time.timetuple())
+    signup_data['join_time'] = int(join_time)
     user_profile_obj.create_profile(signup_data)
 
-    return {'status':1}
+    '''Send Email to confirm Account SignUp via Twitter'''
+    template_content = str(render_to_response('notice-mail.html', {'data':signup_data,'register_request_type':'Twitter'}))
+    template_content = template_content.replace('Content-Type: text/html; charset=utf-8', '')
+    email_object = Email()
+    email_object.send_mail('Please confirm your account', 
+        template_content=[{'name':'main', 'content':template_content}], to = [{'email':email}])
 
+    try:
+        '''Transport the user to MailChimp'''
+        mailchimp_obj = MailChimp()
+        mailchimp_obj.subscribe(signup_data)
+    except:
+        pass
+
+    try:
+        mailchimp_obj_new = MailChimp(list_id='eeea3ac4c6')
+        mailchimp_obj_new.subscribe(data)
+    except:
+        pass
+
+    return {'status':1}
+    

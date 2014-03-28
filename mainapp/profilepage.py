@@ -250,7 +250,10 @@ def edit_profile(request, username):
             '''
             if request.user.is_superuser:
                 try:
-                    userprof = usr_profile.get_profile_by_username(str(username))
+                    if username == 'me':
+                       userprof = usr_profile.get_profile_by_username(str(request.user.username))
+                    else:
+                        userprof = usr_profile.get_profile_by_username(str(username))
                     a = userprof['sign_up_as']
                 except:
                     raise Http404

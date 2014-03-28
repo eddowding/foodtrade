@@ -37,9 +37,11 @@ def get_friends(screen_name, next_cursor, friend_or_follower):
     user_twitter = get_twitter_obj(ACCESS_TOKEN, ACCESS_TOKEN_SECRET)
     if friend_or_follower == 'friends':
         friends = user_twitter.get_friends_list(screen_name = screen_name, count=200, cursor = next_cursor)
+        print len(friends)
         return friends
     else:
         followers = user_twitter.get_followers_list(screen_name = screen_name, count=200, cursor = next_cursor)
+        print len(followers)
         return followers
 
 def register_user_to_mongo(eachFriend, username=''):
@@ -80,6 +82,7 @@ def register_user_to_mongo(eachFriend, username=''):
     friend_obj = Friends()
     print data['screen_name'], "updating Friend"
     friend_obj.save_friend({'username':username, 'friends':eachFriend})
+    print "friend Saved"
     userprofile = UserProfile(host=REMOTE_SERVER_LITE, port=27017, db_name=REMOTE_MONGO_DBNAME, 
         conn_type='remote', username=REMOTE_MONGO_USERNAME, password=REMOTE_MONGO_PASSWORD)
     min_user_id = int(userprofile.get_minimum_id_of_user()[0]['minId']) -1
@@ -140,54 +143,56 @@ def create_users(arg):
         return {'status':1}
     else:    
         '''get all newly registered users and process their friends and followers'''
-        start_time = datetime.datetime.now() - datetime.timedelta(1)
+        start_time = datetime.datetime.now() - datetime.timedelta(7)
         start_time = time.mktime(start_time.timetuple())
         start_time = int(start_time)
 
         user_profile_obj = UserProfile()
         users = user_profile_obj.get_all_profiles_by_time(start_time)
+        print len(users)
 
-    for eachUser in users:        
+    for eachUser in users: 
+        #print eachUser['username']
         process_friends_or_followers(eachUser, 'friends')
         process_friends_or_followers(eachUser, 'followers')
         
-def solve_errors():
-    te = TwitterError()
-    twitter_errors = te.get_unsolved_error('cron')
+# def solve_errors():
+#     te = TwitterError()
+#     twitter_errors = te.get_unsolved_error('cron')
 
-    '''Solve all previous errors'''
-    for eachError in twitter_errors:    
-        '''Make Profile for all the friends who have location'''
-        next_cursor = eachError['next_cursor']
-        if eachError['user_type'] =='friends':
-            users = get_friends(eachError['username'], int(eachError['next_cursor']), 'friends')
-        else:
-            users = get_friends(eachError['username'], int(eachError['next_cursor']), 'followers')
-        try:
-            while(next_cursor !='0'):
-                next_cursor = users['next_cursor']
-                for eachFriend in users['users']:
-                    '''Register this user'''
-                    register_user_to_mongo(eachFriend)
-                if next_cursor != 0:
-                    if eachError['user_type'] =='friends':    
-                        users = get_friends(eachError['username'], next_cursor, 'friends')
-                    else:
-                        users = get_friends(eachError['username'], next_cursor, 'followers')
+#     '''Solve all previous errors'''
+#     for eachError in twitter_errors:    
+#         '''Make Profile for all the friends who have location'''
+#         next_cursor = eachError['next_cursor']
+#         if eachError['user_type'] =='friends':
+#             users = get_friends(eachError['username'], int(eachError['next_cursor']), 'friends')
+#         else:
+#             users = get_friends(eachError['username'], int(eachError['next_cursor']), 'followers')
+#         try:
+#             while(next_cursor !='0'):
+#                 next_cursor = users['next_cursor']
+#                 for eachFriend in users['users']:
+#                     '''Register this user'''
+#                     register_user_to_mongo(eachFriend)
+#                 if next_cursor != 0:
+#                     if eachError['user_type'] =='friends':    
+#                         users = get_friends(eachError['username'], next_cursor, 'friends')
+#                     else:
+#                         users = get_friends(eachError['username'], next_cursor, 'followers')
             
-            '''Normal Flow Update Error Status to Solved'''        
-            twitter_err_obj = TwitterError()
-            twitter_err_obj.save_error({'username':eachError['username'],'error_solve_stat':'false', 'error_type':'cron'}, 
-                {'error_solve_stat':'true'})
-        except:
-            '''If error occurs save in errors'''
-            twitter_err_obj = TwitterError()
-            if eachError['user_type'] =='friends':
-                twitter_err_obj.save_error({'username':eachError['username'],'error_type':'cron',
-                    'next_cursor_str':next_cursor, 'error_solve_stat':'false','user_type':'friends'})
-            else:
-                twitter_err_obj.save_error({'username':eachError['username'],'error_type':'cron',
-                    'next_cursor_str':next_cursor, 'error_solve_stat':'false','user_type':'followers'})
+#             '''Normal Flow Update Error Status to Solved'''        
+#             twitter_err_obj = TwitterError()
+#             twitter_err_obj.save_error({'username':eachError['username'],'error_solve_stat':'false', 'error_type':'cron'}, 
+#                 {'error_solve_stat':'true'})
+#         except:
+#             '''If error occurs save in errors'''
+#             twitter_err_obj = TwitterError()
+#             if eachError['user_type'] =='friends':
+#                 twitter_err_obj.save_error({'username':eachError['username'],'error_type':'cron',
+#                     'next_cursor_str':next_cursor, 'error_solve_stat':'false','user_type':'friends'})
+#             else:
+#                 twitter_err_obj.save_error({'username':eachError['username'],'error_type':'cron',
+#                     'next_cursor_str':next_cursor, 'error_solve_stat':'false','user_type':'followers'})
 
 create_users('new')
 #create_users('Antartica')

@@ -19,6 +19,7 @@ REMOTE_SERVER_STAGING = 'ftstaging.cloudapp.net'
 REMOTE_MONGO_DBNAME = 'foodtrade'
 REMOTE_MONGO_USERNAME = 'ftroot'
 REMOTE_MONGO_PASSWORD = 'ftroot'
+REMOTE_MONGO_PORT = 27017
 #..................Server Settings............................
 
 

@@ -1,16 +1,15 @@
 import mandrill 
 import pymongo
 from pymongo import Connection
-#..................Server Settings............................
-SERVER = 'localhost'
-PORT = 27017
-DB_NAME = 'foodtrade'
+from settingslocal import *
+
 table_name = 'notification'
-#..................Server Settings............................
+
 class Email():
     def __init__ (self):        
-        self.conn = Connection(SERVER,PORT)
-        self.db = self.conn[DB_NAME]
+        self.conn = Connection(LOCAL_SERVER,REMOTE_MONGO_PORT)
+        self.db = self.conn[REMOTE_MONGO_DBNAME]
+        self.db.authenticate(REMOTE_MONGO_USERNAME, REMOTE_MONGO_PASSWORD)
         self.table_name = 'emailbacklogs'
 
     def save_backlogs(self,doc):
