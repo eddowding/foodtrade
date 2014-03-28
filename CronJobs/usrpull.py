@@ -37,9 +37,11 @@ def get_friends(screen_name, next_cursor, friend_or_follower):
     user_twitter = get_twitter_obj(ACCESS_TOKEN, ACCESS_TOKEN_SECRET)
     if friend_or_follower == 'friends':
         friends = user_twitter.get_friends_list(screen_name = screen_name, count=200, cursor = next_cursor)
+        print len(friends)
         return friends
     else:
         followers = user_twitter.get_followers_list(screen_name = screen_name, count=200, cursor = next_cursor)
+        print len(followers)
         return followers
 
 def register_user_to_mongo(eachFriend, username=''):
@@ -80,6 +82,7 @@ def register_user_to_mongo(eachFriend, username=''):
     friend_obj = Friends()
     print data['screen_name'], "updating Friend"
     friend_obj.save_friend({'username':username, 'friends':eachFriend})
+    print "friend Saved"
     userprofile = UserProfile(host=REMOTE_SERVER_LITE, port=27017, db_name=REMOTE_MONGO_DBNAME, 
         conn_type='remote', username=REMOTE_MONGO_USERNAME, password=REMOTE_MONGO_PASSWORD)
     min_user_id = int(userprofile.get_minimum_id_of_user()[0]['minId']) -1
@@ -140,14 +143,16 @@ def create_users(arg):
         return {'status':1}
     else:    
         '''get all newly registered users and process their friends and followers'''
-        start_time = datetime.datetime.now() - datetime.timedelta(1)
+        start_time = datetime.datetime.now() - datetime.timedelta(7)
         start_time = time.mktime(start_time.timetuple())
         start_time = int(start_time)
 
         user_profile_obj = UserProfile()
         users = user_profile_obj.get_all_profiles_by_time(start_time)
+        print len(users)
 
-    for eachUser in users:        
+    for eachUser in users: 
+        #print eachUser['username']
         process_friends_or_followers(eachUser, 'friends')
         process_friends_or_followers(eachUser, 'followers')
         
