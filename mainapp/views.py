@@ -614,9 +614,13 @@ def send_newsletter(request, substype):
             m = Email()
             '''Do not send empty newsletter'''
             if len(email_to_user['email'])>0:
-                if email_to_user['email']:
-                    m.send_mail("Recent FoodTrade activity near you", [{'name':'main', 'content':tem_con}], [{'email':email_to_user['email']}])
-                    #pass
+                change_pref_link = '<a href="http://www.foodtrade.com/editprofile/' +  str(email_to_user['username']) + '/"' +'\
+                style="color: #336699;font-weight: normal;text-decoration: underline;">Update subscription preferences</a>&nbsp;<br/>'
+
+                m.send_mail("Recent FoodTrade activity near you", 
+                    [{'name':'main', 'content':tem_con}, {'name':'update-preferences', 'content':change_pref_link}], 
+                    [{'email':email_to_user['email']}])
+                #pass
             else:
                 return HttpResponse(json.dumps({'status':'0'}))
     except:
