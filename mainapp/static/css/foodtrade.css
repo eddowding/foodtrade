@@ -1031,26 +1031,7 @@ clear: both;
 #single h1 a {
 	margin-top:20px;
 	color: #444; 
-}
-
-#deliveries {
-  max-height: 50px;
-  overflow: hidden;
-  -webkit-transition:all 1s ease-out;
-  -moz-transition:all 1s ease-out;
-  -ms-transition:all 1s ease-out;
-  -o-transition:all 1s ease-out;
-  transition:all 1s ease-out;
-}
-
-#deliveries:hover {
-  max-height: 500px;
-  -webkit-transition:all 1s ease-out;
-  -moz-transition:all 1s ease-out;
-  -ms-transition:all 1s ease-out;
-  -o-transition:all 1s ease-out;
-  transition:all 1s ease-out;
-}
+} 
 
 #header_box {
 	margin-top: 20px;

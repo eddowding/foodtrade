@@ -318,9 +318,9 @@
                       
                             </div>
                             <div class="text">
-                              {% ifequal profile_id user_id %}
+                              {% if user.is_superuser or userinfo.name == screen_name %}
                             <button type="button" class="close" aria-hidden="true" onclick="add_member({{profile_id}}, {{each_mem.id}}, 'third_delete')">&times;</button>
-                            {% endifequal %}
+                            {% endif %}
                               <h5><a href="/profile/{{each_mem.username}}">{{each_mem.name}}</a> 
                               </h5>  
                               <p class="small">{{each_mem.description}}</p>
