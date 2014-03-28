@@ -612,7 +612,7 @@ def send_newsletter(request, substype):
     try:
         if len(results) > 0:
             '''Do not send empty newsletter'''
-            if len(email_to_user['email'])>0 and email not in ['shane@shaneholland.co.uk','theresa@soleshare.net','verazakharov@gmail.com','info@slowfoodedinburgh.com','info@thestorygroup.co.uk','info@foodnewcastle.org','inegoita@cafedirect.co.uk','smallypeople@gmail.com','alarcondiana@gmail.com','ennanamols@gmail.com','megsbakes@gmail.com','Sguzinski@btinternet.com','marcus@londonbiopackaging.com','dawnrayh@gmail.com','info@meanwhilespace.com','him@eddowding.com','myatha123@yahoo.co.uk','samparton@hotmail.com','erin@foodiepages.ca','Perry_air@hotmail.com','mail@goodfoodoxford.org','jjy@moon-light.co.uk','petewestmill@gmail.com', 'cambridge@cropshare.org.uk']:
+            if len(email_to_user['email'])>0:
                 m = Email()
                 m.send_mail("Recent FoodTrade activity near you",[{'name':'main', 'content':tem_con}],[{'email':email_to_user['email']}])
             else:
