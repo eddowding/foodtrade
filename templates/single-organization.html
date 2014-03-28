@@ -124,6 +124,12 @@
 
       {% else %}
       <!-- if not logged in show login prompt -->
+      <div class="btn-group btn-block" rel="tooltip" data-placement="top" title="Login to be a member of {{name}}">
+      <button class="fa fa-smile-o fa-fw text-muted btn btn-default btn-block" style="width:100%;" disabled>
+      I'm a member!
+     </button>
+     </div>
+
       <a href="{% provider_login_url "twitter" process="login" %}" class="btn btn-primary btn-block">Login for more</a>
       {% endif %}
 {% endifnotequal %} 
