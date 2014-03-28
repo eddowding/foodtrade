@@ -7,17 +7,14 @@ import json
 from bson import BSON
 from bson import json_util
 import re
-#..................Server Settings............................
-SERVER = 'localhost'
-PORT = 27017
-DB_NAME = 'foodtrade'
+from settingslocal import *
 table_name = 'notification'
-#..................Server Settings............................
 from myemail import Email
 
 def aggregrate_all(conditions={}):
-    conn = Connection(SERVER,PORT)
-    db = conn[DB_NAME]
+    conn = Connection(LOCAL_SERVER,REMOTE_MONGO_PORT)
+    db = conn[REMOTE_MONGO_DBNAME]
+    db.authenticate(REMOTE_MONGO_USERNAME, REMOTE_MONGO_PASSWORD)    
     all_doc =  db.notification.aggregate(conditions)['result']
     json_doc = json.dumps(list(all_doc),default=json_util.default)
     json_doc = json_doc.replace("$oid", "id")
@@ -54,8 +51,9 @@ def get_all_notification_to_send():
 
 
 def send_daily_email():
-    conn = Connection(SERVER,PORT)
-    db = conn[DB_NAME]
+    conn = Connection(LOCAL_SERVER,REMOTE_MONGO_PORT)
+    db = conn[REMOTE_MONGO_DBNAME]
+    db.authenticate(REMOTE_MONGO_USERNAME, REMOTE_MONGO_PASSWORD)
     notices = get_all_notification_to_send()
     try:
         full_result_set = notices[0]

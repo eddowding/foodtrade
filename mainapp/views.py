@@ -611,12 +611,10 @@ def send_newsletter(request, substype):
     tem_con = tem_con.replace('Content-Type: text/html; charset=utf-8', '')
     try:
         if len(results) > 0:
-            m = Email()
             '''Do not send empty newsletter'''
             if len(email_to_user['email'])>0:
-                if email_to_user['email']:
-                    m.send_mail("New opportunities near you", [{'name':'main', 'content':tem_con}], [{'email':email_to_user['email']}])
-                    #pass
+                m = Email()
+                m.send_mail("Recent FoodTrade activity near you",[{'name':'main', 'content':tem_con}],[{'email':email_to_user['email']}])
             else:
                 return HttpResponse(json.dumps({'status':'0'}))
     except:

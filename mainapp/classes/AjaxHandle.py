@@ -13,7 +13,7 @@ from Foods import AdminFoods
 from mainapp.classes.TweetFeed import TradeConnection, UserProfile, Food, Customer, Organisation, Team, RecommendFood, Notification, Friends, Spam, InviteId, Invites, UnapprovedFood, ApprovedFoodTags, TweeterUser
 from AjaxSearch import AjaxSearch
 from pygeocoder import Geocoder
-from mainapp.profilepage import get_connections, get_all_foods, get_organisations
+from mainapp.profilepage import get_connections, get_all_foods, get_organisations, get_members
 from mainapp.views import get_twitter_obj
 import datetime, time
 from bson.objectid import ObjectId
@@ -569,17 +569,26 @@ class AjaxHandle(AjaxSearch):
                     pass
             except:
                 pass
+            parameters = {}
+            parameters['members'], parameters['logged_member'] = get_members(data['orguid'], request.user.id)
 
-            return HttpResponse("{'status':1}")
+            parameters['profile_id'], parameters['user_id'] = int(data['orguid']), request.user.id
+            return render_to_response('ajax_member.html', parameters, context_instance=RequestContext(request))
+
         else:
             return HttpResponse("{'status':0}")
 
     def deletemember(self, request):
         org = Organisation()
         data = eval(request.POST.get('data'))
+        print 'data', data
         if data !=None and data !="":
             org.delete_member(orguid = data['orguid'], member_id = data['memberuid'])
-            return HttpResponse("{'status':1}")
+            parameters = {}
+            parameters['members'], parameters['logged_member'] = get_members(data['orguid'], request.user.id)
+
+            parameters['profile_id'], parameters['user_id'] = int(data['orguid']), request.user.id
+            return render_to_response('ajax_member.html', parameters, context_instance=RequestContext(request))
         else:
             return HttpResponse("{'status':0}")    
 

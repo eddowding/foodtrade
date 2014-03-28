@@ -533,7 +533,7 @@ class Food():
         self.db_object.update(self.table_name,{'food_name': data['food_name'], 'useruid': data['useruid'], 'deleted': 0},
              update_data)
         twt = TweetFeed()
-        twt.update_data(value['useruid'])
+        twt.update_data(data['useruid'])
 
 
 class Customer():

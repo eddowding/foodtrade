@@ -105,10 +105,10 @@
         {% if logged_member %}
       <label class="fa fa-smile-o text-muted btn btn-default btn-block active" style="width:100%;
   padding: 8px 12px;" title="{{userinfo.full_name}} is member of {{name}}" >
-      <input type="checkbox" checked="checked" class="member-chkbx" onchange="add_member({{profile_id}}, {{user_id}})"><span>I'm a member!</span>
+      <input type="checkbox" checked="checked" class="member-chkbx" onchange="add_member({{profile_id}}, {{user_id}}, 'self')"><span>I'm a member!</span>
       {% else %}
       <label class="fa fa-smile-o fa-fw text-muted btn btn-default btn-block" style="width:100%;" title="{{userinfo.full_name}} is member of {{name}}" >
-      <input type="checkbox" class="member-chkbx" onchange="add_member({{profile_id}}, {{user_id}})"><span>I'm a member!</span>
+      <input type="checkbox" class="member-chkbx" onchange="add_member({{profile_id}}, {{user_id}}, 'self')"><span>I'm a member!</span>
   {% endif %}
  </label></div>
       <!-- Button trigger modal -->
@@ -124,6 +124,12 @@
 
       {% else %}
       <!-- if not logged in show login prompt -->
+      <div class="btn-group btn-block" rel="tooltip" data-placement="top" title="Login to be a member of {{name}}">
+      <button class="fa fa-smile-o fa-fw text-muted btn btn-default btn-block" style="width:100%;" disabled>
+      I'm a member!
+     </button>
+     </div>
+
       <a href="{% provider_login_url "twitter" process="login" %}" class="btn btn-primary btn-block">Login for more</a>
       {% endif %}
 {% endifnotequal %} 
@@ -189,7 +195,7 @@
         <a href="{{facebook_page}}"><i class="fa fa-facebook-square"></i></a>
       {% endif %} 
       {% if userinfo.username %}
-        <a href="http://twitter.com/{{userinfo.username}}"><i class="fa fa-twitter-square"></i></a> 
+        <a href="http://twitter.com/{{userprof.username}}"><i class="fa fa-twitter-square"></i></a> 
       {% endif %} 
       {% if phone_number %}
         <a href="callto:{{phone_number}}"><i class="fa fa-phone-square"></i></a>  
@@ -298,21 +304,11 @@
         <div class="container-responsive clearfix">
         <div class="tab-content">
           <div class="tab-pane active fade in " id="members">
-  <!--     {% if user.is_authenticated %}
-<div>
-  
-      <div class="btn-group btn-block" data-toggle="buttons">
-        {% if logged_member %}
-      <label class="fa fa-check btn btn-default btn-block active" style="width:30%%;" title="{{userinfo.full_name}} is member of {{name}}" >
-      <input type="checkbox" checked="checked" class="member-chkbx" onchange="add_member({{profile_id}}, {{user_id}})">I'm a member!
-      {% else %}
-      <label class="btn btn-default btn-block" style="width:30%;" title="{{userinfo.full_name}} is member of {{name}}" >
-      <input type="checkbox" class="member-chkbx" onchange="add_member({{profile_id}}, {{user_id}})">I'm a member!
-  {% endif %}
- </label></div></div>
-        
-            {% endif %} -->
-            <div class="clearfix"> 
+{% if user.is_superuser or userinfo.name == screen_name %}
+<div id="member_remote" class="well well-sm">
+<input class="typeahead form-control" id="new_member_typeahead" {% if not user.is_authenticated %} rel="tooltip" title="Please login to use this feature" {% endif %} style="width:310px;" type="text" placeholder="add a member"></div>                  
+{% endif %}
+            <div class="clearfix" id="member_ajax"> 
                     {% for each_mem in members %}
                         <div class="card card-business">
                           <div class="content">
@@ -322,7 +318,9 @@
                       
                             </div>
                             <div class="text">
-                            <button type="button" class="close" aria-hidden="true">&times;</button>
+                              {% ifequal profile_id user_id %}
+                            <button type="button" class="close" aria-hidden="true" onclick="add_member({{profile_id}}, {{each_mem.id}}, 'third_delete')">&times;</button>
+                            {% endifequal %}
                               <h5><a href="/profile/{{each_mem.username}}">{{each_mem.name}}</a> 
                               </h5>  
                               <p class="small">{{each_mem.description}}</p>
@@ -486,6 +484,24 @@
    
      <script src="{% static "js/contact.js" %}"></script>
         <script type="text/javascript">
+
+$('#members').on('click', '.tt-suggestion', function(){
+  var member_id = this.getElementsByClassName('result-name')[0];
+  var member_var = $(member_id).attr('data-id');
+  if(member_var == 'search'){
+    $('#my_invite_twitter').click();
+  }
+  else{
+    add_member({{profile_id}}, member_var, 'third_add')
+    $('#new_member_typeahead').val('');
+    $('.tt-hint').val('');
+  }
+});
+$('#new_member_typeahead').on('blur', function(){
+  $('#new_member_typeahead').val('');
+});
+
+
     map_lat={{ loc.lat }};
     map_lon = {{ loc.lon }};
 connections = {{members_str | safe}};
