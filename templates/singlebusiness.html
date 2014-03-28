@@ -443,6 +443,9 @@
             <a href="#" id="more" class="dropdown-toggle" data-toggle="dropdown">More <b class="caret"></b></a>
             <ul class="dropdown-menu" role="menu" aria-labelledby="more">
               <li><a href="#organisations" data-toggle="tab">Organisations {% if userprof.organisation_connection_no != 0 %}<span class="badge pull-right">{{userprof.organisation_connection_no}}</span>{% endif %}</a></li> 
+
+              <li><a href="#deliveries" tabindex="-1" data-toggle="tab">Deliveries</a></li> 
+
               <li><a href="#customers" tabindex="-1" data-toggle="tab">Customers {% if customers|length != 0 %}<span class="badge pull-right">{{customers|length}}</span>{% endif %}</a></li> 
             </ul>
           </li>
@@ -458,18 +461,7 @@
         <div class="tab-content">
           {% if show_foods %}
           <div class="tab-pane active fade in " id="produce">
-
-
-      {% if user.is_authenticated %}
-      {% if deliverables %}
-      <div class="small alert alert-info" id="deliveries">
-        <h5 style="margin-top: 0;"><i class="fa fa-truck"></i>  Deliveries</h5>
-        {{deliverables|linebreaks}}
-      </div>
-      {% endif %}
-      {% endif %}
-
-
+ 
 
           {% if user.is_authenticated %}
           <div class="row">
@@ -834,6 +826,17 @@
                 {% endfor %}
             </div>
           </div> <!-- end organisations -->
+
+          <div class="tab-pane fade" id="deliveries">
+            {% if user.is_authenticated %}
+            {% if deliverables %}
+            <div class="small alert alert-info" id="deliveries">
+              <h5 style="margin-top: 0;"><i class="fa fa-truck"></i>  Deliveries</h5>
+              {{deliverables|linebreaks}}
+            </div>
+            {% endif %}
+            {% endif %}
+          </div>
 
           <div class="tab-pane fade" id="customers">
         {% if user.is_authenticated %}
