@@ -304,10 +304,10 @@
         <div class="container-responsive clearfix">
         <div class="tab-content">
           <div class="tab-pane active fade in " id="members">
-  
-<div id="member_remote">
-<input class="typeahead form-control" id="new_member_typeahead" {% if not user.is_authenticated %} rel="tooltip" title="Please login to use this feature" {% endif %} style="width:310px;" type="text" placeholder="Type member..."></div>                  
-
+{% if user.is_superuser or userinfo.name == screen_name %}
+<div id="member_remote" class="well well-sm">
+<input class="typeahead form-control" id="new_member_typeahead" {% if not user.is_authenticated %} rel="tooltip" title="Please login to use this feature" {% endif %} style="width:310px;" type="text" placeholder="add a member"></div>                  
+{% endif %}
             <div class="clearfix" id="member_ajax"> 
                     {% for each_mem in members %}
                         <div class="card card-business">
