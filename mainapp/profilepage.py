@@ -65,6 +65,15 @@ def display_profile(request, username):
             food_form.save()
         
     parameters = {}
+    
+    # code to get profile banner url
+    try:
+        account = SocialAccount.objects.get(user__username = username)
+        banner_url = account.extra_data['profile_banner_url']
+        parameters['banner_url'] = banner_url+'/web_retina'
+    except:
+        parameters['banner_url'] = 'none'
+
     food_form = FoodForm()
     parameters['form'] = food_form
     foo = AdminFoods()
