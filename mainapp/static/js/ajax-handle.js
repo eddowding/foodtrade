@@ -142,8 +142,8 @@ function add_food(prof_id, user_id, ind_status){
 }
 
 function food_ajax(data){
-// $('.search-choice').remove();
-// $("#myselect").val('').trigger('chosen:updated');
+$('.search-choice').remove();
+$("#myselect").val('').trigger('chosen:updated');
 $('#food_tbody').html(data);
 }
 function recommend_food(logged_in_id, food_name, prof_id, username, my_this){

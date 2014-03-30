@@ -65,15 +65,8 @@ def display_profile(request, username):
             food_form.save()
         
     parameters = {}
-    
-    # code to get profile banner url
-    try:
-        account = SocialAccount.objects.get(user__username = username)
-        banner_url = account.extra_data['profile_banner_url']
-        parameters['banner_url'] = banner_url+'/web_retina'
-    except:
-        parameters['banner_url'] = 'none'
-
+    parameters['banner_url'] = get_banner_url(username)
+    print parameters['banner_url']
     food_form = FoodForm()
     parameters['form'] = food_form
     foo = AdminFoods()
@@ -767,6 +760,16 @@ def search_orgs_business(request, type_user):
         return HttpResponse(json.dumps(final_organisation))
     else:
         return HttpResponse(json.dumps({'status':0, 'message':'You are not authorized to perform this action.'}))        
+
+def get_banner_url(username):
+    # code to get profile banner url
+    try:
+        account = SocialAccount.objects.get(user__username = username)
+        banner_url = account.extra_data['profile_banner_url']
+        banner_url = banner_url+'/web_retina'
+    except:
+        banner_url = 'none'
+    return banner_url
 
 from math import radians, cos, sin, asin, sqrt
 
