@@ -29,15 +29,21 @@
       </div>                     
     </div>
   </div>
-  <div class="row">
+  <div class="row"> 
     <div class="col-xs-6"> 
       <input type="text" name="produce" value="" class="form-control" placeholder="Food / drink (eg 'apples', 'veg curry')"  />  
     </div>
     <div class="col-xs-6"> 
       
-      <input type="text" name="qty" value="" class="form-control" placeholder="Quanity (number)"  />  
 
-      <select id="quantityUnit" style="z-index: 0;" name="_fmr.b._0.qu" class="ui-dropdown ui-dropdown-system ui-control-l" data-widget-cid="widget-14" data-trackid="6442">        <option value="Pieces">Pieces</option>
+    <div class="col-xs-6">
+      <input type="text" name="qty" value="" class="form-control" placeholder="Quanity (number)"  />  
+    </div>
+
+    <div class="col-xs-6">
+
+      <select id="qtyUnit" class="form-control">        
+  <option value="Pieces">Pieces</option>
   <option value="20' Container">20' Container</option>
   <option value="40' Container">40' Container</option>
   <option value="40' HQ Container">40' HQ Container</option>
@@ -87,9 +93,10 @@
   <option value="Yard/Yards">Yard/Yards</option>
 
     </select>
+    </div> 
     </div>
   </div>
-  <div class="row">
+  <div class="row" style="margin: 10px 0;">
     <div class="col-xs-6"> 
       <input type="text" name="Price" value="" class="form-control" placeholder="Price (inc £/$/&euro;)"  />  
     </div>
