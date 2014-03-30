@@ -429,13 +429,15 @@
     <div class="row">
      <div class="col-md-12">
         <ul class="nav nav-tabs">
-          {% if show_foods %}
-          <li class="active"><a href="#produce" data-toggle="tab">Foods {% if userprof.food_no != 0 %}<span class="badge">{{userprof.food_no}}</span>{% endif %}</a></li>
-          {% endif %} 
 
-          <li  {% if not show_foods %} class="active" {% endif %}>
+
+          <li class="active">
             <a href="#connections" data-toggle="tab" onclick="set_width()">Connections {% if userprof.trade_connections_no != 0 %}<span class="badge">{{userprof.trade_connections_no}}</span>{% endif %}</a> 
           </li>
+
+          {% if show_foods %}
+          <li><a href="#produce" data-toggle="tab">Foods {% if userprof.food_no != 0 %}<span class="badge">{{userprof.food_no}}</span>{% endif %}</a></li>
+          {% endif %} 
 
           
           <li><a href="#activity" data-toggle="tab">Updates  {% if updates_count != 0 %}<span class="badge">{{updates_count}}</span>{% endif %}</a></li>     
@@ -460,7 +462,7 @@
 
         <div class="tab-content">
           {% if show_foods %}
-          <div class="tab-pane active fade in " id="produce">
+          <div class="tab-pane   fade in " id="produce">
  
 
           {% if user.is_authenticated %}
@@ -628,7 +630,7 @@
           </div> <!-- end produce -->
           {% endif %}
 
-          <div class="tab-pane fade {% if not show_foods %} in active {% endif %}" id="connections">
+          <div class="tab-pane fade in active" id="connections">
           {% if user.is_authenticated %}
             <div class="well well-sm">  
             <div class="form-inline"  role="form">
@@ -677,16 +679,20 @@
 <div class="clearfix">
 {% if userprof.b_conn_no != 0 %}
           <h4><a name="buyfrom"></a>We buy from <small>these suppliers</small></h4>
-          <div class="ftstrip ftstrip-mini"></div>
-           <div class="pull-left" id="buyers-cards">
+          <div class="ftstrip ftstrip-mini"></div> 
+
+            <div class="clearfix isotope js-isotope" data-isotope-options='{ "itemSelector": ".card" }' id="buyers-cards">
           {% for each in connections %}
               {% if each.relation == "buyer" or each.relation == "both" %}
                   <div class="card card-business">
+
+                    
+
                     <div class="content">
-                      <div class="pull-left">
+                      <div class="text-center">
                         <img src="{{each.photo}}" alt="{{each.name}}"
-                        class="img-rounded img-responsive" style="width:40px;" /> 
-                
+                        class="img-thumbnail img-responsive" style="width:73px;" /> 
+ 
                       </div>
                       <div class="text">
                       {% ifequal profile_id user_id %}
@@ -696,23 +702,28 @@
                       {% endifequal %}
                         <h5><a href="/profile/{{each.username}}">{{each.name}}</a> 
                         </h5>  
-                        <p class="small">{{each.description|truncatechars:80}}</p>
+                        <p class="small">{{each.description|truncatechars:40}}</p>
                       </div>
                     </div>
+
+
                     <div class="numbers clearfix">
-                      {% if each.type|length == 0 or each.type|first == '' %}
-                      {% else %}
-                      <div class="tags tags-biztype pull-left">  
+                      <p class="small text-center">
+                        <span rel="tooltip" title="{{each.food_no}} foods" class="pull-left"><i class="fa fa-cutlery"></i> {{each.food_no}}</span>
+                        <span rel="tooltip" title="{{each.trade_conn_no}} connections"><i class="fa fa-link"></i> {{each.trade_conn_no}}</span>
+                        <span rel="tooltip" title="{{each.org_conn_no}} organisations" class="pull-right"><i class="fa fa-group"></i> {{each.org_conn_no}}</span> 
+                      </p>
+                    </div>
+                    {% if each.type|length == 0 or each.type|first == '' %}
+                    {% else %}
+                    <div class="numbers type text-center clearfix">
+                      <div class="tags tags-biztype pull-lef t">  
                         {% for e in each.type %}
                        <a href="/activity/?b={{e}}">{{e}}</a>
                        {% endfor %}
-                      </div>{% endif %}
-                      <p class="small pull-right">
-                        <span rel="tooltip" title="{{each.food_no}} foods"><i class="fa fa-cutlery"></i> {{each.food_no}}</span>
-                        <span rel="tooltip" title="{{each.trade_conn_no}} connections"><i class="fa fa-link"></i> {{each.trade_conn_no}}</span>
-                        <span rel="tooltip" title="{{each.org_conn_no}} organisations"><i class="fa fa-group"></i> {{each.org_conn_no}}</span> 
-                      </p>
+                      </div>
                     </div>
+                    {% endif %}
                   </div> 
                   {% endif %}
                   {% endfor %}
@@ -725,16 +736,18 @@
           <h4 style="margin-top: 50px;">We sell to <small>these stockists</small></h4>  
 
           <div class="ftstrip ftstrip-mini"></div>
-           <div class="pull-left" id="seller-cards">
+           <div class="clearfix isotope js-isotope" data-isotope-options='{ "itemSelector": ".card" }' id="seller-cards">
           {% for each in connections %}
               {% if each.relation == "seller" or each.relation == "both" %}
                   <div class="card card-business">
-                    <div class="content">
-                      <div class="pull-left">
+                    <div class="content"> 
+
+                      <div class="text-center">
                         <img src="{{each.photo}}" alt="{{each.name}}"
-                        class="img-rounded img-responsive" style="width:40px;" /> 
-                
+                        class="img-thumbnail img-responsive" style="width:73px;" /> 
+ 
                       </div>
+
                       <div class="text">
                     {% ifequal profile_id user_id %}
                       <button type="button" class="close" aria-hidden="true" onclick="conn_handler('close_sell_to', {{profile_id}}, {{each.id}})">&times;</button>
@@ -746,20 +759,24 @@
                         <p class="small">{{each.description|truncatechars:80}}</p>
                       </div>
                     </div>
+
                     <div class="numbers clearfix">
-                      {% if each.type|length == 0 or each.type|first == '' %}
-                      {% else %}
-                      <div class="tags tags-biztype pull-left">  
+                      <p class="small text-center">
+                        <span rel="tooltip" title="{{each.food_no}} foods" class="pull-left"><i class="fa fa-cutlery"></i> {{each.food_no}}</span>
+                        <span rel="tooltip" title="{{each.trade_conn_no}} connections"><i class="fa fa-link"></i> {{each.trade_conn_no}}</span>
+                        <span rel="tooltip" title="{{each.org_conn_no}} organisations" class="pull-right"><i class="fa fa-group"></i> {{each.org_conn_no}}</span> 
+                      </p>
+                    </div>
+                    {% if each.type|length == 0 or each.type|first == '' %}
+                    {% else %}
+                    <div class="numbers type text-center clearfix">
+                      <div class="tags tags-biztype pull-lef t">  
                         {% for e in each.type %}
                        <a href="/activity/?b={{e}}">{{e}}</a>
                        {% endfor %}
-                      </div>{% endif %}
-                      <p class="small pull-right">
-                        <span rel="tooltip" title="{{each.food_no}} foods"><i class="fa fa-cutlery"></i> {{each.food_no}}</span>
-                        <span rel="tooltip" title="{{each.trade_conn_no}} connections"><i class="fa fa-link"></i> {{each.trade_conn_no}}</span>
-                        <span rel="tooltip" title="{{each.org_conn_no}} organisations"><i class="fa fa-group"></i> {{each.org_conn_no}}</span> 
-                      </p>
+                      </div>
                     </div>
+                    {% endif %}
                   </div> 
                   {% endif %}
                   {% endfor %}
