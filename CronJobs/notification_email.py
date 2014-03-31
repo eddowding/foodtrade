@@ -8,8 +8,14 @@ from bson import BSON
 from bson import json_util
 import re
 from settingslocal import *
-table_name = 'notification'
-from myemail import Email
+
+CLASS_PATH = '/srv/www/live/foodtrade-env/foodtrade/mainapp/classes'
+SETTINGS_PATH = '/srv/www/live/foodtrade-env/foodtrade/foodtrade'
+
+sys.path.insert(0, CLASS_PATH)
+sys.path.insert(1,SETTINGS_PATH)
+
+from Email import Email
 
 def aggregrate_all(conditions={}):
     conn = Connection(LOCAL_SERVER,REMOTE_MONGO_PORT)
