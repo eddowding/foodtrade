@@ -13,13 +13,15 @@ from Foods import AdminFoods
 from mainapp.classes.TweetFeed import TradeConnection, UserProfile, Food, Customer, Organisation, Team, RecommendFood, Notification, Friends, Spam, InviteId, Invites, UnapprovedFood, ApprovedFoodTags, TweeterUser
 from AjaxSearch import AjaxSearch
 from pygeocoder import Geocoder
-from mainapp.profilepage import get_connections, get_all_foods, get_organisations, get_members
+from mainapp.profilepage import get_connections, get_all_foods, get_organisations, get_members, get_banner_url
 from mainapp.views import get_twitter_obj
 import datetime, time
 from bson.objectid import ObjectId
 from mainapp.views import calculate_time_ago
 from django.contrib.auth.models import User
 from mainapp.bitly import construct_invite_tweet, shorten_url
+
+
 # from validate_email import validate_email
 # consumer_key = 'seqGJEiDVNPxde7jmrk6dQ'
 # consumer_secret = 'sI2BsZHPk86SYB7nRtKy0nQpZX3NP5j5dLfcNiP14'
@@ -267,7 +269,7 @@ class AjaxHandle(AjaxSearch):
                     pass
             parameters = {}
             # parameters['connections'], parameters['logged_conn'] = get_connections(userprof['useruid'], request.user.id)
-
+            
             parameters['connections'], parameters['conn'] = get_connections(int(data['prof_id']), request.user.id)
             parameters['connections_str'] = str(json.dumps(parameters['connections']))
             parameters['profile_id'], parameters['user_id'] = int(data['prof_id']), request.user.id
