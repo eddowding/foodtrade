@@ -13,118 +13,130 @@
 
     <div class="col-xs-12 col-sm-5 {% if not user.is_authenticated %} col-md-offset-1 col-sm-offset-1 {% endif %}" id="activity_switcher">
 
-<div id="postupdate" class="clearfix well well-sm" style="margin-top: 10px;  border: 1px solid #ccc; padding: 10px;">
+<div id="postupdate" class="clearfix well well-sm hidden" style="margin-top: 10px;  border: 1px solid #ccc; padding: 10px;">
 
-<form action="r" method="post" accept-charset="utf-8" class="form" role="form">   <legend>Sign Up</legend>
-  <h4>It's free and always will be.</h4>
-  <div class="row">
-    <div class="col-xs-3">
-      I would like to                     
-    </div>
-    <div class="col-xs-9">    
-      <div class="btn-group">
-        <button type="button" class="btn btn-default">buy</button>
-        <button type="button" class="btn btn-default">sell</button>
-        <button type="button" class="btn btn-default">offer surplus</button>
+<form action="r" method="post" accept-charset="utf-8" class="form" role="form">   
+  
+  <div class="row"> 
+    <div class="col-xs-12">   
+
+     <p style="line-height: 2.5; margin: 0;"><strong>I'd like to...</strong></p>
+      <div class="btn-group btn-block" style="width:100%;">
+        <button type="button" class="btn btn-default"  style="width:33%;"><i class="fa fa-sign-in fa-fw"></i> buy</button>
+        <button type="button" class="btn btn-default" style="width:33%;"><i class="fa fa-sign-out fa-fw"></i> sell</button>
+        <button type="button" class="btn btn-default" style="width:33%;"><i class="fa fa-random fa-fw"></i> offer surplus</button>
       </div>                     
     </div>
   </div>
   <div class="row"> 
     <div class="col-xs-6"> 
-      <input type="text" name="produce" value="" class="form-control" placeholder="Food / drink (eg 'apples', 'veg curry')"  />  
+      <input type="text" name="produce" value="" class="form-control" placeholder="What?"  />  
+      <p class="help-block">eg 'apples', 'veg curry'</p>
     </div>
     <div class="col-xs-6"> 
       
-
-    <div class="col-xs-6">
-      <input type="text" name="qty" value="" class="form-control" placeholder="Quanity (number)"  />  
+<div class="row">
+    <div class="col-xs-7" style="padding-right:0;">
+      <input type="text" name="qty" value="" class="form-control" placeholder="How much?"  />  
     </div>
 
-    <div class="col-xs-6">
+    <div class="col-xs-5" style="padding-left: 0;">
 
-      <select id="qtyUnit" class="form-control">        
+      <select id="qtyUnit" class="form-control btn-sm">        
+  <option value="">Select unit</option>   
   <option value="Pieces">Pieces</option>
   <option value="20' Container">20' Container</option>
   <option value="40' Container">40' Container</option>
-  <option value="40' HQ Container">40' HQ Container</option>
-  <option value="Acre/Acres">Acre/Acres</option>
+  <option value="Acre/Acres">Acre(s)</option>
     <option value="Bags">Bags</option>
-  <option value="Barrel/Barrels">Barrel/Barrels</option>
+  <option value="Barrel/Barrels">Barrel(s)</option>
     <option value="Boxes">Boxes</option>
-  <option value="Bushel/Bushels">Bushel/Bushels</option>
-  <option value="Case/Cases">Case/Cases</option>
-  <option value="Centimeter/Centimeters">Centimeter/Centimeters</option>
-  <option value="Cubic Meter/Cubic Meters">Cubic Meter/Cubic Meters</option>
-  <option value="Cubic Yard/Cubic Yards">Cubic Yard/Cubic Yards</option>
-  <option value="Dozen/Dozens">Dozen/Dozens</option>
-  <option value="Dram/Drams">Dram/Drams</option>
-  <option value="Fluid Ounce/Fluid Ounces">Fluid Ounce/Fluid Ounces</option>
-  <option value="Foot">Foot</option>
-  <option value="Gallon/Gallons">Gallon/Gallons</option>
-  <option value="Gill/Gills">Gill/Gills</option>
-  <option value="Hectare/Hectares">Hectare/Hectares</option>
-  <option value="Inch/Inches">Inch/Inches</option>
-  <option value="Kilogram/Kilograms">Kilogram/Kilograms</option>
-  <option value="Liter/Liters">Liter/Liters</option>
-  <option value="Long Ton/Long Tons">Long Ton/Long Tons</option>
-    <option value="Meter">Meter</option>
-  <option value="Metric Ton/Metric Tons">Metric Ton/Metric Tons</option>
-  <option value="Mile/Miles">Mile/Miles</option>
-  <option value="Ounce/Ounces">Ounce/Ounces</option>
-  <option value="Pairs">Pairs</option>
-  <option value="Pallet/Pallets">Pallet/Pallets</option>
-  <option value="Parcel/Parcels">Parcel/Parcels</option>
-  <option value="Pint/Pints">Pint/Pints</option>
-  <option value="Pound/Pounds">Pound/Pounds</option>
-  <option value="Quart/Quarts">Quart/Quarts</option>
-  <option value="Quarter/Quarters">Quarter/Quarters</option>
-    <option value="Rolls">Rolls</option>
+  <option value="Bushel/Bushels">Bushel(s)</option>
+  <option value="Case/Cases">Case(s)</option>
+  <option value="Centimeter/Centimeters">Centimeter(s)</option>
+  <option value="Cubic Meter/Cubic Meters">Cubic Meter(s)</option>
+  <option value="Cubic Yard/Cubic Yards">Cubic Yard(s)</option>
+  <option value="Dozen/Dozens">Dozen</option>   
+  <option value="Gallon/Gallons">Gallon(s)</option> 
+  <option value="Hectare/Hectares">Hectare(s)</option> 
+  <option value="Kilogram/Kilograms">Kilogram(s)</option>
+  <option value="Liter/Liters">Litre(s)</option> 
+  <option value="Meter">Meter(s)</option>    
+  <option value="Pallet/Pallets">Pallet(s)</option> 
+  <option value="Pint/Pints">Pint(s)</option>
+  <option value="Pound/Pounds">Pound(s)</option>  
+    <option value="Rolls">Roll(s)</option>
     <option value="Sets">Sets</option>
-  <option value="Sheet/Sheets">Sheet/Sheets</option>
-  <option value="Short Ton/Short Tons">Short Ton/Short Tons</option>
-  <option value="Square Mile/Square Miles">Square Mile/Square Miles</option>
-  <option value="Square Yard/Square Yards">Square Yard/Square Yards</option>
-  <option value="Stone/Stones">Stone/Stones</option>
-  <option value="Strand/Strands">Strand/Strands</option>
-  <option value="Tonne/Tonnes">Tonne/Tonnes</option>
-    <option value="Tons">Tons</option>
-  <option value="Tray/Trays">Tray/Trays</option>
-    <option value="Unit/Units">Unit/Units</option>
-  <option value="Yard/Yards">Yard/Yards</option>
+  <option value="Sheet/Sheets">Sheet(s)</option>  
+  <option value="Stone/Stones">Stone(s)</option> 
+  <option value="Tonne/Tonnes">Ton(s)</option> 
+  <option value="Tray/Trays">Tray(s)</option>
+    <option value="Unit/Units">Unit(s)</option>
+  <option value="Yard/Yards">Yard(s)</option>
 
     </select>
+    </div>
     </div> 
     </div>
   </div>
-  <div class="row" style="margin: 10px 0;">
+  <div class="row">
     <div class="col-xs-6"> 
-      <input type="text" name="Price" value="" class="form-control" placeholder="Price (inc £/$/&euro;)"  />  
+      <input type="text" name="Price" value="" class="form-control" placeholder="Price"  />  
+
+      <p class="help-block">include the currency (inc £/$/&euro;)</p>
     </div>
     <div class="col-xs-6"> 
-      <div class="input-group date">
-        <input type="text" class="form-control"><span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
+      <div class="input-group">
+        <input type="text" class="form-control" placeholder="When?"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
       </div>
+      <p class="help-block">try 'next Friday', '8 sept 17'</p>
     </div>
   </div>
   <div class="row">
     <div class="col-xs-12"> 
-      <textarea class="form-control" rows="3" placeholder="description"></textarea>
+      <textarea class="form-control" rows="3" placeholder="Add detail: eg quality, variety, grade, packaging, etc.  "></textarea>
+      <p class="help-block">
+      Add detail: eg quality, variety, grade, packaging, etc.
+</p>
     </div> 
   </div>
+  <div class="row" style="margin-top: 5px;">
+            <div class="col-xs-7">
+              <ul class="list-inline small" style="margin-bottom:0;">
+                <li class="text-muted">Also send to </li>
+                <li> 
+                  <label>
+                    <input type="checkbox" id="post_to_twitter" name="post_to_twitter" value="1" checked="checked">
+                    <i class="fa fa-twitter-square fa-lg text-muted"></i>
+                  </label>
+                </li>
+                <li> 
+                  <label rel="tooltip" title="Post to Facebook, coming soon!">
+                    <input type="checkbox" name="post_to_facebook" value="1" disabled > 
+                    <i class="fa fa-facebook-square fa-lg text-muted"></i>
+                  </label>
+                </li>
+                <li> 
+                  <label rel="tooltip" title="Follower newsletters, coming soon!">
+                    <input type="checkbox" name="post_to_newsletter" value="1" disabled> 
+                    <i class="fa fa-list-alt fa-lg text-muted"></i> 
+                  </label>
+                </li> 
+              </ul> 
+            </div>
+            <div class="col-xs-5 text-right">
+              <button type="button" id="btn_update_activity" class="btn  btn-success pull-right" {% if not user.is_authenticated %}  title="Please login to use this feature." {% endif %} onclick="post_new_status();"> Post update</button>
+            </div>
+          </div>
+ 
 
+      <a href="#" class="small pull-left" style="position: relative;
+top: 0px;">Switch to basic form</a>
 </form>
 
 
-
-      
-
- Produce name: [type & autocomplete, required]
-
-Tweet this?  Yes / No
-
-{Show advanced form --> switches to show just text area}
-
-[  Post / submit buttom  ]
+ 
+ 
  
 
 </div>
@@ -347,14 +359,7 @@ show_food_filters(food_filters, 0);
 show_organisation_filters(organisation_filters, 0);
 show_business_filters(business_filters, 0);
 
-
-$('#postupdate .input-group.date').datepicker({
-    format: "dd/mm/yy",
-    startDate: "today",
-    endDate: "+3y",
-    autoclose: true,
-    todayHighlight: true
-});
+ 
 
            </script>
 
