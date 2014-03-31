@@ -694,7 +694,7 @@
                     {% endif %}">
 
                     
-
+                    <!-- Use the banner url as {{each.banner_url}} -->
                     <div class="content">
                       <div class="text-center">
                         <img src="{{each.photo}}" alt="{{each.name}}"
@@ -747,6 +747,7 @@
           {% for each in connections %}
               {% if each.relation == "seller" or each.relation == "both" %}
                   <div class="card card-business">
+                    <!-- Use the banner url as {{each.banner_url}} -->
                     <div class="content"> 
 
                       <div class="text-center">
@@ -826,6 +827,7 @@
             {% endif %}
           {% for each in organisations %}
                 <div class="card card-organisation">
+                  <!-- Use the banner url as {{each.banner_url}} -->
                   <div class="content">
                     <div class=" text-center">
                       <img src="{{each.photo}}" alt="{{each.name}}"
@@ -870,6 +872,7 @@
            {% for each in customers %}
 
               <div class="card card-individual">
+                <!-- Use the banner url as {{each.banner_url}} -->
                 <div class="content">
                   <img src="{{each.photo}}" alt="{{each.name}}"
                   class="img-rounded img-responsive pull-left" style="width:40px;" />

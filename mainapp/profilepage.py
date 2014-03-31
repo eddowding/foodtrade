@@ -66,7 +66,6 @@ def display_profile(request, username):
         
     parameters = {}
     parameters['banner_url'] = get_banner_url(username)
-    print parameters['banner_url']
     food_form = FoodForm()
     parameters['form'] = food_form
     foo = AdminFoods()
@@ -465,7 +464,8 @@ def get_customers(user_id, logged_id=None):
          'photo': usr_pr['profile_img'],
          'username' : usr_pr['username'],
          'latitude': usr_pr['latlng']['coordinates'][1],
-         'longitude': usr_pr['latlng']['coordinates'][0]
+         'longitude': usr_pr['latlng']['coordinates'][0],
+         'banner_url': get_banner_url(useruid = int(each['customeruid']))
          })
     return final_customers[:10], logged_customer
 
@@ -504,7 +504,8 @@ def get_connections(user_id, logged_in_id = None):
              'org_conn_no': user_info.organisation_connection_no,
              'latitude': usr_pr['latlng']['coordinates'][1],
              'longitude': usr_pr['latlng']['coordinates'][0],
-             'relation': 'buyer'
+             'relation': 'buyer',
+             'banner_url': get_banner_url(useruid = int(each['c_useruid']))
              })
             
         except:
@@ -533,7 +534,8 @@ def get_connections(user_id, logged_in_id = None):
              'org_conn_no': user_info.organisation_connection_no,
              'latitude': usr_pr['latlng']['coordinates'][1],
              'longitude': usr_pr['latlng']['coordinates'][0],
-             'relation': 'buyer'
+             'relation': 'buyer',
+             'banner_url': get_banner_url(useruid = int(each['b_useruid']))
              }
             if data not in final_connections:
                 data['relation'] = 'seller'
@@ -580,6 +582,7 @@ def get_members(user_id, logged_in_id = None):
              'org_conn_no': user_info.organisation_connection_no,
              'latitude': usr_pr['latlng']['coordinates'][1],
              'longitude': usr_pr['latlng']['coordinates'][0],
+             'banner_url': get_banner_url(useruid = int(each['memberuid']))
              })
         except:
             pass
@@ -603,7 +606,8 @@ def get_organisations(user_id):
          'name': myname,
          'description': usr_pr['description'],
          'photo': usr_pr['profile_img'],
-         'username' : usr_pr['username']
+         'username' : usr_pr['username'],
+         'banner_url': get_banner_url(useruid = int(each['orguid']))
          })
     return final_orgs[:10]
 
@@ -658,7 +662,8 @@ def get_team(user_id, logged_in_id=None):
              'name': myname,
              'description': usr_pr['description'],
              'photo': usr_pr['profile_img'],
-             'username' : usr_pr['username']
+             'username' : usr_pr['username'],
+             'banner_url': get_banner_url(useruid = int(each['memberuid']))
              })
         except:
             pass
@@ -761,10 +766,13 @@ def search_orgs_business(request, type_user):
     else:
         return HttpResponse(json.dumps({'status':0, 'message':'You are not authorized to perform this action.'}))        
 
-def get_banner_url(username):
+def get_banner_url(username=None, useruid=None):
     # code to get profile banner url
     try:
-        account = SocialAccount.objects.get(user__username = username)
+        if username!=None:
+            account = SocialAccount.objects.get(user__username = username)
+        elif useruid!=None:
+            account = SocialAccount.objects.get(user__id = int(useruid))
         banner_url = account.extra_data['profile_banner_url']
         banner_url = banner_url+'/web_retina'
     except:

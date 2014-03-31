@@ -9,9 +9,11 @@ from geolocation import get_addr_from_ip
 import json
 import pprint
 from django.http import Http404
+from mainapp.profilepage import get_banner_url
 
 def get_post_parameters(request, tweet_id):
     parameters={}
+
     user_profile_obj = UserProfile()
     parameters.update(csrf(request))
     if request.user.is_authenticated():
@@ -40,6 +42,10 @@ def get_post_parameters(request, tweet_id):
     keyword = ''
     single_tweet = set_time_date(single_tweet[0],keyword)
     results = search_handle.get_direct_children(str(tweet_id))
+
+    # send banner url
+    parameters['banner_url'] = get_banner_url(single_tweet.user.username)
+
     if results!= None:
         for i in range(len(results)):
             results[i] = set_time_date(results[i],keyword)
