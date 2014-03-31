@@ -65,6 +65,15 @@ def display_profile(request, username):
             food_form.save()
         
     parameters = {}
+    
+    # code to get profile banner url
+    try:
+        account = SocialAccount.objects.get(user__username = username)
+        banner_url = account.extra_data['profile_banner_url']
+        parameters['banner_url'] = banner_url+'/web_retina'
+    except:
+        parameters['banner_url'] = 'none'
+
     food_form = FoodForm()
     parameters['form'] = food_form
     foo = AdminFoods()
@@ -717,9 +726,15 @@ def search_orgs_business(request, type_user):
         userpro = UserProfile()
         profile_user_obj = userpro.get_profile_by_username(profile_user)
         if type_user == 'Business':
+            type_user_new = [type_user]
             profile_data = get_connections(profile_user_obj['useruid'], request.user.id)[0]
-        else:
+        elif type_user == 'Organisation':
+            type_user_new = [type_user]
             profile_data = get_organisations(profile_user_obj['useruid'])
+        elif type_user == 'Member':
+            type_user_new = ['Business', 'Organisation', 'Individual']
+            profile_data = get_members(profile_user_obj['useruid'], request.user.id)[0]
+
         data_list = [int(each['id']) for each in profile_data]
         keyword_like = re.compile(query + '+', re.IGNORECASE)
         reg_expression = {"$regex": keyword_like, '$options': '-i'}
@@ -730,7 +745,7 @@ def search_orgs_business(request, type_user):
             or_conditions.append({search_item:reg_expression})
 
         type_list = ['unclaimed']
-        type_list.append(type_user)
+        type_list.extend(type_user_new)
         query_mongo = {'$or': or_conditions, 'sign_up_as': {'$in': type_list}, 'useruid': {'$nin': data_list}}
         mongo = MongoConnection("localhost",27017,'foodtrade')
         results = mongo.get_all('userprofile', query_mongo)

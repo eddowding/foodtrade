@@ -105,10 +105,10 @@
         {% if logged_member %}
       <label class="fa fa-smile-o text-muted btn btn-default btn-block active" style="width:100%;
   padding: 8px 12px;" title="{{userinfo.full_name}} is member of {{name}}" >
-      <input type="checkbox" checked="checked" class="member-chkbx" onchange="add_member({{profile_id}}, {{user_id}})"><span>I'm a member!</span>
+      <input type="checkbox" checked="checked" class="member-chkbx" onchange="add_member({{profile_id}}, {{user_id}}, 'self')"><span>I'm a member!</span>
       {% else %}
       <label class="fa fa-smile-o fa-fw text-muted btn btn-default btn-block" style="width:100%;" title="{{userinfo.full_name}} is member of {{name}}" >
-      <input type="checkbox" class="member-chkbx" onchange="add_member({{profile_id}}, {{user_id}})"><span>I'm a member!</span>
+      <input type="checkbox" class="member-chkbx" onchange="add_member({{profile_id}}, {{user_id}}, 'self')"><span>I'm a member!</span>
   {% endif %}
  </label></div>
       <!-- Button trigger modal -->
@@ -195,7 +195,7 @@
         <a href="{{facebook_page}}"><i class="fa fa-facebook-square"></i></a>
       {% endif %} 
       {% if userinfo.username %}
-        <a href="http://twitter.com/{{userinfo.username}}"><i class="fa fa-twitter-square"></i></a> 
+        <a href="http://twitter.com/{{userprof.username}}"><i class="fa fa-twitter-square"></i></a> 
       {% endif %} 
       {% if phone_number %}
         <a href="callto:{{phone_number}}"><i class="fa fa-phone-square"></i></a>  
@@ -304,31 +304,28 @@
         <div class="container-responsive clearfix">
         <div class="tab-content">
           <div class="tab-pane active fade in " id="members">
-  <!--     {% if user.is_authenticated %}
-<div>
-  
-      <div class="btn-group btn-block" data-toggle="buttons">
-        {% if logged_member %}
-      <label class="fa fa-check btn btn-default btn-block active" style="width:30%%;" title="{{userinfo.full_name}} is member of {{name}}" >
-      <input type="checkbox" checked="checked" class="member-chkbx" onchange="add_member({{profile_id}}, {{user_id}})">I'm a member!
-      {% else %}
-      <label class="btn btn-default btn-block" style="width:30%;" title="{{userinfo.full_name}} is member of {{name}}" >
-      <input type="checkbox" class="member-chkbx" onchange="add_member({{profile_id}}, {{user_id}})">I'm a member!
-  {% endif %}
- </label></div></div>
-        
-            {% endif %} -->
-            <div class="clearfix"> 
+{% if user.is_superuser or userinfo.name == screen_name %}
+<div id="member_remote" class="well well-sm">
+<input class="typeahead form-control" id="new_member_typeahead" {% if not user.is_authenticated %} rel="tooltip" title="Please login to use this feature" {% endif %} style="width:310px;" type="text" placeholder="add a member"></div>                  
+{% endif %}
+            <div class="clearfix isotope js-isotope" data-isotope-options='{ "itemSelector": ".card" }' id="member_ajax"> 
+
                     {% for each_mem in members %}
                         <div class="card card-business">
+
+                          
+                     
+
                           <div class="content">
-                            <div class="pull-left">
+                            <div class="text-center">
                               <img src="{{each_mem.photo}}" alt="{{each_mem.name}}"
-                              class="img-rounded img-responsive" style="width:40px;" /> 
+                              class="img-thumbnail img-responsive" style="width:73px; height:73px;" /> 
                       
                             </div>
                             <div class="text">
-                            <button type="button" class="close" aria-hidden="true">&times;</button>
+                              {% if user.is_superuser or userinfo.name == screen_name %}
+                            <button type="button" class="close" aria-hidden="true" onclick="add_member({{profile_id}}, {{each_mem.id}}, 'third_delete')">&times;</button>
+                            {% endif %}
                               <h5><a href="/profile/{{each_mem.username}}">{{each_mem.name}}</a> 
                               </h5>  
                               <p class="small">{{each_mem.description}}</p>
@@ -342,10 +339,10 @@
                        <a href="/activity/?q={{e}}">{{e}}</a>
                        {% endfor %}
                       </div>{% endif %}
-                            <p class="small pull-right">
-                              <a href="#" rel="tooltip" title="{{each_mem.food_no}} foods"><i class="fa fa-cutlery"></i> {{each_mem.food_no}}</a>
-                              <a href="#"  rel="tooltip"  title="{{each_mem.trade_conn_no}} connections"><i class="fa fa-link"></i> {{each_mem.trade_conn_no}}</a>
-                              <a href="#" rel="tooltip" title="{{each_mem.org_conn_no}} organisations"><i class="fa fa-group"></i> {{each_mem.org_conn_no}}</a> 
+                            <p class="small text-center">
+                              <a href="#" rel="tooltip" title="{{each_mem.food_no}} foods" class="pull-left"><i class="fa fa-cutlery"></i> {{each_mem.food_no}}</a>
+                              <a href="#" rel="tooltip"  title="{{each_mem.trade_conn_no}} connections"><i class="fa fa-link"></i> {{each_mem.trade_conn_no}}</a>
+                              <a href="#" rel="tooltip" title="{{each_mem.org_conn_no}} organisations" class="pull-right"><i class="fa fa-group"></i> {{each_mem.org_conn_no}}</a> 
                             </p>
                           </div>
                         </div> 
@@ -492,6 +489,24 @@
    
      <script src="{% static "js/contact.js" %}"></script>
         <script type="text/javascript">
+
+$('#members').on('click', '.tt-suggestion', function(){
+  var member_id = this.getElementsByClassName('result-name')[0];
+  var member_var = $(member_id).attr('data-id');
+  if(member_var == 'search'){
+    $('#my_invite_twitter').click();
+  }
+  else{
+    add_member({{profile_id}}, member_var, 'third_add')
+    $('#new_member_typeahead').val('');
+    $('.tt-hint').val('');
+  }
+});
+$('#new_member_typeahead').on('blur', function(){
+  $('#new_member_typeahead').val('');
+});
+
+
     map_lat={{ loc.lat }};
     map_lon = {{ loc.lon }};
 connections = {{members_str | safe}};

@@ -142,8 +142,8 @@ function add_food(prof_id, user_id, ind_status){
 }
 
 function food_ajax(data){
-$('.search-choice').remove();
-$("#myselect").val('').trigger('chosen:updated');
+// $('.search-choice').remove();
+// $("#myselect").val('').trigger('chosen:updated');
 $('#food_tbody').html(data);
 }
 function recommend_food(logged_in_id, food_name, prof_id, username, my_this){
@@ -185,20 +185,32 @@ function add_customer(prof_id, c_id){
 	
 }
 
-function add_member(org_id, mem_id){
-	var checked = $('.member-chkbx').is(':checked');
-	var data = {orguid: org_id, memberuid: mem_id};
-	if (checked){
-		// add member
-		ajax_request("addmember", 'create_conn', {data: JSON.stringify(data)});
+function add_member(org_id, mem_id, action){
+	var data = {orguid: org_id, memberuid: parseInt(mem_id)};
+	if(action == 'self'){
+		var checked = $('.member-chkbx').is(':checked');
+		if (checked){
+			// add member
+			ajax_request("addmember", 'member_ajax', {data: JSON.stringify(data)});
+		}
+		else{
+			// delete that member
+			ajax_request("deletemember", 'member_ajax', {data: JSON.stringify(data)});
+		}
 	}
-	else{
-		// delete that member
-		ajax_request("deletemember", 'create_conn', {data: JSON.stringify(data)});
+	else if(action == 'third_add'){
+		ajax_request("addmember", 'member_ajax', {data: JSON.stringify(data)});
 	}
+	else if(action == 'third_delete'){
+		ajax_request("deletemember", 'member_ajax', {data: JSON.stringify(data)});
+	}
+	
 	
 }
 
+function member_ajax(data){
+	$('#member_ajax').html(data);
+}
 function add_team(org_id, team_id){
 	// var data = {orguid: org_id, memberuid: team_id};
 	// ajax_request("addteam", 'create_conn', {data: JSON.stringify(data)});

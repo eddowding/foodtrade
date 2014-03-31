@@ -460,15 +460,14 @@ hidden
           </div>
 
           <a href="/" class="navbar-brand visible-md visible-lg">
-            <img src="{% static "images/logo.png" %}" alt="FoodTrade logo" /> 
+            <img src="{% static "images/logo_icon.png" %}" alt="FoodTrade logo" /> 
           </a>
   
-          </div>
   
           <form action="/activity" onsubmit="return formSubmit(this);" class="navbar-form navbar-left" role="search" style="width: 380px;">
             <div class="input-group">
             <div class="input-group-btn">
-              <button type="button" class="btn btn-default dropdown-toggle text-muted" data-toggle="dropdown">Quick find <span class="caret"></span></button>
+              <button type="button" class="btn btn-default dropdown-toggle text-muted hidden-xs" data-toggle="dropdown">Quick find <span class="caret"></span></button>
                <ul class="dropdown-menu dropdown-menu-large row">
           <li class="col-sm-3">
             <ul>
@@ -542,6 +541,7 @@ hidden
             <input type="hidden" name="location" id="new_search" value="{% if search %} {{ search.place }} {% endif %} {% if not search %} {{userinfo.zip_code}}{% endif %} ">
           </form>
            
+          </div><!--/navbar header -->
      
       <nav class="collapse navbar-collapse" role="navigation">
 
@@ -855,6 +855,9 @@ hidden
     <script src="{% static "js/twitter-typeahead.js" %}"></script>
     <script src="/static/js/chosen.jquery.min.js" type="text/javascript"></script>
 <script src="/static/css/docsupport/prism.js" type="text/javascript" charset="utf-8"></script>
+
+    <script src="{% static "js/isotope.pkgd.min.js" %}"></script>
+
 
 
  {% block footer %}
@@ -1284,6 +1287,87 @@ function formSubmit(form) {
 });
 
 
+</script>
+
+<script>
+/* Float Label Pattern Plugin for Bootstrap 3.1.0 by Travis Wilson
+**************************************************/
+
+(function ($) {
+    $.fn.floatLabels = function (options) {
+
+        // Settings
+        var self = this;
+        var settings = $.extend({}, options);
+
+
+        // Event Handlers
+        function registerEventHandlers() {
+            self.on('input keyup change', 'input, textarea', function () {
+                actions.swapLabels(this);
+            });
+        }
+
+
+        // Actions
+        var actions = {
+            initialize: function() {
+                self.each(function () {
+                    var $this = $(this);
+                    var $label = $this.children('label');
+                    var $field = $this.find('input,textarea').first();
+
+                    if ($this.children().first().is('label')) {
+                        $this.children().first().remove();
+                        $this.append($label);
+                    }
+
+                    var placeholderText = ($field.attr('placeholder') && $field.attr('placeholder') != $label.text()) ? $field.attr('placeholder') : $label.text();
+
+                    $label.data('placeholder-text', placeholderText);
+                    $label.data('original-text', $label.text());
+
+                    if ($field.val() == '') {
+                        $field.addClass('empty')
+                    }
+                });
+            },
+            swapLabels: function (field) {
+                var $field = $(field);
+                var $label = $(field).siblings('label').first();
+                var isEmpty = Boolean($field.val());
+
+                if (isEmpty) {
+                    $field.removeClass('empty');
+                    $label.text($label.data('original-text'));
+                }
+                else {
+                    $field.addClass('empty');
+                    $label.text($label.data('placeholder-text'));
+                }
+            }
+        }
+
+
+        // Initialization
+        function init() {
+            registerEventHandlers();
+
+            actions.initialize();
+            self.each(function () {
+                actions.swapLabels($(this).find('input,textarea').first());
+            });
+        }
+        init();
+
+
+        return this;
+    };
+
+    $(function () {
+        $('.float-label-control').floatLabels();
+    });
+})(jQuery);
 </script>    
 
 <script type="text/javascript">
