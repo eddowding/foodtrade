@@ -679,12 +679,19 @@
 <div class="clearfix">
 {% if userprof.b_conn_no != 0 %}
           <h4><a name="buyfrom"></a>We buy from <small>these suppliers</small></h4>
-          <div class="ftstrip ftstrip-mini"></div> 
+          <div class="ftstrip ftstrip-mini"></div> <br />
 
             <div class="clearfix isotope js-isotope" data-isotope-options='{ "itemSelector": ".card" }' id="buyers-cards">
           {% for each in connections %}
               {% if each.relation == "buyer" or each.relation == "both" %}
-                  <div class="card card-business">
+                  <div class="card card-business {% if each.type|length == 0 or each.type|first == '' %}
+                    {% else %}
+                      
+                        {% for e in each.type %}
+                        {{e}}
+                       {% endfor %}
+                      
+                    {% endif %}">
 
                     
 
@@ -735,7 +742,7 @@
           {% if userprof.c_conn_no != 0 %}
           <h4 style="margin-top: 50px;">We sell to <small>these stockists</small></h4>  
 
-          <div class="ftstrip ftstrip-mini"></div>
+          <div class="ftstrip ftstrip-mini"></div><br />
            <div class="clearfix isotope js-isotope" data-isotope-options='{ "itemSelector": ".card" }' id="seller-cards">
           {% for each in connections %}
               {% if each.relation == "seller" or each.relation == "both" %}
@@ -820,9 +827,9 @@
           {% for each in organisations %}
                 <div class="card card-organisation">
                   <div class="content">
-                    <div class=" pull-left">
+                    <div class=" text-center">
                       <img src="{{each.photo}}" alt="{{each.name}}"
-                      class="img-rounded img-responsive" style="width:40px;" /> 
+                      class="img-thumbnail img-responsive" style="width:73px; height:73px;" /> 
                     </div>
 
                     <div class="text">
