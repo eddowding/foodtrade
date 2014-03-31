@@ -37,15 +37,14 @@
 {% include 'modal_invite.html' %}
     <div class="col-md-6 col-sm-7  {% if not user.is_authenticated %} col-md-offset-1 {% endif %}" id="single">
     <div class="container-responsive">
-    <div id="header_box" class="clearfix organisation">
-    <!-- use the variable {{banner_url}} for banner url of the user profile -->
+    <div id="header_box" class="clearfix organisation" style="background:url('{{banner_url}}');">
 
        <div class="col-md-2 hidden-sm hidden-xs" id="avatar">
         <img class="img-thumbnail center-block" src="{{pic_url}}"  />
       </div>
       
      
-      <div class="col-md-6 col-sm-8 col-xs-8"> 
+      <div class="col-md-6 col-sm-8 col-xs-8 whitewash"> 
         <!-- certificate -->
           {% if prof_subscribed %}
           <span class="fa-stack fa-lg pull-right" id="verified" rel="tooltip" title="Verified profile">
@@ -312,11 +311,10 @@
 
                     {% for each_mem in members %}
                         <div class="card card-business">
-                          <!-- Use the banner url as {{each_mem.banner_url}} -->
-                          
+                  
                      
                           
-                          <div class="content">
+                          <div class="content" style="background:url('{{each_mem.banner_url}}');">
                             <div class="text-center">
                               <img src="{{each_mem.photo}}" alt="{{each_mem.name}}"
                               class="img-thumbnail img-responsive" style="width:73px; height:73px;" /> 
@@ -400,7 +398,7 @@
           {% for each in teams %}
                 <div class="card card-individual">
                   <!-- Use the banner url as {{each.banner_url}} -->
-                  <div class="content">
+                  <div class="content"  style="background:url('{{each.banner_url}}');">
                     <img src="{{each.photo}}" alt="{{each.name}}"
                     class="img-rounded img-responsive pull-left" style="width:40px;" />
                     <div class="text">

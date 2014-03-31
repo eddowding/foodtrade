@@ -22,6 +22,7 @@ a:hover, a:focus {
           box-sizing: border-box;
 }
 
+
 @font-face {
     font-family: 'tradegothicbold';
     src: url('/static/fonts/trade_gothic_bold_condensed_no._20-webfont.eot');
@@ -382,20 +383,13 @@ article .content h4 {
 /**  ORG / BIZ / PPL           **/
 /********************************/
 
-#header_box.organisation {
-  border-top: 10px solid rgba(154,215,255,0.3);
-}
+ 
 
 .card-organisation .numbers {
   background: rgba(154,215,255,0.3) !important;
   padding: 0 5px;
 }
-
-
-#header_box.individual {
-  border-top: 10px solid rgba(97,174,50,0.3);
-}
-
+ 
 .card-individual .numbers {
   background: rgba(97,174,50,0.3) !important;
   padding: 0 5px;
@@ -1049,7 +1043,7 @@ clear: both;
 #header_box {
 	margin-top: 20px;
 	border: 1px solid #ccc;
-	 
+	background-size: cover;
 } 
 
 #header_box > div[class*='col-']  { 
@@ -1109,6 +1103,7 @@ h2 {
 
 .card .content {
 	padding: 15px 0 0 0;
+  background-size: cover;
 }
 
 .card h5 {
@@ -1133,7 +1128,7 @@ h2 {
 
 .card p.small {
 	font-size: 12px;
-	color: rgb(153,153,153);
+	color: #444;
 	line-height: 15px;
 }
 
@@ -1975,8 +1970,14 @@ border-bottom: 1px dotted ;
 }
 
 .help-block {
-font-style: normal;
-margin: 0px 0 0 4px;
-font-size: 12px;
-color: #999;
+  font-style: normal;
+  margin: 0px 0 0 4px;
+  font-size: 12px;
+  color: #999;
+}
+
+
+#header_box .whitewash,
+.whitewash {
+  background-color: rgba(255,255,255,0.9) !important;
 }

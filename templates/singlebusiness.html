@@ -52,13 +52,12 @@
     <div class="col-md-6 col-sm-7 col-xs-12 {% if not user.is_authenticated %} col-md-offset-1 {% endif %}" id="single">
     <div class="container-responsive">
 
-    <div id="header_box" class="clearfix">
-    <!-- use the variable {{banner_url}} for banner url of the user profile -->
+    <div id="header_box" class="clearfix" style="background-image:url('{{banner_url}}');"> 
       <div class="col-md-2 hidden-sm hidden-xs" id="avatar">
         <img class="img-thumbnail center-block" src="{{pic_url}}"  />
       </div>
      
-      <div class="col-md-6 col-sm-8 col-xs-8">
+      <div class="col-md-6 col-sm-8 col-xs-8 whitewash">
 
           <!-- certificate -->
           {% if prof_subscribed %}
@@ -694,8 +693,7 @@
                     {% endif %}">
 
                     
-                    <!-- Use the banner url as {{each.banner_url}} -->
-                    <div class="content">
+                    <div class="content" style="background-image:url('{{each.banner_url}}');">
                       <div class="text-center">
                         <img src="{{each.photo}}" alt="{{each.name}}"
                         class="img-thumbnail img-responsive" style="width:73px; height:73px;" /> 
@@ -746,9 +744,8 @@
            <div class="clearfix isotope js-isotope" data-isotope-options='{ "itemSelector": ".card" }' id="seller-cards">
           {% for each in connections %}
               {% if each.relation == "seller" or each.relation == "both" %}
-                  <div class="card card-business">
-                    <!-- Use the banner url as {{each.banner_url}} -->
-                    <div class="content"> 
+                  <div class="card card-business"> 
+                    <div class="content" style="background-image:url('{{each.banner_url}}');"> 
 
                       <div class="text-center">
                         <img src="{{each.photo}}" alt="{{each.name}}"
@@ -826,9 +823,8 @@
 
             {% endif %}
           {% for each in organisations %}
-                <div class="card card-organisation">
-                  <!-- Use the banner url as {{each.banner_url}} -->
-                  <div class="content">
+                <div class="card card-organisation"> 
+                  <div class="content" style="background-image:url('{{each.banner_url}}');">
                     <div class=" text-center">
                       <img src="{{each.photo}}" alt="{{each.name}}"
                       class="img-thumbnail img-responsive" style="width:73px; height:73px;" /> 
@@ -871,9 +867,8 @@
 <div class="pull-left">
            {% for each in customers %}
 
-              <div class="card card-individual">
-                <!-- Use the banner url as {{each.banner_url}} -->
-                <div class="content">
+              <div class="card card-individual"> 
+                <div class="content" style="background-image:url('{{each.banner_url}}');">
                   <img src="{{each.photo}}" alt="{{each.name}}"
                   class="img-rounded img-responsive pull-left" style="width:40px;" />
                   <div class="text">

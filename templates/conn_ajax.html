@@ -5,7 +5,7 @@
           {% for each in connections %}
               {% if each.relation == "buyer" or each.relation == "both" %}
                   <div class="card card-business">
-                    <div class="content">
+                    <div class="content" style="background:url('{{each_mem.banner_url}}');">
                       
                       <div class="text-center">
                         <img src="{{each.photo}}" alt="{{each_mem.name}}"
@@ -55,7 +55,7 @@
           {% for each in connections %}
               {% if each.relation == "seller" or each.relation == "both" %}
                   <div class="card card-business">
-                    <div class="content">
+                    <div class="content"  style="background:url('{{each.banner_url}}');">
                       <div class="text-center">
                         <img src="{{each.photo}}" alt="{{each.name}}"
                         class="img-thumbnail img-responsive" style="width:73px; height:73px;" /> 
