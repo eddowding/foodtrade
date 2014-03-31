@@ -1,10 +1,8 @@
- live Kathmandu
- 30 17 * * * sh /srv/www/live/foodtrade-env/foodtrade/CronJobs/daily.sh
- 0 15 * * 5 sh /srv/www/live/foodtrade-env/foodtrade/CronJobs/weekly.sh
- 0 15 1 * * sh /srv/www/live/foodtrade-env/foodtrade/CronJobs/monthly.sh
-
 live root 
 30 2 * * * sh /srv/www/live/foodtrade-env/foodtrade/CronJobs/backup_script_live.sh
+30 17 * * * sh /srv/www/live/foodtrade-env/foodtrade/CronJobs/daily.sh
+0 15 * * 5 sh /srv/www/live/foodtrade-env/foodtrade/CronJobs/weekly.sh
+0 15 1 * * sh /srv/www/live/foodtrade-env/foodtrade/CronJobs/monthly.sh
 
 staging foodtrade
 30 3 * * * sh /srv/www/live/foodtrade-env/foodtrade/CronJobs/backup_script_staging.sh
