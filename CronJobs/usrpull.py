@@ -5,10 +5,10 @@ import os
 import sys
 import time, datetime
 import MySQLdb
-APP_ROOT = os.path.realpath('..')
-APP_ROOT = APP_ROOT.replace('\\','/')
-CLASS_PATH = APP_ROOT + '/mainapp/classes'
-SETTINGS_PATH = APP_ROOT + '/foodtrade'
+
+CLASS_PATH = '/srv/www/live/foodtrade-env/foodtrade/mainapp/classes'
+SETTINGS_PATH = '/srv/www/live/foodtrade-env/foodtrade/foodtrade'
+
 sys.path.insert(0, CLASS_PATH)
 sys.path.insert(1,SETTINGS_PATH)
 

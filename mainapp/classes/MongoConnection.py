@@ -1,3 +1,6 @@
+#!/usr/bin/env python
+# encoding: utf-8
+# Create your views here.
 from pymongo import MongoClient
 import pymongo
 from pymongo import Connection

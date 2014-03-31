@@ -259,8 +259,14 @@ class UserProfile():
         query_str = query_str + """
             items = current.status.split(' ');
             for(var j = 0; j < items.length; j++ ) {
-                if(items[j].indexOf('#')==0){
-                    emit(items[j], 1);
+                if(items[j].indexOf('#')==0){                        
+                      var reg =  /\B#\w*[a-zA-Z]+\w*/g;
+                      if (reg.test(items[j].toLowerCase())){
+                        emit_text = items[j].toLowerCase();
+                        emit_text.replace('?','');
+                        emit(emit_text, 1);
+                      }
+
                     }
                 }
             }
