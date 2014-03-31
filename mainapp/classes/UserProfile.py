@@ -37,9 +37,12 @@ class UserProfile():
         return users
 
     def send_newsletter(self, substype):
-        user_pages_count = int(self.db_object.get_count(self.table_name, {'email':{'$ne':''},'newsletter_freq':{'$ne':'Never'}})/15)+ 1
+        user_pages_count = int(self.db_object.get_count(self.table_name, 
+          {'email':{'$ne':''},'newsletter_freq':{'$ne':'Never'},'newsletter_freq':str(substype)})/15)+ 1
         for i in range(0,user_pages_count, 1):
-            pag_users = self.db_object.get_paginated_values(self.table_name, {'email':{'$ne':''},'newsletter_freq':{'$ne':'Never'}}, pageNumber = int(i+1))
+            pag_users = self.db_object.get_paginated_values(self.table_name, 
+              {'email':{'$ne':''},'newsletter_freq':{'$ne':'Never'}, 'newsletter_freq':str(substype)}, 
+              pageNumber = int(i+1))
             for eachUser in pag_users:
                 if len(eachUser['email'])>0:
                     import urllib2

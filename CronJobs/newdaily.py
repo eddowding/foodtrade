@@ -20,20 +20,12 @@ def send_newsletter(substype):
 
     if substype == 'Daily':
         user_profile_obj.send_newsletter('Daily')
-        #pass
 
     elif substype == 'Weekly' or substype == 'None':
-        pass
-        #users = user_profile_obj.get_all_profiles(substype)
+        users = user_profile_obj.get_all_profiles(substype)
+
     elif substype == 'Monthly':
-        pass
-        #users = user_profile_obj.get_all_profiles('Monthly')
-    # count = 0
-    # for eachUser in users:
-    #     if len(eachUser['email'])>0:
-    #         import urllib2
-    #         baseurl = "http://foodtrade.com/send-newsletter/" + str(substype.lower())+ "?username=" + str(eachUser['username']) + "&code=11foodtradeESRS22"
-    #         response = urllib2.urlopen(baseurl)
+        users = user_profile_obj.get_all_profiles('Monthly')
 
 
 def trending_hash_tags():
