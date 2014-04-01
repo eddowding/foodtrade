@@ -592,10 +592,10 @@ def send_newsletter(request, substype):
         subscription_status = 0
     '''Generate activity for newsletter'''
     if subscription_status == 0:
-        search_handle = Search(lon = email_to_user['latlng']['coordinates'][0], lat = email_to_user['latlng']['coordinates'][1], news='daily')
+        search_handle = Search(lon = email_to_user['latlng']['coordinates'][0], lat = email_to_user['latlng']['coordinates'][1], news=substype)
         # search_handle = Search(lon = email_to_user['latlng']['coordinates'][0], lat = email_to_user['latlng']['coordinates'][1], news="old")
     else:
-        search_handle = Search(lon = email_to_user['latlng']['coordinates'][0], lat = email_to_user['latlng']['coordinates'][1], news='daily')
+        search_handle = Search(lon = email_to_user['latlng']['coordinates'][0], lat = email_to_user['latlng']['coordinates'][1], news=substype)
     search_results = search_handle.search_all()['results']
     '''Make Default value of newsletter 10'''
     temp_result = []

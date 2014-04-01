@@ -149,8 +149,7 @@ def create_users(arg):
 
         user_profile_obj = UserProfile()
         users = user_profile_obj.get_all_profiles_by_time(start_time)
-        print len(users)
-
+        
     for eachUser in users: 
         #print eachUser['username']
         process_friends_or_followers(eachUser, 'friends')
