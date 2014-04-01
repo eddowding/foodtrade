@@ -13,18 +13,19 @@
 
     <div class="col-xs-12 col-sm-5 {% if not user.is_authenticated %} col-md-offset-1 col-sm-offset-1 {% endif %}" id="activity_switcher">
 
-<div id="postupdate" class="clearfix well well-sm" style="margin-top: 10px;  border: 1px solid #ccc; padding: 10px;">
+<div id="structured_postupdate" class="clearfix well well-sm" style="margin-top: 10px;  border: 1px solid #ccc; padding: 10px;">
 
-<form action="r" method="post" accept-charset="utf-8" class="form" role="form">   
+<form action="r" method="post" id="structured_input_form" accept-charset="utf-8" onsubmit="generate_update()" class="form" role="form">   
   
   <div class="row"> 
     <div class="col-xs-12">   
 
      <p style="line-height: 2.5; margin: 0;"><strong>I'd like to...</strong></p>
-      <div class="btn-group btn-block" style="width:100%;">
-        <button type="button" class="btn btn-default"  style="width:33%;"><i class="fa fa-sign-in fa-fw"></i> buy</button>
-        <button type="button" class="btn btn-default" style="width:33%;"><i class="fa fa-sign-out fa-fw"></i> sell</button>
-        <button type="button" class="btn btn-default" style="width:33%;"><i class="fa fa-random fa-fw"></i> offer surplus</button>
+      <div class="btn-group btn-block" id = "post_for" style="width:100%;">
+      <!-- <input type="hidden" /> -->
+        <button type="button" class="btn btn-default" value="buy"  style="width:33%;"><i class="fa fa-sign-in fa-fw"></i> buy</button>
+        <button type="button" class="btn btn-default" value="sell" style="width:33%;"><i class="fa fa-sign-out fa-fw"></i> sell</button>
+        <button type="button" class="btn btn-default" value="offer surplus" style="width:33%;"><i class="fa fa-random fa-fw"></i> offer surplus</button>
       </div>                     
     </div>
   </div>
@@ -87,14 +88,14 @@
     </div>
     <div class="col-xs-6"> 
       <div class="input-group">
-        <input type="text" class="form-control" placeholder="When?"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+        <input type="text" class="form-control" id="expire_on" placeholder="When?"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
       </div>
       <p class="help-block">try 'next Friday', '8 sept 17'</p>
     </div>
   </div>
   <div class="row">
     <div class="col-xs-12"> 
-      <textarea class="form-control" rows="3" placeholder="Add detail: eg quality, variety, grade, packaging, etc.  "></textarea>
+      <textarea class="form-control" id="update_description" rows="3" placeholder="Add detail: eg quality, variety, grade, packaging, etc.  "></textarea>
       <p class="help-block">
       Add detail: eg quality, variety, grade, packaging, etc.
 </p>
@@ -106,7 +107,7 @@
                 <li class="text-muted">Also send to </li>
                 <li> 
                   <label>
-                    <input type="checkbox" id="post_to_twitter" name="post_to_twitter" value="1" checked="checked">
+                    <input type="checkbox" id="structured_post_to_twitter" name="post_to_twitter" value="1" checked="checked">
                     <i class="fa fa-twitter-square fa-lg text-muted"></i>
                   </label>
                 </li>
@@ -125,16 +126,22 @@
               </ul> 
             </div>
             <div class="col-xs-5 text-right">
-              <button type="button" id="btn_update_activity" class="btn  btn-success pull-right" {% if not user.is_authenticated %}  title="Please login to use this feature." {% endif %} onclick="post_new_status();"> Post update</button>
+              <button type="button" id="btn_update_activity" class="btn  btn-success pull-right" {% if not user.is_authenticated %}  title="Please login to use this feature." {% endif %} onclick="generate_update();"> Post update</button>
             </div>
           </div>
  
 
-      <a href="#" class="small pull-left" style="position: relative;
+      <a href="#" onclick="swith_update_form()" class="small pull-left" style="position: relative;
 top: 0px;">Switch to basic form</a>
 </form>
 
-
+<script type="text/javascript">
+function swith_update_form()
+{
+  $("#update-small").removeClass("hidden");
+  $("#structured_postupdate").hide();
+}
+</script>
  
  
  
@@ -144,7 +151,7 @@ top: 0px;">Switch to basic form</a>
 
 
  
-      <div id="update-small" class="well well-sm clearfix" style="margin-top: 10px;">
+      <div id="update-small" class="well well-sm clearfix hidden" style="margin-top: 10px;">
         <input class="form-control col-xs-12"  {% if not user.is_authenticated %}  onfocus="login_redirect()" title="Please login to use this feature." {% else %} {% if can_tweet %} onfocus= "switch_text_area()"{% else %} rel="tooltip" title="You're limited to 1 update every 7 days. Please upgrade your account to unlock." {% endif %}{% endif %} placeholder="What #food do you have to #buy, #sell, or #surplus?">  
       </div> 
 
@@ -354,13 +361,79 @@ top: 0px;">Switch to basic form</a>
           {% block footer %}
     {% include "includes/not_logged_in_modal.html" %}
            <script src="{% static "js/activity.js" %}"></script>
+           <script src="{% static "js/date.js" %}"></script>
+
            <script type="text/javascript">
+           $("#expire_on").keyup(function(){
+  
+});
 show_food_filters(food_filters, 0);
 show_organisation_filters(organisation_filters, 0);
 show_business_filters(business_filters, 0);
 
- 
+var post_for = "";
+$('#post_for').children(".btn").click(function(){
+    var value = $(this).val();
+    var childrens = $('#post_for').children();
+    for(var i=0;i<childrens.length;i++)
+    {
+      $(childrens[i]).removeClass("btn-success");
+    }
+    $(this).addClass("btn-success");
+    post_for = value;// Remove this if you're not using jQuery Validation
+});
 
+function generate_update()
+{
+  if(post_for=="")
+  {
+    alert("Select one of buy / sell / surplus");
+    return;
+  }
+  var input_produces = $("input[name=produce]").val();
+  if(input_produces.trim()=="")
+  {
+    alert("You can't leave produce empty");
+    return;
+  }
+  var produces_name = input_produces.trim().replace("'", "").replace('"','').split(",");
+  var quantity = $("input[name=qty]").val().trim();
+  var quantity_unit = $("#qtyUnit").val();
+  var quantity_text = "";
+  if(quantity!="" && quantity_unit!="")
+  {
+    quantity_text =  "Qty: "+quantity+" "+quantity_unit+".";
+  }
+
+  var expire_on = Date.parse($("#expire_on").val());
+  var expire_text = "";
+  if(expire_on!=null)
+  {
+    var expire_date = expire_on.getDate()+"/"+expire_on.getMonth()+"/"+expire_on.getFullYear();
+    expire_text = " Expires: "+expire_date+".";
+  }
+  var description = $("#update_description").val().trim();
+  
+
+  var produces_hash = "";
+  for(var i = 0;i<produces_name.length;i++)
+  {
+    if(produces_name[i].trim() == "")
+    {
+      continue;
+    }
+    produces_hash += "#" + produces_name[i].trim();
+
+    if((i+1) != produces_name.length)
+    {
+        produces_hash += ", ";
+    }
+  }
+  var update_text = "I'd like to "+post_for+" "+produces_hash+"."+quantity_text+expire_text;
+
+  activity_status_update(update_text);
+  return false;
+}
            </script>
 
  {% endblock %}

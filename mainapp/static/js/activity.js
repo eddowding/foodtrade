@@ -210,6 +210,36 @@ function post_new_status()
   }
 }
 
+
+function activity_status_update(message)
+{
+  
+
+  if($('#structured_post_to_twitter').prop('checked'))
+  {
+    var foodtrade_only = "false";
+
+  }
+  else
+  {
+    var foodtrade_only = "true";
+  }
+  if(validate_login()['status'] == '1'){
+    ajax_request("post_tweet", 'clear_structured_input', {message: message,foodtrade_only:foodtrade_only});
+  }
+  else{
+    /*$('#btn_must_be_logged').click();*/
+    /*$('#btn_update_activity').tooltip('show');*/
+    window.location('/accounts/twitter/login/?process=?login');
+  }
+
+}
+
+function clear_structured_input()
+{
+  $('#structured_input_form').trigger("reset");
+  make_search();
+}
 $('#newstatus').bind('keypress', function(e) {
   
     var code = e.keyCode || e.which;
