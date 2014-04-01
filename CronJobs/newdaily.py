@@ -22,10 +22,10 @@ def send_newsletter(substype):
         user_profile_obj.send_newsletter('Daily')
 
     elif substype == 'Weekly' or substype == 'None':
-        users = user_profile_obj.get_all_profiles(substype)
+        users = user_profile_obj.send_newsletter(substype)
 
     elif substype == 'Monthly':
-        users = user_profile_obj.get_all_profiles('Monthly')
+        users = user_profile_obj.send_newsletter('Monthly')
 
 
 def trending_hash_tags():
