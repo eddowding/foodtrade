@@ -32,11 +32,12 @@
 			maxZoom: 18,
 			attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://cloudmade.com">CloudMade</a>'
 		});
- var openspaceLayer = L.tileLayer.osopenspace("EC9EDE7DAD732ABAE0430C6CA40AB812", {debug: true}); 
+ var openspaceLayer = L.tileLayer.osopenspace("F481BBF739A6038DE0430B6CA40AB6D2", {debug: true}); 
 
       // map.addLayer(openspaceLayer);
+      var show_os_map = true;
 
-if(map_lat>49.89193 && map_lat<61.08466 && map_lon>-9.38053 && map_lon<2.07316&&false)
+if(map_lat>49.89193 && map_lat<61.08466 && map_lon>-9.38053 && map_lon<2.07316&&show_os_map)
 {
 	var default_csr = L.OSOpenSpace.getCRS();
 	current_base_layer = openspaceLayer;
@@ -128,7 +129,7 @@ $("#map").on('click dblclick keyup mousedown mousewheel', function() {
 
     	var is_current_base = (map.options.crs == L.CRS.EPSG3857);
 
-	if(cent_lat>49.89193 && cent_lat<61.08466 && cent_lon>-9.38053 && cent_lon<2.07316&&false)
+	if(cent_lat>49.89193 && cent_lat<61.08466 && cent_lon>-9.38053 && cent_lon<2.07316&&show_os_map)
     {
 
     	if(is_current_base)
