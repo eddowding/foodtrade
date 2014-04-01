@@ -37,12 +37,19 @@ class UserProfile():
         return users
 
     def send_newsletter(self, substype):
-        user_pages_count = int(self.db_object.get_count(self.table_name, 
-          {'email':{'$ne':''},'newsletter_freq':{'$ne':'Never'},'newsletter_freq':str(substype)})/15)+ 1
+        if substype == 'None':
+          user_pages_count = int(self.db_object.get_count(self.table_name, 
+            {'email':{'$ne':''},'$exists':{'newsletter_freq':False})/15)+ 1
+        else:  
+          user_pages_count = int(self.db_object.get_count(self.table_name, 
+            {'email':{'$ne':''},'newsletter_freq':{'$ne':'Never'},'newsletter_freq':str(substype)})/15)+ 1
         for i in range(0,user_pages_count, 1):
-            pag_users = self.db_object.get_paginated_values(self.table_name, 
-              {'email':{'$ne':''},'newsletter_freq':{'$ne':'Never'}, 'newsletter_freq':str(substype)}, 
-              pageNumber = int(i+1))
+            if substype == 'None':
+                pag_users = self.db_object.get_paginated_values(self.table_name,
+                  {'email':{'$ne':''},'$exists':{'newsletter_freq':False}},pageNumber = int(i+1))
+            else:              
+                pag_users = self.db_object.get_paginated_values(self.table_name, 
+                  {'email':{'$ne':''},'newsletter_freq':{'$ne':'Never'}, 'newsletter_freq':str(substype)},pageNumber = int(i+1))
             for eachUser in pag_users:
                 if len(eachUser['email'])>0:
                     import urllib2
