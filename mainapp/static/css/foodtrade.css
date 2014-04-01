@@ -44,9 +44,10 @@ h2 {
 	text-transform: uppercase;
 }
 
-.handwriting {
-  font-family: 'Permanent Marker', cursive !important;
-}
+.right5 {margin-right: 5px;}
+.left5 {margin-left: 5px;}
+.top5 {margin-top: 5px;}
+.bottom5 {margin-bottom: 5px;}
 
 #footer {
   margin-top: 00px;
