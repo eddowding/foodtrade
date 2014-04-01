@@ -39,7 +39,7 @@ class UserProfile():
     def send_newsletter(self, substype):
         if substype == 'None':
           user_pages_count = int(self.db_object.get_count(self.table_name, 
-            {'email':{'$ne':''},'$exists':{'newsletter_freq':False})/15)+ 1
+            {'email':{'$ne':''},'$exists':{'newsletter_freq':False}})/15)+ 1
         else:  
           user_pages_count = int(self.db_object.get_count(self.table_name, 
             {'email':{'$ne':''},'newsletter_freq':{'$ne':'Never'},'newsletter_freq':str(substype)})/15)+ 1
