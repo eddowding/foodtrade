@@ -431,15 +431,37 @@
 
 
           <li class="active">
-            <a href="#connections" data-toggle="tab" onclick="set_width()">Connections {% if userprof.trade_connections_no != 0 %}<span class="badge">{{userprof.trade_connections_no}}</span>{% endif %}</a> 
+            <a href="#connections" data-toggle="tab" onclick="set_width()">
+            <span class="visible-xs pull-left right5"><i class="fa fa-link"></i></span> 
+            <span class="visible-sm pull-left right5">Connect.</span> 
+            <span class="visible-md  pull-left right5">Connections</span> 
+            <span class="visible-lg  pull-left right5"><i class="fa fa-link"></i> Connections</span> 
+
+            {% if userprof.trade_connections_no != 0 %}<span class="badge">{{userprof.trade_connections_no}}</span>{% endif %}</a> 
           </li>
 
           {% if show_foods %}
-          <li><a href="#produce" data-toggle="tab">We sell.. {% if userprof.food_no != 0 %}<span class="badge">{{userprof.food_no}}</span>{% endif %}</a></li>
+          <li><a href="#produce" data-toggle="tab">
+
+            <span class="visible-xs pull-left right5"><i class="fa fa-sign-out"></i></span> 
+            <span class="visible-sm pull-left right5">We sell</span> 
+            <span class="visible-md  pull-left right5">We sell...</span> 
+            <span class="visible-lg  pull-left right5"><i class="fa fa-sign-out"></i> We sell...</span>
+
+           
+
+          {% if userprof.food_no != 0 %}<span class="badge">{{userprof.food_no}}</span>{% endif %}</a></li>
           {% endif %} 
 
           
-          <li><a href="#activity" data-toggle="tab">Updates  {% if updates_count != 0 %}<span class="badge">{{updates_count}}</span>{% endif %}</a></li>     
+          <li><a href="#activity" data-toggle="tab">
+
+            <span class="visible-xs pull-left right5"><i class="fa fa-comment"></i></span> 
+            <span class="visible-sm pull-left right5">Updates</span> 
+            <span class="visible-md  pull-left right5">Updates</span> 
+            <span class="visible-lg  pull-left right5"><i class="fa fa-comment"></i> Updates</span>
+
+            {% if updates_count != 0 %}<span class="badge">{{updates_count}}</span>{% endif %}</a></li>     
           <li class="dropdown">
             <a href="#" id="more" class="dropdown-toggle" data-toggle="dropdown">More <b class="caret"></b></a>
             <ul class="dropdown-menu" role="menu" aria-labelledby="more">
@@ -695,8 +717,8 @@
                     
                     <div class="content" style="background-image:url('{{each.banner_url}}');">
                       <div class="text-center">
-                        <img src="{{each.photo}}" alt="{{each.name}}"
-                        class="img-thumbnail img-responsive" style="width:73px; height:73px;" /> 
+                        <a href="/profile/{{each.username}}"><img src="{{each.photo}}" alt="{{each.name}}"
+                        class="img-thumbnail img-responsive" style="width:73px; height:73px;" /></a>
  
                       </div>
                       <div class="text">
@@ -748,8 +770,8 @@
                     <div class="content" style="background-image:url('{{each.banner_url}}');"> 
 
                       <div class="text-center">
-                        <img src="{{each.photo}}" alt="{{each.name}}"
-                        class="img-thumbnail img-responsive" style="width:73px; height:73px;" /> 
+                        <a href="/profile/{{each.username}}"><img src="{{each.photo}}" alt="{{each.name}}"
+                        class="img-thumbnail img-responsive" style="width:73px; height:73px;" /></a>
  
                       </div>
 

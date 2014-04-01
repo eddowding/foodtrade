@@ -44,8 +44,7 @@ def get_post_parameters(request, tweet_id):
     results = search_handle.get_direct_children(str(tweet_id))
 
     # send banner url
-    parameters['banner_url'] = get_banner_url(single_tweet.user.username)
-
+    parameters['banner_url'] = get_banner_url(single_tweet['user']['username'])
     if results!= None:
         for i in range(len(results)):
             results[i] = set_time_date(results[i],keyword)
