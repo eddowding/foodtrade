@@ -10,11 +10,11 @@
 
             {% endif %}
           {% for each in organisations %}
-                <div class="card card-organisation">
-                  <div class="content">
-                    <div class=" pull-left">
+                <div class="card card-organisation"> 
+                  <div class="content" style="background-image:url('{{each.banner_url}}');">
+                    <div class=" text-center">
                       <img src="{{each.photo}}" alt="{{each.name}}"
-                      class="img-rounded img-responsive" style="width:40px;" /> 
+                      class="img-thumbnail img-responsive" style="width:73px; height:73px;" /> 
                     </div>
 
                     <div class="text">

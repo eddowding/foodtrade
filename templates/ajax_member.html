@@ -1,33 +1,41 @@
 {% for each_mem in members %}
                         <div class="card card-business">
-                          <div class="content"  style="background:url('{{banner_url}}');">
+                  
+                     
+                          
+                          <div class="content" style="background:url('{{each_mem.banner_url}}');">
                             <div class="text-center">
                               <img src="{{each_mem.photo}}" alt="{{each_mem.name}}"
-                              class="img-thumbnail img-responsive" style="width:73px;height:73px;" /> 
+                              class="img-thumbnail img-responsive" style="width:73px; height:73px;" /> 
                       
                             </div>
                             <div class="text">
-                              {% ifequal profile_id user_id %}
+                              {% if user.is_superuser or userinfo.name == screen_name %}
                             <button type="button" class="close" aria-hidden="true" onclick="add_member({{profile_id}}, {{each_mem.id}}, 'third_delete')">&times;</button>
-                            {% endifequal %}
+                            {% endif %}
                               <h5><a href="/profile/{{each_mem.username}}">{{each_mem.name}}</a> 
                               </h5>  
                               <p class="small">{{each_mem.description}}</p>
                             </div>
-                          </div>
+                          </div> 
+
                           <div class="numbers clearfix">
-                    {% if each_mem.type|length == 0 or each_mem.type|first == '' %}
+                    
+                            <p class="small text-center">
+                              <a href="#" rel="tooltip" title="{{each_mem.food_no}} foods" class="pull-left"><i class="fa fa-cutlery"></i> {{each_mem.food_no}}</a>
+                              <a href="#" rel="tooltip"  title="{{each_mem.trade_conn_no}} connections"><i class="fa fa-link"></i> {{each_mem.trade_conn_no}}</a>
+                              <a href="#" rel="tooltip" title="{{each_mem.org_conn_no}} organisations" class="pull-right"><i class="fa fa-group"></i> {{each_mem.org_conn_no}}</a> 
+                            </p>
+                          </div>
+
+                          {% if each_mem.type|length == 0 or each_mem.type|first == '' %}
                       {% else %}
-                      <div class="tags tags-biztype pull-left">  
+                    <div class="numbers type text-center clearfix">
+                      <div class="tags tags-biztype">  
                         {% for e in each_mem.type %}
                        <a href="/activity/?q={{e}}">{{e}}</a>
                        {% endfor %}
+                        </div> 
                       </div>{% endif %}
-                            <p class="small pull-right">
-                              <a href="#" rel="tooltip" title="{{each_mem.food_no}} foods"><i class="fa fa-cutlery"></i> {{each_mem.food_no}}</a>
-                              <a href="#"  rel="tooltip"  title="{{each_mem.trade_conn_no}} connections"><i class="fa fa-link"></i> {{each_mem.trade_conn_no}}</a>
-                              <a href="#" rel="tooltip" title="{{each_mem.org_conn_no}} organisations"><i class="fa fa-group"></i> {{each_mem.org_conn_no}}</a> 
-                            </p>
-                          </div>
                         </div> 
                         {% endfor %}

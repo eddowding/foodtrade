@@ -797,19 +797,12 @@
             <div class="well well-sm">  
             <div class="form-inline"  role="form">
               <div class="form-group">
-              <!-- <select id="org_chosen" data-placeholder="Type organisation..." class="chosen-select col-xs-4 col-sm-4" multiple>
-                            <option value=""></option>
-                            {% for each in all_organisation %}
-                            
-                              <option value={{each.id}}>{{each.name}}</option>
-                            
-                            {% endfor %}
-                            </select>               -->
+              
 <div id="orgs_remote">
 <input class="typeahead form-control" id="new_orgs_typeahead" {% if not user.is_authenticated %} rel="tooltip" title="Please login to use this feature" {% endif %} style="width:310px;" type="text" placeholder="Type organisation..."></div>                  
               </div>
               
-              <!-- <button class="btn btn-success" id="ad_cons_id" {% if not user.is_authenticated %} title="Please login to use this feature" {% endif %} onClick="add_org_to_biz({{profile_id}})">Add</button> -->
+              
 
      
             </div>
