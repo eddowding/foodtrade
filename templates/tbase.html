@@ -1055,7 +1055,7 @@ $(document).ready(function() {
 
 $('.reply').hide();
 
-$('.messagebtn').click(function() {
+$("#activity_switcher").on('click', '.messagebtn', function() {
     $(this).parent().parent().next(".reply").slideToggle(); 
 });
 
