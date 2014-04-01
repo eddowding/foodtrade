@@ -593,7 +593,8 @@ def send_newsletter(request, substype):
     '''Generate activity for newsletter'''
     if subscription_status == 0:
         if substype =='None' or substype == 'Weekly':
-            search_handle = Search(lon = email_to_user['latlng']['coordinates'][0], lat = email_to_user['latlng']['coordinates'][1], news="old")
+            '''Note ::: Please change the substype in below line to old after lots of data starts gathering ::: Note'''            
+            search_handle = Search(lon = email_to_user['latlng']['coordinates'][0], lat = email_to_user['latlng']['coordinates'][1], news="weekly")
         else:
             search_handle = Search(lon = email_to_user['latlng']['coordinates'][0], lat = email_to_user['latlng']['coordinates'][1], news=substype.lower())
     else:
