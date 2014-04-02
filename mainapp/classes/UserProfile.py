@@ -91,7 +91,7 @@ class UserProfile():
         for i in range(0,user_pages_count, 1):
             pag_users = self.db_object.get_paginated_values(self.table_name, {'address':'Antartica'}, pageNumber = int(i+1))
             for eachUser in pag_users:
-                print self.geocode_and_update_address(eachUser['username'], eachUser['address'])
+                self.geocode_and_update_address(eachUser['username'], eachUser['address'])
             time.sleep(2)
         return {'status':1}
 
