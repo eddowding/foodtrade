@@ -15,18 +15,16 @@ SETTINGS_PATH = '/srv/www/live/foodtrade-env/foodtrade/foodtrade'
 sys.path.insert(0, CLASS_PATH)
 sys.path.insert(1,SETTINGS_PATH)
 
-print CLASS_PATH
-print SETTINGS_PATH
 
 from settingslocal import *
-from friends import Friends
+from UserProfile import UserProfile
     
-start_time = datetime.datetime.now() - datetime.timedelta(1)
+start_time = datetime.datetime.now() - datetime.timedelta(2)
 start_time = time.mktime(start_time.timetuple())
 start_time = int(start_time)
 
-# user_profile_obj = UserProfile(host=REMOTE_SERVER_LITE, port=27017, db_name=REMOTE_MONGO_DBNAME, username=REMOTE_MONGO_USERNAME, password=REMOTE_MONGO_PASSWORD)
-# users = user_profile_obj.get_all_friends_and_register_as_friend(start_time)
+user_profile_obj = UserProfile(host=REMOTE_SERVER_LITE, port=27017, db_name=REMOTE_MONGO_DBNAME, username=REMOTE_MONGO_USERNAME, password=REMOTE_MONGO_PASSWORD)
+users = user_profile_obj.get_all_friends_and_register_as_friend(start_time)
         
         
 # def solve_errors():

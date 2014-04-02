@@ -82,14 +82,17 @@ class Friends():
             'email': '', 
             'description': eachFriend['description'],
             'username' : eachFriend['screen_name'],
-            'screen_name': eachFriend['screen_name'],
-            'profile_img': eachFriend['profile_image_url'],
+            'screen_name': eachFriend['screen_name'],            
             'updates': [],
             'foods':[],
             'organisations':[],
             'subscribed':0,
             'newsletter_freq':'Never'
         }
+        try:
+            data['profile_img'] = eachFriend['profile_image_url']
+        except:
+            data['profile_img'] = eachFriend['profile_img']
         from UserProfile import UserProfile
         userprofile = UserProfile(host=REMOTE_SERVER_LITE, port=27017, db_name=REMOTE_MONGO_DBNAME, username=REMOTE_MONGO_USERNAME, password=REMOTE_MONGO_PASSWORD)
         check = userprofile.get_profile_by_username(eachFriend['screen_name'])
@@ -114,6 +117,7 @@ class Friends():
             data['useruid'] = min_user_id
 
             userprofile.update_profile_upsert({'screen_name':eachFriend['screen_name'],'username':eachFriend['screen_name']},data)
+            # print eachFriend['screen_name'] + " added"
             return True
         else:
             return False
@@ -131,13 +135,17 @@ class Friends():
                     self.update_friend(eachUser['friends']['screen_name'], eachUser['username'])
                 else:                    
                     self.update_friend(eachUser['friends']['screen_name'], eachUser['username'])
+            time.sleep(5)
 
     def update_friend(self, friend_name, username):
+        # print friend_name + " updated"
         return self.db_object.update(self.table_name,{'username':username,'friends.screen_name':friend_name},{'friends.added_as_user':'true'})
 
     def get_friend(self, friend_name):
         return self.db_object.get_one(self.table_name,{'friends.screen_name':friend_name})
 
     def save_friend(self,doc):
-        return self.db_object.update_upsert(self.table_name,{'username':doc['username'],'friends.screen_name':doc['friends']['screen_name']},doc)
+        retval = self.db_object.update_upsert(self.table_name,{'username':doc['username'],'friends.screen_name':doc['friends']['screen_name']},doc)
+        # print str(doc['username']) + " saved"
+        return retval
 

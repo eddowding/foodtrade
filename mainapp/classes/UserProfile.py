@@ -9,7 +9,7 @@ import os
 import sys
 from pygeocoder import Geocoder
 
-CLASS_PATH = '/srv/www/live/foodtrade-env/foodtrade/CronJobs'
+CLASS_PATH = '/srv/www/live/foodtrade-env/foodtrade/mainapp/classes'
 SETTINGS_PATH = '/srv/www/live/foodtrade-env/foodtrade/foodtrade'
 
 # CLASS_PATH = 'C:/Users/Roshan Bhandari/Desktop/foodtrade/mainapp/classes'
@@ -95,15 +95,6 @@ class UserProfile():
             time.sleep(5)
         return {'status':1}
 
-    def get_all_profiles_by_time(self, start):
-        users = []
-        user_pages_count = int(self.db_object.get_count(self.table_name, {'join_time':{'$gt':start}, 'is_unknown_profile': 'false'}))
-        for i in range(0,user_pages_count, 1):
-            pag_users = self.db_object.get_paginated_values(self.table_name, {'join_time':{'$gt':start}, 'is_unknown_profile': 'false'}, pageNumber = int(i+1))
-            for eachUser in pag_users:
-                users.append(eachUser)
-        return users 
-
     def get_minimum_id_of_user(self):
         return self.db_object.aggregrate_all(self.table_name, [ { '$group': { '_id':0, 'minId': { '$min': "$useruid"} } } ] )
 
@@ -120,7 +111,7 @@ class UserProfile():
     def get_profile_by_type(self, type_usr):
         return self.db_object.get_all(self.table_name,{'sign_up_as':type_usr})
 
-    def get_all_friends_and_register_as_friend(self, start_time_stamp):
+    def get_all_friends_and_register_as_friend(self, start):
         maxtime = datetime.datetime.now() - datetime.timedelta(minutes=300)
         maxtime = int(time.mktime(maxtime.timetuple()))
         user_pages_count = int(self.db_object.get_count(self.table_name, {'join_time':{'$gt':start, '$lt':maxtime}, 'is_unknown_profile': 'false'}))
