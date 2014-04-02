@@ -668,8 +668,13 @@ fieldset[disabled] .btn-primary.active {
 .leaflet-label-left:after {
 	content: "";
 }
+/*
+.leaflet-fade-anim .leaflet-tile-loaded {
+  -webkit-filter: grayscale(80%) brightness(130%);
+  filter: grayscale(80%) brightness(130%);
 
-
+}
+*/
 /********************************/
 /**  PRICING                   **/
 /********************************/
