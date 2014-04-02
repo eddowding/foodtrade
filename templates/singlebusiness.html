@@ -796,11 +796,19 @@
                     </div>
 
                     <div class="numbers clearfix">
-                      <p class="small text-center">
-                        <span rel="tooltip" title="{{each.food_no}} foods" class="pull-left"><i class="fa fa-cutlery"></i> {{each.food_no}}</span>
-                        <span rel="tooltip" title="{{each.trade_conn_no}} connections"><i class="fa fa-link"></i> {{each.trade_conn_no}}</span>
-                        <span rel="tooltip" title="{{each.org_conn_no}} organisations" class="pull-right"><i class="fa fa-group"></i> {{each.org_conn_no}}</span> 
+                      <p class="small text-center">  
+                        <a href="/profile/{{each.username}}">
+ 
+                        <span rel="tooltip" title="{{each.food_no}} foods" class="pull-left {% if each.food_no = 0 %}zero{% endif %}"><i class="fa fa-cutlery"></i> {{each.food_no}}</span>
+
+                        <span rel="tooltip" title="{{each.trade_conn_no}} connections" class=" {% if each.trade_conn_no = 0 %}zero{% endif %}"><i class="fa fa-link"></i> {{each.trade_conn_no}}</span>
+
+                        <span rel="tooltip" title="{{each.org_conn_no}} organisations" class="pull-right {% if each.org_conn_no = 0 %}zero{% endif %}"><i class="fa fa-group"></i> {{each.org_conn_no}}</span> 
+
+                        </a>
                       </p>
+
+
                     </div>
                     {% if each.type|length == 0 or each.type|first == '' %}
                     {% else %}
