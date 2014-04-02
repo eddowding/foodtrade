@@ -73,26 +73,27 @@ class Friends():
         return {'status':1}
 
     def register_friend_to_user(self, eachFriend, username=''):
+        print eachFriend
+        data = {
+            'is_unknown_profile':'true',
+            'recently_updated_by_super_user': 'false', 
+            'sign_up_as': str('unclaimed'),
+            'type_user': [], 
+            'name': eachFriend['name'],
+            'email': '', 
+            'description': eachFriend['description'],
+            'username' : eachFriend['screen_name'],
+            'screen_name': eachFriend['screen_name'],            
+            'updates': [],
+            'foods':[],
+            'organisations':[],
+            'subscribed':0,
+            'newsletter_freq':'Never'
+        }
         try:
-            data = {
-                'is_unknown_profile':'true',
-                'recently_updated_by_super_user': 'false', 
-                'sign_up_as': str('unclaimed'),
-                'type_user': [], 
-                'name': eachFriend['name'],
-                'email': '', 
-                'description': eachFriend['description'],
-                'username' : eachFriend['screen_name'],
-                'screen_name': eachFriend['screen_name'],
-                'profile_img': eachFriend['profile_image_url'],
-                'updates': [],
-                'foods':[],
-                'organisations':[],
-                'subscribed':0,
-                'newsletter_freq':'Never'
-            }
+            data['profile_img'] = eachFriend['profile_image_url']
         except:
-            return {'status':'0'}
+            data['profile_img'] = eachFriend['profile_img']
         from UserProfile import UserProfile
         userprofile = UserProfile(host=REMOTE_SERVER_LITE, port=27017, db_name=REMOTE_MONGO_DBNAME, username=REMOTE_MONGO_USERNAME, password=REMOTE_MONGO_PASSWORD)
         check = userprofile.get_profile_by_username(eachFriend['screen_name'])
