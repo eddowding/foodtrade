@@ -117,7 +117,7 @@ class Friends():
             data['useruid'] = min_user_id
 
             userprofile.update_profile_upsert({'screen_name':eachFriend['screen_name'],'username':eachFriend['screen_name']},data)
-            print eachFriend['screen_name'] + " added"
+            # print eachFriend['screen_name'] + " added"
             return True
         else:
             return False
@@ -138,7 +138,7 @@ class Friends():
             time.sleep(5)
 
     def update_friend(self, friend_name, username):
-        print friend_name + " updated"
+        # print friend_name + " updated"
         return self.db_object.update(self.table_name,{'username':username,'friends.screen_name':friend_name},{'friends.added_as_user':'true'})
 
     def get_friend(self, friend_name):
@@ -146,6 +146,6 @@ class Friends():
 
     def save_friend(self,doc):
         retval = self.db_object.update_upsert(self.table_name,{'username':doc['username'],'friends.screen_name':doc['friends']['screen_name']},doc)
-        print str(doc['username']) + " saved"
+        # print str(doc['username']) + " saved"
         return retval
 
