@@ -150,10 +150,19 @@ function swith_update_form()
 {
   switch_text_area();
   $("#structured_postupdate").hide();
+  $("#update-big").show();
 }
 
 function show_full_structure()
 {
+  $("#structured_hidden_block").removeClass("hidden");
+}
+
+function show_small_structure()
+{ 
+  switch_text_area
+  $("#update-big").hide();
+  $("#structured_postupdate").show();
   $("#structured_hidden_block").removeClass("hidden");
 }
 </script>
@@ -162,9 +171,21 @@ function show_full_structure()
         <input class="form-control col-xs-12"  {% if not user.is_authenticated %}  onfocus="login_redirect()" title="Please login to use this feature." {% else %} {% if can_tweet %} onfocus= "switch_text_area()"{% else %} rel="tooltip" title="You're limited to 1 update every 7 days. Please upgrade your account to unlock." {% endif %}{% endif %} placeholder="What #food do you have to #buy, #sell, or #surplus?">  
       </div> 
 
-      <div id="update-big" class="well well-sm clearfix hidden">
+      <div id="update-big" class="well well-sm clearfix hidden" style="margin-top:10px;">
         <form class="form-horizontal">
-          <div class="row">
+          <div class="row" style="margin-bottom:0;"> 
+            <div class="col-xs-12">  
+             <p style="line-height: 2.5; margin: 0 10px 0 0;" class="pull-left"><strong>I'd like to...</strong> 
+              <div class="btn-group btn-bl ock pull-left" id="post_for">
+              <!-- <input type="hidden" /> -->
+                <button type="button" onclick="show_small_structure();$('#price').show();"  class="btn btn-default" value="buy" ><i class="fa fa-sign-in fa-fw"></i> buy</button>
+                <button type="button" onclick="show_small_structure();$('#price').show();" class="btn btn-default" value="sell" ><i class="fa fa-sign-out fa-fw"></i> sell</button>
+                <button type="button" onclick="show_small_structure();$('#price').hide();"   class="btn btn-default" value="offer surplus"  ><i class="fa fa-random fa-fw"></i> offer surplus</button>
+                <button type="button" onclick="swith_update_form()"   class="btn btn-default" value="offer surplus"  ><i class="fa fa-rocket fa-fw"></i> go freestyle</button>
+              </div>                     
+            </div>
+          </div>
+          <div class="row" style="margin-top:10px;">
             <div class="col-xs-12">
               <textarea class="form-control col-xs-12 counted" onkeyup="check_limit()" rows="3" name="q" id="newstatus" {% if not user.is_authenticated %}  onfocus="login_redirect()" title="Please login to use this feature." {% endif %} placeholder="What would you like? Eg '300kg #surplus conference #pears for #sale or #surplus' or 'I want to  #buy organic #honey for my farm shop.' "></textarea>
             </div>
