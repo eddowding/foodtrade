@@ -92,7 +92,7 @@ class Friends():
                 'newsletter_freq':'Never'
             }
         except:
-            pass
+            return {'status':'0'}
         from UserProfile import UserProfile
         userprofile = UserProfile(host=REMOTE_SERVER_LITE, port=27017, db_name=REMOTE_MONGO_DBNAME, username=REMOTE_MONGO_USERNAME, password=REMOTE_MONGO_PASSWORD)
         check = userprofile.get_profile_by_username(eachFriend['screen_name'])
