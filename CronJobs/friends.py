@@ -87,7 +87,7 @@ class Friends():
             'newsletter_freq':'Never'
         }
         from UserProfile import UserProfile
-        userprofile = UserProfile(host=REMOTE_SERVER_LITE, port=27017, db_name=REMOTE_MONGO_DBNAME, conn_type='remote', username=REMOTE_MONGO_USERNAME, password=REMOTE_MONGO_PASSWORD)
+        userprofile = UserProfile(host=REMOTE_SERVER_LITE, port=27017, db_name=REMOTE_MONGO_DBNAME, username=REMOTE_MONGO_USERNAME, password=REMOTE_MONGO_PASSWORD)
         check = userprofile.get_profile_by_username(eachFriend['screen_name'])
 
         if check ==None:
@@ -122,7 +122,7 @@ class Friends():
             for eachUser in pag_users:
                 user_profile_obj = UserProfile(host=REMOTE_SERVER_LITE, port=27017, db_name=REMOTE_MONGO_DBNAME, username=REMOTE_MONGO_USERNAME, password=REMOTE_MONGO_PASSWORD)
                 check = user_profile_obj.get_profile_by_username(eachUser['friends']['screen_name'])                                
-                if check == None:
+                if check == None:                    
                     self.register_friend_to_user(eachUser['friends'])
                     self.update_friend(eachUser['friends']['screen_name'], eachUser['username'])
                 else:                    

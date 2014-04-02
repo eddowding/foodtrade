@@ -7,9 +7,13 @@ import time, datetime
 from bson.code import Code
 import os
 import sys
+from pygeocoder import Geocoder
 
 CLASS_PATH = '/srv/www/live/foodtrade-env/foodtrade/CronJobs'
 SETTINGS_PATH = '/srv/www/live/foodtrade-env/foodtrade/foodtrade'
+
+# CLASS_PATH = 'C:/Users/Roshan Bhandari/Desktop/foodtrade/mainapp/classes'
+# SETTINGS_PATH = 'C:/Users/Roshan Bhandari/Desktop/foodtrade/foodtrade'
 
 sys.path.insert(0, CLASS_PATH)
 sys.path.insert(1,SETTINGS_PATH)
@@ -71,13 +75,14 @@ class UserProfile():
         return self.db_object.update(self.table_name, {'username':username}, data)
 
     def geocode_and_update_address(self, username='', address=''):
-        try:
+        try:            
             data ={}
             location_res = Geocoder.geocode(address)
             data['address'] = str(location_res)
             data['latlng'] = {"type":"Point","coordinates":[float(location_res.longitude),float(location_res.latitude)]}
             data['zip_code'] = str(location_res.postal_code)
-            return self.db_object.update({'screen_name':eachFriend['screen_name'],'username':eachFriend['screen_name']},data)
+            self.db_object.update(self.table_name, {'screen_name':username,'username':username},data)
+            return {'status':1}
         except:
             return {'status':0, 'message':'exception occured while geocoding'}
 
@@ -87,7 +92,7 @@ class UserProfile():
             pag_users = self.db_object.get_paginated_values(self.table_name, {'address':'Antartica'}, pageNumber = int(i+1))
             for eachUser in pag_users:
                 self.geocode_and_update_address(eachUser['username'], eachUser['address'])
-            time.sleep(2)
+            time.sleep(5)
         return {'status':1}
 
     def get_all_profiles_by_time(self, start):
