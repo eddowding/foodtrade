@@ -1092,10 +1092,9 @@ h2 {
 .card { 
 	float: left;
 	margin: 0 1% 15px 0;
-  width: 23.3%;
+  width: 32.3%;
 	border: 1px solid #ccc; 
-	min-height: 52px; 
-  border-radius: 3px;
+	min-height: 52px;  
 }
 
 .card-business { 
@@ -1138,20 +1137,26 @@ h2 {
 	line-height: 15px;
 }
 
-.card .numbers {
+.card .numbers p.small {
 	background: #f9f9f9;
   border-top: 1px solid #ccc;
-	padding: 2px 5px;
+	padding: 10px 8px;
+  color: #ccc;
 }
-
-.card .numbers a {
+ 
+.card .numbers p.small a {
 	margin-left: 8px;
 	color: #666;
+}
+
+.card .numbers p.small  a .zero {
+  color: #ccc;
 }
 
 .card .type {
   background: #ddd;
   border-bottom: 1px solid #ccc;
+  padding: 5px;
 }
 .card .type .tags-biztype { 
   overflow:hidden; 
