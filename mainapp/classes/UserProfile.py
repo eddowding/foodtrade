@@ -7,7 +7,6 @@ import time, datetime
 from bson.code import Code
 import os
 import sys
-import time, datetime
 
 CLASS_PATH = '/srv/www/live/foodtrade-env/foodtrade/CronJobs'
 SETTINGS_PATH = '/srv/www/live/foodtrade-env/foodtrade/foodtrade'
@@ -116,10 +115,12 @@ class UserProfile():
     def get_profile_by_type(self, type_usr):
         return self.db_object.get_all(self.table_name,{'sign_up_as':type_usr})
 
-    def get_all_friends_and_register_as_user(self, start_time_stamp):
-        user_pages_count = int(self.db_object.get_count(self.table_name, {'join_time':{'$gt':start}, 'is_unknown_profile': 'false'}))
+    def get_all_friends_and_register_as_friend(self, start_time_stamp):
+        maxtime = datetime.datetime.now() - datetime.timedelta(minutes=100)
+        maxtime = int(time.mktime(maxtime.timetuple()))
+        user_pages_count = int(self.db_object.get_count(self.table_name, {'join_time':{'$gt':start, '$lt':maxtime}, 'is_unknown_profile': 'false'}))
         for i in range(0,user_pages_count, 1):
-            pag_users = self.db_object.get_paginated_values(self.table_name, {'join_time':{'$gt':start}, 'is_unknown_profile': 'false'}, pageNumber = int(i+1))
+            pag_users = self.db_object.get_paginated_values(self.table_name, {'join_time':{'$gt':start, '$lt':maxtime}, 'is_unknown_profile': 'false'}, pageNumber = int(i+1))
             from friends import Friends            
             for eachUser in pag_users:                
                 friend_obj = Friends()

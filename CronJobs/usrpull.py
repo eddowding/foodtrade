@@ -19,7 +19,7 @@ start_time = time.mktime(start_time.timetuple())
 start_time = int(start_time)
 
 user_profile_obj = UserProfile(host=REMOTE_SERVER_LITE, port=27017, db_name=REMOTE_MONGO_DBNAME, username=REMOTE_MONGO_USERNAME, password=REMOTE_MONGO_PASSWORD)
-users = user_profile_obj.get_all_friends_and_register_as_user(start_time)
+users = user_profile_obj.get_all_friends_and_register_as_friend(start_time)
         
         
 # def solve_errors():

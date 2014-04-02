@@ -54,7 +54,7 @@ class Friends():
                     '''Register this user'''
                     self.register_friend(eachFriend, eachUser['username'])
                 if next_cursor != 0:
-                    time.sleep(10)
+                    time.sleep(5)
                     friends = self.get_friends(eachUser['username'], next_cursor, friend_or_follower)
             return {'status':1}
         except:
