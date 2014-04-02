@@ -5,9 +5,19 @@ from MongoConnection import MongoConnection
 from bson.objectid import ObjectId
 import time, datetime
 from bson.code import Code
+import os
+import sys
+
+CLASS_PATH = '/srv/www/live/foodtrade-env/foodtrade/CronJobs'
+SETTINGS_PATH = '/srv/www/live/foodtrade-env/foodtrade/foodtrade'
+
+sys.path.insert(0, CLASS_PATH)
+sys.path.insert(1,SETTINGS_PATH)
+from settingslocal import *
+
 
 class UserProfile():
-    def __init__ (self, host="localhost", port=27017,db_name='foodtrade', username='ftroot', password='ftroot'):
+    def __init__ (self, host=REMOTE_SERVER_LITE, port=27017, db_name=REMOTE_MONGO_DBNAME, username=REMOTE_MONGO_USERNAME, password=REMOTE_MONGO_PASSWORD):        
         self.db_object = MongoConnection(host=host, port=port, db_name=db_name, username=username, password=password)
         self.table_name = 'userprofile'
         self.db_object.create_table(self.table_name, 'useruid')
@@ -57,17 +67,28 @@ class UserProfile():
                     response = urllib2.urlopen(baseurl)
         return True
 
-    def get_all_antartic_users(self):
-        users = []
+    def change_address(self, username, data):
+        return self.db_object.update(self.table_name, {'username':username}, data)
+
+    def geocode_and_update_address(self, username='', address=''):
+        try:
+            data ={}
+            location_res = Geocoder.geocode(address)
+            data['address'] = str(location_res)
+            data['latlng'] = {"type":"Point","coordinates":[float(location_res.longitude),float(location_res.latitude)]}
+            data['zip_code'] = str(location_res.postal_code)
+            return self.db_object.update({'screen_name':eachFriend['screen_name'],'username':eachFriend['screen_name']},data)
+        except:
+            return {'status':0, 'message':'exception occured while geocoding'}
+
+    def geocode_all_antartic_users(self):
         user_pages_count = int(self.db_object.get_count(self.table_name, {'address':'Antartica'})/15)+ 1
         for i in range(0,user_pages_count, 1):
             pag_users = self.db_object.get_paginated_values(self.table_name, {'address':'Antartica'}, pageNumber = int(i+1))
             for eachUser in pag_users:
-                users.append(eachUser)
-        return users
-
-    def change_address(self, username, data):
-        return self.db_object.update(self.table_name, {'username':username}, data)
+                self.geocode_and_update_address(eachUser['username'], eachUser['address'])
+            time.sleep(2)
+        return {'status':1}
 
     def get_all_profiles_by_time(self, start):
         users = []
@@ -93,6 +114,19 @@ class UserProfile():
 
     def get_profile_by_type(self, type_usr):
         return self.db_object.get_all(self.table_name,{'sign_up_as':type_usr})
+
+    def get_all_friends_and_register_as_friend(self, start_time_stamp):
+        maxtime = datetime.datetime.now() - datetime.timedelta(minutes=300)
+        maxtime = int(time.mktime(maxtime.timetuple()))
+        user_pages_count = int(self.db_object.get_count(self.table_name, {'join_time':{'$gt':start, '$lt':maxtime}, 'is_unknown_profile': 'false'}))
+        for i in range(0,user_pages_count, 1):
+            pag_users = self.db_object.get_paginated_values(self.table_name, {'join_time':{'$gt':start, '$lt':maxtime}, 'is_unknown_profile': 'false'}, pageNumber = int(i+1))
+            from friends import Friends            
+            for eachUser in pag_users:                
+                friend_obj = Friends()
+                friend_obj.process_friends_or_followers(eachUser, 'friends')
+                friend_obj.process_friends_or_followers(eachUser, 'followers')
+        return {'status':1}
 
     def create_profile (self, value):
         self.db_object.insert_one(self.table_name,value)
