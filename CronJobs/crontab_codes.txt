@@ -6,3 +6,6 @@ live root
 
 staging foodtrade
 30 3 * * * sh /srv/www/live/foodtrade-env/foodtrade/CronJobs/backup_script_staging.sh
+0 4 * * * python /srv/www/live/foodtrade-env/foodtrade/CronJobs/usrpull.py
+0 1 * * * python /srv/www/live/foodtrade-env/foodtrade/CronJobs/friendtousr.py
+0 12 * * * python /srv/www/live/foodtrade-env/foodtrade/CronJobs/geocodeCron.py
