@@ -5,11 +5,11 @@ import os
 import sys
 import time, datetime
 
-CLASS_PATH = '/srv/www/live/foodtrade-env/foodtrade/mainapp/classes'
-SETTINGS_PATH = '/srv/www/live/foodtrade-env/foodtrade/foodtrade'
+# CLASS_PATH = '/srv/www/live/foodtrade-env/foodtrade/mainapp/classes'
+# SETTINGS_PATH = '/srv/www/live/foodtrade-env/foodtrade/foodtrade'
 
-# CLASS_PATH = 'C:/Users/Roshan Bhandari/Desktop/foodtrade/mainapp/classes'
-# SETTINGS_PATH = 'C:/Users/Roshan Bhandari/Desktop/foodtrade/foodtrade'
+CLASS_PATH = 'C:/Users/Roshan Bhandari/Desktop/foodtrade/mainapp/classes'
+SETTINGS_PATH = 'C:/Users/Roshan Bhandari/Desktop/foodtrade/foodtrade'
 
 
 sys.path.insert(0, CLASS_PATH)
