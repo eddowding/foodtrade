@@ -3,7 +3,7 @@
 
 import sys
 
-CLASS_PATH = '/srv/www/live/foodtrade-env/foodtrade/CronJobs'
+CLASS_PATH = '/srv/www/live/foodtrade-env/foodtrade/mainapp/classes'
 SETTINGS_PATH = '/srv/www/live/foodtrade-env/foodtrade/foodtrade'
 
 # SETTINGS_PATH = 'C:/Users/Roshan Bhandari/Desktop/foodtrade/foodtrade'
