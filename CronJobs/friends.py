@@ -148,4 +148,3 @@ class Friends():
         retval = self.db_object.update_upsert(self.table_name,{'username':doc['username'],'friends.screen_name':doc['friends']['screen_name']},doc)
         # print str(doc['username']) + " saved"
         return retval
-
