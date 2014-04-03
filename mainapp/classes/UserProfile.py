@@ -10,6 +10,7 @@ import sys
 from pygeocoder import Geocoder
 
 CLASS_PATH = '/srv/www/live/foodtrade-env/foodtrade/mainapp/classes'
+CRON_PATH = '/srv/www/live/foodtrade-env/foodtrade/CronJobs'
 SETTINGS_PATH = '/srv/www/live/foodtrade-env/foodtrade/foodtrade'
 
 # CLASS_PATH = 'C:/Users/Roshan Bhandari/Desktop/foodtrade/mainapp/classes'
@@ -17,6 +18,7 @@ SETTINGS_PATH = '/srv/www/live/foodtrade-env/foodtrade/foodtrade'
 
 sys.path.insert(0, CLASS_PATH)
 sys.path.insert(1,SETTINGS_PATH)
+sys.path.insert(1,CRON_PATH)
 from settingslocal import *
 
 
