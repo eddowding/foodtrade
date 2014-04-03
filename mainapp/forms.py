@@ -108,17 +108,17 @@ class SignupForm(forms.Form):
     def save(self, user):
         try:
             addr = self.cleaned_data['address']
-            # lat = self.cleaned_data['lat']
-            # lon = self.cleaned_data['lng']
+            lat = self.cleaned_data['lat']
+            lon = self.cleaned_data['lng']
 
-            # if len(lat) == 0 and len(lon) == 0:
-            addr_geo = Geocoder.geocode(addr.strip())
-            lat = float(addr_geo.latitude)
-            lon = float(addr_geo.longitude)
-            postal_code = str(addr_geo.postal_code)
-            # else:
-            #     result = Geocoder.reverse_geocode(float(lat),float(lon))
-            #     postal_code = str(result.postal_code)
+            if len(lat) == 0 and len(lon) == 0:
+                addr_geo = Geocoder.geocode(addr.strip())
+                lat = float(addr_geo.latitude)
+                lon = float(addr_geo.longitude)
+                postal_code = str(addr_geo.postal_code)
+            else:
+                result = Geocoder.reverse_geocode(float(lat),float(lon))
+                postal_code = str(result.postal_code)
         except:
             lat, lon, addr,postal_code = 51.5072 , -0.1275, "3 Whitehall, London SW1A 2EL, UK", "SW1 A 2EL"
         
