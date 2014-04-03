@@ -46,26 +46,26 @@ class Friends():
             return followers
     
     def process_friends_or_followers(self, eachUser, friend_or_follower):
-        try:
-            friends = self.get_friends(eachUser['username'], -1, friend_or_follower)
-        except:
-            return
+        # try:
+        friends = self.get_friends(eachUser['username'], -1, friend_or_follower)
+        # except:
+        #     return
         next_cursor = -1
-        try:
-            while(next_cursor !='0'):
-                next_cursor = friends['next_cursor']
-                for eachFriend in friends['users']:
-                    '''Register this user'''
-                    self.register_friend(eachFriend, eachUser['username'])
-                if next_cursor != 0:
-                    time.sleep(5)
-                    friends = self.get_friends(eachUser['username'], next_cursor, friend_or_follower)
-            return {'status':1}
-        except:
-            twitter_err_obj = TwitterError()
-            twitter_err_obj.save_error({'username':eachUser['username'],'error_type':'cron',
-                'next_cursor':next_cursor, 'error_solve_stat':'false','user_type':friend_or_follower})
-            return {'status':0, 'msg':'landed in exception'}
+        # try:
+        while(next_cursor !='0'):
+            next_cursor = friends['next_cursor']
+            for eachFriend in friends['users']:
+                '''Register this user'''
+                self.register_friend(eachFriend, eachUser['username'])
+            if next_cursor != 0:
+                time.sleep(5)
+                friends = self.get_friends(eachUser['username'], next_cursor, friend_or_follower)
+        return {'status':1}
+        # except:
+        #     twitter_err_obj = TwitterError()
+        #     twitter_err_obj.save_error({'username':eachUser['username'],'error_type':'cron',
+        #         'next_cursor':next_cursor, 'error_solve_stat':'false','user_type':friend_or_follower})
+        #     return {'status':0, 'msg':'landed in exception'}
 
     def register_friend(self, eachFriend, username=''):
         '''Register User to Friends Collection'''

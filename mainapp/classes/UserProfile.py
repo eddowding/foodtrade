@@ -117,8 +117,8 @@ class UserProfile():
         user_pages_count = int(self.db_object.get_count(self.table_name, {'join_time':{'$gt':start, '$lt':maxtime}, 'is_unknown_profile': 'false'}))
         for i in range(0,user_pages_count, 1):
             pag_users = self.db_object.get_paginated_values(self.table_name, {'join_time':{'$gt':start, '$lt':maxtime}, 'is_unknown_profile': 'false'}, pageNumber = int(i+1))
-            from friends import Friends            
-            for eachUser in pag_users:                
+            from friends import Friends                        
+            for eachUser in pag_users:     
                 friend_obj = Friends()
                 friend_obj.process_friends_or_followers(eachUser, 'friends')
                 friend_obj.process_friends_or_followers(eachUser, 'followers')
