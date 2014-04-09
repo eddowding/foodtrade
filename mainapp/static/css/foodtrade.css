@@ -6,6 +6,8 @@ body {
 
 body {
   padding-top: 58px;
+  background: #eaeaea ;
+  background: #fff;
 }
 
 a {
@@ -131,6 +133,11 @@ h2 {
 .well-sm .help-block,
 .well-sm .help-block ul {
   margin-bottom: 0;
+}
+
+.tab-pane {
+  background: #fff;
+  padding: 10px;
 }
 
 
@@ -304,7 +311,7 @@ tr:hover .showonhover {
    
 #sidebar {
 	border-right: 1px solid #ccc; 
-  background: #444;
+  background: #2B303B;
 	padding-top: 30px;
 	margin-top: 0px;
 	padding-left: 25px; 
@@ -1053,7 +1060,7 @@ clear: both;
 } 
 
 #header_box > div[class*='col-']  { 
-	min-height: 300px;
+	min-height: 100px;
 }
 
 #header_box #avatar {

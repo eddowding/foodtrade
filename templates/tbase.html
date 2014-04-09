@@ -6,7 +6,7 @@
 {% include "socialaccount/snippets/login_extra.html" %}
 {% load account %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="sidebar sidebar-social footer-sticky js flexbox flexboxlegacy no-touch rgba hsla multiplebgs backgroundsize borderimage borderradius boxshadow textshadow opacity cssanimations csscolumns cssgradients cssreflections csstransforms csstransforms3d csstransitions fontface generatedcontent">
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -83,12 +83,13 @@
 
     </title>
     <!-- CSS -->
-    <link href="{% static "css/bootstrap.css" %}" rel="stylesheet">
-    <link href="{% static "css/foodtrade.css" %}" rel="stylesheet"> 
+    <link href="{% static "css/bootstrap.css" %}" rel="stylesheet"><!-- 
+    <link href="{% static "css/foodtrade.css" %}" rel="stylesheet">  -->
     <link rel="stylesheet" href="/static/css/docsupport/prism.css">
-    <link rel="stylesheet" href="/static/css/chosen.min.css">
+    <link rel="stylesheet" href="/static/css/chosen.min.css"> 
+
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places"></script>
-    <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+    <!-- <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet"> -->
     <style type="text/css">
   
       .margin-ta{
@@ -144,8 +145,44 @@
       <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
       <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
     <![endif]-->
+
+
+
+
+
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+    <!-- 
+  **********************************************************
+  In development, use the LESS files and the less.js compiler
+  instead of the minified CSS loaded by default.
+  **********************************************************
+  <link rel="stylesheet/less" href="{% static "assets/less/admin/module.admin.stylesheet-complete.less" %}" />
+  -->
+    <!--[if lt IE 9]><link rel="stylesheet" href="{% static "assets/components/library/bootstrap/css/bootstrap.min.css" %}" /><![endif]-->
+    <script src="{% static "js/jquery.js" %}"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js" type="text/javascript" charset="utf-8"></script>
+   
+    <link rel="stylesheet" href="{% static "assets/css/admin/module.admin.stylesheet-complete.min.css" %}" />  
+    <script src="{% static "assets/components/library/jquery/jquery-migrate.min.js" %}"></script>
+    <script src="{% static "assets/components/library/modernizr/modernizr.js" %}"></script>
+    <script src="{% static "assets/components/plugins/less-js/less.min.js" %}"></script> 
+    <script src="{% static "assets/components/plugins/browser/ie/ie.prototype.polyfill.js" %}"></script>
+    <script>
+    if ( /*@cc_on!@*/ false && document.documentMode === 10)
+    {
+        document.documentElement.className += ' ie ie10';
+    }
+    </script>
+
+
+
+
+
+
+
   </head>
-  <body> 
+<body class=" menu-right-hidden">
     
 
        <!-- New post Modal -->
@@ -261,11 +298,350 @@
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
-<div class="container-responsive clearfix" id="main_page">
- 
-<div class="row row-offcanvas row-offcanvas-left row-offcanvas-right" id="main_row">
 
-<div id="sidebar" class="col-xs-6 col-sm-2 sidebar sidebar-offcanvas
+
+<div class="container-fluid menu-hidden" id="">
+
+<div id="menu" class="hidden-print hidden-xs sidebar-default sidebar-brand-primary">
+    <div id="sidebar-social-wrapper">
+        <div id="brandWrapper">
+            <a href="index.html?lang=en">
+                <span class="text">FoodTrade</span>
+            </a>
+        </div>
+        <ul class="menu list-unstyled" id="navigation_current_page">
+            <li class="category">Navigation</li>
+            <li class="hasSubmenu">
+                <a href="#sidebar-fusion-timelines" data-toggle="collapse"><i class="icon-ship-wheel"></i><span>Timelines</span></a>
+                <ul id="sidebar-fusion-timelines" class="collapse">
+                    <li><a href="index.html?lang=en"><i class="fa fa-clock-o"></i><span>Timeline #1</span></a>
+                    </li>
+                    <li><a href="timeline_2.html?lang=en"><i class="fa fa-clock-o"></i><span>Timeline #2</span></a>
+                    </li>
+                    <li><a href="timeline_3.html?lang=en"><i class="fa fa-clock-o"></i><span>Timeline #3</span></a>
+                    </li>
+                </ul>
+            </li> 
+            <li class="category">News Feeds</li>
+            <li class="reset">
+                <ul>
+                    <li class="media news-item">
+                        <span class="news-item-success pull-right "><i class="fa fa-circle"></i>
+                        </span>
+                        <span class="pull-left media-object">
+                            <i class="fa fa-fw fa-bell"></i>
+                        </span>
+                        <div class="media-body">
+                            <a href="" class="text-white">Adrian</a> just
+                            logged in
+                            <span class="time">2 min ago</span>
+                        </div>
+                    </li>
+                    <li class="media news-item">
+                        <span class="news-item-success pull-right "><i class="fa fa-circle"></i>
+                        </span>
+                        <span class="pull-left media-object">
+                            <i class="fa fa-fw fa-bell"></i>
+                        </span>
+                        <div class="media-body">
+                            <a href="" class="text-white">Adrian</a> just
+                            added <a href="" class="text-white">mosaicpro</a> as
+                            their office
+                            <span class="time">2 min ago</span>
+                        </div>
+                    </li>
+                    <li class="media news-item">
+                        <span class="pull-left media-object">
+                            <i class="fa fa-fw fa-bell"></i>
+                        </span>
+                        <div class="media-body">
+                            <a href="" class="text-white">Adrian</a> just
+                            logged in
+                            <span class="time">2 min ago</span>
+                        </div>
+                    </li>
+                    <li class="media news-item">
+                        <span class="pull-left media-object">
+                            <i class="fa fa-fw fa-bell"></i>
+                        </span>
+                        <div class="media-body">
+                            <a href="" class="text-white">Adrian</a> just
+                            logged in
+                            <span class="time">2 min ago</span>
+                        </div>
+                    </li>
+                    <li class="media news-item">
+                        <span class="pull-left media-object">
+                            <i class="fa fa-fw fa-bell"></i>
+                        </span>
+                        <div class="media-body">
+                            <a href="" class="text-white">Adrian</a> just
+                            logged in
+                            <span class="time">2 min ago</span>
+                        </div>
+                    </li>
+                </ul>
+            </li> 
+        </ul>
+    </div>
+</div>
+<!-- // Main Sidebar Menu END -->
+<!-- // Main Sidebar Menu END -->
+        <div id="menu-right">
+            <div>
+                <button class="btn btn-inverse btn-xs btn-close" data-toggle="sidr-close" data-menu="menu-right"><i class="fa fa-times"></i>
+                </button>
+                <div class="tab-content">
+                    <div class="tab-pane" id="chat-conversation">
+                        <ul>
+                            <li>
+                                <div class="innerAll">
+                                    <button class="btn btn-primary" data-toggle="tab"
+                                    data-target="#chat-list"><i class="fa fa-fw fa-user"></i> friends</button>
+                                </div>
+                            </li>
+                            <li class="conversation innerAll">
+                                <!-- Media item -->
+                                <div class="media">
+                                    <small class="author"><a href="#" title="" class="strong">Jane Doe</a>
+                                    </small>
+                                    <div class="media-object pull-left">
+                                        <img src="../assets/images/people/50/1.jpg"
+                                        alt="Image" class="img-circle" />
+                                    </div>
+                                    <div class="media-body">
+                                        <blockquote>
+                                            <small class="date">
+                                                <cite>just now</cite>
+                                            </small>
+                                            <p>Lorem ipsum dolor sit amet, consectetur
+                                                adipisicing elit. Necessitatibus,
+                                                sit?</p>
+                                        </blockquote>
+                                    </div>
+                                </div>
+                                <!-- // Media item END -->
+                                <!-- Media item -->
+                                <div class="media primary right">
+                                    <small class="author"><a href="#" title="" class="strong">John Doe</a>
+                                    </small>
+                                    <div class="media-object pull-right">
+                                        <img src="../assets/images/people/50/2.jpg"
+                                        alt="Image" class="img-circle" />
+                                    </div>
+                                    <div class="media-body">
+                                        <blockquote class="pull-right">
+                                            <small class="date">
+                                                <cite>15 seconds ago</cite>
+                                            </small>
+                                            <p>Lorem ipsum dolor sit amet, consectetur
+                                                adipisicing elit. Quo, molestiae!</p>
+                                        </blockquote>
+                                    </div>
+                                </div>
+                                <!-- // Media item END -->
+                                <!-- Media item -->
+                                <div class="media">
+                                    <small class="author"><a href="#" title="" class="strong">Ricky</a>
+                                    </small>
+                                    <div class="media-object pull-left">
+                                        <img src="../assets/images/people/50/1.jpg"
+                                        alt="Image" class="img-circle" />
+                                    </div>
+                                    <div class="media-body">
+                                        <blockquote>
+                                            <small class="date">
+                                                <cite>5 minutes ago</cite>
+                                            </small>
+                                            <p>Lorem ipsum dolor sit amet, consectetur
+                                                adipisicing elit. Doloremque, distinctio!</p>
+                                        </blockquote>
+                                    </div>
+                                </div>
+                                <!-- // Media item END -->
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="tab-pane active" id="chat-list">
+                        <div class="mixitup" id="mixitup-chat" data-show-default="mixit-chat-1" data-layout-mode="list"
+                        data-target-selector=".mix" data-filter-selector=".filter-chat">
+                            <ul>
+                                <li class="category">Groups</li>
+                                <li class="reset">
+                                    <div class="innerLR">
+                                        <ul>
+                                            <li class="filter-chat" data-filter="mixit-chat-1">
+                                                <a href="" class="no-ajaxify">
+                                                    <span class="fa fa-fw fa-circle-o text-success"></span>Work Related</a>
+                                            </li>
+                                            <li class="filter-chat" data-filter="mixit-chat-2">
+                                                <a href="" class="no-ajaxify">
+                                                    <span class="fa fa-fw fa-circle-o text-primary"></span>Very Important</a>
+                                            </li>
+                                            <li class="filter-chat" data-filter="mixit-chat-3">
+                                                <a href="" class="no-ajaxify">
+                                                    <span class="fa fa-fw fa-circle-o text-info"></span>Friends &amp; Family</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li class="category border-bottom">Online</li>
+                                <li>
+                                    <div class="mixit-chat-1 mix media border-bottom innerAll margin-none">
+                                        <a href="#chat-conversation" data-toggle="tab" class="pull-left media-object">
+                                            <img src="../assets/images/people/35/1.jpg"
+                                            class="img-circle" />
+                                        </a>
+                                        <div class="media-body">
+                                            <a href="#chat-conversation" data-toggle="tab" class="pull-right text-muted innerT half">
+                                                <i class="fa fa-comments"></i> 4
+                                            </a>
+                                            <h5 class="margin-none"><a href="#chat-conversation" data-toggle="tab"
+                                                class="text-white">Perpetua Inger</a>
+                                            </h5>
+                                            <small>Hey, the party is on tonight!</small>
+                                        </div>
+                                    </div>
+                                    <div class="mixit-chat-1 mix media border-bottom innerAll margin-none">
+                                        <a href="#chat-conversation" data-toggle="tab" class="pull-left media-object">
+                                            <img src="../assets/images/people/35/2.jpg"
+                                            class="img-circle" />
+                                        </a>
+                                        <div class="media-body">
+                                            <a href="#chat-conversation" data-toggle="tab" class="pull-right text-muted innerT half">
+                                                <i class="fa fa-comments"></i> 4
+                                            </a>
+                                            <h5 class="margin-none"><a href="#chat-conversation" data-toggle="tab"
+                                                class="text-white">Zoticus Axel</a>
+                                            </h5>
+                                            <small>Hey, the party is on tonight!</small>
+                                        </div>
+                                    </div>
+                                    <div class="mixit-chat-1 mix media border-bottom innerAll margin-none">
+                                        <a href="#chat-conversation" data-toggle="tab" class="pull-left media-object">
+                                            <img src="../assets/images/people/35/3.jpg"
+                                            class="img-circle" />
+                                        </a>
+                                        <div class="media-body">
+                                            <a href="#chat-conversation" data-toggle="tab" class="pull-right text-muted innerT half">
+                                                <i class="fa fa-comments"></i> 4
+                                            </a>
+                                            <h5 class="margin-none"><a href="#chat-conversation" data-toggle="tab"
+                                                class="text-white">Yun Ragna</a>
+                                            </h5>
+                                            <small>Hey, the party is on tonight!</small>
+                                        </div>
+                                    </div>
+                                    <div class="mixit-chat-3 mix media border-bottom innerAll margin-none">
+                                        <a href="#chat-conversation" data-toggle="tab" class="pull-left media-object">
+                                            <img src="../assets/images/people/35/15.jpg"
+                                            class="img-circle" />
+                                        </a>
+                                        <div class="media-body">
+                                            <a href="#chat-conversation" data-toggle="tab" class="pull-right text-muted innerT half">
+                                                <i class="fa fa-comments"></i> 4
+                                            </a>
+                                            <h5 class="margin-none"><a href="#chat-conversation" data-toggle="tab"
+                                                class="text-white">Elvire Maya</a>
+                                            </h5>
+                                            <small>Hey, the party is on tonight!</small>
+                                        </div>
+                                    </div>
+                                    <div class=" mix media border-bottom innerAll margin-none">
+                                        <a href="#chat-conversation" data-toggle="tab" class="pull-left media-object">
+                                            <img src="../assets/images/people/35/16.jpg"
+                                            class="img-circle" />
+                                        </a>
+                                        <div class="media-body">
+                                            <a href="#chat-conversation" data-toggle="tab" class="pull-right text-muted innerT half">
+                                                <i class="fa fa-comments"></i> 4
+                                            </a>
+                                            <h5 class="margin-none"><a href="#chat-conversation" data-toggle="tab"
+                                                class="text-white">Kerman Otakar</a>
+                                            </h5>
+                                            <small>Hey, the party is on tonight!</small>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+<div id="content">
+            <div class="navbar hidden-print navbar-default box main" role="navigation">
+                <div class="user-action user-action-btn-navbar pull-right border-left">
+                    <a href="#menu-right" class="btn btn-sm btn-navbar btn-open-right"><i class="fa fa-comments fa-2x"></i></a>
+                </div>
+                <div class="user-action user-action-btn-navbar pull-left">
+                    <a href="#menu" class="btn btn-sm btn-navbar btn-open-left"><i class="fa fa-bars fa-2x"></i></a>
+                </div>
+                <ul class="notifications pull-left hidden-xs">
+                    <li class="dropdown notif">
+                        <a href="" class="dropdown-toggle" data-toggle="dropdown"><i class="notif-block icon-envelope-1"></i><span class="fa fa-star"></span></a>
+                        <ul class="dropdown-menu chat media-list">
+                            <li class="media">
+                                <a class="pull-left" href="#">
+                                    <img class="media-object thumb" src="../assets/images/people/100/15.jpg"
+                                    alt="50x50" width="50" />
+                                </a>
+                                <div class="media-body">
+                                    <span class="label label-default pull-right">5 min</span>
+                                    <h5 class="media-heading">Adrian D.</h5>
+                                    <p class="margin-none">Lorem ipsum dolor sit amet, consectetur adipisicing
+                                        elit.</p>
+                                </div>
+                            </li>
+                            <li class="media">
+                                <a class="pull-left" href="#">
+                                    <img class="media-object thumb" src="../assets/images/people/100/17.jpg"
+                                    alt="50x50" width="50" />
+                                </a>
+                                <div class="media-body">
+                                    <span class="label label-default pull-right">3 days</span>
+                                    <h5 class="media-heading">Andrew M.</h5>
+                                    <p class="margin-none">Lorem ipsum dolor sit amet, consectetur adipisicing
+                                        elit.</p>
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+                <div class="user-action pull-left menu-right-hidden-xs menu-left-hidden-xs border-left">
+                    <div class="dropdown username pull-left">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                            <span class="media margin-none">
+                                <span class="pull-left">
+                                    <img src="../assets/images/people/35/16.jpg" alt="user"
+                                    class="img-circle">
+                                </span>
+                                <span class="media-body">Bill
+                                    <span class="caret"></span>
+                                </span>
+                            </span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="about_1.html?lang=en">About</a>
+                            </li>
+                            <li><a href="messages.html?lang=en">Messages</a>
+                            </li>
+                            <li><a href="timeline_3.html?lang=en">Profile</a>
+                            </li>
+                            <li><a href="login.html?lang=en">Logout</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="input-group hidden-xs pull-left">
+                    <span class="input-group-addon"><i class="icon-search"></i>
+                    </span>
+                    <input type="text" class="form-control" placeholder="Search a friend" />
+                </div>
+            </div>
+
+
+<div id="sidebar" class="col-xs-6 col-sm-2 sidebar sidebar-offcanvas hidden
 {% if not user.is_authenticated %} 
 hidden
 {% endif %}
@@ -273,7 +649,7 @@ hidden
 
 {% if not user.is_authenticated %} 
 <div class="alert alert-info  ">
-<a type="button" href="{% provider_login_url "twitter" process="login" %}"  class="btn text-center btn-primary btn-lg btn-block" style="  margin-top: 1em;"><i class="fa fa-twitter fa-fw"></i> Sign in</a>
+<a type="button" href="{% provider_login_url "twitter" process="login" %}"  class="btn text-center btn-primary btn-lg btn-block hidden" style="  margin-top: 1em;"><i class="fa fa-twitter fa-fw"></i> Sign in</a>
 </a>
 </div>
 {% endif %}
@@ -439,7 +815,7 @@ hidden
     </div>
     
 <!-- Fixed navbar -->
-    <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <nav class="navbar navbar-default navbar-fixed-top hidden" role="navigation">
 
       <div class="ftstrip"></div>
       <div>
@@ -660,7 +1036,7 @@ hidden
 
     </nav> 
 
-   <span id="reload_warning"> 
+   <span id="reload_warning" class="hidden"> 
   </span>
 
 
@@ -668,8 +1044,13 @@ hidden
 
  {% block content %}
  {% endblock %}  
-</div>
-</div> 
+ </div>
+        <!-- // Content END -->
+        <div class="clearfix"></div>
+        <!-- // Sidebar menu & content wrapper END -->
+        </div>
+        </div>
+
 
 <div class="modal fade" id="modal_signup" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -695,7 +1076,7 @@ hidden
 
 <div class="ftstrip" style="margin-bottom:40px;"></div>
 
-<div class="row" id="logos">  
+<div class="row hidden" id="logos">  
   <div class="text-center block-center clearfix">
     <div class="thumbnail pull-le ft "> 
       <img class="img-responsive" alt="Wired Magazine top 100 edition" src="/static/images/logos/wired.jpg" >
@@ -842,9 +1223,7 @@ hidden
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script src="{% static "js/jquery.js" %}"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js" type="text/javascript" charset="utf-8"></script>
-    <script src="{% static "js/bootstrap.min.js" %}"></script>
+     <script src="{% static "js/bootstrap.min.js" %}"></script>
     <script src="{% static "js/foodtrade.js" %}"></script>
     <script src="{% static "js/ajax-handle.js" %}"></script> 
     <script src="{% static "js/intro.min.js" %}"></script>
@@ -857,6 +1236,29 @@ hidden
 <script src="/static/css/docsupport/prism.js" type="text/javascript" charset="utf-8"></script>
 
     <script src="{% static "js/isotope.pkgd.min.js" %}"></script>
+
+
+    <!-- social net -->
+
+    <script src="{% static "assets/components/library/bootstrap/js/bootstrap.min.js" %}"></script>
+    <script src="{% static "assets/components/plugins/nicescroll/jquery.nicescroll.min.js" %}"></script>
+    <script src="{% static "assets/components/plugins/breakpoints/breakpoints.js" %}"></script>
+    <script src="{% static "assets/components/plugins/preload/pace/pace.min.js" %}"></script>
+    <script src="{% static "assets/components/plugins/menus/sidr/jquery.sidr.js" %}"></script>
+    <script src="{% static "assets/components/modules/admin/twitter/assets/js/twitter.init.js" %}"></script>
+    <script src="{% static "assets/components/plugins/holder/holder.js" %}"></script>
+    <script src="{% static "assets/components/core/js/sidebar.main.init.js" %}"></script>
+    <script src="{% static "assets/components/core/js/sidebar.collapse.init.js" %}"></script>
+    <script src="{% static "assets/components/common/forms/elements/bootstrap-select/assets/lib/js/bootstrap-select.js" %}"></script>
+    <script src="{% static "assets/components/common/forms/elements/bootstrap-select/assets/custom/js/bootstrap-select.init.js" %}"></script>
+    <script src="{% static "assets/components/modules/admin/menus/menus.sidebar.chat.init.js?v=v1.0.1-rc2" %}"></script>
+    <script src="{% static "assets/components/plugins/mixitup/jquery.mixitup.min.js" %}"></script>
+    <script src="{% static "assets/components/plugins/mixitup/mixitup.init.js" %}"></script>
+    <script src="{% static "assets/components/core/js/core.init.js" %}"></script>
+
+
+
+     
 
 
 
@@ -1176,7 +1578,7 @@ $(function() {
 
    <script>
 // Include the UserVoice JavaScript SDK (only needed once on a page)
-UserVoice=window.UserVoice||[];(function(){var uv=document.createElement('script');uv.type='text/javascript';uv.async=true;uv.src='//widget.uservoice.com/HloB2aRxdk7fbhWMOI5AlQ.js';var s=document.getElementsByTagName('script')[0];s.parentNode.insertBefore(uv,s)})();
+//UserVoice=window.UserVoice||[];(function(){var uv=document.createElement('script');uv.type='text/javascript';uv.async=true;uv.src='//widget.uservoice.com/HloB2aRxdk7fbhWMOI5AlQ.js';var s=document.getElementsByTagName('script')[0];s.parentNode.insertBefore(uv,s)})();
 
 //
 // UserVoice Javascript SDK developer documentation:
