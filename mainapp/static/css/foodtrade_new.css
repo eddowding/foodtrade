@@ -1,3 +1,28 @@
+.widget.widget-tabs>.widget-head ul li.active a i, 
+.widget.widget-tabs>.widget-head ul li.active a i:before,
+.widget.widget-tabs-double-2>.widget-head ul li.active a,
+a {
+  color: #586E31;
+}
+
+.btn-primary { 
+  background: #586E31; 
+  border-color: #586E31;
+}
+
+#menu>div ul>li.category {
+  color: #61AE32;
+}
+
+
+.btn-default:active, 
+.btn-default.active {
+  background: #fff; 
+  border-color: #586E31;
+  color: #586E31;
+}
+
+
 #menu #sidebar-social-wrapper #brandWrapper {
   padding: 0;
 }
