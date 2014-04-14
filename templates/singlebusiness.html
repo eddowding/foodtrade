@@ -50,20 +50,64 @@
 
 <!-- NEW -->
 <!-- <div class="layout-app">  -->
-            <div class="innerAll">
-                <div class="row">
-                    <div class="col-lg-9 col-md-8">
-                        <div class="timeline-cover">  
+<div class="innerAll">
+
+<div class="row">
+  <div class="col-sm-12">
+  <div class="timeline-cover">  
   <div class="cover image ">
     <div class="top">
-      <img src="{{banner_url}}" class="img-responsive">         
+    <div id="carousel-1" class="carousel slide"> 
+      <!-- Items -->
+      <div class="carousel-inner">
+
+          <!-- Item -->
+          <div class="item active">
+              <div style="width:100%; height: 450px; " id="map"></div> 
+          </div>
+          <!-- // Item END -->
+
+          <!-- Item -->
+          <div class="item">
+              <img src="{{banner_url}}" class="img-responsive">
+          </div>
+          <!-- // Item END -->
+
+          <!-- Item -->
+          <div class="item">
+              <img src="{{banner_url}}" class="img-responsive">
+          </div>
+          <!-- // Item END -->    
+      </div>
+      <!-- // Items END -->
+      <!-- Navigation -->
+      <a class="left carousel-control" href="#carousel-1" data-slide="prev">
+          <span class="fa fa-prev"></span>
+      </a>
+      <a class="right carousel-control" href="#carousel-1" data-slide="next">
+          <span class="fa fa-next"></span>
+      </a>
+      <!-- // Navigation END -->
+  </div> 
+
+
     </div>
     <ul class="list-unstyled">
-      <li><a href="index.html?lang=en&amp;v=v1.0.1-rc4"><i class="fa fa-fw fa-clock-o"></i> <span>Timeline</span></a></li>
-      <li class="active"><a href="about_2.html?lang=en&amp;v=v1.0.1-rc4"><i class="fa fa-fw fa-user"></i> <span>About</span></a></li>
-      <li><a href="media_2.html?lang=en&amp;v=v1.0.1-rc4"><i class="icon-photo-camera"></i> <span>Photos</span> <small>(102)</small></a></li>
-      <li><a href="contacts_2.html?lang=en&amp;v=v1.0.1-rc4"><i class="icon-group"></i> <span>Friends</span> <small>(19)</small></a></li>
-      <li><a href="messages.html?lang=en&amp;v=v1.0.1-rc4"><i class="icon-envelope-fill-1"></i> <span>Messages</span> <small>(2 new)</small></a></li>
+      <li><a href="#" data-target="#carousel-1" data-slide-to="0"><i class="fa fa-fw fa-clock-o"></i> <span>Map</span></a></li> 
+      <li><a href="#" data-target="#carousel-1" data-slide-to="1"><i class="icon-photo-camera"></i> <span>Photos</span> </a></li>  
+ 
+      {% if prof_subscribed %}
+      <li class="pull-right" style="background: green;"><a href="#">
+      <i class="fa fa-check" style="color: #fff;"></i>
+      <span>Verified</span></a>
+      </li> 
+      {% endif %} 
+
+       {% for each in organisations %} 
+      <li class="pull-right" style="background: rgba(0,0,0,0.3);">
+        <a href="#tabMemberships" data-toggle="tab" rel="tooltip" title="{{each.name}}"><img src="{{each.photo}}" alt="{{each.name}}" class="img-responsive" style="margin-top: 5px; width:30px; height:30px;" /></a> </li>
+        {% endfor %}
+ 
     </ul>
   </div>
   <div class="widget cover image">  
@@ -72,73 +116,575 @@
         <img src="{{pic_url}}" class="img-circle"> 
       </div>
       <div class="innerAll border-right pull-left">
-        <h3 class="margin-none">{{name}}</h3>
-
-          
-          
-{% if type_user|length == 0 or type_user|first == '' %}
+        <h3 class="margin-none">{{name}}</h3> 
+          {% if type_user|length == 0 or type_user|first == '' %}
           {% else %}
           <span class="tags tags-biztype  ">  
             {% for eachtype in type_user %}
            <a href="/activity/?b={{eachtype}}">{{eachtype}}</a>
            {% endfor %}
-          </span> {% endif %}
-        
+          </span> {% endif %} 
       </div>
-      <div class="innerAll pull-left">
-        <p class="lead margin-none "> <i class="fa fa-quote-left text-muted fa-fw"></i> {{description}}</p> 
-      </div>
+      <div class="innerAll pull-left ">
+        <span class="margin-none">{{description}}</span>  
+        <div class="{% if loc.lat == -82.86275189999999 and loc.lon == -135.10000000000002 %} hidden {% endif %}">
+          <div class="meta">
+            {% if loc.lat == -82.86275189999999 and loc.lon == -135.10000000000002 %}
+              <i class="fa fa-map-marker text-muted"></i> <a > NA</a>
+              <i class="fa fa-location-arrow text-muted" style="margin-left: 20px;"></i> NA
+            {% else %}
+            <i class="fa fa-map-marker text-muted"></i> <a href="http://maps.google.com/maps?saddr={{loggedin_coord.lat}},{{loggedin_coord.lon}}&daddr={{loc.lat}},{{loc.lon}}" target="_blank" data-placement="top" data-toggle="tooltip" title="Get directions" class="" style="margin-right:20px;">
+              {{address}}
+            </a>   
+            <!-- if logged in or you've allows html5 browser location -->
+            <i class="fa fa-location-arrow text-muted"></i> {{distance}} miles  
+            {% endif %} 
+          </div> <!-- meta --> 
+      </div>  
+
     </div>
     <div class="clearfix"></div>
   </div>
 </div>
+  </div>
+</div>
+
+
+    <div class="row">
+        <div class="col-lg-9 col-md-8">
+
 
 <div class="widget widget-tabs widget-tabs-double-2 widget-tabs-responsive">
-  
+   
     <!-- Tabs Heading -->
     <div class="widget-head">
+
       <ul>
-        <li class="active"><a class="glyphicons list" href="#tabAll" data-toggle="tab"><i></i><span>All topics</span></a></li>
-        <li><a class="glyphicons user" href="#tabAccount" data-toggle="tab"><i></i><span>Account</span></a></li>
-        <li><a class="glyphicons credit_card" href="#tabPayments" data-toggle="tab"><i></i><span>Payments</span></a></li>
-        <li><a class="glyphicons cogwheel" href="#tabSupport" data-toggle="tab"><i></i><span>Technical Support</span></a></li>
-        <li><a class="glyphicons snowflake" href="#tabFeatures" data-toggle="tab"><i></i><span>Features</span></a></li>
+        {% if show_foods %}
+        <li class="active"><a class="glyphicons list" href="#tabProduce" data-toggle="tab"><i></i><span>Our Produce</span></a></li>
+        {% endif %}
+        <li><a class="glyphicons user" href="#tabStockists" data-toggle="tab"><i></i><span>Stockists</span></a></li>
+        <li><a class="glyphicons credit_card" href="#tabSuppliers" data-toggle="tab"><i></i><span>Suppliers</span></a></li>
+        <li><a class="glyphicons group" href="#tabMemberships" data-toggle="tab"><i></i><span>Memberships</span></a></li>
+        <li class="premium"><a class="glyphicons cogwheel" rel="tooltip" title="Premium account holders only - upgrade from just &pound;45/yr" href="#tabBuy" data-toggle="tab"><i></i><span>We buy</span>
+        <div class="ribbon-wrapper small">
+            <div class="ribbon danger">Upgrade</div>
+        </div>
+        </a>
+        </li>
+        <li class="premium"><a class="glyphicons cogwheel" rel="tooltip" title="Premium account holders only - upgrade from just &pound;45/yr" href="#tabCustomers" data-toggle="tab"><i></i><span>Customers</span> 
+        <div class="ribbon-wrapper small">
+            <div class="ribbon danger">Upgrade</div>
+        </div>
+        </a></li> 
+        <li class="premium"><a class="glyphicons truck" rel="tooltip" title="Premium account holders only - upgrade from just &pound;45/yr" href="#tabDeliveries" data-toggle="tab"><i class="fa fa-truck"></i><span>Deliveries</span> 
+        <div class="ribbon-wrapper small">
+            <div class="ribbon danger">Upgrade</div>
+        </div>
+        </a></li> 
       </ul>
     </div>
     <!-- // Tabs Heading END -->
     
     <div class="widget-body">
       <div class="tab-content">
-      
-        <!-- Tab content -->
-        <div id="tabAll" class="tab-pane active widget-body-regular">
+       
+        {% if show_foods %}
+          <div  class="tab-pane active widget-body-regular" id="tabProduce">
+  
+          {% if user.is_authenticated %}
           <div class="row">
-            <div class="col-sm-6">
-              <h5>All topics tab content</h5>
-              <p>Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Donec id eros a orci adipiscing accumsan id eget sem. Etiam sit amet neque ligula, ac hendrerit metus. Phasellus convallis nulla nec leo dapibus sed feugiat felis feugiat. Nulla facilisi. Mauris quis tortor eu eros posuere tristique. In turpis leo, iaculis eget tincidunt in, gravida sit amet diam. Vivamus viverra, nisl vitae consectetur volutpat, ipsum risus tempor augue, in convallis leo massa in sem. Maecenas in urna quis purus pulvinar posuere. Fusce blandit viverra placerat. Fusce elementum turpis sed velit blandit elementum.</p>
+          <div class="col-md-12 ">
+          <div class=" well well-sm clearfix">
+          <div class="row">
+            <div class="col-md-8 col-sm-8 col-xs-7">
+              {% if user.is_authenticated %}
+                  <div class="input-group"> 
+                        <div class='pull-left'>
+                        <select id="myselect" data-placeholder="Add foods you can buy here." style="height:20px; width: 192px; padding: 15px 5px;" multiple class="chosen-select" >
+                        <option value=""></option> 
+                       {% for each in all_tags %}
+                          <optgroup label={{each.node}}>
+                          {% if each.childrens %}
+                          {% for eachchild in each.childrens %}
+                          <option>{{eachchild.node}}</option>
+                          {% endfor %}
+                        {% else %}
+                          <option>{{each.node}}</option>
+                        {% endif %}
+                          </optgroup>
+                        {% endfor %}
+                        </select></div>
+
+                          <div class="pull-left">
+                        <span class="input-group-btn">
+                
+                            <button class="btn btn-success btn-sm" id="adfoo_id" rel="tooltip" style="height:34px;" onClick="add_food({{profile_id}}, {{user_id}})" {% if not user.is_authenticated %} title="Please log in to use this feature." {% endif %} > Add</button>
+                        </span></div>
+                      </div>  
+              {% endif %}
+            </div> 
+
+            <div class="col-md-4 col-sm-4 col-xs-5">
+             <form action="#" method="get">
+              <div class="input-group">
+                  <input class="form-control" id="system-search" name="q" placeholder="Search foods..." required>
+                  <span class="input-group-btn">
+                      <button type="submit" class="btn btn-default"><i class="glyphicon glyphicon-search"></i></button>
+                  </span>
+              </div>
+             </form>
             </div>
-            <div class="col-sm-6 {% if loc.lat == -82.86275189999999 and loc.lon == -135.10000000000002 %} hidden {% endif %}">
-              <div style="width:100%; height: 350px; z-index: 100;" id="map">
             </div>
+
           </div>
           </div>
-        </div>
+          </div>
+          {% endif %}
+
+      <div class="innerB">
+        <button class="btn btn-default filter active" data-filter="all">Show all</button>
+        <button class="btn btn-default filter" data-filter="mixit-filter-1">Meat</button>
+        <button class="btn btn-default filter" data-filter="mixit-filter-2">Poulty</button>
+        <button class="btn btn-default filter" data-filter="mixit-filter-2">Fruit</button>
+        <button class="btn btn-default filter" data-filter="mixit-filter-2">Vegetables</button>
+        <button class="btn btn-default filter" data-filter="mixit-filter-2">Dairy</button>
+        <button class="btn btn-default filter" data-filter="mixit-filter-2">Pantry</button>
+        <button class="btn btn-default filter" data-filter="mixit-filter-2">Baked goods</button>
+      </div>
+                        <div class="mixitup" id="mixitup-food">
+                            <div class="row">
+
+                            {% for eachfood in all_foods %}
+ 
+                                <div class="mixit-filter-1 mix col-md-4" style="margin-bottom: 15px;">
+                                  
+                                    <div class="media-body"> 
+                                    <div class="flip">
+                                      <div class="note">
+                                      <div class="face front">
+                                        <div class="widget margin-none">
+                                          <div class="row row-merge">
+                                            <!-- <img src="{{eachfood.photo_url}}" alt="{{eachfood.food_name}}" class="  img-responsive produce_large" style="width:150px" />  -->
+                                            <img src="http://myzerowaste.com/wp-content/uploads/2009/01/carrots1.jpg" alt="" class="img-responsive" style="width: 100%; height: 100px; display: block; margin-left: auto; margin-right: auto;">
+                                            <div class="col-xs-12">
+                                              <a href="/activity/?f={{eachfood.food_name}}" class="lead">  
+                                                {{eachfood.food_name}}
+                                              </a>   
+                                              {% if eachfood.description %}   
+                                                <p class="widget innerAll half">
+                                                  {{eachfood.description}} 
+                                                </p>
+                                              {% endif %}  
+                                            </div>
+                                          </div><!-- row merge -->
+                                        </div><!-- widget -->
+                                      </div><!-- face front -->
+                                      <div class="face back">
+                                        <div class="row row-merge">
+                                          <div class="col-xs-6 ">
+                                              <div class="text-center"> 
+                                                  <li class="display-block ">
+                                                      <small>
+                                                       <i class="fa-2x innerL half text-primary icon-scale-1"></i>
+                                                      </small> 
+                                                      <p class="lead">50 kg/yr</p> 
+                                                  </li>
+                                              </div>
+                                          </div>
+                                          <div class="col-xs-6 ">
+                                              <div class="text-center"> 
+                                                  <li class="display-block ">
+                                                      <small>
+                                                          <i class="fa fa-clock-o text-muted"></i>
+                                                      </small>20
+                                                      -
+                                                      24
+                                                      <i class="fa-2x innerL half text-primary icon-cloudy-night"></i>
+                                                  </li>
+                                              </div>
+                                          </div>
+                                        </div><!-- row -->
+
+                                        <div class="widget border-top-none margin-none">
+                                          <table class="availability"> 
+                                          <tbody><tr>
+                                          <td class="winter">J</td>
+                                          <td class="winter">F</td>
+                                          <td class="spring">M</td>
+                                          <td class="spring">A</td>
+                                          <td class="spring yes">M</td>
+                                          <td class="summer yes">J</td>
+                                          <td class="summer yes">J</td>
+                                          <td class="summer">A</td>  
+                                          <td class="autumn">S</td>
+                                          <td class="autumn">O</td>
+                                          <td class="autumn">N</td>
+                                          <td class="winter">D</td>
+                                          </tr></tbody></table>  
+                                        </div> 
+                                      </div> <!-- face back -->
+
+                                      </div><!-- card -->
+                                      </div><!-- flip -->
+                                      <div class="widget border-top-none hidden innerAll half bg-gray margin-none">
+                                        {% if user.is_authenticated %}
+                                        {% ifnotequal profile_id user_id %}
+                                         <div class="btn-block" data-toggle="buttons">
+                                         {% if eachfood.logged_recommender %}
+                                              <label class="fa fa-thumbs-o-up btn btn-default btn-sm active" rel="tooltip" title="Recommend this to others">
+                                                <input type="checkbox" checked="checked" onchange="recommend_food({{user_id}}, '{{eachfood.food_name}}', {{profile_id}}, '{{screen_name}}', this); return null;">
+                                              </label>
+                                          {% else %}
+                                              <label class="fa fa-thumbs-o-up btn btn-default btn-sm" rel="tooltip" title="Recommend this to others" data-toggle="modal" data-target="#modal_tweet_recomm">
+                                                <input type="checkbox" onchange="recommend_food({{user_id}}, '{{eachfood.food_name}}', {{profile_id}}, '{{screen_name}}', this); return null;">
+                                              </label>
+                                          {% endif %}
+                                          </div> 
+                                        {% endifnotequal %}
+                                        {% endif %}
+
+                                        {% for eachdet in eachfood.recomm_details %}
+                                        <div class="pull-right">
+                                          <img class="pull-left" style="margin:0px 4px 0 0; width:25px" src={{eachdet.photo}} rel="tooltip" title="{{eachdet.name}}"/>
+                                        </div>
+                                        {% endfor %}
+                                        {% ifnotequal eachfood.vouch_count 0 %}
+                                        <div class="pull-right">
+                                          <span class="badge badge-default" style="margin:3px 4px 0 0;" rel="tooltip" title="{{eachfood.vouch_count}} recommendations on {{eachfood.food_name}}">{{eachfood.vouch_count}}</span>
+                                        </div>
+                                        {% endifnotequal %}
+                                        <span class="clearfix"></span>
+                                      </div>   <!--widget -->
+                                    </div><!-- media body -->
+                                </div>
+                              {% endfor %}
+
+                            </div>
+                        </div>
+
+      <!-- FOOD LIST --> 
+      <table class="table table-list-search table-condensed hidden">
+        {% if not user.is_authenticated %}
+          <thead>
+            <tr>
+              <td colspan="2">
+                <p class="alert alert-warning"><a href="{% provider_login_url "twitter" process="login" %}" class="">Login</a> or <a href="{% provider_login_url "twitter" process="login" %}" class="">sign up free</a> to see all their full profile. </p>
+              </td>
+            </tr>
+          </thead>
+          {% endif %}
+          <tbody id="food_tbody">
+            {% for eachfood in all_foods %}
+              <tr id="row{{forloop.counter}}">
+                  <td>
+
+                  <div class="clearfix">   
+          
+
+                <a href="/activity/?f={{eachfood.food_name}}" >  
+                  
+                  {{eachfood.food_name}}
+                </a>   
+
+                  </div>
+ 
+                  </td>
+ 
+                  <td nowrap="nowrap">  
+                   <div class="pull-right">
+
+                   {% ifequal profile_id user_id %}
+                      {% if prof_subscribed %}
+
+                     <a href="" data-toggle="modal" data-target="#modal_food_detail" class="btn btn-sm btn-default" data-container="body" onClick="get_food_detail('{{profile_id}}', '{{eachfood.food_name}}', '{{eachfood.description}}', '{{eachfood.food_tags}}', '{{eachfood.photo_url}}', '{{eachfood.recomm_tags|safe}}')"><i class="fa fa-edit" title="Edit" ></i> edit details</a>
+                     {% else %}
+                     <a class="btn btn-sm btn-default" data-container="body" rel="tooltip" title="Upgrade your account to add details"><i class="fa fa-edit" title="Edit" > edit details</i></a>
+                     {% endif %}
+                     <a class="btn btn-danger btn-sm"><i class="fa fa-trash-o" title="Delete" onClick="delete_food({{profile_id}}, '{{eachfood.food_name}}', this)"></i></a>
+
+                   {% endifequal %}
+
+
+                   {% if user.is_authenticated %}
+
+                     {% ifnotequal profile_id user_id %}
+                       <div class="btn-block" data-toggle="buttons">
+                       {% if eachfood.logged_recommender %}
+                            <label class="fa fa-thumbs-o-up btn btn-default btn-sm active" rel="tooltip" title="Recommend this to others">
+                              <input type="checkbox" checked="checked" onchange="recommend_food({{user_id}}, '{{eachfood.food_name}}', {{profile_id}}, '{{screen_name}}', this); return null;">
+                            </label>
+                        {% else %}
+                            <label class="fa fa-thumbs-o-up btn btn-default btn-sm" rel="tooltip" title="Recommend this to others" data-toggle="modal" data-target="#modal_tweet_recomm">
+                              <input type="checkbox" onchange="recommend_food({{user_id}}, '{{eachfood.food_name}}', {{profile_id}}, '{{screen_name}}', this); return null;">
+                            </label>
+                        {% endif %}
+                        </div>
+
+                     {% endifnotequal %}
+                   {% endif %}
+                     
+                   
+                   </div>
+                   
+                   {% for eachdet in eachfood.recomm_details %}
+                    <div class="pull-right">
+                      <img class="pull-left" style="margin:0px 4px 0 0; width:25px" src={{eachdet.photo}} rel="tooltip" title="{{eachdet.name}}"/>
+                    </div>
+                   {% endfor %}
+                 {% ifnotequal eachfood.vouch_count 0 %}
+                   <div class="pull-right">
+                     <span class="badge badge-default" style="margin:3px 4px 0 0;" rel="tooltip" title="{{eachfood.vouch_count}} recommendations on {{eachfood.food_name}}">{{eachfood.vouch_count}}</span>
+                  </div>
+                  {% endifnotequal %}
+              
+
+                   </div>
+                  </td>  
+              </tr> 
+
+              {% if eachfood.description %}
+              <tr>
+                <td colspan="3">
+                  <div class="produce_detail">  
+                    <img src="{{eachfood.photo_url}}" alt="{{eachfood.food_name}}" class="img-rounded img-responsive produce_large img-thumbnail " /> 
+
+                    <span class="text-muted   ">{{eachfood.description}}</span>
+                  </div> 
+                </td>
+              </tr>
+              {% endif %} 
+
+              {% endfor %}
+          </tbody>
+          
+      </table>    
+
+
+          </div> <!-- end produce -->
+          {% endif %}
+
         <!-- // Tab content END -->
       
         <!-- Tab content -->
-        <div id="tabAccount" class="tab-pane widget-body-regular">
-          <h5>Account tab content</h5>
-          <p>Donec at nunc dui. Integer eget sem sit amet arcu bibendum elementum vel sit amet risus. Fusce libero lorem, fermentum vitae lacinia dapibus, vestibulum ac enim. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Vestibulum accumsan risus sed lorem tincidunt eget faucibus sapien tempor. Proin ac feugiat dolor. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae.</p>
-        </div>
+        <div id="tabStockists" class="tab-pane widget-body-regular">
+
+        {% if userprof.trade_connections_no != 0 %}<span class="badge">{{userprof.trade_connections_no}}</span>{% endif %}</a> 
+
+          <!-- WIKI ADD CONNECTIONS --> 
+          {% if user.is_authenticated %}
+            <div class="well well-sm" style="padding: 0 10px;">  
+            <div class="form-inline"  role="form">
+              <div class="form-group">
+                <img style="width: 25px; margin-right: 2px;" class="" src="{{pic_url}}"  />
+                <div class="btn-group btn-sm" data-toggle="buttons">
+                  <label class="btn  btn-sm btn-default">
+                    <input type="checkbox" name="options" id="option1_conn"> buys from 
+                  </label> 
+                  <label class="btn  btn-sm btn-default">
+                    <input type="checkbox" name="options" id="option2_conn"> sells to
+                  </label> 
+                </div> 
+              </div> 
+              <div class="form-group"> 
+                <div id="buss_remote" >
+                  <input class="typeahead  input-sm form-control  " id="new_buss_typeahead" {% if not user.is_authenticated %} rel="tooltip" title="Please login to use this feature" {% endif %} style="width:310px;" type="text" placeholder="Type business..."> 
+                </div>      
+              </div>   
+            </div>
+          </div>
+          {% endif %}
+                      
+<div id="all-connections">
+
+<div class="cle arfix">
+{% if userprof.b_conn_no != 0 %}
+          <h4><a name="buyfrom"></a>We buy from <small>these suppliers</small></h4>
+          <div class="ftstrip ftstrip-mini"></div> 
+          <br />
+
+            <div class="clearfix isot ope js-isot ope" data-isotope-options='{ "itemSelector": ".card" }' id="buyers-cards">
+          {% for each in connections %}
+              {% if each.relation == "buyer" or each.relation == "both" %}
+                  <div class="card card-business {% if each.type|length == 0 or each.type|first == '' %}
+                    {% else %}
+                      
+                        {% for e in each.type %}
+                        {{e}}
+                       {% endfor %}
+                      
+                    {% endif %}">
+
+                    
+                    <div class="content" style="background: #fff url('{{each.banner_url}}');">
+                      <div class="text-center">
+                        <a href="/profile/{{each.username}}"><img src="{{each.photo}}" alt="{{each.name}}"
+                        class="img-thumbnail img-responsive" style="width:73px; height:73px;" /></a>
+ 
+                      </div>
+                      <div class="text">
+                      {% ifequal profile_id user_id %}
+                      <button type="button" class="close" aria-hidden="true" onclick="conn_handler('close_buy_from', {{profile_id}}, {{each.id}})">&times;</button>
+                      
+                      <!-- <button type="button" class="close" aria-hidden="true">&times;</button> -->
+                      {% endifequal %}
+                        <h5><a href="/profile/{{each.username}}">{{each.name}}</a> 
+                        </h5>  
+                        <p class="small">{{each.description|truncatechars:40}}</p>
+                      </div>
+                    </div>
+
+
+                    <div class="numbers clearfix">
+                      <p class="small text-center">
+
+                        <a href="/profile/{{each.username}}">
+
+                        
+                        <span rel="tooltip" title="{{each.food_no}} foods" class="pull-left {% if each.food_no = 0 %}zero{% endif %}"><i class="fa fa-cutlery"></i> {{each.food_no}}</span>
+
+                        <span rel="tooltip" title="{{each.trade_conn_no}} connections" class=" {% if each.trade_conn_no = 0 %}zero{% endif %}"><i class="fa fa-link"></i> {{each.trade_conn_no}}</span>
+
+                        <span rel="tooltip" title="{{each.org_conn_no}} organisations" class="pull-right {% if each.org_conn_no = 0 %}zero{% endif %}"><i class="fa fa-group"></i> {{each.org_conn_no}}</span> 
+
+                        </a>
+                      </p>
+                    </div>
+                    {% if each.type|length == 0 or each.type|first == '' %}
+                    {% else %}
+                    <div class="numbers type text-center clearfix">
+                      <div class="tags tags-biztype pull-lef t">  
+                        {% for e in each.type %}
+                       <a href="/activity/?b={{e}}">{{e}}</a>
+                       {% endfor %}
+                      </div>
+                    </div>
+                    {% endif %}
+                  </div> 
+                  {% endif %}
+                  {% endfor %}
+                </div>
+                {% endif %}
+          </div>
+
+          <div class="clearfix">
+          {% if userprof.c_conn_no != 0 %}
+          <h4 style="margin-top: 50px;">We sell to <small>these stockists</small></h4>  
+
+          <div class="ftstrip ftstrip-mini"></div><br />
+           <div class="clearfix isotope js-isotope" data-isotope-options='{ "itemSelector": ".card" }' id="seller-cards">
+          {% for each in connections %}
+              {% if each.relation == "seller" or each.relation == "both" %}
+                  <div class="card card-business"> 
+                    <div class="content" style="background-image:url('{{each.banner_url}}');"> 
+
+                      <div class="text-center">
+                        <a href="/profile/{{each.username}}"><img src="{{each.photo}}" alt="{{each.name}}"
+                        class="img-thumbnail img-responsive" style="width:73px; height:73px;" /></a>
+ 
+                      </div>
+
+                      <div class="text">
+                    {% ifequal profile_id user_id %}
+                      <button type="button" class="close" aria-hidden="true" onclick="conn_handler('close_sell_to', {{profile_id}}, {{each.id}})">&times;</button>
+                      
+                      <!-- <button type="button" class="close" aria-hidden="true">&times;</button> -->
+                      {% endifequal %}
+                        <h5><a href="/profile/{{each.username}}">{{each.name}}</a> 
+                        </h5>  
+                        <p class="small">{{each.description|truncatechars:80}}</p>
+                      </div>
+                    </div>
+
+                    <div class="numbers clearfix">
+                      <p class="small text-center">  
+                        <a href="/profile/{{each.username}}">
+ 
+                        <span rel="tooltip" title="{{each.food_no}} foods" class="pull-left {% if each.food_no = 0 %}zero{% endif %}"><i class="fa fa-cutlery"></i> {{each.food_no}}</span>
+
+                        <span rel="tooltip" title="{{each.trade_conn_no}} connections" class=" {% if each.trade_conn_no = 0 %}zero{% endif %}"><i class="fa fa-link"></i> {{each.trade_conn_no}}</span>
+
+                        <span rel="tooltip" title="{{each.org_conn_no}} organisations" class="pull-right {% if each.org_conn_no = 0 %}zero{% endif %}"><i class="fa fa-group"></i> {{each.org_conn_no}}</span> 
+
+                        </a>
+                      </p>
+
+
+                    </div>
+                    {% if each.type|length == 0 or each.type|first == '' %}
+                    {% else %}
+                    <div class="numbers type text-center clearfix">
+                      <div class="tags tags-biztype pull-lef t">  
+                        {% for e in each.type %}
+                       <a href="/activity/?b={{e}}">{{e}}</a>
+                       {% endfor %}
+                      </div>
+                    </div>
+                    {% endif %}
+                  </div> 
+                  {% endif %}
+                  {% endfor %}
+                </div>
+ {% endif %}
+                </div>
+</div>  <!-- end all-connections -->
+
+          </div> <!--  end connections -->
         <!-- // Tab content END -->
         
         <!-- Tab content -->
-        <div id="tabPayments" class="tab-pane widget-body-regular">
+        <div id="tabSuppliers" class="tab-pane widget-body-regular">
           <h5>Payments tab content</h5>
           <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam ante est, tempor ut posuere nec, venenatis sed arcu. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Duis in purus ut mauris sodales sollicitudin. Mauris cursus imperdiet dignissim. Phasellus risus felis, rutrum in laoreet vel, posuere vel dolor. Sed venenatis vehicula tempus. Nam at rutrum enim. Sed massa quam, mattis in viverra ut, ullamcorper et massa. Phasellus sapien diam, faucibus ac tempor a, condimentum quis est. Donec nec velit ante, vel mattis metus. Ut nec libero diam, id auctor sapien. Suspendisse eget lorem ante, in fringilla dui. In hac habitasse platea dictumst.</p>
         </div>
         <!-- // Tab content END -->
         
+        <!-- Tab content -->
+        <div id="tabMemberships" class="tab-pane widget-body-regular">
+          {% if user.is_authenticated %}
+            <div class="well well-s m">  
+            <div class="form-inline"  role="form">
+              <div class="form-group">
+                <div id="orgs_remote">
+                  <input class="typeahead form-control" id="new_orgs_typeahead" {% if not user.is_authenticated %} rel="tooltip" title="Please login to use this feature" {% endif %} style="width:310px;" type="text" placeholder="Add an organisation...">
+                </div>                  
+              </div> 
+            </div>
+            </div>
+            {% endif %}
+
+          <div id="organisations_list" class="clearfix"> 
+            {% if user.is_authenticated %}
+            {% else %}
+             <p class="alert alert-warning"><a href="{% provider_login_url "twitter" process="login" %}" class="">Login</a> or <a href="{% provider_login_url "twitter" process="login" %}" class="">sign up free</a> to see the organisations or groups they belong to. </p>
+            {% endif %}
+
+            <div class="  clearfix"> 
+            {% for each in organisations %}    
+                <div class="innerAll col-sm-4 box-generic">
+                    <div class="media innerAll half">
+                        <a href="" class="pull-left">
+                          <img src="{{each.photo}}" alt="{{each.name}}" style="width:73px; height:73px;" >
+                        </a>
+                        <div class="media-body ">
+                            <h5 class="margin-none strong"><a href="/profile/{{each.username}}">{{each.name}}</a></h5>
+                            {% ifequal profile_id user_id %}
+                            <button type="button" class="close pull-right" aria-hidden="true" onclick="del_org_from_biz({{profile_id}}, {{each.id}})">&times;</button> 
+                          {% endifequal %}
+                            <p class=""> 
+                              {{each.description}}
+                            </p>
+                        </div>
+                    </div> 
+                </div>
+            {% endfor %}
+            </div>
+
+            </div>
+        </div>
+        <!-- // Tab content END -->
+
+
         <!-- Tab content -->
         <div id="tabSupport" class="tab-pane widget-body-regular">
           <h5>Support tab content</h5>
@@ -147,103 +693,97 @@
         <!-- // Tab content END -->
         
         <!-- Tab content -->
-        <div id="tabFeatures" class="tab-pane widget-body-regular">
-          <h5>Features tab content</h5>
-          <p>Nunc aliquet lacus laoreet odio consectetur tempus. In id nisl diam, congue vehicula sapien. Nulla facilisi. Donec sagittis cursus sollicitudin. Aenean leo tellus, eleifend quis facilisis vel, tempus ac elit. Nam eget turpis nec erat vestibulum fringilla. Donec et felis ipsum. Fusce feugiat ultricies lacus a ultrices. Nunc ultrices, orci ut convallis pulvinar, diam nunc tincidunt augue, sit amet lacinia ante mi a augue. Sed feugiat, neque eget porttitor varius, tellus nisi sollicitudin libero, nec aliquam ante dui gravida ipsum. Fusce cursus rhoncus lectus, quis malesuada sapien facilisis eu. Aenean vitae massa sed urna condimentum porttitor ac at risus.</p>
+        {% if user.is_authenticated %} 
+        <div id="tabDeliveries" class="tab-pane widget-body-regular">
+        {% if deliverables %} 
+          {{deliverables|linebreaks}}
+        {% else %}
+          <p>Please contact us directly to discuss deliveries.</p>
+        {% endif %}
         </div>
-        <!-- // Tab content END -->
+        {% endif %}
         
       </div>
     </div>
   </div>
-
-                        <div class="widget">
-                            <div class="innerAll">
-                                <h3 class="margin-none">About</h3>
-                                <div class="media innerB">
-                                    <a href="" class="pull-left">
-                                        <img src="../assets/images/people/100/22.jpg" alt="" width="75" />
-                                    </a>
-                                    <div class="media-body">
-                                        <p>Lorem ipsum dolor sit amet, consectetur
-                                            adipisicing elit. Voluptatibus, eveniet,
-                                            dolores, sit omnis facere odio rerum
-                                            laudantium temporibus nam nulla ratione
-                                            quam quae sint illo similique quis
-                                            nesciunt repudiandae quisquam.</p>
-                                    </div>
-                                </div>
-                                <div class="row border-top">
-                                    <div class="col-sm-6">
-                                      hello
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <h5 class="innerT">Close Friends</h5>
-                                        <div class="widget bg-gray">
-                                            <div class="innerAll">
-                                                <a href="">
-                                                    <img src="../assets/images/people/50/1.jpg" alt="" class="innerR innerB half" />
-                                                </a>
-                                                <a href="">
-                                                    <img src="../assets/images/people/50/2.jpg" alt="" class="innerR innerB half" />
-                                                </a>
-                                                <a href="">
-                                                    <img src="../assets/images/people/50/3.jpg" alt="" class="innerR innerB half" />
-                                                </a>
-                                                <a href="">
-                                                    <img src="../assets/images/people/50/4.jpg" alt="" class="innerR innerB half" />
-                                                </a>
-                                                <a href="">
-                                                    <img src="../assets/images/people/50/5.jpg" alt="" class="innerR innerB half" />
-                                                </a>
-                                                <a href="">
-                                                    <img src="../assets/images/people/50/6.jpg" alt="" class="innerR innerB half" />
-                                                </a>
-                                                <a href="">
-                                                    <img src="../assets/images/people/50/7.jpg" alt="" class="innerR innerB half" />
-                                                </a>
-                                                <a href="">
-                                                    <img src="../assets/images/people/50/8.jpg" alt="" class="innerR innerB half" />
-                                                </a>
-                                                <a href="">
-                                                    <img src="../assets/images/people/50/9.jpg" alt="" class="innerR innerB half" />
-                                                </a>
-                                                <a href="">
-                                                    <img src="../assets/images/people/50/10.jpg" alt="" class="innerR innerB half"
-                                                    />
-                                                </a>
-                                                <a href="">
-                                                    <img src="../assets/images/people/50/11.jpg" alt="" class="innerR innerB half"
-                                                    />
-                                                </a>
-                                                <a href="">
-                                                    <img src="../assets/images/people/50/12.jpg" alt="" class="innerR innerB half"
-                                                    />
-                                                </a>
-                                                <a href="">
-                                                    <img src="../assets/images/people/50/13.jpg" alt="" class="innerR innerB half"
-                                                    />
-                                                </a>
-                                                <a href="">
-                                                    <img src="../assets/images/people/50/14.jpg" alt="" class="innerR innerB half"
-                                                    />
-                                                </a>
-                                                <a href="">
-                                                    <img src="../assets/images/people/50/15.jpg" alt="" class="innerR innerB half"
-                                                    />
-                                                </a>
-                                                <a href="">
-                                                    <img src="../assets/images/people/50/16.jpg" alt="" class="innerR innerB half"
-                                                    />
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+ 
                     </div>
                     <div class="col-md-4 col-lg-3">
+                         
+  
+<div class="widget text-center">
+  <div class="innerTB">
+      <div class="innerB"><i class=" icon-thumbs-up-fill fa fa-4x text-faded"></i>
+      </div>
+      <h2 class="strong margin-none">Get 50% OFF</h2>
+      <p class="lead">$30 / month</p>
+      <button class="btn btn-info">Register Today! <i class="fa fa-fw fa-play-circle"></i>
+      </button>
+  </div>
+  <!-- Ribbon -->
+  <div class="ribbon-wrapper">
+      <div class="ribbon">50% Off</div>
+  </div>
+</div>
+
+
+                        <div class="widget">
+                        <div class="widget-head border-bottom bg-gray">
+                            <h5 class="innerAll pull-left margin-none">Share</h5>
+                        </div> 
+                        <div class="widget-body">
+                            <div class="row">
+                            <div class="col-sm-6">
+              <a href="#" class="btn btn-block  btn-social btn-facebook" onclick="window.open(
+              'https://www.facebook.com/sharer/sharer.php?s=100&amp;p[url]='+encodeURIComponent('{{ request.build_absolute_uri }}') +'&amp;p[images][0]='+encodeURIComponent('{{pic_url}}')+'&amp;p[title]='+encodeURIComponent('{{name}} on FoodTrade')+'&amp;p[summary]='+encodeURIComponent('Hey, see my profile on FoodTrade')+'&amp;u='+encodeURIComponent('{{ request.build_absolute_uri }}') +'&amp;t='+encodeURIComponent('{{name}} on FoodTrade'),
+                    'facebook-share-dialog', 
+                    'width=626,height=436,top='+((screen.height - 436) / 2)+',left='+((screen.width - 626)/2 )); 
+                  return false;">
+
+                <i class="fa fa-facebook"></i>  Share on Facebook
+              </a>
+              <a href="#" class="btn btn-block  btn-social btn-twitter" onclick="window.open(
+                    'https://twitter.com/share?url='+encodeURIComponent('{{ request.build_absolute_uri }}')+'&amp;text='+encodeURIComponent('{{screen_name}} on @foodtradeHQ') + '&amp;count=none/', 
+                    'twitter-share-dialog', 
+                    'width=626,height=436,top='+((screen.height - 436) / 2)+',left='+((screen.width - 626)/2 )); 
+                  return false;">
+                <i class="fa fa-twitter"></i>  Share on Twitter
+              </a>
+  
+              <a class="btn  btn-block  btn-social btn-pinterest" href="http://pinterest.com/pin/create/button/?url={{ request.build_absolute_uri|urlencode }}&media={{pic_url|urlencode}}&description={{screen_name|urlencode}}{{' on FoodTrade'|urlencode}}" class="pin-it-button" count-layout="horizontal">
+                <i class="fa fa-pinterest"></i>
+                Share on Pinterest
+              </a>
+            </div>
+            <div class="col-sm-6">
+              <a  class="btn btn-social btn-block btn-google-plus" href="https://plus.google.com/share?url={{ request.build_absolute_uri|urlencode }}">
+                <i class="fa fa-google-plus"></i>
+                Share on Google+
+              </a>
+              <a  class="btn btn-block btn-social btn-tumblr" href="http://www.tumblr.com/share" title="Share on Tumblr">
+                <i class="fa fa-tumblr"></i>
+                Share on Tumblr
+              </a>
+                 
+              <a  class="btn btn-block  btn-social btn-bitbucket" href="http://www.linkedin.com/shareArticle?mini=true&url={{ request.build_absolute_uri|urlencode}}&title={{screen_name}} on FoodTrade&summary=Hey, view my profile on Foodtrade.&source=">
+                <i class="fa fa-linkedin"></i>
+                Share on LinkedIn
+              </a>
+            </div> 
+              <script type="text/javascript" src="http://platform.tumblr.com/v1/share.js"></script>
+  
+                                <div class="col-sm-12">
+ 
+      {% if company_num %}
+        <a href="https://www.duedil.com/company/{{company_num}}"><i class="fa fa-legal"></i></a>  
+      {% endif %} 
+                                </div> 
+                            </div>
+                          </div> 
+                          </div>
+
+
+
                         <div class="widget">
                             <div class="widget-head border-bottom bg-gray">
                                 <h5 class="innerAll pull-left margin-none">Basic Info</h5>
@@ -252,7 +792,7 @@
                                         <i class="fa fa-pencil innerL"></i>
                                     </a>
                                 </div>
-                            </div>
+                            </div> 
                             <div class="widget-body">
                                 <div class="row">
                                     <div class="col-sm-6">User:</div>
@@ -317,7 +857,9 @@
                             </div>
                         </div>
                         <div class="widget">
-                            <h5 class="innerAll margin-none border-bottom bg-gray">Recent News</h5>
+                            <h5 class="innerAll margin-none border-bottom bg-gray">Recent News
+                             {% if updates_count != 0 %}<span class="badge pull-right">{{updates_count}}</span>{% endif %}
+                             </h5>
                             <div class="widget-body padding-none">
                                 
 
@@ -363,135 +905,17 @@
 
 <!-- /NEW -->
 
-    <div class="col-md-10 col-sm-7 col-xs-12 {% if not user.is_authenticated %} col-md-offset-1 {% endif %} hidden" id="single" style="padding: 0;">
+    <div class="col-md-8 col-sm-7 col-xs-12 {% if not user.is_authenticated %} col-md-offset-1 {% endif %}  " id="single" style="padding: 0;">
 
 
 
-<div class="widget widget-tabs widget-tabs-double-2 widget-tabs-responsive">
-  
-    <!-- Tabs Heading -->
-    <div class="widget-head">
-      <ul>
-        <li class="active"><a class="glyphicons list" href="#tabAll" data-toggle="tab"><i></i><span>All topics</span></a></li>
-        <li><a class="glyphicons user" href="#tabAccount" data-toggle="tab"><i></i><span>Account</span></a></li>
-        <li><a class="glyphicons credit_card" href="#tabPayments" data-toggle="tab"><i></i><span>Payments</span></a></li>
-        <li><a class="glyphicons cogwheel" href="#tabSupport" data-toggle="tab"><i></i><span>Technical Support</span></a></li>
-        <li><a class="glyphicons snowflake" href="#tabFeatures" data-toggle="tab"><i></i><span>Features</span></a></li>
-      </ul>
-    </div>
-    <!-- // Tabs Heading END -->
-    
-    <div class="widget-body">
-      <div class="tab-content">
-      
-        <!-- Tab content -->
-        <div id="tabAll" class="tab-pane active widget-body-regular">
-          <div class="row">
-            <div class="col-sm-6">
-              <h5>All topics tab content</h5>
-              <p>Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Donec id eros a orci adipiscing accumsan id eget sem. Etiam sit amet neque ligula, ac hendrerit metus. Phasellus convallis nulla nec leo dapibus sed feugiat felis feugiat. Nulla facilisi. Mauris quis tortor eu eros posuere tristique. In turpis leo, iaculis eget tincidunt in, gravida sit amet diam. Vivamus viverra, nisl vitae consectetur volutpat, ipsum risus tempor augue, in convallis leo massa in sem. Maecenas in urna quis purus pulvinar posuere. Fusce blandit viverra placerat. Fusce elementum turpis sed velit blandit elementum.</p>
-            </div>
-            <div class="col-sm-6 {% if loc.lat == -82.86275189999999 and loc.lon == -135.10000000000002 %} hidden {% endif %}">
-              <div style="width:100%; height: 350px; z-index: 100;" id="map">
-            </div>
-          </div>
-          </div>
-        </div>
-        <!-- // Tab content END -->
-      
-        <!-- Tab content -->
-        <div id="tabAccount" class="tab-pane widget-body-regular">
-          <h5>Account tab content</h5>
-          <p>Donec at nunc dui. Integer eget sem sit amet arcu bibendum elementum vel sit amet risus. Fusce libero lorem, fermentum vitae lacinia dapibus, vestibulum ac enim. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Vestibulum accumsan risus sed lorem tincidunt eget faucibus sapien tempor. Proin ac feugiat dolor. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae.</p>
-        </div>
-        <!-- // Tab content END -->
-        
-        <!-- Tab content -->
-        <div id="tabPayments" class="tab-pane widget-body-regular">
-          <h5>Payments tab content</h5>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam ante est, tempor ut posuere nec, venenatis sed arcu. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Duis in purus ut mauris sodales sollicitudin. Mauris cursus imperdiet dignissim. Phasellus risus felis, rutrum in laoreet vel, posuere vel dolor. Sed venenatis vehicula tempus. Nam at rutrum enim. Sed massa quam, mattis in viverra ut, ullamcorper et massa. Phasellus sapien diam, faucibus ac tempor a, condimentum quis est. Donec nec velit ante, vel mattis metus. Ut nec libero diam, id auctor sapien. Suspendisse eget lorem ante, in fringilla dui. In hac habitasse platea dictumst.</p>
-        </div>
-        <!-- // Tab content END -->
-        
-        <!-- Tab content -->
-        <div id="tabSupport" class="tab-pane widget-body-regular">
-          <h5>Support tab content</h5>
-          <p>Integer porttitor, enim eu egestas ullamcorper, odio mauris semper quam, in facilisis dui ligula eget ligula. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Maecenas dolor leo, consectetur nec tristique pretium, ornare quis purus. Nullam pulvinar, enim eu molestie venenatis, turpis nisl vehicula eros, et ultricies risus urna sed diam. Suspendisse potenti. Nullam tincidunt tellus nisi. Aenean felis eros, congue vitae hendrerit id, mattis quis mi.</p>
-        </div>
-        <!-- // Tab content END -->
-        
-        <!-- Tab content -->
-        <div id="tabFeatures" class="tab-pane widget-body-regular">
-          <h5>Features tab content</h5>
-          <p>Nunc aliquet lacus laoreet odio consectetur tempus. In id nisl diam, congue vehicula sapien. Nulla facilisi. Donec sagittis cursus sollicitudin. Aenean leo tellus, eleifend quis facilisis vel, tempus ac elit. Nam eget turpis nec erat vestibulum fringilla. Donec et felis ipsum. Fusce feugiat ultricies lacus a ultrices. Nunc ultrices, orci ut convallis pulvinar, diam nunc tincidunt augue, sit amet lacinia ante mi a augue. Sed feugiat, neque eget porttitor varius, tellus nisi sollicitudin libero, nec aliquam ante dui gravida ipsum. Fusce cursus rhoncus lectus, quis malesuada sapien facilisis eu. Aenean vitae massa sed urna condimentum porttitor ac at risus.</p>
-        </div>
-        <!-- // Tab content END -->
-        
-      </div>
-    </div>
-  </div>
+ 
 
     <div class="container-responsive">
 
     
 
-    <div id="header_box" class="clearfix" style="background: #fff url('{{banner_url}}');"> 
-      <div class="col-md-2 hidden-sm hidden-xs" id="avatar">
-        <img class="img-thumbnail center-block" src="{{pic_url}}"  />
-      </div>
-     
-      <div class="col-md-6 col-sm-8 col-xs-8 whitewash">
-
-          <!-- certificate -->
-          {% if prof_subscribed %}
-          <span class="fa-stack fa-lg pull-right" id="verified" rel="tooltip" title="Verified profile">
-            <i class="fa fa-certificate fa-stack-2x" style="color: #1DBD3C;"></i>
-            <i class="fa fa-check fa-stack-1x" style="color: #fff;"></i>
-          </span>
-          {% endif %}
-          <!-- certificate -->
-
-         <h1>
-          <img class="visible-sm visible-xs" style="width: 30px; margin-right: 10px; float:left;" src={{pic_url}}  />
-         <a href="#">{{name}}</a></h1>
-          {% if type_user|length == 0 or type_user|first == '' %}
-          {% else %}
-          <div class="tags tags-biztype  ">  
-            {% for eachtype in type_user %}
-           <a href="/activity/?b={{eachtype}}">{{eachtype}}</a>
-           {% endfor %}
-          </div> {% endif %}
-         <hr />
-         <p>{{description}}</p>        
-        
-     <!--      <div class="tags">  
-           <a href="/tag/TAG">tag1</a>
-           <a href="/tag/TAG">tag2</a> 
-          </div> -->
-         <hr /> 
-     
-         <div class="meta small text-muted">
-            
-            {% if loc.lat == -82.86275189999999 and loc.lon == -135.10000000000002 %}
-              <i class="fa fa-map-marker"></i> <a > NA</a>
-              <i class="fa fa-location-arrow" style="margin-left: 20px;"></i> NA
-            {% else %}
-            <i class="fa fa-map-marker"></i> <a href="http://maps.google.com/maps?saddr={{loggedin_coord.lat}},{{loggedin_coord.lon}}&daddr={{loc.lat}},{{loc.lon}}" target="_blank" data-placement="top" data-toggle="tooltip" title="Get directions" class="">
-              {{address}}
-          </a>  
-            
-            <!-- if logged in or you've allows html5 browser location -->
-            <i class="fa fa-location-arrow" style="margin-left: 20px;"></i> {{distance}} miles  
-            {% endif %}
-            <!--  // if logged in or you've allows html5 browser location -->
-            <!-- DISTANCE TO NEAREST TRADER
-             <i class="fa fa-bullseye" style="margin-left: 20px;"></i> 20.1 miles -->
-  
-         </div> <!-- meta -->
-  
-      </div><!-- end header middle -->
-
-      
+    <div id="header_box" class="clearfix">  
       <div id="contact_info" class="col-md-4 col-sm-4  col-xs-4">
 
 
@@ -642,23 +1066,7 @@
           </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
       </div><!-- /.modal -->
-      <div class="icons text-center">
-
-      {% if facebook_page %}
-        <a href="{{facebook_page}}"><i class="fa fa-facebook-square"></i></a>
-      {% endif %} 
-      {% if userprof.username %}
-        <a href="http://twitter.com/{{userprof.username}}"><i class="fa fa-twitter-square"></i></a> 
-      {% endif %} 
-        
-      {% if website_url %}
-        <a href="{{website_url}}"><i class="fa fa-globe"></i></a>  
-      {% endif %} 
-      {% if company_num %}
-        <a href="https://www.duedil.com/company/{{company_num}}"><i class="fa fa-legal"></i></a>  
-      {% endif %} 
- 
-      </div>  
+       
       
      <!-- modal_contact -->
       <div class="modal fade" id="modal_contact" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -833,23 +1241,13 @@
 
           {% if userprof.food_no != 0 %}<span class="badge">{{userprof.food_no}}</span>{% endif %}</a></li>
           {% endif %} 
-
-          
-          <li><a href="#activity" data-toggle="tab">
-
-            <span class="visible-xs pull-left right5"><i class="fa fa-comment"></i></span> 
-            <span class="visible-sm pull-left right5">Updates</span> 
-            <span class="visible-md  pull-left right5">Updates</span> 
-            <span class="visible-lg  pull-left right5"><i class="fa fa-comment"></i> Updates</span>
-
-            {% if updates_count != 0 %}<span class="badge">{{updates_count}}</span>{% endif %}</a></li>     
+ 
           <li class="dropdown">
             <a href="#" id="more" class="dropdown-toggle" data-toggle="dropdown">More <b class="caret"></b></a>
             <ul class="dropdown-menu" role="menu" aria-labelledby="more">
               <li><a href="#organisations" data-toggle="tab">Organisations {% if userprof.organisation_connection_no != 0 %}<span class="badge pull-right">{{userprof.organisation_connection_no}}</span>{% endif %}</a></li> 
 
-              <li><a href="#deliveries" tabindex="-1" data-toggle="tab">Deliveries</a></li> 
-
+              
               <li><a href="#customers" tabindex="-1" data-toggle="tab">Customers {% if customers|length != 0 %}<span class="badge pull-right">{{customers|length}}</span>{% endif %}</a></li> 
             </ul>
           </li>
@@ -863,177 +1261,7 @@
         <div class="container-responsive clearfix">
 
         <div class="tab-content">
-          {% if show_foods %}
-          <div class="tab-pane   fade in " id="produce">
- 
-
-
-          {% if user.is_authenticated %}
-          <div class="row">
-          <div class="col-md-12 ">
-          <div class=" well well-sm clearfix">
-          <div class="row">
-            <div class="col-md-8 col-sm-8 col-xs-7">
-              {% if user.is_authenticated %}
-                  <div class="input-group">
-                  <!-- link this to open food facts --> 
-                        <!-- <input class="typeahead form-control" name="addfood" data-source='' data-provide="typeahead" autocomplete="off" id = "addfood_id" style="width:400px;" placeholder="Add foods you can buy here."> -->
-                        <div class='pull-left'>
-                        <select id="myselect" data-placeholder="Add foods you can buy here." style="height:20px; width: 192px; padding: 15px 5px;" multiple class="chosen-select" >
-                        <option value=""></option>
-<!--                             {% for each in food_list %}
-                        <optgroup label={{each.node}}>
-                        {% if each.children %}
-                        {% for eachchild in each.children %}
-                        <option>{{eachchild}}</option>
-                        {% endfor %}
-                        {% else %}
-                        <option>{{each.node}}</option>
-                        {% endif %}
-                        </optgroup>
-                        {% endfor %}
--->
-                       {% for each in all_tags %}
-                          <optgroup label={{each.node}}>
-                          {% if each.childrens %}
-                          {% for eachchild in each.childrens %}
-                          <option>{{eachchild.node}}</option>
-                          {% endfor %}
-                        {% else %}
-                          <option>{{each.node}}</option>
-                        {% endif %}
-                          </optgroup>
-                        {% endfor %}
-                        </select></div>
-
-                          <div class="pull-left">
-                        <span class="input-group-btn">
-                
-                            <button class="btn btn-success btn-sm" id="adfoo_id" rel="tooltip" style="height:34px;" onClick="add_food({{profile_id}}, {{user_id}})" {% if not user.is_authenticated %} title="Please log in to use this feature." {% endif %} > Add</button>
-                        </span></div>
-                      </div>  
-              {% endif %}
-            </div> 
-
-            <div class="col-md-4 col-sm-4 col-xs-5">
-             <form action="#" method="get">
-              <div class="input-group">
-                  <input class="form-control" id="system-search" name="q" placeholder="Search foods..." required>
-                  <span class="input-group-btn">
-                      <button type="submit" class="btn btn-default"><i class="glyphicon glyphicon-search"></i></button>
-                  </span>
-              </div>
-             </form>
-            </div>
-            </div>
-
-          </div>
-          </div>
-          </div>
-          {% endif %}
-
-
-
-
-      <table class="table table-list-search table-condensed">
-        {% if not user.is_authenticated %}
-          <thead>
-            <tr>
-              <td colspan="2">
-                <p class="alert alert-warning"><a href="{% provider_login_url "twitter" process="login" %}" class="">Login</a> or <a href="{% provider_login_url "twitter" process="login" %}" class="">sign up free</a> to see all their full profile. </p>
-              </td>
-            </tr>
-          </thead>
-          {% endif %}
-          <tbody id="food_tbody">
-            {% for eachfood in all_foods %}
-              <tr id="row{{forloop.counter}}">
-                  <td>
-
-                  <div class="clearfix">   
           
-
-                <a href="/activity/?f={{eachfood.food_name}}" >  
-                  
-                  {{eachfood.food_name}}
-                </a>   
-
-                  </div>
- 
-                  </td>
- 
-                  <td nowrap="nowrap">  
-                   <div class="pull-right">
-
-                   {% ifequal profile_id user_id %}
-                      {% if prof_subscribed %}
-
-                     <a href="" data-toggle="modal" data-target="#modal_food_detail" class="btn btn-sm btn-default" data-container="body" onClick="get_food_detail('{{profile_id}}', '{{eachfood.food_name}}', '{{eachfood.description}}', '{{eachfood.food_tags}}', '{{eachfood.photo_url}}', '{{eachfood.recomm_tags|safe}}')"><i class="fa fa-edit" title="Edit" ></i> edit details</a>
-                     {% else %}
-                     <a class="btn btn-sm btn-default" data-container="body" rel="tooltip" title="Upgrade your account to add details"><i class="fa fa-edit" title="Edit" > edit details</i></a>
-                     {% endif %}
-                     <a class="btn btn-danger btn-sm"><i class="fa fa-trash-o" title="Delete" onClick="delete_food({{profile_id}}, '{{eachfood.food_name}}', this)"></i></a>
-
-                   {% endifequal %}
-
-
-                   {% if user.is_authenticated %}
-
-                     {% ifnotequal profile_id user_id %}
-                       <div class="btn-block" data-toggle="buttons">
-                       {% if eachfood.logged_recommender %}
-                            <label class="fa fa-thumbs-o-up btn btn-default btn-sm active" rel="tooltip" title="Recommend this to others">
-                              <input type="checkbox" checked="checked" onchange="recommend_food({{user_id}}, '{{eachfood.food_name}}', {{profile_id}}, '{{screen_name}}', this); return null;">
-                            </label>
-                        {% else %}
-                            <label class="fa fa-thumbs-o-up btn btn-default btn-sm" rel="tooltip" title="Recommend this to others" data-toggle="modal" data-target="#modal_tweet_recomm">
-                              <input type="checkbox" onchange="recommend_food({{user_id}}, '{{eachfood.food_name}}', {{profile_id}}, '{{screen_name}}', this); return null;">
-                            </label>
-                        {% endif %}
-                        </div>
-
-                     {% endifnotequal %}
-                   {% endif %}
-                     
-                   
-                   </div>
-                   
-                   {% for eachdet in eachfood.recomm_details %}
-                    <div class="pull-right">
-                      <img class="pull-left" style="margin:0px 4px 0 0; width:25px" src={{eachdet.photo}} rel="tooltip" title="{{eachdet.name}}"/>
-                    </div>
-                   {% endfor %}
-                 {% ifnotequal eachfood.vouch_count 0 %}
-                   <div class="pull-right">
-                     <span class="badge badge-default" style="margin:3px 4px 0 0;" rel="tooltip" title="{{eachfood.vouch_count}} recommendations on {{eachfood.food_name}}">{{eachfood.vouch_count}}</span>
-                  </div>
-                  {% endifnotequal %}
-              
-
-                   </div>
-                  </td>  
-              </tr> 
-
-              {% if eachfood.description %}
-              <tr>
-                <td colspan="3">
-                  <div class="produce_detail">  
-                    <img src="{{eachfood.photo_url}}" alt="{{eachfood.food_name}}" class="img-rounded img-responsive produce_large img-thumbnail " /> 
-
-                    <span class="text-muted   ">{{eachfood.description}}</span>
-                  </div> 
-                </td>
-              </tr>
-              {% endif %} 
-
-              {% endfor %}
-          </tbody>
-          
-      </table>    
-
-
-          </div> <!-- end produce -->
-          {% endif %}
 
 
 
@@ -1132,245 +1360,8 @@
 <!-- END OF FOOD LIST EXPERIEMTN -->
 
 
-          <div class="tab-pane fade in active" id="connections">
-          {% if user.is_authenticated %}
-            <div class="well well-sm" style="padding: 0 10px;">  
-            <div class="form-inline"  role="form">
-              <div class="form-group">
-                 
-
-                 <img 
-                 style="width: 25px; margin-right: 2px;" 
-                 class="" src="{{pic_url}}"  />
-      
-                <div class="btn-group btn-sm" data-toggle="buttons">
-                  <label class="btn  btn-sm btn-default">
-                    <input type="checkbox" name="options" id="option1_conn"> buys from 
-                  </label> 
-                  <label class="btn  btn-sm btn-default">
-                    <input type="checkbox" name="options" id="option2_conn"> sells to
-                  </label> 
-                </div> 
-              </div> 
-              <div class="form-group"> 
-                  
-              <div id="buss_remote" >
-                <input class="typeahead  input-sm form-control  " id="new_buss_typeahead" {% if not user.is_authenticated %} rel="tooltip" title="Please login to use this feature" {% endif %} style="width:310px;" type="text" placeholder="Type business..."> 
-              </div>                  
-
-              </div> 
-
-     
-            </div>
-          </div>
-
-          {% else %}
-              <thead>
-            <tr>
-              <td colspan="2">
-                <p class="alert alert-warning"><a href="{% provider_login_url "twitter" process="login" %}" class="">Login</a> or <a href="{% provider_login_url "twitter" process="login" %}" class="">sign up free</a> to see all their connections.</p>
-              </td>
-            </tr>
-          </thead>
-
-          {% endif %}
-                      
-<div id="all-connections">
+          
  
-
-<div class="clearfix">
-{% if userprof.b_conn_no != 0 %}
-          <h4><a name="buyfrom"></a>We buy from <small>these suppliers</small></h4>
-          <div class="ftstrip ftstrip-mini"></div> <br />
-
-            <div class="clearfix isotope js-isotope" data-isotope-options='{ "itemSelector": ".card" }' id="buyers-cards">
-          {% for each in connections %}
-              {% if each.relation == "buyer" or each.relation == "both" %}
-                  <div class="card card-business {% if each.type|length == 0 or each.type|first == '' %}
-                    {% else %}
-                      
-                        {% for e in each.type %}
-                        {{e}}
-                       {% endfor %}
-                      
-                    {% endif %}">
-
-                    
-                    <div class="content" style="background: #fff url('{{each.banner_url}}');">
-                      <div class="text-center">
-                        <a href="/profile/{{each.username}}"><img src="{{each.photo}}" alt="{{each.name}}"
-                        class="img-thumbnail img-responsive" style="width:73px; height:73px;" /></a>
- 
-                      </div>
-                      <div class="text">
-                      {% ifequal profile_id user_id %}
-                      <button type="button" class="close" aria-hidden="true" onclick="conn_handler('close_buy_from', {{profile_id}}, {{each.id}})">&times;</button>
-                      
-                      <!-- <button type="button" class="close" aria-hidden="true">&times;</button> -->
-                      {% endifequal %}
-                        <h5><a href="/profile/{{each.username}}">{{each.name}}</a> 
-                        </h5>  
-                        <p class="small">{{each.description|truncatechars:40}}</p>
-                      </div>
-                    </div>
-
-
-                    <div class="numbers clearfix">
-                      <p class="small text-center">
-
-                        <a href="/profile/{{each.username}}">
-
-                        
-                        <span rel="tooltip" title="{{each.food_no}} foods" class="pull-left {% if each.food_no = 0 %}zero{% endif %}"><i class="fa fa-cutlery"></i> {{each.food_no}}</span>
-
-                        <span rel="tooltip" title="{{each.trade_conn_no}} connections" class=" {% if each.trade_conn_no = 0 %}zero{% endif %}"><i class="fa fa-link"></i> {{each.trade_conn_no}}</span>
-
-                        <span rel="tooltip" title="{{each.org_conn_no}} organisations" class="pull-right {% if each.org_conn_no = 0 %}zero{% endif %}"><i class="fa fa-group"></i> {{each.org_conn_no}}</span> 
-
-                        </a>
-                      </p>
-                    </div>
-                    {% if each.type|length == 0 or each.type|first == '' %}
-                    {% else %}
-                    <div class="numbers type text-center clearfix">
-                      <div class="tags tags-biztype pull-lef t">  
-                        {% for e in each.type %}
-                       <a href="/activity/?b={{e}}">{{e}}</a>
-                       {% endfor %}
-                      </div>
-                    </div>
-                    {% endif %}
-                  </div> 
-                  {% endif %}
-                  {% endfor %}
-                </div>
-                {% endif %}
-          </div>
-
-          <div class="clearfix">
-          {% if userprof.c_conn_no != 0 %}
-          <h4 style="margin-top: 50px;">We sell to <small>these stockists</small></h4>  
-
-          <div class="ftstrip ftstrip-mini"></div><br />
-           <div class="clearfix isotope js-isotope" data-isotope-options='{ "itemSelector": ".card" }' id="seller-cards">
-          {% for each in connections %}
-              {% if each.relation == "seller" or each.relation == "both" %}
-                  <div class="card card-business"> 
-                    <div class="content" style="background-image:url('{{each.banner_url}}');"> 
-
-                      <div class="text-center">
-                        <a href="/profile/{{each.username}}"><img src="{{each.photo}}" alt="{{each.name}}"
-                        class="img-thumbnail img-responsive" style="width:73px; height:73px;" /></a>
- 
-                      </div>
-
-                      <div class="text">
-                    {% ifequal profile_id user_id %}
-                      <button type="button" class="close" aria-hidden="true" onclick="conn_handler('close_sell_to', {{profile_id}}, {{each.id}})">&times;</button>
-                      
-                      <!-- <button type="button" class="close" aria-hidden="true">&times;</button> -->
-                      {% endifequal %}
-                        <h5><a href="/profile/{{each.username}}">{{each.name}}</a> 
-                        </h5>  
-                        <p class="small">{{each.description|truncatechars:80}}</p>
-                      </div>
-                    </div>
-
-                    <div class="numbers clearfix">
-                      <p class="small text-center">  
-                        <a href="/profile/{{each.username}}">
- 
-                        <span rel="tooltip" title="{{each.food_no}} foods" class="pull-left {% if each.food_no = 0 %}zero{% endif %}"><i class="fa fa-cutlery"></i> {{each.food_no}}</span>
-
-                        <span rel="tooltip" title="{{each.trade_conn_no}} connections" class=" {% if each.trade_conn_no = 0 %}zero{% endif %}"><i class="fa fa-link"></i> {{each.trade_conn_no}}</span>
-
-                        <span rel="tooltip" title="{{each.org_conn_no}} organisations" class="pull-right {% if each.org_conn_no = 0 %}zero{% endif %}"><i class="fa fa-group"></i> {{each.org_conn_no}}</span> 
-
-                        </a>
-                      </p>
-
-
-                    </div>
-                    {% if each.type|length == 0 or each.type|first == '' %}
-                    {% else %}
-                    <div class="numbers type text-center clearfix">
-                      <div class="tags tags-biztype pull-lef t">  
-                        {% for e in each.type %}
-                       <a href="/activity/?b={{e}}">{{e}}</a>
-                       {% endfor %}
-                      </div>
-                    </div>
-                    {% endif %}
-                  </div> 
-                  {% endif %}
-                  {% endfor %}
-                </div>
- {% endif %}
-                </div>
-</div>  <!-- end all-connections -->
-
-          </div> <!--  end connections -->
-
-          <div class="tab-pane fade" id="organisations">
-          {% if user.is_authenticated %}
-            <div class="well well-sm">  
-            <div class="form-inline"  role="form">
-              <div class="form-group">
-              
-<div id="orgs_remote">
-<input class="typeahead form-control" id="new_orgs_typeahead" {% if not user.is_authenticated %} rel="tooltip" title="Please login to use this feature" {% endif %} style="width:310px;" type="text" placeholder="Type organisation..."></div>                  
-              </div>
-              
-              
-
-     
-            </div>
-            </div>
-            {% endif %}
-
-          <div id="organisations_list">
-            {% if user.is_authenticated %}
-            {% else %}
-             <p class="alert alert-warning"><a href="{% provider_login_url "twitter" process="login" %}" class="">Login</a> or <a href="{% provider_login_url "twitter" process="login" %}" class="">sign up free</a> to see the organisations or groups they belong to. </p>
-
-            {% endif %}
-          {% for each in organisations %}
-                <div class="card card-organisation"> 
-                  <div class="content" style="background-image:url('{{each.banner_url}}');">
-                    <div class=" text-center">
-                      <img src="{{each.photo}}" alt="{{each.name}}"
-                      class="img-thumbnail img-responsive" style="width:73px; height:73px;" /> 
-                    </div>
-
-                    <div class="text">
-                      {% ifequal profile_id user_id %}
-                      <button type="button" class="close" aria-hidden="true" onclick="del_org_from_biz({{profile_id}}, {{each.id}})">&times;</button>
-                      
-                      <!-- <button type="button" class="close" aria-hidden="true">&times;</button> -->
-                      {% endifequal %}
-
-                      <h5><a href="/profile/{{each.username}}">{{each.name}}</a></h5> 
-                      <p class="small">{{each.description}}</p> 
-                    </div>
-                  </div>
-                  <div class="numbers clearfix">
-                    <i class="fa fa-group"></i> <small class="text-muted">Organisation</small>
-                  </div>
-                </div> 
-                {% endfor %}
-            </div>
-          </div> <!-- end organisations -->
-
-          <div class="tab-pane fade" id="deliveries">
-            {% if user.is_authenticated %}
-            {% if deliverables %} 
-              <h5 style="margin-top: 0;"><i class="fa fa-truck"></i>  Deliveries</h5>
-              {{deliverables|linebreaks}}
-             
-            {% endif %}
-            {% endif %}
-          </div>
-
           <div class="tab-pane fade" id="customers">
         {% if user.is_authenticated %}
           {% else %} 
@@ -1398,56 +1389,7 @@
           </div>
           </div> <!-- end customers -->
 
-          <div class="tab-pane fade" id="activity">
-
-          <div class="container-responsive">
-          <div class="row">
-           <div class="col-md-12">
-            {% if user.is_authenticated %}
-                  <div class="">
-
-                      <!-- if this is the profile of the logged in user -->
-                      <!-- <div class="well well-sm">
-                          <div class="input-group">
-                              <input id="btn-input" type="text" class="form-control input-sm" placeholder="Send an update..." />
-                              <span class="input-group-btn">
-                                  <button class="btn btn-warning btn-sm" id="btn-chat">
-                                      Send</button>
-                              </span>
-                          </div>
-                      </div> -->
-                      <!-- // if this is the profile of the logged in user -->
-                      <div class="">
-                          <ul class="chat">
-                          {% for eachUpdate in updates %}
-                              <li class="left clearfix"><span class="chat-img pull-left">
-                                  <img src="{{userprof.profileimg}}" />
-                              </span>
-                                  <div class="chat-body clearfix">
-                                      <div class="header">
-                                          <strong class="primary-font">{{eachUpdate.user.name}}</strong> 
-                                          <small class="pull-right text-muted">
-                                          <a href="/{{username}}/post/{{eachUpdate.tweetuid}}/"><span class="glyphicon glyphicon-time"></span>{{eachUpdate.time_elapsed}} ago</a></small>
-                                      </div>
-                                      <p>
-                                         {{eachUpdate.status|recognise_name|safe}}
-                                      </p>
-                                  </div>
-                              </li>
-                          {% endfor %}    
-                          </ul>
-                      </div>
-                  </div>
-              {% else %}
-                <p class="alert alert-warning"><a href="{% provider_login_url "twitter" process="login" %}" class="">Login</a> or <a href="{% provider_login_url "twitter" process="login" %}" class="">sign up free</a> to see updates and activity. </p>
-              {% endif %}
-
-              </div>
-
-          </div>
-
-          </div>
-        </div>
+          
     
       </div>
  
@@ -1467,12 +1409,7 @@
  
 
     
-    
-    <div class="col-md-4 col-sm-3 {% if loc.lat == -82.86275189999999 and loc.lon == -135.10000000000002 %} hidden {% endif %}">
-       <div style="width:100%; z-index: 100;" id="map">
-       </div> 
-    </div>
-
+     
 
    {% endblock %}
    {% block footer %}

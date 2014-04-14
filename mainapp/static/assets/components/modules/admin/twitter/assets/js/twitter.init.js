@@ -8,8 +8,8 @@ $(function() {
 			// hash: '%23jquery OR %23css'			    
 			//search: '%23heroes2013', //leave this blank if you want to show user's tweet
 			search: '', //leave this blank if you want to show user's tweet
-		    user: 'quenesstestacc', //username
-			numTweets: 18, //number of tweets
+		    user: 'foodtradeHQ', //username
+			numTweets: 10, //number of tweets
 			appendTo: '.jstwitter',
 			useGridalicious: false,
 			template: '<div class="item">{IMG}<div class="tweet-wrapper"><span class="text">{TEXT}</span>\
