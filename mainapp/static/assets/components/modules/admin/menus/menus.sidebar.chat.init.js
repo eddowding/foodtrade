@@ -1,11 +1,6 @@
 (function($)
 {
-
-	function showChatNotification() {
-		setTimeout(function(){
-			notification.html('New message from <strong>Mr.Awesome</strong>').fadeIn();
-		}, 5000);
-	}
+ 
 
 	if (typeof $.fn.sidr !== 'undefined')
 	{

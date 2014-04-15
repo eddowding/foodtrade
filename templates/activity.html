@@ -11,22 +11,32 @@
 <div class="container-responsive block-center">
 
 
-    <div class="col-xs-12 col-sm-5 {% if not user.is_authenticated %} col-md-offset-1 col-sm-offset-1 {% endif %}" id="activity_switcher">
+    <div class="col-xs-12 col-sm-7 {% if not user.is_authenticated %} col-md-offset-1 col-sm-offset-1 {% endif %}" id="activity_switcher">
 
-<div id="structured_postupdate" class="clearfix well well-sm" style="margin-top: 10px;  border: 1px solid #ccc; padding: 10px;">
+<div id="structured_postupdate" class="clearfix well well-sm" style="margin-top: 10px; padding: 10px;">
 
 <form action="r" method="post" id="structured_input_form" accept-charset="utf-8" onsubmit="generate_update()" class="form" role="form">   
   
   <div class="row" style="margin-bottom:0;"> 
-    <div class="col-xs-12">  
-     <p style="line-height: 2.5; margin: 0 10px 0 0;" class="pull-left"><strong>I'd like to...</strong> 
-      <div class="btn-group btn-bl ock pull-left" id="post_for">
-      <!-- <input type="hidden" /> -->
-        <button type="button" onclick="show_full_structure();$('#price').show();"  class="btn btn-default" value="buy" ><i class="fa fa-sign-in fa-fw"></i> buy</button>
-        <button type="button" onclick="show_full_structure();$('#price').show();" class="btn btn-default" value="sell" ><i class="fa fa-sign-out fa-fw"></i> sell</button>
-        <button type="button" onclick="show_full_structure();$('#price').hide();"   class="btn btn-default" value="offer surplus"  ><i class="fa fa-random fa-fw"></i> offer surplus</button>
-        <button type="button" onclick="swith_update_form()"   class="btn btn-default" value="offer surplus"  ><i class="fa fa-rocket fa-fw"></i> go freestyle</button>
-      </div>                     
+    <div class="col-xs-12">    
+      <div  id="post_for">
+          <button type="button" class="btn btn-stroke btn-primary btn-icon-stacked" onclick="show_full_structure();$('#price').show();" value="buy"><i class="fa fa-2x fa-sign-in"></i> 
+              <span>I'd like  
+                  <br>to buy </span>
+          </button> 
+          <button type="button" class="btn btn-stroke btn-primary btn-icon-stacked" onclick="show_full_structure();$('#price').show();" value="sell"><i class="fa fa-2x fa-sign-out"></i> 
+              <span>I'd like  
+                  <br>to sell </span>
+          </button> 
+          <button type="button" class="btn btn-stroke btn-primary btn-icon-stacked" onclick="show_full_structure();$('#price').hide();" value="offer surplus"><i class="fa fa-2x fa-refresh"></i> 
+              <span>I'd like  
+                  <br>to offer surplus </span>
+          </button> 
+          <button type="button" class="btn btn-stroke btn-primary btn-icon-stacked" onclick="swith_update_form()" value="freestyle"><i class="fa fa-2x fa-rocket"></i> 
+              <span>Go 
+                  <br>freestyle </span>
+          </button> 
+        </div>             
     </div>
   </div>
  
@@ -47,7 +57,7 @@
 
     <div class="col-xs-5" style="padding-left: 0;">
 
-      <select id="qtyUnit" class="form-control btn-sm">        
+      <select id="qtyUnit" class="form-control btn-sm selectpicker">        
         <option value="">Select unit</option>   
         <option value="Pieces">Pieces</option>
         <option value="20' Container">20' Container</option>
@@ -234,6 +244,98 @@ function show_small_structure()
 <div class="ftstrip ftstrip-mini"></div>
 </div>
 
+<div class="widget widget-tabs widget-tabs-double widget-tabs-responsive">
+
+<div class="widget-head">
+    <ul>
+        <li class="active"><a href="#tab1-2" class="glyphicons shop" data-toggle="tab"><i></i><span class="strong">Companies</span> <span class="small text-muted">370 within 30 miles</span></a>
+        </li>
+        <li><a href="#tab2-2" class="glyphicons group" data-toggle="tab"><i></i><span class="strong">Organisations</span><span class="small text-muted" id="update_count">{{results_updates_count}} within 30 miles</span></a>
+        </li>
+        <li><a href="#tab3-2" class="glyphicons user" data-toggle="tab"><i></i><span class="strong">Individuals</span></a>
+        </li>
+        <li><a href="#tab4-2" class="glyphicons refresh" data-toggle="tab"><i></i><span class="strong">Trades</span>
+          <div class="ribbon-wrapper small">
+              <div class="ribbon danger">Upgrade</div>
+          </div></a>
+        </li>
+    </ul>
+</div>
+
+Put things here
+
+</div><!-- widget --> 
+
+
+
+<div class="box-generic">
+    <div class="timeline-top-info">
+        <i class="fa fa-user"></i>  <a href="" class="text-inverse">mosaicpro</a> wrote
+        a <a href="" class="text-info">comment</a> to
+        <a href="#">
+            <img src="../assets/images/people/80/2.jpg" width="20">
+            </a> <a href="">Jane S.</a>
+            <div class="timeline-bottom">
+                <i class="fa fa-clock-o"></i> 6
+                days ago
+            </div>
+    </div>
+    <div class="bg-gray innerAll border-top">Good Job. Congrats and hope to see you
+        soon.</div>
+</div>
+
+<div class="widget">
+    <div class="widget-body padding-none">
+        <p class="margin-none innerAll"><i class="fa fa-quote-left fa-4x pull-left"></i> Aliquam
+            rutrum, sem at scelerisque tempor,
+            nulla diam pulvinar tortor, id pulvinar
+            massa velit eu purus. Curabitur eu
+            fringilla diam, sed suscipit lorem.
+            Class aptent taciti sociosqu ad litora
+            torquent per conubia nostra, per inceptos
+            himenaeos. Cras iaculis enim vel odio
+            imperdiet faucibus. Aliquam erat volutpat.</p>
+        <div class=" border-top innerAll ">
+            <button class="btn btn-inverse  btn-xs pull-right"><i class="fa fa-sign-in"></i>
+            </button>
+            <span class=" half inline-block">
+                <i class="fa fa-calendar text-primary fa-fw"></i> 22
+                nov 2013 &nbsp;
+                <i class="fa fa-tag text-primary fa-fw"></i> 
+                <span class="label label-primary">tagged</span>&nbsp;
+            </span>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+</div>
+
+<div class="widget">
+<div class="media">
+    <a href="" class="pull-left">
+        <img src="http://pbs.twimg.com/profile_images/378800000141996074/6a363e3c4f2a84a956c3cb27c50b2ca0_normal.png" width="50" class="media-object" style="width: auto; height: auto; display: block; margin-left: auto; margin-right: auto;">
+    </a>
+    <div class="media-body innerTB half">
+        <a href="#" class="pull-right innerT innerR text-muted"><i class="icon-reply-all-fill fa fa-2x "></i></a>
+        <a href="" class="strong display-block">Just Mary</a>
+        <p>I'd like to sell <a href="/activity/?q=%23cheese">#cheese</a> (organic msc). 50 Kg. By 2-4-2014.</p>
+ 
+    </div>
+    <div class="innerAll border-top small">
+      <span class="pull-right time_ago">
+         <a href="/foodtradeHQ/post/451355345244651521" class="text-muted"><i class="fa fa-clock-o"></i> 12 days</a> 
+      </span>
+      <span class="hidden-sm hidden-xs pull-left truncate100">
+        <i class="fa fa-map-marker"></i>
+        44 Fairfield Road, Bristol, City of Bristol BS6 5JP, UK
+      </span>
+      <a href="http://maps.google.com/maps?saddr=51.4694953,-2.5815688&amp;daddr=51.4694953,-2.5815688" target="_blank" data-placement="top" data-toggle="tooltip" class="text-muted pull-left" rel="tooltip" title="" data-original-title="Get directions"> 
+        <i class="fa fa-location-arrow"></i> 0.0 miles  
+      </a>
+      
+    </div>
+</div>
+</div>
+
 <ul class="nav nav-tabs">
   <li {% if results_updates_count != 0  or results_individual_count == 0 and results_business_count == 0 and results_organisation_count == 0  %}class="active dropdown"{% endif %}>
     <a href="#" id="more" class="dropdown-toggle" data-toggle="dropdown">Updates 
@@ -354,10 +456,11 @@ function show_small_structure()
      
     </div><!-- closes 5 -->
 
-    <div class="col-sm-5 col-xs-12 fill"  style="height: 1000px; right:0px;">
+    <div class="col-sm-5 col-xs-12 fill"  style="  right:0px;">
 
     <!-- FIX THE MAP POSITION SO IT DOES NOT SCROLL --> 
-      <div id="map" >
+      <div id="map" style=" position: fixed; width:50%;
+height: 100%; " >
         
 
         <div class="alert alert-warning"> 

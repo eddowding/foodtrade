@@ -1,6 +1,8 @@
+.btn-default i,
 .widget.widget-tabs>.widget-head ul li.active a i, 
 .widget.widget-tabs>.widget-head ul li.active a i:before,
 .widget.widget-tabs-double-2>.widget-head ul li.active a,
+.btn-primary.btn-stroke,
 a {
   color: #586E31;
 }
@@ -14,6 +16,16 @@ a {
   color: #61AE32;
 }
 
+.well {
+  background: #fff;
+  border: 1px solid #aaa;
+}
+
+.help-block { 
+  margin: 0 0 10px 2px;
+  font-size: 12px;
+  color: #aaa;
+}
 
 .btn-default:active, 
 .btn-default.active {
@@ -28,7 +40,7 @@ a {
 }
 
 .premium {
-  background: #fafafa;
+
 }
  
 .dotdotdot {
@@ -38,11 +50,7 @@ a {
   text-overflow: ellipsis;
   display: inline-block;
 }
-
-.box {
-  border: 1px solid #efefef !important;
-}
-
+ 
 .ftstrip {
   position: relative;
   height: 0.5em;

@@ -484,7 +484,7 @@ hid den
   <div class="user-action user-action-btn-navbar pull-left">
       <a href="#menu" class="btn btn-sm btn-navbar btn-open-left"><i class="fa fa-bars fa-2x"></i></a>
   </div>
-  <ul class="notifications pull-left hidden-xs">
+  <ul class="notifications pull-right hidden-xs border-left">
       <li class="dropdown notif">
           <a href="" class="dropdown-toggle" data-toggle="dropdown"><i class="notif-block icon-envelope-1"></i><span class="fa fa-star"></span></a>
           <ul class="dropdown-menu chat media-list">
@@ -503,7 +503,7 @@ hid den
           </ul>
       </li>
   </ul>
-  <div class="user-action pull-left menu-right-hidden-xs menu-left-hidden-xs border-left">
+  <div class="user-action pull-right menu-right-hidden-xs menu-left-hidden-xs border-left">
       <div class="dropdown username pull-left">
           <a class="dropdown-toggle" data-toggle="dropdown" href="#">
               <span class="media margin-none">
@@ -529,18 +529,19 @@ hid den
       </div>
   </div>
   <div class="input-group hidden-xs pull-left">
-      <span class="input-group-addon"><i class="icon-search"></i>
-      </span>
-      <input type="text" class="form-control" placeholder="Search" />
+    <form action="/activity" onsubmit="return formSubmit(this);">
+      <span class="input-group-addon"><i class="icon-search"></i></span> 
+      <input type="text" name="q" id="keyword" class="form-control" value="{{ search.query }}" placeholder="eg 'apples', 'surplus'...">
+      <input type="hidden" name="location" id="new_search" value="{% if search %} {{ search.place }} {% endif %} {% if not search %} {{userinfo.zip_code}}{% endif %} ">
+    </form>
   </div>
-
-
-
-<form action="/activity" onsubmit="return formSubmit(this);" class="navbar-form navbar-left" role="search" style="width: 380px;">
-            <div class="input-group">
-            <div class="input-group-btn">
-              <button type="button" class="btn btn-default dropdown-toggle text-muted hidden-xs" data-toggle="dropdown">Quick find <span class="caret"></span></button>
-               <ul class="dropdown-menu dropdown-menu-large row">
+  <div class="user-action pull-left menu-right-hidden-xs menu-left-hidden-xs border-left">
+      <div class="dropdown username pull-left">
+          <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+          Quick find
+          <span class="caret"></span>
+          </a>
+          <ul class="dropdown-menu dropdown-menu-large row">
           <li class="col-sm-3">
             <ul>
               <li class="dropdown-header">Foods</li>
@@ -603,15 +604,14 @@ hid den
             </ul>
           </li> 
         </ul>
-        </div> 
-              <input type="text" name="q" id="keyword" class="form-control" value="{{ search.query }}" placeholder="eg 'apples', 'surplus'...">   
-               
-              <div class="input-group-btn">
-                <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
-              </div> 
-            </div>
-            <input type="hidden" name="location" id="new_search" value="{% if search %} {{ search.place }} {% endif %} {% if not search %} {{userinfo.zip_code}}{% endif %} ">
-          </form>
+        
+      </div>
+  </div>
+
+
+
+ 
+         
 
             </div>
 
@@ -1047,7 +1047,12 @@ hid den
     <!-- social net -->
 
     <script data-id="App.Config">
-    var App = {}; 
+    var App = {};
+    var basePath = '',
+        commonPath = '../assets/',
+        rootPath = '../',
+        DEV = false,
+        componentsPath = '../assets/components/';
     var primaryColor = '#61AE32',
         dangerColor = '#b55151',
         successColor = '#609450',
