@@ -211,20 +211,20 @@ for(var j=0;j<customers.length;j++)
 
 
 
-	if(max_lat == min_lat && max_lon==min_lon)
-		{
-			var padding = 0.3
-			max_lat += padding;
-			min_lat -= padding;
-			max_lon += padding;
-			min_lon -= padding;
-		}
+// 	if(max_lat == min_lat && max_lon==min_lon)
+// 		{
+// 			var padding = 0.3
+// 			max_lat += padding;
+// 			min_lat -= padding;
+// 			max_lon += padding;
+// 			min_lon -= padding;
+// 		}
 
 
-					  map.fitBounds([
-    [min_lat, min_lon],
-    [max_lat, max_lon]
-]);
+// 					  map.fitBounds([
+//     [min_lat, min_lon],
+//     [max_lat, max_lon]
+// ]);
 		}
 
 
