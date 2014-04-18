@@ -386,7 +386,11 @@ def get_tags_freq(food_name):
 
 def get_all_foods(user_id, logged_in_id = None):
     usr_profile = UserProfile()
-    
+    # find out hierarchy
+    adm = AdminFoods()
+    adm_foods = adm.get_tags()
+
+
     foo = Food()
     all_foods = foo.get_foods_by_userid(user_id)
     recomm = RecommendFood()
@@ -432,6 +436,15 @@ def get_all_foods(user_id, logged_in_id = None):
         else:
             data['photo_url'] = each.get('photo_url')
         data['recomm_tags'] = tags_freq
+
+        #find and append food hierarchy
+        for each_adm in adm_foods:
+            if each_adm.get('childrens')!=None:
+                foo_list = [x['node'] for x in each_adm['childrens']]
+                if each['food_name'] in foo_list:
+                    print each['food_name'], each_adm['node']
+                    data['parent_food'] = each_adm['node']
+                    break
         final_foods.append(data)
     final_foods = sorted(final_foods, key=lambda x: -x['vouch_count'])
     return final_foods
