@@ -10,7 +10,6 @@ urlpatterns = patterns('',
     url(r'^kpi/$', 'mainapp.kpi.stats'),
     url(r'^robots\.txt$', TemplateView.as_view(template_name='robots.txt',content_type='text/plain'), name='robots'),
     url(r'^favicon\.ico$', RedirectView.as_view(url=settings.STATIC_URL + 'images/favicon.ico')),
-
     url(r'^admin-tags$', 'mainapp.home.admin_tags', name='home'),
     url(r'^food-tags$', 'mainapp.home.food_tags', name='home'),
     url(r'^ajax-handler/(?P<func_name>\w{1,40})$', 'mainapp.home.ajax_request', name='ajax_handle'),

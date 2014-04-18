@@ -43,4 +43,4 @@ Go to the dump folder and in terminal type
 =>mongorestore -uftroot -pftroot foodtrade/
 
 #########DO NOT TRY
-=>mongo -u ftroot -p ftroot foodtrade --eval "db.auth('ftroot','ftroot');db.dropDatabase();"
+=>mongo -u ftroot  foodtrade -p --eval "db.dropDatabase();"

@@ -13,22 +13,26 @@
 
     <div class="col-xs-12 col-sm-5 {% if not user.is_authenticated %} col-md-offset-1 col-sm-offset-1 {% endif %}" id="activity_switcher">
 
-<div id="postupdate" class="clearfix well well-sm hidden" style="margin-top: 10px;  border: 1px solid #ccc; padding: 10px;">
+<div id="structured_postupdate" class="clearfix well well-sm" style="margin-top: 10px;  border: 1px solid #ccc; padding: 10px;">
 
-<form action="r" method="post" accept-charset="utf-8" class="form" role="form">   
+<form action="r" method="post" id="structured_input_form" accept-charset="utf-8" onsubmit="generate_update()" class="form" role="form">   
   
-  <div class="row"> 
-    <div class="col-xs-12">   
-
-     <p style="line-height: 2.5; margin: 0;"><strong>I'd like to...</strong></p>
-      <div class="btn-group btn-block" style="width:100%;">
-        <button type="button" class="btn btn-default"  style="width:33%;"><i class="fa fa-sign-in fa-fw"></i> buy</button>
-        <button type="button" class="btn btn-default" style="width:33%;"><i class="fa fa-sign-out fa-fw"></i> sell</button>
-        <button type="button" class="btn btn-default" style="width:33%;"><i class="fa fa-random fa-fw"></i> offer surplus</button>
+  <div class="row" style="margin-bottom:0;"> 
+    <div class="col-xs-12">  
+     <p style="line-height: 2.5; margin: 0 10px 0 0;" class="pull-left"><strong>I'd like to...</strong> 
+      <div class="btn-group btn-bl ock pull-left" id="post_for">
+      <!-- <input type="hidden" /> -->
+        <button type="button" onclick="show_full_structure();$('#price').show();"  class="btn btn-default" value="buy" ><i class="fa fa-sign-in fa-fw"></i> buy</button>
+        <button type="button" onclick="show_full_structure();$('#price').show();" class="btn btn-default" value="sell" ><i class="fa fa-sign-out fa-fw"></i> sell</button>
+        <button type="button" onclick="show_full_structure();$('#price').hide();"   class="btn btn-default" value="offer surplus"  ><i class="fa fa-random fa-fw"></i> offer surplus</button>
+        <button type="button" onclick="swith_update_form()"   class="btn btn-default" value="offer surplus"  ><i class="fa fa-rocket fa-fw"></i> go freestyle</button>
       </div>                     
     </div>
   </div>
-  <div class="row"> 
+ 
+
+<span class="hidden" id="structured_hidden_block">
+  <div class="row" style="margin-top: 10px;"> 
     <div class="col-xs-6"> 
       <input type="text" name="produce" value="" class="form-control" placeholder="What?"  />  
       <p class="help-block">eg 'apples', 'veg curry'</p>
@@ -38,63 +42,63 @@
 <div class="row">
     <div class="col-xs-7" style="padding-right:0;">
       <input type="text" name="qty" value="" class="form-control" placeholder="How much?"  />  
+    <p class="help-block">Weight / vol / size</p>
     </div>
 
     <div class="col-xs-5" style="padding-left: 0;">
 
       <select id="qtyUnit" class="form-control btn-sm">        
-  <option value="">Select unit</option>   
-  <option value="Pieces">Pieces</option>
-  <option value="20' Container">20' Container</option>
-  <option value="40' Container">40' Container</option>
-  <option value="Acre/Acres">Acre(s)</option>
-    <option value="Bags">Bags</option>
-  <option value="Barrel/Barrels">Barrel(s)</option>
-    <option value="Boxes">Boxes</option>
-  <option value="Bushel/Bushels">Bushel(s)</option>
-  <option value="Case/Cases">Case(s)</option>
-  <option value="Centimeter/Centimeters">Centimeter(s)</option>
-  <option value="Cubic Meter/Cubic Meters">Cubic Meter(s)</option>
-  <option value="Cubic Yard/Cubic Yards">Cubic Yard(s)</option>
-  <option value="Dozen/Dozens">Dozen</option>   
-  <option value="Gallon/Gallons">Gallon(s)</option> 
-  <option value="Hectare/Hectares">Hectare(s)</option> 
-  <option value="Kilogram/Kilograms">Kilogram(s)</option>
-  <option value="Liter/Liters">Litre(s)</option> 
-  <option value="Meter">Meter(s)</option>    
-  <option value="Pallet/Pallets">Pallet(s)</option> 
-  <option value="Pint/Pints">Pint(s)</option>
-  <option value="Pound/Pounds">Pound(s)</option>  
-    <option value="Rolls">Roll(s)</option>
-    <option value="Sets">Sets</option>
-  <option value="Sheet/Sheets">Sheet(s)</option>  
-  <option value="Stone/Stones">Stone(s)</option> 
-  <option value="Tonne/Tonnes">Ton(s)</option> 
-  <option value="Tray/Trays">Tray(s)</option>
-    <option value="Unit/Units">Unit(s)</option>
-  <option value="Yard/Yards">Yard(s)</option>
-
-    </select>
+        <option value="">Select unit</option>   
+        <option value="Pieces">Pieces</option>
+        <option value="20' Container">20' Container</option>
+        <option value="40' Container">40' Container</option>
+        <option value="Acre/Acres">Acre(s)</option>
+        <option value="Bags">Bags</option>
+        <option value="Barrel/Barrels">Barrel(s)</option>
+        <option value="Boxes">Boxes</option>
+        <option value="Bushel/Bushels">Bushel(s)</option>
+        <option value="Case/Cases">Case(s)</option>
+        <option value="Centimeter/Centimeters">Centimeter(s)</option>
+        <option value="Cubic Meter/Cubic Meters">Cubic Meter(s)</option>
+        <option value="cubic yards">Cubic Yard(s)</option>
+        <option value="doz">Dozen</option>   
+        <option value="gall">Gallon(s)</option> 
+        <option value="ha">Hectare(s)</option> 
+        <option selected="selected" value="Kg">Kilogram(s)</option>
+        <option value="l">Litre(s)</option> 
+        <option value="m">Meter(s)</option>    
+        <option value="pallet(s)">Pallet(s)</option> 
+        <option value="pint(s)">Pint(s)</option>
+        <option value="pound(s)">Pound(s)</option>  
+        <option value="roll(s)">Roll(s)</option>
+        <option value="sets">Sets</option>
+        <option value="sheet(s)">Sheet(s)</option>  
+        <option value="stone">Stone(s)</option> 
+        <option value="ton(s)">Ton(s)</option> 
+        <option value="tray(s)">Tray(s)</option>
+        <option value="unit(s)">Unit(s)</option>
+        <option value="yard(s)">Yard(s)</option>
+      </select>
     </div>
     </div> 
     </div>
   </div>
   <div class="row">
-    <div class="col-xs-6"> 
+    <div class="col-xs-6" id="price"> 
       <input type="text" name="Price" value="" class="form-control" placeholder="Price"  />  
 
-      <p class="help-block">include the currency (inc £/$/&euro;)</p>
+      <p class="help-block">Total, or per unit. Inc £/$/&euro;</p>
     </div>
     <div class="col-xs-6"> 
       <div class="input-group">
-        <input type="text" class="form-control" placeholder="When?"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+        <input type="text" class="form-control" id="expire_on" placeholder="When?"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
       </div>
-      <p class="help-block">try 'next Friday', '8 sept 17'</p>
+      <p class="help-block" id="date_help">try 'next Friday', '8 sept 17'</p>
     </div>
   </div>
   <div class="row">
     <div class="col-xs-12"> 
-      <textarea class="form-control" rows="3" placeholder="Add detail: eg quality, variety, grade, packaging, etc.  "></textarea>
+      <textarea class="form-control" id="update_description" rows="3" placeholder="Add detail: eg quality, variety, grade, packaging, etc.  "></textarea>
       <p class="help-block">
       Add detail: eg quality, variety, grade, packaging, etc.
 </p>
@@ -106,7 +110,7 @@
                 <li class="text-muted">Also send to </li>
                 <li> 
                   <label>
-                    <input type="checkbox" id="post_to_twitter" name="post_to_twitter" value="1" checked="checked">
+                    <input type="checkbox" id="structured_post_to_twitter" name="post_to_twitter" value="1" checked="checked">
                     <i class="fa fa-twitter-square fa-lg text-muted"></i>
                   </label>
                 </li>
@@ -125,32 +129,63 @@
               </ul> 
             </div>
             <div class="col-xs-5 text-right">
-              <button type="button" id="btn_update_activity" class="btn  btn-success pull-right" {% if not user.is_authenticated %}  title="Please login to use this feature." {% endif %} onclick="post_new_status();"> Post update</button>
+            {% if not user.is_authenticated %}
+                <a href="/payments" class="btn btn-success pull-right"  rel="tooltip" title="Join free to post an upate">LOGIN TO POST
+                <br />
+                <span class="  small">Sign up is free</span></a>
+            {% else %}
+              {% if can_tweet %} 
+                <button type="button" id="btn_update_activity" class="btn  btn-success pull-right" rel="tooltip"  {% if not user.is_authenticated %}  title="Please login to use this feature." {% endif %} onclick="generate_update();"> Post this</button>
+              {% else %} 
+                <a href="/payments" class="btn  btn-success pull-right"  rel="tooltip" title="You're limited to 1 update every 7 days. Please upgrade your account to unlock."  {% if not user.is_authenticated %}  title="Please login to use this feature." {% endif %} > Upgrade to post</a>
+              {% endif %}
+            {% endif %}
             </div>
-          </div>
- 
-
-      <a href="#" class="small pull-left" style="position: relative;
-top: 0px;">Switch to basic form</a>
+          </div> 
+</span>
 </form>
 
+<script type="text/javascript">
+function swith_update_form()
+{
+  switch_text_area();
+  $("#structured_postupdate").hide();
+  $("#update-big").show();
+}
 
- 
- 
- 
+function show_full_structure()
+{
+  $("#structured_hidden_block").removeClass("hidden");
+}
 
+function show_small_structure()
+{ 
+  switch_text_area
+  $("#update-big").hide();
+  $("#structured_postupdate").show();
+  $("#structured_hidden_block").removeClass("hidden");
+}
+</script>
 </div>
- 
-
-
- 
-      <div id="update-small" class="well well-sm clearfix" style="margin-top: 10px;">
+<div id="update-small" class="well well-sm clearfix hidden" style="margin-top: 10px;">
         <input class="form-control col-xs-12"  {% if not user.is_authenticated %}  onfocus="login_redirect()" title="Please login to use this feature." {% else %} {% if can_tweet %} onfocus= "switch_text_area()"{% else %} rel="tooltip" title="You're limited to 1 update every 7 days. Please upgrade your account to unlock." {% endif %}{% endif %} placeholder="What #food do you have to #buy, #sell, or #surplus?">  
       </div> 
 
-      <div id="update-big" class="well well-sm clearfix hidden">
+      <div id="update-big" class="well well-sm clearfix hidden" style="margin-top:10px;">
         <form class="form-horizontal">
-          <div class="row">
+          <div class="row" style="margin-bottom:0;"> 
+            <div class="col-xs-12">  
+             <p style="line-height: 2.5; margin: 0 10px 0 0;" class="pull-left"><strong>I'd like to...</strong> 
+              <div class="btn-group btn-bl ock pull-left" id="post_for">
+              <!-- <input type="hidden" /> -->
+                <button type="button" onclick="show_small_structure();$('#price').show();"  class="btn btn-default" value="buy" ><i class="fa fa-sign-in fa-fw"></i> buy</button>
+                <button type="button" onclick="show_small_structure();$('#price').show();" class="btn btn-default" value="sell" ><i class="fa fa-sign-out fa-fw"></i> sell</button>
+                <button type="button" onclick="show_small_structure();$('#price').hide();"   class="btn btn-default" value="offer surplus"  ><i class="fa fa-random fa-fw"></i> offer surplus</button>
+                <button type="button" onclick="swith_update_form()"   class="btn btn-default" value="offer surplus"  ><i class="fa fa-rocket fa-fw"></i> go freestyle</button>
+              </div>                     
+            </div>
+          </div>
+          <div class="row" style="margin-top:10px;">
             <div class="col-xs-12">
               <textarea class="form-control col-xs-12 counted" onkeyup="check_limit()" rows="3" name="q" id="newstatus" {% if not user.is_authenticated %}  onfocus="login_redirect()" title="Please login to use this feature." {% endif %} placeholder="What would you like? Eg '300kg #surplus conference #pears for #sale or #surplus' or 'I want to  #buy organic #honey for my farm shop.' "></textarea>
             </div>
@@ -354,13 +389,92 @@ top: 0px;">Switch to basic form</a>
           {% block footer %}
     {% include "includes/not_logged_in_modal.html" %}
            <script src="{% static "js/activity.js" %}"></script>
+           <script src="{% static "js/date.js" %}"></script>
+
            <script type="text/javascript">
+           $("#expire_on").keyup(function(){
+             var expire_on = Date.parse($("#expire_on").val());
+             if(expire_on!=null)
+             {
+              var expire_date = expire_on.getDate()+"/"+expire_on.getMonth()+"/"+expire_on.getFullYear();
+  $("#date_help").html(expire_date);
+
+             }
+ 
+    
+});
 show_food_filters(food_filters, 0);
 show_organisation_filters(organisation_filters, 0);
 show_business_filters(business_filters, 0);
 
- 
+var post_for = "";
+$('#post_for').children(".btn").click(function(){
+    var value = $(this).val();
+    var childrens = $('#post_for').children();
+    for(var i=0;i<childrens.length;i++)
+    {
+      $(childrens[i]).removeClass("btn-success");
+    }
+    $(this).addClass("btn-success");
+    post_for = value;
+});
 
+function generate_update()
+{
+  if(post_for=="")
+  {
+    alert("Select one of buy / sell / surplus");
+    return;
+  }
+  var input_produces = $("input[name=produce]").val();
+  if(input_produces.trim()=="")
+  {
+    alert("You can't leave produce empty");
+    return;
+  }
+  var produces_name = input_produces.trim().replace("'", "").replace('"','').split(",");
+  var quantity = $("input[name=qty]").val().trim();
+  var quantity_unit = $("#qtyUnit").val();
+  var quantity_text = "";
+  if(quantity!="" && quantity_unit!="")
+  {
+    quantity_text =  " "+quantity+" "+quantity_unit+".";
+  }
+
+  var expire_on = Date.parse($("#expire_on").val());
+  var expire_text = "";
+  if(expire_on!=null)
+  {
+    var expire_date = expire_on.getDate()+"-"+expire_on.getMonth()+"-"+expire_on.getFullYear();
+    expire_text = " By "+expire_date+".";
+  }
+  var description = $("#update_description").val().trim();
+  var description_text = "";
+  if(description!="")
+  {
+    description_text = " ("+description+")";
+  }
+  
+
+  var produces_hash = "";
+  for(var i = 0;i<produces_name.length;i++)
+  {
+    if(produces_name[i].trim() == "")
+    {
+      continue;
+    }
+    produces_hash += "#" + produces_name[i].trim();
+
+    if((i+1) != produces_name.length)
+    {
+        produces_hash += ", ";
+    }
+  }
+  var update_text = "I'd like to "+post_for+" "+produces_hash+description_text+"."+quantity_text+expire_text;
+
+  activity_status_update(update_text);
+  return false;
+}
            </script>
 
  {% endblock %}
