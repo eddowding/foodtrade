@@ -177,6 +177,17 @@
       </div>
     </div>
 
+{% ifequal sign_up_as 'Business' %}
+<div class="form-group" id="video_group">
+      <label for="video_txt" class="col-sm-2 control-label">Video URL</label>
+      <div class="col-sm-5">
+        <input type="text" class="form-control" id="video_txt" name="video_url" placeholder="URL of your short introductory video" rows="5" value="{{video_url}}"></input>
+        <p class="help-block small">Supports most video provider websites like Youtube, Vimeo, Vine, Metacafe, Daily Motion. See complete list <a href="http://embed.ly/embed/features/providers">here</a>.
+        </p>
+      </div>
+    </div>
+    {% endifequal %}
+
 <div class="form-group">
       <label for="newsletter_freq_txt" class="col-sm-2 control-label">Local activity newsletter</label>
       <div class="col-sm-5">

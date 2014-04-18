@@ -302,7 +302,7 @@ class UserProfile():
              )
 
     def update_profile_by_username(self, username, description, address, type_usr, sign_up_as, phone, lat, lon, postal_code, name, is_superuser,
-      company_num, website_url, facebook_page, deliverables, business_org_name, email, newsletter_freq, show_foods):
+      company_num, website_url, facebook_page, deliverables, business_org_name, email, newsletter_freq, show_foods, video_url = ''):
 
         data = {'zip_code':str(postal_code),
                  'description':description,
@@ -320,7 +320,8 @@ class UserProfile():
                  'business_org_name': business_org_name,
                  'email':email,
                  'newsletter_freq':newsletter_freq,
-                 'show_foods': show_foods
+                 'show_foods': show_foods,
+                 'video_url': video_url
                  }
         if not is_superuser: 
             return self.db_object.update(self.table_name,

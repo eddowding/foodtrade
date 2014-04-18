@@ -21,6 +21,7 @@ REMOTE_MONGO_USERNAME = 'ftroot'
 REMOTE_MONGO_PASSWORD = 'ftroot'
 #..................Server Settings............................
 
+EMBEDLY_KEY = 'dda65dba82724765b3b82e79525286cc'
 
 # old ones of my twitter app
 # CONSUMER_KEY = 'seqGJEiDVNPxde7jmrk6dQ'

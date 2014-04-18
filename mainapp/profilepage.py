@@ -23,6 +23,8 @@ import pprint
 from django.http import Http404
 import re
 from mainapp.classes.MongoConnection import MongoConnection
+from embedly import Embedly
+from django.conf import settings
 
 def profile_url_resolve(request, username):
     if username == 'me':
@@ -65,6 +67,7 @@ def display_profile(request, username):
             food_form.save()
         
     parameters = {}
+    
     parameters['banner_url'] = get_banner_url(username)
     food_form = FoodForm()
     parameters['form'] = food_form
@@ -91,6 +94,9 @@ def display_profile(request, username):
     parameters['sign_up_as'] = userprof['sign_up_as']
     parameters['address'] = userprof['address']
     parameters['type_user'] = userprof['type_user']
+
+    video_url = userprof.get('video_url') if userprof.get('video_url')!=None else ''
+    parameters['intro_video'] = get_video_html(video_url)
     try:
         parameters['company_num'] = userprof.get('company_num') if userprof.get('company_num')!=None else ''
         parameters['website_url'] = userprof.get('website_url') if userprof.get('website_url')!=None else ''
@@ -269,6 +275,8 @@ def edit_profile(request, username):
                 parameters['superuser_edit_other'] = True
             parameters['sign_up_as'] = userprof['sign_up_as']
             parameters['username'] = username
+            parameters['video_url'] = userprof.get('video_url') if userprof.get('video_url')!=None else ''
+
             parameters['company_num'] = userprof.get('company_num') if userprof.get('company_num')!=None else ''
             parameters['website_url'] = userprof.get('website_url') if userprof.get('website_url')!=None else ''
             parameters['facebook_page'] = userprof.get('facebook_page') if userprof.get('facebook_page')!=None else ''
@@ -326,6 +334,7 @@ def edit_profile(request, username):
         # last_name = request.POST['last_name']
         newsletter_freq = request.POST['newsletter_freq']
         display_name = request.POST['display_name']
+        video_url = request.POST.get('video_url')
         email = request.POST['email']
         # name = first_name + " " + last_name
         description = request.POST['description']
@@ -363,7 +372,7 @@ def edit_profile(request, username):
 
         usr_profile.update_profile_by_username(userprof['username'], description, address, 
             usr_type, sign_up_as, phone, lat, lon, postal_code, display_name, is_superuser, company_num,
-            website_url, facebook_page, deliverables, business_org_name, email, newsletter_freq, show_food_db)
+            website_url, facebook_page, deliverables, business_org_name, email, newsletter_freq, show_food_db, video_url)
         twt = TweetFeed()
         twt.update_data(userprof['useruid'])
 
@@ -442,7 +451,6 @@ def get_all_foods(user_id, logged_in_id = None):
             if each_adm.get('childrens')!=None:
                 foo_list = [x['node'] for x in each_adm['childrens']]
                 if each['food_name'] in foo_list:
-                    print each['food_name'], each_adm['node']
                     data['parent_food'] = each_adm['node']
                     break
         final_foods.append(data)
@@ -788,6 +796,18 @@ def get_banner_url(username=None, useruid=None):
     except:
         banner_url = 'none'
     return banner_url
+
+def get_video_html(url):
+    client = Embedly(settings.EMBEDLY_KEY)
+    obj = client.oembed(url)
+
+    if obj.get('error')==True:
+        print 'error'
+        return ''
+    else:
+        html = obj.get('html') if obj.get('html')!=None else ''
+        return html
+    
 
 from math import radians, cos, sin, asin, sqrt
 
