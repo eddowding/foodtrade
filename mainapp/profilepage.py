@@ -274,7 +274,6 @@ def edit_profile(request, username):
             parameters['facebook_page'] = userprof.get('facebook_page') if userprof.get('facebook_page')!=None else ''
             parameters['deliverables'] = userprof.get('deliverables') if userprof.get('deliverables')!=None else ''
             parameters['business_org_name'] = userprof.get('business_org_name') if userprof.get('business_org_name')!=None else ''
-            print parameters['deliverables']
             if userprof['sign_up_as'] == 'Business':
                 parameters['type_user'] = str(','.join(userprof['type_user']))
             else:
@@ -336,7 +335,6 @@ def edit_profile(request, username):
             address = request.POST['formatted_address']
             addr_check = Geocoder.reverse_geocode(float(lat),float(lon))
             postal_code = str(addr_check.postal_code)
-            print userprof['latlng']['coordinates'][0]
         except:
             address = userprof['address']
             except_address = Geocoder.geocode(address)
