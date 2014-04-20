@@ -177,7 +177,7 @@
       </div>
     </div>
 
-{% ifequal sign_up_as 'Business' %}
+
 <div class="form-group" id="video_group">
       <label for="video_txt" class="col-sm-2 control-label">Video URL</label>
       <div class="col-sm-5">
@@ -186,7 +186,7 @@
         </p>
       </div>
     </div>
-    {% endifequal %}
+
 
 <div class="form-group">
       <label for="newsletter_freq_txt" class="col-sm-2 control-label">Local activity newsletter</label>
@@ -257,6 +257,8 @@ $( document ).ready(function() {
     $('#fb_page_group').toggleClass('typeempty');
     $('#deliverables_group').toggleClass('typeempty');
     $('#buss_org_group').toggleClass('typeempty');
+    $('#video_group').toggleClass('typeempty');
+
     /*$('#dropdown3').attr('required','flase');*/
     /*$('#dropdown3').removeAttr('required');*/
     }
@@ -265,6 +267,8 @@ $( document ).ready(function() {
     $('#deliverables_group').toggleClass('typeempty');
     $('#buss_org_label').text('Organisation Name');
     $('#buss_org_name_txt').prop('placeholder', 'Organisation Name');
+    $('#video_group').toggleClass('typeempty');
+
     /*$('#dropdown3').attr('required','true');*/
   }
   else{
@@ -296,6 +300,10 @@ function dataradio(value){
         if ( $('#buss_org_group').hasClass('typeempty') ){
           $('#buss_org_group').removeClass('typeempty');
         }
+        if ( $('#video_group').hasClass('typeempty') ){
+          $('#video_group').removeClass('typeempty');
+        }
+
         $('#buss_org_label').text('Business Name');
         $('#buss_org_name_txt').prop('placeholder', 'Business Name');
     }
@@ -306,6 +314,10 @@ function dataradio(value){
         if (!($('#deliverables_group').hasClass('typeempty'))){
           $('#deliverables_group').addClass('typeempty');
         }
+        if (!($('#video_group').hasClass('typeempty'))){
+          $('#video_group').addClass('typeempty');
+        }
+
         if ( $('#company_charity').hasClass('typeempty') ){
           $('#company_charity').removeClass('typeempty');
         }
@@ -339,6 +351,9 @@ function dataradio(value){
         }
         if (!($('#buss_org_group').hasClass('typeempty'))){
           $('#buss_org_group').addClass('typeempty');
+        }
+        if (!($('#video_group').hasClass('typeempty'))){
+          $('#video_group').addClass('typeempty');
         }
         /*$('#dropdown3').removeAttr('required');*/
     }
