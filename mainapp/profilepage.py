@@ -96,7 +96,10 @@ def display_profile(request, username):
     parameters['type_user'] = userprof['type_user']
 
     video_url = userprof.get('video_url') if userprof.get('video_url')!=None else ''
-    parameters['intro_video'] = get_video_html(video_url)
+    if video_url != '':
+        parameters['intro_video'] = get_video_html(video_url)
+    else:
+        parameters['intro_video'] = ''
     try:
         parameters['company_num'] = userprof.get('company_num') if userprof.get('company_num')!=None else ''
         parameters['website_url'] = userprof.get('website_url') if userprof.get('website_url')!=None else ''
