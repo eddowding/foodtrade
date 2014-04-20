@@ -26,14 +26,21 @@ def user_info(request):
         user_id = request.user.id
 
         try:
-
             user_info = UserInfo(user_id)
-            ft = TweetFeed()
-            has_tweet = ft.has_tweet_in_week(request.user.id)
-            can_tweet = False
+            ft = TweetFeed()        
 
-            if subscribed or (not has_tweet):
+            if subscribed:
                 can_tweet = True
+            else:                
+                has_trial_period_expired = ft.has_expired_trial_period(request.user.id)
+                if has_trial_period_expired == True:
+                    has_tweet = ft.has_tweet_in_week(request.user.id)
+                    if not has_tweet:
+                        can_tweet = True
+                    else:
+                        can_tweet = False
+                else:
+                    can_tweet = True
 
             return {
                     'userinfo' : user_info, 
