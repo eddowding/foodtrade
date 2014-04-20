@@ -91,16 +91,16 @@ class TweetFeed():
         import datetime
         usr_obj = UserProfile()
         user = usr_obj.get_profile_by_id(useruid)
-            try:
-                '''For all the users that are joined after adding the field join_time'''
-                join_date = datetime.datetime.fromtimestamp(int(user['join_time']))
-            except:
-                join_date = datetime.datetime(2014, 3, 19)
-            difference = datetime.datetime.today() - join_time
-            if difference.days < 30:
-                return False
-            else:
-                return True
+        try:
+            '''For all the users that are joined after adding the field join_time'''
+            join_date = datetime.datetime.fromtimestamp(int(user['join_time']))
+        except:
+            join_date = datetime.datetime(2014, 3, 19)
+        difference = datetime.datetime.today() - join_time
+        if difference.days < 30:
+            return False
+        else:
+            return True
                         
     def get_tweet_by_user_id(self, user_id):
         return self.db_object.get_one(self.table_name,{'useruid':int(user_id), 'updates':{"$elemMatch":{'deleted':0}}})
