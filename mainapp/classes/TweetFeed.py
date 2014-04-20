@@ -81,7 +81,8 @@ class TweetFeed():
         # week_ago = now_instant - (now_instant%(7*24*3600)) + 4*24*3600
         a = datetime.now()
         start = a - timedelta(days = a.weekday())
-        week_ago =int(start.strftime("%s"))
+        print start
+        week_ago = int(start.strftime("%S"))
         results = self.db_object.get_all( self.table_name, {"useruid":useruid,"updates.parent_tweet_id":"0", "updates.time_stamp": {"$gte":week_ago} })
         if len(results)>0:
             return True
