@@ -398,3 +398,26 @@ a {
     padding: 3px 15px !important;
   }
 }
+
+.navbar.main .dropdown.username .dropdown-menu {
+  left: auto; 
+}
+
+#footer a {
+  color: #999;
+  text-decoration: none;
+}
+
+#menu>div ul>li>a { 
+  color: #999;
+}
+
+.navbar.main .dropdown.username .dropdown-menu li a, .navbar.main .dropdown.dropdown-regular .dropdown-menu li a {
+  color: #444; 
+}
+
+.textarea,
+.form-control,
+.chosen-container-multi .chosen-choices { 
+  border: 1px solid #ccc;
+}

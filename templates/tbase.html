@@ -305,11 +305,6 @@
         </div>
 
         <ul class="menu list-unstyled" id="navigation_current_page">
-          <li>
-            <a href="#" id="help">
-              <i class="fa fa-question-circle fa-fw"></i><span>Help</span>
-            </a>
-          </li>
           {% if user.is_superuser %}
           <li>
             <a href="/unclaimed-profiles/" id="unclaimed" title="Unclaimed Profiles">
@@ -335,43 +330,91 @@ hid den
     </div>
 
 
-            <li class="category">Navigation</li>
+
+        
             <li class="hasSubmenu">
-                <a href="#sidebar-fusion-timelines" data-toggle="collapse"><i class="icon-ship-wheel"></i><span>Timelines</span></a>
+                <a href="#sidebar-fusion-timelines" data-toggle="collapse"><i class="fa fa-search"></i><span>Advanced search</span></a>
                 <ul id="sidebar-fusion-timelines" class="collapse">
-                    <li><a href="index.html?lang=en"><i class="fa fa-clock-o"></i><span>Timeline #1</span></a>
-                    </li>
-                    <li><a href="timeline_2.html?lang=en"><i class="fa fa-clock-o"></i><span>Timeline #2</span></a>
-                    </li>
-                    <li><a href="timeline_3.html?lang=en"><i class="fa fa-clock-o"></i><span>Timeline #3</span></a>
-                    </li>
+                    <li><a href="#"><i class="fa fa-clock-o"></i><span>Timeline</span></a>
+                    </li> 
                 </ul>
             </li> 
-            <li class="category">Activity</li>
+
+
+            <li class="">
+                <a href="/myprofile/favourites"><i class="fa fa-star"></i><span>Favourites</span></a> 
+            </li> 
+            <li class="">
+                <a href="/myprofile/stockists"><i class="fa fa-sign-in"></i><span>My Stockists</span></a> 
+            </li> 
+            <li class="">
+                <a href="/myprofile/suppliers"><i class="fa fa-sign-out"></i><span>My Suppliers</span></a> 
+            </li> 
+
+            <li class="separator">
+            </li>
+
+              <li>
+                <a href="#" id="help">
+                  <i class="fa fa-question-circle"></i><span>Help</span>
+                </a>
+              </li>
+
+
+             
+
+            <li class="category">
+             Did you know..?</li>
             <li class="reset">
                 <ul>
-                    <li class="media news-item"> 
-                        <span class="pull-left media-object">
-                            <i class="fa fa-fw fa-bell"></i>
-                        </span>
-                        <div class="media-body">
-                            <a href="#" class="text-white">Tytherley stores</a> just
-                            added <a href="#" class="text-white">new produce</a>
-                            <span class="time">2 min ago</span>
+
+                    <div id="didyouknow" class="carousel slide"> 
+                            <!-- Items -->
+                            <div class="carousel-inner">
+                                <!-- Item -->
+                                <div class="item active"> 
+                                    
+                                <li class="media news-item"> 
+                                    <span class="pull-left media-object">
+                                        <i class="fa fa-fw fa-question-circle"></i>
+                                    </span>
+                                    <div class="media-body">
+                                        If you would like to find or offer surplus or gluts, just use as <a href="/activity/?q=surplus">#surplus</a> to your message.  <a href="/activity/?q=surplus" class="text-white">Test it out</a>
+                                    </div>
+                                </li> 
+                                </div>
+                                <!-- // Item END -->
+                                <!-- Item -->
+                                <div class="item"> 
+                                    
+                                <li class="media news-item"> 
+                                    <span class="pull-left media-object">
+                                        <i class="fa fa-fw fa-question-circle"></i>
+                                    </span>
+                                    <div class="media-body">
+                                      You can  post updates from anywhere! Just tweet your message to @foodtradeHQ and we'll push your message to local businesses!
+                                    </div>
+                                </li> 
+                                </div> 
+
+                            </div> 
                         </div>
-                    </li> 
-                    <li class="media news-item"> 
-                        <span class="pull-left media-object">
-                            <i class="fa fa-fw fa-bell"></i>
-                        </span>
-                        <div class="media-body">
-                            <a href="#" class="text-white">Tytherley stores</a> just
-                            added <a href="#" class="text-white">a new supplier</a>
-                            <span class="time">8 min ago</span>
-                        </div>
-                    </li> 
                 </ul>
-            </li> 
+            </li>
+
+            <li class="reset" style="position: fixed; bottom: 5px;text-align: center;left: 20px; display: block;">
+            <ul>
+                <li class="media news-item">
+                    <div class="media-body">
+            <a href="/pages/about">About </a> &bull;
+            <a href="http://digest.foodtrade.com/" target="_blank">Blog</a> &bull;
+            <a href="http://foodtrade.uservoice.com/" target="_blank">Contact</a> &bull;
+            <a href="http://foodtrade.uservoice.com/" target="_blank">Get help</a>
+            </div>
+            </li>
+            </ul>
+            </li>
+            
         </ul>
     </div>
 </div>
@@ -386,17 +429,31 @@ hid den
                     <div class="mixitup" id="mixitup-chat" data-show-default="mixit-chat-1" data-layout-mode="list"
                     data-target-selector=".mix" data-filter-selector=".filter-chat">
                       <ul>
-                        <li class="category">Search</li>
+                        <li class="category">Activity</li>
                         <li class="reset">
-                          <div class="innerLR">
                             <ul>
-                              <li class="filter-chat" data-filter="mixit-chat-1">
-                                <a href="" class="no-ajaxify">
-                                    <span class="fa fa-fw fa-circle-o text-success"></span>Work Related</a>
-                              </li> 
+                                <li class="media news-item"> 
+                                    <span class="pull-left media-object">
+                                        <i class="fa fa-fw fa-bell"></i>
+                                    </span>
+                                    <div class="media-body">
+                                        <a href="#" class="text-white">Tytherley stores</a> just
+                                        added <a href="#" class="text-white">new produce</a>
+                                        <span class="time">2 min ago</span>
+                                    </div>
+                                </li> 
+                                <li class="media news-item"> 
+                                    <span class="pull-left media-object">
+                                        <i class="fa fa-fw fa-bell"></i>
+                                    </span>
+                                    <div class="media-body">
+                                        <a href="#" class="text-white">Tytherley stores</a> just
+                                        added <a href="#" class="text-white">a new supplier</a>
+                                        <span class="time">8 min ago</span>
+                                    </div>
+                                </li> 
                             </ul>
-                          </div>
-                        </li>
+                        </li> 
                       </ul>
                                  
     {% if   search %}
@@ -479,28 +536,14 @@ hid den
 <div id="content">
 <div class="navbar hidden-print navbar-default box main" role="navigation"  >
   <div class="user-action user-action-btn-navbar pull-right border-left">
-      <a href="#menu-right" class="btn btn-sm btn-navbar btn-open-right"><i class="fa fa-search fa-2x"></i></a>
+      <a href="#menu-right" class="btn btn-sm btn-navbar btn-open-right"><i class="fa fa-bell fa-2x"></i></a>
   </div>
   <div class="user-action user-action-btn-navbar pull-left">
       <a href="#menu" class="btn btn-sm btn-navbar btn-open-left"><i class="fa fa-bars fa-2x"></i></a>
   </div>
   <ul class="notifications pull-right hidden-xs border-left">
-      <li class="dropdown notif">
-          <a href="" class="dropdown-toggle" data-toggle="dropdown"><i class="notif-block icon-envelope-1"></i><span class="fa fa-star"></span></a>
-          <ul class="dropdown-menu chat media-list">
-              <li class="media">
-                  <a class="pull-left" href="#">
-                      <img class="media-object thumb" src="../assets/images/people/100/15.jpg"
-                      alt="50x50" width="50" />
-                  </a>
-                  <div class="media-body">
-                      <span class="label label-default pull-right">5 min</span>
-                      <h5 class="media-heading">Adrian D.</h5>
-                      <p class="margin-none">Lorem ipsum dolor sit amet, consectetur adipisicing
-                          elit.</p>
-                  </div>
-              </li> 
-          </ul>
+      <li class="dropdown">
+          <a href="" class="dropdown-toggle" data-toggle="dropdown"><i class="notif-block icon-envelope-1"></i><span class="fa fa-star"></span></a> 
       </li>
   </ul>
   <div class="user-action pull-right menu-right-hidden-xs menu-left-hidden-xs border-left">
@@ -516,7 +559,7 @@ hid den
                   </span>
               </span>
           </a>
-          <ul class="dropdown-menu">
+          <ul class="dropdown-menu pull-right">
               <li><a href="/editprofile/{{userinfo.username}}">Edit</a>
               </li>
               <li><a href="/profile/{{userinfo.username}}">Profile</a>
@@ -535,13 +578,13 @@ hid den
       <input type="hidden" name="location" id="new_search" value="{% if search %} {{ search.place }} {% endif %} {% if not search %} {{userinfo.zip_code}}{% endif %} ">
     </form>
   </div>
-  <div class="user-action pull-left menu-right-hidden-xs menu-left-hidden-xs border-left">
-      <div class="dropdown username pull-left">
+  <div class="user-action pull-right menu-right-hidden-xs menu-left-hidden-xs border-left">
+      <div class="dropdown">
           <a class="dropdown-toggle" data-toggle="dropdown" href="#">
           Quick find
           <span class="caret"></span>
           </a>
-          <ul class="dropdown-menu dropdown-menu-large row">
+          <ul class="dropdown-menu dropdown-menu-large row pull-right">
           <li class="col-sm-3">
             <ul>
               <li class="dropdown-header">Foods</li>
@@ -915,86 +958,40 @@ hid den
 
 <!-- FOOTER --> 
 
-<div class="container-responsive clearfix" id="footer">    
-  <div class="row">
-    <div class="col-lg-12">
-        <div class="ftstrip ftstrip-mini"></div>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-lg-12" id="footer_container">
-      <div class="col-md-3">
-      <h5>About FoodTrade </h5>
-        <ul class="list-unstyled"> 
-          <li><a href="/pages/about">About us</a></li>
-          <li><a href="http://digest.foodtrade.com/" target="_blank">Blog</a></li>
-          <li><a href="http://foodtrade.uservoice.com/" target="_blank">Contact & support</a></li>
-         </ul>
-      </div>
-      <div class="col-md-3">
+<div class="container-responsive clearfix" id="footer" >    
+  <div class="row"  id="footer_container">
+      
+      <div class="col-sm-8">
       <!-- 
       developers
-      timeline -->
-      <h5>Features</h5>
-        <ul class="list-unstyled">  
+      timeline --> 
+        <ul class="list-unstyled list-inline pull-left" style="display: inline;">  
           <li><a href="/pages/individuals">Individuals</a></li>
           <li><a href="/pages/business">Business</a></li>
           <li><a href="/pages/organisations">Organisations</a></li>
           <li><a href="/pages/foodwaste">Food surplus &amp; waste</a></li>
-          <li><a href="/pages/pricing">Pricing</a></li>            
-        </ul> 
-      </div>
-      <div class="col-md-3">
-       <!--  <ul class="list-unstyled">
-          <li>Services<li>
-          <li><a href="#">Web analytics</a></li>
-          <li><a href="#">Presentations</a></li>
-          <li><a href="#">Code snippets</a></li>
-          <li><a href="#">Job board</a></li>              
-        </ul> -->
-      </div>
-      <div class="col-md-3">
-      <h5>Stay connected</h5>
-        <ul class="list-unstyled list-inline">
+          <li><a href="/pages/pricing">Pricing</a></li>      
+          <li><a href="/pages/terms">Terms of Service</a></li>
+          <li><a href="/pages/privacy">Privacy</a></li>
+        </ul>
+        <p class="text-muted pull-left">&copy; 2012 - {% now "Y" %} Sustaination Ltd. All rights reserved. All data remains the property of its creator. </p>
+
+      </div> 
+
+      <div class="col-sm-4"> 
+        <ul class="list-unstyled list-inline pull-right">
           <li>
             <a href="http://www.facebook.com/foodtradeHQ"><i class="fa fa-facebook-square fa-2x"></i></a></li><li> 
             <a href="http://www.twitter.com/foodtradeHQ"><i class="fa fa-twitter-square fa-2x"></i></a></li><li> 
             <a href="https://plus.google.com/+Foodtrade" rel="publisher"><i class="fa fa-google-plus-square fa-2x"></i></a>
           </li>
-        </ul>
-
-           <!-- Begin MailChimp Signup Form -->
-<div id="mc_embed_signup">
-<form action="http://sustaination.us2.list-manage1.com/subscribe/post?u=79e1467c02512dbd83bddab5f&amp;id=eeea3ac4c6" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
-    <div class="input-group"> 
-      <input type="email" value="" name="EMAIL"  class="form-control required" id="mce-EMAIL" placeholder="Email Address"> 
-      <span class="input-group-btn">
-          <button type="submit" class="btn btn-success"> Subscribe</button>
-      </span>
-    </div>
-      <div id="mce-responses" class="clear">
-    <div class="response" id="mce-error-response" style="display:none"></div>
-    <div class="response" id="mce-success-response" style="display:none"></div>
-    <div style="position: absolute; left: -5000px;"><input type="text" name="b_79e1467c02512dbd83bddab5f_eeea3ac4c6" value=""></div>
-  </div>    <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
-</form>
- </div> 
-      
-<!--End mc_embed_signup-->     
+        </ul> 
+  
+</div>
        
       </div>  
     </div>
-  </div>
-  <hr>
-  <div class="row" style="margin-bottom: 20px;"> 
-    <div class="col-sm-4">
-      <a href="/pages/terms">Terms of Service</a>    | 
-      <a href="/pages/privacy">Privacy</a>  
-    </div>
-    <div class="col-sm-8">
-      <p class="text-muted pull-right">&copy; 2012 - {% now "Y" %} Sustaination Ltd. All rights reserved. All data remains the property of its creator. </p>
-    </div> 
-  </div>
+  </div> 
 </div>
 
 <!-- Button trigger modal -->
@@ -1040,6 +1037,9 @@ hid den
     <script src="{% static "js/isotope.pkgd.min.js" %}"></script>
 
 
+<link href="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/css/bootstrap-editable.css" rel="stylesheet"/>
+<script src="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/js/bootstrap-editable.min.js"></script>
+
     <!-- social net -->
     <!-- social net -->
     <!-- social net -->
@@ -1076,7 +1076,6 @@ hid den
     <script src="{% static "assets/components/plugins/mixitup/jquery.mixitup.min.js" %}"></script>
     <script src="{% static "assets/components/plugins/mixitup/mixitup.init.js" %}"></script>
     <script src="{% static "assets/components/core/js/core.init.js" %}"></script>
-
 
 
      
