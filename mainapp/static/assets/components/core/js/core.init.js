@@ -245,13 +245,13 @@ if (window.location != window.parent.location)
 		breakpoints: [ 768, 992 ]
 	});
 
-	$(window).bind('exitBreakpoint768',function() {		
+	$(window).bind('exitBreakpoint992',function() {		
 		$('.container-fluid').addClass('menu-hidden');
 		disableNavbarMenusHover();
 		enableResponsiveNavbarSubmenus();
 	});
 
-	$(window).bind('enterBreakpoint768',function() {
+	$(window).bind('enterBreakpoint992',function() {
 		$('.container-fluid').removeClass('menu-hidden');
 		enableNavbarMenusHover();
 		disableResponsiveNavbarSubmenus();

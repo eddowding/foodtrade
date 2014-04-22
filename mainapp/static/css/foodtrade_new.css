@@ -27,6 +27,10 @@ a {
   color: #aaa;
 }
 
+.btn-default {
+  background: none;
+}
+
 .btn-default:active, 
 .btn-default.active {
   background: #fff; 
@@ -147,7 +151,7 @@ a {
 .flip .note {
   width: 100%;
   height: 100%;
-  min-height: 130px;
+  min-height: 100px;
   -webkit-transform-style: preserve-3d;
   -webkit-transition: 0.5s;
   -moz-transform-style: preserve-3d;
@@ -245,6 +249,7 @@ a {
   width: 32.3%;
   border: 1px solid #ccc; 
   min-height: 52px;  
+  border-radius: 3px; 
 }
  
 
@@ -279,8 +284,8 @@ a {
   line-height: 15px;
 }
 
-.card .numbers p.small {
-  background: #f9f9f9;
+.card .numbers p.small { 
+  background: #fff;
   border-top: 1px solid #ccc;
   padding: 10px 8px;
   color: #ccc;
@@ -296,7 +301,7 @@ a {
 }
 
 .card .type {
-  background: #ddd;
+  background: #f9f9f9;
   border-bottom: 1px solid #ccc;
   padding: 5px;
 }
@@ -319,8 +324,77 @@ a {
 }
 
 .timeline-cover .cover .top {
-  height: 400px;
+  height: 330px;
 }
+
+
+
+
+/********************************/
+/**  MODAL HEADER              **/
+/********************************/
+
+.modal .modal-header { 
+  background: #88BC62;
+}
+.modal .modal-content {
+  border: 0px;
+  padding: 0;
+}
+
+.modal .modal-header .modal-title {
+  color: #fff;
+}
+
+
+/********************************/
+/**  TWITTER RESULTS           **/
+/********************************/
+
+
+.result-container
+{
+
+}
+.result-name
+{
+  font-weight: bold;
+  padding-left: 10px;
+}
+.result-img
+{
+  font-weight: bold; 
+}
+
+.result-screen-name
+{
+  font-size: 9px;
+}
+
+.tt-dataset-twitter-oss
+{
+  background: #fefefe;
+  border: 1px solid #ccc;
+}
+.tt-suggestion
+{
+  padding: 5px;
+  border-bottom: 1px solid #eee;
+}
+
+.tt-suggestions div:hover
+{
+  background: #BEB5B5;
+}
+
+.typeahead {
+  background: #fff !important;
+}
+
+.tt-hint {
+  visibility: hidden;
+}
+
 
 
 
@@ -421,3 +495,19 @@ a {
 .chosen-container-multi .chosen-choices { 
   border: 1px solid #ccc;
 }
+
+/********************************/
+/**  SIDEBAR                   **/
+/********************************/
+
+.foodtrade-sidebar form {padding: 5px 20px;}   
+.foodtrade-sidebar .foodtrade-tag-list{list-style:none; padding: 0 20px !important;}
+.foodtrade-sidebar .foodtrade-tag-list li {height: auto !important;}
+.foodtrade-tag-text{padding-left:18px;padding-right:26px}
+.foodtrade-tag-checkbox-column{float:left;}
+.foodtrade-tag-checkbox-column .foodtrade-tag-checkbox{margin-top:-1px}
+.foodtrade-tag{position:relative;font-size:12px;padding-left:3px;cursor:pointer;line-height:17px;margin-bottom:5px}
+.foodtrade-tag-all .foodtrade-tag-text{font-weight:bold}
+.foodtrade-tag-count{position:absolute;top:0;right:0}
+.foodtrade-tag-showmore{position:relative;color:#eee;cursor:pointer;font-size:12px;padding-left:22px;}
+.foodtrade-tag-showmore .foodtrade-tag-count{position:absolute;top:0;right:0}

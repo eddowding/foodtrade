@@ -63,7 +63,7 @@
 
           <!-- Item -->
           <div class="item active">
-              <div style="width:100%; height: 450px; " id="map"></div> 
+              <div style="width:100%; height: 350px; " id="map"></div> 
           </div>
           <!-- // Item END -->
 
@@ -97,7 +97,7 @@
       <li><a href="#" data-target="#carousel-1" data-slide-to="1"><i class="icon-photo-camera"></i> <span>Photos</span> </a></li>  
  
       {% if prof_subscribed %}
-      <li class="pull-right" style="background: green;"><a href="#">
+      <li class="pull-right" style="background: #88BC62;"><a href="#">
       <i class="fa fa-check" style="color: #fff;"></i>
       <span>Verified</span></a>
       </li> 
@@ -161,11 +161,12 @@
 
       <ul>
         {% if show_foods %}
-        <li class="active"><a class="glyphicons list" href="#tabProduce" data-toggle="tab"><i></i><span>Our Produce</span></a></li>
+        <li class="active"><a class="glyphicons list" href="#tabProduce" data-toggle="tab"><i></i><span>Produce</span></a></li>
         {% endif %}
-        <li><a class="glyphicons log_in" href="#tabStockists" data-toggle="tab"><i></i><span>We buy from</span></a></li>
-        <li><a class="glyphicons log_out" href="#tabSuppliers" data-toggle="tab"><i></i><span>We supply</span></a></li>
-        <li><a class="glyphicons group" href="#tabMemberships" data-toggle="tab"><i></i><span>Memberships</span></a></li>
+        <li>
+        <a class="glyphicons log_in" href="#tabStockists" data-toggle="tab"><i></i><span>We buy from</span></a></li>
+        <li><a class="glyphicons log_out" href="#tabSuppliers" data-toggle="tab"><i></i><span>We sell to</span></a></li>
+        <li><a class="glyphicons certificate" href="#tabMemberships" data-toggle="tab"><i></i><span>Memberships</span></a></li>
         <li><a class="glyphicons truck" rel="tooltip" href="#tabDeliveries" data-toggle="tab"><i class="fa fa-truck"></i><span>Deliveries</span> 
         </a></li> 
         <li class="premium"><a class="glyphicons log_in" rel="tooltip" title="Premium account holders only - upgrade from just &pound;45/yr" href="#tabBuy" data-toggle="tab"><i></i><span>We buy</span>
@@ -480,11 +481,10 @@
         <!-- Tab content -->
         <div id="tabStockists" class="tab-pane widget-body-regular">
 
-        {% if userprof.trade_connections_no != 0 %}<span class="badge">{{userprof.trade_connections_no}}</span>{% endif %}</a> 
-
+         
           <!-- WIKI ADD CONNECTIONS --> 
           {% if user.is_authenticated %}
-            <div class="well well-sm" style="padding: 0 10px;">  
+            <div class="alert  " style="padding: 0 10px;">  
             <div class="form-inline"  role="form">
               <div class="form-group">
                 <img style="width: 25px; margin-right: 2px;" class="" src="{{pic_url}}"  />
@@ -508,13 +508,10 @@
                       
 <div id="all-connections">
 
-<div class="cle arfix">
-{% if userprof.b_conn_no != 0 %}
-          <h4><a name="buyfrom"></a>We buy from <small>these suppliers</small></h4>
-          <div class="ftstrip ftstrip-mini"></div> 
-          <br />
+<div class="clearfix">
+{% if userprof.b_conn_no != 0 %} 
 
-            <div class="clearfix isot ope js-isot ope" data-isotope-options='{ "itemSelector": ".card" }' id="buyers-cards">
+            <div class="clearfix isotope js-isotope" data-isotope-options='{ "itemSelector": ".card" }' id="buyers-cards"> 
           {% for each in connections %}
               {% if each.relation == "buyer" or each.relation == "both" %}
                   <div class="card card-business {% if each.type|length == 0 or each.type|first == '' %}
@@ -647,8 +644,92 @@
         
         <!-- Tab content -->
         <div id="tabSuppliers" class="tab-pane widget-body-regular">
-          <h5>Payments tab content</h5>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam ante est, tempor ut posuere nec, venenatis sed arcu. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Duis in purus ut mauris sodales sollicitudin. Mauris cursus imperdiet dignissim. Phasellus risus felis, rutrum in laoreet vel, posuere vel dolor. Sed venenatis vehicula tempus. Nam at rutrum enim. Sed massa quam, mattis in viverra ut, ullamcorper et massa. Phasellus sapien diam, faucibus ac tempor a, condimentum quis est. Donec nec velit ante, vel mattis metus. Ut nec libero diam, id auctor sapien. Suspendisse eget lorem ante, in fringilla dui. In hac habitasse platea dictumst.</p>
+          
+        {% if userprof.trade_connections_no != 0 %}<span class="badge">{{userprof.trade_connections_no}}</span>{% endif %}</a> 
+
+          <!-- WIKI ADD CONNECTIONS --> 
+          {% if user.is_authenticated %}
+            <div class="alert-alert-info" style="padding: 0 10px;">  
+            <div class="form-inline"  role="form">
+              <div class="form-group">
+                <img style="width: 25px; margin-right: 2px;" class="" src="{{pic_url}}"  />
+                <div class="btn-group btn-sm" data-toggle="buttons">
+                  <label class="btn  btn-sm btn-default active">
+                    <input type="checkbox" name="options" checked="checked" id="option2_conn"> sells to
+                  </label> 
+                  <label class="btn  btn-sm btn-default">
+                    <input type="checkbox" name="options" id="option1_conn"> buys from 
+                  </label> 
+                </div> 
+              </div> 
+              <div class="form-group"> 
+                <div id="buss_remote" >
+                  <input class="typeahead  input-sm form-control  " id="new_buss_typeahead" {% if not user.is_authenticated %} rel="tooltip" title="Please login to use this feature" {% endif %} style="width:310px;" type="text" placeholder="Type business..."> 
+                </div>      
+              </div>   
+            </div>
+          </div>
+          {% endif %}
+                      
+        <div id="all-connections" class="clearfix">
+          {% if userprof.c_conn_no != 0 %}  
+           <div class="clearfix isotope js-isotope" data-isotope-options='{ "itemSelector": ".card" }' id="seller-cards">
+          {% for each in connections %}
+              {% if each.relation == "seller" or each.relation == "both" %}
+
+                  <div class="card card-business"> 
+                    <div class="content" style="background: #fff url('{{each.banner_url}}');"> 
+
+                      <div class="text-center">
+                        <a href="/profile/{{each.username}}"><img src="{{each.photo}}" alt="{{each.name}}"
+                        class="img-thumbnail img-responsive" style="width:73px; height:73px;" /></a>
+ 
+                      </div>
+
+                      <div class="text">
+                    {% ifequal profile_id user_id %}
+                      <button type="button" class="close" aria-hidden="true" onclick="conn_handler('close_sell_to', {{profile_id}}, {{each.id}})">&times;</button>
+                      
+                      <!-- <button type="button" class="close" aria-hidden="true">&times;</button> -->
+                      {% endifequal %}
+                        <h5><a href="/profile/{{each.username}}">{{each.name}}</a> 
+                        </h5>  
+                        <p class="small">{{each.description|truncatechars:80}}</p>
+                      </div>
+                    </div>
+
+                    <div class="numbers clearfix">
+                      <p class=" small  text-center">  
+                        <a href="/profile/{{each.username}}">
+ 
+                        <span rel="tooltip" title="{{each.food_no}} foods" class="pull-left {% if each.food_no = 0 %}zero{% endif %}"><i class="fa fa-cutlery"></i> {{each.food_no}}</span>
+
+                        <span rel="tooltip" title="{{each.trade_conn_no}} connections" class=" {% if each.trade_conn_no = 0 %}zero{% endif %}"><i class="fa fa-link"></i> {{each.trade_conn_no}}</span>
+
+                        <span rel="tooltip" title="{{each.org_conn_no}} organisations" class="pull-right {% if each.org_conn_no = 0 %}zero{% endif %}"><i class="fa fa-group"></i> {{each.org_conn_no}}</span> 
+
+                        </a>
+                      </p>
+
+
+                    </div>
+                    {% if each.type|length == 0 or each.type|first == '' %}
+                    {% else %}
+                    <div class="numbers type text-center clearfix">
+                      <div class="tags tags-biztype ">  
+                        {% for e in each.type %}
+                       <a href="/activity/?b={{e}}">{{e}}</a>
+                       {% endfor %}
+                      </div>
+                    </div>
+                    {% endif %}
+                  </div> 
+                  {% endif %}
+                  {% endfor %}
+                </div>
+           {% endif %} 
+          </div>  <!-- end all-connections -->
+ 
         </div>
         <!-- // Tab content END -->
         
@@ -725,22 +806,103 @@
 
                     <div class="widget">
                             
-                                <div class="border-top innerAll text-center">
-                                {% ifequal is_unknown_profile 'false' %}
+                      <div class="border-top innerAll text-center block-center">
 
-                                {% ifequal profile_id user_id %}
-                                <a href="/editprofile/{{userinfo.username}}" class="btn btn-danger btn-block">
-                                   Edit my profile
-                                </a>
-                                {% else %}
-                                <button class="btn btn-primary " data-toggle="modal" data-target="#modal_contact"><i class="fa fa-envelope-o"></i>  Contact {{name}}</button>
+ 
 
-                                {% endifequal %}
-                                {% else %}
-                                  <button class="btn btn-primary" style="margin-top:40px;" data-toggle="modal" data-target="#modal_invite">Invite to connect</button> 
-                                {% endifequal %} 
+      {% ifnotequal profile_id user_id %}
+      
+
+
+{% if user.is_authenticated %}      
+      <!-- if logged in users = individual --> 
+      {% ifequal loggedin_signupas "Individual" %}
+
+      <div class="btn-group btn-block" data-toggle="buttons">
+  {% if logged_customer %}
+      <label class="fa fa-smile-o text-muted btn btn-default btn-block active" style="width:100%;" title="{{userinfo.full_name}} is customer of {{name}}" >
+      <input type="checkbox" checked="checked" id="customer-chkbx" onchange="add_customer({{profile_id}}, {{user_id}})">I'm a customer!
+      {% else %}
+      <label class="fa fa-smile-o text-muted btn btn-default btn-block" style="width:100%;" title="{{userinfo.full_name}} is customer of {{name}}" >
+      <input type="checkbox" id="customer-chkbx" onchange="add_customer({{profile_id}}, {{user_id}})">I'm a customer!
+  {% endif %}
+      </label>      
+      </div>
+      {% endifequal %}
+      <!-- if logged in users = business --> 
+      {% ifequal loggedin_signupas "Business" %} 
+      <div class="btn-group btn-block " data-toggle="buttons">
+        <button class="btn btn-default btn-sm " style="background: url('{{userinfo.profileimg}}'); background-size: cover;width:10%;">&nbsp;</button>
+
+        {% if logged_conn == "seller"  or logged_conn == "both" %}
+                    
+        <label class="btn btn-default active btn-sm" style="width:40%;" title="{{userinfo.full_name}} buys from {{name}}"> 
+          <input type="checkbox" checked id="buy_from" onchange="conn_handler('buy_from', {{profile_id}})">buys from
+          {% else %}
+        <label class="btn btn-default btn-sm"  style="width:40%;"  title="{{userinfo.full_name}} buys from {{name}}"> 
+          <input type="checkbox" id="buy_from" onchange="conn_handler('buy_from', {{profile_id}})"> buys from
+          {% endif %}
+
+          {% comment %} 
+          <input type="checkbox" id="buy_from" onchange="conn_handler('buy_from', {{profile_id}})"> buys from
+          {% endcomment %}
+
+        </label>
+        <!-- showing active mode if button is selected -->
+        {% if logged_conn == "buyer" or logged_conn == "both" %}
+          
+        <label class="btn btn-default active btn-sm" style="width:40%;"  title="{{userinfo.full_name}} sells to {{name}}" > 
+          <input type="checkbox" checked id="sell_to" onchange="conn_handler('sell_to', {{profile_id}})"> sells to
+          {% else %}
+        <label class="btn btn-default btn-sm" style="width:40%;"   title="{{userinfo.full_name}} sells to {{name}}" > 
+          <input type="checkbox" id="sell_to" onchange="conn_handler('sell_to', {{profile_id}})"> sells to
+          {% endif %}
+
+          {% comment %}
+          <input type="checkbox" id="sell_to" onchange="conn_handler('sell_to', {{profile_id}})"> sells to
+          {% endcomment %}
+
+        </label> 
+
+        <button class="btn btn-default btn-sm"  style="background: url('{{pic_url}}'); background-size: cover; width:10%;">&nbsp;</button>
+      </div>
+
+      {% endifequal %}
+
+          {% ifequal profile_id user_id %}
+            <a href="/editprofile/{{userinfo.username}}" class="btn btn-danger btn-block">
+               Edit my profile
+            </a>       
+          {% endifequal %}
+   
+ 
+          {% ifequal is_unknown_profile 'false' %}
+            <button class="btn btn-primary btn-block" data-toggle="modal" data-target="#modal_contact"><i class="fa fa-envelope-o"></i> Contact {{name}}</button>
+          {% else %}
+            <button class="btn btn-primary btn-block" style="margin-top:40px;" data-toggle="modal" data-target="#modal_invite">Invite to connect</button> 
+          {% endifequal %} 
+ 
+          {% if user.is_superuser %}
+            <a href="/editprofile/{{username}}/" class="btn btn-primary btn-block">Edit</a>
+          {% endif %}
+           
+{% else %}
+      <!-- if not logged in show login prompt -->
+<div class="btn-group btn-block" rel="tooltip" data-placement="top" title="Login to connect to {{name}}">
+    <button class="btn btn-default" style="width:50%;" disabled>
+          Buy from</button>
+<button class="btn btn-default"  style="width:50%;" disabled>
+          Sell to</button>
+</div>
+      <a href="{% provider_login_url "twitter" process="login" %}" class="btn btn-success btn-block">Login for more</a>
+
+{% endif %}
+      {% endifnotequal %}
+
+
+                                
                                 </div>
-                            <div class="widget-body padding-none">
+                            <div class="widget-body padding-none hidden">
                                 <div class="innerAll">
                                     <p class=" margin-none"><i class="fa fa-envelope fa-fw text-muted"></i> 
                                     <a href="mailto:{{email}}" target="_blank">
@@ -769,29 +931,15 @@
                         </div>
                          
   
-<div class="widget text-center">
-  <div class="innerTB">
-      <div class="innerB"><i class=" icon-thumbs-up-fill fa fa-4x text-faded"></i>
-      </div>
-      <h2 class="strong margin-none">Get 50% OFF</h2>
-      <p class="lead">$30 / month</p>
-      <button class="btn btn-info">Register Today! <i class="fa fa-fw fa-play-circle"></i>
-      </button>
-  </div>
-  <!-- Ribbon -->
-  <div class="ribbon-wrapper">
-      <div class="ribbon">50% Off</div>
-  </div>
-</div>
 
 
                         <div class="widget">
                         <div class="widget-head border-bottom bg-gray">
-                            <h5 class="innerAll pull-left margin-none">Share</h5>
+                            <h5 class="innerAll pull-left margin-none"></h5>
                         </div> 
                         <div class="widget-body">
                             <div class="row">
-                            <div class="col-sm-12">
+                            <div class="col-sm-12">Share
               <a href="#" class="btn    btn-social btn-facebook" onclick="window.open(
               'https://www.facebook.com/sharer/sharer.php?s=100&amp;p[url]='+encodeURIComponent('{{ request.build_absolute_uri }}') +'&amp;p[images][0]='+encodeURIComponent('{{pic_url}}')+'&amp;p[title]='+encodeURIComponent('{{name}} on FoodTrade')+'&amp;p[summary]='+encodeURIComponent('Hey, see my profile on FoodTrade')+'&amp;u='+encodeURIComponent('{{ request.build_absolute_uri }}') +'&amp;t='+encodeURIComponent('{{name}} on FoodTrade'),
                     'facebook-share-dialog', 
@@ -834,6 +982,22 @@
                           </div> 
                           </div>
 
+
+<div class="widget text-center">
+  <div class="innerTB">
+      <div class="innerB"><i class=" icon-rocket fa fa-4x text-faded"></i>
+      </div>
+      <h2 class="strong margin-none">Help us grow!</h2>
+      <p class="lead">from &pound;20 / year</p>
+      <p>We don't sell your data or show adverts because you're our customer, not our product. And because we're working for YOU, we charge a small fee for premium features</p>
+      <button class="btn btn-info">Upgrade today <i class="fa fa-fw fa-play-circle"></i>
+      </button>
+  </div>
+  <!-- Ribbon -->
+  <div class="ribbon-wrapper">
+      <div class="ribbon">Beta offer</div>
+  </div>
+</div>
 
 
                         <div class="widget">
@@ -930,86 +1094,7 @@
       <div id="contact_info" class="col-md-4 col-sm-4  col-xs-4">
 
 
-     
-
-      {% ifnotequal profile_id user_id %}
-      
-
-
-{% if user.is_authenticated %}      
-      <!-- if logged in users = individual --> 
-      {% ifequal loggedin_signupas "Individual" %}
-
-      <div class="btn-group btn-block" data-toggle="buttons">
-  {% if logged_customer %}
-      <label class="fa fa-smile-o text-muted btn btn-default btn-block active" style="width:100%;" title="{{userinfo.full_name}} is customer of {{name}}" >
-      <input type="checkbox" checked="checked" id="customer-chkbx" onchange="add_customer({{profile_id}}, {{user_id}})">I'm a customer!
-      {% else %}
-      <label class="fa fa-smile-o text-muted btn btn-default btn-block" style="width:100%;" title="{{userinfo.full_name}} is customer of {{name}}" >
-      <input type="checkbox" id="customer-chkbx" onchange="add_customer({{profile_id}}, {{user_id}})">I'm a customer!
-  {% endif %}
-      </label>      
-      </div>
-      {% endifequal %}
-      <!-- if logged in users = business --> 
-      {% ifequal loggedin_signupas "Business" %}
-      <div class="btn-group btn-block" data-toggle="buttons">
-        {% if logged_conn == "seller"  or logged_conn == "both" %}
-                    
-        <label class="btn btn-default active" style="width:50%;" title="{{userinfo.full_name}} buys from {{name}}">
-          <input type="checkbox" checked id="buy_from" onchange="conn_handler('buy_from', {{profile_id}})"> Buy from
-          {% else %}
-        <label class="btn btn-default" style="width:50%;" title="{{userinfo.full_name}} buys from {{name}}">
-          <input type="checkbox" id="buy_from" onchange="conn_handler('buy_from', {{profile_id}})"> Buy from
-          {% endif %}
-
-          {% comment %}
-          <input type="checkbox" id="buy_from" onchange="conn_handler('buy_from', {{profile_id}})"> Buy from
-          {% endcomment %}
-
-        </label>
-        <!-- showing active mode if button is selected -->
-        {% if logged_conn == "buyer" or logged_conn == "both" %}
-          
-        <label class="btn btn-default active" style="width:50%;" title="{{userinfo.full_name}} sells to {{name}}" >
-          
-          <input type="checkbox" checked id="sell_to" onchange="conn_handler('sell_to', {{profile_id}})"> Sell to
-          {% else %}
-        <label class="btn btn-default" style="width:50%;" title="{{userinfo.full_name}} sells to {{name}}" >
-          <input type="checkbox" id="sell_to" onchange="conn_handler('sell_to', {{profile_id}})"> Sell to
-          {% endif %}
-
-          {% comment %}
-          <input type="checkbox" id="sell_to" onchange="conn_handler('sell_to', {{profile_id}})"> Sell to
-          {% endcomment %}
-
-        </label> 
-      </div>
-      {% endifequal %}
- 
-          {% ifequal is_unknown_profile 'false' %}
-          <button class="btn btn-primary btn-block" data-toggle="modal" data-target="#modal_contact"><i class="fa fa-envelope-o"></i>  Contact</button>
-          {% else %}
-            <button class="btn btn-primary btn-block" style="margin-top:40px;" data-toggle="modal" data-target="#modal_invite">Invite to connect</button> 
-          {% endifequal %}
-
-
-          {% if user.is_superuser %}
-            <a href="/editprofile/{{username}}/" class="btn btn-primary btn-block">Edit</a>
-          {% endif %}
-           
-{% else %}
-      <!-- if not logged in show login prompt -->
-<div class="btn-group btn-block" rel="tooltip" data-placement="top" title="Login to connect to {{name}}">
-    <button class="btn btn-default" style="width:50%;" disabled>
-          Buy from</button>
-<button class="btn btn-default"  style="width:50%;" disabled>
-          Sell to</button>
-</div>
-      <a href="{% provider_login_url "twitter" process="login" %}" class="btn btn-success btn-block">Login for more</a>
-
-{% endif %}
-      {% endifnotequal %}
+    
    
       
      <!-- modal_contact -->
