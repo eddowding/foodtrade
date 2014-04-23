@@ -247,12 +247,16 @@ if (window.location != window.parent.location)
 
 	$(window).bind('exitBreakpoint992',function() {		
 		$('.container-fluid').addClass('menu-hidden');
+		$('#topnav').addClass('left0'); 
+		$('#topnav').removeClass('left250'); 
 		disableNavbarMenusHover();
 		enableResponsiveNavbarSubmenus();
 	});
 
 	$(window).bind('enterBreakpoint992',function() {
 		$('.container-fluid').removeClass('menu-hidden');
+		$('#topnav').addClass('left250'); 
+		$('#topnav').removeClass('left0'); 
 		enableNavbarMenusHover();
 		disableResponsiveNavbarSubmenus();
 	});

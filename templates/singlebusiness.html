@@ -60,24 +60,20 @@
     <div id="carousel-1" class="carousel slide"> 
       <!-- Items -->
       <div class="carousel-inner">
-
-          <!-- Item -->
+ 
           <div class="item active">
               <div style="width:100%; height: 350px; " id="map"></div> 
-          </div>
-          <!-- // Item END -->
-
-          <!-- Item -->
+          </div> 
+ 
+          {% if banner_url %}
           <div class="item">
               <img src="{{banner_url}}" class="img-responsive">
           </div>
-          <!-- // Item END -->
-
-          <!-- Item -->
+          {% endif %} 
+ 
           <div class="item">
               <img src="{{banner_url}}" class="img-responsive">
-          </div>
-          <!-- // Item END -->    
+          </div>    
       </div>
       <!-- // Items END -->
       <!-- Navigation -->
@@ -166,19 +162,17 @@
         <li>
         <a class="glyphicons log_in" href="#tabStockists" data-toggle="tab"><i></i><span>We buy from</span></a></li>
         <li><a class="glyphicons log_out" href="#tabSuppliers" data-toggle="tab"><i></i><span>We sell to</span></a></li>
-        <li><a class="glyphicons certificate" href="#tabMemberships" data-toggle="tab"><i></i><span>Memberships</span></a></li>
-        <li><a class="glyphicons truck" rel="tooltip" href="#tabDeliveries" data-toggle="tab"><i class="fa fa-truck"></i><span>Deliveries</span> 
+        <li><a class="glyphicons certificate" href="#tabMemberships" data-toggle="tab"><i></i><span>Members of</span></a></li>
+        <li><a class="glyphicons truck" rel="tooltip" href="#tabDeliveries" data-toggle="tab"><i></i><span>Deliveries</span> 
         </a></li> 
         <li class="premium"><a class="glyphicons log_in" rel="tooltip" title="Premium account holders only - upgrade from just &pound;45/yr" href="#tabBuy" data-toggle="tab"><i></i><span>We buy</span>
-        <div class="ribbon-wrapper small">
-            <div class="ribbon danger">Upgrade</div>
-        </div>
+       
         </a>
         </li>
         <li class="premium"><a class="glyphicons cogwheel" rel="tooltip" title="Premium account holders only - upgrade from just &pound;45/yr" href="#tabCustomers" data-toggle="tab"><i></i><span>Customers</span> 
-        <div class="ribbon-wrapper small">
+       <!--  <div class="ribbon-wrapper small">
             <div class="ribbon danger">Upgrade</div>
-        </div>
+        </div> -->
         </a></li> 
       </ul>
     </div>
@@ -806,14 +800,29 @@
 
                     <div class="widget">
                             
-                      <div class="border-top innerAll text-center block-center">
+                      <div class="border-top innerAll  ">
 
- 
+          {% ifequal is_unknown_profile 'false' %}
+            {% ifequal profile_id user_id %}
+              <a href="/editprofile/{{userinfo.username}}" class="btn btn-danger btn-block">
+                 Edit my profile
+              </a>       
+            {% else %}
+              <button class="btn btn-primary btn-block" data-toggle="modal" data-target="#modal_contact"><i class="fa fa-envelope-o fa-fw"></i> Contact {{name}}</button>
+            {% endifequal %}
+          {% else %}
+            <button class="btn btn-primary btn-block" style="margin-top:40px;" data-toggle="modal" data-target="#modal_invite">Invite to connect</button> 
+          {% endifequal %} 
+
+
+          
+          
+          {% if user.is_superuser %}
+            <a href="/editprofile/{{username}}/" class="btn btn-primary btn-block">Edit</a>
+          {% endif %}
 
       {% ifnotequal profile_id user_id %}
-      
-
-
+       
 {% if user.is_authenticated %}      
       <!-- if logged in users = individual --> 
       {% ifequal loggedin_signupas "Individual" %}
@@ -836,10 +845,10 @@
 
         {% if logged_conn == "seller"  or logged_conn == "both" %}
                     
-        <label class="btn btn-default active btn-sm" style="width:40%;" title="{{userinfo.full_name}} buys from {{name}}"> 
+        <label class="btn btn-default active btn-sm" rel="tooltip" style="width:40%;" title="{{userinfo.full_name}} buys from {{name}}"> 
           <input type="checkbox" checked id="buy_from" onchange="conn_handler('buy_from', {{profile_id}})">buys from
           {% else %}
-        <label class="btn btn-default btn-sm"  style="width:40%;"  title="{{userinfo.full_name}} buys from {{name}}"> 
+        <label class="btn btn-default btn-sm"  rel="tooltip" style="width:40%;"  title="{{userinfo.full_name}} buys from {{name}}"> 
           <input type="checkbox" id="buy_from" onchange="conn_handler('buy_from', {{profile_id}})"> buys from
           {% endif %}
 
@@ -851,10 +860,10 @@
         <!-- showing active mode if button is selected -->
         {% if logged_conn == "buyer" or logged_conn == "both" %}
           
-        <label class="btn btn-default active btn-sm" style="width:40%;"  title="{{userinfo.full_name}} sells to {{name}}" > 
+        <label class="btn btn-default active btn-sm" rel="tooltip" style="width:40%;"  title="{{userinfo.full_name}} sells to {{name}}" > 
           <input type="checkbox" checked id="sell_to" onchange="conn_handler('sell_to', {{profile_id}})"> sells to
           {% else %}
-        <label class="btn btn-default btn-sm" style="width:40%;"   title="{{userinfo.full_name}} sells to {{name}}" > 
+        <label class="btn btn-default btn-sm"  rel="tooltip" style="width:40%;"   title="{{userinfo.full_name}} sells to {{name}}" > 
           <input type="checkbox" id="sell_to" onchange="conn_handler('sell_to', {{profile_id}})"> sells to
           {% endif %}
 
@@ -869,36 +878,58 @@
 
       {% endifequal %}
 
-          {% ifequal profile_id user_id %}
-            <a href="/editprofile/{{userinfo.username}}" class="btn btn-danger btn-block">
-               Edit my profile
-            </a>       
-          {% endifequal %}
-   
- 
-          {% ifequal is_unknown_profile 'false' %}
-            <button class="btn btn-primary btn-block" data-toggle="modal" data-target="#modal_contact"><i class="fa fa-envelope-o"></i> Contact {{name}}</button>
-          {% else %}
-            <button class="btn btn-primary btn-block" style="margin-top:40px;" data-toggle="modal" data-target="#modal_invite">Invite to connect</button> 
-          {% endifequal %} 
- 
-          {% if user.is_superuser %}
-            <a href="/editprofile/{{username}}/" class="btn btn-primary btn-block">Edit</a>
-          {% endif %}
+          
            
-{% else %}
-      <!-- if not logged in show login prompt -->
-<div class="btn-group btn-block" rel="tooltip" data-placement="top" title="Login to connect to {{name}}">
-    <button class="btn btn-default" style="width:50%;" disabled>
-          Buy from</button>
-<button class="btn btn-default"  style="width:50%;" disabled>
-          Sell to</button>
-</div>
-      <a href="{% provider_login_url "twitter" process="login" %}" class="btn btn-success btn-block">Login for more</a>
+          {% else %}
+                <!-- if not logged in show login prompt -->
+          <div class="btn-group btn-block" rel="tooltip" data-placement="top" title="Login to connect to {{name}}">
+              <button class="btn btn-default" style="width:50%;" disabled>
+                    Buy from</button>
+          <button class="btn btn-default"  style="width:50%;" disabled>
+                    Sell to</button>
+          </div>
+                <a href="{% provider_login_url "twitter" process="login" %}" class="btn btn-success btn-block">Login for more</a>
 
-{% endif %}
+          {% endif %}
       {% endifnotequal %}
 
+          <div class="btn-group btn-block">
+            <button class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" style="width:50%;" ><i class="fa fa-share"></i> Share</button>
+              <ul class="dropdown-menu ">
+               <li> <a href="#" class="" onclick="window.open(
+                'https://www.facebook.com/sharer/sharer.php?s=100&amp;p[url]='+encodeURIComponent('{{ request.build_absolute_uri }}') +'&amp;p[images][0]='+encodeURIComponent('{{pic_url}}')+'&amp;p[title]='+encodeURIComponent('{{name}} on FoodTrade')+'&amp;p[summary]='+encodeURIComponent('Hey, see my profile on FoodTrade')+'&amp;u='+encodeURIComponent('{{ request.build_absolute_uri }}') +'&amp;t='+encodeURIComponent('{{name}} on FoodTrade'),
+                      'facebook-share-dialog', 
+                      'width=626,height=436,top='+((screen.height - 436) / 2)+',left='+((screen.width - 626)/2 )); 
+                    return false;">
+
+                  <i class="fa fa-facebook-square fa-2x"></i> Share on facebook 
+                </a></li><li>
+                <a href="#" class="  " onclick="window.open(
+                      'https://twitter.com/share?url='+encodeURIComponent('{{ request.build_absolute_uri }}')+'&amp;text='+encodeURIComponent('{{screen_name}} on @foodtradeHQ') + '&amp;count=none/', 
+                      'twitter-share-dialog', 
+                      'width=626,height=436,top='+((screen.height - 436) / 2)+',left='+((screen.width - 626)/2 )); 
+                    return false;">
+                  <i class="fa fa-twitter-square fa-2x"></i> Tweet this
+                </a></li><li>
+    
+                <a class=" " href="http://pinterest.com/pin/create/button/?url={{ request.build_absolute_uri|urlencode }}&media={{pic_url|urlencode}}&description={{screen_name|urlencode}}{{' on FoodTrade'|urlencode}}" class="pin-it-button" count-layout="horizontal">
+                  <i class="fa fa-pinterest-square fa-2x"></i> Pin to pinterest
+                </a> </li><li>
+                <a  class="" href="https://plus.google.com/share?url={{ request.build_absolute_uri|urlencode }}">
+                  <i class="fa fa-google-plus-square fa-2x"></i> Share on Google+
+                </a></li><li>
+                <a  class=" " href="http://www.tumblr.com/share" title="Share on Tumblr">
+                  <i class="fa fa-tumblr-square fa-2x"></i> Post to Tumblr
+                </a>
+                   </li><li>
+                <a  class=" " href="http://www.linkedin.com/shareArticle?mini=true&url={{ request.build_absolute_uri|urlencode}}&title={{screen_name}} on FoodTrade&summary=Hey, view my profile on Foodtrade.&source=">
+                  <i class="fa fa-linkedin-square fa-2x"></i> Share on LinkedIn
+                </a></li> 
+                <script type="text/javascript" src="http://platform.tumblr.com/v1/share.js"></script>
+              </ul>
+
+              <button class="btn btn-default btn-sm" style="width:50%;"><i class="fa fa-star-o"></i> Favourite</button>
+          </div>
 
                                 
                                 </div>
@@ -933,69 +964,27 @@
   
 
 
-                        <div class="widget">
-                        <div class="widget-head border-bottom bg-gray">
-                            <h5 class="innerAll pull-left margin-none"></h5>
-                        </div> 
-                        <div class="widget-body">
-                            <div class="row">
-                            <div class="col-sm-12">Share
-              <a href="#" class="btn    btn-social btn-facebook" onclick="window.open(
-              'https://www.facebook.com/sharer/sharer.php?s=100&amp;p[url]='+encodeURIComponent('{{ request.build_absolute_uri }}') +'&amp;p[images][0]='+encodeURIComponent('{{pic_url}}')+'&amp;p[title]='+encodeURIComponent('{{name}} on FoodTrade')+'&amp;p[summary]='+encodeURIComponent('Hey, see my profile on FoodTrade')+'&amp;u='+encodeURIComponent('{{ request.build_absolute_uri }}') +'&amp;t='+encodeURIComponent('{{name}} on FoodTrade'),
-                    'facebook-share-dialog', 
-                    'width=626,height=436,top='+((screen.height - 436) / 2)+',left='+((screen.width - 626)/2 )); 
-                  return false;">
-
-                <i class="fa fa-facebook-square fa-2x"></i>  
-              </a>
-              <a href="#" class="btn   btn-social btn-twitter" onclick="window.open(
-                    'https://twitter.com/share?url='+encodeURIComponent('{{ request.build_absolute_uri }}')+'&amp;text='+encodeURIComponent('{{screen_name}} on @foodtradeHQ') + '&amp;count=none/', 
-                    'twitter-share-dialog', 
-                    'width=626,height=436,top='+((screen.height - 436) / 2)+',left='+((screen.width - 626)/2 )); 
-                  return false;">
-                <i class="fa fa-twitter-square fa-2x"></i> 
-              </a>
-  
-              <a class="btn  btn-social btn-pinterest" href="http://pinterest.com/pin/create/button/?url={{ request.build_absolute_uri|urlencode }}&media={{pic_url|urlencode}}&description={{screen_name|urlencode}}{{' on FoodTrade'|urlencode}}" class="pin-it-button" count-layout="horizontal">
-                <i class="fa fa-pinterest-square fa-2x"></i> 
-              </a> 
-              <a  class="btn btn-social  btn-google-plus" href="https://plus.google.com/share?url={{ request.build_absolute_uri|urlencode }}">
-                <i class="fa fa-google-plus-square fa-2x"></i> 
-              </a>
-              <a  class="btn  btn-social btn-tumblr" href="http://www.tumblr.com/share" title="Share on Tumblr">
-                <i class="fa fa-tumblr-square fa-2x"></i> 
-              </a>
-                 
-              <a  class="btn   btn-social btn-bitbucket" href="http://www.linkedin.com/shareArticle?mini=true&url={{ request.build_absolute_uri|urlencode}}&title={{screen_name}} on FoodTrade&summary=Hey, view my profile on Foodtrade.&source=">
-                <i class="fa fa-linkedin-square fa-2x"></i> 
-              </a>
-            </div> 
-              <script type="text/javascript" src="http://platform.tumblr.com/v1/share.js"></script>
-  
-                                <div class="col-sm-12">
+                
  
       {% if company_num %}
         <a href="https://www.duedil.com/company/{{company_num}}"><i class="fa fa-legal"></i></a>  
-      {% endif %} 
-                                </div> 
-                            </div>
-                          </div> 
-                          </div>
+      {% endif %}  
 
 
-<div class="widget text-center">
-  <div class="innerTB">
+<div class="widget text-center bg-secondary">
+  <div class="innerTB text-white">
       <div class="innerB"><i class=" icon-rocket fa fa-4x text-faded"></i>
       </div>
-      <h2 class="strong margin-none">Help us grow!</h2>
+      <h2 class="strong margin-none text-white">Help us grow!</h2>
       <p class="lead">from &pound;20 / year</p>
       <p>We don't sell your data or show adverts because you're our customer, not our product. And because we're working for YOU, we charge a small fee for premium features</p>
-      <button class="btn btn-info">Upgrade today <i class="fa fa-fw fa-play-circle"></i>
-      </button>
+      <p>Use the coupon code: BETASUMMER</p>
+      <button class="btn btn-primary btn-stroke">Upgrade today <i class="fa fa-fw fa-play-circle"></i>
+      </button> 
   </div>
   <!-- Ribbon -->
   <div class="ribbon-wrapper">
-      <div class="ribbon">Beta offer</div>
+      <div class="ribbon primary">Beta offer</div>
   </div>
 </div>
 

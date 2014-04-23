@@ -1,4 +1,4 @@
-.btn-default i,
+/*.btn-default i,
 .widget.widget-tabs>.widget-head ul li.active a i, 
 .widget.widget-tabs>.widget-head ul li.active a i:before,
 .widget.widget-tabs-double-2>.widget-head ul li.active a,
@@ -10,6 +10,10 @@ a {
 .btn-primary { 
   background: #586E31; 
   border-color: #586E31;
+}*/
+
+.bg-secondary {
+  background: #420F29; 
 }
 
 #menu>div ul>li.category {
@@ -38,6 +42,9 @@ a {
   color: #586E31;
 }
 
+#content {
+  margin-top: 60px;
+}
 
 #menu #sidebar-social-wrapper #brandWrapper {
   padding: 0;
@@ -327,6 +334,9 @@ a {
   height: 330px;
 }
 
+.dropdown-menu li a .fa {
+  color: #999;
+}
 
 
 
@@ -477,6 +487,9 @@ a {
   left: auto; 
 }
 
+.left250 {margin-left: 250px !important;}
+.left0 {margin-left: 0 !important}
+
 #footer a {
   color: #999;
   text-decoration: none;
@@ -511,3 +524,11 @@ a {
 .foodtrade-tag-count{position:absolute;top:0;right:0}
 .foodtrade-tag-showmore{position:relative;color:#eee;cursor:pointer;font-size:12px;padding-left:22px;}
 .foodtrade-tag-showmore .foodtrade-tag-count{position:absolute;top:0;right:0}
+
+
+
+@media (max-width: 1200px) {
+  .widget-tabs-double-2 li span {
+    display: none !important;
+  }
+}
