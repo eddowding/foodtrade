@@ -1,71 +1,300 @@
 {% extends 'tbase.html' %}
-{% load staticfiles %}
+{% load staticfiles %} 
+{% load socialaccount %}
+{% load url from future %}
+{% load i18n %}
+{% include "socialaccount/snippets/login_extra.html" %}
+{% load account %}
 
 {% block content %}
-
- 
-<div class="col-md-10  {% if not user.is_authenticated %} col-md-offset-1 {% endif %}">
-
-<div class="container-responsive block-center  ">
- 
  
 
+<div class="col-md-12">
 
- <div class='row'>
-    <div class='col-md-12'>
-      <div class="carousel slide media-carousel" id="media" style="margin-top: 30px ; margin-bottom: 30px;">
-        <div class="carousel-inner">
-          
+<div class="container-responsive block-center showcase">
 
-          <div class="item  active">
-            <div class='row'>
-  <div class="col-md-12 hero text-center" style="background-image: url('/static/images/apples.jpg');">
-     
-    <div class="text-center"> 
-   
-      <h1>The simpler way<br /> to find better food.</h1> 
-      
-      <p><a href="/accounts/twitter/login/?process=login" class="btn text-center btn-primary btn-lg" style="font-size: 2em; margin-top: 1em; border: 7px double #fff;"><i class="fa fa-twitter fa-fw"></i> Get started &raquo;</a></p> <br />
-      <p class="lea d"><a href="#notwitter" class="white">Don't have a twitter account?</a></p>
-    </div> 
-  </div>
-</div>
+<style type="text/css">
+.main-text
+{
+    position: absolute;
+    top: 50px;
+    width: 96.66666666666666%;
+    color: #FFF;
+}
+.btn-min-block
+{
+    min-width: 170px;
+    line-height: 26px;
+}
+.btn-clear
+{
+    color: #FFF;
+    background-color: transparent;
+    border-color: #FFF;
+    margin-right: 15px;
+}
+.btn-clear:hover
+{
+    color: #000;
+    background-color: #FFF;
+}
 
-          </div>  
-          <div class="item">
-            <div class='row'>
-  <div class="col-md-12 hero text-center" style="background-image: url('/static/images/vegboxes.jpg');">
-     
-    <div class=""> 
-      <h1>Trade with a simple update</h1>  
-      <h3>There's a great deal nearer than you think.</h3>
-      <p><a href="/accounts/twitter/login/?process=login" class="btn text-center btn-primary btn-lg" style="font-size: 2em; margin-top: 1em; border: 7px double #fff;"><i class="fa fa-twitter fa-fw"></i> Get started for free &raquo;
-      </a></p>
-    </div> 
-  </div>
-</div>
+.carousel-caption h1 {
+  background: rgba(0,0,0,0.3);
+  text-shadow: 1px 1px 2px #444;
+  padding: 10px 20px 5px 20px; 
+  border: 1px solid #fff;
+  margin:20px 0;
+  display: inline-block;;
+}
 
-          </div>  
-          <div class="item">
-           <div class='row'>
-  <div class="col-md-12 hero text-center black whiteshadow" style="background-image: url('/static/images/foodweb2.jpg');">
-     
-    <div class=""> 
-      <h1>"This technology could transform the way food networks operate." </h1> 
-      <h3 class="text-center">&mdash; HRH Prince Charles</h3>
-    </div> 
-  </div>
-</div>
+.carousel,
+.item {
+  height: 500px;
+}
 
-          </div>  
+.carousel-caption a {
+  background: rgba(0,0,0,0.8);
+  text-shadow: 1px 1px 2px #444;
+  border: 3px solid #fff;
+  line-height: 2;
+  color: #fff;
+  font-size: 30px;
+  padding: 15px 30px;
+  margin:20px 0 0 0;
+}
+
+.carousel-caption {   
+  top: 130px !important;
+  right: 18%;
+  left: 17%;
+}
+
+.input-lg {
+  height: auto;
+  font-size: 40px;
+}
+
+.btn-lg {
+  padding: 10px 20px;
+  font-size: 40px;
+}
+
+.showcase .row {
+  padding: 0;
+}
+
+.more {   height: 70px;
+display: block; }
+</style>
 
 
-        </div> 
-      </div>                          
+<div class="container-responsive" style="">
+    <div class="row" style="height: 300px; padding: 0;">
+        <div class="col-md-12">
+            <div id="carousel-example" class="carousel slide" data-ride="carousel"> 
+                <div class="carousel-inner" style="height: 800px;">
+                    <div class="item active" style="background:url('/static/images/cows.jpg'); background-size: cover;">  
+                        <div class="carousel-caption">
+                            <h1>The dating site for food business.</h1>
+                            <p><a href="#more">Discover more <i class="fa fa-search"></i></a></p>
+                        </div>
+                        <div class="text-right small photocredit white">Photo credit: <a href="http://kirstymorris.com/" target="_blank">Kirsty Morris</a></div>
+                    </div>
+                    <div class="item" style="background:url('http://e5bakehouse.com/wp-content/uploads/2013/08/provenence.jpg'); background-size: cover;">
+                      
+                          <div class="carousel-caption">
+                            <h1>
+                               Find your perfect match: producer, stockist or customer</h1>
+                            <p><a href="#more">Discover more <i class="fa fa-chevron-down"></i></a></p>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <img src="/static/images/pot.jpg" alt="Third slide">
+                        <div class="carousel-caption">
+                            <h1>
+                                Together we can get better food onto shelves, menus and dining tables.</h1>
+                            <p><a href="#more">Discover more</a></p>
+                        </div>
+                        <div class="text-right small photocredit white">Photo credit: <a href="http://kirstymorris.com/" target="_blank">Kirsty Morris</a></div>
+                    </div>
+                </div>
+                <a class="left carousel-control" href="#carousel-example-generic" data-slide="prev">
+                    <span class="glyphicon glyphicon-chevron-left"></span></a><a class="right carousel-control"
+                        href="#carousel-example-generic" data-slide="next"><span class="glyphicon glyphicon-chevron-right">
+                        </span></a>
+            </div>
+            <div class="main-text ">
+                <div class="col-md-12">
+                    <form action="/activity" onsubmit="return formSubmit(this);" class=" " role="search">
+                     <div class="col-sm-8 col-sm-offset-2"> 
+                     <div class="input-group">  
+
+                        <input type="text" name="q" id="keyword" class="form-control input-lg" value="" placeholder="Type a food to buy, sell, or is surplus">                    
+                        <span class="input-group-btn">
+                          <button class="btn btn-default btn-lg" type="submit"><i class="fa fa-search"></i></button>  
+                        </span> 
+                      </div>
+
+                      <p class="lead" style=" text-shadow: 0 0 4px #000; margin-left: 10px; display: inline-block;">eg Apples, chicken, cider</p>
+                      </div>
+
+                      <input type="hidden" name="location" id="new_search" value="   ">
+                    </form>
+                </div>
+
+            </div>
+        </div>
     </div>
-  </div> 
+</div>
+<div id="push">
+</div>
 
-  
+</div>
+<a name="more" class="more"></a>
+ 
+<div class="container  col-md-10 col-md-offset-1 block-center showcase">
+ 
+
+<div class="row" style="position: relative; top: -50px;">
+  <div class="col-md-6">
+      <!-- Thumbnail -->
+      <div class="thumbnail widget-thumbnail"> 
+          <div style="background-image: url('/static/images/ft_packshot.gif'); min-height:200px; background-size: contain; background-repeat: no-repeat; background-position: center center;">
+          </div>
+          <div class="caption">
+
+            <div class="text-center">
+              <a href="#" class="btn btn-info btn-block" style="font-size: 25px; background: #F5941F; border: #F36037"><strong>Add My Business &raquo;</strong></a> 
+            </div>
+            <div class="text-center" >
+              <ul class="fa-ul text-muted  text-left" style="display: inline-block;">
+                <li>
+                    <span class="fa fa-li fa fa-check"></span>
+                    No credit card needed to get started 
+                </li> 
+                <li>
+                    <span class="fa fa-li fa fa-check"></span>
+                    Trade effortlessly with local network
+                </li>
+                <li>
+                    <span class="fa fa-li fa fa-check"></span>
+                    Don't miss out on local business opportunities 
+                </li>
+              </ul>
+              </div>
+
+<div  >
+          <p>  
+          Think of FoodTrade like a dating site. Producer, stockist or customer; we help you find your perfect match.
+</p><p>
+We make it easy and economical to make smarter decisions; connecting you with new suppliers or stockists, resources, market intelligence, or a heap of hungry folk ready to eat. 
+</p><p>
+Your time is precious. Just tweet @foodtradeHQ and we’ll spread the word for you.</p>
+</div>
+
+              
+
+              <div class="text-center">
+              <a href="/pages/business" class="lead" >Learn more &raquo;</a>
+              </div>
+
+ 
+          </div>
+      </div>
+      <!-- // Thumbnail END -->
+      </div>
+
+      
+
+      <div class="col-md-6">
+      <!-- Thumbnail -->
+      <div class="thumbnail widget-thumbnail"> 
+          <div style="background-image: url('/static/images/pot.jpg'); min-height:200px; background-size: cover;">
+          </div>
+          <div class="caption">
+          <div class="text-center">
+              <a href="#" class="btn btn-info btn-block" style="font-size: 25px; background: #F5941F; border: #F36037"><strong>Join as an Individual &raquo;</strong></a> 
+            </div>
+            <div class="text-center">
+              <ul class="fa-ul text-muted text-left" style="display: inline-block;">
+                <li>
+                    <span class="fa fa-li fa fa-check"></span>
+                    100% free for individuals, forever
+                </li> 
+                <li>
+                    <span class="fa fa-li fa fa-check"></span>
+                    Find businesses, new schemes, and join local groups
+                </li>
+                <li>
+                    <span class="fa fa-li fa fa-check"></span>
+                    Trade surpluses with others nearby
+                </li>
+              </ul>
+              </div>
+            <p>      
+FoodTrade helps you find the foods you love, sold by the people you trust. 
+</p><p>
+By discovering the story behind your food, you can contribute to the health of your family, friends and community.
+</p><p>
+Support a great producers, restaurants or stores by vouching for them on FoodTrade, or if they aren’t FoodTrade yet why not invite(link) them. Because if we’re connected, we can all be part of a better, fairer food system. 
+ </p>
+
+              
+            <div class="text-center">
+              <a href="http://www.foodtrade.com/pages/individuals" class="lead">Learn more &raquo;</a>
+            </div>
+
+          </div>
+      </div>
+      <!-- // Thumbnail END -->
+  </div>
+
+
+ 
+</div>
+  <div class="well well-sm">
+<div class="row">
+    <div class="col-md-9">
+
+    <p class="lead" style="margin:0"><strong>
+    We do great things for organisations, too</strong></p>
+    <p>
+   Certifiers, community groups, networks, awards or public sector. We want to showcase your story, offering you the credentials you deserve and connecting you with the right people. 
+</p><p>
+We’re about honesty and transparency. The more information you share, the smarter you become. This is your food trade network. </p>
+
+
+    </div> 
+    <div class="col-sm-3 text-right">
+      <a href="/pages/organisations" class="btn btn-info pull-right btn-block" style="font-size: 25px; background: #F5941F; border: #F36037">Learn more &raquo;</a>  
+    </div>
+  </div>
+</div>
+
+
+
+
+<div class="row"> 
+
+  <div class="col-sm-12 lead">         
+    <p>
+What we choose to cook, and where we choose to eat, affects the people and the places that grew, raised, baked and sold it. 
+</p><p>
+FoodTrade is for those who want to reconnect the farm to the fork. 
+It’s for farmers and families, tapas bars and taco trucks, smallholders and even supermarkets. <acronym ‘if they’re willing to stock good local food at fair prices’>
+</p><p>
+Join us (link) on a mission to create a better, fairer food system. 
+</p>
+
+<blockquote>
+“This technology could change the way our food system operates” HRH Prince Charles</blockquote>
+
+  </div>
+</div>
+
+
+
 
 <div class='row'>
 
@@ -107,62 +336,9 @@
 
 </div><!-- row --> 
  
+
  
 
-
-<div class="row">
-  <div class="col-md-12">
-  <hr />
-  <p class="text-center ">Please <a href="mailto:ed@foodtrade.com">get in touch</a> to learn about the services we provide for cities, regions, and application developers.</p>  
-  <hr />
-  </div>
-</div> 
  
-<a name="notwitter"></a>
-
-
-
-
-<div class='row'>
-  <div class='col-md-12'>
-    <div class="well  clearfix ">
-
-<div class="col-sm-6">
-<p class="lead" style="margin:0;"> Sign up to the newsletter and you'll be first to know about new features.</p>
 </div>
-<div class="col-sm-6">
- <!-- Begin MailChimp Signup Form -->
-<div id="mc_embed_signup">
-<form action="http://sustaination.us2.list-manage1.com/subscribe/post?u=79e1467c02512dbd83bddab5f&amp;id=eeea3ac4c6" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
-    <div class="input-group"> 
-      <input type="email" value="" name="EMAIL"  class="form-control required" name="q"  id="mce-EMAIL"  placeholder="Email Address">
-      <span class="input-group-btn">
-          <button type="submit" class="btn btn-success"> Subscribe</button>
-      </span>
-    </div>
-      <div id="mce-responses" class="clear">
-    <div class="response" id="mce-error-response" style="display:none"></div>
-    <div class="response" id="mce-success-response" style="display:none"></div>
-    <div style="position: absolute; left: -5000px;"><input type="text" name="b_79e1467c02512dbd83bddab5f_eeea3ac4c6" value=""></div>
-  </div>    <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
-</form>    
-<!--End mc_embed_signup-->   
-</div>
-
-    </div>
-  </div>
-</div>
-
-
-
-</div>
-
 </div><!-- col10 --> {% endblock %}
-
-
-      <script type="text/javascript">
-    map_lat='50';
-    map_lon = "0";
- 
-    </script>
-     <script src="{% static "js/business-map.js" %}"></script>
