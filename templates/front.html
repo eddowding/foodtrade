@@ -153,10 +153,10 @@ display: block; }
 </div>
 <a name="more" class="more"></a>
  
-<div class="container  col-md-10 col-md-offset-1 block-center showcase">
+<div class="container  col-md-10 col-md-offset-1 block-center showcase" style="position: relative; top: -50px;">
  
 
-<div class="row" style="position: relative; top: -50px;">
+<div class="row">
   <div class="col-md-6">
       <!-- Thumbnail -->
       <div class="thumbnail widget-thumbnail"> 
@@ -165,7 +165,7 @@ display: block; }
           <div class="caption">
 
             <div class="text-center">
-              <a href="#" class="btn btn-info btn-block" style="font-size: 25px; background: #F5941F; border: #F36037"><strong>Add My Business &raquo;</strong></a> 
+              <a href="{% provider_login_url "twitter" process="login" %}"  class="btn btn-info btn-block" style="font-size: 25px; background: #F5941F; border: #F36037"><strong>Add My Business &raquo;</strong></a> 
             </div>
             <div class="text-center" >
               <ul class="fa-ul text-muted  text-left" style="display: inline-block;">
@@ -214,7 +214,7 @@ Your time is precious. Just tweet @foodtradeHQ and we’ll spread the word for y
           </div>
           <div class="caption">
           <div class="text-center">
-              <a href="#" class="btn btn-info btn-block" style="font-size: 25px; background: #F5941F; border: #F36037"><strong>Join as an Individual &raquo;</strong></a> 
+              <a href="{% provider_login_url "twitter" process="login" %}"  class="btn btn-info btn-block" style="font-size: 25px; background: #F5941F; border: #F36037"><strong>Join as an Individual &raquo;</strong></a> 
             </div>
             <div class="text-center">
               <ul class="fa-ul text-muted text-left" style="display: inline-block;">
@@ -253,11 +253,11 @@ Support a great producers, restaurants or stores by vouching for them on FoodTra
 
  
 </div>
-  <div class="well well-sm">
+  <div class="well well-sm" style="background: #fff;">
 <div class="row">
     <div class="col-md-9">
 
-    <p class="lead" style="margin:0"><strong>
+    <p class="lead" style="margin:0 0 10px 0;"><strong>
     We do great things for organisations, too</strong></p>
     <p>
    Certifiers, community groups, networks, awards or public sector. We want to showcase your story, offering you the credentials you deserve and connecting you with the right people. 
@@ -267,7 +267,7 @@ We’re about honesty and transparency. The more information you share, the smar
 
     </div> 
     <div class="col-sm-3 text-right">
-      <a href="/pages/organisations" class="btn btn-info pull-right btn-block" style="font-size: 25px; background: #F5941F; border: #F36037">Learn more &raquo;</a>  
+      <a href="/pages/organisations" class="btn btn-info pull-right btn-block" style="font-size: 25px; background: #F5941F; border: #F36037; margin-top:30px;">Learn more &raquo;</a>  
     </div>
   </div>
 </div>
@@ -275,9 +275,28 @@ We’re about honesty and transparency. The more information you share, the smar
 
 
 
-<div class="row"> 
+<div class="row hero white" style="background-image: url('/static/images/apples2.jpg');   padding: 50px 0;">
+  <div class="col-sm-12"> 
+  <blockquote class="clearfix">
+  <p class=" text-left" style="font-size:40px;">
+“This technology could change the way our food system operates” <br />
+</p>
 
-  <div class="col-sm-12 lead">         
+<p class="text-right " style="font-size:30px;">
+&mdash; HRH Prince Charles 
+</p> 
+</blockquote> 
+<div class="clearfix"> </div>
+  </div>
+</div>
+
+ 
+    
+<div class="row clearfix" style="padding: 25px 0; margin: 25px 0;"> 
+
+  <div class="ftstrip ftstrip-mini"></div>
+  <div class="col-sm-12 lead clearfix">   
+  <h1 style="font-size:26px;">About us</h1>  
     <p>
 What we choose to cook, and where we choose to eat, affects the people and the places that grew, raised, baked and sold it. 
 </p><p>
@@ -285,56 +304,12 @@ FoodTrade is for those who want to reconnect the farm to the fork.
 It’s for farmers and families, tapas bars and taco trucks, smallholders and even supermarkets. <acronym ‘if they’re willing to stock good local food at fair prices’>
 </p><p>
 Join us (link) on a mission to create a better, fairer food system. 
-</p>
-
-<blockquote>
-“This technology could change the way our food system operates” HRH Prince Charles</blockquote>
-
+</p>  
   </div>
-</div>
 
+  <div class="ftstrip ftstrip-mini"></div>
+</div>    
 
-
-
-<div class='row'>
-
-  <div class="col-sm-4 text-center">
-    <a href="/pages/individuals">  
-      <img alt="" class="img-thumbnail center" src="https://fbcdn-profile-a.akamaihd.net/hprofile-ak-prn1/c41.41.518.518/s160x160/15202_10152750860890051_592474866_n.jpg" style="max-height: 120px;">
-    </a>
-    <h4>
-      <a  href="/pages/individuals"> 
-        For everyone &raquo;
-      </a>
-    </h5>
-    <p>Find &amp; support the businesses who produce the foods you love, in the way you value.</p>
-  </div><!-- col -->
-
-  <div class="col-sm-4 text-center">
-    <a href="/pages/business">  
-      <img alt="" class="img-thumbnail center" src="https://pbs.twimg.com/profile_images/378800000510461570/2e8436740f730dc785435c27de270f5a.jpeg" style="max-height: 120px;">
-    </a>
-    <h4>
-      <a  href="/pages/business"> 
-        For business &raquo;
-      </a>
-    </h5>
-    <p>Take the hassle out of finding trade partners - discover, connect, and grow with more great businesses. </p>
-  </div><!-- col -->
-
-  <div class="col-sm-4 text-center">
-    <a href="/pages/organisations">  
-      <img alt="" class="img-thumbnail center" src="https://pbs.twimg.com/profile_images/1690823879/Screen_shot_2011-12-13_at_12.21.20.png" style="max-height: 120px;">
-    </a>
-    <h4>
-      <a  href="/pages/organisations"> 
-        For organisations &raquo;
-      </a>
-    </h5>
-    <p>Showcase your members, visualise your reach &amp; impact, and find new supporters.</p>
-  </div><!-- col -->
-
-</div><!-- row --> 
  
 
  
