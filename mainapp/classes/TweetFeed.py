@@ -94,10 +94,10 @@ class TweetFeed():
         user = usr_obj.get_profile_by_id(useruid)
         try:
             '''For all the users that are joined after adding the field join_time'''
-            join_date = datetime.datetime.fromtimestamp(int(user['join_time']))
+            start_date = datetime.datetime.fromtimestamp(int(user['trial_period_starts']))
         except:
-            join_date = datetime.datetime(2014, 3, 19)
-        difference = datetime.datetime.today() - join_time
+            start_date = datetime.datetime(2014, 3, 19)
+        difference = datetime.datetime.today() - start_date
         if difference.days < 30:
             return False
         else:
@@ -117,7 +117,21 @@ class TweetFeed():
         except:
             subscribed = 0
         # subscribed = 1
-        if tweet['parent_tweet_id'] == "0" and self.has_tweet_in_week(user_id) and subscribed != 1:
+
+        if subscribed:
+            can_tweet = True
+        else:                
+            has_trial_period_expired = self.has_expired_trial_period(user_id)
+            if has_trial_period_expired == True:
+                has_tweet = self.has_tweet_in_week(user_id)
+                if not has_tweet:
+                    can_tweet = True
+                else:
+                    can_tweet = False
+            else:
+                can_tweet = True
+
+        if tweet['parent_tweet_id'] == "0" and not can_tweet: #and self.has_tweet_in_week(user_id) and subscribed != 1:
             return
 
         tweet['deleted'] = 0
