@@ -331,8 +331,8 @@ hid den
 
 
 
-        
-            <li class="hasSubmenu {% if search %}active {% endif %}">
+        {% if search %}
+            <li class="hasSubmenu active">
                 <a href="#advsearch" data-toggle="collapse"><i class="fa fa-search"></i><span>Advanced search</span></a>
                 <ul id="advsearch" class="{% if not search %}collapse {% endif %}">
                     
@@ -403,7 +403,7 @@ hid den
     {% endif %}
                 </ul>
             </li> 
-
+ {% endif %}
 
             <li class="">
                 <a href="/myprofile/favourites"><i class="fa fa-star"></i><span>Favourites</span></a> 
