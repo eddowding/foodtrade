@@ -207,7 +207,6 @@
         <i class="fa fa-share-square-o text-muted"></i> Share
       </button>
 
-
       <!--SHARER  Modal -->
       <div class="modal fade" id="sharer" tabindex="-1" role="dialog" aria-labelledby="sharer" aria-hidden="true">
         <div class="modal-dialog">
@@ -278,6 +277,7 @@
       {% endif %} 
  
       </div>  
+
       
      <!-- modal_contact -->
       <div class="modal fade" id="modal_contact" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -422,6 +422,7 @@
 
 
       </div><!-- end header last -->
+<!--  this embeds the video     {{intro_video|safe}} -->
     </div>
     </div>
 
@@ -572,8 +573,11 @@
                 <a href="/activity/?f={{eachfood.food_name}}" >  
                   
                   {{eachfood.food_name}}
-                </a>   
+                  
 
+
+                </a>   
+            <!-- You can now access parent food with this {{eachfood.parent_food}} -->
                   </div>
  
                   </td>
@@ -582,12 +586,10 @@
                    <div class="pull-right">
 
                    {% ifequal profile_id user_id %}
-                      {% if prof_subscribed %}
+                      
 
                      <a href="" data-toggle="modal" data-target="#modal_food_detail" class="btn btn-sm btn-default" data-container="body" onClick="get_food_detail('{{profile_id}}', '{{eachfood.food_name}}', '{{eachfood.description}}', '{{eachfood.food_tags}}', '{{eachfood.photo_url}}', '{{eachfood.recomm_tags|safe}}')"><i class="fa fa-edit" title="Edit" ></i> edit details</a>
-                     {% else %}
-                     <a class="btn btn-sm btn-default" data-container="body" rel="tooltip" title="Upgrade your account to add details"><i class="fa fa-edit" title="Edit" > edit details</i></a>
-                     {% endif %}
+                     
                      <a class="btn btn-danger btn-sm"><i class="fa fa-trash-o" title="Delete" onClick="delete_food({{profile_id}}, '{{eachfood.food_name}}', this)"></i></a>
 
                    {% endifequal %}

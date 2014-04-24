@@ -14,6 +14,7 @@ CRON_PATH = '/srv/www/live/foodtrade-env/foodtrade/CronJobs'
 SETTINGS_PATH = '/srv/www/live/foodtrade-env/foodtrade/foodtrade'
 
 # CLASS_PATH = 'C:/Users/Roshan Bhandari/Desktop/foodtrade/mainapp/classes'
+# CRON_PATH = 'C:/Users/Roshan Bhandari/Desktop/foodtrade/CronJobs'
 # SETTINGS_PATH = 'C:/Users/Roshan Bhandari/Desktop/foodtrade/foodtrade'
 
 sys.path.insert(0, CLASS_PATH)
@@ -114,7 +115,7 @@ class UserProfile():
         return self.db_object.get_all(self.table_name,{'sign_up_as':type_usr})
 
     def get_all_friends_and_register_as_friend(self, start):
-        maxtime = datetime.datetime.now() - datetime.timedelta(minutes=300)
+        maxtime = datetime.datetime.now() - datetime.timedelta(minutes=30)
         maxtime = int(time.mktime(maxtime.timetuple()))
         user_pages_count = int(self.db_object.get_count(self.table_name, {'join_time':{'$gt':start}, 'join_time':{'$lt':maxtime}, 'is_unknown_profile': 'false'}))
         for i in range(0,user_pages_count, 1):

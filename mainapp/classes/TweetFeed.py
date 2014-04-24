@@ -81,13 +81,28 @@ class TweetFeed():
         # week_ago = now_instant - (now_instant%(7*24*3600)) + 4*24*3600
         a = datetime.now()
         start = a - timedelta(days = a.weekday())
-        week_ago =int(start.strftime("%s"))
+        print start
+        week_ago = int(start.strftime("%S"))
         results = self.db_object.get_all( self.table_name, {"useruid":useruid,"updates.parent_tweet_id":"0", "updates.time_stamp": {"$gte":week_ago} })
         if len(results)>0:
             return True
         return False
 
-        
+    def has_expired_trial_period(self, useruid):
+        import datetime
+        usr_obj = UserProfile()
+        user = usr_obj.get_profile_by_id(useruid)
+        try:
+            '''For all the users that are joined after adding the field join_time'''
+            join_date = datetime.datetime.fromtimestamp(int(user['join_time']))
+        except:
+            join_date = datetime.datetime(2014, 3, 19)
+        difference = datetime.datetime.today() - join_time
+        if difference.days < 30:
+            return False
+        else:
+            return True
+                        
     def get_tweet_by_user_id(self, user_id):
         return self.db_object.get_one(self.table_name,{'useruid':int(user_id), 'updates':{"$elemMatch":{'deleted':0}}})
 
@@ -302,7 +317,7 @@ class UserProfile():
              )
 
     def update_profile_by_username(self, username, description, address, type_usr, sign_up_as, phone, lat, lon, postal_code, name, is_superuser,
-      company_num, website_url, facebook_page, deliverables, business_org_name, email, newsletter_freq, show_foods):
+      company_num, website_url, facebook_page, deliverables, business_org_name, email, newsletter_freq, show_foods, video_url = ''):
 
         data = {'zip_code':str(postal_code),
                  'description':description,
@@ -320,7 +335,8 @@ class UserProfile():
                  'business_org_name': business_org_name,
                  'email':email,
                  'newsletter_freq':newsletter_freq,
-                 'show_foods': show_foods
+                 'show_foods': show_foods,
+                 'video_url': video_url
                  }
         if not is_superuser: 
             return self.db_object.update(self.table_name,

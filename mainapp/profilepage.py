@@ -23,6 +23,8 @@ import pprint
 from django.http import Http404
 import re
 from mainapp.classes.MongoConnection import MongoConnection
+from embedly import Embedly
+from django.conf import settings
 
 def profile_url_resolve(request, username):
     if username == 'me':
@@ -65,6 +67,7 @@ def display_profile(request, username):
             food_form.save()
         
     parameters = {}
+    
     parameters['banner_url'] = get_banner_url(username)
     food_form = FoodForm()
     parameters['form'] = food_form
@@ -91,6 +94,12 @@ def display_profile(request, username):
     parameters['sign_up_as'] = userprof['sign_up_as']
     parameters['address'] = userprof['address']
     parameters['type_user'] = userprof['type_user']
+
+    video_url = userprof.get('video_url') if userprof.get('video_url')!=None else ''
+    if video_url != '':
+        parameters['intro_video'] = get_video_html(video_url)
+    else:
+        parameters['intro_video'] = ''
     try:
         parameters['company_num'] = userprof.get('company_num') if userprof.get('company_num')!=None else ''
         parameters['website_url'] = userprof.get('website_url') if userprof.get('website_url')!=None else ''
@@ -269,12 +278,13 @@ def edit_profile(request, username):
                 parameters['superuser_edit_other'] = True
             parameters['sign_up_as'] = userprof['sign_up_as']
             parameters['username'] = username
+            parameters['video_url'] = userprof.get('video_url') if userprof.get('video_url')!=None else ''
+
             parameters['company_num'] = userprof.get('company_num') if userprof.get('company_num')!=None else ''
             parameters['website_url'] = userprof.get('website_url') if userprof.get('website_url')!=None else ''
             parameters['facebook_page'] = userprof.get('facebook_page') if userprof.get('facebook_page')!=None else ''
             parameters['deliverables'] = userprof.get('deliverables') if userprof.get('deliverables')!=None else ''
             parameters['business_org_name'] = userprof.get('business_org_name') if userprof.get('business_org_name')!=None else ''
-            print parameters['deliverables']
             if userprof['sign_up_as'] == 'Business':
                 parameters['type_user'] = str(','.join(userprof['type_user']))
             else:
@@ -327,6 +337,7 @@ def edit_profile(request, username):
         # last_name = request.POST['last_name']
         newsletter_freq = request.POST['newsletter_freq']
         display_name = request.POST['display_name']
+        video_url = request.POST.get('video_url')
         email = request.POST['email']
         # name = first_name + " " + last_name
         description = request.POST['description']
@@ -336,7 +347,6 @@ def edit_profile(request, username):
             address = request.POST['formatted_address']
             addr_check = Geocoder.reverse_geocode(float(lat),float(lon))
             postal_code = str(addr_check.postal_code)
-            print userprof['latlng']['coordinates'][0]
         except:
             address = userprof['address']
             lat = userprof['latlng']['coordinates'][1]
@@ -365,7 +375,7 @@ def edit_profile(request, username):
 
         usr_profile.update_profile_by_username(userprof['username'], description, address, 
             usr_type, sign_up_as, phone, lat, lon, postal_code, display_name, is_superuser, company_num,
-            website_url, facebook_page, deliverables, business_org_name, email, newsletter_freq, show_food_db)
+            website_url, facebook_page, deliverables, business_org_name, email, newsletter_freq, show_food_db, video_url)
         twt = TweetFeed()
         twt.update_data(userprof['useruid'])
 
@@ -388,7 +398,11 @@ def get_tags_freq(food_name):
 
 def get_all_foods(user_id, logged_in_id = None):
     usr_profile = UserProfile()
-    
+    # find out hierarchy
+    adm = AdminFoods()
+    adm_foods = adm.get_tags()
+
+
     foo = Food()
     all_foods = foo.get_foods_by_userid(user_id)
     recomm = RecommendFood()
@@ -434,6 +448,14 @@ def get_all_foods(user_id, logged_in_id = None):
         else:
             data['photo_url'] = each.get('photo_url')
         data['recomm_tags'] = tags_freq
+
+        #find and append food hierarchy
+        for each_adm in adm_foods:
+            if each_adm.get('childrens')!=None:
+                foo_list = [x['node'] for x in each_adm['childrens']]
+                if each['food_name'] in foo_list:
+                    data['parent_food'] = each_adm['node']
+                    break
         final_foods.append(data)
     final_foods = sorted(final_foods, key=lambda x: -x['vouch_count'])
     return final_foods
@@ -777,6 +799,18 @@ def get_banner_url(username=None, useruid=None):
     except:
         banner_url = 'none'
     return banner_url
+
+def get_video_html(url):
+    client = Embedly(settings.EMBEDLY_KEY)
+    obj = client.oembed(url)
+
+    if obj.get('error')==True:
+        print 'error'
+        return ''
+    else:
+        html = obj.get('html') if obj.get('html')!=None else ''
+        return html
+    
 
 from math import radians, cos, sin, asin, sqrt
 
