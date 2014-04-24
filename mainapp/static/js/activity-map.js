@@ -1,11 +1,11 @@
-		var base_layer = L.tileLayer('http://{s}.tile.cloudmade.com/0c670d97b5984ce79b34deb902915b3e/110167/256/{z}/{x}/{y}.png', {
+		var base_layer = L.tileLayer('https://{s}.tiles.mapbox.com/v3/foodtrade.i26pc0n5/{z}/{x}/{y}.png', {
 			maxZoom: 18,
-			attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://cloudmade.com">CloudMade</a>'
+			attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>'
 		});
  var openspaceLayer = L.tileLayer.osopenspace("F481BBF739A6038DE0430B6CA40AB6D2", {debug: true}); 
 
       // map.addLayer(openspaceLayer);
-      var show_os_map = false;
+      var show_os_map = true;
 
 if(map_lat>49.89193 && map_lat<61.08466 && map_lon>-9.38053 && map_lon<2.07316&&show_os_map)
 {
@@ -76,42 +76,65 @@ $("#map").on('click dblclick keyup mousedown mousewheel', function() {
     	// Check if it is showing non OS map
     	if(is_current_base)
     	{
-    		var over_zoom = current_zoom_level-5;
-    		if(over_zoom>9)
-    		{
-    			over_zoom = 9;
-    		}
-    		if(over_zoom - switching_zoom_level>0)
+
+    		if(current_zoom_level > 16)
     		{
     			map.options.crs=L.OSOpenSpace.getCRS();
 	    		map.removeLayer(base_layer)
 	    		map.addLayer(openspaceLayer);
-				map.setView([cent_lat,cent_lon],over_zoom);
+				map.setView([cent_lat,cent_lon],9);
 
     		}
+    		var over_zoom = current_zoom_level-5;
+    // 		if(over_zoom>9)
+    // 		{
+    // 			over_zoom = 9;
+    // 		}
+    // 		if(over_zoom - switching_zoom_level>0)
+    // 		{
+    // 			map.options.crs=L.OSOpenSpace.getCRS();
+	   //  		map.removeLayer(base_layer)
+	   //  		map.addLayer(openspaceLayer);
+				// map.setView([cent_lat,cent_lon],over_zoom);
+
+    // 		}
     	}
     	 else
 	    {
 
-	    	if(current_zoom_level<switching_zoom_level+1)
+	    	if(current_zoom_level<9)
 	    	{
-	    			    	
 	    		map.options.crs=L.CRS.EPSG3857;
 	    		map.removeLayer(openspaceLayer)
 	    		map.addLayer(base_layer);
-    			map.setView([cent_lat,cent_lon],current_zoom_level+5);
+    			map.setView([cent_lat,cent_lon],16+current_zoom_level-9);
 	    	}
+	    	// if(current_zoom_level<switching_zoom_level+1)
+	    	// {
+	    			    	
+	    	// 	map.options.crs=L.CRS.EPSG3857;
+	    	// 	map.removeLayer(openspaceLayer)
+	    	// 	map.addLayer(base_layer);
+    		// 	map.setView([cent_lat,cent_lon],current_zoom_level+5);
+	    	// }
 	    	
 	    }
     }
     else
     {
-    	if(current_zoom_level<1+switching_zoom_level&&(!is_current_base))
+   //  	if(current_zoom_level<1+switching_zoom_level&&(!is_current_base))
+   //  	{
+   //  		map.options.crs=L.CRS.EPSG3857;
+   //  		map.removeLayer(openspaceLayer)
+   //  		map.addLayer(base_layer);
+			// map.setView([cent_lat,cent_lon],current_zoom_level+5);
+   //  	}
+    	if((!is_current_base))
     	{
     		map.options.crs=L.CRS.EPSG3857;
     		map.removeLayer(openspaceLayer)
     		map.addLayer(base_layer);
-			map.setView([cent_lat,cent_lon],current_zoom_level+5);
+			map.setView([cent_lat,cent_lon],9);
     	}
     }        
 });
