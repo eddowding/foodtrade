@@ -244,12 +244,62 @@ a {
   color: #fff;
 }
 
+
+
+/********************************/
+/**  cards / timeline / marketplace                   **/
+/********************************/
+ 
+
+.marketplace li {
+  border-left: 0 !important;
+  margin-left: 0 !important;
+  width: 100%;
+}
+
+.marketplace li .block.block-inline {
+  padding: 0 20px;
+}
+
+.marketplace .box-generic {  
+  border: 2px solid #ccc !important;
+}
+
+#cards.marketplace li.singleresult,
+.grid-sizer {
+  width: 49%%;
+}
+
+#cards.marketplace li.singleresult {
+  float: left;    
+  padding: 5px;
+}
+
+#cards.marketplace li .block.block-inline {
+  padding: 5px;
+}
+
+.gutter-sizer { width: 1%; }
+
+
+#cards.marketplace .address,
+#cards.marketplace .replies,
+#cards.marketplace .reply {
+  display: none;
+}
+
 .leaflet-tile {
     filter: url(filters.svg#grayscale); /* Firefox 3.5+ */
     filter: gray; /* IE6-9 */
     -webkit-filter: grayscale(0.7); /* Google Chrome, Safari 6+ & Opera 15+ */
 }
+.leaflet-container a.btn {
+  color: #fff;
+}
 
+.leaflet-popup-content-wrapper {
+  border-radius: 0;
+}
 /********************************/
 /**  ISOTOPE                   **/
 /********************************/
@@ -532,6 +582,15 @@ a {
   padding: 4px 4px 3px 3px !important;
 
 }
+
+.timeline-activity li.verified .box-generic {
+  border: 2px solid rgba(97,174,50,1) !important;
+}
+
+.verified .timeline-top-info {
+  background: rgba(97,174,50,0.4) !important;
+}
+
 
 /********************************/
 /**  SIDEBAR                   **/

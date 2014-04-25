@@ -1,4 +1,5 @@
 {% load activity_tags %}
+
 {% if results_updates_count == 0 and results_individual_count == 0 and results_business_count == 0 and results_organisation_count == 0 %}
 <div class="alert alert-warning text-center">
   <p><strong>Sorry, we've found nothing for this search... yet!</strong></p>
@@ -6,34 +7,34 @@
 </div>
 {% endif %}
 
-<ul class="timeline-activity list-unstyled">
+<ul class="timeline-activity marketplace list-unstyled ">
 
 {% if results %}
 
-{% for result in results %}
-{% if result.user.username == result.result_type %}
+  {% for result in results %}
+  {% if result.user.username == result.result_type %}
 
-{% single_activity userinfo result "status" "main" %}
+  {% single_activity userinfo result "status" "main" %}
 
-
-     <li class="replies">
-      <ul>
+  {% if result.replies %}
+  <li class="replies">
+    <ul>
       {% for reply_result in result.replies %}
+        {% single_activity userinfo reply_result "status" "main" %}
+      {% endfor %}
+    </ul>
+  </li>
+  {% endif %}
 
-{% single_activity userinfo reply_result "status" "main" %}
 
-         {% endfor %}
-        
-</ul>
-</li>
+  {% endif %}
+  {% endfor %}
 
 {% endif %}
-  {% endfor %}
-    {% endif %}
 </ul>
-<script type="text/javascript">
-  
-{% if results %}
-connections = {{json_data | safe}};
-    {% endif %}
+
+<script type="text/javascript">  
+  {% if results %}
+    connections = {{json_data | safe}};
+  {% endif %}
 </script>

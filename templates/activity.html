@@ -244,14 +244,14 @@ function show_small_structure()
 <div class="ftstrip ftstrip-mini"></div>
 </div>
 
-<div class="widget widget-tabs widget-tabs-double-2 widget-tabs-responsive">
+<div class="widget widget-tabs widget-tabs-double-2 widget-tabs-responsive"  style="background: #f9f9f9;">
  
 <!--  {% ifequal loggedin_signupas "Individual" %}{% endifequal %}
       {% ifequal loggedin_signupas "Business" %}{% endifequal %}
       {% ifequal loggedin_signupas "Organisation" %} {% endifequal %}
       -->
   <div class="widget-head">
-    <ul id="activity_s elector">
+    <ul id="activity_selector">
 
         <li {% if results_updates_count != 0  or results_individual_count == 0 and results_business_count == 0 and results_organisation_count == 0  %}class="active dropdown"{% endif %}>
         <a href="#near_me" class="glyphicons shopping_cart" data-toggle="tab"><i></i><span class="strong title">Marketplace</span>
@@ -360,7 +360,7 @@ function show_small_structure()
 
 
     <div class="col-sm-5 col-xs-12 fill"  style="  right:0px;">
-        <div id="map" style=" position: fixed; width:50%; height: 100%; " >
+        <div id="map" style=" position: fixed; width:40%; height: 100%; " >
         </div>
       </div>
     </div>

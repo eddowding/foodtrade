@@ -2,19 +2,14 @@
 {{request.user.username}}
 
 
-  <li class="{{result.result_class}} singleresult" data-id="{% if result_type == "status" %}{{result.tweetuid}} {% else %}{{result.user.username}}{% endif %}">
-    <div class="block block-inline">
-        <span class="marker"></span>
-        <div class="caret"></div>
+  <li class="{{result.result_class}} singleresult {% if result.subscribed %} verified {% endif %}" data-id="{% if result_type == "status" %}{{result.tweetuid}} {% else %}{{result.user.username}}{% endif %}">
+    <div class="block block-inline"> 
         <div class="inline-block box-generic">
 
-            <div class="timeline-top-info bg-gray border-bottom">
+            <div class="timeline-top-info bg-gray border-bottom" {% if result.subscribed %} rel="tooltip" title="Verified profile" {% endif %}>
             
             <div class="btn-group pull-right" style="margin-left: 5px;">
-
-          {% if result.subscribed %} 
-          <button type="button" rel="tooltip" title="Verified profile" class="btn btn-default btn-xs" style=""><i class="fa fa-check-circle fa-lg" style="color: #1DBD3C;"></i></button>
-          {% endif %}
+ 
               <button type="button" class="btn btn-primary btn-stroke btn-xs messagebtn">
                 <i class="fa fa-envelope"></i>
               </button> 
@@ -29,6 +24,7 @@
                 <i class="fa fa-caret-down"></i>
                 <span class="sr-only">Toggle Dropdown</span>
               </button>
+
               <ul class="dropdown-menu" role="menu">  
                 <li><a href="http://www.facebook.com/sharer/sharer.php?u=http://foodtrade.com/{% if result_type == "status" %}{{result.user.username}}/post/{{result.tweetuid}}{% else %}profile/{{result.user.username}}{% endif %}" target="_blank"><i class="fa fa-facebook fa-fw facebook"></i> Share on Facebook</a></li>
                 <li><a href="http://twitter.com/home?status={{result.status|urlencode}}%20http://foodtrade.com/{% if result_type == "status" %}{{result.user.username}}/post/{{result.tweetuid}}{% else %}profile/{{result.user.username}}{% endif %}" target="_blank"><i class="fa fa-twitter fa-fw twitter "></i> Share on Twitter</a></li>
@@ -56,8 +52,7 @@
               </ul>  
 
           </div>  
-
-              
+ 
  
                 <img src="{{result.user.profile_img}}" alt="{{result.user.name}}" class="img-responsive pull-left" style="width:20px; margin-right: 5px;" />
                 <a href="/profile/{{result.user.username}}" class="text-inverse">
@@ -90,47 +85,50 @@
               {% endif %}
               <!-- /images !-->
 
+            </div>
+
+            <div class="timeline-bottom innerAll border-top">
+
+             {% if result.distance_text != "NA" %}
+               <a href="http://maps.google.com/maps?saddr={{userinfo.lat}},{{userinfo.lon}}&daddr={{result.location.coordinates.1}},{{result.location.coordinates.0}}" 
+                  target="_blank" data-placement="top" data-toggle="tooltip" 
+                  class="pull-right" 
+                  rel="tooltip" 
+                  title="Get directions"> 
+               <i class="fa fa-location-arrow fa-fw"></i> {{result.distance_text}}  
+               </a>
+               {% else %}
+               <i class="fa fa-location-arrow fa-fw"></i> {{result.distance_text}}  
+              {% endif %}
 
               {% if result_type == "status" %} 
-                 <a href="/{{result.user.username}}/post/{{result.tweetuid}}" class="pull-right">
-                 <i class="fa fa-clock-o"></i> {{result.time_elapsed}} ago</a> 
+                 <a href="/{{result.user.username}}/post/{{result.tweetuid}}">
+                 <i class="fa fa-clock-o  fa-fw"></i> {{result.time_elapsed}} ago</a>
+                 <br />
               {% endif %}  
 
 
             <!-- tags --> 
             {% if type_user|length == 0 or type_user|first == '' %}
               {% else %}
-              {% if result.sign_up_as == "Business" %}    
+              {% if result.sign_up_as == "Business" %} 
+              <i class="fa fa-home fa-fw"></i>
                 {% for tag in result.type_user  %}
-                  <a href="/activity/?b={{tag}}" class="label label-default label-stroke">{{tag}}</a>
-                {% endfor %} 
+                  <a href="/activity/?b={{tag}}" class="">{{tag}}</a>,
+                {% endfor %}  
               {% endif %}
-            {% endif %} 
-            </div>
-            <!-- /status --> 
+            {% endif %}  
 
-            <div class="timeline-bottom innerAll border-top">
+             
 
-              {% if result.distance_text != "NA" %}
-               <a href="http://maps.google.com/maps?saddr={{userinfo.lat}},{{userinfo.lon}}&daddr={{result.location.coordinates.1}},{{result.location.coordinates.0}}" 
-                  target="_blank" data-placement="top" data-toggle="tooltip" 
-                  class="pull-right" 
-                  rel="tooltip" 
-                  title="Get directions"> 
-               <i class="fa fa-location-arrow"></i> {{result.distance_text}}  
-               </a>
-               {% else %}
-               <i class="fa fa-location-arrow"></i> {{result.distance_text}}  
-              {% endif %}
-
-              <span class="hidden-sm hidden-xs truncate100" >
-                <i class="fa fa-map-marker"></i>
+              <span class="hidden-sm hidden-xs truncate100 address" >
+                <i class="fa fa-map-marker fa-fw"></i>
                 {{result.user.address}}
               </span>
  
             </div> 
  
-            <div class="media innerAll bg-gray margin-none">
+            <div class="media innerAll bg-gray margin-none replies">
                 <a class="pull-left" href="#">
                     <img src="../assets/images/people/80/8.jpg" alt="photo" class="media-object" width="35">
                 </a>
@@ -143,7 +141,7 @@
                     </div>
                 </div>
             </div> 
-            <div class="innerAll"> 
+            <div class="innerAll reply"> 
 
                 <input class="form-control input-sm enterhandler reply_input" {% if result_type == "status" %}data-tweet-id = "{{result.tweetuid}}" {% endif %} data-main = "{{position}}"   {% if not userinfo.username %} data-toggle="tooltip" data-placement="top" title="Please login to use this feature." {% endif %} type="text" placeholder="Reply to {{result.mentions}}" data-mentions = "{{result.mentions}}"> 
             </div>

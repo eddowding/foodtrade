@@ -161,6 +161,7 @@ function reload_controls()
 			var status =  con.status;
 			var profile_img = con.user.profile_img;
 			var username = con.user.username;
+			var banner = con.user.banner_url;
 			var description = con.user.description;
 			var type_user = con.type_user;
 			var sign_up_as = con.sign_up_as;
@@ -199,23 +200,25 @@ function reload_controls()
 				min_lon = current_lon;
 			}
 
-var card_str = '<div class="card-box"><div class="content"><div class="pull-left"><a href="/profile/'+username+'"><img src="'+profile_img+'" alt="'+name+'" class="img-rounded img-responsive" style="width:40px;" /></a>';
+var card_str = '<div class="card-box"><div class="content"><div class=""><a href="/profile/'+username+'"><img src="'+profile_img+'" alt="'+name+'" class="pull-left img-circle img-thumbnail img-responsive" style="width:73px;" /></a>';
 
                 
-                      card_str += '</div><div class="text"><h5><a href="/profile/'+username+'">'+name+'</a></h5>';
+                      card_str += '</div><div class="text"><h3><a href="/profile/'+username+'">'+name+'</a></h3>';
 
-                      card_str += '<p class="small">'+description+'</p></div></div>';
                       if(type_user.length>0)
                       {
-                    card_str += '<div class="numbers clearfix"><div class="tags tags-biztype pull-left">';
-                    for(var j=0;j<type_user.length;j++)
-                    {  
+	                    card_str += '<div class="  clearfix">';
+	                    for(var j=0;j<type_user.length;j++)
+	                    {  
+	                      
+	                      card_str +=  '<a class="label label-default label-stroke" href="/activity/?b='+type_user[j]+'">'+type_user[j]+'</a>';
+	                     }
+	                      card_str += '</div>';
+		              }
+
+                      card_str += '<p>'+description+'</p></div></div>';
                       
-                      card_str +=  '<a href="/activity/?b='+type_user[j]+'">'+type_user[j]+'</a>';
-                     }
-                      card_str += '</div></div>';
-                }
-                  card_str += '</div> ';
+	                  card_str += '<a href="/profile/'+username+'" class="btn btn-primary btn-sm">View profile &raquo;</a></div> ';
                   	var tweet_id = (con.result_type == username)?con.tweetuid:username;
 			var ctrl = L.marker([parseFloat(current_lat), parseFloat(current_lon)],{tweet_id:tweet_id,icon: redIcon}).addTo(map).bindPopup(card_str);
 			

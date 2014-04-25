@@ -309,6 +309,9 @@
             </a>
         </div>
 
+   
+
+
         <ul class="menu list-unstyled" id="navigation_current_page">
           {% if user.is_superuser %}
           <li>
@@ -343,7 +346,7 @@ hid den
                     
                      {% if search %}
     <div class="foodtrade-sidebar">
-    
+
    
    <form action="/activity"   onsubmit="return formSubmit(this);"  role="search" data-step="1" data-intro="Search for anyhing, anywhere">
       <div class="input-group  input-group-sm">
@@ -376,10 +379,10 @@ hid den
       <div class="form-group"> 
         <input type="email" class="form-control  input-sm" id="business_filter" placeholder="Filter by business type">
       </div>
-    </form>
+    </form><!-- 
     <ul class="foodtrade-tag-list">
     <li data-id="ALL" class="foodtrade-tag foodtrade-tag-click foodtrade-tag-all"><div class="foodtrade-tag-checkbox-column"><input type="checkbox" id="all_businesses" checked="checked" onclick="make_search()" aria-label="All Partners" class="foodtrade-tag-checkbox"></div><div class="foodtrade-tag-text">All Businesses</div><div class="foodtrade-tag-count">{{business_count}}</div></li>
-</ul>
+</ul> -->
 
 <ul class="foodtrade-tag-list" id="business_filter_results">
     </ul>
@@ -392,10 +395,10 @@ hid den
       <div class="form-group"> 
         <input type="email" class="form-control  input-sm" id="organisation_filter" placeholder="Show only members of...">
       </div>
-    </form>
+    </form><!-- 
     <ul class="foodtrade-tag-list">
     <li data-id="ALL" class="foodtrade-tag foodtrade-tag-click foodtrade-tag-all"><div class="foodtrade-tag-checkbox-column"><input type="checkbox" id="all_organisations" checked="checked" onclick="make_search()" aria-label="All Partners" class="foodtrade-tag-checkbox"></div><div class="foodtrade-tag-text">All Organisations</div><div class="foodtrade-tag-count">{{organisation_count}}</div></li>
-    </ul>
+    </ul> -->
 
 
     <ul class="foodtrade-tag-list" id="organisation_filter_results">
@@ -1067,8 +1070,6 @@ hid den
     <script src="{% static "assets/components/common/forms/elements/bootstrap-select/assets/lib/js/bootstrap-select.js" %}"></script>
     <script src="{% static "assets/components/common/forms/elements/bootstrap-select/assets/custom/js/bootstrap-select.init.js" %}"></script>
     <script src="{% static "assets/components/modules/admin/menus/menus.sidebar.chat.init.js" %}"></script>
-    <script src="{% static "assets/components/plugins/mixitup/jquery.mixitup.min.js" %}"></script>
-    <script src="{% static "assets/components/plugins/mixitup/mixitup.init.js" %}"></script>
     <script src="{% static "assets/components/core/js/core.init.js" %}"></script>
 
 
@@ -1207,14 +1208,19 @@ function success_tweeter_user_invite(data){
 </script> 
 <script type="text/javascript">
 $(document).ready(function() {
+ 
 
 // tweetlistener('tweetMessage', 'counter', 'contact_tweet', 'newtweet_btn');
 
- $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
-        if(e.target.hash == '#tabStockists') {
-            $container.isotope('reLayout');
-        }
-    });
+$('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+  $container.css('visibility', 'hidden');
+  $container.isotope('reLayout', showgrid);
+  tabLoaded = true;
+});
+
+function showgrid() {
+  $container.css('visibility', 'visible');
+}
 
     var activeSystemClass = $('.list-group-item.active');
     //something is entered in search form
