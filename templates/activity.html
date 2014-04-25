@@ -251,37 +251,26 @@ function show_small_structure()
       {% ifequal loggedin_signupas "Organisation" %} {% endifequal %}
       -->
   <div class="widget-head">
-    <ul class="clearfix">
+    <ul class="clearfix" id="activity_selector">
         <li class="active dropdown">
-        <a href="#tab3-2" class="glyphicons shopping_cart" data-toggle="tab"><i></i><span class="strong">Marketplace</span>
+        <a href="#tab3-2" class="glyphicons shopping_cart" data-toggle="tab"><i></i><span class="strong title">Marketplace</span>
         {% ifnotequal results_updates_count 0 %}
         <span class="pull-number label label-success">{{results_updates_count}}</span>
         {% endifnotequal %}
-        </a>
-          <a href="#" id="more" class="dropdown-toggle" data-toggle="dropdown">  
-            <b class="caret"></b>
-          </a>
-          <ul class="dropdown-menu" role="menu" aria-labelledby="more">
-            <li><a href="/activity"><i class="fa fa-fw fa-bell-o"></i> All </li> 
-            <li><a href="/activity/?q=sell"><i class="fa fa-fw fa-sign-out"></i> Sell</li> 
-            <li><a href="/activity/?q=buy"><i class="fa fa-fw fa-sign-in"></i> Buy</a></li> 
-            <li><a href="/activity/?q=surplus"><i class="fa fa-fw fa-refresh"></i> Surplus</a></li> 
-            <li><a href="/activity/?q=ask"><i class="fa fa-fw fa-comment-o"></i> Ask</a></li> 
-            <li><a href="/activity/?q=job"><i class="fa fa-fw fa-eur"></i> Job</a></li> 
-          </ul>
+        </a> 
         </li>  
-        <li><a href="#tab1-2" class="glyphicons shop" data-toggle="tab"><i></i><span class="strong">Companies</span> 
+        <li><a href="#tab1-2" class="glyphicons shop" data-toggle="tab"><i></i><span class="strong title">Companies</span> 
         {% ifnotequal results_business_count 0 %}
         <span class="pull-number label label-success">{{results_business_count}}</span></a>
         {% endifnotequal %}
         </li>
-        <li><a href="#tab2-2" class="glyphicons group" data-toggle="tab"><i></i><span class="strong">Organisations</span>
+        <li><a href="#tab2-2" class="glyphicons group" data-toggle="tab"><i></i><span class="strong title">Organisations</span>
         {% ifnotequal results_organisations_count 0 %}
         <span class="pull-number label label-success">{{results_organisations_count}}</span>
         {% endifnotequal %}
         </a>
         </li> 
-        <li><a href="#tab3-2" class="glyphicons user" data-toggle="tab"><i></i><span class="strong">Indiv</span>
+        <li><a href="#tab3-2" class="glyphicons user" data-toggle="tab"><i></i><span class="strong title">Indiv</span>
         {% ifnotequal results_individuals_count 0 %}
         <span class="pull-number label label-success">{{results_individuals_count}}</span>
         {% endifnotequal %}
@@ -291,78 +280,18 @@ function show_small_structure()
   </div>
 
 </div><!-- widget --> 
-
-
  
 
+<ul class="nav nav-pills">
+  <li><a href="/activity"><i class="fa fa-fw fa-bell-o"></i> All </a></li> 
+  <li><a href="/activity/?q=sell"><i class="fa fa-fw fa-sign-out"></i> Sell</a></li> 
+  <li><a href="/activity/?q=buy"><i class="fa fa-fw fa-sign-in"></i> Buy</a></li> 
+  <li><a href="/activity/?q=surplus"><i class="fa fa-fw fa-refresh"></i> Surplus</a></li> 
+  <li><a href="/activity/?q=ask"><i class="fa fa-fw fa-comment-o"></i> Ask</a></li> 
+  <li><a href="/activity/?q=job"><i class="fa fa-fw fa-eur"></i> Job</a></li> 
+</ul>
 
-
-
-
-<div class="box-generic">
-    <div class="timeline-top-info">
-        <i class="fa fa-user"></i>  <a href="" class="text-inverse">mosaicpro</a> wrote
-        a <a href="" class="text-info">comment</a> to
-        <a href="#">
-            <img src="../assets/images/people/80/2.jpg" width="20">
-            </a> <a href="">Jane S.</a>
-            <div class="timeline-bottom">
-                <i class="fa fa-clock-o"></i> 6
-                days ago
-            </div>
-    </div>
-    <div class="bg-gray innerAll border-top">Good Job. Congrats and hope to see you
-        soon.</div>
-</div>
-
-<div class="widget">
-    <div class="widget-body padding-none">
-        <p class="margin-none innerAll"><i class="fa fa-quote-left fa-4x pull-left"></i> Aliquam
-            rutrum, sem at scelerisque tempor,
-            nulla diam pulvinar tortor, id pulvina 
-            torquent per conubia nostra, per inceptos
-            himenaeos. Cras iaculis enim vel odio
-            imperdiet faucibus. Aliquam erat volutpat.</p>
-        <div class=" border-top innerAll ">
-            <button class="btn btn-inverse  btn-xs pull-right"><i class="fa fa-sign-in"></i>
-            </button>
-            <span class=" half inline-block">
-                <i class="fa fa-calendar text-primary fa-fw"></i> 22
-                nov 2013 &nbsp;
-                <i class="fa fa-tag text-primary fa-fw"></i> 
-                <span class="label label-primary">tagged</span>&nbsp;
-            </span>
-            <div class="clearfix"></div>
-        </div>
-    </div>
-</div>
-
-<div class="widget">
-<div class="media">
-    <a href="" class="pull-left">
-        <img src="http://pbs.twimg.com/profile_images/378800000141996074/6a363e3c4f2a84a956c3cb27c50b2ca0_normal.png" width="50" class="media-object" style="width: auto; height: auto; display: block; margin-left: auto; margin-right: auto;">
-    </a>
-    <div class="media-body innerTB half">
-        <a href="#" class="pull-right innerT innerR text-muted"><i class="icon-reply-all-fill fa fa-2x "></i></a>
-        <a href="" class="strong display-block">Just Mary</a>
-        <p>I'd like to sell <a href="/activity/?q=%23cheese">#cheese</a> (organic msc). 50 Kg. By 2-4-2014.</p>
- 
-    </div>
-    <div class="innerAll border-top small">
-      <span class="pull-right time_ago">
-         <a href="/foodtradeHQ/post/451355345244651521" class="text-muted"><i class="fa fa-clock-o"></i> 12 days</a> 
-      </span>
-      <span class="hidden-sm hidden-xs pull-left truncate100">
-        <i class="fa fa-map-marker"></i>
-        44 Fairfield Road, Bristol, City of Bristol BS6 5JP, UK
-      </span>
-      <a href="http://maps.google.com/maps?saddr=51.4694953,-2.5815688&amp;daddr=51.4694953,-2.5815688" target="_blank" data-placement="top" data-toggle="tooltip" class="text-muted pull-left" rel="tooltip" title="" data-original-title="Get directions"> 
-        <i class="fa fa-location-arrow"></i> 0.0 miles  
-      </a>
-      
-    </div>
-</div>
-</div>
+   
 
 <ul class="nav nav-tabs">
   <li {% if results_updates_count != 0  or results_individual_count == 0 and results_business_count == 0 and results_organisation_count == 0  %}class="active dropdown"{% endif %}>
@@ -435,8 +364,17 @@ function show_small_structure()
 
 
 <div class="activity" id="activity_updates"> 
+ 
+
  {% include 'activity_updates.html' %}
-  </div>
+ 
+</div> 
+
+ 
+
+
+
+
 
 </div><!-- tab pane activity -->
 
