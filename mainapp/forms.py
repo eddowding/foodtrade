@@ -160,12 +160,14 @@ class SignupForm(forms.Form):
                 'organisations':[],
                 'subscribed':0,
                 'newsletter_freq':'Weekly'
+
         }
 
         join_time = datetime.datetime.now()
         join_time = time.mktime(join_time.timetuple())
         data['join_time'] = int(join_time)
-
+        data['trial_period_starts'] = int(join_time)
+        
         '''Transport  user from MySql to Mongo'''
         userprofile.update_profile_upsert({'screen_name':social_account.extra_data['screen_name'],
                  'username':social_account.extra_data['screen_name']},data)

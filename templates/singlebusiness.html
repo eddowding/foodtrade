@@ -71,9 +71,11 @@
           </div>
           {% endif %} 
  
+          {% if intro_video %}
           <div class="item">
-              <img src="{{banner_url}}" class="img-responsive">
-          </div>    
+              {{intro_video|safe}}  
+          </div>   
+          {% endif %}  
       </div>
       <!-- // Items END -->
       <!-- Navigation -->
@@ -90,6 +92,9 @@
     </div>
     <ul class="list-unstyled">
       <li><a href="#" data-target="#carousel-1" data-slide-to="0"><i class="fa fa-fw fa-clock-o"></i> <span>Map</span></a></li> 
+      {% if intro_video %} 
+      <li><a href="#" data-target="#carousel-1" data-slide-to="2"><i class="icon-photo-camera"></i> <span>Video</span> </a></li>  
+      {% endif %}  
       <li><a href="#" data-target="#carousel-1" data-slide-to="1"><i class="icon-photo-camera"></i> <span>Photos</span> </a></li>  
  
       {% if prof_subscribed %}
@@ -148,14 +153,13 @@
 
     <div class="row">
         <div class="col-lg-9 col-md-8">
-
-
+ 
 <div class="widget widget-tabs widget-tabs-double-2 widget-tabs-responsive">
    
     <!-- Tabs Heading -->
     <div class="widget-head">
 
-      <ul>
+      <ul class="clearfix">
         {% if show_foods %}
         <li class="active"><a class="glyphicons list" href="#tabProduce" data-toggle="tab"><i></i><span>Produce</span></a></li>
         {% endif %}
@@ -244,11 +248,11 @@
 
                             {% for eachfood in all_foods %}
  
-                                <div class="mixit-filter-1 mix col-md-3" style="margin-bottom: 15px;">
+                                <div class="mixit-filter-1 mix col-md-3  {{eachfood.parent_food}}" style="margin-bottom: 15px;">
                                   
                                     <div class="media-body" style="border:1px solid #ccc;"> 
                                     <a href="/activity/?f={{eachfood.food_name}}" class="lead" style="padding-left: 2px; font-weight:bold;">  
-                                      {{eachfood.food_name}}
+                                     {{eachfood.parent_food}}>   {{eachfood.food_name}}
                                     </a> 
                                     <div class="flip">
                                       <div class="note">
@@ -801,6 +805,8 @@
                     <div class="widget">
                             
                       <div class="border-top innerAll  ">
+
+                      {{intro_video|safe}}  
 
           {% ifequal is_unknown_profile 'false' %}
             {% ifequal profile_id user_id %}
@@ -1482,6 +1488,11 @@
 
 
 $( document ).ready(function() {
+
+ 
+
+
+
   $("#myTags").tagit({
       placeholderText: 'Add tags, eg free-range',
       allowSpaces: true

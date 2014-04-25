@@ -29,8 +29,8 @@
                   <br>to sell </span>
           </button> 
           <button type="button" class="btn btn-stroke btn-primary btn-icon-stacked" onclick="show_full_structure();$('#price').hide();" value="offer surplus"><i class="fa fa-2x fa-refresh"></i> 
-              <span>I'd like  
-                  <br>to offer surplus </span>
+              <span>I'd like  to 
+                  <br>offer surplus </span>
           </button> 
           <button type="button" class="btn btn-stroke btn-primary btn-icon-stacked" onclick="swith_update_form()" value="freestyle"><i class="fa fa-2x fa-rocket"></i> 
               <span>Go 
@@ -244,27 +244,58 @@ function show_small_structure()
 <div class="ftstrip ftstrip-mini"></div>
 </div>
 
-<div class="widget widget-tabs widget-tabs-double widget-tabs-responsive">
-
-<div class="widget-head">
-    <ul>
-        <li class="active"><a href="#tab1-2" class="glyphicons shop" data-toggle="tab"><i></i><span class="strong">Companies</span> <span class="small text-muted">370 within 30 miles</span></a>
+<div class="widget widget-tabs widget-tabs-double-2 widget-tabs-responsive">
+ 
+<!--  {% ifequal loggedin_signupas "Individual" %}{% endifequal %}
+      {% ifequal loggedin_signupas "Business" %}{% endifequal %}
+      {% ifequal loggedin_signupas "Organisation" %} {% endifequal %}
+      -->
+  <div class="widget-head">
+    <ul class="clearfix">
+        <li class="active dropdown">
+        <a href="#tab3-2" class="glyphicons shopping_cart" data-toggle="tab"><i></i><span class="strong">Marketplace</span>
+        {% ifnotequal results_updates_count 0 %}
+        <span class="pull-number label label-success">{{results_updates_count}}</span>
+        {% endifnotequal %}
+        </a>
+          <a href="#" id="more" class="dropdown-toggle" data-toggle="dropdown">  
+            <b class="caret"></b>
+          </a>
+          <ul class="dropdown-menu" role="menu" aria-labelledby="more">
+            <li><a href="/activity"><i class="fa fa-fw fa-bell-o"></i> All </li> 
+            <li><a href="/activity/?q=sell"><i class="fa fa-fw fa-sign-out"></i> Sell</li> 
+            <li><a href="/activity/?q=buy"><i class="fa fa-fw fa-sign-in"></i> Buy</a></li> 
+            <li><a href="/activity/?q=surplus"><i class="fa fa-fw fa-refresh"></i> Surplus</a></li> 
+            <li><a href="/activity/?q=ask"><i class="fa fa-fw fa-comment-o"></i> Ask</a></li> 
+            <li><a href="/activity/?q=job"><i class="fa fa-fw fa-eur"></i> Job</a></li> 
+          </ul>
+        </li>  
+        <li><a href="#tab1-2" class="glyphicons shop" data-toggle="tab"><i></i><span class="strong">Companies</span> 
+        {% ifnotequal results_business_count 0 %}
+        <span class="pull-number label label-success">{{results_business_count}}</span></a>
+        {% endifnotequal %}
         </li>
-        <li><a href="#tab2-2" class="glyphicons group" data-toggle="tab"><i></i><span class="strong">Organisations</span><span class="small text-muted" id="update_count">{{results_updates_count}} within 30 miles</span></a>
-        </li>
-        <li><a href="#tab3-2" class="glyphicons user" data-toggle="tab"><i></i><span class="strong">Individuals</span></a>
-        </li>
-        <li><a href="#tab4-2" class="glyphicons refresh" data-toggle="tab"><i></i><span class="strong">Trades</span>
-          <div class="ribbon-wrapper small">
-              <div class="ribbon danger">Upgrade</div>
-          </div></a>
-        </li>
-    </ul>
-</div>
-
-Put things here
+        <li><a href="#tab2-2" class="glyphicons group" data-toggle="tab"><i></i><span class="strong">Organisations</span>
+        {% ifnotequal results_organisations_count 0 %}
+        <span class="pull-number label label-success">{{results_organisations_count}}</span>
+        {% endifnotequal %}
+        </a>
+        </li> 
+        <li><a href="#tab3-2" class="glyphicons user" data-toggle="tab"><i></i><span class="strong">Indiv</span>
+        {% ifnotequal results_individuals_count 0 %}
+        <span class="pull-number label label-success">{{results_individuals_count}}</span>
+        {% endifnotequal %}
+        </a>
+        </li> 
+    </ul> 
+  </div>
 
 </div><!-- widget --> 
+
+
+ 
+
+
 
 
 
@@ -288,10 +319,7 @@ Put things here
     <div class="widget-body padding-none">
         <p class="margin-none innerAll"><i class="fa fa-quote-left fa-4x pull-left"></i> Aliquam
             rutrum, sem at scelerisque tempor,
-            nulla diam pulvinar tortor, id pulvinar
-            massa velit eu purus. Curabitur eu
-            fringilla diam, sed suscipit lorem.
-            Class aptent taciti sociosqu ad litora
+            nulla diam pulvinar tortor, id pulvina 
             torquent per conubia nostra, per inceptos
             himenaeos. Cras iaculis enim vel odio
             imperdiet faucibus. Aliquam erat volutpat.</p>
@@ -356,7 +384,7 @@ Put things here
 
   <li {% if results_updates_count == 0 and results_individual_count == 0  and results_organisation_count == 0 and results_business_count != 0 %}class="active"{% endif %}>
     <a href="#biz" data-toggle="tab">Business 
-    <span class="badge" id="business_count">{{results_business_count}}</span>
+    <span class="badge" id="business_count">w</span>
     </a>
   </li> 
 

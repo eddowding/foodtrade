@@ -196,6 +196,11 @@ a {
 
 }
 
+.carousel .item {
+  background: #000;
+  text-align: center;
+}
+
 
 /********************************/
 /**  SEASONS                   **/
@@ -239,6 +244,11 @@ a {
   color: #fff;
 }
 
+.leaflet-tile {
+    filter: url(filters.svg#grayscale); /* Firefox 3.5+ */
+    filter: gray; /* IE6-9 */
+    -webkit-filter: grayscale(0.7); /* Google Chrome, Safari 6+ & Opera 15+ */
+}
 
 /********************************/
 /**  ISOTOPE                   **/
@@ -487,11 +497,7 @@ a {
 .navbar.main .dropdown.username .dropdown-menu {
   left: auto; 
 }
-
-.left250 {margin-left: 250px !important;}
-.left0 {margin-left: 0 !important}
-
- 
+  
 #footer a {
   color: #999;
   text-decoration: none;
@@ -505,10 +511,24 @@ a {
   color: #444; 
 }
 
+
+
 .textarea,
 .form-control,
 .chosen-container-multi .chosen-choices { 
   border: 1px solid #ccc;
+}
+
+.pull-number {
+  position: absolute;
+  top: 6px;
+  right: 12px; 
+  display: block; 
+  color:#fff;
+  font-size:11px; 
+  line-height: 1 !important;
+  padding: 4px 4px 3px 3px !important;
+
 }
 
 /********************************/
@@ -528,9 +548,43 @@ a {
 .foodtrade-tag-showmore .foodtrade-tag-count{position:absolute;top:0;right:0}
 
 
+/********************************/
+/**  SIDEBAR sizes             **/
+/********************************/
+
+@media (max-width: px) {
+#topnav {
+  margin-left: 250px;
+}
+
+.menu-hidden #topnav {
+  margin-left: 0;
+}
+
+
+/********************************/
+/**  tabs    sizes             **/
+/********************************/
+
 
 @media (max-width: 1200px) {
   .widget-tabs-double-2 li span {
     display: none !important;
+  }
+  .widget.widget-tabs-double-2 > .widget-head ul li.active,
+  .widget.widget-tabs-double-2 > .widget-head ul li a,
+  .widget.widget-tabs-double-2 > .widget-head ul li {
+    height: auto;
+    line-height: 1.5;
+  }
+
+  .widget.widget-tabs-double-2 > .widget-head ul li a {
+    padding: 0 15px 15px 15px !important;
+  }
+}
+
+@media (max-width: 991px) {  
+  .widget.widget-tabs.widget-tabs-responsive>.widget-head ul li {
+    float: left;
   }
 }

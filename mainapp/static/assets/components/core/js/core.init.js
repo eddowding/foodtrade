@@ -242,21 +242,17 @@ if (window.location != window.parent.location)
 
 	$(window).setBreakpoints({
 		distinct: false,
-		breakpoints: [ 768, 992 ]
+		breakpoints: [ 767, 992, 1280 ]
 	});
 
-	$(window).bind('exitBreakpoint992',function() {		
-		$('.container-fluid').addClass('menu-hidden');
-		$('#topnav').addClass('left0'); 
-		$('#topnav').removeClass('left250'); 
+	$(window).bind('exitBreakpoint767',function() {		
+		$('.container-fluid').addClass('menu-hidden'); 
 		disableNavbarMenusHover();
 		enableResponsiveNavbarSubmenus();
 	});
 
-	$(window).bind('enterBreakpoint992',function() {
-		$('.container-fluid').removeClass('menu-hidden');
-		$('#topnav').addClass('left250'); 
-		$('#topnav').removeClass('left0'); 
+	$(window).bind('enterBreakpoint767',function() {
+		$('.container-fluid').removeClass('menu-hidden'); 
 		enableNavbarMenusHover();
 		disableResponsiveNavbarSubmenus();
 	});
@@ -278,8 +274,8 @@ if (window.location != window.parent.location)
 		if ($(window).width() < 992)
 			$('.hasNiceScroll').getNiceScroll().stop();
 
-		if ($(window).width() < 768)
-			enableResponsiveNavbarSubmenus();
+		if ($(window).width() < 770)
+			enableResponsiveNavbarSubmenus(); 
 		else
 			enableNavbarMenusHover();
 

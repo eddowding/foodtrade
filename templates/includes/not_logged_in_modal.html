@@ -5,7 +5,7 @@
     <div class="row">
       <div class="col-sm-6 col-sm-offset-3 text-center" id="not_logged_in_modal_container">
       <p><strong>Why do I need to sign in?</strong></p>
-      <p>Because FoodTrade is a community which depends on people like you, <br />sharing what you know and working together for a better, fairer food system. </p>
+      <p style="max-width: 450px;">Because FoodTrade is a community which depends on people like you,  sharing what you know and working together for a better, fairer food system. </p>
       
         <a href="/accounts/twitter/login/?process=login" class="btn text-center btn-primary " style="font-size: 1.5em; margin-top: 1em; border: 7px double #fff;"><i class="fa fa-twitter fa-fw"></i> Login to continue
         </a>  
@@ -26,7 +26,7 @@ $("#not_logged_in_modal").on('show.bs.modal', function () {
 
   setTimeout(function() {   
       $('#not_logged_in_modal').modal('show');
-    }, 10000);  // 10 seconds
+    }, 8000);  // 8 seconds
 
 </script>
 {% endif %}

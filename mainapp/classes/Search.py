@@ -193,7 +193,7 @@ class Search():
             reg_expression = {"$regex": keyword_like, '$options': '-i'}
 
 
-            search_variables = ["sign_up_as", "name", "description", "username", "nick_name"]
+            search_variables = ["sign_up_as","business_org_name", "name", "description", "username", "nick_name"]
             
             
             for search_item in search_variables:

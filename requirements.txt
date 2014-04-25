@@ -14,3 +14,4 @@ mandrill
 pyDNS
 validate_email
 twilio
+embedly
