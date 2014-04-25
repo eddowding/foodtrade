@@ -2,7 +2,7 @@
 {{request.user.username}}
 
 
-  <li class="{{result.result_class}}" data-id="{% if result_type == "status" %}{{result.tweetuid}} {% else %}{{result.user.username}}{% endif %}">
+  <li class="{{result.result_class}} singleresult" data-id="{% if result_type == "status" %}{{result.tweetuid}} {% else %}{{result.user.username}}{% endif %}">
     <div class="block block-inline">
         <span class="marker"></span>
         <div class="caret"></div>
