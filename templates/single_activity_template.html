@@ -15,8 +15,16 @@
           {% if result.subscribed %} 
           <button type="button" rel="tooltip" title="Verified profile" class="btn btn-default btn-xs" style=""><i class="fa fa-check-circle fa-lg" style="color: #1DBD3C;"></i></button>
           {% endif %}
-              <button type="button" class="btn btn-primary btn-stroke btn-xs messagebtn"><i class="fa fa-reply"></i> Contact</button> 
-              <a type="button" href="/profile/{{result.user.username}}/" class="btn btn-info btn-stroke btn-sm"><i class="fa fa-info-circle fa-lg"></i></a>
+              <button type="button" class="btn btn-primary btn-stroke btn-xs messagebtn">
+                <i class="fa fa-envelope"></i>
+              </button> 
+
+              <a href="/profile/{{result.user.username}}/" class="text-muted">
+                <i class="fa fa-info-circle fa-lg"></i>
+              </a>
+
+              <a href="" class="btn btn-primary btn-xs pull-right"><i class="fa fa-plus-circle"></i></a>
+
               <button type="button" class="btn btn-primary btn-stroke btn-sm dropdown-toggle" data-toggle="dropdown">
                 <i class="fa fa-caret-down"></i>
                 <span class="sr-only">Toggle Dropdown</span>
@@ -66,10 +74,12 @@
             </div>
 
             <!-- status --> 
-            <div class="media innerAll margin-none lead border-bottom">  
-              {{result.status|recognise_name|safe}}
+            <div class="media innerAll margin-none">  
+              <div class="lead">
+                {{result.status|recognise_name|safe}}
+              </div>
 
-
+ 
               <!-- images !-->
               {% if result_type == "status" %}
               <div class="media innerAll half">
@@ -80,25 +90,26 @@
               {% endif %}
               <!-- /images !-->
 
-            </div>
-            <!-- /status --> 
+
+              {% if result_type == "status" %} 
+                 <a href="/{{result.user.username}}/post/{{result.tweetuid}}" class="pull-right">
+                 <i class="fa fa-clock-o"></i> {{result.time_elapsed}} ago</a> 
+              {% endif %}  
+
 
             <!-- tags --> 
             {% if type_user|length == 0 or type_user|first == '' %}
               {% else %}
-              {% if result.sign_up_as == "Business" %}   
-              <div class="border-bottom innerAll half">
+              {% if result.sign_up_as == "Business" %}    
                 {% for tag in result.type_user  %}
-                  <a href="/activity/?b={{tag}}" class="label label-primary label-stroke">{{tag}}</a>
-                {% endfor %}
-              </div>
+                  <a href="/activity/?b={{tag}}" class="label label-default label-stroke">{{tag}}</a>
+                {% endfor %} 
               {% endif %}
             {% endif %} 
+            </div>
+            <!-- /status --> 
 
-            <div class="timeline-bottom innerAll">
-              {% if result_type == "status" %} 
-                 <a href="/{{result.user.username}}/post/{{result.tweetuid}}"><i class="fa fa-clock-o"></i> {{result.time_elapsed}} ago</a> 
-              {% endif %}  
+            <div class="timeline-bottom innerAll border-top">
 
               {% if result.distance_text != "NA" %}
                <a href="http://maps.google.com/maps?saddr={{userinfo.lat}},{{userinfo.lon}}&daddr={{result.location.coordinates.1}},{{result.location.coordinates.0}}" 

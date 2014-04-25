@@ -251,89 +251,50 @@ function show_small_structure()
       {% ifequal loggedin_signupas "Organisation" %} {% endifequal %}
       -->
   <div class="widget-head">
-    <ul class="clearfix" id="activity_selector">
-        <li class="active dropdown">
-        <a href="#tab3-2" class="glyphicons shopping_cart" data-toggle="tab"><i></i><span class="strong title">Marketplace</span>
+    <ul id="activity_s elector">
+
+        <li {% if results_updates_count != 0  or results_individual_count == 0 and results_business_count == 0 and results_organisation_count == 0  %}class="active dropdown"{% endif %}>
+        <a href="#near_me" class="glyphicons shopping_cart" data-toggle="tab"><i></i><span class="strong title">Marketplace</span>
         {% ifnotequal results_updates_count 0 %}
         <span class="pull-number label label-success">{{results_updates_count}}</span>
         {% endifnotequal %}
         </a> 
         </li>  
-        <li><a href="#tab1-2" class="glyphicons shop" data-toggle="tab"><i></i><span class="strong title">Companies</span> 
+
+        <li {% if results_updates_count == 0 and results_individual_count == 0  and results_organisation_count == 0 and results_business_count != 0 %}class="active"{% endif %}>
+        <a href="#biz" class="glyphicons shop" data-toggle="tab"><i></i><span class="strong title">Companies</span> 
         {% ifnotequal results_business_count 0 %}
         <span class="pull-number label label-success">{{results_business_count}}</span></a>
         {% endifnotequal %}
         </li>
-        <li><a href="#tab2-2" class="glyphicons group" data-toggle="tab"><i></i><span class="strong title">Organisations</span>
-        {% ifnotequal results_organisations_count 0 %}
+
+ 
+
+        <li {% if results_updates_count == 0 and results_individual_count == 0 and results_business_count == 0 and results_organisation_count != 0 %}class="active"{% endif %}>
+        <a href="#org" class="glyphicons group" data-toggle="tab"><i></i><span class="strong title">Groups</span>
+        {% if results_organisations_count  != 0 %}
         <span class="pull-number label label-success">{{results_organisations_count}}</span>
-        {% endifnotequal %}
+        {% endif %}
         </a>
         </li> 
-        <li><a href="#tab3-2" class="glyphicons user" data-toggle="tab"><i></i><span class="strong title">Indiv</span>
-        {% ifnotequal results_individuals_count 0 %}
-        <span class="pull-number label label-success">{{results_individuals_count}}</span>
-        {% endifnotequal %}
-        </a>
-        </li> 
-    </ul> 
+
+        <li {% if results_updates_count == 0  and results_business_count == 0 and results_organisation_count == 0 and results_individual_count != 0 %}class="active"{% endif %}>
+          <a href="#indiv" class="glyphicons user" data-toggle="tab"><i></i><span class="strong title">People</span>
+          {% ifnotequal results_individuals_count 0 %}
+          <span class="pull-number label label-success">{{results_individuals_count}}</span>
+          {% endifnotequal %}
+          </a>
+        </li>   
+    </ul>
   </div>
 
-</div><!-- widget --> 
- 
-
-<ul class="nav nav-pills">
-  <li><a href="/activity"><i class="fa fa-fw fa-bell-o"></i> All </a></li> 
-  <li><a href="/activity/?q=sell"><i class="fa fa-fw fa-sign-out"></i> Sell</a></li> 
-  <li><a href="/activity/?q=buy"><i class="fa fa-fw fa-sign-in"></i> Buy</a></li> 
-  <li><a href="/activity/?q=surplus"><i class="fa fa-fw fa-refresh"></i> Surplus</a></li> 
-  <li><a href="/activity/?q=ask"><i class="fa fa-fw fa-comment-o"></i> Ask</a></li> 
-  <li><a href="/activity/?q=job"><i class="fa fa-fw fa-eur"></i> Job</a></li> 
-</ul>
-
-   
-
-<ul class="nav nav-tabs">
-  <li {% if results_updates_count != 0  or results_individual_count == 0 and results_business_count == 0 and results_organisation_count == 0  %}class="active dropdown"{% endif %}>
-    <a href="#" id="more" class="dropdown-toggle" data-toggle="dropdown">Updates 
-      <span class="badge" id="update_count">{{results_updates_count}}</span>
-      <b class="caret"></b>
-    </a>
-    <ul class="dropdown-menu" role="menu" aria-labelledby="more">
-      <li><a href="/activity"><i class="fa fa-fw fa-bell-o"></i> All </li> 
-      <li><a href="/activity/?q=sell"><i class="fa fa-fw fa-sign-out"></i> Sell</li> 
-      <li><a href="/activity/?q=buy"><i class="fa fa-fw fa-sign-in"></i> Buy</a></li> 
-      <li><a href="/activity/?q=surplus"><i class="fa fa-fw fa-refresh"></i> Surplus</a></li> 
-      <li><a href="/activity/?q=ask"><i class="fa fa-fw fa-comment-o"></i> Ask</a></li> 
-      <li><a href="/activity/?q=job"><i class="fa fa-fw fa-eur"></i> Job</a></li> 
-    </ul>
-  </li> 
- 
-
-
-  <li {% if results_updates_count == 0 and results_individual_count == 0  and results_organisation_count == 0 and results_business_count != 0 %}class="active"{% endif %}>
-    <a href="#biz" data-toggle="tab">Business 
-    <span class="badge" id="business_count">w</span>
-    </a>
-  </li> 
-
-    <li {% if results_updates_count == 0 and results_individual_count == 0 and results_business_count == 0 and results_organisation_count != 0 %}class="active"{% endif %}>
-    <a href="#org" data-toggle="tab">Orgs
-    <span class="badge" id="organisation_count">{{results_organisation_count}}</span>
-    </a>
-  </li> 
-    <li {% if results_updates_count == 0  and results_business_count == 0 and results_organisation_count == 0 and results_individual_count != 0 %}class="active"{% endif %}>
-    <a href="#indiv" data-toggle="tab">People 
-    <span class="badge" id="individual_count">{{results_individual_count}}</span>
-    </a>
-  </li>
-</ul>
+<div class="widget-body">
 
 <div class="tab-content reply_text" id = "filtered_content">
-  <div class="tab-pane {% if results_updates_count != 0  or results_business_count == 0 and results_organisation_count == 0  %}active{% endif %}" id="near_me">
- 
-   <div id="sortby" class="clearfix">
 
+  <div class="tab-pane {% if results_updates_count != 0  or results_business_count == 0 and results_organisation_count == 0  %}active{% endif %}" id="near_me">
+    
+    <div id="sortby" class="clearfix">
       <div class="pull-left">
         <p class="text-muted" style="margin:0;">Filter:
           <a href="/activity/?q=buy" class="text-muted">#buy</a>
@@ -345,7 +306,7 @@ function show_small_structure()
       </div>
 
       <div class="btn-group pull-right">
-      <input type="hidden" id="current_sort_order" value="time" />
+        <input type="hidden" id="current_sort_order" value="time" />
         <span class="pull-left small text-muted" style="position: relative; top: 3px; margin-right: 2px;">Sort by </span>
         <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
           <span  id="current_sort_text" class="text-muted"><i class="fa fa-clock-o fa-fw"></i> Time posted</span>
@@ -356,198 +317,160 @@ function show_small_structure()
           <li><a onclick="sort_by('time',this)"><i class="fa fa-clock-o fa-fw"></i> Time posted</a></li>
         </ul>
       </div> 
+    </div>
 
-   </div>
+    <ul class="nav nav-pills btn-sm btn-stroke">
+      <li><a href="/activity"><i class="fa fa-fw fa-bell-o"></i> All </a></li> 
+      <li><a href="/activity/?q=sell"><i class="fa fa-fw fa-sign-out"></i> Sell</a></li> 
+      <li><a href="/activity/?q=buy"><i class="fa fa-fw fa-sign-in"></i> Buy</a></li> 
+      <li><a href="/activity/?q=surplus"><i class="fa fa-fw fa-refresh"></i> Surplus</a></li> 
+      <li><a href="/activity/?q=ask"><i class="fa fa-fw fa-comment-o"></i> Ask</a></li> 
+      <li><a href="/activity/?q=job"><i class="fa fa-fw fa-eur"></i> Job</a></li> 
+    </ul>
 
-
-
-
-
-<div class="activity" id="activity_updates"> 
- 
-
- {% include 'activity_updates.html' %}
- 
-</div> 
-
- 
-
-
-
-
-
-</div><!-- tab pane activity -->
-
-
+    <div class="activity" id="activity_updates"> 
+      {% include 'activity_updates.html' %}
+    </div>  
+  </div><!-- tab pane activity -->
 
   <div class="tab-pane {% if results_updates_count == 0 and results_business_count == 0  and results_organisation_count == 0 and results_individual_count != 0 %}active{% endif %}" id="indiv">
- 
-  <div class="activity" id="activity_indiv"> 
-{% include 'activity_indiv.html' %}
-  </div>
-
-
+    <div class="activity" id="activity_indiv"> 
+      {% include 'activity_indiv.html' %}
+    </div> 
   </div> 
-
-
-
 
   <div class="tab-pane {% if results_updates_count == 0 and results_individual_count == 0  and results_organisation_count == 0 and results_business_count != 0 %}active{% endif %}" id="biz">
- 
-  <div class="activity" id="activity_biz"> 
-  {% include 'activity_biz.html' %}
-   
-  </div>
-
-
+    <div class="activity" id="activity_biz"> 
+      {% include 'activity_biz.html' %}
+    </div>
   </div> 
 
+  <div class="tab-pane {% if results_updates_count == 0 and results_individual_count == 0 and results_business_count == 0 and results_organisation_count != 0 %}active{% endif %}" id="org"> 
+    <div class="activity" id="activity_org"> 
+      {% include 'activity_org.html' %}
+    </div>
+  </div>  
 
+</div><!-- tab content -->
 
-  <div class="tab-pane {% if results_updates_count == 0 and results_individual_count == 0 and results_business_count == 0 and results_organisation_count != 0 %}active{% endif %}" id="org">
- 
-  <div class="activity" id="activity_org"> 
-   {% include 'activity_org.html' %}
-  </div>
-
-
-  </div> 
-  <!-- close organisation tab -->
-
-
-
-</div><!-- tabs -->
-
-
+</div><!-- widget --> 
+</div>
      
-    </div><!-- closes 5 -->
+    </div><!-- closes main col -->
+
 
     <div class="col-sm-5 col-xs-12 fill"  style="  right:0px;">
-
-    <!-- FIX THE MAP POSITION SO IT DOES NOT SCROLL --> 
-      <div id="map" style=" position: fixed; width:50%;
-height: 100%; " >
-        
-
-        <div class="alert alert-warning"> 
-
-          <p>There are radius lines at 15, 30, and 100 miles.</p>
+        <div id="map" style=" position: fixed; width:50%; height: 100%; " >
         </div>
-
       </div>
     </div>
-    </div>
+
+
     <script type="text/javascript">
-    map_lat={{ search.lat }};
-    map_lon = {{ search.lon }};
-
-
+      map_lat={{ search.lat }};
+      map_lon = {{ search.lon }};
 
       food_filters = {{foods_filter |safe}};
       business_filters = {{business_filter |safe}};
-      organisation_filters = {{organisation_filter |safe}};
-
-
-
+      organisation_filters = {{organisation_filter |safe}}; 
     </script>
       
 
   {% endblock %}
 
 
-          {% block footer %}
+  {% block footer %}
     {% include "includes/not_logged_in_modal.html" %}
-           <script src="{% static "js/activity.js" %}"></script>
-           <script src="{% static "js/date.js" %}"></script>
+     <script src="{% static "js/activity.js" %}"></script>
+     <script src="{% static "js/date.js" %}"></script>
 
-           <script type="text/javascript">
-           $("#expire_on").keyup(function(){
-             var expire_on = Date.parse($("#expire_on").val());
-             if(expire_on!=null)
-             {
-              var expire_date = expire_on.getDate()+"/"+expire_on.getMonth()+"/"+expire_on.getFullYear();
-  $("#date_help").html(expire_date);
+     <script type="text/javascript">
+     $("#expire_on").keyup(function(){
+       var expire_on = Date.parse($("#expire_on").val());
+       if(expire_on!=null)
+       {
+        var expire_date = expire_on.getDate()+"/"+expire_on.getMonth()+"/"+expire_on.getFullYear();
+        $("#date_help").html(expire_date);
+       }
+      });
 
-             }
- 
-    
-});
-show_food_filters(food_filters, 0);
-show_organisation_filters(organisation_filters, 0);
-show_business_filters(business_filters, 0);
+      show_food_filters(food_filters, 0);
+      show_organisation_filters(organisation_filters, 0);
+      show_business_filters(business_filters, 0);
 
-var post_for = "";
-$('#post_for').children(".btn").click(function(){
-    var value = $(this).val();
-    var childrens = $('#post_for').children();
-    for(var i=0;i<childrens.length;i++)
-    {
-      $(childrens[i]).removeClass("btn-success");
-    }
-    $(this).addClass("btn-success");
-    post_for = value;
-});
+      var post_for = "";
+      $('#post_for').children(".btn").click(function(){
+          var value = $(this).val();
+          var childrens = $('#post_for').children();
+          for(var i=0;i<childrens.length;i++)
+          {
+            $(childrens[i]).removeClass("btn-success");
+          }
+          $(this).addClass("btn-success");
+          post_for = value;
+      });
 
-function generate_update()
-{
-  if(post_for=="")
-  {
-    alert("Select one of buy / sell / surplus");
-    return;
-  }
-  var input_produces = $("input[name=produce]").val();
-  if(input_produces.trim()=="")
-  {
-    alert("You can't leave produce empty");
-    return;
-  }
-  var produces_name = input_produces.trim().replace("'", "").replace('"','').split(",");
-  var quantity = $("input[name=qty]").val().trim();
-  var quantity_unit = $("#qtyUnit").val();
-  var quantity_text = "";
-  if(quantity!="" && quantity_unit!="")
-  {
-    quantity_text =  " "+quantity+" "+quantity_unit+".";
-  }
+      function generate_update()
+      {
+        if(post_for=="")
+        {
+          alert("Select one of buy / sell / surplus");
+          return;
+        }
+        var input_produces = $("input[name=produce]").val();
+        if(input_produces.trim()=="")
+        {
+          alert("You can't leave produce empty");
+          return;
+        }
+        var produces_name = input_produces.trim().replace("'", "").replace('"','').split(",");
+        var quantity = $("input[name=qty]").val().trim();
+        var quantity_unit = $("#qtyUnit").val();
+        var quantity_text = "";
+        if(quantity!="" && quantity_unit!="")
+        {
+          quantity_text =  " "+quantity+" "+quantity_unit+".";
+        }
 
-  var expire_on = Date.parse($("#expire_on").val());
-  var expire_text = "";
-  if(expire_on!=null)
-  {
-    var expire_date = expire_on.getDate()+"-"+expire_on.getMonth()+"-"+expire_on.getFullYear();
-    expire_text = " By "+expire_date+".";
-  }
-  var description = $("#update_description").val().trim();
-  var description_text = "";
-  if(description!="")
-  {
-    description_text = " ("+description+")";
-  }
-  
+        var expire_on = Date.parse($("#expire_on").val());
+        var expire_text = "";
+        if(expire_on!=null)
+        {
+          var expire_date = expire_on.getDate()+"-"+expire_on.getMonth()+"-"+expire_on.getFullYear();
+          expire_text = " By "+expire_date+".";
+        }
+        var description = $("#update_description").val().trim();
+        var description_text = "";
+        if(description!="")
+        {
+          description_text = " ("+description+")";
+        }
+        
 
-  var produces_hash = "";
-  for(var i = 0;i<produces_name.length;i++)
-  {
-    if(produces_name[i].trim() == "")
-    {
-      continue;
-    }
-    produces_hash += "#" + produces_name[i].trim();
+        var produces_hash = "";
+        for(var i = 0;i<produces_name.length;i++)
+        {
+          if(produces_name[i].trim() == "")
+          {
+            continue;
+          }
+          produces_hash += "#" + produces_name[i].trim();
 
-    if((i+1) != produces_name.length)
-    {
-        produces_hash += ", ";
-    }
-  }
-  var update_text = "I'd like to "+post_for+" "+produces_hash+description_text+"."+quantity_text+expire_text;
+          if((i+1) != produces_name.length)
+          {
+              produces_hash += ", ";
+          }
+        }
+        var update_text = "I'd like to "+post_for+" "+produces_hash+description_text+"."+quantity_text+expire_text;
 
-  activity_status_update(update_text);
-  return false;
-}
-           </script>
+        activity_status_update(update_text);
+        return false;
+      }
+   </script>
 
  {% endblock %}
  {% block javascript %}
-     <script src="{% static "js/activity-map.js" %}"></script>
+
+ <script src="{% static "js/activity-map.js" %}"></script>
 
 {% endblock %}
