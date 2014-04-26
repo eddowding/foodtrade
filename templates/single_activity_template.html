@@ -128,6 +128,22 @@
  
             </div> 
  
+
+          {% if result.replies %}
+              {% for reply_result in result.replies %} 
+                  <div class="media innerAll bg-gray margin-none replies">
+                      <a class="pull-left" href="#">
+                        <img src="{{reply_result.user.profile_img}}" alt="@{{reply_result.user.username}}" class="media-object" width="35">
+                      </a>
+                    <div class="media-body">
+                          <a href="/profile/{{reply_result.user.username}}" class="strong text-inverse">{{reply_result.user.username}}</a> {{reply_result.status}}
+                          <div class="timeline-bottom">
+                                <i class="fa fa-clock-o"></i> {{reply_result.time_elapsed}}
+                          </div>
+                    </div>                
+                  </div> 
+              {% endfor %}
+          {% else %}
             <div class="media innerAll bg-gray margin-none replies">
                 <a class="pull-left" href="#">
                     <img src="../assets/images/people/80/8.jpg" alt="photo" class="media-object" width="35">
@@ -141,6 +157,10 @@
                     </div>
                 </div>
             </div> 
+          {% endif %}
+
+
+
             <div class="innerAll reply"> 
 
                 <input class="form-control input-sm enterhandler reply_input" {% if result_type == "status" %}data-tweet-id = "{{result.tweetuid}}" {% endif %} data-main = "{{position}}"   {% if not userinfo.username %} data-toggle="tooltip" data-placement="top" title="Please login to use this feature." {% endif %} type="text" placeholder="Reply to {{result.mentions}}" data-mentions = "{{result.mentions}}"> 
