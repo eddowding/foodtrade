@@ -276,7 +276,7 @@ a {
   padding: 5px;
 }
 
-#cards.marketplace li .block.block-inline {
+#cards.marketplace li .block {
   padding: 5px;
 }
 
@@ -287,7 +287,7 @@ a {
 }
 
 #cards.marketplace li .status .lead {
- 
+  
   background: rgba(0,0,0,0.5);
   color: #fff;
 }

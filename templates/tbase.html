@@ -1212,15 +1212,15 @@ $(document).ready(function() {
 
 // tweetlistener('tweetMessage', 'counter', 'contact_tweet', 'newtweet_btn');
 
-$('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
-  $container.css('visibility', 'hidden');
-  $container.isotope('reLayout', showgrid);
-  tabLoaded = true;
-});
-
 // $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
-//   $container.isotope('reLayout');
+//   $container.css('visibility', 'hidden');
+//   $container.isotope('reLayout', showgrid);
+//   tabLoaded = true;
 // });
+
+$('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+  $container.isotope('reLayout');
+});
 
 function showgrid() {
   $container.css('visibility', 'visible');
