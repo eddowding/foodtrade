@@ -567,7 +567,7 @@ for(var i = 0; i < business_filters.length;i++){
          $('#organisation_count').html(data_json.results_organisation_count);
          // connections = ajax_connections;
          reload_controls();
-         $('.reply').hide();
+         //$('.reply').hide();
 
        }
 $('#food_filter').keyup( function() {

@@ -12,22 +12,11 @@
 {% if results %}
 
   {% for result in results %}
-  {% if result.user.username == result.result_type %}
+    {% if result.user.username == result.result_type %}
 
-  {% single_activity userinfo result "status" "main" %}
-
-<!--   {% if result.replies %}
-  <li class="replies">
-    <ul>
-      {% for reply_result in result.replies %}
-        {% single_activity userinfo reply_result "status" "main" %}
-      {% endfor %}
-    </ul>
-  </li>
-  {% endif %} -->
-
-
-  {% endif %}
+      {% single_activity userinfo result "status" "main" %}
+    
+    {% endif %}
   {% endfor %}
 
 {% endif %}

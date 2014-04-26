@@ -257,8 +257,9 @@ a {
   width: 100%;
 }
 
-.marketplace li .block.block-inline {
+.marketplace li .block {
   padding: 0 20px;
+  width: 100%;
 }
 
 .marketplace .box-generic {  
@@ -279,8 +280,23 @@ a {
   padding: 5px;
 }
 
+.status {
+  background-size: cover !important;
+  /*
+  background-image: none !important;*/
+}
+
+#cards.marketplace li .status .lead {
+ 
+  background: rgba(0,0,0,0.5);
+  color: #fff;
+}
+
 .gutter-sizer { width: 1%; }
 
+.bg-gray { 
+  background: #EBEBEB;
+}
 
 #cards.marketplace .address,
 #cards.marketplace .replies,
