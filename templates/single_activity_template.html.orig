@@ -70,15 +70,19 @@
               </ul>  
 
           </div>  
+<<<<<<< HEAD
+
+
+
             <div class="header"> 
                 <strong class="pull-left" style="margin-right: 10px;">
                 <a href="/profile/{{result.user.username}}">
-
+=======
  
  
                 <img src="{{result.user.profile_img}}" alt="{{result.user.name}}" class="img-responsive pull-left" style="width:20px; margin-right: 5px;" />
                 <a href="/profile/{{result.user.username}}" class="text-inverse">
-
+>>>>>>> c1235552a9de31d21047be2a42cdf98d2b0ed89b
                   {% if result.user.business_org_name != None %}
                       {% if result.sign_up_as == "Business" and result.user.business_org_name != '' or result.sign_up_as == "Organisation" and result.user.business_org_name != '' %}
                         {{result.user.business_org_name}}
@@ -149,14 +153,14 @@
               {% endif %}
               <!--- end tweet images !-->
 
-
+<<<<<<< HEAD
         </div>
 
         <div class="reply">
         <div class="alert alert-info" style="margin:0;"> 
           <input class="form-control input-sm enterhandler reply_input" {% if result_type == "status" %}data-tweet-id = "{{result.tweetuid}}" {% endif %} data-main = "{{position}}"   {% if not userinfo.username %} data-toggle="tooltip" data-placement="top" title="Please login to use this feature." {% endif %} type="text" placeholder="Reply to {{result.mentions}}" data-mentions = "{{result.mentions}}">
         </div>
-
+=======
             </div>
 
             <div class="timeline-bottom innerAll border-top">
@@ -217,6 +221,6 @@
 
                 <input class="form-control input-sm enterhandler reply_input" {% if result_type == "status" %}data-tweet-id = "{{result.tweetuid}}" {% endif %} data-main = "{{position}}"   {% if not userinfo.username %} data-toggle="tooltip" data-placement="top" title="Please login to use this feature." {% endif %} type="text" placeholder="Reply to {{result.mentions}}" data-mentions = "{{result.mentions}}"> 
             </div>
-
+>>>>>>> c1235552a9de31d21047be2a42cdf98d2b0ed89b
         </div>
     </li>
