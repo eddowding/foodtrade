@@ -81,7 +81,6 @@ class TweetFeed():
         # week_ago = now_instant - (now_instant%(7*24*3600)) + 4*24*3600
         a = datetime.now()
         start = a - timedelta(days = a.weekday())
-        print start
         week_ago = int(start.strftime("%S"))
         results = self.db_object.get_all( self.table_name, {"useruid":useruid,"updates.parent_tweet_id":"0", "updates.time_stamp": {"$gte":week_ago} })
         if len(results)>0:
@@ -234,12 +233,12 @@ class TweetFeed():
         return friends
 
 
-    def search_tweeter_users (self, user_id, q= ""):
+    def search_tweeter_users (self, user_id, q= "", no_of_result = 20):
         st = SocialToken.objects.get(account__user__id=user_id)
         ACCESS_TOKEN = st.token
         ACCESS_TOKEN_SECRET = st.token_secret        
         user_twitter = get_twitter_obj(ACCESS_TOKEN, ACCESS_TOKEN_SECRET)        
-        results = user_twitter.search_users(q=q, page=1, count=20)
+        results = user_twitter.search_users(q=q, page=1, count = no_of_result)
         return_results = []
         for eachResult in results:
             '''Update upsert if the profile doesnot exists in our TweeterUser collection'''

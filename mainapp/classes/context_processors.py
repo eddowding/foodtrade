@@ -33,10 +33,8 @@ def user_info(request):
                 can_tweet = True
             else:                
                 has_trial_period_expired = ft.has_expired_trial_period(request.user.id)
-                print has_trial_period_expired
                 if has_trial_period_expired == True:
                     has_tweet = ft.has_tweet_in_week(request.user.id)
-                    print has_tweet
                     if not has_tweet:
                         can_tweet = True
                     else:

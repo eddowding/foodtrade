@@ -1007,7 +1007,7 @@ class AjaxHandle(AjaxSearch):
             q = request.POST.get('q')
             user_id = request.user.id
             tweet_feed_obj = TweetFeed()
-            results = tweet_feed_obj.search_tweeter_users(user_id, q)
+            results = tweet_feed_obj.search_tweeter_users(user_id, q, 20)
             return HttpResponse(json.dumps({'results':results}))
         else:
             return HttpResponse(json.dumps({'status':0, 'message':'You are not authorized to perform this action.'}))        

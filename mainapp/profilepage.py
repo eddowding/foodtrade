@@ -26,6 +26,8 @@ from mainapp.classes.MongoConnection import MongoConnection
 from embedly import Embedly
 from django.conf import settings
 
+
+
 def profile_url_resolve(request, username):
     if username == 'me':
         if request.user.is_authenticated():
@@ -38,7 +40,17 @@ def profile_url_resolve(request, username):
     if userprof!= None:
         return display_profile(request, userprof['username'])
     else:
-        raise Http404()
+        try:
+            from mainapp.classes.AjaxHandle import AjaxHandle
+            user_id = request.user.id
+            tweet_feed_obj = TweetFeed()
+            result = tweet_feed_obj.search_tweeter_users(user_id, username, 1)
+            ajax_handle = AjaxHandle()
+            ajax_handle.create_fake_profile(username, username, 'twitter','unclaimed')
+            userprof = usr_profile.get_profile_by_username(str(username))
+            return display_profile(request, str(username))
+        except:        
+            raise Http404()
             
 def resolve_profile(request, username):
     if username == 'me':
@@ -46,11 +58,20 @@ def resolve_profile(request, username):
             username = request.user.username
             return display_profile(request, username)    
     usr_profile = UserProfile()
-    try:
-        userprof = usr_profile.get_profile_by_username(str(username))
-        a = userprof['sign_up_as']
-    except:
-        raise Http404
+    
+    userprof = usr_profile.get_profile_by_username(str(username))
+    if userprof == None:
+        try:
+            from mainapp.classes.AjaxHandle import AjaxHandle
+            user_id = request.user.id
+            tweet_feed_obj = TweetFeed()
+            result = tweet_feed_obj.search_tweeter_users(user_id, username, 1)
+            ajax_handle = AjaxHandle()
+            ajax_handle.create_fake_profile(username, username, 'twitter','unclaimed')
+            userprof = usr_profile.get_profile_by_username(str(username))
+        except:
+            raise Http404
+
     if userprof['sign_up_as'] == 'unclaimed':
         return HttpResponseRedirect('/unclaimed/' + username)
     elif userprof['sign_up_as'] == 'Business':

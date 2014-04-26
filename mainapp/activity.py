@@ -19,7 +19,7 @@ from django.template import RequestContext
 from django.views.decorators.csrf import csrf_exempt
 
 from djstripe.models import Customer
-
+import pprint
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.utils.functional import cached_property
@@ -206,15 +206,21 @@ def get_search_parameters(request):
             replies = search_handle.get_all_children(tweet_id)
             if replies == None:
                 continue
-                print "reply present"
             replies = sorted(replies, key=lambda k: k['time_stamp']) 
             for j in range(len(replies)):
                 replies[j] = set_time_date(replies[j],keyword)
                 replies[j]['mentions'] = "@" + results[i]['user']['username'] + " " + replies[j]['mentions']
-            # print results[i]['replies']
+        
             results[i]['replies'] = replies
+
+    for i in range(len(results)):
+        from mainapp.profilepage import get_banner_url
+        banner_url = get_banner_url(results[i]['user']['username'])
+        results[i]['user']['banner_url'] = banner_url
     
+            
     parameters['results'] = results
+
     # print len(results)
     parameters['json_data'] = json.dumps(results)
     parameters['results_business_count'] = search_results["business_counter"]
