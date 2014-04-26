@@ -14,13 +14,13 @@
                 <i class="fa fa-envelope"></i>
               </button> 
 
-              <a href="/profile/{{result.user.username}}/" class="text-muted">
+              <a href="/profile/{{result.user.username}}/" class="btn btn-primary btn-xs">
                 <i class="fa fa-info-circle fa-lg"></i>
               </a>
 
-              <a href="" class="btn btn-primary btn-xs pull-right"><i class="fa fa-plus-circle"></i></a>
+              <a href="" class="btn btn-primary btn-xs"><i class="fa fa-plus-circle"></i></a>
 
-              <button type="button" class="btn btn-primary btn-stroke btn-sm dropdown-toggle" data-toggle="dropdown">
+              <button type="button" class="btn btn-primary btn-stroke btn-xs dropdown-toggle" data-toggle="dropdown">
                 <i class="fa fa-caret-down"></i>
                 <span class="sr-only">Toggle Dropdown</span>
               </button>
@@ -69,8 +69,8 @@
             </div>
 
             <!-- status --> 
-            <div class="media innerAll margin-none status" style="background: url('{{result.user.banner_url}}');" />  
-              <div class="lead">
+            <div class="media margin-none status" style="background: url('{{result.user.banner_url}}');" />  
+              <div class="lead innerAll">
                 {{result.status|recognise_name|safe}}
               </div>
 
