@@ -838,8 +838,8 @@ def get_video_html(url):
 
         height_start = html.find("height=\"") 
         height_end = html[height_start+7:].find('"')
-        print html[height_start:(height_start+8+height_end+2)]
-        html = html.replace(html[height_start:(height_start+8+height_end+2)], "height=\"100%\"")
+
+        html = html.replace(html[height_start:(height_start+8+height_end+5)], "height=\"100%\"")
         return html
 
     
