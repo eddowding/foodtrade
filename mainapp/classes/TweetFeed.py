@@ -557,7 +557,8 @@ class Food():
         if data.get('approved_food_tags') != None:
             update_data['approved_food_tags'] = data['approved_food_tags']
         else:
-            update_data = {'description':data['description'], 'food_tags': data['food_tags'], 'photo_url': data['photo_url']}
+            update_data = {'description':data['description'], 'food_tags': data['food_tags'], 'photo_url': data['photo_url'],
+            'how_much': data['how_much'], 'how_often': data['how_often'], 'month_list': data['month_list']}
           
         self.db_object.update(self.table_name,{'food_name': data['food_name'], 'useruid': data['useruid'], 'deleted': 0},
              update_data)

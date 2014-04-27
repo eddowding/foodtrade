@@ -84,9 +84,13 @@ def resolve_profile(request, username):
 
 def display_profile(request, username):
     if request.method == 'POST':
+        month_list = []
+        for i in range(1,13):
+            val = request.POST.get('option'+str(i)+'_month')
+            month_list.append(1) if val=='on' else month_list.append(0)
         food_form = FoodForm(request.POST, request.FILES)
         if food_form.is_valid():
-            food_form.save()
+            food_form.save(month_list)
         
     parameters = {}
     
@@ -462,6 +466,12 @@ def get_all_foods(user_id, logged_in_id = None):
         'logged_recommender': logged_recommender}
         if each.get('description')!=None:
             data['description'] = each.get('description')
+
+        data['how_much'] = each.get('how_much') if each.get('how_much')!='' else ''
+        data['how_often'] = each.get('how_often') if each.get('how_often')!=None else ''
+        data['month_list'] = each.get('month_list') if each.get('month_list')!=None else []
+
+
         if each.get('food_tags')!=None:
             # tags_list = each.get('food_tags').split(',')
             data['food_tags'] = each.get('food_tags')

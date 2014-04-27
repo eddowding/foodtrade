@@ -36,11 +36,16 @@ class FoodForm(forms.Form):
     food_name = forms.CharField(required=False, widget=forms.TextInput(attrs={'class' : 'form-control'}))
     food_photo = forms.ImageField(required=False)
     food_duplicate = forms.CharField(required=False)
+    how_much = forms.CharField(required=False, widget=forms.TextInput(attrs={'class' : 'form-control',
+        'placeholder': 'How much?'}))
+    how_often = forms.ChoiceField(choices=[("*", "How often")]+[(x, x) for x in ['daily', 'monthly', 'seasonally', 'annually']],
+        widget=forms.Select(attrs={'class' : 'form-control btn-sm selectpicker'}))
+    
 
     def __init__(self, *args, **kwargs):
         super(FoodForm, self).__init__(*args, **kwargs)
 
-    def save(self):
+    def save(self, month_list):
         food_description = self.cleaned_data['food_description']
         food_tags = self.cleaned_data['food_tags']
         profile_id = int(self.cleaned_data['profile_id'])
@@ -48,8 +53,10 @@ class FoodForm(forms.Form):
         food_detail = Food()
         food_photo = self.cleaned_data['food_photo']
         food_duplicate = self.cleaned_data['food_duplicate']
+        how_much = self.cleaned_data['how_much']
+        how_often = self.cleaned_data['how_often']
         data = {'food_name': food_name, 'useruid': profile_id, 'description': food_description,
-        'food_tags': food_tags, 'photo_url': ''}
+        'food_tags': food_tags, 'photo_url': '', 'how_much': how_much, 'how_often': how_often, 'month_list': month_list}
         if food_photo == None:
             if food_duplicate != '':
                 data['photo_url'] = food_duplicate
