@@ -225,7 +225,7 @@ def get_search_parameters(request):
         except:
             video_url = ''
             video_html = ''
-        results[i]['user']['video_html'] =  video_html
+        results[i]['user']['intro_video'] =  video_html
 
     
             
