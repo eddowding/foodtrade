@@ -217,6 +217,12 @@ def get_search_parameters(request):
         from mainapp.profilepage import get_banner_url
         banner_url = get_banner_url(results[i]['user']['username'])
         results[i]['user']['banner_url'] = banner_url
+        user_prof = UserProfile()
+        try:
+            video_url = user_prof.get_profile_by_username(results[i]['user']['username'])['video_url']
+        except:
+            video_url = ''
+        results[i]['user']['video_url'] =  video_url
     
             
     parameters['results'] = results
