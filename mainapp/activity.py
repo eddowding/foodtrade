@@ -226,7 +226,6 @@ def get_search_parameters(request):
             video_url = ''
             video_html = ''
         results[i]['user']['intro_video'] =  video_html
-
     
             
     parameters['results'] = results
