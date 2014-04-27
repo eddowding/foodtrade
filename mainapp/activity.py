@@ -215,14 +215,18 @@ def get_search_parameters(request):
 
     for i in range(len(results)):
         from mainapp.profilepage import get_banner_url
+        from mainapp.profilepage import get_video_html
         banner_url = get_banner_url(results[i]['user']['username'])
         results[i]['user']['banner_url'] = banner_url
         user_prof = UserProfile()
         try:
             video_url = user_prof.get_profile_by_username(results[i]['user']['username'])['video_url']
+            video_html = get_video_html(video_url)
         except:
             video_url = ''
-        results[i]['user']['video_url'] =  video_url
+            video_html = ''
+        results[i]['user']['video_html'] =  video_html
+
     
             
     parameters['results'] = results
