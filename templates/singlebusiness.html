@@ -802,9 +802,9 @@
 
                     <div class="widget">
                             
-                      <div class="border-top innerAll  ">
+                      <div class="border-top  ">
 
-                      {{intro_video}}  <br />
+                      {{intro_video|safe}}  <br />
                       followers<br />
                       followding<br />
                       foods<br />
@@ -980,6 +980,11 @@
         <a href="https://www.duedil.com/company/{{company_num}}"><i class="fa fa-legal"></i></a>  
       {% endif %}  
 
+<div class="widget text-center">
+  <div class="innerTB text-white">
+    <input type="text" id="select2_5" style="width: 100%;" value="brown,red,green" />
+  </div>
+</div>
 
 <div class="widget text-center bg-secondary">
   <div class="innerTB text-white">
