@@ -841,7 +841,17 @@ def get_video_html(url):
         return ''
     else:
         html = obj.get('html') if obj.get('html')!=None else ''
+        width_start = html.find("width=\"") 
+        width_end = html[width_start+7:].find('"')
+
+        html = html.replace(html[width_start:(width_start+7+width_end+2)], "width=\"100%\"")
+
+        height_start = html.find("height=\"") 
+        height_end = html[height_start+7:].find('"')
+
+        html = html.replace(html[height_start:(height_start+8+height_end+5)], "height=\"100%\"")
         return html
+
     
 
 from math import radians, cos, sin, asin, sqrt

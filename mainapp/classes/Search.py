@@ -81,7 +81,8 @@ class Search():
         "time_stamp":"$updates.time_stamp",
         "tweet_pictures":"$updates.picture",
         "result_type":result_type,
-        "subscribed": "$subscribed"
+        "subscribed": "$subscribed",
+        "video_url":'$video_url'
         }}
 
 
