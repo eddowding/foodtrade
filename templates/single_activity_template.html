@@ -70,7 +70,7 @@
 
             <!-- status --> 
             <div class="media margin-none status" style="background: url('{{result.user.banner_url}}');" />  
-            {{result.user.video_url}}
+            {{result.user.intro_video|safe}}
               <div class="lead innerAll">
                 {{result.status|recognise_name|safe}}
               </div>
