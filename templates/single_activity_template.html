@@ -3,7 +3,10 @@
 
 
   <li class="{{result.result_class}} singleresult {% if result.subscribed %} verified {% endif %}" data-id="{% if result_type == "status" %}{{result.tweetuid}} {% else %}{{result.user.username}}{% endif %}">
+
     <div class="block block-inline"> 
+      <span class="marker"></span>
+      <div class="caret"></div>
         <div class="box-generic">
 
             <div class="timeline-top-info bg-gray border-bottom" {% if result.subscribed %} rel="tooltip" title="Verified profile" {% endif %}>
@@ -70,7 +73,15 @@
 
             <!-- status --> 
             <div class="media margin-none status" style="background: url('{{result.user.banner_url}}');" />  
-            {{result.user.intro_video|safe}}
+
+            {% if result.user.intro_video %}
+
+              <div style="height: 300px">
+                {{result.user.intro_video|safe}}
+              </div>
+
+            {% endif %}
+
               <div class="lead innerAll">
                 {{result.status|recognise_name|safe}}
               </div>
@@ -148,7 +159,7 @@
 
 
 
-            <div class="innerAll border-top bg-gray r eply"> 
+            <div class="innerAll border-top bg-gray eply"> 
                 <input class="form-control input-sm enterhandler reply_input" {% if result_type == "status" %}data-tweet-id = "{{result.tweetuid}}" {% endif %} data-main = "{{position}}"   {% if not userinfo.username %} data-toggle="tooltip" data-placement="top" title="Please login to use this feature." {% endif %} type="text" placeholder="Reply to {{result.mentions}}" data-mentions = "{{result.mentions}}"> 
             </div>
         </div>
