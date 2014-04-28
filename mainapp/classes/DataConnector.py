@@ -33,6 +33,7 @@ class UserConnections():
         total_conn = len(b_conn) + len(c_conn)
         return len(b_conn), len(c_conn)
         # return self.db_object.get_all_count(self.table_name,{"$or":[{'buyer':self.twitter_user_id},{'seller':self.twitter_user_id}]}, 'time_stamp')
+
     def get_food_connection_no(self):
         foo = Food()
         foods = foo.get_foods_by_userid(self.user_id)
@@ -91,6 +92,9 @@ class UserInfo():
         self.zip_code = userprof.get('zip_code')
         self.address = userprof['address']
         self.type = userprof['type_user']
+        
+        self.post_count = user_profile.get_post_count(user_id)
+
         try:
             self.country = userprof['address'].split(',')[len(userprof['address'].split(','))-1]
         except:
@@ -140,6 +144,7 @@ class UserInfo():
         self.nearby_individuals_no = user_connection.get_nearby_individuals_no(self.lon,self.lat)
         self.organisation_connection_no = user_connection.get_organisation_connection_no()
         self.award_no = user_connection.get_award_no()
+
 
         '''Trends'''
         trends_this_week = TrendsThisWeek(host='localhost', port=27017,db_name='foodtrade', username='ftroot', password='ftroot')
