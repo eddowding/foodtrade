@@ -455,7 +455,10 @@
               <tr>
                 <td colspan="3">
                   <div class="produce_detail">  
+                    {% if eachfood.photo_url %}
                     <img src="{{eachfood.photo_url}}" alt="{{eachfood.food_name}}" class="img-rounded img-responsive produce_large img-thumbnail " /> 
+                    
+                    {% endif %}
 
                     <span class="text-muted   ">{{eachfood.description}}</span>
                   </div> 

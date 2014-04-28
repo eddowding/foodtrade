@@ -53,3 +53,6 @@ urlpatterns = patterns('',
     ## any user    
     url(r'^(?P<username>\w{1,40})/$', 'mainapp.profilepage.profile_url_resolve'),
 )
+urlpatterns += patterns('',
+        (r'^media/(?P<path>.*)$', 'django.views.static.serve', {
+        'document_root': settings.MEDIA_ROOT}))
