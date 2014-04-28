@@ -527,6 +527,9 @@ class Food():
     def get_all_new_foods(self):
         return self.db_object.get_all(self.table_name, {'deleted': 0})
 
+    # def count_foods(self, useruid):
+    #     return 
+
     def create_food (self, value):
         value['deleted'] =0
         # self.db_object.insert_one(self.table_name,value)

@@ -1,9 +1,7 @@
 #!/usr/bin/env python
 # encoding: utf-8
 from MongoConnection import MongoConnection
-
 from bson.objectid import ObjectId
-# import time
 from pygeocoder import Geocoder
 from bson.code import Code
 from bson import BSON
@@ -12,9 +10,11 @@ from pymongo import Connection
 from django.conf import settings
 from allauth.socialaccount.models import SocialToken, SocialAccount
 from django.http import HttpResponse, HttpResponseRedirect
+from twython import Twython
+import json, time, datetime
+
 ACCESS_TOKEN = ''
 ACCESS_TOKEN_SECRET =''
-import json, time, datetime
 
 
 def get_twitter_obj(token, secret):
@@ -30,13 +30,32 @@ class TwitterCounts():
         self.db_object = MongoConnection("localhost",27017,'foodtrade')
         self.table_name = 'twittercounts'
 
-    def get_twitter_followers_and_number(self,user_id, find_username, find_userid):
-        st = SocialToken.objects.get(account__user__id=user_id)
+    def get_twitter_followers_and_number(self,user_id, find_username):
+        st = SocialToken.objects.get(account__user__id=user_id)    
         ACCESS_TOKEN = st.token
-        ACCESS_TOKEN_SECRET = st.token_secret        
+        ACCESS_TOKEN_SECRET = st.token_secret
         user_twitter = get_twitter_obj(ACCESS_TOKEN, ACCESS_TOKEN_SECRET)
-        result = user_twitter.show_user(user_id=find_userid, screen_name=find_username)
 
-        self.db_object.update_upsert(self.table_name, )
+        try:
+            sa = SocialAccount.objects.get(user__username=find_username)
+            find_userid = sa.extra_data['id']
+        except:
+            from mainapp.classes.TweetFeed import Friends 
+            friend_obj = Friends()
+            friend = friends_obj.get_one({'friends.screen_name':find_username})
+            find_userid = friend['friends']['id']
+        try:
+            result = user_twitter.show_user(user_id=find_userid, screen_name=find_username)
+            self.db_object.update_upsert(self.table_name,{'screen_name':find_username,'twitter_id':find_userid, 'data':result}, 
+                {'screen_name':find_username,'twitter_id':find_userid, 'data':result})
+            return_values = {'followers_count':result['followers_count'], 'friends_count':result['friends_count']}          
+            return return_values
+        except:
+            result = self.db_object.get_one(self.table_name,{'screen_name':find_username,'twitter_id':find_userid})
+            return_values = {'followers_count':result['data']['followers_count'], 'friends_count':result['data']['friends_count']}
+            return return_values
+
+
+
 
        
