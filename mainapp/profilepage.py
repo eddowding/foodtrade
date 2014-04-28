@@ -25,6 +25,8 @@ import re
 from mainapp.classes.MongoConnection import MongoConnection
 from embedly import Embedly
 from django.conf import settings
+from mainapp.classes.TwitterCounts import TwitterCounts
+
 
 
 
@@ -94,10 +96,16 @@ def display_profile(request, username):
         
     parameters = {}
     
+    twitter_counts = TwitterCounts()
+    f_count = twitter_counts.get_twitter_followers_and_number(request.user.id, username)    
+    parameters['followers_count'] = f_count['followers_count']
+    parameters['friends_count'] = f_count['friends_count']
+
     parameters['banner_url'] = get_banner_url(username)
     food_form = FoodForm()
     parameters['form'] = food_form
     foo = AdminFoods()
+
     parameters['all_tags'] = foo.get_tags()
 
     user_profile = UserProfile()

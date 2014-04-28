@@ -455,7 +455,10 @@
               <tr>
                 <td colspan="3">
                   <div class="produce_detail">  
+                    {% if eachfood.photo_url %}
                     <img src="{{eachfood.photo_url}}" alt="{{eachfood.food_name}}" class="img-rounded img-responsive produce_large img-thumbnail " /> 
+                    
+                    {% endif %}
 
                     <span class="text-muted   ">{{eachfood.description}}</span>
                   </div> 
@@ -805,10 +808,10 @@
                       <div class="border-top  ">
 
                       {{intro_video|safe}}  <br />
-                      followers<br />
-                      followding<br />
-                      foods<br />
-                      connections<br />
+                      followers: {{followers_count}}<br />
+                      following: {{friends_count}}<br />
+                      foods:{{all_foods|length}}<br />
+                      connections:{{userinfo.trade_connections_no}}<br />
                       tags
 
 
