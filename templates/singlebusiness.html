@@ -223,26 +223,24 @@
  
           {% endif %} 
 
-      <div class="innerB">
-        <button class="btn btn-default filter active" data-filter="all">Show all</button>
-        <button class="btn btn-default filter" data-filter="mixit-filter-1">Meat</button>
-        <button class="btn btn-default filter" data-filter="mixit-filter-2">Poulty</button>
-        <button class="btn btn-default filter" data-filter="mixit-filter-2">Fruit</button>
-        <button class="btn btn-default filter" data-filter="mixit-filter-2">Vegetables</button>
-        <button class="btn btn-default filter" data-filter="mixit-filter-2">Dairy</button>
-        <button class="btn btn-default filter" data-filter="mixit-filter-2">Pantry</button>
-        <button class="btn btn-default filter" data-filter="mixit-filter-2">Baked goods</button> 
+      <div class="innerB button-group" id="filterFoods" data-filter-group="foodtype">
+        <button class="btn btn-default active" data-filter="*">Show all</button> 
+        
+        {% for eachfood in all_foods %}
+          <button class="btn btn-default" data-filter=".{{eachfood.parent_food|slugify}}">{{eachfood.parent_food}}</button> 
+        {% endfor %}
+
       </div>
-                        <div class="mixitup" id="mixitup-food">
+                    <div class="clearfix isotope"  id="foods"> 
                             <div class="row">
 
                             {% for eachfood in all_foods %}
  
-                                <div class="mixit-filter-1 mix col-md-3  {{eachfood.parent_food}}" style="margin-bottom: 15px;">
+                                <div class="food col-md-3  {{eachfood.parent_food|slugify}}" style="margin-bottom: 15px;">
                                   
                                     <div class="media-body" style="border:1px solid #ccc;"> 
                                     <a href="/activity/?f={{eachfood.food_name}}" class="lead" style="padding-left: 2px; font-weight:bold;">  
-                                     {{eachfood.parent_food}}> {{eachfood.food_name}}
+                                      {{eachfood.food_name}}
                                     </a> 
                                     <div class="flip">
                                       <div class="note">
@@ -250,7 +248,7 @@
                                         <div class="widget margin-none">
                                           <div class="row row-merge">
                                             <!-- <img src="{{eachfood.photo_url}}" alt="{{eachfood.food_name}}" class="  img-responsive produce_large" style="width:150px" />  -->
-                                            <img src="http://myzerowaste.com/wp-content/uploads/2009/01/carrots1.jpg" alt="" class="img-responsive" style="width: 100%; height: 100px; display: block; margin-left: auto; margin-right: auto;">
+                                            <img src="{{eachfood.photo_url}}" title="{{eachdet.food_name}}" rel="tooltip" class="img-responsive" style="width: 100%; height: 100px; display: block; margin-left: auto; margin-right: auto;">
                                             <div class="col-xs-12"> 
                                               {% if eachfood.description %}   
                                                 <p class="widget innerAll half">
@@ -448,6 +446,7 @@
                 <td colspan="3">
                   <div class="produce_detail">  
                     {% if eachfood.photo_url %}
+
                     <img src="{{eachfood.photo_url}}" alt="{{eachfood.food_name}}" class="img-rounded img-responsive produce_large img-thumbnail " /> 
                     
                     {% endif %}
@@ -1073,7 +1072,7 @@ top: -24px;" >
 </div>
 
 <div class="widget text-center bg-secondary">
-  <div class="innerTB text-white">
+  <div class="innerAll text-white">
       <div class="innerB"><i class=" icon-rocket fa fa-4x text-faded"></i>
       </div>
       <h2 class="strong margin-none text-white">Help us grow!</h2>
