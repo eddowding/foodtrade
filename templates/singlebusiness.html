@@ -591,70 +591,9 @@
                 </div>
                 {% endif %}
           </div>
-
-          <div class="clearfix">
-          {% if userprof.c_conn_no != 0 %}
-          <h4 style="margin-top: 50px;">We sell to <small>these stockists</small></h4>  
-
-          <div class="ftstrip ftstrip-mini"></div><br />
-           <div class="clearfix isotope" id="seller-cards">
-          {% for each in connections %}
-              {% if each.relation == "seller" or each.relation == "both" %}
-                  <div class="card card-business"> 
-                    <div class="content" style="background-image:url('{{each.banner_url}}');"> 
-
-                      <div class="text-center">
-                        <a href="/profile/{{each.username}}"><img src="{{each.photo}}" alt="{{each.name}}"
-                        class="img-thumbnail img-responsive" style="width:73px; height:73px;" /></a>
  
-                      </div>
-
-                      <div class="text">
-                    {% ifequal profile_id user_id %}
-                      <button type="button" class="close" aria-hidden="true" onclick="conn_handler('close_sell_to', {{profile_id}}, {{each.id}})">&times;</button>
-                      
-                      <!-- <button type="button" class="close" aria-hidden="true">&times;</button> -->
-                      {% endifequal %}
-                        <h5><a href="/profile/{{each.username}}">{{each.name}}</a> 
-                        </h5>  
-                        <p class="small">{{each.description|truncatechars:80}}</p>
-                      </div>
-                    </div>
-
-                    <div class="numbers clearfix">
-                      <p class="small text-center">  
-                        <a href="/profile/{{each.username}}">
+          </div>  <!-- end all-connections -->
  
-                        <span rel="tooltip" title="{{each.food_no}} foods" class="pull-left {% if each.food_no = 0 %}zero{% endif %}"><i class="fa fa-cutlery"></i> {{each.food_no}}</span>
-
-                        <span rel="tooltip" title="{{each.trade_conn_no}} connections" class=" {% if each.trade_conn_no = 0 %}zero{% endif %}"><i class="fa fa-link"></i> {{each.trade_conn_no}}</span>
-
-                        <span rel="tooltip" title="{{each.org_conn_no}} organisations" class="pull-right {% if each.org_conn_no = 0 %}zero{% endif %}"><i class="fa fa-group"></i> {{each.org_conn_no}}</span> 
-
-                        </a>
-                      </p>
-
-
-                    </div>
-                    {% if each.type|length == 0 or each.type|first == '' %}
-                    {% else %}
-                    <div class="numbers type text-center clearfix">
-                      <div class="tags tags-biztype pull-lef t">  
-                        {% for e in each.type %}
-                       <a href="/activity/?b={{e}}">{{e}}</a>
-                       {% endfor %}
-                      </div>
-                    </div>
-                    {% endif %}
-                  </div> 
-                  {% endif %}
-                  {% endfor %}
-                </div>
- {% endif %}
-                </div>
-</div>  <!-- end all-connections -->
-
-          <div class="clearfix"></div>
 
           </div> <!--  end connections -->
         <!-- // Tab content END -->
