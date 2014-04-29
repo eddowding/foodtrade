@@ -146,6 +146,8 @@
 </div>
 </div>
  
+
+ 
 <div class="widget widget-tabs widget-tabs-double-2 widget-tabs-responsive">
    
     <!-- Tabs Heading -->
@@ -161,10 +163,10 @@
         <li><a class="glyphicons certificate" href="#tabMemberships" data-toggle="tab"><i></i><span>Groups</span></a></li>
         <li class="premium"><a class="glyphicons list" rel="tooltip" title="Premium account holders only - upgrade from just &pound;45/yr" href="#tabBuy" data-toggle="tab"><i></i><span>Shopping list</span>
         </a>
-        </li>
-        <li class="premium"><a class="glyphicons group" rel="tooltip" title="Premium account holders only - upgrade from just &pound;45/yr" href="#tabBuy" data-toggle="tab"><i></i><span>People</span>
+        </li><!-- 
+        <li class="premium"><a class="glyphicons group" rel="tooltip" title="Premium account holders only - upgrade from just &pound;45/yr" href="#tabTeam" data-toggle="tab"><i></i><span>People</span>
         </a>
-        </li>
+        </li> -->
         <li class="premium"><a class="glyphicons google_maps" rel="tooltip" title="Premium account holders only - upgrade from just &pound;45/yr" href="#tabCustomers" data-toggle="tab"><i></i><span>Customers</span> 
        <!--  <div class="ribbon-wrapper small">
             <div class="ribbon danger">Upgrade</div>
@@ -511,7 +513,7 @@
 <div class="clearfix">
 {% if userprof.b_conn_no != 0 %} 
 
-            <div class="clearfix isotope" id="buyers-cards"> 
+            <div class="clearfix isotope js-isotope" data-isotope-options='{ "itemSelector": ".card" }'  id="buyers-cards"> 
           {% for each in connections %}
               {% if each.relation == "buyer" or each.relation == "both" %}
                   <div class="card card-business {% if each.type|length == 0 or each.type|first == '' %}
@@ -582,57 +584,18 @@
                 </div>
                 {% endif %}
           </div>
-
-          <div class="clearfix">
-          {% if userprof.c_conn_no != 0 %}
-          <h4 style="margin-top: 50px;">We sell to <small>these stockists</small></h4>  
-
-          <div class="ftstrip ftstrip-mini"></div><br />
-           <div class="clearfix isotope js-isotope" data-isotope-options='{ "itemSelector": ".card" }' id="seller-cards">
-          {% for each in connections %}
-              {% if each.relation == "seller" or each.relation == "both" %}
-                  <div class="card card-business"> 
-                    <div class="content" style="background-image:url('{{each.banner_url}}');"> 
-
-                      <div class="text-center">
-                        <a href="/profile/{{each.username}}"><img src="{{each.photo}}" alt="{{each.name}}"
-                        class="img-thumbnail img-responsive" style="width:73px; height:73px;" /></a>
  
-          </div>  <!-- end all-connections -->
- 
-                        <span rel="tooltip" title="{{each.food_no}} foods" class="pull-left {% if each.food_no = 0 %}zero{% endif %}"><i class="fa fa-cutlery"></i> {{each.food_no}}</span>
-
-                        <span rel="tooltip" title="{{each.trade_conn_no}} connections" class=" {% if each.trade_conn_no = 0 %}zero{% endif %}"><i class="fa fa-link"></i> {{each.trade_conn_no}}</span>
-
-                        <span rel="tooltip" title="{{each.org_conn_no}} organisations" class="pull-right {% if each.org_conn_no = 0 %}zero{% endif %}"><i class="fa fa-group"></i> {{each.org_conn_no}}</span> 
-
-                        </a>
-                      </p>
-
-
-                    </div>
-                    {% if each.type|length == 0 or each.type|first == '' %}
-                    {% else %}
-                    <div class="numbers type text-center clearfix">
-                      <div class="tags tags-biztype pull-lef t">  
-                        {% for e in each.type %}
-                       <a href="/activity/?b={{e}}">{{e}}</a>
-                       {% endfor %}
-                      </div>
-                    </div>
-                    {% endif %}
-                  </div> 
-                  {% endif %}
-                  {% endfor %}
-                </div>
- {% endif %}
-                </div>
 </div>  <!-- end all-connections -->
 
           <div class="clearfix"></div>
 
           </div> <!--  end connections -->
         <!-- // Tab content END -->
+
+
+        <div id="tabTeam" class="tab-pane widget-body-regular">
+
+        </div>
         
         <!-- Tab content -->
         <div id="tabSuppliers" class="tab-pane widget-body-regular">
