@@ -42,7 +42,7 @@
 
 <link href="{% static "css/jquery.tagit.css" %}" rel="stylesheet" type="text/css">
 <link href="{% static "css/tagit.ui-zendesk.css" %}" rel="stylesheet" type="text/css">
-<link href="{% static "css/embedly.css" %}" rel="stylesheet" type="text/css">
+
 
 <style type="text/css" media="all">
     /* fix rtl for demo */
@@ -1456,7 +1456,6 @@ top: -24px;" >
    {% block footer %}
       {% include "includes/not_logged_in_modal.html" %}
 <script src="/static/js/chosen.jquery.min.js" type="text/javascript"></script>
-  <script src="http://cdn.embed.ly/jquery.embedly-3.1.1.min.js" type="text/javascript"></script>
   <script src="/static/css/docsupport/prism.js" type="text/javascript" charset="utf-8"></script>
      <script src="{% static "js/hogan-2.0.0.js" %}"></script>
      <script src="{% static "js/typeahead.min.js" %}"></script>
@@ -1661,27 +1660,5 @@ customers = {{customers_str | safe}};
       
     </script>
      <script src="{% static "js/business-map.js" %}"></script>
-     <script type="text/javascript">
-        $('a').embedly({
-          display: function(obj){
-            // Overwrite the default display.
-            if (obj.type === 'video' || obj.type === 'rich'){
-              // Figure out the percent ratio for the padding. This is (height/width) * 100
-              var ratio = ((obj.height/obj.width)*100).toPrecision(4) + '%'
-         
-              // Wrap the embed in a responsive object div. See the CSS here!
-              var div = $('<div class="responsive-object">').css({
-                paddingBottom: ratio
-              });
-         
-              // Add the embed to the div.
-              div.html(obj.html);
-         
-              // Replace the element with the div.
-              $(this).replaceWith(div);
-            }
-          }
-        });
-     </script>
  {% endblock %}
 
