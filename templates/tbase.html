@@ -1066,7 +1066,12 @@ hid den
         rootPath = '../',
         DEV = false,
         componentsPath = '../assets/components/';
- 
+    var primaryColor = '#25ad9f',
+        dangerColor = '#b55151',
+        successColor = '#609450',
+        infoColor = '#4a8bc2',
+        warningColor = '#ab7a4b',
+        inverseColor = '#45484d'; 
     var themerPrimaryColor = primaryColor;
     </script>
  
@@ -1221,34 +1226,7 @@ $(document).ready(function() {
  
 
 // tweetlistener('tweetMessage', 'counter', 'contact_tweet', 'newtweet_btn');
-
-
-var $container = $('#foods').isotope({
-   itemSelector: '.food'
-});
-
  
-// filter items on button click
-$('#filterFoods').on( 'click', 'button', function() {
-  var filterValue = $(this).attr('data-filter');
-  $container.isotope({ filter: filterValue });
-});
-
-// $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
-//   $container.isotope('reLayout');
-// });
-
-
-// $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
-//   $container.css('visibility', 'hidden');
-//   $container.isotope('reLayout', showgrid);
-//   tabLoaded = true;
-// });
-
-
-
-
-
 
 function showgrid() {
   $container.css('visibility', 'visible');
