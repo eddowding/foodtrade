@@ -102,6 +102,7 @@ def display_profile(request, username):
     parameters['friends_count'] = f_count['friends_count']
 
     parameters['banner_url'] = get_banner_url(username = username, logged_useruid = request.user.id)
+
     food_form = FoodForm()
     parameters['form'] = food_form
     foo = AdminFoods()
@@ -833,27 +834,33 @@ def search_orgs_business(request, type_user):
 
 def get_banner_url(username=None, useruid=None, logged_useruid =None):
     # code to get profile banner url
-    try:
-        if username!=None:
-            account = SocialAccount.objects.get(user__username = username)
-        elif useruid!=None:
-            account = SocialAccount.objects.get(user__id = int(useruid))            
-        banner_url = account.extra_data['profile_banner_url']
+
+    tweet_feed_obj = TweetFeed()
+    banner_url = tweet_feed_obj.get_banner_url_from_twitter(logged_useruid, username)
+
+    if banner_url != 'none':
         banner_url = banner_url+'/web_retina'
-    except:
+
+    else:
         try:
-            friend_obj = Friends()
             if username!=None:
-                t_user = friend_obj.get_one({'friends.screen_name':username})
-            if useruid != None:
-                t_user = friend_obj.get_one({'friends.id':useruid})        
-            banner_url = t_user['friends.profile_banner_url']
-        except:
+                account = SocialAccount.objects.get(user__username = username)
+            elif useruid!=None:
+                account = SocialAccount.objects.get(user__id = int(useruid))            
+            banner_url = account.extra_data['profile_banner_url']
+            banner_url = banner_url+'/web_retina'
+
+        except:        
             try:
-                tweet_feed_obj = TweetFeed()
-                banner_url = tweet_feed_obj.get_banner_url_from_twitter(logged_useruid, username)
+                friend_obj = Friends()
+                if username!=None:
+                    t_user = friend_obj.get_one({'friends.screen_name':username})
+                if useruid != None:
+                    t_user = friend_obj.get_one({'friends.id':useruid})        
+                banner_url = t_user['friends']['profile_banner_url']
+                banner_url = banner_url+'/web_retina'
             except:
-                banner_url ='none'
+                banner_url ='none'    
     return banner_url
 
 

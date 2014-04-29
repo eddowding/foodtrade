@@ -275,19 +275,26 @@ class TweetFeed():
         ACCESS_TOKEN = st.token
         ACCESS_TOKEN_SECRET = st.token_secret
         user_twitter = get_twitter_obj(ACCESS_TOKEN, ACCESS_TOKEN_SECRET)
+
+        from mainapp.classes.TweetFeed import Friends 
+        friend_obj = Friends()
+
         try:
             sa = SocialAccount.objects.get(user__username=find_username)
             find_userid = sa.extra_data['id']
         except:
-            from mainapp.classes.TweetFeed import Friends 
-            friend_obj = Friends()
             friend = friends_obj.get_one({'friends.screen_name':find_username})
             find_userid = friend['friends']['id']
+
         try:
             result = user_twitter.show_user(user_id=find_userid, screen_name=find_username)
+            friend_obj.update_friends({'friends.screen_name':find_username}, {'friends':result})
             return result['profile_banner_url']
         except:
-            return 'none'
+            try:
+                return friend['friends']['profile_banner_url']
+            except:
+                return 'none'
 
 
 class UserProfile():
@@ -727,6 +734,9 @@ class Friends():
 
     def get_one(self, what):
         return self.db_object.get_one(self.table_name, what)
+
+    def update_friends(self, where, what):
+        return self.db_object.update_upsert(self.table_name, where, what)
 
 class InviteId():
     def __init__ (self):
