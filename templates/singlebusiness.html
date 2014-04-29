@@ -540,10 +540,7 @@
                         </h5>  
                         <p class="small">{{each.description|truncatechars:40}}</p>
                       </div>
-                    </div>
-
-
-                  
+                    </div> 
 
                       <div class="row row-merge border-top">
 
@@ -560,26 +557,24 @@
 
                         <!-- number of trade connections --> 
                         <div class="{% if show_foods %}col-sm-3{% else %}col-sm-6{% endif %}">
-                          <a href=""  rel="tooltip" title="{{each.trade_connections_no}} of trade connections" class="innerAll text-center display-block text-muted"><i class="fa fa-fw fa-link"></i> {{each.trade_conn_no}}</a>
+                          <a href=""  rel="tooltip" title="{{each.trade_conn_no}} of trade connections" class="innerAll text-center display-block text-muted"><i class="fa fa-fw fa-link"></i> {{each.trade_conn_no}}</a>
                         </div>
 
                         <!-- number of group membershpis -->  
                         <div class="{% if show_foods %}col-sm-3{% else %}col-sm-6{% endif %}">
-                          <a href=""  rel="tooltip" title="Member of {{each.organisation_connection_no}} groups or organisations"  class="innerAll text-center display-block text-muted"><i class="fa fa-fw fa-group"></i> {{each.org_conn_no}}</a>
+                          <a href=""  rel="tooltip" title="Member of {{each.org_conn_no}} groups or organisations"  class="innerAll text-center display-block text-muted"><i class="fa fa-fw fa-group"></i> {{each.org_conn_no}}</a>
                         </div> 
 
-                      </div>
-
-
-
-                          {% if type_user|length == 0 or type_user|first == '' %}
-                          {% else %}
-                          <div class="bg-gray border-top innerAll half text-center">  
-                           {% for eachtype in type_user %}
-                            <a href="/activity/?b={{eachtype}}">{{eachtype}}</a>
-                           {% endfor %}
-                          </div> 
-                          {% endif %} 
+                      </div> 
+                      
+                      {% if each.type|length == 0 or each.type|first == '' %}
+                      {% else %}
+                      <div class="bg-gray border-top innerAll half text-center">  
+                       {% for e in each.type %}
+                       <a href="/activity/?b={{e}}">{{e}}</a>
+                       {% endfor %}
+                      </div> 
+                      {% endif %} 
  
                   </div> 
                   {% endif %}
@@ -715,13 +710,14 @@
                       </div>
                     </div>
 
-                    <div class="numbers clearfix">
-                      <p class=" small  text-center">  
-                        <a href="/profile/{{each.username}}">
- 
-                        <span rel="tooltip" title="{{each.food_no}} foods" class="pull-left {% if each.food_no = 0 %}zero{% endif %}"><i class="fa fa-cutlery"></i> {{each.food_no}}</span>
+                    <div class="row row-merge border-top">
 
-                        <span rel="tooltip" title="{{each.trade_conn_no}} connections" class=" {% if each.trade_conn_no = 0 %}zero{% endif %}"><i class="fa fa-link"></i> {{each.trade_conn_no}}</span>
+                       
+                        <!-- number of foods sold -->
+                        <div class="{% if show_foods %}col-sm-3{% else %}col-sm-6{% endif %}">
+                          <a href="" class="innerAll text-center display-block text-muted" data-original-title="{{each.food_no}} foods" rel="tooltip"><i class="fa fa-fw fa fa-cutlery"></i> {{each.food_no}}</a>
+                        </div>
+
 
                         
                         <span rel="tooltip" title="{{each.org_conn_no}} organisations" class="pull-right {% if each.org_conn_no = 0 %}zero{% endif %}"><i class="fa fa-group"></i> {{each.org_conn_no}}</span> 
@@ -730,18 +726,34 @@
                         </a>
                       </p>
 
+                        <!-- number of vouches across all produce --> 
+                        <div class="{% if show_foods %}col-sm-3{% else %}col-sm-6{% endif %}">
+                          <a href=""  rel="tooltip" title="{{each.total_vouches}} number of vouches for all produce"  class="innerAll text-center display-block text-muted"><i class="fa fa-fw fa-thumbs-o-up"></i> {{each.total_vouches}}</a>
+                        </div> 
 
-                    </div>
-                    {% if each.type|length == 0 or each.type|first == '' %}
-                    {% else %}
-                    <div class="numbers type text-center clearfix">
-                      <div class="tags tags-biztype ">  
-                        {% for e in each.type %}
+                        <!-- number of trade connections --> 
+                        <div class="{% if show_foods %}col-sm-3{% else %}col-sm-6{% endif %}">
+                          <a href=""  rel="tooltip" title="{{each.trade_conn_no}} of trade connections" class="innerAll text-center display-block text-muted"><i class="fa fa-fw fa-link"></i> {{each.trade_conn_no}}</a>
+                        </div>
+
+
+                        <!-- number of group membershpis -->  
+                        <div class="{% if show_foods %}col-sm-3{% else %}col-sm-6{% endif %}">
+                          <a href=""  rel="tooltip" title="Member of {{each.org_conn_no}} groups or organisations"  class="innerAll text-center display-block text-muted"><i class="fa fa-fw fa-group"></i> {{each.org_conn_no}}</a>
+                        </div> 
+
+                      </div>
+ 
+
+                      {% if each.type|length == 0 or each.type|first == '' %}
+                      {% else %}
+                      <div class="bg-gray border-top innerAll half text-center">  
+                       {% for e in each.type %}
                        <a href="/activity/?b={{e}}">{{e}}</a>
                        {% endfor %}
-                      </div>
-                    </div>
-                    {% endif %}
+                      </div> 
+                      {% endif %} 
+ 
                   </div> 
                   {% endif %}
                   {% endfor %}
@@ -1238,7 +1250,7 @@ top: -24px;" >
 
                         <!-- number of vouches across all produce --> 
                         <div class="{% if show_foods %}col-sm-3{% else %}col-sm-6{% endif %}">
-                          <a href=""  rel="tooltip" title="{{userprof.VOUCH_COUNT}} number of vouches for all produce"  class="innerAll text-center display-block text-muted"><i class="fa fa-fw fa-thumbs-o-up"></i> {{total_vouches}}</a>
+                          <a href=""  rel="tooltip" title="{{userprof.total_vouches}} number of vouches for all produce"  class="innerAll text-center display-block text-muted"><i class="fa fa-fw fa-thumbs-o-up"></i> {{total_vouches}}</a>
                         </div> 
 
                         <!-- number of trade connections --> 
