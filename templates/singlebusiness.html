@@ -239,12 +239,9 @@
 
                             {% for eachfood in all_foods %}
  
-                                <div class="food col-md-3  {{eachfood.parent_food|slugify}}" style="margin-bottom: 15px;">
+                                <div class="food col-md-3 {{eachfood.parent_food|slugify}}" style="margin-bottom: 15px;">
                                   
-                                    <div class="media-body" style="border:1px solid #ccc;"> 
-                                    <a href="/activity/?f={{eachfood.food_name}}" class="lead" style="padding-left: 2px; font-weight:bold;">  
-                                      {{eachfood.food_name}}
-                                    </a> 
+                                    <div class="media-body"> 
                                     <div class="flip">
                                       <div class="note">
                                       <div class="face front">
@@ -308,7 +305,16 @@
 
                                       </div><!-- card -->
                                       </div><!-- flip -->
-                                      <div class="widget border-top-none   innerAll half bg-gray margin-none">
+                                      <div class="widget border-top innerAll half margin-none">
+
+                                      <h5>
+                                        <a href="/activity/?f={{eachfood.food_name}}" style="padding-left: 2px; font-weight:bold;">  
+                                        {{eachfood.food_name}}
+                                        </a> 
+                                      </h5>
+                                      </div>
+
+                                      <div class="widget border-top innerAll half bg-gray margin-none">
 
                                       <div class="pull-left">
 
