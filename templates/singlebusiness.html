@@ -51,6 +51,10 @@
 
 <!-- NEW -->
 <!-- <div class="layout-app">  -->
+
+ 
+
+
 <div class="innerAll">
  
 
@@ -152,24 +156,26 @@
         <li class="active"><a class="glyphicons list" href="#tabProduce" data-toggle="tab"><i></i><span>Produce</span></a></li>
         {% endif %}
         <li>
-        <a class="glyphicons log_in" href="#tabStockists" data-toggle="tab"><i></i><span>We buy from</span></a></li>
-        <li><a class="glyphicons log_out" href="#tabSuppliers" data-toggle="tab"><i></i><span>We sell to</span></a></li>
-        <li><a class="glyphicons certificate" href="#tabMemberships" data-toggle="tab"><i></i><span>Members of</span></a></li>
-        <li><a class="glyphicons truck" rel="tooltip" href="#tabDeliveries" data-toggle="tab"><i></i><span>Deliveries</span> 
-        </a></li> 
-        <li class="premium"><a class="glyphicons log_in" rel="tooltip" title="Premium account holders only - upgrade from just &pound;45/yr" href="#tabBuy" data-toggle="tab"><i></i><span>We buy</span>
-       
+        <a class="glyphicons log_in" href="#tabStockists" data-toggle="tab"><i></i><span>Buys from</span></a></li>
+        <li><a class="glyphicons log_out" href="#tabSuppliers" data-toggle="tab"><i></i><span>Sells to</span></a></li>
+        <li><a class="glyphicons certificate" href="#tabMemberships" data-toggle="tab"><i></i><span>Groups</span></a></li>
+        <li class="premium"><a class="glyphicons list" rel="tooltip" title="Premium account holders only - upgrade from just &pound;45/yr" href="#tabBuy" data-toggle="tab"><i></i><span>Shopping list</span>
         </a>
         </li>
-        <li class="premium"><a class="glyphicons cogwheel" rel="tooltip" title="Premium account holders only - upgrade from just &pound;45/yr" href="#tabCustomers" data-toggle="tab"><i></i><span>Customers</span> 
+        <li class="premium"><a class="glyphicons group" rel="tooltip" title="Premium account holders only - upgrade from just &pound;45/yr" href="#tabBuy" data-toggle="tab"><i></i><span>People</span>
+        </a>
+        </li>
+        <li class="premium"><a class="glyphicons google_maps" rel="tooltip" title="Premium account holders only - upgrade from just &pound;45/yr" href="#tabCustomers" data-toggle="tab"><i></i><span>Customers</span> 
        <!--  <div class="ribbon-wrapper small">
             <div class="ribbon danger">Upgrade</div>
         </div> -->
         </a></li> 
-        <li class="premium"><a class="glyphicons cogwheel" rel="tooltip" title="Premium account holders only - upgrade from just &pound;45/yr" href="#tabUpdates" data-toggle="tab"><i></i><span>Trades</span> 
+        <li class="premium"><a class="glyphicons bullhorn" rel="tooltip" title="Premium account holders only - upgrade from just &pound;45/yr" href="#tabUpdates" data-toggle="tab"><i></i><span>Trade</span> 
        <!--  <div class="ribbon-wrapper small">
             <div class="ribbon danger">Upgrade</div>
         </div> -->
+        </a></li> 
+        <li class="hidden"><a class="glyphicons truck" rel="tooltip" href="#tabDeliveries" data-toggle="tab"><i></i><span>Deliveries</span> 
         </a></li> 
       </ul>
     </div>
@@ -307,8 +313,8 @@
                                       </div><!-- flip -->
                                       <div class="widget border-top innerAll half margin-none">
 
-                                      <h5>
-                                        <a href="/activity/?f={{eachfood.food_name}}" style="padding-left: 2px; font-weight:bold;">  
+                                      <h5 class="margin-none">
+                                        <a href="/activity/?f={{eachfood.food_name}}" class="black">  
                                         {{eachfood.food_name}}
                                         </a> 
                                       </h5>
@@ -344,7 +350,7 @@
 
                                         {% if user.is_authenticated %}
                                         {% ifnotequal profile_id user_id %}
-                                         <span class="btn-bl ock" data-toggle="buttons">
+                                         <span data-toggle="buttons">
                                          {% if eachfood.logged_recommender %}
                                               <label class="fa  fa-thumbs-o-up btn btn-default btn-sm " rel="tooltip" title="Recommend this to others"> 
                                                 <input type="checkbox" checked="checked" onchange="recommend_food({{user_id}}, '{{eachfood.food_name}}', {{profile_id}}, '{{screen_name}}', this); return null;">
@@ -511,7 +517,7 @@
 <div class="clearfix">
 {% if userprof.b_conn_no != 0 %} 
 
-            <div class="clearfix isotope js-isotope" data-isotope-options='{ "itemSelector": ".card" }' id="buyers-cards"> 
+            <div class="clearfix isotope" id="buyers-cards"> 
           {% for each in connections %}
               {% if each.relation == "buyer" or each.relation == "both" %}
                   <div class="card card-business {% if each.type|length == 0 or each.type|first == '' %}
@@ -580,7 +586,7 @@
           <h4 style="margin-top: 50px;">We sell to <small>these stockists</small></h4>  
 
           <div class="ftstrip ftstrip-mini"></div><br />
-           <div class="clearfix isotope js-isotope" data-isotope-options='{ "itemSelector": ".card" }' id="seller-cards">
+           <div class="clearfix isotope" id="seller-cards">
           {% for each in connections %}
               {% if each.relation == "seller" or each.relation == "both" %}
                   <div class="card card-business"> 
@@ -673,7 +679,7 @@
                       
         <div id="all-connections" class="clearfix">
           {% if userprof.c_conn_no != 0 %}  
-           <div class="clearfix isotope js-isotope" data-isotope-options='{ "itemSelector": ".card" }' id="seller-cards">
+           <div class="clearfix isotope" id="seller-cards">
           {% for each in connections %}
               {% if each.relation == "seller" or each.relation == "both" %}
 
@@ -1394,103 +1400,7 @@ top: -24px;" >
         <div class="tab-content">
           
 
-
-
-
-<!-- FOODS LIST EXPERIEMNT  -->
-
-<div class="widget gridalicious-item not-responsive col-md-3" style="margin-bottom: 12px; zoom: 1; opacity: 1;">
-            <img src="http://myzerowaste.com/wp-content/uploads/2009/01/carrots1.jpg" alt="" class="img-responsive" style="width: auto; height: auto; display: block; margin-left: auto; margin-right: auto;">
-            <div class="ribbon-wrapper"><div class="ribbon primary"><i class="fa fa-fw fa-star-o "></i><strong>4.8</strong></div></div>
-
-            <div class="innerTB half text-center">
-            <div class="rating text-medium text-faded margin-top-none">
-                  <span class="star"></span>
-                  <span class="star"></span>
-                  <span class="star"></span>
-                  <span class="star active"></span>
-                  <span class="star"></span>
-                </div>
-            </div>
-            <div class="border-top innerAll">
-              <div class="pull-left">
-                <span class="text-muted small innerT innerR pull-left">Rated by:</span>
-                <img src="http://cdn.mosaicpro.biz/social/php/assets/images/people/35/13.jpg" class="img-circle pull-left innerR half" style="width: auto; height: auto; display: block; margin-left: auto; margin-right: auto;"><img src="http://cdn.mosaicpro.biz/social/php/assets/images/people/35/13.jpg" class="img-circle pull-left innerR half" style="width: auto; height: auto; display: block; margin-left: auto; margin-right: auto;"><img src="http://cdn.mosaicpro.biz/social/php/assets/images/people/35/13.jpg" class="img-circle pull-left innerR half" style="width: auto; height: auto; display: block; margin-left: auto; margin-right: auto;"><img src="http://cdn.mosaicpro.biz/social/php/assets/images/people/35/13.jpg" class="img-circle pull-left innerR half" style="width: auto; height: auto; display: block; margin-left: auto; margin-right: auto;"> 
-              </div>
-              <div class="pull-right">
-                <span class="text-primary strong lead pull-left innerT innerR half "><i class="icon-time-clock" data-toggle="tooltip" fata-placement="top" data-title="15 miutes ago"></i></span>
-                <a href="#"><img src="http://cdn.mosaicpro.biz/social/php/assets/images/people/35/13.jpg" class="img-circle pull-right" data-toggle="tooltip" fata-placement="top" data-title="Marie" style="width: auto; height: auto; display: block; margin-left: auto; margin-right: auto;"></a>
-              </div>
-            </div>
-              <div class="clearfix"></div>
-          </div>
-
-
-<div class="foods clearfix" style="margin: 10px 0;">
-{% for eachfood in all_foods %}
-
-
-<div class="card">
-
-<div class="content" style="background: url('http://myzerowaste.com/wp-content/uploads/2009/01/carrots1.jpg'); background-size: cover; min-height: 80px; position: relative; "><!--{{eachfood.photo_url}}-->
  
-  <div class="text" style="position: absolute; width: 100%; bottom: 0;"> 
-  {% ifequal profile_id user_id %}
-    <button type="button" class="close" aria-hidden="true" onClick="delete_food({{profile_id}}, '{{eachfood.food_name}}', this)">&times;</button>
-  {% endifequal %}
-
-  <h5><a href="/activity/?f={{eachfood.food_name}}">{{eachfood.food_name}}</a></h5> 
-  {% if eachfood.description %}<p class="small">{{eachfood.description}}</p>{% endif %}
-
-  </div>
-</div>
-
-<div class="numbers clearfix">
-
-  <a href="" data-toggle="modal" data-target="#modal_food_detail" class="btn btn-sm btn-default pull-left" data-container="body" onClick="get_food_detail('{{profile_id}}', '{{eachfood.food_name}}', '{{eachfood.description}}', '{{eachfood.food_tags}}', '{{eachfood.photo_url}}', '{{eachfood.recomm_tags|safe}}')"><i class="fa fa-edit" title="Edit" ></i></a>
-
-{% if user.is_authenticated %}
-{% ifnotequal profile_id user_id %}
- <div class="btn-block" data-toggle="buttons">
- {% if eachfood.logged_recommender %}
-      <label class="fa fa-thumbs-o-up btn btn-default btn-sm active" rel="tooltip" title="Recommend this to others">
-        <input type="checkbox" checked="checked" onchange="recommend_food({{user_id}}, '{{eachfood.food_name}}', {{profile_id}}, '{{screen_name}}', this); return null;">
-      </label>
-  {% else %}
-      <label class="fa fa-thumbs-o-up btn btn-default btn-sm" rel="tooltip" title="Recommend this to others" data-toggle="modal" data-target="#modal_tweet_recomm">
-        <input type="checkbox" onchange="recommend_food({{user_id}}, '{{eachfood.food_name}}', {{profile_id}}, '{{screen_name}}', this); return null;">
-      </label>
-  {% endif %}
-  </div>
-{% endifnotequal %}
-{% endif %}
-
- {% for eachdet in eachfood.recomm_details %}
-      <div class="pull-right">
-        <img class="pull-left" style="margin:0px 4px 0 0; width:25px" src={{eachdet.photo}} rel="tooltip" title="{{eachdet.name}}"/>
-      </div>
-     {% endfor %}
-   {% ifnotequal eachfood.vouch_count 0 %}
-     <div class="pull-right">
-       <span class="badge badge-default" style="margin:3px 4px 0 0;" rel="tooltip" title="{{eachfood.vouch_count}} recommendations on {{eachfood.food_name}}">{{eachfood.vouch_count}}</span>
-    </div>
-    {% endifnotequal %}
- 
- </div><!-- numbers -->
-
- 
-
- 
-
-
-</div>
-{% endfor %}
-</div>
-
-
-<!-- END OF FOOD LIST EXPERIEMTN -->
-
-
           
  
           <div class="tab-pane fade" id="customers">
@@ -1555,6 +1465,31 @@ top: -24px;" >
  
 
  $.fn.editable.defaults.mode = 'inline';
+
+
+var $container1 = $('#foods').isotope({
+   itemSelector: '.food'
+});
+
+// filter items on button click
+$('#filterFoods').on( 'click', 'button', function() {
+  var filterValue = $(this).attr('data-filter');
+  $container1.isotope({ filter: filterValue });
+});
+
+var $container2 = $('#buyers-cards').isotope({
+   itemSelector: '.card'
+});
+
+var $container3 = $('#seller-cards').isotope({
+   itemSelector: '.card'
+});
+
+$('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+  $container2.isotope('reLayout');
+  $container3.isotope('reLayout');
+});
+ 
  
 
 
