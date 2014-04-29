@@ -126,7 +126,7 @@ def display_profile(request, username):
 
 
     rec_food_obj = RecommendFood()
-    parameters['total_vouches'] =rec_food_obj.get_recommend_count(userprof['useruid'])
+    parameters['total_vouches'] = rec_food_obj.get_recommend_count(userprof['useruid'])
 
     parameters['profile_id'] = userprof['useruid']
     parameters['sign_up_as'] = userprof['sign_up_as']
@@ -147,6 +147,8 @@ def display_profile(request, username):
     except:
         pass
     
+    parameters['we_buy'] = userprof.get('we_buy') if userprof.get('we_buy')!=None else ''
+
     if userprof.get('business_org_name')!=None:
         parameters['name'] = userprof.get('business_org_name') if (userprof['sign_up_as'] == 'Business' or userprof['sign_up_as'] == 'Organisation') \
         and userprof.get('business_org_name')!='' else userprof['name']
@@ -246,6 +248,8 @@ def display_profile(request, username):
         if request.user.is_authenticated():
             parameters['connections'], parameters['logged_conn'] = get_connections(userprof['useruid'], request.user.id)
             parameters['all_foods'] = get_all_foods(userprof['useruid'], request.user.id)
+            parameters['all_buying_foods'] = get_all_buying_foods(userprof['useruid'], request.user.id)
+            
             parameters['organisations'] = get_organisations(userprof['useruid'])
             parameters['customers'], parameters['logged_customer'] = get_customers(userprof['useruid'], request.user.id)
         else:
@@ -317,6 +321,7 @@ def edit_profile(request, username):
             parameters['sign_up_as'] = userprof['sign_up_as']
             parameters['username'] = username
             parameters['video_url'] = userprof.get('video_url') if userprof.get('video_url')!=None else ''
+            parameters['we_buy'] = userprof.get('we_buy') if userprof.get('we_buy')!=None else ''
 
             parameters['company_num'] = userprof.get('company_num') if userprof.get('company_num')!=None else ''
             parameters['website_url'] = userprof.get('website_url') if userprof.get('website_url')!=None else ''
@@ -376,6 +381,7 @@ def edit_profile(request, username):
         newsletter_freq = request.POST['newsletter_freq']
         display_name = request.POST['display_name']
         video_url = request.POST.get('video_url')
+        we_buy = request.POST.get('we_buy')
         email = request.POST['email']
         # name = first_name + " " + last_name
         description = request.POST['description']
@@ -479,11 +485,74 @@ def get_all_foods(user_id, logged_in_id = None):
         if each.get('description')!=None:
             data['description'] = each.get('description')
 
-        data['how_much'] = each.get('how_much') if each.get('how_much')!='' else ''
-        data['how_often'] = each.get('how_often') if each.get('how_often')!=None else ''
+        data['how_much'] = each.get('how_much') if each.get('how_much')!=None else ''
+        data['how_often'] = each.get('how_often') if each.get('how_often')!=None else 'How often'
         data['month_list'] = each.get('month_list') if each.get('month_list')!=None else []
 
 
+        if each.get('food_tags')!=None:
+            # tags_list = each.get('food_tags').split(',')
+            data['food_tags'] = each.get('food_tags')
+        if each.get('photo_url')== None or each.get('photo_url')== '':
+            data['photo_url'] = ''
+        else:
+            data['photo_url'] = each.get('photo_url')
+        data['recomm_tags'] = tags_freq
+
+        #find and append food hierarchy
+        for each_adm in adm_foods:
+            if each_adm.get('childrens')!=None:
+                foo_list = [x['node'] for x in each_adm['childrens']]
+                if each['food_name'] in foo_list:
+                    data['parent_food'] = each_adm['node']
+                    break
+        final_foods.append(data)
+    final_foods = sorted(final_foods, key=lambda x: -x['vouch_count'])
+    return final_foods
+
+def get_all_buying_foods(user_id, logged_in_id = None):
+    usr_profile = UserProfile()
+    # find out hierarchy
+    adm = AdminFoods()
+    adm_foods = adm.get_tags()
+
+    foo = Food()
+    all_foods = foo.get_webuy_foods_by_userid(user_id)
+    recomm = RecommendFood()
+    final_foods = []
+    for each in all_foods:
+        # get common tags for each foods
+        tags_freq = get_tags_freq(each['food_name'])
+        all_rec = recomm.get_recomm(user_id, each['food_name'])
+        recomm_details =  []
+        logged_recommender = False
+
+        for each_rec in all_rec:
+            if logged_in_id != None and each_rec['recommenderuid'] == logged_in_id:
+                logged_recommender=True
+            myid = each_rec['recommenderuid']
+
+            userprof = usr_profile.get_profile_by_id(myid)
+            try:
+                # account = SocialAccount.objects.get(user__id = myid)
+                if userprof.get('business_org_name')!=None:
+                    myname = userprof.get('business_org_name') if (userprof['sign_up_as'] == 'Business' or userprof['sign_up_as'] == 'Organisation') \
+                    and userprof.get('business_org_name')!='' else userprof['name']
+                else:
+                    myname = userprof['name']                
+                recomm_details.append({'id': myid,
+                    'name': myname,
+                    # 'name': userprof.get('business_org_name') if userprof['sign_up_as'] == 'Business' or userprof['sign_up_as'] == 'Organisation' else userprof['name'],
+                    # 'name': account.extra_data['name'],
+                    'screen_name': userprof['screen_name'],
+                    'photo': userprof['profile_img']})
+            except:
+                pass
+        random.shuffle(recomm_details)
+        data = {'food_name': each['food_name'], 'vouch_count': len(all_rec), 'recomm_details': recomm_details[:8],
+        'logged_recommender': logged_recommender}
+        if each.get('description')!=None:
+            data['description'] = each.get('description')
         if each.get('food_tags')!=None:
             # tags_list = each.get('food_tags').split(',')
             data['food_tags'] = each.get('food_tags')
@@ -556,10 +625,14 @@ def get_connections(user_id, logged_in_id = None):
                 myname = usr_pr.get('business_org_name') if (usr_pr['sign_up_as'] == 'Business' or usr_pr['sign_up_as'] == 'Organisation') \
                 and usr_pr.get('business_org_name')!='' else usr_pr['name']
             else:
-                myname = usr_pr['name']                            
+                myname = usr_pr['name']           
+            rec_food_obj = RecommendFood()
+            total_vouches = rec_food_obj.get_recommend_count(each['c_useruid'])
+
             final_connections.append({'id': each['c_useruid'],
              # 'name': account.extra_data['name'],
              'name': myname,
+             'total_vouches' : total_vouches,
              'description': usr_pr['description'],
              'photo': usr_pr['profile_img'],
              'username' : usr_pr['username'],

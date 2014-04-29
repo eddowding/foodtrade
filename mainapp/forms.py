@@ -38,7 +38,7 @@ class FoodForm(forms.Form):
     food_duplicate = forms.CharField(required=False)
     how_much = forms.CharField(required=False, widget=forms.TextInput(attrs={'class' : 'form-control',
         'placeholder': 'How much?'}))
-    how_often = forms.ChoiceField(choices=[("*", "How often")]+[(x, x) for x in ['daily', 'monthly', 'seasonally', 'annually']],
+    how_often = forms.ChoiceField(choices=[("How often", "How often")]+[(x, x) for x in ['daily', 'monthly', 'seasonally', 'annually']],
         widget=forms.Select(attrs={'class' : 'form-control btn-sm selectpicker'}))
     
 

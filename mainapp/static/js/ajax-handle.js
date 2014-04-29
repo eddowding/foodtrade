@@ -120,7 +120,7 @@ function invite_connect(prof_username, logged_username){
 	ajax_request("post_tweet_admin", 'create_conn', {message: message});
 }
 
-function add_food(prof_id, user_id, ind_status){
+function add_food(prof_id, we_buy){
 	if (validate_login()['status'] == '1'){
 		// if(ind_status == 'individual'){
 		// 	alert('{{all_foods}}');
@@ -131,7 +131,9 @@ function add_food(prof_id, user_id, ind_status){
 		// }
 		var elements = document.getElementsByClassName('search-choice');
 	    var food = elements[0].children[0].innerHTML;
-		var data = {useruid: prof_id, food_name: food, created_by: user_id};
+	    we_buy = typeof we_buy !== 'undefined' ? we_buy : '';
+	    var data = {useruid: prof_id, food_name: food};
+	    data['we_buy'] = we_buy== '' ? 0 : 1;
 		ajax_request("addfood", 'food_ajax', {data: JSON.stringify(data)});
 
 	}
