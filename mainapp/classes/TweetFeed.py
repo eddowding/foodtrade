@@ -270,6 +270,38 @@ class TweetFeed():
         except:
             return {'status':0, 'activity':'follow', '_id':my_id, 'message':'Already Followed'}
 
+    def get_banner_url_from_twitter(self,user_id, find_username=None):
+        print find_username, user_id
+        st = SocialToken.objects.get(account__user__id=user_id)    
+        ACCESS_TOKEN = st.token
+        ACCESS_TOKEN_SECRET = st.token_secret
+        user_twitter = get_twitter_obj(ACCESS_TOKEN, ACCESS_TOKEN_SECRET)
+
+        from mainapp.classes.TweetFeed import Friends 
+        friend_obj = Friends()
+        friend = friend_obj.get_one({'friends.screen_name':find_username})
+
+        try:
+            find_userid = friend['friends']['id']
+        except:
+            try:
+                sa = SocialAccount.objects.get(user__username=find_username)
+                find_userid = sa.extra_data['id']
+            except:
+                return 'none'
+
+        try:
+            result = user_twitter.show_user(user_id=find_userid, screen_name=find_username)
+            return result['profile_banner_url']
+        except:
+            try:
+                return friend['friends']['profile_banner_url']
+            except:
+                return 'none'
+        
+
+
+
 class UserProfile():
     def __init__ (self):
         self.db_object = MongoConnection("localhost",27017,'foodtrade')
@@ -662,6 +694,9 @@ class RecommendFood():
     def delete_recomm(self, business_id, food_name, recommender_id):
         self.db_object.update(self.table_name,{'business_id': business_id, 'food_name': food_name, 'recommender_id': recommender_id}, {'deleted':1})
 
+    def get_recommend_count(self, useruid):
+        return self.db_object.get_count(self.table_name, {'recommender_id':useruid})
+
 class Friends():
     def __init__ (self):
         self.db_object = MongoConnection("localhost",27017,'foodtrade')
@@ -706,6 +741,12 @@ class Friends():
         result = self.db_object.get_one(self.table_name,
             {'friends.screen_name':screen_name, 'username':username})
         return result
+
+    def get_one(self, what):
+        return self.db_object.get_one(self.table_name, what)
+
+    def update_friends(self, where, what):
+        return self.db_object.update_upsert(self.table_name, where, what)
 
 class InviteId():
     def __init__ (self):

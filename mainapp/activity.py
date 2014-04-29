@@ -216,7 +216,7 @@ def get_search_parameters(request):
     for i in range(len(results)):
         from mainapp.profilepage import get_banner_url
         from mainapp.profilepage import get_video_html
-        banner_url = get_banner_url(results[i]['user']['username'])
+        banner_url = get_banner_url(username=results[i]['user']['username'],logged_useruid=request.user.id)
         results[i]['user']['banner_url'] = banner_url
         user_prof = UserProfile()
         try:
@@ -297,4 +297,3 @@ def get_search_parameters(request):
 def home(request): 
     # print request['subscribed']
     return render_to_response('activity.html',get_search_parameters(request) ,context_instance=RequestContext(request))
-

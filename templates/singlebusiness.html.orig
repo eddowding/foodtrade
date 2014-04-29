@@ -42,6 +42,7 @@
 
 <link href="{% static "css/jquery.tagit.css" %}" rel="stylesheet" type="text/css">
 <link href="{% static "css/tagit.ui-zendesk.css" %}" rel="stylesheet" type="text/css">
+<link href="{% static "css/embedly.css" %}" rel="stylesheet" type="text/css">
 
 <style type="text/css" media="all">
     /* fix rtl for demo */
@@ -50,34 +51,38 @@
 
 <!-- NEW -->
 <!-- <div class="layout-app">  -->
-<div class="innerAll">
 
-<div class="row">
-  <div class="col-sm-12">
-  <div class="timeline-cover">  
-  <div class="cover image ">
+ 
+
+
+<div class="innerAll">
+ 
+
+    <div class="row">
+        <div class="col-lg-9 col-md-8">
+
+          <div class="timeline-cover">  
+  <div class="cover ">
     <div class="top">
     <div id="carousel-1" class="carousel slide"> 
       <!-- Items -->
       <div class="carousel-inner">
-
-          <!-- Item -->
+ 
           <div class="item active">
-              <div style="width:100%; height: 450px; " id="map"></div> 
-          </div>
-          <!-- // Item END -->
-
-          <!-- Item -->
+              <div style="width:100%; height: 350px; " id="map"></div> 
+          </div> 
+ 
+          {% ifnotequal banner_url 'none' %}
+            <div class="item">
+                <img src="{{banner_url}}" class="img-responsive">
+            </div>
+          {% endifnotequal %} 
+ 
+          {% if intro_video %}
           <div class="item">
-              <img src="{{banner_url}}" class="img-responsive">
-          </div>
-          <!-- // Item END -->
-
-          <!-- Item -->
-          <div class="item">
-              <img src="{{banner_url}}" class="img-responsive">
-          </div>
-          <!-- // Item END -->    
+            <div style="width:100%; height: 350px;">{{intro_video|safe}}</div>                
+          </div>   
+          {% endif %}  
       </div>
       <!-- // Items END -->
       <!-- Navigation -->
@@ -88,16 +93,22 @@
           <span class="fa fa-next"></span>
       </a>
       <!-- // Navigation END -->
-  </div> 
+    </div> 
 
 
     </div>
     <ul class="list-unstyled">
       <li><a href="#" data-target="#carousel-1" data-slide-to="0"><i class="fa fa-fw fa-clock-o"></i> <span>Map</span></a></li> 
+      {% if intro_video %} 
+      <li><a href="#" data-target="#carousel-1" data-slide-to="2"><i class="icon-photo-camera"></i> <span>Video</span> </a></li>  
+      {% endif %}  
+
+      {% ifnotequal banner_url 'none' %}
       <li><a href="#" data-target="#carousel-1" data-slide-to="1"><i class="icon-photo-camera"></i> <span>Photos</span> </a></li>  
+      {% endifnotequal %} 
  
       {% if prof_subscribed %}
-      <li class="pull-right" style="background: green;"><a href="#">
+      <li class="pull-right" style="background: #88BC62;"><a href="#">
       <i class="fa fa-check" style="color: #fff;"></i>
       <span>Verified</span></a>
       </li> 
@@ -111,22 +122,9 @@
     </ul>
   </div>
   <div class="widget cover image">  
-    <div class="widget-body padding-none margin-none">
-      <div class="photo">
-        <img src="{{pic_url}}" class="img-circle"> 
-      </div>
-      <div class="innerAll border-right pull-left">
-        <h3 class="margin-none">{{name}}</h3> 
-          {% if type_user|length == 0 or type_user|first == '' %}
-          {% else %}
-          <span class="tags tags-biztype  ">  
-            {% for eachtype in type_user %}
-           <a href="/activity/?b={{eachtype}}">{{eachtype}}</a>
-           {% endfor %}
-          </span> {% endif %} 
-      </div>
-      <div class="innerAll pull-left ">
-        <span class="margin-none">{{description}}</span>  
+    <div class="widget-body padding-none margin-none"> 
+      <div class="innerAll"> 
+        <p class="lead margin-none">{{description}}</p>  
         <div class="{% if loc.lat == -82.86275189999999 and loc.lon == -135.10000000000002 %} hidden {% endif %}">
           <div class="meta">
             {% if loc.lat == -82.86275189999999 and loc.lon == -135.10000000000002 %}
@@ -146,42 +144,50 @@
     <div class="clearfix"></div>
   </div>
 </div>
-  </div>
 </div>
-
-
-    <div class="row">
-        <div class="col-lg-9 col-md-8">
-
-
+ 
 <div class="widget widget-tabs widget-tabs-double-2 widget-tabs-responsive">
    
     <!-- Tabs Heading -->
     <div class="widget-head">
 
-      <ul>
+      <ul class="clearfix">
         {% if show_foods %}
-        <li class="active"><a class="glyphicons list" href="#tabProduce" data-toggle="tab"><i></i><span>Our Produce</span></a></li>
+        <li class="active"><a class="glyphicons list" href="#tabProduce" data-toggle="tab"><i></i><span>Produce</span></a></li>
         {% endif %}
-        <li><a class="glyphicons log_in" href="#tabStockists" data-toggle="tab"><i></i><span>We buy from</span></a></li>
-        <li><a class="glyphicons log_out" href="#tabSuppliers" data-toggle="tab"><i></i><span>We supply</span></a></li>
-        <li><a class="glyphicons group" href="#tabMemberships" data-toggle="tab"><i></i><span>Memberships</span></a></li>
-        <li class="premium"><a class="glyphicons log_in" rel="tooltip" title="Premium account holders only - upgrade from just &pound;45/yr" href="#tabBuy" data-toggle="tab"><i></i><span>We buy</span>
-        <div class="ribbon-wrapper small">
-            <div class="ribbon danger">Upgrade</div>
-        </div>
+        <li>
+<<<<<<< HEAD
+        <a class="glyphicons log_in" href="#tabStockists" data-toggle="tab"><i></i><span>We buy from</span></a></li>
+        <li><a class="glyphicons log_out" href="#tabSuppliers" data-toggle="tab"><i></i><span>We sell to</span></a></li>
+        <li><a class="glyphicons certificate" href="#tabMemberships" data-toggle="tab"><i></i><span>Members of</span></a></li>
+        <li><a class="glyphicons truck" rel="tooltip" href="#tabDeliveries" data-toggle="tab"><i></i><span>Deliveries</span> 
+        </a></li> 
+        <!-- class="premium" -->
+        {% if we_buy %}
+        <li><a class="glyphicons log_in" rel="tooltip" href="#tabBuy" data-toggle="tab"><i></i><span>We buy</span>
+        </a></li>{% endif %}
+        <li class="premium"><a class="glyphicons cogwheel" rel="tooltip" title="Premium account holders only - upgrade from just &pound;45/yr" href="#tabCustomers" data-toggle="tab"><i></i><span>Customers</span> 
+=======
+        <a class="glyphicons log_in" href="#tabStockists" data-toggle="tab"><i></i><span>Buys from</span></a></li>
+        <li><a class="glyphicons log_out" href="#tabSuppliers" data-toggle="tab"><i></i><span>Sells to</span></a></li>
+        <li><a class="glyphicons certificate" href="#tabMemberships" data-toggle="tab"><i></i><span>Groups</span></a></li>
+        <li class="premium"><a class="glyphicons list" rel="tooltip" title="Premium account holders only - upgrade from just &pound;45/yr" href="#tabBuy" data-toggle="tab"><i></i><span>Shopping list</span>
         </a>
         </li>
-        <li class="premium"><a class="glyphicons cogwheel" rel="tooltip" title="Premium account holders only - upgrade from just &pound;45/yr" href="#tabCustomers" data-toggle="tab"><i></i><span>Customers</span> 
-        <div class="ribbon-wrapper small">
+        <li class="premium"><a class="glyphicons group" rel="tooltip" title="Premium account holders only - upgrade from just &pound;45/yr" href="#tabBuy" data-toggle="tab"><i></i><span>People</span>
+        </a>
+        </li>
+        <li class="premium"><a class="glyphicons google_maps" rel="tooltip" title="Premium account holders only - upgrade from just &pound;45/yr" href="#tabCustomers" data-toggle="tab"><i></i><span>Customers</span> 
+>>>>>>> 019bb80398b3720cdac3f45ba58f2f39533c2640
+       <!--  <div class="ribbon-wrapper small">
             <div class="ribbon danger">Upgrade</div>
-        </div>
+        </div> -->
         </a></li> 
-        <li class="premium"><a class="glyphicons truck" rel="tooltip" title="Premium account holders only - upgrade from just &pound;45/yr" href="#tabDeliveries" data-toggle="tab"><i class="fa fa-truck"></i><span>Deliveries</span> 
-        <div class="ribbon-wrapper small">
+        <li class="premium"><a class="glyphicons bullhorn" rel="tooltip" title="Premium account holders only - upgrade from just &pound;45/yr" href="#tabUpdates" data-toggle="tab"><i></i><span>Trade</span> 
+       <!--  <div class="ribbon-wrapper small">
             <div class="ribbon danger">Upgrade</div>
-        </div>
-        </a></li> 
+        </div> -->
+        </a></li>  
       </ul>
     </div>
     <!-- // Tabs Heading END -->
@@ -193,15 +199,12 @@
           <div  class="tab-pane active widget-body-regular" id="tabProduce">
   
           {% if user.is_authenticated %}
-          <div class="row">
-          <div class="col-md-12 ">
-          <div class=" well well-sm clearfix">
-          <div class="row">
+          <div class="row" style="padding: 20px 0;"> 
             <div class="col-md-8 col-sm-8 col-xs-7">
               {% if user.is_authenticated %}
                   <div class="input-group"> 
                         <div class='pull-left'>
-                        <select id="myselect" data-placeholder="Add foods you can buy here." style="height:20px; width: 192px; padding: 15px 5px;" multiple class="chosen-select" >
+                        <select id="myselect" data-placeholder="Add produce available here" style="height:20px; width: 192px; padding: 15px 5px;" multiple class="chosen-select" >
                         <option value=""></option> 
                        {% for each in all_tags %}
                           <optgroup label={{each.node}}>
@@ -219,7 +222,7 @@
                           <div class="pull-left">
                         <span class="input-group-btn">
                 
-                            <button class="btn btn-success btn-sm" id="adfoo_id" rel="tooltip" style="height:34px;" onClick="add_food({{profile_id}}, {{user_id}})" {% if not user.is_authenticated %} title="Please log in to use this feature." {% endif %} > Add</button>
+                            <button class="btn btn-success btn-sm" id="adfoo_id" rel="tooltip" style="height:34px;" onClick="add_food({{profile_id}})" {% if not user.is_authenticated %} title="Please log in to use this feature." {% endif %} > Add</button>
                         </span></div>
                       </div>  
               {% endif %}
@@ -235,29 +238,25 @@
               </div>
              </form>
             </div>
+
             </div>
+ 
+          {% endif %} 
 
-          </div>
-          </div>
-          </div>
-          {% endif %}
+      <div class="innerB button-group" id="filterFoods" data-filter-group="foodtype">
+        <button class="btn btn-default active" data-filter="*">Show all</button> 
+        
+        {% for eachfood in all_foods %}
+          <button class="btn btn-default" data-filter=".{{eachfood.parent_food|slugify}}">{{eachfood.parent_food}}</button> 
+        {% endfor %}
 
-      <div class="innerB">
-        <button class="btn btn-default filter active" data-filter="all">Show all</button>
-        <button class="btn btn-default filter" data-filter="mixit-filter-1">Meat</button>
-        <button class="btn btn-default filter" data-filter="mixit-filter-2">Poulty</button>
-        <button class="btn btn-default filter" data-filter="mixit-filter-2">Fruit</button>
-        <button class="btn btn-default filter" data-filter="mixit-filter-2">Vegetables</button>
-        <button class="btn btn-default filter" data-filter="mixit-filter-2">Dairy</button>
-        <button class="btn btn-default filter" data-filter="mixit-filter-2">Pantry</button>
-        <button class="btn btn-default filter" data-filter="mixit-filter-2">Baked goods</button>
       </div>
-                        <div class="mixitup" id="mixitup-food">
+                    <div class="clearfix isotope"  id="foods"> 
                             <div class="row">
 
                             {% for eachfood in all_foods %}
  
-                                <div class="mixit-filter-1 mix col-md-3" style="margin-bottom: 15px;">
+                                <div class="food col-md-3 {{eachfood.parent_food|slugify}}" style="margin-bottom: 15px;">
                                   
                                     <div class="media-body"> 
                                     <div class="flip">
@@ -266,11 +265,8 @@
                                         <div class="widget margin-none">
                                           <div class="row row-merge">
                                             <!-- <img src="{{eachfood.photo_url}}" alt="{{eachfood.food_name}}" class="  img-responsive produce_large" style="width:150px" />  -->
-                                            <img src="http://myzerowaste.com/wp-content/uploads/2009/01/carrots1.jpg" alt="" class="img-responsive" style="width: 100%; height: 100px; display: block; margin-left: auto; margin-right: auto;">
-                                            <div class="col-xs-12">
-                                              <a href="/activity/?f={{eachfood.food_name}}" class="lead">  
-                                                {{eachfood.food_name}}
-                                              </a>   
+                                            <img src="{{eachfood.photo_url}}" title="{{eachdet.food_name}}" rel="tooltip" class="img-responsive" style="width: 100%; height: 100px; display: block; margin-left: auto; margin-right: auto;">
+                                            <div class="col-xs-12"> 
                                               {% if eachfood.description %}   
                                                 <p class="widget innerAll half">
                                                   {{eachfood.description}} 
@@ -326,33 +322,60 @@
 
                                       </div><!-- card -->
                                       </div><!-- flip -->
-                                      <div class="widget border-top-none hidden innerAll half bg-gray margin-none">
+                                      <div class="widget border-top innerAll half margin-none">
+
+                                      <h5 class="margin-none">
+                                        <a href="/activity/?f={{eachfood.food_name}}" class="black">  
+                                        {{eachfood.food_name}}
+                                        </a> 
+                                      </h5>
+                                      </div>
+
+                                      <div class="widget border-top innerAll half bg-gray margin-none">
+
+                                      <div class="pull-left">
+
+                   {% ifequal profile_id user_id %}
+                      
+
+                     <a href="" data-toggle="modal" data-target="#modal_food_detail" class="btn btn-sm btn-default" data-container="body" onClick="get_food_detail('{{profile_id}}', '{{eachfood.food_name}}', '{{eachfood.description}}', '{{eachfood.food_tags}}', '{{eachfood.photo_url}}', '{{eachfood.recomm_tags|safe}}')"><i class="fa fa-edit" title="Edit" ></i> edit details</a>
+                     
+                     <a class="btn btn-danger btn-sm"><i class="fa fa-trash-o" title="Delete" onClick="delete_food({{profile_id}}, '{{eachfood.food_name}}', this)"></i></a>
+
+                   {% endifequal %}
+                                      </div>
+
+
+                                      <div class="pull-right">
+
+                                        {% for eachdet in eachfood.recomm_details %}
+                                          <img class="pull-left" style="margin:0px 4px 0 0; width:25px" src={{eachdet.photo}} rel="tooltip" title="{{eachdet.name}}"/> 
+                                        {% endfor %}
+                                        {% ifnotequal eachfood.vouch_count 0 %} 
+                                          <span class="badge badge-default" style="margin:3px 4px 0 0;" rel="tooltip" title="{{eachfood.vouch_count}} recommendations on {{eachfood.food_name}}">{{eachfood.vouch_count}}</span>
+                                        {% endifnotequal %}
+
+
+
                                         {% if user.is_authenticated %}
                                         {% ifnotequal profile_id user_id %}
-                                         <div class="btn-block" data-toggle="buttons">
+                                         <span data-toggle="buttons">
                                          {% if eachfood.logged_recommender %}
-                                              <label class="fa fa-thumbs-o-up btn btn-default btn-sm active" rel="tooltip" title="Recommend this to others">
+                                              <label class="fa  fa-thumbs-o-up btn btn-default btn-sm " rel="tooltip" title="Recommend this to others"> 
                                                 <input type="checkbox" checked="checked" onchange="recommend_food({{user_id}}, '{{eachfood.food_name}}', {{profile_id}}, '{{screen_name}}', this); return null;">
                                               </label>
                                           {% else %}
-                                              <label class="fa fa-thumbs-o-up btn btn-default btn-sm" rel="tooltip" title="Recommend this to others" data-toggle="modal" data-target="#modal_tweet_recomm">
+                                              <label class="fa  fa-thumbs-o-up btn btn-default btn-sm active" rel="tooltip" title="Recommend this to others" data-toggle="modal" data-target="#modal_tweet_recomm"> 
                                                 <input type="checkbox" onchange="recommend_food({{user_id}}, '{{eachfood.food_name}}', {{profile_id}}, '{{screen_name}}', this); return null;">
                                               </label>
                                           {% endif %}
-                                          </div> 
+                                          </span> 
                                         {% endifnotequal %}
                                         {% endif %}
 
-                                        {% for eachdet in eachfood.recomm_details %}
-                                        <div class="pull-right">
-                                          <img class="pull-left" style="margin:0px 4px 0 0; width:25px" src={{eachdet.photo}} rel="tooltip" title="{{eachdet.name}}"/>
-                                        </div>
-                                        {% endfor %}
-                                        {% ifnotequal eachfood.vouch_count 0 %}
-                                        <div class="pull-right">
-                                          <span class="badge badge-default" style="margin:3px 4px 0 0;" rel="tooltip" title="{{eachfood.vouch_count}} recommendations on {{eachfood.food_name}}">{{eachfood.vouch_count}}</span>
-                                        </div>
-                                        {% endifnotequal %}
+                                      </div>
+
+                                        
                                         <span class="clearfix"></span>
                                       </div>   <!--widget -->
                                     </div><!-- media body -->
@@ -363,7 +386,7 @@
                         </div>
 
       <!-- FOOD LIST --> 
-      <table class="table table-list-search table-condensed hidden">
+      <table class="table table-list-search table-condensed">
         {% if not user.is_authenticated %}
           <thead>
             <tr>
@@ -394,9 +417,568 @@
                    <div class="pull-right">
 
                    {% ifequal profile_id user_id %}
-                      {% if prof_subscribed %}
+                      
+
+                     <a href="" data-toggle="modal" data-target="#modal_food_detail" class="btn btn-sm btn-default" data-container="body" onClick="get_food_detail('{{profile_id}}', '{{eachfood.food_name}}', '{{eachfood.description}}', '{{eachfood.food_tags}}', '{{eachfood.photo_url}}', '{{eachfood.recomm_tags|safe}}', '{{eachfood.how_much}}', '{{eachfood.how_often}}', '{{eachfood.month_list}}')"><i class="fa fa-edit" title="Edit" ></i> edit details</a>
+                     
+                     <a class="btn btn-danger btn-sm"><i class="fa fa-trash-o" title="Delete" onClick="delete_food({{profile_id}}, '{{eachfood.food_name}}', this)"></i></a>
+
+                   {% endifequal %}
+
+
+                   {% if user.is_authenticated %}
+
+                     {% ifnotequal profile_id user_id %}
+                       <div class="btn-block" data-toggle="buttons">
+                       {% if eachfood.logged_recommender %}
+                            <label class="fa fa-thumbs-o-up btn btn-default btn-sm active" rel="tooltip" title="Recommend this to others">
+                              <input type="checkbox" checked="checked" onchange="recommend_food({{user_id}}, '{{eachfood.food_name}}', {{profile_id}}, '{{screen_name}}', this); return null;">
+                            </label>
+                        {% else %}
+                            <label class="fa fa-thumbs-o-up btn btn-default btn-sm" rel="tooltip" title="Recommend this to others" data-toggle="modal" data-target="#modal_tweet_recomm">
+                              <input type="checkbox" onchange="recommend_food({{user_id}}, '{{eachfood.food_name}}', {{profile_id}}, '{{screen_name}}', this); return null;">
+                            </label>
+                        {% endif %}
+                        </div>
+
+                     {% endifnotequal %}
+                   {% endif %}
+                     
+                   
+                   </div>
+                   
+                   {% for eachdet in eachfood.recomm_details %}
+                    <div class="pull-right">
+                      <img class="pull-left" style="margin:0px 4px 0 0; width:25px" src={{eachdet.photo}} rel="tooltip" title="{{eachdet.name}}"/>
+                    </div>
+                   {% endfor %}
+                 {% ifnotequal eachfood.vouch_count 0 %}
+                   <div class="pull-right">
+                     <span class="badge badge-default" style="margin:3px 4px 0 0;" rel="tooltip" title="{{eachfood.vouch_count}} recommendations on {{eachfood.food_name}}">{{eachfood.vouch_count}}</span>
+                  </div>
+                  {% endifnotequal %}
+              
+
+                   </div>
+                  </td>  
+              </tr> 
+
+              {% if eachfood.description %}
+              <tr>
+                <td colspan="3">
+                  <div class="produce_detail">  
+                    {% if eachfood.photo_url %}
+
+                    <img src="{{eachfood.photo_url}}" alt="{{eachfood.food_name}}" class="img-rounded img-responsive produce_large img-thumbnail " /> 
+                    
+                    {% endif %}
+
+                    <span class="text-muted   ">{{eachfood.description}}</span>
+                  </div> 
+                </td>
+              </tr>
+              {% endif %} 
+
+              {% endfor %}
+          </tbody>
+          
+      </table>    
+
+
+          </div> <!-- end produce -->
+          {% endif %}
+
+        <!-- // Tab content END -->
+      
+        <!-- Tab content -->
+        <div id="tabStockists" class="tab-pane widget-body-regular">
+
+         
+          <!-- WIKI ADD CONNECTIONS --> 
+          {% if user.is_authenticated %}
+            <div class="alert  " style="padding: 0 10px;">  
+            <div class="form-inline"  role="form">
+              <div class="form-group">
+                <img style="width: 25px; margin-right: 2px;" class="" src="{{pic_url}}"  />
+                <div class="btn-group btn-sm" data-toggle="buttons">
+                  <label class="btn  btn-sm active btn-default">
+                    <input type="checkbox" name="options" id="option1_conn"> buys from 
+                  </label> 
+                  <label class="btn  btn-sm btn-default">
+                    <input type="checkbox" name="options" id="option2_conn"> sells to
+                  </label> 
+                </div> 
+              </div> 
+              <div class="form-group"> 
+                <div id="buss_remote" >
+                  <input class="typeahead  input-sm form-control  " id="new_buss_typeahead" {% if not user.is_authenticated %} rel="tooltip" title="Please login to use this feature" {% endif %} style="width:310px;" type="text" placeholder="Type business..."> 
+                </div>      
+              </div>   
+            </div>
+          </div>
+          {% endif %}
+
+                      
+<div id="all-connections">
+
+<div class="clearfix">
+{% if userprof.b_conn_no != 0 %} 
+
+            <div class="clearfix isotope" id="buyers-cards"> 
+          {% for each in connections %}
+              {% if each.relation == "buyer" or each.relation == "both" %}
+                  <div class="card card-business {% if each.type|length == 0 or each.type|first == '' %}
+                    {% else %}
+                      
+                        {% for e in each.type %}
+                        {{e}}
+                       {% endfor %}
+                      
+                    {% endif %}">
+
+                    
+                    <div class="content" style="background:  url('{{each.banner_url}}');">
+                      <div class="text-center">
+                        <a href="/profile/{{each.username}}"><img src="{{each.photo}}" alt="{{each.name}}"
+                        class="img-thumbnail img-responsive" style="width:73px; height:73px;" /></a>
+ 
+                      </div>
+                      <div class="text">
+                      {% ifequal profile_id user_id %}
+                      <button type="button" class="close" aria-hidden="true" onclick="conn_handler('close_buy_from', {{profile_id}}, {{each.id}})">&times;</button>
+                      
+                      <!-- <button type="button" class="close" aria-hidden="true">&times;</button> -->
+                      {% endifequal %}
+                        <h5><a href="/profile/{{each.username}}">{{each.name}}</a> 
+                        </h5>  
+                        <p class="small">{{each.description|truncatechars:40}}</p>
+                      </div>
+                    </div>
+
+
+                  
+
+                      <div class="row row-merge border-top">
+
+                       
+                        <!-- number of foods sold -->
+                        <div class="{% if show_foods %}col-sm-3{% else %}col-sm-6{% endif %}">
+                          <a href="" class="innerAll text-center display-block text-muted" data-original-title="{{each.food_no}} foods" rel="tooltip"><i class="fa fa-fw fa fa-cutlery"></i> {{each.food_no}}</a>
+                        </div>
+
+                        <!-- number of vouches across all produce --> 
+                        <div class="{% if show_foods %}col-sm-3{% else %}col-sm-6{% endif %}">
+                          <a href=""  rel="tooltip" title="{{each.total_vouches}} number of vouches for all produce"  class="innerAll text-center display-block text-muted"><i class="fa fa-fw fa-thumbs-o-up"></i> {{each.total_vouches}}</a>
+                        </div> 
+
+                        <!-- number of trade connections --> 
+                        <div class="{% if show_foods %}col-sm-3{% else %}col-sm-6{% endif %}">
+                          <a href=""  rel="tooltip" title="{{each.trade_connections_no}} of trade connections" class="innerAll text-center display-block text-muted"><i class="fa fa-fw fa-link"></i> {{each.trade_conn_no}}</a>
+                        </div>
+
+                        <!-- number of group membershpis -->  
+                        <div class="{% if show_foods %}col-sm-3{% else %}col-sm-6{% endif %}">
+                          <a href=""  rel="tooltip" title="Member of {{each.organisation_connection_no}} groups or organisations"  class="innerAll text-center display-block text-muted"><i class="fa fa-fw fa-group"></i> {{each.org_conn_no}}</a>
+                        </div> 
+
+                      </div>
+
+
+
+                          {% if type_user|length == 0 or type_user|first == '' %}
+                          {% else %}
+                          <div class="bg-gray border-top innerAll half text-center">  
+                           {% for eachtype in type_user %}
+                            <a href="/activity/?b={{eachtype}}">{{eachtype}}</a>
+                           {% endfor %}
+                          </div> 
+                          {% endif %} 
+ 
+                  </div> 
+                  {% endif %}
+                  {% endfor %}
+                </div>
+                {% endif %}
+          </div>
+ 
+          </div>  <!-- end all-connections -->
+ 
+
+          </div> <!--  end connections -->
+        <!-- // Tab content END -->
+        
+        <!-- Tab content -->
+        <div id="tabSuppliers" class="tab-pane widget-body-regular">
+          
+        {% if userprof.trade_connections_no != 0 %}<span class="badge">{{userprof.trade_connections_no}}</span>{% endif %}</a> 
+
+          <!-- WIKI ADD CONNECTIONS --> 
+          {% if user.is_authenticated %}
+            <div class="alert-alert-info" style="padding: 0 10px;">  
+            <div class="form-inline"  role="form">
+              <div class="form-group">
+                <img style="width: 25px; margin-right: 2px;" class="" src="{{pic_url}}"  />
+                <div class="btn-group btn-sm" data-toggle="buttons">
+                  <label class="btn  btn-sm btn-default">
+                    <input type="checkbox" name="options" id="option1_conn"> buys from 
+                  </label> 
+                  <label class="btn  btn-sm btn-default active">
+                    <input type="checkbox" name="options" checked="checked" id="option2_conn"> sells to
+                  </label> 
+                </div> 
+              </div> 
+              <div class="form-group"> 
+                <div id="buss_remote" >
+                  <input class="typeahead  input-sm form-control  " id="new_buss_typeahead" {% if not user.is_authenticated %} rel="tooltip" title="Please login to use this feature" {% endif %} style="width:310px;" type="text" placeholder="Type business..."> 
+                </div>      
+              </div>   
+            </div>
+          </div>
+          {% endif %}
+                      
+        <div id="all-connections" class="clearfix">
+          {% if userprof.c_conn_no != 0 %}  
+           <div class="clearfix isotope" id="seller-cards">
+          {% for each in connections %}
+              {% if each.relation == "seller" or each.relation == "both" %}
+
+                  <div class="card card-business"> 
+                    <div class="content" style="background: url('{{each.banner_url}}');"> 
+
+                      <div class="text-center">
+                        <a href="/profile/{{each.username}}"><img src="{{each.photo}}" alt="{{each.name}}"
+                        class="img-thumbnail img-responsive" style="width:73px; height:73px;" /></a>
+ 
+                      </div>
+
+                      <div class="text">
+                    {% ifequal profile_id user_id %}
+                      <button type="button" class="close" aria-hidden="true" onclick="conn_handler('close_sell_to', {{profile_id}}, {{each.id}})">&times;</button>
+                      
+                      <!-- <button type="button" class="close" aria-hidden="true">&times;</button> -->
+                      {% endifequal %}
+                        <h5><a href="/profile/{{each.username}}">{{each.name}}</a> 
+                        </h5>  
+                        <p class="small">{{each.description|truncatechars:80}}</p>
+                      </div>
+                    </div>
+
+                    <div class="numbers clearfix">
+                      <p class=" small  text-center">  
+                        <a href="/profile/{{each.username}}">
+ 
+                        <span rel="tooltip" title="{{each.food_no}} foods" class="pull-left {% if each.food_no = 0 %}zero{% endif %}"><i class="fa fa-cutlery"></i> {{each.food_no}}</span>
+
+                        <span rel="tooltip" title="{{each.trade_conn_no}} connections" class=" {% if each.trade_conn_no = 0 %}zero{% endif %}"><i class="fa fa-link"></i> {{each.trade_conn_no}}</span>
+
+                        <span rel="tooltip" title="{{each.org_conn_no}} organisations" class="pull-right {% if each.org_conn_no = 0 %}zero{% endif %}"><i class="fa fa-group"></i> {{each.org_conn_no}}</span> 
+
+                        </a>
+                      </p>
+
+
+                    </div>
+                    {% if each.type|length == 0 or each.type|first == '' %}
+                    {% else %}
+                    <div class="numbers type text-center clearfix">
+                      <div class="tags tags-biztype ">  
+                        {% for e in each.type %}
+                       <a href="/activity/?b={{e}}">{{e}}</a>
+                       {% endfor %}
+                      </div>
+                    </div>
+                    {% endif %}
+                  </div> 
+                  {% endif %}
+                  {% endfor %}
+                </div>
+           {% endif %} 
+          </div>  <!-- end all-connections -->
+ 
+        </div>
+        <!-- // Tab content END -->
+        
+        <!-- Tab content -->
+        <div id="tabMemberships" class="tab-pane widget-body-regular">
+          {% if user.is_authenticated %}
+            <div class="well well-s m">  
+            <div class="form-inline"  role="form">
+              <div class="form-group">
+                <div id="orgs_remote">
+                  <input class="typeahead form-control" id="new_orgs_typeahead" {% if not user.is_authenticated %} rel="tooltip" title="Please login to use this feature" {% endif %} style="width:310px;" type="text" placeholder="Add an organisation...">
+                </div>                  
+              </div> 
+            </div>
+            </div>
+            {% endif %}
+
+          <div id="organisations_list" class="clearfix"> 
+            {% if user.is_authenticated %}
+            {% else %}
+             <p class="alert alert-warning"><a href="{% provider_login_url "twitter" process="login" %}" class="">Login</a> or <a href="{% provider_login_url "twitter" process="login" %}" class="">sign up free</a> to see the organisations or groups they belong to. </p>
+            {% endif %}
+
+            <div class="  clearfix"> 
+            {% for each in organisations %}    
+                <div class="innerAll col-sm-4 box-generic">
+                    <div class="media innerAll half">
+                        <a href="" class="pull-left">
+                          <img src="{{each.photo}}" alt="{{each.name}}" style="width:73px; height:73px;" >
+                        </a>
+                        <div class="media-body ">
+                            <h5 class="margin-none strong"><a href="/profile/{{each.username}}">{{each.name}}</a></h5>
+                            {% ifequal profile_id user_id %}
+                            <button type="button" class="close pull-right" aria-hidden="true" onclick="del_org_from_biz({{profile_id}}, {{each.id}})">&times;</button> 
+                          {% endifequal %}
+                            <p class=""> 
+                              {{each.description}}
+                            </p>
+                        </div>
+                    </div> 
+                </div>
+            {% endfor %}
+            </div>
+
+            </div>
+        </div>
+        <!-- // Tab content END -->
+ 
+ 
+
+        <div id="tabUpdates" class="tab-pane widget-body-regular">
+          <h5 class="innerAll margin-none border-bottom bg-gray">Recent News
+           {% if updates_count != 0 %}<span class="badge pull-right">{{updates_count}}</span>{% endif %}
+           </h5>
+
+           {% if deliverables %} 
+          {{deliverables|linebreaks}}
+        {% else %}
+          <p>Please contact us directly to discuss deliveries.</p>
+        {% endif %}
+
+<!--  start we buy -->
+
+{% if we_buy %}
+<div  class="tab-pane active widget-body-regular" id="tabBuy">
+  
+          {% if user.is_authenticated %}
+          <div class="row" style="padding: 20px 0;"> 
+            <div class="col-md-8 col-sm-8 col-xs-7">
+              {% if user.is_authenticated %}
+                  <div class="input-group"> 
+                        <div class='pull-left'>
+                        <select id="webuy_select" data-placeholder="Add produce {{name}} buys" style="height:20px; width: 192px; padding: 15px 5px;" multiple class="chosen-select" >
+                        <option value=""></option> 
+                       {% for each in all_tags %}
+                          <optgroup label={{each.node}}>
+                          {% if each.childrens %}
+                          {% for eachchild in each.childrens %}
+                          <option>{{eachchild.node}}</option>
+                          {% endfor %}
+                        {% else %}
+                          <option>{{each.node}}</option>
+                        {% endif %}
+                          </optgroup>
+                        {% endfor %}
+                        </select></div>
+
+                          <div class="pull-left">
+                        <span class="input-group-btn">
+                
+                            <button class="btn btn-success btn-sm" id="adfoo_id" rel="tooltip" style="height:34px;" onClick="add_food({{profile_id}}, 'we_buy')" {% if not user.is_authenticated %} title="Please log in to use this feature." {% endif %} > Add</button>
+                        </span></div>
+                      </div>  
+              {% endif %}
+            </div> 
+
+            <div class="col-md-4 col-sm-4 col-xs-5">
+             <form action="#" method="get">
+              <div class="input-group">
+                  <input class="form-control system-search" name="q" placeholder="Search foods..." required>
+                  <span class="input-group-btn">
+                      <button type="submit" class="btn btn-default"><i class="glyphicon glyphicon-search"></i></button>
+                  </span>
+              </div>
+             </form>
+            </div>
+
+            </div>
+ 
+          {% endif %} 
+
+      <div class="innerB button-group" id="filterFoods" data-filter-group="foodtype">
+        <button class="btn btn-default active" data-filter="*">Show all</button> 
+        
+        {% for eachfood in all_buying_foods %}
+          <button class="btn btn-default" data-filter=".{{eachfood.parent_food|slugify}}">{{eachfood.parent_food}}</button> 
+        {% endfor %}
+
+      </div>
+                    <div class="clearfix isotope"  id="foods"> 
+                            <div class="row">
+
+                            {% for eachfood in all_buying_foods %}
+ 
+                                <div class="food col-md-3  {{eachfood.parent_food|slugify}}" style="margin-bottom: 15px;">
+                                  
+                                    <div class="media-body" style="border:1px solid #ccc;"> 
+                                    <a href="/activity/?f={{eachfood.food_name}}" class="lead" style="padding-left: 2px; font-weight:bold;">  
+                                      {{eachfood.food_name}}
+                                    </a> 
+                                    <div class="flip">
+                                      <div class="note">
+                                      <div class="face front">
+                                        <div class="widget margin-none">
+                                          <div class="row row-merge">
+                                            <!-- <img src="{{eachfood.photo_url}}" alt="{{eachfood.food_name}}" class="  img-responsive produce_large" style="width:150px" />  -->
+                                            <img src="{{eachfood.photo_url}}" title="{{eachdet.food_name}}" rel="tooltip" class="img-responsive" style="width: 100%; height: 100px; display: block; margin-left: auto; margin-right: auto;">
+                                            <div class="col-xs-12"> 
+                                              {% if eachfood.description %}   
+                                                <p class="widget innerAll half">
+                                                  {{eachfood.description}} 
+                                                </p>
+                                              {% endif %}  
+                                            </div>
+                                          </div><!-- row merge -->
+                                        </div><!-- widget -->
+                                      </div><!-- face front -->
+                                      <div class="face back">
+                                        <div class="row row-merge">
+                                          <div class="col-xs-6 ">
+                                              <div class="text-center"> 
+                                                  <li class="display-block ">
+                                                      <small>
+                                                       <i class="fa-2x innerL half text-primary icon-scale-1"></i>
+                                                      </small> 
+                                                      <p class="lead">50 kg/yr</p> 
+                                                  </li>
+                                              </div>
+                                          </div>
+                                          <div class="col-xs-6 ">
+                                            <div class="text-center"> 
+                                             {% ifequal is_unknown_profile 'false' %}
+                                              <button class="btn btn-primary btn-sm" style="margin-top:10px" data-toggle="modal" data-target="#modal_contact"><i class="fa fa-envelope-o"></i>  Contact</button> 
+                                             {% endifequal %}
+
+                                             {% if user.is_superuser %}
+                                              <a href="/editprofile/{{username}}/" class="btn btn-sm btn-default">Edit</a>
+                                             {% endif %} 
+                                            </div>
+                                          </div>
+                                        </div><!-- row -->
+
+                                        <div class="widget border-top-none margin-none">
+                                          <table class="availability"> 
+                                          <tbody><tr>
+                                          <td class="winter">J</td>
+                                          <td class="winter">F</td>
+                                          <td class="spring">M</td>
+                                          <td class="spring">A</td>
+                                          <td class="spring yes">M</td>
+                                          <td class="summer yes">J</td>
+                                          <td class="summer yes">J</td>
+                                          <td class="summer">A</td>  
+                                          <td class="autumn">S</td>
+                                          <td class="autumn">O</td>
+                                          <td class="autumn">N</td>
+                                          <td class="winter">D</td>
+                                          </tr></tbody></table>  
+                                        </div> 
+                                      </div> <!-- face back -->
+
+                                      </div><!-- card -->
+                                      </div><!-- flip -->
+                                      <div class="widget border-top-none   innerAll half bg-gray margin-none">
+
+                                      <div class="pull-left">
+
+                   {% ifequal profile_id user_id %}
+                      {% if not prof_subscribed %}
 
                      <a href="" data-toggle="modal" data-target="#modal_food_detail" class="btn btn-sm btn-default" data-container="body" onClick="get_food_detail('{{profile_id}}', '{{eachfood.food_name}}', '{{eachfood.description}}', '{{eachfood.food_tags}}', '{{eachfood.photo_url}}', '{{eachfood.recomm_tags|safe}}')"><i class="fa fa-edit" title="Edit" ></i> edit details</a>
+                     {% else %}
+                     <a class="btn btn-sm btn-default" data-container="body" rel="tooltip" title="Upgrade your account to add details"><i class="fa fa-edit" title="Edit" > edit details</i></a>
+                     {% endif %}
+                     <a class="btn btn-danger btn-sm"><i class="fa fa-trash-o" title="Delete" onClick="delete_food({{profile_id}}, '{{eachfood.food_name}}', this)"></i></a>
+
+                   {% endifequal %}
+                                      </div>
+
+
+                                      <div class="pull-right">
+
+                                        {% for eachdet in eachfood.recomm_details %}
+                                          <img class="pull-left" style="margin:0px 4px 0 0; width:25px" src={{eachdet.photo}} rel="tooltip" title="{{eachdet.name}}"/> 
+                                        {% endfor %}
+                                        {% ifnotequal eachfood.vouch_count 0 %} 
+                                          <span class="badge badge-default" style="margin:3px 4px 0 0;" rel="tooltip" title="{{eachfood.vouch_count}} recommendations on {{eachfood.food_name}}">{{eachfood.vouch_count}}</span>
+                                        {% endifnotequal %}
+
+
+
+                                        {% if user.is_authenticated %}
+                                        {% ifnotequal profile_id user_id %}
+                                         <span class="btn-bl ock" data-toggle="buttons">
+                                         {% if eachfood.logged_recommender %}
+                                              <label class="fa  fa-thumbs-o-up btn btn-default btn-sm " rel="tooltip" title="Recommend this to others"> 
+                                                <input type="checkbox" checked="checked" onchange="recommend_food({{user_id}}, '{{eachfood.food_name}}', {{profile_id}}, '{{screen_name}}', this); return null;">
+                                              </label>
+                                          {% else %}
+                                              <label class="fa  fa-thumbs-o-up btn btn-default btn-sm active" rel="tooltip" title="Recommend this to others" data-toggle="modal" data-target="#modal_tweet_recomm"> 
+                                                <input type="checkbox" onchange="recommend_food({{user_id}}, '{{eachfood.food_name}}', {{profile_id}}, '{{screen_name}}', this); return null;">
+                                              </label>
+                                          {% endif %}
+                                          </span> 
+                                        {% endifnotequal %}
+                                        {% endif %}
+
+                                      </div>
+
+                                        
+                                        <span class="clearfix"></span>
+                                      </div>   <!--widget -->
+                                    </div><!-- media body -->
+                                </div>
+                              {% endfor %}
+
+                            </div>
+                        </div>
+
+      <!-- FOOD LIST --> 
+      <table class="table table-list-search table-condensed">
+        {% if not user.is_authenticated %}
+          <thead>
+            <tr>
+              <td colspan="2">
+                <p class="alert alert-warning"><a href="{% provider_login_url "twitter" process="login" %}" class="">Login</a> or <a href="{% provider_login_url "twitter" process="login" %}" class="">sign up free</a> to see all their full profile. </p>
+              </td>
+            </tr>
+          </thead>
+          {% endif %}
+          <tbody id="food_tbody">
+            {% for eachfood in all_buying_foods %}
+              <tr id="row{{forloop.counter}}">
+                  <td>
+
+                  <div class="clearfix">   
+          
+
+                <a href="/activity/?f={{eachfood.food_name}}" >  
+                  
+                  {{eachfood.food_name}}
+                </a>   
+
+                  </div>
+ 
+                  </td>
+ 
+                  <td nowrap="nowrap">  
+                   <div class="pull-right">
+
+                   {% ifequal profile_id user_id %}
+                      {% if not prof_subscribed %}
+
+                     <a href="" data-toggle="modal" data-target="#modal_food_detail" class="btn btn-sm btn-default" data-container="body" onClick="get_food_detail('{{profile_id}}', '{{eachfood.food_name}}', '{{eachfood.description}}', '{{eachfood.food_tags}}', '{{eachfood.photo_url}}', '{{eachfood.recomm_tags|safe}}', '{{eachfood.how_much}}', '{{eachfood.how_often}}', '{{eachfood.month_list}}')"><i class="fa fa-edit" title="Edit" ></i> edit details</a>
                      {% else %}
                      <a class="btn btn-sm btn-default" data-container="body" rel="tooltip" title="Upgrade your account to add details"><i class="fa fa-edit" title="Edit" > edit details</i></a>
                      {% endif %}
@@ -446,7 +1028,11 @@
               <tr>
                 <td colspan="3">
                   <div class="produce_detail">  
+                    {% if eachfood.photo_url %}
+
                     <img src="{{eachfood.photo_url}}" alt="{{eachfood.food_name}}" class="img-rounded img-responsive produce_large img-thumbnail " /> 
+                    
+                    {% endif %}
 
                     <span class="text-muted   ">{{eachfood.description}}</span>
                   </div> 
@@ -460,247 +1046,67 @@
       </table>    
 
 
-          </div> <!-- end produce -->
+          </div> <!-- end we_buy -->
+{% endif %}
+
+
+          <div class="widget-body padding-none">
+              
+
+              {% if user.is_authenticated %}
+
+              {% for eachUpdate in updates %}
+              <div class="media border-bottom innerAll margin-none">
+                  <img src="{{userprof.profileimg}}" class="pull-left media-object" width="20" />
+                  <div class="media-body"> 
+                      <p class="lead"><a href="" class="text-inverse"> {{eachUpdate.status|recognise_name|safe}}</a>
+                      </p>
+                      <small class="pull-right">
+                        <a href="/{{username}}/post/{{eachUpdate.tweetuid}}/">  {{eachUpdate.time_elapsed}} ago</a>
+                      </small>
+                  </div>
+              </div>
+              {% endfor %}  
+              {% else %}
+                <p class="alert alert-warning"><a href="{% provider_login_url "twitter" process="login" %}" class="">Login</a> or <a href="{% provider_login_url "twitter" process="login" %}" class="">sign up free</a> to see updates and activity. </p>
+              {% endif %} 
+          </div>
+        </div> <!-- /updates--> 
+
+
+
+        <div id="tabCustomers" class="tab-pane widget-body-regular">
+  
+          {% if customers|length != 0 %}<span class="badge pull-right">{{customers|length}}</span>{% endif %}
+
+          {% if user.is_authenticated %}
+          {% else %} 
+            <p class="alert alert-warning"><a href="{% provider_login_url "twitter" process="login" %}" class="">Login</a> or <a href="{% provider_login_url "twitter" process="login" %}" class="">sign up free</a> to see where their customers live. Maybe they'll do home deliveries if you ask nicely! </p> 
           {% endif %}
 
-        <!-- // Tab content END -->
-      
-        <!-- Tab content -->
-        <div id="tabStockists" class="tab-pane widget-body-regular">
+          <div class="pull-left">
+           {% for each in customers %}
 
-        {% if userprof.trade_connections_no != 0 %}<span class="badge">{{userprof.trade_connections_no}}</span>{% endif %}</a> 
-
-          <!-- WIKI ADD CONNECTIONS --> 
-          {% if user.is_authenticated %}
-            <div class="well well-sm" style="padding: 0 10px;">  
-            <div class="form-inline"  role="form">
-              <div class="form-group">
-                <img style="width: 25px; margin-right: 2px;" class="" src="{{pic_url}}"  />
-                <div class="btn-group btn-sm" data-toggle="buttons">
-                  <label class="btn  btn-sm btn-default">
-                    <input type="checkbox" name="options" id="option1_conn"> buys from 
-                  </label> 
-                  <label class="btn  btn-sm btn-default">
-                    <input type="checkbox" name="options" id="option2_conn"> sells to
-                  </label> 
-                </div> 
-              </div> 
-              <div class="form-group"> 
-                <div id="buss_remote" >
-                  <input class="typeahead  input-sm form-control  " id="new_buss_typeahead" {% if not user.is_authenticated %} rel="tooltip" title="Please login to use this feature" {% endif %} style="width:310px;" type="text" placeholder="Type business..."> 
-                </div>      
-              </div>   
-            </div>
-          </div>
-          {% endif %}
-                      
-<div id="all-connections">
-
-<div class="cle arfix">
-{% if userprof.b_conn_no != 0 %}
-          <h4><a name="buyfrom"></a>We buy from <small>these suppliers</small></h4>
-          <div class="ftstrip ftstrip-mini"></div> 
-          <br />
-
-            <div class="clearfix isot ope js-isot ope" data-isotope-options='{ "itemSelector": ".card" }' id="buyers-cards">
-          {% for each in connections %}
-              {% if each.relation == "buyer" or each.relation == "both" %}
-                  <div class="card card-business {% if each.type|length == 0 or each.type|first == '' %}
-                    {% else %}
-                      
-                        {% for e in each.type %}
-                        {{e}}
-                       {% endfor %}
-                      
-                    {% endif %}">
-
-                    
-                    <div class="content" style="background: #fff url('{{each.banner_url}}');">
-                      <div class="text-center">
-                        <a href="/profile/{{each.username}}"><img src="{{each.photo}}" alt="{{each.name}}"
-                        class="img-thumbnail img-responsive" style="width:73px; height:73px;" /></a>
- 
-                      </div>
-                      <div class="text">
-                      {% ifequal profile_id user_id %}
-                      <button type="button" class="close" aria-hidden="true" onclick="conn_handler('close_buy_from', {{profile_id}}, {{each.id}})">&times;</button>
-                      
-                      <!-- <button type="button" class="close" aria-hidden="true">&times;</button> -->
-                      {% endifequal %}
-                        <h5><a href="/profile/{{each.username}}">{{each.name}}</a> 
-                        </h5>  
-                        <p class="small">{{each.description|truncatechars:40}}</p>
-                      </div>
-                    </div>
-
-
-                    <div class="numbers clearfix">
-                      <p class="small text-center">
-
-                        <a href="/profile/{{each.username}}">
-
-                        
-                        <span rel="tooltip" title="{{each.food_no}} foods" class="pull-left {% if each.food_no = 0 %}zero{% endif %}"><i class="fa fa-cutlery"></i> {{each.food_no}}</span>
-
-                        <span rel="tooltip" title="{{each.trade_conn_no}} connections" class=" {% if each.trade_conn_no = 0 %}zero{% endif %}"><i class="fa fa-link"></i> {{each.trade_conn_no}}</span>
-
-                        <span rel="tooltip" title="{{each.org_conn_no}} organisations" class="pull-right {% if each.org_conn_no = 0 %}zero{% endif %}"><i class="fa fa-group"></i> {{each.org_conn_no}}</span> 
-
-                        </a>
-                      </p>
-                    </div>
-                    {% if each.type|length == 0 or each.type|first == '' %}
-                    {% else %}
-                    <div class="numbers type text-center clearfix">
-                      <div class="tags tags-biztype pull-lef t">  
-                        {% for e in each.type %}
-                       <a href="/activity/?b={{e}}">{{e}}</a>
-                       {% endfor %}
-                      </div>
-                    </div>
-                    {% endif %}
+              <div class="card card-individual"> 
+                <div class="content" style="background-image:url('{{each.banner_url}}');">
+                  <img src="{{each.photo}}" alt="{{each.name}}"
+                  class="img-rounded img-responsive pull-left" style="width:40px;" />
+                  <div class="text">
+                    <h5><a href="/profile/{{each.username}}">{{each.name}}</a></h5> 
+                    <p class="small">
+                    {{each.description}}</p>
                   </div> 
-                  {% endif %}
-                  {% endfor %}
                 </div>
-                {% endif %}
+                <div class="numbers clearfix">
+                  <i class="fa fa-user"></i> <small class="t ext-muted">Person</small>
+                </div>
+              </div>
+          {% endfor %}
           </div>
-
-          <div class="clearfix">
-          {% if userprof.c_conn_no != 0 %}
-          <h4 style="margin-top: 50px;">We sell to <small>these stockists</small></h4>  
-
-          <div class="ftstrip ftstrip-mini"></div><br />
-           <div class="clearfix isotope js-isotope" data-isotope-options='{ "itemSelector": ".card" }' id="seller-cards">
-          {% for each in connections %}
-              {% if each.relation == "seller" or each.relation == "both" %}
-                  <div class="card card-business"> 
-                    <div class="content" style="background-image:url('{{each.banner_url}}');"> 
-
-                      <div class="text-center">
-                        <a href="/profile/{{each.username}}"><img src="{{each.photo}}" alt="{{each.name}}"
-                        class="img-thumbnail img-responsive" style="width:73px; height:73px;" /></a>
- 
-                      </div>
-
-                      <div class="text">
-                    {% ifequal profile_id user_id %}
-                      <button type="button" class="close" aria-hidden="true" onclick="conn_handler('close_sell_to', {{profile_id}}, {{each.id}})">&times;</button>
-                      
-                      <!-- <button type="button" class="close" aria-hidden="true">&times;</button> -->
-                      {% endifequal %}
-                        <h5><a href="/profile/{{each.username}}">{{each.name}}</a> 
-                        </h5>  
-                        <p class="small">{{each.description|truncatechars:80}}</p>
-                      </div>
-                    </div>
-
-                    <div class="numbers clearfix">
-                      <p class="small text-center">  
-                        <a href="/profile/{{each.username}}">
- 
-                        <span rel="tooltip" title="{{each.food_no}} foods" class="pull-left {% if each.food_no = 0 %}zero{% endif %}"><i class="fa fa-cutlery"></i> {{each.food_no}}</span>
-
-                        <span rel="tooltip" title="{{each.trade_conn_no}} connections" class=" {% if each.trade_conn_no = 0 %}zero{% endif %}"><i class="fa fa-link"></i> {{each.trade_conn_no}}</span>
-
-                        <span rel="tooltip" title="{{each.org_conn_no}} organisations" class="pull-right {% if each.org_conn_no = 0 %}zero{% endif %}"><i class="fa fa-group"></i> {{each.org_conn_no}}</span> 
-
-                        </a>
-                      </p>
+        </div> <!-- end customers -->
 
 
-                    </div>
-                    {% if each.type|length == 0 or each.type|first == '' %}
-                    {% else %}
-                    <div class="numbers type text-center clearfix">
-                      <div class="tags tags-biztype pull-lef t">  
-                        {% for e in each.type %}
-                       <a href="/activity/?b={{e}}">{{e}}</a>
-                       {% endfor %}
-                      </div>
-                    </div>
-                    {% endif %}
-                  </div> 
-                  {% endif %}
-                  {% endfor %}
-                </div>
- {% endif %}
-                </div>
-</div>  <!-- end all-connections -->
-
-          </div> <!--  end connections -->
-        <!-- // Tab content END -->
         
-        <!-- Tab content -->
-        <div id="tabSuppliers" class="tab-pane widget-body-regular">
-          <h5>Payments tab content</h5>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam ante est, tempor ut posuere nec, venenatis sed arcu. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Duis in purus ut mauris sodales sollicitudin. Mauris cursus imperdiet dignissim. Phasellus risus felis, rutrum in laoreet vel, posuere vel dolor. Sed venenatis vehicula tempus. Nam at rutrum enim. Sed massa quam, mattis in viverra ut, ullamcorper et massa. Phasellus sapien diam, faucibus ac tempor a, condimentum quis est. Donec nec velit ante, vel mattis metus. Ut nec libero diam, id auctor sapien. Suspendisse eget lorem ante, in fringilla dui. In hac habitasse platea dictumst.</p>
-        </div>
-        <!-- // Tab content END -->
-        
-        <!-- Tab content -->
-        <div id="tabMemberships" class="tab-pane widget-body-regular">
-          {% if user.is_authenticated %}
-            <div class="well well-s m">  
-            <div class="form-inline"  role="form">
-              <div class="form-group">
-                <div id="orgs_remote">
-                  <input class="typeahead form-control" id="new_orgs_typeahead" {% if not user.is_authenticated %} rel="tooltip" title="Please login to use this feature" {% endif %} style="width:310px;" type="text" placeholder="Add an organisation...">
-                </div>                  
-              </div> 
-            </div>
-            </div>
-            {% endif %}
-
-          <div id="organisations_list" class="clearfix"> 
-            {% if user.is_authenticated %}
-            {% else %}
-             <p class="alert alert-warning"><a href="{% provider_login_url "twitter" process="login" %}" class="">Login</a> or <a href="{% provider_login_url "twitter" process="login" %}" class="">sign up free</a> to see the organisations or groups they belong to. </p>
-            {% endif %}
-
-            <div class="  clearfix"> 
-            {% for each in organisations %}    
-                <div class="innerAll col-sm-4 box-generic">
-                    <div class="media innerAll half">
-                        <a href="" class="pull-left">
-                          <img src="{{each.photo}}" alt="{{each.name}}" style="width:73px; height:73px;" >
-                        </a>
-                        <div class="media-body ">
-                            <h5 class="margin-none strong"><a href="/profile/{{each.username}}">{{each.name}}</a></h5>
-                            {% ifequal profile_id user_id %}
-                            <button type="button" class="close pull-right" aria-hidden="true" onclick="del_org_from_biz({{profile_id}}, {{each.id}})">&times;</button> 
-                          {% endifequal %}
-                            <p class=""> 
-                              {{each.description}}
-                            </p>
-                        </div>
-                    </div> 
-                </div>
-            {% endfor %}
-            </div>
-
-            </div>
-        </div>
-        <!-- // Tab content END -->
-
-
-        <!-- Tab content -->
-        <div id="tabSupport" class="tab-pane widget-body-regular">
-          <h5>Support tab content</h5>
-          <p>Integer porttitor, enim eu egestas ullamcorper, odio mauris semper quam, in facilisis dui ligula eget ligula. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Maecenas dolor leo, consectetur nec tristique pretium, ornare quis purus. Nullam pulvinar, enim eu molestie venenatis, turpis nisl vehicula eros, et ultricies risus urna sed diam. Suspendisse potenti. Nullam tincidunt tellus nisi. Aenean felis eros, congue vitae hendrerit id, mattis quis mi.</p>
-        </div>
-        <!-- // Tab content END -->
-        
-        <!-- Tab content -->
-        {% if user.is_authenticated %} 
-        <div id="tabDeliveries" class="tab-pane widget-body-regular">
-        {% if deliverables %} 
-          {{deliverables|linebreaks}}
-        {% else %}
-          <p>Please contact us directly to discuss deliveries.</p>
-        {% endif %}
-        </div>
-        {% endif %}
         
       </div>
     </div>
@@ -710,31 +1116,217 @@
                     <div class="col-md-4 col-lg-3">
 
                     <div class="widget">
-                            <div class="widget-head border-bottom bg-gray">
-                                <h5 class="innerAll pull-left margin-none">Contact</h5>
-                                <div class="pull-right">
-                                    <a href="" class="text-muted">
-                                        <i class="fa fa-facebook innerL"></i>
-                                    </a>
-                                    <a href="" class="text-muted">
-                                        <i class="fa fa-twitter innerL"></i>
-                                    </a>
-                                    <a href="" class="text-muted">
-                                        <i class="fa fa-dribbble innerL"></i>
-                                    </a>
+                      {% if intro_video %}
+  
+                        <div style="width:100%; height: 200px;">{{intro_video|safe}}</div> 
+                        
+                      {% endif %}
+
+                      <div class="widget-body text-center">    
+
+
+                      {% if intro_video %}
+                        <a href="">
+                            <img src="{{pic_url}}" width="120" alt="" class="img-circle img-thumbnail" style=" 
+float: left;
+height: 70px;
+width: 70px;
+position: relative;
+top: -24px;" >
+                        </a>
+                      {% else %}
+                        <a href="">
+                            <img src="{{pic_url}}" width="120" alt="" class="img-circle img-thumbnail">
+                        </a>
+                      {% endif %}
+
+
+
+                        <h2 class="strong margin-none">{{name}}</h2>
+                        <div class="innerB">
+                          {% if type_user|length == 0 or type_user|first == '' %}
+                          {% else %}
+                          <span class=" ">  
+                            {% for eachtype in type_user %}
+                           <a href="/activity/?b={{eachtype}}">{{eachtype}}</a>
+                           {% endfor %}
+                          </span> {% endif %}  
+                        </div> 
+
+                        {% ifequal is_unknown_profile 'false' %}
+                          {% ifequal profile_id user_id %}
+                            <a href="/editprofile/{{userinfo.username}}" class="btn btn-danger btn-block">
+                               Edit my profile
+                            </a>       
+                          {% else %}
+                            <button class="btn btn-primary text-center btn-block" data-toggle="modal" data-target="#modal_contact"><i class="fa fa-envelope fa-fw"></i> Contact {{name}}</button>
+                          {% endifequal %}
+                        {% else %}
+                          <button class="btn btn-primary btn-block" style="margin-top:40px;" data-toggle="modal" data-target="#modal_invite">Invite to connect</button> 
+                        {% endifequal %} 
+          
+                      </div> 
+
+
+                      <div class="row row-merge border-top">
+
+                       
+                        <!-- number of foods sold -->
+                        <div class="{% if show_foods %}col-sm-3{% else %}col-sm-6{% endif %}">
+                          <a href="" class="innerAll text-center display-block text-muted" data-original-title="{{userprof.food_no}} foods" rel="tooltip"><i class="fa fa-fw fa fa-cutlery"></i> {{userprof.food_no}}</a>
+                        </div>
+
+                        <!-- number of vouches across all produce --> 
+                        <div class="{% if show_foods %}col-sm-3{% else %}col-sm-6{% endif %}">
+                          <a href=""  rel="tooltip" title="{{userprof.VOUCH_COUNT}} number of vouches for all produce"  class="innerAll text-center display-block text-muted"><i class="fa fa-fw fa-thumbs-o-up"></i> {{total_vouches}}</a>
+                        </div> 
+
+                        <!-- number of trade connections --> 
+                        <div class="{% if show_foods %}col-sm-3{% else %}col-sm-6{% endif %}">
+                          <a href=""  rel="tooltip" title="{{userprof.trade_connections_no}} of trade connections" class="innerAll text-center display-block text-muted"><i class="fa fa-fw fa-link"></i> {{userprof.trade_connections_no}}</a>
+                        </div>
+
+                        <!-- number of group membershpis -->  
+                        <div class="{% if show_foods %}col-sm-3{% else %}col-sm-6{% endif %}">
+                          <a href=""  rel="tooltip" title="Member of {{userprof.organisation_connection_no}} groups or organisations"  class="innerAll text-center display-block text-muted"><i class="fa fa-fw fa-group"></i> {{userprof.organisation_connection_no}}</a>
+                        </div> 
+
+                      </div>
+                            
+                      <div class="border-top  innerAll">
+
+          
+          
+          {% if user.is_superuser %}
+            <a href="/editprofile/{{username}}/" class="btn btn-primary btn-block">Edit</a>
+          {% endif %}
+
+      {% ifnotequal profile_id user_id %}
+       
+{% if user.is_authenticated %}      
+      <!-- if logged in users = individual --> 
+      {% ifequal loggedin_signupas "Individual" %}
+
+      <div class="btn-group btn-block" data-toggle="buttons">
+  {% if logged_customer %}
+      <label class="fa fa-smile-o text-muted btn btn-default btn-block active" style="width:100%;" title="{{userinfo.full_name}} is customer of {{name}}" >
+      <input type="checkbox" checked="checked" id="customer-chkbx" onchange="add_customer({{profile_id}}, {{user_id}})">I'm a customer!
+      {% else %}
+      <label class="fa fa-smile-o text-muted btn btn-default btn-block" style="width:100%;" title="{{userinfo.full_name}} is customer of {{name}}" >
+      <input type="checkbox" id="customer-chkbx" onchange="add_customer({{profile_id}}, {{user_id}})">I'm a customer!
+  {% endif %}
+      </label>      
+      </div>
+      {% endifequal %}
+      <!-- if logged in users = business --> 
+      {% ifequal loggedin_signupas "Business" %} 
+      <div class="btn-group btn-block " data-toggle="buttons">
+        <button class="btn btn-default btn-sm " style="background: url('{{userinfo.profileimg}}'); background-size: cover;width:10%;">&nbsp;</button>
+
+        {% if logged_conn == "seller"  or logged_conn == "both" %}
+                    
+        <label class="btn btn-default active btn-sm" rel="tooltip" style="width:40%;" title="{{userinfo.full_name}} buys from {{name}}"> 
+          <input type="checkbox" checked id="buy_from" onchange="conn_handler('buy_from', {{profile_id}})">buys from
+          {% else %}
+        <label class="btn btn-default btn-sm"  rel="tooltip" style="width:40%;"  title="{{userinfo.full_name}} buys from {{name}}"> 
+          <input type="checkbox" id="buy_from" onchange="conn_handler('buy_from', {{profile_id}})"> buys from
+          {% endif %}
+
+          {% comment %} 
+          <input type="checkbox" id="buy_from" onchange="conn_handler('buy_from', {{profile_id}})"> buys from
+          {% endcomment %}
+
+        </label>
+        <!-- showing active mode if button is selected -->
+        {% if logged_conn == "buyer" or logged_conn == "both" %}
+          
+        <label class="btn btn-default active btn-sm" rel="tooltip" style="width:40%;"  title="{{userinfo.full_name}} sells to {{name}}" > 
+          <input type="checkbox" checked id="sell_to" onchange="conn_handler('sell_to', {{profile_id}})"> sells to
+          {% else %}
+        <label class="btn btn-default btn-sm"  rel="tooltip" style="width:40%;"   title="{{userinfo.full_name}} sells to {{name}}" > 
+          <input type="checkbox" id="sell_to" onchange="conn_handler('sell_to', {{profile_id}})"> sells to
+          {% endif %}
+
+          {% comment %}
+          <input type="checkbox" id="sell_to" onchange="conn_handler('sell_to', {{profile_id}})"> sells to
+          {% endcomment %}
+
+        </label> 
+
+        <button class="btn btn-default btn-sm"  style="background: url('{{pic_url}}'); background-size: cover; width:10%;">&nbsp;</button>
+      </div>
+
+      {% endifequal %}
+
+          
+           
+          {% else %}
+                <!-- if not logged in show login prompt -->
+          <div class="btn-group btn-block" rel="tooltip" data-placement="top" title="Login to connect to {{name}}">
+              <button class="btn btn-default" style="width:50%;" disabled>
+                    Buy from</button>
+          <button class="btn btn-default"  style="width:50%;" disabled>
+                    Sell to</button>
+          </div>
+                <a href="{% provider_login_url "twitter" process="login" %}" class="btn btn-success btn-block">Login for more</a>
+
+          {% endif %}
+      {% endifnotequal %}
+
+          <div class="btn-group btn-block">
+            <button class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" style="width:50%;" ><i class="fa fa-share"></i> Share</button>
+              <ul class="dropdown-menu ">
+               <li> <a href="#" class="" onclick="window.open(
+                'https://www.facebook.com/sharer/sharer.php?s=100&amp;p[url]='+encodeURIComponent('{{ request.build_absolute_uri }}') +'&amp;p[images][0]='+encodeURIComponent('{{pic_url}}')+'&amp;p[title]='+encodeURIComponent('{{name}} on FoodTrade')+'&amp;p[summary]='+encodeURIComponent('Hey, see my profile on FoodTrade')+'&amp;u='+encodeURIComponent('{{ request.build_absolute_uri }}') +'&amp;t='+encodeURIComponent('{{name}} on FoodTrade'),
+                      'facebook-share-dialog', 
+                      'width=626,height=436,top='+((screen.height - 436) / 2)+',left='+((screen.width - 626)/2 )); 
+                    return false;">
+
+                  <i class="fa fa-facebook-square fa-2x"></i> Share on facebook 
+                </a></li><li>
+                <a href="#" class="  " onclick="window.open(
+                      'https://twitter.com/share?url='+encodeURIComponent('{{ request.build_absolute_uri }}')+'&amp;text='+encodeURIComponent('{{screen_name}} on @foodtradeHQ') + '&amp;count=none/', 
+                      'twitter-share-dialog', 
+                      'width=626,height=436,top='+((screen.height - 436) / 2)+',left='+((screen.width - 626)/2 )); 
+                    return false;">
+                  <i class="fa fa-twitter-square fa-2x"></i> Tweet this
+                </a></li><li>
+    
+                <a class=" " href="http://pinterest.com/pin/create/button/?url={{ request.build_absolute_uri|urlencode }}&media={{pic_url|urlencode}}&description={{screen_name|urlencode}}{{' on FoodTrade'|urlencode}}" class="pin-it-button" count-layout="horizontal">
+                  <i class="fa fa-pinterest-square fa-2x"></i> Pin to pinterest
+                </a> </li><li>
+                <a  class="" href="https://plus.google.com/share?url={{ request.build_absolute_uri|urlencode }}">
+                  <i class="fa fa-google-plus-square fa-2x"></i> Share on Google+
+                </a></li><li>
+                <a  class=" " href="http://www.tumblr.com/share" title="Share on Tumblr">
+                  <i class="fa fa-tumblr-square fa-2x"></i> Post to Tumblr
+                </a>
+                   </li><li>
+                <a  class=" " href="http://www.linkedin.com/shareArticle?mini=true&url={{ request.build_absolute_uri|urlencode}}&title={{screen_name}} on FoodTrade&summary=Hey, view my profile on Foodtrade.&source=">
+                  <i class="fa fa-linkedin-square fa-2x"></i> Share on LinkedIn
+                </a></li> 
+                <script type="text/javascript" src="http://platform.tumblr.com/v1/share.js"></script>
+              </ul>
+
+              <button class="btn btn-default btn-sm" style="width:50%;"><i class="fa fa-star-o"></i> Favourite</button>
+          </div>
+
+
+                  
+ 
+                      followers: {{followers_count}}<br />
+                      following: {{friends_count}}<br />
+
+                      
+
+                                
                                 </div>
-                            </div>
-                            <div class="widget-body padding-none">
+                            <div class="widget-body padding-none hidden">
                                 <div class="innerAll">
                                     <p class=" margin-none"><i class="fa fa-envelope fa-fw text-muted"></i> 
                                     <a href="mailto:{{email}}" target="_blank">
                                      {{email}} </a>
                                     </p>
-                                    {% ifequal is_unknown_profile 'false' %}
-          <button class="btn btn-primary " data-toggle="modal" data-target="#modal_contact"><i class="fa fa-envelope-o"></i>  Contact</button>
-          {% else %}
-            <button class="btn btn-primary" style="margin-top:40px;" data-toggle="modal" data-target="#modal_invite">Invite to connect</button> 
-          {% endifequal %}
                                 </div>
                                 {% if phone_number %}
                                 <div class="border-top innerAll">
@@ -758,164 +1350,44 @@
                         </div>
                          
   
-<div class="widget text-center">
-  <div class="innerTB">
-      <div class="innerB"><i class=" icon-thumbs-up-fill fa fa-4x text-faded"></i>
-      </div>
-      <h2 class="strong margin-none">Get 50% OFF</h2>
-      <p class="lead">$30 / month</p>
-      <button class="btn btn-info">Register Today! <i class="fa fa-fw fa-play-circle"></i>
-      </button>
-  </div>
-  <!-- Ribbon -->
-  <div class="ribbon-wrapper">
-      <div class="ribbon">50% Off</div>
-  </div>
-</div>
 
-<<<<<<< HEAD
 
-                        <div class="widget">
-                        <div class="widget-head border-bottom bg-gray">
-                            <h5 class="innerAll pull-left margin-none">Share</h5>
-                        </div> 
-                        <div class="widget-body">
-                            <div class="row">
-                            <div class="col-sm-6">
-=======
-      <!--SHARER  Modal -->
-      <div class="modal fade" id="sharer" tabindex="-1" role="dialog" aria-labelledby="sharer" aria-hidden="true">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-body"> 
-        <div class="container-responsive">
-          <div class="row">
-            <div class="col-sm-6">
->>>>>>> a5707c95666019d97b5012b8252dab63c146c584
-              <a href="#" class="btn btn-block  btn-social btn-facebook" onclick="window.open(
-              'https://www.facebook.com/sharer/sharer.php?s=100&amp;p[url]='+encodeURIComponent('{{ request.build_absolute_uri }}') +'&amp;p[images][0]='+encodeURIComponent('{{pic_url}}')+'&amp;p[title]='+encodeURIComponent('{{name}} on FoodTrade')+'&amp;p[summary]='+encodeURIComponent('Hey, see my profile on FoodTrade')+'&amp;u='+encodeURIComponent('{{ request.build_absolute_uri }}') +'&amp;t='+encodeURIComponent('{{name}} on FoodTrade'),
-                    'facebook-share-dialog', 
-                    'width=626,height=436,top='+((screen.height - 436) / 2)+',left='+((screen.width - 626)/2 )); 
-                  return false;">
-
-                <i class="fa fa-facebook"></i>  Share on Facebook
-              </a>
-              <a href="#" class="btn btn-block  btn-social btn-twitter" onclick="window.open(
-                    'https://twitter.com/share?url='+encodeURIComponent('{{ request.build_absolute_uri }}')+'&amp;text='+encodeURIComponent('{{screen_name}} on @foodtradeHQ') + '&amp;count=none/', 
-                    'twitter-share-dialog', 
-                    'width=626,height=436,top='+((screen.height - 436) / 2)+',left='+((screen.width - 626)/2 )); 
-                  return false;">
-                <i class="fa fa-twitter"></i>  Share on Twitter
-              </a>
-  
-              <a class="btn  btn-block  btn-social btn-pinterest" href="http://pinterest.com/pin/create/button/?url={{ request.build_absolute_uri|urlencode }}&media={{pic_url|urlencode}}&description={{screen_name|urlencode}}{{' on FoodTrade'|urlencode}}" class="pin-it-button" count-layout="horizontal">
-                <i class="fa fa-pinterest"></i>
-                Share on Pinterest
-              </a>
-            </div>
-            <div class="col-sm-6">
-              <a  class="btn btn-social btn-block btn-google-plus" href="https://plus.google.com/share?url={{ request.build_absolute_uri|urlencode }}">
-                <i class="fa fa-google-plus"></i>
-                Share on Google+
-              </a>
-              <a  class="btn btn-block btn-social btn-tumblr" href="http://www.tumblr.com/share" title="Share on Tumblr">
-                <i class="fa fa-tumblr"></i>
-                Share on Tumblr
-              </a>
-                 
-              <a  class="btn btn-block  btn-social btn-bitbucket" href="http://www.linkedin.com/shareArticle?mini=true&url={{ request.build_absolute_uri|urlencode}}&title={{screen_name}} on FoodTrade&summary=Hey, view my profile on Foodtrade.&source=">
-                <i class="fa fa-linkedin"></i>
-                Share on LinkedIn
-              </a>
-            </div> 
-              <script type="text/javascript" src="http://platform.tumblr.com/v1/share.js"></script>
-  
-                                <div class="col-sm-12">
+                
  
       {% if company_num %}
         <a href="https://www.duedil.com/company/{{company_num}}"><i class="fa fa-legal"></i></a>  
-      {% endif %} 
-                                </div> 
-                            </div>
-                          </div> 
-                          </div>
+      {% endif %}  
 
+<div class="widget text-center">
+  <div class="innerAll text-white">
 
+    <form id="contact" method="post" class="form" role="form">
+    <div class="form-group">
+    <input class="form-control col-md-12" type="text" placeholder="tags">
+    </div>
+    </form>
+  </div>
+</div>
 
-                        <div class="widget">
-                            <div class="widget-head border-bottom bg-gray">
-                                <h5 class="innerAll pull-left margin-none">Basic Info</h5>
-                                <div class="pull-right">
-                                    <a href="" class="text-muted">
-                                        <i class="fa fa-pencil innerL"></i>
-                                    </a>
-                                </div>
-                            </div> 
-                            <div class="widget-body">
-                                <div class="row">
-                                    <div class="col-sm-6">User:</div>
-                                    <div class="col-sm-6 text-right">
-                                        <span class="label label-default">mosaicpro</span>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-sm-6">Friends:</div>
-                                    <div class="col-sm-6 text-right">
-                                        <span class="label label-default">219</span>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-sm-6">Joined:</div>
-                                    <div class="col-sm-6 text-right">
-                                        <span class="label label-default">2 months ago</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="widget">
-                            <h5 class="innerAll margin-none border-bottom bg-gray">Recent News
-                             {% if updates_count != 0 %}<span class="badge pull-right">{{updates_count}}</span>{% endif %}
-                             </h5>
-                            <div class="widget-body padding-none">
-                                
+<div class="widget text-center bg-secondary">
+  <div class="innerAll text-white">
+      <div class="innerB"><i class=" icon-rocket fa fa-4x text-faded"></i>
+      </div>
+      <h2 class="strong margin-none text-white">Help us grow!</h2>
+      <p class="lead">from &pound;20 / year</p>
+      <p>We don't sell your data or show adverts because you're our customer, not our product. And because we're working for YOU, we charge a small fee for premium features</p>
+      <p>Use the coupon code: BETASUMMER</p>
+      <button class="btn btn-primary btn-stroke">Upgrade today <i class="fa fa-fw fa-play-circle"></i>
+      </button> 
+  </div>
+  <!-- Ribbon -->
+  <div class="ribbon-wrapper">
+      <div class="ribbon primary">Beta offer</div>
+  </div>
+</div>
 
-                                {% if user.is_authenticated %}
-
-                                {% for eachUpdate in updates %}
-                                <div class="media border-bottom innerAll margin-none">
-                                    <img src="{{userprof.profileimg}}" class="pull-left media-object" width="20" />
-                                    <div class="media-body">
-                                        <a href="" class="pull-right text-muted innerT half">
-                                            <i class="fa fa-comments"></i> 4
-                                        </a>
-                                        <h5 class="margin-none"><a href="" class="text-inverse"> {{eachUpdate.status|recognise_name|safe}}</a>
-                                        </h5>
-                                        <small class="pull-right">
-                                          <a href="/{{username}}/post/{{eachUpdate.tweetuid}}/">  {{eachUpdate.time_elapsed}} ago</a>
-                                        </small>
-                                    </div>
-                                </div>
-                                {% endfor %}  
-                                {% else %}
-                                  <p class="alert alert-warning"><a href="{% provider_login_url "twitter" process="login" %}" class="">Login</a> or <a href="{% provider_login_url "twitter" process="login" %}" class="">sign up free</a> to see updates and activity. </p>
-                                {% endif %} 
-                            </div>
-                        </div>
-                        <!-- Widget -->
-                        <div class="widget widget-heading-simple widget-body-white">
-                            <!-- Widget Heading -->
-                            <div class="widget-head">
-                                <h4 class="heading glyphicons glyphicons-social twitter"><i></i>Twitter feed</h4>
-                            </div>
-                            <!-- // Widget Heading END -->
-                            <div class="widget-body" data-builder-exclude="element children">
-                                <div class="jstwitter" data-gridalicious="false" data-type="slide" data-images="false">
-                                    <span class="label label-default">Loading ..</span>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- // Widget END -->
+ 
+                          
                     </div>
                 </div>
             </div>
@@ -928,7 +1400,7 @@
 
  
 
-    <div class="container-responsive">
+    <div class="contai ner-responsive">
 
     
 
@@ -936,103 +1408,8 @@
       <div id="contact_info" class="col-md-4 col-sm-4  col-xs-4">
 
 
-     {% ifequal profile_id user_id %}
-        <a href="/editprofile/{{userinfo.username}}" class="btn btn-danger btn-block">
-           Edit my profile
-        </a>
-      {% endifequal %}
-
-      {% ifnotequal profile_id user_id %}
-      <!-- if they dont't have an account yet -->
-      
-<!--       {% if not user.is_authenticated %}
-      <button class="btn btn-success btn-block" onclick="invite_connect('{{screen_name}}', '{{userinfo.username}}')">Invite to connect</button>
-      {% endif %} -->
-
-
-
-{% if user.is_authenticated %}      
-      <!-- if logged in users = individual --> 
-      {% ifequal loggedin_signupas "Individual" %}
-      <!-- <button class="btn btn-default btn-block" data-toggle="modal" data-target="#modal_customer">
-        <i class="fa fa-smile-o text-muted"></i> I am a customer
-      </button>  -->
-      <div class="btn-group btn-block" data-toggle="buttons">
-  {% if logged_customer %}
-      <label class="fa fa-smile-o text-muted btn btn-default btn-block active" style="width:100%;" title="{{userinfo.full_name}} is customer of {{name}}" >
-      <input type="checkbox" checked="checked" id="customer-chkbx" onchange="add_customer({{profile_id}}, {{user_id}})">I'm a customer!
-      {% else %}
-      <label class="fa fa-smile-o text-muted btn btn-default btn-block" style="width:100%;" title="{{userinfo.full_name}} is customer of {{name}}" >
-      <input type="checkbox" id="customer-chkbx" onchange="add_customer({{profile_id}}, {{user_id}})">I'm a customer!
-  {% endif %}
-      </label>      
-      </div>
-      {% endifequal %}
-      <!-- if logged in users = business --> 
-      {% ifequal loggedin_signupas "Business" %}
-      <div class="btn-group btn-block" data-toggle="buttons">
-        {% if logged_conn == "seller"  or logged_conn == "both" %}
-                    
-        <label class="btn btn-default active" style="width:50%;" title="{{userinfo.full_name}} buys from {{name}}">
-          <input type="checkbox" checked id="buy_from" onchange="conn_handler('buy_from', {{profile_id}})"> Buy from
-          {% else %}
-        <label class="btn btn-default" style="width:50%;" title="{{userinfo.full_name}} buys from {{name}}">
-          <input type="checkbox" id="buy_from" onchange="conn_handler('buy_from', {{profile_id}})"> Buy from
-          {% endif %}
-
-          {% comment %}
-          <input type="checkbox" id="buy_from" onchange="conn_handler('buy_from', {{profile_id}})"> Buy from
-          {% endcomment %}
-
-        </label>
-        <!-- showing active mode if button is selected -->
-        {% if logged_conn == "buyer" or logged_conn == "both" %}
-          
-        <label class="btn btn-default active" style="width:50%;" title="{{userinfo.full_name}} sells to {{name}}" >
-          
-          <input type="checkbox" checked id="sell_to" onchange="conn_handler('sell_to', {{profile_id}})"> Sell to
-          {% else %}
-        <label class="btn btn-default" style="width:50%;" title="{{userinfo.full_name}} sells to {{name}}" >
-          <input type="checkbox" id="sell_to" onchange="conn_handler('sell_to', {{profile_id}})"> Sell to
-          {% endif %}
-
-          {% comment %}
-          <input type="checkbox" id="sell_to" onchange="conn_handler('sell_to', {{profile_id}})"> Sell to
-          {% endcomment %}
-
-        </label> 
-      </div>
-      {% endifequal %}
- 
-<<<<<<< HEAD
-          {% ifequal is_unknown_profile 'false' %}
-          <button class="btn btn-primary btn-block" data-toggle="modal" data-target="#modal_contact"><i class="fa fa-envelope-o"></i>  Contact</button>
-          {% else %}
-            <button class="btn btn-primary btn-block" style="margin-top:40px;" data-toggle="modal" data-target="#modal_invite">Invite to connect</button> 
-          {% endifequal %}
-
-
-          {% if user.is_superuser %}
-            <a href="/editprofile/{{username}}/" class="btn btn-primary btn-block">Edit</a>
-          {% endif %}
-           
-{% else %}
-      <!-- if not logged in show login prompt -->
-<div class="btn-group btn-block" rel="tooltip" data-placement="top" title="Login to connect to {{name}}">
-    <button class="btn btn-default" style="width:50%;" disabled>
-          Buy from</button>
-<button class="btn btn-default"  style="width:50%;" disabled>
-          Sell to</button>
-</div>
-      <a href="{% provider_login_url "twitter" process="login" %}" class="btn btn-success btn-block">Login for more</a>
-
-{% endif %}
-      {% endifnotequal %}
+    
    
-=======
-      </div>  
-
->>>>>>> a5707c95666019d97b5012b8252dab63c146c584
       
      <!-- modal_contact -->
       <div class="modal fade" id="modal_contact" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -1122,9 +1499,9 @@
               <form accept-charset="UTF-8" action="." role="form" method="POST" enctype="multipart/form-data">
                {% csrf_token %}
                <div class="row">
-                <div class="col-xs-12 col-md-4"> 
+                <div class="col-sm-6"> 
                   <a href="#" rel="tooltip" title="Change the photo">
-                    <img src="http://placehold.it/100x100&text=Upload an image" class="img-responsive img-thumbnail" id="food_photo" style="width:100px;height:100px;">
+                    <img src="" class="img-responsive img-thumbnail" id="food_photo" style="width:100%;height:200px; background: #ccc url('/static/images/upload.gif'); background-size: cover;"> 
                   </a>
                   <!-- show this in another modal? -->
                   <!-- can we use html5 drag and drop to upload? -->
@@ -1139,10 +1516,31 @@
                   <!-- end code -->
                 </div>
                 
-                <div class="col-xs-12 col-md-8">
+                <div class="col-sm-6">
+
                   <div class="form-group">
                     {{form.food_description}}
                   </div>
+
+
+                  <div class="form-group row">
+                    <!-- add weight input --> 
+                    <div class="col-xs-6" style="padding-right:0;">
+                      {{form.how_much}}
+                    <p class="help-block">Weight / vol / size</p>
+                    </div>
+                    <div class="col-xs-6" style="padding-right:0;"> 
+                      {{form.how_often}}
+                     <!-- <select id="qtyUnit" class="form-control btn-sm selectpicker">        
+                        <option value="">How often</option>   
+                        <option value="daily">daily</option>
+                        <option value="monthly">monthly</option>
+                        <option value="seaonsally">seaonsally</option>
+                        <option value="annualy">annualy</option>
+                      </select> -->
+                    </div>
+                  </div>
+                  
                   <div class="form-group" id="recommend_main" style="display:none;">
                     <div id="recomm_tags">
                     </div>
@@ -1150,13 +1548,69 @@
                   </div>
                   <div class="form-group">
                   <ul id="myTags">
-                  <!-- Existing list items will be pre-added to the tags -->
-                  <!-- <li>Tag1</li>
-                  <li>Tag2</li> -->
+                    <!-- Existing list items will be laoded here --> 
                   </ul>
-                  <p class="help-block small">Eg "free range, organic, bramley". Use commas to separate tags.</p>
+                  <p class="help-block small">Use commas to separate tags.</p>
                   
-                  </div>
+ 
+                  <div class="form-group"> 
+                  <label>Available in the months</label>
+                    <table class="availability"> 
+                    <tbody><tr>
+                      <div class="btn-group btn-sm" data-toggle="buttons">
+                      <label class="btn btn-sm btn-default winter">
+                        <input type="checkbox" name="option1_month" id="option1_month"> J
+                      </label> 
+                      <label class="btn  btn-sm btn-default winter">
+                        <input type="checkbox" name="option2_month" id="option2_month"> F
+                      </label> 
+                      <label class="btn  btn-sm btn-default spring">
+                        <input type="checkbox" name="option3_month" id="option3_month"> M
+                      </label> 
+                      <label class="btn  btn-sm btn-default spring">
+                        <input type="checkbox" name="option4_month" id="option4_month"> A
+                      </label> 
+                      <label class="btn btn-sm btn-default spring">
+                        <input type="checkbox" name="option5_month" id="option5_month"> M
+                      </label> 
+                      <label class="btn  btn-sm btn-default summer">
+                        <input type="checkbox" name="option6_month" id="option6_month"> J
+                      </label> 
+                      <label class="btn  btn-sm btn-default summer">
+                        <input type="checkbox" name="option7_month" id="option7_month"> J
+                      </label> 
+                      <label class="btn  btn-sm btn-default summer">
+                        <input type="checkbox" name="option8_month" id="option8_month"> A
+                      </label> 
+                      <label class="btn btn-sm btn-default autumn">
+                        <input type="checkbox" name="option9_month" id="option9_month"> S
+                      </label> 
+                      <label class="btn  btn-sm btn-default autumn">
+                        <input type="checkbox" name="option10_month" id="option10_month"> O
+                      </label> 
+                      <label class="btn  btn-sm btn-default autumn">
+                        <input type="checkbox" name="option11_month" id="option11_month"> N
+                      </label> 
+                      <label class="btn  btn-sm btn-default winter">
+                        <input type="checkbox" name="option12_month" id="option12_month"> D
+                      </label> 
+                </div> 
+                     <!-- <td class="winter" rel="tooltip" title="January">
+                          <button class="btn btn-default" value="Jan">J</td>
+                    <td class="winter">F</td>
+                    <td class="spring">M</td>
+                    <td class="spring">A</td>
+                    <td class="spring yes">M</td>
+                    <td class="summer yes">J</td>
+                    <td class="summer yes">J</td>
+                    <td class="summer">A</td>  
+                    <td class="autumn">S</td>
+                    <td class="autumn">O</td>
+                    <td class="autumn">N</td>
+                    <td class="winter">D</td>  -->
+                    </tr></tbody></table>  
+                  </div> 
+
                 </div>
                </div><!-- row -->
 
@@ -1174,227 +1628,6 @@
           </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
       </div><!-- /.modal -->
-<<<<<<< HEAD
-=======
-
-
-      </div><!-- end header last -->
-<!--  this embeds the video     {{intro_video|safe}} -->
-    </div>
-    </div>
-
-    <div class="row">
-     <div class="col-md-12">
-        <ul class="nav nav-tabs">
-
-
-          <li class="active">
-            <a href="#connections" data-toggle="tab" onclick="set_width()">
-            <span class="visible-xs pull-left right5"><i class="fa fa-link"></i></span> 
-            <span class="visible-sm pull-left right5">Connect.</span> 
-            <span class="visible-md  pull-left right5">Connections</span> 
-            <span class="visible-lg  pull-left right5"><i class="fa fa-link"></i> Connections</span> 
-
-            {% if userprof.trade_connections_no != 0 %}<span class="badge">{{userprof.trade_connections_no}}</span>{% endif %}</a> 
-          </li>
-
-          {% if show_foods %}
-          <li><a href="#produce" data-toggle="tab">
-
-            <span class="visible-xs pull-left right5"><i class="fa fa-sign-out"></i></span> 
-            <span class="visible-sm pull-left right5">We sell</span> 
-            <span class="visible-md  pull-left right5">We sell...</span> 
-            <span class="visible-lg  pull-left right5"><i class="fa fa-sign-out"></i> We sell...</span>
-
-           
-
-          {% if userprof.food_no != 0 %}<span class="badge">{{userprof.food_no}}</span>{% endif %}</a></li>
-          {% endif %} 
-
-          
-          <li><a href="#activity" data-toggle="tab">
-
-            <span class="visible-xs pull-left right5"><i class="fa fa-comment"></i></span> 
-            <span class="visible-sm pull-left right5">Updates</span> 
-            <span class="visible-md  pull-left right5">Updates</span> 
-            <span class="visible-lg  pull-left right5"><i class="fa fa-comment"></i> Updates</span>
-
-            {% if updates_count != 0 %}<span class="badge">{{updates_count}}</span>{% endif %}</a></li>     
-          <li class="dropdown">
-            <a href="#" id="more" class="dropdown-toggle" data-toggle="dropdown">More <b class="caret"></b></a>
-            <ul class="dropdown-menu" role="menu" aria-labelledby="more">
-              <li><a href="#organisations" data-toggle="tab">Organisations {% if userprof.organisation_connection_no != 0 %}<span class="badge pull-right">{{userprof.organisation_connection_no}}</span>{% endif %}</a></li> 
-
-              <li><a href="#deliveries" tabindex="-1" data-toggle="tab">Deliveries</a></li> 
-
-              <li><a href="#customers" tabindex="-1" data-toggle="tab">Customers {% if customers|length != 0 %}<span class="badge pull-right">{{customers|length}}</span>{% endif %}</a></li> 
-            </ul>
-          </li>
-        </ul>
-     </div>
-    </div>
-
-
-    <div class="row">
-      <div class="col-md-12">
-        <div class="container-responsive clearfix">
-
-        <div class="tab-content">
-          {% if show_foods %}
-          <div class="tab-pane   fade in " id="produce">
- 
-
-          {% if user.is_authenticated %}
-          <div class="row">
-          <div class="col-md-12 ">
-          <div class=" well well-sm clearfix">
-          <div class="row">
-            <div class="col-md-8 col-sm-8 col-xs-7">
-              {% if user.is_authenticated %}
-                  <div class="input-group">
-                  <!-- link this to open food facts --> 
-                        <!-- <input class="typeahead form-control" name="addfood" data-source='' data-provide="typeahead" autocomplete="off" id = "addfood_id" style="width:400px;" placeholder="Add foods you can buy here."> -->
-                        <div class='pull-left'>
-                        <select id="myselect" data-placeholder="Add foods you can buy here." style="height:20px; width: 192px; padding: 15px 5px;" multiple class="chosen-select" >
-                        <option value=""></option>
-<!--                             {% for each in food_list %}
-                        <optgroup label={{each.node}}>
-                        {% if each.children %}
-                        {% for eachchild in each.children %}
-                        <option>{{eachchild}}</option>
-                        {% endfor %}
-                        {% else %}
-                        <option>{{each.node}}</option>
-                        {% endif %}
-                        </optgroup>
-                        {% endfor %}
--->
-                       {% for each in all_tags %}
-                          <optgroup label={{each.node}}>
-                          {% if each.childrens %}
-                          {% for eachchild in each.childrens %}
-                          <option>{{eachchild.node}}</option>
-                          {% endfor %}
-                        {% else %}
-                          <option>{{each.node}}</option>
-                        {% endif %}
-                          </optgroup>
-                        {% endfor %}
-                        </select></div>
-
-                          <div class="pull-left">
-                        <span class="input-group-btn">
-                
-                            <button class="btn btn-success btn-sm" id="adfoo_id" rel="tooltip" style="height:34px;" onClick="add_food({{profile_id}}, {{user_id}})" {% if not user.is_authenticated %} title="Please log in to use this feature." {% endif %} > Add</button>
-                        </span></div>
-                      </div>  
-              {% endif %}
-            </div> 
-
-            <div class="col-md-4 col-sm-4 col-xs-5">
-             <form action="#" method="get">
-              <div class="input-group">
-                  <input class="form-control" id="system-search" name="q" placeholder="Search foods..." required>
-                  <span class="input-group-btn">
-                      <button type="submit" class="btn btn-default"><i class="glyphicon glyphicon-search"></i></button>
-                  </span>
-              </div>
-             </form>
-            </div>
-            </div>
-
-          </div>
-          </div>
-          </div>
-          {% endif %}
-
-
-      <table class="table table-list-search table-condensed">
-        {% if not user.is_authenticated %}
-          <thead>
-            <tr>
-              <td colspan="2">
-                <p class="alert alert-warning"><a href="{% provider_login_url "twitter" process="login" %}" class="">Login</a> or <a href="{% provider_login_url "twitter" process="login" %}" class="">sign up free</a> to see all their full profile. </p>
-              </td>
-            </tr>
-          </thead>
-          {% endif %}
-          <tbody id="food_tbody">
-            {% for eachfood in all_foods %}
-              <tr id="row{{forloop.counter}}">
-                  <td>
-
-                  <div class="clearfix">   
-          
-
-                <a href="/activity/?f={{eachfood.food_name}}" >  
-                  
-                  {{eachfood.food_name}}
-                  
-
-
-                </a>   
-            <!-- You can now access parent food with this {{eachfood.parent_food}} -->
-                  </div>
- 
-                  </td>
- 
-                  <td nowrap="nowrap">  
-                   <div class="pull-right">
-
-                   {% ifequal profile_id user_id %}
-                      
-
-                     <a href="" data-toggle="modal" data-target="#modal_food_detail" class="btn btn-sm btn-default" data-container="body" onClick="get_food_detail('{{profile_id}}', '{{eachfood.food_name}}', '{{eachfood.description}}', '{{eachfood.food_tags}}', '{{eachfood.photo_url}}', '{{eachfood.recomm_tags|safe}}')"><i class="fa fa-edit" title="Edit" ></i> edit details</a>
-                     
-                     <a class="btn btn-danger btn-sm"><i class="fa fa-trash-o" title="Delete" onClick="delete_food({{profile_id}}, '{{eachfood.food_name}}', this)"></i></a>
-
-                   {% endifequal %}
-
-
-                   {% if user.is_authenticated %}
-
-                     {% ifnotequal profile_id user_id %}
-                       <div class="btn-block" data-toggle="buttons">
-                       {% if eachfood.logged_recommender %}
-                            <label class="fa fa-thumbs-o-up btn btn-default btn-sm active" rel="tooltip" title="Recommend this to others">
-                              <input type="checkbox" checked="checked" onchange="recommend_food({{user_id}}, '{{eachfood.food_name}}', {{profile_id}}, '{{screen_name}}', this); return null;">
-                            </label>
-                        {% else %}
-                            <label class="fa fa-thumbs-o-up btn btn-default btn-sm" rel="tooltip" title="Recommend this to others" data-toggle="modal" data-target="#modal_tweet_recomm">
-                              <input type="checkbox" onchange="recommend_food({{user_id}}, '{{eachfood.food_name}}', {{profile_id}}, '{{screen_name}}', this); return null;">
-                            </label>
-                        {% endif %}
-                        </div>
-
-                     {% endifnotequal %}
-                   {% endif %}
-                     
-                   
-                   </div>
-                   
-                   {% for eachdet in eachfood.recomm_details %}
-                    <div class="pull-right">
-                      <img class="pull-left" style="margin:0px 4px 0 0; width:25px" src={{eachdet.photo}} rel="tooltip" title="{{eachdet.name}}"/>
-                    </div>
-                   {% endfor %}
-                 {% ifnotequal eachfood.vouch_count 0 %}
-                   <div class="pull-right">
-                     <span class="badge badge-default" style="margin:3px 4px 0 0;" rel="tooltip" title="{{eachfood.vouch_count}} recommendations on {{eachfood.food_name}}">{{eachfood.vouch_count}}</span>
-                  </div>
-                  {% endifnotequal %}
-              
-
-                   </div>
-                  </td>  
-              </tr> 
-
-              {% if eachfood.description %}
-              <tr>
-                <td colspan="3">
-                  <div class="produce_detail">  
-                    <img src="{{eachfood.photo_url}}" alt="{{eachfood.food_name}}" class="img-rounded img-responsive produce_large img-thumbnail " /> 
->>>>>>> a5707c95666019d97b5012b8252dab63c146c584
 
 
       </div><!-- end header last -->
@@ -1425,7 +1658,7 @@
             <span class="visible-lg  pull-left right5"><i class="fa fa-sign-out"></i> We sell...</span>
 
            
-
+ 
           {% if userprof.food_no != 0 %}<span class="badge">{{userprof.food_no}}</span>{% endif %}</a></li>
           {% endif %} 
  
@@ -1441,155 +1674,7 @@
         </ul>
      </div>
     </div>
-
-
-    <div class="row">
-      <div class="col-md-12">
-        <div class="container-responsive clearfix">
-
-        <div class="tab-content">
-          
-
-
-
-
-<!-- FOODS LIST EXPERIEMNT  -->
-
-<div class="widget gridalicious-item not-responsive col-md-3" style="margin-bottom: 12px; zoom: 1; opacity: 1;">
-            <img src="http://myzerowaste.com/wp-content/uploads/2009/01/carrots1.jpg" alt="" class="img-responsive" style="width: auto; height: auto; display: block; margin-left: auto; margin-right: auto;">
-            <div class="ribbon-wrapper"><div class="ribbon primary"><i class="fa fa-fw fa-star-o "></i><strong>4.8</strong></div></div>
-
-            <div class="innerTB half text-center">
-            <div class="rating text-medium text-faded margin-top-none">
-                  <span class="star"></span>
-                  <span class="star"></span>
-                  <span class="star"></span>
-                  <span class="star active"></span>
-                  <span class="star"></span>
-                </div>
-            </div>
-            <div class="border-top innerAll">
-              <div class="pull-left">
-                <span class="text-muted small innerT innerR pull-left">Rated by:</span>
-                <img src="http://cdn.mosaicpro.biz/social/php/assets/images/people/35/13.jpg" class="img-circle pull-left innerR half" style="width: auto; height: auto; display: block; margin-left: auto; margin-right: auto;"><img src="http://cdn.mosaicpro.biz/social/php/assets/images/people/35/13.jpg" class="img-circle pull-left innerR half" style="width: auto; height: auto; display: block; margin-left: auto; margin-right: auto;"><img src="http://cdn.mosaicpro.biz/social/php/assets/images/people/35/13.jpg" class="img-circle pull-left innerR half" style="width: auto; height: auto; display: block; margin-left: auto; margin-right: auto;"><img src="http://cdn.mosaicpro.biz/social/php/assets/images/people/35/13.jpg" class="img-circle pull-left innerR half" style="width: auto; height: auto; display: block; margin-left: auto; margin-right: auto;"> 
-              </div>
-              <div class="pull-right">
-                <span class="text-primary strong lead pull-left innerT innerR half "><i class="icon-time-clock" data-toggle="tooltip" fata-placement="top" data-title="15 miutes ago"></i></span>
-                <a href="#"><img src="http://cdn.mosaicpro.biz/social/php/assets/images/people/35/13.jpg" class="img-circle pull-right" data-toggle="tooltip" fata-placement="top" data-title="Marie" style="width: auto; height: auto; display: block; margin-left: auto; margin-right: auto;"></a>
-              </div>
-            </div>
-              <div class="clearfix"></div>
-          </div>
-
-
-<div class="foods clearfix" style="margin: 10px 0;">
-{% for eachfood in all_foods %}
-
-
-<div class="card">
-
-<div class="content" style="background: url('http://myzerowaste.com/wp-content/uploads/2009/01/carrots1.jpg'); background-size: cover; min-height: 80px; position: relative; "><!--{{eachfood.photo_url}}-->
  
-  <div class="text" style="position: absolute; width: 100%; bottom: 0;"> 
-  {% ifequal profile_id user_id %}
-    <button type="button" class="close" aria-hidden="true" onClick="delete_food({{profile_id}}, '{{eachfood.food_name}}', this)">&times;</button>
-  {% endifequal %}
-
-  <h5><a href="/activity/?f={{eachfood.food_name}}">{{eachfood.food_name}}</a></h5> 
-  {% if eachfood.description %}<p class="small">{{eachfood.description}}</p>{% endif %}
-
-  </div>
-</div>
-
-<div class="numbers clearfix">
-
-  <a href="" data-toggle="modal" data-target="#modal_food_detail" class="btn btn-sm btn-default pull-left" data-container="body" onClick="get_food_detail('{{profile_id}}', '{{eachfood.food_name}}', '{{eachfood.description}}', '{{eachfood.food_tags}}', '{{eachfood.photo_url}}', '{{eachfood.recomm_tags|safe}}')"><i class="fa fa-edit" title="Edit" ></i></a>
-
-{% if user.is_authenticated %}
-{% ifnotequal profile_id user_id %}
- <div class="btn-block" data-toggle="buttons">
- {% if eachfood.logged_recommender %}
-      <label class="fa fa-thumbs-o-up btn btn-default btn-sm active" rel="tooltip" title="Recommend this to others">
-        <input type="checkbox" checked="checked" onchange="recommend_food({{user_id}}, '{{eachfood.food_name}}', {{profile_id}}, '{{screen_name}}', this); return null;">
-      </label>
-  {% else %}
-      <label class="fa fa-thumbs-o-up btn btn-default btn-sm" rel="tooltip" title="Recommend this to others" data-toggle="modal" data-target="#modal_tweet_recomm">
-        <input type="checkbox" onchange="recommend_food({{user_id}}, '{{eachfood.food_name}}', {{profile_id}}, '{{screen_name}}', this); return null;">
-      </label>
-  {% endif %}
-  </div>
-{% endifnotequal %}
-{% endif %}
-
- {% for eachdet in eachfood.recomm_details %}
-      <div class="pull-right">
-        <img class="pull-left" style="margin:0px 4px 0 0; width:25px" src={{eachdet.photo}} rel="tooltip" title="{{eachdet.name}}"/>
-      </div>
-     {% endfor %}
-   {% ifnotequal eachfood.vouch_count 0 %}
-     <div class="pull-right">
-       <span class="badge badge-default" style="margin:3px 4px 0 0;" rel="tooltip" title="{{eachfood.vouch_count}} recommendations on {{eachfood.food_name}}">{{eachfood.vouch_count}}</span>
-    </div>
-    {% endifnotequal %}
- 
- </div><!-- numbers -->
-
- 
-
- 
-
-
-</div>
-{% endfor %}
-</div>
-
-
-<!-- END OF FOOD LIST EXPERIEMTN -->
-
-
-          
- 
-          <div class="tab-pane fade" id="customers">
-        {% if user.is_authenticated %}
-          {% else %} 
-            <p class="alert alert-warning"><a href="{% provider_login_url "twitter" process="login" %}" class="">Login</a> or <a href="{% provider_login_url "twitter" process="login" %}" class="">sign up free</a> to see where their customers live. Maybe they'll do home deliveries if you ask nicely! </p> 
-        {% endif %}
-<div class="pull-left">
-           {% for each in customers %}
-
-              <div class="card card-individual"> 
-                <div class="content" style="background-image:url('{{each.banner_url}}');">
-                  <img src="{{each.photo}}" alt="{{each.name}}"
-                  class="img-rounded img-responsive pull-left" style="width:40px;" />
-                  <div class="text">
-                    <h5><a href="/profile/{{each.username}}">{{each.name}}</a></h5> 
-                    <p class="small">
-                    {{each.description}}</p>
-                  </div> 
-                </div>
-                <div class="numbers clearfix">
-                  <i class="fa fa-user"></i> <small class="t ext-muted">Person</small>
-                </div>
-               
-          </div>
-          {% endfor %}
-          </div>
-          </div> <!-- end customers -->
-
-          
-    
-      </div>
- 
- 
-        </div><!-- container responsive -->
-  
-      
- 
-   
-      </div><!-- end col --> 
- 
-    </div><!-- row -->
-
 
    
     </div><!-- col --> 
@@ -1602,17 +1687,56 @@
    {% block footer %}
       {% include "includes/not_logged_in_modal.html" %}
 <script src="/static/js/chosen.jquery.min.js" type="text/javascript"></script>
+  <script src="http://cdn.embed.ly/jquery.embedly-3.1.1.min.js" type="text/javascript"></script>
   <script src="/static/css/docsupport/prism.js" type="text/javascript" charset="utf-8"></script>
      <script src="{% static "js/hogan-2.0.0.js" %}"></script>
      <script src="{% static "js/typeahead.min.js" %}"></script>
 
   <script type="text/javascript">
+ 
+
+ $.fn.editable.defaults.mode = 'inline';
+
+
+var $container1 = $('#foods').isotope({
+   itemSelector: '.food'
+});
+
+// filter items on button click
+$('#filterFoods').on( 'click', 'button', function() {
+  var filterValue = $(this).attr('data-filter');
+  $container1.isotope({ filter: filterValue });
+});
+
+var $container2 = $('#buyers-cards').isotope({
+   itemSelector: '.card'
+});
+
+var $container3 = $('#seller-cards').isotope({
+   itemSelector: '.card'
+});
+
+$('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+  $container2.isotope('reLayout');
+  $container3.isotope('reLayout');
+});
+ 
+ 
+
 
 $( document ).ready(function() {
+
+ 
+
+
+
   $("#myTags").tagit({
-      placeholderText: 'Add tags to your food...',
+      placeholderText: 'Add tags, eg free-range',
       allowSpaces: true
     });
+
+
+    $('.editable').editable();
 
 // activating tooltips
     // $('#adfoo_id').tooltip();
@@ -1620,11 +1744,14 @@ $( document ).ready(function() {
 
 // food_detail();
 
-// $("#buss_chosen").chosen({max_selected_options: 1});
 $('#myselect').chosen({create_option: true, skip_no_results: true, create_option_text: 'Add'});
+$('#webuy_select').chosen({create_option: true, skip_no_results: true, create_option_text: 'Add'});
 // chosen on change event
     $('#myselect').chosen().change(function(){
     add_food({{profile_id}});
+    });
+    $('#webuy_select').chosen().change(function(){
+    add_food({{profile_id}}, 'we_buy');
     });
     
     $('#myselect').chosen().ready(function(){
@@ -1684,7 +1811,9 @@ function set_width(){
   $('#buss_chosen_chosen').attr("style", "width:350px;");
 }
 
-function get_food_detail(profile_id, food_name, description, food_tags, photo_url, recomm_tags){
+function get_food_detail(profile_id, food_name, description, food_tags, photo_url, recomm_tags, how_much,
+  how_often, month_list){
+    var month_list = jQuery.parseJSON(month_list);
     $("#myTags").tagit("removeAll");
     $('#food_detail_title').text('Add details to '+ food_name);
     var placeholder = "What makes your " + food_name + " special? This is where it's completely fine to show-off! Remember to name any variety names, special techniques, or unique properties - and how it tastes is the most important thing."
@@ -1696,6 +1825,26 @@ function get_food_detail(profile_id, food_name, description, food_tags, photo_ur
     $('#id_food_name').val(food_name);
     $('#id_profile_id').val(profile_id);
     $('#id_food_description').val(description);
+    $('#id_how_much').val(how_much);
+    $('.filter-option').text(how_often);
+    
+    
+    for(i=1;i<=12;i++){
+      if(parseInt(month_list[i-1])==1){
+        if(!($('#option'+ String(i) +'_month').parent().hasClass('active'))){
+          $('#option'+ String(i) +'_month').parent().addClass('active');
+        }
+        $('#option'+ String(i) +'_month').prop('checked', true);
+      }
+      else{
+        $('#option'+ String(i) +'_month').prop('checked', false);  
+        if($('#option'+ String(i) +'_month').parent().hasClass('active')){
+          $('#option'+ String(i) +'_month').parent().removeClass('active');
+        }
+      }
+    }
+
+
     var tags_list = food_tags.split(',');
     for(i=0;i<tags_list.length;i++){
       $("#myTags").tagit('createTag', tags_list[i]);
@@ -1747,6 +1896,27 @@ customers = {{customers_str | safe}};
       
     </script>
      <script src="{% static "js/business-map.js" %}"></script>
-     
+     <script type="text/javascript">
+        $('a').embedly({
+          display: function(obj){
+            // Overwrite the default display.
+            if (obj.type === 'video' || obj.type === 'rich'){
+              // Figure out the percent ratio for the padding. This is (height/width) * 100
+              var ratio = ((obj.height/obj.width)*100).toPrecision(4) + '%'
+         
+              // Wrap the embed in a responsive object div. See the CSS here!
+              var div = $('<div class="responsive-object">').css({
+                paddingBottom: ratio
+              });
+         
+              // Add the embed to the div.
+              div.html(obj.html);
+         
+              // Replace the element with the div.
+              $(this).replaceWith(div);
+            }
+          }
+        });
+     </script>
  {% endblock %}
 

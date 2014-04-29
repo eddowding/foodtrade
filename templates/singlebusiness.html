@@ -51,6 +51,10 @@
 
 <!-- NEW -->
 <!-- <div class="layout-app">  -->
+
+ 
+
+
 <div class="innerAll">
  
 
@@ -68,11 +72,11 @@
               <div style="width:100%; height: 350px; " id="map"></div> 
           </div> 
  
-          {% if banner_url %}
-          <div class="item">
-              <img src="{{banner_url}}" class="img-responsive">
-          </div>
-          {% endif %} 
+          {% ifnotequal banner_url 'none' %}
+            <div class="item">
+                <img src="{{banner_url}}" class="img-responsive">
+            </div>
+          {% endifnotequal %} 
  
           {% if intro_video %}
           <div class="item">
@@ -98,7 +102,10 @@
       {% if intro_video %} 
       <li><a href="#" data-target="#carousel-1" data-slide-to="2"><i class="icon-photo-camera"></i> <span>Video</span> </a></li>  
       {% endif %}  
+
+      {% ifnotequal banner_url 'none' %}
       <li><a href="#" data-target="#carousel-1" data-slide-to="1"><i class="icon-photo-camera"></i> <span>Photos</span> </a></li>  
+      {% endifnotequal %} 
  
       {% if prof_subscribed %}
       <li class="pull-right" style="background: #88BC62;"><a href="#">
@@ -149,25 +156,25 @@
         <li class="active"><a class="glyphicons list" href="#tabProduce" data-toggle="tab"><i></i><span>Produce</span></a></li>
         {% endif %}
         <li>
-        <a class="glyphicons log_in" href="#tabStockists" data-toggle="tab"><i></i><span>We buy from</span></a></li>
-        <li><a class="glyphicons log_out" href="#tabSuppliers" data-toggle="tab"><i></i><span>We sell to</span></a></li>
-        <li><a class="glyphicons certificate" href="#tabMemberships" data-toggle="tab"><i></i><span>Members of</span></a></li>
-        <li><a class="glyphicons truck" rel="tooltip" href="#tabDeliveries" data-toggle="tab"><i></i><span>Deliveries</span> 
-        </a></li> 
-        <!-- class="premium" -->
-        {% if we_buy %}
-        <li><a class="glyphicons log_in" rel="tooltip" href="#tabBuy" data-toggle="tab"><i></i><span>We buy</span>
-        </a></li>{% endif %}
-        <li class="premium"><a class="glyphicons cogwheel" rel="tooltip" title="Premium account holders only - upgrade from just &pound;45/yr" href="#tabCustomers" data-toggle="tab"><i></i><span>Customers</span> 
+        <a class="glyphicons log_in" href="#tabStockists" data-toggle="tab"><i></i><span>Buys from</span></a></li>
+        <li><a class="glyphicons log_out" href="#tabSuppliers" data-toggle="tab"><i></i><span>Sells to</span></a></li>
+        <li><a class="glyphicons certificate" href="#tabMemberships" data-toggle="tab"><i></i><span>Groups</span></a></li>
+        <li class="premium"><a class="glyphicons list" rel="tooltip" title="Premium account holders only - upgrade from just &pound;45/yr" href="#tabBuy" data-toggle="tab"><i></i><span>Shopping list</span>
+        </a>
+        </li>
+        <li class="premium"><a class="glyphicons group" rel="tooltip" title="Premium account holders only - upgrade from just &pound;45/yr" href="#tabBuy" data-toggle="tab"><i></i><span>People</span>
+        </a>
+        </li>
+        <li class="premium"><a class="glyphicons google_maps" rel="tooltip" title="Premium account holders only - upgrade from just &pound;45/yr" href="#tabCustomers" data-toggle="tab"><i></i><span>Customers</span> 
        <!--  <div class="ribbon-wrapper small">
             <div class="ribbon danger">Upgrade</div>
         </div> -->
         </a></li> 
-        <li class="premium"><a class="glyphicons cogwheel" rel="tooltip" title="Premium account holders only - upgrade from just &pound;45/yr" href="#tabUpdates" data-toggle="tab"><i></i><span>Trades</span> 
+        <li class="premium"><a class="glyphicons bullhorn" rel="tooltip" title="Premium account holders only - upgrade from just &pound;45/yr" href="#tabUpdates" data-toggle="tab"><i></i><span>Trade</span> 
        <!--  <div class="ribbon-wrapper small">
             <div class="ribbon danger">Upgrade</div>
         </div> -->
-        </a></li> 
+        </a></li>  
       </ul>
     </div>
     <!-- // Tabs Heading END -->
@@ -236,12 +243,9 @@
 
                             {% for eachfood in all_foods %}
  
-                                <div class="food col-md-3  {{eachfood.parent_food|slugify}}" style="margin-bottom: 15px;">
+                                <div class="food col-md-3 {{eachfood.parent_food|slugify}}" style="margin-bottom: 15px;">
                                   
-                                    <div class="media-body" style="border:1px solid #ccc;"> 
-                                    <a href="/activity/?f={{eachfood.food_name}}" class="lead" style="padding-left: 2px; font-weight:bold;">  
-                                      {{eachfood.food_name}}
-                                    </a> 
+                                    <div class="media-body"> 
                                     <div class="flip">
                                       <div class="note">
                                       <div class="face front">
@@ -305,7 +309,16 @@
 
                                       </div><!-- card -->
                                       </div><!-- flip -->
-                                      <div class="widget border-top-none   innerAll half bg-gray margin-none">
+                                      <div class="widget border-top innerAll half margin-none">
+
+                                      <h5 class="margin-none">
+                                        <a href="/activity/?f={{eachfood.food_name}}" class="black">  
+                                        {{eachfood.food_name}}
+                                        </a> 
+                                      </h5>
+                                      </div>
+
+                                      <div class="widget border-top innerAll half bg-gray margin-none">
 
                                       <div class="pull-left">
 
@@ -333,7 +346,7 @@
 
                                         {% if user.is_authenticated %}
                                         {% ifnotequal profile_id user_id %}
-                                         <span class="btn-bl ock" data-toggle="buttons">
+                                         <span data-toggle="buttons">
                                          {% if eachfood.logged_recommender %}
                                               <label class="fa  fa-thumbs-o-up btn btn-default btn-sm " rel="tooltip" title="Recommend this to others"> 
                                                 <input type="checkbox" checked="checked" onchange="recommend_food({{user_id}}, '{{eachfood.food_name}}', {{profile_id}}, '{{screen_name}}', this); return null;">
@@ -498,7 +511,7 @@
 <div class="clearfix">
 {% if userprof.b_conn_no != 0 %} 
 
-            <div class="clearfix isotope js-isotope" data-isotope-options='{ "itemSelector": ".card" }' id="buyers-cards"> 
+            <div class="clearfix isotope" id="buyers-cards"> 
           {% for each in connections %}
               {% if each.relation == "buyer" or each.relation == "both" %}
                   <div class="card card-business {% if each.type|length == 0 or each.type|first == '' %}
@@ -511,7 +524,7 @@
                     {% endif %}">
 
                     
-                    <div class="content" style="background: #fff url('{{each.banner_url}}');">
+                    <div class="content" style="background:  url('{{each.banner_url}}');">
                       <div class="text-center">
                         <a href="/profile/{{each.username}}"><img src="{{each.photo}}" alt="{{each.name}}"
                         class="img-thumbnail img-responsive" style="width:73px; height:73px;" /></a>
@@ -530,31 +543,44 @@
                     </div>
 
 
-                    <div class="numbers clearfix">
-                      <p class="small text-center">
+                  
 
-                        <a href="/profile/{{each.username}}">
+                      <div class="row row-merge border-top">
 
-                        
-                        <span rel="tooltip" title="{{each.food_no}} foods" class="pull-left {% if each.food_no = 0 %}zero{% endif %}"><i class="fa fa-cutlery"></i> {{each.food_no}}</span>
+                       
+                        <!-- number of foods sold -->
+                        <div class="{% if show_foods %}col-sm-3{% else %}col-sm-6{% endif %}">
+                          <a href="" class="innerAll text-center display-block text-muted" data-original-title="{{each.food_no}} foods" rel="tooltip"><i class="fa fa-fw fa fa-cutlery"></i> {{each.food_no}}</a>
+                        </div>
 
-                        <span rel="tooltip" title="{{each.trade_conn_no}} connections" class=" {% if each.trade_conn_no = 0 %}zero{% endif %}"><i class="fa fa-link"></i> {{each.trade_conn_no}}</span>
+                        <!-- number of vouches across all produce --> 
+                        <div class="{% if show_foods %}col-sm-3{% else %}col-sm-6{% endif %}">
+                          <a href=""  rel="tooltip" title="{{each.total_vouches}} number of vouches for all produce"  class="innerAll text-center display-block text-muted"><i class="fa fa-fw fa-thumbs-o-up"></i> {{each.total_vouches}}</a>
+                        </div> 
 
-                        <span rel="tooltip" title="{{each.org_conn_no}} organisations" class="pull-right {% if each.org_conn_no = 0 %}zero{% endif %}"><i class="fa fa-group"></i> {{each.org_conn_no}}</span> 
+                        <!-- number of trade connections --> 
+                        <div class="{% if show_foods %}col-sm-3{% else %}col-sm-6{% endif %}">
+                          <a href=""  rel="tooltip" title="{{each.trade_connections_no}} of trade connections" class="innerAll text-center display-block text-muted"><i class="fa fa-fw fa-link"></i> {{each.trade_conn_no}}</a>
+                        </div>
 
-                        </a>
-                      </p>
-                    </div>
-                    {% if each.type|length == 0 or each.type|first == '' %}
-                    {% else %}
-                    <div class="numbers type text-center clearfix">
-                      <div class="tags tags-biztype pull-lef t">  
-                        {% for e in each.type %}
-                       <a href="/activity/?b={{e}}">{{e}}</a>
-                       {% endfor %}
+                        <!-- number of group membershpis -->  
+                        <div class="{% if show_foods %}col-sm-3{% else %}col-sm-6{% endif %}">
+                          <a href=""  rel="tooltip" title="Member of {{each.organisation_connection_no}} groups or organisations"  class="innerAll text-center display-block text-muted"><i class="fa fa-fw fa-group"></i> {{each.org_conn_no}}</a>
+                        </div> 
+
                       </div>
-                    </div>
-                    {% endif %}
+
+
+
+                          {% if type_user|length == 0 or type_user|first == '' %}
+                          {% else %}
+                          <div class="bg-gray border-top innerAll half text-center">  
+                           {% for eachtype in type_user %}
+                            <a href="/activity/?b={{eachtype}}">{{eachtype}}</a>
+                           {% endfor %}
+                          </div> 
+                          {% endif %} 
+ 
                   </div> 
                   {% endif %}
                   {% endfor %}
@@ -577,23 +603,7 @@
                         <a href="/profile/{{each.username}}"><img src="{{each.photo}}" alt="{{each.name}}"
                         class="img-thumbnail img-responsive" style="width:73px; height:73px;" /></a>
  
-                      </div>
-
-                      <div class="text">
-                    {% ifequal profile_id user_id %}
-                      <button type="button" class="close" aria-hidden="true" onclick="conn_handler('close_sell_to', {{profile_id}}, {{each.id}})">&times;</button>
-                      
-                      <!-- <button type="button" class="close" aria-hidden="true">&times;</button> -->
-                      {% endifequal %}
-                        <h5><a href="/profile/{{each.username}}">{{each.name}}</a> 
-                        </h5>  
-                        <p class="small">{{each.description|truncatechars:80}}</p>
-                      </div>
-                    </div>
-
-                    <div class="numbers clearfix">
-                      <p class="small text-center">  
-                        <a href="/profile/{{each.username}}">
+          </div>  <!-- end all-connections -->
  
                         <span rel="tooltip" title="{{each.food_no}} foods" class="pull-left {% if each.food_no = 0 %}zero{% endif %}"><i class="fa fa-cutlery"></i> {{each.food_no}}</span>
 
@@ -660,12 +670,12 @@
                       
         <div id="all-connections" class="clearfix">
           {% if userprof.c_conn_no != 0 %}  
-           <div class="clearfix isotope js-isotope" data-isotope-options='{ "itemSelector": ".card" }' id="seller-cards">
+           <div class="clearfix isotope" id="seller-cards">
           {% for each in connections %}
               {% if each.relation == "seller" or each.relation == "both" %}
 
                   <div class="card card-business"> 
-                    <div class="content" style="background: #fff url('{{each.banner_url}}');"> 
+                    <div class="content" style="background: url('{{each.banner_url}}');"> 
 
                       <div class="text-center">
                         <a href="/profile/{{each.username}}"><img src="{{each.photo}}" alt="{{each.name}}"
@@ -764,17 +774,20 @@
             </div>
         </div>
         <!-- // Tab content END -->
+ 
+ 
 
-        <!-- Tab content -->
-        {% if user.is_authenticated %} 
-        <div id="tabDeliveries" class="tab-pane widget-body-regular">
-        {% if deliverables %} 
+        <div id="tabUpdates" class="tab-pane widget-body-regular">
+          <h5 class="innerAll margin-none border-bottom bg-gray">Recent News
+           {% if updates_count != 0 %}<span class="badge pull-right">{{updates_count}}</span>{% endif %}
+           </h5>
+
+           {% if deliverables %} 
           {{deliverables|linebreaks}}
         {% else %}
           <p>Please contact us directly to discuss deliveries.</p>
         {% endif %}
         </div>
-        {% endif %}
 
 <!--  start we buy -->
 
@@ -1096,7 +1109,41 @@
                 <p class="alert alert-warning"><a href="{% provider_login_url "twitter" process="login" %}" class="">Login</a> or <a href="{% provider_login_url "twitter" process="login" %}" class="">sign up free</a> to see updates and activity. </p>
               {% endif %} 
           </div>
-        </div> 
+        </div> <!-- /updates--> 
+
+
+
+        <div id="tabCustomers" class="tab-pane widget-body-regular">
+  
+          {% if customers|length != 0 %}<span class="badge pull-right">{{customers|length}}</span>{% endif %}
+
+          {% if user.is_authenticated %}
+          {% else %} 
+            <p class="alert alert-warning"><a href="{% provider_login_url "twitter" process="login" %}" class="">Login</a> or <a href="{% provider_login_url "twitter" process="login" %}" class="">sign up free</a> to see where their customers live. Maybe they'll do home deliveries if you ask nicely! </p> 
+          {% endif %}
+
+          <div class="pull-left">
+           {% for each in customers %}
+
+              <div class="card card-individual"> 
+                <div class="content" style="background-image:url('{{each.banner_url}}');">
+                  <img src="{{each.photo}}" alt="{{each.name}}"
+                  class="img-rounded img-responsive pull-left" style="width:40px;" />
+                  <div class="text">
+                    <h5><a href="/profile/{{each.username}}">{{each.name}}</a></h5> 
+                    <p class="small">
+                    {{each.description}}</p>
+                  </div> 
+                </div>
+                <div class="numbers clearfix">
+                  <i class="fa fa-user"></i> <small class="t ext-muted">Person</small>
+                </div>
+              </div>
+          {% endfor %}
+          </div>
+        </div> <!-- end customers -->
+
+
         
         
       </div>
@@ -1169,7 +1216,7 @@ top: -24px;" >
 
                         <!-- number of vouches across all produce --> 
                         <div class="{% if show_foods %}col-sm-3{% else %}col-sm-6{% endif %}">
-                          <a href=""  rel="tooltip" title="{{userprof.VOUCH_COUNT}} number of vouches for all produce"  class="innerAll text-center display-block text-muted"><i class="fa fa-fw fa-thumbs-o-up"></i> 89</a>
+                          <a href=""  rel="tooltip" title="{{userprof.VOUCH_COUNT}} number of vouches for all produce"  class="innerAll text-center display-block text-muted"><i class="fa fa-fw fa-thumbs-o-up"></i> {{total_vouches}}</a>
                         </div> 
 
                         <!-- number of trade connections --> 
@@ -1835,6 +1882,31 @@ top: -24px;" >
  
 
  $.fn.editable.defaults.mode = 'inline';
+
+
+var $container1 = $('#foods').isotope({
+   itemSelector: '.food'
+});
+
+// filter items on button click
+$('#filterFoods').on( 'click', 'button', function() {
+  var filterValue = $(this).attr('data-filter');
+  $container1.isotope({ filter: filterValue });
+});
+
+var $container2 = $('#buyers-cards').isotope({
+   itemSelector: '.card'
+});
+
+var $container3 = $('#seller-cards').isotope({
+   itemSelector: '.card'
+});
+
+$('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+  $container2.isotope('reLayout');
+  $container3.isotope('reLayout');
+});
+ 
  
 
 

@@ -26,7 +26,7 @@ from mainapp.classes.MongoConnection import MongoConnection
 from embedly import Embedly
 from django.conf import settings
 from mainapp.classes.TwitterCounts import TwitterCounts
-
+from mainapp.classes.TweetFeed import Friends
 
 
 
@@ -100,8 +100,8 @@ def display_profile(request, username):
     f_count = twitter_counts.get_twitter_followers_and_number(request.user.id, username)    
     parameters['followers_count'] = f_count['followers_count']
     parameters['friends_count'] = f_count['friends_count']
+    parameters['banner_url'] = f_count['banner_url']
 
-    parameters['banner_url'] = get_banner_url(username)
     food_form = FoodForm()
     parameters['form'] = food_form
     foo = AdminFoods()
@@ -123,6 +123,10 @@ def display_profile(request, username):
         parameters['show_foods'] = userprof['show_foods']
     except:
         parameters['show_foods'] = True
+
+
+    rec_food_obj = RecommendFood()
+    parameters['total_vouches'] =rec_food_obj.get_recommend_count(userprof['useruid'])
 
     parameters['profile_id'] = userprof['useruid']
     parameters['sign_up_as'] = userprof['sign_up_as']
@@ -635,7 +639,7 @@ def get_connections(user_id, logged_in_id = None):
              'latitude': usr_pr['latlng']['coordinates'][1],
              'longitude': usr_pr['latlng']['coordinates'][0],
              'relation': 'buyer',
-             'banner_url': get_banner_url(useruid = int(each['c_useruid']))
+             'banner_url': get_banner_url(useruid = int(each['c_useruid']), logged_useruid=logged_in_id)
              })
             
         except:
@@ -665,7 +669,7 @@ def get_connections(user_id, logged_in_id = None):
              'latitude': usr_pr['latlng']['coordinates'][1],
              'longitude': usr_pr['latlng']['coordinates'][0],
              'relation': 'buyer',
-             'banner_url': get_banner_url(useruid = int(each['b_useruid']))
+             'banner_url': get_banner_url(useruid = int(each['b_useruid']), logged_useruid=logged_in_id)
              }
             if data not in final_connections:
                 data['relation'] = 'seller'
@@ -712,7 +716,7 @@ def get_members(user_id, logged_in_id = None):
              'org_conn_no': user_info.organisation_connection_no,
              'latitude': usr_pr['latlng']['coordinates'][1],
              'longitude': usr_pr['latlng']['coordinates'][0],
-             'banner_url': get_banner_url(useruid = int(each['memberuid']))
+             'banner_url': get_banner_url(useruid = int(each['memberuid']), logged_useruid= logged_in_id)
              })
         except:
             pass
@@ -793,7 +797,7 @@ def get_team(user_id, logged_in_id=None):
              'description': usr_pr['description'],
              'photo': usr_pr['profile_img'],
              'username' : usr_pr['username'],
-             'banner_url': get_banner_url(useruid = int(each['memberuid']))
+             'banner_url': get_banner_url(useruid = int(each['memberuid']), logged_useruid=logged_in_id)
              })
         except:
             pass
@@ -896,18 +900,34 @@ def search_orgs_business(request, type_user):
     else:
         return HttpResponse(json.dumps({'status':0, 'message':'You are not authorized to perform this action.'}))        
 
-def get_banner_url(username=None, useruid=None):
-    # code to get profile banner url
-    try:
-        if username!=None:
-            account = SocialAccount.objects.get(user__username = username)
-        elif useruid!=None:
-            account = SocialAccount.objects.get(user__id = int(useruid))
-        banner_url = account.extra_data['profile_banner_url']
+def get_banner_url(username=None, useruid=None, logged_useruid =None):
+    # code to get profile banner url    
+    banner_url = 'none'
+    if banner_url != 'none':
         banner_url = banner_url+'/web_retina'
-    except:
-        banner_url = 'none'
+
+    else:
+        try:
+            if username!=None:
+                account = SocialAccount.objects.get(user__username = username)
+            elif useruid!=None:
+                account = SocialAccount.objects.get(user__id = int(useruid))            
+            banner_url = account.extra_data['profile_banner_url']
+            banner_url = banner_url+'/web_retina'
+
+        except:        
+            try:
+                friend_obj = Friends()
+                if username!=None:
+                    t_user = friend_obj.get_one({'friends.screen_name':username})
+                if useruid != None:
+                    t_user = friend_obj.get_one({'friends.id':useruid})        
+                banner_url = t_user['friends']['profile_banner_url']
+                banner_url = banner_url+'/web_retina'
+            except:
+                banner_url ='none'    
     return banner_url
+
 
 def get_video_html(url):
     client = Embedly(settings.EMBEDLY_KEY)
