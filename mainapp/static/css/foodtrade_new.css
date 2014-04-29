@@ -408,22 +408,7 @@ a {
   line-height: 15px;
 }
 
-.card .numbers p.small { 
-  background: #fff;
-  border-top: 1px solid #ccc;
-  padding: 10px 8px;
-  color: #ccc;
-}
  
-.card .numbers p.small a {
-  margin-left: 8px;
-  color: #666;
-}
-
-.card .numbers p.small  a .zero {
-  color: #ccc;
-}
-
 .card .type {
   background: #f9f9f9;
   border-bottom: 1px solid #ccc;
