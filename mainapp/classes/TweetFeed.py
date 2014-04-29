@@ -270,6 +270,26 @@ class TweetFeed():
         except:
             return {'status':0, 'activity':'follow', '_id':my_id, 'message':'Already Followed'}
 
+    def get_banner_url_from_twitter(self,user_id, find_username=None):
+        st = SocialToken.objects.get(account__user__id=user_id)    
+        ACCESS_TOKEN = st.token
+        ACCESS_TOKEN_SECRET = st.token_secret
+        user_twitter = get_twitter_obj(ACCESS_TOKEN, ACCESS_TOKEN_SECRET)
+        try:
+            sa = SocialAccount.objects.get(user__username=find_username)
+            find_userid = sa.extra_data['id']
+        except:
+            from mainapp.classes.TweetFeed import Friends 
+            friend_obj = Friends()
+            friend = friends_obj.get_one({'friends.screen_name':find_username})
+            find_userid = friend['friends']['id']
+        try:
+            result = user_twitter.show_user(user_id=find_userid, screen_name=find_username)
+            return result['profile_banner_url']
+        except:
+            return 'none'
+
+
 class UserProfile():
     def __init__ (self):
         self.db_object = MongoConnection("localhost",27017,'foodtrade')
@@ -701,6 +721,9 @@ class Friends():
         result = self.db_object.get_one(self.table_name,
             {'friends.screen_name':screen_name, 'username':username})
         return result
+
+    def get_one(self, what):
+        return self.db_object.get_one(self.table_name, what)
 
 class InviteId():
     def __init__ (self):

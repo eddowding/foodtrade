@@ -45,7 +45,7 @@ def get_post_parameters(request, tweet_id):
 
     # send banner url
     from mainapp.profilepage import get_banner_url
-    parameters['banner_url'] = get_banner_url(single_tweet['user']['username'])
+    parameters['banner_url'] = get_banner_url(username=single_tweet['user']['username'], logged_useruid=request.user.id)
     if results!= None:
         for i in range(len(results)):
             results[i] = set_time_date(results[i],keyword)

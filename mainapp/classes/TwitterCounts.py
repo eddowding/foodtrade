@@ -42,7 +42,7 @@ class TwitterCounts():
         except:
             from mainapp.classes.TweetFeed import Friends 
             friend_obj = Friends()
-            friend = friends_obj.get_one({'friends.screen_name':find_username})
+            friend = friend_obj.get_one({'friends.screen_name':find_username})
             find_userid = friend['friends']['id']
         try:
             result = user_twitter.show_user(user_id=find_userid, screen_name=find_username)

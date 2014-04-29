@@ -68,11 +68,11 @@
               <div style="width:100%; height: 350px; " id="map"></div> 
           </div> 
  
-          {% if banner_url %}
-          <div class="item">
-              <img src="{{banner_url}}" class="img-responsive">
-          </div>
-          {% endif %} 
+          {% ifnotequal banner_url 'none' %}
+            <div class="item">
+                <img src="{{banner_url}}" class="img-responsive">
+            </div>
+          {% endifnotequal %} 
  
           {% if intro_video %}
           <div class="item">
@@ -98,7 +98,10 @@
       {% if intro_video %} 
       <li><a href="#" data-target="#carousel-1" data-slide-to="2"><i class="icon-photo-camera"></i> <span>Video</span> </a></li>  
       {% endif %}  
+
+      {% ifnotequal banner_url 'none' %}
       <li><a href="#" data-target="#carousel-1" data-slide-to="1"><i class="icon-photo-camera"></i> <span>Photos</span> </a></li>  
+      {% endifnotequal %} 
  
       {% if prof_subscribed %}
       <li class="pull-right" style="background: #88BC62;"><a href="#">
