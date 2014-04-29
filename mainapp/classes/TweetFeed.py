@@ -271,6 +271,7 @@ class TweetFeed():
             return {'status':0, 'activity':'follow', '_id':my_id, 'message':'Already Followed'}
 
     def get_banner_url_from_twitter(self,user_id, find_username=None):
+        print find_username, user_id
         st = SocialToken.objects.get(account__user__id=user_id)    
         ACCESS_TOKEN = st.token
         ACCESS_TOKEN_SECRET = st.token_secret
@@ -278,26 +279,27 @@ class TweetFeed():
 
         from mainapp.classes.TweetFeed import Friends 
         friend_obj = Friends()
+        friend = friend_obj.get_one({'friends.screen_name':find_username})
 
         try:
-            sa = SocialAccount.objects.get(user__username=find_username)
-            find_userid = sa.extra_data['id']
+            find_userid = friend['friends']['id']
         except:
-            friend = friend_obj.get_one({'friends.screen_name':find_username})
             try:
-                find_userid = friend['friends']['id']
+                sa = SocialAccount.objects.get(user__username=find_username)
+                find_userid = sa.extra_data['id']
             except:
                 return 'none'
 
         try:
             result = user_twitter.show_user(user_id=find_userid, screen_name=find_username)
-            friend_obj.update_friends({'friends.screen_name':find_username}, {'friends':result})
             return result['profile_banner_url']
         except:
             try:
                 return friend['friends']['profile_banner_url']
             except:
                 return 'none'
+        
+
 
 
 class UserProfile():

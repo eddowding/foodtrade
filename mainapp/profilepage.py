@@ -101,7 +101,13 @@ def display_profile(request, username):
     parameters['followers_count'] = f_count['followers_count']
     parameters['friends_count'] = f_count['friends_count']
 
-    parameters['banner_url'] = get_banner_url(username = username, logged_useruid = request.user.id)
+
+    '''2 lines below is exclusively meant for call from display_profile only, exploit elsewhere will slowdown system'''    
+    tweet_feed_obj = TweetFeed()
+    banner_url = tweet_feed_obj.get_banner_url_from_twitter(request.user.id, username)
+    ''' !!! Warning !!! '''
+
+    parameters['banner_url'] = banner_url
 
     food_form = FoodForm()
     parameters['form'] = food_form
@@ -531,7 +537,7 @@ def get_customers(user_id, logged_id=None):
          'username' : usr_pr['username'],
          'latitude': usr_pr['latlng']['coordinates'][1],
          'longitude': usr_pr['latlng']['coordinates'][0],
-         'banner_url': get_banner_url(useruid = int(each['customeruid']), logged_useruid=logged_id)
+         'banner_url': get_banner_url(useruid = int(each['customeruid']))
          })
     return final_customers[:10], logged_customer
 
@@ -571,7 +577,7 @@ def get_connections(user_id, logged_in_id = None):
              'latitude': usr_pr['latlng']['coordinates'][1],
              'longitude': usr_pr['latlng']['coordinates'][0],
              'relation': 'buyer',
-             'banner_url': get_banner_url(useruid = int(each['c_useruid']), logged_useruid=request.user.id)
+             'banner_url': get_banner_url(useruid = int(each['c_useruid']), logged_useruid=logged_in_id)
              })
             
         except:
@@ -601,7 +607,7 @@ def get_connections(user_id, logged_in_id = None):
              'latitude': usr_pr['latlng']['coordinates'][1],
              'longitude': usr_pr['latlng']['coordinates'][0],
              'relation': 'buyer',
-             'banner_url': get_banner_url(useruid = int(each['b_useruid']), logged_useruid=request.user.id)
+             'banner_url': get_banner_url(useruid = int(each['b_useruid']), logged_useruid=logged_in_id)
              }
             if data not in final_connections:
                 data['relation'] = 'seller'
@@ -648,7 +654,7 @@ def get_members(user_id, logged_in_id = None):
              'org_conn_no': user_info.organisation_connection_no,
              'latitude': usr_pr['latlng']['coordinates'][1],
              'longitude': usr_pr['latlng']['coordinates'][0],
-             'banner_url': get_banner_url(useruid = int(each['memberuid']), logged_useruid= request.user.id)
+             'banner_url': get_banner_url(useruid = int(each['memberuid']), logged_useruid= logged_in_id)
              })
         except:
             pass
@@ -673,7 +679,7 @@ def get_organisations(user_id):
          'description': usr_pr['description'],
          'photo': usr_pr['profile_img'],
          'username' : usr_pr['username'],
-         'banner_url': get_banner_url(useruid = int(each['orguid']), logged_useruid=request.user.id)
+         'banner_url': get_banner_url(useruid = int(each['orguid']))
          })
     return final_orgs[:10]
 
@@ -729,7 +735,7 @@ def get_team(user_id, logged_in_id=None):
              'description': usr_pr['description'],
              'photo': usr_pr['profile_img'],
              'username' : usr_pr['username'],
-             'banner_url': get_banner_url(useruid = int(each['memberuid']), logged_useruid=request.user.id)
+             'banner_url': get_banner_url(useruid = int(each['memberuid']), logged_useruid=logged_in_id)
              })
         except:
             pass
@@ -833,11 +839,8 @@ def search_orgs_business(request, type_user):
         return HttpResponse(json.dumps({'status':0, 'message':'You are not authorized to perform this action.'}))        
 
 def get_banner_url(username=None, useruid=None, logged_useruid =None):
-    # code to get profile banner url
-
-    tweet_feed_obj = TweetFeed()
-    banner_url = tweet_feed_obj.get_banner_url_from_twitter(logged_useruid, username)
-
+    # code to get profile banner url    
+    banner_url = 'none'
     if banner_url != 'none':
         banner_url = banner_url+'/web_retina'
 
