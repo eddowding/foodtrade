@@ -102,7 +102,6 @@ def display_profile(request, username):
     parameters['friends_count'] = f_count['friends_count']
 
     parameters['banner_url'] = get_banner_url(username = username, logged_useruid = request.user.id)
-    print parameters['banner_url']
     food_form = FoodForm()
     parameters['form'] = food_form
     foo = AdminFoods()
@@ -124,6 +123,10 @@ def display_profile(request, username):
         parameters['show_foods'] = userprof['show_foods']
     except:
         parameters['show_foods'] = True
+
+
+    rec_food_obj = RecommendFood()
+    parameters['total_vouches'] =rec_food_obj.get_recommend_count(userprof['useruid'])
 
     parameters['profile_id'] = userprof['useruid']
     parameters['sign_up_as'] = userprof['sign_up_as']

@@ -677,6 +677,9 @@ class RecommendFood():
     def delete_recomm(self, business_id, food_name, recommender_id):
         self.db_object.update(self.table_name,{'business_id': business_id, 'food_name': food_name, 'recommender_id': recommender_id}, {'deleted':1})
 
+    def get_recommend_count(self, useruid):
+        return self.db_object.get_count(self.table_name, {'recommender_id':useruid})
+
 class Friends():
     def __init__ (self):
         self.db_object = MongoConnection("localhost",27017,'foodtrade')
