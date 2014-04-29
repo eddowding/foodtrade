@@ -338,7 +338,7 @@ class UserProfile():
              )
 
     def update_profile_by_username(self, username, description, address, type_usr, sign_up_as, phone, lat, lon, postal_code, name, is_superuser,
-      company_num, website_url, facebook_page, deliverables, business_org_name, email, newsletter_freq, show_foods, video_url = ''):
+      company_num, website_url, facebook_page, deliverables, business_org_name, email, newsletter_freq, show_foods, video_url = '', ):
 
         data = {'zip_code':str(postal_code),
                  'description':description,
@@ -574,7 +574,7 @@ class Food():
         self.db_object.update(self.table_name,{'food_name': data['food_name'], 'useruid': data['useruid'], 'deleted': 0},
              update_data)
         twt = TweetFeed()
-        twt.update_data(data['useruid'])
+        twt.update_pdata(data['useruid'])
 
 
 class Customer():

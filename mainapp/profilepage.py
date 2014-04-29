@@ -475,8 +475,8 @@ def get_all_foods(user_id, logged_in_id = None):
         if each.get('description')!=None:
             data['description'] = each.get('description')
 
-        data['how_much'] = each.get('how_much') if each.get('how_much')!='' else ''
-        data['how_often'] = each.get('how_often') if each.get('how_often')!=None else ''
+        data['how_much'] = each.get('how_much') if each.get('how_much')!=None else ''
+        data['how_often'] = each.get('how_often') if each.get('how_often')!=None else 'How often'
         data['month_list'] = each.get('month_list') if each.get('month_list')!=None else []
 
 
