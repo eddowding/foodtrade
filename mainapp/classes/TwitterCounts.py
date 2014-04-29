@@ -52,7 +52,10 @@ class TwitterCounts():
             return return_values
         except:
             result = self.db_object.get_one(self.table_name,{'screen_name':find_username,'twitter_id':find_userid})
-            return_values = {'followers_count':result['data']['followers_count'], 'friends_count':result['data']['friends_count'], 'banner_url':result['data']['profile_banner_url']}
+            try:
+                return_values = {'followers_count':result['data']['followers_count'], 'friends_count':result['data']['friends_count'], 'banner_url':result['data']['profile_banner_url']}
+            except:
+                return_values = {'followers_count':result['data']['followers_count'], 'friends_count':result['data']['friends_count'], 'banner_url':'none'}
             return return_values
 
 
