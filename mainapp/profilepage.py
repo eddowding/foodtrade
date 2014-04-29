@@ -126,7 +126,7 @@ def display_profile(request, username):
 
 
     rec_food_obj = RecommendFood()
-    parameters['total_vouches'] =rec_food_obj.get_recommend_count(userprof['useruid'])
+    parameters['total_vouches'] = rec_food_obj.get_recommend_count(userprof['useruid'])
 
     parameters['profile_id'] = userprof['useruid']
     parameters['sign_up_as'] = userprof['sign_up_as']
@@ -625,10 +625,14 @@ def get_connections(user_id, logged_in_id = None):
                 myname = usr_pr.get('business_org_name') if (usr_pr['sign_up_as'] == 'Business' or usr_pr['sign_up_as'] == 'Organisation') \
                 and usr_pr.get('business_org_name')!='' else usr_pr['name']
             else:
-                myname = usr_pr['name']                            
+                myname = usr_pr['name']           
+            rec_food_obj = RecommendFood()
+            total_vouches = rec_food_obj.get_recommend_count(each['c_useruid'])
+
             final_connections.append({'id': each['c_useruid'],
              # 'name': account.extra_data['name'],
              'name': myname,
+             'total_vouches' : total_vouches,
              'description': usr_pr['description'],
              'photo': usr_pr['profile_img'],
              'username' : usr_pr['username'],
