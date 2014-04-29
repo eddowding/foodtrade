@@ -338,7 +338,8 @@ class UserProfile():
              )
 
     def update_profile_by_username(self, username, description, address, type_usr, sign_up_as, phone, lat, lon, postal_code, name, is_superuser,
-      company_num, website_url, facebook_page, deliverables, business_org_name, email, newsletter_freq, show_foods, video_url = '', ):
+      company_num, website_url, facebook_page, deliverables, business_org_name, email, newsletter_freq, show_foods, video_url = '',
+      we_buy=False):
 
         data = {'zip_code':str(postal_code),
                  'description':description,
@@ -357,7 +358,8 @@ class UserProfile():
                  'email':email,
                  'newsletter_freq':newsletter_freq,
                  'show_foods': show_foods,
-                 'video_url': video_url
+                 'video_url': video_url,
+                 'we_buy': we_buy
                  }
         if not is_superuser: 
             return self.db_object.update(self.table_name,
@@ -517,7 +519,10 @@ class Food():
         self.db_object.create_table(self.table_name,'food_name')
 
     def get_foods_by_userid(self,useruid):
-        return self.db_object.get_all(self.table_name,{'useruid': useruid, 'deleted': 0})
+        return self.db_object.get_all(self.table_name,{'useruid': useruid, 'webuy':0, 'deleted': 0})
+
+    def get_webuy_foods_by_userid(self,useruid):
+        return self.db_object.get_all(self.table_name,{'useruid': useruid, 'webuy': 1, 'deleted': 0})
 
     def get_approved_foods_by_useruid(self, useruid):
         result = self.db_object.get_all(self.table_name,{'useruid': useruid, 'deleted': 0})
@@ -542,7 +547,7 @@ class Food():
         value['deleted'] =0
         # self.db_object.insert_one(self.table_name,value)
         self.db_object.update_upsert(self.table_name, {'food_name': value['food_name'], 
-            'useruid': value['useruid']}, {'deleted': 0})
+            'useruid': value['useruid'], 'we_buy': value['we_buy']}, {'deleted': 0})
         twt = TweetFeed()
         twt.update_data(value['useruid'])
 
