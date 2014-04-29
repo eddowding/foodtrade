@@ -100,14 +100,7 @@ def display_profile(request, username):
     f_count = twitter_counts.get_twitter_followers_and_number(request.user.id, username)    
     parameters['followers_count'] = f_count['followers_count']
     parameters['friends_count'] = f_count['friends_count']
-
-
-    '''2 lines below is exclusively meant for call from display_profile only, exploit elsewhere will slowdown system'''    
-    tweet_feed_obj = TweetFeed()
-    banner_url = tweet_feed_obj.get_banner_url_from_twitter(request.user.id, username)
-    ''' !!! Warning !!! '''
-
-    parameters['banner_url'] = banner_url
+    parameters['banner_url'] = f_count['banner_url']
 
     food_form = FoodForm()
     parameters['form'] = food_form

@@ -48,11 +48,11 @@ class TwitterCounts():
             result = user_twitter.show_user(user_id=find_userid, screen_name=find_username)
             self.db_object.update_upsert(self.table_name,{'screen_name':find_username,'twitter_id':find_userid, 'data':result}, 
                 {'screen_name':find_username,'twitter_id':find_userid, 'data':result})
-            return_values = {'followers_count':result['followers_count'], 'friends_count':result['friends_count']}          
+            return_values = {'followers_count':result['followers_count'], 'friends_count':result['friends_count'], 'banner_url':result['profile_banner_url']}
             return return_values
         except:
             result = self.db_object.get_one(self.table_name,{'screen_name':find_username,'twitter_id':find_userid})
-            return_values = {'followers_count':result['data']['followers_count'], 'friends_count':result['data']['friends_count']}
+            return_values = {'followers_count':result['data']['followers_count'], 'friends_count':result['data']['friends_count'], 'banner_url':result['data']['profile_banner_url']}
             return return_values
 
 
