@@ -284,7 +284,10 @@ class TweetFeed():
             find_userid = sa.extra_data['id']
         except:
             friend = friend_obj.get_one({'friends.screen_name':find_username})
-            find_userid = friend['friends']['id']
+            try:
+                find_userid = friend['friends']['id']
+            except:
+                return 'none'
 
         try:
             result = user_twitter.show_user(user_id=find_userid, screen_name=find_username)
