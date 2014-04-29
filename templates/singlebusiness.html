@@ -73,12 +73,7 @@
               <img src="{{banner_url}}" class="img-responsive">
           </div>
           {% endif %} 
- 
-          {% if intro_video %}
-          <div class="item">
-            <div style="width:100%; height: 350px;">{{intro_video|safe}}</div>                
-          </div>   
-          {% endif %}  
+    
       </div>
       <!-- // Items END -->
       <!-- Navigation -->
@@ -95,9 +90,6 @@
     </div>
     <ul class="list-unstyled">
       <li><a href="#" data-target="#carousel-1" data-slide-to="0"><i class="fa fa-fw fa-clock-o"></i> <span>Map</span></a></li> 
-      {% if intro_video %} 
-      <li><a href="#" data-target="#carousel-1" data-slide-to="2"><i class="icon-photo-camera"></i> <span>Video</span> </a></li>  
-      {% endif %}  
       <li><a href="#" data-target="#carousel-1" data-slide-to="1"><i class="icon-photo-camera"></i> <span>Photos</span> </a></li>  
  
       {% if prof_subscribed %}
@@ -231,6 +223,12 @@
         {% endfor %}
 
       </div>
+
+
+
+
+
+
                     <div class="clearfix isotope"  id="foods"> 
                             <div class="row">
 
@@ -238,16 +236,13 @@
  
                                 <div class="food col-md-3  {{eachfood.parent_food|slugify}}" style="margin-bottom: 15px;">
                                   
-                                    <div class="media-body" style="border:1px solid #ccc;"> 
-                                    <a href="/activity/?f={{eachfood.food_name}}" class="lead" style="padding-left: 2px; font-weight:bold;">  
-                                      {{eachfood.food_name}}
-                                    </a> 
+                                    <div class="media-body"> 
+
                                     <div class="flip">
                                       <div class="note">
                                       <div class="face front">
                                         <div class="widget margin-none">
-                                          <div class="row row-merge">
-                                            <!-- <img src="{{eachfood.photo_url}}" alt="{{eachfood.food_name}}" class="  img-responsive produce_large" style="width:150px" />  -->
+                                          <div class="row row-merge"> 
                                             <img src="{{eachfood.photo_url}}" title="{{eachdet.food_name}}" rel="tooltip" class="img-responsive" style="width: 100%; height: 100px; display: block; margin-left: auto; margin-right: auto;">
                                             <div class="col-xs-12"> 
                                               {% if eachfood.description %}   
@@ -305,18 +300,22 @@
 
                                       </div><!-- card -->
                                       </div><!-- flip -->
-                                      <div class="widget border-top-none   innerAll half bg-gray margin-none">
+                                      <div class="widget border-top   innerAll half  margin-none">
+
+                                    <h5 class="black"><a href="/activity/?f={{eachfood.food_name}}" style="padding-left: 2px; font-weight:bold;">  
+                                      {{eachfood.food_name}}
+                                    </a></h5>
 
                                       <div class="pull-left">
 
                    {% ifequal profile_id user_id %}
                       {% if not prof_subscribed %}
 
-                     <a href="" data-toggle="modal" data-target="#modal_food_detail" class="btn btn-sm btn-default" data-container="body" onClick="get_food_detail('{{profile_id}}', '{{eachfood.food_name}}', '{{eachfood.description}}', '{{eachfood.food_tags}}', '{{eachfood.photo_url}}', '{{eachfood.recomm_tags|safe}}')"><i class="fa fa-edit" title="Edit" ></i> edit details</a>
+                     <a href="" data-toggle="modal" data-target="#modal_food_detail" class="btn btn-sm btn-default" data-container="body" onClick="get_food_detail('{{profile_id}}', '{{eachfood.food_name}}', '{{eachfood.description}}', '{{eachfood.food_tags}}', '{{eachfood.photo_url}}', '{{eachfood.recomm_tags|safe}}')"><i class="fa fa-edit" title="Edit" ></i> </a>
                      {% else %}
-                     <a class="btn btn-sm btn-default" data-container="body" rel="tooltip" title="Upgrade your account to add details"><i class="fa fa-edit" title="Edit" > edit details</i></a>
+                     <a class="btn btn-sm btn-default" data-container="body" rel="tooltip" title="Upgrade your account to add details"><i class="fa fa-edit" title="Edit" ></i></a>
                      {% endif %}
-                     <a class="btn btn-danger btn-sm"><i class="fa fa-trash-o" title="Delete" onClick="delete_food({{profile_id}}, '{{eachfood.food_name}}', this)"></i></a>
+                     <a class=""><i class="fa fa-trash-o" title="Delete" onClick="delete_food({{profile_id}}, '{{eachfood.food_name}}', this)"></i></a>
 
                    {% endifequal %}
                                       </div>
@@ -1201,9 +1200,9 @@ top: -24px;" >
               <form accept-charset="UTF-8" action="." role="form" method="POST" enctype="multipart/form-data">
                {% csrf_token %}
                <div class="row">
-                <div class="col-sm-6"> 
+                <div class="col-sm-4"> 
                   <a href="#" rel="tooltip" title="Change the photo">
-                    <img src="" class="img-responsive img-thumbnail" id="food_photo" style="width:100%;height:200px; background: #ccc url('/static/images/upload.gif'); background-size: cover;"> 
+                    <img src="" class="img-responsive img-thumbnail" id="food_photo" style="width:100%;height:110px; background: #ccc url('/static/images/upload.gif'); background-size: contain;"> 
                   </a>
                   <!-- show this in another modal? -->
                   <!-- can we use html5 drag and drop to upload? -->
@@ -1212,13 +1211,13 @@ top: -24px;" >
                       {{form.food_photo}}
                       {{form.food_name.as_hidden}}
                       {{form.profile_id.as_hidden}}
-                {{form.food_tags.as_hidden}}
-               {{form.food_duplicate.as_hidden}} 
+                      {{form.food_tags.as_hidden}}
+                      {{form.food_duplicate.as_hidden}} 
                     </div>
                   <!-- end code -->
                 </div>
                 
-                <div class="col-sm-6">
+                <div class="col-sm-8">
 
                   <div class="form-group">
                     {{form.food_description}}
