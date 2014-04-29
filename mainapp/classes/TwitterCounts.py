@@ -36,24 +36,20 @@ class TwitterCounts():
         ACCESS_TOKEN_SECRET = st.token_secret
         user_twitter = get_twitter_obj(ACCESS_TOKEN, ACCESS_TOKEN_SECRET)
 
+        from mainapp.classes.TweetFeed import Friends 
+        friend_obj = Friends()
+        friend = friend_obj.get_one({'friends.screen_name':find_username})
+
         try:
-            sa = SocialAccount.objects.get(user__username=find_username)
-            find_userid = sa.extra_data['id']
-        except:
-            from mainapp.classes.TweetFeed import Friends 
-            friend_obj = Friends()
-            friend = friend_obj.get_one({'friends.screen_name':find_username})
-            find_userid = friend['friends']['id']
-        try:
-            result = user_twitter.show_user(user_id=find_userid, screen_name=find_username)
-            self.db_object.update_upsert(self.table_name,{'screen_name':find_username,'twitter_id':find_userid, 'data':result}, 
-                {'screen_name':find_username,'twitter_id':find_userid, 'data':result})
-            return_values = {'followers_count':result['followers_count'], 'friends_count':result['friends_count'], 'banner_url':result['profile_banner_url']}
+            result = user_twitter.show_user(screen_name=find_username)
+            self.db_object.update_upsert(self.table_name,{'screen_name':find_username, 'data':result}, 
+                {'screen_name':find_username,'data':result})
+            return_values = {'followers_count':result['followers_count'], 'friends_count':result['friends_count'], 'banner_url':result['profile_banner_url'] +'/web_retina'}
             return return_values
         except:
-            result = self.db_object.get_one(self.table_name,{'screen_name':find_username,'twitter_id':find_userid})
+            result = self.db_object.get_one(self.table_name,{'screen_name':find_username})
             try:
-                return_values = {'followers_count':result['data']['followers_count'], 'friends_count':result['data']['friends_count'], 'banner_url':result['data']['profile_banner_url']}
+                return_values = {'followers_count':result['data']['followers_count'], 'friends_count':result['data']['friends_count'], 'banner_url':result['data']['profile_banner_url'] + '/web_retina'}
             except:
                 return_values = {'followers_count':result['data']['followers_count'], 'friends_count':result['data']['friends_count'], 'banner_url':'none'}
             return return_values
