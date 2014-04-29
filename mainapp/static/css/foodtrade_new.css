@@ -199,6 +199,21 @@ a {
 .carousel .item {
   background: #000;
   text-align: center;
+  height: 100%;
+}
+
+/********************************/
+/**  SEASONS                   **/
+/********************************/
+
+#activity_single .carousel .item {
+  background: #fff;
+  padding: 30px;
+}
+
+
+#activity_single .carousel .lead {
+  font-size: 36px;
 }
 
 
@@ -310,6 +325,16 @@ a {
 #cards.marketplace .address,
 #cards.marketplace .replies,
 #cards.marketplace .reply {
+  display: none;
+}
+
+.timeline-activity.marketplace li .block.block-inline {
+  padding: 0 10px;
+}
+
+
+.marketplace .marker,
+.marketplace .caret {
   display: none;
 }
 

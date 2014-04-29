@@ -58,7 +58,7 @@
         <div class="col-lg-9 col-md-8">
 
           <div class="timeline-cover">  
-  <div class="cover image ">
+  <div class="cover ">
     <div class="top">
     <div id="carousel-1" class="carousel slide"> 
       <!-- Items -->
@@ -89,7 +89,7 @@
           <span class="fa fa-next"></span>
       </a>
       <!-- // Navigation END -->
-  </div> 
+    </div> 
 
 
     </div>
@@ -118,22 +118,9 @@
     </ul>
   </div>
   <div class="widget cover image">  
-    <div class="widget-body padding-none margin-none">
-      <div class="photo col-sm-1">
-        <img src="{{pic_url}}" class="img-circle"> 
-      </div>
-      <div class="innerAll border-right col-sm-3">
-        <h3 class="margin-none">{{name}}</h3> 
-          {% if type_user|length == 0 or type_user|first == '' %}
-          {% else %}
-          <span class="tags tags-biztype  ">  
-            {% for eachtype in type_user %}
-           <a href="/activity/?b={{eachtype}}">{{eachtype}}</a>
-           {% endfor %}
-          </span> {% endif %} 
-      </div>
-      <div class="innerAll col-sm-6">
-        <span class="margin-none">{{description}}</span>  
+    <div class="widget-body padding-none margin-none"> 
+      <div class="innerAll"> 
+        <p class="lead margin-none">{{description}}</p>  
         <div class="{% if loc.lat == -82.86275189999999 and loc.lon == -135.10000000000002 %} hidden {% endif %}">
           <div class="meta">
             {% if loc.lat == -82.86275189999999 and loc.lon == -135.10000000000002 %}
@@ -175,6 +162,11 @@
         </a>
         </li>
         <li class="premium"><a class="glyphicons cogwheel" rel="tooltip" title="Premium account holders only - upgrade from just &pound;45/yr" href="#tabCustomers" data-toggle="tab"><i></i><span>Customers</span> 
+       <!--  <div class="ribbon-wrapper small">
+            <div class="ribbon danger">Upgrade</div>
+        </div> -->
+        </a></li> 
+        <li class="premium"><a class="glyphicons cogwheel" rel="tooltip" title="Premium account holders only - upgrade from just &pound;45/yr" href="#tabUpdates" data-toggle="tab"><i></i><span>Trades</span> 
        <!--  <div class="ribbon-wrapper small">
             <div class="ribbon danger">Upgrade</div>
         </div> -->
@@ -234,26 +226,24 @@
  
           {% endif %} 
 
-      <div class="innerB">
-        <button class="btn btn-default filter active" data-filter="all">Show all</button>
-        <button class="btn btn-default filter" data-filter="mixit-filter-1">Meat</button>
-        <button class="btn btn-default filter" data-filter="mixit-filter-2">Poulty</button>
-        <button class="btn btn-default filter" data-filter="mixit-filter-2">Fruit</button>
-        <button class="btn btn-default filter" data-filter="mixit-filter-2">Vegetables</button>
-        <button class="btn btn-default filter" data-filter="mixit-filter-2">Dairy</button>
-        <button class="btn btn-default filter" data-filter="mixit-filter-2">Pantry</button>
-        <button class="btn btn-default filter" data-filter="mixit-filter-2">Baked goods</button> 
+      <div class="innerB button-group" id="filterFoods" data-filter-group="foodtype">
+        <button class="btn btn-default active" data-filter="*">Show all</button> 
+        
+        {% for eachfood in all_foods %}
+          <button class="btn btn-default" data-filter=".{{eachfood.parent_food|slugify}}">{{eachfood.parent_food}}</button> 
+        {% endfor %}
+
       </div>
-                        <div class="mixitup" id="mixitup-food">
+                    <div class="clearfix isotope"  id="foods"> 
                             <div class="row">
 
                             {% for eachfood in all_foods %}
  
-                                <div class="mixit-filter-1 mix col-md-3  {{eachfood.parent_food}}" style="margin-bottom: 15px;">
+                                <div class="food col-md-3  {{eachfood.parent_food|slugify}}" style="margin-bottom: 15px;">
                                   
                                     <div class="media-body" style="border:1px solid #ccc;"> 
                                     <a href="/activity/?f={{eachfood.food_name}}" class="lead" style="padding-left: 2px; font-weight:bold;">  
-                                     {{eachfood.parent_food}}> {{eachfood.food_name}}
+                                      {{eachfood.food_name}}
                                     </a> 
                                     <div class="flip">
                                       <div class="note">
@@ -261,7 +251,7 @@
                                         <div class="widget margin-none">
                                           <div class="row row-merge">
                                             <!-- <img src="{{eachfood.photo_url}}" alt="{{eachfood.food_name}}" class="  img-responsive produce_large" style="width:150px" />  -->
-                                            <img src="http://myzerowaste.com/wp-content/uploads/2009/01/carrots1.jpg" alt="" class="img-responsive" style="width: 100%; height: 100px; display: block; margin-left: auto; margin-right: auto;">
+                                            <img src="{{eachfood.photo_url}}" title="{{eachdet.food_name}}" rel="tooltip" class="img-responsive" style="width: 100%; height: 100px; display: block; margin-left: auto; margin-right: auto;">
                                             <div class="col-xs-12"> 
                                               {% if eachfood.description %}   
                                                 <p class="widget innerAll half">
@@ -459,6 +449,7 @@
                 <td colspan="3">
                   <div class="produce_detail">  
                     {% if eachfood.photo_url %}
+
                     <img src="{{eachfood.photo_url}}" alt="{{eachfood.food_name}}" class="img-rounded img-responsive produce_large img-thumbnail " /> 
                     
                     {% endif %}
@@ -491,7 +482,7 @@
               <div class="form-group">
                 <img style="width: 25px; margin-right: 2px;" class="" src="{{pic_url}}"  />
                 <div class="btn-group btn-sm" data-toggle="buttons">
-                  <label class="btn  btn-sm btn-default">
+                  <label class="btn  btn-sm active btn-default">
                     <input type="checkbox" name="options" id="option1_conn"> buys from 
                   </label> 
                   <label class="btn  btn-sm btn-default">
@@ -507,6 +498,7 @@
             </div>
           </div>
           {% endif %}
+
                       
 <div id="all-connections">
 
@@ -656,11 +648,11 @@
               <div class="form-group">
                 <img style="width: 25px; margin-right: 2px;" class="" src="{{pic_url}}"  />
                 <div class="btn-group btn-sm" data-toggle="buttons">
-                  <label class="btn  btn-sm btn-default active">
-                    <input type="checkbox" name="options" checked="checked" id="option2_conn"> sells to
-                  </label> 
                   <label class="btn  btn-sm btn-default">
                     <input type="checkbox" name="options" id="option1_conn"> buys from 
+                  </label> 
+                  <label class="btn  btn-sm btn-default active">
+                    <input type="checkbox" name="options" checked="checked" id="option2_conn"> sells to
                   </label> 
                 </div> 
               </div> 
@@ -780,14 +772,6 @@
         </div>
         <!-- // Tab content END -->
 
-
-        <!-- Tab content -->
-        <div id="tabSupport" class="tab-pane widget-body-regular">
-          <h5>Support tab content</h5>
-          <p>Integer porttitor, enim eu egestas ullamcorper, odio mauris semper quam, in facilisis dui ligula eget ligula. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Maecenas dolor leo, consectetur nec tristique pretium, ornare quis purus. Nullam pulvinar, enim eu molestie venenatis, turpis nisl vehicula eros, et ultricies risus urna sed diam. Suspendisse potenti. Nullam tincidunt tellus nisi. Aenean felis eros, congue vitae hendrerit id, mattis quis mi.</p>
-        </div>
-        <!-- // Tab content END -->
-        
         <!-- Tab content -->
         {% if user.is_authenticated %} 
         <div id="tabDeliveries" class="tab-pane widget-body-regular">
@@ -798,6 +782,36 @@
         {% endif %}
         </div>
         {% endif %}
+
+
+
+        <div id="tabUpdates" class="tab-pane widget-body-regular">
+          <h5 class="innerAll margin-none border-bottom bg-gray">Recent News
+           {% if updates_count != 0 %}<span class="badge pull-right">{{updates_count}}</span>{% endif %}
+           </h5>
+          <div class="widget-body padding-none">
+              
+
+              {% if user.is_authenticated %}
+
+              {% for eachUpdate in updates %}
+              <div class="media border-bottom innerAll margin-none">
+                  <img src="{{userprof.profileimg}}" class="pull-left media-object" width="20" />
+                  <div class="media-body"> 
+                      <p class="lead"><a href="" class="text-inverse"> {{eachUpdate.status|recognise_name|safe}}</a>
+                      </p>
+                      <small class="pull-right">
+                        <a href="/{{username}}/post/{{eachUpdate.tweetuid}}/">  {{eachUpdate.time_elapsed}} ago</a>
+                      </small>
+                  </div>
+              </div>
+              {% endfor %}  
+              {% else %}
+                <p class="alert alert-warning"><a href="{% provider_login_url "twitter" process="login" %}" class="">Login</a> or <a href="{% provider_login_url "twitter" process="login" %}" class="">sign up free</a> to see updates and activity. </p>
+              {% endif %} 
+          </div>
+        </div> 
+        
         
       </div>
     </div>
@@ -807,30 +821,84 @@
                     <div class="col-md-4 col-lg-3">
 
                     <div class="widget">
+                      {% if intro_video %}
+  
+                        <div style="width:100%; height: 200px;">{{intro_video|safe}}</div> 
+                        
+                      {% endif %}
+
+                      <div class="widget-body text-center">    
+
+
+                      {% if intro_video %}
+                        <a href="">
+                            <img src="{{pic_url}}" width="120" alt="" class="img-circle img-thumbnail" style=" 
+float: left;
+height: 70px;
+width: 70px;
+position: relative;
+top: -24px;" >
+                        </a>
+                      {% else %}
+                        <a href="">
+                            <img src="{{pic_url}}" width="120" alt="" class="img-circle img-thumbnail">
+                        </a>
+                      {% endif %}
+
+
+
+                        <h2 class="strong margin-none">{{name}}</h2>
+                        <div class="innerB">
+                          {% if type_user|length == 0 or type_user|first == '' %}
+                          {% else %}
+                          <span class="tags tags-biztype  ">  
+                            {% for eachtype in type_user %}
+                           <a href="/activity/?b={{eachtype}}">{{eachtype}}</a>
+                           {% endfor %}
+                          </span> {% endif %}  
+                        </div> 
+
+                        {% ifequal is_unknown_profile 'false' %}
+                          {% ifequal profile_id user_id %}
+                            <a href="/editprofile/{{userinfo.username}}" class="btn btn-danger btn-block">
+                               Edit my profile
+                            </a>       
+                          {% else %}
+                            <button class="btn btn-primary text-center btn-block" data-toggle="modal" data-target="#modal_contact"><i class="fa fa-envelope fa-fw"></i> Contact {{name}}</button>
+                          {% endifequal %}
+                        {% else %}
+                          <button class="btn btn-primary btn-block" style="margin-top:40px;" data-toggle="modal" data-target="#modal_invite">Invite to connect</button> 
+                        {% endifequal %} 
+          
+                      </div> 
+
+
+                      <div class="row row-merge border-top">
+
+                       
+                        <!-- number of foods sold -->
+                        <div class="{% if show_foods %}col-sm-3{% else %}col-sm-6{% endif %}">
+                          <a href="" class="innerAll text-center display-block text-muted" data-original-title="{{userprof.food_no}} foods" rel="tooltip"><i class="fa fa-fw fa fa-cutlery"></i> {{userprof.food_no}}</a>
+                        </div>
+
+                        <!-- number of vouches across all produce --> 
+                        <div class="{% if show_foods %}col-sm-3{% else %}col-sm-6{% endif %}">
+                          <a href=""  rel="tooltip" title="{{userprof.VOUCH_COUNT}} number of vouches for all produce"  class="innerAll text-center display-block text-muted"><i class="fa fa-fw fa-thumbs-o-up"></i> 89</a>
+                        </div> 
+
+                        <!-- number of trade connections --> 
+                        <div class="{% if show_foods %}col-sm-3{% else %}col-sm-6{% endif %}">
+                          <a href=""  rel="tooltip" title="{{userprof.trade_connections_no}} of trade connections" class="innerAll text-center display-block text-muted"><i class="fa fa-fw fa-link"></i> {{userprof.trade_connections_no}}</a>
+                        </div>
+
+                        <!-- number of group membershpis -->  
+                        <div class="{% if show_foods %}col-sm-3{% else %}col-sm-6{% endif %}">
+                          <a href=""  rel="tooltip" title="Member of {{userprof.organisation_connection_no}} groups or organisations"  class="innerAll text-center display-block text-muted"><i class="fa fa-fw fa-group"></i> {{userprof.organisation_connection_no}}</a>
+                        </div> 
+
+                      </div>
                             
-                      <div class="border-top  ">
-
-                      {{intro_video|safe}}  <br />
-                      followers: {{followers_count}}<br />
-                      following: {{friends_count}}<br />
-                      foods:{{all_foods|length}}<br />
-                      connections:{{userinfo.trade_connections_no}}<br />
-                      posts: {{userinfo.post_count}}
-                      <!-- tags: -->
-
-
-          {% ifequal is_unknown_profile 'false' %}
-            {% ifequal profile_id user_id %}
-              <a href="/editprofile/{{userinfo.username}}" class="btn btn-danger btn-block">
-                 Edit my profile
-              </a>       
-            {% else %}
-              <button class="btn btn-primary btn-block" data-toggle="modal" data-target="#modal_contact"><i class="fa fa-envelope-o fa-fw"></i> Contact {{name}}</button>
-            {% endifequal %}
-          {% else %}
-            <button class="btn btn-primary btn-block" style="margin-top:40px;" data-toggle="modal" data-target="#modal_invite">Invite to connect</button> 
-          {% endifequal %} 
-
+                      <div class="border-top  innerAll">
 
           
           
@@ -948,6 +1016,14 @@
               <button class="btn btn-default btn-sm" style="width:50%;"><i class="fa fa-star-o"></i> Favourite</button>
           </div>
 
+
+                  
+ 
+                      followers: {{followers_count}}<br />
+                      following: {{friends_count}}<br />
+
+                      
+
                                 
                                 </div>
                             <div class="widget-body padding-none hidden">
@@ -999,7 +1075,7 @@
 </div>
 
 <div class="widget text-center bg-secondary">
-  <div class="innerTB text-white">
+  <div class="innerAll text-white">
       <div class="innerB"><i class=" icon-rocket fa fa-4x text-faded"></i>
       </div>
       <h2 class="strong margin-none text-white">Help us grow!</h2>
@@ -1015,81 +1091,8 @@
   </div>
 </div>
 
-
-                        <div class="widget">
-                            <div class="widget-head border-bottom bg-gray">
-                                <h5 class="innerAll pull-left margin-none">Basic Info</h5>
-                                <div class="pull-right">
-                                    <a href="" class="text-muted">
-                                        <i class="fa fa-pencil innerL"></i>
-                                    </a>
-                                </div>
-                            </div> 
-                            <div class="widget-body">
-                                <div class="row">
-                                    <div class="col-sm-6">User:</div>
-                                    <div class="col-sm-6 text-right">
-                                        <span class="label label-default">mosaicpro</span>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-sm-6">Friends:</div>
-                                    <div class="col-sm-6 text-right">
-                                        <span class="label label-default">219</span>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-sm-6">Joined:</div>
-                                    <div class="col-sm-6 text-right">
-                                        <span class="label label-default">2 months ago</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="widget">
-                            <h5 class="innerAll margin-none border-bottom bg-gray">Recent News
-                             {% if updates_count != 0 %}<span class="badge pull-right">{{updates_count}}</span>{% endif %}
-                             </h5>
-                            <div class="widget-body padding-none">
-                                
-
-                                {% if user.is_authenticated %}
-
-                                {% for eachUpdate in updates %}
-                                <div class="media border-bottom innerAll margin-none">
-                                    <img src="{{userprof.profileimg}}" class="pull-left media-object" width="20" />
-                                    <div class="media-body">
-                                        <a href="" class="pull-right text-muted innerT half">
-                                            <i class="fa fa-comments"></i> 4
-                                        </a>
-                                        <h5 class="margin-none"><a href="" class="text-inverse"> {{eachUpdate.status|recognise_name|safe}}</a>
-                                        </h5>
-                                        <small class="pull-right">
-                                          <a href="/{{username}}/post/{{eachUpdate.tweetuid}}/">  {{eachUpdate.time_elapsed}} ago</a>
-                                        </small>
-                                    </div>
-                                </div>
-                                {% endfor %}  
-                                {% else %}
-                                  <p class="alert alert-warning"><a href="{% provider_login_url "twitter" process="login" %}" class="">Login</a> or <a href="{% provider_login_url "twitter" process="login" %}" class="">sign up free</a> to see updates and activity. </p>
-                                {% endif %} 
-                            </div>
-                        </div>
-                        <!-- Widget -->
-                        <div class="widget widget-heading-simple widget-body-white">
-                            <!-- Widget Heading -->
-                            <div class="widget-head">
-                                <h4 class="heading glyphicons glyphicons-social twitter"><i></i>Twitter feed</h4>
-                            </div>
-                            <!-- // Widget Heading END -->
-                            <div class="widget-body" data-builder-exclude="element children">
-                                <div class="jstwitter" data-gridalicious="false" data-type="slide" data-images="false">
-                                    <span class="label label-default">Loading ..</span>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- // Widget END -->
+ 
+                          
                     </div>
                 </div>
             </div>
@@ -1360,7 +1363,7 @@
             <span class="visible-lg  pull-left right5"><i class="fa fa-sign-out"></i> We sell...</span>
 
            
-
+ 
           {% if userprof.food_no != 0 %}<span class="badge">{{userprof.food_no}}</span>{% endif %}</a></li>
           {% endif %} 
  
