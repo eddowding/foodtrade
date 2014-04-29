@@ -283,7 +283,7 @@ class TweetFeed():
             sa = SocialAccount.objects.get(user__username=find_username)
             find_userid = sa.extra_data['id']
         except:
-            friend = friends_obj.get_one({'friends.screen_name':find_username})
+            friend = friend_obj.get_one({'friends.screen_name':find_username})
             find_userid = friend['friends']['id']
 
         try:
