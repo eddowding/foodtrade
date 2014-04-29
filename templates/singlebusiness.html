@@ -155,24 +155,34 @@
 
       <ul class="clearfix">
         {% if show_foods %}
-        <li class="active"><a class="glyphicons list" href="#tabProduce" data-toggle="tab"><i></i><span>Produce</span></a></li>
+        <li class="active"><a class="glyphicons list" href="#tabProduce" data-toggle="tab"><i></i><span>Produce</span>
+        {% if userprof.food_no != 0 %}<span class="badge pull-number">{{userprof.food_no}}</span>{% endif %}
+        </a></li>
         {% endif %}
         <li>
-        <a class="glyphicons log_in" href="#tabStockists" data-toggle="tab"><i></i><span>Buys from</span></a></li>
-        <li><a class="glyphicons log_out" href="#tabSuppliers" data-toggle="tab"><i></i><span>Sells to</span></a></li>
-        <li><a class="glyphicons certificate" href="#tabMemberships" data-toggle="tab"><i></i><span>Groups</span></a></li>
+        <a class="glyphicons log_in" href="#tabStockists" data-toggle="tab"><i></i><span>Buys from</span>
+        {% if userprof.trade_connections_no != 0 %}<span class="badge pull-number">{{userprof.trade_connections_no}}</span>{% endif %}</a> 
+        </a></li>
+        <li><a class="glyphicons log_out" href="#tabSuppliers" data-toggle="tab"><i></i><span>Sells to</span> 
+        {% if userprof.trade_connections_no != 0 %}<span class="badge pull-number">{{userprof.trade_connections_no}}</span>{% endif %}</a> 
+        </a></li>
+        <li><a class="glyphicons certificate" href="#tabMemberships" data-toggle="tab"><i></i><span>Groups</span>         
+        {% if userprof.organisation_connection_no != 0 %}<span class="badge pull-number">{{userprof.organisation_connection_no}}</span>{% endif %}
+        </a>
+        </li>
         <li class="premium"><a class="glyphicons list" rel="tooltip" title="Premium account holders only - upgrade from just &pound;45/yr" href="#tabBuy" data-toggle="tab"><i></i><span>Shopping list</span>
+
+        {% if buy_items != 0 %}<span class="badge pull-number">{{buy_items}}</span>{% endif %}
         </a>
         </li><!-- 
         <li class="premium"><a class="glyphicons group" rel="tooltip" title="Premium account holders only - upgrade from just &pound;45/yr" href="#tabTeam" data-toggle="tab"><i></i><span>People</span>
         </a>
         </li> -->
         <li class="premium"><a class="glyphicons google_maps" rel="tooltip" title="Premium account holders only - upgrade from just &pound;45/yr" href="#tabCustomers" data-toggle="tab"><i></i><span>Customers</span> 
-       <!--  <div class="ribbon-wrapper small">
-            <div class="ribbon danger">Upgrade</div>
-        </div> -->
+        {% if customers|length != 0 %}<span class="badge pull-number">{{customers|length}}</span>{% endif %}  
         </a></li> 
         <li class="premium"><a class="glyphicons bullhorn" rel="tooltip" title="Premium account holders only - upgrade from just &pound;45/yr" href="#tabUpdates" data-toggle="tab"><i></i><span>Trade</span> 
+        {% if updates_count != 0 %}<span class="badge pull-number">{{updates_count}}</span>{% endif %}
        <!--  <div class="ribbon-wrapper small">
             <div class="ribbon danger">Upgrade</div>
         </div> -->
@@ -600,8 +610,7 @@
         <!-- Tab content -->
         <div id="tabSuppliers" class="tab-pane widget-body-regular">
           
-        {% if userprof.trade_connections_no != 0 %}<span class="badge">{{userprof.trade_connections_no}}</span>{% endif %}</a> 
-
+        
           <!-- WIKI ADD CONNECTIONS --> 
           {% if user.is_authenticated %}
             <div class="alert-alert-info" style="padding: 0 10px;">  
@@ -746,15 +755,11 @@
  
 
         <div id="tabUpdates" class="tab-pane widget-body-regular">
-          <h5 class="innerAll margin-none border-bottom bg-gray">Recent News
-           {% if updates_count != 0 %}<span class="badge pull-right">{{updates_count}}</span>{% endif %}
-           </h5>
-
-           {% if deliverables %} 
-          {{deliverables|linebreaks}}
-        {% else %}
-          <p>Please contact us directly to discuss deliveries.</p>
-        {% endif %}
+          {% if deliverables %} 
+            {{deliverables|linebreaks}}
+          {% else %}
+            <p>Please contact us directly to discuss deliveries.</p>
+          {% endif %}
         </div>
 
 <!--  start we buy -->
@@ -1082,9 +1087,7 @@
 
 
         <div id="tabCustomers" class="tab-pane widget-body-regular">
-  
-          {% if customers|length != 0 %}<span class="badge pull-right">{{customers|length}}</span>{% endif %}
-
+   
           {% if user.is_authenticated %}
           {% else %} 
             <p class="alert alert-warning"><a href="{% provider_login_url "twitter" process="login" %}" class="">Login</a> or <a href="{% provider_login_url "twitter" process="login" %}" class="">sign up free</a> to see where their customers live. Maybe they'll do home deliveries if you ask nicely! </p> 
