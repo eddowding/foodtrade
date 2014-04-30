@@ -244,7 +244,7 @@ function show_small_structure()
 <div class="ftstrip ftstrip-mini"></div>
 </div>
 
-<div class="widget widget-tabs widget-tabs-double-2 widget-tabs-responsive"  style="background: #f9f9f9;">
+<div class="widget widget-tabs widget-tabs-double-2 widget-tabs-responsive"  style="background: #F5F8FA;">
  
 <!--  {% ifequal loggedin_signupas "Individual" %}{% endifequal %}
       {% ifequal loggedin_signupas "Business" %}{% endifequal %}
@@ -293,17 +293,14 @@ function show_small_structure()
 <div class="tab-content reply_text" id = "filtered_content">
 
   <div class="tab-pane {% if results_updates_count != 0  or results_business_count == 0 and results_organisation_count == 0  %}active{% endif %}" id="near_me">
+
+  <!-- isotope filter -->
+
+
+  <!-- end filter --> 
     
     <div id="sortby" class="clearfix">
-      <div class="pull-left">
-        <p class="text-muted" style="margin:0;">Filter:
-          <a href="/activity/?q=buy" class="text-muted">#buy</a>
-          <span class="text-muted">/</span>
-          <a href="/activity/?q=sell" class="text-muted">#sell</a>
-          <span class="text-muted">/</span>
-          <a href="/activity/?q=surplus" class="text-muted">#surplus</a>
-        </p>
-      </div>
+    
 
       <div class="btn-group pull-right">
         <input type="hidden" id="current_sort_order" value="time" />
@@ -319,14 +316,21 @@ function show_small_structure()
       </div> 
     </div>
 
-    <ul class="nav nav-pills btn-sm btn-stroke">
-      <li><a href="/activity"><i class="fa fa-fw fa-bell-o"></i> All </a></li> 
-      <li><a href="/activity/?q=sell"><i class="fa fa-fw fa-sign-out"></i> Sell</a></li> 
-      <li><a href="/activity/?q=buy"><i class="fa fa-fw fa-sign-in"></i> Buy</a></li> 
-      <li><a href="/activity/?q=surplus"><i class="fa fa-fw fa-refresh"></i> Surplus</a></li> 
-      <li><a href="/activity/?q=ask"><i class="fa fa-fw fa-comment-o"></i> Ask</a></li> 
-      <li><a href="/activity/?q=job"><i class="fa fa-fw fa-eur"></i> Job</a></li> 
-    </ul>
+
+    <div class="btn-group pull-left">
+      <a href="/activity/?q=sell" class="btn btn-primary btn-sm btn-stroke "><i class="fa fa-fw fa-sign-out"></i> Companies</a>
+      <a href="/activity" class="btn btn-primary btn-sm btn-stroke "><i class="fa fa-fw fa-bell-o"></i> People </a> 
+    </div>
+
+    <div class="btn-group pull-right">
+      <a href="/activity" class="btn btn-default btn-sm btn-stroke "><i class="fa fa-fw fa-bell-o"></i> All </a> 
+      <a href="/activity/?q=sell" class="btn btn-default btn-sm btn-stroke "><i class="fa fa-fw fa-sign-out"></i></a>
+      <a href="/activity/?q=buy" class="btn btn-default btn-sm btn-stroke "><i class="fa fa-fw fa-sign-in"></i></a>
+      <a href="/activity/?q=surplus" class="btn btn-default btn-sm btn-stroke "><i class="fa fa-fw fa-refresh"></i></a>
+      <a href="/activity/?q=ask" class="btn btn-default btn-sm btn-stroke "><i class="fa fa-fw fa-comment-o"></i></a>
+      <a href="/activity/?q=job" class="btn btn-default btn-sm btn-stroke "><i class="fa fa-fw fa-eur"></i></a>
+    </div>
+
 
     <div class="activity" id="activity_updates"> 
       {% include 'activity_updates.html' %}
