@@ -255,9 +255,11 @@ def display_profile(request, username):
     if parameters['sign_up_as'] == 'Business':
         if request.user.is_authenticated():
             parameters['connections'], parameters['logged_conn'] = get_connections(userprof['useruid'], request.user.id)
+
             temp_all_foods = get_all_foods(userprof['useruid'], request.user.id)
             parameters['food_parents'] = temp_all_foods[len(temp_all_foods)-1]
-            parameters['all_foods'] = temp_all_foods[0:(len(temp_all_foods)-2)]
+            parameters['all_foods'] = temp_all_foods[0:(len(temp_all_foods)-1)]
+
             parameters['all_buying_foods'] = get_all_buying_foods(userprof['useruid'], request.user.id)
             
             parameters['organisations'] = get_organisations(userprof['useruid'])
@@ -296,7 +298,7 @@ def display_profile(request, username):
         if request.user.is_authenticated():
             temp_all_foods = get_all_foods(userprof['useruid'], request.user.id)
             parameters['food_parents'] = temp_all_foods[len(temp_all_foods)-1]
-            parameters['all_foods'] = temp_all_foods[0:(len(temp_all_foods)-2)]
+            parameters['all_foods'] = temp_all_foods[0:(len(temp_all_foods)-1)]
         else:
             temp_all_foods = get_all_foods(userprof['useruid'], request.user.id)
             parameters['food_parents'] = temp_all_foods[len(temp_all_foods)-1]
@@ -635,7 +637,6 @@ def get_connections(user_id, logged_in_id = None):
     b_conn = trade_conn.get_connection_by_business(user_id)
     c_conn = trade_conn.get_connection_by_customer(user_id)
     final_connections = []
-    print 'b_conn: ', len(b_conn), 'c_conn: ', len(c_conn)
     logged_conn = 'none'
     for count, each in enumerate(b_conn):
         try:
@@ -1026,7 +1027,6 @@ def get_video_html(url):
     obj = client.oembed(url)
 
     if obj.get('error')==True:
-        print 'error'
         return ''
     else:
         html = obj.get('html') if obj.get('html')!=None else ''
