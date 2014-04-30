@@ -259,11 +259,11 @@
  
           {% endif %} 
 
-      <div class="innerB button-group" id="filterFoods" data-filter-group="foodtype">
-        <button class="btn btn-default active" data-filter="*">Show all</button> 
+      <div class="innerB btn-group" id="filterFoods" data-filter-group="foodtype">
+        <button class="btn btn-primary btn-sm active" data-filter="*">All</button> 
         
         {% for eachfood in all_foods %}
-          <button class="btn btn-default" data-filter=".{{eachfood.parent_food|slugify}}">{{eachfood.parent_food}}</button> 
+          <button class="btn btn-default btn-sm" data-filter=".{{eachfood.parent_food|slugify}}">{{eachfood.parent_food}}</button> 
         {% endfor %}
 
       </div>
@@ -365,7 +365,7 @@
                                       <div class="pull-right">
 
                                         {% for eachdet in eachfood.recomm_details %}
-                                          <img class="pull-left" style="margin:0px 4px 0 0; width:25px" src={{eachdet.photo}} rel="tooltip" title="{{eachdet.name}}"/> 
+                                          <img class="pull-left img-circle" style="margin:0px 4px 0 0; width:25px" src={{eachdet.photo}} rel="tooltip" title="{{eachdet.name}}"/> 
                                         {% endfor %}
                                         {% ifnotequal eachfood.vouch_count 0 %} 
                                           <span class="badge badge-default" style="margin:3px 4px 0 0;" rel="tooltip" title="{{eachfood.vouch_count}} recommendations on {{eachfood.food_name}}">{{eachfood.vouch_count}}</span>
@@ -402,7 +402,7 @@
                         </div>
 
       <!-- FOOD LIST --> 
-      <table class="table table-list-search table-condensed">
+      <table class="table table-list-search table-condensed hidden ">
         {% if not user.is_authenticated %}
           <thead>
             <tr>
@@ -465,7 +465,7 @@
                    
                    {% for eachdet in eachfood.recomm_details %}
                     <div class="pull-right">
-                      <img class="pull-left" style="margin:0px 4px 0 0; width:25px" src={{eachdet.photo}} rel="tooltip" title="{{eachdet.name}}"/>
+                      <img class="pull-left img-circle" style="margin:0px 4px 0 0; width:25px" src={{eachdet.photo}} rel="tooltip" title="{{eachdet.name}}"/>
                     </div>
                    {% endfor %}
                  {% ifnotequal eachfood.vouch_count 0 %}
@@ -781,13 +781,14 @@
  
           {% endif %} 
 
-      <div class="innerB button-group" id="filterFoods" data-filter-group="foodtype">
-        <button class="btn btn-default active" data-filter="*">Show all</button> 
+      <div class="innerB" id="filterFoods" data-filter-group="foodtype">
+      <div class="btn-group">
+        <button type="button" class="btn btn-default active" data-filter="*">Show all</button> 
         
         {% for eachfood in all_buying_foods %}
-          <button class="btn btn-default" data-filter=".{{eachfood.parent_food|slugify}}">{{eachfood.parent_food}}</button> 
+          <button type="button" class="btn btn-default" data-filter=".{{eachfood.parent_food|slugify}}">{{eachfood.parent_food}}</button> 
         {% endfor %}
-
+        </div>
       </div>
                     <div class="clearfix isotope"  id="foods"> 
                             <div class="row">
@@ -883,7 +884,7 @@
                                       <div class="pull-right">
 
                                         {% for eachdet in eachfood.recomm_details %}
-                                          <img class="pull-left" style="margin:0px 4px 0 0; width:25px" src={{eachdet.photo}} rel="tooltip" title="{{eachdet.name}}"/> 
+                                          <img class="pull-left img-circle" style="cla" src={{eachdet.photo}} rel="tooltip" title="{{eachdet.name}}"/> 
                                         {% endfor %}
                                         {% ifnotequal eachfood.vouch_count 0 %} 
                                           <span class="badge badge-default" style="margin:3px 4px 0 0;" rel="tooltip" title="{{eachfood.vouch_count}} recommendations on {{eachfood.food_name}}">{{eachfood.vouch_count}}</span>
@@ -920,7 +921,7 @@
                         </div>
 
       <!-- FOOD LIST --> 
-      <table class="table table-list-search table-condensed">
+      <table class="table table-list-search table-condensed hidden">
         {% if not user.is_authenticated %}
           <thead>
             <tr>
@@ -985,7 +986,7 @@
                    
                    {% for eachdet in eachfood.recomm_details %}
                     <div class="pull-right">
-                      <img class="pull-left" style="margin:0px 4px 0 0; width:25px" src={{eachdet.photo}} rel="tooltip" title="{{eachdet.name}}"/>
+                      <img class="pull-left img-circle" style="margin:0px 4px 0 0; width:25px" src={{eachdet.photo}} rel="tooltip" title="{{eachdet.name}}"/>
                     </div>
                    {% endfor %}
                  {% ifnotequal eachfood.vouch_count 0 %}
@@ -1474,9 +1475,9 @@
               <form accept-charset="UTF-8" action="." role="form" method="POST" enctype="multipart/form-data">
                {% csrf_token %}
                <div class="row">
-                <div class="col-sm-6"> 
+                <div class="col-sm-4"> 
                   <a href="#" rel="tooltip" title="Change the photo">
-                    <img src="" class="img-responsive img-thumbnail" id="food_photo" style="width:100%;height:200px; background: #ccc url('/static/images/upload.gif'); background-size: cover;"> 
+                    <img src="" class="img-responsive img-thumbnail" id="food_photo" style="width:100%;height:150px; background: #ccc url('/static/images/upload.gif'); background-size: cover;"> 
                   </a>
                   <!-- show this in another modal? -->
                   <!-- can we use html5 drag and drop to upload? -->
@@ -1491,7 +1492,7 @@
                   <!-- end code -->
                 </div>
                 
-                <div class="col-sm-6">
+                <div class="col-sm-8">
 
                   <div class="form-group">
                     {{form.food_description}}
@@ -1609,199 +1610,8 @@
     </div>
     </div>
 
-    <div class="row">
-     <div class="col-md-12">
-        <ul class="nav nav-tabs">
-
-
-          <li class="active">
-            <a href="#connections" data-toggle="tab" onclick="set_width()">
-            <span class="visible-xs pull-left right5"><i class="fa fa-link"></i></span> 
-            <span class="visible-sm pull-left right5">Connect.</span> 
-            <span class="visible-md  pull-left right5">Connections</span> 
-            <span class="visible-lg  pull-left right5"><i class="fa fa-link"></i> Connections</span> 
-
-            {% if userprof.trade_connections_no != 0 %}<span class="badge">{{userprof.trade_connections_no}}</span>{% endif %}</a> 
-          </li>
-
-          {% if show_foods %}
-          <li><a href="#produce" data-toggle="tab">
-
-            <span class="visible-xs pull-left right5"><i class="fa fa-sign-out"></i></span> 
-            <span class="visible-sm pull-left right5">We sell</span> 
-            <span class="visible-md  pull-left right5">We sell...</span> 
-            <span class="visible-lg  pull-left right5"><i class="fa fa-sign-out"></i> We sell...</span>
-
-           
- 
-          {% if userprof.food_no != 0 %}<span class="badge">{{userprof.food_no}}</span>{% endif %}</a></li>
-          {% endif %} 
- 
-          <li class="dropdown">
-            <a href="#" id="more" class="dropdown-toggle" data-toggle="dropdown">More <b class="caret"></b></a>
-            <ul class="dropdown-menu" role="menu" aria-labelledby="more">
-              <li><a href="#organisations" data-toggle="tab">Organisations {% if userprof.organisation_connection_no != 0 %}<span class="badge pull-right">{{userprof.organisation_connection_no}}</span>{% endif %}</a></li> 
-
-              
-              <li><a href="#customers" tabindex="-1" data-toggle="tab">Customers {% if customers|length != 0 %}<span class="badge pull-right">{{customers|length}}</span>{% endif %}</a></li> 
-            </ul>
-          </li>
-        </ul>
-     </div>
-    </div>
-
-
-    <div class="row">
-      <div class="col-md-12">
-        <div class="container-responsive clearfix">
-
-        <div class="tab-content">
-          
-
-
-
-
-<!-- FOODS LIST EXPERIEMNT  -->
-
-<div class="widget gridalicious-item not-responsive col-md-3" style="margin-bottom: 12px; zoom: 1; opacity: 1;">
-            <img src="http://myzerowaste.com/wp-content/uploads/2009/01/carrots1.jpg" alt="" class="img-responsive" style="width: auto; height: auto; display: block; margin-left: auto; margin-right: auto;">
-            <div class="ribbon-wrapper"><div class="ribbon primary"><i class="fa fa-fw fa-star-o "></i><strong>4.8</strong></div></div>
-
-            <div class="innerTB half text-center">
-            <div class="rating text-medium text-faded margin-top-none">
-                  <span class="star"></span>
-                  <span class="star"></span>
-                  <span class="star"></span>
-                  <span class="star active"></span>
-                  <span class="star"></span>
-                </div>
-            </div>
-            <div class="border-top innerAll">
-              <div class="pull-left">
-                <span class="text-muted small innerT innerR pull-left">Rated by:</span>
-                <img src="http://cdn.mosaicpro.biz/social/php/assets/images/people/35/13.jpg" class="img-circle pull-left innerR half" style="width: auto; height: auto; display: block; margin-left: auto; margin-right: auto;"><img src="http://cdn.mosaicpro.biz/social/php/assets/images/people/35/13.jpg" class="img-circle pull-left innerR half" style="width: auto; height: auto; display: block; margin-left: auto; margin-right: auto;"><img src="http://cdn.mosaicpro.biz/social/php/assets/images/people/35/13.jpg" class="img-circle pull-left innerR half" style="width: auto; height: auto; display: block; margin-left: auto; margin-right: auto;"><img src="http://cdn.mosaicpro.biz/social/php/assets/images/people/35/13.jpg" class="img-circle pull-left innerR half" style="width: auto; height: auto; display: block; margin-left: auto; margin-right: auto;"> 
-              </div>
-              <div class="pull-right">
-                <span class="text-primary strong lead pull-left innerT innerR half "><i class="icon-time-clock" data-toggle="tooltip" fata-placement="top" data-title="15 miutes ago"></i></span>
-                <a href="#"><img src="http://cdn.mosaicpro.biz/social/php/assets/images/people/35/13.jpg" class="img-circle pull-right" data-toggle="tooltip" fata-placement="top" data-title="Marie" style="width: auto; height: auto; display: block; margin-left: auto; margin-right: auto;"></a>
-              </div>
-            </div>
-              <div class="clearfix"></div>
-          </div>
-
-
-<div class="foods clearfix" style="margin: 10px 0;">
-{% for eachfood in all_foods %}
-
-
-<div class="card">
-
-<div class="content" style="background: url('http://myzerowaste.com/wp-content/uploads/2009/01/carrots1.jpg'); background-size: cover; min-height: 80px; position: relative; "><!--{{eachfood.photo_url}}-->
- 
-  <div class="text" style="position: absolute; width: 100%; bottom: 0;"> 
-  {% ifequal profile_id user_id %}
-    <button type="button" class="close" aria-hidden="true" onClick="delete_food({{profile_id}}, '{{eachfood.food_name}}', this)">&times;</button>
-  {% endifequal %}
-
-  <h5><a href="/activity/?f={{eachfood.food_name}}">{{eachfood.food_name}}</a></h5> 
-  {% if eachfood.description %}<p class="small">{{eachfood.description}}</p>{% endif %}
-
-  </div>
-</div>
-
-<div class="numbers clearfix">
-
-  <a href="" data-toggle="modal" data-target="#modal_food_detail" class="btn btn-sm btn-default pull-left" data-container="body" onClick="get_food_detail('{{profile_id}}', '{{eachfood.food_name}}', '{{eachfood.description}}', '{{eachfood.food_tags}}', '{{eachfood.photo_url}}', '{{eachfood.recomm_tags|safe}}')"><i class="fa fa-edit" title="Edit" ></i></a>
-
-{% if user.is_authenticated %}
-{% ifnotequal profile_id user_id %}
- <div class="btn-block" data-toggle="buttons">
- {% if eachfood.logged_recommender %}
-      <label class="fa fa-thumbs-o-up btn btn-default btn-sm active" rel="tooltip" title="Recommend this to others">
-        <input type="checkbox" checked="checked" onchange="recommend_food({{user_id}}, '{{eachfood.food_name}}', {{profile_id}}, '{{screen_name}}', this); return null;">
-      </label>
-  {% else %}
-      <label class="fa fa-thumbs-o-up btn btn-default btn-sm" rel="tooltip" title="Recommend this to others" data-toggle="modal" data-target="#modal_tweet_recomm">
-        <input type="checkbox" onchange="recommend_food({{user_id}}, '{{eachfood.food_name}}', {{profile_id}}, '{{screen_name}}', this); return null;">
-      </label>
-  {% endif %}
-  </div>
-{% endifnotequal %}
-{% endif %}
-
- {% for eachdet in eachfood.recomm_details %}
-      <div class="pull-right">
-        <img class="pull-left" style="margin:0px 4px 0 0; width:25px" src={{eachdet.photo}} rel="tooltip" title="{{eachdet.name}}"/>
-      </div>
-     {% endfor %}
-   {% ifnotequal eachfood.vouch_count 0 %}
-     <div class="pull-right">
-       <span class="badge badge-default" style="margin:3px 4px 0 0;" rel="tooltip" title="{{eachfood.vouch_count}} recommendations on {{eachfood.food_name}}">{{eachfood.vouch_count}}</span>
-    </div>
-    {% endifnotequal %}
- 
- </div><!-- numbers -->
-
- 
-
- 
-
-
-</div>
-{% endfor %}
-</div>
-
-
-<!-- END OF FOOD LIST EXPERIEMTN -->
-
-
-          
- 
-          <div class="tab-pane fade" id="customers">
-        {% if user.is_authenticated %}
-          {% else %} 
-            <p class="alert alert-warning"><a href="{% provider_login_url "twitter" process="login" %}" class="">Login</a> or <a href="{% provider_login_url "twitter" process="login" %}" class="">sign up free</a> to see where their customers live. Maybe they'll do home deliveries if you ask nicely! </p> 
-        {% endif %}
-<div class="pull-left">
-           {% for each in customers %}
-
-              <div class="card card-individual"> 
-                <div class="content" style="background-image:url('{{each.banner_url}}');">
-                  <img src="{{each.photo}}" alt="{{each.name}}"
-                  class="img-rounded img-responsive pull-left" style="width:40px;" />
-                  <div class="text">
-                    <h5><a href="/profile/{{each.username}}">{{each.name}}</a></h5> 
-                    <p class="small">
-                    {{each.description}}</p>
-                  </div> 
-                </div>
-                <div class="numbers clearfix">
-                  <i class="fa fa-user"></i> <small class="t ext-muted">Person</small>
-                </div>
-               
-          </div>
-          {% endfor %}
-          </div>
-          </div> <!-- end customers -->
-
-          
+        
     
-      </div>
- 
- 
-        </div><!-- container responsive -->
-  
-      
- 
-   
-      </div><!-- end col --> 
- 
-    </div><!-- row -->
-
-
-   
-    </div><!-- col --> 
- 
 
     
      
