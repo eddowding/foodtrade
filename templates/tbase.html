@@ -254,8 +254,15 @@
             </a>
         </div>
 
-   
+{% if not user.is_authenticated %} 
+<ul class="menu list-unstyled" id="navigation_current_page">
+<li>
+<a href="%#">hello</a>
+</li>
 
+</ul>
+{% else %}
+ 
 
         <ul class="menu list-unstyled" id="navigation_current_page">
           {% if user.is_superuser %}
@@ -265,6 +272,10 @@
               </a>
           </li>  
           {% endif %}
+
+
+
+
  
 
 
@@ -454,6 +465,8 @@ hid den
             </li>
             
         </ul>
+
+{% endif %}
     </div>
 </div>
 <!-- // Main Sidebar Menu END --> 
