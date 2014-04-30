@@ -240,62 +240,7 @@
               </div><!-- /.modal-content -->
             </div><!-- /.modal-dialog -->
           </div><!-- /.modal -->
-<!-- modal_invite -->
-<div class="modal fade hidden" id="modal_login_old" tabindex="-2" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-   
-      <div class="modal-body">
-<div class="container-responsive">
-  <div class="row">
-    <div class="main">
- 
-      <div class="row">  
-        <div class="col-md-12 text-center">
-          <a href="{% provider_login_url "twitter" process="login" %}" class="btn btn-lg btn-info btn-block"><i class="fa fa-twitter"></i> Sign in with Twitter</a>
-        </div> 
-<!-- USE THIS LATER!! 
-        <div class="col-xs-6 col-sm-6 col-md-6">
-          <a href="#" class="btn btn-lg btn-primary btn-block">Facebook</a>
-        </div>
-        <div class="col-xs-6 col-sm-6 col-md-6">
-          <a href="#" class="btn btn-lg btn-info btn-block">Google</a>
-        </div> -->
-      </div>
-      <div class="login-or">
-        <hr class="hr-or">
-        <span class="span-or">or</span>
-      </div>
-      <form role="form">
-        <div class="form-group">
-          <label for="inputUsernameEmail">Username or email</label>
-          <input type="text" class="form-control" id="inputUsernameEmail">
-        </div>
-        <div class="form-group">
-          <a class="pull-right" href="#">Forgot password?</a>
-          <label for="inputPassword">Password</label>
-          <input type="password" class="form-control" id="inputPassword">
-        </div>
-        <div class="checkbox pull-right">
-          <label>
-            <input type="checkbox">
-            Remember me </label>
-        </div>
-        <button type="submit" class="btn btn btn-primary">
-          Log In
-        </button>
-      </form>
-    
-    </div>
-    
-  </div>
-</div>
- 
-      </div>
- 
-      </div> 
-    </div><!-- /.modal-content -->
-  </div><!-- /.modal-dialog -->
+<!-- modal_invite --> 
 </div><!-- /.modal -->
 
 
@@ -625,6 +570,8 @@ hid den
       <a href="#menu-right" class="btn btn-sm btn-navbar btn-open-right"><i class="fa fa-bell fa-2x"></i></a>
   </div> -->
 
+
+  {% if request.user.is_authenticated %}
   <div class="user-action pull-right menu-right-hidden-xs menu-left-hidden-xs border-left">
       <div class="dropdown username pull-left">
           <a class="dropdown-toggle" data-toggle="dropdown" href="#">
@@ -650,6 +597,7 @@ hid den
           </ul>
       </div>
   </div>
+  {% endif %}
 
 
   {% if not request.user.is_authenticated %} 
@@ -658,6 +606,11 @@ hid den
       <a class="dropdown-toggle" data-toggle="dropdown" href="#">Sign up / Login
       </a> 
        <ul class="dropdown-menu pull-right" style="padding: 15px;min-width: 250px;">
+          <li>
+             <!-- <input class="btn btn-primary btn-block" type="button" id="sign-in-google" value="Sign In with Google"> -->
+             <input class="btn btn-primary btn-block" style="background: #5398D8;" href="{% provider_login_url "twitter" process="login" %}" type="button" id="sign-in-twitter" value="Sign In with Twitter">
+          </li>
+          <li class="divider"></li>
           <li>
              <div class="row">
                 <div class="col-md-12">
@@ -681,11 +634,6 @@ hid den
                    </form>
                 </div>
              </div>
-          </li>
-          <li class="divider"></li>
-          <li>
-             <input class="btn btn-primary btn-block" type="button" id="sign-in-google" value="Sign In with Google">
-             <input class="btn btn-primary btn-block" type="button" id="sign-in-twitter" value="Sign In with Twitter">
           </li>
        </ul> 
     </div>
