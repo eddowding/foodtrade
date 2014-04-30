@@ -56,8 +56,12 @@ $(".reply_text").on("mouseover",".singleresult",function(e){
   if(String(map_controls[i].options.tweet_id).trim() == String(result_id).trim())
   {
     result_mouseout = false;
-
+    var temp_lat = map_controls[i]._latlng.lat;
+    var temp_lon = map_controls[i]._latlng.lng;
+    var zoom_level = map.getZoom();
+map.setView([temp_lat, temp_lon], zoom_level);
     map_controls[i].openPopup();
+    
   }
  }
   
@@ -184,7 +188,7 @@ function ajax_update_single_post(data)
 
 function post_new_status()
 {
-       message = $('#newstatus').val();
+ message = $('#newstatus').val();
   if(message=="")
   {
     alert("You can't post empty status.");

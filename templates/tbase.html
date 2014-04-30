@@ -1,4 +1,3 @@
-{% load staticfiles %}
 {% load staticfiles %}  
 {% load socialaccount %}
 {% load url from future %}
@@ -87,8 +86,12 @@
     </title>
     <!-- CSS -->
     <link href="{% static "css/bootstrap.css" %}" rel="stylesheet"> 
+
     <link rel="stylesheet" href="{% static "css/docsupport/prism.css" %}">
     <link rel="stylesheet" href="{% static "css/chosen.min.css" %}"> 
+
+    <link href="{% static "css/dynamic.css" %}" rel="stylesheet"> 
+
 
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places"></script>
     <!-- <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet"> -->
@@ -114,6 +117,8 @@
     
  
 <script src="{% static "js/label-leaflet.js" %}"></script> 
+
+
 <script type="text/javascript">
 
    var RedIcon = L.Icon.Default.extend({
@@ -222,29 +227,247 @@
           </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
       </div><!-- /.modal -->
-
-       <!-- New post Modal -->
-          <div class="modal fade" id="newtwitterpost" tabindex="-1" role="dialog" aria-labelledby="newtwitterpost" aria-hidden="true">
-            <div class="modal-dialog">
-              <div class="modal-content"> 
-                <div class="modal-body">               
-                  <form accept-charset="UTF-8" action="" method="POST">
-                      <textarea id="tweetMessage" class="form-control counted" name="message" placeholder="Type in your message" rows="5" ></textarea>
-                  </form> 
-                </div>
-                <div class="modal-footer">
-                  <h6 class="pull-left" id="counter">120 characters remaining</h6> 
-                  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                  <button id="newtweet_btn" type="button" class="btn btn-primary" onclick="UpdateStatus('tweetMessage')">Post update</button>
-                </div>
-              </div><!-- /.modal-content -->
-            </div><!-- /.modal-dialog -->
-          </div><!-- /.modal -->
-<!-- modal_invite --> 
+ 
 </div><!-- /.modal -->
 
 
-<div class="container-fluid menu-hidden" id="">
+<!-- new post exp --> 
+   <div class="modal fade" id="newtwitterpost" tabindex="-1" role="dialog" aria-labelledby="newtwitterpost" aria-hidden="true">
+
+            <div class="modal-dialog">
+              <div class="modal-content"> 
+                <div class="modal-body">  
+<div id="structured_postupdate" class="">
+
+<form action="r" method="post" id="structured_input_form" accept-charset="utf-8" onsubmit="generate_update(); $('#newtwitterpost').modal('hide')" class="form" role="form">   
+  
+  <div class="row" style="margin-bottom:0;"> 
+    <div class="col-xs-12">    
+    Step 1: 
+      <div  id="post_for" class="btn-group">
+          <button type="button" class="btn btn-stroke btn-primary btn-icon-stacked" onclick="show_full_structure();$('#price').show();" value="buy"><i class="fa fa-2x fa-sign-in"></i> 
+              <span>I'd like  
+                  <br>to buy </span>
+          </button> 
+          <button type="button" class="btn btn-stroke btn-primary btn-icon-stacked" onclick="show_full_structure();$('#price').show();" value="sell"><i class="fa fa-2x fa-sign-out"></i> 
+              <span>I'd like  
+                  <br>to sell </span>
+          </button> 
+          <button type="button" class="btn btn-stroke btn-primary btn-icon-stacked" onclick="show_full_structure();$('#price').hide();" value="offer surplus"><i class="fa fa-2x fa-refresh"></i> 
+              <span>I'd like  to 
+                  <br>offer surplus </span>
+          </button> 
+          <button type="button" class="btn btn-stroke btn-primary btn-icon-stacked" onclick="swith_update_form()" value="freestyle"><i class="fa fa-2x fa-rocket"></i> 
+              <span>Go 
+                  <br>freestyle </span>
+          </button> 
+        </div>             
+    </div>
+  </div> 
+
+<span class="hidden" id="structured_hidden_block">
+  <div class="row" style="margin-top: 10px;"> 
+    <div class="col-xs-6"> 
+      <input type="text" name="produce" value="" class="form-control" placeholder="What?"  />  
+      <p class="help-block">eg 'apples', 'veg curry'</p>
+    </div>
+    <div class="col-xs-6"> 
+      
+<div class="row">
+    <div class="col-xs-7" style="padding-right:0;">
+      <input type="text" name="qty" value="" class="form-control" placeholder="How much?"  />  
+    <p class="help-block">Weight / vol / size</p>
+    </div>
+
+    <div class="col-xs-5" style="padding-left: 0;">
+
+       <select id="qtyUnit" class="form-control btn-sm selectpicker">        
+        <option value="">Select unit</option>   
+        <option value="Pieces">Pieces</option>
+        <option value="20' Container">20' Container</option>
+        <option value="40' Container">40' Container</option>
+        <option value="Acre/Acres">Acre(s)</option>
+        <option value="Bags">Bags</option>
+        <option value="Barrel/Barrels">Barrel(s)</option>
+        <option value="Boxes">Boxes</option>
+        <option value="Bushel/Bushels">Bushel(s)</option>
+        <option value="Case/Cases">Case(s)</option>
+        <option value="Centimeter/Centimeters">Centimeter(s)</option>
+        <option value="Cubic Meter/Cubic Meters">Cubic Meter(s)</option>
+        <option value="cubic yards">Cubic Yard(s)</option>
+        <option value="doz">Dozen</option>   
+        <option value="gall">Gallon(s)</option> 
+        <option value="ha">Hectare(s)</option> 
+        <option selected="selected" value="Kg">kg(s)</option>
+        <option value="l">Litre(s)</option> 
+        <option value="m">Meter(s)</option>    
+        <option value="pallet(s)">Pallet(s)</option> 
+        <option value="pint(s)">Pint(s)</option>
+        <option value="pound(s)">Pound(s)</option>  
+        <option value="roll(s)">Roll(s)</option>
+        <option value="sets">Sets</option>
+        <option value="sheet(s)">Sheet(s)</option>  
+        <option value="stone">Stone(s)</option> 
+        <option value="ton(s)">Ton(s)</option> 
+        <option value="tray(s)">Tray(s)</option>
+        <option value="unit(s)">Unit(s)</option>
+        <option value="yard(s)">Yard(s)</option>
+      </select>
+    </div>
+    </div> 
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-6" id="price"> 
+      <input type="text" name="Price" value="" class="form-control" placeholder="Price"  />  
+
+      <p class="help-block">Total, or per unit. Inc £/$/&euro;</p>
+    </div>
+    <div class="col-xs-6">  
+      <input type="text" class="form-control" id="expire_on" placeholder="When?"> 
+      <p class="help-block" id="date_help">try 'next Friday', '8 sept 17'</p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12"> 
+      <textarea class="form-control" id="update_description" rows="3" placeholder="Add detail: eg quality, variety, grade, packaging, etc.  "></textarea>
+      <p class="help-block">
+      Add detail: eg quality, variety, grade, packaging, etc.
+</p>
+    </div> 
+  </div>
+  <div class="row" style="margin-top: 5px;">
+            <div class="col-xs-7">
+              <ul class="list-inline small" style="margin-bottom:0;">
+                <li class="">Also send to </li>
+                <li>
+                  <label>
+                    <input type="checkbox" id="structured_post_to_twitter" name="post_to_twitter" value="1" checked="checked">
+                    <i class="fa fa-twitter-square fa-lg text-muted"></i>
+                  </label>
+                </li>
+                <li> 
+                  <label rel="tooltip" title="Post to Facebook, coming soon!">
+                    <input type="checkbox" name="post_to_facebook" value="1" disabled > 
+                    <i class="fa fa-facebook-square fa-lg text-muted"></i>
+                  </label>
+                </li>
+                <li> 
+                  <label rel="tooltip" title="Follower newsletters, coming soon!">
+                    <input type="checkbox" name="post_to_newsletter" value="1" disabled> 
+                    <i class="fa fa-list-alt fa-lg text-muted"></i> 
+                  </label>
+                </li> 
+              </ul> 
+            </div>
+            <div class="col-xs-5 text-right">
+            {% if not user.is_authenticated %}
+                <a href="/payments" class="btn btn-success pull-right"  rel="tooltip" title="Join free to post an upate">LOGIN TO POST
+                <br />
+                <span class="  small">Sign up is free</span></a>
+            {% else %}
+              {% if not can_tweet %} 
+                <button type="button" id="btn_update_activity" class="btn  btn-success pull-right" rel="tooltip"  {% if not user.is_authenticated %}  title="Please login to use this feature." {% endif %} onclick="generate_update();"> Post this</button>
+              {% else %} 
+                <a href="/payments" class="btn  btn-success pull-right"  rel="tooltip" title="Please upgrade your account to unlock."  {% if not user.is_authenticated %}  title="Please login to use this feature." {% endif %} > Upgrade to post</a>
+              {% endif %}
+            {% endif %}
+            </div>
+          </div> 
+</span>
+</form>
+
+<script type="text/javascript">
+function swith_update_form()
+{
+  switch_text_area();
+  $("#structured_postupdate").hide();
+  $("#update-big").show();
+}
+
+function show_full_structure()
+{
+  $("#structured_hidden_block").removeClass("hidden");
+}
+
+function show_small_structure()
+{ 
+  switch_text_area
+  $("#update-big").hide();
+  $("#structured_postupdate").show();
+  $("#structured_hidden_block").removeClass("hidden");
+}
+</script>
+</div>
+
+
+<div id="update-small" class="clearfix hidden" style="margin-top: 10px;">
+  <input class="form-control col-xs-12"  {% if not user.is_authenticated %}  onfocus="login_redirect()" title="Please login to use this feature." {% else %} {% if can_tweet %} onfocus= "switch_text_area()"{% else %} rel="tooltip" title="You're limited to 1 update every 7 days. Please upgrade your account to unlock." {% endif %}{% endif %} placeholder="What #food do you have to #buy, #sell, or #surplus?">  
+</div> 
+
+<div id="update-big" class=" clearfix hidden" style="margin-top:10px; display: none;">
+<form class="form-horizontal">
+  <div class="row" style="margin-bottom:0;"> 
+    <div class="col-xs-12">  
+     <p style="line-height: 2.5; margin: 0 10px 0 0;" class="pull-left"><strong>I'd like to...</strong> 
+      <div class="btn-group btn-bl ock pull-left" id="post_for">
+      <!-- <input type="hidden" /> -->
+        <button type="button" onclick="show_small_structure();$('#price').show();"  class="btn btn-default" value="buy" ><i class="fa fa-sign-in fa-fw"></i> buy</button>
+        <button type="button" onclick="show_small_structure();$('#price').show();" class="btn btn-default" value="sell" ><i class="fa fa-sign-out fa-fw"></i> sell</button>
+        <button type="button" onclick="show_small_structure();$('#price').hide();"   class="btn btn-default" value="offer surplus"  ><i class="fa fa-random fa-fw"></i> offer surplus</button>
+        <button type="button" onclick="swith_update_form()"   class="btn btn-default" value="offer surplus"  ><i class="fa fa-rocket fa-fw"></i> go freestyle</button>
+      </div>                     
+    </div>
+  </div>
+  <div class="row" style="margin-top:10px;">
+    <div class="col-xs-12">
+      <textarea class="form-control col-xs-12 counted" onkeyup="check_limit()" rows="3" name="q" id="newstatus" {% if not user.is_authenticated %}  onfocus="login_redirect()" title="Please login to use this feature." {% endif %} placeholder="What would you like? Eg '300kg #surplus conference #pears for #sale or #surplus' or 'I want to  #buy organic #honey for my farm shop.' "></textarea>
+    </div>
+  </div>
+
+  <div class="row" style="margin-top: 5px;">
+    <div class="col-xs-7">
+      <ul class="list-inline small" style="margin-bottom:0;">
+        <li class="text-muted">Also send to </li>
+        <li> 
+          <label>
+            <input type="checkbox" id="post_to_twitter" name="post_to_twitter" value="1" checked="checked">
+            <i class="fa fa-twitter-square fa-lg text-muted"></i>
+          </label>
+        </li>
+        <li> 
+          <label rel="tooltip" title="Post to Facebook, coming soon!">
+            <input type="checkbox" name="post_to_facebook" value="1" disabled > 
+            <i class="fa fa-facebook-square fa-lg text-muted"></i>
+          </label>
+        </li>
+        <li> 
+          <label rel="tooltip" title="Follower newsletters, coming soon!">
+            <input type="checkbox" name="post_to_newsletter" value="1" disabled> 
+            <i class="fa fa-list-alt fa-lg text-muted"></i> 
+          </label>
+        </li> 
+      </ul> 
+    </div>
+    <div class="col-xs-5 text-right">
+      <span class="small text-muted counted" id="charsRem">
+        120 characters remaining
+      </span>
+    </div>
+  </div>
+
+
+      <button type="button" id="btn_update_activity" class="btn btn-sm btn-success pull-right" {% if not user.is_authenticated %}  title="Please login to use this feature." {% endif %} onclick="post_new_status();"> Post</button>
+  </form>
+</div> <!-- /well --> 
+</div>
+</div>
+</div>
+</div>
+<!-- new post exp -->
+
+
+<div class="container-fluid menu-hidden" id="main_page">
 
 <div id="menu" class="hidden-print hidden-xs sidebar-default sidebar-brand-primary">
     <div id="sidebar-social-wrapper">
@@ -616,31 +839,31 @@ hid den
   {% if not request.user.is_authenticated %} 
   <div class="user-action pull-right menu-right-hidden-xs menu-left-hidden-xs border-left">
     <div class="dropdown username pull-left">
-      <a class="dropdown-toggle" data-toggle="dropdown" href="#">Sign up / Login
+      <a class="dropdown-toggle" data-toggle="dropdown" href="#">Login
       </a> 
        <ul class="dropdown-menu pull-right" style="padding: 15px;min-width: 250px;">
           <li>
-             <!-- <input class="btn btn-primary btn-block" type="button" id="sign-in-google" value="Sign In with Google"> -->
-             <input class="btn btn-primary btn-block" style="background: #5398D8;" href="{% provider_login_url "twitter" process="login" %}" type="button" id="sign-in-twitter" value="Sign In with Twitter">
+             <a href="{% provider_login_url "twitter" process="login" %}"><button class="btn btn-primary btn-block" style="background: #5398D8;" id="sign-in-twitter" value="Sign In with Twitter">Sign In with Twitter</button></a>
           </li>
           <li class="divider"></li>
           <li>
              <div class="row">
                 <div class="col-md-12">
-                   <form class="form" role="form" method="post" action="login" accept-charset="UTF-8" id="login-nav">
+                   <form class="form" role="form" method="post" action="/accounts/login/" accept-charset="UTF-8" id="login-nav">{% csrf_token %}
                       <div class="form-group">
                          <label class="sr-only" for="exampleInputEmail2">Email address</label>
-                         <input type="email" class="form-control" id="exampleInputEmail2" placeholder="Email address" required>
+                         <input type="email" class="form-control" id="exampleInputEmail2" name="login" placeholder="Email address" required>
                       </div>
                       <div class="form-group">
                          <label class="sr-only" for="exampleInputPassword2">Password</label>
-                         <input type="password" class="form-control" id="exampleInputPassword2" placeholder="Password" required>
+                         <input type="password" class="form-control" id="exampleInputPassword2" name="password" placeholder="Password" required>
                       </div>
                       <div class="checkbox">
                          <label>
-                         <input type="checkbox"> Remember me
+                         <input type="checkbox" name="remember"> Remember me
                          </label>
                       </div>
+                      <a class="help-block" href="/accounts/password/reset/"/>Forgot Password?</a>
                       <div class="form-group">
                          <button type="submit" class="btn btn-success btn-block">Sign in</button>
                       </div>
@@ -649,7 +872,45 @@ hid den
              </div>
           </li>
        </ul> 
-    </div>
+    </div> <!-- end login dropdown -->
+           <!-- end login dropdown -->
+    <div class="dropdown username pull-left border-left">
+      <a class="dropdown-toggle" data-toggle="dropdown" href="#"> &nbsp;&nbsp;Sign up
+      </a> 
+       <ul class="dropdown-menu pull-right" style="padding: 15px;min-width: 250px;">
+          <li>
+             <a href="{% provider_login_url "twitter" process="login" %}"><button class="btn btn-primary btn-block" style="background: #5398D8;" id="sign-in-twitter" value="Sign In with Twitter">Sign In with Twitter</button></a>
+          </li>
+          <li class="divider"></li>
+          <li>
+             <div class="row">
+                <div class="col-md-12">
+                   <form class="form" role="form" method="post" action="/accounts/login/" accept-charset="UTF-8" id="login-nav">{% csrf_token %}
+                      <div class="form-group">
+                         <label class="sr-only" for="exampleInputEmail2">Email address</label>
+                         <input type="email" class="form-control" id="exampleInputEmail2" name="login" placeholder="Email address" required>
+                      </div>
+                      <div class="form-group">
+                         <label class="sr-only" for="exampleInputPassword2">Password</label>
+                         <input type="password" class="form-control" id="exampleInputPassword2" name="password" placeholder="Password" required>
+                      </div>
+                      <div class="checkbox">
+                         <label>
+                         <input type="checkbox" name="remember"> Remember me
+                         </label>
+                      </div>
+                      <a class="help-block" href="/accounts/password/reset/"/>Forgot Password?</a>
+                      <div class="form-group">
+                         <button type="submit" class="btn btn-success btn-block">Sign in</button>
+                      </div>
+                   </form>
+                </div>
+             </div>
+          </li>
+       </ul> 
+    </div> <!-- end sign up dropdown -->
+
+
   </div>
   <div class="user-action user-action-btn-navbar pull-left">
       <a href="#menu" class="btn btn-sm btn-navbar btn-open-left"><i class="fa fa-bars fa-2x"></i></a>
@@ -696,7 +957,7 @@ hid den
   <div class=" pull-right border-left user-action "> 
       <div class="dropdown">     
       <a href="#" class="dropdown-toggle visible-md visible-lg" data-step="2" data-intro="Post an update from any screen" data-position="bottom" data-placement="bottom"  data-toggle="modal" data-target="#newtwitterpost" rel="tooltip" title="Post a trade update"> 
-       <i class="fa fa-edit"></i>  New 
+       <i class="fa fa-edit fa-lg"></i>  New 
       </a> 
 
       <a href="#" class="dropdown-toggle visible-sm visible-xs" data-toggle="modal" data-target="#newtwitterpost"> 
@@ -1048,6 +1309,14 @@ hid den
     <script src="{% static "assets/components/modules/admin/menus/menus.sidebar.chat.init.js" %}"></script>
     <script src="{% static "assets/components/core/js/core.init.js" %}"></script>
 
+
+
+     <script src="https://rawgithub.com/kartena/Proj4Leaflet/master/lib/proj4-compressed.js"></script><!-- proj4js -->
+  <script src="https://rawgithub.com/kartena/Proj4Leaflet/master/src/proj4leaflet.js"></script><!-- proj4leaflet -->
+  <script src="https://rawgithub.com/rob-murray/os-leaflet/master/src/osopenspace.js"></script><!-- OS OpenSpace layer -->
+
+
+<script src="{% static "js/map-include.js" %}"></script>
 
      
 
@@ -1494,6 +1763,96 @@ $(".flip").hover(function(){
 });
 
 </script>
+
+
+<!-- post new update modal --> 
+<script src="{% static "js/date.js" %}"></script>
+
+     <script type="text/javascript">
+     $("#expire_on").keyup(function(){
+       var expire_on = Date.parse($("#expire_on").val());
+       if(expire_on!=null)
+       {
+        var expire_date = expire_on.getDate()+"/"+expire_on.getMonth()+"/"+expire_on.getFullYear();
+        $("#date_help").html(expire_date);
+       }
+      });
+
+      show_food_filters(food_filters, 0);
+      show_organisation_filters(organisation_filters, 0);
+      show_business_filters(business_filters, 0);
+
+      var post_for = "";
+      $('#post_for').children(".btn").click(function(){
+          var value = $(this).val();
+          var childrens = $('#post_for').children();
+          for(var i=0;i<childrens.length;i++)
+          {
+            $(childrens[i]).removeClass("btn-success");
+          }
+          $(this).addClass("btn-success");
+          post_for = value;
+      });
+
+      function generate_update()
+      {
+        if(post_for=="")
+        {
+          alert("Select one of buy / sell / surplus");
+          return;
+        }
+        var input_produces = $("input[name=produce]").val();
+        if(input_produces.trim()=="")
+        {
+          alert("You can't leave produce empty");
+          return;
+        }
+        var produces_name = input_produces.trim().replace("'", "").replace('"','').split(",");
+        var quantity = $("input[name=qty]").val().trim();
+        var quantity_unit = $("#qtyUnit").val();
+        var quantity_text = "";
+        if(quantity!="" && quantity_unit!="")
+        {
+          quantity_text =  " "+quantity+" "+quantity_unit+".";
+        }
+
+        var expire_on = Date.parse($("#expire_on").val());
+        var expire_text = "";
+        if(expire_on!=null)
+        {
+          var expire_date = expire_on.getDate()+"-"+expire_on.getMonth()+"-"+expire_on.getFullYear();
+          expire_text = " By "+expire_date+".";
+        }
+        var description = $("#update_description").val().trim();
+        var description_text = "";
+        if(description!="")
+        {
+          description_text = " ("+description+")";
+        }
+        
+
+        var produces_hash = "";
+        for(var i = 0;i<produces_name.length;i++)
+        {
+          if(produces_name[i].trim() == "")
+          {
+            continue;
+          }
+          produces_hash += "#" + produces_name[i].trim();
+
+          if((i+1) != produces_name.length)
+          {
+              produces_hash += ", ";
+          }
+        }
+        var update_text = "I'd like to "+post_for+" "+produces_hash+description_text+"."+quantity_text+expire_text;
+
+        activity_status_update(update_text);
+        return false;
+      }
+   </script>
+
+
  
 <script type="text/javascript">
   var $mcGoal = {'settings':{'uuid':'79e1467c02512dbd83bddab5f','dc':'us2'}};

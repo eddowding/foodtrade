@@ -44,7 +44,7 @@ input[type="text"]:focus, input[type="text"]:active, input[type="text"]:hover {
 }
 
 .help-block { 
-  margin: 0 0 10px 2px;
+  margin: 3px 0 20px 4px !important;
   font-size: 12px;
   color: #aaa;
 }
@@ -283,11 +283,7 @@ input[type="text"]:focus, input[type="text"]:active, input[type="text"]:hover {
 /**  cards / timeline / marketplace                   **/
 /********************************/
  
-.timeline-activity li:first-of-type, 
-.timeline-activity li {
-  padding: 0;
-}
-
+ 
 .timeline-activity > li:first-of-type {
   padding: 20px 0 10px;
 }
@@ -299,10 +295,7 @@ input[type="text"]:focus, input[type="text"]:active, input[type="text"]:hover {
 .timeline-activity li .timeline-top-info a:hover {
   text-decoration: none;
 }
-
-.timeline-activity > li {
-  padding: 10px 0;
-} 
+ 
 
 .timeline-activity .dropdown-menu {
   position: absolute;
@@ -330,12 +323,12 @@ input[type="text"]:focus, input[type="text"]:active, input[type="text"]:hover {
 
 #cards.marketplace li.singleresult,
 .grid-sizer {
-  width: 49%%;
+  width: 49%;
 }
 
 #cards.marketplace li.singleresult {
   float: left;    
-  padding: 5px;
+  padding: 0px;
 }
 
 #cards.marketplace li .reply {
@@ -651,6 +644,7 @@ input[type="text"]:focus, input[type="text"]:active, input[type="text"]:hover {
 
 
 
+input[type=text], input[type=password], select, textarea,
 .textarea,
 .form-control,
 .chosen-container-multi .chosen-choices { 
