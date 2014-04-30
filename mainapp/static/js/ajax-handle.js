@@ -90,6 +90,7 @@ function third_party_connection(prof_id, buss_var){
 
 	// for(i=0;i<business_ids_list.length;i++){
 	// buyer checked
+
 	if($('#option1_conn').is(':checked') && buss_var!=""){
 		// var conn_data = {prof_id: prof_id, status: 'buy_from', buss_id: businesses_id };
 		ajax_request("third_party_conn", 'conn_ajax', {conn_data: "{'prof_id': " + prof_id + ",'buss_id': " + parseInt(buss_var) + ",'status': 'buy_from'}"});
