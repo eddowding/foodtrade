@@ -157,9 +157,8 @@
         {% if show_foods %}
         <li class="active"><a class="glyphicons list" href="#tabProduce" data-toggle="tab"><i></i><span>Produce</span></a></li>
         {% endif %}
-        <li>
-        <a class="glyphicons log_in" href="#tabStockists" data-toggle="tab"><i></i><span>Buys from</span></a></li>
-        <li><a class="glyphicons log_out" href="#tabSuppliers" data-toggle="tab"><i></i><span>Sells to</span></a></li>
+        <li id="liBuysFrom"><a class="glyphicons log_in" href="#tabStockists" data-toggle="tab"><i></i><span>Buys from</span></a></li>
+        <li id="liSellsTo"><a class="glyphicons log_out" href="#tabSuppliers" data-toggle="tab"><i></i><span>Sells to</span></a></li>
         <li><a class="glyphicons certificate" href="#tabMemberships" data-toggle="tab"><i></i><span>Groups</span></a></li>
         <li class="premium"><a class="glyphicons list" rel="tooltip" title="Premium account holders only - upgrade from just &pound;45/yr" href="#tabBuy" data-toggle="tab"><i></i><span>Shopping list</span>
         </a>
@@ -485,6 +484,7 @@
          
           <!-- WIKI ADD CONNECTIONS --> 
           {% if user.is_authenticated %}
+          <div class="tab-pane fade in active" id="connections">
             <div class="alert  " style="padding: 0 10px;">  
             <div class="form-inline"  role="form">
               <div class="form-group">
@@ -504,6 +504,7 @@
                 </div>      
               </div>   
             </div>
+          </div>
           </div>
           {% endif %}
 
@@ -1951,7 +1952,7 @@ $('#connections').on('click', '.tt-suggestion', function(){
     $('#my_invite_twitter').click();
   }
   else{
-    third_party_connection('{{profile_id}}', buss_var)
+    third_party_connection('{{profile_id}}', buss_var);
     $('#new_buss_typeahead').val('');
     $('.tt-hint').val('');
   }
@@ -2049,5 +2050,16 @@ customers = {{customers_str | safe}};
       
     </script>
      <script src="{% static "js/business-map.js" %}"></script>
+     <script type="text/javascript">
+     $( "#liBuysFrom" ).click(function() {
+      alert('Anuja')
+        $('#option1_conn').click();
+        $('#option1_conn').click();
+      });
+      $( "#liSellsTo" ).click(function() {
+        $('#option2_conn').click();
+        $('#option2_conn').click();
+      });
+     </script>
  {% endblock %}
 
