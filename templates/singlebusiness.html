@@ -262,8 +262,8 @@
       <div class="innerB button-group" id="filterFoods" data-filter-group="foodtype">
         <button class="btn btn-default active" data-filter="*">Show all</button> 
         
-        {% for eachfood in all_foods %}
-          <button class="btn btn-default" data-filter=".{{eachfood.parent_food|slugify}}">{{eachfood.parent_food}}</button> 
+        {% for eachparent in food_parents %}
+          <button class="btn btn-default" data-filter=".{{eachparent|slugify}}">{{eachparent}}</button> 
         {% endfor %}
 
       </div>
