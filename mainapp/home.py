@@ -18,6 +18,7 @@ from django.contrib.auth.decorators import user_passes_test
 import pprint
 from collections import Counter
 from django.contrib.auth.models import User
+from django.core.context_processors import csrf
 
 consumer_key = 'seqGJEiDVNPxde7jmrk6dQ'
 consumer_secret = 'sI2BsZHPk86SYB7nRtKy0nQpZX3NP5j5dLfcNiP14'
@@ -177,6 +178,7 @@ def food_tags(request):
 
 def home(request):
     parameters = {}
+    parameters.update(csrf(request))
     if request.user.is_authenticated():
         return HttpResponseRedirect('/activity/')
     return render_to_response('front.html',parameters,context_instance=RequestContext(request))

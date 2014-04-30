@@ -12,9 +12,22 @@ a {
   border-color: #586E31;
 }*/
 
-
+body, 
 .black {
   color: #444;
+}
+
+.text-muted {
+  color: #CDD6DE !important;
+}
+
+.timeline-activity li .timeline-top-info a:hover i,
+a:hover i {
+  color: #7BB81A !important;
+}
+
+input[type="text"]:focus, input[type="text"]:active, input[type="text"]:hover {
+  background: #fff;
 }
 
 .bg-secondary {
@@ -49,6 +62,7 @@ a {
 
 #content {
   margin-top: 60px;
+  background: #F5F8FA;
 }
 
 #menu #sidebar-social-wrapper #brandWrapper {
@@ -269,6 +283,35 @@ a {
 /**  cards / timeline / marketplace                   **/
 /********************************/
  
+.timeline-activity li:first-of-type, 
+.timeline-activity li {
+  padding: 0;
+}
+
+.timeline-activity > li:first-of-type {
+  padding: 20px 0 10px;
+}
+
+.timeline-activity li .timeline-top-info .dropdown-menu a {
+  font-weight: normal;
+}
+
+.timeline-activity li .timeline-top-info a:hover {
+  text-decoration: none;
+}
+
+.timeline-activity > li {
+  padding: 10px 0;
+} 
+
+.timeline-activity .dropdown-menu {
+  position: absolute;
+  top: 35px; 
+}
+
+.widget.widget-tabs-double-2 > .widget-head ul li.active {
+  background: #F5F8FA;
+}
 
 .marketplace li {
   border-left: 0 !important;
@@ -354,6 +397,10 @@ a {
 .leaflet-popup-content-wrapper {
   border-radius: 0;
 }
+
+.leaflet-container a {
+  color: #6a7f40;
+} 
 /********************************/
 /**  ISOTOPE                   **/
 /********************************/
@@ -626,9 +673,9 @@ a {
   border: 2px solid rgba(97,174,50,1) !important;
 }
 
-.verified .timeline-top-info {
+/*.verified .timeline-top-info {
   background: rgba(97,174,50,0.4) !important;
-}
+}*/
 
 
 /********************************/

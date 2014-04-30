@@ -103,7 +103,7 @@ function reload_controls()
 				min_lon = current_lon;
 			}
 
-var card_str = '<div class="card-box"><div class="content"><div class=""><a href="/profile/'+username+'"><img src="'+profile_img+'" alt="'+name+'" class="pull-left img-circle img-thumbnail img-responsive" style="width:73px;" /></a>';
+var card_str = '<div class="card-box"><div class="content text-center"><div class=""><a href="/profile/'+username+'"><img src="'+profile_img+'" alt="'+name+'" class="img-circle img-thumbnail img-responsive" style="width:73px;" /></a>';
 
                 
                       card_str += '</div><div class="text"><h3><a href="/profile/'+username+'">'+name+'</a></h3>';
@@ -114,14 +114,14 @@ var card_str = '<div class="card-box"><div class="content"><div class=""><a href
 	                    for(var j=0;j<type_user.length;j++)
 	                    {  
 	                      
-	                      card_str +=  '<a class="label label-default label-stroke" href="/activity/?b='+type_user[j]+'">'+type_user[j]+'</a>';
+	                      card_str +=  '<a class="" href="/activity/?b='+type_user[j]+'">'+type_user[j]+'</a>';
 	                     }
 	                      card_str += '</div>';
 		              }
 
-                      card_str += '<p>'+description+'</p></div></div>';
+                      card_str += '<p>'+description+'</p></div>';
                       
-	                  card_str += '<a href="/profile/'+username+'" class="btn btn-primary btn-sm">View profile &raquo;</a></div> ';
+	                  card_str += '<a href="/profile/'+username+'" class="btn btn-primary btn-sm">View profile &raquo;</a></div> </div>';
                   	var tweet_id = (con.result_type == username)?con.tweetuid:username;
 			var ctrl = L.marker([parseFloat(current_lat), parseFloat(current_lon)],{tweet_id:tweet_id,icon: redIcon}).addTo(map).bindPopup(card_str);
 			
