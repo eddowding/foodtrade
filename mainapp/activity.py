@@ -139,6 +139,7 @@ def get_search_parameters(request):
         else:
             ip = request.META.get('REMOTE_ADDR')
         location_info = get_addr_from_ip(ip)
+        subscribed = False
         default_lon = float(location_info['longitude'])
         default_lat = float(location_info['latitude'])
 

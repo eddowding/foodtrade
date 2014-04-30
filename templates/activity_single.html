@@ -357,6 +357,16 @@
           
         </div> 
 
+
+
+    <!-- #ed Get pictures in the tweets as this 
+    {% for pic in parent_tweet.tweet_pictures %}
+    <img src="{{ pic }}" />
+    {% endfor %}
+
+    -->
+
+
         <div class="container-responsive clearfix">
           <div id="activity"> 
            
@@ -413,6 +423,8 @@
     </div><!-- col10 --> 
     </div>
     </div>
+
+
         <script type="text/javascript">
     map_lat={{parent_tweet.location.coordinates.1}};
     map_lon = {{parent_tweet.location.coordinates.0}};
