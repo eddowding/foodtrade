@@ -102,6 +102,7 @@ def display_profile(request, username):
     parameters['friends_count'] = f_count['friends_count']
     parameters['banner_url'] = f_count['banner_url']
 
+
     food_form = FoodForm()
     parameters['form'] = food_form
     foo = AdminFoods()
@@ -127,6 +128,13 @@ def display_profile(request, username):
 
     rec_food_obj = RecommendFood()
     parameters['total_vouches'] = rec_food_obj.get_recommend_count(userprof['useruid'])
+
+    from mainapp.classes.DataConnector import UserConnections
+    user_connection =  UserConnections(userprof['useruid'])
+    b_conn_len, c_conn_len = user_connection.get_trade_connection_no()
+
+    parameters['b_conn_no'] = b_conn_len
+    parameters['c_conn_no'] = c_conn_len
 
     parameters['profile_id'] = userprof['useruid']
     parameters['sign_up_as'] = userprof['sign_up_as']
@@ -632,9 +640,15 @@ def get_connections(user_id, logged_in_id = None):
             rec_food_obj = RecommendFood()
             total_vouches = rec_food_obj.get_recommend_count(each['c_useruid'])
 
+            from mainapp.classes.DataConnector import UserConnections
+            user_connection =  UserConnections(each['c_useruid'])
+            b_conn_len, c_conn_len = user_connection.get_trade_connection_no()
+
             final_connections.append({'id': each['c_useruid'],
              # 'name': account.extra_data['name'],
              'name': myname,
+             'b_conn_no':b_conn_len, 
+             'c_conn_no':c_conn_len,
              'total_vouches' : total_vouches,
              'description': usr_pr['description'],
              'photo': usr_pr['profile_img'],
@@ -667,11 +681,17 @@ def get_connections(user_id, logged_in_id = None):
             rec_food_obj = RecommendFood()
             total_vouches = rec_food_obj.get_recommend_count(each['b_useruid'])                            
 
+            from mainapp.classes.DataConnector import UserConnections
+            user_connection =  UserConnections(each['b_useruid'])
+            b_conn_len, c_conn_len = user_connection.get_trade_connection_no()
+
             data = {'id': each['b_useruid'],
 
              # 'name': account.extra_data['name'],
              'name': myname,
              'total_vouches':total_vouches,
+             'b_conn_no':b_conn_len, 
+             'c_conn_no':c_conn_len,
              'description': usr_pr['description'],
              'photo': usr_pr['profile_img'],
              'username' : usr_pr['username'],
@@ -717,10 +737,21 @@ def get_members(user_id, logged_in_id = None):
                 and usr_pr.get('business_org_name')!='' else usr_pr['name']
             else:
                 myname = usr_pr['name']                    
+
+            rec_food_obj = RecommendFood()
+            total_vouches = rec_food_obj.get_recommend_count(each['memberuid'])                            
+
+            from mainapp.classes.DataConnector import UserConnections
+            user_connection =  UserConnections(each['memberuid'])
+            b_conn_len, c_conn_len = user_connection.get_trade_connection_no()                
+
             final_members.append({'id': each['memberuid'],
              # 'name': account.extra_data['name'],
              'name': myname,
              'description': usr_pr['description'],
+             'total_vouches':total_vouches, 
+             'b_conn_no':b_conn_len,
+             'c_conn_no':c_conn_len,
              'photo': usr_pr['profile_img'],
              'username' : usr_pr['username'],
              'type': usr_pr['type_user'],
@@ -747,10 +778,21 @@ def get_organisations(user_id):
             myname = usr_pr.get('business_org_name') if (usr_pr['sign_up_as'] == 'Business' or usr_pr['sign_up_as'] == 'Organisation') \
             and usr_pr.get('business_org_name')!='' else usr_pr['name']
         else:
-            myname = usr_pr['name']                                    
+            myname = usr_pr['name']
+
+        rec_food_obj = RecommendFood()
+        total_vouches = rec_food_obj.get_recommend_count(each['orguid'])                            
+
+        from mainapp.classes.DataConnector import UserConnections
+        user_connection =  UserConnections(each['orguid'])
+        b_conn_len, c_conn_len = user_connection.get_trade_connection_no()                                                
+
         final_orgs.append({'id': each['orguid'],
          # 'name': account.extra_data['name'],
          'name': myname,
+         'total_vouches':total_vouches,
+         'b_conn_no':b_conn_len,
+         'c_conn_no':c_conn_len,
          'description': usr_pr['description'],
          'photo': usr_pr['profile_img'],
          'username' : usr_pr['username'],
@@ -804,9 +846,20 @@ def get_team(user_id, logged_in_id=None):
                 and usr_pr.get('business_org_name')!='' else usr_pr['name']
             else:
                 myname = usr_pr['name']                            
+
+            rec_food_obj = RecommendFood()
+            total_vouches = rec_food_obj.get_recommend_count(each['memberuid'])                            
+
+            from mainapp.classes.DataConnector import UserConnections
+            user_connection =  UserConnections(each['memberuid'])
+            b_conn_len, c_conn_len = user_connection.get_trade_connection_no()            
+
             final_teams.append({'id': each['memberuid'],
              # 'name': account.extra_data['name'],
              'name': myname,
+             'total_vouches':total_vouches,
+             'b_conn_no':b_conn_no,
+             'c_conn_no':c_conn_len,
              'description': usr_pr['description'],
              'photo': usr_pr['profile_img'],
              'username' : usr_pr['username'],
@@ -829,10 +882,21 @@ def get_all_business(prof_id):
                 myname = usr_pr.get('business_org_name') if (usr_pr['sign_up_as'] == 'Business' or usr_pr['sign_up_as'] == 'Organisation') \
                 and usr_pr.get('business_org_name')!='' else usr_pr['name']
             else:
-                myname = usr_pr['name']                                        
+                myname = usr_pr['name']
+
+            rec_food_obj = RecommendFood()
+            total_vouches = rec_food_obj.get_recommend_count(each['useruid'])                            
+
+            from mainapp.classes.DataConnector import UserConnections
+            user_connection =  UserConnections(each['useruid'])
+            b_conn_len, c_conn_len = user_connection.get_trade_connection_no()
+
             if prof_id != int(each['useruid']):
                 final_business.append({'id': each['useruid'],
                     # 'name': account.extra_data['name'],
+                    'total_vouches':total_vouches,
+                    'b_conn_no':b_conn_len,
+                    'c_conn_no':c_conn_len,
                     'name': myname,
                      'description': usr_pr['description'],
                      'photo': usr_pr['profile_img'],
