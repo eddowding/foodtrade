@@ -182,7 +182,7 @@ def get_search_parameters(request):
 
     keyword = keyword.lower()
 
-    search_global = True
+    search_global = subscribed
 
 
 

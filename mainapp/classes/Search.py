@@ -269,9 +269,7 @@ class Search():
             query_string["$or"] = or_conditions
 
 
-        
-        geo_near = {
-                        "$geoNear": {"near": [float(self.lon), float(self.lat)],
+        geo_search = {"near": [float(self.lon), float(self.lat)],
                                     "distanceField": "distance",
                                     # "maxDistance": 0.425260398681,
                                     "query": query_string,
@@ -281,7 +279,13 @@ class Search():
                                     "limit":5000,
                                     "distanceMultiplier":6371
                                 }
+
+        if not self.search_global :
+            geo_search['maxDistance'] = 0.02511379689
+        geo_near = {
+                        "$geoNear": geo_search
                       }
+
 
 
         agg_pipeline.append(geo_near)
