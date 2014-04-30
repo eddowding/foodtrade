@@ -155,34 +155,23 @@
 
       <ul class="clearfix">
         {% if show_foods %}
-        <li class="active"><a class="glyphicons list" href="#tabProduce" data-toggle="tab"><i></i><span>Produce</span>
-        {% if userprof.food_no != 0 %}<span class="badge pull-number">{{userprof.food_no}}</span>{% endif %}
-        </a></li>
+        <li class="active"><a class="glyphicons list" href="#tabProduce" data-toggle="tab"><i></i><span>Produce</span></a></li>
         {% endif %}
-        <li>
-        <a class="glyphicons log_in" href="#tabStockists" data-toggle="tab"><i></i><span>Buys from</span>
-        {% if userprof.trade_connections_no != 0 %}<span class="badge pull-number">{{userprof.trade_connections_no}}</span>{% endif %}</a> 
-        </a></li>
-        <li><a class="glyphicons log_out" href="#tabSuppliers" data-toggle="tab"><i></i><span>Sells to</span> 
-        {% if userprof.trade_connections_no != 0 %}<span class="badge pull-number">{{userprof.trade_connections_no}}</span>{% endif %}</a> 
-        </a></li>
-        <li><a class="glyphicons certificate" href="#tabMemberships" data-toggle="tab"><i></i><span>Groups</span>         
-        {% if userprof.organisation_connection_no != 0 %}<span class="badge pull-number">{{userprof.organisation_connection_no}}</span>{% endif %}
-        </a>
-        </li>
+        <li id="liBuysFrom"><a class="glyphicons log_in" href="#tabStockists" data-toggle="tab"><i></i><span>Buys from</span></a></li>
+        <li id="liSellsTo"><a class="glyphicons log_out" href="#tabSuppliers" data-toggle="tab"><i></i><span>Sells to</span></a></li>
+        <li><a class="glyphicons certificate" href="#tabMemberships" data-toggle="tab"><i></i><span>Groups</span></a></li>
         <li class="premium"><a class="glyphicons list" rel="tooltip" title="Premium account holders only - upgrade from just &pound;45/yr" href="#tabBuy" data-toggle="tab"><i></i><span>Shopping list</span>
-
-        {% if buy_items != 0 %}<span class="badge pull-number">{{buy_items}}</span>{% endif %}
         </a>
         </li><!-- 
         <li class="premium"><a class="glyphicons group" rel="tooltip" title="Premium account holders only - upgrade from just &pound;45/yr" href="#tabTeam" data-toggle="tab"><i></i><span>People</span>
         </a>
         </li> -->
         <li class="premium"><a class="glyphicons google_maps" rel="tooltip" title="Premium account holders only - upgrade from just &pound;45/yr" href="#tabCustomers" data-toggle="tab"><i></i><span>Customers</span> 
-        {% if customers|length != 0 %}<span class="badge pull-number">{{customers|length}}</span>{% endif %}  
+       <!--  <div class="ribbon-wrapper small">
+            <div class="ribbon danger">Upgrade</div>
+        </div> -->
         </a></li> 
         <li class="premium"><a class="glyphicons bullhorn" rel="tooltip" title="Premium account holders only - upgrade from just &pound;45/yr" href="#tabUpdates" data-toggle="tab"><i></i><span>Trade</span> 
-        {% if updates_count != 0 %}<span class="badge pull-number">{{updates_count}}</span>{% endif %}
        <!--  <div class="ribbon-wrapper small">
             <div class="ribbon danger">Upgrade</div>
         </div> -->
@@ -190,8 +179,36 @@
       </ul>
     </div>
     <!-- // Tabs Heading END -->
+
     
     <div class="widget-body">
+
+        <!-- WIKI ADD CONNECTIONS --> 
+          {% if user.is_authenticated %}
+          <div class="tab-pane fade in hidden" id="connections" style="margin-top: 1%;">
+            <div class="alert  " style="padding: 0 10px;">  
+            <div class="form-inline"  role="form">
+              <div class="form-group">
+                <img style="width: 25px; margin-right: 2px;" class="" src="{{pic_url}}"  />
+                <div class="btn-group btn-sm" data-toggle="buttons">
+                  <label class="btn  btn-sm active btn-default" id="li1_conn">
+                    <input type="checkbox" name="options" id="option1_conn"> buys from 
+                  </label> 
+                  <label class="btn  btn-sm btn-default" id="li2_conn">
+                    <input type="checkbox" name="options" id="option2_conn"> sells to
+                  </label> 
+                </div> 
+              </div> 
+              <div class="form-group"> 
+                <div id="buss_remote" >
+                  <input class="typeahead  input-sm form-control  " id="new_buss_typeahead" {% if not user.is_authenticated %} rel="tooltip" title="Please login to use this feature" {% endif %} style="width:310px;" type="text" placeholder="Type business..."> 
+                </div>      
+              </div>   
+            </div>
+          </div>
+          </div>
+          {% endif %}
+
       <div class="tab-content">
        
         {% if show_foods %}
@@ -490,33 +507,7 @@
         <!-- // Tab content END -->
       
         <!-- Tab content -->
-        <div id="tabStockists" class="tab-pane widget-body-regular">
-
-         
-          <!-- WIKI ADD CONNECTIONS --> 
-          {% if user.is_authenticated %}
-            <div class="alert  " style="padding: 0 10px;">  
-            <div class="form-inline"  role="form">
-              <div class="form-group">
-                <img style="width: 25px; margin-right: 2px;" class="" src="{{pic_url}}"  />
-                <div class="btn-group btn-sm" data-toggle="buttons">
-                  <label class="btn  btn-sm active btn-default">
-                    <input type="checkbox" name="options" id="option1_conn"> buys from 
-                  </label> 
-                  <label class="btn  btn-sm btn-default">
-                    <input type="checkbox" name="options" id="option2_conn"> sells to
-                  </label> 
-                </div> 
-              </div> 
-              <div class="form-group"> 
-                <div id="buss_remote" >
-                  <input class="typeahead  input-sm form-control  " id="new_buss_typeahead" {% if not user.is_authenticated %} rel="tooltip" title="Please login to use this feature" {% endif %} style="width:310px;" type="text" placeholder="Type business..."> 
-                </div>      
-              </div>   
-            </div>
-          </div>
-          {% endif %}
-
+        <div id="tabStockists" class="tab-pane widget-body-regular">        
                       
 <div id="all-connections">
 
@@ -608,33 +599,7 @@
         </div>
         
         <!-- Tab content -->
-        <div id="tabSuppliers" class="tab-pane widget-body-regular">
-          
-        
-          <!-- WIKI ADD CONNECTIONS --> 
-          {% if user.is_authenticated %}
-            <div class="alert-alert-info" style="padding: 0 10px;">  
-            <div class="form-inline"  role="form">
-              <div class="form-group">
-                <img style="width: 25px; margin-right: 2px;" class="" src="{{pic_url}}"  />
-                <div class="btn-group btn-sm" data-toggle="buttons">
-                  <label class="btn  btn-sm btn-default">
-                    <input type="checkbox" name="options" id="option1_conn"> buys from 
-                  </label> 
-                  <label class="btn  btn-sm btn-default active">
-                    <input type="checkbox" name="options" checked="checked" id="option2_conn"> sells to
-                  </label> 
-                </div> 
-              </div> 
-              <div class="form-group"> 
-                <div id="buss_remote" >
-                  <input class="typeahead  input-sm form-control  " id="new_buss_typeahead" {% if not user.is_authenticated %} rel="tooltip" title="Please login to use this feature" {% endif %} style="width:310px;" type="text" placeholder="Type business..."> 
-                </div>      
-              </div>   
-            </div>
-          </div>
-          {% endif %}
-                      
+        <div id="tabSuppliers" class="tab-pane widget-body-regular">                      
         <div id="all-connections" class="clearfix">
           {% if userprof.c_conn_no != 0 %}  
            <div class="clearfix isotope" id="seller-cards">
@@ -755,11 +720,15 @@
  
 
         <div id="tabUpdates" class="tab-pane widget-body-regular">
-          {% if deliverables %} 
-            {{deliverables|linebreaks}}
-          {% else %}
-            <p>Please contact us directly to discuss deliveries.</p>
-          {% endif %}
+          <h5 class="innerAll margin-none border-bottom bg-gray">Recent News
+           {% if updates_count != 0 %}<span class="badge pull-right">{{updates_count}}</span>{% endif %}
+           </h5>
+
+           {% if deliverables %} 
+          {{deliverables|linebreaks}}
+        {% else %}
+          <p>Please contact us directly to discuss deliveries.</p>
+        {% endif %}
         </div>
 
 <!--  start we buy -->
@@ -1087,7 +1056,9 @@
 
 
         <div id="tabCustomers" class="tab-pane widget-body-regular">
-   
+  
+          {% if customers|length != 0 %}<span class="badge pull-right">{{customers|length}}</span>{% endif %}
+
           {% if user.is_authenticated %}
           {% else %} 
             <p class="alert alert-warning"><a href="{% provider_login_url "twitter" process="login" %}" class="">Login</a> or <a href="{% provider_login_url "twitter" process="login" %}" class="">sign up free</a> to see where their customers live. Maybe they'll do home deliveries if you ask nicely! </p> 
@@ -1136,12 +1107,7 @@
 
                       {% if intro_video %}
                         <a href="">
-                            <img src="{{pic_url}}" width="120" alt="" class="img-circle img-thumbnail" style=" 
-float: left;
-height: 70px;
-width: 70px;
-position: relative;
-top: -24px;" >
+                            <img src="{{pic_url}}" width="120" alt="" class="img-circle img-thumbnail" style=" float: left;height: 70px;width: 70px;position: relative; top: -24px;" >
                         </a>
                       {% else %}
                         <a href="">
@@ -1954,7 +1920,7 @@ $('#connections').on('click', '.tt-suggestion', function(){
     $('#my_invite_twitter').click();
   }
   else{
-    third_party_connection('{{profile_id}}', buss_var)
+    third_party_connection('{{profile_id}}', buss_var);
     $('#new_buss_typeahead').val('');
     $('.tt-hint').val('');
   }
@@ -2052,5 +2018,33 @@ customers = {{customers_str | safe}};
       
     </script>
      <script src="{% static "js/business-map.js" %}"></script>
+     <script type="text/javascript">
+        $(".widget-head ul li").on("click", function(){ 
+          id = $(this).attr('id');
+          if (id == 'liBuysFrom' || id == 'liSellsTo'){
+
+              $('#connections').addClass('active');
+              $('#connections').removeClass('hidden');
+
+              if (id == 'liBuysFrom'){
+                $('#option1_conn').attr('checked','checked');
+                $('#option2_conn').removeAttr('checked');
+                $('#li1_conn').addClass('active');
+                $('#li2_conn').removeClass('active');
+                
+              }
+              else{
+                $('#option1_conn').removeAttr('checked');
+                $('#option2_conn').attr('checked','checked');
+                $('#li1_conn').removeClass('active');                
+                $('#li2_conn').addClass('active');
+              }
+          }
+          else{
+              $('#connections').addClass('hidden');
+              $('#connections').removeClass('active');
+          }
+        });
+     </script>
  {% endblock %}
 
