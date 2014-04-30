@@ -188,7 +188,7 @@ function ajax_update_single_post(data)
 
 function post_new_status()
 {
-       message = $('#newstatus').val();
+ message = $('#newstatus').val();
   if(message=="")
   {
     alert("You can't post empty status.");

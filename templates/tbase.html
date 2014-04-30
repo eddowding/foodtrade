@@ -236,11 +236,12 @@
                 <div class="modal-body">  
 <div id="structured_postupdate" class="">
 
-<form action="r" method="post" id="structured_input_form" accept-charset="utf-8" onsubmit="generate_update(); $(this).modal('hide')" class="form" role="form">   
+<form action="r" method="post" id="structured_input_form" accept-charset="utf-8" onsubmit="generate_update(); $('#newtwitterpost').modal('hide')" class="form" role="form">   
   
   <div class="row" style="margin-bottom:0;"> 
     <div class="col-xs-12">    
-      <div  id="post_for">
+    Step 1: 
+      <div  id="post_for" class="btn-group">
           <button type="button" class="btn btn-stroke btn-primary btn-icon-stacked" onclick="show_full_structure();$('#price').show();" value="buy"><i class="fa fa-2x fa-sign-in"></i> 
               <span>I'd like  
                   <br>to buy </span>

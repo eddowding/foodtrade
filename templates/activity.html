@@ -13,24 +13,14 @@
 
     <div class="col-xs-12 col-sm-7" id="activity_switcher">
 
-<div class="widget activity-line">
-  <div class="widget-body padding-none">
-    <div class="share"> 
-     <p style="line-height: 2.5; margin: 0 10px 0 0;" class="pull-left"><strong>I'd like to...</strong> 
-      </p><div class="btn-group btn-bl ock pull-left" id="post_for">
-      <!-- <input type="hidden" /> -->
-        <button type="button" onclick="show_small_structure();$('#price').show();" class="btn btn-default" value="buy"><i class="fa fa-sign-in fa-fw"></i> buy</button>
-        <button type="button" onclick="show_small_structure();$('#price').show();" class="btn btn-default" value="sell"><i class="fa fa-sign-out fa-fw"></i> sell</button>
-        <button type="button" onclick="show_small_structure();$('#price').hide();" class="btn btn-default" value="offer surplus"><i class="fa fa-random fa-fw"></i> offer surplus</button>
-        <button type="button" onclick="swith_update_form()" class="btn btn-default" value="offer surplus"><i class="fa fa-rocket fa-fw"></i> go freestyle</button>
-      </div>   
-      <textarea class="form-control" rows="3" placeholder="Share what you've been up to..."></textarea>
-      <div class="share-buttons"> 
-        <a href="#" class="glyphicons envelope"><i></i></a>
-        <a href="#" class="glyphicons-social facebook"><i></i></a>
-        <a href="#" class="glyphicons-social twitter"><i></i></a>
-      </div>  
-      <a class="btn btn-primary  btn-sm pull-right">Submit</a>
+ 
+<div class="widget">
+  <div class="padding-none"> 
+    <div class="input-group">
+      <input class="form-control"  {% if not user.is_authenticated %}  onfocus="login_redirect()" title="Please login to use this feature." {% else %} {% if not can_tweet %} data-toggle="modal" data-target="#newtwitterpost" {% else %} rel="tooltip" title="Please upgrade your account to post." {% endif %}{% endif %} placeholder="What #food do you have to #buy, #sell, or #surplus?">  
+      <span class="input-group-btn">
+        <button class="btn btn-primary" type="button">Post</button>
+      </span>
     </div>
   </div>
 </div>
@@ -173,6 +163,14 @@
       food_filters = {{foods_filter |safe}};
       business_filters = {{business_filter |safe}};
       organisation_filters = {{organisation_filter |safe}}; 
+
+      function swith_update_form()
+        {
+          switch_text_area();
+          $("#structured_postupdate").hide();
+          $("#update-big").show();
+        }
+
     </script>
       
 
