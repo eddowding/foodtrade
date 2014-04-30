@@ -1,4 +1,3 @@
-{% load staticfiles %}
 {% load staticfiles %}  
 {% load socialaccount %}
 {% load url from future %}
@@ -603,31 +602,31 @@ hid den
   {% if not request.user.is_authenticated %} 
   <div class="user-action pull-right menu-right-hidden-xs menu-left-hidden-xs border-left">
     <div class="dropdown username pull-left">
-      <a class="dropdown-toggle" data-toggle="dropdown" href="#">Sign up / Login
+      <a class="dropdown-toggle" data-toggle="dropdown" href="#">Login
       </a> 
        <ul class="dropdown-menu pull-right" style="padding: 15px;min-width: 250px;">
           <li>
-             <!-- <input class="btn btn-primary btn-block" type="button" id="sign-in-google" value="Sign In with Google"> -->
-             <input class="btn btn-primary btn-block" style="background: #5398D8;" href="{% provider_login_url "twitter" process="login" %}" type="button" id="sign-in-twitter" value="Sign In with Twitter">
+             <a href="{% provider_login_url "twitter" process="login" %}"><button class="btn btn-primary btn-block" style="background: #5398D8;" id="sign-in-twitter" value="Sign In with Twitter">Sign In with Twitter</button></a>
           </li>
           <li class="divider"></li>
           <li>
              <div class="row">
                 <div class="col-md-12">
-                   <form class="form" role="form" method="post" action="login" accept-charset="UTF-8" id="login-nav">
+                   <form class="form" role="form" method="post" action="/accounts/login/" accept-charset="UTF-8" id="login-nav">{% csrf_token %}
                       <div class="form-group">
                          <label class="sr-only" for="exampleInputEmail2">Email address</label>
-                         <input type="email" class="form-control" id="exampleInputEmail2" placeholder="Email address" required>
+                         <input type="email" class="form-control" id="exampleInputEmail2" name="login" placeholder="Email address" required>
                       </div>
                       <div class="form-group">
                          <label class="sr-only" for="exampleInputPassword2">Password</label>
-                         <input type="password" class="form-control" id="exampleInputPassword2" placeholder="Password" required>
+                         <input type="password" class="form-control" id="exampleInputPassword2" name="password" placeholder="Password" required>
                       </div>
                       <div class="checkbox">
                          <label>
-                         <input type="checkbox"> Remember me
+                         <input type="checkbox" name="remember"> Remember me
                          </label>
                       </div>
+                      <a class="help-block" href="/accounts/password/reset/"/>Forgot Password?</a>
                       <div class="form-group">
                          <button type="submit" class="btn btn-success btn-block">Sign in</button>
                       </div>
@@ -636,7 +635,45 @@ hid den
              </div>
           </li>
        </ul> 
-    </div>
+    </div> <!-- end login dropdown -->
+           <!-- end login dropdown -->
+    <div class="dropdown username pull-left border-left">
+      <a class="dropdown-toggle" data-toggle="dropdown" href="#"> &nbsp;&nbsp;Sign up
+      </a> 
+       <ul class="dropdown-menu pull-right" style="padding: 15px;min-width: 250px;">
+          <li>
+             <a href="{% provider_login_url "twitter" process="login" %}"><button class="btn btn-primary btn-block" style="background: #5398D8;" id="sign-in-twitter" value="Sign In with Twitter">Sign In with Twitter</button></a>
+          </li>
+          <li class="divider"></li>
+          <li>
+             <div class="row">
+                <div class="col-md-12">
+                   <form class="form" role="form" method="post" action="/accounts/login/" accept-charset="UTF-8" id="login-nav">{% csrf_token %}
+                      <div class="form-group">
+                         <label class="sr-only" for="exampleInputEmail2">Email address</label>
+                         <input type="email" class="form-control" id="exampleInputEmail2" name="login" placeholder="Email address" required>
+                      </div>
+                      <div class="form-group">
+                         <label class="sr-only" for="exampleInputPassword2">Password</label>
+                         <input type="password" class="form-control" id="exampleInputPassword2" name="password" placeholder="Password" required>
+                      </div>
+                      <div class="checkbox">
+                         <label>
+                         <input type="checkbox" name="remember"> Remember me
+                         </label>
+                      </div>
+                      <a class="help-block" href="/accounts/password/reset/"/>Forgot Password?</a>
+                      <div class="form-group">
+                         <button type="submit" class="btn btn-success btn-block">Sign in</button>
+                      </div>
+                   </form>
+                </div>
+             </div>
+          </li>
+       </ul> 
+    </div> <!-- end sign up dropdown -->
+
+
   </div>
   <div class="user-action user-action-btn-navbar pull-left">
       <a href="#menu" class="btn btn-sm btn-navbar btn-open-left"><i class="fa fa-bars fa-2x"></i></a>
