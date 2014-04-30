@@ -1455,12 +1455,16 @@ function success_tweeter_user_invite(data){
 $(document).ready(function() {
  
 
+  $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+          $('.isotope').isotope('layout');
+    });
+
 // tweetlistener('tweetMessage', 'counter', 'contact_tweet', 'newtweet_btn');
  
 
-function showgrid() {
-  $container.css('visibility', 'visible');
-}
+// function showgrid() {
+//   $container.css('visibility', 'visible');
+// }
 
     var activeSystemClass = $('.list-group-item.active');
     //something is entered in search form
