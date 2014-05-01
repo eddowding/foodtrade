@@ -21,4 +21,5 @@ class ProfileVisits():
     def save_visit(self,data={}):
     	return self.db_object.insert_one(self.table_name, data)
 
+
     

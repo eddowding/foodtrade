@@ -1100,4 +1100,6 @@ def distance(lon1, lat1, lon2, lat2):
     return km
   
 def get_views_count(request, username):
-    pass
+    userprof = UserProfile()
+    
+    return render_to_response('view_stats.html', context_instance=RequestContext(request))
