@@ -478,12 +478,14 @@ function show_small_structure()
         </div>
 
 {% if not user.is_authenticated %} 
+
 <ul class="menu list-unstyled" id="navigation_current_page">
 <li>
-<a href="%#">hello</a>
+<a type="button" href="{% provider_login_url "twitter" process="login" %}"  class="btn text-center btn-primary btn-lg btn-block hidden" style="  margin-top: 1em;"><i class="fa fa-twitter fa-fw"></i> Sign in</a>
+</a>
 </li>
-
 </ul>
+
 {% else %}
  
 
@@ -497,25 +499,9 @@ function show_small_structure()
           {% endif %}
 
 
-
-
- 
-
-
-<div id="sidebar" class=" 
-{% if not user.is_authenticated %} 
-hid den
-{% endif %}
-" role="navigation" >
-
-{% if not user.is_authenticated %} 
-<div class="alert alert-info  ">
-<a type="button" href="{% provider_login_url "twitter" process="login" %}"  class="btn text-center btn-primary btn-lg btn-block hidden" style="  margin-top: 1em;"><i class="fa fa-twitter fa-fw"></i> Sign in</a>
-</a>
-</div>
-{% endif %}  
-    </div>
-
+        <li class="">
+          <a href="/"><i class="fa fa-shopping-cart"></i><span>Marketplace</span></a> 
+        </li> 
 
 
         {% if search %}
@@ -592,6 +578,7 @@ hid den
             </li> 
  {% endif %}
 
+            
             <li class="">
               <a href="/myprofile/favourites"><i class="fa fa-star"></i><span>Favourites</span></a> 
             </li> 
