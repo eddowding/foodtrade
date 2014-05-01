@@ -366,7 +366,7 @@
                 <br />
                 <span class="  small">Sign up is free</span></a>
             {% else %}
-              {% if not can_tweet %} 
+              {% if can_tweet %} 
                 <button type="button" id="btn_update_activity" class="btn  btn-success pull-right" rel="tooltip"  {% if not user.is_authenticated %}  title="Please login to use this feature." {% endif %} onclick="generate_update();"> Post this</button>
               {% else %} 
                 <a href="/payments" class="btn  btn-success pull-right"  rel="tooltip" title="Please upgrade your account to unlock."  {% if not user.is_authenticated %}  title="Please login to use this feature." {% endif %} > Upgrade to post</a>

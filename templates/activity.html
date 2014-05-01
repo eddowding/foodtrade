@@ -17,7 +17,7 @@
 <div class="widget">
   <div class="padding-none"> 
     <div class="input-group">
-      <input class="form-control"  {% if not user.is_authenticated %}  onfocus="login_redirect()" title="Please login to use this feature." {% else %} {% if not can_tweet %} data-toggle="modal" data-target="#newtwitterpost" {% else %} rel="tooltip" title="Please upgrade your account to post." {% endif %}{% endif %} placeholder="What #food do you have to #buy, #sell, or #surplus?">  
+      <input class="form-control"  {% if not user.is_authenticated %}  onfocus="login_redirect()" title="Please login to use this feature." {% else %} {% if not can_tweet %} data-toggle="modal" data-target="#newtwitterpost" {% else %} rel="tooltip" title="Please upgrade your account to post." {% endif %}{% endif %} placeholder="What #food do you have to #buy, #sell, or #surplus?" style="border:0;">  
       <span class="input-group-btn">
         <button class="btn btn-primary" type="button">Post</button>
       </span>
@@ -50,14 +50,12 @@
         <span class="pull-number label label-success">{{results_business_count}}</span>
         {% endifnotequal %}
         </a>
-        </li>
-
- 
+        </li>  
 
         <li {% if results_updates_count == 0 and results_individual_count == 0 and results_business_count == 0 and results_organisation_count != 0 %}class="active"{% endif %}>
         <a href="#org" class="glyphicons group" data-toggle="tab"><i></i><span class="strong title">Groups</span>
-        {% if results_organisations_count > 0 %}
-        <span class="pull-number label label-success">{{results_organisations_count}}</span>
+        {% if results_organisation_count > 0 %}
+        <span class="pull-number label label-success">{{results_organisation_count}}</span>
         {% endif %}
         </a>
         </li> 
@@ -65,10 +63,11 @@
         <li {% if results_updates_count == 0  and results_business_count == 0 and results_organisation_count == 0 and results_individual_count != 0 %}class="active"{% endif %}>
           <a href="#indiv" class="glyphicons user" data-toggle="tab"><i></i><span class="strong title">People</span>
           {% if results_individual_count != 0 %}
-          <span class="pull-number label label-success">{{results_individuals_count}}</span>
+          <span class="pull-number label label-success">{{results_individual_count}}</span>
           {% endif %}
           </a>
-        </li>   
+        </li>  
+  </li>
     </ul>
   </div>
 

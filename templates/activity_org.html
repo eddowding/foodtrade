@@ -5,7 +5,14 @@
   <p>More produce, businesses, and organisations are signing up every day so check back soon.</p>
 </div>
 {% endif %}
-        <ul class="chat">
+
+
+<ul class="timeline-activity marketplace list-unstyled clearfix isotope js-isotope" data-isotope-options='{ "itemSelector": ".singleresult", "masonry": { "columnWidth": ".grid-sizer", "gutter": ".gutter-sizer" } }' id="cards">
+
+  <div class="grid-sizer"></div>
+  <div class="gutter-sizer"></div>
+ 
+ 
 {% if results %}
 
 {% for result in results %}
