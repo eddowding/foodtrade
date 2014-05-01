@@ -69,11 +69,18 @@ class FoodForm(forms.Form):
             food_detail.update_food(data)
 
 class SignupForm(forms.Form):
-    display_name = forms.CharField(widget=forms.TextInput(attrs={'placeholder': u'Eg "Leonardo D. Vinci"',
+    
+    username = forms.CharField(required=False, widget=forms.TextInput(attrs={'placeholder': u'Username',
      'class' : 'form-control'})) 
 
-    # username = forms.CharField(widget=forms.TextInput(attrs={'placeholder': u'Username',
-     # 'class' : 'form-control'})) 
+    password1 = forms.CharField(required=False, widget=forms.PasswordInput(attrs={'placeholder': u'Password',
+     'class' : 'form-control'})) 
+
+    password2 = forms.CharField(required=False, widget=forms.PasswordInput(attrs={'placeholder': u'Confirm Password',
+     'class' : 'form-control'})) 
+
+    display_name = forms.CharField(widget=forms.TextInput(attrs={'placeholder': u'Eg "Leonardo D. Vinci"',
+     'class' : 'form-control'})) 
 
     buss_org_name = forms.CharField(required=False, widget=forms.TextInput(attrs={'placeholder': u'Business Name',
         'class' : 'form-control'}))
@@ -97,8 +104,10 @@ class SignupForm(forms.Form):
      'class' : 'form-control'}))
 
 
-    def __init__(self, request, *args, **kwargs):
-        self.request = request
+    def __init__(self, *args, **kwargs):
+        # self.request = request
+        self.request = kwargs.pop('request', None)
+        print 'request is: ', self.request
         super(SignupForm, self).__init__(*args, **kwargs)
         try:
             username =  self.sociallogin.account.extra_data['screen_name']
@@ -113,6 +122,8 @@ class SignupForm(forms.Form):
         self.fields['email'].widget.attrs['class'] = 'form-control'
 
     def save(self, user):
+        new_username = self.cleaned_data.get('username') if self.cleaned_data.get('username')!=None else ''
+        new_password1 = self.cleaned_data.get('password1') if self.cleaned_data.get('password1')!=None else ''
         try:
             addr = self.cleaned_data['address']
             lat = self.cleaned_data['lat']
@@ -138,14 +149,17 @@ class SignupForm(forms.Form):
         address = addr 
         '''Get user from the SocialAccount MySql'''
         userprofile = UserProfile()
-        social_account = SocialAccount.objects.get(user__id = user.id)
+        try:
+            social_account = SocialAccount.objects.get(user__id = user.id)
+        except:
+            social_account = None
         try:
             old_useruid = userprofile.get_profile_by_username(str(social_account.extra_data['screen_name']))['useruid']
             '''update all other affected collections when unclaimed profile changes to claimed'''
             update_all_values(int(old_useruid), int(user.id))
         except:
             pass
-                 
+        default_profile_img = 'http://a0.twimg.com/sticky/default_profile_images/default_profile_6_normal.png'
         data = {
                 'is_unknown_profile':'false',
                 'useruid': int(user.id), 
@@ -158,10 +172,10 @@ class SignupForm(forms.Form):
                 'business_org_name': self.cleaned_data['buss_org_name'],
                 'name': self.cleaned_data['display_name'],
                 'email': str(self.cleaned_data['email']), 
-                'description': social_account.extra_data['description'],
+                'description': social_account.extra_data['description'] if social_account!=None else '',
                 'username' : user.username,
-                'screen_name': social_account.extra_data['screen_name'],
-                'profile_img': social_account.extra_data['profile_image_url'],
+                'screen_name': social_account.extra_data['screen_name'] if social_account!=None else new_username,
+                'profile_img': social_account.extra_data['profile_image_url'] if social_account!=None else default_profile_img,
                 'updates': [],
                 'foods':[],
                 'organisations':[],
@@ -169,16 +183,18 @@ class SignupForm(forms.Form):
                 'newsletter_freq':'Weekly'
 
         }
-
+        if new_password1 != '':
+            data['email_registration'] = 1
         join_time = datetime.datetime.now()
         join_time = time.mktime(join_time.timetuple())
         data['join_time'] = int(join_time)
         data['trial_period_starts'] = int(join_time)
         
         '''Transport  user from MySql to Mongo'''
-        userprofile.update_profile_upsert({'screen_name':social_account.extra_data['screen_name'],
-                 'username':social_account.extra_data['screen_name']},data)
-
+        # userprofile.update_profile_upsert({'screen_name':social_account.extra_data['screen_name'],
+        #          'username':social_account.extra_data['screen_name']},data)
+        userprofile.update_profile_upsert({'screen_name':data['screen_name'],
+                 'username':data['username']},data)
         
         conn = TradeConnection()
         if self.cleaned_data['sign_up_as'] == "Business":
@@ -201,7 +217,8 @@ class SignupForm(forms.Form):
         '''Invitation Tracking and Notifying the user who invites the user'''
         if invite_id != '':
             invititation_to = user.username
-            screen_name = social_account.extra_data['screen_name']
+            # screen_name = social_account.extra_data['screen_name']
+            screen_name = data['screen_name']
             invite_accept_obj = InviteAccept()
             invites_obj = Invites()
             result = invites_obj.check_invited_by_invite_id(str(screen_name), str(invite_id))

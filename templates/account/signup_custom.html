@@ -2,10 +2,11 @@
 {% load url from future %}
 {% load staticfiles %}
 {% load i18n %}
-{% load recognise_name %}
+
 {% block head_title %}{% trans "Signup" %}{% endblock %}
 
 {% block content %}
+
 <link rel="stylesheet" href="/static/css/docsupport/style.css">
   <link rel="stylesheet" href="/static/css/docsupport/prism.css">
 <link rel="stylesheet" href="/static/css/chosen.min.css">
@@ -37,11 +38,7 @@
   font-size:12px;
 } 
 </style>
-
-
-<!-- <h1>{% trans "Sign Up" %}</h1> -->
-
-<!-- <p>{% blocktrans %}Already have an account? Then please <a href="{{ login_url }}">sign in</a>.{% endblocktrans %}</p> -->
+  
     <div class="signup-container">
     <div class="row">
         <div class="col-md-6 col-md-offset-3">
@@ -49,25 +46,14 @@
                 <div class="panel-heading">
                     <span class="glyphicon glyphicon-lock"></span> Sign Up</div>
                 <div class="panel-body">
-
-{% comment %} <form class="signup" id="signup_form" method="post" action="{% url 'account_signup' %}">
-  {% csrf_token %}
-  {{ form.as_p }}
-  {% if redirect_field_value %}
-  <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
-  {% endif %}
-  <button type="submit">{% trans "Sign Up" %} &raquo;</button>
-</form> {% endcomment %}
-
-<!-- custom form begins -->
-<form class="signup form-horizontal" id="signup_form" method="post" action="/accounts/signup/" role="form" onSubmit="return check_type()">
+                    <form class="signup form-horizontal" id="signup_form" method="post" action="/accounts/signup/" role="form" onSubmit="return check_type()">
                       {% csrf_token %}
                       
                       <div class="form-group">
                         <label for="id_username" class="col-sm-3 control-label">
                             Username</label>
                         <div class="col-sm-9">
-                          {{form.username | add_html_attr:'{"class":"form-control",  "required":"required"}' }}
+                          {{form.username}}
 
                           {% if form.username.errors.as_text %} 
                           <label class="error">{{ form.username.errors.as_text }}</label>
@@ -79,8 +65,8 @@
                         <label for="id_password1" class="col-sm-3 control-label">
                             Password</label>
                         <div class="col-sm-9">
-                          {{form.password1 | add_html_attr:'{"class":"form-control",  "required":"required"}' }}
-                          <input id="id_confirmation_key" name="confirmation_key" type="hidden">
+                          {{form.password1}}
+
                           {% if form.password1.errors.as_text %} 
                           <label class="error">{{ form.password1.errors.as_text }}</label>
                           {% endif %}
@@ -91,7 +77,7 @@
                         <label for="id_password2" class="col-sm-3 control-label">
                             Confirm Password</label>
                         <div class="col-sm-9">
-                          {{form.password2 | add_html_attr:'{"class":"form-control",  "required":"required"}' }}
+                          {{form.password2}}
 
                           {% if form.password2.errors.as_text %} 
                           <label class="error">{{ form.password2.errors.as_text }}</label>
@@ -210,7 +196,14 @@
                         <div class="map_canvas" id="myMap" style="width: 100%;height: 200px; margin-top:3%;"></div>
                       </div>
                     </div>
-                    
+                    <div class="form-group">
+                          <!--<label for="id_username" class="col-sm-3 control-label">
+                            Username</label> -->
+                        <div class="col-sm-9">
+                          {{form.username.as_hidden}}
+                          <!-- <label class="error">{{ form.username.errors.as_text }}</label> -->
+                        </div>
+                    </div>
                                
                     <div class="form-group last">
                         <div class="col-sm-offset-3 col-sm-9">
@@ -224,10 +217,7 @@
                         </div>
                     </div>
                     </form>
-                    
-
-<!-- custom form ends -->
-</div>
+                </div>
                 <div class="panel-footer">
                     <p class="small">By signing up you agree to the  <a href="/pages/terms" target="blank">terms of use</a> and <a href="/pages/privacy" target="blank">privacy policy</a>.</p>
                 </div>
@@ -238,7 +228,7 @@
 
  
     </div><!-- col10 --> 
-    <script src="/static/js/chosen.jquery.min.js" type="text/javascript"></script>
+  <script src="/static/js/chosen.jquery.min.js" type="text/javascript"></script>
   <script src="/static/css/docsupport/prism.js" type="text/javascript" charset="utf-8"></script>
   <script type="text/javascript">
   // A $( document ).ready() block.
@@ -309,7 +299,6 @@ var elements = document.getElementsByClassName('search-choice');
     }
     document.getElementById('id_type_user').value = all_values;
   }
-
   </script>
 
 {% endblock %}
@@ -327,5 +316,3 @@ var elements = document.getElementsByClassName('search-choice');
     }
   </script>
 {% endblock %}
-
-
