@@ -1,6 +1,4 @@
 {% load recognise_name %}
-{{request.user.username}}
-
 
   <li class="{{result.result_class}} singleresult {% if result.subscribed %} verified {% endif %}" data-id="{% if result_type == "status" %}{{result.tweetuid}} {% else %}{{result.user.username}}{% endif %}">
 
@@ -71,7 +69,7 @@
             </div>
 
             <!-- status --> 
-            <div class="media margin-none status" {% if result.result_class = 'business profile' %} style="background: url('{{result.user.banner_url}}'); {% endif %}" />  
+            <div class="media margin-none status" {% if result.result_class == 'business profile' %} style="background: url('{{result.user.banner_url}}'); {% endif %}" >  
 
             {% if result.result_class = 'business profile' %}  
 
@@ -131,6 +129,12 @@
             {% endif %}
 
             </div>
+
+
+
+
+
+
 
             <div class="timeline-bottom innerAll border-top clearfix">
 
