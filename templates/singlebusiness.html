@@ -1625,15 +1625,16 @@
 
  // $.fn.editable.defaults.mode = 'inline';
 
-
-var $container1 = $('#foods').isotope({
-   itemSelector: '.food'
-});
+$(document).ready(function(){
+  var $container1 = $('#foods').isotope({itemSelector: '.food'});
+  $('.isotope').isotope({itemSelector: '.card-business'});
 
 // filter items on button click
 $('#filterFoods').on( 'click', 'button', function() {
   var filterValue = $(this).attr('data-filter');
   $container1.isotope({ filter: filterValue });
+});
+
 });
  
 
@@ -1809,7 +1810,6 @@ customers = {{customers_str | safe}};
      <script src="{% static "js/business-map.js" %}"></script>
      <script type="text/javascript">
         $(".widget-head ul li").on("click", function(){ 
-          $(window).resize();
           id = $(this).attr('id');
           if (id == 'liBuysFrom' || id == 'liSellsTo'){
 
@@ -1835,8 +1835,8 @@ customers = {{customers_str | safe}};
               $('#connections').removeClass('active');
           }
         });
+
         
-        $("#all-connections").isotope({itemSelector: 'card card-business',layoutMode: 'fitColumns'});
      </script>
 
  {% endblock %}

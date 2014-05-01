@@ -1375,13 +1375,13 @@ function success_tweeter_user_invite(data){
 }
 </script> 
 <script type="text/javascript">
+$('.isotope').isotope({});
+$('a[data-toggle="tab"]').on('click', function (e) {
+  $('.isotope').isotope({});
+});
+
 $(document).ready(function() {
- 
-
-  $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
-          $('.isotope').isotope('layout');
-    });
-
+$('a[data-toggle="tab"]').click()
 // tweetlistener('tweetMessage', 'counter', 'contact_tweet', 'newtweet_btn');
  
 
