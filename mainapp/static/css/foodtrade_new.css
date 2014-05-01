@@ -34,6 +34,7 @@ input[type="text"]:focus, input[type="text"]:active, input[type="text"]:hover {
   background: #420F29; 
 }
 
+
 #menu>div ul>li.category {
   color: #61AE32;
 }
@@ -339,27 +340,20 @@ input[type="text"]:focus, input[type="text"]:active, input[type="text"]:hover {
   padding: 5px;
 }
 
-#updates.marketplace li .status {
-  background-image: none !important;
-} 
-
+ 
 .status {
   background-size: cover !important; 
 }
-
-#cards.marketplace li .status .lead {
-  background: rgba(0,0,0,0.5);
-  }
-
-#cards.marketplace li .status .lead a,
-#cards.marketplace li .status .lead {
-  color: #fff;
-}
+ 
 
 .gutter-sizer { width: 1%; }
 
 .bg-gray { 
   background: #EBEBEB;
+}
+
+.bg-white-wash {
+  background: rgba(255,255,255,0.8);
 }
 
 #cards.marketplace .address,
@@ -372,6 +366,9 @@ input[type="text"]:focus, input[type="text"]:active, input[type="text"]:hover {
   padding: 0 10px;
 }
 
+.dropdown-menu li {
+  padding: 0 !important;
+}
 
 .marketplace .marker,
 .marketplace .caret {
@@ -419,7 +416,7 @@ input[type="text"]:focus, input[type="text"]:active, input[type="text"]:hover {
 
 .card .content {
   padding: 15px 0 0 0;
-  background-size: cover;
+  background-size: cover !important;
 }
 
 .card h5 {

@@ -64,9 +64,9 @@
 
         <li {% if results_updates_count == 0  and results_business_count == 0 and results_organisation_count == 0 and results_individual_count != 0 %}class="active"{% endif %}>
           <a href="#indiv" class="glyphicons user" data-toggle="tab"><i></i><span class="strong title">People</span>
-          {% ifnotequal results_individuals_count 0 %}
+          {% if results_individual_count != 0 %}
           <span class="pull-number label label-success">{{results_individuals_count}}</span>
-          {% endifnotequal %}
+          {% endif %}
           </a>
         </li>   
     </ul>
