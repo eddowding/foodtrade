@@ -17,7 +17,7 @@
 <div class="widget">
   <div class="padding-none"> 
     <div class="input-group">
-      <input class="form-control"  {% if not user.is_authenticated %}  onfocus="login_redirect()" title="Please login to use this feature." {% else %} {% if not can_tweet %} data-toggle="modal" data-target="#newtwitterpost" {% else %} rel="tooltip" title="Please upgrade your account to post." {% endif %}{% endif %} placeholder="What #food do you have to #buy, #sell, or #surplus?">  
+      <input class="form-control"  {% if not user.is_authenticated %}  onfocus="login_redirect()" title="Please login to use this feature." {% else %} {% if not can_tweet %} data-toggle="modal" data-target="#newtwitterpost" {% else %} rel="tooltip" title="Please upgrade your account to post." {% endif %}{% endif %} placeholder="What #food do you have to #buy, #sell, or #surplus?" style="border:0;">  
       <span class="input-group-btn">
         <button class="btn btn-primary" type="button">Post</button>
       </span>
@@ -50,25 +50,24 @@
         <span class="pull-number label label-success">{{results_business_count}}</span>
         {% endifnotequal %}
         </a>
-        </li>
-
- 
+        </li>  
 
         <li {% if results_updates_count == 0 and results_individual_count == 0 and results_business_count == 0 and results_organisation_count != 0 %}class="active"{% endif %}>
         <a href="#org" class="glyphicons group" data-toggle="tab"><i></i><span class="strong title">Groups</span>
-        {% if results_organisations_count > 0 %}
-        <span class="pull-number label label-success">{{results_organisations_count}}</span>
+        {% if results_organisation_count > 0 %}
+        <span class="pull-number label label-success">{{results_organisation_count}}</span>
         {% endif %}
         </a>
         </li> 
 
         <li {% if results_updates_count == 0  and results_business_count == 0 and results_organisation_count == 0 and results_individual_count != 0 %}class="active"{% endif %}>
           <a href="#indiv" class="glyphicons user" data-toggle="tab"><i></i><span class="strong title">People</span>
-          {% ifnotequal results_individuals_count 0 %}
-          <span class="pull-number label label-success">{{results_individuals_count}}</span>
-          {% endifnotequal %}
+          {% if results_individual_count != 0 %}
+          <span class="pull-number label label-success">{{results_individual_count}}</span>
+          {% endif %}
           </a>
-        </li>   
+        </li>  
+  </li>
     </ul>
   </div>
 
@@ -105,12 +104,12 @@
     </div>
 
     <div class="btn-group pull-left">
-      <a href="/activity" class="btn btn-default btn-sm btn-stroke" rel="tooltip" title="All posts"><i class="fa fa-fw fa-bell-o"></i> All </a> 
-      <a href="/activity/?q=sell" class="btn btn-default btn-sm btn-stroke " rel="tooltip" title="Filter by #sell"><i class="fa fa-fw fa-sign-out"></i></a>
-      <a href="/activity/?q=buy" class="btn btn-default btn-sm btn-stroke " rel="tooltip" title="Filter by #buy"><i class="fa fa-fw fa-sign-in"></i></a>
-      <a href="/activity/?q=surplus" class="btn btn-default btn-sm btn-stroke"  rel="tooltip" title="Filter by #surplus"><i class="fa fa-fw fa-refresh"></i></a>
-      <a href="/activity/?q=ask" class="btn btn-default btn-sm btn-stroke " rel="tooltip" title="Filter by #ask "><i class="fa fa-fw fa-comment-o"></i></a>
-      <a href="/activity/?q=job" class="btn btn-default btn-sm btn-stroke"  rel="tooltip" title="Filter by #job"><i class="fa fa-fw fa-eur"></i></a>
+      <a href="/activity" class="btn btn-sm btn-stroke {% if request.get_full_path = "/activity/" %} btn-primary active {% else %} btn-default {% endif %}" rel="tooltip" title="All posts">Show all </a> 
+      <a href="/activity/?q=sell" class="btn btn-sm btn-stroke {% if request.get_full_path = "/activity/?q=sell" %} btn-primary active {% else %} btn-default {% endif %}" rel="tooltip" title="Filter by #sell"><i class="fa fa-fw fa-sign-out"></i></a>
+      <a href="/activity/?q=buy" class="btn btn-sm btn-stroke {% if request.get_full_path = "/activity/?q=buy" %} btn-primary active {% else %} btn-default {% endif %}" rel="tooltip" title="Filter by #buy"><i class="fa fa-fw fa-sign-in"></i></a>
+      <a href="/activity/?q=surplus" class="btn btn-sm btn-stroke {% if request.get_full_path = "/activity/?q=surplus" %} btn-primary active {% else %} btn-default {% endif %}"  rel="tooltip" title="Filter by #surplus"><i class="fa fa-fw fa-refresh"></i></a>
+      <a href="/activity/?q=ask" class="btn btn-sm btn-stroke {% if request.get_full_path = "/activity/?q=ask" %} btn-primary active {% else %} btn-default {% endif %}" rel="tooltip" title="Filter by #ask "><i class="fa fa-fw fa-comment-o"></i></a>
+      <a href="/activity/?q=job" class="btn btn-sm btn-stroke {% if request.get_full_path = "/activity/?q=job" %} btn-primary active {% else %} btn-default {% endif %}"  rel="tooltip" title="Filter by #job"><i class="fa fa-fw fa-eur"></i></a>
     </div>
 
 

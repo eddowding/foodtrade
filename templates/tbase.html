@@ -366,7 +366,7 @@
                 <br />
                 <span class="  small">Sign up is free</span></a>
             {% else %}
-              {% if not can_tweet %} 
+              {% if can_tweet %} 
                 <button type="button" id="btn_update_activity" class="btn  btn-success pull-right" rel="tooltip"  {% if not user.is_authenticated %}  title="Please login to use this feature." {% endif %} onclick="generate_update();"> Post this</button>
               {% else %} 
                 <a href="/payments" class="btn  btn-success pull-right"  rel="tooltip" title="Please upgrade your account to unlock."  {% if not user.is_authenticated %}  title="Please login to use this feature." {% endif %} > Upgrade to post</a>
@@ -650,7 +650,7 @@ hid den
                                     <span class="pull-left media-object">
                                         <i class="fa fa-fw fa-question-circle"></i>
                                     </span>
-                                    <div class="media-body">
+                                    <div class="media-body text-left">
                                         If you would like to find or offer surplus or gluts, just use as <a href="/activity/?q=surplus">#surplus</a> to your message.  <a href="/activity/?q=surplus" class="text-white">Test it out</a>
                                     </div>
                                 </li> 
@@ -663,7 +663,7 @@ hid den
                                     <span class="pull-left media-object">
                                         <i class="fa fa-fw fa-question-circle"></i>
                                     </span>
-                                    <div class="media-body">
+                                    <div class="media-body text-left">
                                       You can  post updates from anywhere! Just tweet your message to @foodtradeHQ and we'll push your message to local businesses!
                                     </div>
                                 </li> 
@@ -1455,12 +1455,16 @@ function success_tweeter_user_invite(data){
 $(document).ready(function() {
  
 
+  $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+          $('.isotope').isotope('layout');
+    });
+
 // tweetlistener('tweetMessage', 'counter', 'contact_tweet', 'newtweet_btn');
  
 
-function showgrid() {
-  $container.css('visibility', 'visible');
-}
+// function showgrid() {
+//   $container.css('visibility', 'visible');
+// }
 
     var activeSystemClass = $('.list-group-item.active');
     //something is entered in search form

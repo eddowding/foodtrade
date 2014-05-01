@@ -261,12 +261,10 @@
 
       <div class="innerB btn-group" id="filterFoods" data-filter-group="foodtype">
         <button class="btn btn-primary btn-sm active" data-filter="*">All</button> 
-        
 
         {% for eachparent in food_parents %}
-          <button class="btn btn-default" data-filter=".{{eachparent|slugify}}">{{eachparent}}</button> 
+          <button class="btn btn-default btn-sm" data-filter=".{{eachparent|slugify}}">{{eachparent}}</button> 
         {% endfor %}
-
       </div>
                     <div class="clearfix isotope"  id="foods"> 
                             <div class="row">
@@ -515,17 +513,10 @@
 <div class="clearfix">
 {% if userprof.b_conn_no != 0 %} 
 
-            <div class="clearfix isotope js-isotope" data-isotope-options='{ "itemSelector": ".card" }'  id="buyers-cards"> 
+            <div class="clearfix isotope js-isotope" data-isotope-options='{ "itemSelector": ".card" }' id="buyers-cards"> 
           {% for each in connections %}
               {% if each.relation == "buyer" or each.relation == "both" %}
-                  <div class="card card-business {% if each.type|length == 0 or each.type|first == '' %}
-                    {% else %}
-                      
-                        {% for e in each.type %}
-                        {{e}}
-                       {% endfor %}
-                      
-                    {% endif %}">
+                  <div class="card card-business">
 
                     
                     <div class="content" style="background:  url('{{each.banner_url}}');">
@@ -551,22 +542,22 @@
                        
                         <!-- number of foods sold -->
                         <div class="{% if show_foods %}col-sm-3{% else %}col-sm-6{% endif %}">
-                          <a href="" class="innerAll text-center display-block text-muted" data-original-title="{{each.food_no}} foods" rel="tooltip"><i class="fa fa-fw fa fa-cutlery"></i> {{each.food_no}}</a>
+                          <a href="" class="innerAll half text-center display-block text-muted" data-original-title="{{each.food_no}} foods" rel="tooltip"><i class="fa fa-fw fa fa-cutlery"></i> {{each.food_no}}</a>
                         </div>
 
                         <!-- number of vouches across all produce --> 
                         <div class="{% if show_foods %}col-sm-3{% else %}col-sm-6{% endif %}">
-                          <a href=""  rel="tooltip" title="{{each.total_vouches}} number of vouches for all produce"  class="innerAll text-center display-block text-muted"><i class="fa fa-fw fa-thumbs-o-up"></i> {{each.total_vouches}}</a>
+                          <a href=""  rel="tooltip" title="{{each.total_vouches}} of vouches for all produce"  class="innerAll half text-center display-block text-muted"><i class="fa fa-fw fa-thumbs-o-up"></i> {{each.total_vouches}}</a>
                         </div> 
 
                         <!-- number of trade connections --> 
                         <div class="{% if show_foods %}col-sm-3{% else %}col-sm-6{% endif %}">
-                          <a href=""  rel="tooltip" title="{{each.trade_conn_no}} of trade connections" class="innerAll text-center display-block text-muted"><i class="fa fa-fw fa-link"></i> {{each.trade_conn_no}}</a>
+                          <a href=""  rel="tooltip" title="{{each.trade_conn_no}} of trade connections" class="innerAll half text-center display-block text-muted"><i class="fa fa-fw fa-link"></i> {{each.trade_conn_no}}</a>
                         </div>
 
                         <!-- number of group membershpis -->  
                         <div class="{% if show_foods %}col-sm-3{% else %}col-sm-6{% endif %}">
-                          <a href=""  rel="tooltip" title="Member of {{each.org_conn_no}} groups or organisations"  class="innerAll text-center display-block text-muted"><i class="fa fa-fw fa-group"></i> {{each.org_conn_no}}</a>
+                          <a href=""  rel="tooltip" title="Member of {{each.org_conn_no}} groups or organisations"  class="innerAll half text-center display-block text-muted"><i class="fa fa-fw fa-group"></i> {{each.org_conn_no}}</a>
                         </div> 
 
                       </div> 
@@ -603,7 +594,7 @@
         <div id="tabSuppliers" class="tab-pane widget-body-regular">                      
         <div id="all-connections" class="clearfix">
           {% if userprof.c_conn_no != 0 %}  
-           <div class="clearfix isotope" id="seller-cards">
+           <div class="clearfix isotope js-isotope" data-isotope-options='{ "itemSelector": ".card" }' id="seller-cards">
           {% for each in connections %}
               {% if each.relation == "seller" or each.relation == "both" %}
 
@@ -633,22 +624,22 @@
                        
                         <!-- number of foods sold -->
                         <div class="{% if show_foods %}col-sm-3{% else %}col-sm-6{% endif %}">
-                          <a href="" class="innerAll text-center display-block text-muted" data-original-title="{{each.food_no}} foods" rel="tooltip"><i class="fa fa-fw fa fa-cutlery"></i> {{each.food_no}}</a>
+                          <a href="" class="innerAll half text-center display-block text-muted" data-original-title="{{each.food_no}} foods" rel="tooltip"><i class="fa fa-fw fa fa-cutlery"></i> {{each.food_no}}</a>
                         </div>
 
                         <!-- number of vouches across all produce --> 
                         <div class="{% if show_foods %}col-sm-3{% else %}col-sm-6{% endif %}">
-                          <a href=""  rel="tooltip" title="{{each.total_vouches}} number of vouches for all produce"  class="innerAll text-center display-block text-muted"><i class="fa fa-fw fa-thumbs-o-up"></i> {{each.total_vouches}}</a>
+                          <a href=""  rel="tooltip" title="{{each.total_vouches}} of vouches for all produce"  class="innerAll half text-center display-block text-muted"><i class="fa fa-fw fa-thumbs-o-up"></i> {{each.total_vouches}}</a>
                         </div> 
 
                         <!-- number of trade connections --> 
                         <div class="{% if show_foods %}col-sm-3{% else %}col-sm-6{% endif %}">
-                          <a href=""  rel="tooltip" title="{{each.trade_conn_no}} of trade connections" class="innerAll text-center display-block text-muted"><i class="fa fa-fw fa-link"></i> {{each.trade_conn_no}}</a>
+                          <a href=""  rel="tooltip" title="{{each.trade_conn_no}} of trade connections" class="innerAll half text-center display-block text-muted"><i class="fa fa-fw fa-link"></i> {{each.trade_conn_no}}</a>
                         </div>
 
                         <!-- number of group membershpis -->  
                         <div class="{% if show_foods %}col-sm-3{% else %}col-sm-6{% endif %}">
-                          <a href=""  rel="tooltip" title="Member of {{each.org_conn_no}} groups or organisations"  class="innerAll text-center display-block text-muted"><i class="fa fa-fw fa-group"></i> {{each.org_conn_no}}</a>
+                          <a href=""  rel="tooltip" title="Member of {{each.org_conn_no}} groups or organisations"  class="innerAll half text-center display-block text-muted"><i class="fa fa-fw fa-group"></i> {{each.org_conn_no}}</a>
                         </div> 
 
                       </div>
@@ -1150,22 +1141,22 @@
                        
                         <!-- number of foods sold -->
                         <div class="{% if show_foods %}col-sm-3{% else %}col-sm-6{% endif %}">
-                          <a href="" class="innerAll text-center display-block text-muted" data-original-title="{{userprof.food_no}} foods" rel="tooltip"><i class="fa fa-fw fa fa-cutlery"></i> {{userprof.food_no}}</a>
+                          <a href="" class="innerAll half text-center display-block text-muted" data-original-title="{{userprof.food_no}} foods" rel="tooltip"><i class="fa fa-fw fa fa-cutlery"></i> {{userprof.food_no}}</a>
                         </div>
 
                         <!-- number of vouches across all produce --> 
                         <div class="{% if show_foods %}col-sm-3{% else %}col-sm-6{% endif %}">
-                          <a href=""  rel="tooltip" title="{{userprof.total_vouches}} number of vouches for all produce"  class="innerAll text-center display-block text-muted"><i class="fa fa-fw fa-thumbs-o-up"></i> {{total_vouches}}</a>
+                          <a href=""  rel="tooltip" title="{{userprof.total_vouches}} of vouches for all produce"  class="innerAll half text-center display-block text-muted"><i class="fa fa-fw fa-thumbs-o-up"></i> {{total_vouches}}</a>
                         </div> 
 
                         <!-- number of trade connections --> 
                         <div class="{% if show_foods %}col-sm-3{% else %}col-sm-6{% endif %}">
-                          <a href=""  rel="tooltip" title="{{userprof.trade_connections_no}} of trade connections" class="innerAll text-center display-block text-muted"><i class="fa fa-fw fa-link"></i> {{userprof.trade_connections_no}}</a>
+                          <a href=""  rel="tooltip" title="{{userprof.trade_connections_no}} of trade connections" class="innerAll half text-center display-block text-muted"><i class="fa fa-fw fa-link"></i> {{userprof.trade_connections_no}}</a>
                         </div>
 
                         <!-- number of group membershpis -->  
                         <div class="{% if show_foods %}col-sm-3{% else %}col-sm-6{% endif %}">
-                          <a href=""  rel="tooltip" title="Member of {{userprof.organisation_connection_no}} groups or organisations"  class="innerAll text-center display-block text-muted"><i class="fa fa-fw fa-group"></i> {{userprof.organisation_connection_no}}</a>
+                          <a href=""  rel="tooltip" title="Member of {{userprof.organisation_connection_no}} groups or organisations"  class="innerAll half text-center display-block text-muted"><i class="fa fa-fw fa-group"></i> {{userprof.organisation_connection_no}}</a>
                         </div> 
 
                       </div>
@@ -1350,16 +1341,18 @@
   <div class="innerAll text-white">
       <div class="innerB"><i class=" icon-rocket fa fa-4x text-faded"></i>
       </div>
-      <h2 class="strong margin-none text-white">Help us grow!</h2>
+      <h2 class="strong margin-none text-white">Better, together</h2>
       <p class="lead">from &pound;20 / year</p>
-      <p>We don't sell your data or show adverts because you're our customer, not our product. And because we're working for YOU, we charge a small fee for premium features</p>
-      <p>Use the coupon code: BETASUMMER</p>
+      <p> 
+
+      We don't sell your data or show adverts because you're our customer, not our product. And because we're working for YOU, we charge a small fee for premium features</p>
+      <p>Use the coupon code: LOVESUMMER</p>
       <button class="btn btn-primary btn-stroke">Upgrade today <i class="fa fa-fw fa-play-circle"></i>
       </button> 
   </div>
   <!-- Ribbon -->
   <div class="ribbon-wrapper">
-      <div class="ribbon primary">Beta offer</div>
+      <div class="ribbon primary">It's spring!</div>
   </div>
 </div>
 
@@ -1628,7 +1621,7 @@
   <script type="text/javascript">
  
 
- $.fn.editable.defaults.mode = 'inline';
+ // $.fn.editable.defaults.mode = 'inline';
 
 
 var $container1 = $('#foods').isotope({
@@ -1640,27 +1633,10 @@ $('#filterFoods').on( 'click', 'button', function() {
   var filterValue = $(this).attr('data-filter');
   $container1.isotope({ filter: filterValue });
 });
-
-var $container2 = $('#buyers-cards').isotope({
-   itemSelector: '.card'
-});
-
-var $container3 = $('#seller-cards').isotope({
-   itemSelector: '.card'
-});
-
-$('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
-  $container2.isotope('reLayout');
-  $container3.isotope('reLayout');
-});
- 
  
 
 
 $( document ).ready(function() {
-
- 
-
 
 
   $("#myTags").tagit({
