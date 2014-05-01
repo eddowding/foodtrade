@@ -50,6 +50,7 @@ urlpatterns = patterns('',
     # Temporary urls
     url(r'^merge-data/$', 'mainapp.merge_data.merge'),
     url(r'^update-image/$', 'mainapp.merge_data.update_image'),
+    url(r'^(?P<username>\w{1,40})/visitors', 'mainapp.profilepage.get_views_count'),
     ## any user    
     url(r'^(?P<username>\w{1,40})/$', 'mainapp.profilepage.profile_url_resolve'),
 )
