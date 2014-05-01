@@ -185,5 +185,8 @@
  {% block javascript %}
 
  <script src="{% static "js/activity-map.js" %}"></script>
-
+ <script type="text/javascript">
+    $('a[data-toggle="tab"]').on('click', function (e) {$('.isotope').isotope({});});
+ </script>
+ 
 {% endblock %}
