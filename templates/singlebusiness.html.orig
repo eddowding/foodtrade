@@ -42,7 +42,7 @@
 
 <link href="{% static "css/jquery.tagit.css" %}" rel="stylesheet" type="text/css">
 <link href="{% static "css/tagit.ui-zendesk.css" %}" rel="stylesheet" type="text/css">
-<link href="{% static "css/embedly.css" %}" rel="stylesheet" type="text/css">
+
 
 <style type="text/css" media="all">
     /* fix rtl for demo */
@@ -146,6 +146,8 @@
 </div>
 </div>
  
+
+ 
 <div class="widget widget-tabs widget-tabs-double-2 widget-tabs-responsive">
    
     <!-- Tabs Heading -->
@@ -155,30 +157,16 @@
         {% if show_foods %}
         <li class="active"><a class="glyphicons list" href="#tabProduce" data-toggle="tab"><i></i><span>Produce</span></a></li>
         {% endif %}
-        <li>
-<<<<<<< HEAD
-        <a class="glyphicons log_in" href="#tabStockists" data-toggle="tab"><i></i><span>We buy from</span></a></li>
-        <li><a class="glyphicons log_out" href="#tabSuppliers" data-toggle="tab"><i></i><span>We sell to</span></a></li>
-        <li><a class="glyphicons certificate" href="#tabMemberships" data-toggle="tab"><i></i><span>Members of</span></a></li>
-        <li><a class="glyphicons truck" rel="tooltip" href="#tabDeliveries" data-toggle="tab"><i></i><span>Deliveries</span> 
-        </a></li> 
-        <!-- class="premium" -->
-        {% if we_buy %}
-        <li><a class="glyphicons log_in" rel="tooltip" href="#tabBuy" data-toggle="tab"><i></i><span>We buy</span>
-        </a></li>{% endif %}
-        <li class="premium"><a class="glyphicons cogwheel" rel="tooltip" title="Premium account holders only - upgrade from just &pound;45/yr" href="#tabCustomers" data-toggle="tab"><i></i><span>Customers</span> 
-=======
-        <a class="glyphicons log_in" href="#tabStockists" data-toggle="tab"><i></i><span>Buys from</span></a></li>
-        <li><a class="glyphicons log_out" href="#tabSuppliers" data-toggle="tab"><i></i><span>Sells to</span></a></li>
+        <li id="liBuysFrom"><a class="glyphicons log_in" href="#tabStockists" data-toggle="tab"><i></i><span>Buys from</span></a></li>
+        <li id="liSellsTo"><a class="glyphicons log_out" href="#tabSuppliers" data-toggle="tab"><i></i><span>Sells to</span></a></li>
         <li><a class="glyphicons certificate" href="#tabMemberships" data-toggle="tab"><i></i><span>Groups</span></a></li>
         <li class="premium"><a class="glyphicons list" rel="tooltip" title="Premium account holders only - upgrade from just &pound;45/yr" href="#tabBuy" data-toggle="tab"><i></i><span>Shopping list</span>
         </a>
-        </li>
-        <li class="premium"><a class="glyphicons group" rel="tooltip" title="Premium account holders only - upgrade from just &pound;45/yr" href="#tabBuy" data-toggle="tab"><i></i><span>People</span>
+        </li><!-- 
+        <li class="premium"><a class="glyphicons group" rel="tooltip" title="Premium account holders only - upgrade from just &pound;45/yr" href="#tabTeam" data-toggle="tab"><i></i><span>People</span>
         </a>
-        </li>
+        </li> -->
         <li class="premium"><a class="glyphicons google_maps" rel="tooltip" title="Premium account holders only - upgrade from just &pound;45/yr" href="#tabCustomers" data-toggle="tab"><i></i><span>Customers</span> 
->>>>>>> 019bb80398b3720cdac3f45ba58f2f39533c2640
        <!--  <div class="ribbon-wrapper small">
             <div class="ribbon danger">Upgrade</div>
         </div> -->
@@ -191,8 +179,36 @@
       </ul>
     </div>
     <!-- // Tabs Heading END -->
+
     
     <div class="widget-body">
+
+        <!-- WIKI ADD CONNECTIONS --> 
+          {% if user.is_authenticated %}
+          <div class="tab-pane fade in hidden" id="connections" style="margin-top: 1%;">
+            <div class="alert  " style="padding: 0 10px;">  
+            <div class="form-inline"  role="form">
+              <div class="form-group">
+                <img style="width: 25px; margin-right: 2px;" class="" src="{{pic_url}}"  />
+                <div class="btn-group btn-sm" data-toggle="buttons">
+                  <label class="btn  btn-sm active btn-default" id="li1_conn">
+                    <input type="checkbox" name="options" id="option1_conn"> buys from 
+                  </label> 
+                  <label class="btn  btn-sm btn-default" id="li2_conn">
+                    <input type="checkbox" name="options" id="option2_conn"> sells to
+                  </label> 
+                </div> 
+              </div> 
+              <div class="form-group"> 
+                <div id="buss_remote" >
+                  <input class="typeahead  input-sm form-control  " id="new_buss_typeahead" {% if not user.is_authenticated %} rel="tooltip" title="Please login to use this feature" {% endif %} style="width:310px;" type="text" placeholder="Type business..."> 
+                </div>      
+              </div>   
+            </div>
+          </div>
+          </div>
+          {% endif %}
+
       <div class="tab-content">
        
         {% if show_foods %}
@@ -243,11 +259,16 @@
  
           {% endif %} 
 
-      <div class="innerB button-group" id="filterFoods" data-filter-group="foodtype">
-        <button class="btn btn-default active" data-filter="*">Show all</button> 
+      <div class="innerB btn-group" id="filterFoods" data-filter-group="foodtype">
+        <button class="btn btn-primary btn-sm active" data-filter="*">All</button> 
         
+<<<<<<< HEAD
+        {% for eachparent in food_parents %}
+          <button class="btn btn-default" data-filter=".{{eachparent|slugify}}">{{eachparent}}</button> 
+=======
         {% for eachfood in all_foods %}
-          <button class="btn btn-default" data-filter=".{{eachfood.parent_food|slugify}}">{{eachfood.parent_food}}</button> 
+          <button class="btn btn-default btn-sm" data-filter=".{{eachfood.parent_food|slugify}}">{{eachfood.parent_food}}</button> 
+>>>>>>> f345e0f8dfc704b1e3207002980fa8d3ac06b98a
         {% endfor %}
 
       </div>
@@ -349,7 +370,7 @@
                                       <div class="pull-right">
 
                                         {% for eachdet in eachfood.recomm_details %}
-                                          <img class="pull-left" style="margin:0px 4px 0 0; width:25px" src={{eachdet.photo}} rel="tooltip" title="{{eachdet.name}}"/> 
+                                          <img class="pull-left img-circle" style="margin:0px 4px 0 0; width:25px" src={{eachdet.photo}} rel="tooltip" title="{{eachdet.name}}"/> 
                                         {% endfor %}
                                         {% ifnotequal eachfood.vouch_count 0 %} 
                                           <span class="badge badge-default" style="margin:3px 4px 0 0;" rel="tooltip" title="{{eachfood.vouch_count}} recommendations on {{eachfood.food_name}}">{{eachfood.vouch_count}}</span>
@@ -386,7 +407,7 @@
                         </div>
 
       <!-- FOOD LIST --> 
-      <table class="table table-list-search table-condensed">
+      <table class="table table-list-search table-condensed hidden ">
         {% if not user.is_authenticated %}
           <thead>
             <tr>
@@ -449,7 +470,7 @@
                    
                    {% for eachdet in eachfood.recomm_details %}
                     <div class="pull-right">
-                      <img class="pull-left" style="margin:0px 4px 0 0; width:25px" src={{eachdet.photo}} rel="tooltip" title="{{eachdet.name}}"/>
+                      <img class="pull-left img-circle" style="margin:0px 4px 0 0; width:25px" src={{eachdet.photo}} rel="tooltip" title="{{eachdet.name}}"/>
                     </div>
                    {% endfor %}
                  {% ifnotequal eachfood.vouch_count 0 %}
@@ -491,40 +512,14 @@
         <!-- // Tab content END -->
       
         <!-- Tab content -->
-        <div id="tabStockists" class="tab-pane widget-body-regular">
-
-         
-          <!-- WIKI ADD CONNECTIONS --> 
-          {% if user.is_authenticated %}
-            <div class="alert  " style="padding: 0 10px;">  
-            <div class="form-inline"  role="form">
-              <div class="form-group">
-                <img style="width: 25px; margin-right: 2px;" class="" src="{{pic_url}}"  />
-                <div class="btn-group btn-sm" data-toggle="buttons">
-                  <label class="btn  btn-sm active btn-default">
-                    <input type="checkbox" name="options" id="option1_conn"> buys from 
-                  </label> 
-                  <label class="btn  btn-sm btn-default">
-                    <input type="checkbox" name="options" id="option2_conn"> sells to
-                  </label> 
-                </div> 
-              </div> 
-              <div class="form-group"> 
-                <div id="buss_remote" >
-                  <input class="typeahead  input-sm form-control  " id="new_buss_typeahead" {% if not user.is_authenticated %} rel="tooltip" title="Please login to use this feature" {% endif %} style="width:310px;" type="text" placeholder="Type business..."> 
-                </div>      
-              </div>   
-            </div>
-          </div>
-          {% endif %}
-
+        <div id="tabStockists" class="tab-pane widget-body-regular">        
                       
 <div id="all-connections">
 
 <div class="clearfix">
 {% if userprof.b_conn_no != 0 %} 
 
-            <div class="clearfix isotope" id="buyers-cards"> 
+            <div class="clearfix isotope js-isotope" data-isotope-options='{ "itemSelector": ".card" }'  id="buyers-cards"> 
           {% for each in connections %}
               {% if each.relation == "buyer" or each.relation == "both" %}
                   <div class="card card-business {% if each.type|length == 0 or each.type|first == '' %}
@@ -553,10 +548,7 @@
                         </h5>  
                         <p class="small">{{each.description|truncatechars:40}}</p>
                       </div>
-                    </div>
-
-
-                  
+                    </div> 
 
                       <div class="row row-merge border-top">
 
@@ -573,26 +565,24 @@
 
                         <!-- number of trade connections --> 
                         <div class="{% if show_foods %}col-sm-3{% else %}col-sm-6{% endif %}">
-                          <a href=""  rel="tooltip" title="{{each.trade_connections_no}} of trade connections" class="innerAll text-center display-block text-muted"><i class="fa fa-fw fa-link"></i> {{each.trade_conn_no}}</a>
+                          <a href=""  rel="tooltip" title="{{each.trade_conn_no}} of trade connections" class="innerAll text-center display-block text-muted"><i class="fa fa-fw fa-link"></i> {{each.trade_conn_no}}</a>
                         </div>
 
                         <!-- number of group membershpis -->  
                         <div class="{% if show_foods %}col-sm-3{% else %}col-sm-6{% endif %}">
-                          <a href=""  rel="tooltip" title="Member of {{each.organisation_connection_no}} groups or organisations"  class="innerAll text-center display-block text-muted"><i class="fa fa-fw fa-group"></i> {{each.org_conn_no}}</a>
+                          <a href=""  rel="tooltip" title="Member of {{each.org_conn_no}} groups or organisations"  class="innerAll text-center display-block text-muted"><i class="fa fa-fw fa-group"></i> {{each.org_conn_no}}</a>
                         </div> 
 
-                      </div>
-
-
-
-                          {% if type_user|length == 0 or type_user|first == '' %}
-                          {% else %}
-                          <div class="bg-gray border-top innerAll half text-center">  
-                           {% for eachtype in type_user %}
-                            <a href="/activity/?b={{eachtype}}">{{eachtype}}</a>
-                           {% endfor %}
-                          </div> 
-                          {% endif %} 
+                      </div> 
+                      
+                      {% if each.type|length == 0 or each.type|first == '' %}
+                      {% else %}
+                      <div class="bg-gray border-top innerAll half text-center">  
+                       {% for e in each.type %}
+                       <a href="/activity/?b={{e}}">{{e}}</a>
+                       {% endfor %}
+                      </div> 
+                      {% endif %} 
  
                   </div> 
                   {% endif %}
@@ -601,41 +591,20 @@
                 {% endif %}
           </div>
  
-          </div>  <!-- end all-connections -->
- 
+</div>  <!-- end all-connections -->
+
+          <div class="clearfix"></div>
 
           </div> <!--  end connections -->
         <!-- // Tab content END -->
+
+
+        <div id="tabTeam" class="tab-pane widget-body-regular">
+
+        </div>
         
         <!-- Tab content -->
-        <div id="tabSuppliers" class="tab-pane widget-body-regular">
-          
-        {% if userprof.trade_connections_no != 0 %}<span class="badge">{{userprof.trade_connections_no}}</span>{% endif %}</a> 
-
-          <!-- WIKI ADD CONNECTIONS --> 
-          {% if user.is_authenticated %}
-            <div class="alert-alert-info" style="padding: 0 10px;">  
-            <div class="form-inline"  role="form">
-              <div class="form-group">
-                <img style="width: 25px; margin-right: 2px;" class="" src="{{pic_url}}"  />
-                <div class="btn-group btn-sm" data-toggle="buttons">
-                  <label class="btn  btn-sm btn-default">
-                    <input type="checkbox" name="options" id="option1_conn"> buys from 
-                  </label> 
-                  <label class="btn  btn-sm btn-default active">
-                    <input type="checkbox" name="options" checked="checked" id="option2_conn"> sells to
-                  </label> 
-                </div> 
-              </div> 
-              <div class="form-group"> 
-                <div id="buss_remote" >
-                  <input class="typeahead  input-sm form-control  " id="new_buss_typeahead" {% if not user.is_authenticated %} rel="tooltip" title="Please login to use this feature" {% endif %} style="width:310px;" type="text" placeholder="Type business..."> 
-                </div>      
-              </div>   
-            </div>
-          </div>
-          {% endif %}
-                      
+        <div id="tabSuppliers" class="tab-pane widget-body-regular">                      
         <div id="all-connections" class="clearfix">
           {% if userprof.c_conn_no != 0 %}  
            <div class="clearfix isotope" id="seller-cards">
@@ -663,31 +632,41 @@
                       </div>
                     </div>
 
-                    <div class="numbers clearfix">
-                      <p class=" small  text-center">  
-                        <a href="/profile/{{each.username}}">
+                    <div class="row row-merge border-top">
+
+                       
+                        <!-- number of foods sold -->
+                        <div class="{% if show_foods %}col-sm-3{% else %}col-sm-6{% endif %}">
+                          <a href="" class="innerAll text-center display-block text-muted" data-original-title="{{each.food_no}} foods" rel="tooltip"><i class="fa fa-fw fa fa-cutlery"></i> {{each.food_no}}</a>
+                        </div>
+
+                        <!-- number of vouches across all produce --> 
+                        <div class="{% if show_foods %}col-sm-3{% else %}col-sm-6{% endif %}">
+                          <a href=""  rel="tooltip" title="{{each.total_vouches}} number of vouches for all produce"  class="innerAll text-center display-block text-muted"><i class="fa fa-fw fa-thumbs-o-up"></i> {{each.total_vouches}}</a>
+                        </div> 
+
+                        <!-- number of trade connections --> 
+                        <div class="{% if show_foods %}col-sm-3{% else %}col-sm-6{% endif %}">
+                          <a href=""  rel="tooltip" title="{{each.trade_conn_no}} of trade connections" class="innerAll text-center display-block text-muted"><i class="fa fa-fw fa-link"></i> {{each.trade_conn_no}}</a>
+                        </div>
+
+                        <!-- number of group membershpis -->  
+                        <div class="{% if show_foods %}col-sm-3{% else %}col-sm-6{% endif %}">
+                          <a href=""  rel="tooltip" title="Member of {{each.org_conn_no}} groups or organisations"  class="innerAll text-center display-block text-muted"><i class="fa fa-fw fa-group"></i> {{each.org_conn_no}}</a>
+                        </div> 
+
+                      </div>
  
-                        <span rel="tooltip" title="{{each.food_no}} foods" class="pull-left {% if each.food_no = 0 %}zero{% endif %}"><i class="fa fa-cutlery"></i> {{each.food_no}}</span>
 
-                        <span rel="tooltip" title="{{each.trade_conn_no}} connections" class=" {% if each.trade_conn_no = 0 %}zero{% endif %}"><i class="fa fa-link"></i> {{each.trade_conn_no}}</span>
-
-                        <span rel="tooltip" title="{{each.org_conn_no}} organisations" class="pull-right {% if each.org_conn_no = 0 %}zero{% endif %}"><i class="fa fa-group"></i> {{each.org_conn_no}}</span> 
-
-                        </a>
-                      </p>
-
-
-                    </div>
-                    {% if each.type|length == 0 or each.type|first == '' %}
-                    {% else %}
-                    <div class="numbers type text-center clearfix">
-                      <div class="tags tags-biztype ">  
-                        {% for e in each.type %}
+                      {% if each.type|length == 0 or each.type|first == '' %}
+                      {% else %}
+                      <div class="bg-gray border-top innerAll half text-center">  
+                       {% for e in each.type %}
                        <a href="/activity/?b={{e}}">{{e}}</a>
                        {% endfor %}
-                      </div>
-                    </div>
-                    {% endif %}
+                      </div> 
+                      {% endif %} 
+ 
                   </div> 
                   {% endif %}
                   {% endfor %}
@@ -755,6 +734,7 @@
         {% else %}
           <p>Please contact us directly to discuss deliveries.</p>
         {% endif %}
+        </div>
 
 <!--  start we buy -->
 
@@ -806,13 +786,14 @@
  
           {% endif %} 
 
-      <div class="innerB button-group" id="filterFoods" data-filter-group="foodtype">
-        <button class="btn btn-default active" data-filter="*">Show all</button> 
+      <div class="innerB" id="filterFoods" data-filter-group="foodtype">
+      <div class="btn-group">
+        <button type="button" class="btn btn-default active" data-filter="*">Show all</button> 
         
         {% for eachfood in all_buying_foods %}
-          <button class="btn btn-default" data-filter=".{{eachfood.parent_food|slugify}}">{{eachfood.parent_food}}</button> 
+          <button type="button" class="btn btn-default" data-filter=".{{eachfood.parent_food|slugify}}">{{eachfood.parent_food}}</button> 
         {% endfor %}
-
+        </div>
       </div>
                     <div class="clearfix isotope"  id="foods"> 
                             <div class="row">
@@ -908,7 +889,7 @@
                                       <div class="pull-right">
 
                                         {% for eachdet in eachfood.recomm_details %}
-                                          <img class="pull-left" style="margin:0px 4px 0 0; width:25px" src={{eachdet.photo}} rel="tooltip" title="{{eachdet.name}}"/> 
+                                          <img class="pull-left img-circle" style="cla" src={{eachdet.photo}} rel="tooltip" title="{{eachdet.name}}"/> 
                                         {% endfor %}
                                         {% ifnotequal eachfood.vouch_count 0 %} 
                                           <span class="badge badge-default" style="margin:3px 4px 0 0;" rel="tooltip" title="{{eachfood.vouch_count}} recommendations on {{eachfood.food_name}}">{{eachfood.vouch_count}}</span>
@@ -945,7 +926,7 @@
                         </div>
 
       <!-- FOOD LIST --> 
-      <table class="table table-list-search table-condensed">
+      <table class="table table-list-search table-condensed hidden">
         {% if not user.is_authenticated %}
           <thead>
             <tr>
@@ -1010,7 +991,7 @@
                    
                    {% for eachdet in eachfood.recomm_details %}
                     <div class="pull-right">
-                      <img class="pull-left" style="margin:0px 4px 0 0; width:25px" src={{eachdet.photo}} rel="tooltip" title="{{eachdet.name}}"/>
+                      <img class="pull-left img-circle" style="margin:0px 4px 0 0; width:25px" src={{eachdet.photo}} rel="tooltip" title="{{eachdet.name}}"/>
                     </div>
                    {% endfor %}
                  {% ifnotequal eachfood.vouch_count 0 %}
@@ -1050,6 +1031,11 @@
 {% endif %}
 
 
+
+        <div id="tabUpdates" class="tab-pane widget-body-regular">
+          <h5 class="innerAll margin-none border-bottom bg-gray">Recent News
+           {% if updates_count != 0 %}<span class="badge pull-right">{{updates_count}}</span>{% endif %}
+           </h5>
           <div class="widget-body padding-none">
               
 
@@ -1127,12 +1113,7 @@
 
                       {% if intro_video %}
                         <a href="">
-                            <img src="{{pic_url}}" width="120" alt="" class="img-circle img-thumbnail" style=" 
-float: left;
-height: 70px;
-width: 70px;
-position: relative;
-top: -24px;" >
+                            <img src="{{pic_url}}" width="120" alt="" class="img-circle img-thumbnail" style=" float: left;height: 70px;width: 70px;position: relative; top: -24px;" >
                         </a>
                       {% else %}
                         <a href="">
@@ -1146,7 +1127,7 @@ top: -24px;" >
                         <div class="innerB">
                           {% if type_user|length == 0 or type_user|first == '' %}
                           {% else %}
-                          <span class=" ">  
+                          <span class="tags tags-biztype  ">  
                             {% for eachtype in type_user %}
                            <a href="/activity/?b={{eachtype}}">{{eachtype}}</a>
                            {% endfor %}
@@ -1178,7 +1159,7 @@ top: -24px;" >
 
                         <!-- number of vouches across all produce --> 
                         <div class="{% if show_foods %}col-sm-3{% else %}col-sm-6{% endif %}">
-                          <a href=""  rel="tooltip" title="{{userprof.VOUCH_COUNT}} number of vouches for all produce"  class="innerAll text-center display-block text-muted"><i class="fa fa-fw fa-thumbs-o-up"></i> {{total_vouches}}</a>
+                          <a href=""  rel="tooltip" title="{{userprof.total_vouches}} number of vouches for all produce"  class="innerAll text-center display-block text-muted"><i class="fa fa-fw fa-thumbs-o-up"></i> {{total_vouches}}</a>
                         </div> 
 
                         <!-- number of trade connections --> 
@@ -1358,7 +1339,7 @@ top: -24px;" >
         <a href="https://www.duedil.com/company/{{company_num}}"><i class="fa fa-legal"></i></a>  
       {% endif %}  
 
-<div class="widget text-center">
+<div class="widget text-center hidden">
   <div class="innerAll text-white">
 
     <form id="contact" method="post" class="form" role="form">
@@ -1499,9 +1480,9 @@ top: -24px;" >
               <form accept-charset="UTF-8" action="." role="form" method="POST" enctype="multipart/form-data">
                {% csrf_token %}
                <div class="row">
-                <div class="col-sm-6"> 
+                <div class="col-sm-4"> 
                   <a href="#" rel="tooltip" title="Change the photo">
-                    <img src="" class="img-responsive img-thumbnail" id="food_photo" style="width:100%;height:200px; background: #ccc url('/static/images/upload.gif'); background-size: cover;"> 
+                    <img src="" class="img-responsive img-thumbnail" id="food_photo" style="width:100%;height:150px; background: #ccc url('/static/images/upload.gif'); background-size: cover;"> 
                   </a>
                   <!-- show this in another modal? -->
                   <!-- can we use html5 drag and drop to upload? -->
@@ -1516,7 +1497,7 @@ top: -24px;" >
                   <!-- end code -->
                 </div>
                 
-                <div class="col-sm-6">
+                <div class="col-sm-8">
 
                   <div class="form-group">
                     {{form.food_description}}
@@ -1634,51 +1615,8 @@ top: -24px;" >
     </div>
     </div>
 
-    <div class="row">
-     <div class="col-md-12">
-        <ul class="nav nav-tabs">
-
-
-          <li class="active">
-            <a href="#connections" data-toggle="tab" onclick="set_width()">
-            <span class="visible-xs pull-left right5"><i class="fa fa-link"></i></span> 
-            <span class="visible-sm pull-left right5">Connect.</span> 
-            <span class="visible-md  pull-left right5">Connections</span> 
-            <span class="visible-lg  pull-left right5"><i class="fa fa-link"></i> Connections</span> 
-
-            {% if userprof.trade_connections_no != 0 %}<span class="badge">{{userprof.trade_connections_no}}</span>{% endif %}</a> 
-          </li>
-
-          {% if show_foods %}
-          <li><a href="#produce" data-toggle="tab">
-
-            <span class="visible-xs pull-left right5"><i class="fa fa-sign-out"></i></span> 
-            <span class="visible-sm pull-left right5">We sell</span> 
-            <span class="visible-md  pull-left right5">We sell...</span> 
-            <span class="visible-lg  pull-left right5"><i class="fa fa-sign-out"></i> We sell...</span>
-
-           
- 
-          {% if userprof.food_no != 0 %}<span class="badge">{{userprof.food_no}}</span>{% endif %}</a></li>
-          {% endif %} 
- 
-          <li class="dropdown">
-            <a href="#" id="more" class="dropdown-toggle" data-toggle="dropdown">More <b class="caret"></b></a>
-            <ul class="dropdown-menu" role="menu" aria-labelledby="more">
-              <li><a href="#organisations" data-toggle="tab">Organisations {% if userprof.organisation_connection_no != 0 %}<span class="badge pull-right">{{userprof.organisation_connection_no}}</span>{% endif %}</a></li> 
-
-              
-              <li><a href="#customers" tabindex="-1" data-toggle="tab">Customers {% if customers|length != 0 %}<span class="badge pull-right">{{customers|length}}</span>{% endif %}</a></li> 
-            </ul>
-          </li>
-        </ul>
-     </div>
-    </div>
- 
-
-   
-    </div><!-- col --> 
- 
+        
+    
 
     
      
@@ -1687,7 +1625,6 @@ top: -24px;" >
    {% block footer %}
       {% include "includes/not_logged_in_modal.html" %}
 <script src="/static/js/chosen.jquery.min.js" type="text/javascript"></script>
-  <script src="http://cdn.embed.ly/jquery.embedly-3.1.1.min.js" type="text/javascript"></script>
   <script src="/static/css/docsupport/prism.js" type="text/javascript" charset="utf-8"></script>
      <script src="{% static "js/hogan-2.0.0.js" %}"></script>
      <script src="{% static "js/typeahead.min.js" %}"></script>
@@ -1798,7 +1735,7 @@ $('#connections').on('click', '.tt-suggestion', function(){
     $('#my_invite_twitter').click();
   }
   else{
-    third_party_connection('{{profile_id}}', buss_var)
+    third_party_connection('{{profile_id}}', buss_var);
     $('#new_buss_typeahead').val('');
     $('.tt-hint').val('');
   }
@@ -1897,24 +1834,30 @@ customers = {{customers_str | safe}};
     </script>
      <script src="{% static "js/business-map.js" %}"></script>
      <script type="text/javascript">
-        $('a').embedly({
-          display: function(obj){
-            // Overwrite the default display.
-            if (obj.type === 'video' || obj.type === 'rich'){
-              // Figure out the percent ratio for the padding. This is (height/width) * 100
-              var ratio = ((obj.height/obj.width)*100).toPrecision(4) + '%'
-         
-              // Wrap the embed in a responsive object div. See the CSS here!
-              var div = $('<div class="responsive-object">').css({
-                paddingBottom: ratio
-              });
-         
-              // Add the embed to the div.
-              div.html(obj.html);
-         
-              // Replace the element with the div.
-              $(this).replaceWith(div);
-            }
+        $(".widget-head ul li").on("click", function(){ 
+          id = $(this).attr('id');
+          if (id == 'liBuysFrom' || id == 'liSellsTo'){
+
+              $('#connections').addClass('active');
+              $('#connections').removeClass('hidden');
+
+              if (id == 'liBuysFrom'){
+                $('#option1_conn').attr('checked','checked');
+                $('#option2_conn').removeAttr('checked');
+                $('#li1_conn').addClass('active');
+                $('#li2_conn').removeClass('active');
+                
+              }
+              else{
+                $('#option1_conn').removeAttr('checked');
+                $('#option2_conn').attr('checked','checked');
+                $('#li1_conn').removeClass('active');                
+                $('#li2_conn').addClass('active');
+              }
+          }
+          else{
+              $('#connections').addClass('hidden');
+              $('#connections').removeClass('active');
           }
         });
      </script>

@@ -14,16 +14,20 @@
             <div class="  pull-right" style="margin-left: 5px;">
   
 
-              <a type="button" class="  messagebtn text-muted"><i class="fa fa-envelope fa-lg fa-fw"></i></button> 
-
               <a type="button" class="dropdown-toggle" data-toggle="dropdown">
                 <i class="fa fa-fw fa-cog fa-lg"></i>
                 <span class="sr-only">Toggle Dropdown</span>
               </a>
 
+              {% if result_type == "status" %} 
               <a type="button" class="btn btn-primary btn-xs" href="/{{result.user.username}}/post/{{result.tweetuid}}">
                 <i class="fa fa-arrow-right fa-lg" style="color:#fff;"></i> 
               </a>
+              {% else %}
+              <a type="button" class="btn btn-primary btn-xs" href="/{{result.user.username}}">
+                <i class="fa fa-arrow-right fa-lg" style="color:#fff;"></i> 
+              </a>
+              {% endif %}
 
               <ul class="dropdown-menu" role="menu">  
                 <li><a href="http://www.facebook.com/sharer/sharer.php?u=http://foodtrade.com/{% if result_type == "status" %}{{result.user.username}}/post/{{result.tweetuid}}{% else %}profile/{{result.user.username}}{% endif %}" target="_blank"><i class="fa fa-facebook fa-fw facebook"></i> Share on Facebook</a></li>
@@ -67,21 +71,53 @@
             </div>
 
             <!-- status --> 
-            <div class="media margin-none status" style="background: url('{{result.user.banner_url}}');" />  
+            <div class="media margin-none status" {% if result.result_class = 'business profile' %} style="background: url('{{result.user.banner_url}}'); {% endif %}" />  
 
-            {% if result.user.intro_video %}
+            {% if result.result_class = 'business profile' %}  
 
-              <div style="height: 300px">
-                {{result.user.intro_video|safe}}
-              </div>
+              {% if result.user.intro_video %}
+              <div class="content" style="background:  url('{{result.user.banner_url}}');">
+               
+                <div style="height: 300px">
+                  {{result.user.intro_video|safe}}
+                </div>
 
-            {% endif %}
 
+                <div class="text bg-white-wash innerAll half"> 
+                  <p class="">{{result.user.description|truncatechars:200}}</p>
+                </div>
+              </div>  
+              {% else %} 
+
+              <div class="content" style="background:  url('{{result.user.banner_url}}');">
+                <div class="text-center innerAll">
+                  <a href="/profile/{{result.user.username}}"><img src="{{result.user.profile_img}}" alt="{{result.user.name}}" 
+                  class="img-thumbnail img-responsive" style="width:73px; height:73px;" /></a>
+                </div> 
+
+                <div class="text bg-white-wash innerAll half"> 
+                  <p class="">{{result.user.description|truncatechars:200}}</p>
+                </div>
+              </div>  
+
+            {% endif %} 
+ 
+      
+            {% else %}
+
+
+            {% if result.result_class = 'organisation profile' %}  
+            <div class="innerAll text-center">
+              <img src="{{result.user.profile_img}}" alt="{{result.user.name}}" class="img-responsive img-circle img-thumbnail" style="width:73px;" />
+            </div>
+            {% endif %} 
+
+              {% if result.status %}
               <div class="lead innerAll">
                 {{result.status|recognise_name|safe}}
               </div>
+              {% endif %}
 
- 
               <!-- images !-->
               {% if result_type == "status" %}
               <div class="media innerAll half">
@@ -92,11 +128,13 @@
               {% endif %}
               <!-- /images !-->
 
+            {% endif %}
+
             </div>
 
-            <div class="timeline-bottom innerAll border-top">
+            <div class="timeline-bottom innerAll border-top clearfix">
 
-             {% if result.distance_text != "NA" %}
+              {% if result.distance_text != "NA" %}
                <a href="http://maps.google.com/maps?saddr={{userinfo.lat}},{{userinfo.lon}}&daddr={{result.location.coordinates.1}},{{result.location.coordinates.0}}" 
                   target="_blank" data-placement="top" data-toggle="tooltip" 
                   class="pull-right" 
@@ -113,27 +151,33 @@
                  <i class="fa fa-clock-o  fa-fw"></i> {{result.time_elapsed}} ago</a>
                  <br />
               {% endif %}  
+ 
+              <!-- tags --> 
+              {% if type_user|length == 0 or type_user|first == '' %}
+                {% else %}
+                {% if result.sign_up_as == "Business" %} 
+                <i class="fa fa-home fa-fw"></i>
+                  {% for tag in result.type_user  %}
+                    <a href="/activity/?b={{tag}}" class="innerR half">{{tag}}</a>
+                  {% endfor %}  
+                {% endif %}
+              {% endif %}   
 
-
-            <!-- tags --> 
-            {% if type_user|length == 0 or type_user|first == '' %}
-              {% else %}
-              {% if result.sign_up_as == "Business" %} 
-              <i class="fa fa-home fa-fw"></i>
-                {% for tag in result.type_user  %}
-                  <a href="/activity/?b={{tag}}" class="">{{tag}}</a>,
-                {% endfor %}  
-              {% endif %}
-            {% endif %}  
-
-             
-
+              {% if result_type == "status" %} 
               <span class="hidden-sm hidden-xs truncate100 address" >
                 <i class="fa fa-map-marker fa-fw"></i>
                 {{result.user.address}}
               </span>
+              {% endif %}
  
-            
+            </div> 
+
+
+
+
+
+
+
  
 
           {% if result.replies %}
@@ -154,10 +198,9 @@
 
 
 
-            <div class="innerAll border-top bg-gray eply"> 
+            <div class="innerAll border-top bg-gray {% if not result_type == "status" %} reply{% endif %}"> 
                 <input class="form-control input-sm enterhandler reply_input" {% if result_type == "status" %}data-tweet-id = "{{result.tweetuid}}" {% endif %} data-main = "{{position}}"   {% if not userinfo.username %} data-toggle="tooltip" data-placement="top" title="Please login to use this feature." {% endif %} type="text" placeholder="Reply to {{result.mentions}}" data-mentions = "{{result.mentions}}"> 
             </div>
         </div>
     </div>
-    </div> 
   </li>   
