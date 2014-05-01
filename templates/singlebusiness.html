@@ -163,12 +163,13 @@
         <li class="premium"><a class="glyphicons group" rel="tooltip" title="Premium account holders only - upgrade from just &pound;45/yr" href="#tabTeam" data-toggle="tab"><i></i><span>People</span>
         </a>
         </li> -->
-        <li class="premium"><a class="glyphicons google_maps" rel="tooltip" title="Premium account holders only - upgrade from just &pound;45/yr" href="#tabCustomers" data-toggle="tab"><i></i><span>Customers</span> 
-       <!--  <div class="ribbon-wrapper small">
-            <div class="ribbon danger">Upgrade</div>
-        </div> -->
-        </a></li> 
+        <li class="premium"><a class="glyphicons google_maps" rel="tooltip" title="Premium account holders only - upgrade from just &pound;45/yr" href="#tabCustomers" data-toggle="tab"><i></i><span>Customers</span>  
+        </a>
+
+        </li> 
         <li class="premium"><a class="glyphicons bullhorn" rel="tooltip" title="Premium account holders only - upgrade from just &pound;45/yr" href="#tabUpdates" data-toggle="tab"><i></i><span>Trade</span> 
+
+        {% if updates_count != 0 %}<span class="label label-default pull-number">{{updates_count}}</span>{% endif %}
        <!--  <div class="ribbon-wrapper small">
             <div class="ribbon danger">Upgrade</div>
         </div> -->
@@ -209,7 +210,7 @@
       <div class="tab-content">
        
         {% if show_foods %}
-          <div  class="tab-pane active widget-body-regular" id="tabProduce">
+          <div  class="tab-pane active " id="tabProduce">
   
           {% if user.is_authenticated %}
           <div class="row" style="padding: 20px 0;"> 
@@ -503,7 +504,7 @@
         <!-- // Tab content END -->
       
         <!-- Tab content -->
-        <div id="tabStockists" class="tab-pane widget-body-regular">        
+        <div id="tabStockists" class="tab-pane ">        
                       
 <div id="all-connections">
 
@@ -583,12 +584,12 @@
         <!-- // Tab content END -->
 
 
-        <div id="tabTeam" class="tab-pane widget-body-regular">
+        <div id="tabTeam" class="tab-pane ">
 
         </div>
         
         <!-- Tab content -->
-        <div id="tabSuppliers" class="tab-pane widget-body-regular">                      
+        <div id="tabSuppliers" class="tab-pane ">                      
         <div id="all-connections" class="clearfix">
           {% if userprof.c_conn_no != 0 %}  
            <div class="clearfix isotope js-isotope" data-isotope-options='{ "itemSelector": ".card" }' id="seller-cards">
@@ -662,7 +663,7 @@
         <!-- // Tab content END -->
         
         <!-- Tab content -->
-        <div id="tabMemberships" class="tab-pane widget-body-regular">
+        <div id="tabMemberships" class="tab-pane ">
           {% if user.is_authenticated %}
             <div class="well well-s m">  
             <div class="form-inline"  role="form">
@@ -706,24 +707,11 @@
         </div>
         <!-- // Tab content END -->
  
- 
-
-        <div id="tabUpdates" class="tab-pane widget-body-regular">
-          <h5 class="innerAll margin-none border-bottom bg-gray">Recent News
-           {% if updates_count != 0 %}<span class="badge pull-right">{{updates_count}}</span>{% endif %}
-           </h5>
-
-           {% if deliverables %} 
-          {{deliverables|linebreaks}}
-        {% else %}
-          <p>Please contact us directly to discuss deliveries.</p>
-        {% endif %}
-        </div>
-
+  
 <!--  start we buy -->
 
 {% if we_buy %}
-<div  class="tab-pane active widget-body-regular" id="tabBuy">
+<div  class="tab-pane active " id="tabBuy">
   
           {% if user.is_authenticated %}
           <div class="row" style="padding: 20px 0;"> 
@@ -1016,12 +1004,14 @@
 
 
 
-        <div id="tabUpdates" class="tab-pane widget-body-regular">
-          <h5 class="innerAll margin-none border-bottom bg-gray">Recent News
-           {% if updates_count != 0 %}<span class="badge pull-right">{{updates_count}}</span>{% endif %}
-           </h5>
+        <div id="tabUpdates" class="tab-pane "> 
           <div class="widget-body padding-none">
-              
+                  {% if deliverables %} 
+            {{deliverables|linebreaks}}
+          {% else %}
+            <p>Please contact us directly to discuss deliveries.</p>
+          {% endif %}
+
 
               {% if user.is_authenticated %}
 
@@ -1045,7 +1035,7 @@
 
 
 
-        <div id="tabCustomers" class="tab-pane widget-body-regular">
+        <div id="tabCustomers" class="tab-pane ">
   
           {% if customers|length != 0 %}<span class="badge pull-right">{{customers|length}}</span>{% endif %}
 
