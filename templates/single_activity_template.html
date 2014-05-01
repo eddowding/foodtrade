@@ -100,9 +100,17 @@
                 </div>
               </div>  
 
-              {% endif %} 
+            {% endif %} 
+ 
       
             {% else %}
+
+
+            {% if result.result_class = 'organisation profile' %}  
+            <div class="innerAll text-center">
+              <img src="{{result.user.profile_img}}" alt="{{result.user.name}}" class="img-responsive img-circle img-thumbnail" style="width:73px;" />
+            </div>
+            {% endif %} 
 
               {% if result.status %}
               <div class="lead innerAll">

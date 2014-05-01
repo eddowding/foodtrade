@@ -1242,50 +1242,55 @@
       {% endifnotequal %}
 
           <div class="btn-group btn-block">
-            <button class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" style="width:50%;" ><i class="fa fa-share"></i> Share</button>
-              <ul class="dropdown-menu ">
-               <li> <a href="#" class="" onclick="window.open(
-                'https://www.facebook.com/sharer/sharer.php?s=100&amp;p[url]='+encodeURIComponent('{{ request.build_absolute_uri }}') +'&amp;p[images][0]='+encodeURIComponent('{{pic_url}}')+'&amp;p[title]='+encodeURIComponent('{{name}} on FoodTrade')+'&amp;p[summary]='+encodeURIComponent('Hey, see my profile on FoodTrade')+'&amp;u='+encodeURIComponent('{{ request.build_absolute_uri }}') +'&amp;t='+encodeURIComponent('{{name}} on FoodTrade'),
-                      'facebook-share-dialog', 
-                      'width=626,height=436,top='+((screen.height - 436) / 2)+',left='+((screen.width - 626)/2 )); 
-                    return false;">
+            <div class="btn-group"  style="width:50%;">
+              <button type="button"  style="width:100%;" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown"  ><i class="fa fa-share"></i> Share</button>
+                <ul class="dropdown-menu ">
+                 <li> <a href="#" class="" onclick="window.open(
+                  'https://www.facebook.com/sharer/sharer.php?s=100&amp;p[url]='+encodeURIComponent('{{ request.build_absolute_uri }}') +'&amp;p[images][0]='+encodeURIComponent('{{pic_url}}')+'&amp;p[title]='+encodeURIComponent('{{name}} on FoodTrade')+'&amp;p[summary]='+encodeURIComponent('Hey, see my profile on FoodTrade')+'&amp;u='+encodeURIComponent('{{ request.build_absolute_uri }}') +'&amp;t='+encodeURIComponent('{{name}} on FoodTrade'),
+                        'facebook-share-dialog', 
+                        'width=626,height=436,top='+((screen.height - 436) / 2)+',left='+((screen.width - 626)/2 )); 
+                      return false;">
 
-                  <i class="fa fa-facebook-square fa-2x"></i> Share on facebook 
-                </a></li><li>
-                <a href="#" class="  " onclick="window.open(
-                      'https://twitter.com/share?url='+encodeURIComponent('{{ request.build_absolute_uri }}')+'&amp;text='+encodeURIComponent('{{screen_name}} on @foodtradeHQ') + '&amp;count=none/', 
-                      'twitter-share-dialog', 
-                      'width=626,height=436,top='+((screen.height - 436) / 2)+',left='+((screen.width - 626)/2 )); 
-                    return false;">
-                  <i class="fa fa-twitter-square fa-2x"></i> Tweet this
-                </a></li><li>
-    
-                <a class=" " href="http://pinterest.com/pin/create/button/?url={{ request.build_absolute_uri|urlencode }}&media={{pic_url|urlencode}}&description={{screen_name|urlencode}}{{' on FoodTrade'|urlencode}}" class="pin-it-button" count-layout="horizontal">
-                  <i class="fa fa-pinterest-square fa-2x"></i> Pin to pinterest
-                </a> </li><li>
-                <a  class="" href="https://plus.google.com/share?url={{ request.build_absolute_uri|urlencode }}">
-                  <i class="fa fa-google-plus-square fa-2x"></i> Share on Google+
-                </a></li><li>
-                <a  class=" " href="http://www.tumblr.com/share" title="Share on Tumblr">
-                  <i class="fa fa-tumblr-square fa-2x"></i> Post to Tumblr
-                </a>
-                   </li><li>
-                <a  class=" " href="http://www.linkedin.com/shareArticle?mini=true&url={{ request.build_absolute_uri|urlencode}}&title={{screen_name}} on FoodTrade&summary=Hey, view my profile on Foodtrade.&source=">
-                  <i class="fa fa-linkedin-square fa-2x"></i> Share on LinkedIn
-                </a></li> 
-                <script type="text/javascript" src="http://platform.tumblr.com/v1/share.js"></script>
-              </ul>
+                    <i class="fa fa-facebook-square fa-2x"></i> Share on facebook 
+                  </a></li><li>
+                  <a href="#" class="  " onclick="window.open(
+                        'https://twitter.com/share?url='+encodeURIComponent('{{ request.build_absolute_uri }}')+'&amp;text='+encodeURIComponent('{{screen_name}} on @foodtradeHQ') + '&amp;count=none/', 
+                        'twitter-share-dialog', 
+                        'width=626,height=436,top='+((screen.height - 436) / 2)+',left='+((screen.width - 626)/2 )); 
+                      return false;">
+                    <i class="fa fa-twitter-square fa-2x"></i> Tweet this
+                  </a></li><li>
+      
+                  <a class=" " href="http://pinterest.com/pin/create/button/?url={{ request.build_absolute_uri|urlencode }}&media={{pic_url|urlencode}}&description={{screen_name|urlencode}}{{' on FoodTrade'|urlencode}}" class="pin-it-button" count-layout="horizontal">
+                    <i class="fa fa-pinterest-square fa-2x"></i> Pin to pinterest
+                  </a> </li><li>
+                  <a  class="" href="https://plus.google.com/share?url={{ request.build_absolute_uri|urlencode }}">
+                    <i class="fa fa-google-plus-square fa-2x"></i> Share on Google+
+                  </a></li><li>
+                  <a  class=" " href="http://www.tumblr.com/share" title="Share on Tumblr">
+                    <i class="fa fa-tumblr-square fa-2x"></i> Post to Tumblr
+                  </a>
+                     </li><li>
+                  <a  class=" " href="http://www.linkedin.com/shareArticle?mini=true&url={{ request.build_absolute_uri|urlencode}}&title={{screen_name}} on FoodTrade&summary=Hey, view my profile on Foodtrade.&source=">
+                    <i class="fa fa-linkedin-square fa-2x"></i> Share on LinkedIn
+                  </a></li> 
+                  <script type="text/javascript" src="http://platform.tumblr.com/v1/share.js"></script>
+                </ul>
+              </div>
 
               <button class="btn btn-default btn-sm" style="width:50%;"><i class="fa fa-star-o"></i> Favourite</button>
           </div>
 
+          <div class="text-center innerT">
 
-                  
- 
-                      followers: {{followers_count}}<br />
-                      following: {{friends_count}}<br />
+            <span class="label label-default label-stroke">{{followers_count}}</span> followers
 
-                      
+            <i class="fa fa-fw fa-twitter fa-lg" style="color: #35B8EB;"></i>
+
+            follows
+            <span class="label label-default label-stroke">{{friends_count}}</span>  
+   
+          </div>
 
                                 
                                 </div>

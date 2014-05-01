@@ -839,11 +839,14 @@ hid den
   {% if not request.user.is_authenticated %} 
   <div class="user-action pull-right menu-right-hidden-xs menu-left-hidden-xs border-left">
     <div class="dropdown username pull-left">
+      <a type="button" class="btn btn-success navbar-btn navbar-right" style="margin-right: 55px;" data-toggle="modal" data-target="#modal_signup">
+        <i class="fa fa-user fa-fw"></i><strong>Sign up</strong>
+      </a>
       <a class="dropdown-toggle" data-toggle="dropdown" href="#">Login
       </a> 
        <ul class="dropdown-menu pull-right" style="padding: 15px;min-width: 250px;">
           <li>
-             <a href="{% provider_login_url "twitter" process="login" %}"><button class="btn btn-primary btn-block" style="background: #5398D8;" id="sign-in-twitter" value="Sign In with Twitter">Sign In with Twitter</button></a>
+             <a href="{% provider_login_url "twitter" process="login" %}"><button class="btn btn-primary btn-block" style="background: #5398D8; border-color: #4B80B5;" id="sign-in-twitter" value="Sign In with Twitter">Sign In with Twitter</button></a>
           </li>
           <li class="divider"></li>
           <li>
@@ -1170,14 +1173,57 @@ hid den
               <h4 class="modal-title" id="myModalLabel">Signup to FoodTrade</h4>
             </div>
             <div class="modal-body">
-              <p><strong>Twitter is about to ask for some permissions from you. </strong></p><p>We want to assure you that we will only post tweets for you when you say so.</p>
-   
+            <div class="row">
+
+              <div class="col-sm-6   innerAll">
+              <h3>Ou</h3>
+              <p><strong>Twitter is about to ask you to give FoodTrade quite a few permissions (shown on the right)</strong></p>
+               
+              <ul>
+              <li></li>
+              <li></li>
+              <li></li>
+              <li></li>
+              <li></li>
+              <li></li>
+              <li>we will only post tweets for you when you say so.</li>
+              </ul>
+
+              </div>
+
+              <div class="col-sm-6 border-left innerAll"> 
+
+              <div class="text-center">
+                <img alt="" class="app-icon block-center" src="https://pbs.twimg.com/client_application_images/1239729/9x9.png" title="FoodTrade Everywhere by FoodTrade ">
+                <h4 class=""> 
+                  FoodTrade Everywhere
+                </h4>
+              </div>
+
+              <div class="permissions allow">
+                <p>This application <strong style="color: #85B963;">will be able to</strong>:</p>
+                <ul>
+                    <li>Read Tweets from your timeline.</li>
+                  <li>See who you follow, and follow new people.</li>
+                  <li>Update your profile.</li>
+                  <li>Post Tweets for you.</li>
+                </ul>
+              </div>
+              <div class="permissions deny">
+                <p>This application <strong style="color: #F1370A;">will not be able to</strong>:</p>
+                <ul> 
+                  <li>Access your direct messages.</li>
+                  <li>See your Twitter password.</li>
+                </ul>
+              </div>
+              </div> 
+   </div>
             </div>
             <div class="modal-footer"> 
               <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
               
           <!-- <a href="{% provider_login_url "twitter" process="login" %}" class="btn btn-lg btn-info btn-block"><i class="fa fa-twitter"></i> Continue Login</a> -->
-                       <a href="{% provider_login_url "twitter" process="login" %}"><button type="button" class="btn btn-primary btn-lg"><i class="fa fa-twitter"></i> Continue Registration</button></a>
+                       <a href="{% provider_login_url "twitter" process="login" %}"><button type="button" class="btn btn-primary"><i class="fa fa-twitter"></i> Continue Registration</button></a>
               
             </div>
           </div><!-- /.modal-content -->
