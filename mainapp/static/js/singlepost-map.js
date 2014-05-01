@@ -2,12 +2,10 @@ var map = new L.map('map', {
     center: new L.LatLng(map_lat,map_lon),
     crs: default_csr,
     zoom: default_zoom,
-      continuousWorld: false,
-        worldCopyJump: false,
+	continuousWorld: false,
+    worldCopyJump: false,
     layers: [current_base_layer]
 });
-
-
 
 
 

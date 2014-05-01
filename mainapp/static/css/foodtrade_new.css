@@ -38,10 +38,9 @@ input[type="text"]:focus, input[type="text"]:active, input[type="text"]:hover {
 #menu>div ul>li.category {
   color: #61AE32;
 }
-
-.well {
-  background: #fff;
-  border: 1px solid #aaa;
+ 
+.inner-4x.innerAll {
+  padding: 40px !important;
 }
 
 .help-block { 
@@ -278,6 +277,10 @@ input[type="text"]:focus, input[type="text"]:active, input[type="text"]:hover {
   color: #fff;
 }
 
+
+.widget-head {
+  background: #ddd !important;
+}
 
 
 /********************************/
