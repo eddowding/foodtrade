@@ -28,334 +28,112 @@
 
 {% block content %}
 {% load activity_tags %}
-<div id="activity_single"> 
+  <div id="activity_single">
+    <div class="col-sm-12" id="single">
 
 
-<div class="row">
-  <div class="col-lg-9 col-md-8">
-    <div class="timeline-cover">  
-      <div class="cover ">
-        <div class="top">
-          <div id="carousel-1" class="carousel slide"> 
-          <!-- Items -->
-            <div class="carousel-inner">
+<div class="widget">
+    <div class="row row-merge margin-none ">
+        <div class="col-md-12">
+            <div class="innerAll inner-4x">
+                <span class="text-large lead innerAll ">
 
-              <div class="item active">
-                <p class="lead" style="padding: 20px 0 0 0;">
                   {{parent_tweet.status|recognise_name|safe}}
-                </p>
-              </div> 
-
-            </div>     
-          </div> 
-        </div>
-        <ul class="list-unstyled">
-          <li>
-            <a href="#" data-target="#carousel-1" data-slide-to="1">
-              <span>Posted 7th May</span> 
-            </a>
-          </li>   
-     
-          {% if prof_subscribed %}
-          <li class="pull-right" style="background: #88BC62;"><a href="#">
-          <i class="fa fa-check" style="color: #fff;"></i>
-          <span>Verified</span></a>
-          </li> 
-          {% endif %} 
-        </ul>
-      </div>
-
-      <div class="widget cover image">  
-        <div class="widget-body padding-none margin-none"> 
-          <div class="innerAll"> 
-            <p class="lead margin-none">{{description}}</p>  
-            <div class="{% if loc.lat == -82.86275189999999 and loc.lon == -135.10000000000002 %} hidden {% endif %}">
-              <div class="meta">
-                {% if loc.lat == -82.86275189999999 and loc.lon == -135.10000000000002 %}
-                  <i class="fa fa-map-marker text-muted"></i> <a > NA</a>
-                  <i class="fa fa-location-arrow text-muted" style="margin-left: 20px;"></i> NA
-                {% else %}
-                <i class="fa fa-map-marker text-muted"></i> <a href="http://maps.google.com/maps?saddr={{loggedin_coord.lat}},{{loggedin_coord.lon}}&daddr={{loc.lat}},{{loc.lon}}" target="_blank" data-placement="top" data-toggle="tooltip" title="Get directions" class="" style="margin-right:20px;">
-                  {{parent_tweet.user.address}}
-                </a>   
-                <!-- if logged in or you've allows html5 browser location -->
-                <i class="fa fa-location-arrow text-muted"></i> {{parent_tweet.distance_text}}    
-                {% endif %} 
-              </div> <!-- meta --> 
-            </div>  
-          </div>
-          <div class="clearfix"></div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-
-
- <div class="col-md-4 col-lg-3">
-
-    <div class="widget">
-      {% if intro_video %}
-        <div style="width:100%; height: 200px;">{{intro_video|safe}}</div> 
-      {% endif %}
-
-      <div class="widget-body text-center">    
-
-      {% if intro_video %}
-        <a href="">
-            <img src="{{parent_tweet.user.profile_img}}" width="73" alt="" class="img-circle img-thumbnail" style=" float: left;height: 70px;width: 70px;position: relative; top: -24px;" >
-        </a>
-      {% else %}
-        <a href="">
-            <img src="{{parent_tweet.user.profile_img}}" width="73" alt="" class="img-circle img-thumbnail">
-        </a>
-      {% endif %}
-
-
-        <h3 class="margin-none">
-          {% ifequal parent_tweet.user.business_org_name None %}
-              {{parent_tweet.user.name}}
-          {% else %}
-              {% if parent_tweet.sign_up_as == "Business" and parent_tweet.user.business_org_name != '' or parent_tweet.sign_up_as == "Organisation" and parent_tweet.user.business_org_name != '' %}
-                {{parent_tweet.user.business_org_name}}
-              {% else %}
-                {{parent_tweet.user.name}}
-              {% endif %}  
-          {% endifequal %}
-        </h3> 
-          {% if parent_tweet.type_user|length == 0 or parent_tweet.type_user|first == '' %}
-          {% else %}
-          <span class="tags tags-biztype  ">  
-            {% for eachtype in parent_tweet.type_user %}
-           <a href="/activity/?b={{eachtype}}">{{eachtype}}</a>
-           {% endfor %}
-          </span> {% endif %}  
-
-          <h2 class="strong margin-none">{{name}}</h2>
-          <div class="innerB">
-            {% if type_user|length == 0 or type_user|first == '' %}
-            {% else %}
-            <span class="tags tags-biztype  ">  
-              {% for eachtype in type_user %}
-             <a href="/activity/?b={{eachtype}}">{{eachtype}}</a>
-             {% endfor %}
-            </span> {% endif %}  
-          </div> 
-
-
-            <button class="btn btn-primary btn-block" data-toggle="modal" data-target="#modal_contact">
-              Contact
-            </button>   
-       
-          
-        </div> 
-
- 
-              
-        <div class="border-top  innerAll">
- 
-          {% if user.is_superuser %}
-            <a href="/editprofile/{{username}}/" class="btn btn-primary btn-block">Edit</a>
-          {% endif %}
-
-      {% ifnotequal profile_id user_id %}
-       
-{% if user.is_authenticated %}      
-      <!-- if logged in users = individual --> 
-      {% ifequal loggedin_signupas "Individual" %}
-
-      <div class="btn-group btn-block" data-toggle="buttons">
-  {% if logged_customer %}
-      <label class="fa fa-smile-o text-muted btn btn-default btn-block active" style="width:100%;" title="{{userinfo.full_name}} is customer of {{name}}" >
-      <input type="checkbox" checked="checked" id="customer-chkbx" onchange="add_customer({{profile_id}}, {{user_id}})">I'm a customer!
-      {% else %}
-      <label class="fa fa-smile-o text-muted btn btn-default btn-block" style="width:100%;" title="{{userinfo.full_name}} is customer of {{name}}" >
-      <input type="checkbox" id="customer-chkbx" onchange="add_customer({{profile_id}}, {{user_id}})">I'm a customer!
-  {% endif %}
-      </label>      
-      </div>
-      {% endifequal %}
-      <!-- if logged in users = business --> 
-      {% ifequal loggedin_signupas "Business" %} 
-      <div class="btn-group btn-block " data-toggle="buttons">
-        <button class="btn btn-default btn-sm " style="background: url('{{userinfo.profileimg}}'); background-size: cover;width:10%;">&nbsp;</button>
-
-        {% if logged_conn == "seller"  or logged_conn == "both" %}
-                    
-        <label class="btn btn-default active btn-sm" rel="tooltip" style="width:40%;" title="{{userinfo.full_name}} buys from {{name}}"> 
-          <input type="checkbox" checked id="buy_from" onchange="conn_handler('buy_from', {{profile_id}})">buys from
-          {% else %}
-        <label class="btn btn-default btn-sm"  rel="tooltip" style="width:40%;"  title="{{userinfo.full_name}} buys from {{name}}"> 
-          <input type="checkbox" id="buy_from" onchange="conn_handler('buy_from', {{profile_id}})"> buys from
-          {% endif %}
-
-          {% comment %} 
-          <input type="checkbox" id="buy_from" onchange="conn_handler('buy_from', {{profile_id}})"> buys from
-          {% endcomment %}
-
-        </label>
-        <!-- showing active mode if button is selected -->
-        {% if logged_conn == "buyer" or logged_conn == "both" %}
-          
-        <label class="btn btn-default active btn-sm" rel="tooltip" style="width:40%;"  title="{{userinfo.full_name}} sells to {{name}}" > 
-          <input type="checkbox" checked id="sell_to" onchange="conn_handler('sell_to', {{profile_id}})"> sells to
-          {% else %}
-        <label class="btn btn-default btn-sm"  rel="tooltip" style="width:40%;"   title="{{userinfo.full_name}} sells to {{name}}" > 
-          <input type="checkbox" id="sell_to" onchange="conn_handler('sell_to', {{profile_id}})"> sells to
-          {% endif %}
-
-          {% comment %}
-          <input type="checkbox" id="sell_to" onchange="conn_handler('sell_to', {{profile_id}})"> sells to
-          {% endcomment %}
-
-        </label> 
-
-        <button class="btn btn-default btn-sm"  style="background: url('{{pic_url}}'); background-size: cover; width:10%;">&nbsp;</button>
-      </div>
-
-      {% endifequal %}
-
-          
-           
-          {% else %}
-                <!-- if not logged in show login prompt -->
-          <div class="btn-group btn-block" rel="tooltip" data-placement="top" title="Login to connect to {{name}}">
-              <button class="btn btn-default" style="width:50%;" disabled>
-                    Buy from</button>
-          <button class="btn btn-default"  style="width:50%;" disabled>
-                    Sell to</button>
-          </div>
-                 
-          {% endif %}
-      {% endifnotequal %}
-
-          <!-- share -->
-          <div class="btn-group btn-block">
-            <div class="btn-group"  style="width:50%;">
-              <button type="button"  style="width:100%;" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown"  ><i class="fa fa-share"></i> Share</button>
-              <ul class="dropdown-menu ">
-               <li> <a href="#" class="" onclick="window.open(
-                'https://www.facebook.com/sharer/sharer.php?s=100&amp;p[url]='+encodeURIComponent('{{ request.build_absolute_uri }}') +'&amp;p[images][0]='+encodeURIComponent('{{pic_url}}')+'&amp;p[title]='+encodeURIComponent('{{name}} on FoodTrade')+'&amp;p[summary]='+encodeURIComponent('Hey, see my profile on FoodTrade')+'&amp;u='+encodeURIComponent('{{ request.build_absolute_uri }}') +'&amp;t='+encodeURIComponent('{{name}} on FoodTrade'),
-                      'facebook-share-dialog', 
-                      'width=626,height=436,top='+((screen.height - 436) / 2)+',left='+((screen.width - 626)/2 )); 
-                    return false;">
-
-                  <i class="fa fa-facebook-square fa-2x"></i> Share on facebook 
-                </a></li><li>
-                <a href="#" class="  " onclick="window.open(
-                      'https://twitter.com/share?url='+encodeURIComponent('{{ request.build_absolute_uri }}')+'&amp;text='+encodeURIComponent('{{screen_name}} on @foodtradeHQ') + '&amp;count=none/', 
-                      'twitter-share-dialog', 
-                      'width=626,height=436,top='+((screen.height - 436) / 2)+',left='+((screen.width - 626)/2 )); 
-                    return false;">
-                  <i class="fa fa-twitter-square fa-2x"></i> Tweet this
-                </a></li><li>
-    
-                <a class=" " href="http://pinterest.com/pin/create/button/?url={{ request.build_absolute_uri|urlencode }}&media={{pic_url|urlencode}}&description={{screen_name|urlencode}}{{' on FoodTrade'|urlencode}}" class="pin-it-button" count-layout="horizontal">
-                  <i class="fa fa-pinterest-square fa-2x"></i> Pin to pinterest
-                </a> </li><li>
-                <a  class="" href="https://plus.google.com/share?url={{ request.build_absolute_uri|urlencode }}">
-                  <i class="fa fa-google-plus-square fa-2x"></i> Share on Google+
-                </a></li><li>
-                <a  class=" " href="http://www.tumblr.com/share" title="Share on Tumblr">
-                  <i class="fa fa-tumblr-square fa-2x"></i> Post to Tumblr
-                </a>
-                   </li><li>
-                <a  class=" " href="http://www.linkedin.com/shareArticle?mini=true&url={{ request.build_absolute_uri|urlencode}}&title={{screen_name}} on FoodTrade&summary=Hey, view my profile on Foodtrade.&source=">
-                  <i class="fa fa-linkedin-square fa-2x"></i> Share on LinkedIn
-                </a></li> 
-                <script type="text/javascript" src="http://platform.tumblr.com/v1/share.js"></script>
-              </ul>
+                </span>
             </div>
-            <button class="btn btn-default btn-sm" style="width:50%;"><i class="fa fa-star-o"></i> Favourite</button>
-          </div>
- 
-    </div>
-  </div> 
-                          
         </div>
+    </div>
+    <div class="row row-merge margin-none">
+        <div class="col-md-7">
+            <div class="innerAll">
+                <div class="media innerAll"> 
+                    <img class="img-thumbnail center-block pull-left" src="{{parent_tweet.user.profile_img}}"  />
+                          
+                    <h3 class="margin-none">
+                      <a href="/profile/{{parent_tweet.user.username}}">
+                        {% ifequal parent_tweet.user.business_org_name None %}
+                            {{parent_tweet.user.name}}
+                        {% else %}
+                            {% if parent_tweet.sign_up_as == "Business" and parent_tweet.user.business_org_name != '' or parent_tweet.sign_up_as == "Organisation" and parent_tweet.user.business_org_name != '' %}
+                              {{parent_tweet.user.business_org_name}}
+                            {% else %}
+                              {{parent_tweet.user.name}}
+                            {% endif %}  
+                        {% endifequal %}
+                      </a>
+                    </h3>
+                    {% if parent_tweet.type_user|length == 0 or parent_tweet.type_user|first == '' %}
+                    {% else %}
+                      <div>  
+                        {% for eachtype in parent_tweet.type_user %}
+                       <a href="/activity/?b={{eachtype}}">{{eachtype}}</a>
+                       {% endfor %}
+                      </div> 
+                    {% endif %}
+         
+                     <div class="meta text-muted">
+                      {% if parent_tweet.location.coordinates.1 == -82.86275189999999 and parent_tweet.location.coordinates.0 == -135.10000000000002 %}
+                          <i class="fa fa-map-marker"></i> <a > NA</a>
+                          <i class="fa fa-location-arrow" style="margin-left: 20px;"></i> NA
+                        {% else %}
+                        <i class="fa fa-map-marker"></i> <a href="http://maps.google.com/maps?saddr={{userinfo.lat}},{{userinfo.lon}}&daddr={{parent_tweet.location.coordinates.1}},{{parent_tweet.location.coordinates.0}}" target="_blank" data-placement="top" data-toggle="tooltip" title="Get directions" class="text-muted">
+                          {{parent_tweet.user.address}}
+                      </a>  
+                        
+                        <!-- if logged in or you've allows html5 browser location -->
+                        <span class="pull-right">
+                        <i class="fa fa-location-arrow" style="margin-left: 20px;"></i> {{parent_tweet.distance_text}}  
+                        </span>
+                        {% endif %}
+             
+                     </div> <!-- meta -->
+  
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="innerAll text-center">
+                <div class="media innerAll"> 
+                <!-- Button trigger modal -->
+                <button class="btn btn-primary btn-block" data-toggle="modal" data-target="#modal_contact">
+                  Contact
+                </button>    
+
+                <button class="btn btn-info btn-block" data-toggle="modal" data-target="#modal_contact">
+                  Quote
+                </button>    
+
+                <button class="btn btn-default btn-block" data-toggle="modal" data-target="#sharer">
+                  <i class="fa fa-share-square-o text-muted"></i> Share
+                </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-2">
+            <div class="innerAll text-center">
+                <div class="media innerAll"> 
+                  <i class="fa fa-calendar fa-3x"></i> <br />
+                  {{parent_tweet.time_elapsed}} ago 
+                </div>
+            </div>
+        </div>
+
     </div>
 </div>
 
-
-
-
-    <div class="row" style="margin-top: 30px;">
-      <div class="col-md-6 reply_text" id="single_post_content">
-
-        <div id="update" class="well well-sm">
-          
-          <div class="input-group"> 
-           <input id="main_post_input" class="form-control reply_input" data-tweet-id="{{parent_tweet.tweetuid}}" data-main="{{position}}"   {% if not userinfo.username %} data-toggle="tooltip" data-placement="top" title="Please login to use this feature." {% endif %}  type="text" placeholder="Reply to @{{parent_tweet.user.username}}" data-mentions="@{{parent_tweet.user.username}}"> 
-
-            <span class="input-group-btn">
-                <button type="submit" class="btn btn-success" onclick="single_post_content_new_post()"> Post</button>
-            </span>
-          </div>
-          
-        </div> 
- 
-
-
-        <div class="container-responsive clearfix">
-          <div id="activity"> 
-           
-        <ul class="timeline-activity list-unstyled " id="update_content">
-
- 
-
-{% if results %}
-
-{% for result in results %}
-{% if result.user.username == result.result_type %}
-
-{% single_activity userinfo result "status" "main" %}
-
- {% if result.replies  %}
-     <li>
- 
-      <ul class="">
-      {% for reply_result in result.replies %}
-
-{% single_activity userinfo reply_result "status" "main" %}
-
-         {% endfor %}
-        
-</ul>
-
-</li>
-{% endif %}
-
-{% endif %}
-  {% endfor %}
-    {% endif %}
-</ul> 
-
-
-          </div> 
-         </div>
-      </div><!-- end col8 --> 
-
- 
-      <div class="col-md-6 fill" style="height: 100%:" >
-        <div id="map" style=" position: fixed; width:40%; height: 100%; " >
-        </div>
-      </div>
-
-    </div><!-- row -->
-
-
- 
-
-<!-- / new --> 
-<!-- old --> 
-
-
-    <div class="container-responsive ">
-    <div id="header" class="box-generic clearfix">
    
-
-      <div id="contact_info" class="col-md-3  col-xs-4">
+     
+          {% if parent_tweet.subscribed %}
+          <span class="fa-stack fa-lg pull-right" id="verified" rel="tooltip" title="Verified profile">
+            <i class="fa fa-certificate fa-stack-2x" style="color: #1DBD3C;"></i>
+            <i class="fa fa-check fa-stack-1x" style="color: #fff;"></i>
+          </span>
+          {% endif %}
+   
  
+      
 
        <!-- modal_contact -->
       <div class="modal fade" id="modal_contact" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -408,23 +186,180 @@
         </div><!-- /.modal-dialog -->
       </div><!-- /.modal -->
 
- 
- 
-      </div><!-- end header last -->
 
+
+
+      <!--SHARER  Modal -->
+      <div class="modal fade" id="sharer" tabindex="-1" role="dialog" aria-labelledby="sharer" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-body"> 
+        <div class="container-responsive">
+          <div class="row">
+            <div class="col-sm-6">
+              <a href="#" class="btn btn-block  btn-social btn-facebook" onclick="window.open(
+              'https://www.facebook.com/sharer/sharer.php?s=100&amp;p[url]='+encodeURIComponent('{{ request.build_absolute_uri }}') +'&amp;p[images][0]='+encodeURIComponent('{{parent_tweet.user.profile_img}}')+'&amp;p[title]='+encodeURIComponent('{{parent_tweet.user.name}} on FoodTrade')+'&amp;p[summary]={{parent_tweet.status|urlencode}}&amp;u='+encodeURIComponent('{{ request.build_absolute_uri }}') +'&amp;t='+encodeURIComponent('{{parent_tweet.user.name}} on FoodTrade'),
+                    'facebook-share-dialog',
+                    'width=626,height=436,top='+((screen.height - 436) / 2)+',left='+((screen.width - 626)/2 )); 
+                  return false;">
+
+                <i class="fa fa-facebook"></i>  Share on Facebook
+              </a>
+              <a href="#" class="btn btn-block  btn-social btn-twitter" onclick="window.open(
+                    'https://twitter.com/share?url='+encodeURIComponent('{{ request.build_absolute_uri }}')+'&amp;text={{parent_tweet.status |urlencode}} %40{{parent_tweet.user.username|urlencode}}&amp;count=none/', 
+                    'twitter-share-dialog', 
+                    'width=626,height=436,top='+((screen.height - 436) / 2)+',left='+((screen.width - 626)/2 )); 
+                  return false;">
+                <i class="fa fa-twitter"></i>  Share on Twitter
+              </a>
+  
+              <a class="btn  btn-block  btn-social btn-pinterest" href="http://pinterest.com/pin/create/button/?url={{ request.build_absolute_uri|urlencode }}&media={{parent_tweet.user.profile_img|urlencode}}&description={{parent_tweet.status|urlencode}}{{'#FoodTrade'|urlencode}}" class="pin-it-button" count-layout="horizontal">
+                <i class="fa fa-pinterest"></i>
+                Share on Pinterest
+              </a>
+            </div>
+            <div class="col-sm-6">
+              <a  class="btn btn-social btn-block btn-google-plus" href="https://plus.google.com/share?url={{ request.build_absolute_uri|urlencode }}">
+                <i class="fa fa-google-plus"></i>
+                Share on Google+
+              </a>
+              <a  class="btn btn-block btn-social btn-tumblr" href="http://www.tumblr.com/share" title="Share on Tumblr">
+                <i class="fa fa-tumblr"></i>
+                Share on Tumblr
+              </a>
+                 
+              <a  class="btn btn-block  btn-social btn-bitbucket" href="http://www.linkedin.com/shareArticle?mini=true&url={{ request.build_absolute_uri|urlencode}}&title={{parent_tweet.user.username}} on FoodTrade&summary={{parent_tweet.status}}&source=">
+                <i class="fa fa-linkedin"></i>
+                Share on LinkedIn
+              </a>
+            </div>
+            </div>
+            </div>
+              <script type="text/javascript" src="http://platform.tumblr.com/v1/share.js"></script>
+            </div> 
+          </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+      </div><!-- /.modal -->
+ 
+      
+
+
+   
+    <div class="row">
+      <div class="col-md-6 col-xs-8 reply_text" id="single_post_content">
+
+
+
+
+<div class="widget">
+    <div class="widget-head">
+      <h4 class="heading pull-left">Conversation history</h4>
+      <i class="fa fa-fw fa-clock-o pull-right text-muted innerT half"></i> 
     </div>
-    </div> 
+    <div class="widget-body padding-none">
+      <div id="update" class="">
+        <div class="input-group"> 
+         <input id="main_post_input" class="form-control reply_input" data-tweet-id="{{parent_tweet.tweetuid}}" data-main="{{position}}"   {% if not userinfo.username %} data-toggle="tooltip" data-placement="top" title="Please login to use this feature." {% endif %}  type="text" placeholder="Reply to @{{parent_tweet.user.username}}" data-mentions="@{{parent_tweet.user.username}}">
+          <span class="input-group-btn">
+              <button type="submit" class="btn btn-success" onclick="single_post_content_new_post()"> Post</button>
+          </span>
+        </div>
+      </div> 
+
+        <ul class="timeline-activity list-unstyled">
+            <li>
+                <div class="marker"></div>
+                <div class="block">
+                    <div class="caret"></div>
+                    <div class="box-generic bg-primary-light">
+                        <div class="timeline-top-info border-bottom">
+                            <a href="" class="text-regular">Upcoming procedure</a> 
+                            <span class="text-muted2">(consectetur adipisicing
+                                elit)</span>with
+                                <i class="fa fa-stethoscope"></i> <a href="">Dr. Dignissimos</a>
+                        </div>
+                        <div class="innerAll half inline-block">
+                            <i class="fa fa-clock-o text-primary"></i> 17:00
+                            &nbsp;
+                            <i class="fa fa-calendar text-primary"></i> 3
+                            October 2013
+                        </div>
+                    </div>
+                    <div class="separator bottom"></div>
+                </div>
+            </li>
+            <li>
+                <div class="marker"></div>
+                <div class="block">
+                    <div class="caret"></div>
+                    <div class="box-generic">
+                        <div class="timeline-top-info border-bottom">
+                            <a href="" class="text-regular">Consultation</a> with
+                            <i class="fa fa-stethoscope"></i> <a href="">Dr. Dignissimos</a>
+                        </div>
+                        <div class="innerAll half inline-block">
+                            <i class="fa fa-clock-o"></i> 10:00
+                            &nbsp;
+                            <i class="fa fa-calendar"></i> 2
+                            October 2013
+                        </div>
+                    </div>
+                    <div class="separator bottom"></div>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
 
 
+
+
+        
+
+        <div class="container-responsive clearfix">
+          <div id="activity"> 
+            <ul class="timeline-activity list-unstyled" id ="update_content">
+              {% if results %}
+                  {% for result in results %}
+                  {% if result.user.username == result.result_type %}
+                    {% single_activity userinfo result "status" "main" %}
+                    {% if result.replies  %}
+                    <li>
+                      <ul>
+                      {% for reply_result in result.replies %}
+                        {% single_activity userinfo reply_result "status" "main" %}
+                      {% endfor %}
+                      </ul>
+                    </li>
+                    {% endif %}
+                  {% endif %}
+                {% endfor %}
+              {% endif %}
+            </ul> 
+          </div> 
+         </div>
+      </div><!-- end col8 --> 
+
+
+      <div class="col-md-6 col-xs-4">
+       <div id="map" >
  
+        </div>
+
+
+      </div><!-- end col4 -->
+
+    </div><!-- row -->
+
+   
+
+
         
 
 
     </div><!-- col10 --> 
     </div>
     </div>
-
-
         <script type="text/javascript">
     map_lat={{parent_tweet.location.coordinates.1}};
     map_lon = {{parent_tweet.location.coordinates.0}};
