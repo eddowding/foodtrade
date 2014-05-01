@@ -15,7 +15,7 @@ from pygeocoder import Geocoder
 import json
 from mainapp.produce import *
 import random
-import time
+import time, datetime
 from mainapp.forms import FoodForm
 from bson import json_util
 from collections import Counter
@@ -96,12 +96,6 @@ def display_profile(request, username):
         
     parameters = {}
     
-    twitter_counts = TwitterCounts()
-    f_count = twitter_counts.get_twitter_followers_and_number(request.user.id, username)    
-    parameters['followers_count'] = f_count['followers_count']
-    parameters['friends_count'] = f_count['friends_count']
-    parameters['banner_url'] = f_count['banner_url']
-
 
     food_form = FoodForm()
     parameters['form'] = food_form
@@ -109,12 +103,43 @@ def display_profile(request, username):
 
     parameters['all_tags'] = foo.get_tags()
 
-    user_profile = UserProfile()
+    user_profile = UserProfile()    
+
     try:
         userprof = user_profile.get_profile_by_username(str(username))
         a = userprof['sign_up_as']
     except:
         raise Http404
+
+    '''Code to get the banner_url, followers_count, friends_count'''
+    twitter_counts = TwitterCounts()
+    if request.user.is_authenticated():
+        f_count = twitter_counts.get_twitter_followers_and_number(request.user.id, username)    
+        parameters['followers_count'] = f_count['followers_count']
+        parameters['friends_count'] = f_count['friends_count']
+        parameters['banner_url'] = f_count['banner_url']
+    else:
+        try:
+            from mainapp.classes.TweetFeed import Friends 
+            friend_obj = Friends()
+            friend = friend_obj.get_one({'friends.screen_name': { "$regex" : re.compile("^"+str(username)+"$", re.IGNORECASE), "$options" : "-i" }})
+            parameters['followers_count'] = friend['friends']['followers_count']
+            parameters['friends_count'] = friend['friends']['friends_count']
+            try:
+                parameters['banner_url'] = friend['friends']['banner_url']            
+            except:
+                parameters['banner_url'] = 'none'           
+        except:                    
+            sa = SocialAccount.objects.get(user__id=userprof['useruid'])            
+            parameters['followers_count'] = sa.extra_data['followers_count']
+            parameters['friends_count'] = sa.extra_data['friends_count']
+            try:
+                parameters['banner_url'] = sa.extra_data['banner_url']            
+            except:
+                parameters['banner_url'] = 'none'
+
+    '''Code to get the banner_url, followers_count, friends_count ends'''
+
     uinfo = UserInfo(userprof['useruid'])
     uinfo.description = uinfo.description.replace("\r\n"," ")
 
@@ -251,6 +276,20 @@ def display_profile(request, username):
     parameters['distance'] = dis
 
 
+    '''Code to track who views my profile'''
+    from mainapp.classes.profilevisits import ProfileVisits
+    visit_time = datetime.datetime.now()
+    visit_time = time.mktime(visit_time.timetuple())
+
+    profile_visits_obj = ProfileVisits()
+    profile_visits_obj.save_visit({
+        'visit_time':int(visit_time),
+        'visitor_id':request.user.id, 
+        'visitor_name':request.user.username,
+        'profile_id':userprof['useruid'],
+        'profile_name':userprof['username'],
+        })
+    '''Code to track who views my profile'''
         
     if parameters['sign_up_as'] == 'Business':
         if request.user.is_authenticated():
@@ -1060,3 +1099,16 @@ def distance(lon1, lat1, lon2, lat2):
     km = 6367 * c
     return km
   
+def get_views_count(request, username):
+    userprof = UserProfile()
+    user= userprof.get_profile_by_username(username)
+    from mainapp.classes.profilevisits import ProfileVisits
+    profile_visits_obj = ProfileVisits()
+    visit_stats = profile_visits_obj.get_visit_stats()
+
+    parameters ={}
+    parameters['user'] = user
+    parameters['visit_stats'] = visit_stats
+
+
+    return render_to_response('view_stats.html', parameters, context_instance=RequestContext(request))

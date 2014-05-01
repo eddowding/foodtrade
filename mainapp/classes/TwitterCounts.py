@@ -31,10 +31,14 @@ class TwitterCounts():
         self.table_name = 'twittercounts'
 
     def get_twitter_followers_and_number(self,user_id, find_username):
-        st = SocialToken.objects.get(account__user__id=user_id)    
-        ACCESS_TOKEN = st.token
-        ACCESS_TOKEN_SECRET = st.token_secret
-        user_twitter = get_twitter_obj(ACCESS_TOKEN, ACCESS_TOKEN_SECRET)
+        try:
+            st = SocialToken.objects.get(account__user__id=user_id)    
+            ACCESS_TOKEN = st.token
+            ACCESS_TOKEN_SECRET = st.token_secret
+            user_twitter = get_twitter_obj(ACCESS_TOKEN, ACCESS_TOKEN_SECRET)
+
+        except:
+            pass
 
         from mainapp.classes.TweetFeed import Friends 
         friend_obj = Friends()
@@ -47,7 +51,7 @@ class TwitterCounts():
             return_values = {'followers_count':result['followers_count'], 'friends_count':result['friends_count'], 'banner_url':result['profile_banner_url'] +'/web_retina'}
             return return_values
         except:
-            result = self.db_object.get_one(self.table_name,{'screen_name':find_username})
+            result = self.db_object.get_one(self.table_name,{'screen_name':find_username})    
             try:
                 return_values = {'followers_count':result['data']['followers_count'], 'friends_count':result['data']['friends_count'], 'banner_url':result['data']['profile_banner_url'] + '/web_retina'}
             except:
