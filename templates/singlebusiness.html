@@ -152,11 +152,21 @@
 
       <ul class="clearfix">
         {% if show_foods %}
-        <li class="active"><a class="glyphicons list" href="#tabProduce" data-toggle="tab"><i></i><span>Produce</span></a></li>
+        <li class="active"><a class="glyphicons list" href="#tabProduce" data-toggle="tab"><i></i><span>Produce</span>
+        
+
+        {% if updates_count != 0 %}<span class="label label-default pull-number">{{userprof.food_no}}</span>{% endif %}
+        </a></li>
         {% endif %}
-        <li id="liBuysFrom"><a class="glyphicons log_in" href="#tabStockists" data-toggle="tab"><i></i><span>Buys from</span></a></li>
-        <li id="liSellsTo"><a class="glyphicons log_out" href="#tabSuppliers" data-toggle="tab"><i></i><span>Sells to</span></a></li>
-        <li><a class="glyphicons certificate" href="#tabMemberships" data-toggle="tab"><i></i><span>Groups</span></a></li>
+        <li id="liBuysFrom"><a class="glyphicons log_in" href="#tabStockists" data-toggle="tab"><i></i><span>Buys from</span>
+        {% if userprof.trade_connections_no != 0 %}<span class="label label-default pull-number">{{b_conn_no}}</span>{% endif %}
+        </a></li>
+        <li id="liSellsTo"><a class="glyphicons log_out" href="#tabSuppliers" data-toggle="tab"><i></i><span>Sells to</span>
+        {% if userprof.trade_connections_no != 0 %}<span class="label label-default pull-number">{{c_conn_no}}</span>{% endif %}
+        </a></li>
+        <li><a class="glyphicons certificate" href="#tabMemberships" data-toggle="tab"><i></i><span>Groups</span>
+        {% if userprof.organisation_connection_no != 0 %}<span class="label label-default pull-number">{{userprof.organisation_connection_no}}</span>{% endif %}
+        </a></li>
         <li class="premium"><a class="glyphicons list" rel="tooltip" title="Premium account holders only - upgrade from just &pound;45/yr" href="#tabBuy" data-toggle="tab"><i></i><span>Shopping list</span>
         </a>
         </li><!-- 
@@ -164,6 +174,7 @@
         </a>
         </li> -->
         <li class="premium"><a class="glyphicons google_maps" rel="tooltip" title="Premium account holders only - upgrade from just &pound;45/yr" href="#tabCustomers" data-toggle="tab"><i></i><span>Customers</span>  
+        {% if customers|length != 0 %}<span class="label label-default pull-number">{{customers|length}}</span>{% endif %}
         </a>
 
         </li> 
@@ -180,6 +191,8 @@
 
     
     <div class="widget-body">
+
+      <div class="tab-content">
 
         <!-- WIKI ADD CONNECTIONS --> 
           {% if user.is_authenticated %}
@@ -206,8 +219,6 @@
           </div>
           </div>
           {% endif %}
-
-      <div class="tab-content">
        
         {% if show_foods %}
           <div  class="tab-pane active " id="tabProduce">
@@ -504,7 +515,7 @@
         <!-- // Tab content END -->
       
         <!-- Tab content -->
-        <div id="tabStockists" class="tab-pane ">        
+        <div id="tabStockists" class="tab-pane  clearfix">        
                       
 <div id="all-connections">
 
@@ -582,14 +593,10 @@
 
           </div> <!--  end connections -->
         <!-- // Tab content END -->
-
-
-        <div id="tabTeam" class="tab-pane ">
-
-        </div>
+ 
         
         <!-- Tab content -->
-        <div id="tabSuppliers" class="tab-pane ">                      
+        <div id="tabSuppliers" class="tab-pane  clearfix">                      
         <div id="all-connections" class="clearfix">
           {% if userprof.c_conn_no != 0 %}  
            <div class="clearfix isotope js-isotope" data-isotope-options='{ "itemSelector": ".card" }' id="seller-cards">
@@ -663,55 +670,66 @@
         <!-- // Tab content END -->
         
         <!-- Tab content -->
-        <div id="tabMemberships" class="tab-pane ">
+        <div id="tabMemberships" class="tab-pane clearfix">
           {% if user.is_authenticated %}
-            <div class="well well-s m">  
-            <div class="form-inline"  role="form">
-              <div class="form-group">
-                <div id="orgs_remote">
-                  <input class="typeahead form-control" id="new_orgs_typeahead" {% if not user.is_authenticated %} rel="tooltip" title="Please login to use this feature" {% endif %} style="width:310px;" type="text" placeholder="Add an organisation...">
-                </div>                  
-              </div> 
+            <div class="box-generic bg-primary-light">  
+              <div class="form-inline"  role="form">
+                <div class="form-group">
+                  <div id="orgs_remote">
+                    <input class="typeahead form-control" id="new_orgs_typeahead" {% if not user.is_authenticated %} rel="tooltip" title="Please login to use this feature" {% endif %} style="width:310px;" type="text" placeholder="Add an organisation...">
+                  </div>                  
+                </div> 
+              </div>
             </div>
-            </div>
-            {% endif %}
+          {% endif %}
 
           <div id="organisations_list" class="clearfix"> 
             {% if user.is_authenticated %}
             {% else %}
-             <p class="alert alert-warning"><a href="{% provider_login_url "twitter" process="login" %}" class="">Login</a> or <a href="{% provider_login_url "twitter" process="login" %}" class="">sign up free</a> to see the organisations or groups they belong to. </p>
+              <p class="alert alert-warning"><a href="{% provider_login_url "twitter" process="login" %}" class="">Login</a> or <a href="{% provider_login_url "twitter" process="login" %}" class="">sign up free</a> to see the organisations or groups they belong to. </p>
             {% endif %}
 
-            <div class="  clearfix"> 
-            {% for each in organisations %}    
-                <div class="innerAll col-sm-4 box-generic">
-                    <div class="media innerAll half">
-                        <a href="" class="pull-left">
-                          <img src="{{each.photo}}" alt="{{each.name}}" style="width:73px; height:73px;" >
-                        </a>
-                        <div class="media-body ">
-                            <h5 class="margin-none strong"><a href="/profile/{{each.username}}">{{each.name}}</a></h5>
-                            {% ifequal profile_id user_id %}
-                            <button type="button" class="close pull-right" aria-hidden="true" onclick="del_org_from_biz({{profile_id}}, {{each.id}})">&times;</button> 
-                          {% endifequal %}
-                            <p class=""> 
-                              {{each.description}}
-                            </p>
-                        </div>
-                    </div> 
-                </div>
-            {% endfor %}
-            </div>
+            <div class="clearfix isotope js-isotope" data-isotope-options='{ "itemSelector": ".card" }' id="organisation-cards"> 
+              {% for each in organisations %} 
+                <div class="card card-organisation"> 
+                  <div class="content" style="background:  url('{{each.banner_url}}');">
+                    <div class="text-center">
+                      <a href="/profile/{{each.username}}"><img src="{{each.photo}}" alt="{{each.name}}"
+                      class="img-thumbnail img-responsive img-circle" style="width:73px; height:73px;" /></a>
+                    </div>
+                    <div class="text">
+                      {% ifequal profile_id user_id %}
+                      <button type="button" class="close" aria-hidden="true" onclick="conn_handler('close_buy_from', {{profile_id}}, {{each.id}})">&times;</button> 
+                      {% endifequal %}
+                      <h5><a href="/profile/{{each.username}}">{{each.name}}</a></h5>  
+                      <p class="small">{{each.description|truncatechars:200}}</p>
+                    </div>
+                  </div> 
+                  <div class="row row-merge border-top hidden">
 
-            </div>
-        </div>
+                    <!-- number of members -->
+                    <div class="col-sm-6">
+                      <a href="" class="innerAll half text-center display-block text-muted" data-original-title="{{each.food_no}} foods" rel="tooltip"><i class="fa fa-fw fa fa-cutlery"></i> {{each.food_no}}</a>
+                    </div>
+
+                    <!-- number of group membershpis -->  
+                    <div class="col-sm-6">
+                      <a href=""  rel="tooltip" title="Member of {{each.org_conn_no}} groups or organisations"  class="innerAll half text-center display-block text-muted"><i class="fa fa-fw fa-group"></i> {{each.org_conn_no}}</a>
+                    </div> 
+                  </div> 
+                </div>  
+              {% endfor %}
+            </div> 
+          </div>
+
+        </div> 
         <!-- // Tab content END -->
  
   
 <!--  start we buy -->
 
 {% if we_buy %}
-<div  class="tab-pane active " id="tabBuy">
+<div  class="tab-pane clearfix " id="tabBuy">
   
           {% if user.is_authenticated %}
           <div class="row" style="padding: 20px 0;"> 
@@ -1004,12 +1022,14 @@
 
 
 
-        <div id="tabUpdates" class="tab-pane "> 
+        <div id="tabUpdates" class="tab-pane clearfix"> 
           <div class="widget-body padding-none">
                   {% if deliverables %} 
             {{deliverables|linebreaks}}
           {% else %}
-            <p>Please contact us directly to discuss deliveries.</p>
+            <div class="box-generic text-center">
+            <i class="fa fa-truck"></i> Please contact us directly to discuss deliveries.
+            </div>
           {% endif %}
 
 
@@ -1035,34 +1055,32 @@
 
 
 
-        <div id="tabCustomers" class="tab-pane ">
-  
-          {% if customers|length != 0 %}<span class="badge pull-right">{{customers|length}}</span>{% endif %}
-
+        <div id="tabCustomers" class="tab-pane clearfix">
+   
           {% if user.is_authenticated %}
           {% else %} 
             <p class="alert alert-warning"><a href="{% provider_login_url "twitter" process="login" %}" class="">Login</a> or <a href="{% provider_login_url "twitter" process="login" %}" class="">sign up free</a> to see where their customers live. Maybe they'll do home deliveries if you ask nicely! </p> 
           {% endif %}
-
-          <div class="pull-left">
+ 
            {% for each in customers %}
 
               <div class="card card-individual"> 
-                <div class="content" style="background-image:url('{{each.banner_url}}');">
-                  <img src="{{each.photo}}" alt="{{each.name}}"
-                  class="img-rounded img-responsive pull-left" style="width:40px;" />
-                  <div class="text">
-                    <h5><a href="/profile/{{each.username}}">{{each.name}}</a></h5> 
-                    <p class="small">
-                    {{each.description}}</p>
-                  </div> 
-                </div>
-                <div class="numbers clearfix">
-                  <i class="fa fa-user"></i> <small class="t ext-muted">Person</small>
-                </div>
+
+                <div class="content" style="background:  url('{{each.banner_url}}');">
+                  <div class="text-center">
+                    <a href="/profile/{{each.username}}"><img src="{{each.photo}}" alt="{{each.name}}"
+                    class="img-thumbnail img-responsive" style="width:73px; height:73px;" /></a>
+
+                  </div>
+                  <div class="text"> 
+                    <h5><a href="/profile/{{each.username}}">{{each.name}}</a> 
+                    </h5>  
+                    <p class="small">{{each.description|truncatechars:40}}</p>
+                  </div>
+                </div> 
+ 
               </div>
-          {% endfor %}
-          </div>
+          {% endfor %} 
         </div> <!-- end customers -->
 
 
@@ -1618,7 +1636,7 @@
 $(document).ready(function(){
   var $container1 = $('#foods').isotope({itemSelector: '.food'});
 
-  var $container = $('#all-connections').isotope({itemSelector: '.card-business'});
+ // var $container = $('#all-connections').isotope({itemSelector: '.card-business'});
 
 // filter items on button click
 $('#filterFoods').on( 'click', 'button', function() {
