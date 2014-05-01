@@ -1101,5 +1101,14 @@ def distance(lon1, lat1, lon2, lat2):
   
 def get_views_count(request, username):
     userprof = UserProfile()
-    
-    return render_to_response('view_stats.html', context_instance=RequestContext(request))
+    user= userprof.get_profile_by_username(username)
+    from mainapp.classes.profilevisits import ProfileVisits
+    profile_visits_obj = ProfileVisits()
+    visit_stats = profile_visits_obj.get_visit_stats()
+
+    parameters ={}
+    parameters['user'] = user
+    parameters['visit_stats'] = visit_stats
+
+
+    return render_to_response('view_stats.html', parameters, context_instance=RequestContext(request))
