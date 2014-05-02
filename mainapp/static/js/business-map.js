@@ -32,25 +32,16 @@ L.circle([map_lat,map_lon], 160934, {
 			weight:1,
 			fill: 0,
 		}).addTo(map);
-var card_str = '<div class="card-box"><div class="content"><div class="pull-left"><a href="/profile/'+username+'"><img src="'+photo+'" alt="'+name+'" class="img-rounded img-responsive" style="width:40px;" /></a>';
 
-                
-                      card_str += '</div><div class="text"><h5><a href="/profile/'+username+'">'+name+'</a></h5>';
 
-                      card_str += '<p class="small">'+description+'</p></div></div>';
-                      if(type.length>0)
-                      {
-                    card_str += '<div class="numbers clearfix"><div class="tags tags-biztype pull-left">';
-                    for(var j=0;j<type.length;j++)
-                    {  
-                      
-                      card_str +=  '<a href="/activity/?q='+type[j]+'">'+type[j]+'</a>';
-                     }
-                      card_str += '</div></div>';
-                }
-                  card_str += '</div> ';
 
-		 L.marker([parseFloat(map_lat), parseFloat(map_lon)], {icon: redIcon}).addTo(map).bindPopup(card_str);
+
+var card_str = '<div class="card-box"><div class="content text-center"><div class=""><a href="/profile/'+username+'"><img src="'+photo+'" alt="'+name+'" class="img-circle img-thumbnail img-responsive" style="width:73px;" /></a>';
+    card_str += '</div><div class="text"><h3><a href="/profile/'+username+'">'+name+'</a></h3>';
+    card_str += '<p>'+description+'</p></div>';
+    card_str += '<a href="/profile/'+username+'" class="btn btn-primary btn-sm">View profile &raquo;</a></div> </div>';    
+
+L.marker([parseFloat(map_lat), parseFloat(map_lon)], {icon: redIcon}).addTo(map).bindPopup(card_str);
 			
 
 
@@ -130,23 +121,25 @@ function reload_connections()
 				opacity: 0.8
 			}).addTo(map);
 			map_controls.push(polyline);
-			var card_str = '<div class="card-box"><div class="content"><div class="pull-left"><a href="/profile/'+username+'"><img src="'+photo+'" alt="'+name+'" class="img-rounded img-responsive" style="width:40px;" /></a>';
 
-                
-                      card_str += '</div><div class="text"><h5><a href="/profile/'+username+'">'+name+'</a></h5>';
+ 
 
-                      card_str += '<p class="small">'+description+'</p></div></div>';
-                      if(type.length>0)
-                      {
-                    card_str += '<div class="numbers clearfix"><div class="tags tags-biztype pull-left">';
-                    for(var j=0;j<type.length;j++)
-                    {  
-                      
-                      card_str +=  '<a href="/activity/?q='+type[j]+'">'+type[j]+'</a>';
-                     }
-                      card_str += '</div></div>';
-                }
-                  card_str += '</div> ';
+var card_str = '<div class="card-box"><div class="content text-center"><div class=""><a href="/profile/'+username+'"><img src="'+photo+'" alt="'+name+'" class="img-circle img-thumbnail img-responsive" style="width:73px;" /></a>';
+    card_str += '</div><div class="text"><h3><a href="/profile/'+username+'">'+name+'</a></h3>';
+
+    if(type.length>0)
+      {
+      card_str += '<div class="clearfix">';
+        for(var j=0;j<type.length;j++)
+        {  
+        card_str +=  '<a class="" href="/activity/?q='+type[j]+'">'+type[j]+'</a>';
+        }
+        card_str += '</div>';
+    }
+
+    card_str += '<p>'+description+'</p></div>';
+    card_str += '<a href="/profile/'+username+'" class="btn btn-primary btn-sm">View profile &raquo;</a></div> </div>';    
+
 
 			var ctrl = L.marker([parseFloat(current_lat), parseFloat(current_lon)], {icon: redIcon}).addTo(map).bindPopup(card_str);
 			
@@ -227,5 +220,6 @@ for(var j=0;j<customers.length;j++)
 // ]);
 		}
 
+    L.control.fullscreen().addTo(map);
 
 setTimeout(function(){reload_connections()},3000);

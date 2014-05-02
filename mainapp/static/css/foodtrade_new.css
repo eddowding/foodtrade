@@ -278,10 +278,6 @@ input[type="text"]:focus, input[type="text"]:active, input[type="text"]:hover {
 }
 
 
-.widget-head {
-  background: #ddd !important;
-}
-
 
 /********************************/
 /**  cards / timeline / marketplace                   **/
@@ -663,14 +659,23 @@ input[type=text], input[type=password], select, textarea,
 
 }
 
+.box-verified,
 .timeline-activity li.verified .box-generic {
   border: 2px solid rgba(97,174,50,1) !important;
 }
 
-/*.verified .timeline-top-info {
-  background: rgba(97,174,50,0.4) !important;
-}*/
+.widget.widget-tabs-double-2 > .widget-body {
+  padding: 10px;
+  background: #fff;
+}
+ 
+.widget.widget-tabs-double-2 > .widget-head {
+  background: #F5F8FA;
+}
 
+.widget.widget-tabs-double-2 > .widget-head ul li.active {
+  background: #ffffff !important;
+}
 
 /********************************/
 /**  SIDEBAR                   **/

@@ -32,21 +32,30 @@
     <div class="col-sm-12" id="single">
 
 
-<div class="widget">
-    <div class="row row-merge margin-none ">
-        <div class="col-md-12">
-            <div class="innerAll inner-4x">
-                <span class="text-large lead innerAll ">
-
-                  {{parent_tweet.status|recognise_name|safe}}
-                </span>
-            </div>
-        </div>
-    </div>
+<div class="widget {% if parent_tweet.subscribed %}box-verified{% endif %}">
+    {% if parent_tweet.subscribed %}
     <div class="row row-merge margin-none">
-        <div class="col-md-7">
+      <div class="col-xs-12 bg-primary">
+        <div class="innerAll half">
+        <i class="fa fa-fw fa-check fa-lg"></i> <b>Verified profile</b>
+        </div>
+      </div>
+    </div>
+
+    {% endif %}
+    <div class="row row-merge margin-none">
+        <div class="col-xs-10">
             <div class="innerAll">
-                <div class="media innerAll"> 
+                <div class="media innerAll">
+
+                    <a class="pull-right btn btn-primary btn-sm" data-toggle="modal" data-target="#sharer">
+                      <i class="fa fa-share-square-o fa-fw fa-lg "></i> Share 
+                    </a> 
+
+                    <a class="pull-right btn btn-default btn-sm" data-toggle="modal" data-target="#modal_contact">
+                      <i class="fa fa-envelope fa-fw fa-lg text-muted"></i> 
+                    </a>     
+
                     <img class="img-thumbnail center-block pull-left" src="{{parent_tweet.user.profile_img}}"  />
                           
                     <h3 class="margin-none">
@@ -87,31 +96,13 @@
                         {% endif %}
              
                      </div> <!-- meta -->
+ 
   
                 </div>
             </div>
         </div>
 
-        <div class="col-md-3">
-            <div class="innerAll text-center">
-                <div class="media innerAll"> 
-                <!-- Button trigger modal -->
-                <button class="btn btn-primary btn-block" data-toggle="modal" data-target="#modal_contact">
-                  Contact
-                </button>    
-
-                <button class="btn btn-info btn-block" data-toggle="modal" data-target="#modal_contact">
-                  Quote
-                </button>    
-
-                <button class="btn btn-default btn-block" data-toggle="modal" data-target="#sharer">
-                  <i class="fa fa-share-square-o text-muted"></i> Share
-                </button>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-2">
+        <div class="col-xs-2">
             <div class="innerAll text-center">
                 <div class="media innerAll"> 
                   <i class="fa fa-calendar fa-3x"></i> <br />
@@ -120,20 +111,35 @@
             </div>
         </div>
 
+        <div class="col-md-3 hidden">
+            <div class="innerAll text-center">
+                <div class="media innerAll"> 
+                <!-- Button trigger modal -->
+                <button class="btn btn-default btn-block" data-toggle="modal" data-target="#modal_contact">
+                  <i class="fa fa-envelope fa-fw"></i> Contact
+                </button>     
+
+                <button class="btn btn-default btn-block" data-toggle="modal" data-target="#sharer">
+                  <i class="fa fa-share-square-o text-muted"></i> Share
+                </button>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+    <div class="row row-merge margin-none ">
+        <div class="col-md-12">
+            <div class="innerAll inner-4x">
+                <span class="text-large lead innerAll ">
+                  {{parent_tweet.status|recognise_name|safe}}
+                </span>
+            </div>
+        </div>
     </div>
 </div>
 
-   
      
-          {% if parent_tweet.subscribed %}
-          <span class="fa-stack fa-lg pull-right" id="verified" rel="tooltip" title="Verified profile">
-            <i class="fa fa-certificate fa-stack-2x" style="color: #1DBD3C;"></i>
-            <i class="fa fa-check fa-stack-1x" style="color: #fff;"></i>
-          </span>
-          {% endif %}
-   
- 
-      
 
        <!-- modal_contact -->
       <div class="modal fade" id="modal_contact" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -252,12 +258,11 @@
 
 
 <div class="widget">
-    <div class="widget-head">
-      <h4 class="heading pull-left">Conversation history</h4>
-      <i class="fa fa-fw fa-clock-o pull-right text-muted innerT half"></i> 
+    <div class="widget-head bg-primary-light">
+      <h4 class="heading pull-left">Join the conversation</h4> 
     </div>
     <div class="widget-body padding-none">
-      <div id="update" class="">
+      <div id="update" class="innerAll">
         <div class="input-group"> 
          <input id="main_post_input" class="form-control reply_input" data-tweet-id="{{parent_tweet.tweetuid}}" data-main="{{position}}"   {% if not userinfo.username %} data-toggle="tooltip" data-placement="top" title="Please login to use this feature." {% endif %}  type="text" placeholder="Reply to @{{parent_tweet.user.username}}" data-mentions="@{{parent_tweet.user.username}}">
           <span class="input-group-btn">
@@ -267,59 +272,7 @@
       </div> 
 
         <ul class="timeline-activity list-unstyled">
-            <li>
-                <div class="marker"></div>
-                <div class="block">
-                    <div class="caret"></div>
-                    <div class="box-generic bg-primary-light">
-                        <div class="timeline-top-info border-bottom">
-                            <a href="" class="text-regular">Upcoming procedure</a> 
-                            <span class="text-muted2">(consectetur adipisicing
-                                elit)</span>with
-                                <i class="fa fa-stethoscope"></i> <a href="">Dr. Dignissimos</a>
-                        </div>
-                        <div class="innerAll half inline-block">
-                            <i class="fa fa-clock-o text-primary"></i> 17:00
-                            &nbsp;
-                            <i class="fa fa-calendar text-primary"></i> 3
-                            October 2013
-                        </div>
-                    </div>
-                    <div class="separator bottom"></div>
-                </div>
-            </li>
-            <li>
-                <div class="marker"></div>
-                <div class="block">
-                    <div class="caret"></div>
-                    <div class="box-generic">
-                        <div class="timeline-top-info border-bottom">
-                            <a href="" class="text-regular">Consultation</a> with
-                            <i class="fa fa-stethoscope"></i> <a href="">Dr. Dignissimos</a>
-                        </div>
-                        <div class="innerAll half inline-block">
-                            <i class="fa fa-clock-o"></i> 10:00
-                            &nbsp;
-                            <i class="fa fa-calendar"></i> 2
-                            October 2013
-                        </div>
-                    </div>
-                    <div class="separator bottom"></div>
-                </div>
-            </li>
-        </ul>
-    </div>
-</div>
-
-
-
-
-        
-
-        <div class="container-responsive clearfix">
-          <div id="activity"> 
-            <ul class="timeline-activity list-unstyled" id ="update_content">
-              {% if results %}
+            {% if results %}
                   {% for result in results %}
                   {% if result.user.username == result.result_type %}
                     {% single_activity userinfo result "status" "main" %}
@@ -335,9 +288,28 @@
                   {% endif %}
                 {% endfor %}
               {% endif %}
-            </ul> 
-          </div> 
-         </div>
+            <li>
+                <div class="marker"></div>
+                <div class="block">
+                    <div class="caret"></div>
+                    <div class="box-generic bg-primary-light">
+                        <div class="timeline-top-info border-bottom">
+                            <a href="" class="text-regular">Original post</a> 
+                             
+                        </div>
+                        <div class="innerAll half inline-block">
+                            <i class="fa fa-calendar text-primary"></i>
+                            {{parent_tweet.time_elapsed}} ago 
+                        </div>
+                    </div>
+                    <div class="separator bottom"></div>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
+
+ 
       </div><!-- end col8 --> 
 
 

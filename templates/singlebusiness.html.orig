@@ -56,12 +56,9 @@
 
 
 <div class="innerAll">
- 
-
-    <div class="row">
-        <div class="col-lg-9 col-md-8">
-
-          <div class="timeline-cover">  
+<div class="row">
+<div class="col-lg-9 col-md-8">
+<div class="timeline-cover">  
   <div class="cover ">
     <div class="top">
     <div id="carousel-1" class="carousel slide"> 
@@ -155,23 +152,35 @@
 
       <ul class="clearfix">
         {% if show_foods %}
-        <li class="active"><a class="glyphicons list" href="#tabProduce" data-toggle="tab"><i></i><span>Produce</span></a></li>
+        <li class="active"><a class="glyphicons list" href="#tabProduce" data-toggle="tab"><i></i><span>Produce</span>
+        
+
+        {% if updates_count != 0 %}<span class="label label-default pull-number">{{userprof.food_no}}</span>{% endif %}
+        </a></li>
         {% endif %}
-        <li id="liBuysFrom"><a class="glyphicons log_in" href="#tabStockists" data-toggle="tab"><i></i><span>Buys from</span></a></li>
-        <li id="liSellsTo"><a class="glyphicons log_out" href="#tabSuppliers" data-toggle="tab"><i></i><span>Sells to</span></a></li>
-        <li><a class="glyphicons certificate" href="#tabMemberships" data-toggle="tab"><i></i><span>Groups</span></a></li>
+        <li id="liBuysFrom"><a class="glyphicons log_in" href="#tabStockists" data-toggle="tab"><i></i><span>Buys from</span>
+        {% if userprof.trade_connections_no != 0 %}<span class="label label-default pull-number">{{b_conn_no}}</span>{% endif %}
+        </a></li>
+        <li id="liSellsTo"><a class="glyphicons log_out" href="#tabSuppliers" data-toggle="tab"><i></i><span>Sells to</span>
+        {% if userprof.trade_connections_no != 0 %}<span class="label label-default pull-number">{{c_conn_no}}</span>{% endif %}
+        </a></li>
+        <li><a class="glyphicons certificate" href="#tabMemberships" data-toggle="tab"><i></i><span>Groups</span>
+        {% if userprof.organisation_connection_no != 0 %}<span class="label label-default pull-number">{{userprof.organisation_connection_no}}</span>{% endif %}
+        </a></li>
         <li class="premium"><a class="glyphicons list" rel="tooltip" title="Premium account holders only - upgrade from just &pound;45/yr" href="#tabBuy" data-toggle="tab"><i></i><span>Shopping list</span>
         </a>
         </li><!-- 
         <li class="premium"><a class="glyphicons group" rel="tooltip" title="Premium account holders only - upgrade from just &pound;45/yr" href="#tabTeam" data-toggle="tab"><i></i><span>People</span>
         </a>
         </li> -->
-        <li class="premium"><a class="glyphicons google_maps" rel="tooltip" title="Premium account holders only - upgrade from just &pound;45/yr" href="#tabCustomers" data-toggle="tab"><i></i><span>Customers</span> 
-       <!--  <div class="ribbon-wrapper small">
-            <div class="ribbon danger">Upgrade</div>
-        </div> -->
-        </a></li> 
+        <li class="premium"><a class="glyphicons google_maps" rel="tooltip" title="Premium account holders only - upgrade from just &pound;45/yr" href="#tabCustomers" data-toggle="tab"><i></i><span>Customers</span>  
+        {% if customers|length != 0 %}<span class="label label-default pull-number">{{customers|length}}</span>{% endif %}
+        </a>
+
+        </li> 
         <li class="premium"><a class="glyphicons bullhorn" rel="tooltip" title="Premium account holders only - upgrade from just &pound;45/yr" href="#tabUpdates" data-toggle="tab"><i></i><span>Trade</span> 
+
+        {% if updates_count != 0 %}<span class="label label-default pull-number">{{updates_count}}</span>{% endif %}
        <!--  <div class="ribbon-wrapper small">
             <div class="ribbon danger">Upgrade</div>
         </div> -->
@@ -182,6 +191,8 @@
 
     
     <div class="widget-body">
+
+      <div class="tab-content">
 
         <!-- WIKI ADD CONNECTIONS --> 
           {% if user.is_authenticated %}
@@ -208,11 +219,9 @@
           </div>
           </div>
           {% endif %}
-
-      <div class="tab-content">
        
         {% if show_foods %}
-          <div  class="tab-pane active widget-body-regular" id="tabProduce">
+          <div  class="tab-pane active " id="tabProduce">
   
           {% if user.is_authenticated %}
           <div class="row" style="padding: 20px 0;"> 
@@ -261,16 +270,10 @@
 
       <div class="innerB btn-group" id="filterFoods" data-filter-group="foodtype">
         <button class="btn btn-primary btn-sm active" data-filter="*">All</button> 
-        
-<<<<<<< HEAD
-        {% for eachparent in food_parents %}
-          <button class="btn btn-default" data-filter=".{{eachparent|slugify}}">{{eachparent}}</button> 
-=======
-        {% for eachfood in all_foods %}
-          <button class="btn btn-default btn-sm" data-filter=".{{eachfood.parent_food|slugify}}">{{eachfood.parent_food}}</button> 
->>>>>>> f345e0f8dfc704b1e3207002980fa8d3ac06b98a
-        {% endfor %}
 
+        {% for eachparent in food_parents %}
+          <button class="btn btn-default btn-sm" data-filter=".{{eachparent|slugify}}">{{eachparent}}</button> 
+        {% endfor %}
       </div>
                     <div class="clearfix isotope"  id="foods"> 
                             <div class="row">
@@ -512,24 +515,17 @@
         <!-- // Tab content END -->
       
         <!-- Tab content -->
-        <div id="tabStockists" class="tab-pane widget-body-regular">        
+        <div id="tabStockists" class="tab-pane  clearfix">        
                       
 <div id="all-connections">
 
 <div class="clearfix">
 {% if userprof.b_conn_no != 0 %} 
 
-            <div class="clearfix isotope js-isotope" data-isotope-options='{ "itemSelector": ".card" }'  id="buyers-cards"> 
+            <div class="clearfix isotope js-isotope" data-isotope-options='{ "itemSelector": ".card" }' id="buyers-cards"> 
           {% for each in connections %}
               {% if each.relation == "buyer" or each.relation == "both" %}
-                  <div class="card card-business {% if each.type|length == 0 or each.type|first == '' %}
-                    {% else %}
-                      
-                        {% for e in each.type %}
-                        {{e}}
-                       {% endfor %}
-                      
-                    {% endif %}">
+                  <div class="card card-business">
 
                     
                     <div class="content" style="background:  url('{{each.banner_url}}');">
@@ -555,22 +551,22 @@
                        
                         <!-- number of foods sold -->
                         <div class="{% if show_foods %}col-sm-3{% else %}col-sm-6{% endif %}">
-                          <a href="" class="innerAll text-center display-block text-muted" data-original-title="{{each.food_no}} foods" rel="tooltip"><i class="fa fa-fw fa fa-cutlery"></i> {{each.food_no}}</a>
+                          <a href="" class="innerAll half text-center display-block text-muted" data-original-title="{{each.food_no}} foods" rel="tooltip"><i class="fa fa-fw fa fa-cutlery"></i> {{each.food_no}}</a>
                         </div>
 
                         <!-- number of vouches across all produce --> 
                         <div class="{% if show_foods %}col-sm-3{% else %}col-sm-6{% endif %}">
-                          <a href=""  rel="tooltip" title="{{each.total_vouches}} number of vouches for all produce"  class="innerAll text-center display-block text-muted"><i class="fa fa-fw fa-thumbs-o-up"></i> {{each.total_vouches}}</a>
+                          <a href=""  rel="tooltip" title="{{each.total_vouches}} of vouches for all produce"  class="innerAll half text-center display-block text-muted"><i class="fa fa-fw fa-thumbs-o-up"></i> {{each.total_vouches}}</a>
                         </div> 
 
                         <!-- number of trade connections --> 
                         <div class="{% if show_foods %}col-sm-3{% else %}col-sm-6{% endif %}">
-                          <a href=""  rel="tooltip" title="{{each.trade_conn_no}} of trade connections" class="innerAll text-center display-block text-muted"><i class="fa fa-fw fa-link"></i> {{each.trade_conn_no}}</a>
+                          <a href=""  rel="tooltip" title="{{each.trade_conn_no}} of trade connections" class="innerAll half text-center display-block text-muted"><i class="fa fa-fw fa-link"></i> {{each.trade_conn_no}}</a>
                         </div>
 
                         <!-- number of group membershpis -->  
                         <div class="{% if show_foods %}col-sm-3{% else %}col-sm-6{% endif %}">
-                          <a href=""  rel="tooltip" title="Member of {{each.org_conn_no}} groups or organisations"  class="innerAll text-center display-block text-muted"><i class="fa fa-fw fa-group"></i> {{each.org_conn_no}}</a>
+                          <a href=""  rel="tooltip" title="Member of {{each.org_conn_no}} groups or organisations"  class="innerAll half text-center display-block text-muted"><i class="fa fa-fw fa-group"></i> {{each.org_conn_no}}</a>
                         </div> 
 
                       </div> 
@@ -597,17 +593,13 @@
 
           </div> <!--  end connections -->
         <!-- // Tab content END -->
-
-
-        <div id="tabTeam" class="tab-pane widget-body-regular">
-
-        </div>
+ 
         
         <!-- Tab content -->
-        <div id="tabSuppliers" class="tab-pane widget-body-regular">                      
+        <div id="tabSuppliers" class="tab-pane  clearfix">                      
         <div id="all-connections" class="clearfix">
           {% if userprof.c_conn_no != 0 %}  
-           <div class="clearfix isotope" id="seller-cards">
+           <div class="clearfix isotope js-isotope" data-isotope-options='{ "itemSelector": ".card" }' id="seller-cards">
           {% for each in connections %}
               {% if each.relation == "seller" or each.relation == "both" %}
 
@@ -637,22 +629,22 @@
                        
                         <!-- number of foods sold -->
                         <div class="{% if show_foods %}col-sm-3{% else %}col-sm-6{% endif %}">
-                          <a href="" class="innerAll text-center display-block text-muted" data-original-title="{{each.food_no}} foods" rel="tooltip"><i class="fa fa-fw fa fa-cutlery"></i> {{each.food_no}}</a>
+                          <a href="" class="innerAll half text-center display-block text-muted" data-original-title="{{each.food_no}} foods" rel="tooltip"><i class="fa fa-fw fa fa-cutlery"></i> {{each.food_no}}</a>
                         </div>
 
                         <!-- number of vouches across all produce --> 
                         <div class="{% if show_foods %}col-sm-3{% else %}col-sm-6{% endif %}">
-                          <a href=""  rel="tooltip" title="{{each.total_vouches}} number of vouches for all produce"  class="innerAll text-center display-block text-muted"><i class="fa fa-fw fa-thumbs-o-up"></i> {{each.total_vouches}}</a>
+                          <a href=""  rel="tooltip" title="{{each.total_vouches}} of vouches for all produce"  class="innerAll half text-center display-block text-muted"><i class="fa fa-fw fa-thumbs-o-up"></i> {{each.total_vouches}}</a>
                         </div> 
 
                         <!-- number of trade connections --> 
                         <div class="{% if show_foods %}col-sm-3{% else %}col-sm-6{% endif %}">
-                          <a href=""  rel="tooltip" title="{{each.trade_conn_no}} of trade connections" class="innerAll text-center display-block text-muted"><i class="fa fa-fw fa-link"></i> {{each.trade_conn_no}}</a>
+                          <a href=""  rel="tooltip" title="{{each.trade_conn_no}} of trade connections" class="innerAll half text-center display-block text-muted"><i class="fa fa-fw fa-link"></i> {{each.trade_conn_no}}</a>
                         </div>
 
                         <!-- number of group membershpis -->  
                         <div class="{% if show_foods %}col-sm-3{% else %}col-sm-6{% endif %}">
-                          <a href=""  rel="tooltip" title="Member of {{each.org_conn_no}} groups or organisations"  class="innerAll text-center display-block text-muted"><i class="fa fa-fw fa-group"></i> {{each.org_conn_no}}</a>
+                          <a href=""  rel="tooltip" title="Member of {{each.org_conn_no}} groups or organisations"  class="innerAll half text-center display-block text-muted"><i class="fa fa-fw fa-group"></i> {{each.org_conn_no}}</a>
                         </div> 
 
                       </div>
@@ -678,68 +670,66 @@
         <!-- // Tab content END -->
         
         <!-- Tab content -->
-        <div id="tabMemberships" class="tab-pane widget-body-regular">
+        <div id="tabMemberships" class="tab-pane clearfix">
           {% if user.is_authenticated %}
-            <div class="well well-s m">  
-            <div class="form-inline"  role="form">
-              <div class="form-group">
-                <div id="orgs_remote">
-                  <input class="typeahead form-control" id="new_orgs_typeahead" {% if not user.is_authenticated %} rel="tooltip" title="Please login to use this feature" {% endif %} style="width:310px;" type="text" placeholder="Add an organisation...">
-                </div>                  
-              </div> 
+            <div class="box-generic bg-primary-light">  
+              <div class="form-inline"  role="form">
+                <div class="form-group">
+                  <div id="orgs_remote">
+                    <input class="typeahead form-control" id="new_orgs_typeahead" {% if not user.is_authenticated %} rel="tooltip" title="Please login to use this feature" {% endif %} style="width:310px;" type="text" placeholder="Add an organisation...">
+                  </div>                  
+                </div> 
+              </div>
             </div>
-            </div>
-            {% endif %}
+          {% endif %}
 
           <div id="organisations_list" class="clearfix"> 
             {% if user.is_authenticated %}
             {% else %}
-             <p class="alert alert-warning"><a href="{% provider_login_url "twitter" process="login" %}" class="">Login</a> or <a href="{% provider_login_url "twitter" process="login" %}" class="">sign up free</a> to see the organisations or groups they belong to. </p>
+              <p class="alert alert-warning"><a href="{% provider_login_url "twitter" process="login" %}" class="">Login</a> or <a href="{% provider_login_url "twitter" process="login" %}" class="">sign up free</a> to see the organisations or groups they belong to. </p>
             {% endif %}
 
-            <div class="  clearfix"> 
-            {% for each in organisations %}    
-                <div class="innerAll col-sm-4 box-generic">
-                    <div class="media innerAll half">
-                        <a href="" class="pull-left">
-                          <img src="{{each.photo}}" alt="{{each.name}}" style="width:73px; height:73px;" >
-                        </a>
-                        <div class="media-body ">
-                            <h5 class="margin-none strong"><a href="/profile/{{each.username}}">{{each.name}}</a></h5>
-                            {% ifequal profile_id user_id %}
-                            <button type="button" class="close pull-right" aria-hidden="true" onclick="del_org_from_biz({{profile_id}}, {{each.id}})">&times;</button> 
-                          {% endifequal %}
-                            <p class=""> 
-                              {{each.description}}
-                            </p>
-                        </div>
-                    </div> 
-                </div>
-            {% endfor %}
-            </div>
+            <div class="clearfix isotope js-isotope" data-isotope-options='{ "itemSelector": ".card" }' id="organisation-cards"> 
+              {% for each in organisations %} 
+                <div class="card card-organisation"> 
+                  <div class="content" style="background:  url('{{each.banner_url}}');">
+                    <div class="text-center">
+                      <a href="/profile/{{each.username}}"><img src="{{each.photo}}" alt="{{each.name}}"
+                      class="img-thumbnail img-responsive img-circle" style="width:73px; height:73px;" /></a>
+                    </div>
+                    <div class="text">
+                      {% ifequal profile_id user_id %}
+                      <button type="button" class="close" aria-hidden="true" onclick="conn_handler('close_buy_from', {{profile_id}}, {{each.id}})">&times;</button> 
+                      {% endifequal %}
+                      <h5><a href="/profile/{{each.username}}">{{each.name}}</a></h5>  
+                      <p class="small">{{each.description|truncatechars:200}}</p>
+                    </div>
+                  </div> 
+                  <div class="row row-merge border-top hidden">
 
-            </div>
-        </div>
+                    <!-- number of members -->
+                    <div class="col-sm-6">
+                      <a href="" class="innerAll half text-center display-block text-muted" data-original-title="{{each.food_no}} foods" rel="tooltip"><i class="fa fa-fw fa fa-cutlery"></i> {{each.food_no}}</a>
+                    </div>
+
+                    <!-- number of group membershpis -->  
+                    <div class="col-sm-6">
+                      <a href=""  rel="tooltip" title="Member of {{each.org_conn_no}} groups or organisations"  class="innerAll half text-center display-block text-muted"><i class="fa fa-fw fa-group"></i> {{each.org_conn_no}}</a>
+                    </div> 
+                  </div> 
+                </div>  
+              {% endfor %}
+            </div> 
+          </div>
+
+        </div> 
         <!-- // Tab content END -->
  
- 
-
-        <div id="tabUpdates" class="tab-pane widget-body-regular">
-          <h5 class="innerAll margin-none border-bottom bg-gray">Recent News
-           {% if updates_count != 0 %}<span class="badge pull-right">{{updates_count}}</span>{% endif %}
-           </h5>
-
-           {% if deliverables %} 
-          {{deliverables|linebreaks}}
-        {% else %}
-          <p>Please contact us directly to discuss deliveries.</p>
-        {% endif %}
-        </div>
-
+  
 <!--  start we buy -->
 
 {% if we_buy %}
-<div  class="tab-pane active widget-body-regular" id="tabBuy">
+<div  class="tab-pane clearfix " id="tabBuy">
   
           {% if user.is_authenticated %}
           <div class="row" style="padding: 20px 0;"> 
@@ -1032,12 +1022,16 @@
 
 
 
-        <div id="tabUpdates" class="tab-pane widget-body-regular">
-          <h5 class="innerAll margin-none border-bottom bg-gray">Recent News
-           {% if updates_count != 0 %}<span class="badge pull-right">{{updates_count}}</span>{% endif %}
-           </h5>
+        <div id="tabUpdates" class="tab-pane clearfix"> 
           <div class="widget-body padding-none">
-              
+                  {% if deliverables %} 
+            {{deliverables|linebreaks}}
+          {% else %}
+            <div class="box-generic text-center">
+            <i class="fa fa-truck"></i> Please contact us directly to discuss deliveries.
+            </div>
+          {% endif %}
+
 
               {% if user.is_authenticated %}
 
@@ -1061,34 +1055,32 @@
 
 
 
-        <div id="tabCustomers" class="tab-pane widget-body-regular">
-  
-          {% if customers|length != 0 %}<span class="badge pull-right">{{customers|length}}</span>{% endif %}
-
+        <div id="tabCustomers" class="tab-pane clearfix">
+   
           {% if user.is_authenticated %}
           {% else %} 
             <p class="alert alert-warning"><a href="{% provider_login_url "twitter" process="login" %}" class="">Login</a> or <a href="{% provider_login_url "twitter" process="login" %}" class="">sign up free</a> to see where their customers live. Maybe they'll do home deliveries if you ask nicely! </p> 
           {% endif %}
-
-          <div class="pull-left">
+ 
            {% for each in customers %}
 
               <div class="card card-individual"> 
-                <div class="content" style="background-image:url('{{each.banner_url}}');">
-                  <img src="{{each.photo}}" alt="{{each.name}}"
-                  class="img-rounded img-responsive pull-left" style="width:40px;" />
-                  <div class="text">
-                    <h5><a href="/profile/{{each.username}}">{{each.name}}</a></h5> 
-                    <p class="small">
-                    {{each.description}}</p>
-                  </div> 
-                </div>
-                <div class="numbers clearfix">
-                  <i class="fa fa-user"></i> <small class="t ext-muted">Person</small>
-                </div>
+
+                <div class="content" style="background:  url('{{each.banner_url}}');">
+                  <div class="text-center">
+                    <a href="/profile/{{each.username}}"><img src="{{each.photo}}" alt="{{each.name}}"
+                    class="img-thumbnail img-responsive" style="width:73px; height:73px;" /></a>
+
+                  </div>
+                  <div class="text"> 
+                    <h5><a href="/profile/{{each.username}}">{{each.name}}</a> 
+                    </h5>  
+                    <p class="small">{{each.description|truncatechars:40}}</p>
+                  </div>
+                </div> 
+ 
               </div>
-          {% endfor %}
-          </div>
+          {% endfor %} 
         </div> <!-- end customers -->
 
 
@@ -1154,22 +1146,22 @@
                        
                         <!-- number of foods sold -->
                         <div class="{% if show_foods %}col-sm-3{% else %}col-sm-6{% endif %}">
-                          <a href="" class="innerAll text-center display-block text-muted" data-original-title="{{userprof.food_no}} foods" rel="tooltip"><i class="fa fa-fw fa fa-cutlery"></i> {{userprof.food_no}}</a>
+                          <a href="" class="innerAll half text-center display-block text-muted" data-original-title="{{userprof.food_no}} foods" rel="tooltip"><i class="fa fa-fw fa fa-cutlery"></i> {{userprof.food_no}}</a>
                         </div>
 
                         <!-- number of vouches across all produce --> 
                         <div class="{% if show_foods %}col-sm-3{% else %}col-sm-6{% endif %}">
-                          <a href=""  rel="tooltip" title="{{userprof.total_vouches}} number of vouches for all produce"  class="innerAll text-center display-block text-muted"><i class="fa fa-fw fa-thumbs-o-up"></i> {{total_vouches}}</a>
+                          <a href=""  rel="tooltip" title="{{userprof.total_vouches}} of vouches for all produce"  class="innerAll half text-center display-block text-muted"><i class="fa fa-fw fa-thumbs-o-up"></i> {{total_vouches}}</a>
                         </div> 
 
                         <!-- number of trade connections --> 
                         <div class="{% if show_foods %}col-sm-3{% else %}col-sm-6{% endif %}">
-                          <a href=""  rel="tooltip" title="{{userprof.trade_connections_no}} of trade connections" class="innerAll text-center display-block text-muted"><i class="fa fa-fw fa-link"></i> {{userprof.trade_connections_no}}</a>
+                          <a href=""  rel="tooltip" title="{{userprof.trade_connections_no}} of trade connections" class="innerAll half text-center display-block text-muted"><i class="fa fa-fw fa-link"></i> {{userprof.trade_connections_no}}</a>
                         </div>
 
                         <!-- number of group membershpis -->  
                         <div class="{% if show_foods %}col-sm-3{% else %}col-sm-6{% endif %}">
-                          <a href=""  rel="tooltip" title="Member of {{userprof.organisation_connection_no}} groups or organisations"  class="innerAll text-center display-block text-muted"><i class="fa fa-fw fa-group"></i> {{userprof.organisation_connection_no}}</a>
+                          <a href=""  rel="tooltip" title="Member of {{userprof.organisation_connection_no}} groups or organisations"  class="innerAll half text-center display-block text-muted"><i class="fa fa-fw fa-group"></i> {{userprof.organisation_connection_no}}</a>
                         </div> 
 
                       </div>
@@ -1255,50 +1247,55 @@
       {% endifnotequal %}
 
           <div class="btn-group btn-block">
-            <button class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" style="width:50%;" ><i class="fa fa-share"></i> Share</button>
-              <ul class="dropdown-menu ">
-               <li> <a href="#" class="" onclick="window.open(
-                'https://www.facebook.com/sharer/sharer.php?s=100&amp;p[url]='+encodeURIComponent('{{ request.build_absolute_uri }}') +'&amp;p[images][0]='+encodeURIComponent('{{pic_url}}')+'&amp;p[title]='+encodeURIComponent('{{name}} on FoodTrade')+'&amp;p[summary]='+encodeURIComponent('Hey, see my profile on FoodTrade')+'&amp;u='+encodeURIComponent('{{ request.build_absolute_uri }}') +'&amp;t='+encodeURIComponent('{{name}} on FoodTrade'),
-                      'facebook-share-dialog', 
-                      'width=626,height=436,top='+((screen.height - 436) / 2)+',left='+((screen.width - 626)/2 )); 
-                    return false;">
+            <div class="btn-group"  style="width:50%;">
+              <button type="button"  style="width:100%;" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown"  ><i class="fa fa-share"></i> Share</button>
+                <ul class="dropdown-menu ">
+                 <li> <a href="#" class="" onclick="window.open(
+                  'https://www.facebook.com/sharer/sharer.php?s=100&amp;p[url]='+encodeURIComponent('{{ request.build_absolute_uri }}') +'&amp;p[images][0]='+encodeURIComponent('{{pic_url}}')+'&amp;p[title]='+encodeURIComponent('{{name}} on FoodTrade')+'&amp;p[summary]='+encodeURIComponent('Hey, see my profile on FoodTrade')+'&amp;u='+encodeURIComponent('{{ request.build_absolute_uri }}') +'&amp;t='+encodeURIComponent('{{name}} on FoodTrade'),
+                        'facebook-share-dialog', 
+                        'width=626,height=436,top='+((screen.height - 436) / 2)+',left='+((screen.width - 626)/2 )); 
+                      return false;">
 
-                  <i class="fa fa-facebook-square fa-2x"></i> Share on facebook 
-                </a></li><li>
-                <a href="#" class="  " onclick="window.open(
-                      'https://twitter.com/share?url='+encodeURIComponent('{{ request.build_absolute_uri }}')+'&amp;text='+encodeURIComponent('{{screen_name}} on @foodtradeHQ') + '&amp;count=none/', 
-                      'twitter-share-dialog', 
-                      'width=626,height=436,top='+((screen.height - 436) / 2)+',left='+((screen.width - 626)/2 )); 
-                    return false;">
-                  <i class="fa fa-twitter-square fa-2x"></i> Tweet this
-                </a></li><li>
-    
-                <a class=" " href="http://pinterest.com/pin/create/button/?url={{ request.build_absolute_uri|urlencode }}&media={{pic_url|urlencode}}&description={{screen_name|urlencode}}{{' on FoodTrade'|urlencode}}" class="pin-it-button" count-layout="horizontal">
-                  <i class="fa fa-pinterest-square fa-2x"></i> Pin to pinterest
-                </a> </li><li>
-                <a  class="" href="https://plus.google.com/share?url={{ request.build_absolute_uri|urlencode }}">
-                  <i class="fa fa-google-plus-square fa-2x"></i> Share on Google+
-                </a></li><li>
-                <a  class=" " href="http://www.tumblr.com/share" title="Share on Tumblr">
-                  <i class="fa fa-tumblr-square fa-2x"></i> Post to Tumblr
-                </a>
-                   </li><li>
-                <a  class=" " href="http://www.linkedin.com/shareArticle?mini=true&url={{ request.build_absolute_uri|urlencode}}&title={{screen_name}} on FoodTrade&summary=Hey, view my profile on Foodtrade.&source=">
-                  <i class="fa fa-linkedin-square fa-2x"></i> Share on LinkedIn
-                </a></li> 
-                <script type="text/javascript" src="http://platform.tumblr.com/v1/share.js"></script>
-              </ul>
+                    <i class="fa fa-facebook-square fa-2x"></i> Share on facebook 
+                  </a></li><li>
+                  <a href="#" class="  " onclick="window.open(
+                        'https://twitter.com/share?url='+encodeURIComponent('{{ request.build_absolute_uri }}')+'&amp;text='+encodeURIComponent('{{screen_name}} on @foodtradeHQ') + '&amp;count=none/', 
+                        'twitter-share-dialog', 
+                        'width=626,height=436,top='+((screen.height - 436) / 2)+',left='+((screen.width - 626)/2 )); 
+                      return false;">
+                    <i class="fa fa-twitter-square fa-2x"></i> Tweet this
+                  </a></li><li>
+      
+                  <a class=" " href="http://pinterest.com/pin/create/button/?url={{ request.build_absolute_uri|urlencode }}&media={{pic_url|urlencode}}&description={{screen_name|urlencode}}{{' on FoodTrade'|urlencode}}" class="pin-it-button" count-layout="horizontal">
+                    <i class="fa fa-pinterest-square fa-2x"></i> Pin to pinterest
+                  </a> </li><li>
+                  <a  class="" href="https://plus.google.com/share?url={{ request.build_absolute_uri|urlencode }}">
+                    <i class="fa fa-google-plus-square fa-2x"></i> Share on Google+
+                  </a></li><li>
+                  <a  class=" " href="http://www.tumblr.com/share" title="Share on Tumblr">
+                    <i class="fa fa-tumblr-square fa-2x"></i> Post to Tumblr
+                  </a>
+                     </li><li>
+                  <a  class=" " href="http://www.linkedin.com/shareArticle?mini=true&url={{ request.build_absolute_uri|urlencode}}&title={{screen_name}} on FoodTrade&summary=Hey, view my profile on Foodtrade.&source=">
+                    <i class="fa fa-linkedin-square fa-2x"></i> Share on LinkedIn
+                  </a></li> 
+                  <script type="text/javascript" src="http://platform.tumblr.com/v1/share.js"></script>
+                </ul>
+              </div>
 
               <button class="btn btn-default btn-sm" style="width:50%;"><i class="fa fa-star-o"></i> Favourite</button>
           </div>
 
+          <div class="text-center innerT">
 
-                  
- 
-                      followers: {{followers_count}}<br />
-                      following: {{friends_count}}<br />
+            <span class="label label-default label-stroke">{{followers_count}}</span> followers
 
-                      
+            <i class="fa fa-fw fa-twitter fa-lg" style="color: #35B8EB;"></i>
+
+            follows
+            <span class="label label-default label-stroke">{{friends_count}}</span>  
+   
+          </div>
 
                                 
                                 </div>
@@ -1354,16 +1351,18 @@
   <div class="innerAll text-white">
       <div class="innerB"><i class=" icon-rocket fa fa-4x text-faded"></i>
       </div>
-      <h2 class="strong margin-none text-white">Help us grow!</h2>
+      <h2 class="strong margin-none text-white">Better, together</h2>
       <p class="lead">from &pound;20 / year</p>
-      <p>We don't sell your data or show adverts because you're our customer, not our product. And because we're working for YOU, we charge a small fee for premium features</p>
-      <p>Use the coupon code: BETASUMMER</p>
+      <p> 
+
+      We don't sell your data or show adverts because you're our customer, not our product. And because we're working for YOU, we charge a small fee for premium features</p>
+      <p>Use the coupon code: LOVESUMMER</p>
       <button class="btn btn-primary btn-stroke">Upgrade today <i class="fa fa-fw fa-play-circle"></i>
       </button> 
   </div>
   <!-- Ribbon -->
   <div class="ribbon-wrapper">
-      <div class="ribbon primary">Beta offer</div>
+      <div class="ribbon primary">It's spring!</div>
   </div>
 </div>
 
@@ -1375,7 +1374,7 @@
 
 <!-- /NEW -->
 
-    <div class="col-md-8 col-sm-7 col-xs-12 {% if not user.is_authenticated %} col-md-offset-1 {% endif %}  " id="single" style="padding: 0;">
+    <div class="col-md-8 col-sm-7 col-xs-12 {% if not user.is_authenticated %} col-md-offset-1 {% endif %}  hidden " id="single" style="padding: 0;">
 
 
 
@@ -1632,39 +1631,27 @@
   <script type="text/javascript">
  
 
- $.fn.editable.defaults.mode = 'inline';
+ // $.fn.editable.defaults.mode = 'inline';
 
+$(document).ready(function(){
+  var $container1 = $('#foods').isotope({itemSelector: '.food'});
+<<<<<<< HEAD
+=======
 
-var $container1 = $('#foods').isotope({
-   itemSelector: '.food'
-});
+ // var $container = $('#all-connections').isotope({itemSelector: '.card-business'});
 
+>>>>>>> 71c9b60992b2f803470482e511999e399106dda5
 // filter items on button click
 $('#filterFoods').on( 'click', 'button', function() {
   var filterValue = $(this).attr('data-filter');
   $container1.isotope({ filter: filterValue });
 });
 
-var $container2 = $('#buyers-cards').isotope({
-   itemSelector: '.card'
 });
-
-var $container3 = $('#seller-cards').isotope({
-   itemSelector: '.card'
-});
-
-$('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
-  $container2.isotope('reLayout');
-  $container3.isotope('reLayout');
-});
- 
  
 
 
 $( document ).ready(function() {
-
- 
-
 
 
   $("#myTags").tagit({
@@ -1811,6 +1798,10 @@ function get_food_detail(profile_id, food_name, description, food_tags, photo_ur
     
   </script>
 
+  <script src='//api.tiles.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v0.0.2/Leaflet.fullscreen.min.js'></script>
+<link href='//api.tiles.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v0.0.2/leaflet.fullscreen.css' rel='stylesheet' />
+
+
      <script src="{% static "js/contact.js" %}"></script>
         <script type="text/javascript">
     map_lat={{ loc.lat }};
@@ -1860,6 +1851,9 @@ customers = {{customers_str | safe}};
               $('#connections').removeClass('active');
           }
         });
+
+        
      </script>
+
  {% endblock %}
 
