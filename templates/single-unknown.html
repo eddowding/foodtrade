@@ -37,11 +37,14 @@
 {% block content %}
 {% include 'modal_invite.html' %}
 
-    <div  class="container">
-    <div class="col-md-10 col-sm-10" id="single">
+
+
+<div class="innerAll">
+<div class="row">
+<div class="col-md-12"  id="single">
 
     <div class="container-responsive">
-    <div id="header_box" class="clearfix">
+    <div id="header_box" class="clearfix box-generic">
      <div class="col-md-2 hidden-sm hidden-xs" id="avatar">
                 <img class="img-thumbnail center-block" src="{{pic_url}}" />
             </div>
@@ -50,11 +53,11 @@
          <h1> <img class="visible-sm visible-xs" style="width: 30px; margin-right: 10px; float:left;" src={{pic_url}}  /><a href="/{{userprof.username}}/">{{userprof.full_name}}</a></h1>
 
          <hr />
-         <p>{{userprof.description}}</p>        
+         <p class="lead">{{userprof.description}}</p>        
  
          <hr /> 
      
-         <div class="meta small text-muted">
+         <div class="meta text-muted">
             {% if loc.lat == -82.86275189999999 and loc.lon == -135.10000000000002 %}
               <i class="fa fa-map-marker"></i> <a > NA</a>
               <i class="fa fa-location-arrow" style="margin-left: 20px;"></i> NA
@@ -85,18 +88,17 @@
     <div class="row" style="margin-top: 30px;">
      <div class="col-md-12 col-sm-12">
 
-<div class="well well-sm">
+<div class="box-generic bg-primary-light">
   <h3 class="text-center"> Hi! What is @{{userprof.username}}? </h3>
-
-<div class="container">
+ 
     <div class="row">
       <ul class="thumbnails list-unstyled">
-        <li class="col-md-3 col-sm-3">
+        <li class="col-sm-4">
           <div class="thumbnail" style="padding: 0">  
             <div class="modal-header text-center">            
               <button type="button" class="btn btn-lg btn-primary" {% if request.user.is_authenticated %} onclick="change_sign_up('Business','{{userprof.username}}')" {% else %} disabled="disabled" {% endif %}>Food business</button>
             </div>
-            <div class="caption"> 
+            <div class="caption bg-gray"> 
               <p><span class="help-block">Eg. Farms, restaurants, caterers, bakers, schools, hospitals...</span></p>
               <p>Any business or organisation which buys an sells food for a living. From farm to fork, small holder to supermarket.</p>
               
@@ -104,12 +106,12 @@
           </div>
         </li>
 
-        <li class="col-md-3 col-sm-3">
+        <li class="col-sm-4">
           <div class="thumbnail" style="padding: 0">  
-            <div class="modal-header text-center">            
+            <div class="modal-header text-center ">            
               <button type="button" class="btn btn-lg btn-primary"  {% if request.user.is_authenticated %} onclick="change_sign_up('Organisation','{{userprof.username}}')" {% else%} disabled="disabled" {% endif %}>Organisation</button>
             </div>
-            <div class="caption"> 
+            <div class="caption bg-gray"> 
               <p><span class="help-block">Eg. Soil Assocation, Slow Food, LEAF, The SRA, Catering Mark...</span></p>
               <p>Any membership group with an a strong interest in food, agriculture, or nutrition.</p>
               
@@ -117,12 +119,12 @@
           </div>
         </li>
 
-        <li class="col-md-3 col-sm-3">
+        <li class="col-sm-4">
           <div class="thumbnail" style="padding: 0">  
             <div class="modal-header text-center">
               <button type="button" class="btn btn-lg btn-primary" {% if request.user.is_authenticated %} onclick="change_sign_up('Individual','{{userprof.username}}')" {% else %} disabled="disabled" {% endif %}>Individual</button>
             </div>
-            <div class="caption"> 
+            <div class="caption bg-gray"> 
               <p><span class="help-block">Eg. most of us: customers, chefs, bloggers, consultants... </span></p>
               <p>Did you know that the food system employs just over 400,000 workers in the UK?</p>
               
@@ -130,8 +132,7 @@
           </div>
         </li>  
       </ul>
-    </div>
-</div>
+    </div> 
  </div>
   <h4 class="text-center"> <small> <strong>This only shows once!</strong> As soon as we know what it is, others can start adding information to it. </small></h4> 
 </div>
