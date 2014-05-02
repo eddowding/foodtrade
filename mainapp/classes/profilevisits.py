@@ -21,8 +21,10 @@ class ProfileVisits():
     def save_visit(self,data={}):
     	return self.db_object.insert_one(self.table_name, data)
 
-    def get_visit_stats(self, pagenum=1, condition={}):
-    	return 
+    def get_visit_stats(self, pagenum=1, conditions={}):
+    	return self.db_object.get_paginated_values(self.table_name, conditions=conditions, pageNumber=pagenum)
+
+    
 
 
     
