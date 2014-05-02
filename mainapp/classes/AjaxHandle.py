@@ -632,6 +632,13 @@ class AjaxHandle(AjaxSearch):
         else:
             return HttpResponse("{'status':0}")
 
+    def get_business_tags(self, request):
+        tags_obj = Tags()
+        all_tags = tags_obj.get_tags()
+        parameters={}
+        parameters['all_tags'] = all_tags
+        return render_to_response('ajax_tags_signup.html', parameters)
+
     def approve_tag(self, request):
         foo = ApprovedFoodTags()
         data = eval(request.POST.get('data'))

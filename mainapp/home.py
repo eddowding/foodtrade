@@ -250,7 +250,6 @@ def all_users(request):
     user_prof = UserProfile()
     for each in all_users:
         try:
-            print each.username
             usr_pro = user_prof.get_profile_by_username(str(each.username))
             final_list.append({
                 'date_joined': each.date_joined,
@@ -259,7 +258,6 @@ def all_users(request):
                 })
         except:
             continue
-    print final_list
     parameters['all_users'] = final_list
     return render_to_response('all_users.html', parameters, context_instance=RequestContext(request))
     # return render_to_response('all_users.html', parameters)

@@ -144,7 +144,7 @@
                         
                         <label for="id_type_user" class="col-sm-3 control-label">Type</label>
                         <div class="col-sm-9">
-                        <select data-placeholder="Farm, wholesaler, bakery..." style="width:100%;height:30px;" class="chosen-select" multiple>
+                        <select id="business_tags_id" data-placeholder="Farm, wholesaler, bakery..." style="width:100%;height:30px;" class="chosen-select" multiple>
                         <option value=""></option>
                           {% for each in all_tags %}
                           <optgroup label={{each.node}}>
@@ -253,7 +253,8 @@ function dataradio(value){
     // var result_val = $("input[name=options]:checked").val();
     document.getElementById('id_sign_up_as').value = value;
     if (value == "Business"){
-
+        // get business tags value
+        get_business_tags()
         if ( $('#type_user_id').hasClass('typeempty') ){
           $('#type_user_id').removeClass('typeempty');
         }

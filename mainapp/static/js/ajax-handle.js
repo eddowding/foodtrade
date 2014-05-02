@@ -28,6 +28,15 @@ function add_org_to_biz(member_id, orguid){
 	ajax_request("third_party_add_org", 'org_ajax', {data: "{'memberuid': " + member_id + ",'orguid': " + parseInt(orguid) +"}"});
 	// }
 }
+// get business tags
+function get_business_tags(){
+ajax_request("get_business_tags", 'signup_tags_ajax', {data: "{'abc': 'abc' }"});
+}
+
+function signup_tags_ajax(data){
+$('#business_tags_id').html(data);
+$("#business_tags_id").trigger('chosen:updated');
+}
 
 function del_org_from_biz(member_id, org_id){
 ajax_request("third_party_delete_org", 'org_ajax', {data: "{'memberuid': " + member_id + ",'orguid': " + org_id +"}"});

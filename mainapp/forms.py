@@ -107,7 +107,6 @@ class SignupForm(forms.Form):
     def __init__(self, *args, **kwargs):
         # self.request = request
         self.request = kwargs.pop('request', None)
-        print 'request is: ', self.request
         super(SignupForm, self).__init__(*args, **kwargs)
         try:
             username =  self.sociallogin.account.extra_data['screen_name']
@@ -124,6 +123,7 @@ class SignupForm(forms.Form):
     def save(self, user):
         new_username = self.cleaned_data.get('username') if self.cleaned_data.get('username')!=None else ''
         new_password1 = self.cleaned_data.get('password1') if self.cleaned_data.get('password1')!=None else ''
+        print type(user), 'this is user', user, 
         try:
             addr = self.cleaned_data['address']
             lat = self.cleaned_data['lat']
