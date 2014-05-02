@@ -86,14 +86,12 @@
     </title>
     <!-- CSS -->
     <link href="{% static "css/bootstrap.css" %}" rel="stylesheet"> 
-<<<<<<< HEAD
+
     <link rel="stylesheet" href="{% static "css/docsupport/prism.css" %}">
     <link rel="stylesheet" href="{% static "css/chosen.min.css" %}"> 
-=======
-     <link href="{% static "css/dynamic.css" %}" rel="stylesheet"> 
-    <link rel="stylesheet" href="/static/css/docsupport/prism.css">
-    <link rel="stylesheet" href="/static/css/chosen.min.css"> 
->>>>>>> f345e0f8dfc704b1e3207002980fa8d3ac06b98a
+
+    <link href="{% static "css/dynamic.css" %}" rel="stylesheet"> 
+
 
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places"></script>
     <!-- <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet"> -->
@@ -188,7 +186,7 @@
 
 
   </head>
-<body class=" menu-right-hidden">
+<body class=" menu-right-hidden {% if not user.is_authenticated %}menu-hidden{% endif %}">
     
 
        <!-- New post Modal -->
@@ -368,7 +366,7 @@
                 <br />
                 <span class="  small">Sign up is free</span></a>
             {% else %}
-              {% if not can_tweet %} 
+              {% if can_tweet %} 
                 <button type="button" id="btn_update_activity" class="btn  btn-success pull-right" rel="tooltip"  {% if not user.is_authenticated %}  title="Please login to use this feature." {% endif %} onclick="generate_update();"> Post this</button>
               {% else %} 
                 <a href="/payments" class="btn  btn-success pull-right"  rel="tooltip" title="Please upgrade your account to unlock."  {% if not user.is_authenticated %}  title="Please login to use this feature." {% endif %} > Upgrade to post</a>
@@ -480,12 +478,14 @@ function show_small_structure()
         </div>
 
 {% if not user.is_authenticated %} 
+
 <ul class="menu list-unstyled" id="navigation_current_page">
 <li>
-<a href="%#">hello</a>
+<a type="button" href="{% provider_login_url "twitter" process="login" %}"  class="btn text-center btn-primary btn-lg btn-block hidden" style="  margin-top: 1em;"><i class="fa fa-twitter fa-fw"></i> Sign in</a>
+</a>
 </li>
-
 </ul>
+
 {% else %}
  
 
@@ -499,25 +499,9 @@ function show_small_structure()
           {% endif %}
 
 
-
-
- 
-
-
-<div id="sidebar" class=" 
-{% if not user.is_authenticated %} 
-hid den
-{% endif %}
-" role="navigation" >
-
-{% if not user.is_authenticated %} 
-<div class="alert alert-info  ">
-<a type="button" href="{% provider_login_url "twitter" process="login" %}"  class="btn text-center btn-primary btn-lg btn-block hidden" style="  margin-top: 1em;"><i class="fa fa-twitter fa-fw"></i> Sign in</a>
-</a>
-</div>
-{% endif %}  
-    </div>
-
+        <li class="">
+          <a href="/"><i class="fa fa-shopping-cart"></i><span>Marketplace</span></a> 
+        </li> 
 
 
         {% if search %}
@@ -594,6 +578,7 @@ hid den
             </li> 
  {% endif %}
 
+            
             <li class="">
               <a href="/myprofile/favourites"><i class="fa fa-star"></i><span>Favourites</span></a> 
             </li> 
@@ -652,7 +637,7 @@ hid den
                                     <span class="pull-left media-object">
                                         <i class="fa fa-fw fa-question-circle"></i>
                                     </span>
-                                    <div class="media-body">
+                                    <div class="media-body text-left">
                                         If you would like to find or offer surplus or gluts, just use as <a href="/activity/?q=surplus">#surplus</a> to your message.  <a href="/activity/?q=surplus" class="text-white">Test it out</a>
                                     </div>
                                 </li> 
@@ -665,7 +650,7 @@ hid den
                                     <span class="pull-left media-object">
                                         <i class="fa fa-fw fa-question-circle"></i>
                                     </span>
-                                    <div class="media-body">
+                                    <div class="media-body text-left">
                                       You can  post updates from anywhere! Just tweet your message to @foodtradeHQ and we'll push your message to local businesses!
                                     </div>
                                 </li> 
@@ -839,13 +824,16 @@ hid den
 
 
   {% if not request.user.is_authenticated %} 
+
+
   <div class="user-action pull-right menu-right-hidden-xs menu-left-hidden-xs border-left">
+    
     <div class="dropdown username pull-left">
       <a class="dropdown-toggle" data-toggle="dropdown" href="#">Login
       </a> 
        <ul class="dropdown-menu pull-right" style="padding: 15px;min-width: 250px;">
           <li>
-             <a href="{% provider_login_url "twitter" process="login" %}"><button class="btn btn-primary btn-block" style="background: #5398D8;" id="sign-in-twitter" value="Sign In with Twitter">Sign In with Twitter</button></a>
+             <a href="{% provider_login_url "twitter" process="login" %}"><button class="btn btn-primary btn-block" style="background: #5398D8; border-color: #4B80B5;" id="sign-in-twitter" value="Sign In with Twitter">Sign In with Twitter</button></a>
           </li>
           <li class="divider"></li>
           <li>
@@ -869,54 +857,35 @@ hid den
                       <div class="form-group">
                          <button type="submit" class="btn btn-success btn-block">Sign in</button>
                       </div>
-                   </form>
+                    </form>
                 </div>
              </div>
           </li>
        </ul> 
-    </div> <!-- end login dropdown -->
-           <!-- end login dropdown -->
-    <div class="dropdown username pull-left border-left">
-      <a class="dropdown-toggle" data-toggle="dropdown" href="#"> &nbsp;&nbsp;Sign up
-      </a> 
-       <ul class="dropdown-menu pull-right" style="padding: 15px;min-width: 250px;">
-          <li>
-             <a href="{% provider_login_url "twitter" process="login" %}"><button class="btn btn-primary btn-block" style="background: #5398D8;" id="sign-in-twitter" value="Sign In with Twitter">Sign In with Twitter</button></a>
-          </li>
-          <li class="divider"></li>
-          <li>
-             <div class="row">
-                <div class="col-md-12">
-                   <form class="form" role="form" method="post" action="/accounts/login/" accept-charset="UTF-8" id="login-nav">{% csrf_token %}
-                      <div class="form-group">
-                         <label class="sr-only" for="exampleInputEmail2">Email address</label>
-                         <input type="email" class="form-control" id="exampleInputEmail2" name="login" placeholder="Email address" required>
-                      </div>
-                      <div class="form-group">
-                         <label class="sr-only" for="exampleInputPassword2">Password</label>
-                         <input type="password" class="form-control" id="exampleInputPassword2" name="password" placeholder="Password" required>
-                      </div>
-                      <div class="checkbox">
-                         <label>
-                         <input type="checkbox" name="remember"> Remember me
-                         </label>
-                      </div>
-                      <a class="help-block" href="/accounts/password/reset/"/>Forgot Password?</a>
-                      <div class="form-group">
-                         <button type="submit" class="btn btn-success btn-block">Sign in</button>
-                      </div>
-                   </form>
-                </div>
-             </div>
-          </li>
-       </ul> 
-    </div> <!-- end sign up dropdown -->
-
-
+    </div> 
   </div>
+
+  <div class="user-action pull-right  border-left">
+    <div class="dropdown username pull-left">
+      <a class="dropdown-toggle" data-toggle="modal" data-target="#modal_signup">
+        Sign up
+      </a>
+    </div>
+  </div>
+   
+ 
+   {% if not user.is_authenticated %} 
+  <div class=" pull-left">
+      <a href="/" class="">
+      <img src="{% static 'images/logo_tall.png' %}" alt="FoodTrade logo" width="" />
+      </a>
+  </div>
+  {% else %}
   <div class="user-action user-action-btn-navbar pull-left">
       <a href="#menu" class="btn btn-sm btn-navbar btn-open-left"><i class="fa fa-bars fa-2x"></i></a>
   </div>
+  {% endif %}
+
   {% endif %}
 
 
@@ -929,18 +898,7 @@ hid den
             {% endif %}
             </a> 
       </li>
-    </ul><!-- 
-    <ul class="notifications pull-right hidden-xs border-left">
-      <li class="border-left">
-      <a href="#tab3-2"   data-toggle="tab">
-      <i class="notif-block icon-shopping-cart"></i>
-
-
-        <span class="badge pull-number badge-white">2</span>
-        </a> 
-      </li>
-  </ul>
-  -->
+    </ul> 
   {% endif %}
 
 
@@ -1048,108 +1006,19 @@ hid den
 
 
 
-    
-<!-- Fixed navbar -->
-    <nav class="navbar navbar-default navbar-fixed-top hidden" role="navigation">
-
-      <div class="ftstrip"></div>
-      <div>
-
-        <div class="navbar-header"> 
-          <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".navbar-collapse" style="margin-right:60px;">
-            <span class="sr-only">Toggle</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-
-          <div class="visible-xs visible-sm">
-            <span data-toggle="offcanvas" style="top: 10px; position:relative;">
-              <span class="sr-only">Toggle navigation</span>
-              <img src="{% static 'images/logo_icon_menu.png' %}" alt="FoodTrade logo" width="" />
-            </span>
-          </div>
-
-          <a href="/" class="navbar-brand visible-md visible-lg">
-            <img src="{% static "images/logo_icon.png" %}" alt="FoodTrade logo" /> 
-          </a>
-  
-  
-           
-           
-          </div><!--/navbar header -->
      
-      <nav class="collapse navbar-collapse" role="navigation">
-
  
 
-        {% if user.is_authenticated %} 
+  <script type="text/javascript">
+  function logout()
+  {
+    window.location = '/accounts/logout';
+  }
+  </script>
 
-          <ul class="nav navbar-nav pull-right" style="margin-right: 50px;">  
-         
-         
-          <li class="dropdown">
-            <!-- bigger screens --> 
-            <a href="#" class="dropdown-toggle visible-md visible-lg" data-toggle="dropdown" style="padding: 5px">
-            <img style="width:40px"  src="{{userinfo.profileimg}}" class="img-rounded img-thumbnail"  /> <b class="caret"></b>
-            </a>
-
-            <!-- smaller screens --> 
-            <a href="#" class="dropdown-toggle visible-sm visible-xs" data-toggle="dropdown" style="padding: 2px;" >
-            <img class="img-thumbnail" style=" width:40px" style="padding: 2px;"  src="{{userinfo.profileimg}}"  />  <b class="caret"></b>
-          </a>
-
-              <ul class="dropdown-menu">
-                <li class=" text-center">
-                  <div class="">
-                    <img src="{{userinfo.profileimg}}" class="img-circle img-thumbnail" />
-                  </div>
-                  <span class="text-muted">{{userinfo.username}}</span>
-                </li>
-                <li class="divider"></li>
-                
-                <li class=" pull-left"><a href="/editprofile/{{userinfo.username}}"><i class="fa fa-user fa-fw"></i> Edit profile</a></li>
-
-                <li class=" pull-left"><a href="/payments"><i class="fa fa-credit-card fa-fw"></i> Account &amp; billing</a></li> 
-                <li data-step="4" data-intro="Building a better food system is going to take all of us. Please invite your suppliers, stockists, customers, friends.. everyone! For everyone you invite who signs up, we'll give you a month free, too." rel="tooltip" title="For everyone you invite who signs up, we'll give you a month free!">
-                  <a data-toggle="modal" id="my_invite_twitter" data-target="#modal-tweeter-user"><i class="fa fa-twitter fa-fw"></i> Invite</a>
-                </li> 
-              </ul>
-          </li>
-        </ul>   
-        </nav>
-
-            <script type="text/javascript">
-            function logout()
-            {
-              window.location = '/accounts/logout';
-            }
-            </script>
-      
-        {% endif %}
-         
-          
-          
+           
  
-         {% if not user.is_authenticated %} 
-          <a type="button" class="btn btn-success navbar-btn navbar-right" style="margin-right: 55px;" data-toggle="modal" data-target="#modal_signup">
-            <i class="fa fa-user fa-fw"></i><strong>Sign up</strong>
-          </a>
-         <a type="button" href="{% provider_login_url "twitter" process="login" %}" class="btn btn-success navbar-btn navbar-right" style="margin-right: 15px;">
-            <i class="fa fa-user fa-fw"></i> <strong>Login</strong>
-          </a>
-         {% endif %}
-          
-      </div>
-      <div class="row">
-      <div class="col-sm-12">
-    <div class="ftstrip ftstrip-mini"></div>
-    </div></div>
-
-    </nav> 
-
-   <span id="reload_warning" class="hidden"> 
-  </span>
+   <span id="reload_warning" class="hidden"> </span>
 
 
 
@@ -1169,17 +1038,69 @@ hid den
           <div class="modal-content">
             <div class="modal-header">
               <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-              <h4 class="modal-title" id="myModalLabel">Signup to FoodTrade</h4>
+              <h4 class="modal-title" id="myModalLabel">Sign up to FoodTrade</h4>
             </div>
             <div class="modal-body">
-              <p><strong>Twitter is about to ask for some permissions from you. </strong></p><p>We want to assure you that we will only post tweets for you when you say so.</p>
-   
+            <div class="row">
+
+              <div class="col-sm-6">
+                <div class="innerAll">
+                <p><strong>Twitter is about to ask you to give FoodTrade some permissions</strong></p>
+                 
+
+                
+                <p><strong style="color: #85B963;">We want to assure you that</strong>:</p>
+                <ul class="fa-ul"> 
+              
+                  <li>
+                      <span class="fa fa-li fa fa-check"  style="color: #85B963;"></span>We take your security seriously</li>
+                  <li>
+                      <span class="fa fa-li fa fa-check" style="color: #85B963;"></span>We are registered with the Data Protection Agency</li>
+                
+                  <li>
+                      <span class="fa fa-li fa fa-check" style="color: #85B963;"></span>This network depends on trust and transparency </li>
+                
+                  <li>
+                      <span class="fa fa-li fa fa-check" style="color: #85B963;"></span>We work for you: You're our customer, not our product.</li>
+                </ul> 
+                <p>If you're not happy with these assurances, you can also <a href="#">register with an email and password</a>, but you will not be able to take full advantage of all the great features.</p>
+                </div>
+
+              </div>
+
+ 
+  
+              <div class="col-sm-6 border-left ">
+
+              <div class="innerAll"> 
+
+              <div class="text-center innerB"> 
+                <img alt="" class="app-icon" src="https://pbs.twimg.com/client_application_images/1239729/9x9.png" title="FoodTrade Everywhere by FoodTrade ">
+              </div>
+
+              <div class="permissions allow">
+                <p><strong style="color: #85B963;">We will</strong>:</p>
+                <ul> 
+                  <li>See who you follow, and help you follow new people.</li> 
+                  <li>Post Tweets for you, when you say so</li>
+                </ul>
+              </div>
+              <div class="permissions deny">
+                <p><strong style="color: #F1370A;">We will not</strong>:</p>
+                <ul> 
+                  <li>Access your direct messages.</li>
+                  <li>See your Twitter password.</li>
+                </ul>
+              </div>
+              </div>
+              </div> 
+   </div>
             </div>
             <div class="modal-footer"> 
-              <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+              <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cancel</button>
               
           <!-- <a href="{% provider_login_url "twitter" process="login" %}" class="btn btn-lg btn-info btn-block"><i class="fa fa-twitter"></i> Continue Login</a> -->
-                       <a href="{% provider_login_url "twitter" process="login" %}"><button type="button" class="btn btn-primary btn-lg"><i class="fa fa-twitter"></i> Continue Registration</button></a>
+                       <a href="{% provider_login_url "twitter" process="login" %}"><button type="button" class="btn btn-primary"><i class="fa fa-twitter"></i> Continue Registration</button></a>
               
             </div>
           </div><!-- /.modal-content -->
@@ -1268,7 +1189,7 @@ hid den
 
     <script src="{% static "js/tag-it.js" %}"></script>
     <script src="{% static "js/twitter-typeahead.js" %}"></script>
-    <script src="{% static "js/chosen.jquery.min.js" %}"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
     <script src="{% static "css/docsupport/prism.js" %}" charset="utf-8"></script>
 
     <script src="{% static "js/isotope.pkgd.min.js" %}"></script>
@@ -1456,13 +1377,24 @@ function success_tweeter_user_invite(data){
 <script type="text/javascript">
 $(document).ready(function() {
  
+<<<<<<< HEAD
+  $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {    
+    alert('roshan');
+          $('.isotope').isotope('layout');
+=======
+
+  $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+        alert('hello');
+        $('.isotope').isotope('layout');
+>>>>>>> 71c9b60992b2f803470482e511999e399106dda5
+    });
 
 // tweetlistener('tweetMessage', 'counter', 'contact_tweet', 'newtweet_btn');
  
 
-function showgrid() {
-  $container.css('visibility', 'visible');
-}
+// function showgrid() {
+//   $container.css('visibility', 'visible');
+// }
 
     var activeSystemClass = $('.list-group-item.active');
     //something is entered in search form

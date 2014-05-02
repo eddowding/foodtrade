@@ -1100,11 +1100,12 @@ def distance(lon1, lat1, lon2, lat2):
     return km
 
 
-def get_views_parameters(request, tweet_id):
+def get_views_parameters(request, find_username):
     from mainapp.classes.Search import Search
     parameters={}
     user_profile_obj = UserProfile()
     parameters.update(csrf(request))
+
     if request.user.is_authenticated():
         user_id = request.user.id
         user_profile = user_profile_obj.get_profile_by_id(str(user_id))
@@ -1122,60 +1123,67 @@ def get_views_parameters(request, tweet_id):
         default_lon = float(location_info['longitude'])
         default_lat = float(location_info['latitude'])
 
-    search_handle = Search(lon = default_lon, lat =default_lat)
-    try:
-        single_tweet = search_handle.get_single_tweet(str(tweet_id))
-        a = single_tweet[0]
-    except:
-        raise Http404
-    keyword = ''
-    from mainapp.activity import set_time_date
-    single_tweet = set_time_date(single_tweet[0],keyword)
-    results = search_handle.get_direct_children(str(tweet_id))
+    from mainapp.classes.profilevisits import ProfileVisits    
+    profile_visits_obj = ProfileVisits()
 
-    # send banner url
-    from mainapp.profilepage import get_banner_url
-    parameters['banner_url'] = get_banner_url(username=single_tweet['user']['username'], logged_useruid=request.user.id)
-    if results!= None:
-        for i in range(len(results)):
-            results[i] = set_time_date(results[i],keyword)
-            mentions = "@" + single_tweet['user']['username']+ " " + "@" + results[i]['user']['username'] 
-            results[i]['mentions'] = mentions
+    visit_stats = profile_visits_obj.get_visit_stats(pagenum=1,
+        conditions={'profile_name':{ "$regex" : re.compile("^"+str(find_username)+"$", re.IGNORECASE), "$options" : "-i" }})
+    find_user = user_profile_obj.get_profile_by_username(find_username)
 
-            if results[i]["result_type"] == results[i]["user"]["username"]:
-                tweet_id = results[i]["tweetuid"]
-                replies = search_handle.get_all_children([tweet_id])
-                if replies == None:
-                    continue
-                replies = sorted(replies, key=lambda k: k['time_stamp']) 
-                for j in range(len(replies)):
-                    replies[j] = set_time_date(replies[j],keyword)
-                    replies[j]['mentions'] = mentions + " " + replies[j]['mentions']
-                results[i]['replies'] = replies
-    single_tweet['user']['profile_img'] = single_tweet['user']['profile_img'].replace("normal","bigger")
-    try:
-        single_tweet['user']['business_org_name'] = str(single_tweet['user']['business_org_name'])
-    except:
-        pass
+    results = []
+    for eachVisit in visit_stats:
+        data={}
+        if eachVisit['profile_name']!='':
+            data['username'] = eachVisit['profile_name']
+        else:
+            data['username'] = 'Unknown visitor'
+
+        chk_usr = user_profile_obj.get_profile_by_username(eachVisit['profile_name'])
+        data['profile_img'] = chk_usr['profile_img']
+        data['address'] = chk_usr['address']
+        data['latitude'] = chk_usr['latlng']['coordinates'][1]
+        data['longitude'] = chk_usr['latlng']['coordinates'][0]
+        data['sign_up_as'] = chk_usr['sign_up_as']
+        data['name'] = chk_usr['name']
+        data['useruid'] = chk_usr['useruid']
+
+        try:
+            if chk_usr['subscribed'] ==1:
+                data['subscribed'] = True
+            else:
+                data['subscribed'] = False            
+        except:
+            data['subscribed'] = False
+
+        if chk_usr['sign_up_as'] == 'Individual':
+            data['result_class'] = 'individual updates'
+        elif chk_usr['sign_up_as'] == 'Organisation':
+            data['result_class'] = 'organisation updates'
+        else:
+            data['result_class'] = 'business updates'        
+        
+        data['distance_text'] = str(distance(default_lon, default_lat, chk_usr['latlng']['coordinates'][0], chk_usr['latlng']['coordinates'][1])) + ' miles away'
+        time_elapsed = int(time.time()) -eachVisit['visit_time']
+        if time_elapsed<60:
+            time_text = str(time_elapsed) + ' seconds ago'
+        elif time_elapsed < 3600:
+            minutes = time_elapsed/60
+            time_text = str(minutes) + ' minutes ago'
+        elif time_elapsed < 3600*24:
+            hours = time_elapsed/3600
+            time_text = str(hours) + ' hours ago'
+        elif time_elapsed < 3600*24*365:
+            days = time_elapsed/3600/24
+            time_text = str(days) + ' days ago'
+        else:
+            years = time_elapsed/3600/24/365
+            time_text = str(years) + ' years'
+        data['visit_time'] = time_text
+        data['visit_date_time'] = datetime.datetime.fromtimestamp(int(eachVisit['visit_time']))
+        results.append(data)
     parameters['results'] = results
-    parameters['json_data'] = json.dumps(results)
-    parameters['parent_tweet'] = single_tweet
-    addr = single_tweet['user']['address'].split(',')
-    parameters['tweet_country'] = addr[len(addr)-1].strip()
-    parameters['parent_json'] = json.dumps(single_tweet)
-    parameters['s_userinfo'] = UserInfo(single_tweet['useruid'])
 
     return parameters
 
 def get_views_count(request, username):
-    userprof = UserProfile()
-    user= userprof.get_profile_by_username(username)
-    from mainapp.classes.profilevisits import ProfileVisits
-    profile_visits_obj = ProfileVisits()
-    visit_stats = profile_visits_obj.get_visit_stats()
-
-    parameters ={}
-    parameters['user'] = user
-    parameters['visit_stats'] = visit_stats
-    tweet_id = '443425161815932929'
-    return render_to_response('view_stats.html', get_views_parameters(request,tweet_id), context_instance=RequestContext(request))
+    return render_to_response('view_stats.html', get_views_parameters(request,username), context_instance=RequestContext(request))
