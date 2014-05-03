@@ -289,17 +289,50 @@
       </div><!-- end header last -->
     </div>
     </div>
-    <div class="row">
-     <div class="col-md-12">
-        <ul class="nav nav-tabs ">
-          <li class="active"><a href="#members" data-toggle="tab">Members 
-            {% if members|length != 0 %}<span class="badge ">{{members|length}}{% endif %}</span></a></li>
-          <li><a href="#foods" data-toggle="tab">Foods  {% if food_count != 0 %}<span class="badge">{{food_count}}</span>{% endif %}</a></li> 
-          <li><a href="#people" data-toggle="tab">Team {% if teams|length != 0 %}<span class="badge ">{{teams|length}}</span>{% endif %}</a></li>
-          <li><a href="#updates" data-toggle="tab">Updates {% if updates_count != 0 %}<span class="badge ">{{updates_count}}</span>{% endif %}</a></li>
-        </ul>
-     </div>
+ 
+
+<div class="widget widget-tabs widget-tabs-double-2 widget-tabs-responsive">
+   
+    <!-- Tabs Heading -->
+    <div class="widget-head">
+
+      <ul class="clearfix">
+
+          <li class="active">
+            <a href="#members" class="glyphicons log_in" data-toggle="tab">
+            <i></i>
+            <span>Members</span>
+            {% if members|length != 0 %}<span class="label label-default pull-number ">{{members|length}}</span>{% endif %}
+            </a></li>
+          <li>
+            <a href="#foods" data-toggle="tab" class="glyphicons cutlery">
+            <i></i>
+            <span>Foods</span>
+            {% if food_count != 0 %}<span class="label label-default pull-number">{{food_count}}</span>{% endif %}
+            </a></li> 
+          <li>
+            <a href="#people" data-toggle="tab" class="glyphicons group">
+            <i></i>
+            <span>Team</span>
+            {% if teams|length != 0 %}<span class="label label-default pull-number ">{{teams|length}}</span>{% endif %}
+            </a></li>
+          <li>
+            <a href="#updates" data-toggle="tab" class="glyphicons bullhorn">
+            <i></i>
+            <span>Updates</span>
+            {% if updates_count != 0 %}<span class="label label-default pull-number ">{{updates_count}}</span>{% endif %}
+            </a></li>
+        
+      </ul>
     </div>
+    <!-- // Tabs Heading END -->
+
+    
+    <div class="widget-body">
+
+      <div class="tab-content">
+
+
     <div class="row">
       <div class="col-md-12">
         <div class="container-responsive clearfix">
