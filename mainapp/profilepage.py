@@ -282,13 +282,14 @@ def display_profile(request, username):
     visit_time = time.mktime(visit_time.timetuple())
 
     profile_visits_obj = ProfileVisits()
-    profile_visits_obj.save_visit({
-        'visit_time':int(visit_time),
-        'visitor_id':request.user.id, 
-        'visitor_name':request.user.username,
-        'profile_id':userprof['useruid'],
-        'profile_name':userprof['username'],
-        })
+    if request.user.username != str(userprof['username']):
+        profile_visits_obj.save_visit({
+            'visit_time':int(visit_time),
+            'visitor_id':request.user.id, 
+            'visitor_name':request.user.username,
+            'profile_id':userprof['useruid'],
+            'profile_name':userprof['username'],
+            })
     '''Code to track who views my profile'''
         
     if parameters['sign_up_as'] == 'Business':
@@ -1125,7 +1126,6 @@ def get_views_parameters(request, find_username):
 
     from mainapp.classes.profilevisits import ProfileVisits    
     profile_visits_obj = ProfileVisits()
-
     visit_stats = profile_visits_obj.get_visit_stats(pagenum=1,
         conditions={'profile_name':{ "$regex" : re.compile("^"+str(find_username)+"$", re.IGNORECASE), "$options" : "-i" }})
     find_user = user_profile_obj.get_profile_by_username(find_username)
@@ -1133,12 +1133,12 @@ def get_views_parameters(request, find_username):
     results = []
     for eachVisit in visit_stats:
         data={}
-        if eachVisit['profile_name']!='':
-            data['username'] = eachVisit['profile_name']
+        if eachVisit['visitor_name']!='':
+            data['username'] = eachVisit['visitor_name']
         else:
             data['username'] = 'Unknown visitor'
 
-        chk_usr = user_profile_obj.get_profile_by_username(eachVisit['profile_name'])
+        chk_usr = user_profile_obj.get_profile_by_username(eachVisit['visitor_name'])
         data['profile_img'] = chk_usr['profile_img']
         data['address'] = chk_usr['address']
         data['latitude'] = chk_usr['latlng']['coordinates'][1]
@@ -1146,7 +1146,7 @@ def get_views_parameters(request, find_username):
         data['sign_up_as'] = chk_usr['sign_up_as']
         data['name'] = chk_usr['name']
         data['useruid'] = chk_usr['useruid']
-
+        data['description'] = chk_usr['description']
         try:
             if chk_usr['subscribed'] ==1:
                 data['subscribed'] = True
@@ -1179,11 +1179,13 @@ def get_views_parameters(request, find_username):
             years = time_elapsed/3600/24/365
             time_text = str(years) + ' years'
         data['visit_time'] = time_text
-        data['visit_date_time'] = datetime.datetime.fromtimestamp(int(eachVisit['visit_time']))
+        data['visit_date_time'] = str(datetime.datetime.fromtimestamp(int(eachVisit['visit_time'])))
         results.append(data)
     parameters['results'] = results
-
+    parameters['visit_data'] = str(json.dumps(results))
     return parameters
 
 def get_views_count(request, username):
+    if not request.user.is_authenticated():
+        return HttpResponse(json.dumps({'message':'You are not authorised to view this profile'}))
     return render_to_response('view_stats.html', get_views_parameters(request,username), context_instance=RequestContext(request))

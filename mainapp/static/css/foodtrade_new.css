@@ -14,7 +14,7 @@ a {
 
 body, 
 .black {
-  color: #444;
+  color: #444 !important;
 }
 
 .text-muted {

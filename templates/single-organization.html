@@ -7,7 +7,7 @@
 {% include "socialaccount/snippets/login_extra.html" %}
 {% load account %}
 
-
+ 
 {% block ogtype %}{% if userprof.user_type == "Business" %}business.business{%endif%}{% if userprof.user_type == "Individual" %}Profile{%endif%}{% if userprof.user_type == "Organisation" %}business.business{%endif%}{% endblock %}
 
 {% block titlecontent %}{{userprof.full_name}}{% endblock %}
@@ -54,7 +54,7 @@
           {% endif %}
           <!-- certificate -->
           
-         <h1><a href="#">{{name}}</a></h1>
+         <h1 class="margin-none">{{name}}</h1>
      
          <hr />
          <p>{{description}}</p>        
@@ -80,6 +80,8 @@
             <!--  // if logged in or you've allows html5 browser location -->
   
          </div> <!-- meta -->
+
+
   
       </div><!-- end header middle -->
       <div id="contact_info" class="col-md-4 col-sm-4  col-xs-4">

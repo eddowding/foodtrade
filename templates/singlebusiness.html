@@ -193,36 +193,10 @@
     <div class="widget-body">
 
       <div class="tab-content">
-
-        <!-- WIKI ADD CONNECTIONS --> 
-          {% if user.is_authenticated %}
-          <div class="tab-pane fade in hidden" id="connections" style="margin-top: 1%;">
-            <div class="alert  " style="padding: 0 10px;">  
-            <div class="form-inline"  role="form">
-              <div class="form-group">
-                <img style="width: 25px; margin-right: 2px;" class="" src="{{pic_url}}"  />
-                <div class="btn-group btn-sm" data-toggle="buttons">
-                  <label class="btn  btn-sm active btn-default" id="li1_conn">
-                    <input type="checkbox" name="options" id="option1_conn"> buys from 
-                  </label> 
-                  <label class="btn  btn-sm btn-default" id="li2_conn">
-                    <input type="checkbox" name="options" id="option2_conn"> sells to
-                  </label> 
-                </div> 
-              </div> 
-              <div class="form-group"> 
-                <div id="buss_remote" >
-                  <input class="typeahead  input-sm form-control  " id="new_buss_typeahead" {% if not user.is_authenticated %} rel="tooltip" title="Please login to use this feature" {% endif %} style="width:310px;" type="text" placeholder="Type business..."> 
-                </div>      
-              </div>   
-            </div>
-          </div>
-          </div>
-          {% endif %}
        
         {% if show_foods %}
           <div  class="tab-pane active " id="tabProduce">
-  
+
           {% if user.is_authenticated %}
           <div class="row" style="padding: 20px 0;"> 
             <div class="col-md-8 col-sm-8 col-xs-7">
@@ -254,7 +228,7 @@
             </div> 
 
             <div class="col-md-4 col-sm-4 col-xs-5">
-             <form action="#" method="get">
+             <form action="#" method="get" class="hidden">
               <div class="input-group">
                   <input class="form-control" id="system-search" name="q" placeholder="Search foods..." required>
                   <span class="input-group-btn">
@@ -515,7 +489,31 @@
         <!-- // Tab content END -->
       
         <!-- Tab content -->
-        <div id="tabStockists" class="tab-pane  clearfix">        
+        <div id="tabStockists" class="tab-pane  clearfix"> 
+
+
+         <!-- WIKI ADD CONNECTIONS --> 
+          {% if user.is_authenticated %} 
+          <div class="box-generic bg-primary-light" style="padding: 0 10px;">  
+            <div class="form-inline"  role="form">
+              <div class="form-group">
+                <img style="width: 25px; margin-right: 2px;" class="" src="{{pic_url}}"  />
+                <div class="btn-group btn-sm" data-toggle="buttons">
+                  <label class="btn  btn-sm active btn-primary" id="li1_conn">
+                    <input type="checkbox" name="options" id="option1_conn"> buys from 
+                  </label>  
+                </div>  
+              </div> 
+              <div class="form-group"> 
+                <div id="buss_remote" class="form-group  has-feedback">
+                  <input class="typeahead  input-sm form-control  " id="new_buss_typeahead" {% if not user.is_authenticated %} rel="tooltip" title="Please login to use this feature" {% endif %} style="width:310px;" type="text" placeholder="Start typing a supplier..."> 
+                  <span class="fa fa-search form-control-feedback"></span> 
+                </div>      
+              </div>   
+            </div>
+          </div> 
+          {% endif %}
+        
                       
 <div id="all-connections">
 
@@ -596,7 +594,31 @@
  
         
         <!-- Tab content -->
-        <div id="tabSuppliers" class="tab-pane  clearfix">                      
+        <div id="tabSuppliers" class="tab-pane  clearfix"> 
+
+        <!-- WIKI ADD CONNECTIONS --> 
+          {% if user.is_authenticated %} 
+          <div class="box-generic bg-primary-light" style="padding: 0 10px;">  
+            <div class="form-inline"  role="form">
+              <div class="form-group">
+                <img style="width: 25px; margin-right: 2px;" class="" src="{{pic_url}}"  />
+                <div class="btn-group btn-sm" data-toggle="buttons"> 
+                  <label class="btn btn-sm active btn-primary" id="li2_conn">
+                    <input type="checkbox" name="options" id="option2_conn"> sells to
+                  </label> 
+                </div> 
+              </div> 
+              <div class="form-group">   
+                <div id="buss_remote" class="form-group  has-feedback">
+                  <input class="typeahead  input-sm form-control  " id="new_buss_typeahead" {% if not user.is_authenticated %} rel="tooltip" title="Please login to use this feature" {% endif %} style="width:310px;" type="text" placeholder="Start typing a stockist..."> 
+                  <span class="fa fa-search form-control-feedback"></span> 
+                </div>      
+              </div>   
+            </div>
+          </div> 
+          {% endif %}
+        
+
         <div id="all-connections" class="clearfix">
           {% if userprof.c_conn_no != 0 %}  
            <div class="clearfix isotope js-isotope" data-isotope-options='{ "itemSelector": ".card" }' id="seller-cards">
@@ -672,14 +694,13 @@
         <!-- Tab content -->
         <div id="tabMemberships" class="tab-pane clearfix">
           {% if user.is_authenticated %}
-            <div class="box-generic bg-primary-light">  
-              <div class="form-inline"  role="form">
-                <div class="form-group">
-                  <div id="orgs_remote">
-                    <input class="typeahead form-control" id="new_orgs_typeahead" {% if not user.is_authenticated %} rel="tooltip" title="Please login to use this feature" {% endif %} style="width:310px;" type="text" placeholder="Add an organisation...">
-                  </div>                  
-                </div> 
-              </div>
+            <div class="box-generic bg-primary-light" style="padding: 7px 10px 3px 10px;">   
+              <div class="form-inline" role="form"> 
+                <div id="orgs_remote" class="form-group  has-feedback">
+                  <input class="typeahead form-control col-sm-12" id="new_orgs_typeahead" {% if not user.is_authenticated %} rel="tooltip" title="Please login to use this feature" {% endif %} style="min-width:350px;" type="text" placeholder="Type the name of a group, organisation, or certifier">
+                  <span class="fa fa-search form-control-feedback"></span> 
+                </div>     
+              </div>    
             </div>
           {% endif %}
 
@@ -1182,11 +1203,11 @@
 
       <div class="btn-group btn-block" data-toggle="buttons">
   {% if logged_customer %}
-      <label class="fa fa-smile-o text-muted btn btn-default btn-block active" style="width:100%;" title="{{userinfo.full_name}} is customer of {{name}}" >
-      <input type="checkbox" checked="checked" id="customer-chkbx" onchange="add_customer({{profile_id}}, {{user_id}})">I'm a customer!
+      <label class=" btn btn-info btn-block  " style="width:100%; font-size: 12px;" >
+      <input type="checkbox" checked="checked" id="customer-chkbx" onchange="add_customer({{profile_id}}, {{user_id}})" rel="tooltip" title="{{userinfo.full_name}} is customer of {{name}}"><i class="fa fa-smile-o fa-fw fa-lg"></i>  I'm a customer!
       {% else %}
-      <label class="fa fa-smile-o text-muted btn btn-default btn-block" style="width:100%;" title="{{userinfo.full_name}} is customer of {{name}}" >
-      <input type="checkbox" id="customer-chkbx" onchange="add_customer({{profile_id}}, {{user_id}})">I'm a customer!
+      <label class=" btn btn-default btn-block" style="width:100%; font-size: 12px;" rel="tooltip" title="{{userinfo.full_name}} is customer of {{name}}" >
+      <input type="checkbox" id="customer-chkbx" onchange="add_customer({{profile_id}}, {{user_id}})"  rel="tooltip" title="{{userinfo.full_name}} is customer of {{name}}"><i class="fa fa-smile-o fa-fw"></i> I'm a customer!
   {% endif %}
       </label>      
       </div>
