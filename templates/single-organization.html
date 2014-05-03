@@ -513,10 +513,20 @@
    
       </div><!-- end col8 --> 
     </div><!-- col6 --> 
+
+
   </div>
-  <div class="col-md-4 col-sm-3 {% if loc.lat == -82.86275189999999 and loc.lon == -135.10000000000002 %} hidden {% endif %}">
-    <div style="width:100%; z-index: 100;" id="map">
-     
+
+
+
+</div>
+</div>
+</div>
+
+
+
+      <div class="col-md-4 col-sm-3 {% if loc.lat == -82.86275189999999 and loc.lon == -135.10000000000002 %} hidden {% endif %}">
+    <div style="position: fixed; width:40%; height: 100%; " id="map">
            </div> 
            </div>
       
@@ -559,6 +569,9 @@ var name = "{{userprof.full_name}}";
           var longitude =  {{userprof.lon}};
   tweetlistener('email_message', 'contact_counter', 'contact_tweet');
     </script>
-     <script src="{% static "js/organisation-map.js" %}"></script>
 
+
+{% endblock %}
+{% block javascript%}
+     <script src="{% static "js/organisation-map.js" %}"></script>
 {% endblock %}

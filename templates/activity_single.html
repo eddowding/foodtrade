@@ -314,7 +314,7 @@
 
 
       <div class="col-md-6 col-xs-4">
-       <div id="map" >
+       <div id="map"  style=" position: fixed; width:40%; height: 100%; " >
  
         </div>
 
@@ -343,7 +343,7 @@ connections = {% if results %}{{json_data | safe}}{% else %} [];
 {% endif %}
    
     </script>
-     <script src="{% static "js/singlepost-map.js" %}"></script>
+ 
 
    {% endblock %}
 
@@ -356,4 +356,5 @@ $( document ).ready(function() {
     tweetlistener('email_message', 'contact_counter', 'contact_tweet');
 });
 </script>
+    <script src="{% static "js/singlepost-map.js" %}"></script>
  {% endblock %}
