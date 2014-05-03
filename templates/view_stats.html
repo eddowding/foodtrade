@@ -141,12 +141,21 @@
           </div> 
          </div>
       </div><!-- end col8 --> 
-      <div class="col-md-6 col-xs-8 reply_text" style="float:right; margin-top:20px;" id="map">          
+      <div class="col-md-6 col-xs-8 reply_text" style="float:right; margin-top:20px;  height:700px;" id="map">          
       </div>
     </div><!-- row -->
     </div><!-- col10 --> 
     </div>
     </div>
+<script type="text/javascript">
+ {% if not userinfo.subscribed %}
+  var visit_data = jQuery.parseJSON('{{visit_data|safe}}');
+ {% else %}
+  var visit_data = [];
+ {% endif %}
+  var map_lat = {{userinfo.lat}};
+  var map_lon = {{userinfo.lon}};
+</script>    
 {% endblock %}
 {% block footer %}
 <script src="{% static "js/visitor-map.js" %}"></script>

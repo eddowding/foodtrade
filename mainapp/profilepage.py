@@ -1146,7 +1146,7 @@ def get_views_parameters(request, find_username):
         data['sign_up_as'] = chk_usr['sign_up_as']
         data['name'] = chk_usr['name']
         data['useruid'] = chk_usr['useruid']
-
+        data['description'] = chk_usr['description']
         try:
             if chk_usr['subscribed'] ==1:
                 data['subscribed'] = True
@@ -1179,10 +1179,10 @@ def get_views_parameters(request, find_username):
             years = time_elapsed/3600/24/365
             time_text = str(years) + ' years'
         data['visit_time'] = time_text
-        data['visit_date_time'] = datetime.datetime.fromtimestamp(int(eachVisit['visit_time']))
+        data['visit_date_time'] = str(datetime.datetime.fromtimestamp(int(eachVisit['visit_time'])))
         results.append(data)
     parameters['results'] = results
-
+    parameters['visit_data'] = str(json.dumps(results))
     return parameters
 
 def get_views_count(request, username):
