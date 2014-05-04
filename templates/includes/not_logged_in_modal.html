@@ -22,15 +22,17 @@ $("#not_logged_in_modal").on('show.bs.modal', function () {
   $("body").removeAttr("id");
 });
 
-$('#not_logged_in_modal').modal({
+
+$(document).ready(function(){
+  setTimeout(function() {   
+    $('#not_logged_in_modal').modal({
   backdrop: 'static',
   keyboard: false
 });
-
-
-  setTimeout(function() {   
-      $('#not_logged_in_modal').modal('show');
-    }, 10000);  // 8 seconds
+      // $('#not_logged_in_modal').modal('show');
+    }, 8000); 
+});
+   // 8 seconds
 
 </script>
 {% endif %}

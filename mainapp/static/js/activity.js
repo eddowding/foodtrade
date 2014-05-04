@@ -47,6 +47,11 @@ $(".reply_text").on("click",".deletetweet",function(e){
 });
 
 var result_mouseout = true;
+
+function set_center(lon,lat,zoom)
+{
+    map.setView([lat, lon], zoom);
+}
 $(".reply_text").on("mouseover",".singleresult",function(e){
  var result_id = $(this).attr("data-id");
    // console.log(result_id);
@@ -59,8 +64,13 @@ $(".reply_text").on("mouseover",".singleresult",function(e){
     var temp_lat = map_controls[i]._latlng.lat;
     var temp_lon = map_controls[i]._latlng.lng;
     var zoom_level = map.getZoom();
-map.setView([temp_lat, temp_lon], zoom_level);
-    map_controls[i].openPopup();
+
+set_center(temp_lon,temp_lat,zoom_level);
+map_controls[i].openPopup({keepInView:true});
+set_center(temp_lon,temp_lat,zoom_level);
+  setTimeout(function() {   
+      
+    }, 8000);  // 8 seconds
     
   }
  }

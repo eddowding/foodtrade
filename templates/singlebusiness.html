@@ -357,7 +357,7 @@
 
                                       <h5 class="margin-none">
                                         <a href="/activity/?f={{eachfood.food_name}}" class="black">  
-                                        {{eachfood.food_name}}
+                                        {{eachfood.food_name|safe}}
                                         </a> 
                                       </h5>
                                       </div>
@@ -369,9 +369,9 @@
                    {% ifequal profile_id user_id %}
                       
 
-                     <a href="" data-toggle="modal" data-target="#modal_food_detail" class="btn btn-sm btn-default" data-container="body" onClick="get_food_detail('{{profile_id}}', '{{eachfood.food_name}}', '{{eachfood.description}}', '{{eachfood.food_tags}}', '{{eachfood.photo_url}}', '{{eachfood.recomm_tags|safe}}')"><i class="fa fa-edit" title="Edit" ></i> edit details</a>
+                     <a href="" data-toggle="modal" data-target="#modal_food_detail" class="btn btn-sm btn-default" data-container="body" onClick="get_food_detail('{{profile_id}}', '{{eachfood.food_name|safe}}', '{{eachfood.description}}', '{{eachfood.food_tags}}', '{{eachfood.photo_url}}', '{{eachfood.recomm_tags|safe}}')"><i class="fa fa-edit" title="Edit" ></i> edit details</a>
                      
-                     <a class="btn btn-danger btn-sm"><i class="fa fa-trash-o" title="Delete" onClick="delete_food({{profile_id}}, '{{eachfood.food_name}}', this)"></i></a>
+                     <a class="btn btn-danger btn-sm"><i class="fa fa-trash-o" title="Delete" onClick="delete_food({{profile_id}}, '{{eachfood.food_name|safe}}', this)"></i></a>
 
                    {% endifequal %}
                                       </div>
@@ -437,7 +437,7 @@
 
                 <a href="/activity/?f={{eachfood.food_name}}" >  
                   
-                  {{eachfood.food_name}}
+                  {{eachfood.food_name|safe}}
                 </a>   
 
                   </div>
@@ -839,7 +839,7 @@
         {% endfor %}
         </div>
       </div>
-                    <div class="clearfix isotope"  id="foods"> 
+                    <div class="clearfix isotope"  id="webuy_foods"> 
                             <div class="row">
 
                             {% for eachfood in all_buying_foods %}
@@ -848,7 +848,7 @@
                                   
                                     <div class="media-body" style="border:1px solid #ccc;"> 
                                     <a href="/activity/?f={{eachfood.food_name}}" class="lead" style="padding-left: 2px; font-weight:bold;">  
-                                      {{eachfood.food_name}}
+                                      {{eachfood.food_name|safe}}
                                     </a> 
                                     <div class="flip">
                                       <div class="note">
@@ -991,7 +991,7 @@
 
                 <a href="/activity/?f={{eachfood.food_name}}" >  
                   
-                  {{eachfood.food_name}}
+                  {{eachfood.food_name|safe}}
                 </a>   
 
                   </div>
