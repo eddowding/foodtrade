@@ -253,7 +253,7 @@ def display_profile(request, username):
         usr_profile_obj = UserProfile()
         usr_profile = usr_profile_obj.get_profile_by_id(str(user_id))
         fav_profiles = usr_profile.get('favourites') if usr_profile.get('favourites')!=None else None
-        if fav_profile!=None:
+        if fav_profiles!=None:
             parameters['fav_profile'] = True if int(userprof['useruid']) in fav_profiles else False
 
         parameters['loggedin_signupas'] = usr_profile['sign_up_as']
