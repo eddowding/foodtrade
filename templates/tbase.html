@@ -163,8 +163,10 @@
     <link href="{% static "css/foodtrade_new.css" %}" rel="stylesheet">
   
     <!--[if lt IE 9]><link rel="stylesheet" href="{% static "assets/components/library/bootstrap/css/bootstrap.min.css" %}" /><![endif]-->
-    <script src="{% static "js/jquery.js" %}"></script>
+    
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>    
     <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js" type="text/javascript" charset="utf-8"></script>
+
    
  <!--    <link rel="stylesheet" href="{% static "assets/css/admin/module.admin.stylesheet-complete.min.css" %}" />  --> 
 
@@ -1009,12 +1011,6 @@ function show_small_structure()
      
  
 
-  <script type="text/javascript">
-  function logout()
-  {
-    window.location = '/accounts/logout';
-  }
-  </script>
 
            
  
@@ -1189,14 +1185,14 @@ function show_small_structure()
 
     <script src="{% static "js/tag-it.js" %}"></script>
     <script src="{% static "js/twitter-typeahead.js" %}"></script>
-    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+    
     <script src="{% static "css/docsupport/prism.js" %}" charset="utf-8"></script>
 
     <script src="{% static "js/isotope.pkgd.min.js" %}"></script>
 
-<!-- 
+
 <link href="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/css/bootstrap-editable.css" rel="stylesheet"/>
-<script src="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/js/bootstrap-editable.min.js"></script> -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/js/bootstrap-editable.min.js"></script>
 
     <!-- social net -->
     <!-- social net --> 
@@ -1252,23 +1248,27 @@ function show_small_structure()
  {% endblock %}
 
  <script type="text/javascript">
-$(".img-thumbnail").bind('error', function (e) {
-  var img_src = this.src;
-  console.log(img_src);
-    $.post( "/update-image/", { img: img_src });
-});
- </script>
- <script type="text/javascript">
-var invite_id = String('{{invite_id|safe}}');
-var tweet = String('{{invite_tweet|safe}}');
-var input_val;
-$(document).ready(function(){
-  // $('#select-invite').chosen({skip_no_results: true});
-  $('#invite_tweeter_user_text').html(tweet);
-  // $('#select-invite').chosen().ready(function(){
-  //     $('.search-field input').attr('style', 'width:192px;height:30px;');
-  //   });
-});
+ function logout()
+  {
+    window.location = '/accounts/logout';
+  }
+
+  $(".img-thumbnail").bind('error', function (e) {
+    var img_src = this.src;
+    console.log(img_src);
+      $.post( "/update-image/", { img: img_src });
+  });
+
+  var invite_id = String('{{invite_id|safe}}');
+  var tweet = String('{{invite_tweet|safe}}');
+  var input_val;
+  $(document).ready(function(){
+    // $('#select-invite').chosen({skip_no_results: true});
+    $('#invite_tweeter_user_text').html(tweet);
+    // $('#select-invite').chosen().ready(function(){
+    //     $('.search-field input').attr('style', 'width:192px;height:30px;');
+    //   });
+  });
 
 // $('#select-invite').on('chosen:ready', function(evt, params) {
   /*$('#select_invite_chosen ul li input').attr('onkeyup', 'search_tweeter_users()');*/
@@ -1374,7 +1374,7 @@ function success_tweeter_user_invite(data){
 $(document).ready(function() {
  
   $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
-        alert('hello');
+        /*alert('hello');*/
         $('.isotope').isotope('layout');
     });
 
@@ -1689,6 +1689,7 @@ $(".flip").hover(function(){
 
 
 <!-- post new update modal --> 
+<script src="{% static "js/activity.js" %}"></script>
 <script src="{% static "js/date.js" %}"></script>
 
      <script type="text/javascript">
@@ -1701,6 +1702,9 @@ $(".flip").hover(function(){
        }
       });
 
+      var food_filters = [];
+      var business_filters = [];
+      var organisation_filters = [];
       show_food_filters(food_filters, 0);
       show_organisation_filters(organisation_filters, 0);
       show_business_filters(business_filters, 0);

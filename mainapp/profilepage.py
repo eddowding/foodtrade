@@ -1140,6 +1140,8 @@ def get_views_parameters(request, find_username):
         else:
             data['username'] = 'Unknown visitor'
 
+        if eachVisit['visitor_name'] == '':
+            continue
         chk_usr = user_profile_obj.get_profile_by_username(eachVisit['visitor_name'])
         data['profile_img'] = chk_usr['profile_img']
         data['address'] = chk_usr['address']
