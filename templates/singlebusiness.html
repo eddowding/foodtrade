@@ -192,11 +192,37 @@
     
     <div class="widget-body">
 
+        <!-- WIKI ADD CONNECTIONS --> 
+          {% if user.is_authenticated %}
+          <div class="tab-pane fade in hidden" id="connections" style="margin-top: 1%;">
+            <div class="alert  " style="padding: 0 10px;">  
+            <div class="form-inline"  role="form">
+              <div class="form-group">
+                <img style="width: 25px; margin-right: 2px;" class="" src="{{pic_url}}"  />
+                <div class="btn-group btn-sm" data-toggle="buttons">
+                  <label class="btn  btn-sm active btn-default" id="li1_conn">
+                    <input type="checkbox" name="options" id="option1_conn"> buys from 
+                  </label> 
+                  <label class="btn  btn-sm btn-default" id="li2_conn">
+                    <input type="checkbox" name="options" id="option2_conn"> sells to
+                  </label> 
+                </div> 
+              </div> 
+              <div class="form-group"> 
+                <div id="buss_remote" >
+                  <input class="typeahead  input-sm form-control  " id="new_buss_typeahead" {% if not user.is_authenticated %} rel="tooltip" title="Please login to use this feature" {% endif %} style="width:310px;" type="text" placeholder="Type business..."> 
+                </div>      
+              </div>   
+            </div>
+          </div>
+          </div>
+          {% endif %}
+
       <div class="tab-content">
        
         {% if show_foods %}
-          <div  class="tab-pane active " id="tabProduce">
-
+          <div  class="tab-pane active widget-body-regular" id="tabProduce">
+  
           {% if user.is_authenticated %}
           <div class="row" style="padding: 20px 0;"> 
             <div class="col-md-8 col-sm-8 col-xs-7">
@@ -248,6 +274,7 @@
         {% for eachparent in food_parents %}
           <button class="btn btn-default btn-sm" data-filter=".{{eachparent|slugify}}">{{eachparent}}</button> 
         {% endfor %}
+
       </div>
                     <div class="clearfix isotope"  id="foods"> 
                             <div class="row">
@@ -263,7 +290,10 @@
                                         <div class="widget margin-none">
                                           <div class="row row-merge">
                                             <!-- <img src="{{eachfood.photo_url}}" alt="{{eachfood.food_name}}" class="  img-responsive produce_large" style="width:150px" />  -->
+
+                                            {% if eachfood.photo_url %}
                                             <img src="{{eachfood.photo_url}}" title="{{eachdet.food_name}}" rel="tooltip" class="img-responsive" style="width: 100%; height: 100px; display: block; margin-left: auto; margin-right: auto;">
+                                            {% endif %}
                                             <div class="col-xs-12"> 
                                               {% if eachfood.description %}   
                                                 <p class="widget innerAll half">
@@ -276,16 +306,18 @@
                                       </div><!-- face front -->
                                       <div class="face back">
                                         <div class="row row-merge">
+                                          {% if eachfood.how_much %}
                                           <div class="col-xs-6 ">
                                               <div class="text-center"> 
                                                   <li class="display-block ">
                                                       <small>
                                                        <i class="fa-2x innerL half text-primary icon-scale-1"></i>
                                                       </small> 
-                                                      <p class="lead">50 kg/yr</p> 
+                                                      <p class="lead">{{eachfood.how_much}}</p> 
                                                   </li>
                                               </div>
                                           </div>
+                                          {% endif %}
                                           <div class="col-xs-6 ">
                                             <div class="text-center"> 
                                              {% ifequal is_unknown_profile 'false' %}
@@ -302,18 +334,19 @@
                                         <div class="widget border-top-none margin-none">
                                           <table class="availability"> 
                                           <tbody><tr>
-                                          <td class="winter">J</td>
-                                          <td class="winter">F</td>
-                                          <td class="spring">M</td>
-                                          <td class="spring">A</td>
-                                          <td class="spring yes">M</td>
-                                          <td class="summer yes">J</td>
-                                          <td class="summer yes">J</td>
-                                          <td class="summer">A</td>  
-                                          <td class="autumn">S</td>
-                                          <td class="autumn">O</td>
-                                          <td class="autumn">N</td>
-                                          <td class="winter">D</td>
+
+                                          <td class="winter {% if eachfood.month_list.0 == 1 %} yes {% endif %}">J</td>
+                                          <td class="winter {% if eachfood.month_list.1 == 1 %} yes {% endif %}">F</td>
+                                          <td class="spring {% if eachfood.month_list.2 == 1 %} yes {% endif %}">M</td>
+                                          <td class="spring {% if eachfood.month_list.3 == 1 %} yes {% endif %}">A</td>
+                                          <td class="spring {% if eachfood.month_list.4 == 1 %} yes {% endif %}">M</td>
+                                          <td class="summer {% if eachfood.month_list.5 == 1 %} yes {% endif %}">J</td>
+                                          <td class="summer {% if eachfood.month_list.6 == 1 %} yes {% endif %}">J</td>
+                                          <td class="summer {% if eachfood.month_list.7 == 1 %} yes {% endif %}">A</td>  
+                                          <td class="autumn {% if eachfood.month_list.8 == 1 %} yes {% endif %}">S</td>
+                                          <td class="autumn {% if eachfood.month_list.9 == 1 %} yes {% endif %}">O</td>
+                                          <td class="autumn {% if eachfood.month_list.10 == 1 %} yes {% endif %}">N</td>
+                                          <td class="winter {% if eachfood.month_list.11 == 1 %} yes {% endif %}">D</td>
                                           </tr></tbody></table>  
                                         </div> 
                                       </div> <!-- face back -->
@@ -548,22 +581,22 @@
 
                        
                         <!-- number of foods sold -->
-                        <div class="{% if show_foods %}col-sm-3{% else %}col-sm-6{% endif %}">
+                        <div class="{% if show_foods %}col-xs-3{% else %}col-xs-6{% endif %}">
                           <a href="" class="innerAll half text-center display-block text-muted" data-original-title="{{each.food_no}} foods" rel="tooltip"><i class="fa fa-fw fa fa-cutlery"></i> {{each.food_no}}</a>
                         </div>
 
                         <!-- number of vouches across all produce --> 
-                        <div class="{% if show_foods %}col-sm-3{% else %}col-sm-6{% endif %}">
+                        <div class="{% if show_foods %}col-xs-3{% else %}col-xs-6{% endif %}">
                           <a href=""  rel="tooltip" title="{{each.total_vouches}} of vouches for all produce"  class="innerAll half text-center display-block text-muted"><i class="fa fa-fw fa-thumbs-o-up"></i> {{each.total_vouches}}</a>
                         </div> 
 
                         <!-- number of trade connections --> 
-                        <div class="{% if show_foods %}col-sm-3{% else %}col-sm-6{% endif %}">
+                        <div class="{% if show_foods %}col-xs-3{% else %}col-xs-6{% endif %}">
                           <a href=""  rel="tooltip" title="{{each.trade_conn_no}} of trade connections" class="innerAll half text-center display-block text-muted"><i class="fa fa-fw fa-link"></i> {{each.trade_conn_no}}</a>
                         </div>
 
                         <!-- number of group membershpis -->  
-                        <div class="{% if show_foods %}col-sm-3{% else %}col-sm-6{% endif %}">
+                        <div class="{% if show_foods %}col-xs-3{% else %}col-xs-6{% endif %}">
                           <a href=""  rel="tooltip" title="Member of {{each.org_conn_no}} groups or organisations"  class="innerAll half text-center display-block text-muted"><i class="fa fa-fw fa-group"></i> {{each.org_conn_no}}</a>
                         </div> 
 
@@ -821,9 +854,10 @@
                                       <div class="note">
                                       <div class="face front">
                                         <div class="widget margin-none">
-                                          <div class="row row-merge">
-                                            <!-- <img src="{{eachfood.photo_url}}" alt="{{eachfood.food_name}}" class="  img-responsive produce_large" style="width:150px" />  -->
-                                            <img src="{{eachfood.photo_url}}" title="{{eachdet.food_name}}" rel="tooltip" class="img-responsive" style="width: 100%; height: 100px; display: block; margin-left: auto; margin-right: auto;">
+                                          <div class="row row-merge"> 
+                                          {% if eachfood.photo_url %}
+                                            <img src="{{eachfood.photo_url}}" title="{{eachdet.food_name}}" rel="tooltip" class="img-responsive" style="width: 100%; height: 100px; display: block; margin-left: auto; margin-right: auto;">xx
+                                          {% endif %}
                                             <div class="col-xs-12"> 
                                               {% if eachfood.description %}   
                                                 <p class="widget innerAll half">
@@ -836,16 +870,18 @@
                                       </div><!-- face front -->
                                       <div class="face back">
                                         <div class="row row-merge">
+                                          {% if eachfood.how_much %}
                                           <div class="col-xs-6 ">
                                               <div class="text-center"> 
                                                   <li class="display-block ">
                                                       <small>
                                                        <i class="fa-2x innerL half text-primary icon-scale-1"></i>
                                                       </small> 
-                                                      <p class="lead">50 kg/yr</p> 
+                                                      <p class="lead">{{eachfood.how_much}}</p> 
                                                   </li>
                                               </div>
                                           </div>
+                                          {% endif %}
                                           <div class="col-xs-6 ">
                                             <div class="text-center"> 
                                              {% ifequal is_unknown_profile 'false' %}
@@ -862,18 +898,18 @@
                                         <div class="widget border-top-none margin-none">
                                           <table class="availability"> 
                                           <tbody><tr>
-                                          <td class="winter">J</td>
-                                          <td class="winter">F</td>
-                                          <td class="spring">M</td>
-                                          <td class="spring">A</td>
-                                          <td class="spring yes">M</td>
-                                          <td class="summer yes">J</td>
-                                          <td class="summer yes">J</td>
-                                          <td class="summer">A</td>  
-                                          <td class="autumn">S</td>
-                                          <td class="autumn">O</td>
-                                          <td class="autumn">N</td>
-                                          <td class="winter">D</td>
+                                          <td class="winter {% if eachfood.month_list.0 == 1 %} yes {% endif %}">J</td>
+                                          <td class="winter {% if eachfood.month_list.1 == 1 %} yes {% endif %}">F</td>
+                                          <td class="spring {% if eachfood.month_list.2 == 1 %} yes {% endif %}">M</td>
+                                          <td class="spring {% if eachfood.month_list.3 == 1 %} yes {% endif %}">A</td>
+                                          <td class="spring {% if eachfood.month_list.4 == 1 %} yes {% endif %}">M</td>
+                                          <td class="summer {% if eachfood.month_list.5 == 1 %} yes {% endif %}">J</td>
+                                          <td class="summer {% if eachfood.month_list.6 == 1 %} yes {% endif %}">J</td>
+                                          <td class="summer {% if eachfood.month_list.7 == 1 %} yes {% endif %}">A</td>  
+                                          <td class="autumn {% if eachfood.month_list.8 == 1 %} yes {% endif %}">S</td>
+                                          <td class="autumn {% if eachfood.month_list.9 == 1 %} yes {% endif %}">O</td>
+                                          <td class="autumn {% if eachfood.month_list.10 == 1 %} yes {% endif %}">N</td>
+                                          <td class="winter {% if eachfood.month_list.11 == 1 %} yes {% endif %}">D</td>
                                           </tr></tbody></table>  
                                         </div> 
                                       </div> <!-- face back -->
@@ -885,12 +921,10 @@
                                       <div class="pull-left">
 
                    {% ifequal profile_id user_id %}
-                      {% if not prof_subscribed %}
+                      
 
                      <a href="" data-toggle="modal" data-target="#modal_food_detail" class="btn btn-sm btn-default" data-container="body" onClick="get_food_detail('{{profile_id}}', '{{eachfood.food_name}}', '{{eachfood.description}}', '{{eachfood.food_tags}}', '{{eachfood.photo_url}}', '{{eachfood.recomm_tags|safe}}')"><i class="fa fa-edit" title="Edit" ></i> edit details</a>
-                     {% else %}
-                     <a class="btn btn-sm btn-default" data-container="body" rel="tooltip" title="Upgrade your account to add details"><i class="fa fa-edit" title="Edit" > edit details</i></a>
-                     {% endif %}
+                     
                      <a class="btn btn-danger btn-sm"><i class="fa fa-trash-o" title="Delete" onClick="delete_food({{profile_id}}, '{{eachfood.food_name}}', this)"></i></a>
 
                    {% endifequal %}
@@ -1076,8 +1110,10 @@
 
 
 
-        <div id="tabCustomers" class="tab-pane clearfix">
-   
+        <div id="tabCustomers" class="tab-pane widget-body-regular">
+  
+          {% if customers|length != 0 %}<span class="badge pull-right">{{customers|length}}</span>{% endif %}
+
           {% if user.is_authenticated %}
           {% else %} 
             <p class="alert alert-warning"><a href="{% provider_login_url "twitter" process="login" %}" class="">Login</a> or <a href="{% provider_login_url "twitter" process="login" %}" class="">sign up free</a> to see where their customers live. Maybe they'll do home deliveries if you ask nicely! </p> 
@@ -1203,7 +1239,7 @@
 
       <div class="btn-group btn-block" data-toggle="buttons">
   {% if logged_customer %}
-      <label class=" btn btn-info btn-block  " style="width:100%; font-size: 12px;" >
+      <label class=" btn btn-info btn-block active" style="width:100%; font-size: 12px;" >
       <input type="checkbox" checked="checked" id="customer-chkbx" onchange="add_customer({{profile_id}}, {{user_id}})" rel="tooltip" title="{{userinfo.full_name}} is customer of {{name}}"><i class="fa fa-smile-o fa-fw fa-lg"></i>  I'm a customer!
       {% else %}
       <label class=" btn btn-default btn-block" style="width:100%; font-size: 12px;" rel="tooltip" title="{{userinfo.full_name}} is customer of {{name}}" >
@@ -1304,14 +1340,12 @@
                 </ul>
               </div>
 
-              <button class="btn btn-default btn-sm" style="width:50%;" onclick="favourite_him({{profile_id | safe}})"><i class="fa fa-star-o"></i> Favourite</button>
+              <div class="btn-group" data-toggle="buttons" width="100%">
+              <label class="btn btn-default fa fa-star-o {% if fav_profile %} active {% endif %}">
+              <input type="checkbox" id="favourite_btn" {% if fav_profile %} checked="checked" {% endif %} onchange="save_favourites('{{profile_id}}', '{{user_id}}'); return null;">Favourite
+            </label>
+
           </div>
-          <script type="text/javascript">
-          function favourite_him(user_id)
-          {
-            ajax_request("favourite_profile", 'favourite_done', {useruid:user_id});
-          }
-          </script>
 
           <div class="text-center innerT">
 

@@ -3,16 +3,15 @@ from django.shortcuts import render_to_response
 # from allauth.socialaccount import views as signup_views
 from django.template.response import TemplateResponse
 from mainapp import new_signup as signup_views
+from mainapp import signup_view as aa_signup
 
 def signup_view(request):
-	tags = Tags()
-	parameters={}
-	all_tags = tags.get_tags()
-	parameters['all_tags'] = all_tags
 	response = signup_views.signup(request)
-	# response.add_post_render_callback(my_render_callback)
 	return response
-	
+
+def signup_view_new(request):
+	response = aa_signup.signup(request)
+	return response
 # def my_render_callback(response):
 # 	tags = Tags()
 # 	parameters={}

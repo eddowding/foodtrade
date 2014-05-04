@@ -22,6 +22,7 @@ urlpatterns = patterns('',
     url(r'^(?i)unclaimed/(?P<username>[-\w]+)/$', 'mainapp.profilepage.display_profile', name='profile'),
     # url(r'^foodtrade/', include('foodtrade.foo.urls')),
     url(r'^accounts/social/signup/', 'mainapp.signup_views.signup_view', name = 'account_signup'),
+    # url(r'^accounts/signup/', 'mainapp.signup_views.signup_view_new'),
     url(r'^accounts/', include('allauth.urls')),
     # Uncomment the admin/doc line below to enable admin documentation:
     url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
@@ -55,6 +56,7 @@ urlpatterns = patterns('',
     url(r'^(?P<username>\w{1,40})/$', 'mainapp.profilepage.profile_url_resolve'),
     url(r'^activity/(?P<request_type>\w{1,40})$', 'mainapp.activity.activity_suppliers'),
 
+    url(r'^myprofile/favourites/$', 'mainapp.favpage.display_favourites'),
 )
 urlpatterns += patterns('',
         (r'^media/(?P<path>.*)$', 'django.views.static.serve', {
