@@ -11,6 +11,7 @@ import json
 import operator
 import datetime,time
 from TweetFeed import TradeConnection
+from TweetFeed import UserProfile as UserDetails
 
 class UserProfile():
     def __init__ (self):
@@ -113,23 +114,42 @@ class Search():
         return [{"uid":value,"value":label} for value, label in sorted_counter]
 
 
-    def supplier_updates(self, user_id):
+    def supplier_updates(self, user_id,request_type):
         query_string = {}
         agg_pipeline = []
         or_conditions = []
 
         trade_con = TradeConnection()
-        conns = trade_con.get_connection_by_business(user_id)
-        print "sujit"
+        if request_type == "suppliers":
+            conns = trade_con.get_connection_by_business(user_id)
+            dict_name = "c_useruid"
+        if request_type == "stockists":
+            conns = trade_con.get_connection_by_customer(user_id)
+            dict_name = "b_useruid"
+      
+        
 
-        suppliers_id = []
+        con_ids = []
         for con in conns:
-            suppliers_id.append(con['c_useruid'])
-        and_query =[]
-        print suppliers_id
+            con_ids.append(con[dict_name])
 
 
-        query_string = {"useruid":{"$in":suppliers_id}}
+        if request_type == "favourites":
+            up = UserDetails()
+            user_details = up.get_profile_by_id(user_id)
+            try:
+                favourites = user_details['favourites']
+            except:
+                favourites = []
+            con_ids = favourites
+
+        and_query = []
+
+        if len(con_ids) == 0:
+            return {"foods":[], "businesses":[], "organisations":[],"results":[], "individual_counter":0, "business_counter":0, "organisation_counter":0, "update_counter":0}
+
+
+        query_string = {"useruid":{"$in":con_ids}}
 
         geo_near = {
                         "$geoNear": {"near": [float(self.lon), float(self.lat)],
