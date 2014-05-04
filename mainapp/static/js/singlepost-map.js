@@ -9,7 +9,6 @@ var map = new L.map('map', {
 
 
 
-
 L.circle([map_lat,map_lon], 24140.2, {
 			stroke: 1,
 			color: '#00cc00',

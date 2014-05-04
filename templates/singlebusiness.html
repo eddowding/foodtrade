@@ -1308,8 +1308,14 @@
                 </ul>
               </div>
 
-              <button class="btn btn-default btn-sm" style="width:50%;"><i class="fa fa-star-o"></i> Favourite</button>
+              <button class="btn btn-default btn-sm" style="width:50%;" onclick="favourite_him({{profile_id | safe}})"><i class="fa fa-star-o"></i> Favourite</button>
           </div>
+          <script type="text/javascript">
+          function favourite_him(user_id)
+          {
+            ajax_request("favourite_profile", 'favourite_done', {useruid:user_id});
+          }
+          </script>
 
           <div class="text-center innerT">
 

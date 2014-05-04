@@ -1002,6 +1002,27 @@ class AjaxHandle(AjaxSearch):
         else:
             return HttpResponse(json.dumps({'status':0, 'message':'You are not authorized to perform this action.'}))
 
+
+    def favourite_profile(self, request):
+        if request.user.is_authenticated():
+            user_profile_obj = UserProfile()
+            try:
+                favourite_id = int(request.POST['useruid'])
+            except:
+                return HttpResponse(json.dumps({'status':0, 'message':'Sorry, couldn\'t favourite this time.'}))
+            
+            user_id = request.user.id
+            user_info = user_profile_obj.get_profile_by_id(user_id)
+            try:
+                favourites = user_info["favourites"]
+            except:
+                favourites = []
+            favourites.append(favourite_id)
+            user_profile_obj.update_profile_fields({"useruid":user_id}, {"favourites":favourites})
+            user_info = user_profile_obj.get_profile_by_id(user_id)
+            print user_info["favourites"]
+            return HttpResponse(json.dumps({'status':1, 'message':'You have successfully favourited.'}))
+
     def search_users(self, request):
         if request.user.is_authenticated():
             q = request.POST.get('q')
