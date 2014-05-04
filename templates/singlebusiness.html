@@ -1341,7 +1341,7 @@
               </div>
 
               <div class="btn-group" data-toggle="buttons" width="100%">
-              <label class="btn btn-default fa fa-star-o {% if fav_profile %} active {% endif %}" style="font-size: 12px; padding: 8px 20px;">
+              <label class="btn btn-default fa fa-star-o {% if fav_profile %} active {% else %}{% endif %}" style="font-size: 12px; padding: 8px 20px;">
               <input type="checkbox" id="favourite_btn" {% if fav_profile %} checked="checked" {% endif %} onchange="save_favourites('{{profile_id}}', '{{user_id}}'); return null;">Favourite
             </label>
             </div>

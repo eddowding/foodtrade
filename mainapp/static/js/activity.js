@@ -65,7 +65,12 @@ $(".reply_text").on("mouseover",".singleresult",function(e){
     var temp_lon = map_controls[i]._latlng.lng;
     var zoom_level = map.getZoom();
 
-set_center(temp_lon,temp_lat,zoom_level, function(){ map_controls[1].openPopup(); });
+set_center(temp_lon,temp_lat,zoom_level);
+map_controls[i].openPopup({keepInView:true});
+set_center(temp_lon,temp_lat,zoom_level);
+  setTimeout(function() {   
+      
+    }, 8000);  // 8 seconds
     
   }
  }

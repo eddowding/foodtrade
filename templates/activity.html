@@ -5,22 +5,20 @@
 
 {% endblock %}
 {% block content %}
- <script src="https://rawgithub.com/kartena/Proj4Leaflet/master/lib/proj4-compressed.js"></script><!-- proj4js -->
+  <script src="https://rawgithub.com/kartena/Proj4Leaflet/master/lib/proj4-compressed.js"></script><!-- proj4js -->
   <script src="https://rawgithub.com/kartena/Proj4Leaflet/master/src/proj4leaflet.js"></script><!-- proj4leaflet -->
   <script src="https://rawgithub.com/rob-murray/os-leaflet/master/src/osopenspace.js"></script><!-- OS OpenSpace layer -->
+
+
 <div class="container-responsive block-center">
 
-
-    <div class="col-xs-12 col-sm-7" id="activity_switcher">
+<div class="col-xs-12 col-sm-7" id="activity_switcher">
 
  
-<div class="widget">
+<div class="widget" style="width:100%;">
   <div class="padding-none"> 
-    <div class="input-group">
-      <input class="form-control"  {% if not user.is_authenticated %}  onfocus="login_redirect()" title="Please login to use this feature." {% else %} {% if not can_tweet %} data-toggle="modal" data-target="#newtwitterpost" {% else %} rel="tooltip" title="Please upgrade your account to post." {% endif %}{% endif %} placeholder="What #food do you have to #buy, #sell, or #surplus?" style="border:0;">  
-      <span class="input-group-btn">
-        <button class="btn btn-primary" type="button">Post</button>
-      </span>
+    <div class="input-group"  style="width:100%;">
+      <textarea class="form-control"  {% if not user.is_authenticated %}  onfocus="login_redirect()" title="Please login to use this feature." {% else %} {% if not can_tweet %} data-toggle="modal" data-target="#newtwitterpost" {% else %} rel="tooltip" title="Please upgrade your account to post." {% endif %}{% endif %} style="width:100%;">What #food do you have to #buy, #sell, or #surplus?  </textarea> 
     </div>
   </div>
 </div>
