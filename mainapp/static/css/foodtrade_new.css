@@ -14,7 +14,7 @@ a {
 
 body, 
 .black {
-  color: #444;
+  color: #444 !important;
 }
 
 .text-muted {
@@ -34,17 +34,17 @@ input[type="text"]:focus, input[type="text"]:active, input[type="text"]:hover {
   background: #420F29; 
 }
 
+
 #menu>div ul>li.category {
   color: #61AE32;
 }
-
-.well {
-  background: #fff;
-  border: 1px solid #aaa;
+ 
+.inner-4x.innerAll {
+  padding: 40px !important;
 }
 
 .help-block { 
-  margin: 0 0 10px 2px;
+  margin: 3px 0 20px 4px !important;
   font-size: 12px;
   color: #aaa;
 }
@@ -283,11 +283,7 @@ input[type="text"]:focus, input[type="text"]:active, input[type="text"]:hover {
 /**  cards / timeline / marketplace                   **/
 /********************************/
  
-.timeline-activity li:first-of-type, 
-.timeline-activity li {
-  padding: 0;
-}
-
+ 
 .timeline-activity > li:first-of-type {
   padding: 20px 0 10px;
 }
@@ -299,10 +295,7 @@ input[type="text"]:focus, input[type="text"]:active, input[type="text"]:hover {
 .timeline-activity li .timeline-top-info a:hover {
   text-decoration: none;
 }
-
-.timeline-activity > li {
-  padding: 10px 0;
-} 
+ 
 
 .timeline-activity .dropdown-menu {
   position: absolute;
@@ -330,12 +323,12 @@ input[type="text"]:focus, input[type="text"]:active, input[type="text"]:hover {
 
 #cards.marketplace li.singleresult,
 .grid-sizer {
-  width: 49%%;
+  width: 49%;
 }
 
 #cards.marketplace li.singleresult {
   float: left;    
-  padding: 5px;
+  padding: 0px;
 }
 
 #cards.marketplace li .reply {
@@ -346,27 +339,20 @@ input[type="text"]:focus, input[type="text"]:active, input[type="text"]:hover {
   padding: 5px;
 }
 
-#updates.marketplace li .status {
-  background-image: none !important;
-} 
-
+ 
 .status {
   background-size: cover !important; 
 }
-
-#cards.marketplace li .status .lead {
-  background: rgba(0,0,0,0.5);
-  }
-
-#cards.marketplace li .status .lead a,
-#cards.marketplace li .status .lead {
-  color: #fff;
-}
+ 
 
 .gutter-sizer { width: 1%; }
 
 .bg-gray { 
   background: #EBEBEB;
+}
+
+.bg-white-wash {
+  background: rgba(255,255,255,0.8);
 }
 
 #cards.marketplace .address,
@@ -379,6 +365,9 @@ input[type="text"]:focus, input[type="text"]:active, input[type="text"]:hover {
   padding: 0 10px;
 }
 
+.dropdown-menu li {
+  padding: 0 !important;
+}
 
 .marketplace .marker,
 .marketplace .caret {
@@ -426,7 +415,7 @@ input[type="text"]:focus, input[type="text"]:active, input[type="text"]:hover {
 
 .card .content {
   padding: 15px 0 0 0;
-  background-size: cover;
+  background-size: cover !important;
 }
 
 .card h5 {
@@ -651,6 +640,7 @@ input[type="text"]:focus, input[type="text"]:active, input[type="text"]:hover {
 
 
 
+input[type=text], input[type=password], select, textarea,
 .textarea,
 .form-control,
 .chosen-container-multi .chosen-choices { 
@@ -669,14 +659,23 @@ input[type="text"]:focus, input[type="text"]:active, input[type="text"]:hover {
 
 }
 
+.box-verified,
 .timeline-activity li.verified .box-generic {
   border: 2px solid rgba(97,174,50,1) !important;
 }
 
-/*.verified .timeline-top-info {
-  background: rgba(97,174,50,0.4) !important;
-}*/
+.widget.widget-tabs-double-2 > .widget-body {
+  padding: 10px;
+  background: #fff;
+}
+ 
+.widget.widget-tabs-double-2 > .widget-head {
+  background: #F5F8FA;
+}
 
+.widget.widget-tabs-double-2 > .widget-head ul li.active {
+  background: #ffffff !important;
+}
 
 /********************************/
 /**  SIDEBAR                   **/

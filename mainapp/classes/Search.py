@@ -10,6 +10,7 @@ from MongoConnection import MongoConnection
 import json
 import operator
 import datetime,time
+from TweetFeed import TradeConnection
 
 class UserProfile():
     def __init__ (self):
@@ -110,6 +111,126 @@ class Search():
         
         sorted_counter = sorted(counter.iteritems(), key=operator.itemgetter(1),reverse=True)
         return [{"uid":value,"value":label} for value, label in sorted_counter]
+
+
+    def supplier_updates(self, user_id):
+        query_string = {}
+        agg_pipeline = []
+        or_conditions = []
+
+        trade_con = TradeConnection()
+        conns = trade_con.get_connection_by_business(user_id)
+        print "sujit"
+
+        suppliers_id = []
+        for con in conns:
+            suppliers_id.append(con['c_useruid'])
+        and_query =[]
+        print suppliers_id
+
+
+        query_string = {"useruid":{"$in":suppliers_id}}
+
+        geo_near = {
+                        "$geoNear": {"near": [float(self.lon), float(self.lat)],
+                                    "distanceField": "distance",
+                                    # "maxDistance": 160.934,
+                                    "query": query_string,
+                                    "includeLocs": "latlng",
+                                    "uniqueDocs": True,  
+                                    "spherical":True,
+                                    "limit":20,
+                                    "distanceMultiplier":6371
+                                }
+                      }
+        agg_pipeline.append(geo_near)
+
+        # agg_pipeline.append({ '$match':query_string})
+
+        agg_pipeline.append({"$unwind": "$updates"})
+
+
+        query_string2 = {"updates.deleted":{"$ne":1},"updates.parent_tweet_id":"0"}
+        agg_pipeline.append({ '$match':query_string2})
+       
+        # agg_pipeline.append({ '$match':{"updates":{"$size":0}}})
+        sort_text = "updates.time_stamp"
+        sort_order = -1
+       
+
+        agg_pipeline.append({"$sort": SON([(sort_text, sort_order), ("time_stamp", -1)])})
+
+        group_fields = {}
+        group_fields["_id"] = "all"
+        group_fields["foods"] = { "$push": "$foods" }
+        group_fields["businesses"] = { "$push": "$type_user"}
+        group_fields["organisations"] = { "$push": "$organisations"}
+        group_fields["individual_count"] = {"$sum":{"$cond": [{"$eq": ['$sign_up_as', "Individual"]}, 1, 0]}}
+        group_fields["business_count"] = {"$sum":{"$cond": [{"$eq": ['$sign_up_as', "Business"]}, 1, 0]}}
+        group_fields["organisation_count"] = {"$sum":{"$cond": [{"$eq": ['$sign_up_as', "Organisation"]}, 1, 0]}}
+        group_fields["update_count"] = {"$sum": 1}
+
+        result_type = "updates.status"
+        
+        
+        group_fields["results"] = self.get_result_fields(result_type)
+        
+        agg_pipeline.append({"$group": group_fields})
+        
+
+        
+        agg_pipeline.append({ "$limit" : 30 })
+
+        
+
+        up = UserProfile()
+        statuses = up.agg(agg_pipeline)
+
+        result_profiles = []
+        profile_counts = {"Individual":0, "Business":0, "Organisation":0}
+      
+        if len(statuses)>0:
+            results = statuses[0]
+        else:
+            return {"foods":[], "businesses":[], "organisations":[],"results":[], "individual_counter":0, "business_counter":0, "organisation_counter":0, "update_counter":0}
+
+
+        foods_list = results["foods"]
+        foods_array = []
+
+
+        for fds in foods_list:
+            fd_list = []
+            for fd in fds:
+                try:
+                    fd_list.append(fd['food_name'])
+                except:
+                    pass
+            foods_array.append(fd_list)
+
+
+        foods_counter = self.item_counter(foods_array)
+        results["foods"] = foods_counter
+        businesses_list = results["businesses"]
+        businesses_counter = self.item_counter(businesses_list)
+        results["businesses"] = businesses_counter
+        organisations_list = results["organisations"]
+        organisations_counter = self.item_counter(organisations_list)
+        results["organisations"] = organisations_counter
+        try:
+            results["individual_counter"] = profiles[0]["individual_count"]
+            results["business_counter"] = profiles[0]["business_count"]
+            results["organisation_counter"] = profiles[0]["organisation_count"]
+        except:
+            results["individual_counter"] = 0
+            results["business_counter"] = 0
+            results["organisation_counter"] = 0
+        try:
+            results["update_counter"] = statuses[0]["update_count"]
+        except:
+            results["update_counter"] = 0
+        return results
+
 
 
     def search_all(self):
@@ -269,9 +390,7 @@ class Search():
             query_string["$or"] = or_conditions
 
 
-        
-        geo_near = {
-                        "$geoNear": {"near": [float(self.lon), float(self.lat)],
+        geo_search = {"near": [float(self.lon), float(self.lat)],
                                     "distanceField": "distance",
                                     # "maxDistance": 0.425260398681,
                                     "query": query_string,
@@ -281,7 +400,13 @@ class Search():
                                     "limit":5000,
                                     "distanceMultiplier":6371
                                 }
+
+        if not self.search_global :
+            geo_search['maxDistance'] = 0.02511379689
+        geo_near = {
+                        "$geoNear": geo_search
                       }
+
 
 
         agg_pipeline.append(geo_near)

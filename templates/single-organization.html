@@ -7,7 +7,7 @@
 {% include "socialaccount/snippets/login_extra.html" %}
 {% load account %}
 
-
+ 
 {% block ogtype %}{% if userprof.user_type == "Business" %}business.business{%endif%}{% if userprof.user_type == "Individual" %}Profile{%endif%}{% if userprof.user_type == "Organisation" %}business.business{%endif%}{% endblock %}
 
 {% block titlecontent %}{{userprof.full_name}}{% endblock %}
@@ -54,7 +54,7 @@
           {% endif %}
           <!-- certificate -->
           
-         <h1><a href="#">{{name}}</a></h1>
+         <h1 class="margin-none">{{name}}</h1>
      
          <hr />
          <p>{{description}}</p>        
@@ -80,6 +80,8 @@
             <!--  // if logged in or you've allows html5 browser location -->
   
          </div> <!-- meta -->
+
+
   
       </div><!-- end header middle -->
       <div id="contact_info" class="col-md-4 col-sm-4  col-xs-4">
@@ -287,17 +289,50 @@
       </div><!-- end header last -->
     </div>
     </div>
-    <div class="row">
-     <div class="col-md-12">
-        <ul class="nav nav-tabs ">
-          <li class="active"><a href="#members" data-toggle="tab">Members 
-            {% if members|length != 0 %}<span class="badge ">{{members|length}}{% endif %}</span></a></li>
-          <li><a href="#foods" data-toggle="tab">Foods  {% if food_count != 0 %}<span class="badge">{{food_count}}</span>{% endif %}</a></li> 
-          <li><a href="#people" data-toggle="tab">Team {% if teams|length != 0 %}<span class="badge ">{{teams|length}}</span>{% endif %}</a></li>
-          <li><a href="#updates" data-toggle="tab">Updates {% if updates_count != 0 %}<span class="badge ">{{updates_count}}</span>{% endif %}</a></li>
-        </ul>
-     </div>
+ 
+
+<div class="widget widget-tabs widget-tabs-double-2 widget-tabs-responsive">
+   
+    <!-- Tabs Heading -->
+    <div class="widget-head">
+
+      <ul class="clearfix">
+
+          <li class="active">
+            <a href="#members" class="glyphicons log_in" data-toggle="tab">
+            <i></i>
+            <span>Members</span>
+            {% if members|length != 0 %}<span class="label label-default pull-number ">{{members|length}}</span>{% endif %}
+            </a></li>
+          <li>
+            <a href="#foods" data-toggle="tab" class="glyphicons cutlery">
+            <i></i>
+            <span>Foods</span>
+            {% if food_count != 0 %}<span class="label label-default pull-number">{{food_count}}</span>{% endif %}
+            </a></li> 
+          <li>
+            <a href="#people" data-toggle="tab" class="glyphicons group">
+            <i></i>
+            <span>Team</span>
+            {% if teams|length != 0 %}<span class="label label-default pull-number ">{{teams|length}}</span>{% endif %}
+            </a></li>
+          <li>
+            <a href="#updates" data-toggle="tab" class="glyphicons bullhorn">
+            <i></i>
+            <span>Updates</span>
+            {% if updates_count != 0 %}<span class="label label-default pull-number ">{{updates_count}}</span>{% endif %}
+            </a></li>
+        
+      </ul>
     </div>
+    <!-- // Tabs Heading END -->
+
+    
+    <div class="widget-body">
+
+      <div class="tab-content">
+
+
     <div class="row">
       <div class="col-md-12">
         <div class="container-responsive clearfix">
@@ -478,10 +513,20 @@
    
       </div><!-- end col8 --> 
     </div><!-- col6 --> 
+
+
   </div>
-  <div class="col-md-4 col-sm-3 {% if loc.lat == -82.86275189999999 and loc.lon == -135.10000000000002 %} hidden {% endif %}">
-    <div style="width:100%; z-index: 100;" id="map">
-     
+
+
+
+</div>
+</div>
+</div>
+
+
+
+      <div class="col-md-4 col-sm-3 {% if loc.lat == -82.86275189999999 and loc.lon == -135.10000000000002 %} hidden {% endif %}">
+    <div style="position: fixed; width:40%; height: 100%; " id="map">
            </div> 
            </div>
       
@@ -524,6 +569,9 @@ var name = "{{userprof.full_name}}";
           var longitude =  {{userprof.lon}};
   tweetlistener('email_message', 'contact_counter', 'contact_tweet');
     </script>
-     <script src="{% static "js/organisation-map.js" %}"></script>
 
+
+{% endblock %}
+{% block javascript%}
+     <script src="{% static "js/organisation-map.js" %}"></script>
 {% endblock %}

@@ -37,24 +37,28 @@
 {% block content %}
 {% include 'modal_invite.html' %}
 
-    <div  class="container">
-    <div class="col-md-10 col-sm-10" id="single">
+
+
+<div class="innerAll">
+<div class="row">
+<div class="col-md-12"  id="single">
 
     <div class="container-responsive">
-    <div id="header_box" class="clearfix">
+    <div id="header_box" class="clearfix box-generic">
      <div class="col-md-2 hidden-sm hidden-xs" id="avatar">
                 <img class="img-thumbnail center-block" src="{{pic_url}}" />
             </div>
      
-      <div class="col-md-7 col-sm-7" >
-         <h1> <img class="visible-sm visible-xs" style="width: 30px; margin-right: 10px; float:left;" src={{pic_url}}  /><a href="/{{userprof.username}}/">{{userprof.full_name}}</a></h1>
+      <div class="col-md-7 col-sm-7" > 
+         <h1 class="margin-none">{{userprof.full_name}}</h1>
 
-         <hr />
-         <p>{{userprof.description}}</p>        
+         <div class="innerTB">
+           <p class="lead">{{userprof.description}}</p>        
+         </div>
  
          <hr /> 
      
-         <div class="meta small text-muted">
+         <div class="meta text-muted">
             {% if loc.lat == -82.86275189999999 and loc.lon == -135.10000000000002 %}
               <i class="fa fa-map-marker"></i> <a > NA</a>
               <i class="fa fa-location-arrow" style="margin-left: 20px;"></i> NA
@@ -73,67 +77,80 @@
       </div><!-- end header middle -->
 
       <div id="contact_info" class="col-md-3 col-sm-3">
+
+      {% if not request.user.is_authenticated %}
+      <a href="{% provider_login_url "twitter" process="login" %}" class="btn btn-info btn-lg btn-block">
+        <i class="fa fa-fw fa-twitter"></i> Is this your profile?
+      </a>
+ 
+      {% endif %}
         
       <!-- if they dont't have an account yet --> 
-      <button class="btn btn-primary btn-block" style="margin-top:40px;" data-toggle="modal" {% if request.user.is_authenticated %} data-target="#modal_invite" {% else %} disabled="disabled" {% endif %}>
+      <button class="btn btn-default btn-block"  data-toggle="modal" {% if request.user.is_authenticated %} data-target="#modal_invite" {% else %} disabled="disabled" {% endif %}>
          Invite to connect
       </button> 
       </div><!-- end header last -->
+      
     </div>
     </div>
 
     <div class="row" style="margin-top: 30px;">
      <div class="col-md-12 col-sm-12">
 
-<div class="well well-sm">
-  <h3 class="text-center"> Hi! What is @{{userprof.username}}? </h3>
+<div class="box-generic">
+  <div class="text-center">
 
-<div class="container">
+    <i class="fa fa-fw fa-2x icon-looking-shocked"></i>Hmmm... can you help?
+    <h3 class=""> 
+    What is @{{userprof.username}}? </h3>
+  </div>
+ 
     <div class="row">
       <ul class="thumbnails list-unstyled">
-        <li class="col-md-3 col-sm-3">
+        <li class="col-sm-4">
           <div class="thumbnail" style="padding: 0">  
             <div class="modal-header text-center">            
-              <button type="button" class="btn btn-lg btn-primary" {% if request.user.is_authenticated %} onclick="change_sign_up('Business','{{userprof.username}}')" {% else %} disabled="disabled" {% endif %}>Food business</button>
+              <button type="button" class="btn btn-lg btn-primary" {% if request.user.is_authenticated %} onclick="change_sign_up('Business','{{userprof.username}}')" {% else %} disabled="disabled" {% endif %}>It's a business</button>
             </div>
-            <div class="caption"> 
-              <p><span class="help-block">Eg. Farms, restaurants, caterers, bakers, schools, hospitals...</span></p>
-              <p>Any business or organisation which buys an sells food for a living. From farm to fork, small holder to supermarket.</p>
+            <div class="caption bg-gray"> 
+              <p class="lead">Any business or organisation which buys an sells food for a living. From farm to fork, small holder to supermarket.</p>
+              <p><span class=" ">Eg. Farms, restaurants, caterers, bakers, schools, hospitals...</span></p>
               
             </div> 
           </div>
         </li>
 
-        <li class="col-md-3 col-sm-3">
+        <li class="col-sm-4">
           <div class="thumbnail" style="padding: 0">  
-            <div class="modal-header text-center">            
-              <button type="button" class="btn btn-lg btn-primary"  {% if request.user.is_authenticated %} onclick="change_sign_up('Organisation','{{userprof.username}}')" {% else%} disabled="disabled" {% endif %}>Organisation</button>
+            <div class="modal-header text-center ">            
+              <button type="button" class="btn btn-lg btn-primary"  {% if request.user.is_authenticated %} onclick="change_sign_up('Organisation','{{userprof.username}}')" {% else%} disabled="disabled" {% endif %}>It's an organisation</button>
             </div>
-            <div class="caption"> 
-              <p><span class="help-block">Eg. Soil Assocation, Slow Food, LEAF, The SRA, Catering Mark...</span></p>
-              <p>Any membership group with an a strong interest in food, agriculture, or nutrition.</p>
+            <div class="caption bg-gray"> 
+              <p class="lead">Any membership group with an a strong interest in food, agriculture, or nutrition.</p>
+              <p><span class=" ">Eg. Soil Assocation, Slow Food, LEAF, The SRA, Catering Mark...</span></p>
               
             </div> 
           </div>
         </li>
 
-        <li class="col-md-3 col-sm-3">
+        <li class="col-sm-4">
           <div class="thumbnail" style="padding: 0">  
             <div class="modal-header text-center">
-              <button type="button" class="btn btn-lg btn-primary" {% if request.user.is_authenticated %} onclick="change_sign_up('Individual','{{userprof.username}}')" {% else %} disabled="disabled" {% endif %}>Individual</button>
+              <button type="button" class="btn btn-lg btn-primary" {% if request.user.is_authenticated %} onclick="change_sign_up('Individual','{{userprof.username}}')" {% else %} disabled="disabled" {% endif %}>It's an individual</button>
             </div>
-            <div class="caption"> 
-              <p><span class="help-block">Eg. most of us: customers, chefs, bloggers, consultants... </span></p>
-              <p>Did you know that the food system employs just over 400,000 workers in the UK?</p>
+            <div class="caption bg-gray"> 
+              <p class="lead">Did you know that the food system employs just over 400,000 workers in the UK?</p>
+
+              <p><span class="">Eg. most of us: customers, chefs, bloggers, consultants... </span></p>
               
             </div> 
           </div>
         </li>  
       </ul>
-    </div>
-</div>
+    </div> 
+    
+  <h4 class="text-center"> <small> <strong>This only shows once!</strong> As soon as we know what it is, anyone can start adding information to it. <br />You just happened to get here first - so thank you for sharing what you know!</small></h4> 
  </div>
-  <h4 class="text-center"> <small> <strong>This only shows once!</strong> As soon as we know what it is, others can start adding information to it. </small></h4> 
 </div>
 </div>
 </div>
