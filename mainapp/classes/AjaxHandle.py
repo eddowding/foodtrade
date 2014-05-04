@@ -13,7 +13,7 @@ from Foods import AdminFoods
 from mainapp.classes.TweetFeed import TradeConnection, UserProfile, Food, Customer, Organisation, Team, RecommendFood, Notification, Friends, Spam, InviteId, Invites, UnapprovedFood, ApprovedFoodTags, TweeterUser
 from AjaxSearch import AjaxSearch
 from pygeocoder import Geocoder
-from mainapp.profilepage import get_connections, get_all_foods, get_organisations, get_members, get_banner_url
+from mainapp.profilepage import get_connections, get_all_foods, get_organisations, get_members, get_banner_url, get_all_buying_foods
 from mainapp.views import get_twitter_obj
 import datetime, time
 from bson.objectid import ObjectId
@@ -402,6 +402,7 @@ class AjaxHandle(AjaxSearch):
         foo = Food()
         data = eval(request.POST.get('data'))
         if data !=None and data !="":
+            print 'In addfood: ', data
             foo.create_food(data)
             notice_obj = Notification()
             user_profile_obj = UserProfile()
@@ -423,7 +424,11 @@ class AjaxHandle(AjaxSearch):
                 pass
 
             parameters = {}
-            parameters['all_foods'] = get_all_foods(int(data['useruid']), request.user.id)
+            if data['we_buy'] == 1:
+                parameters['all_foods'] = get_all_buying_foods(int(data['useruid']), request.user.id)
+                parameters['webuy_flag'] = True
+            else:
+                parameters['all_foods'] = get_all_foods(int(data['useruid']), request.user.id)
             parameters['profile_id'], parameters['user_id'] = int(data['useruid']), request.user.id
             return render_to_response('ajax_food.html', parameters, context_instance=RequestContext(request))
             # return HttpResponse("{'status':1}")
@@ -434,6 +439,7 @@ class AjaxHandle(AjaxSearch):
         foo = UnapprovedFood()
         data = eval(request.POST.get('data'))
         if data !=None and data !="":
+            print 'In addnewfood: ', data
             foo.create_food(data)
             print 'new food ', data['food_name'], ' created !!'
             return HttpResponse("{'status':1}")
