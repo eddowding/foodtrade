@@ -7,9 +7,20 @@
 {% load activity_tags %}
  
 
-    <div class="container-res ponsive">
-      <div class="r ow">
+    <div class=" ">
+      <div class="">
         <div class="col-md-6 col-xs-8" id="single_post_content">
+
+
+          {% if not result.subscribed %}
+          <div class="box-generic bg-primary-light text-center">
+
+          <p>
+          Upgrade to premium membership to see who's visited your profile.</p>
+
+          <a href="/payments" class="btn btn-primary btn-sm">Upgrade my account &raquo;</a>
+          </div>
+          {% endif %}
                  
           <div class="widget innerAll">
             <h3 class="margin-none">
