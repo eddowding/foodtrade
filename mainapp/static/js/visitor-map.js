@@ -98,9 +98,8 @@ var card_str = '<div class="card-box"><div class="content text-center"><div clas
        }
         card_str += '</div>';
     }*/
-    card_str += '<p>Addreee:'+description+'</p></div>';
-    card_str += '<p>Address:'+address+'</p></div>';
-    card_str += '<p>Visit Time:'+visit_time+'</p></div>';
+    card_str += '<p>'+description+'</p>'; 
+    card_str += '<p class="text-muted">'+visit_time+'</p>';
     card_str += '<a href="/profile/'+username+'" class="btn btn-primary btn-sm">View profile &raquo;</a></div> </div>';
 
 var ctrl = L.marker([parseFloat(current_lat), parseFloat(current_lon)]).addTo(map).bindPopup(card_str);

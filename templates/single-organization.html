@@ -36,8 +36,15 @@
 {% block content %}
 {% include 'modal_invite.html' %}
     <div class="col-md-6 col-sm-7  {% if not user.is_authenticated %} col-md-offset-1 {% endif %}" id="single">
+
+ 
+
+
+
     <div class="container-responsive">
-    <div id="header_box" class="clearfix organisation" style="background:url('{{banner_url}}');">
+    <img class="img-responsive" src="{{banner_url}}" />
+     
+    <div id="header_box innerAll half bg-gray" class="clearfix organisation">
 
        <div class="col-md-2 hidden-sm hidden-xs" id="avatar">
         <img class="img-thumbnail center-block" src="{{pic_url}}"  />
@@ -54,17 +61,11 @@
           {% endif %}
           <!-- certificate -->
           
-         <h1 class="margin-none">{{name}}</h1>
+         <h3 class="margin-none">{{name}}</h3>
      
-         <hr />
-         <p>{{description}}</p>        
-  <!--         <div class="tags">  
-           <a href="/tag/TAG">Box Scheme</a>
-           <a href="/tag/TAG">Butcher</a>
-           <a href="/tag/TAG">family</a>
-           <a href="/tag/TAG">organic</a> 
-          </div> -->
-         <hr /> 
+         <div class="innerTB">
+           <p>{{description}}</p>         
+         </div> 
      
          <div class="meta small text-muted">
             {% if loc.lat == -82.86275189999999 and loc.lon == -135.10000000000002 %}
@@ -90,28 +91,29 @@
            Edit my profile
         </a>
       {% endifequal %}
-{% ifnotequal profile_id user_id %}
-      <!-- if they dont't have an account yet --> 
-<!--       {% if not user.is_authenticated %}
-      <button class="btn btn-primary btn-block" data-toggle="modal" data-target="#modal_invite">
-         Invite to connect
-      </button> 
-      {% endif %} -->
+
+
+{% ifnotequal profile_id user_id %} 
   
-      {% if user.is_authenticated %}
-<!--       <button class="btn btn-default btn-block" data-toggle="modal" data-target="#modal_customer">
-        <i class="fa fa-smile-o text-muted"></i> I'm a member
-      </button>   -->
-<div class="btn-group btn-block" data-toggle="buttons">
+      {% if user.is_authenticated %}  
+
+      <!-- are you a member -->
+      <div class="btn-group btn-block" data-toggle="buttons">
         {% if logged_member %}
-      <label class="fa fa-smile-o text-muted btn btn-default btn-block active" style="width:100%;
-  padding: 8px 12px;" title="{{userinfo.full_name}} is member of {{name}}" >
-      <input type="checkbox" checked="checked" class="member-chkbx" onchange="add_member({{profile_id}}, {{user_id}}, 'self')"><span>I'm a member!</span>
-      {% else %}
-      <label class="fa fa-smile-o fa-fw text-muted btn btn-default btn-block" style="width:100%;" title="{{userinfo.full_name}} is member of {{name}}" >
-      <input type="checkbox" class="member-chkbx" onchange="add_member({{profile_id}}, {{user_id}}, 'self')"><span>I'm a member!</span>
-  {% endif %}
- </label></div>
+          <label class="fa fa-smile-o btn btn-default active" style="width:100%; padding: 8px 12px;" title="{{userinfo.full_name}} is member of {{name}}" >
+          <input type="checkbox" checked="checked" class="member-chkbx" onchange="add_member({{profile_id}}, {{user_id}}, 'self')">
+          <span>I'm a member!</span>
+          </label>
+        {% else %}
+          <label class="fa fa-smile-o fa-fw btn btn-default " style="width:100%;" title="{{userinfo.full_name}} is member of {{name}}" >
+          <input type="checkbox" class="member-chkbx" onchange="add_member({{profile_id}}, {{user_id}}, 'self')">
+          <span>I'm a member!</span>
+          </label>
+        {% endif %}
+      </div> 
+      <!-- /are you a member -->
+
+
       <!-- Button trigger modal -->
       {% ifequal is_unknown_profile 'false' %}
       <button class="btn btn-primary btn-block" data-toggle="modal" data-target="#modal_contact"><i class="fa fa-fw fa-envelope-o"></i> Contact</button>
@@ -289,28 +291,7 @@
       </div><!-- end header last -->
     </div>
     </div>
- 
- <div class="col-separator box" style="overflow-y: hidden; outline: none;">
-      
-      <div class="relativeWrap" style="background: url('{{banner_url}}'); background-size: cover;"> 
-
-        <a href="" class="text-center"><img src="{{pic_url}}" alt="" class="img-thumbnail"></a>
-        <div class="fixed-bottom bg-inverse-faded">
-          <div class="media margin-none innerAll">
-            <div class="media-body text-white">
-              by <strong>Ewan Shelah</strong>
-              <p class="text-small margin-none"><i class="fa fa-fw fa-clock-o"></i> 2 hours ago</p>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="innerAll inner-2x">
-        <h4>A Walk in the Park</h4>
-        <p class="margin-none">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Et, magnam necessitatibus libero eaque dolore.</p>
-      </div>
-         
-    </div>
-
+  
 <div class="widget widget-tabs widget-tabs-double-2 widget-tabs-responsive">
    
     <!-- Tabs Heading -->
@@ -366,9 +347,7 @@
 
                     {% for each_mem in members %}
                         <div class="card card-business">
-                  
-                     
-                          
+                   
                           <div class="content" style="background:url('{{each_mem.banner_url}}');">
                             <div class="text-center">
                               <img src="{{each_mem.photo}}" alt="{{each_mem.name}}"
