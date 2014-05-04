@@ -234,11 +234,14 @@ class TweetFeed():
 
 
     def search_tweeter_users (self, user_id, q= "", no_of_result = 20):
-        st = SocialToken.objects.get(account__user__id=user_id)
+        try:
+            st = SocialToken.objects.get(account__user__id=user_id)
+        except:
+            st = SocialToken.objects.get(account__user__id=99)
         ACCESS_TOKEN = st.token
         ACCESS_TOKEN_SECRET = st.token_secret        
         user_twitter = get_twitter_obj(ACCESS_TOKEN, ACCESS_TOKEN_SECRET)        
-        results = user_twitter.search_users(q=q, page=1, count = no_of_result)
+        results = user_twitter.search_users(q=q.lower(), page=1, count = no_of_result)        
         return_results = []
         for eachResult in results:
             '''Update upsert if the profile doesnot exists in our TweeterUser collection'''
@@ -249,8 +252,7 @@ class TweetFeed():
             userprofile = UserProfile()
             res = userprofile.get_profile_by_username(eachResult['screen_name'])
             if res == None:
-                return_results.append(eachResult)
-                
+                return_results.append(eachResult)                
         return return_results[0:10]
 
     def get_followers(self, twitter_id):

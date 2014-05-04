@@ -130,13 +130,16 @@ def display_profile(request, username):
             except:
                 parameters['banner_url'] = 'none'           
         except:                    
-            sa = SocialAccount.objects.get(user__id=userprof['useruid'])            
-            parameters['followers_count'] = sa.extra_data['followers_count']
-            parameters['friends_count'] = sa.extra_data['friends_count']
             try:
-                parameters['banner_url'] = sa.extra_data['banner_url']            
+                sa = SocialAccount.objects.get(user__id=userprof['useruid'])            
+                parameters['followers_count'] = sa.extra_data['followers_count']
+                parameters['friends_count'] = sa.extra_data['friends_count']
+                try:
+                    parameters['banner_url'] = sa.extra_data['banner_url']            
+                except:
+                    parameters['banner_url'] = 'none'
             except:
-                parameters['banner_url'] = 'none'
+                pass
 
     '''Code to get the banner_url, followers_count, friends_count ends'''
 
