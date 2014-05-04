@@ -874,9 +874,11 @@ function show_small_structure()
       </a>
     </div>
   </div>
+
+  {% endif %}
    
  
-   {% if not user.is_authenticated %} 
+  {% if not user.is_authenticated %} 
   <div class=" pull-left">
       <a href="/" class="">
       <img src="{% static 'images/logo_tall.png' %}" alt="FoodTrade logo" width="" />
@@ -888,7 +890,6 @@ function show_small_structure()
   </div>
   {% endif %}
 
-  {% endif %}
 
 
 
