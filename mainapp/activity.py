@@ -306,7 +306,7 @@ def home(request):
 
 
 @csrf_exempt
-def activity_suppliers(request): 
+def activity_suppliers(request,request_type): 
     parameters = {}
 
     if request.user.is_authenticated():
@@ -339,8 +339,10 @@ def activity_suppliers(request):
     else:
         return HttpResponseRedirect("/activity")
 
+    request_types = ['suppliers','stockists','favourites']
 
-
+    if request_type not in request_types:
+        return HttpResponseRedirect("/activity")
 
     my_lon = default_lon
     my_lat = default_lat
@@ -354,7 +356,7 @@ def activity_suppliers(request):
     if request.user.is_superuser:
         search_global = True
     search_handle = Search(lon = my_lon, lat =my_lat)
-    search_results = search_handle.supplier_updates(user_id)
+    search_results = search_handle.supplier_updates(user_id, request_type)
     results =search_results['results'][:no_of_results-1]
     results =search_results['results']
     if request.user.is_superuser:

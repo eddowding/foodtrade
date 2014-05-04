@@ -864,8 +864,20 @@ function show_small_structure()
              </div>
           </li>
        </ul> 
+<<<<<<< HEAD
+    </div> <!-- end login dropdown -->
+
+    <div class="user-action pull-right menu-right-hidden-xs menu-left-hidden-xs border-left">
+    <div class="username pull-left">
+      <a href="/accounts/signup/">Signup
+      </a> 
+    </div>
+  </div>
+
+=======
     </div> 
   </div>
+>>>>>>> 8d4fe9550e524f832bce8264ef39a7c27298447b
 
   <div class="user-action pull-right  border-left">
     <div class="dropdown username pull-left">
@@ -1689,7 +1701,6 @@ $(".flip").hover(function(){
 
 
 <!-- post new update modal --> 
-<script src="{% static "js/activity.js" %}"></script>
 <script src="{% static "js/date.js" %}"></script>
 
      <script type="text/javascript">
@@ -1702,15 +1713,6 @@ $(".flip").hover(function(){
        }
       });
 
-<<<<<<< HEAD
-=======
-      var food_filters = [];
-      var business_filters = [];
-      var organisation_filters = [];
-      show_food_filters(food_filters, 0);
-      show_organisation_filters(organisation_filters, 0);
-      show_business_filters(business_filters, 0);
->>>>>>> e095ebf597a7c890607dbaa6a9f7c123308a31ee
 
       var post_for = "";
       $('#post_for').children(".btn").click(function(){

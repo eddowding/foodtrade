@@ -152,7 +152,7 @@
 
       <ul class="clearfix">
         {% if show_foods %}
-        <li class="active"><a class="glyphicons list" href="#tabProduce" data-toggle="tab"><i></i><span>Produce</span>
+        <li class="active"><a class="glyphicons cutlery" href="#tabProduce" data-toggle="tab"><i></i><span>Produce</span>
         
 
         {% if updates_count != 0 %}<span class="label label-default pull-number">{{userprof.food_no}}</span>{% endif %}
@@ -193,36 +193,10 @@
     <div class="widget-body">
 
       <div class="tab-content">
-
-        <!-- WIKI ADD CONNECTIONS --> 
-          {% if user.is_authenticated %}
-          <div class="tab-pane fade in hidden" id="connections" style="margin-top: 1%;">
-            <div class="alert  " style="padding: 0 10px;">  
-            <div class="form-inline"  role="form">
-              <div class="form-group">
-                <img style="width: 25px; margin-right: 2px;" class="" src="{{pic_url}}"  />
-                <div class="btn-group btn-sm" data-toggle="buttons">
-                  <label class="btn  btn-sm active btn-default" id="li1_conn">
-                    <input type="checkbox" name="options" id="option1_conn"> buys from 
-                  </label> 
-                  <label class="btn  btn-sm btn-default" id="li2_conn">
-                    <input type="checkbox" name="options" id="option2_conn"> sells to
-                  </label> 
-                </div> 
-              </div> 
-              <div class="form-group"> 
-                <div id="buss_remote" >
-                  <input class="typeahead  input-sm form-control  " id="new_buss_typeahead" {% if not user.is_authenticated %} rel="tooltip" title="Please login to use this feature" {% endif %} style="width:310px;" type="text" placeholder="Type business..."> 
-                </div>      
-              </div>   
-            </div>
-          </div>
-          </div>
-          {% endif %}
        
         {% if show_foods %}
           <div  class="tab-pane active " id="tabProduce">
-  
+
           {% if user.is_authenticated %}
           <div class="row" style="padding: 20px 0;"> 
             <div class="col-md-8 col-sm-8 col-xs-7">
@@ -254,7 +228,7 @@
             </div> 
 
             <div class="col-md-4 col-sm-4 col-xs-5">
-             <form action="#" method="get">
+             <form action="#" method="get" class="hidden">
               <div class="input-group">
                   <input class="form-control" id="system-search" name="q" placeholder="Search foods..." required>
                   <span class="input-group-btn">
@@ -302,16 +276,18 @@
                                       </div><!-- face front -->
                                       <div class="face back">
                                         <div class="row row-merge">
+                                          {% if eachfood.how_much %}
                                           <div class="col-xs-6 ">
                                               <div class="text-center"> 
                                                   <li class="display-block ">
                                                       <small>
                                                        <i class="fa-2x innerL half text-primary icon-scale-1"></i>
                                                       </small> 
-                                                      <p class="lead">50 kg/yr</p> 
+                                                      <p class="lead">{{eachfood.how_much}}</p> 
                                                   </li>
                                               </div>
                                           </div>
+                                          {% endif %}
                                           <div class="col-xs-6 ">
                                             <div class="text-center"> 
                                              {% ifequal is_unknown_profile 'false' %}
@@ -328,18 +304,19 @@
                                         <div class="widget border-top-none margin-none">
                                           <table class="availability"> 
                                           <tbody><tr>
-                                          <td class="winter">J</td>
-                                          <td class="winter">F</td>
-                                          <td class="spring">M</td>
-                                          <td class="spring">A</td>
-                                          <td class="spring yes">M</td>
-                                          <td class="summer yes">J</td>
-                                          <td class="summer yes">J</td>
-                                          <td class="summer">A</td>  
-                                          <td class="autumn">S</td>
-                                          <td class="autumn">O</td>
-                                          <td class="autumn">N</td>
-                                          <td class="winter">D</td>
+
+                                          <td class="winter {% if eachfood.month_list.0 == 1 %} yes {% endif %}">J</td>
+                                          <td class="winter {% if eachfood.month_list.1 == 1 %} yes {% endif %}">F</td>
+                                          <td class="spring {% if eachfood.month_list.2 == 1 %} yes {% endif %}">M</td>
+                                          <td class="spring {% if eachfood.month_list.3 == 1 %} yes {% endif %}">A</td>
+                                          <td class="spring {% if eachfood.month_list.4 == 1 %} yes {% endif %}">M</td>
+                                          <td class="summer {% if eachfood.month_list.5 == 1 %} yes {% endif %}">J</td>
+                                          <td class="summer {% if eachfood.month_list.6 == 1 %} yes {% endif %}">J</td>
+                                          <td class="summer {% if eachfood.month_list.7 == 1 %} yes {% endif %}">A</td>  
+                                          <td class="autumn {% if eachfood.month_list.8 == 1 %} yes {% endif %}">S</td>
+                                          <td class="autumn {% if eachfood.month_list.9 == 1 %} yes {% endif %}">O</td>
+                                          <td class="autumn {% if eachfood.month_list.10 == 1 %} yes {% endif %}">N</td>
+                                          <td class="winter {% if eachfood.month_list.11 == 1 %} yes {% endif %}">D</td>
                                           </tr></tbody></table>  
                                         </div> 
                                       </div> <!-- face back -->
@@ -515,7 +492,31 @@
         <!-- // Tab content END -->
       
         <!-- Tab content -->
-        <div id="tabStockists" class="tab-pane  clearfix">        
+        <div id="tabStockists" class="tab-pane  clearfix"> 
+
+
+         <!-- WIKI ADD CONNECTIONS --> 
+          {% if user.is_authenticated %} 
+          <div class="box-generic bg-primary-light" style="padding: 0 10px;">  
+            <div class="form-inline"  role="form">
+              <div class="form-group">
+                <img style="width: 25px; margin-right: 2px;" class="" src="{{pic_url}}"  />
+                <div class="btn-group btn-sm" data-toggle="buttons">
+                  <label class="btn  btn-sm active btn-primary" id="li1_conn">
+                    <input type="checkbox" name="options" id="option1_conn"> buys from 
+                  </label>  
+                </div>  
+              </div> 
+              <div class="form-group"> 
+                <div id="buss_remote" class="form-group  has-feedback">
+                  <input class="typeahead  input-sm form-control  " id="new_buss_typeahead" {% if not user.is_authenticated %} rel="tooltip" title="Please login to use this feature" {% endif %} style="width:310px;" type="text" placeholder="Start typing a supplier..."> 
+                  <span class="fa fa-search form-control-feedback"></span> 
+                </div>      
+              </div>   
+            </div>
+          </div> 
+          {% endif %}
+        
                       
 <div id="all-connections">
 
@@ -596,7 +597,31 @@
  
         
         <!-- Tab content -->
-        <div id="tabSuppliers" class="tab-pane  clearfix">                      
+        <div id="tabSuppliers" class="tab-pane  clearfix"> 
+
+        <!-- WIKI ADD CONNECTIONS --> 
+          {% if user.is_authenticated %} 
+          <div class="box-generic bg-primary-light" style="padding: 0 10px;">  
+            <div class="form-inline"  role="form">
+              <div class="form-group">
+                <img style="width: 25px; margin-right: 2px;" class="" src="{{pic_url}}"  />
+                <div class="btn-group btn-sm" data-toggle="buttons"> 
+                  <label class="btn btn-sm active btn-primary" id="li2_conn">
+                    <input type="checkbox" name="options" id="option2_conn"> sells to
+                  </label> 
+                </div> 
+              </div> 
+              <div class="form-group">   
+                <div id="buss_remote" class="form-group  has-feedback">
+                  <input class="typeahead  input-sm form-control  " id="new_buss_typeahead" {% if not user.is_authenticated %} rel="tooltip" title="Please login to use this feature" {% endif %} style="width:310px;" type="text" placeholder="Start typing a stockist..."> 
+                  <span class="fa fa-search form-control-feedback"></span> 
+                </div>      
+              </div>   
+            </div>
+          </div> 
+          {% endif %}
+        
+
         <div id="all-connections" class="clearfix">
           {% if userprof.c_conn_no != 0 %}  
            <div class="clearfix isotope js-isotope" data-isotope-options='{ "itemSelector": ".card" }' id="seller-cards">
@@ -672,14 +697,13 @@
         <!-- Tab content -->
         <div id="tabMemberships" class="tab-pane clearfix">
           {% if user.is_authenticated %}
-            <div class="box-generic bg-primary-light">  
-              <div class="form-inline"  role="form">
-                <div class="form-group">
-                  <div id="orgs_remote">
-                    <input class="typeahead form-control" id="new_orgs_typeahead" {% if not user.is_authenticated %} rel="tooltip" title="Please login to use this feature" {% endif %} style="width:310px;" type="text" placeholder="Add an organisation...">
-                  </div>                  
-                </div> 
-              </div>
+            <div class="box-generic bg-primary-light" style="padding: 7px 10px 3px 10px;">   
+              <div class="form-inline" role="form"> 
+                <div id="orgs_remote" class="form-group  has-feedback">
+                  <input class="typeahead form-control col-sm-12" id="new_orgs_typeahead" {% if not user.is_authenticated %} rel="tooltip" title="Please login to use this feature" {% endif %} style="min-width:350px;" type="text" placeholder="Type the name of a group, organisation, or certifier">
+                  <span class="fa fa-search form-control-feedback"></span> 
+                </div>     
+              </div>    
             </div>
           {% endif %}
 
@@ -815,16 +839,18 @@
                                       </div><!-- face front -->
                                       <div class="face back">
                                         <div class="row row-merge">
+                                          {% if eachfood.how_much %}
                                           <div class="col-xs-6 ">
                                               <div class="text-center"> 
                                                   <li class="display-block ">
                                                       <small>
                                                        <i class="fa-2x innerL half text-primary icon-scale-1"></i>
                                                       </small> 
-                                                      <p class="lead">50 kg/yr</p> 
+                                                      <p class="lead">{{eachfood.how_much}}</p> 
                                                   </li>
                                               </div>
                                           </div>
+                                          {% endif %}
                                           <div class="col-xs-6 ">
                                             <div class="text-center"> 
                                              {% ifequal is_unknown_profile 'false' %}
@@ -841,18 +867,18 @@
                                         <div class="widget border-top-none margin-none">
                                           <table class="availability"> 
                                           <tbody><tr>
-                                          <td class="winter">J</td>
-                                          <td class="winter">F</td>
-                                          <td class="spring">M</td>
-                                          <td class="spring">A</td>
-                                          <td class="spring yes">M</td>
-                                          <td class="summer yes">J</td>
-                                          <td class="summer yes">J</td>
-                                          <td class="summer">A</td>  
-                                          <td class="autumn">S</td>
-                                          <td class="autumn">O</td>
-                                          <td class="autumn">N</td>
-                                          <td class="winter">D</td>
+                                          <td class="winter {% if eachfood.month_list.0 == 1 %} yes {% endif %}">J</td>
+                                          <td class="winter {% if eachfood.month_list.1 == 1 %} yes {% endif %}">F</td>
+                                          <td class="spring {% if eachfood.month_list.2 == 1 %} yes {% endif %}">M</td>
+                                          <td class="spring {% if eachfood.month_list.3 == 1 %} yes {% endif %}">A</td>
+                                          <td class="spring {% if eachfood.month_list.4 == 1 %} yes {% endif %}">M</td>
+                                          <td class="summer {% if eachfood.month_list.5 == 1 %} yes {% endif %}">J</td>
+                                          <td class="summer {% if eachfood.month_list.6 == 1 %} yes {% endif %}">J</td>
+                                          <td class="summer {% if eachfood.month_list.7 == 1 %} yes {% endif %}">A</td>  
+                                          <td class="autumn {% if eachfood.month_list.8 == 1 %} yes {% endif %}">S</td>
+                                          <td class="autumn {% if eachfood.month_list.9 == 1 %} yes {% endif %}">O</td>
+                                          <td class="autumn {% if eachfood.month_list.10 == 1 %} yes {% endif %}">N</td>
+                                          <td class="winter {% if eachfood.month_list.11 == 1 %} yes {% endif %}">D</td>
                                           </tr></tbody></table>  
                                         </div> 
                                       </div> <!-- face back -->
@@ -864,12 +890,10 @@
                                       <div class="pull-left">
 
                    {% ifequal profile_id user_id %}
-                      {% if not prof_subscribed %}
+                      
 
                      <a href="" data-toggle="modal" data-target="#modal_food_detail" class="btn btn-sm btn-default" data-container="body" onClick="get_food_detail('{{profile_id}}', '{{eachfood.food_name}}', '{{eachfood.description}}', '{{eachfood.food_tags}}', '{{eachfood.photo_url}}', '{{eachfood.recomm_tags|safe}}')"><i class="fa fa-edit" title="Edit" ></i> edit details</a>
-                     {% else %}
-                     <a class="btn btn-sm btn-default" data-container="body" rel="tooltip" title="Upgrade your account to add details"><i class="fa fa-edit" title="Edit" > edit details</i></a>
-                     {% endif %}
+                     
                      <a class="btn btn-danger btn-sm"><i class="fa fa-trash-o" title="Delete" onClick="delete_food({{profile_id}}, '{{eachfood.food_name}}', this)"></i></a>
 
                    {% endifequal %}
@@ -1182,11 +1206,11 @@
 
       <div class="btn-group btn-block" data-toggle="buttons">
   {% if logged_customer %}
-      <label class="fa fa-smile-o text-muted btn btn-default btn-block active" style="width:100%;" title="{{userinfo.full_name}} is customer of {{name}}" >
-      <input type="checkbox" checked="checked" id="customer-chkbx" onchange="add_customer({{profile_id}}, {{user_id}})">I'm a customer!
+      <label class=" btn btn-info btn-block  " style="width:100%; font-size: 12px;" >
+      <input type="checkbox" checked="checked" id="customer-chkbx" onchange="add_customer({{profile_id}}, {{user_id}})" rel="tooltip" title="{{userinfo.full_name}} is customer of {{name}}"><i class="fa fa-smile-o fa-fw fa-lg"></i>  I'm a customer!
       {% else %}
-      <label class="fa fa-smile-o text-muted btn btn-default btn-block" style="width:100%;" title="{{userinfo.full_name}} is customer of {{name}}" >
-      <input type="checkbox" id="customer-chkbx" onchange="add_customer({{profile_id}}, {{user_id}})">I'm a customer!
+      <label class=" btn btn-default btn-block" style="width:100%; font-size: 12px;" rel="tooltip" title="{{userinfo.full_name}} is customer of {{name}}" >
+      <input type="checkbox" id="customer-chkbx" onchange="add_customer({{profile_id}}, {{user_id}})"  rel="tooltip" title="{{userinfo.full_name}} is customer of {{name}}"><i class="fa fa-smile-o fa-fw"></i> I'm a customer!
   {% endif %}
       </label>      
       </div>
@@ -1247,6 +1271,48 @@
       {% endifnotequal %}
 
           <div class="btn-group btn-block">
+<<<<<<< HEAD
+            <button class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" style="width:50%;" ><i class="fa fa-share"></i> Share</button>
+              <ul class="dropdown-menu ">
+               <li> <a href="#" class="" onclick="window.open(
+                'https://www.facebook.com/sharer/sharer.php?s=100&amp;p[url]='+encodeURIComponent('{{ request.build_absolute_uri }}') +'&amp;p[images][0]='+encodeURIComponent('{{pic_url}}')+'&amp;p[title]='+encodeURIComponent('{{name}} on FoodTrade')+'&amp;p[summary]='+encodeURIComponent('Hey, see my profile on FoodTrade')+'&amp;u='+encodeURIComponent('{{ request.build_absolute_uri }}') +'&amp;t='+encodeURIComponent('{{name}} on FoodTrade'),
+                      'facebook-share-dialog', 
+                      'width=626,height=436,top='+((screen.height - 436) / 2)+',left='+((screen.width - 626)/2 )); 
+                    return false;">
+
+                  <i class="fa fa-facebook-square fa-2x"></i> Share on facebook 
+                </a></li><li>
+                <a href="#" class="  " onclick="window.open(
+                      'https://twitter.com/share?url='+encodeURIComponent('{{ request.build_absolute_uri }}')+'&amp;text='+encodeURIComponent('{{screen_name}} on @foodtradeHQ') + '&amp;count=none/', 
+                      'twitter-share-dialog', 
+                      'width=626,height=436,top='+((screen.height - 436) / 2)+',left='+((screen.width - 626)/2 )); 
+                    return false;">
+                  <i class="fa fa-twitter-square fa-2x"></i> Tweet this
+                </a></li><li>
+    
+                <a class=" " href="http://pinterest.com/pin/create/button/?url={{ request.build_absolute_uri|urlencode }}&media={{pic_url|urlencode}}&description={{screen_name|urlencode}}{{' on FoodTrade'|urlencode}}" class="pin-it-button" count-layout="horizontal">
+                  <i class="fa fa-pinterest-square fa-2x"></i> Pin to pinterest
+                </a> </li><li>
+                <a  class="" href="https://plus.google.com/share?url={{ request.build_absolute_uri|urlencode }}">
+                  <i class="fa fa-google-plus-square fa-2x"></i> Share on Google+
+                </a></li><li>
+                <a  class=" " href="http://www.tumblr.com/share" title="Share on Tumblr">
+                  <i class="fa fa-tumblr-square fa-2x"></i> Post to Tumblr
+                </a>
+                   </li><li>
+                <a  class=" " href="http://www.linkedin.com/shareArticle?mini=true&url={{ request.build_absolute_uri|urlencode}}&title={{screen_name}} on FoodTrade&summary=Hey, view my profile on Foodtrade.&source=">
+                  <i class="fa fa-linkedin-square fa-2x"></i> Share on LinkedIn
+                </a></li> 
+                <script type="text/javascript" src="http://platform.tumblr.com/v1/share.js"></script>
+              </ul>
+            <div class="btn-group" data-toggle="buttons" width="100%">
+              <label class="btn btn-default fa fa-star-o {% if fav_profile %} active {% endif %}">
+              <input type="checkbox" id="favourite_btn" {% if fav_profile %} checked="checked" {% endif %} onchange="save_favourites('{{profile_id}}', '{{user_id}}'); return null;">Favourite
+            </label>
+          </div>
+
+              
+=======
             <div class="btn-group"  style="width:50%;">
               <button type="button"  style="width:100%;" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown"  ><i class="fa fa-share"></i> Share</button>
                 <ul class="dropdown-menu ">
@@ -1283,8 +1349,15 @@
                 </ul>
               </div>
 
-              <button class="btn btn-default btn-sm" style="width:50%;"><i class="fa fa-star-o"></i> Favourite</button>
+              <button class="btn btn-default btn-sm" style="width:50%;" onclick="favourite_him({{profile_id | safe}})"><i class="fa fa-star-o"></i> Favourite</button>
+>>>>>>> 8d4fe9550e524f832bce8264ef39a7c27298447b
           </div>
+          <script type="text/javascript">
+          function favourite_him(user_id)
+          {
+            ajax_request("favourite_profile", 'favourite_done', {useruid:user_id});
+          }
+          </script>
 
           <div class="text-center innerT">
 
@@ -1635,12 +1708,11 @@
 
 $(document).ready(function(){
   var $container1 = $('#foods').isotope({itemSelector: '.food'});
-<<<<<<< HEAD
-=======
+
 
  // var $container = $('#all-connections').isotope({itemSelector: '.card-business'});
 
->>>>>>> 71c9b60992b2f803470482e511999e399106dda5
+
 // filter items on button click
 $('#filterFoods').on( 'click', 'button', function() {
   var filterValue = $(this).attr('data-filter');
