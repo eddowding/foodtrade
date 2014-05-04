@@ -292,10 +292,9 @@
  
  <div class="col-separator box" style="overflow-y: hidden; outline: none;">
       
-      <div class="relativeWrap">
-        <img src="{{banner_url}}" alt="" class="img-responsive padding-none border-none">
+      <div class="relativeWrap" style="background: url('{{banner_url}}'); background-size: cover;"> 
 
-        <a href="" class="text-center"><img src="{{pic_url}}" alt="" class="img-responsive"></a>
+        <a href="" class="text-center"><img src="{{pic_url}}" alt="" class="img-thumbnail"></a>
         <div class="fixed-bottom bg-inverse-faded">
           <div class="media margin-none innerAll">
             <div class="media-body text-white">
@@ -547,9 +546,8 @@
 
 
       <div class="col-md-6 col-sm-5 {% if loc.lat == -82.86275189999999 and loc.lon == -135.10000000000002 %} hidden {% endif %}">
-    <div style="position: fixed; width:50%; height: 100%; " id="map">
-           </div> 
-           </div>
+        <div style="position: fixed; width:50%; height: 100%; " id="map"></div> 
+     </div>
       
    
 {% endblock %}
