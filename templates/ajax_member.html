@@ -17,25 +17,44 @@
                               </h5>  
                               <p class="small">{{each_mem.description}}</p>
                             </div>
+                          </div>  
+                          
+                           <div class="row row-merge border-top">
+
+                            <!-- number of foods sold -->
+                            <div class="col-xs-3">
+                              <a href="" class="innerAll half text-center display-block text-muted" data-original-title="{{each_mem.food_no}} foods" rel="tooltip"><i class="fa fa-fw fa fa-cutlery"></i> {{each_mem.food_no}}</a>
+                            </div>
+
+                            <!-- number of vouches across all produce --> 
+                            <div class="col-xs-3">
+                              <a href=""  rel="tooltip" title="{{each_mem.total_vouches}} of vouches for all produce"  class="innerAll half text-center display-block text-muted"><i class="fa fa-fw fa-thumbs-o-up"></i> {{each_mem.total_vouches}}</a>
+                            </div> 
+
+                            <!-- number of trade connections --> 
+                            <div class="col-xs-3">
+                              <a href=""  rel="tooltip" title="{{each_mem.trade_conn_no}} of trade connections" class="innerAll half text-center display-block text-muted"><i class="fa fa-fw fa-link"></i> {{each_mem.trade_conn_no}}</a>
+                            </div>
+
+                            <!-- number of group membershpis -->  
+                            <div class="col-xs-3">
+                              <a href=""  rel="tooltip" title="Member of {{each_mem.org_conn_no}} groups or organisations"  class="innerAll half text-center display-block text-muted"><i class="fa fa-fw fa-group"></i> {{each_mem.org_conn_no}}</a>
+                            </div> 
+
                           </div> 
 
-                          <div class="numbers clearfix">
-                    
-                            <p class="small text-center">
-                              <a href="#" rel="tooltip" title="{{each_mem.food_no}} foods" class="pull-left"><i class="fa fa-cutlery"></i> {{each_mem.food_no}}</a>
-                              <a href="#" rel="tooltip"  title="{{each_mem.trade_conn_no}} connections"><i class="fa fa-link"></i> {{each_mem.trade_conn_no}}</a>
-                              <a href="#" rel="tooltip" title="{{each_mem.org_conn_no}} organisations" class="pull-right"><i class="fa fa-group"></i> {{each_mem.org_conn_no}}</a> 
-                            </p>
-                          </div>
+
+           
 
                           {% if each_mem.type|length == 0 or each_mem.type|first == '' %}
-                      {% else %}
-                    <div class="numbers type text-center clearfix">
-                      <div class="tags tags-biztype">  
-                        {% for e in each_mem.type %}
-                       <a href="/activity/?q={{e}}">{{e}}</a>
-                       {% endfor %}
-                        </div> 
-                      </div>{% endif %}
+                          {% else %}
+                          <div class="bg-gray border-top innerAll half text-center">  
+                            {% for e in each_mem.type %}
+                           <a href="/activity/?q={{e}}">{{e}}</a>
+                           {% endfor %}
+                          </div>
+                          {% endif %}
+ 
+
                         </div> 
                         {% endfor %}

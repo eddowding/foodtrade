@@ -154,8 +154,12 @@ function add_food(prof_id, we_buy){
 	    we_buy = typeof we_buy !== 'undefined' ? we_buy : '';
 	    var data = {useruid: prof_id, food_name: food};
 	    data['we_buy'] = we_buy== '' ? 0 : 1;
-		ajax_request("addfood", 'food_ajax', {data: JSON.stringify(data)});
-
+	    if(data['we_buy']==1){
+			ajax_request("addfood", 'webuy_food_ajax', {data: JSON.stringify(data)});
+	    }
+	    else{
+			ajax_request("addfood", 'food_ajax', {data: JSON.stringify(data)});
+		}
 	}
 	else{
 		$('#adfoo_id').tooltip('show');
@@ -166,8 +170,17 @@ function add_food(prof_id, we_buy){
 function food_ajax(data){
 $('.search-choice').remove();
 $("#myselect").val('').trigger('chosen:updated');
-$('#food_tbody').html(data);
+$('#foods').html(data);
+var $container1 = $('#foods').isotope({itemSelector: '.food'});
 }
+
+function webuy_food_ajax(data){
+$('.search-choice').remove();
+$("#webuy_select").val('').trigger('chosen:updated');
+$('#webuy_foods').html(data);
+var $container1 = $('#webuy_foods').isotope({itemSelector: '.food'});
+}
+
 function recommend_food(logged_in_id, food_name, prof_id, username, my_this){
 	var data = {recommender_id: logged_in_id, food_name: food_name, business_id: prof_id, action: 'add'};
 	vouch_this = my_this;
@@ -189,6 +202,7 @@ function delete_food(prof_id, food_name, my_this){
 	var data = {useruid: prof_id, food_name: food_name};
 	ajax_request("deletefood", 'food_ajax', {data: JSON.stringify(data)});
 	global_this = my_this;
+	console.log(global_this)
 	var del_id = global_this.parentElement.parentElement.parentElement.parentElement.getAttribute('id');
 	$('#'+del_id).remove();
 }
