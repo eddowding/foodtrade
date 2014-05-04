@@ -594,7 +594,7 @@ class Food():
         value['deleted'] =0
         # self.db_object.insert_one(self.table_name,value)
         self.db_object.update_upsert(self.table_name, {'food_name': value['food_name'], 
-            'useruid': value['useruid'], 'we_buy': value['we_buy']}, {'deleted': 0})
+            'useruid': value['useruid'], 'webuy': value['we_buy']}, {'deleted': 0})
         twt = TweetFeed()
         twt.update_data(value['useruid'])
 

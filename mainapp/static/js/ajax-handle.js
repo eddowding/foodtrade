@@ -147,15 +147,10 @@ function invite_connect(prof_username, logged_username){
 
 function add_food(prof_id, we_buy){
 	if (validate_login()['status'] == '1'){
-		// if(ind_status == 'individual'){
-		// 	alert('{{all_foods}}');
-		// 	prepend_warning = '<thead id="warning_produce"><tr><td colspan="2"><p class="alert alert-warning">Please <a href="/payments" class="">upgrade</a> to add more produce. </p></td></tr></thead>';
-		// 	$('#produce').prepend(prepend_warning);
-		// 	$('#myselect').prop('disabled', true).trigger("chosen:updated");
-		// 	$('#adfoo_id').prop('disabled', true);
-		// }
-		var elements = document.getElementsByClassName('search-choice');
-	    var food = elements[0].children[0].innerHTML;
+		
+		// var elements = document.getElementsByClassName('search-choice');
+	    // var food = elements[0].children[0].innerHTML;
+	    var food = $('.search-choice').children()[0].innerHTML;
 	    we_buy = typeof we_buy !== 'undefined' ? we_buy : '';
 	    var data = {useruid: prof_id, food_name: food};
 	    data['we_buy'] = we_buy== '' ? 0 : 1;
