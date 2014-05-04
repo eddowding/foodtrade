@@ -1188,7 +1188,7 @@ def get_views_parameters(request):
             years = time_elapsed/3600/24/365
             time_text = str(round(years,2)) + ' years ago'
         data['visit_time'] = time_text
-        data['visit_date_time'] = str(datetime.datetime.fromtimestamp(int(eachVisit['visit_time'])))
+        data['visit_date_time'] = str(datetime.datetime.fromtimestamp(int(eachVisit['visit_time'])).strftime("%A, %d. %B %Y %I:%M%p"))
         results.append(data)
     parameters['results'] = results
     parameters['visit_data'] = str(json.dumps(results))
