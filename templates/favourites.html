@@ -1,0 +1,162 @@
+{% extends 'tbase.html' %}
+{% load staticfiles %}
+{% load recognise_name %}
+{% block titlemain %}Favourites {% endblock %}
+
+{% block content %}
+{% load activity_tags %}
+<div id="activity_single">
+<div class="col-sm-12 {% if not user.is_authenticated %} col-md-offset-1 {% endif %}" id="single">
+  <div class="row">
+  <div class="col-lg-9 col-md-8">
+  <div class="timeline-cover" >            
+  <div class="cover ">
+    <div class="top">
+        <div id="carousel-1" class="carousel slide"> 
+          <div class="carousel-inner">
+              <div class="item active">
+                  <div style="width:100%; height: 350px; "><img src="{{userinfo.profileimg}}"/></div> 
+              </div> 
+          </div>
+      </div> 
+    </div>
+
+    <ul class="list-unstyled">
+      <li><a href="#" data-target="#carousel-1" data-slide-to="1"><i class="icon-photo-camera"></i> <span>Photo</span> </a></li>   
+ 
+      {% if userinfo.subscribed %}
+      <li class="pull-right" style="background: #88BC62;"><a href="#">
+      <i class="fa fa-check" style="color: #fff;"></i>
+      <span>Verified</span></a>
+      </li> 
+      {% endif %} 
+ 
+    </ul>
+  </div>
+  <div class="widget cover image">  
+    <div class="widget-body padding-none margin-none">
+      <div class="photo col-sm-1">
+        <img src="{{userinfo.profileimg}}" class="img-circle"> 
+      </div>
+      <div class="innerAll border-right col-sm-3">
+        <h3 class="margin-none">
+          {{userinfo.username}}
+        </h3> 
+      </div>
+      <div class="innerAll col-sm-6">
+        <span class="margin-none">{{userinfo.description}}</span>  
+        <div class="{% if userinfo.loc.lat == -82.86275189999999 and loc.lon == -135.10000000000002 %} hidden {% endif %}">
+          <div class="meta">
+            {% if userinfo.lat == -82.86275189999999 and userinfo.lon == -135.10000000000002 %}
+              <i class="fa fa-map-marker text-muted"></i> <a > NA</a>
+              <i class="fa fa-location-arrow text-muted" style="margin-left: 20px;"></i> NA
+            {% else %}
+            <i class="fa fa-map-marker text-muted"></i> <a href="http://maps.google.com/maps?saddr={{userinfo.lat}},{{userinfo.lon}}&daddr={{userinfo.lat}},{{userinfo.lon}}" target="_blank" data-placement="top" data-toggle="tooltip" title="Get directions" class="" style="margin-right:20px;">
+              {{userinfo.address}}
+            </a>   
+            {% endif %} 
+          </div> <!-- meta --> 
+      </div>  
+
+    </div>
+    <div class="clearfix"></div>
+  </div>
+</div>
+</div>
+
+    <div class="container-responsive">
+    <div class="row" style="margin-top: 30px;">
+      <div class="col-md-6 col-xs-8 reply_text" id="single_post_content">
+        <div class="container-responsive clearfix">
+          <div id="activity">            
+            <ul class="timeline-activity list-unstyled " id="update_content">
+
+                  {% for result in fav_users_list %}
+                    <!--Single Activity Template -->                      
+                    <li class="{{result.result_class}} singleresult {% if result.subscribed %} verified {% endif %}">
+                      <div class="block-inline" style="margin-left:2%"> 
+                      <span class="marker"></span>
+                      <div class="caret"></div>
+                      <div class="box-generic">
+                      {% if not result.subscribed %}
+                        <div class="timeline-top-info   border-bottom" {% if result.subscribed %} rel="tooltip" title="Verified profile" {% endif %}>            
+                        <div class="  pull-right" style="margin-left: 5px;">
+                          <a type="button" class="dropdown-toggle" data-toggle="dropdown">
+                          <i class="fa fa-fw fa-cog fa-lg"></i>
+                          <span  class="sr-only">Toggle Dropdown</span>
+                          </a>
+                            <a type="button" class="btn btn-primary btn-xs" href="/profile/{{result.username}}">
+                              <i class="fa fa-arrow-right fa-lg" style="color:#fff;"></i> 
+                            </a>
+
+                          <ul class="dropdown-menu" role="menu">  
+                            <li><a href="http://www.facebook.com/sharer/sharer.php?u=http://foodtrade.com/{{result.username}}" target="_blank"><i class="fa fa-facebook fa-fw facebook"></i> Share on Facebook</a></li>
+                            <li><a href="http://twitter.com/home?status={{result.username}}%20http://foodtrade.com/{{result.username}}" target="_blank"><i class="fa fa-twitter fa-fw twitter "></i> Share on Twitter</a></li>
+                            <li><a type="button" href="/profile/{{result.username}}/">
+                            <i class="fa fa-info-circle fa-lg fa-fw"></i> View profile</a></li> 
+                            {%  if userinfo.user_type == "Business" and result.sign_up_as == "Business" and result.username != userinfo.username %}
+                            <li><a href="#" onclick="click_activity('buyFrom','{{result.useruid}}')"><i class="fa fa-sign-in fa-lg fa-fw"></i> I buy from</a></li>
+                            <li><a href="#"onclick="click_activity('sellTo','{{result.useruid}}')"><i class="fa fa-sign-out fa-lg fa-fw"></i> I sell to</a></li>  
+                            {% endif %}
+                            {% if result.sign_up_as == "Organisation" %}
+                            <li><a href="#" onclick="click_activity('markMember', '{{result.useruid}}')"><i class="fa fa-fw fa-group"></i>  I'm a member</a></li>
+                            {% endif %}
+                            {% if userinfo.user_type == "Individual" and result.sign_up_as == "Business" %}
+                            <li><a href="#" onclick="click_activity('markCustomer', '{{result.username}}')"><i class="fa fa-fw fa-shopping-cart"></i>  I'm a customer</a></li>
+                            {% endif %} 
+                            {% if result.username != userinfo.username %}
+                            <li><a href="#" onclick="click_activity('follow','{{result.username}}')"><i class="fa fa-star-o fa-fw"></i>  Follow on Twitter</a></li>
+                            {% endif %} 
+                          </ul>  
+                      </div> 
+                          <img src="{{result.profile_img}}" alt="{{result.username}}" class="img-responsive pull-left" style="width:20px; margin-right: 5px;" /><a href="/profile/{{result.username}}" class="text-inverse">{{result.username}}</a> 
+                        </div>
+                      {% endif %}
+
+                        <!-- status --> 
+                        <div class="media margin-none status"  /> 
+                              <div class="lead innerAll">
+                                  {% if userinfo.subscribed %}
+                                      {{result.name}} from {{result.address}} viewed your profile on {{result.visit_date_time}}
+                                    {% else %}  
+                                      A {{result.sign_up_as}} viewed your profile on {{result.visit_date_time}}
+                                  {% endif %}
+                                  
+                              </div>
+                        </div>
+                        <div class="timeline-bottom innerAll border-top clearfix">
+                                   <a href="http://maps.google.com/maps?saddr={{userinfo.lat}},{{userinfo.lon}}&daddr={{result.latitude}},{{result.longitude}}" target="_blank" data-placement="top" data-toggle="tooltip" class="pull-right" rel="tooltip" title="Get directions"> {% if not userinfo.subscribed %}<i class="fa fa-location-arrow fa-fw"></i> {{result.distance_text}}  {% endif %}</a>
+                                   <i class="fa fa-clock-o  fa-fw"></i> {{result.visit_time}} 
+                                   <br />                        
+                                  {% if not userinfo.subscribed %}
+                                  <span class="hidden-sm hidden-xs truncate100 address" > <i class="fa fa-map-marker fa-fw"></i> {{result.address}}</span>
+                                  {% endif %}
+                                </div> 
+                            </div>
+                        </div>
+                      </li>   
+                    <!--Single Activity Template ends -->                  
+              {% endfor %}
+          </ul> 
+          </div> 
+         </div>
+      </div><!-- end col8 --> 
+      <div class="col-md-6 col-xs-8 reply_text" style="float:right; margin-top:20px;  height:700px;" id="map">          
+      </div>
+    </div><!-- row -->
+    </div><!-- col10 --> 
+    </div>
+    </div>
+<script type="text/javascript">
+ {% if not userinfo.subscribed %}
+  var visit_data = jQuery.parseJSON('{{visit_data|safe}}');
+ {% else %}
+  var visit_data = [];
+ {% endif %}
+  var map_lat = {{userinfo.lat}};
+  var map_lon = {{userinfo.lon}};
+</script>    
+{% endblock %}
+{% block footer %}
+<script src="{% static "js/visitor-map.js" %}"></script>
+{% endblock %}

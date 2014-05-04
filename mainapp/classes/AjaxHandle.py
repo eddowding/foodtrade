@@ -594,6 +594,30 @@ class AjaxHandle(AjaxSearch):
         else:
             return HttpResponse("{'status':0}")    
 
+    def save_favourites(self, request):
+        data = eval(request.POST.get('data'))
+        if data !=None and data !="":
+            userprof = UserProfile()
+            prof = userprof.get_profile_by_id(int(data['useruid']))
+            old_favourites = prof.get('favourites') if prof.get('favourites')!=None else None
+            if old_favourites!=None:
+                if data.get('delete')==1 and int(data['profile_id']) in old_favourites:
+                    old_favourites.remove(int(data['profile_id']))
+                else:
+                    if int(data['profile_id']) not in old_favourites:
+                        old_favourites.append(int(data['profile_id']))
+                        # save the new favourites
+                userprof.update_profile_upsert({'useruid': int(data['useruid'])},
+                    {'favourites': old_favourites})
+            else:
+                if data.get('delete')==None:
+                    userprof.update_profile_upsert({'useruid': int(data['useruid'])},
+                            {'favourites': [int(data['profile_id'])]})
+            return HttpResponse("{'status':1}")    
+        else:
+            return HttpResponse("{'status':0}")    
+
+
     def addteam(self, request):
         team = Team()
         data = eval(request.POST.get('data'))

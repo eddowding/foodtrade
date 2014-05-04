@@ -53,6 +53,7 @@ urlpatterns = patterns('',
     url(r'^update-image/$', 'mainapp.merge_data.update_image'),
     ## any user    
     url(r'^(?P<username>\w{1,40})/$', 'mainapp.profilepage.profile_url_resolve'),
+    url(r'^myprofile/favourites/$', 'mainapp.favpage.display_favourites'),
 )
 urlpatterns += patterns('',
         (r'^media/(?P<path>.*)$', 'django.views.static.serve', {

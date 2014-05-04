@@ -294,16 +294,18 @@
                                       </div><!-- face front -->
                                       <div class="face back">
                                         <div class="row row-merge">
+                                          {% if eachfood.how_much %}
                                           <div class="col-xs-6 ">
                                               <div class="text-center"> 
                                                   <li class="display-block ">
                                                       <small>
                                                        <i class="fa-2x innerL half text-primary icon-scale-1"></i>
                                                       </small> 
-                                                      <p class="lead">50 kg/yr</p> 
+                                                      <p class="lead">{{eachfood.how_much}}</p> 
                                                   </li>
                                               </div>
                                           </div>
+                                          {% endif %}
                                           <div class="col-xs-6 ">
                                             <div class="text-center"> 
                                              {% ifequal is_unknown_profile 'false' %}
@@ -320,18 +322,19 @@
                                         <div class="widget border-top-none margin-none">
                                           <table class="availability"> 
                                           <tbody><tr>
-                                          <td class="winter">J</td>
-                                          <td class="winter">F</td>
-                                          <td class="spring">M</td>
-                                          <td class="spring">A</td>
-                                          <td class="spring yes">M</td>
-                                          <td class="summer yes">J</td>
-                                          <td class="summer yes">J</td>
-                                          <td class="summer">A</td>  
-                                          <td class="autumn">S</td>
-                                          <td class="autumn">O</td>
-                                          <td class="autumn">N</td>
-                                          <td class="winter">D</td>
+
+                                          <td class="winter {% if eachfood.month_list.0 == 1 %} yes {% endif %}">J</td>
+                                          <td class="winter {% if eachfood.month_list.1 == 1 %} yes {% endif %}">F</td>
+                                          <td class="spring {% if eachfood.month_list.2 == 1 %} yes {% endif %}">M</td>
+                                          <td class="spring {% if eachfood.month_list.3 == 1 %} yes {% endif %}">A</td>
+                                          <td class="spring {% if eachfood.month_list.4 == 1 %} yes {% endif %}">M</td>
+                                          <td class="summer {% if eachfood.month_list.5 == 1 %} yes {% endif %}">J</td>
+                                          <td class="summer {% if eachfood.month_list.6 == 1 %} yes {% endif %}">J</td>
+                                          <td class="summer {% if eachfood.month_list.7 == 1 %} yes {% endif %}">A</td>  
+                                          <td class="autumn {% if eachfood.month_list.8 == 1 %} yes {% endif %}">S</td>
+                                          <td class="autumn {% if eachfood.month_list.9 == 1 %} yes {% endif %}">O</td>
+                                          <td class="autumn {% if eachfood.month_list.10 == 1 %} yes {% endif %}">N</td>
+                                          <td class="winter {% if eachfood.month_list.11 == 1 %} yes {% endif %}">D</td>
                                           </tr></tbody></table>  
                                         </div> 
                                       </div> <!-- face back -->
@@ -819,16 +822,18 @@
                                       </div><!-- face front -->
                                       <div class="face back">
                                         <div class="row row-merge">
+                                          {% if eachfood.how_much %}
                                           <div class="col-xs-6 ">
                                               <div class="text-center"> 
                                                   <li class="display-block ">
                                                       <small>
                                                        <i class="fa-2x innerL half text-primary icon-scale-1"></i>
                                                       </small> 
-                                                      <p class="lead">50 kg/yr</p> 
+                                                      <p class="lead">{{eachfood.how_much}}</p> 
                                                   </li>
                                               </div>
                                           </div>
+                                          {% endif %}
                                           <div class="col-xs-6 ">
                                             <div class="text-center"> 
                                              {% ifequal is_unknown_profile 'false' %}
@@ -845,18 +850,18 @@
                                         <div class="widget border-top-none margin-none">
                                           <table class="availability"> 
                                           <tbody><tr>
-                                          <td class="winter">J</td>
-                                          <td class="winter">F</td>
-                                          <td class="spring">M</td>
-                                          <td class="spring">A</td>
-                                          <td class="spring yes">M</td>
-                                          <td class="summer yes">J</td>
-                                          <td class="summer yes">J</td>
-                                          <td class="summer">A</td>  
-                                          <td class="autumn">S</td>
-                                          <td class="autumn">O</td>
-                                          <td class="autumn">N</td>
-                                          <td class="winter">D</td>
+                                          <td class="winter {% if eachfood.month_list.0 == 1 %} yes {% endif %}">J</td>
+                                          <td class="winter {% if eachfood.month_list.1 == 1 %} yes {% endif %}">F</td>
+                                          <td class="spring {% if eachfood.month_list.2 == 1 %} yes {% endif %}">M</td>
+                                          <td class="spring {% if eachfood.month_list.3 == 1 %} yes {% endif %}">A</td>
+                                          <td class="spring {% if eachfood.month_list.4 == 1 %} yes {% endif %}">M</td>
+                                          <td class="summer {% if eachfood.month_list.5 == 1 %} yes {% endif %}">J</td>
+                                          <td class="summer {% if eachfood.month_list.6 == 1 %} yes {% endif %}">J</td>
+                                          <td class="summer {% if eachfood.month_list.7 == 1 %} yes {% endif %}">A</td>  
+                                          <td class="autumn {% if eachfood.month_list.8 == 1 %} yes {% endif %}">S</td>
+                                          <td class="autumn {% if eachfood.month_list.9 == 1 %} yes {% endif %}">O</td>
+                                          <td class="autumn {% if eachfood.month_list.10 == 1 %} yes {% endif %}">N</td>
+                                          <td class="winter {% if eachfood.month_list.11 == 1 %} yes {% endif %}">D</td>
                                           </tr></tbody></table>  
                                         </div> 
                                       </div> <!-- face back -->
@@ -868,12 +873,10 @@
                                       <div class="pull-left">
 
                    {% ifequal profile_id user_id %}
-                      {% if not prof_subscribed %}
+                      
 
                      <a href="" data-toggle="modal" data-target="#modal_food_detail" class="btn btn-sm btn-default" data-container="body" onClick="get_food_detail('{{profile_id}}', '{{eachfood.food_name}}', '{{eachfood.description}}', '{{eachfood.food_tags}}', '{{eachfood.photo_url}}', '{{eachfood.recomm_tags|safe}}')"><i class="fa fa-edit" title="Edit" ></i> edit details</a>
-                     {% else %}
-                     <a class="btn btn-sm btn-default" data-container="body" rel="tooltip" title="Upgrade your account to add details"><i class="fa fa-edit" title="Edit" > edit details</i></a>
-                     {% endif %}
+                     
                      <a class="btn btn-danger btn-sm"><i class="fa fa-trash-o" title="Delete" onClick="delete_food({{profile_id}}, '{{eachfood.food_name}}', this)"></i></a>
 
                    {% endifequal %}
@@ -1282,8 +1285,13 @@
                 </a></li> 
                 <script type="text/javascript" src="http://platform.tumblr.com/v1/share.js"></script>
               </ul>
+            <div class="btn-group" data-toggle="buttons" width="100%">
+              <label class="btn btn-default fa fa-star-o {% if fav_profile %} active {% endif %}">
+              <input type="checkbox" id="favourite_btn" {% if fav_profile %} checked="checked" {% endif %} onchange="save_favourites('{{profile_id}}', '{{user_id}}'); return null;">Favourite
+            </label>
+          </div>
 
-              <button class="btn btn-default btn-sm" style="width:50%;"><i class="fa fa-star-o"></i> Favourite</button>
+              
           </div>
 
 

@@ -142,6 +142,7 @@ def display_profile(request, username):
     parameters['type_user'] = userprof['type_user']
 
     video_url = userprof.get('video_url') if userprof.get('video_url')!=None else ''
+
     if video_url != '':
         parameters['intro_video'] = get_video_html(video_url)
     else:
@@ -224,6 +225,9 @@ def display_profile(request, username):
         user_id = request.user.id
         usr_profile_obj = UserProfile()
         usr_profile = usr_profile_obj.get_profile_by_id(str(user_id))
+        fav_profiles = usr_profile.get('favourites') if usr_profile.get('favourites')!=None else None
+        parameters['fav_profile'] = True if int(userprof['useruid']) in fav_profiles else False
+
         parameters['loggedin_signupas'] = usr_profile['sign_up_as']
         parameters['loggedin_coord'] = {'lat':usr_profile['latlng']['coordinates'][1], 'lon':usr_profile['latlng']['coordinates'][0]}
         user_info = UserInfo(user_id)
