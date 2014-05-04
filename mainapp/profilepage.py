@@ -130,14 +130,16 @@ def display_profile(request, username):
             except:
                 parameters['banner_url'] = 'none'           
         except:                    
-            sa = SocialAccount.objects.get(user__id=userprof['useruid'])            
-            parameters['followers_count'] = sa.extra_data['followers_count']
-            parameters['friends_count'] = sa.extra_data['friends_count']
             try:
-                parameters['banner_url'] = sa.extra_data['banner_url']            
+                sa = SocialAccount.objects.get(user__id=userprof['useruid'])            
+                parameters['followers_count'] = sa.extra_data['followers_count']
+                parameters['friends_count'] = sa.extra_data['friends_count']
+                try:
+                    parameters['banner_url'] = sa.extra_data['banner_url']            
+                except:
+                    parameters['banner_url'] = 'none'
             except:
-                parameters['banner_url'] = 'none'
-
+                pass
     '''Code to get the banner_url, followers_count, friends_count ends'''
 
     uinfo = UserInfo(userprof['useruid'])
@@ -1102,7 +1104,6 @@ def distance(lon1, lat1, lon2, lat2):
 
 
 def get_views_parameters(request, find_username):
-    from mainapp.classes.Search import Search
     parameters={}
     user_profile_obj = UserProfile()
     parameters.update(csrf(request))
@@ -1138,6 +1139,8 @@ def get_views_parameters(request, find_username):
         else:
             data['username'] = 'Unknown visitor'
 
+        if eachVisit['visitor_name'] == '':
+            continue
         chk_usr = user_profile_obj.get_profile_by_username(eachVisit['visitor_name'])
         data['profile_img'] = chk_usr['profile_img']
         data['address'] = chk_usr['address']
