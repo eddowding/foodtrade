@@ -130,8 +130,9 @@ class Search():
         
 
         con_ids = []
-        for con in conns:
-            con_ids.append(con[dict_name])
+        if request_type == "suppliers" or request_type == "stockists":
+            for con in conns:
+                con_ids.append(con[dict_name])
 
 
         if request_type == "favourites":
