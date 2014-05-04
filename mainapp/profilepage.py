@@ -1104,7 +1104,6 @@ def distance(lon1, lat1, lon2, lat2):
 
 
 def get_views_parameters(request, find_username):
-    from mainapp.classes.Search import Search
     parameters={}
     user_profile_obj = UserProfile()
     parameters.update(csrf(request))
