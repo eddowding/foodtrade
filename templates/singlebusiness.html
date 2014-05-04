@@ -1733,6 +1733,7 @@ $('#myselect').chosen({create_option: true, skip_no_results: true, create_option
 $('#webuy_select').chosen({create_option: true, skip_no_results: true, create_option_text: 'Add'});
 // chosen on change event
     $('#myselect').chosen().change(function(){
+      
     add_food({{profile_id}});
     });
     $('#webuy_select').chosen().change(function(){
