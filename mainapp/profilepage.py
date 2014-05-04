@@ -140,7 +140,6 @@ def display_profile(request, username):
                     parameters['banner_url'] = 'none'
             except:
                 pass
-
     '''Code to get the banner_url, followers_count, friends_count ends'''
 
     uinfo = UserInfo(userprof['useruid'])
