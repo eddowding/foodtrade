@@ -294,7 +294,164 @@ def get_search_parameters(request):
     parameters['organisation_count'] = int(organisation_filters_count)
     return parameters
 
+
+
+
+    
+
 @csrf_exempt
 def home(request): 
     # print request['subscribed']
     return render_to_response('activity.html',get_search_parameters(request) ,context_instance=RequestContext(request))
+
+
+@csrf_exempt
+def activity_suppliers(request): 
+    parameters = {}
+
+    if request.user.is_authenticated():
+        user_id = request.user.id
+        user_profile_obj = UserProfile()
+        user_profile = user_profile_obj.get_profile_by_id(str(user_id))
+
+        default_lon = float(user_profile['latlng']['coordinates'][0])
+        default_lat = float(user_profile['latlng']['coordinates'][1])
+        user_info = UserInfo(user_id)
+        parameters['userinfo'] = user_info
+        default_location = user_profile['zip_code']
+
+
+
+        no_of_results = 10
+        subscribed = True
+
+        customer, created = Customer.get_or_create(request.user)
+        if created:
+            subscribed = False
+
+        if not customer.has_active_subscription():
+            subscribed = False
+
+        if subscribed:
+            no_of_results = 30
+
+
+    else:
+        return HttpResponseRedirect("/activity")
+
+
+
+
+    my_lon = default_lon
+    my_lat = default_lat
+
+
+
+    search_global = subscribed
+
+    keyword = ""
+
+    if request.user.is_superuser:
+        search_global = True
+    search_handle = Search(lon = my_lon, lat =my_lat)
+    search_results = search_handle.supplier_updates(user_id)
+    results =search_results['results'][:no_of_results-1]
+    results =search_results['results']
+    if request.user.is_superuser:
+        results =search_results['results']
+
+    for i in range(len(results)):
+        results[i] = set_time_date(results[i],"")
+        results[i]['mentions'] = "@" + results[i]['user']['username'] 
+        user_loc = results[i]['location']
+
+
+        if results[i]["result_type"] == results[i]["user"]["username"]:
+            tweet_id = results[i]["tweetuid"]
+            replies = search_handle.get_all_children(tweet_id)
+            if replies == None:
+                continue
+            replies = sorted(replies, key=lambda k: k['time_stamp']) 
+            for j in range(len(replies)):
+                replies[j] = set_time_date(replies[j],keyword)
+                replies[j]['mentions'] = "@" + results[i]['user']['username'] + " " + replies[j]['mentions']
+        
+            results[i]['replies'] = replies
+
+    for i in range(len(results)):
+        from mainapp.profilepage import get_banner_url
+        from mainapp.profilepage import get_video_html
+        banner_url = get_banner_url(username=results[i]['user']['username'],logged_useruid=request.user.id)
+        results[i]['user']['banner_url'] = banner_url
+        user_prof = UserProfile()
+        try:
+            video_url = user_prof.get_profile_by_username(results[i]['user']['username'])['video_url']
+            video_html = get_video_html(video_url)
+        except:
+            video_url = ''
+            video_html = ''
+        results[i]['user']['intro_video'] =  video_html
+    
+            
+    parameters['results'] = results
+
+    # print len(results)
+    parameters['json_data'] = json.dumps(results)
+    parameters['results_business_count'] = search_results["business_counter"]
+    parameters['results_individual_count'] = search_results["individual_counter"]
+    parameters['results_organisation_count'] = search_results["organisation_counter"]
+    parameters['results_updates_count'] = search_results["update_counter"]
+
+
+    parameters['search'] = {'query':"", 'place':"", 'lon':my_lon, 'lat':my_lat}
+
+    # For food Filters
+    food_filters = search_results["foods"]
+    food_filters_count = 0
+    for f in food_filters:
+      
+        if f["uid"]=="":
+            food_filters.remove(f)
+        else:
+            food_filters_count = food_filters_count + f['value']
+    parameters['foods_filter'] = json.dumps(food_filters)
+    parameters['food_count'] = int(food_filters_count)
+
+
+    # For business Filter
+    business_filters = search_results["businesses"]
+    business_filters_count = 0
+
+    business_filters_temp = []
+    for f in business_filters:        
+
+        if f["uid"]=="":
+            continue
+        else:
+            business_filters_count = business_filters_count + f['value']
+        
+
+
+        business_filters_temp.append(f)
+    business_filters = business_filters_temp
+
+
+
+
+    parameters['business_filter'] = json.dumps(business_filters)
+    parameters['business_count'] = int(business_filters_count)
+
+
+    # For organisation Filter
+    organisation_filters = search_results["organisations"]
+    organisation_filters_count = 0
+    for f in organisation_filters:
+      
+        if f["uid"]=="":
+            organisation_filters.remove(f)
+        else:
+            organisation_filters_count = organisation_filters_count + f['value']
+    parameters['organisation_filter'] = json.dumps(organisation_filters)
+    parameters['organisation_count'] = int(organisation_filters_count)
+
+    return render_to_response('supplier_updates.html',parameters ,context_instance=RequestContext(request))
