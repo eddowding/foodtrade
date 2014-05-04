@@ -79,7 +79,13 @@
         {% endif %}
         {% if 'kpi' in request.path %}      
           KPI
-        {% endif %}                 
+        {% endif %}  
+        {% if 'terms' in request.path %}      
+          Terms of service
+        {% endif %}
+        {% if 'privacy' in request.path %}      
+          Privacy policies
+        {% endif %}
       {% endblock %}{% if request.path != '/' %} - FoodTrade{% endif %}
       
 

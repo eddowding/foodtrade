@@ -281,7 +281,7 @@
 
                             {% for eachfood in all_foods %}
  
-                                <div class="food col-md-3 {{eachfood.parent_food|slugify}}" style="margin-bottom: 15px;">
+                                <div class="food col-md-3 {{eachfood.parent_food|slugify}}" style="margin-bottom: 15px;" id="flip_food_{{forloop.counter}}">
                                   
                                     <div class="media-body"> 
                                     <div class="flip">
@@ -371,7 +371,7 @@
 
                      <a href="" data-toggle="modal" data-target="#modal_food_detail" class="btn btn-sm btn-default" data-container="body" onClick="get_food_detail('{{profile_id}}', '{{eachfood.food_name|safe}}', '{{eachfood.description}}', '{{eachfood.food_tags}}', '{{eachfood.photo_url}}', '{{eachfood.recomm_tags|safe}}')"><i class="fa fa-edit" title="Edit" ></i> edit details</a>
                      
-                     <a class="btn btn-danger btn-sm"><i class="fa fa-trash-o" title="Delete" onClick="delete_food({{profile_id}}, '{{eachfood.food_name|safe}}', this)"></i></a>
+                     <a class="btn btn-danger btn-sm"><i class="fa fa-trash-o" title="Delete" onClick="delete_food({{profile_id}}, '{{eachfood.food_name}}', this)"></i></a>
 
                    {% endifequal %}
                                       </div>

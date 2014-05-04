@@ -200,10 +200,11 @@ function empty(){}
 
 function delete_food(prof_id, food_name, my_this){
 	var data = {useruid: prof_id, food_name: food_name};
-	ajax_request("deletefood", 'food_ajax', {data: JSON.stringify(data)});
+	ajax_request("deletefood", 'empty', {data: JSON.stringify(data)});
 	global_this = my_this;
 	console.log(global_this)
-	var del_id = global_this.parentElement.parentElement.parentElement.parentElement.getAttribute('id');
+	// var del_id = global_this.parentElement.parentElement.parentElement.parentElement.getAttribute('id');
+	var del_id = global_this.parentElement.parentElement.parentElement.parentElement.parentElement.getAttribute('id');
 	$('#'+del_id).remove();
 }
 
