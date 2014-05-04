@@ -907,7 +907,7 @@ function show_small_structure()
   <div class="input-group pull-left">
     <form action="/activity" onsubmit="return formSubmit(this);">
       <span class="input-group-addon"><i class="icon-search"></i></span> 
-      <input type="text" name="q" id="keyword" class="form-control" value="{{ search.query }}" placeholder="eg 'apples', 'surplus'...">
+      <input type="text" name="q" id="keyword" class="form-control" value="{{ search.query }}" placeholder="eg 'apples', 'fish'...">
       <input type="hidden" name="location" id="new_search" value="{% if search %} {{ search.place }} {% endif %} {% if not search %} {{userinfo.zip_code}}{% endif %} ">
     </form>
   </div>
@@ -929,9 +929,9 @@ function show_small_structure()
   </div>
     {% endif %}  
 
-  <div class="user-action hidden-xs  pull-right menu-right-hidden-xs menu-left-hidden-xs border-left">
+  <div class="user-action hidden-xs hidden-sm pull-right menu-right-hidden-xs menu-left-hidden-xs border-left">
       <div class="dropdown">
-          <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+          <a class="dropdown-toggle " data-toggle="dropdown" href="#">
           Browse
           <span class="caret"></span>
           </a>

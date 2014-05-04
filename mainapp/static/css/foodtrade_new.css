@@ -619,6 +619,11 @@ input[type="text"]:focus, input[type="text"]:active, input[type="text"]:hover {
   .dropdown-menu-large .dropdown-header {
     padding: 3px 15px !important;
   }
+
+  .navbar-fixed-top, .navbar-fixed-bottom {
+    position: relative; 
+    margin-bottom: 10px !important;
+  }
 }
 
 .navbar.main .dropdown.username .dropdown-menu {

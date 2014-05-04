@@ -246,23 +246,23 @@ if (window.location != window.parent.location)
 	});
 
 	$(window).bind('exitBreakpoint767',function() {		
+	});
+
+	$(window).bind('enterBreakpoint767',function() {
+	});
+
+	$(window).bind('exitBreakpoint992',function() {		
+		disableContentNiceScroll();
 		$('.container-fluid').addClass('menu-hidden'); 
 		disableNavbarMenusHover();
 		enableResponsiveNavbarSubmenus();
 	});
 
-	$(window).bind('enterBreakpoint767',function() {
+	$(window).bind('enterBreakpoint992',function() {
+		enableContentNiceScroll(false);
 		$('.container-fluid').removeClass('menu-hidden'); 
 		enableNavbarMenusHover();
 		disableResponsiveNavbarSubmenus();
-	});
-
-	$(window).bind('exitBreakpoint992',function() {		
-		disableContentNiceScroll();
-	});
-
-	$(window).bind('enterBreakpoint992',function() {
-		enableContentNiceScroll(false);
 	});
 
 	window.coreInit = true;
