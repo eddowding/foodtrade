@@ -38,7 +38,8 @@ class TwitterCounts():
             user_twitter = get_twitter_obj(ACCESS_TOKEN, ACCESS_TOKEN_SECRET)
 
         except:
-            pass
+            return_values = {'followers_count':0, 'friends_count':0, 'banner_url':'none'}
+            return return_values
 
         from mainapp.classes.TweetFeed import Friends 
         friend_obj = Friends()
@@ -57,8 +58,3 @@ class TwitterCounts():
             except:
                 return_values = {'followers_count':result['data']['followers_count'], 'friends_count':result['data']['friends_count'], 'banner_url':'none'}
             return return_values
-
-
-
-
-       
