@@ -1107,17 +1107,17 @@ def distance(lon1, lat1, lon2, lat2):
     return km
 
 
-def get_views_parameters(request, find_username):
+def get_views_parameters(request):
     parameters={}
     user_profile_obj = UserProfile()
     parameters.update(csrf(request))
 
     if request.user.is_authenticated():
         user_id = request.user.id
-        user_profile = user_profile_obj.get_profile_by_id(str(user_id))
+        user_profile = user_profile_obj.get_profile_by_id(str(request.user.id))
         default_lon = float(user_profile['latlng']['coordinates'][0])
         default_lat = float(user_profile['latlng']['coordinates'][1])
-        user_info = UserInfo(user_id)
+        user_info = UserInfo(request.user.id)
         parameters['userinfo'] = user_info
     else:
         x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
@@ -1132,8 +1132,8 @@ def get_views_parameters(request, find_username):
     from mainapp.classes.profilevisits import ProfileVisits    
     profile_visits_obj = ProfileVisits()
     visit_stats = profile_visits_obj.get_visit_stats(pagenum=1,
-        conditions={'profile_name':{ "$regex" : re.compile("^"+str(find_username)+"$", re.IGNORECASE), "$options" : "-i" }})
-    find_user = user_profile_obj.get_profile_by_username(find_username)
+        conditions={'profile_name':{ "$regex" : re.compile("^"+str(request.user.username)+"$", re.IGNORECASE), "$options" : "-i" }})
+    # find_user = user_profile_obj.get_profile_by_username(find_username)
 
     results = []
     for eachVisit in visit_stats:
@@ -1145,6 +1145,7 @@ def get_views_parameters(request, find_username):
 
         if eachVisit['visitor_name'] == '':
             continue
+
         chk_usr = user_profile_obj.get_profile_by_username(eachVisit['visitor_name'])
         data['profile_img'] = chk_usr['profile_img']
         data['address'] = chk_usr['address']
@@ -1169,22 +1170,22 @@ def get_views_parameters(request, find_username):
         else:
             data['result_class'] = 'business updates'        
         
-        data['distance_text'] = str(distance(default_lon, default_lat, chk_usr['latlng']['coordinates'][0], chk_usr['latlng']['coordinates'][1])) + ' miles away'
+        data['distance_text'] = str(round(distance(default_lon, default_lat, chk_usr['latlng']['coordinates'][0], chk_usr['latlng']['coordinates'][1]),2)) + ' miles away'
         time_elapsed = int(time.time()) -eachVisit['visit_time']
         if time_elapsed<60:
-            time_text = str(time_elapsed) + ' seconds ago'
+            time_text = str(round(time_elapsed,2)) + ' seconds ago'
         elif time_elapsed < 3600:
             minutes = time_elapsed/60
-            time_text = str(minutes) + ' minutes ago'
+            time_text = str(round(minutes,2)) + ' minutes ago'
         elif time_elapsed < 3600*24:
             hours = time_elapsed/3600
             time_text = str(hours) + ' hours ago'
         elif time_elapsed < 3600*24*365:
             days = time_elapsed/3600/24
-            time_text = str(days) + ' days ago'
+            time_text = str(round(days,2)) + ' days ago'
         else:
             years = time_elapsed/3600/24/365
-            time_text = str(years) + ' years'
+            time_text = str(round(years,2)) + ' years ago'
         data['visit_time'] = time_text
         data['visit_date_time'] = str(datetime.datetime.fromtimestamp(int(eachVisit['visit_time'])))
         results.append(data)
@@ -1192,7 +1193,7 @@ def get_views_parameters(request, find_username):
     parameters['visit_data'] = str(json.dumps(results))
     return parameters
 
-def get_views_count(request, username):
+def get_views_count(request):
     if not request.user.is_authenticated():
-        return HttpResponse(json.dumps({'message':'You are not authorised to view this profile'}))
-    return render_to_response('view_stats.html', get_views_parameters(request,username), context_instance=RequestContext(request))
+        return HttpResponseRedirect('/')
+    return render_to_response('view_stats.html', get_views_parameters(request), context_instance=RequestContext(request))

@@ -33,7 +33,7 @@
                         <span class="marker"></span>
                         <div class="caret"></div>
                         <div class="box-generic">
-                        {% if not result.subscribed %}
+                        {% if userinfo.subscribed %}
                           <div class="timeline-top-info   border-bottom" {% if result.subscribed %} rel="tooltip" title="Verified profile" {% endif %}>            
                           <div class="  pull-right" style="margin-left: 5px;">
                             <a type="button" class="dropdown-toggle" data-toggle="dropdown">
@@ -70,20 +70,20 @@
 
                           <!-- status --> 
                           <div class="media margin-none status"  /> 
-                                <div class="lead innerAll">
-                                    {% if not userinfo.subscribed %}
+                                <div {% if not result.subscribed %} rel="tooltip" title="Subscribe to get full features" {% endif %} class="lead innerAll">
+                                    {% if userinfo.subscribed %}
                                         {{result.name}} from {{result.address}} viewed your profile on {{result.visit_date_time}}
                                       {% else %}  
-                                        A {{result.sign_up_as}} viewed your profile on {{result.visit_date_time}}
+                                        <p>A {{result.sign_up_as}} viewed your profile on {{result.visit_date_time}}</p>
                                     {% endif %}
                                     
                                 </div>
                           </div>
                           <div class="timeline-bottom innerAll border-top clearfix">
-                                     <a href="http://maps.google.com/maps?saddr={{userinfo.lat}},{{userinfo.lon}}&daddr={{result.latitude}},{{result.longitude}}" target="_blank" data-placement="top" data-toggle="tooltip" class="pull-right" rel="tooltip" title="Get directions"> {% if not userinfo.subscribed %}<i class="fa fa-location-arrow fa-fw"></i> {{result.distance_text}}  {% endif %}</a>
+                                     <a href="http://maps.google.com/maps?saddr={{userinfo.lat}},{{userinfo.lon}}&daddr={{result.latitude}},{{result.longitude}}" target="_blank" data-placement="top" data-toggle="tooltip" class="pull-right" rel="tooltip" title="Get directions"> {% if userinfo.subscribed %}<i class="fa fa-location-arrow fa-fw"></i> {{result.distance_text}}  {% endif %}</a>
                                      <i class="fa fa-clock-o  fa-fw"></i> {{result.visit_time}} 
                                      <br />                        
-                                    {% if not userinfo.subscribed %}
+                                    {% if userinfo.subscribed %}
                                     <span class="hidden-sm hidden-xs truncate100 address" > <i class="fa fa-map-marker fa-fw"></i> {{result.address}}</span>
                                     {% endif %}
                                   </div> 
@@ -106,7 +106,7 @@
     </div><!-- col10 --> 
    
 <script type="text/javascript">
- {% if not userinfo.subscribed %}
+ {% if userinfo.subscribed %}
   var visit_data = jQuery.parseJSON('{{visit_data|safe}}');
  {% else %}
   var visit_data = [];
