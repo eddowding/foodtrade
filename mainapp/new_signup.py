@@ -58,3 +58,4 @@ class SignupView(RedirectAuthenticatedUserMixin, CloseableSignupMixin,
         return reverse(connections)
 
 signup = SignupView.as_view()
+

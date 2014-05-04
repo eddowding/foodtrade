@@ -5,7 +5,13 @@ from django.contrib.auth.models import User
 import re
 from mainapp.classes.Foods import AdminFoods
 from mainapp.classes.TweetFeed import UserProfile
+import json
 register = template.Library()
+
+@register.filter(name='add_html_attr')
+def add_html_attr(field, attr_dict):
+   attrs = json.loads(attr_dict)
+   return field.as_widget(attrs=attrs)
 
 @register.filter
 def recognise_name(value):

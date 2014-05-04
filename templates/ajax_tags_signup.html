@@ -1,0 +1,12 @@
+<option value=""></option>
+                          {% for each in all_tags %}
+                          <optgroup label={{each.node}}>
+                          {% if each.childrens %}
+                          {% for eachchild in each.childrens %}
+                          <option>{{eachchild.node}}</option>
+                          {% endfor %}
+                    {% else %}
+                        <option>{{each.node}}</option>
+                    {% endif %}
+                        </optgroup>
+                        {% endfor %}

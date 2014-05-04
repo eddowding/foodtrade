@@ -229,8 +229,6 @@
           </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
       </div><!-- /.modal -->
- 
-</div><!-- /.modal -->
 
 
 <!-- new post exp --> 
@@ -480,14 +478,13 @@ function show_small_structure()
         </div>
 
 {% if not user.is_authenticated %} 
-
 <ul class="menu list-unstyled" id="navigation_current_page">
 <li>
 <a type="button" href="{% provider_login_url "twitter" process="login" %}"  class="btn text-center btn-primary btn-lg btn-block hidden" style="  margin-top: 1em;"><i class="fa fa-twitter fa-fw"></i> Sign in</a>
 </a>
 </li>
-</ul>
 
+</ul>
 {% else %}
  
 
@@ -580,15 +577,14 @@ function show_small_structure()
             </li> 
  {% endif %}
 
-            
             <li class="">
-              <a href="/myprofile/favourites"><i class="fa fa-star"></i><span>Favourites</span></a> 
+              <a href="/activity/favourites"><i class="fa fa-star"></i><span>Favourites</span></a> 
             </li> 
             <li class="">
-              <a href="/myprofile/stockists"><i class="fa fa-sign-in"></i><span>My Stockists</span></a> 
+              <a href="/activity/stockists"><i class="fa fa-sign-in"></i><span>My Stockists</span></a> 
             </li> 
             <li class="">
-              <a href="/myprofile/suppliers"><i class="fa fa-sign-out"></i><span>My Suppliers</span></a> 
+              <a href="/activity/suppliers"><i class="fa fa-sign-out"></i><span>My Suppliers</span></a> 
             </li> 
 
             <li class="hasSubmenu">
@@ -826,10 +822,7 @@ function show_small_structure()
 
 
   {% if not request.user.is_authenticated %} 
-
-
   <div class="user-action pull-right menu-right-hidden-xs menu-left-hidden-xs border-left">
-    
     <div class="dropdown username pull-left">
       <a class="dropdown-toggle" data-toggle="dropdown" href="#">Login
       </a> 

@@ -22,11 +22,35 @@ function tweetlistener(input, counter, button){
     });
 }
 
+function save_favourites(profile_id, user_id){
+	if($('#favourite_btn').prop('checked')==true){
+		if(profile_id!=user_id){
+			ajax_request("save_favourites", 'empty', {data: "{'profile_id': " + parseInt(profile_id) + ",'useruid': " + parseInt(user_id) +"}"});
+		}	
+	}
+	else{
+		if(profile_id!=user_id){
+				ajax_request("save_favourites", 'empty', {data: "{'profile_id': " + parseInt(profile_id) + ",'useruid': " + parseInt(user_id) +",'delete': " + 1 +"}"});
+			}		
+	}
+	
+
+}
+
 function add_org_to_biz(member_id, orguid){
 	// var org_ids_list = $('#org_chosen').val();
 	// for(i=0;i<org_ids_list.length;i++){
 	ajax_request("third_party_add_org", 'org_ajax', {data: "{'memberuid': " + member_id + ",'orguid': " + parseInt(orguid) +"}"});
 	// }
+}
+// get business tags
+function get_business_tags(){
+ajax_request("get_business_tags", 'signup_tags_ajax', {data: "{'abc': 'abc' }"});
+}
+
+function signup_tags_ajax(data){
+$('#business_tags_id').html(data);
+$("#business_tags_id").trigger('chosen:updated');
 }
 
 function del_org_from_biz(member_id, org_id){
