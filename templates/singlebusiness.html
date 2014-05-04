@@ -1341,9 +1341,10 @@
               </div>
 
               <div class="btn-group" data-toggle="buttons" width="100%">
-              <label class="btn btn-default fa fa-star-o {% if fav_profile %} active {% endif %}">
+              <label class="btn btn-default fa fa-star-o {% if fav_profile %} active {% endif %}" style="font-size: 12px; padding: 8px 20px;">
               <input type="checkbox" id="favourite_btn" {% if fav_profile %} checked="checked" {% endif %} onchange="save_favourites('{{profile_id}}', '{{user_id}}'); return null;">Favourite
             </label>
+            </div>
 
           </div>
 
@@ -1732,6 +1733,7 @@ $('#myselect').chosen({create_option: true, skip_no_results: true, create_option
 $('#webuy_select').chosen({create_option: true, skip_no_results: true, create_option_text: 'Add'});
 // chosen on change event
     $('#myselect').chosen().change(function(){
+      
     add_food({{profile_id}});
     });
     $('#webuy_select').chosen().change(function(){
