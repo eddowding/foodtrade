@@ -50,6 +50,8 @@ class FoodForm(forms.Form):
         food_tags = self.cleaned_data['food_tags']
         profile_id = int(self.cleaned_data['profile_id'])
         food_name = self.cleaned_data['food_name']
+        food_name = food_name.replace('&', '&amp;')
+
         food_detail = Food()
         food_photo = self.cleaned_data['food_photo']
         food_duplicate = self.cleaned_data['food_duplicate']
