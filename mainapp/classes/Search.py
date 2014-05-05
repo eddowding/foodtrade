@@ -113,7 +113,87 @@ class Search():
         sorted_counter = sorted(counter.iteritems(), key=operator.itemgetter(1),reverse=True)
         return [{"uid":value,"value":label} for value, label in sorted_counter]
 
+    def get_tweets_by_user_id(self, user_id):
+        query_string = {}
+        agg_pipeline = []
+        or_conditions = []
 
+        up = UserDetails()
+        usr_pr = up.get_profile_by_id(user_id)
+        search_user = {"useruid":user_id}
+        if usr_pr['sign_up_as'] == "Organisation":
+
+            if usr_pr.get('business_org_name')!=None:
+                myname = usr_pr.get('business_org_name') if (usr_pr['sign_up_as'] == 'Business' or usr_pr['sign_up_as'] == 'Organisation') \
+                and usr_pr.get('business_org_name')!='' else usr_pr['name']
+            else:
+                myname = usr_pr['name']
+            search_org = {"organisations":{"$all":[myname]}}
+            query_string = {"$or":[search_user,search_org]}
+        else:
+            query_string = search_user
+
+
+        geo_near = {
+                        "$geoNear": {"near": [float(self.lon), float(self.lat)],
+                                    "distanceField": "distance",
+                                    # "maxDistance": 160.934,
+                                    "query": query_string,
+                                    "includeLocs": "latlng",
+                                    "uniqueDocs": True,  
+                                    "spherical":True,
+                                    "limit":50,
+                                    "distanceMultiplier":6371
+                                }
+                      }
+        agg_pipeline.append(geo_near)
+
+        # agg_pipeline.append({ '$match':query_string})
+
+        agg_pipeline.append({"$unwind": "$updates"})
+
+
+        query_string2 = {"updates.deleted":{"$ne":1},"updates.parent_tweet_id":"0"}
+        agg_pipeline.append({ '$match':query_string2})
+       
+        # agg_pipeline.append({ '$match':{"updates":{"$size":0}}})
+        sort_text = "updates.time_stamp"
+        sort_order = -1
+       
+
+        agg_pipeline.append({"$sort": SON([(sort_text, sort_order), ("time_stamp", -1)])})
+
+        group_fields = {}
+        group_fields["_id"] = "all"
+
+        group_fields["businesses"] = { "$push": "$type_user"}
+
+        group_fields["update_count"] = {"$sum": 1}
+
+        result_type = "updates.status"
+        
+        
+        group_fields["results"] = self.get_result_fields(result_type)
+        
+        agg_pipeline.append({"$group": group_fields})
+        
+
+        
+        agg_pipeline.append({ "$limit" : 10 })
+
+        
+
+        up = UserProfile()
+        statuses = up.agg(agg_pipeline)
+
+        result_profiles = []
+        if len(statuses)>0:
+            return statuses[0]
+        else:
+            return {"foods":[], "businesses":[], "organisations":[],"results":[], "update_count":0}
+
+
+   
     def supplier_updates(self, user_id,request_type):
         query_string = {}
         agg_pipeline = []

@@ -39,9 +39,12 @@
 
 
 
-<div class="innerAll">
+<div class="innerAll inner-4x">
+</div>
+
+<div class="innerAll ">
 <div class="row">
-<div class="col-md-12"  id="single">
+<div class="col-md-12 "  id="single" >
 
     <div class="container-responsive">
     <div id="header_box" class="clearfix box-generic">
@@ -58,12 +61,12 @@
  
          <hr /> 
      
-         <div class="meta text-muted">
+         <div class="meta">
             {% if loc.lat == -82.86275189999999 and loc.lon == -135.10000000000002 %}
               <i class="fa fa-map-marker"></i> <a > NA</a>
               <i class="fa fa-location-arrow" style="margin-left: 20px;"></i> NA
             {% else %}
-            <i class="fa fa-map-marker"></i> <a href="http://maps.google.com/maps?saddr={{loggedin_coord.lat}},{{loggedin_coord.lon}}&daddr={{loc.lat}},{{loc.lon}}" target="_blank" data-placement="top" data-toggle="tooltip" title="Get directions" class="text-muted">
+            <i class="fa fa-map-marker"></i> <a href="http://maps.google.com/maps?saddr={{loggedin_coord.lat}},{{loggedin_coord.lon}}&daddr={{loc.lat}},{{loc.lon}}" target="_blank" data-placement="top" data-toggle="tooltip" title="Get directions" >
               {{address}}
           </a>  
             
