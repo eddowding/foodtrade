@@ -152,33 +152,23 @@ s
 
 {% if show_foods %}
           <div class="tab-pane active fade in " id="produce">
-
-
-
-      {% if user.is_authenticated %}
+      <!-- {% if user.is_authenticated %}
       {% if deliverables %}
       <div class="small alert alert-info" id="deliveries">
         <h5 style="margin-top: 0;"><i class="fa fa-truck"></i>  Deliveries</h5>
         {{deliverables|linebreaks}}
       </div>
       {% endif %}
-      {% endif %}
+      {% endif %} -->
 
 
-
-          {% if user.is_authenticated %}
-          <div class="row">
-          <div class="col-md-12 ">
-          <div class=" well well-sm clearfix">
-          <div class="row">
+        {% if user.is_authenticated %}
+          <div class="row" style="padding: 20px 0;"> 
             <div class="col-md-8 col-sm-8 col-xs-7">
               {% if user.is_authenticated %}
-
-
                   <div class="input-group"> 
                         <div class='pull-left'>
-
-                        <select id="myselect" data-placeholder="Add foods they sell" style="height:30px; width: 192px" multiple class="chosen-select" >
+                        <select id="myselect" data-placeholder="Add produce available here" style="height:20px; width: 192px; padding: 15px 5px;" multiple class="chosen-select" >
                         <option value=""></option> 
                        {% for each in all_tags %}
                           <optgroup label={{each.node}}>
@@ -196,126 +186,41 @@ s
                           <div class="pull-left">
                         <span class="input-group-btn">
                 
-                            <button class="btn btn-success" id="adfoo_id" rel="tooltip" style="height:38px;" onClick="add_food({{profile_id}}, {{user_id}}, 'individual')" {% if not user.is_authenticated %} title="Please log in to use this feature." {% endif %} > Add</button>
+                            <button class="btn btn-success btn-sm" id="adfoo_id" rel="tooltip" style="height:34px;" onClick="add_food({{profile_id}}, {{user_id}}, 'individual')" {% if not user.is_authenticated %} title="Please log in to use this feature." {% endif %} > Add</button>
                         </span></div>
-                        
                       </div>  
-                      
               {% endif %}
             </div> 
-                      
+
             <div class="col-md-4 col-sm-4 col-xs-5">
-             <form action="#" method="get">
+             <form action="#" method="get" class="hidden">
               <div class="input-group">
-                  <input class="form-control" id="system-search" name="q" placeholder="Search foods..." required>
+                  <input class="form-control system-search" id="system-search" name="q" placeholder="Search foods..." required>
                   <span class="input-group-btn">
                       <button type="submit" class="btn btn-default"><i class="glyphicon glyphicon-search"></i></button>
                   </span>
               </div>
              </form>
             </div>
+
             </div>
-
-          </div>
-          </div>
-          </div>
-          {% endif %}
-
-
-      <table class="table table-list-search table-condensed">
-        {% if not user.is_authenticated %}
-          <thead>
-            <tr>
-              <td colspan="2">
-                <p class="alert alert-warning"><a href="{% provider_login_url "twitter" process="login" %}" class="">Login</a> or <a href="{% provider_login_url "twitter" process="login" %}" class="">sign up free</a> to see all their full profile. </p>
-              </td>
-            </tr>
-          </thead>
-          {% endif %}
-          <tbody id="food_tbody">
-            {% for eachfood in all_foods %}
-              <tr id="row{{forloop.counter}}">
-                  <td>
-
-                  <div class="clearfix">   
-          
-
-                <a href="/activity/?f={{eachfood.food_name}}" >  
-                  
-                  {{eachfood.food_name}}
-                </a>   
-        <!-- You can now access parent food with this {{eachfood.parent_food}} -->
-                  </div>
  
-                  </td>
- 
-                  <td nowrap="nowrap">  
-                   <div class="pull-right">
+          {% endif %} 
 
-                   {% ifequal profile_id user_id %}
-                      
+      <div class="innerB btn-group" id="filterFoods" data-filter-group="foodtype">
+        <button class="btn btn-primary btn-sm active" data-filter="*">All</button> 
 
-                     <a href="" data-toggle="modal" data-target="#modal_food_detail" class="btn btn-sm btn-default" data-container="body" onClick="get_food_detail('{{profile_id}}', '{{eachfood.food_name}}', '{{eachfood.description}}', '{{eachfood.food_tags}}', '{{eachfood.photo_url}}', '{{eachfood.recomm_tags|safe}}')"><i class="fa fa-edit" title="Edit" ></i> edit details</a>
-                     
-                     <a class="btn btn-danger btn-sm"><i class="fa fa-trash-o" title="Delete" onClick="delete_food({{profile_id}}, '{{eachfood.food_name}}', this)"></i></a>
+        {% for eachparent in food_parents %}
+          <button class="btn btn-default btn-sm" data-filter=".{{eachparent|slugify}}">{{eachparent}}</button> 
+        {% endfor %}
 
-                   {% endifequal %}
+      </div>
+      <div class="clearfix isotope"  id="foods"> 
+        {% include 'ajax_food.html' %}
+        </div>
 
 
-                   {% if user.is_authenticated %}
-
-                     {% ifnotequal profile_id user_id %}
-                       <div class="" data-toggle="buttons">
-                       {% if eachfood.logged_recommender %}
-                            <label class="fa fa-thumbs-o-up btn btn-default btn-sm active" rel="tooltip" title="Recommend this to others">
-                              <input type="checkbox" checked="checked" onchange="recommend_food({{user_id}}, '{{eachfood.food_name}}', {{profile_id}}, '{{screen_name}}', this); return null;">
-                            </label>
-                        {% else %}
-                            <label class="fa fa-thumbs-o-up btn btn-default btn-sm" rel="tooltip" title="Recommend this to others" data-toggle="modal" data-target="#modal_tweet_recomm">
-                              <input type="checkbox" onchange="recommend_food({{user_id}}, '{{eachfood.food_name}}', {{profile_id}}, '{{screen_name}}', this); return null;">
-                            </label>
-                        {% endif %}
-                        </div>
-
-                     {% endifnotequal %}
-                   {% endif %}
-                     
-                   
-                   </div>
-                   
-                   {% for eachdet in eachfood.recomm_details %}
-                    <div class="pull-right">
-                      <img class="pull-left" style="margin:0px 4px 0 0; width:25px" src={{eachdet.photo}} title="{{eachdet.name}}"/>
-                    </div>
-                   {% endfor %}
-                 {% ifnotequal eachfood.vouch_count 0 %}
-                   <div class="pull-right">
-                     <span class="badge badge-default" style="margin:3px 4px 0 0;" rel="tooltip" title="{{eachfood.vouch_count}} recommendations on {{eachfood.food_name}}">{{eachfood.vouch_count}}</span>
-                  </div>
-                  {% endifnotequal %}
-              
-
-                   </div>
-                  </td>  
-              </tr> 
-
-              {% if eachfood.description %}
-              <tr>
-                <td colspan="3">
-                  <div class="produce_detail">  
-                    <img src="{{eachfood.photo_url}}" alt="{{eachfood.food_name}}" class="img-rounded img-responsive produce_large img-thumbnail " /> 
-
-                    <span class="text-muted   ">{{eachfood.description}}</span>
-                  </div> 
-                </td>
-              </tr>
-              {% endif %} 
-
-              {% endfor %}
-          </tbody>
           
-      </table>    
-
 
           </div> <!-- end produce -->
           {% endif %}
@@ -458,9 +363,9 @@ s
               <form accept-charset="UTF-8" action="." role="form" method="POST" enctype="multipart/form-data">
                {% csrf_token %}
                <div class="row">
-                <div class="col-xs-12 col-md-4"> 
+                <div class="col-sm-4"> 
                   <a href="#" rel="tooltip" title="Change the photo">
-                    <img src="http://placehold.it/100x100&text=Upload an image" class="img-responsive img-thumbnail" id="food_photo" style="width:100px;height:100px;">
+                    <img src="" class="img-responsive img-thumbnail" id="food_photo" style="width:100%;height:150px; background: #ccc url('/static/images/upload.gif'); background-size: cover;"> 
                   </a>
                   <!-- show this in another modal? -->
                   <!-- can we use html5 drag and drop to upload? -->
@@ -475,10 +380,31 @@ s
                   <!-- end code -->
                 </div>
                 
-                <div class="col-xs-12 col-md-8">
+                <div class="col-sm-8">
+
                   <div class="form-group">
                     {{form.food_description}}
                   </div>
+
+
+                  <div class="form-group row">
+                    <!-- add weight input --> 
+                    <div class="col-xs-6" style="padding-right:0;">
+                      {{form.how_much}}
+                    <p class="help-block">Weight / vol / size</p>
+                    </div>
+                    <div class="col-xs-6" style="padding-right:0;"> 
+                      {{form.how_often}}
+                     <!-- <select id="qtyUnit" class="form-control btn-sm selectpicker">        
+                        <option value="">How often</option>   
+                        <option value="daily">daily</option>
+                        <option value="monthly">monthly</option>
+                        <option value="seaonsally">seaonsally</option>
+                        <option value="annualy">annualy</option>
+                      </select> -->
+                    </div>
+                  </div>
+                  
                   <div class="form-group" id="recommend_main" style="display:none;">
                     <div id="recomm_tags">
                     </div>
@@ -486,13 +412,69 @@ s
                   </div>
                   <div class="form-group">
                   <ul id="myTags">
-                  <!-- Existing list items will be pre-added to the tags -->
-                  <!-- <li>Tag1</li>
-                  <li>Tag2</li> -->
+                    <!-- Existing list items will be laoded here --> 
                   </ul>
-                  <p class="help-block small">Eg "free range, organic, bramley". Use commas to separate tags.</p>
+                  <p class="help-block small">Use commas to separate tags.</p>
                   
-                  </div>
+ 
+                  <div class="form-group"> 
+                  <label>Available in the months</label>
+                    <table class="availability"> 
+                    <tbody><tr>
+                      <div class="btn-group btn-sm" data-toggle="buttons">
+                      <label class="btn btn-sm btn-default winter">
+                        <input type="checkbox" name="option1_month" id="option1_month"> J
+                      </label> 
+                      <label class="btn  btn-sm btn-default winter">
+                        <input type="checkbox" name="option2_month" id="option2_month"> F
+                      </label> 
+                      <label class="btn  btn-sm btn-default spring">
+                        <input type="checkbox" name="option3_month" id="option3_month"> M
+                      </label> 
+                      <label class="btn  btn-sm btn-default spring">
+                        <input type="checkbox" name="option4_month" id="option4_month"> A
+                      </label> 
+                      <label class="btn btn-sm btn-default spring">
+                        <input type="checkbox" name="option5_month" id="option5_month"> M
+                      </label> 
+                      <label class="btn  btn-sm btn-default summer">
+                        <input type="checkbox" name="option6_month" id="option6_month"> J
+                      </label> 
+                      <label class="btn  btn-sm btn-default summer">
+                        <input type="checkbox" name="option7_month" id="option7_month"> J
+                      </label> 
+                      <label class="btn  btn-sm btn-default summer">
+                        <input type="checkbox" name="option8_month" id="option8_month"> A
+                      </label> 
+                      <label class="btn btn-sm btn-default autumn">
+                        <input type="checkbox" name="option9_month" id="option9_month"> S
+                      </label> 
+                      <label class="btn  btn-sm btn-default autumn">
+                        <input type="checkbox" name="option10_month" id="option10_month"> O
+                      </label> 
+                      <label class="btn  btn-sm btn-default autumn">
+                        <input type="checkbox" name="option11_month" id="option11_month"> N
+                      </label> 
+                      <label class="btn  btn-sm btn-default winter">
+                        <input type="checkbox" name="option12_month" id="option12_month"> D
+                      </label> 
+                </div> 
+                     <!-- <td class="winter" rel="tooltip" title="January">
+                          <button class="btn btn-default" value="Jan">J</td>
+                    <td class="winter">F</td>
+                    <td class="spring">M</td>
+                    <td class="spring">A</td>
+                    <td class="spring yes">M</td>
+                    <td class="summer yes">J</td>
+                    <td class="summer yes">J</td>
+                    <td class="summer">A</td>  
+                    <td class="autumn">S</td>
+                    <td class="autumn">O</td>
+                    <td class="autumn">N</td>
+                    <td class="winter">D</td>  -->
+                    </tr></tbody></table>  
+                  </div> 
+
                 </div>
                </div><!-- row -->
 
@@ -601,7 +583,7 @@ s
     // chosen on change event
         $('#myselect').chosen().change(function(){
             {% if request.user.is_authenticated %}
-        add_food({{profile_id}}, {{user_id}});
+        add_food({{profile_id}});
         {% endif %}
         });
         
@@ -625,7 +607,9 @@ s
 {% endif %}   
 
 
-function get_food_detail(profile_id, food_name, description, food_tags, photo_url, recomm_tags){
+function get_food_detail(profile_id, food_name, description, food_tags, photo_url, recomm_tags, how_much,
+  how_often, month_list){
+    var month_list = jQuery.parseJSON(month_list);
     $("#myTags").tagit("removeAll");
     $('#food_detail_title').text('Add details to '+ food_name);
     var placeholder = "What makes your " + food_name + " special? This is where it's completely fine to show-off! Remember to name any variety names, special techniques, or unique properties - and how it tastes is the most important thing."
@@ -637,6 +621,26 @@ function get_food_detail(profile_id, food_name, description, food_tags, photo_ur
     $('#id_food_name').val(food_name);
     $('#id_profile_id').val(profile_id);
     $('#id_food_description').val(description);
+    $('#id_how_much').val(how_much);
+    $('.filter-option').text(how_often);
+    
+    
+    for(i=1;i<=12;i++){
+      if(parseInt(month_list[i-1])==1){
+        if(!($('#option'+ String(i) +'_month').parent().hasClass('active'))){
+          $('#option'+ String(i) +'_month').parent().addClass('active');
+        }
+        $('#option'+ String(i) +'_month').prop('checked', true);
+      }
+      else{
+        $('#option'+ String(i) +'_month').prop('checked', false);  
+        if($('#option'+ String(i) +'_month').parent().hasClass('active')){
+          $('#option'+ String(i) +'_month').parent().removeClass('active');
+        }
+      }
+    }
+
+
     var tags_list = food_tags.split(',');
     for(i=0;i<tags_list.length;i++){
       $("#myTags").tagit('createTag', tags_list[i]);
@@ -647,8 +651,6 @@ function get_food_detail(profile_id, food_name, description, food_tags, photo_ur
     $('#recommend_main').show();
     var recomm_tags_list = recomm_tags.split(',');
     $('#recomm_tags').html('');
-    console.log('recomm_tags_list', recomm_tags_list);
-    console.log('tags_list', tags_list);
     var count = 0;
     for(i=0;i<recomm_tags_list.length;i++){
       
@@ -664,8 +666,6 @@ function get_food_detail(profile_id, food_name, description, food_tags, photo_ur
         $(this).remove();
         $("#myTags").tagit('createTag', tag_text);
     });
-    // $('#recomm_tags').append(appendtext);
-
 }
 
  tweetlistener('email_message', 'contact_counter', 'contact_tweet');
