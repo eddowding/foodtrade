@@ -608,6 +608,7 @@ class Food():
 
     def delete_food(self, useruid, food_name):
         self.db_object.update(self.table_name,{'useruid': useruid, 'food_name': food_name}, {'deleted':1})
+        print food_name, ' deleted'
         # also delete recommendations of the food
         table_name = 'recommendfood'
         self.db_object.create_table(table_name,'food_name')
