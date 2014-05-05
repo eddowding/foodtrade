@@ -193,30 +193,7 @@
     <div class="widget-body">
 
         <!-- WIKI ADD CONNECTIONS --> 
-          {% if user.is_authenticated %}
-          <div class="tab-pane fade in hidden" id="connections" style="margin-top: 1%;">
-            <div class="alert  " style="padding: 0 10px;">  
-            <div class="form-inline"  role="form">
-              <div class="form-group">
-                <img style="width: 25px; margin-right: 2px;" class="" src="{{pic_url}}"  />
-                <div class="btn-group btn-sm" data-toggle="buttons">
-                  <label class="btn  btn-sm active btn-default" id="li1_conn">
-                    <input type="checkbox" name="options" id="option1_conn"> buys from 
-                  </label> 
-                  <label class="btn  btn-sm btn-default" id="li2_conn">
-                    <input type="checkbox" name="options" id="option2_conn"> sells to
-                  </label> 
-                </div> 
-              </div> 
-              <div class="form-group"> 
-                <div id="buss_remote" >
-                  <input class="typeahead  input-sm form-control  " id="new_buss_typeahead" {% if not user.is_authenticated %} rel="tooltip" title="Please login to use this feature" {% endif %} style="width:310px;" type="text" placeholder="Type business..."> 
-                </div>      
-              </div>   
-            </div>
-          </div>
-          </div>
-          {% endif %}
+          
 
       <div class="tab-content">
        
@@ -538,8 +515,8 @@
                 </div>  
               </div> 
               <div class="form-group"> 
-                <div id="buss_remote" class="form-group  has-feedback">
-                  <input class="typeahead  input-sm form-control  " id="new_buss_typeahead" {% if not user.is_authenticated %} rel="tooltip" title="Please login to use this feature" {% endif %} style="width:310px;" type="text" placeholder="Start typing a supplier..."> 
+                <div id="stockists_remote" class="form-group  has-feedback">
+                  <input class="typeahead  input-sm form-control  " id="new_stockists_typeahead" {% if not user.is_authenticated %} rel="tooltip" title="Please login to use this feature" {% endif %} style="width:310px;" type="text" placeholder="Start typing a supplier..."> 
                   <span class="fa fa-search form-control-feedback"></span> 
                 </div>      
               </div>   
@@ -548,7 +525,7 @@
           {% endif %}
         
                       
-<div id="all-connections">
+<div id="all-stockists">
 
 <div class="clearfix">
 {% if userprof.b_conn_no != 0 %} 
@@ -642,8 +619,8 @@
                 </div> 
               </div> 
               <div class="form-group">   
-                <div id="buss_remote" class="form-group  has-feedback">
-                  <input class="typeahead  input-sm form-control  " id="new_buss_typeahead" {% if not user.is_authenticated %} rel="tooltip" title="Please login to use this feature" {% endif %} style="width:310px;" type="text" placeholder="Start typing a stockist..."> 
+                <div id="suppliers_remote" class="form-group  has-feedback">
+                  <input class="typeahead  input-sm form-control  " id="new_suppliers_typeahead" {% if not user.is_authenticated %} rel="tooltip" title="Please login to use this feature" {% endif %} style="width:310px;" type="text" placeholder="Start typing a stockist..."> 
                   <span class="fa fa-search form-control-feedback"></span> 
                 </div>      
               </div>   
@@ -652,7 +629,7 @@
           {% endif %}
         
 
-        <div id="all-connections" class="clearfix">
+        <div id="all-suppliers" class="clearfix">
           {% if userprof.c_conn_no != 0 %}  
            <div class="clearfix isotope js-isotope" data-isotope-options='{ "itemSelector": ".card" }' id="seller-cards">
           {% for each in connections %}
@@ -1760,7 +1737,7 @@ var remove_from_input = false;
 
 });
 // adding organisations to business
-$('#organisations').on('click', '.tt-suggestion', function(){
+$('#tabMemberships').on('click', '.tt-suggestion', function(){
   var organisation_id = this.getElementsByClassName('result-name')[0];
   var org_var = $(organisation_id).attr('data-id');
   if(org_var == 'search'){
@@ -1776,22 +1753,39 @@ $('#new_orgs_typeahead').on('blur', function(){
   $('#new_orgs_typeahead').val('');
 });
 
-// adding links to business
-$('#connections').on('click', '.tt-suggestion', function(){
+// adding stockists to business
+$('#tabStockists').on('click', '.tt-suggestion', function(){
   var business_id = this.getElementsByClassName('result-name')[0];
   var buss_var = $(business_id).attr('data-id');
   if(buss_var == 'search'){
     $('#my_invite_twitter').click();
   }
   else{
-    third_party_connection('{{profile_id}}', buss_var);
-    $('#new_buss_typeahead').val('');
+    third_party_connection('{{profile_id}}', buss_var, 'stockists');
+    $('#new_stockists_typeahead').val('');
     $('.tt-hint').val('');
   }
 });
-$('#new_buss_typeahead').on('blur', function(){
-  $('#new_buss_typeahead').val('');
+$('#new_stockists_typeahead').on('blur', function(){
+  $('#new_stockists_typeahead').val('');
 });
+
+$('#tabSuppliers').on('click', '.tt-suggestion', function(){
+  var business_id = this.getElementsByClassName('result-name')[0];
+  var buss_var = $(business_id).attr('data-id');
+  if(buss_var == 'search'){
+    $('#my_invite_twitter').click();
+  }
+  else{
+    third_party_connection('{{profile_id}}', buss_var, 'suppliers');
+    $('#new_suppliers_typeahead').val('');
+    $('.tt-hint').val('');
+  }
+});
+$('#new_suppliers_typeahead').on('blur', function(){
+  $('#new_suppliers_typeahead').val('');
+});
+
 
 function set_width(){
   $('#buss_chosen_chosen').attr("style", "width:350px;");

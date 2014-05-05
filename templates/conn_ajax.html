@@ -1,8 +1,6 @@
+{% if buy_from_flag %}
 <div class="clearfix">
 {% if userprof.b_conn_no != 0 %}
-          <h4><a name="buyfrom"></a>We buy from <small>these suppliers</small></h4>
-          <div class="ftstrip ftstrip-mini"></div> <br />
-
             <div class="clearfix isotope js-isotope" data-isotope-options='{ "itemSelector": ".card" }' id="buyers-cards">
           {% for each in connections %}
               {% if each.relation == "buyer" or each.relation == "both" %}
@@ -58,12 +56,10 @@
                 </div>
                 {% endif %}
           </div>
-
+        
+        {% else %}
           <div class="clearfix">
           {% if userprof.c_conn_no != 0 %}
-          <h4 style="margin-top: 50px;">We sell to <small>these stockists</small></h4>  
-
-          <div class="ftstrip ftstrip-mini"></div><br />
            <div class="clearfix isotope js-isotope" data-isotope-options='{ "itemSelector": ".card" }' id="seller-cards">
           {% for each in connections %}
               {% if each.relation == "seller" or each.relation == "both" %}
@@ -111,6 +107,7 @@
                 </div>
  {% endif %}
                 </div>
+{% endif %}
 <script type="text/javascript">
 var new_connections = {{connections_str|safe}};
 </script>

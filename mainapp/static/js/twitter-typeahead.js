@@ -1718,7 +1718,20 @@ var buss = new Bloodhound({
 buss.initialize();
  
  
-$('#buss_remote .typeahead').typeahead(null, {
+$('#stockists_remote .typeahead').typeahead(null, {
+  name: 'twitter-oss',
+  displayKey: 'name',
+  source: buss.ttAdapter(),
+  templates: {
+    suggestion: Handlebars.compile([
+      '<span class="result-container"><span class="result-img"><img height="32px" width="32px" src="{{profile_image_url_https}}"></span>',
+      '<span data-id="{{id}}" class="result-name">{{name}}</span> ',
+      '<span class="result-screen-name"> @{{screen_name}}</span></span>'     
+    ].join(''))
+  }
+});
+
+$('#suppliers_remote .typeahead').typeahead(null, {
   name: 'twitter-oss',
   displayKey: 'name',
   source: buss.ttAdapter(),
