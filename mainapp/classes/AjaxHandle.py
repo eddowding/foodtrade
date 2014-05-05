@@ -454,8 +454,8 @@ class AjaxHandle(AjaxSearch):
             parameters = {}
             parameters['all_foods'] = get_all_foods(int(data['useruid']), request.user.id)
             parameters['profile_id'], parameters['user_id'] = int(data['useruid']), request.user.id
-            return render_to_response('ajax_food.html', parameters, context_instance=RequestContext(request))
-            # return HttpResponse("{'status':1}")
+            # return render_to_response('ajax_food.html', parameters, context_instance=RequestContext(request))
+            return HttpResponse("{'status':1}")
         else:
             return HttpResponse("{'status':0}")    
 
