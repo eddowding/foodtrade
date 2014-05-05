@@ -41,7 +41,11 @@ var card_str = '<div class="card-box"><div class="content text-center"><div clas
     card_str += '<p>'+description+'</p></div>';
     card_str += '<a href="/profile/'+username+'" class="btn btn-primary btn-sm">View profile &raquo;</a></div> </div>';    
 
-L.marker([parseFloat(map_lat), parseFloat(map_lon)], {icon: redIcon}).addTo(map).bindPopup(card_str);
+if(map_lon != def_lon && current_lat != map_lat)
+         	{
+         		L.marker([parseFloat(map_lat), parseFloat(map_lon)], {icon: redIcon}).addTo(map).bindPopup(card_str);
+         	}
+
 			
 
 
@@ -112,6 +116,10 @@ function reload_connections()
 			{
 				color = "#FC8628";
 			}
+
+
+if(map_lon != def_lon && current_lat != map_lat)
+         	{
 			var polyline = L.polyline([
 			[parseFloat(map_lat), parseFloat(map_lon)],
 			[parseFloat(latitude), parseFloat(longitude)]
@@ -120,6 +128,8 @@ function reload_connections()
 				weight: 2,
 				opacity: 0.8
 			}).addTo(map);
+}
+
 			map_controls.push(polyline);
 
  

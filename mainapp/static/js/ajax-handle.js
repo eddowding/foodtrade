@@ -96,11 +96,11 @@ function conn_handler(value, prof_id, conn_id)
 				}
 				else if(value == "close_buy_from"){
 					
-					ajax_request("profile_user_delete_conn", 'conn_ajax', {conn_data: "{'prof_id': " +prof_id +", 'status': 'buy_from'" + ", 'conn_id': " + conn_id +"}"});
+					ajax_request("profile_user_delete_conn", 'stockists_ajax', {conn_data: "{'prof_id': " +prof_id +", 'status': 'buy_from'" + ", 'conn_id': " + conn_id +"}"});
 				}
 				else if(value == "close_sell_to"){
 					
-					ajax_request("profile_user_delete_conn", 'conn_ajax', {conn_data: "{'prof_id': " +prof_id +", 'status': 'sell_to'" + ", 'conn_id': " + conn_id +"}"});
+					ajax_request("profile_user_delete_conn", 'suppliers_ajax', {conn_data: "{'prof_id': " +prof_id +", 'status': 'sell_to'" + ", 'conn_id': " + conn_id +"}"});
 				}				
 	}
 	else{
@@ -108,34 +108,44 @@ function conn_handler(value, prof_id, conn_id)
 	}
 }
 
-function third_party_connection(prof_id, buss_var){
+function third_party_connection(prof_id, buss_var, link_type){
 	// var business_id = $('#buss_chosen').val().join('');
 	// var business_ids_list = $('#buss_chosen').val();
 
 	// for(i=0;i<business_ids_list.length;i++){
 	// buyer checked
 
-	if($('#option1_conn').is(':checked') && buss_var!=""){
+	if(link_type=='stockists' && buss_var!=""){
 		// var conn_data = {prof_id: prof_id, status: 'buy_from', buss_id: businesses_id };
-		ajax_request("third_party_conn", 'conn_ajax', {conn_data: "{'prof_id': " + prof_id + ",'buss_id': " + parseInt(buss_var) + ",'status': 'buy_from'}"});
+		ajax_request("third_party_conn", 'stockists_ajax', {conn_data: "{'prof_id': " + prof_id + ",'buss_id': " + parseInt(buss_var) + ",'status': 'buy_from'}"});
 		
 	}
 	// seller checked
-	if($('#option2_conn').is(':checked') && buss_var!=""){
+	if(link_type=='suppliers' && buss_var!=""){
 		// var conn_data = {prof_id: prof_id, status: 'sell_to', buss_id: businesses_id };
-		ajax_request("third_party_conn", 'conn_ajax', {conn_data: "{'prof_id': " + prof_id + ",'buss_id': " + parseInt(buss_var) + ",'status': 'sell_to'}"});
+		ajax_request("third_party_conn", 'suppliers_ajax', {conn_data: "{'prof_id': " + prof_id + ",'buss_id': " + parseInt(buss_var) + ",'status': 'sell_to'}"});
 	}
 	// }
 	
 }
-function conn_ajax(data){
+function stockists_ajax(data){
 // clear selected choice
 $('.search-choice').remove();
-$("#buss_chosen").val('').trigger('chosen:updated');
+// $("#buss_chosen").val('').trigger('chosen:updated');
 
-$('#all-connections').html(data);
+$('#all-stockists').html(data);
 reload_connections();
 }
+
+function suppliers_ajax(data){
+// clear selected choice
+$('.search-choice').remove();
+// $("#buss_chosen").val('').trigger('chosen:updated');
+
+$('#all-suppliers').html(data);
+reload_connections();
+}
+
 function create_conn(){
 	location.reload();
 }

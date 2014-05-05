@@ -297,11 +297,15 @@ class AjaxHandle(AjaxSearch):
         trade_conn = TradeConnection()
         data = eval(request.POST.get('conn_data'))
         if data !=None and data !="":
+            parameters = {}
             if data['status'] == 'buy_from':
+                print 'stocklists ajax called'
+                parameters['buy_from_flag'] = True
                 trade_conn.delete_connection(b_useruid = int(data['prof_id']), c_useruid = int(data['conn_id']))
             else:
+                parameters['buy_from_flag'] = False
+                print 'suppliers ajax called'
                 trade_conn.delete_connection(b_useruid = int(data['conn_id']), c_useruid = int(data['prof_id']))
-            parameters = {}
             parameters['connections'], parameters['conn'] = get_connections(int(data['prof_id']), request.user.id)
             parameters['connections_str'] = json.dumps(parameters['connections'])
             parameters['profile_id'], parameters['user_id'] = int(data['prof_id']), request.user.id
@@ -314,9 +318,12 @@ class AjaxHandle(AjaxSearch):
         trade_conn = TradeConnection()
         data = eval(request.POST.get('conn_data'))
         if data !=None and data !="":
+            parameters = {}
             if data['status'] == 'buy_from':
                 trade_conn.create_connection({'b_useruid': int(data['prof_id']), 'c_useruid': int(data['buss_id'])})
+                parameters['buy_from_flag'] = True
             elif data['status'] == 'sell_to':
+                parameters['buy_from_flag'] = False
                 trade_conn.create_connection({'b_useruid': int(data['buss_id']), 'c_useruid': int(data['prof_id'])})
 
             user_pro = UserProfile()
@@ -334,7 +341,6 @@ class AjaxHandle(AjaxSearch):
             else:
                 print 'no unclaimed user in new link'
             # add parameters
-            parameters = {}
             parameters['connections'], parameters['conn'] = get_connections(int(data['prof_id']), request.user.id)
             parameters['connections_str'] = json.dumps(parameters['connections'])
             parameters['profile_id'], parameters['user_id'] = int(data['prof_id']), request.user.id
