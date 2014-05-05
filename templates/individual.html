@@ -1,6 +1,6 @@
 {% extends 'tbase.html' %}
 {% load staticfiles %}
-{% load socialaccount %}
+{% load socialaccount %} 
 {% load url from future %}
 {% load i18n %}
 {% load recognise_name %}
@@ -119,18 +119,31 @@ s
     </div>
 
 
-  
-<div class="row">
-     <div class="col-md-12">
-        <ul class="nav nav-tabs ">
+<div class="widget widget-tabs widget-tabs-double-2 widget-tabs-responsive">
+   
+    <!-- Tabs Heading -->
+    <div class="widget-head">
+
+      <ul class="clearfix">
           {% if show_foods %}
-          <li class="active"><a href="#produce" data-toggle="tab">Foods <span class="badge">{{userprof.food_no}}</span></a></li>
+          <li class="active">
+            <a href="#produce" data-toggle="tab" class="glyphicons cutlery">
+            <i></i>
+            <span>Foods</span> 
+            <span class="label label-default pull-number">{{userprof.food_no}}</span></a></li>
           {% endif %}
 
-          <li {% if not show_foods %} class="active" {% endif %}><a href="#activity" data-toggle="tab">Updates <span class="badge ">{{updates_count}}</span></a></li>
-        </ul>
-     </div>
+          <li>
+            <a href="#activity" data-toggle="tab" class="glyphicons bullhorn">
+            <i></i>
+            <span>Updates</span>
+            {% if updates_count != 0 %}<span class="label label-default pull-number">{{updates_count}}</span>{% endif %}
+            </a></li>
+
+      </ul>
     </div>
+  </div>
+   
 
     <div class="row">
       <div class="col-md-12">
@@ -163,25 +176,11 @@ s
               {% if user.is_authenticated %}
 
 
-                  <div class="input-group">
-                  <!-- link this to open food facts --> 
-                        <!-- <input class="typeahead form-control" name="addfood" data-source='' data-provide="typeahead" autocomplete="off" id = "addfood_id" style="width:400px;" placeholder="Add foods you can buy here."> -->
+                  <div class="input-group"> 
                         <div class='pull-left'>
 
                         <select id="myselect" data-placeholder="Add foods they sell" style="height:30px; width: 192px" multiple class="chosen-select" >
-                        <option value=""></option>
-<!--                             {% for each in food_list %}
-                        <optgroup label={{each.node}}>
-                        {% if each.children %}
-                        {% for eachchild in each.children %}
-                        <option>{{eachchild}}</option>
-                        {% endfor %}
-                        {% else %}
-                        <option>{{each.node}}</option>
-                        {% endif %}
-                        </optgroup>
-                        {% endfor %}
--->
+                        <option value=""></option> 
                        {% for each in all_tags %}
                           <optgroup label={{each.node}}>
                           {% if each.childrens %}
@@ -329,20 +328,17 @@ s
           <div class="row">
               <div class="col-md-12">
             {% if user.is_authenticated %}
-                  <div>
-
-                      <!-- if this is the profile of the logged in user -->
-                      <!-- <div class="well well-sm">
-                          <div class="input-group">
-                              <input id="btn-input" type="text" class="form-control input-sm" placeholder="Send an update..." />
-                              <span class="input-group-btn">
-                                  <button class="btn btn-warning btn-sm" id="btn-chat">
-                                      Send</button>
-                              </span>
-                          </div>
-                      </div> -->
-                      <!-- // if this is the profile of the logged in user -->
+                  <div> 
                       <div>
+
+
+
+<!-- replce me with timeline --> 
+
+
+
+
+                        
                           <ul class="chat">
                           
                           {% for eachUpdate in updates %}
@@ -350,7 +346,7 @@ s
                                   <img src="{{userprof.profileimg}}" />
                               </span>
                                   <div class="chat-body clearfix">
-                                      <div class="header">                                                                                                                                                                                                                                                                                                                                                        
+                                      <div class="header">                                                                                                                                  
                                           <strong class="primary-font">{{eachUpdate.user.name}}</strong> 
                                           <small class="pull-right text-muted">
                                           <a href="/{{username}}/post/{{eachUpdate.tweetuid}}/"><span class="glyphicon glyphicon-time"></span>{{eachUpdate.time_elapsed}} ago</a></small>
