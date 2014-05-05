@@ -337,40 +337,21 @@
           <div class="row">
               <div class="col-md-12">
             {% if user.is_authenticated %}
-                  <div class="">
 
-                      <!-- if this is the profile of the logged in user -->
-                      <!-- <div class="well well-sm">
-                          <div class="input-group">
-                              <input id="btn-input" type="text" class="form-control input-sm" placeholder="Send an update..." />
-                              <span class="input-group-btn">
-                                  <button class="btn btn-warning btn-sm" id="btn-chat">
-                                      Send</button>
-                              </span>
-                          </div>
-                      </div> -->
-                      <!-- // if this is the profile of the logged in user -->
-                      <div class="">
-                          <ul class="chat">
-                          {% for eachUpdate in updates %}
-                              <li class="left clearfix"><span class="chat-img pull-left">
-                                  <img src="{{userprof.profileimg}}" />
-                              </span>
-                                  <div class="chat-body clearfix">
-                                      <div class="header">
-                                          <strong class="primary-font">{{eachUpdate.user.name}}</strong> 
-                                          <small class="pull-right text-muted">
-                                          <a href="/{{username}}/post/{{eachUpdate.tweetuid}}/"><span class="glyphicon glyphicon-time"></span>{{eachUpdate.time_elapsed}} ago</a></small>
-                                      </div>
-                                      <p>
-                                         {{eachUpdate.status|recognise_name|safe}}
-                                      </p>
-                                  </div>
-                              </li>
-                          {% endfor %}    
-                          </ul>
-                      </div>
+
+              {% for eachUpdate in updates %}
+              <div class="media border-bottom innerAll margin-none"> 
+                  <div class="media-body"> 
+                      <p class="lead"><a href="" class="text-inverse"> {{eachUpdate.status|recognise_name|safe}}</a>
+                      </p>
+                      <small class="pull-right">
+                        <a href="/{{username}}/post/{{eachUpdate.tweetuid}}/"><i class="fa fa-fw fa-clock-o"></i> {{eachUpdate.time_elapsed}} ago</a>
+                      </small>
                   </div>
+              </div>
+              {% endfor %}  
+
+                  
               {% else %}
                 <p class="alert alert-warning"><a href="{% provider_login_url "twitter" process="login" %}" class="">Login</a> or <a href="{% provider_login_url "twitter" process="login" %}" class="">sign up free</a> to see updates and activity. </p>
               {% endif %}

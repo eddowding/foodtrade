@@ -685,6 +685,20 @@ input[type=text], input[type=password], select, textarea,
   background: #ffffff !important;
 }
 
+ul.tagit li.tagit-choice {
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  -webkit-border-radius: 3px;
+  border: 1px solid #37AD40;
+  background: none;
+  background-color: #DEF8E7;
+  font-weight: normal;
+  font-size: 12px;
+}
+ul.tagit li.tagit-choice-editable {
+padding: 0em 18px 0em .1em;
+}
+
 /********************************/
 /**  SIDEBAR                   **/
 /********************************/
