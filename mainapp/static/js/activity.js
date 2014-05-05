@@ -50,7 +50,18 @@ var result_mouseout = true;
 
 function set_center(lon,lat,zoom)
 {
+  var def = $.Deferred();
     map.setView([lat, lon], zoom);
+    return def.promise();
+    
+}
+
+
+function open_popup(map_ctrl)
+{
+   var def = $.Deferred();
+   map_ctrl.openPopup({keepInView:true});
+    return def.promise();
 }
 $(".reply_text").on("mouseover",".singleresult",function(e){
  var result_id = $(this).attr("data-id");
@@ -65,9 +76,11 @@ $(".reply_text").on("mouseover",".singleresult",function(e){
     var temp_lon = map_controls[i]._latlng.lng;
     var zoom_level = map.getZoom();
 
-set_center(temp_lon,temp_lat,zoom_level);
-map_controls[i].openPopup({keepInView:true});
-set_center(temp_lon,temp_lat,zoom_level);
+// set_center(temp_lon,temp_lat,zoom_level);
+// map_controls[i].openPopup({keepInView:true});
+// ;
+
+$.when(set_center(temp_lon,temp_lat,zoom_level), open_popup(map_controls[i]));
   setTimeout(function() {   
       
     }, 8000);  // 8 seconds
