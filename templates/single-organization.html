@@ -354,13 +354,13 @@
                           <ul class="chat">
                           {% for eachUpdate in updates %}
                               <li class="left clearfix"><span class="chat-img pull-left">
-                                  <img src="{{userprof.profileimg}}" />
+                                  <img src="{{eachUpdate.user.profile_img}}" />
                               </span>
                                   <div class="chat-body clearfix">
                                       <div class="header">
                                           <strong class="primary-font">{{eachUpdate.user.name}}</strong> 
                                           <small class="pull-right text-muted">
-                                          <a href="/{{username}}/post/{{eachUpdate.tweetuid}}/"><span class="glyphicon glyphicon-time"></span>{{eachUpdate.time_elapsed}} ago</a></small>
+                                          <a href="/{{eachUpdate.user.username}}/post/{{eachUpdate.tweetuid}}/"><span class="glyphicon glyphicon-time"></span>{{eachUpdate.time_elapsed}} ago</a></small>
                                       </div>
                                       <p>
                                          {{eachUpdate.status|recognise_name|safe}}

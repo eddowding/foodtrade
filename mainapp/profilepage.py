@@ -27,7 +27,7 @@ from embedly import Embedly
 from django.conf import settings
 from mainapp.classes.TwitterCounts import TwitterCounts
 from mainapp.classes.TweetFeed import Friends
-
+from classes.Search import Search
 
 
 def profile_url_resolve(request, username):
@@ -205,17 +205,21 @@ def display_profile(request, username):
         parameters['is_unknown_profile'] = 'false'
 
     try:
-        tweet_feed_obj = TweetFeed()
-        user_updates = tweet_feed_obj.get_tweet_by_user_id(userprof['useruid'])
-        user_updates["updates"].reverse()
-        updates = user_updates["updates"]
+        search_handle = Search(lon = userprof['latlng']['coordinates'][0], lat =userprof['latlng']['coordinates'][1],)
+
+        update_results = search_handle.get_tweets_by_user_id(userprof['useruid'])
+        updates = update_results['results'][:10]
+        # tweet_feed_obj = TweetFeed()
+        # user_updates = tweet_feed_obj.get_tweet_by_user_id(userprof['useruid'])
+        # user_updates["updates"].reverse()
+        # updates = user_updates["updates"]
         new_updates = []
 
         '''Show only undeleted posts'''
-        for eachUpdate in updates:
-            if eachUpdate['deleted'] == 0:
-                new_updates.append(eachUpdate)
-        updates = new_updates[0:10]
+        # for eachUpdate in updates:
+        #     if eachUpdate['deleted'] == 0:
+        #         new_updates.append(eachUpdate)
+        # updates = new_updates[0:10]
 
         for i in range(len(updates)):
             time_elapsed = int(time.time()) - updates[i]['time_stamp']
@@ -235,7 +239,7 @@ def display_profile(request, username):
                 time_text = str(years) + ' years'
             updates[i]['time_elapsed'] = time_text
         parameters['updates'] = updates
-        parameters['updates_count'] = len(updates)
+        parameters['updates_count'] = update_results["update_count"]
     except:
         parameters['updates'] = []
         parameters['updates_count'] = 0
