@@ -456,6 +456,8 @@ function show_small_structure()
 
 
       <button type="button" id="btn_update_activity" class="btn btn-sm btn-success pull-right" {% if not user.is_authenticated %}  title="Please login to use this feature." {% endif %} onclick="post_new_status();"> Post</button>
+
+      <button type="button" id="btn_update_close"  data-dismiss="modal" class="btn btn-sm btn-success pull-right hidden"> Close </button>
   </form>
 </div> <!-- /well --> 
 </div>
@@ -1750,6 +1752,72 @@ $(".flip").hover(function(){
 
   ga('create', 'UA-3315919-37', 'foodtrade.com');
   ga('send', 'pageview');
+
+</script>
+
+<script type="text/javascript">
+function post_new_status(){
+      message = $('#newstatus').val();
+      if(message==""){
+        alert("You can't post empty status.");
+        return;
+      }
+
+      if($('#post_to_twitter').prop('checked')){
+          var foodtrade_only = "false";
+      }
+      else{
+        var foodtrade_only = "true";
+      }
+      if(validate_login()['status'] == '1'){
+        ajax_request("post_tweet", 'clear_input', {message: message,foodtrade_only:foodtrade_only});
+      }
+      else{
+          /*$('#btn_must_be_logged').click();*/
+          /*$('#btn_update_activity').tooltip('show');*/
+          window.location('/accounts/twitter/login/?process=?login');
+      }
+}
+
+
+function activity_status_update(message){
+    if($('#structured_post_to_twitter').prop('checked')){
+      var foodtrade_only = "false";
+    }
+    else{
+      var foodtrade_only = "true";
+    }
+    if(validate_login()['status'] == '1'){
+      ajax_request("post_tweet", 'clear_structured_input', {message: message,foodtrade_only:foodtrade_only});
+    }
+    else{
+      /*$('#btn_must_be_logged').click();*/
+      /*$('#btn_update_activity').tooltip('show');*/
+      window.location('/accounts/twitter/login/?process=?login');
+    }
+}
+
+function clear_structured_input(data){
+        $('#structured_input_form').trigger("reset");
+        $('#newstatus').val('');        
+        $('#btn_update_close').click();
+        $('#btnClose').click();
+        make_search();
+}
+
+$('#newstatus').bind('keypress', function(e) {
+    var code = e.keyCode || e.which;
+     if(code == 13) {
+        post_new_status();
+     }
+});
+
+function clear_input(data){
+        $('#newstatus').val('');
+        $('#btnClose').click();        
+        $('#btn_update_close').click();
+        make_search();
+}
 
 </script>
 </body>
