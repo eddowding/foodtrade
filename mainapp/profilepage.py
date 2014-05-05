@@ -183,7 +183,8 @@ def display_profile(request, username):
     except:
         pass
     
-    parameters['we_buy'] = userprof.get('we_buy') if userprof.get('we_buy')!=None else ''
+    parameters['we_buy'] = userprof.get('we_buy') if userprof.get('we_buy')!=None else False
+    print 'value of we_buy: ', parameters['we_buy']
 
     if userprof.get('business_org_name')!=None:
         parameters['name'] = userprof.get('business_org_name') if (userprof['sign_up_as'] == 'Business' or userprof['sign_up_as'] == 'Organisation') \
@@ -392,7 +393,7 @@ def edit_profile(request, username):
             parameters['sign_up_as'] = userprof['sign_up_as']
             parameters['username'] = username
             parameters['video_url'] = userprof.get('video_url') if userprof.get('video_url')!=None else ''
-            parameters['we_buy'] = userprof.get('we_buy') if userprof.get('we_buy')!=None else ''
+            parameters['we_buy'] = userprof.get('we_buy') if userprof.get('we_buy')!=None else False
 
             parameters['company_num'] = userprof.get('company_num') if userprof.get('company_num')!=None else ''
             parameters['website_url'] = userprof.get('website_url') if userprof.get('website_url')!=None else ''
@@ -453,6 +454,7 @@ def edit_profile(request, username):
         display_name = request.POST['display_name']
         video_url = request.POST.get('video_url')
         we_buy = request.POST.get('we_buy')
+        we_buy = True if we_buy == 'Yes' else False
         email = request.POST['email']
         # name = first_name + " " + last_name
         description = request.POST['description']
@@ -483,6 +485,7 @@ def edit_profile(request, username):
             show_foods = 'Yes'
         show_food_db = True if show_foods == 'Yes' else False
 
+
         if request.user.is_superuser:
             is_superuser = True
         else:
@@ -490,7 +493,7 @@ def edit_profile(request, username):
 
         usr_profile.update_profile_by_username(userprof['username'], description, address, 
             usr_type, sign_up_as, phone, lat, lon, postal_code, display_name, is_superuser, company_num,
-            website_url, facebook_page, deliverables, business_org_name, email, newsletter_freq, show_food_db, video_url)
+            website_url, facebook_page, deliverables, business_org_name, email, newsletter_freq, show_food_db, video_url, we_buy)
         twt = TweetFeed()
         twt.update_data(userprof['useruid'])
 

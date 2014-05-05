@@ -606,8 +606,8 @@ class Food():
         return self.db_object.get_all(self.table_name, 
             {'food_name':food_name, 'deleted': 0})
 
-    def delete_food(self, useruid, food_name):
-        self.db_object.update(self.table_name,{'useruid': useruid, 'food_name': food_name}, {'deleted':1})
+    def delete_food(self, useruid, food_name, we_buy=0):
+        self.db_object.update(self.table_name,{'useruid': useruid, 'food_name': food_name, 'webuy': we_buy}, {'deleted':1})
         print food_name, ' deleted'
         # also delete recommendations of the food
         table_name = 'recommendfood'

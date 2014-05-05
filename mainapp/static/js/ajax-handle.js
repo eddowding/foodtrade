@@ -208,9 +208,16 @@ function recommend_food(logged_in_id, food_name, prof_id, username, my_this){
 function empty(){}
 
 
-function delete_food(prof_id, food_name, my_this){
+function delete_food(prof_id, food_name, my_this, we_buy){
+	we_buy = typeof we_buy !== 'undefined' ? we_buy : '';
 	var data = {useruid: prof_id, food_name: food_name};
-	ajax_request("deletefood", 'food_ajax', {data: JSON.stringify(data)});
+	data['we_buy'] = we_buy== '' ? 0 : 1;
+    if(data['we_buy']==1){
+		ajax_request("deletefood", 'webuy_food_ajax', {data: JSON.stringify(data)});
+	}
+	else{
+		ajax_request("deletefood", 'food_ajax', {data: JSON.stringify(data)});
+	}
 	global_this = my_this;
 	console.log(global_this)
 	// var del_id = global_this.parentElement.parentElement.parentElement.parentElement.getAttribute('id');
