@@ -1658,7 +1658,7 @@ $(".flip").hover(function(){
        var expire_on = Date.parse($("#expire_on").val());
        if(expire_on!=null)
        {
-        var expire_date = expire_on.getDate()+"/"+expire_on.getMonth()+"/"+expire_on.getFullYear();
+        var expire_date = expire_on.getDate()+"/"+(parseInt(expire_on.getMonth())+1)+"/"+expire_on.getFullYear();
         $("#date_help").html(expire_date);
        }
       });
@@ -1702,7 +1702,7 @@ $(".flip").hover(function(){
         var expire_text = "";
         if(expire_on!=null)
         {
-          var expire_date = expire_on.getDate()+"-"+expire_on.getMonth()+"-"+expire_on.getFullYear();
+          var expire_date = expire_on.getDate()+"-"+(parseInt(expire_on.getMonth())+1)+"-"+expire_on.getFullYear();
           expire_text = " By "+expire_date+".";
         }
         var description = $("#update_description").val().trim();
