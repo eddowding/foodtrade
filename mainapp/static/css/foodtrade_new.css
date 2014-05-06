@@ -784,9 +784,6 @@ padding: 0em 18px 0em .1em !important;
     line-height: 1.5;
   }
 
-  .widget.widget-tabs-double-2 > .widget-head ul li a {
-    padding: 0 15px 15px 15px !important;
-  }
 }
 
 @media (max-width: 991px) {   
@@ -794,8 +791,17 @@ padding: 0em 18px 0em .1em !important;
   .widget.widget-tabs.widget-tabs-responsive > .widget-head ul li,
   #activity_selector.widget.widget-tabs.widget-tabs-responsive > .widget-head ul li {
     float: left !important;
+    height: auto;
+    line-height: 1.5;
   }
 
   .widget.widget-tabs-double-2 > .widget-head ul li a span.title {
     display: none; 
+  }
+
+  .widget.widget-tabs-double-2 > .widget-head ul li a {
+    padding: 0 15px 15px 15px !important; 
+    height: auto !important;
+  }
+
 }

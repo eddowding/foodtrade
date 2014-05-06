@@ -31,7 +31,7 @@
       {% ifequal loggedin_signupas "Business" %}{% endifequal %}
       {% ifequal loggedin_signupas "Organisation" %} {% endifequal %}
       -->
-  <div class="widget-head">
+  <div class="widget-head clearfix">
     <ul id="activity_selector">
 
         <li {% if results_updates_count != 0  or results_individual_count == 0 and results_business_count == 0 and results_organisation_count == 0  %}class="active dropdown"{% endif %}>
