@@ -469,8 +469,15 @@ input[type="text"]:focus, input[type="text"]:active, input[type="text"]:hover {
 }
 
 .timeline-cover .cover .top {
-  height: 330px;
+  height: 400px;
 }
+
+@media (max-width: 768px) {
+  .timeline-cover .cover .top {
+    height: 200px;
+  }
+}
+
 
 .dropdown-menu li a .fa {
   color: #999;
@@ -620,6 +627,10 @@ input[type="text"]:focus, input[type="text"]:active, input[type="text"]:hover {
     padding: 3px 15px !important;
   }
 
+  #footer {
+    display: none;
+  }
+
 }
 
 @media (max-width: 992px) {
@@ -627,6 +638,8 @@ input[type="text"]:focus, input[type="text"]:active, input[type="text"]:hover {
     position: relative; 
     margin-bottom: 5px !important;
   }
+ 
+
 }
 
 .navbar.main .dropdown.username .dropdown-menu {
@@ -646,6 +659,16 @@ input[type="text"]:focus, input[type="text"]:active, input[type="text"]:hover {
   color: #444; 
 }
 
+.map-biz {
+  width: 100%;
+  height: 400px; 
+}
+
+@media(max-width: 768px) {
+  .map-biz { 
+    height: 200px; 
+  }
+}
 
 
 input[type=text], input[type=password], select, textarea,
@@ -657,14 +680,14 @@ input[type=text], input[type=password], select, textarea,
 
 .pull-number {
   position: absolute;
-  top: 6px;
-  right: 12px; 
-  display: block; 
-  color:#fff;
-  font-size:11px; 
+  top: 10%;
+  left: 56%;
+  display: block;
+  color: #fff;
+  font-size: 11px;
   line-height: 1 !important;
-  padding: 2px 6px 3px 6px !important;
-
+  padding: 1px 4px 2px 4px !important;
+  background: #ccc;
 }
 
 .box-verified,
@@ -675,6 +698,21 @@ input[type=text], input[type=password], select, textarea,
 .widget.widget-tabs-double-2 > .widget-body {
   padding: 10px;
   background: #fff;
+}
+
+.widget .widget-head > .glyphicons i:before, 
+.widget .widget-head ul .glyphicons i:before {
+  color: #aaa;
+}
+
+.widget.widget-tabs > .widget-head ul li a {
+  color: #666;
+}
+
+.widget.widget-tabs-double-2 > .widget-head ul li:hover .pull-number,
+.widget.widget-tabs-double-2 > .widget-head ul li.active .pull-number {
+  background: #7BB81A;
+  border: 1px solid green;
 }
  
 .widget.widget-tabs-double-2 > .widget-head {
@@ -733,8 +771,8 @@ padding: 0em 18px 0em .1em;
 /********************************/
 
 
-@media (max-width: 1200px) {
-  .widget-tabs-double-2 li span {
+@media (max-width: 768px) {
+  .widget-tabs-double-2 li span.name {
     display: none !important;
   }
   .widget.widget-tabs-double-2 > .widget-head ul li.active,

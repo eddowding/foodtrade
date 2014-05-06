@@ -31,25 +31,44 @@
                         <p class="small">{{each.description|truncatechars:40}}</p>
                       </div>
                     </div>
+ 
+
+                    <div class="row row-merge border-top">
+
+                       
+                        <!-- number of foods sold -->
+                        <div class="col-xs-3">
+                          <a href="" class="innerAll half text-center display-block text-muted" data-original-title="{{each.food_no}} foods" rel="tooltip"><i class="fa fa-fw fa fa-cutlery"></i> {{each.food_no}}</a>
+                        </div>
+
+                        <!-- number of vouches across all produce --> 
+                        <div class="col-xs-3">
+                          <a href=""  rel="tooltip" title="{{each.total_vouches}} of vouches for all produce"  class="innerAll half text-center display-block text-muted"><i class="fa fa-fw fa-thumbs-o-up"></i> {{each.total_vouches}}</a>
+                        </div> 
+
+                        <!-- number of trade connections --> 
+                        <div class="col-xs-3">
+                          <a href=""  rel="tooltip" title="{{each.trade_conn_no}} of trade connections" class="innerAll half text-center display-block text-muted"><i class="fa fa-fw fa-link"></i> {{each.trade_conn_no}}</a>
+                        </div>
+
+                        <!-- number of group membershpis -->  
+                        <div class="col-xs-3">
+                          <a href=""  rel="tooltip" title="Member of {{each.org_conn_no}} groups or organisations"  class="innerAll half text-center display-block text-muted"><i class="fa fa-fw fa-group"></i> {{each.org_conn_no}}</a>
+                        </div> 
+
+                      </div> 
 
 
-                    <div class="numbers clearfix">
-                      <p class="small text-center">
-                        <span rel="tooltip" title="{{each.food_no}} foods" class="pull-left"><i class="fa fa-cutlery"></i> {{each.food_no}}</span>
-                        <span rel="tooltip" title="{{each.trade_conn_no}} connections"><i class="fa fa-link"></i> {{each.trade_conn_no}}</span>
-                        <span rel="tooltip" title="{{each.org_conn_no}} organisations" class="pull-right"><i class="fa fa-group"></i> {{each.org_conn_no}}</span> 
-                      </p>
-                    </div>
+
                     {% if each.type|length == 0 or each.type|first == '' %}
                     {% else %}
-                    <div class="numbers type text-center clearfix">
-                      <div class="tags tags-biztype pull-lef t">  
-                        {% for e in each.type %}
-                       <a href="/activity/?b={{e}}">{{e}}</a>
-                       {% endfor %}
-                      </div>
-                    </div>
-                    {% endif %}
+                    <div class="bg-gray border-top innerAll half text-center">  
+                     {% for e in each.type %}
+                     <a href="/activity/?b={{e}}">{{e}}</a>
+                     {% endfor %}
+                    </div> 
+                    {% endif %} 
+ 
                   </div> 
                   {% endif %}
                   {% endfor %}
@@ -84,23 +103,41 @@
                       </div>
                     </div>
 
-                    <div class="numbers clearfix">
-                      <p class="small text-center">
-                        <span rel="tooltip" title="{{each.food_no}} foods" class="pull-left"><i class="fa fa-cutlery"></i> {{each.food_no}}</span>
-                        <span rel="tooltip" title="{{each.trade_conn_no}} connections"><i class="fa fa-link"></i> {{each.trade_conn_no}}</span>
-                        <span rel="tooltip" title="{{each.org_conn_no}} organisations" class="pull-right"><i class="fa fa-group"></i> {{each.org_conn_no}}</span> 
-                      </p>
-                    </div>
+                    <div class="row row-merge border-top">
+
+                       
+                        <!-- number of foods sold -->
+                        <div class="col-xs-3">
+                          <a href="" class="innerAll half text-center display-block text-muted" data-original-title="{{each.food_no}} foods" rel="tooltip"><i class="fa fa-fw fa fa-cutlery"></i> {{each.food_no}}</a>
+                        </div>
+
+                        <!-- number of vouches across all produce --> 
+                        <div class="col-xs-3">
+                          <a href=""  rel="tooltip" title="{{each.total_vouches}} of vouches for all produce"  class="innerAll half text-center display-block text-muted"><i class="fa fa-fw fa-thumbs-o-up"></i> {{each.total_vouches}}</a>
+                        </div> 
+
+                        <!-- number of trade connections --> 
+                        <div class="col-xs-3">
+                          <a href=""  rel="tooltip" title="{{each.trade_conn_no}} of trade connections" class="innerAll half text-center display-block text-muted"><i class="fa fa-fw fa-link"></i> {{each.trade_conn_no}}</a>
+                        </div>
+
+                        <!-- number of group membershpis -->  
+                        <div class="col-xs-3">
+                          <a href=""  rel="tooltip" title="Member of {{each.org_conn_no}} groups or organisations"  class="innerAll half text-center display-block text-muted"><i class="fa fa-fw fa-group"></i> {{each.org_conn_no}}</a>
+                        </div> 
+
+                      </div> 
+
+
+
                     {% if each.type|length == 0 or each.type|first == '' %}
                     {% else %}
-                    <div class="numbers type text-center clearfix">
-                      <div class="tags tags-biztype pull-lef t">  
-                        {% for e in each.type %}
-                       <a href="/activity/?b={{e}}">{{e}}</a>
-                       {% endfor %}
-                      </div>
-                    </div>
-                    {% endif %}
+                    <div class="bg-gray border-top innerAll half text-center">  
+                     {% for e in each.type %}
+                     <a href="/activity/?b={{e}}">{{e}}</a>
+                     {% endfor %}
+                    </div> 
+                    {% endif %} 
                   </div> 
                   {% endif %}
                   {% endfor %}

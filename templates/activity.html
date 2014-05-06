@@ -37,7 +37,7 @@
         <li {% if results_updates_count != 0  or results_individual_count == 0 and results_business_count == 0 and results_organisation_count == 0  %}class="active dropdown"{% endif %}>
         <a href="#near_me" class="glyphicons shopping_cart" data-toggle="tab"><i></i><span class="strong title">Marketplace</span>
         {% ifnotequal results_updates_count 0 %}
-        <span class="pull-number label label-success">{{results_updates_count}}</span>
+        <span class="pull-number label label-default">{{results_updates_count}}</span>
         {% endifnotequal %}
         </a> 
         </li>  
@@ -45,7 +45,7 @@
         <li {% if results_updates_count == 0 and results_individual_count == 0  and results_organisation_count == 0 and results_business_count != 0 %}class="active"{% endif %}>
         <a href="#biz" class="glyphicons shop" data-toggle="tab"><i></i><span class="strong title">Companies</span> 
         {% ifnotequal results_business_count 0 %}
-        <span class="pull-number label label-success">{{results_business_count}}</span>
+        <span class="pull-number label label-default">{{results_business_count}}</span>
         {% endifnotequal %}
         </a>
         </li>  
@@ -53,7 +53,7 @@
         <li {% if results_updates_count == 0 and results_individual_count == 0 and results_business_count == 0 and results_organisation_count != 0 %}class="active"{% endif %}>
         <a href="#org" class="glyphicons group" data-toggle="tab"><i></i><span class="strong title">Groups</span>
         {% if results_organisation_count > 0 %}
-        <span class="pull-number label label-success">{{results_organisation_count}}</span>
+        <span class="pull-number label label-default">{{results_organisation_count}}</span>
         {% endif %}
         </a>
         </li> 
@@ -61,7 +61,7 @@
         <li {% if results_updates_count == 0  and results_business_count == 0 and results_organisation_count == 0 and results_individual_count != 0 %}class="active"{% endif %}>
           <a href="#indiv" class="glyphicons user" data-toggle="tab"><i></i><span class="strong title">People</span>
           {% if results_individual_count != 0 %}
-          <span class="pull-number label label-success">{{results_individual_count}}</span>
+          <span class="pull-number label label-default">{{results_individual_count}}</span>
           {% endif %}
           </a>
         </li>  
