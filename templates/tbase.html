@@ -193,12 +193,10 @@
       <div class="modal fade" id="modal-tweeter-user" tabindex="-1" role="dialog" aria-labelledby="newtwitterpost" aria-hidden="true">
         <div class="modal-dialog">
           <div class="modal-content"> 
-            <div class="modal-body">
-              <h3>Invite someone to join FoodTrade:</h3>
-
-
-   
-
+            <div class="modal-header text-white">
+              Invite someone to join FoodTrade
+            </div>
+            <div class="modal-body">  
             <div class="input-group twitter-user-suggestions" id="my_twitter_search">
                 <input class="typeahead form-control" id="invite_tweeter_user"  type="text" placeholder="Search Twitter users"> 
                 <div class="input-group-btn">
@@ -362,7 +360,7 @@
             {% if not user.is_authenticated %}
                 <a href="/payments" class="btn btn-success pull-right"  rel="tooltip" title="Join free to post an upate">LOGIN TO POST
                 <br />
-                <span class="  small">Sign up is free</span></a>
+                <span class="small">Get started free</span></a>
             {% else %}
               {% if can_tweet %} 
                 <button type="button" id="btn_update_activity" class="btn  btn-success pull-right" rel="tooltip"  {% if not user.is_authenticated %}  title="Please login to use this feature." {% endif %} onclick="generate_update();"> Post this</button>
@@ -555,8 +553,12 @@ function show_small_structure()
           <a href="/activity/suppliers"><i class="fa fa-sign-out"></i><span>My Suppliers</span></a> 
         </li> 
 
+        <li data-step="4" data-intro="Building a better food system is going to take all of us. Please invite your suppliers, stockists, customers, friends.. everyone! For everyone you invite who signs up, we'll give you a month free, too." rel="tooltip" title="For everyone you invite who signs up, we'll give you a month free!">
+            <a data-toggle="modal" id="my_invite_twitter" data-target="#modal-tweeter-user"><i class="fa fa-bullhorn"></i><span>Invite</span></a>
+        </li>
+
         <li class="hasSubmenu">
-          <a href="#trendsWeek" data-toggle="collapse">Popular this week</a>
+          <a href="#trendsWeek" data-toggle="collapse"><i class="fa  fa-bell-o"></i><span>Popular this week</span></a>
 
           <ul class="collapse" id="trendsWeek"> 
             {% for eachVal in userinfo.hashtagsthis %}
@@ -566,7 +568,7 @@ function show_small_structure()
         </li>
 
         <li class="hasSubmenu">
-          <a href="#trendsAll" data-toggle="collapse">Popular all time</a>
+          <a href="#trendsAll" data-toggle="collapse"><i class="fa  fa-bell"></i><span>Popular all time</span></a>
 
           <ul class="collapse" id="trendsAll"> 
             {% for eachVal in userinfo.hashtagsall %}
