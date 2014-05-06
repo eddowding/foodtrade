@@ -362,9 +362,12 @@
           <li><a class="glyphicons certificate" href="#tabMemberships" data-toggle="tab"><i></i><span class="name">Groups</span>
           {% if userprof.organisation_connection_no != 0 %}<span class="label label-default pull-number">{{userprof.organisation_connection_no}}</span>{% endif %}
           </a></li>
+          {% if we_buy %}
           <li class="premium"><a class="glyphicons list" rel="tooltip" title="Premium account holders only - upgrade from just &pound;45/yr" href="#tabBuy" data-toggle="tab"><i></i><span class="name">Shopping list</span>
           </a>
-          </li><!-- 
+          </li>
+          {% endif %}
+          <!-- 
           <li class="premium"><a class="glyphicons group" rel="tooltip" title="Premium account holders only - upgrade from just &pound;45/yr" href="#tabTeam" data-toggle="tab"><i></i><span>People</span>
           </a>
           </li> -->
@@ -437,7 +440,7 @@
           {% endif %} 
 
       <div class="innerB btn-group" id="filterFoods" data-filter-group="foodtype">
-        <button class="btn btn-primary btn-sm active" data-filter="*">All</button> 
+        <button class="btn btn-default btn-sm" style="background: #eee;" data-filter="*">All</button> 
 
         {% for eachparent in food_parents %}
           <button class="btn btn-default btn-sm" data-filter=".{{eachparent|slugify}}">{{eachparent}}</button> 
@@ -953,8 +956,7 @@
 
 {% if we_buy %}
 <div  class="tab-pane clearfix" id="tabBuy">
-  webuy
-          {% if user.is_authenticated %}
+           {% if user.is_authenticated %}
           <div class="row" style="padding: 20px 0;"> 
             <div class="col-md-8 col-sm-8 col-xs-7">
               {% if user.is_authenticated %}
@@ -1008,10 +1010,13 @@
         {% endfor %}
         </div>
       </div>
+                    
+
                     <div class="clearfix isotope"  id="webuy_foods"> 
                             <div class="row">
 
                             {% for eachfood in all_buying_foods %}
+
  
 <div class="food col-md-3 {{eachfood.parent_food|slugify}}" style="margin-bottom: 15px;" id="flip_food_{{forloop.counter}}">            
   <div class="media-body"> 
@@ -1067,7 +1072,8 @@
       </div>
       </div><!-- row -->
       {% endif %}
-      
+ 
+
       {% if 1 in eachfood.month_list %}
 
 
@@ -1432,13 +1438,15 @@
           </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
       </div><!-- /.modal -->
+
+
       <!-- modal_customer -->
       <div class="modal fade" id="modal_tweet_recomm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
               <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-              <h4 class="modal-title" id="myModalLabel">Tell others what you have just recommended !</h4>
+              <h4 class="modal-title" id="myModalLabel">Tell others what you have just recommended!</h4>
             </div>
             <div class="modal-body">
                <form accept-charset="UTF-8" action="" method="POST">
@@ -1620,7 +1628,9 @@
  // $.fn.editable.defaults.mode = 'inline';
 
 $(document).ready(function(){
-  var $container1 = $('#foods').isotope({itemSelector: '.food'});
+  var $container1 = $('#foods').isotope({
+      itemSelector: '.food'
+    });
 
 
  // var $container = $('#all-connections').isotope({itemSelector: '.card-business'});
