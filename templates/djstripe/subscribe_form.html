@@ -5,7 +5,7 @@
 
 {% block content %}
 {{ block.super }}
-<div class="col-sm-10" id="pricing">
+<div class="innerAll"  id="pricing">
  
 <div class="container-responsive">
 
@@ -15,13 +15,24 @@
 {% if view.error %}
     <div class="alert alert-error">{{ view.error }}</div>
 {% endif %}
+ 
+{% if not subscribed %} 
+<div class="box-generic bg-secondary">
+<form class="form-inline" method = "post" id ="promo_form" role="form" onsubmit ="return apply_discount()">
+  {% csrf_token %}
+  <div class="form-group has-info">
+    <label class="label-control text-large text-white" for="promo_code">Got a coupon code?</label><br />
+    </div>
+     <div class="form-group">
+    <input type="text" class="form-control input-lg" name = "promo_code" id="promo_code" placeholder = "Enter it here">
+  </div>
+    <button type="submit" class="btn btn-info btn-lg pull-right">Apply discount</button>
+</form>
+<div id="promo_message"></div>
+<a href="#" id="form_link" onclick="change_promo()">Change Promo Code</a>
 
-
-<div class="alert alert-info" style="margin-top: 20px;">
-  <a href="/" class="pull-right btn btn-info btn-lg" style="margin: 5px  30px 0 0;" > Continue free &raquo;</a>
-  <h3 style="margin-top:0;"><strong>Not ready to subscribe?</strong> </h3>
-  <p>Click on your picture at the top right of the screen to come back here later. </p>
-</div>
+ </div> 
+{% endif %}
 
 
  
@@ -33,9 +44,9 @@
                         Starter</h3>
                 </div>
                 <div class="panel-body">
-                    <div class="the-price">
-                        <h1>
-                           Free <span class="subscript">forever</span></h1>
+                    <div class="text-center">
+                        <h1 class="margin-none">
+                           Free <span class="subscript small">forever</span></h1>
                         <small>Get started with FoodTrade</small>
                     </div>
                     <table class="table">
@@ -76,22 +87,15 @@
             </div>
         </div>
         <div class="col-xs-4">
-            <div class="panel panel-primary">
-                <div class="cnrflash hidden">
-                    <div class="cnrflash-inner">
-                        <span class="cnrflash-label">BEST
-                            <br>
-                            FOR YOU</span>
-                    </div>
-                </div>
-                <div class="panel-heading" style="background-color: # ;">
+            <div class="panel  box-verified">  
+                <div class="panel-heading bg-primary" >
                     <h3 class="panel-title">
-                        Basic</h3>
+                        Premium</h3>
                 </div>
                 <div class="panel-body">
-                    <div class="the-price">
-                        <h1>
-                            &pound;3.75 <span class="subscript">/ month</span></h1>
+                    <div class="text-center">
+                        <h1 class="margin-none">
+                            &pound;3.75 <span class="subscript small">/ month</span></h1>
                         <small>Perfect for most small business</small>
                     </div>
                     <table class="table">
@@ -119,7 +123,7 @@
                         </tr>
                         <tr >
                             <td>
-                                   30 results per search 
+                              30 results per search 
                             </td>
                         </tr>
                         <tr class="active">
@@ -130,7 +134,7 @@
                         <tr>
                             <td>
                                 Integrate with other apps <br />
-                                <small class="text-muted">OpenTable, TripAdvisor etc - coming soon</small>
+                                <small  >OpenTable, TripAdvisor etc - coming soon</small>
                             </td>
                         </tr>
                         <tr class="active">
@@ -208,12 +212,12 @@
             <div class="panel panel-success">
                 <div class="panel-heading"  style="background-color: #;">
                     <h3 class="panel-title">
-                        Advanced <span class="text-muted sm all">- coming soon</span></h3>
+                        Advanced  </h3>
                 </div>
                 <div class="panel-body">
-                    <div class="the-price">
-                        <h1>
-                            &pound;12 <span class="subscript">/ month</span></h1>
+                    <div class="text-center">
+                        <h1 class="margin-none">
+                            &pound;12 <span class="subscript small">/ month</span></h1>
                         <small>For the growing business</small>
                     </div>
                     <table class="table">
@@ -246,11 +250,10 @@
                 </div>
                 <div class="panel-footer">
                     
-                     <div class="ui-group-buttons" rel="tooltip" title="Coming soon, with free upgrade for all paid users">
+                     <div rel="tooltip" title="Coming soon, with free upgrade for all paid users">
                         <a type="button" href="/payments/subscribe/" disabled class="btn btn-success btn-lg">
                           &pound;12 / mo
-                        </a>
-                        <div class="or or-lg"></div>
+                        </a> 
                         <a type="button" href="/payments/subscribe/" disabled class="btn btn-success btn-lg"></i>
                           &pound;120 / yr
                         </a>
@@ -263,30 +266,11 @@
 
  
    
-
- 
-
-{% if not subscribed %}
-<div class="row">
-<div class="col-md-12 text-center" style="padding-top:20px;">
-<div class="alert alert-info">
-<form class="form-inline" method = "post" id ="promo_form" role="form" onsubmit ="return apply_discount()">
-  {% csrf_token %}
-  <div class="form-group has-info">
-    <label class="label-control" for="promo_code"><h3>Got a coupon code?</h3></label><br />
-    </div>
-     <div class="form-group">
-    <input type="text" class="form-control input-lg" name = "promo_code" id="promo_code" placeholder = "Enter it here">
-  </div>
-    <button type="submit" class="btn btn-info btn-lg">Apply</button>
-</form>
-<div id="promo_message"></div>
-<a href="#" id="form_link" onclick="change_promo()">Change Promo Code</a>
-
- </div>
- </div>
+<div class="box-generic text-center">
+  <p>Not ready to subscribe? 
+    <a href="/" class=" btn btn-default"  > Continue free &raquo;</a>
+  </p>
 </div>
-{% endif %}
 
 
 </div>

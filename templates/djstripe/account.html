@@ -4,13 +4,15 @@
 
 {% block content %}
 {{ block.super }}
-<div class="col-md-8 col-md-offset-1 col-sm-9" id="single">
+<div class="  ">
 
-    <div class="row" style="margin-top:50px;">
+<div class="widget">
+<div class="widget-body">
+
+    <div class="row">
         <div class="col-xs-12">
             {% include "djstripe/includes/_subscription_status.html" %}
-            <h3 class="text-muted">Subscription </h3>
-            <hr />
+            <h3 >Subscription </h3> 
         </div>
     </div>
 
@@ -32,7 +34,7 @@
 
     <div class="row" style="margin-top:50px;">
         <div class="col-xs-12"> 
-            <h3 class="text-muted">Your card details</h3>
+            <h3 >Your card details</h3>
             <hr />
         </div>
     </div>
@@ -53,7 +55,7 @@
         <div class=" " style="margin: 50px 0;"></div>
         <div class="row">
             <div class="col-xs-12">
-                <h3 class="text-muted">Your plan</h3>
+                <h3>Your plan</h3>
                 <hr />
             </div>  
         </div>
@@ -103,6 +105,9 @@
         {# No plans so just show payment history #}
         {% include "djstripe/includes/_history_table.html" %}
     {% endif %}
+</div>
+
+</div>
 </div>
 
   <!-- Modal for showing card -->
