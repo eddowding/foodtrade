@@ -106,7 +106,9 @@
 
             {% if result.result_class = 'organisation profile' %}  
             <div class="innerAll text-center">
-              <img src="{{result.user.profile_img}}" alt="{{result.user.name}}" class="img-responsive img-circle img-thumbnail" style="width:73px;" />
+              <a  href="/{{result.user.username}}">
+                <img src="{{result.user.profile_img}}" alt="{{result.user.name}}" class="img-responsive img-circle img-thumbnail" style="width:73px;" />
+              </a>
             </div>
             {% endif %} 
 
