@@ -517,6 +517,7 @@ for(var i = 0; i < business_filters.length;i++){
          // connections = ajax_connections;
          reload_controls();
          //$('.reply').hide();
+         $('.isotope').isotope();
 
        }
 $('#food_filter').keyup( function() {

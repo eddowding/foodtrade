@@ -362,7 +362,7 @@
                 <br />
                 <span class="small">Get started free</span></a>
             {% else %}
-              {% if can_tweet %} 
+              {% if not can_tweet %} 
                 <button type="button" id="btn_update_activity" class="btn  btn-success pull-right" rel="tooltip"  {% if not user.is_authenticated %}  title="Please login to use this feature." {% endif %} onclick="generate_update();"> Post this</button>
               {% else %} 
                 <a href="/payments" class="btn  btn-success pull-right"  rel="tooltip" title="Please upgrade your account to unlock."  {% if not user.is_authenticated %}  title="Please login to use this feature." {% endif %} > Upgrade to post</a>
@@ -398,7 +398,7 @@ function show_small_structure()
 
 
 <div id="update-small" class="clearfix hidden" style="margin-top: 10px;">
-  <input class="form-control col-xs-12"  {% if not user.is_authenticated %}  onfocus="login_redirect()" title="Please login to use this feature." {% else %} {% if can_tweet %} onfocus= "switch_text_area()"{% else %} rel="tooltip" title="You're limited to 1 update every 7 days. Please upgrade your account to unlock." {% endif %}{% endif %} placeholder="What #food do you have to #buy, #sell, or #surplus?">  
+  <input class="form-control col-xs-12"  {% if not user.is_authenticated %}  onfocus="login_redirect()" title="Please login to use this feature." {% else %} {% if not can_tweet %} onfocus= "switch_text_area()"{% else %} rel="tooltip" title="You're limited to 1 update every 7 days. Please upgrade your account to unlock." {% endif %}{% endif %} placeholder="What #food do you have to #buy, #sell, or #surplus?">  
 </div> 
 
 <div id="update-big" class=" clearfix hidden" style="margin-top:10px; display: none;">
@@ -1170,7 +1170,7 @@ function show_small_structure()
         dangerColor = '#b55151',
         successColor = '#609450',
         infoColor = '#4a8bc2',
-        warningColor = '#ab7a4b',
+        warningColor = '#F5C995',
         inverseColor = '#45484d'; 
     var themerPrimaryColor = primaryColor;
     </script>
