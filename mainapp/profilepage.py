@@ -184,7 +184,6 @@ def display_profile(request, username):
         pass
     
     parameters['we_buy'] = userprof.get('we_buy') if userprof.get('we_buy')!=None else False
-    print 'value of we_buy: ', parameters['we_buy']
 
     if userprof.get('business_org_name')!=None:
         parameters['name'] = userprof.get('business_org_name') if (userprof['sign_up_as'] == 'Business' or userprof['sign_up_as'] == 'Organisation') \
@@ -308,11 +307,9 @@ def display_profile(request, username):
         if request.user.is_authenticated():
             parameters['connections'], parameters['logged_conn'] = get_connections(userprof['useruid'], request.user.id)
 
-            temp_all_foods = get_all_foods(userprof['useruid'], request.user.id)
-            parameters['food_parents'] = temp_all_foods[len(temp_all_foods)-1]
-            parameters['all_foods'] = temp_all_foods[0:(len(temp_all_foods)-1)]
+            parameters['all_foods'], parameters['food_parents'] = get_all_foods(userprof['useruid'], request.user.id)
 
-            parameters['all_buying_foods'] = get_all_buying_foods(userprof['useruid'], request.user.id)
+            parameters['all_buying_foods'], parameters['webuy_food_parents'] = get_all_buying_foods(userprof['useruid'], request.user.id)
             
             parameters['organisations'] = get_organisations(userprof['useruid'])
             parameters['customers'], parameters['logged_customer'] = get_customers(userprof['useruid'], request.user.id)
@@ -322,10 +319,12 @@ def display_profile(request, username):
             # if not logged in show limited
             parameters['connections'] = conn_limited
             
-            temp_all_foods = get_all_foods(userprof['useruid'], request.user.id)
-            parameters['food_parents'] = temp_all_foods[len(temp_all_foods)-1]
+            temp_all_foods, parameters['food_parents'] = get_all_foods(userprof['useruid'], request.user.id)
             parameters['all_foods'] = temp_all_foods[:3]
-            
+
+            temp_buy_foods, parameters['webuy_food_parents'] = get_all_foods(userprof['useruid'], request.user.id)
+            parameters['all_buying_foods'] = temp_buy_foods[:3]
+
             parameters['organisations'] = get_organisations(userprof['useruid'])[:3]
             all_customers, parameters['logged_customer'] = get_customers(userprof['useruid'])
             parameters['customers'] = all_customers[:10]
@@ -348,12 +347,9 @@ def display_profile(request, username):
         return render_to_response('single-organization.html', parameters, context_instance=RequestContext(request))
     elif parameters['sign_up_as'] == 'Individual':
         if request.user.is_authenticated():
-            temp_all_foods = get_all_foods(userprof['useruid'], request.user.id)
-            parameters['food_parents'] = temp_all_foods[len(temp_all_foods)-1]
-            parameters['all_foods'] = temp_all_foods[0:(len(temp_all_foods)-1)]
+            parameters['all_foods'], parameters['food_parents'] = get_all_foods(userprof['useruid'], request.user.id)
         else:
-            temp_all_foods = get_all_foods(userprof['useruid'], request.user.id)
-            parameters['food_parents'] = temp_all_foods[len(temp_all_foods)-1]
+            temp_all_foods, parameters['food_parents'] = get_all_foods(userprof['useruid'], request.user.id)
             parameters['all_foods'] = temp_all_foods[:3]
         return render_to_response('individual.html', parameters, context_instance=RequestContext(request))
         
@@ -584,17 +580,17 @@ def get_all_foods(user_id, logged_in_id = None):
                     if each_adm['node'] not in food_parents:
                         food_parents.append(each_adm['node'])
                     break
+
         final_foods.append(data)
     final_foods = sorted(final_foods, key=lambda x: -x['vouch_count'])
-    final_foods.append(food_parents)
-    return final_foods
+    return final_foods, food_parents
 
 def get_all_buying_foods(user_id, logged_in_id = None):
     usr_profile = UserProfile()
     # find out hierarchy
     adm = AdminFoods()
     adm_foods = adm.get_tags()
-
+    food_parents=[]
     foo = Food()
     all_foods = foo.get_webuy_foods_by_userid(user_id)
     recomm = RecommendFood()
@@ -647,10 +643,12 @@ def get_all_buying_foods(user_id, logged_in_id = None):
                 foo_list = [x['node'] for x in each_adm['childrens']]
                 if each['food_name'] in foo_list:
                     data['parent_food'] = each_adm['node']
+                    if each_adm['node'] not in food_parents:
+                        food_parents.append(each_adm['node'])
                     break
         final_foods.append(data)
     final_foods = sorted(final_foods, key=lambda x: -x['vouch_count'])
-    return final_foods
+    return final_foods, food_parents
 
 def get_customers(user_id, logged_id=None):
     usr_profile = UserProfile()

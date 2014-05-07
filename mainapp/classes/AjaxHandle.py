@@ -20,7 +20,7 @@ from bson.objectid import ObjectId
 from mainapp.views import calculate_time_ago
 from django.contrib.auth.models import User
 from mainapp.bitly import construct_invite_tweet, shorten_url
-
+import pprint
 
 # from validate_email import validate_email
 # consumer_key = 'seqGJEiDVNPxde7jmrk6dQ'
@@ -436,10 +436,11 @@ class AjaxHandle(AjaxSearch):
 
             parameters = {}
             if data['we_buy'] == 1:
-                parameters['all_foods'] = get_all_buying_foods(int(data['useruid']), request.user.id)
+                parameters['all_foods'], parameters['food_parents'] = get_all_buying_foods(int(data['useruid']), request.user.id)
                 parameters['webuy_flag'] = True
             else:
-                parameters['all_foods'] = get_all_foods(int(data['useruid']), request.user.id)
+                parameters['all_foods'], parameters['food_parents'] = get_all_foods(int(data['useruid']), request.user.id)
+            # print pprint.pprint(parameters['all_foods'])
             parameters['profile_id'], parameters['user_id'] = int(data['useruid']), request.user.id
             return render_to_response('ajax_food.html', parameters, context_instance=RequestContext(request))
             # return HttpResponse("{'status':1}")
@@ -452,7 +453,6 @@ class AjaxHandle(AjaxSearch):
         if data !=None and data !="":
             print 'In addnewfood: ', data
             foo.create_food(data)
-            print 'new food ', data['food_name'], ' created !!'
             return HttpResponse("{'status':1}")
         else:
             return HttpResponse("{'status':0}")
@@ -464,9 +464,9 @@ class AjaxHandle(AjaxSearch):
             foo.delete_food(useruid = data['useruid'], food_name = data['food_name'], we_buy = data['we_buy']);
             parameters = {}
             if data['we_buy'] == 1:
-                parameters['all_foods'] = get_all_buying_foods(int(data['useruid']), request.user.id)
+                parameters['all_foods'],  = get_all_buying_foods(int(data['useruid']), request.user.id)
             else:
-                parameters['all_foods'] = get_all_foods(int(data['useruid']), request.user.id)
+                parameters['all_foods'], parameters['food_parents'] = get_all_foods(int(data['useruid']), request.user.id)
             parameters['profile_id'], parameters['user_id'] = int(data['useruid']), request.user.id
             return render_to_response('ajax_food.html', parameters, context_instance=RequestContext(request))
             # return HttpResponse("{'status':1}")
@@ -722,7 +722,6 @@ class AjaxHandle(AjaxSearch):
         recomm = RecommendFood()
         #print request.POST.get('data')
         data = request.POST.get('data')
-        print 'vouch data', type(data), data
         data = eval(request.POST.get('data'))
         if data !=None and data !="":
             if data['action'] == 'add':
@@ -751,7 +750,7 @@ class AjaxHandle(AjaxSearch):
                 recomm.delete_recomm(data['business_id'], data['food_name'], data['recommender_id'])
 
             parameters = {}
-            parameters['all_foods'] = get_all_foods(int(data['business_id']), request.user.id)
+            parameters['all_foods'], parameters['food_parents'] = get_all_foods(int(data['business_id']), request.user.id)
             parameters['profile_id'], parameters['user_id'] = int(data['business_id']), request.user.id
             return render_to_response('ajax_food.html', parameters, context_instance=RequestContext(request))
             # return HttpResponse("{'status':1}")
@@ -764,7 +763,7 @@ class AjaxHandle(AjaxSearch):
         return notification_obj.get_notification(username)
 
     def change_notification_status(self, request):
-    	'''Changes the status of Notification'''
+        '''Changes the status of Notification'''
         if request.method == 'POST' and request.user.is_authenticated():
             notification_obj = Notification()
             return notification_obj.change_notification_status(request.user.username)
@@ -772,13 +771,13 @@ class AjaxHandle(AjaxSearch):
             return HttpResponse(json.dumps({'status':'0'}))
 
     def validate_logged_in(self,request):
-    	'''Validates if the user is logged in or not.'''
+        '''Validates if the user is logged in or not.'''
         if request.user.is_authenticated():
             return HttpResponse(json.dumps({'status':'1'}))
         return HttpResponse(json.dumps({'status':'0'}))
 
     def get_friends_paginated(self,request):
-    	'''Returns a list of pagiated friends'''
+        '''Returns a list of pagiated friends'''
         if request.method == 'POST' and request.user.is_authenticated():
             page_num = request.POST['pgnum']
             friends_obj = Friends()
@@ -786,7 +785,7 @@ class AjaxHandle(AjaxSearch):
         else:
             return HttpResponse(json.dumps({'status':'0'}))
     def search_friend(self, request):
-    	'''This function is used to search friends from the invite page'''
+        '''This function is used to search friends from the invite page'''
         if request.method == 'POST' and request.user.is_authenticated():
             query = request.POST['query']
             friends_obj = Friends()
@@ -796,7 +795,7 @@ class AjaxHandle(AjaxSearch):
             return HttpResponse(json.dumps({'status':'0'}))
 
     def activity_handle(self,request):
-    	'''This function is used for tasks on the dropdown in activity page.'''
+        '''This function is used for tasks on the dropdown in activity page.'''
         if request.user.is_authenticated and request.method == 'POST':
             task = request.POST['task']
             change_id = request.POST['changeID']
@@ -804,7 +803,7 @@ class AjaxHandle(AjaxSearch):
             tweet_feed_obj = TweetFeed()
 
             if task == 'spam':
-            	'''Marking spam.'''
+                '''Marking spam.'''
                 spam_obj = Spam()
                 result = spam_obj.check_spam_by(change_id, int(request.user.id))
                 try:
@@ -821,14 +820,14 @@ class AjaxHandle(AjaxSearch):
                         'message':'You marked this tweet as spam.'}))                    
 
             if task == 'delete':
-            	'''Deleting a Tweet'''
+                '''Deleting a Tweet'''
                 #print change_id
                 if request.user.is_superuser or request.user.is_authenticated():
                     tweet_feed_obj.delete_tweet(request.user.id,str(change_id))
                 return HttpResponse(json.dumps({'status':'1', 'activity':'deleteTweet', '_id':change_id}))
 
             if task == 'follow':
-            	'''Marking follower'''
+                '''Marking follower'''
                 friend_obj = Friends()
                 fid = friend_obj.get_friend_id(request.user.username, change_id)
                 data = tweet_feed_obj.follow_user(fid, request.user.username, request.user.id)
@@ -895,7 +894,7 @@ class AjaxHandle(AjaxSearch):
             return HttpResponse(json.dumps({'status':0, 'message':'You are not authorized for this action.'}))
     
     def get_notices_paginated(self, request):
-    	'''This function returns the paginated list of notifications.'''
+        '''This function returns the paginated list of notifications.'''
         page_num = request.POST['pgnum']
         n_type = request.POST['n_type']
 
@@ -949,16 +948,16 @@ class AjaxHandle(AjaxSearch):
             notice_obj.change_notification_view_status(notification_id)            
             if this_not['notification_view_status'] == 'false':
                 return HttpResponse(json.dumps({'status':1, 
-                	'notification_id':notification_id, 
-                	'message':'Successfully changed status','already':'false'}))
+                    'notification_id':notification_id, 
+                    'message':'Successfully changed status','already':'false'}))
             else:
                 return HttpResponse(json.dumps({'status':1, 
-                	'notification_id':notification_id, 
-                	'message':'Successfully changed status', 'already':'true'})) 
+                    'notification_id':notification_id, 
+                    'message':'Successfully changed status', 'already':'true'})) 
         else:
             return HttpResponse(json.dumps({'status':0, 
-            	'activity':'notification status change', 
-            	'message':'You are not authorized to perform this action.'}))
+                'activity':'notification status change', 
+                'message':'You are not authorized to perform this action.'}))
 
     def un_archive_notification(self, request):
         '''This function un-archives a notification.'''
@@ -967,12 +966,12 @@ class AjaxHandle(AjaxSearch):
             notification_id = request.POST['notification_id']
             notice_obj.un_archive_notification(notification_id)            
             return HttpResponse(json.dumps({'status':1, 
-            	'notification_id':notification_id, 
-            	'message':'Successfully changed status'}))
+                'notification_id':notification_id, 
+                'message':'Successfully changed status'}))
         else:
             return HttpResponse(json.dumps({'status':0, 
-            	'activity':'notification status change', 
-            	'message':'You are not authorized to perform this action.'}))
+                'activity':'notification status change', 
+                'message':'You are not authorized to perform this action.'}))
 
     def get_notification_counts(self, request):
         '''This function returns the Notification(Inbox) Count.'''
@@ -982,7 +981,7 @@ class AjaxHandle(AjaxSearch):
             return HttpResponse(json.dumps(notices))
         else:
             return HttpResponse(json.dumps({'status':0, 
-            	'message':'You are not authorized to perform this action.'}))
+                'message':'You are not authorized to perform this action.'}))
 
     def get_unclaimed_paginated(self, request):
         '''This function returns unclaimed profiles paginated.'''
