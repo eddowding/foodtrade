@@ -418,7 +418,7 @@
 
               <div class="pull-left">
                 <span class="input-group-btn">
-                  <button class="btn btn-inverse  btn-sm" id="adfoo_id" rel="tooltip" style="height:34px;" onClick="add_food({{profile_id}})" {% if not user.is_authenticated %} title="Please log in to use this feature." {% endif %} > Add</button>
+                  <button class="btn btn-inverse  btn-sm" id="adfoo_id" rel="tooltip" style="height:35px;" onClick="add_food({{profile_id}})" {% if not user.is_authenticated %} title="Please log in to use this feature." {% endif %} > Add</button>
                 </span>
               </div>
             </div>  
@@ -729,22 +729,12 @@
                           <div class="pull-left">
                         <span class="input-group-btn">
                 
-                            <button class="btn btn-success btn-sm" id="adfoo_id" rel="tooltip" style="height:34px;" onClick="add_food({{profile_id}}, 'we_buy')" {% if not user.is_authenticated %} title="Please log in to use this feature." {% endif %} > Add</button>
+                            <button class="btn btn-inverse btn-sm" id="adfoo_id" rel="tooltip" style="height:35px;" onClick="add_food({{profile_id}}, 'we_buy')" {% if not user.is_authenticated %} title="Please log in to use this feature." {% endif %} > Add</button>
                         </span></div>
                       </div>  
               {% endif %}
             </div> 
-
-            <div class="col-md-4 col-sm-4 col-xs-5">
-             <form action="#" method="get">
-              <div class="input-group">
-                  <input class="form-control system-search" name="q" placeholder="Search foods..." required>
-                  <span class="input-group-btn">
-                      <button type="submit" class="btn btn-default"><i class="glyphicon glyphicon-search"></i></button>
-                  </span>
-              </div>
-             </form>
-            </div>
+ 
 
             </div>
  
@@ -1581,8 +1571,7 @@ function get_food_detail(profile_id, food_name, description, food_tags, photo_ur
     
   </script>
 
-  <script src='//api.tiles.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v0.0.2/Leaflet.fullscreen.min.js'></script>
-<link href='//api.tiles.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v0.0.2/leaflet.fullscreen.css' rel='stylesheet' />
+ 
 
 
      <script src="{% static "js/contact.js" %}"></script>
