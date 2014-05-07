@@ -162,68 +162,43 @@ s
       {% endif %} -->
 
 
-        {% if user.is_authenticated %}
-          <div class="row" style="padding: 20px 0;"> 
-            <div class="col-md-8 col-sm-8 col-xs-7">
-              {% if user.is_authenticated %}
-                  <div class="input-group"> 
-                        <div class='pull-left'>
-                        <select id="myselect" data-placeholder="Add produce available here" style="height:20px; width: 192px; padding: 15px 5px;" multiple class="chosen-select" >
-                        <option value=""></option> 
-                       {% for each in all_tags %}
-                          <optgroup label={{each.node}}>
-                          {% if each.childrens %}
-                          {% for eachchild in each.childrens %}
-                          <option>{{eachchild.node}}</option>
-                          {% endfor %}
-                        {% else %}
-                          <option>{{each.node}}</option>
-                        {% endif %}
-                          </optgroup>
-                        {% endfor %}
-                        </select></div>
-
-                          <div class="pull-left">
-                        <span class="input-group-btn">
-                
-                            <button class="btn btn-success btn-sm" id="adfoo_id" rel="tooltip" style="height:34px;" onClick="add_food({{profile_id}}, {{user_id}}, 'individual')" {% if not user.is_authenticated %} title="Please log in to use this feature." {% endif %} > Add</button>
-                        </span></div>
-                      </div>  
+        {% if user.is_authenticated %} 
+          <div class="input-group pull-right"> 
+              <div class='pull-left'>
+              <select id="myselect" data-placeholder="Add produce available here" style="height:20px; width: 192px; padding: 15px 5px;" multiple class="chosen-select" >
+              <option value=""></option> 
+             {% for each in all_tags %}
+                <optgroup label={{each.node}}>
+                {% if each.childrens %}
+                {% for eachchild in each.childrens %}
+                <option>{{eachchild.node}}</option>
+                {% endfor %}
+              {% else %}
+                <option>{{each.node}}</option>
               {% endif %}
-            </div> 
+                </optgroup>
+              {% endfor %}
+              </select></div>
 
-            <div class="col-md-4 col-sm-4 col-xs-5">
-             <form action="#" method="get" class="hidden">
-              <div class="input-group">
-                  <input class="form-control system-search" id="system-search" name="q" placeholder="Search foods..." required>
-                  <span class="input-group-btn">
-                      <button type="submit" class="btn btn-default"><i class="glyphicon glyphicon-search"></i></button>
-                  </span>
-              </div>
-             </form>
-            </div>
-
-            </div>
- 
+                <div class="pull-left">
+              <span class="input-group-btn">
+                <button class="btn btn-inverse btn-sm" id="adfoo_id" rel="tooltip" style="height:35px;" onClick="add_food({{profile_id}}, {{user_id}}, 'individual')" {% if not user.is_authenticated %} title="Please log in to use this feature." {% endif %} > Add</button>
+              </span></div>
+            </div>     
           {% endif %} 
 
       <div class="innerB btn-group" id="filterFoods" data-filter-group="foodtype">
         <button class="btn btn-primary btn-sm active" data-filter="*">All</button> 
-
         {% for eachparent in food_parents %}
           <button class="btn btn-default btn-sm" data-filter=".{{eachparent|slugify}}">{{eachparent}}</button> 
         {% endfor %}
-
       </div>
       <div class="clearfix isotope"  id="foods"> 
         {% include 'ajax_food.html' %}
-        </div>
+      </div>
 
-
-          
-
-          </div> <!-- end produce -->
-          {% endif %}
+    </div> <!-- end produce -->
+    {% endif %}
 
 
 <div class="tab-pane fade {% if not show_foods %} in active {% endif %}" id="activity">
