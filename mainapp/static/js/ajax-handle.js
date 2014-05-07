@@ -22,6 +22,19 @@ function tweetlistener(input, counter, button){
     });
 }
 
+function checktweet(input, counter, button){
+    var tweettext = $("#"+input).val();
+    var char = 120- parseInt(tweettext.length);
+    if(char <= 0){
+        $("#"+counter).text('');
+        $('#'+button).attr('disabled', 'disabled');
+    }
+    else{
+        $("#"+counter).text(char+' characters remaining');
+        $('#'+button).removeAttr('disabled');
+    }
+}
+    
 function save_favourites(profile_id, user_id){
 	if($('#favourite_btn').prop('checked')==true){
 		if(profile_id!=user_id){
@@ -194,7 +207,7 @@ var $container1 = $('#webuy_foods').isotope({itemSelector: '.food'});
 function recommend_food(logged_in_id, food_name, prof_id, username, my_this){
 	var data = {recommender_id: logged_in_id, food_name: food_name, business_id: prof_id, action: 'add'};
 	vouch_this = my_this;
-	if(vouch_this.checked){
+	if(!(vouch_this.checked)){
 		var url = window.location.href;
 		msg = "I've just vouched for #" + food_name.toLocaleLowerCase() + " from " + username + " " + url;
 		$('#tweet-recomm').val(msg);
@@ -202,7 +215,9 @@ function recommend_food(logged_in_id, food_name, prof_id, username, my_this){
 	else{
 		data['action'] = 'remove';
 	}
+	console.log(data);
 	ajax_request("vouch_for_food", 'food_ajax', {data: JSON.stringify(data)});
+	// ajax_request("vouch_for_food", 'empty', {data: JSON.stringify(data)});
 }
 
 function empty(){}

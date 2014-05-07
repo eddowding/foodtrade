@@ -125,11 +125,11 @@
        <span data-toggle="buttons">
        {% if eachfood.logged_recommender %}
             <label class="fa  fa-thumbs-o-up btn btn-default btn-sm " rel="tooltip" title="Recommend this to others"> 
-              <input type="checkbox" checked="checked" onchange="recommend_food({{user_id}}, '{{eachfood.food_name}}', {{profile_id}}, '{{screen_name}}', this); return null;">
+              <input type="checkbox" id="recomm_{{forloop.counter}}" checked="checked" onchange="recommend_food({{user_id}}, '{{eachfood.food_name}}', {{profile_id}}, '{{screen_name}}', this, 'recomm_{{forloop.counter}}'); return null;">
             </label>
         {% else %}
-            <label class="fa  fa-thumbs-o-up btn btn-default btn-sm active" rel="tooltip" title="Recommend this to others" data-toggle="modal" data-target="#modal_tweet_recomm"> 
-              <input type="checkbox" onchange="recommend_food({{user_id}}, '{{eachfood.food_name}}', {{profile_id}}, '{{screen_name}}', this); return null;">
+            <label class="fa fa-thumbs-o-up btn btn-default btn-sm active" rel="tooltip" title="Recommend this to others" data-toggle="modal" data-target="#modal_tweet_recomm"> 
+              <input id="recomm_{{forloop.counter}}" type="checkbox" onchange="recommend_food({{user_id}}, '{{eachfood.food_name}}', {{profile_id}}, '{{screen_name}}', this, 'recomm_{{forloop.counter}}'); return null;">
             </label>
         {% endif %}
         </span> 
