@@ -156,8 +156,8 @@
   In development, use the LESS files and the less.js compiler
   instead of the minified CSS loaded by default.
   -->
-  <link rel="stylesheet/less" href="{% static "assets/less/admin/module.admin.stylesheet-complete.less" %}" />
-
+  <!-- <link rel="stylesheet/less" href="{% static "assets/less/admin/module.admin.stylesheet-complete.less" %}" /> -->
+<link href="{% static "assets/less/admin/compiledstyle.css" %}" rel="stylesheet">
     <link href="{% static "css/foodtrade_new.css" %}" rel="stylesheet">
   
     <!--[if lt IE 9]><link rel="stylesheet" href="{% static "assets/components/library/bootstrap/css/bootstrap.min.css" %}" /><![endif]-->

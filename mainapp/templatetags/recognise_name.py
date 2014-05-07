@@ -17,7 +17,7 @@ def add_html_attr(field, attr_dict):
 def recognise_name(value):
     value = value.encode('utf-8').strip()
     result = re.findall(r'(?<=^|(?<=[^a-zA-Z0-9-_\.]))@([A-Za-z]+[A-Za-z0-9]+)', value, re.M|re.I)
-    tags = re.findall(r'(?<=^|(?<=[^a-zA-Z0-9-_\.]))#([A-Za-z]+[A-Za-z0-9]+)', value, re.M|re.I)
+    tags = re.findall(r'(?<=^|(?<=[^a-zA-Z0-9-_\.]))#([A-Za-z_]+[A-Za-z0-9]+)', value, re.M|re.I)
     links = re.findall("((http:|https:)//[^ \<]*[^ \<\.])",value)
     if links:
         for each_link in links:

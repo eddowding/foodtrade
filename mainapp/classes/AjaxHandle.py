@@ -110,7 +110,6 @@ class AjaxHandle(AjaxSearch):
 
         ACCESS_TOKEN = st.token
         ACCESS_TOKEN_SECRET = st.token_secret
-        
         user_twitter = get_twitter_obj(ACCESS_TOKEN, ACCESS_TOKEN_SECRET)
 
         bot_twitter = get_twitter_obj(settings.BOT_ACCESS_TOKEN, settings.BOT_ACCESS_TOKEN_SECRET)
