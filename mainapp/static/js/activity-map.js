@@ -146,5 +146,8 @@ var ctrl = L.marker([parseFloat(current_lat), parseFloat(current_lon)],{tweet_id
 
 
 
+    L.control.fullscreen().addTo(map);
+
+
 
 setTimeout(function(){reload_controls()},3000);

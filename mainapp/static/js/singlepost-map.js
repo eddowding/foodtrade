@@ -176,6 +176,7 @@ var card_str = '<div class="card-box"><div class="content"><div class="pull-left
 }
 
 
+L.control.fullscreen().addTo(map);
 
 
 setTimeout(function(){reload_controls()},3000);
