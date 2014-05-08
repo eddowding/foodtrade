@@ -230,22 +230,22 @@
 
                             <!-- number of foods sold -->
                             <div class="{% if show_foods %}col-xs-3{% else %}col-xs-6{% endif %}">
-                              <a href="" class="innerAll half text-center display-block text-muted" data-original-title="{{each_mem.food_no}} foods" rel="tooltip"><i class="fa fa-fw fa fa-cutlery"></i> {{each_mem.food_no}}</a>
+                              <a href="/profile/{{each_mem.username}}" class="innerAll half text-center display-block text-muted" data-original-title="{{each_mem.food_no}} foods" rel="tooltip"><i class="fa fa-fw fa fa-cutlery"></i> {{each_mem.food_no}}</a>
                             </div>
 
                             <!-- number of vouches across all produce --> 
                             <div class="{% if show_foods %}col-xs-3{% else %}col-xs-6{% endif %}">
-                              <a href=""  rel="tooltip" title="{{each_mem.total_vouches}} of vouches for all produce"  class="innerAll half text-center display-block text-muted"><i class="fa fa-fw fa-thumbs-o-up"></i> {{each_mem.total_vouches}}</a>
+                              <a href="/profile/{{each_mem.username}}"  rel="tooltip" title="{{each_mem.total_vouches}} of vouches for all produce"  class="innerAll half text-center display-block text-muted"><i class="fa fa-fw fa-thumbs-o-up"></i> {{each_mem.total_vouches}}</a>
                             </div> 
 
                             <!-- number of trade connections --> 
                             <div class="{% if show_foods %}col-xs-3{% else %}col-xs-6{% endif %}">
-                              <a href=""  rel="tooltip" title="{{each_mem.trade_conn_no}} of trade connections" class="innerAll half text-center display-block text-muted"><i class="fa fa-fw fa-link"></i> {{each_mem.trade_conn_no}}</a>
+                              <a href="/profile/{{each_mem.username}}"  rel="tooltip" title="{{each_mem.trade_conn_no}} of trade connections" class="innerAll half text-center display-block text-muted"><i class="fa fa-fw fa-link"></i> {{each_mem.trade_conn_no}}</a>
                             </div>
 
                             <!-- number of group membershpis -->  
                             <div class="{% if show_foods %}col-xs-3{% else %}col-xs-6{% endif %}">
-                              <a href=""  rel="tooltip" title="Member of {{each_mem.org_conn_no}} groups or organisations"  class="innerAll half text-center display-block text-muted"><i class="fa fa-fw fa-group"></i> {{each_mem.org_conn_no}}</a>
+                              <a href="/profile/{{each_mem.username}}"  rel="tooltip" title="Member of {{each_mem.org_conn_no}} groups or organisations"  class="innerAll half text-center display-block text-muted"><i class="fa fa-fw fa-group"></i> {{each_mem.org_conn_no}}</a>
                             </div> 
 
                           </div> 
@@ -382,7 +382,7 @@
 
 
 <div class="col-md-6 col-sm-5 {% if loc.lat == -82.86275189999999 and loc.lon == -135.10000000000002 %} hidden {% endif %}">
-  <div style="position: fixed; width:50%; height: 100%; " id="map"></div> 
+  <div style="position: fixed; width: 50%; height: 90%; " id="map"></div> 
 </div>
 
 
