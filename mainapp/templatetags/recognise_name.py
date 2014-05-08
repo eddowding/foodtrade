@@ -16,7 +16,7 @@ def add_html_attr(field, attr_dict):
 @register.filter
 def recognise_name(value):
     value = value.encode('utf-8').strip()
-    result = re.findall(r'(?<=^|(?<=[^a-zA-Z0-9-_\.]))@([A-Za-z]+[A-Za-z0-9]+)', value, re.M|re.I)
+    result = re.findall(r'(?<=^|(?<=[^a-zA-Z0-9-\.]))@([A-Za-z_]+[A-Za-z0-9_]+)', value, re.M|re.I)
     tags = re.findall(r'(?<=^|(?<=[^a-zA-Z0-9-_\.]))#([A-Za-z_]+[A-Za-z0-9]+)', value, re.M|re.I)
     links = re.findall("((http:|https:)//[^ \<]*[^ \<\.])",value)
     if links:
@@ -25,6 +25,7 @@ def recognise_name(value):
     if tags:
     	for each_tag in tags:
     		value = value.replace("#"+each_tag, '<a href="/activity/?q=%23'+each_tag+'">#'+each_tag+'</a>')
+    print 'result: ', result            
     if result:
         user_prof = UserProfile()
         for each in result:
