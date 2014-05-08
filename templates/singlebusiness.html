@@ -397,8 +397,8 @@
   
 
           {% if user.is_authenticated %}
-          <div class="pull-right">
-            <div class="input-group"> 
+          <div class="box-generic bg-primary-light innerAll half">
+            <div class="input-group" style="margin: 0 auto;"> 
               <div class='pull-left'>
                 <select id="myselect" data-placeholder="Add produce available here" style="height:20px; width: 192px; padding: 15px 5px;" multiple class="chosen-select" >
                 <option value=""></option> 
@@ -704,41 +704,35 @@
 <!--  start we buy -->
 
 {% if we_buy %}
-<div  class="tab-pane clearfix" id="tabBuy">
-           {% if user.is_authenticated %}
-          <div class="row" style="padding: 20px 0;"> 
-            <div class="col-md-8 col-sm-8 col-xs-7">
-              {% if user.is_authenticated %}
-                  <div class="input-group"> 
-                        <div class='pull-left'>
-                        <select id="webuy_select" data-placeholder="Add produce {{name}} buys" style="height:20px; width: 192px; padding: 15px 5px;" multiple class="chosen-select" >
-                        <option value=""></option> 
-                       {% for each in all_tags %}
-                          <optgroup label={{each.node}}>
-                          {% if each.childrens %}
-                          {% for eachchild in each.childrens %}
-                          <option>{{eachchild.node}}</option>
-                          {% endfor %}
-                        {% else %}
-                          <option>{{each.node}}</option>
-                        {% endif %}
-                          </optgroup>
-                        {% endfor %}
-                        </select></div>
+<div  class="tab-pane clearfix" id="tabBuy"> 
+  {% if user.is_authenticated %}
+  <div class="box-generic bg-primary-light innerAll half">
+    <div class="input-group" style="margin: 0 auto;"> 
+      <div class='pull-left'>
+        <select id="webuy_select" data-placeholder="Add produce {{name}} buys" style="height:20px; width: 300px; padding: 15px 5px;" multiple class="chosen-select" >
+            <option value=""></option> 
+           {% for each in all_tags %}
+              <optgroup label={{each.node}}>
+              {% if each.childrens %}
+              {% for eachchild in each.childrens %}
+              <option>{{eachchild.node}}</option>
+              {% endfor %}
+            {% else %}
+              <option>{{each.node}}</option>
+            {% endif %}
+              </optgroup>
+            {% endfor %}
+        </select>
+      </div>
 
-                          <div class="pull-left">
-                        <span class="input-group-btn">
-                
-                            <button class="btn btn-inverse btn-sm" id="adfoo_id" rel="tooltip" style="height:35px;" onClick="add_food({{profile_id}}, 'we_buy')" {% if not user.is_authenticated %} title="Please log in to use this feature." {% endif %} > Add</button>
-                        </span></div>
-                      </div>  
-              {% endif %}
-            </div> 
- 
-
-            </div>
- 
-          {% endif %} 
+      <div class="pull-left">
+        <span class="input-group-btn">    
+          <button class="btn btn-inverse btn-sm" id="adfoo_id" rel="tooltip" style="height:35px;" onClick="add_food({{profile_id}}, 'we_buy')" {% if not user.is_authenticated %} title="Please log in to use this feature." {% endif %} > Add</button>
+        </span>
+      </div>
+    </div>  
+  </div>
+  {% endif %} 
 
       <div class="innerB" id="filterBuyingFoods" data-filter-group="foodtype">
       <div class="btn-group">
@@ -1435,7 +1429,7 @@ $('#webuy_select').chosen({create_option: true, skip_no_results: true, create_op
     });
     
     $('#myselect').chosen().ready(function(){
-      $('.search-field input').attr('style', 'width:192px;height:20px;');
+      $('.search-field input').attr('style', 'width:300px;height:20px;');
     });
 
 if (jQuery.contains(document, $('#myselect'))) {    
