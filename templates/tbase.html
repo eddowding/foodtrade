@@ -236,32 +236,29 @@
 <div id="structured_postupdate" class="">
 
 <form action="r" method="post" id="structured_input_form" accept-charset="utf-8" onsubmit="generate_update(); $('#newtwitterpost').modal('hide')" class="form" role="form">   
-  
-  <div class="row" style="margin-bottom:0;"> 
-    <div class="col-xs-12">    
-    Step 1: 
-      <div  id="post_for" class="btn-group">
-          <button type="button" class="btn btn-stroke btn-primary btn-icon-stacked" onclick="show_full_structure();$('#price').show();" value="buy"><i class="fa fa-2x fa-sign-in"></i> 
-              <span>I'd like  
-                  <br>to buy </span>
-          </button> 
-          <button type="button" class="btn btn-stroke btn-primary btn-icon-stacked" onclick="show_full_structure();$('#price').show();" value="sell"><i class="fa fa-2x fa-sign-out"></i> 
-              <span>I'd like  
-                  <br>to sell </span>
-          </button> 
-          <button type="button" class="btn btn-stroke btn-primary btn-icon-stacked" onclick="show_full_structure();$('#price').hide();" value="offer surplus"><i class="fa fa-2x fa-refresh"></i> 
-              <span>I'd like  to 
-                  <br>offer surplus </span>
-          </button> 
-          <button type="button" class="btn btn-stroke btn-primary btn-icon-stacked" onclick="swith_update_form()" value="freestyle"><i class="fa fa-2x fa-rocket"></i> 
-              <span>Go 
-                  <br>freestyle </span>
-          </button> 
-        </div>             
+
+<div class="row innerTB">
+    <div class="col-xs-12 border-bottom"> 
+      <h4>What would you like to do?</h4>
     </div>
-  </div> 
+  </div>
+  <div class="row" style="margin-bottom:0;"> 
+    <div class="col-xs-12">  
+     <p style="line-height: 2.5; margin: 0 10px 0 0;" class="pull-left"> 
+      <div class="btn-group" id="post_for">
+      <!-- <input type="hidden" /> -->
+        <button type="button" onclick="show_small_structure();$('#price').show();"  class="btn btn-primary btn-stroke btn-lg" value="buy" ><i class="fa fa-sign-in fa-fw"></i> buy</button>
+        <button type="button" onclick="show_small_structure();$('#price').show();" class="btn btn-primary btn-stroke btn-lg" value="sell" ><i class="fa fa-sign-out fa-fw"></i> sell</button>
+        <button type="button" onclick="show_small_structure();$('#price').hide();"   class="btn btn-primary btn-stroke btn-lg" value="offer surplus"  ><i class="fa fa-random fa-fw"></i> offer surplus</button>
+        <button type="button" onclick="swith_update_form()"   class="btn btn-primary btn-stroke btn-lg" value="offer surplus"  ><i class="fa fa-rocket fa-fw"></i> go freestyle</button>
+      </div>                     
+    </div>
+  </div>
+  
+  
 
 <span class="hidden" id="structured_hidden_block">
+ 
   <div class="row" style="margin-top: 10px;"> 
     <div class="col-xs-6"> 
       <input type="text" name="produce" value="" class="form-control" placeholder="What?"  />  
@@ -331,8 +328,9 @@
       Add detail: eg quality, variety, grade, packaging, etc.
 </p>
     </div> 
-  </div>
+  </div> 
   <div class="row" style="margin-top: 5px;">
+     
             <div class="col-xs-7">
               <ul class="list-inline small" style="margin-bottom:0;">
                 <li class="">Also send to </li>
@@ -363,7 +361,7 @@
                 <span class="small">Get started free</span></a>
             {% else %}
 
-                <button type="button" id="btn_update_activity" class="btn  btn-success pull-right" rel="tooltip"  {% if not user.is_authenticated %}  title="Please login to use this feature." {% endif %} onclick="generate_update();"> Post this</button>
+                <button type="button" id="btn_update_activity" class="btn btn-lg btn-success pull-right" rel="tooltip"  {% if not user.is_authenticated %}  title="Please login to use this feature." {% endif %} onclick="generate_update();"> Post this</button>
 
             {% endif %}
 
