@@ -18,7 +18,10 @@
 <div class="widget" style="width:100%;">
   <div class="padding-none"> 
     <div class="input-group"  style="width:100%;">
+    {% comment %}
       <textarea class="form-control"  {% if not user.is_authenticated %}  onfocus="login_redirect()" title="Please login to use this feature." {% else %} {% if not can_tweet %} data-toggle="modal" data-target="#newtwitterpost" {% else %} rel="tooltip" title="Please upgrade your account to post." {% endif %}{% endif %} style="width:100%;">What #food do you have to #buy, #sell, or #surplus?  </textarea> 
+    {% endcomment %}
+      <textarea class="form-control"  {% if not user.is_authenticated %}  onfocus="login_redirect()" title="Please login to use this feature." {% else %}  data-toggle="modal" data-target="#newtwitterpost" {% endif %} style="width:100%;">What #food do you have to #buy, #sell, or #surplus?  </textarea> 
     </div>
   </div>
 </div>
