@@ -86,13 +86,13 @@ function reload_controls()
 		{
 			var con = connections[i];
 			// var name = self_info.user.name;
-			var name = self_info.sign_up_as =="Business" || self_info.sign_up_as == "Organisation" ? self_info.user.business_org_name: self_info.user.name;
-			var status =  self_info.status;
-			var profile_img = self_info.user.profile_img;
-			var username = self_info.user.username;
-			var description = self_info.user.description;
-			var type_user = self_info.type_user;
-			var sign_up_as = self_info.sign_up_as;
+			var name = con.sign_up_as =="Business" || con.sign_up_as == "Organisation" ? con.user.business_org_name: con.user.name;
+			var status =  con.status;
+			var profile_img = con.user.profile_img;
+			var username = con.user.username;
+			var description = con.user.description;
+			var type_user = con.type_user;
+			var sign_up_as = con.sign_up_as;
 			if(!type_user)
 			{
 				type_user = [];
