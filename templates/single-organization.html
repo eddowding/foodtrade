@@ -181,7 +181,7 @@
           <li>
             <a href="#updates" data-toggle="tab" class="glyphicons bullhorn">
             <i></i>
-            <span>Updates</span>
+            <span>Activity</span>
             {% if updates_count != 0 %}<span class="label label-default pull-number ">{{updates_count}}</span>{% endif %}
             </a></li>
         
@@ -211,8 +211,10 @@
                    
                           <div class="content" style="background:url('{{each_mem.banner_url}}');">
                             <div class="text-center">
+                            <a href="/profile/{{each_mem.username}}">
                               <img src="{{each_mem.photo}}" alt="{{each_mem.name}}"
                               class="img-thumbnail img-responsive" style="width:73px; height:73px;" /> 
+                            </a>
                       
                             </div>
                             <div class="text">
@@ -342,7 +344,9 @@
               {% for eachUpdate in updates %}
               <div class="media border-bottom innerAll margin-none"> 
                   <div class="media-body"> 
-                      <p class="lead"><a href="" class="text-inverse"> {{eachUpdate.status|recognise_name|safe}}</a>
+
+                      <p class="lead">  
+                        <a href="" class="text-inverse"> {{eachUpdate.status|recognise_name|safe}}</a>
                       </p>
                       <small class="pull-right">
                         <a href="/{{username}}/post/{{eachUpdate.tweetuid}}/"><i class="fa fa-fw fa-clock-o"></i> {{eachUpdate.time_elapsed}} ago</a>
