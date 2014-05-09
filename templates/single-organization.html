@@ -340,20 +340,99 @@
               <div class="col-md-12">
             {% if user.is_authenticated %}
 
+<ul class="timeline-activity marketplace list-unstyled " id="updates">
 
               {% for eachUpdate in updates %}
-              <div class="media border-bottom innerAll margin-none"> 
-                  <div class="media-body"> 
+      
 
-                      <p class="lead">  
-                        <a href="" class="text-inverse"> {{eachUpdate.status|recognise_name|safe}}</a>
-                      </p>
-                      <small class="pull-right">
-                        <a href="/{{username}}/post/{{eachUpdate.tweetuid}}/"><i class="fa fa-fw fa-clock-o"></i> {{eachUpdate.time_elapsed}} ago</a>
-                      </small>
-                  </div>
+ <li class="{{eachUpdate.eachUpdate_class}} singleeachUpdate {% if eachUpdate.subscribed %} verified {% endif %}" data-id="{% if eachUpdate_type == "status" %}{{eachUpdate.tweetuid}} {% else %}{{username}}{% endif %}">
+
+    <div class="block block-inline"> 
+      <span class="marker"></span>
+      <div class="caret"></div>
+        <div class="box-generic">
+
+            <div class="timeline-top-info   border-bottom" {% if eachUpdate.subscribed %} rel="tooltip" title="Verified profile" {% endif %}>
+            
+            <div class="pull-right" style="margin-left: 5px;">
+  
+
+              <a type="button" class="dropdown-toggle" data-toggle="dropdown">
+                <i class="fa fa-fw fa-cog fa-lg"></i>
+                <span class="sr-only">Toggle Dropdown</span>
+              </a>
+
+             
+              <a type="button" class="btn btn-primary btn-xs" href="/{{eachUpdate.user.username}}/post/{{eachUpdate.tweetuid}}/">
+                <i class="fa fa-arrow-right fa-lg" style="color:#fff;"></i> 
+              </a> 
+
+              <ul class="dropdown-menu" role="menu">  
+                <li><a href="http://www.facebook.com/sharer/sharer.php?u=http://foodtrade.com/{{eachUpdate.user.username}}/post/{{eachUpdate.tweetuid}}" target="_blank"><i class="fa fa-facebook fa-fw facebook"></i> Share on Facebook</a></li>
+                <li><a href="http://twitter.com/home?status={{eachUpdate.status|urlencode}}%20http://foodtrade.com/{% if eachUpdate_type == "status" %}{{user.username}}/post/{{eachUpdate.tweetuid}}{% else %}profile/{{user.username}}{% endif %}" target="_blank"><i class="fa fa-twitter fa-fw twitter "></i> Share on Twitter</a></li>
+                <li><a type="button" href="/profile/{{user.username}}/">
+                <i class="fa fa-info-circle fa-lg fa-fw"></i> View profile</a></li>  
+                <li><a href="#" onclick="click_activity('spam','{% if eachUpdate_type == "status" %}{{eachUpdate.tweetuid}} {% else %}{{username}}{% endif %}')" class=" "><i class="fa fa-flag-o flag fa-fw"></i> Report</a></li>
+              </ul>  
+
+          </div>  
+  
+ 
+                <img src="{{eachUpdate.user.profile_img}}" alt="{{eachUpdate.user.name}}" class="img-responsive pull-left" style="width:20px; margin-right: 5px;" />
+                <a href="/profile/{{eachUpdate.user.name}}" class="text-inverse">
+                  {% if eachUpdate.user.business_org_name != None %}
+                      {% if eachUpdate.sign_up_as == "Business" and eachUpdate.user.business_org_name != '' or eachUpdate.sign_up_as == "Organisation" and eachUpdate.user.business_org_name != '' %}
+                        {{eachUpdate.user.business_org_name}}
+                      {% else %}
+                        {{eachUpdate.user.name}}
+                      {% endif %}
+                {% else %}
+                    {{eachUpdate.user.name}}
+                {% endif %}
+                </a> 
+            </div>
+
+            <!-- status --> 
+            <div class="media margin-none status" >  
+
+ 
+              {% if eachUpdate.status %}
+              <div class="lead innerAll">
+                {{eachUpdate.status|recognise_name|safe}}
               </div>
+              {% endif %}
+
+              <!-- images !--> 
+              <div class="media innerAll half">
+                {% for picture in eachUpdate.tweet_pictures %}
+                <img src="{{picture}}" class="img-post">
+                {% endfor %} 
+              </div> 
+              <!-- /images !-->
+ 
+
+            </div> 
+
+            <div class="timeline-bottom innerAll border-top clearfix">
+  
+             <a href="/{{username}}/post/{{eachUpdate.tweetuid}}" class="pull-right">
+             <i class="fa fa-calendar  fa-fw"></i> {{eachUpdate.time_elapsed}} ago</a>
+          
+              <span class="hidden-sm hidden-xs truncate100 address" >
+                <i class="fa fa-map-marker fa-fw"></i>
+                {{eachUpdate.user.address}}
+              </span> 
+            </div> 
+
+
+
+
+ 
+        </div>
+    </div>
+  </li>    
               {% endfor %}  
+</ul>
 
                   
               {% else %}

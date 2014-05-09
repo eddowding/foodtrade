@@ -154,7 +154,7 @@
 
               {% if result_type == "status" %} 
                  <a href="/{{result.user.username}}/post/{{result.tweetuid}}">
-                 <i class="fa fa-clock-o  fa-fw"></i> {{result.time_elapsed}} ago</a>
+                 <i class="fa fa-calendar  fa-fw"></i> {{result.time_elapsed}} ago</a>
                  <br />
               {% endif %}  
  
@@ -195,7 +195,7 @@
                     <div class="media-body">
                           <a href="/profile/{{reply_result.user.username}}" class="strong text-inverse">{{reply_result.user.username}}</a> {{reply_result.status}}
                           <div class="timeline-bottom">
-                                <i class="fa fa-clock-o"></i> {{reply_result.time_elapsed}}
+                                <i class="fa fa-calendar"></i> {{reply_result.time_elapsed}}
                           </div>
                     </div>                
                   </div> 
