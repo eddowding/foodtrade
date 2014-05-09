@@ -95,7 +95,7 @@
 
           </div><!-- card --> 
           
-          {% ifequal profile_id user_id %}
+      {% if request.user.is_superuser or profile_id == user_id %}
           <div class="widget border-top innerAll half bg-gray margin-none text-center">
            
              <a href="" data-toggle="modal" data-target="#modal_food_detail"  data-container="body" onClick="get_food_detail('{{profile_id}}', '{{eachfood.food_name|safe}}', '{{eachfood.description}}', '{{eachfood.food_tags}}', '{{eachfood.photo_url}}', '{{eachfood.recomm_tags|safe}}', '{{eachfood.how_much}}', '{{eachfood.how_often}}', '{{eachfood.month_list}}')">
@@ -104,7 +104,7 @@
              <a class=" "><i class="fa fa-trash-o fa-fw fa-lg text-danger" title="Delete" onClick="delete_food({{profile_id}}, '{{eachfood.food_name}}', this)"></i></a>
 
           </div>
-          {% endifequal %}
+          {% endif %}
 
 
           <div class="widget border-top innerAll half bg-gray margin-none">
