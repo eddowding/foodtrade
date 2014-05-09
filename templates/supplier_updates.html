@@ -87,12 +87,12 @@
       <div class="btn-group pull-right">
         <input type="hidden" id="current_sort_order" value="time" /> 
         <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown">
-          <span  id="current_sort_text" class=""><i class="fa fa-clock-o fa-fw"></i> Time posted</span>
+          <span  id="current_sort_text" class=""><i class="fa fa-calendar fa-fw"></i> Time posted</span>
           <span class="caret text-muted"></span>
         </button>
         <ul class="dropdown-menu">
           <li><a onclick="sort_by('distance',this)"><i class="fa fa-location-arrow fa-fw"></i> Distance from {% if search %} {{ search.place }} {% endif %} {% if not search %} {{userinfo.zip_code}}{% endif %}</a></li>
-          <li><a onclick="sort_by('time',this)"><i class="fa fa-clock-o fa-fw"></i> Time posted</a></li>
+          <li><a onclick="sort_by('time',this)"><i class="fa fa-calendar fa-fw"></i> Time posted</a></li>
         </ul>
       </div> 
 

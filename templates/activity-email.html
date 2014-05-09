@@ -1,12 +1,12 @@
 {% load recognise_name %}
-<h1 style="text-align:center">Local activity updates</h1>
+<h2 style="text-align:center">What's happening hear you?</h2>
 <table style="border:0;" cellpadding="2" >
 
 {% for result in results %}
 <tr>
     <td valign="top" data-id="{% if result_type == "status" %}{{result.tweetuid}} {% else %}{{result.user.username}}{% endif %}">
       <span class="chat-img">
-      <img src="{{result.user.profile_img}}" alt="{{result.user.name}}" style="padding: 2px; border: 1px solid #999; margin-right: 4px;"  />
+      <img src="{{result.user.profile_img}}" alt="{{result.user.name}}" style="padding: 0px; width: 50px; margin-right: 4px;"  />
       </span>
     </td>
     <td>  
@@ -23,11 +23,11 @@
         {% endif %}
       {% endif %}
 
-      <p style="font-size: 12px; color: #444; margin: 2px 0 2px 0;">
+      <div style="color: #444; margin: 2px 0 2px 0; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 21px; font-weight: 200;">
           {{result.status|recognise_name|safe}}
-      </p>
+      </div>
 
-              <p style="font-size:11px; color: #999;">
+              <p style="font-size:12px; color: #999;">
                 <span style="color: #999;"> 
                   {{result.user.address}}
                 </span>

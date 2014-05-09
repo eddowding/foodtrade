@@ -17,7 +17,7 @@
 {% endif %}
  
 {% if not subscribed %} 
-<div class="box-generic bg-secondary">
+<div class="box-generic bg-secondary text-white">
 <form class="form-inline" method = "post" id ="promo_form" role="form" onsubmit ="return apply_discount()">
   {% csrf_token %}
   <div class="form-group has-info">

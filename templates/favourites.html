@@ -126,7 +126,7 @@
                         </div>
                         <div class="timeline-bottom innerAll border-top clearfix">
                                    <a href="http://maps.google.com/maps?saddr={{userinfo.lat}},{{userinfo.lon}}&daddr={{result.latitude}},{{result.longitude}}" target="_blank" data-placement="top" data-toggle="tooltip" class="pull-right" rel="tooltip" title="Get directions"> {% if not userinfo.subscribed %}<i class="fa fa-location-arrow fa-fw"></i> {{result.distance_text}}  {% endif %}</a>
-                                   <i class="fa fa-clock-o  fa-fw"></i> {{result.visit_time}} 
+                                   <i class="fa fa-calendar  fa-fw"></i> {{result.visit_time}} 
                                    <br />                        
                                   {% if not userinfo.subscribed %}
                                   <span class="hidden-sm hidden-xs truncate100 address" > <i class="fa fa-map-marker fa-fw"></i> {{result.address}}</span>

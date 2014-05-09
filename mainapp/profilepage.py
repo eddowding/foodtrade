@@ -493,7 +493,7 @@ def edit_profile(request, username):
         twt = TweetFeed()
         twt.update_data(userprof['useruid'])
 
-        return HttpResponseRedirect('/')
+        return HttpResponseRedirect('/'+username)
 
 def get_tags_freq(food_name):
     foo = ApprovedFoodTags()

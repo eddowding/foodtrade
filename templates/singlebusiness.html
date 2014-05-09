@@ -377,7 +377,7 @@
           </a>
 
           </li> 
-          <li class="premium"><a class="glyphicons bullhorn" rel="tooltip" title="Premium account holders only - upgrade from just &pound;45/yr" href="#tabUpdates" data-toggle="tab"><i></i><span class="name">Trade</span> 
+          <li class="premium"><a class="glyphicons bullhorn" rel="tooltip" title="Premium account holders only - upgrade from just &pound;45/yr" href="#tabUpdates" data-toggle="tab"><i></i><span class="name">Activity</span> 
 
           {% if updates_count != 0 %}<span class="label label-default pull-number">{{updates_count}}</span>{% endif %}
          <!--  <div class="ribbon-wrapper small">
@@ -393,12 +393,12 @@
       <div class="tab-content">
        
         {% if show_foods %}
-          <div  class="tab-pane active" id="tabProduce">
+          <div  class="tab-pane active clearfix" id="tabProduce">
   
 
           {% if user.is_authenticated %}
-          <div class="pull-right">
-            <div class="input-group"> 
+          <div class="box-generic bg-primary-light innerAll half">
+            <div class="input-group" style="margin: 0 auto;"> 
               <div class='pull-left'>
                 <select id="myselect" data-placeholder="Add produce available here" style="height:20px; width: 192px; padding: 15px 5px;" multiple class="chosen-select" >
                 <option value=""></option> 
@@ -704,41 +704,35 @@
 <!--  start we buy -->
 
 {% if we_buy %}
-<div  class="tab-pane clearfix" id="tabBuy">
-           {% if user.is_authenticated %}
-          <div class="row" style="padding: 20px 0;"> 
-            <div class="col-md-8 col-sm-8 col-xs-7">
-              {% if user.is_authenticated %}
-                  <div class="input-group"> 
-                        <div class='pull-left'>
-                        <select id="webuy_select" data-placeholder="Add produce {{name}} buys" style="height:20px; width: 192px; padding: 15px 5px;" multiple class="chosen-select" >
-                        <option value=""></option> 
-                       {% for each in all_tags %}
-                          <optgroup label={{each.node}}>
-                          {% if each.childrens %}
-                          {% for eachchild in each.childrens %}
-                          <option>{{eachchild.node}}</option>
-                          {% endfor %}
-                        {% else %}
-                          <option>{{each.node}}</option>
-                        {% endif %}
-                          </optgroup>
-                        {% endfor %}
-                        </select></div>
+<div  class="tab-pane clearfix" id="tabBuy"> 
+  {% if user.is_authenticated %}
+  <div class="box-generic bg-primary-light innerAll half">
+    <div class="input-group" style="margin: 0 auto;"> 
+      <div class='pull-left'>
+        <select id="webuy_select" data-placeholder="Add produce {{name}} buys" style="height:20px; width: 300px; padding: 15px 5px;" multiple class="chosen-select" >
+            <option value=""></option> 
+           {% for each in all_tags %}
+              <optgroup label={{each.node}}>
+              {% if each.childrens %}
+              {% for eachchild in each.childrens %}
+              <option>{{eachchild.node}}</option>
+              {% endfor %}
+            {% else %}
+              <option>{{each.node}}</option>
+            {% endif %}
+              </optgroup>
+            {% endfor %}
+        </select>
+      </div>
 
-                          <div class="pull-left">
-                        <span class="input-group-btn">
-                
-                            <button class="btn btn-inverse btn-sm" id="adfoo_id" rel="tooltip" style="height:35px;" onClick="add_food({{profile_id}}, 'we_buy')" {% if not user.is_authenticated %} title="Please log in to use this feature." {% endif %} > Add</button>
-                        </span></div>
-                      </div>  
-              {% endif %}
-            </div> 
- 
-
-            </div>
- 
-          {% endif %} 
+      <div class="pull-left">
+        <span class="input-group-btn">    
+          <button class="btn btn-inverse btn-sm" id="adfoo_id" rel="tooltip" style="height:35px;" onClick="add_food({{profile_id}}, 'we_buy')" {% if not user.is_authenticated %} title="Please log in to use this feature." {% endif %} > Add</button>
+        </span>
+      </div>
+    </div>  
+  </div>
+  {% endif %} 
 
       <div class="innerB" id="filterBuyingFoods" data-filter-group="foodtype">
       <div class="btn-group">
@@ -851,7 +845,7 @@
 
           </div><!-- card --> 
           
-          {% ifequal profile_id user_id %}
+          {% if request.user.is_superuser or profile_id == user_id %}
           <div class="widget border-top innerAll half bg-gray margin-none text-center">
            
              <a href="" data-toggle="modal" data-target="#modal_food_detail"  data-container="body" onClick="get_food_detail('{{profile_id}}', '{{eachfood.food_name|safe}}', '{{eachfood.description}}', '{{eachfood.food_tags}}', '{{eachfood.photo_url}}', '{{eachfood.recomm_tags|safe}}', '{{eachfood.how_much}}', '{{eachfood.how_often}}', '{{eachfood.month_list}}')">
@@ -860,7 +854,7 @@
              <a class=" "><i class="fa fa-trash-o fa-fw fa-lg text-danger" title="Delete" onClick="delete_food({{profile_id}}, '{{eachfood.food_name}}', this, 'we_buy')"></i></a>
 
           </div>
-          {% endifequal %}
+          {% endif %}
 
 
           <div class="widget border-top innerAll half bg-gray margin-none">
@@ -1435,7 +1429,7 @@ $('#webuy_select').chosen({create_option: true, skip_no_results: true, create_op
     });
     
     $('#myselect').chosen().ready(function(){
-      $('.search-field input').attr('style', 'width:192px;height:20px;');
+      $('.search-field input').attr('style', 'width:300px;height:20px;');
     });
 
 if (jQuery.contains(document, $('#myselect'))) {    
