@@ -25,7 +25,6 @@ def recognise_name(value):
     if tags:
     	for each_tag in tags:
     		value = value.replace("#"+each_tag, '<a href="/activity/?q=%23'+each_tag+'">#'+each_tag+'</a>')
-    print 'result: ', result            
     if result:
         user_prof = UserProfile()
         for each in result:

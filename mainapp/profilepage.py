@@ -183,7 +183,7 @@ def display_profile(request, username):
     except:
         pass
     
-    parameters['we_buy'] = userprof.get('we_buy') if userprof.get('we_buy')!=None else False
+    parameters['we_buy'] = userprof.get('we_buy') if userprof.get('we_buy')!=None else True
 
     if userprof.get('business_org_name')!=None:
         parameters['name'] = userprof.get('business_org_name') if (userprof['sign_up_as'] == 'Business' or userprof['sign_up_as'] == 'Organisation') \
@@ -389,7 +389,7 @@ def edit_profile(request, username):
             parameters['sign_up_as'] = userprof['sign_up_as']
             parameters['username'] = username
             parameters['video_url'] = userprof.get('video_url') if userprof.get('video_url')!=None else ''
-            parameters['we_buy'] = userprof.get('we_buy') if userprof.get('we_buy')!=None else False
+            parameters['we_buy'] = userprof.get('we_buy') if userprof.get('we_buy')!=None else True
 
             parameters['company_num'] = userprof.get('company_num') if userprof.get('company_num')!=None else ''
             parameters['website_url'] = userprof.get('website_url') if userprof.get('website_url')!=None else ''
