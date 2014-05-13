@@ -628,6 +628,11 @@ def get_all_buying_foods(user_id, logged_in_id = None):
         'logged_recommender': logged_recommender}
         if each.get('description')!=None:
             data['description'] = each.get('description')
+
+        data['how_much'] = each.get('how_much') if each.get('how_much')!=None else ''
+        data['how_often'] = each.get('how_often') if each.get('how_often')!=None else 'How often'
+        data['month_list'] = each.get('month_list') if each.get('month_list')!=None else []
+        
         if each.get('food_tags')!=None:
             # tags_list = each.get('food_tags').split(',')
             data['food_tags'] = each.get('food_tags')
