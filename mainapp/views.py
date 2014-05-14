@@ -437,7 +437,7 @@ def transport_mailchimp(request, username):
         user_profile_obj = UserProfile()
         user = user_profile_obj.get_profile_by_username(username)
         # try:
-        if eachUser['email'] == '':
+        if user['email'] == '':
             return HttpResponse(json.dumps({'email':'empty'}))
         m = MailChimp()
         m.subscribe(user)
