@@ -14,7 +14,6 @@ class MailChimp():
         self.db_object.create_table(self.table_name,'_id')
     
     def get_mailchimp_api(self):
-        import mailchimp
         # return mailchimp.Mailchimp('e9294366710f56f159569b82660f9df3-us3') #your api key here
         return mailchimp.Mailchimp('0a92cdd6b266f6e6f1db98639bfa20e2-us2') #your api key here
 
@@ -27,7 +26,8 @@ class MailChimp():
             first, last = doc['name'].split(' ')[0], doc['name'].split(' ')[1]
         except:
             first, last = doc['name'].split(' ')[0], ''
-        m = self.get_mailchimp_api()
+        # m = self.get_mailchimp_api()
+        m = mailchimp.Mailchimp('0a92cdd6b266f6e6f1db98639bfa20e2-us2')
         if self.list_id != 'eeea3ac4c6':
             response = m.lists.subscribe(self.list_id, email = {'email':str(doc['email'])}, 
                 double_optin = False,
