@@ -699,16 +699,25 @@ class RecommendFood():
         self.db_object.create_table(self.table_name,'food_name')
 
 
-    def get_recomm(self,business_id, food_name):
-        return self.db_object.get_all(self.table_name,{'food_name': food_name, 'business_id': business_id, 'deleted': 0})
+    def get_recomm(self,business_id, food_name, we_buy=0):
+        if we_buy==1:
+            return self.db_object.get_all(self.table_name,{'food_name': food_name, 'business_id': business_id, 'webuy': we_buy, 'deleted': 0})
+        else:
+            return self.db_object.get_all(self.table_name,{'food_name': food_name, 'business_id': business_id, 'webuy': {'$exists': False}, 'deleted': 0})
 
     def create_recomm(self, value):
         value['deleted'] =0
         # self.db_object.insert_one(self.table_name,value)
-        self.db_object.update_upsert(self.table_name, {'food_name': value['food_name'], 'business_id': value['business_id'], 'recommender_id': value['recommender_id']}, {'deleted': 0})
+        if value.get('we_buy')==1:
+            self.db_object.update_upsert(self.table_name, {'food_name': value['food_name'], 'business_id': value['business_id'], 'recommender_id': value['recommender_id'], 'webuy': value['we_buy']}, {'deleted': 0})
+        else:
+            self.db_object.update_upsert(self.table_name, {'food_name': value['food_name'], 'business_id': value['business_id'], 'recommender_id': value['recommender_id']}, {'deleted': 0})
 
-    def delete_recomm(self, business_id, food_name, recommender_id):
-        self.db_object.update(self.table_name,{'business_id': business_id, 'food_name': food_name, 'recommender_id': recommender_id}, {'deleted':1})
+    def delete_recomm(self, business_id, food_name, recommender_id, we_buy=0):
+        if we_buy==1:
+            self.db_object.update(self.table_name,{'business_id': business_id, 'food_name': food_name, 'recommender_id': recommender_id, 'webuy': we_buy}, {'deleted':1})
+        else:
+            self.db_object.update(self.table_name,{'business_id': business_id, 'food_name': food_name, 'recommender_id': recommender_id, 'webuy': {'$exists': False}}, {'deleted':1})
 
     def get_recommend_count(self, useruid):
         return self.db_object.get_count(self.table_name, {'recommender_id':useruid})
