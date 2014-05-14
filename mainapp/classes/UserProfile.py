@@ -59,6 +59,7 @@ class UserProfile():
                 users.append(eachUser)
                 m = MailChimp()
                 m.subscribe(eachUser)
+                print eachUser['email']
         return users
     def get_all_users(self):
         users = []
