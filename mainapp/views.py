@@ -435,7 +435,7 @@ def unclaimed_profiles(request):
 def transport_mailchimp(request):
     if request.user.is_authenticated():
         user_profile_obj = UserProfile()
-        all_users = user_profile_obj.get_all_profiles('Daily')
+        all_users = user_profile_obj.get_all_profiles('Weekly')
         print len(all_users)
         count = 0
         for eachUser in all_users:
