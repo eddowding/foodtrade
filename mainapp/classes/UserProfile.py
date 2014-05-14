@@ -58,7 +58,10 @@ class UserProfile():
             for eachUser in pag_users:
                 users.append(eachUser)
                 m = MailChimp()
-                m.subscribe(eachUser)
+                try:
+                  m.subscribe(eachUser)
+                except mailchimp.ListAlreadySubscribedError:
+                  return {'status':0,'message':'Already subscribed'}
                 print eachUser['email']
         return users
     def get_all_users(self):
