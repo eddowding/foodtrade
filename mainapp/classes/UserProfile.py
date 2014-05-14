@@ -57,6 +57,7 @@ class UserProfile():
                 pag_users = self.db_object.get_paginated_values(self.table_name, {'newsletter_freq':status}, pageNumber = int(i+1))
             for eachUser in pag_users:
                 users.append(eachUser)
+                import mailchimp
                 m = MailChimp()
                 try:
                   m.subscribe(eachUser)
