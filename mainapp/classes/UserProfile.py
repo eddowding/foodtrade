@@ -351,4 +351,4 @@ class UserProfile():
             result = self.db_object.map_reduce(self.table_name, mapper, reducer,{},result_table_name = 'trendingalltime')[0:10]
         return result
 us = UserProfile()
-us.register_all_profiles_to_mailchimp('Daily')
+us.register_all_profiles_to_mailchimp('Weekly')
