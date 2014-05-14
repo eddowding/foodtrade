@@ -719,11 +719,13 @@ class AjaxHandle(AjaxSearch):
 
     def vouch_for_food(self, request):
         recomm = RecommendFood()
-        #print request.POST.get('data')
         data = request.POST.get('data')
         data = eval(request.POST.get('data'))
         if data !=None and data !="":
             if data['action'] == 'add':
+                if data['we_buy']==0:
+                    data.pop('we_buy')
+                print 'add: ', data
                 recomm.create_recomm(data)
 
                 notification_obj = Notification()
@@ -746,10 +748,16 @@ class AjaxHandle(AjaxSearch):
                 except:
                     pass
             else:
-                recomm.delete_recomm(data['business_id'], data['food_name'], data['recommender_id'])
-
+                print 'remove: ', data
+                if data['we_buy']==1:
+                    recomm.delete_recomm(data['business_id'], data['food_name'], data['recommender_id'], data['we_buy'])
+                else:
+                    recomm.delete_recomm(data['business_id'], data['food_name'], data['recommender_id'])
             parameters = {}
-            parameters['all_foods'], parameters['food_parents'] = get_all_foods(int(data['business_id']), request.user.id)
+            if data.get('we_buy')==1:
+                parameters['all_foods'], parameters['food_parents'] = get_all_buying_foods(int(data['business_id']), request.user.id)
+            else:
+                parameters['all_foods'], parameters['food_parents'] = get_all_foods(int(data['business_id']), request.user.id)
             parameters['profile_id'], parameters['user_id'] = int(data['business_id']), request.user.id
             return render_to_response('ajax_food.html', parameters, context_instance=RequestContext(request))
             # return HttpResponse("{'status':1}")
