@@ -1,7 +1,9 @@
+#!/usr/bin/env python
+# encoding: utf-8
+
 import mailchimp
 from pymongo import Connection
 from MongoConnection import MongoConnection
-
 
 class MailChimp():
     """This class is used to make api calls to the MailChimp"""
