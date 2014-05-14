@@ -599,7 +599,6 @@ def get_all_buying_foods(user_id, logged_in_id = None):
         # get common tags for each foods
         tags_freq = get_tags_freq(each['food_name'])
         all_rec = recomm.get_recomm(user_id, each['food_name'], we_buy=1)
-        pprint.pprint(all_rec)
         recomm_details =  []
         logged_recommender = False
 

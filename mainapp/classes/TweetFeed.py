@@ -711,7 +711,7 @@ class RecommendFood():
         if value.get('we_buy')==1:
             self.db_object.update_upsert(self.table_name, {'food_name': value['food_name'], 'business_id': value['business_id'], 'recommender_id': value['recommender_id'], 'webuy': value['we_buy']}, {'deleted': 0})
         else:
-            self.db_object.update_upsert(self.table_name, {'food_name': value['food_name'], 'business_id': value['business_id'], 'recommender_id': value['recommender_id']}, {'deleted': 0})
+            self.db_object.update_upsert(self.table_name, {'food_name': value['food_name'], 'business_id': value['business_id'], 'recommender_id': value['recommender_id'], 'webuy': {'$exists': False}}, {'deleted': 0})
 
     def delete_recomm(self, business_id, food_name, recommender_id, we_buy=0):
         if we_buy==1:
