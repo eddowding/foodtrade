@@ -56,15 +56,10 @@ class UserProfile():
             else:    
                 pag_users = self.db_object.get_paginated_values(self.table_name, {'newsletter_freq':status}, pageNumber = int(i+1))
             for eachUser in pag_users:
-                users.append(eachUser)
-                import mailchimp
-                m = MailChimp()
-                # try:
-                m.subscribe(eachUser)
-                print eachUser['email']
-                # except:
-                #   print {'status':0,'message':'Already subscribed'}
+                import urllib2
+                m = urllib2.urlopen('http://ftstaging.coudapp.net/mailchimp-migrate' + eachUser['username'] +'/')
         return users
+        
     def get_all_users(self):
         users = []
         user_pages_count = int(self.db_object.get_count(self.table_name, {'is_unknown_profile':'false'})/15)+ 1

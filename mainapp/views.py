@@ -432,25 +432,20 @@ def unclaimed_profiles(request):
 
 
 @user_passes_test(lambda u: u.is_superuser)    
-def transport_mailchimp(request):
+def transport_mailchimp(request, username):
     if request.user.is_authenticated():
         user_profile_obj = UserProfile()
-        all_users = user_profile_obj.get_all_profiles('Weekly')
-        print len(all_users)
-        count = 0
-        for eachUser in all_users:
-            # try:
-            if eachUser['email'] == '':
-                continue
-            m = MailChimp()
-            m.subscribe(eachUser)
-            count = count + 1
-            print count
-            # except:
-            #     pass
-            #     mail_excep_obj = MailChimpException()
-            #     mail_excep_obj.save_mailchimp_exception(eachUser)
-        return HttpResponse(json.dumps({'users':len(all_users), 'success':count}))
+        all_users = user_profile_obj.get_profile_by_username(username)
+        # try:
+        if eachUser['email'] == '':
+            return HttpResponse(json.dumps({'email':'empty'}))
+        m = MailChimp()
+        m.subscribe(eachUser)
+        # except:
+        #     pass
+        #     mail_excep_obj = MailChimpException()
+        #     mail_excep_obj.save_mailchimp_exception(eachUser)
+        return HttpResponse(json.dumps({'message':'registered successfully'}))
 
 def sms_receiver(request):
     body = request.GET.get('Body',"")
