@@ -1,5 +1,3 @@
-#!/usr/bin/env python
-# encoding: utf-8
 import mailchimp
 from pymongo import Connection
 from MongoConnection import MongoConnection
@@ -26,8 +24,7 @@ class MailChimp():
             first, last = doc['name'].split(' ')[0], doc['name'].split(' ')[1]
         except:
             first, last = doc['name'].split(' ')[0], ''
-        # m = self.get_mailchimp_api()
-        m = mailchimp.Mailchimp('0a92cdd6b266f6e6f1db98639bfa20e2-us2')
+        m = self.get_mailchimp_api()
         if self.list_id != 'eeea3ac4c6':
             response = m.lists.subscribe(self.list_id, email = {'email':str(doc['email'])}, 
                 double_optin = False,
