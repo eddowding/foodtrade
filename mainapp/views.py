@@ -439,16 +439,16 @@ def transport_mailchimp(request):
         print len(all_users)
         count = 0
         for eachUser in all_users:
-            # try:
-            if eachUser['email'] == '':
-                continue
-            m = MailChimp()
-            m.subscribe(eachUser)
-            count = count + 1
-            print count
-            # except:
-            mail_excep_obj = MailChimpException()
-            mail_excep_obj.save_mailchimp_exception(eachUser)
+            try:
+                if eachUser['email'] == '':
+                    continue
+                m = MailChimp()
+                m.subscribe(eachUser)
+                count = count + 1
+                print count
+            except:
+                mail_excep_obj = MailChimpException()
+                mail_excep_obj.save_mailchimp_exception(eachUser)
         return HttpResponse(json.dumps({'success':'True'}))
 
 def sms_receiver(request):
