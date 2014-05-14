@@ -430,12 +430,11 @@ def unclaimed_profiles(request):
         
     return render_to_response('unclaimed.html', parameters, context_instance=RequestContext(request))
 
-
-@user_passes_test(lambda u: u.is_superuser)    
+   
 def transport_mailchimp(request, username):
     if request.user.is_authenticated():
         user_profile_obj = UserProfile()
-        user = user_profile_obj.get_profile_by_username(username)
+        user = user_profile_obj.get_profile_by_username(str(username))
         # try:
         if user['email'] == '':
             return HttpResponse(json.dumps({'email':'empty'}))
