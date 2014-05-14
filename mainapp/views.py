@@ -435,16 +435,16 @@ def unclaimed_profiles(request):
 def transport_mailchimp(request, username):
     if request.user.is_authenticated():
         user_profile_obj = UserProfile()
-        all_users = user_profile_obj.get_profile_by_username(username)
+        user = user_profile_obj.get_profile_by_username(username)
         # try:
         if eachUser['email'] == '':
             return HttpResponse(json.dumps({'email':'empty'}))
         m = MailChimp()
-        m.subscribe(eachUser)
+        m.subscribe(user)
         # except:
         #     pass
         #     mail_excep_obj = MailChimpException()
-        #     mail_excep_obj.save_mailchimp_exception(eachUser)
+        #     mail_excep_obj.save_mailchimp_exception(user)
         return HttpResponse(json.dumps({'message':'registered successfully'}))
 
 def sms_receiver(request):
