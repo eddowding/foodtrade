@@ -21,7 +21,7 @@ sys.path.insert(0, CLASS_PATH)
 sys.path.insert(1,SETTINGS_PATH)
 sys.path.insert(1,CRON_PATH)
 from settingslocal import *
-from mailchimp import MailChimp, MailChimpException
+from Mailchimp import MailChimp, MailChimpException
 
 class UserProfile():
     def __init__ (self, host=REMOTE_SERVER_LITE, port=27017, db_name=REMOTE_MONGO_DBNAME, username=REMOTE_MONGO_USERNAME, password=REMOTE_MONGO_PASSWORD):        

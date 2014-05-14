@@ -9,7 +9,7 @@ import json
 from django.conf import settings
 from mainapp.classes.Email import Email
 from mainapp.classes.TweetFeed import TweetFeed, UserProfile, Friends, TwitterError, Invites, InviteId, Notification, Analytics
-from mainapp.classes.mailchimp import MailChimp, MailChimpException
+from mainapp.classes.Mailchimp import MailChimp, MailChimpException
 from mainapp.classes.Tags import Tags
 from search import *
 from streaming import MyStreamer
@@ -30,7 +30,7 @@ from mainapp.classes.Search import Search
 from mainapp.classes.Email import Email
 import uuid
 from twilio.rest import TwilioRestClient 
-from mainapp.classes.mailchimp import MailChimp
+from mainapp.classes.Mailchimp import MailChimp
 from mainapp.classes.SendSms import send_sms
 
 
