@@ -61,9 +61,9 @@ class UserProfile():
                 m = MailChimp()
                 try:
                   m.subscribe(eachUser)
-                except mailchimp.ListAlreadySubscribedError:
-                  return {'status':0,'message':'Already subscribed'}
-                print eachUser['email']
+                  print eachUser['email']
+                except:
+                  print {'status':0,'message':'Already subscribed'}
         return users
     def get_all_users(self):
         users = []
