@@ -59,11 +59,11 @@ class UserProfile():
                 users.append(eachUser)
                 import mailchimp
                 m = MailChimp()
-                try:
-                  m.subscribe(eachUser)
-                  print eachUser['email']
-                except:
-                  print {'status':0,'message':'Already subscribed'}
+                # try:
+                m.subscribe(eachUser)
+                print eachUser['email']
+                # except:
+                #   print {'status':0,'message':'Already subscribed'}
         return users
     def get_all_users(self):
         users = []
