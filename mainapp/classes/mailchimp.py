@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+# encoding: utf-8
 import mailchimp
 from pymongo import Connection
 from MongoConnection import MongoConnection
