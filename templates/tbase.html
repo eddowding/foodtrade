@@ -867,7 +867,7 @@ function show_small_structure()
   {% if request.user.is_authenticated %}
   <ul class="notifications pull-right hidden-xs border-left">
       <li>
-          <a href="/inbox/" class="dropdown-toggle" data-toggle="dropdown"><i class="notif-block icon-envelope-1"></i>{% if userinfo.notification_count != 0 %}
+          <a href="/inbox/"><i class="notif-block icon-envelope-1"></i>{% if userinfo.notification_count != 0 %}
             <span id="spanInbox" class="pull-number label label-success">{{userinfo.notification_count}}</span> 
             {% endif %}
             </a> 
