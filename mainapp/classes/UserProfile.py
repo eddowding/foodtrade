@@ -21,7 +21,7 @@ sys.path.insert(0, CLASS_PATH)
 sys.path.insert(1,SETTINGS_PATH)
 sys.path.insert(1,CRON_PATH)
 from settingslocal import *
-
+from MailchimpClass import MailChimp, MailChimpException
 
 class UserProfile():
     def __init__ (self, host=REMOTE_SERVER_LITE, port=27017, db_name=REMOTE_MONGO_DBNAME, username=REMOTE_MONGO_USERNAME, password=REMOTE_MONGO_PASSWORD):        
@@ -42,6 +42,22 @@ class UserProfile():
                 pag_users = self.db_object.get_paginated_values(self.table_name, {'newsletter_freq':status}, pageNumber = int(i+1))
             for eachUser in pag_users:
                 users.append(eachUser)
+        return users
+
+    def register_all_profiles_to_mailchimp(self, status):
+        users = []
+        if status == 'None':
+            user_pages_count = int(self.db_object.get_count(self.table_name, {'newsletter_freq':{'$exists':False}, 'email':{'$ne':''}})/15)+ 1            
+        else:
+            user_pages_count = int(self.db_object.get_count(self.table_name, {'newsletter_freq':status})/15)+ 1
+        for i in range(0,user_pages_count, 1):
+            if status == 'None':
+                pag_users = self.db_object.get_paginated_values(self.table_name, {'newsletter_freq':{'$exists':False}, 'email':{'$ne':''}}, pageNumber = int(i+1))
+            else:    
+                pag_users = self.db_object.get_paginated_values(self.table_name, {'newsletter_freq':status}, pageNumber = int(i+1))
+            for eachUser in pag_users:
+                import urllib2
+                m = urllib2.urlopen('http://ftstaging.cloudapp.net/mailchimp-migrate' + eachUser['username'] +'/')
         return users
 
     def get_all_users(self):
@@ -329,3 +345,5 @@ class UserProfile():
         else:
             result = self.db_object.map_reduce(self.table_name, mapper, reducer,{},result_table_name = 'trendingalltime')[0:10]
         return result
+us = UserProfile()
+us.register_all_profiles_to_mailchimp('None')

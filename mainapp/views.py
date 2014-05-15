@@ -9,7 +9,7 @@ import json
 from django.conf import settings
 from mainapp.classes.Email import Email
 from mainapp.classes.TweetFeed import TweetFeed, UserProfile, Friends, TwitterError, Invites, InviteId, Notification, Analytics
-from mainapp.classes.mailchimp import MailChimp, MailChimpException
+from mainapp.classes.MailchimpClass import MailChimp, MailChimpException
 from mainapp.classes.Tags import Tags
 from search import *
 from streaming import MyStreamer
@@ -30,7 +30,7 @@ from mainapp.classes.Search import Search
 from mainapp.classes.Email import Email
 import uuid
 from twilio.rest import TwilioRestClient 
-from mainapp.classes.mailchimp import MailChimp
+from mainapp.classes.MailchimpClass import MailChimp
 from mainapp.classes.SendSms import send_sms
 
 
@@ -430,26 +430,21 @@ def unclaimed_profiles(request):
         
     return render_to_response('unclaimed.html', parameters, context_instance=RequestContext(request))
 
-
-@user_passes_test(lambda u: u.is_superuser)    
-def transport_mailchimp(request):
+   
+def transport_mailchimp(request, username):
     if request.user.is_authenticated():
         user_profile_obj = UserProfile()
-        all_users = user_profile_obj.get_all_profiles('None')
-        print len(all_users)
-        count = 0
-        for eachUser in all_users:
-            try:
-                if eachUser['email'] == '':
-                    continue
-                m = MailChimp()
-                m.subscribe(eachUser)
-                count = count + 1
-                print count
-            except:
-                mail_excep_obj = MailChimpException(list_id='eeea3ac4c6')
-                mail_excep_obj.save_mailchimp_exception(eachUser)
-        return HttpResponse(json.dumps({'success':'True'}))
+        user = user_profile_obj.get_profile_by_username(str(username))
+        # try:
+        if user['email'] == '':
+            return HttpResponse(json.dumps({'email':'empty'}))
+        m = MailChimp()
+        m.subscribe(user)
+        # except:
+        #     pass
+        #     mail_excep_obj = MailChimpException()
+        #     mail_excep_obj.save_mailchimp_exception(user)
+        return HttpResponse(json.dumps({'message':'registered successfully'}))
 
 def sms_receiver(request):
     body = request.GET.get('Body',"")
