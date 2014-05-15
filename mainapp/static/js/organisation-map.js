@@ -87,7 +87,7 @@ function reload_connections()
 
 			var current_lat = parseFloat(latitude);
 			var current_lon = parseFloat(longitude);
-			if(current_lon != def_lon || def_lat != current_lat)
+			if(parseInt(current_lon) == parseInt(def_lon) && parseInt(def_lat) == parseInt(current_lat))
          	{
          		continue;
          	}
