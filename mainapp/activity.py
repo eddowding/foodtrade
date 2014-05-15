@@ -193,8 +193,8 @@ def get_search_parameters(request):
     search_results = search_handle.search_all()
     results =search_results['results'][:no_of_results-1]
     results =search_results['results']
-    if request.user.is_superuser():
-        results =search_results['results']
+    # if request.user.is_superuser:
+    #     results =search_results['results']
 
     for i in range(len(results)):
         results[i] = set_time_date(results[i],keyword)
