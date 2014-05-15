@@ -48,7 +48,7 @@ var card_str = '<div class="card-box"><div class="content"><div class="pull-left
                 }
                   card_str += '</div> ';
 
- if(map_lon != def_lon || current_lat != map_lat)
+if(map_lon != def_lon || def_lat != map_lat)
          	{
 		 L.marker([parseFloat(map_lat), parseFloat(map_lon)], {icon: redIcon}).addTo(map).bindPopup(card_str);
 }
