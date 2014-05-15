@@ -48,7 +48,7 @@ var card_str = '<div class="card-box"><div class="content"><div class="pull-left
                 }
                   card_str += '</div> ';
 
-if(map_lon != def_lon || def_lat != map_lat)
+if(parseInt(map_lon) != parseInt(def_lon) || parseInt(def_lat) != parseInt(map_lat))
          	{
 		 L.marker([parseFloat(map_lat), parseFloat(map_lon)], {icon: redIcon}).addTo(map).bindPopup(card_str);
 }
@@ -149,7 +149,7 @@ var card_str = '<div class="card-box"><div class="content"><div class="pull-left
 
 
 
-if(current_lon != def_lon || def_lat != current_lat)
+if(parseInt(current_lon) != parseInt(def_lon) || parseInt(def_lat) != parseInt(current_lat))
 {
 
 			var dot = L.circleMarker([parseFloat(latitude), parseFloat(longitude)],  {
