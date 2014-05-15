@@ -149,7 +149,8 @@ var card_str = '<div class="card-box"><div class="content"><div class="pull-left
 
 
 
-
+if(map_lon != def_lon || def_lat != map_lat)
+{
 
 			var dot = L.circleMarker([parseFloat(latitude), parseFloat(longitude)],  {
 			
@@ -163,6 +164,7 @@ var card_str = '<div class="card-box"><div class="content"><div class="pull-left
 
 		}).addTo(map).bindPopup(card_str);
 			map_controls.push(dot);
+		}
 
 }
 

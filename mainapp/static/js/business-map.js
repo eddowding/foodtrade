@@ -118,7 +118,7 @@ function reload_connections()
 			}
 
 
-if(map_lon != def_lon && current_lat != map_lat)
+if(map_lon != def_lon || def_lat != map_lat)
          	{
 			var polyline = L.polyline([
 			[parseFloat(map_lat), parseFloat(map_lon)],
