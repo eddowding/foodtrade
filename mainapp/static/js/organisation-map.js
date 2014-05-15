@@ -87,7 +87,7 @@ function reload_connections()
 
 			var current_lat = parseFloat(latitude);
 			var current_lon = parseFloat(longitude);
-			if(current_lon == def_lon && current_lat == def_lat)
+			if(current_lon != def_lon || def_lat != current_lat)
          	{
          		continue;
          	}
@@ -149,7 +149,7 @@ var card_str = '<div class="card-box"><div class="content"><div class="pull-left
 
 
 
-if(map_lon != def_lon || def_lat != map_lat)
+if(current_lon != def_lon || def_lat != current_lat)
 {
 
 			var dot = L.circleMarker([parseFloat(latitude), parseFloat(longitude)],  {
