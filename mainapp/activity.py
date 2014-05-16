@@ -188,13 +188,13 @@ def get_search_parameters(request):
 
 
     if request.user.is_superuser:
-        search_global = True
+        search_global = False
     search_handle = Search(keyword=keyword, lon = my_lon, lat =my_lat, place = location, foods=foods, business=businesses, organisation=organisations, sort=sort, search_global=search_global)
     search_results = search_handle.search_all()
     results =search_results['results'][:no_of_results-1]
     results =search_results['results']
-    if request.user.is_superuser:
-        results =search_results['results']
+    # if request.user.is_superuser:
+    #     results =search_results['results']
 
     for i in range(len(results)):
         results[i] = set_time_date(results[i],keyword)
