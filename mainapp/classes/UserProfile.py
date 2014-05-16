@@ -9,13 +9,13 @@ import os
 import sys
 from pygeocoder import Geocoder
 
-# CLASS_PATH = '/srv/www/live/foodtrade-env/foodtrade/mainapp/classes'
-# CRON_PATH = '/srv/www/live/foodtrade-env/foodtrade/CronJobs'
-# SETTINGS_PATH = '/srv/www/live/foodtrade-env/foodtrade/foodtrade'
+CLASS_PATH = '/srv/www/live/foodtrade-env/foodtrade/mainapp/classes'
+CRON_PATH = '/srv/www/live/foodtrade-env/foodtrade/CronJobs'
+SETTINGS_PATH = '/srv/www/live/foodtrade-env/foodtrade/foodtrade'
 
-CLASS_PATH = 'C:/Users/Roshan Bhandari/Desktop/project repos/foodtrade/mainapp/classes'
-CRON_PATH = 'C:/Users/Roshan Bhandari/Desktop/project repos/foodtrade/CronJobs'
-SETTINGS_PATH = 'C:/Users/Roshan Bhandari/Desktop/project repos/foodtrade/foodtrade'
+# CLASS_PATH = 'C:/Users/Roshan Bhandari/Desktop/project repos/foodtrade/mainapp/classes'
+# CRON_PATH = 'C:/Users/Roshan Bhandari/Desktop/project repos/foodtrade/CronJobs'
+# SETTINGS_PATH = 'C:/Users/Roshan Bhandari/Desktop/project repos/foodtrade/foodtrade'
 
 sys.path.insert(0, CLASS_PATH)
 sys.path.insert(1,SETTINGS_PATH)
@@ -348,5 +348,11 @@ class UserProfile():
         else:
             result = self.db_object.map_reduce(self.table_name, mapper, reducer,{},result_table_name = 'trendingalltime')[0:10]
         return result
+
+'''
+Please do not remove the code below. It is necessary during 
+registering user to mailchimp by cron.
+'''        
 # us = UserProfile()
 # us.register_all_profiles_to_mailchimp('Never')
+'''ends'''
