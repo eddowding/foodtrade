@@ -641,6 +641,7 @@ class AjaxHandle(AjaxSearch):
         team = Team()
         data = eval(request.POST.get('data'))
         if data !=None and data !="":
+            print 'inside addteam: ', data
             team.create_member(data)
 
             notification_obj = Notification()
@@ -670,6 +671,7 @@ class AjaxHandle(AjaxSearch):
         team = Team()
         data = eval(request.POST.get('data'))
         if data !=None and data !="":
+            print 'inside addteam: ', data
             team.delete_member(orguid = data['orguid'], member_id = data['memberuid'])
             return HttpResponse("{'status':1}")
         else:
