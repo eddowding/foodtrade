@@ -434,6 +434,7 @@ def unclaimed_profiles(request):
 def transport_mailchimp(request, username):
     if request.user.is_authenticated():
         user_profile_obj = UserProfile()
+
         user = user_profile_obj.get_profile_by_username(str(username))
         # try:
         if user['email'] == '':

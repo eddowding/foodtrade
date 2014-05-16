@@ -60,4 +60,7 @@ class MailChimpException():
 
     def save_mailchimp_exception(self, doc):
         self.db_object.insert_one(self.table_name, doc)
-
+<<<<<<< HEAD:mainapp/classes/MailchimpClass.py
+        
+=======
+>>>>>>> 7fd9893b2ee4952f80f23e23b8f11cab76d35f19:mainapp/classes/MailchimpClass.py
