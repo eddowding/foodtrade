@@ -931,7 +931,7 @@ def get_team(user_id, logged_in_id=None):
              # 'name': account.extra_data['name'],
              'name': myname,
              'total_vouches':total_vouches,
-             'b_conn_no':b_conn_no,
+             'b_conn_no':b_conn_len,
              'c_conn_no':c_conn_len,
              'description': usr_pr['description'],
              'photo': usr_pr['profile_img'],
@@ -940,7 +940,6 @@ def get_team(user_id, logged_in_id=None):
              })
         except:
             pass
-    #print final_teams
     return final_teams, logged_team
 
 def get_all_business(prof_id):

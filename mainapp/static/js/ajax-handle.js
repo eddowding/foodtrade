@@ -290,6 +290,8 @@ function member_ajax(data){
 function add_team(org_id, team_id){
 	// var data = {orguid: org_id, memberuid: team_id};
 	// ajax_request("addteam", 'create_conn', {data: JSON.stringify(data)});
+	console.log(org_id);
+	console.log(team_id);
 	var checked = $('#team-chkbx').is(':checked');
 	var data = {orguid: org_id, memberuid: team_id};
 	if (checked){
