@@ -8,7 +8,7 @@ from pygeocoder import Geocoder
 import datetime,time
 from mainapp.classes.TweetFeed import Food
 from mainapp.models import FoodPhoto
-from mainapp.classes.mailchimp import MailChimp
+from mainapp.classes.MailchimpClass import MailChimpClass
 from django.conf import settings
 import pprint
 from classes.MongoConnection import MongoConnection
@@ -207,14 +207,15 @@ class SignupForm(forms.Form):
             except:
                 pass
 
-        try:
-            '''Transport user to MailChimp List'''
-            mailchimp_obj = MailChimp()
-            mailchimp_obj.subscribe(data)
-            mailchimp_obj_new = MailChimp(list_id='eeea3ac4c6')
-            mailchimp_obj_new.subscribe(data)
-        except:
-            pass
+        # try:
+        '''Transport user to MailChimp List'''
+        mailchimp_obj = MailChimpClass()
+        mailchimp_obj.subscribe(data)
+        mailchimp_obj_new = MailChimpClass(list_id='eeea3ac4c6')
+        mailchimp_obj_new.subscribe(data)
+        # except:
+        #     pass
+
 
         '''Invitation Tracking and Notifying the user who invites the user'''
         if invite_id != '':

@@ -41,7 +41,7 @@ var card_str = '<div class="card-box"><div class="content text-center"><div clas
     card_str += '<p>'+description+'</p></div>';
     card_str += '<a href="/profile/'+username+'" class="btn btn-primary btn-sm">View profile &raquo;</a></div> </div>';    
 
-if(map_lon != def_lon && current_lat != map_lat)
+if(parseInt(map_lon) != parseInt(def_lon) || parseInt(def_lat) != parseInt(map_lat))
          	{
          		L.marker([parseFloat(map_lat), parseFloat(map_lon)], {icon: redIcon}).addTo(map).bindPopup(card_str);
          	}
@@ -85,7 +85,7 @@ function reload_connections()
 
 			var current_lat = parseFloat(latitude);
 			var current_lon = parseFloat(longitude);
-			if(current_lon == def_lon && current_lat == def_lat)
+			if(parseInt(current_lon) == parseInt(def_lon) && parseInt(def_lat) == parseInt(current_lat))
          	{
          		continue;
          	}
@@ -118,7 +118,7 @@ function reload_connections()
 			}
 
 
-if(map_lon != def_lon && current_lat != map_lat)
+if(parseInt(current_lon) != parseInt(def_lon) || parseInt(def_lat) != parseInt(current_lat))
          	{
 			var polyline = L.polyline([
 			[parseFloat(map_lat), parseFloat(map_lon)],
@@ -193,7 +193,8 @@ for(var j=0;j<customers.length;j++)
 			// }
 
 
-
+if(parseInt(map_lon) != parseInt(def_lon) || parseInt(def_lat) != parseInt(map_lat))
+{
 
 			var dot = L.circleMarker([parseFloat(latitude), parseFloat(longitude)],  {
 			
@@ -207,6 +208,7 @@ for(var j=0;j<customers.length;j++)
 
 		}).addTo(map);
 			map_controls.push(dot);
+		}
 
 }
 

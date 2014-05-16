@@ -120,11 +120,11 @@
 
               <!-- images !-->
               {% if result_type == "status" %}
-              <div class="media innerAll half">
                 {% for picture in result.tweet_pictures %}
-                <img src="{{picture}}" class="img-post">
+                  <div class="media innerAll half">
+                    <img src="{{picture}}" class="img-post">
+                  </div>
                 {% endfor %} 
-              </div>
               {% endif %}
               <!-- /images !-->
 
