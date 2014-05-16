@@ -5,7 +5,7 @@ import mailchimp
 from pymongo import Connection
 from MongoConnection import MongoConnection
 
-class MailChimp():
+class MailChimpClass():
     """This class is used to make api calls to the MailChimp"""
     def __init__(self, list_id = '610c67b4de'):
         self.db_object = MongoConnection("localhost",27017,'foodtrade')
@@ -60,7 +60,4 @@ class MailChimpException():
 
     def save_mailchimp_exception(self, doc):
         self.db_object.insert_one(self.table_name, doc)
-
-
-
-
+        
