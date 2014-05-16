@@ -9,13 +9,13 @@ import os
 import sys
 from pygeocoder import Geocoder
 
-CLASS_PATH = '/srv/www/live/foodtrade-env/foodtrade/mainapp/classes'
-CRON_PATH = '/srv/www/live/foodtrade-env/foodtrade/CronJobs'
-SETTINGS_PATH = '/srv/www/live/foodtrade-env/foodtrade/foodtrade'
+# CLASS_PATH = '/srv/www/live/foodtrade-env/foodtrade/mainapp/classes'
+# CRON_PATH = '/srv/www/live/foodtrade-env/foodtrade/CronJobs'
+# SETTINGS_PATH = '/srv/www/live/foodtrade-env/foodtrade/foodtrade'
 
-# CLASS_PATH = 'C:/Users/Roshan Bhandari/Desktop/foodtrade/mainapp/classes'
-# CRON_PATH = 'C:/Users/Roshan Bhandari/Desktop/foodtrade/CronJobs'
-# SETTINGS_PATH = 'C:/Users/Roshan Bhandari/Desktop/foodtrade/foodtrade'
+CLASS_PATH = 'C:/Users/Roshan Bhandari/Desktop/project repos/foodtrade/mainapp/classes'
+CRON_PATH = 'C:/Users/Roshan Bhandari/Desktop/project repos/foodtrade/CronJobs'
+SETTINGS_PATH = 'C:/Users/Roshan Bhandari/Desktop/project repos/foodtrade/foodtrade'
 
 sys.path.insert(0, CLASS_PATH)
 sys.path.insert(1,SETTINGS_PATH)
@@ -56,8 +56,11 @@ class UserProfile():
             else:    
                 pag_users = self.db_object.get_paginated_values(self.table_name, {'newsletter_freq':status}, pageNumber = int(i+1))
             for eachUser in pag_users:
-                import urllib2
-                m = urllib2.urlopen('http://ftstaging.cloudapp.net/mailchimp-migrate' + eachUser['username'] +'/')
+                # import urllib2
+                # m = urllib2.urlopen('http://ftstaging.cloudapp.net/mailchimp-migrate' + eachUser['username'] +'/')
+                m = MailChimp()
+                m.subscribe(eachUser)
+                print eachUser['email'] + "subscribed"
         return users
 
     def get_all_users(self):
@@ -345,5 +348,5 @@ class UserProfile():
         else:
             result = self.db_object.map_reduce(self.table_name, mapper, reducer,{},result_table_name = 'trendingalltime')[0:10]
         return result
-us = UserProfile()
-us.register_all_profiles_to_mailchimp('None')
+# us = UserProfile()
+# us.register_all_profiles_to_mailchimp('Never')
