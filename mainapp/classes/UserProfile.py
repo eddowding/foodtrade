@@ -22,7 +22,7 @@ sys.path.insert(0, CLASS_PATH)
 sys.path.insert(1,SETTINGS_PATH)
 sys.path.insert(1,CRON_PATH)
 from settingslocal import *
-from MailchimpClass import MailChimp, MailChimpException
+from MailchimpClass import MailChimpClass, MailChimpException
 
 class UserProfile():
     def __init__ (self, host=REMOTE_SERVER_LITE, port=27017, db_name=REMOTE_MONGO_DBNAME, username=REMOTE_MONGO_USERNAME, password=REMOTE_MONGO_PASSWORD):        
@@ -59,7 +59,7 @@ class UserProfile():
             for eachUser in pag_users:
                 # import urllib2
                 # m = urllib2.urlopen('http://ftstaging.cloudapp.net/mailchimp-migrate' + eachUser['username'] +'/')
-                m = MailChimp()
+                m = MailChimpClass()
                 m.subscribe(eachUser)
                 print eachUser['email'] + "subscribed"
         return users
