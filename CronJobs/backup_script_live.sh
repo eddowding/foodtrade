@@ -8,8 +8,7 @@ mysqldump -u root -proot foodtrade > foodtrade.sql
 cd ..
 zip -r $(date +%F).zip $(date +%F)/
 rsync /backup/$(date +%F).zip foodtrade@ftstaging.cloudapp.net:~/backups
-mv /backup/* /home/kathmandu/backups/
+mv /backup/$(date +%F).zip /home/kathmandu/backups/
 rm -r $(date --date="1 day ago" +%F)
-rm  $(date +%F).zip
 cd /home/kathmandu/backups/
 rm -r $(date --date="1 day ago" +%F)
