@@ -46,6 +46,7 @@ class Friends():
             return followers
     
     def process_friends_or_followers(self, eachUser, friend_or_follower):
+        timer_start_time = time.mktime(datetime.datetime.now().timetuple())
         try:
             friends = self.get_friends(eachUser['username'], -1, friend_or_follower)
         except:
@@ -53,12 +54,15 @@ class Friends():
         next_cursor = -1
         try:
             while(next_cursor !='0'):
+                timer_now_time = time.mktime(datetime.datetime.now().timetuple())
+                if (timer_now_time - timer_start_time > 30*60):
+                    break
                 next_cursor = friends['next_cursor']
                 for eachFriend in friends['users']:
                     '''Register this user'''
                     self.register_friend(eachFriend, eachUser['username'])
                 if next_cursor != 0:
-                    time.sleep(5)
+                    time.sleep(3)
                     friends = self.get_friends(eachUser['username'], next_cursor, friend_or_follower)
             return {'status':1}
         except:
@@ -123,9 +127,14 @@ class Friends():
             return False
 
     def register_all_friends(self):
+        timer_start_time = time.mktime(datetime.datetime.now().timetuple())
         user_pages_count = int(self.db_object.get_count(self.table_name, {'friends.added_as_user':{'$exists':False}})/15)+ 1
         for i in range(0,user_pages_count, 1):
             pag_users = self.db_object.get_paginated_values(self.table_name, {'friends.added_as_user':{'$exists':False}}, pageNumber = int(i+1))
+            
+            timer_now_time = time.mktime(datetime.datetime.now().timetuple())
+            if timer_now_time - timer_start_time > 2*60*60:
+                break
             from UserProfile import UserProfile
             for eachUser in pag_users:
                 user_profile_obj = UserProfile(host=REMOTE_SERVER_LITE, port=27017, db_name=REMOTE_MONGO_DBNAME, username=REMOTE_MONGO_USERNAME, password=REMOTE_MONGO_PASSWORD)
@@ -135,7 +144,7 @@ class Friends():
                     self.update_friend(eachUser['friends']['screen_name'], eachUser['username'])
                 else:                    
                     self.update_friend(eachUser['friends']['screen_name'], eachUser['username'])
-            time.sleep(5)
+            time.sleep(3)
 
     def update_friend(self, friend_name, username):
         # print friend_name + " updated"
