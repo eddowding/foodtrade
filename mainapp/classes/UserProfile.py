@@ -135,13 +135,20 @@ class UserProfile():
         return self.db_object.get_all(self.table_name,{'sign_up_as':type_usr})
 
     def get_all_friends_and_register_as_friend(self, start):
+        timer_start_time = time.mktime(datetime.datetime.now().timetuple())
+
         maxtime = datetime.datetime.now() - datetime.timedelta(minutes=30)
         maxtime = int(time.mktime(maxtime.timetuple()))
         user_pages_count = int(self.db_object.get_count(self.table_name, {'join_time':{'$gt':start}, 'join_time':{'$lt':maxtime}, 'is_unknown_profile': 'false'}))
         for i in range(0,user_pages_count, 1):
+            timer_now_time = time.mktime(datetime.datetime.now().timetuple())
+            if (timer_now_time - timer_start_time) > 5*60*60:
+                break
             pag_users = self.db_object.get_paginated_values(self.table_name, {'join_time':{'$gt':start}, 'join_time':{'$lt':maxtime}, 'is_unknown_profile': 'false'}, pageNumber = int(i+1))
             from friends import Friends                        
-            for eachUser in pag_users:     
+            for eachUser in pag_users:
+                if (timer_now_time - timer_start_time) > 5*60*60:
+                    break
                 friend_obj = Friends()
                 friend_obj.process_friends_or_followers(eachUser, 'friends')
                 friend_obj.process_friends_or_followers(eachUser, 'followers')
