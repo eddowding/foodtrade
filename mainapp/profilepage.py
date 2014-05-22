@@ -1023,7 +1023,7 @@ def search_orgs_business(request, type_user):
 
         type_list = ['unclaimed']
         type_list.extend(type_user_new)
-        query_mongo = {'$or': or_conditions, 'sign_up_as': {'$in': type_list}, 'useruid': {'$nin': data_list}}
+        query_mongo = {'$or': or_conditions, 'sign_up_as': {'$in': type_list}} #, 'useruid': {'$nin': data_list}}
         mongo = MongoConnection("localhost",27017,'foodtrade')
         results = mongo.get_all('userprofile', query_mongo)
         
