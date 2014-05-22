@@ -992,6 +992,7 @@ def get_all_orgs():
     return final_organisation    
 
 def search_orgs_business(request, type_user):
+    print "gone here"
     if request.user.is_authenticated():
         query = request.GET.get("q")
         user_id = request.user.id
@@ -1025,7 +1026,7 @@ def search_orgs_business(request, type_user):
         type_list.extend(type_user_new)
         query_mongo = {'$or': or_conditions, 'sign_up_as': {'$in': type_list}} #, 'useruid': {'$nin': data_list}}
         mongo = MongoConnection("localhost",27017,'foodtrade')
-        results = mongo.get_all('userprofile', query_mongo)
+        results = mongo.get_all('userprofile', query_mongo, limit=4)
         
         final_organisation = []
         if len(results) == 0:
