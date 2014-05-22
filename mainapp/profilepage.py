@@ -1017,7 +1017,7 @@ def search_orgs_business(request, type_user):
         keyword_like = re.compile(query + '+', re.IGNORECASE)
         reg_expression = {"$regex": keyword_like, '$options': '-i'}
 
-        search_variables = ["name", "business_org_name", "screen_name"]
+        search_variables = ["name", "screen_name"] #, "business_org_name"]
         or_conditions = []
         for search_item in search_variables:
             or_conditions.append({search_item:reg_expression})
@@ -1026,7 +1026,7 @@ def search_orgs_business(request, type_user):
         type_list.extend(type_user_new)
         query_mongo = {'$or': or_conditions, 'sign_up_as': {'$in': type_list}} #, 'useruid': {'$nin': data_list}}
         mongo = MongoConnection("localhost",27017,'foodtrade')
-        results = mongo.get_all('userprofile', query_mongo, limit=4)
+        results = mongo.get_all('userprofile', or_conditions, limit=4)
         
         final_organisation = []
         if len(results) == 0:
