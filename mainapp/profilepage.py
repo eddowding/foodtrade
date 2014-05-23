@@ -103,7 +103,8 @@ def display_profile(request, username):
 
     parameters['all_tags'] = foo.get_tags()
 
-    user_profile = UserProfile()    
+    user_profile = UserProfile() 
+      
 
     try:
         userprof = user_profile.get_profile_by_username(str(username))
@@ -142,11 +143,13 @@ def display_profile(request, username):
                 pass
     '''Code to get the banner_url, followers_count, friends_count ends'''
 
-    uinfo = UserInfo(userprof['useruid'])
-    uinfo.description = uinfo.description.replace("\r\n"," ")
+    # uinfo = UserInfo(userprof['useruid'])
 
-    parameters['prof_subscribed'] = uinfo.subscribed
-    parameters['userprof'] = uinfo
+
+    userprof['description'] = userprof['description'].replace("\r\n"," ")
+
+    parameters['prof_subscribed'] = userprof['subscribed']
+    # parameters['userprof'] = uinfo
     try:
         parameters['show_foods'] = userprof['show_foods']
     except:
@@ -262,12 +265,12 @@ def display_profile(request, username):
 
         parameters['loggedin_signupas'] = usr_profile['sign_up_as']
         parameters['loggedin_coord'] = {'lat':usr_profile['latlng']['coordinates'][1], 'lon':usr_profile['latlng']['coordinates'][0]}
-        user_info = UserInfo(user_id)
-        parameters['userinfo'] = user_info
+        # user_info = UserInfo(user_id)
+        # parameters['userinfo'] = user_info
 
-        parameters['user_id'] = request.user.id
-        lon2 = user_info.lon
-        lat2 = user_info.lat
+        # parameters['user_id'] = request.user.id
+        lon2 = usr_profile['latlng']['coordinates'][0]
+        lat2 = usr_profile['latlng']['coordinates'][1]
 
     else:
         x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
@@ -682,7 +685,7 @@ def get_customers(user_id, logged_id=None):
          'banner_url': get_banner_url(useruid = int(each['customeruid']))
          })
     return final_customers[:10], logged_customer
-
+from mainapp.classes.DataConnector import UserConnections
 def get_connections(user_id, logged_in_id = None):
     trade_conn = TradeConnection()
     userprof = UserProfile()
@@ -697,7 +700,19 @@ def get_connections(user_id, logged_in_id = None):
             # account = SocialAccount.objects.get(user__id = each['c_useruid'])
             
             usr_pr = userprof.get_profile_by_id(str(each['c_useruid']))
-            user_info = UserInfo(each['c_useruid'])
+            # user_info = UserInfo(each['c_useruid'])
+
+            user_connection =  UserConnections(each['c_useruid'])
+            
+            b_conn_len, c_conn_len = user_connection.get_trade_connection_no()
+            trade_connections_no = b_conn_len + c_conn_len
+            food_no = user_connection.get_food_connection_no()
+            organisation_connection_no = user_connection.get_organisation_connection_no()
+
+
+
+
+
             if logged_in_id!=None and each['c_useruid'] == logged_in_id:
                 logged_conn = 'buyer'
             if usr_pr.get('business_org_name')!=None:
@@ -722,9 +737,9 @@ def get_connections(user_id, logged_in_id = None):
              'photo': usr_pr['profile_img'],
              'username' : usr_pr['username'],
              'type': usr_pr['type_user'][:3],
-             'trade_conn_no': user_info.trade_connections_no,
-             'food_no': user_info.food_no,
-             'org_conn_no': user_info.organisation_connection_no,
+             'trade_conn_no': trade_connections_no,
+             'food_no': food_no,
+             'org_conn_no': organisation_connection_no,
              'latitude': usr_pr['latlng']['coordinates'][1],
              'longitude': usr_pr['latlng']['coordinates'][0],
              'relation': 'buyer',
@@ -739,7 +754,13 @@ def get_connections(user_id, logged_in_id = None):
                 break
 
             usr_pr = userprof.get_profile_by_id(str(each['b_useruid']))
-            user_info = UserInfo(each['b_useruid'])
+            user_connection =  UserConnections(each['b_useruid'])
+            
+            b_conn_len, c_conn_len = user_connection.get_trade_connection_no()
+            trade_connections_no = b_conn_len + c_conn_len
+            food_no = user_connection.get_food_connection_no()
+            organisation_connection_no = user_connection.get_organisation_connection_no()
+
             if usr_pr.get('business_org_name')!=None:
                 myname = usr_pr.get('business_org_name') if (usr_pr['sign_up_as'] == 'Business' or usr_pr['sign_up_as'] == 'Organisation') \
                 and usr_pr.get('business_org_name')!='' else usr_pr['name']
@@ -764,9 +785,9 @@ def get_connections(user_id, logged_in_id = None):
              'photo': usr_pr['profile_img'],
              'username' : usr_pr['username'],
              'type': usr_pr['type_user'][:3],
-             'trade_conn_no': user_info.trade_connections_no,
-             'food_no': user_info.food_no,
-             'org_conn_no': user_info.organisation_connection_no,
+             'trade_conn_no': trade_connections_no,
+             'food_no': food_no,
+             'org_conn_no': organisation_connection_no,
              'latitude': usr_pr['latlng']['coordinates'][1],
              'longitude': usr_pr['latlng']['coordinates'][0],
              'relation': 'buyer',
@@ -797,7 +818,12 @@ def get_members(user_id, logged_in_id = None):
         try:
             # account = SocialAccount.objects.get(user__id = each['memberuid'])
             usr_pr = userprof.get_profile_by_id(str(each['memberuid']))
-            user_info = UserInfo(each['memberuid'])
+            user_connection =  UserConnections(each['memberuid'])
+            
+            b_conn_len, c_conn_len = user_connection.get_trade_connection_no()
+            trade_connections_no = b_conn_len + c_conn_len
+            food_no = user_connection.get_food_connection_no()
+            organisation_connection_no = user_connection.get_organisation_connection_no()
             if logged_in_id!=None and each['memberuid'] == logged_in_id:
                     logged_member = True
             if usr_pr.get('business_org_name')!=None:
@@ -823,9 +849,9 @@ def get_members(user_id, logged_in_id = None):
              'photo': usr_pr['profile_img'],
              'username' : usr_pr['username'],
              'type': usr_pr['type_user'],
-             'trade_conn_no': user_info.trade_connections_no,
-             'food_no': user_info.food_no,
-             'org_conn_no': user_info.organisation_connection_no,
+             'trade_conn_no': trade_connections_no,
+             'food_no': food_no,
+             'org_conn_no': organisation_connection_no,
              'latitude': usr_pr['latlng']['coordinates'][1],
              'longitude': usr_pr['latlng']['coordinates'][0],
              'banner_url': get_banner_url(useruid = int(each['memberuid']), logged_useruid= logged_in_id)
@@ -989,8 +1015,10 @@ def get_all_orgs():
             'name':myname
             })
 
-    return final_organisation    
+    return final_organisation  
 
+
+  
 def search_orgs_business(request, type_user):
     if request.user.is_authenticated():
         query = request.GET.get("q")
