@@ -94,11 +94,11 @@ class Friends():
             'join_time':int(join_time)
         }
         try:
-            data['profile_img'] = eachFriend['profile_image_url']
+            data['profile_img'] = twitter_user['profile_image_url']
         except:
-            data['profile_img'] = eachFriend['profile_img']
+            data['profile_img'] = twitter_user['profile_img']
         try:
-            data['profile_banner_url'] = eachFriend['profile_banner_url']
+            data['profile_banner_url'] = twitter_user['profile_banner_url']
         except:
             data['profile_banner_url'] = ''
 
