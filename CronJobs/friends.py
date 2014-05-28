@@ -59,7 +59,7 @@ class Friends():
                     # self.register_friend(eachFriend, eachUser['username'])
                     self.register_as_unclaimed_user(eachFriend)                    
                 if next_cursor != 0:
-                    time.sleep(5)
+                    # time.sleep(5)
                     friends = self.get_friends(eachUser['username'], next_cursor, friend_or_follower)
             return {'status':1}
         except:
@@ -112,8 +112,10 @@ class Friends():
 
             userprofile.update_profile_upsert({'screen_name':twitter_user['screen_name'],
                 'username':twitter_user['screen_name']},data)
+            print twitter_user['screen_name'] + ' registered'
             return True
         else:
+            print twitter_user['screen_name'] + ' already exists'
             return False
 
     def register_friend(self, eachFriend, username=''):
