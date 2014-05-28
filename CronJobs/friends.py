@@ -66,7 +66,7 @@ class Friends():
         #     print 'landed in exception'
         #     return {'status':0, 'msg':'landed in exception'}
 
-    def register_as_unclaimed_user(twitter_user):
+    def register_as_unclaimed_user(self,twitter_user):
         join_time = datetime.datetime.now()
         join_time = time.mktime(join_time.timetuple())
         data = {
