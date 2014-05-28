@@ -19,16 +19,19 @@ class MongoConnection():
 
     def ensure_index(self, table_name, index=None):
         self.db[table_name].ensure_index([(index,pymongo.GEOSPHERE)])
+        self.conn.close()
     
     def create_table(self, table_name, index=None):
         self.db[table_name].create_index( [(index, pymongo.DESCENDING)] )
+        self.conn.close()
 
 
     def get_one(self,table_name,conditions={}):
         single_doc = self.db[table_name].find_one(conditions)
         json_doc = json.dumps(single_doc,default=json_util.default)
         json_doc = json_doc.replace("$oid", "id")
-        json_doc = json_doc.replace("_id", "uid")
+        json_doc = json_doc.replace("_id", "uid")        
+        self.conn.close()
         return json.loads(json_doc)
 
     def get_all(self,table_name,conditions={}, sort_index ='_id', limit=100):
@@ -36,25 +39,31 @@ class MongoConnection():
         json_doc = json.dumps(list(all_doc),default=json_util.default)
         json_doc = json_doc.replace("$oid", "id")
         json_doc = json_doc.replace("_id", "uid")
+        self.conn.close()
         return json.loads(str(json_doc))
 
 
     def insert_one(self, table_name, value):
         self.db[table_name].insert(value)
+        self.conn.close()
 
     def update_push(self, table_name, where, what):
         #print where, what
         self.db[table_name].update(where,{"$push":what},upsert=False)
+        self.conn.close()
 
     def update(self, table_name, where, what):
         #print where, what
         self.db[table_name].update(where,{"$set":what},upsert=False)
+        self.conn.close()
 
     def update_multi(self, table_name, where, what):
         self.db[table_name].update(where,{"$set":what},upsert=False, multi=True)
+        self.conn.close()
 
     def update_upsert(self, table_name, where, what):
         self.db[table_name].update(where,{"$set":what},upsert=True)
+        self.conn.close()
         
 
     def map_reduce(self, table_name, mapper, reducer, query, result_table_name):
@@ -71,6 +80,7 @@ class MongoConnection():
         json_doc = json.dumps(list(results),default=json_util.default)
         json_doc = json_doc.replace("$oid", "id")
         json_doc = json_doc.replace("_id", "uid")
+        self.conn.close()
         return json.loads(str(json_doc))
 
     def aggregrate_all(self,table_name,conditions={}):
@@ -78,6 +88,7 @@ class MongoConnection():
         json_doc = json.dumps(list(all_doc),default=json_util.default)
         json_doc = json_doc.replace("$oid", "id")
         json_doc = json_doc.replace("_id", "uid")
+        self.conn.close()
         return json.loads(str(json_doc))
         
     def group(self,table_name,key, condition, initial, reducer):
@@ -85,6 +96,7 @@ class MongoConnection():
         json_doc = json.dumps(list(all_doc),default=json_util.default)
         json_doc = json_doc.replace("$oid", "id")
         json_doc = json_doc.replace("_id", "uid")
+        self.conn.close()
         return json.loads(str(json_doc))
 
     def get_distinct(self,table_name, distinct_val, query):
@@ -93,6 +105,7 @@ class MongoConnection():
         parameter = {}
         parameter['count'] = count
         parameter['results'] = all_doc
+        self.conn.close()
         return parameter
         
     def get_all_vals(self,table_name,conditions={}, sort_index ='_id'):
@@ -100,6 +113,7 @@ class MongoConnection():
         json_doc = json.dumps(list(all_doc),default=json_util.default)
         json_doc = json_doc.replace("$oid", "id")
         json_doc = json_doc.replace("_id", "uid")
+        self.conn.close()
         return json.loads(json_doc)
 
     def get_paginated_values(self, table_name, conditions ={}, sort_index ='_id', pageNumber = 1):
@@ -107,9 +121,10 @@ class MongoConnection():
         json_doc = json.dumps(list(all_doc),default=json_util.default)
         json_doc = json_doc.replace("$oid", "id")
         json_doc = json_doc.replace("_id", "uid")
+        self.conn.close()
         return json.loads(json_doc)        
 
     def get_count(self, table_name,conditions={}, sort_index='_id'):
         count = self.db[table_name].find(conditions).count()
+        self.conn.close()
         return count
-

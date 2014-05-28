@@ -9,8 +9,8 @@ import MySQLdb
 CLASS_PATH = '/srv/www/live/foodtrade-env/foodtrade/mainapp/classes'
 SETTINGS_PATH = '/srv/www/live/foodtrade-env/foodtrade/foodtrade'
 
-# CLASS_PATH = 'C:/Users/Roshan Bhandari/Desktop/foodtrade/mainapp/classes'
-# SETTINGS_PATH = 'C:/Users/Roshan Bhandari/Desktop/foodtrade/foodtrade'
+# CLASS_PATH = 'C:/Users/Roshan Bhandari/Desktop/project repos/foodtrade/mainapp/classes'
+# SETTINGS_PATH = 'C:/Users/Roshan Bhandari/Desktop/project repos/foodtrade/foodtrade'
 
 
 sys.path.insert(0, CLASS_PATH)
@@ -56,16 +56,65 @@ class Friends():
                 next_cursor = friends['next_cursor']
                 for eachFriend in friends['users']:
                     '''Register this user'''
-                    self.register_friend(eachFriend, eachUser['username'])
+                    # self.register_friend(eachFriend, eachUser['username'])
+                    self.register_as_unclaimed_user(eachFriend)                    
                 if next_cursor != 0:
                     time.sleep(5)
                     friends = self.get_friends(eachUser['username'], next_cursor, friend_or_follower)
             return {'status':1}
         except:
-            twitter_err_obj = TwitterError()
-            twitter_err_obj.save_error({'username':eachUser['username'],'error_type':'cron',
-                'next_cursor':next_cursor, 'error_solve_stat':'false','user_type':friend_or_follower})
             return {'status':0, 'msg':'landed in exception'}
+
+    def register_as_unclaimed_user(twitter_user):
+        join_time = datetime.datetime.now()
+        join_time = time.mktime(join_time.timetuple())
+        data = {
+            'is_unknown_profile':'true',
+            'recently_updated_by_super_user': 'false', 
+            'sign_up_as': str('unclaimed'),
+            'type_user': [], 
+            'name': twitter_user['name'],
+            'email': '', 
+            'description': twitter_user['description'],
+            'username' : twitter_user['screen_name'],
+            'screen_name': twitter_user['screen_name'],            
+            'updates': [],
+            'foods':[],
+            'organisations':[],
+            'subscribed':0,
+            'newsletter_freq':'Never',
+            'address_geocoded':False,
+            'address':'Antartica',
+            'twitter_address':twitter_user['location'],
+            'followers_count':twitter_user['followers_count'],
+            'friends_count':twitter_user['friends_count'],
+            'latlng':{"type":"Point","coordinates":[float(-135.10000000000002) ,float(-82.86275189999999)]},
+            'zip_code': '',
+            'join_time':int(join_time)
+        }
+        try:
+            data['profile_img'] = eachFriend['profile_image_url']
+        except:
+            data['profile_img'] = eachFriend['profile_img']
+        try:
+            data['profile_banner_url'] = eachFriend['profile_banner_url']
+        except:
+            data['profile_banner_url'] = ''
+
+        from UserProfile import UserProfile
+        userprofile = UserProfile(host=REMOTE_SERVER_LITE, port=27017, db_name=REMOTE_MONGO_DBNAME, username=REMOTE_MONGO_USERNAME, password=REMOTE_MONGO_PASSWORD)
+        check = userprofile.get_profile_by_username(twitter_user['screen_name'])
+
+        if check == None:
+            
+            min_user_id = int(userprofile.get_minimum_id_of_user()[0]['minId']) -1
+            data['useruid'] = min_user_id
+
+            userprofile.update_profile_upsert({'screen_name':twitter_user['screen_name'],
+                'username':twitter_user['screen_name']},data)
+            return True
+        else:
+            return False
 
     def register_friend(self, eachFriend, username=''):
         '''Register User to Friends Collection'''
