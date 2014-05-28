@@ -215,11 +215,7 @@ class SignupForm(forms.Form):
             mailchimp_obj_new.subscribe(data)
         except:
             pass
-<<<<<<< HEAD
-
-=======
->>>>>>> 2d05f4179f092525cca750cd5d03b399b535eb05
-
+            
         '''Invitation Tracking and Notifying the user who invites the user'''
         if invite_id != '':
             invititation_to = user.username
