@@ -39,10 +39,10 @@ class Friends():
         ACCESS_TOKEN_SECRET = st[1]
         user_twitter = self.get_twitter_obj(ACCESS_TOKEN, ACCESS_TOKEN_SECRET)
         if friend_or_follower == 'friends':
-            friends = user_twitter.get_friends_list(screen_name = screen_name, count=30, cursor = next_cursor)
+            friends = user_twitter.get_friends_list(screen_name = screen_name, count=200, cursor = next_cursor)
             return friends
         else:
-            followers = user_twitter.get_followers_list(screen_name = screen_name, count=30, cursor = next_cursor)
+            followers = user_twitter.get_followers_list(screen_name = screen_name, count=200, cursor = next_cursor)
             return followers
     
     def process_friends_or_followers(self, eachUser, friend_or_follower):
@@ -58,8 +58,8 @@ class Friends():
                     '''Register this user'''
                     # self.register_friend(eachFriend, eachUser['username'])
                     self.register_as_unclaimed_user(eachFriend)                    
-                if next_cursor != 0:
-                    time.sleep(5)
+                    time.sleep(1)
+                if next_cursor != 0:                    
                     friends = self.get_friends(eachUser['username'], next_cursor, friend_or_follower)
             return {'status':1}
         except:
@@ -116,6 +116,19 @@ class Friends():
             print twitter_user['screen_name'] + ' registered'
             return True
         else:
+            new_data = {
+            'followers_count':twitter_user['followers_count'],
+            'friends_count':twitter_user['friends_count']}
+            try:
+                new_data['profile_img'] = twitter_user['profile_image_url']
+            except:
+                new_data['profile_img'] = twitter_user['profile_img']
+            try:
+                new_data['profile_banner_url'] = twitter_user['profile_banner_url']
+            except:
+                new_data['profile_banner_url'] = ''
+            userprofile.update_profile_upsert({'screen_name':twitter_user['screen_name'],
+                'username':twitter_user['screen_name']},new_data)
             print twitter_user['screen_name'] + ' already exists'
             return False
 
