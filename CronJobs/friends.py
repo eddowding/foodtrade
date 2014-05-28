@@ -51,19 +51,20 @@ class Friends():
         except:
             return
         next_cursor = -1
-        try:
-            while(next_cursor !='0'):
-                next_cursor = friends['next_cursor']
-                for eachFriend in friends['users']:
-                    '''Register this user'''
-                    # self.register_friend(eachFriend, eachUser['username'])
-                    self.register_as_unclaimed_user(eachFriend)                    
-                if next_cursor != 0:
-                    # time.sleep(5)
-                    friends = self.get_friends(eachUser['username'], next_cursor, friend_or_follower)
-            return {'status':1}
-        except:
-            return {'status':0, 'msg':'landed in exception'}
+        # try:
+        while(next_cursor !='0'):
+            next_cursor = friends['next_cursor']
+            for eachFriend in friends['users']:
+                '''Register this user'''
+                # self.register_friend(eachFriend, eachUser['username'])
+                self.register_as_unclaimed_user(eachFriend)                    
+            if next_cursor != 0:
+                # time.sleep(5)
+                friends = self.get_friends(eachUser['username'], next_cursor, friend_or_follower)
+        return {'status':1}
+        # except:
+        #     print 'landed in exception'
+        #     return {'status':0, 'msg':'landed in exception'}
 
     def register_as_unclaimed_user(twitter_user):
         join_time = datetime.datetime.now()
