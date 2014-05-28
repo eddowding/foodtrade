@@ -31,8 +31,8 @@ class MongoConnection():
 
     def ensure_index(self, table_name, index=None):
         self.create_connection()
-        db[table_name].ensure_index([(index,pymongo.GEOSPHERE)])
-        db.close()
+        self.db[table_name].ensure_index([(index,pymongo.GEOSPHERE)])
+        self.close_connection()
     
     def create_table(self, table_name, index=None):
         self.create_connection()
