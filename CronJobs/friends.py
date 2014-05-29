@@ -67,12 +67,10 @@ class Friends():
             return {'status':0, 'msg':'landed in exception'}
 
     def register_as_unclaimed_user(self,twitter_user):
-        join_time = datetime.datetime.now()
-        join_time = time.mktime(join_time.timetuple())
         data = {
             'is_unknown_profile':'true',
             'recently_updated_by_super_user': 'false', 
-            'sign_up_as': str('unclaimed'),
+            'sign_up_as': 'unclaimed',
             'type_user': [], 
             'name': twitter_user['name'],
             'email': '', 
@@ -83,15 +81,9 @@ class Friends():
             'foods':[],
             'organisations':[],
             'subscribed':0,
-            'newsletter_freq':'Never',
-            'address_geocoded':False,
-            'address':'Antartica',
-            'twitter_address':twitter_user['location'],
+            'newsletter_freq':'Never',            
             'followers_count':twitter_user['followers_count'],
             'friends_count':twitter_user['friends_count'],
-            'latlng':{"type":"Point","coordinates":[float(-135.10000000000002) ,float(-82.86275189999999)]},
-            'zip_code': '',
-            'join_time':int(join_time)
         }
         try:
             data['profile_img'] = twitter_user['profile_image_url']
@@ -107,13 +99,30 @@ class Friends():
         check = userprofile.get_profile_by_username(twitter_user['screen_name'])
 
         if check == None:
-            
+            try:
+                location_res = Geocoder.geocode(twitter_user['location'])
+                data['twitter_address'] = twitter_user['location']
+                data['address'] = str(location_res)
+                data['latlng'] = {"type":"Point","coordinates":[float(location_res.longitude),float(location_res.latitude)]}
+                data['zip_code'] = str(location_res.postal_code)
+                data['address_geocoded']=True
+            except:
+                data['address'] = str('Antartica')
+                data['twitter_address'] = twitter_user['location']
+                data['latlng'] = {"type":"Point","coordinates":[float(-135.10000000000002) ,float(-82.86275189999999)]}
+                data['zip_code'] = str('')
+                data['address_geocoded']=False
+                data['location_default_on_error'] = 'true'
+
+            join_time = datetime.datetime.now()
+            join_time = time.mktime(join_time.timetuple())
+            data['join_time'] = int(join_time)            
             min_user_id = int(userprofile.get_minimum_id_of_user()[0]['minId']) -1
             data['useruid'] = min_user_id
 
             userprofile.update_profile_upsert({'screen_name':twitter_user['screen_name'],
                 'username':twitter_user['screen_name']},data)
-            print twitter_user['screen_name'] + ' registered'
+            print twitter_user['screen_name'] + ' updated'
             return True
         else:
             new_data = {
