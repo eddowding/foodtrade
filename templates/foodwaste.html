@@ -7,23 +7,28 @@
 {% load account %}
 
 {% block content %} 
-<div class="col-md-10  {% if not user.is_authenticated %} col-md-offset-1 {% endif %}" id="pricing">
+<div class="innerAll">
+ 
 
-<div class="container-responsive block-center showcase">
 
-<div class="row hero white" style="background-image: url('/static/images/pot.jpg'); padding: 80px 0;">
-  <div class="col-sm-12 text-center">
-     
-    <h1>FOOD WASTE</h1> 
-    <h3 class="text-center">Let's make the best of a bad situation</h3> 
+<div class="row" style="background-image: url('/static/images/pot.jpg'); background-size: cover; ">
+  <div class="col-sm-12 text-center innerAll inner-2x " style="background: rgba(0,0,0,0.3); padding: 80px 0 !Important;">
+    <h2 class="text-white" style="font-family: georgia; font-style: italic; margin: 0 60px;">
+    Food waste &amp; surpluses &mdash; let's make the best of a bad situation
+    </h2> 
+ 
   </div>
 </div> 
 <div class="text-right small photocredit white">Photo credit: <a href="http://kirstymorris.com/" target="_blank">Kirsty Morris</a></div>
 
 
-<div class="container-responsive">
+
+
+
+ 
  
 <div class="row">  
+<div class="box-generic clearfix">
   <div class="col-md-7 lead">
  
      <h1>1. Tweet us your surplus</h1>
@@ -35,8 +40,12 @@
     <img src="/static/images/tweet_to_sell.png" class="img-responsive img-thumbnail" />
   </div>
 </div>
+</div>
+
+
 
 <div class="row"> 
+<div class="box-generic clearfix">
   <div class="col-md-4 	">
     <img src="/static/images/search.png" class="img-responsive   img-thumbnail" />
   </div> 
@@ -52,9 +61,11 @@
 - put yourself on the map with a profile </p>
   </div>
 </div> 
+</div>
  
 
 <div class="row">  
+<div class="box-generic clearfix">
   <div class="col-md-8 lead">
      <h1>3. In real time, brilliantly</h1>
     <p>
@@ -65,15 +76,27 @@
     <img src="/static/images/stockists.png" class="img-responsive img-thumbnail" />
   </div>
 </div>
-  
-<div class="row hero white" style="background-image: url('/static/images/apples2.jpg');">
-  <div class="col-sm-12 text-center">
-    <blockquote>Numerous industries have been radically transformed by ‘disruptive technology’, but to date there has been little technology innovation in the grocery industry which can be considered truly disruptive. That may all be about to change…</blockquote>
-    <cite><img class="img-thumbnail" src="/static/images/logos/grocer.jpg"></cite>
-  </div>
 </div>
+
+
+
+  
+
+
+<div class="row" style="background-image: url('/static/images/apples2.jpg'); background-size: cover; ">
+  <div class="col-sm-12 text-center innerAll inner-2x " style="background: rgba(0,0,0,0.3); padding: 80px 0 !Important;">
+    <h2 class="text-white" style="font-family: georgia; font-style: italic; ">Numerous industries have been radically transformed by ‘disruptive technology’, but to date there has been little technology innovation in the grocery industry which can be considered truly disruptive. That may all be about to change…</h3>
+
+    <img class="img-thumbnail" src="/static/images/logos/grocer.jpg" style="margin-top: 20px; height: 60px;" />
+  </div>
+</div> 
+<div class="text-right small photocredit white">Photo credit: <a href="http://kirstymorris.com/" target="_blank">Kirsty Morris</a></div>
+
+
  
-{% if not user.is_authenticated %}   
+
+ 
+
 <div class="ftstrip ftstrip-mid" style="  margin-top: 50px;" ></div>
 <div style="padding: 20px 0; " class="text-center">
 
@@ -85,9 +108,7 @@ margin-right: 0px;">You're obviously interested. You should definitely </span>
 
 </div>
 <div class="ftstrip ftstrip-mid"></div>
-{% endif %}
  
-
 
 
 
