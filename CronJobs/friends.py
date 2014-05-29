@@ -122,7 +122,7 @@ class Friends():
 
             userprofile.update_profile_upsert({'screen_name':twitter_user['screen_name'],
                 'username':twitter_user['screen_name']},data)
-            # print twitter_user['screen_name'] + ' updated'
+            print twitter_user['screen_name'] + ' updated'
             return True
         else:
             new_data = {
@@ -138,7 +138,7 @@ class Friends():
                 new_data['profile_banner_url'] = ''
             userprofile.update_profile_upsert({'screen_name':twitter_user['screen_name'],
                 'username':twitter_user['screen_name']},new_data)
-            # print twitter_user['screen_name'] + ' already exists'
+            print twitter_user['screen_name'] + ' already exists'
             return False
 
     def register_friend(self, eachFriend, username=''):
