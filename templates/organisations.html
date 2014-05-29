@@ -7,36 +7,34 @@
 {% load account %}
 
 {% block content %}
-
-<div class="col-md-10  {% if not user.is_authenticated %} col-md-offset-1 {% endif %}">
-
-<div class="container-responsive block-center showcase">
+ 
+<div class="innerAll inner-2x"> 
 
 
-<div class="row hero white" style="background-image: url('/static/images/clifton.jpg');">
-  <div class="col-sm-12 text-center">
-    <blockquote>"There is currently no other mechanism that provides us with this information - which will greatly increase our data on local Fairtrade providers, and therefore our capacity to increase sales of Fairtrade products."</blockquote>
-    <cite><img class="img-thumbnail" src="/static/images/logos/fairtrade.png" /></cite>
+<div class="row" style="background: url('/static/images/clifton.jpg'); background-size: cover;padding: 60px 0 !Important; ">
+  <div class="col-sm-12   text-center innerAll inner-2x">
+    <h2 class="text-white" style="font-family: georgia; font-style: italic; ">"There is currently no other mechanism that provides us with this information - which will greatly increase our data on local Fairtrade providers, and therefore our capacity to increase sales of Fairtrade products."</h3>
+
+    <img class="img-thumbnail" src="/static/images/logos/fairtrade.png" style="margin-top: 20px; height: 60px;" />
   </div>
 </div> 
 <div class="text-right small photocredit white">Photo credit: <a href="http://en.wikipedia.org/wiki/Bristol" target="_blank">Wikipedia</a></div>
 
-<!-- 
+ 
 
- SHOW MEMBERS 
- SHOW TEAM
- SHARE UPDATES
- FIND PPL
-  -->
-
+<div class="row">
+<div class="box-generic clearfix">
 <div class="ftstrip ftstrip-mid"></div>
-<div style="padding: 20px 0;" class="text-center">
-<p class="lead" style="margin: 0;">Don't forget to see everything we can do for your <a href="/pages/business" target="_blank">trade</a> and <a href="/pages/individuals" target="_blank">individual</a> members.</p>
+  <div style="padding: 20px 0;" class="text-center">
+    <p class="lead" style="margin: 0;">See what we can do for your <a href="/pages/business" class="btn btn-primary" target="_blank">business users</a> and <a href="/pages/individuals" target="_blank" class="btn btn-primary">individual members</a></p>
+  </div>
+<div class="ftstrip ftstrip-mid"></div>
 </div>
-<div class="ftstrip ftstrip-mid"></div>
+</div>
 
 
 <div class="row">
+<div class="box-generic clearfix">
   <div class="col-sm-5 block-center">
     <img src="/static/images/vouch.png" class="img-responsive img-thumbnail" />
   </div>
@@ -47,10 +45,11 @@
     <p class="lead">Nothing helps sell your produce like other people talking about it, FoodTrade encourages users to find, vouch for, and share your members' produce. It's 2014, social selling is where it's at.</p>
   </div>
 </div>
+</div>
 
 
 <div class="row">
-   
+<div class="box-generic clearfix">
   <div class="col-sm-6 block-vertical text-right">        
     <h1>Demonstrate your impact</h1>
     <h3>Map your members, and where they trade</h3>
@@ -60,24 +59,31 @@
   <div class="col-sm-6 block-vertical text-center">
     <img src="/static/images/stockists.png" class="img-responsive img-thumbnail" />
   </div>
-
+</div>
 </div>
 
 
 
-<div class="row hero white" style="background-image: url('/static/images/apples2.jpg');">
-  <div class="col-sm-12 text-center">
-    <blockquote>Numerous industries have been radically transformed by ‘disruptive technology’, but to date there has been little technology innovation in the grocery industry which can be considered truly disruptive. That may all be about to change…</blockquote>
-    <cite><img class="img-thumbnail" src="/static/images/logos/grocer.jpg" /></cite>
+
+<div class="row" style="background-image: url('/static/images/apples2.jpg'); background-size: cover; ">
+  <div class="col-sm-12 text-center innerAll inner-2x " style="background: rgba(0,0,0,0.3); padding: 80px 0 !Important;">
+    <h2 class="text-white" style="font-family: georgia; font-style: italic; ">Numerous industries have been radically transformed by ‘disruptive technology’, but to date there has been little technology innovation in the grocery industry which can be considered truly disruptive. That may all be about to change…</h3>
+
+    <img class="img-thumbnail" src="/static/images/logos/grocer.jpg" style="margin-top: 20px; height: 60px;" />
   </div>
 </div> 
 <div class="text-right small photocredit white">Photo credit: <a href="http://kirstymorris.com/" target="_blank">Kirsty Morris</a></div>
 
+
+ 
+
+
+
 <div class="row">
+<div class="box-generic clearfix">
   <div class="col-sm-6 block-vertical text-center">
     <img src="/static/images/search.png" class="img-responsive img-thumbnail" />
   </div>
-
 
   <div class="col-sm-6">        
     <h1>Like Google, but for carrots and things</h1>
@@ -85,15 +91,15 @@
     <p class="lead">We want to help more of us buy great produce from great people. And that means certifiers, groups, campaigns, and .. everyone! We want you to be right there in the search when people are making decisions about who to but from.  </p>
   </div>
 </div>
+</div>
   
 
 
 <div class="row">
-   
-
+<div class="box-generic clearfix">
   <div class="col-sm-6 text-right">        
-    <h1>Eventually, everything connects</h1>
-    <h3>Or.. at least we hope so.</h3>
+    <h1>"Eventually, everything connects"</h1>
+    <h3>&mdash; Charles Eames</h3>
     <p class="lead">We connect you directly to the people you need to talk to, never getting in the way for a second. (We'd say something about getting it straight from the horse's mouth, but we wouldn't want to rub it in...)</p>
   </div>
 
@@ -101,23 +107,31 @@
     <img src="/static/images/contact.png" class="img-responsive img-thumbnail" />
   </div>
 </div>
+</div>
 
-<div class="row hero white" style="background-image: url('/static/images/cows.jpg');">
-  <div class="col-sm-12 text-center">
-    <blockquote>The sustainable alternative to the UK’s food network — Together [small companies] are able to enjoy the same advantages as big agri-business.</blockquote>
-    <cite><img class="img-thumbnail" src="/static/images/logos/wired.jpg"</cite>
+
+
+
+<div class="row" style="background-image: url('/static/images/cows.jpg'); background-size: cover; ">
+  <div class="col-sm-12 text-center innerAll inner-2x " style="background: rgba(0,0,0,0.3); padding: 80px 0 !Important;">
+    <h2 class="text-white" style="font-family: georgia; font-style: italic; ">
+    The sustainable alternative to the UK’s food network — Together [small companies] are able to enjoy the same advantages as big agri-business.
+    </h2>
+
+    <img class="img-thumbnail" src="/static/images/logos/wired.jpg" style="margin-top: 20px; height: 60px;" />
   </div>
 </div> 
 <div class="text-right small photocredit white">Photo credit: <a href="http://kirstymorris.com/" target="_blank">Kirsty Morris</a></div>
 
+ 
+
 
 <div class="row">
+<div class="box-generic clearfix">
   <div class="col-sm-6 block-vertical text-center">
     <img src="http://farm5.staticflickr.com/4032/4620044329_dd3bc8cca1_o.jpg" class="img-responsive img-thumbnail" />
     <div class="text-right small photocredit white">Photo credit: <a href="http://www.flickr.com/photos/psbikes/4620044329/" target="_blank">Peter Santos</a></div>
   </div>
-
-
 
   <div class="col-sm-6">        
     <h1>Online, on the farm, in the kitchen, on the road</h1>
@@ -125,16 +139,23 @@
     <p class="lead">Using FoodTrade is as easy as a status update, so whether your members are tweeting from the polytunnal, or busy in the kitchens whilst spotting a great deal on surplus fruit, it's perfect for any scale of business, anywhere.</p>
   </div>
 </div>
-
-<div class="ftstrip ftstrip-mid"></div>
-<div style="padding: 20px 0;" class="text-center">
-<p class="lead" style="margin: 0;">Don't forget to see everything we can do for your <a href="/pages/business" target="_blank">trade</a> and <a href="/pages/individuals" target="_blank">individual</a> members.</p>
 </div>
+
+
+
+<div class="row">
+<div class="box-generic clearfix">
 <div class="ftstrip ftstrip-mid"></div>
+  <div style="padding: 20px 0;" class="text-center">
+    <p class="lead" style="margin: 0;">See what we can do for your <a href="/pages/business" class="btn btn-primary" target="_blank">business users</a> and <a href="/pages/individuals" target="_blank" class="btn btn-primary">individual members</a></p>
+  </div>
+<div class="ftstrip ftstrip-mid"></div>
+</div>
+</div>
  
 
 <div class="row">
-
+<div class="box-generic clearfix">
   <div class="col-sm-6 text-right">        
     <h1>Wiki..foodia?</h1>
     <h3>Share what you know so that others can benefit</h3>
@@ -145,17 +166,19 @@
     <img src="/static/images/wiki.png" class="img-responsive img-thumbnail" />
   </div>
 </div>
+</div>
 
 
- 
-<div class="row hero white" style="background-image: url('http://e5bakehouse.com/wp-content/uploads/2013/08/growing-community.jpg');" >
-  <div class="col-sm-12 text-center" >
-    <blockquote>The ‘dating site for food’, connects food producers with local businesses to foster communities and help small farms exist whilst in competition with the big supermarkets.
-    </blockquote>
-    <cite><img class="img-thumbnail" src="/static/images/logos/huffpo.png"</cite>
+
+<div class="row" style="background-image: url('/static/images/cows.jpg'); background-size: cover; ">
+  <div class="col-sm-12 text-center innerAll inner-2x " style="background: rgba(0,0,0,0.3); padding: 80px 0 !Important;">
+    <h2 class="text-white" style="font-family: georgia; font-style: italic; ">
+    The ‘dating site for food’, connects food producers with local businesses to foster communities and help small farms exist whilst in competition with the big supermarkets.
+    </h2>
+
+    <img class="img-thumbnail" src="/static/images/logos/huffpo.png" style="margin-top: 20px; height: 60px;" />
   </div>
-</div> 
-
+</div>  
 
 
 <div style="margin-bottom: 100px;"></div>
@@ -166,8 +189,7 @@
 
 
  
-</div>
-</div><!-- col10 --> 
+</div> 
     
 
 {% endblock %}
