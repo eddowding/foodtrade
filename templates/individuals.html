@@ -8,26 +8,27 @@
 
 {% block content %}
 
-<div class="col-md-10  {% if not user.is_authenticated %} col-md-offset-1 {% endif %}">
 
-<div class="container-responsive block-center showcase">
+<div class="innerAll inner-2x"> 
+ 
 
- 
- 
-<div class="row hero white" style="background-image: url('http://e5bakehouse.com/wp-content/uploads/2013/08/growing-community.jpg');" >
-  <div class="col-sm-12 text-center" >
-    <blockquote>The ‘dating site for food’, connects food producers with local businesses to foster communities and help small farms exist whilst in competition with the big supermarkets.
-    </blockquote>
-    <cite><img class="img-thumbnail" src="/static/images/logos/huffpo.png"</cite>
+<div class="row" style="background-image: url('/static/images/cows.jpg'); background-size: cover; ">
+  <div class="col-sm-12 text-center innerAll inner-2x " style="background: rgba(0,0,0,0.3); padding: 80px 0 !Important;">
+    <h2 class="text-white" style="font-family: georgia; font-style: italic; ">
+    The ‘dating site for food’, connects food producers with local businesses to foster communities and help small farms exist whilst in competition with the big supermarkets.
+    </h2>
+
+    <img class="img-thumbnail" src="/static/images/logos/huffpo.png" style="margin-top: 20px; height: 60px;" />
   </div>
-</div> 
+</div>  
+
 
 
 <div class="row">
+<div class="box-generic clearfix">
   <div class="col-sm-5 block-vertical text-center">
     <img src="/static/images/search.png" class="img-responsive " />
   </div>
-
 
   <div class="col-sm-7 block-vertical">  
     <h1>The real food search engine</h1>
@@ -35,10 +36,11 @@
     <p class="lead">Finding responsibly sourced produce shouldn't have to be a hassle. FoodTrade helps you find your nearest producer, and the people who stock their produce. </p><p class="lead">We take the hassle out of finding real food.</p>
   </div>
 </div>
+</div>
 
  
 <div class="row">
-   
+<div class="box-generic clearfix">
   <div class="col-sm-7 block-vertical text-right">        
     <h1>Find your nearest stockist </h1>
     <h3>We show stockists and suppliers so you know what's what. </h3>
@@ -48,29 +50,39 @@
   <div class="col-sm-5 block-vertical text-center">
     <img src="/static/images/stockists.png" class="img-responsive img-thumbnail" />
   </div>
-
 </div>
+</div>
+ 
 
-  
-{% if not user.is_authenticated %}   
+
+
+
+<div class="row">
+<div class="box-generic clearfix">
 <div class="ftstrip ftstrip-mid"></div>
-<div style="padding: 20px 0;" class="text-center">
-
+  <div style="padding: 20px 0;" class="text-center">
   <span class="lead" style="position: relative;
 top: 5px;
 margin-right: 20px;"><strong>Already seen enough?</strong></span>
-  <a type="button" class="btn btn-success btn-lg" href="{% provider_login_url "twitter" process="login" %}" style="margin-right: 15px;">
-    <i class="fa fa-user fa-fw"></i> <strong>Sign up now</strong>
+  <a type="button" class="btn btn-success btn-lg" href="/accounts/twitter/login/?process=login" style="margin-right: 15px;">
+    <i class="fa fa-user fa-fw"></i> <strong>Sign up is Free</strong>
   </a>
   <span class="lead" style="position: relative;
 top: 5px;">&mdash; it's free for individuals. Forever.</p>
-
-</div>
+  </div>
 <div class="ftstrip ftstrip-mid"></div>
-{% endif %}
+</div>
+</div>
+
+
+
+
+
+
+
  
 <div class="row">
-
+<div class="box-generic clearfix">
   <div class="col-sm-6 block-center">
     <img src="/static/images/vouch.png" class="img-responsive img-thumbnail" />
   </div>
@@ -80,22 +92,26 @@ top: 5px;">&mdash; it's free for individuals. Forever.</p>
     <p class="lead">Everyone loves a bit of appreciation. Whether it's bacon from Park Farm, apple juice from Stream Farm, or pork belly from Poco, showing your appreciation makes it easier for great food to get on to more shelves and menus.</p>
   </div>
 </div>
-
-
-
+</div> 
   
+ 
 
-<div class="row hero white" style="background-image: url('/static/images/cows.jpg');">
-  <div class="col-sm-12 text-center">
-    <blockquote>More jobs. More money in the local economy. More resilient supply chains. Better food. Less CO2... the answer is a social media platform that helps local people collaborate with local business.</blockquote>
-    <cite><img class="img-thumbnail" src="/static/images/logos/fastcompany.jpg" /></cite>
+<div class="row" style="background-image: url('/static/images/apples2.jpg'); background-size: cover; ">
+  <div class="col-sm-12 text-center innerAll inner-2x " style="background: rgba(0,0,0,0.3); padding: 80px 0 !Important;">
+    <h2 class="text-white" style="font-family: georgia; font-style: italic; margin: 0 60px;">
+    More jobs. More money in the local economy. More resilient supply chains. Better food. Less CO2... the answer is a social media platform that helps local people collaborate with local business.
+    </h2>
+
+    <img class="img-thumbnail" src="/static/images/logos/fastcompany.jpg" style="margin-top: 20px; height: 60px;" />
   </div>
 </div> 
 <div class="text-right small photocredit white">Photo credit: <a href="http://kirstymorris.com/" target="_blank">Kirsty Morris</a></div>
 
 
-<div class="row">
 
+
+<div class="row">
+<div class="box-generic clearfix">
   <div class="col-sm-6 text-right">        
     <h1>Let's map the food web</h1>
     <h3>Share what you know so that others can benefit</h3>
@@ -106,8 +122,12 @@ top: 5px;">&mdash; it's free for individuals. Forever.</p>
     <img src="/static/images/wiki.png" class="img-responsive img-thumbnail" />
   </div>
 </div>
+</div>
+
+
 
 <div class="row">
+<div class="box-generic clearfix">
   <div class="col-sm-6 block-vertical text-center">
     <img src="/static/images/contact.png" class="img-responsive img-thumbnail" />
   </div>
@@ -117,22 +137,31 @@ top: 5px;">&mdash; it's free for individuals. Forever.</p>
     <h3>Think of us like a dating site.</h3>
     <p class="lead">We connect you directly to the people you want to talk to, never getting in the way for a second. (We'd say something about getting it straight from the horse's mouth, but we wouldn't want to rub it in...)</p>
   </div>
-
+</div>
 </div>
  
+ 
 
-<div class="row hero white" style="background-image: url('/static/images/pot.jpg');">
-  <div class="col-sm-12 text-center">
-    <blockquote>Local food is about getting the freshest and best tasting food. It’s also also about connecting to and strengthening your community. The more that you buy locally, the more you contribute to the health of your local economy. <cite>&mdash; <a href="https://twitter.com/annalappe" target="_blank">Anna Lappé</a></cite></blockquote>
+
+
+
+<div class="row" style="background-image: url('/static/images/pot.jpg'); background-size: cover; ">
+  <div class="col-sm-12 text-center innerAll inner-2x " style="background: rgba(0,0,0,0.3); padding: 80px 0 !Important;">
+    <h2 class="text-white" style="font-family: georgia; font-style: italic; margin: 0 60px;">
+    Local food is about getting the freshest and best tasting food. It’s also also about connecting to and strengthening your community. The more that you buy locally, the more you contribute to the health of your local economy.
+    </h2>
+    <p> &mdash; <a href="https://twitter.com/annalappe" class="text-white" target="_blank">Anna Lappé</a></p>
+ 
   </div>
-</div>  
+</div> 
 <div class="text-right small photocredit white">Photo credit: <a href="http://kirstymorris.com/" target="_blank">Kirsty Morris</a></div>
 
 
-{% if not user.is_authenticated %}   
+
+
+
 <div class="ftstrip ftstrip-mid" style="  margin-top: 50px;" ></div>
 <div style="padding: 20px 0; " class="text-center">
-
   <span class="lead" style="position: relative;
 top: 5px;
 margin-right: 0px;">You made it this far, it would seem silly not to</span>
@@ -140,8 +169,9 @@ margin-right: 0px;">You made it this far, it would seem silly not to</span>
   </a>
 
 </div>
-<div class="ftstrip ftstrip-mid"></div>
-{% endif %}
+<div class="ftstrip ftstrip-mid"></div> 
+
+
 
 
 <div style="margin-bottom: 100px;"></div>
@@ -152,6 +182,5 @@ margin-right: 0px;">You made it this far, it would seem silly not to</span>
 
 
 
- 
-</div>
+  
 </div><!-- col10 --> {% endblock %}
