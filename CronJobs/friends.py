@@ -22,6 +22,29 @@ from MySQLConnect import MySQLConnect
 from settingslocal import *
 from twython import Twython
 from pygeocoder import Geocoder
+from pygeocoder import Geocoder
+import requests
+import json
+
+def geocode_address(address):
+    API_KEY = 'AIzaSyDRNTE8EWOsbZzAQcM3hlBpaNA0zTuVups'
+    get_url = 'https://maps.googleapis.com/maps/api/geocode/json?'
+    payload = {
+    'key':API_KEY,
+    'sensor':'true',
+    'address':address
+    }
+    r = requests.get(get_url,params=payload)
+    json_response = json.loads(r.text)
+    if json_response['status']=='ok':
+        retval = {'address':json_response['results'][0]['formatted_address'], 
+                  'latlng':json_response['results'][0]['geometry']['location'],
+                  'zip':'',
+                  'status':'ok'
+            }            
+    else:
+        return {'status':'error'}
+    return retval
 
 class Friends():
     def __init__ (self):
@@ -108,14 +131,13 @@ class Friends():
                 data['address_geocoded']=True
             except:
                 try:
-                    business_geocoder = Geocoder()
-                    business_geocoder.api_key = 'AIzaSyDRNTE8EWOsbZzAQcM3hlBpaNA0zTuVups'
-                    location_res = business_geocoder.geocode(twitter_user['location'])
+                    location_res = geocode_address(twitter_user['location'])
                     data['twitter_address'] = twitter_user['location']
-                    data['address'] = str(location_res)
-                    data['latlng'] = {"type":"Point","coordinates":[float(location_res.longitude),float(location_res.latitude)]}
-                    data['zip_code'] = str(location_res.postal_code)
-                    data['address_geocoded']=True                    
+                    data['address'] = str(location_res['address'])
+                    data['latlng'] = {"type":"Point","coordinates":[float(location_res['latlng']['lng']),float(location_res['latlng']['lat'])]}
+                    data['zip_code'] = str(location_res['zip'])
+                    data['address_geocoded']=True         
+                    print "Business key used"           
                 except:                
                     data['address'] = str('Antartica')
                     data['twitter_address'] = twitter_user['location']
