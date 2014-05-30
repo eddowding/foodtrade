@@ -36,7 +36,7 @@ def geocode_address(address):
     }
     r = requests.get(get_url,params=payload)
     json_response = json.loads(r.text)
-    if json_response['status']=='ok':
+    if json_response['status']=='OK':
         retval = {'address':json_response['results'][0]['formatted_address'], 
                   'latlng':json_response['results'][0]['geometry']['location'],
                   'zip':'',
