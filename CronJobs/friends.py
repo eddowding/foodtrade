@@ -107,12 +107,22 @@ class Friends():
                 data['zip_code'] = str(location_res.postal_code)
                 data['address_geocoded']=True
             except:
-                data['address'] = str('Antartica')
-                data['twitter_address'] = twitter_user['location']
-                data['latlng'] = {"type":"Point","coordinates":[float(-135.10000000000002) ,float(-82.86275189999999)]}
-                data['zip_code'] = str('')
-                data['address_geocoded']=False
-                data['location_default_on_error'] = 'true'
+                try:
+                    business_geocoder = Geocoder()
+                    business_geocoder.api_key = 'AIzaSyDRNTE8EWOsbZzAQcM3hlBpaNA0zTuVups'
+                    location_res = business_geocoder.geocode(twitter_user['location'])
+                    data['twitter_address'] = twitter_user['location']
+                    data['address'] = str(location_res)
+                    data['latlng'] = {"type":"Point","coordinates":[float(location_res.longitude),float(location_res.latitude)]}
+                    data['zip_code'] = str(location_res.postal_code)
+                    data['address_geocoded']=True                    
+                except:                
+                    data['address'] = str('Antartica')
+                    data['twitter_address'] = twitter_user['location']
+                    data['latlng'] = {"type":"Point","coordinates":[float(-135.10000000000002) ,float(-82.86275189999999)]}
+                    data['zip_code'] = str('')
+                    data['address_geocoded']=False
+                    data['location_default_on_error'] = 'true'
 
             join_time = datetime.datetime.now()
             join_time = time.mktime(join_time.timetuple())
@@ -122,7 +132,7 @@ class Friends():
 
             userprofile.update_profile_upsert({'screen_name':twitter_user['screen_name'],
                 'username':twitter_user['screen_name']},data)
-            # print twitter_user['screen_name'] + ' updated'
+            print twitter_user['screen_name'] + ' added'
             return True
         else:
             new_data = {
@@ -136,14 +146,19 @@ class Friends():
                 new_data['profile_banner_url'] = twitter_user['profile_banner_url']
             except:
                 new_data['profile_banner_url'] = ''
+            
+            data['updated_recently'] = True
+            update_time = datetime.datetime.now()
+            update_time = time.mktime(update_time.timetuple())
+            data['update_time'] = int(update_time)                
             userprofile.update_profile_upsert({'screen_name':twitter_user['screen_name'],
                 'username':twitter_user['screen_name']},new_data)
-            # print twitter_user['screen_name'] + ' already exists'
+            print twitter_user['screen_name'] + ' updated'
             return False
 
     def register_friend(self, eachFriend, username=''):
         '''Register User to Friends Collection'''
-        self.save_friend({'username':username, 'friends':eachFriend})
+        self.save_friendw({'username':username, 'friends':eachFriend})
         return {'status':1}
 
     def register_friend_to_user(self, eachFriend, username=''):
