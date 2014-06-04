@@ -330,41 +330,6 @@ class UserProfile():
             result = self.db_object.map_reduce(self.table_name, mapper, reducer,{},result_table_name = 'trendingalltime')[0:10]
         return result
 
-            query_str = query_str + """if(current.deleted != 1 && current.time_stamp >= """ + str(time.mktime(start_time_stamp.timetuple())) + """ && current.time_stamp <= """ + str(time.mktime(end_time_stamp.timetuple())) + """ ){"""
-        else:
-            query_str = query_str + """if(current.deleted != 1){"""
-
-        query_str = query_str + """
-            items = current.status.split(' ');
-            for(var j = 0; j < items.length; j++ ) {
-                if(items[j].indexOf('#')==0){                        
-                      var reg =  /\B#\w*[a-zA-Z]+\w*/g;
-                      if (reg.test(items[j].toLowerCase())){
-                        emit_text = items[j].toLowerCase();
-                        emit_text.replace('?','');
-                        emit(emit_text, 1);
-                      }
-
-                    }
-                }
-            }
-            }}"""
-        mapper = Code(query_str)
-        reducer = Code("""
-            function (key, values) { 
-             var sum = 0;
-             for (var i =0; i<values.length; i++){
-                    sum = sum + parseInt(values[i]);
-             }
-             return parseInt(sum);
-            }
-            """)
-        if start_time_stamp !="" and end_time_stamp !="":
-            result = self.db_object.map_reduce(self.table_name, mapper, reducer,{}, result_table_name = 'trendingthisweek')[0:10]
-        else:
-            result = self.db_object.map_reduce(self.table_name, mapper, reducer,{},result_table_name = 'trendingalltime')[0:10]
-        return result
-
 '''
 Please do not remove the code below. It is necessary during 
 registering user to mailchimp by cron.
