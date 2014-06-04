@@ -39,14 +39,13 @@ class Friends():
         ACCESS_TOKEN_SECRET = st[1]
         user_twitter = self.get_twitter_obj(ACCESS_TOKEN, ACCESS_TOKEN_SECRET)
         if friend_or_follower == 'friends':
-            friends = user_twitter.get_friends_list(screen_name = screen_name, count=30, cursor = next_cursor)
+            friends = user_twitter.get_friends_list(screen_name = screen_name, count=200, cursor = next_cursor)
             return friends
         else:
-            followers = user_twitter.get_followers_list(screen_name = screen_name, count=30, cursor = next_cursor)
+            followers = user_twitter.get_followers_list(screen_name = screen_name, count=200, cursor = next_cursor)
             return followers
     
     def process_friends_or_followers(self, eachUser, friend_or_follower):
-        timer_start_time = time.mktime(datetime.datetime.now().timetuple())
         try:
             friends = self.get_friends(eachUser['username'], -1, friend_or_follower)
         except:
@@ -54,26 +53,112 @@ class Friends():
         next_cursor = -1
         try:
             while(next_cursor !='0'):
-                timer_now_time = time.mktime(datetime.datetime.now().timetuple())
-                if (timer_now_time - timer_start_time > 30*60):
-                    break
                 next_cursor = friends['next_cursor']
                 for eachFriend in friends['users']:
                     '''Register this user'''
-                    self.register_friend(eachFriend, eachUser['username'])
-                if next_cursor != 0:
-                    time.sleep(3)
+                    # self.register_friend(eachFriend, eachUser['username'])
+                    self.register_as_unclaimed_user(eachFriend)                    
+                    time.sleep(1)
+                if next_cursor != 0:                    
                     friends = self.get_friends(eachUser['username'], next_cursor, friend_or_follower)
             return {'status':1}
         except:
-            twitter_err_obj = TwitterError()
-            twitter_err_obj.save_error({'username':eachUser['username'],'error_type':'cron',
-                'next_cursor':next_cursor, 'error_solve_stat':'false','user_type':friend_or_follower})
+            print 'landed in exception'
             return {'status':0, 'msg':'landed in exception'}
+
+    def register_as_unclaimed_user(self,twitter_user):
+        data = {
+            'is_unknown_profile':'true',
+            'recently_updated_by_super_user': 'false', 
+            'sign_up_as': 'unclaimed',
+            'type_user': [], 
+            'name': twitter_user['name'],
+            'email': '', 
+            'description': twitter_user['description'],
+            'username' : twitter_user['screen_name'],
+            'screen_name': twitter_user['screen_name'],            
+            'updates': [],
+            'foods':[],
+            'organisations':[],
+            'subscribed':0,
+            'newsletter_freq':'Never',            
+            'followers_count':twitter_user['followers_count'],
+            'friends_count':twitter_user['friends_count'],
+        }
+        try:
+            data['profile_img'] = twitter_user['profile_image_url']
+        except:
+            data['profile_img'] = twitter_user['profile_img']
+        try:
+            data['profile_banner_url'] = twitter_user['profile_banner_url']
+        except:
+            data['profile_banner_url'] = ''
+
+        from UserProfile import UserProfile
+        userprofile = UserProfile(host=REMOTE_SERVER_LITE, port=27017, db_name=REMOTE_MONGO_DBNAME, username=REMOTE_MONGO_USERNAME, password=REMOTE_MONGO_PASSWORD)
+        check = userprofile.get_profile_by_username(twitter_user['screen_name'])
+
+        if check == None:
+            try:
+                location_res = Geocoder.geocode(twitter_user['location'])
+                data['twitter_address'] = twitter_user['location']
+                data['address'] = str(location_res)
+                data['latlng'] = {"type":"Point","coordinates":[float(location_res.longitude),float(location_res.latitude)]}
+                data['zip_code'] = str(location_res.postal_code)
+                data['address_geocoded']=True
+            except:
+                try:
+                    business_geocoder = Geocoder(api_key='AIzaSyDRNTE8EWOsbZzAQcM3hlBpaNA0zTuVups')
+                    location_res = business_geocoder.geocode(twitter_user['location'])
+                    data['twitter_address'] = twitter_user['location']
+                    data['address'] = str(location_res)
+                    data['latlng'] = {"type":"Point","coordinates":[float(location_res.longitude),float(location_res.latitude)]}
+                    data['zip_code'] = str(location_res.postal_code)
+                    data['address_geocoded']=True         
+                    print "Business key used"           
+                except:                
+                    data['address'] = str('Antartica')
+                    data['twitter_address'] = twitter_user['location']
+                    data['latlng'] = {"type":"Point","coordinates":[float(-135.10000000000002) ,float(-82.86275189999999)]}
+                    data['zip_code'] = str('')
+                    data['address_geocoded']=False
+                    data['location_default_on_error'] = 'true'
+
+            join_time = datetime.datetime.now()
+            join_time = time.mktime(join_time.timetuple())
+            data['join_time'] = int(join_time)            
+            min_user_id = int(userprofile.get_minimum_id_of_user()[0]['minId']) -1
+            data['useruid'] = min_user_id
+
+            userprofile.update_profile_upsert({'screen_name':twitter_user['screen_name'],
+                'username':twitter_user['screen_name']},data)
+            print twitter_user['screen_name'] + ' added'
+            return True
+        else:
+            new_data = {
+            'followers_count':twitter_user['followers_count'],
+            'friends_count':twitter_user['friends_count']}
+            try:
+                new_data['profile_img'] = twitter_user['profile_image_url']
+            except:
+                new_data['profile_img'] = twitter_user['profile_img']
+            try:
+                new_data['profile_banner_url'] = twitter_user['profile_banner_url']
+            except:
+                new_data['profile_banner_url'] = ''
+            
+            data['updated_recently'] = True
+            update_time = datetime.datetime.now()
+            update_time = time.mktime(update_time.timetuple())
+            data['update_time'] = int(update_time)                
+            userprofile.update_profile_upsert({'screen_name':twitter_user['screen_name'],
+                'username':twitter_user['screen_name']},new_data)
+            print twitter_user['screen_name'] + ' updated'
+            return False
 
     def register_friend(self, eachFriend, username=''):
         '''Register User to Friends Collection'''
-        self.save_friend({'username':username, 'friends':eachFriend})
+        self.save_friendw({'username':username, 'friends':eachFriend})
         return {'status':1}
 
     def register_friend_to_user(self, eachFriend, username=''):
@@ -127,14 +212,9 @@ class Friends():
             return False
 
     def register_all_friends(self):
-        timer_start_time = time.mktime(datetime.datetime.now().timetuple())
         user_pages_count = int(self.db_object.get_count(self.table_name, {'friends.added_as_user':{'$exists':False}})/15)+ 1
         for i in range(0,user_pages_count, 1):
             pag_users = self.db_object.get_paginated_values(self.table_name, {'friends.added_as_user':{'$exists':False}}, pageNumber = int(i+1))
-            
-            timer_now_time = time.mktime(datetime.datetime.now().timetuple())
-            if timer_now_time - timer_start_time > 2*60*60:
-                break
             from UserProfile import UserProfile
             for eachUser in pag_users:
                 user_profile_obj = UserProfile(host=REMOTE_SERVER_LITE, port=27017, db_name=REMOTE_MONGO_DBNAME, username=REMOTE_MONGO_USERNAME, password=REMOTE_MONGO_PASSWORD)
@@ -144,7 +224,7 @@ class Friends():
                     self.update_friend(eachUser['friends']['screen_name'], eachUser['username'])
                 else:                    
                     self.update_friend(eachUser['friends']['screen_name'], eachUser['username'])
-            time.sleep(3)
+            time.sleep(5)
 
     def update_friend(self, friend_name, username):
         # print friend_name + " updated"
