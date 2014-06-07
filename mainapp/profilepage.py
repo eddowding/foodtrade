@@ -1198,19 +1198,26 @@ def get_views_parameters(request):
             data['username'] = eachVisit['visitor_name']
         else:
             data['username'] = 'Unknown visitor'
+            data['UnknownVisitor']=True
 
         if eachVisit['visitor_name'] == '':
             continue
-
+        data['UnknownVisitor']=False
         chk_usr = user_profile_obj.get_profile_by_username(eachVisit['visitor_name'])
         data['profile_img'] = chk_usr['profile_img']
         data['address'] = chk_usr['address']
+        data['screen_name'] = chk_usr['screen_name']
+        data['email'] = chk_usr['email']
         data['latitude'] = chk_usr['latlng']['coordinates'][1]
         data['longitude'] = chk_usr['latlng']['coordinates'][0]
         data['sign_up_as'] = chk_usr['sign_up_as']
         data['name'] = chk_usr['name']
         data['useruid'] = chk_usr['useruid']
         data['description'] = chk_usr['description']
+        try:
+            data['phone'] = chk_usr['phone_number']            
+        except:
+            data['phone'] = ''
         try:
             if chk_usr['subscribed'] ==1:
                 data['subscribed'] = True
@@ -1245,6 +1252,7 @@ def get_views_parameters(request):
         data['visit_time'] = time_text
         data['visit_date_time'] = str(datetime.datetime.fromtimestamp(int(eachVisit['visit_time'])).strftime("%A, %d. %B %Y %I:%M%p"))
         results.append(data)
+    print len(results)
     parameters['results'] = results
     parameters['visit_data'] = str(json.dumps(results))
     return parameters
