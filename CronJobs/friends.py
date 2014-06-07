@@ -54,6 +54,7 @@ class Friends():
         try:
             while(next_cursor !='0'):
                 next_cursor = friends['next_cursor']
+                print next_cursor
                 for eachFriend in friends['users']:
                     '''Register this user'''
                     # self.register_friend(eachFriend, eachUser['username'])
