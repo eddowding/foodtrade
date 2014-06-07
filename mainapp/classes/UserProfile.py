@@ -126,7 +126,7 @@ class UserProfile():
               'is_unknown_profile': 'false'}, pageNumber = int(i+1))
             from friends import Friends                        
             for eachUser in pag_users:
-              print "processing " + eachUser['username']
+                print "processing " + eachUser['username']
                 friend_obj = Friends()
                 friend_obj.process_friends_or_followers(eachUser, 'friends')
                 friend_obj.process_friends_or_followers(eachUser, 'followers')
