@@ -54,16 +54,12 @@ class Friends():
         try:
             while(next_cursor !=0):
                 next_cursor = friends['next_cursor']
-                print next_cursor," updated"
-                print type(next_cursor)
                 for eachFriend in friends['users']:
                     '''Register this user'''
-                    print eachFriend['screen_name']
                     # self.register_friend(eachFriend, eachUser['username'])
-                    # self.register_as_unclaimed_user(eachFriend)                    
-                    # time.sleep(1)
-                if next_cursor != 0:            
-                    print next_cursor, "Not 0"
+                    self.register_as_unclaimed_user(eachFriend)                    
+                    time.sleep(0.4)
+                if next_cursor != 0: 
                     friends = self.get_friends(eachUser['username'], next_cursor, friend_or_follower)
             return {'status':1}
         except:
