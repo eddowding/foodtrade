@@ -52,7 +52,7 @@ class Friends():
             return
         next_cursor = -1
         try:
-            while(next_cursor !='0'):
+            while(next_cursor !=0):
                 next_cursor = friends['next_cursor']
                 print next_cursor," updated"
                 print type(next_cursor)
