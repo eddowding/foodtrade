@@ -193,7 +193,7 @@
                         <img src="{{reply_result.user.profile_img}}" alt="@{{reply_result.user.username}}" class="media-object" width="35">
                       </a>
                     <div class="media-body">
-                          <a href="/profile/{{reply_result.user.username}}" class="strong text-inverse">{{reply_result.user.username}}</a> {{reply_result.status}}
+                          <a href="/profile/{{reply_result.user.username}}" class="strong text-inverse">{{reply_result.user.username}}</a> {{reply_result.status|recognise_name|safe}}
                           <div class="timeline-bottom">
                                 <i class="fa fa-calendar"></i> {{reply_result.time_elapsed}}
                           </div>

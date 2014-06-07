@@ -51,5 +51,5 @@ def recognise_name(value):
     for each in val_list:
         if each.lower() in final_master:
             value = value.replace(each, '<a href="/activity/?f='+each.title()+'">'+each+'</a>')
-    print value
     return value
+
