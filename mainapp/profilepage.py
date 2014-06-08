@@ -1106,11 +1106,11 @@ def get_banner_url(username=None, useruid=None, logged_useruid =None):
     # code to get profile banner url    
     user_obj =  UserProfile()
     if username!=None:
-        t_user = user_obj.get_one({'friends.screen_name':username})
+        t_user = user_obj.get_profile_by_username({'username':username})
     if useruid != None:
-        t_user = user_obj.get_one({'useruid':useruid}) 
+        t_user = user_obj.get_profile_by_id({'useruid':useruid}) 
     if logged_useruid !=None:
-        t_user = user_obj.get_one({'useruid':logged_useruid}) 
+        t_user = user_obj.get_profile_by_id({'useruid':logged_useruid}) 
     try:
         banner_url = t_user['banner_url']
     except:
