@@ -313,9 +313,6 @@ class TweetFeed():
                 return friend['friends']['profile_banner_url']
             except:
                 return 'none'
-        
-
-
 
 class UserProfile():
     def __init__ (self):
@@ -337,7 +334,31 @@ class UserProfile():
             for eachUser in pag_users:
                 users.append(eachUser)
         return users
-  
+
+    def get_banner_by_username(self, username):
+        query = self.db_object.get_one_field(self.table_name, conditions={'username': { "$regex" : re.compile("^"+str(username)+"$", re.IGNORECASE), "$options" : "-i" }},
+            fields={'profile_banner_url':1})        
+        try:
+            banner_url = query[0]['profile_banner_url']
+        except:
+            banner_url = None
+        return banner_url
+
+
+    def get_banner_by_useruid(self, useruid):
+        query = self.db_object.get_one_field(self.table_name, conditions={'useruid':useruid},
+            fields={'profile_banner_url':1})        
+        try:
+            banner_url = query[0]['profile_banner_url']
+        except:
+            banner_url = None
+        return banner_url
+
+    def get_username_by_useruid(self, useruid):
+        query = self.db_object.get_one_field(self.table_name, conditions={'useruid':useruid},
+            fields={'useruid':1})        
+        return query[0]['useruid']
+
     def get_minimum_id_of_user(self):
         return self.db_object.aggregrate_all(self.table_name, [ { '$group': { '_id':0, 'minId': { '$min': "$useruid"} } } ] )
 
@@ -772,6 +793,29 @@ class Friends():
 
     def update_friends(self, where, what):
         return self.db_object.update_upsert(self.table_name, where, what)
+
+    def get_banner_by_screen_name(self, screen_name):
+        query = self.db_object.get_one_field(self.table_name, conditions={'friends.screen_name': { "$regex" : re.compile("^"+str(screen_name)+"$", re.IGNORECASE), "$options" : "-i" }},
+            fields={'friends.profile_banner_url':1})        
+        try:
+            banner_url = query[0]['profile_banner_url']
+        except:
+            banner_url = None
+        print "Roshan Friends ", banner_url, " banner_url"
+        return banner_url
+
+    def get_banner_by_userid(self, useruid):
+        user = UserProfile()
+        username = user.get_username_by_useruid(int(useruid))
+        query = self.db_object.get_one_field(self.table_name, conditions={'friends.screen_name': { "$regex" : re.compile("^"+str(username)+"$", re.IGNORECASE), "$options" : "-i" }},
+            fields={'friends.profile_banner_url':1})        
+        try:
+            banner_url = query[0]['profile_banner_url']
+        except:
+            banner_url = None
+        print "Roshan Friends ", banner_url, " banner_url"
+        return banner_url
+
 
 class InviteId():
     def __init__ (self):

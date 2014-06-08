@@ -114,10 +114,15 @@ def display_profile(request, username):
     '''Code to get the banner_url, followers_count, friends_count'''
     twitter_counts = TwitterCounts()
     if request.user.is_authenticated():
-        f_count = twitter_counts.get_twitter_followers_and_number(request.user.id, username)    
-        parameters['followers_count'] = f_count['followers_count']
-        parameters['friends_count'] = f_count['friends_count']
-        parameters['banner_url'] = f_count['banner_url']
+        try:
+            parameters['followers_count'] = userprof['followers_count']
+            parameters['followers_count'] = userprof['friends_count']
+            parameters['banner_url'] = userprof['banner_url']
+        except:
+            f_count = twitter_counts.get_twitter_followers_and_number(request.user.id, username)    
+            parameters['followers_count'] = f_count['followers_count']
+            parameters['friends_count'] = f_count['friends_count']
+            parameters['banner_url'] = f_count['banner_url']
     else:
         try:
             from mainapp.classes.TweetFeed import Friends 
@@ -847,8 +852,7 @@ def get_members(user_id, logged_in_id = None):
             total_vouches = rec_food_obj.get_recommend_count(each['memberuid'])                            
 
                          
-
-            final_members.append({'id': each['memberuid'],
+            mem_data = {'id': each['memberuid'],
              # 'name': account.extra_data['name'],
              'name': myname,
              'description': usr_pr['description'],
@@ -862,9 +866,17 @@ def get_members(user_id, logged_in_id = None):
              'food_no': food_no,
              'org_conn_no': organisation_connection_no,
              'latitude': usr_pr['latlng']['coordinates'][1],
-             'longitude': usr_pr['latlng']['coordinates'][0],
-             'banner_url': get_banner_url(useruid = int(each['memberuid']), logged_useruid= logged_in_id)
-             })
+             'longitude': usr_pr['latlng']['coordinates'][0]             
+             }
+            try:
+                if usr_pr['profile_banner_url'] !='':
+                    mem_data['banner_url'] = usr_pr['profile_banner_url']
+                else:
+                    mem_data['banner_url'] = get_banner_url(useruid = int(each['memberuid']))
+            except:
+                mem_data['banner_url'] = get_banner_url(useruid = int(each['memberuid']))
+
+            final_members.append(mem_data)
         except:
             pass
     return final_members, logged_member
@@ -1100,7 +1112,15 @@ def search_orgs_business(request, type_user):
 def get_banner_url(username=None, useruid=None, logged_useruid =None):
     # code to get profile banner url    
     banner_url = 'none'
-    if banner_url != 'none':
+    user_obj =  UserProfile()
+    if username!=None:
+        banner_url = user_obj.get_banner_by_username(username)
+    if useruid != None:
+        banner_url = user_obj.get_banner_by_useruid(useruid) 
+    if logged_useruid !=None:
+        banner_url = user_obj.get_banner_by_useruid(logged_useruid)     
+            
+    if banner_url != None and banner_url !='':
         banner_url = banner_url+'/web_retina'
 
     else:
@@ -1116,13 +1136,22 @@ def get_banner_url(username=None, useruid=None, logged_useruid =None):
             try:
                 friend_obj = Friends()
                 if username!=None:
-                    t_user = friend_obj.get_one({'friends.screen_name':username})
-                if useruid != None:
-                    t_user = friend_obj.get_one({'friends.id':useruid})        
-                banner_url = t_user['friends']['profile_banner_url']
-                banner_url = banner_url+'/web_retina'
-            except:
+                    banner_url = friend_obj.get_banner_by_screen_name(username)
+                
+                if useruid!=None:
+                    banner_url = friend_obj.get_banner_by_userid(useruid)
+
+                if logged_useruid!=None:
+                    banner_url = friend_obj.get_banner_by_userid(logged_useruid)                
+
+                if banner_url != None and banner_url !='':
+                    banner_url = banner_url+'/web_retina'
+            except: 
                 banner_url ='none'    
+
+    if banner_url == '' or banner_url == None:
+        banner_url = 'none'
+
     return banner_url
 
 
@@ -1198,19 +1227,26 @@ def get_views_parameters(request):
             data['username'] = eachVisit['visitor_name']
         else:
             data['username'] = 'Unknown visitor'
+            data['UnknownVisitor']=True
 
         if eachVisit['visitor_name'] == '':
             continue
-
+        data['UnknownVisitor']=False
         chk_usr = user_profile_obj.get_profile_by_username(eachVisit['visitor_name'])
         data['profile_img'] = chk_usr['profile_img']
         data['address'] = chk_usr['address']
+        data['screen_name'] = chk_usr['screen_name']
+        data['email'] = chk_usr['email']
         data['latitude'] = chk_usr['latlng']['coordinates'][1]
         data['longitude'] = chk_usr['latlng']['coordinates'][0]
         data['sign_up_as'] = chk_usr['sign_up_as']
         data['name'] = chk_usr['name']
         data['useruid'] = chk_usr['useruid']
         data['description'] = chk_usr['description']
+        try:
+            data['phone'] = chk_usr['phone_number']            
+        except:
+            data['phone'] = ''
         try:
             if chk_usr['subscribed'] ==1:
                 data['subscribed'] = True
@@ -1245,6 +1281,7 @@ def get_views_parameters(request):
         data['visit_time'] = time_text
         data['visit_date_time'] = str(datetime.datetime.fromtimestamp(int(eachVisit['visit_time'])).strftime("%A, %d. %B %Y %I:%M%p"))
         results.append(data)
+    print len(results)
     parameters['results'] = results
     parameters['visit_data'] = str(json.dumps(results))
     return parameters

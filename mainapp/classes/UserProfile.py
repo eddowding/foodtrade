@@ -1,6 +1,5 @@
 #!/usr/bin/env python
 # encoding: utf-8
-
 import re
 from MongoConnection import MongoConnection
 from bson.objectid import ObjectId
@@ -14,15 +13,15 @@ CLASS_PATH = '/srv/www/live/foodtrade-env/foodtrade/mainapp/classes'
 CRON_PATH = '/srv/www/live/foodtrade-env/foodtrade/CronJobs'
 SETTINGS_PATH = '/srv/www/live/foodtrade-env/foodtrade/foodtrade'
 
-# CLASS_PATH = 'C:/Users/Roshan Bhandari/Desktop/project repos/foodtrade/mainapp/classes'
-# CRON_PATH = 'C:/Users/Roshan Bhandari/Desktop/project repos/foodtrade/CronJobs'
-# SETTINGS_PATH = 'C:/Users/Roshan Bhandari/Desktop/project repos/foodtrade/foodtrade'
+# CLASS_PATH = 'C:/Users/Roshan Bhandari/Desktop/foodtrade/mainapp/classes'
+# CRON_PATH = 'C:/Users/Roshan Bhandari/Desktop/foodtrade/CronJobs'
+# SETTINGS_PATH = 'C:/Users/Roshan Bhandari/Desktop/foodtrade/foodtrade'
 
 sys.path.insert(0, CLASS_PATH)
 sys.path.insert(1,SETTINGS_PATH)
 sys.path.insert(1,CRON_PATH)
 from settingslocal import *
-from MailchimpClass import MailChimpClass, MailChimpException
+
 
 class UserProfile():
     def __init__ (self, host=REMOTE_SERVER_LITE, port=27017, db_name=REMOTE_MONGO_DBNAME, username=REMOTE_MONGO_USERNAME, password=REMOTE_MONGO_PASSWORD):        
@@ -43,25 +42,6 @@ class UserProfile():
                 pag_users = self.db_object.get_paginated_values(self.table_name, {'newsletter_freq':status}, pageNumber = int(i+1))
             for eachUser in pag_users:
                 users.append(eachUser)
-        return users
-
-    def register_all_profiles_to_mailchimp(self, status):
-        users = []
-        if status == 'None':
-            user_pages_count = int(self.db_object.get_count(self.table_name, {'newsletter_freq':{'$exists':False}, 'email':{'$ne':''}})/15)+ 1            
-        else:
-            user_pages_count = int(self.db_object.get_count(self.table_name, {'newsletter_freq':status})/15)+ 1
-        for i in range(0,user_pages_count, 1):
-            if status == 'None':
-                pag_users = self.db_object.get_paginated_values(self.table_name, {'newsletter_freq':{'$exists':False}, 'email':{'$ne':''}}, pageNumber = int(i+1))
-            else:    
-                pag_users = self.db_object.get_paginated_values(self.table_name, {'newsletter_freq':status}, pageNumber = int(i+1))
-            for eachUser in pag_users:
-                # import urllib2
-                # m = urllib2.urlopen('http://ftstaging.cloudapp.net/mailchimp-migrate' + eachUser['username'] +'/')
-                m = MailChimpClass()
-                m.subscribe(eachUser)
-                print eachUser['email'] + "subscribed"
         return users
 
     def get_all_users(self):
@@ -135,22 +115,20 @@ class UserProfile():
         return self.db_object.get_all(self.table_name,{'sign_up_as':type_usr})
 
     def get_all_friends_and_register_as_friend(self, start):
-        timer_start_time = time.mktime(datetime.datetime.now().timetuple())
-
         maxtime = datetime.datetime.now() - datetime.timedelta(minutes=30)
         maxtime = int(time.mktime(maxtime.timetuple()))
-        user_pages_count = int(self.db_object.get_count(self.table_name, {'join_time':{'$gt':start}, 'join_time':{'$lt':maxtime}, 'is_unknown_profile': 'false'}))
+        user_pages_count = int(self.db_object.get_count(self.table_name, 
+          {'join_time':{'$gt':start}, 'join_time':{'$lt':maxtime}, 'is_unknown_profile': 'false'}))
         for i in range(0,user_pages_count, 1):
-            timer_now_time = time.mktime(datetime.datetime.now().timetuple())
-            if (timer_now_time - timer_start_time) > 5*60*60:
-                break
-            pag_users = self.db_object.get_paginated_values(self.table_name, {'join_time':{'$gt':start}, 'join_time':{'$lt':maxtime}, 'is_unknown_profile': 'false'}, pageNumber = int(i+1))
+            pag_users = self.db_object.get_paginated_values(self.table_name, {
+              'join_time':{'$gt':start}, 
+              'join_time':{'$lt':maxtime}, 
+              'is_unknown_profile': 'false'}, pageNumber = int(i+1))
             from friends import Friends                        
             for eachUser in pag_users:
-                if (timer_now_time - timer_start_time) > 5*60*60:
-                    break
+                print "processing " + eachUser['username']
                 friend_obj = Friends()
-                friend_obj.process_friends_or_followers(eachUser, 'friends')
+                # friend_obj.process_friends_or_followers(eachUser, 'friends')
                 friend_obj.process_friends_or_followers(eachUser, 'followers')
         return {'status':1}
 

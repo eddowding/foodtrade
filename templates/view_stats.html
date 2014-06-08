@@ -12,7 +12,7 @@
         <div class="col-md-6 col-xs-8" id="single_post_content">
 
 
-          {% if not userinfo.subscribed %}
+          {% if userinfo.subscribed %}
           <div class="box-generic bg-primary-light text-center">
 
           <p>
@@ -44,40 +44,49 @@
                         <span class="marker"></span>
                         <div class="caret"></div>
                         <div class="box-generic">
-                        {% if userinfo.subscribed %}
-                          <div class="timeline-top-info   border-bottom" {% if result.subscribed %} rel="tooltip" title="Verified profile" {% endif %}>            
+                        
+                          <div class="timeline-top-info   border-bottom" {% if result.subscribed %} rel="tooltip" title="Verified profile" {% endif %} {% if not userinfo.subscribed %}style="height: 40px;"{% endif %}>            
                           <div class="  pull-right" style="margin-left: 5px;">
                             <a type="button" class="dropdown-toggle" data-toggle="dropdown">
                             <i class="fa fa-fw fa-cog fa-lg"></i>
                             <span  class="sr-only">Toggle Dropdown</span>
                             </a>
-                              <a type="button" class="btn btn-primary btn-xs" href="/profile/{{result.username}}">
+                              {% if userinfo.subscribed %}<a type="button" class="btn btn-primary btn-xs" href="/profile/{{result.username}}">
                                 <i class="fa fa-arrow-right fa-lg" style="color:#fff;"></i> 
-                              </a>
+                              </a>{% endif %}
 
                             <ul class="dropdown-menu" role="menu">  
-                              <li><a href="http://www.facebook.com/sharer/sharer.php?u=http://foodtrade.com/{{result.username}}" target="_blank"><i class="fa fa-facebook fa-fw facebook"></i> Share on Facebook</a></li>
-                              <li><a href="http://twitter.com/home?status={{result.username}}%20http://foodtrade.com/{{result.username}}" target="_blank"><i class="fa fa-twitter fa-fw twitter "></i> Share on Twitter</a></li>
-                              <li><a type="button" href="/profile/{{result.username}}/">
-                              <i class="fa fa-info-circle fa-lg fa-fw"></i> View profile</a></li> 
-                              {%  if userinfo.user_type == "Business" and result.sign_up_as == "Business" and result.username != userinfo.username %}
-                              <li><a href="#" onclick="click_activity('buyFrom','{{result.useruid}}')"><i class="fa fa-sign-in fa-lg fa-fw"></i> I buy from</a></li>
+                              {% if userinfo.subscribed %}<li><a href="http://www.facebook.com/sharer/sharer.php?u=http://foodtrade.com/{{result.username}} " target="_blank"><i class="fa fa-facebook fa-fw facebook"></i> Share on Facebook</a></li>{% endif %}
+
+                              {% if userinfo.subscribed %}<li><a href="http://twitter.com/home?status={{result.username}}%20http://foodtrade.com/{{result.username}}" target="_blank"><i class="fa fa-twitter fa-fw twitter "></i> Share on Twitter</a></li>{% endif %}
+
+                              {% if userinfo.subscribed %}<li><a type="button" href="/profile/{{result.username}}/"><i class="fa fa-info-circle fa-lg fa-fw"></i> View profile</a></li> 
+                              {% endif %}
+
+                              <li><a type="button" href="#" onclick="{% if userinfo.subscribed %}trigger_modal('{{result.screen_name}}','{{result.email}}', '{{result.address}}', '{{result.name}}', '{{result.latitude}}', '{{result.longitude}}', '{{result.phone}}', '{{result.distance_text}}')" '{% else %}trigger_upgrade_modal(){% endif %}"><i class="fa fa-envelope fa-lg fa-fw"></i> Contact</a></li> 
+
+                              {% if userinfo.subscribed %} {%  if userinfo.user_type == "Business" and result.sign_up_as == "Business" and result.username != userinfo.username %}<li><a href="#" onclick="click_activity('buyFrom','{{result.useruid}}')"><i class="fa fa-sign-in fa-lg fa-fw"></i> I buy from</a></li>
                               <li><a href="#"onclick="click_activity('sellTo','{{result.useruid}}')"><i class="fa fa-sign-out fa-lg fa-fw"></i> I sell to</a></li>  
-                              {% endif %}
-                              {% if result.sign_up_as == "Organisation" %}
+                              {% endif %}{% endif %}
+
+                              {% if userinfo.subscribed %}{% if result.sign_up_as == "Organisation" %}
                               <li><a href="#" onclick="click_activity('markMember', '{{result.useruid}}')"><i class="fa fa-fw fa-group"></i>  I'm a member</a></li>
-                              {% endif %}
-                              {% if userinfo.user_type == "Individual" and result.sign_up_as == "Business" %}
+                              {% endif %}{% endif %}
+
+                              {% if userinfo.subscribed %}{% if userinfo.user_type == "Individual" and result.sign_up_as == "Business" %}
                               <li><a href="#" onclick="click_activity('markCustomer', '{{result.username}}')"><i class="fa fa-fw fa-shopping-cart"></i>  I'm a customer</a></li>
-                              {% endif %} 
-                              {% if result.username != userinfo.username %}
+                              {% endif %} {% endif %}
+
+                              {% if userinfo.subscribed %} {% if result.username != userinfo.username %}
                               <li><a href="#" onclick="click_activity('follow','{{result.username}}')"><i class="fa fa-star-o fa-fw"></i>  Follow on Twitter</a></li>
-                              {% endif %} 
-                            </ul>  
-                        </div> 
+                              {% endif %} {% endif %}
+
+                            </ul>                                                        
+                          </div> 
+                          {% if userinfo.subscribed %}
                             <img src="{{result.profile_img}}" alt="{{result.username}}" class="img-responsive pull-left" style="width:20px; margin-right: 5px;" /><a href="/profile/{{result.username}}" class="text-inverse">{{result.username}}</a> 
+                          {% endif %}
                           </div>
-                        {% endif %}
 
                           <!-- status --> 
                           <div class="media margin-none status"  /> 
@@ -115,7 +124,87 @@
 
       </div><!-- row -->
     </div><!-- col10 --> 
+
+
+     <!-- modal_contact -->
+     <a href="#" id="triggerContact" data-toggle="modal" data-target="#modal_contact" class="hidden"></a>
+      <div class="modal fade" id="modal_contact" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+              <h4 class="modal-title" id="myModalContact">Contact {{userinfo.name}}</h4>
+            </div>
+            <div class="modal-body">
+            <div class="container-responsive">
+              <div class="row">
+                <div class="col-sm-4">
+             
+                  <address>
+                    <a href="mailto:{{email}}" class="dotdotdot" target="_blank"><i class="fa fa-envelope text-muted fa-fw"></i> {{email}} </a><br />
+                    <a href="http://twitter.com/{{screen_name}}" id="contactScreenName" target="_blank"><i class="fa fa-twitter text-muted fa-fw"></i> {{screen_name}}</a><br />
+
+                    <a href="callto:{{phone_number}}" class="hidden" id="phoneNumber"><i class="fa fa-phone text-muted fa-fw"></i> {{phone_number}}</a>
+                  </address>
+
+                  {% if loc.lat == -82.8627519 and loc.lon == -135.0 %} 
+                  {% else %}
+                  <i class="fa fa-map-marker fa-fw text-muted"></i> <a id="contactAddress" href="" target="_blank" data-placement="top" data-toggle="tooltip" title="Get directions" class="" style="margin-right:20px;">
+                    {{address}}
+                  </a>   
+                  {% endif %} 
+                </div>
+                
+                <div class="col-sm-8 contact-form">
+                  <form id="contact" method="post" class="form" role="form">
+                    <div class="row">
+                      <div class="col-xs-6 col-md-6 form-group">
+                        <input class="form-control" id="sender_name" name="name" placeholder="Name" type="text" required autofocus value = "{{userinfo.full_name}}"/>
+                      </div>
+                      <div class="col-xs-6 col-md-6 form-group">
+                        <input class="form-control" id="sender_email" name="email" placeholder="Email" type="email" required value = "{{userinfo.email}}" />
+                      </div>
+                    </div> 
+                    <textarea class="form-control counted" id="email_message" placeholder="Type in your message" rows="5"></textarea>
+                    <h6 class="pull-right" id="contact_counter">120 characters remaining</h6>
+                     
+                  </form>
+                </div>
+              </div>
+            </div>
+ 
    
+            </div>
+            <div class="modal-footer">  
+              <button type="button" id="contact_tweet" class="btn btn-info"><i class="fa fa-fw fa-twitter"></i> Tweet it</button>
+              <button type="button" class="btn btn-success" id="contactEmail"><i class="fa fa-envelope fa-fw"></i> Email it</button>
+            </div>
+          </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+      </div><!-- /.modal -->
+
+<!-- modal_upgrade -->
+     <a href="#" id="triggerUpgrade" data-toggle="modal" data-target="#modal_upgrade" class="hidden"></a>
+      <div class="modal fade" id="modal_upgrade" tabindex="-1" role="dialog" aria-labelledby="myModalLabelUpgrade" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+              <h4 class="modal-title" id="myModalContact">Contact</h4>
+            </div>
+            <div class="modal-body">
+            <div class="container-responsive">
+              <div class="row">
+                <p>You must be subscribed to use this feature.</p>
+              </div>
+            </div>
+            </div>
+            <div class="modal-footer">  
+              <button type="button" data-dismiss="modal" class="btn btn-info">Close</button>
+            </div>
+          </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+      </div><!-- /.modal -->         
 <script type="text/javascript">
  {% if userinfo.subscribed %}
   var visit_data = jQuery.parseJSON('{{visit_data|safe}}');
@@ -124,8 +213,30 @@
  {% endif %}
   var map_lat = {{userinfo.lat}};
   var map_lon = {{userinfo.lon}};
-</script>    
+</script>  
 {% endblock %}
-{% block footer %}
+{% block javascript %}
 <script src="{% static "js/visitor-map.js" %}"></script>
+<script src="{% static "js/ajax-handle.js" %}"></script>
+<script src="{% static "js/contact.js" %}"></script>
+<script type="text/javascript">
+  tweetlistener('email_message', 'contact_counter', 'contact_tweet');
+  function trigger_modal(screen_name, email, address, name, lat, lon, phone, distance_text){
+    $('#myModalContact').html('Contact ' + name);
+    $('.dotdotdot').html('<i class="fa fa-envelope text-muted fa-fw"></i>' + email);
+    $('#contactScreenName').html('<i class="fa fa-twitter text-muted fa-fw"></i>' + screen_name);
+    $('#contactAddress').attr('href', 'http://maps.google.com/maps?saddr={{userinfo.lat}},{{userinfo.lon}}&daddr=' + lat + ',' + lon);
+    $('#contactAddress').html(address);
+    $('#contact_tweet').attr('onclick', "post_contact_tweet('@" + screen_name + "')");
+    $('#contactEmail').attr('onclick', "send_email('" + email + "')");
+    if (phone!=''){
+      $('#phoneNumber').removeClass('hidden');
+      $('#phoneNumber').html('<i class="fa fa-phone text-muted fa-fw"></i>'+phone);
+    }
+    $('#triggerContact').click();
+  }
+  function trigger_upgrade_modal(){
+    $('#triggerUpgrade').click();
+  }
+</script>
 {% endblock %}
