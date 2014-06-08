@@ -133,7 +133,7 @@ class UserProfile():
                     new_data['update_time'] = int(update_time)                
                     self.update_profile_upsert({'screen_name':twitter_user['screen_name'],
                         'username':twitter_user['screen_name']},new_data)
-                    # print twitter_user['screen_name'] + ' updated'
+                    print twitter_user['screen_name'] + ' updated'
                 except:
                     i += 1
                     continue
