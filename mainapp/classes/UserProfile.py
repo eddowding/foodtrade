@@ -8,6 +8,8 @@ from bson.code import Code
 import os
 import sys
 from pygeocoder import Geocoder
+from MySQLConnect import MySQLConnect
+from twython import Twython
 
 CLASS_PATH = '/srv/www/live/foodtrade-env/foodtrade/mainapp/classes'
 CRON_PATH = '/srv/www/live/foodtrade-env/foodtrade/CronJobs'
@@ -22,6 +24,8 @@ sys.path.insert(1,SETTINGS_PATH)
 sys.path.insert(1,CRON_PATH)
 from settingslocal import *
 
+def get_twitter_obj(token, secret):
+    return Twython(app_key = CONSUMER_KEY,app_secret = CONSUMER_SECRET,oauth_token = token,oauth_token_secret = secret)
 
 class UserProfile():
     def __init__ (self, host=REMOTE_SERVER_LITE, port=27017, db_name=REMOTE_MONGO_DBNAME, username=REMOTE_MONGO_USERNAME, password=REMOTE_MONGO_PASSWORD):        
@@ -98,6 +102,43 @@ class UserProfile():
             time.sleep(5)
         return {'status':1}
 
+    def update_banner_for_all_users(self):
+        user_pages_count = int(self.db_object.get_count(self.table_name, {})/15)+ 1
+        mc = MySQLConnect()
+        i = 0 
+        st = mc.get_token_list()
+        for i in range(0,user_pages_count, 1):
+            pag_users = self.db_object.get_paginated_values(self.table_name, {}, pageNumber = int(i+1))
+            for eachUser in pag_users:
+                try:
+                    ACCESS_TOKEN = st[i][0]
+                    ACCESS_TOKEN_SECRET = st[i][1]
+                    user_twitter = get_twitter_obj(ACCESS_TOKEN, ACCESS_TOKEN_SECRET)     
+                    twitter_user = user_twitter.show_user(screen_name=eachUser['username'])
+                    new_data = {
+                      'followers_count':twitter_user['followers_count'],
+                      'friends_count':twitter_user['friends_count']}
+                    try:
+                        new_data['profile_img'] = twitter_user['profile_image_url']
+                    except:
+                        new_data['profile_img'] = twitter_user['profile_img']
+                    try:
+                        new_data['profile_banner_url'] = twitter_user['profile_banner_url']
+                    except:
+                        new_data['profile_banner_url'] = ''
+
+                    new_data['updated_recently'] = True
+                    update_time = datetime.datetime.now()
+                    update_time = time.mktime(update_time.timetuple())
+                    new_data['update_time'] = int(update_time)                
+                    self.update_profile_upsert({'screen_name':twitter_user['screen_name'],
+                        'username':twitter_user['screen_name']},new_data)
+                    print twitter_user['screen_name'] + ' updated'
+                except:
+                    i += 1
+                    continue
+        return {'status':1}
+
     def get_minimum_id_of_user(self):
         return self.db_object.aggregrate_all(self.table_name, [ { '$group': { '_id':0, 'minId': { '$min': "$useruid"} } } ] )
 
@@ -108,7 +149,6 @@ class UserProfile():
         return self.db_object.get_one(self.table_name,{'profile_img': img})
 
     def get_profile_by_username(self, username):
-        # return self.db_object.get_one(self.table_name,{'username': str(username)})
         return self.db_object.get_one(self.table_name,{'username': { "$regex" : re.compile("^"+str(username)+"$", re.IGNORECASE), "$options" : "-i" }})
 
     def get_profile_by_type(self, type_usr):

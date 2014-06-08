@@ -806,15 +806,10 @@ def get_connections(user_id, logged_in_id = None):
                 index = final_connections.index(data)
                 final_connections[index]['relation'] = 'both'
                 if logged_in_id!=None and each['b_useruid'] == logged_in_id:
-                    logged_conn = 'both'
-            
+                    logged_conn = 'both'            
         except:
             pass
     return final_connections, logged_conn
-
-
-
-
 
 
 def get_members(user_id, logged_in_id = None):
