@@ -852,8 +852,7 @@ def get_members(user_id, logged_in_id = None):
             total_vouches = rec_food_obj.get_recommend_count(each['memberuid'])                            
 
                          
-
-            final_members.append({'id': each['memberuid'],
+            mem_data = {'id': each['memberuid'],
              # 'name': account.extra_data['name'],
              'name': myname,
              'description': usr_pr['description'],
@@ -867,9 +866,17 @@ def get_members(user_id, logged_in_id = None):
              'food_no': food_no,
              'org_conn_no': organisation_connection_no,
              'latitude': usr_pr['latlng']['coordinates'][1],
-             'longitude': usr_pr['latlng']['coordinates'][0],
-             'banner_url': get_banner_url(useruid = int(each['memberuid']), logged_useruid= logged_in_id)
-             })
+             'longitude': usr_pr['latlng']['coordinates'][0]             
+             }
+            try:
+                if usr_pr['profile_banner_url'] !='':
+                    mem_data['banner_url'] = usr_pr['profile_banner_url']
+                else:
+                    mem_data['banner_url'] = get_banner_url(useruid = int(each['memberuid']))
+            except:
+                mem_data['banner_url'] = get_banner_url(useruid = int(each['memberuid']))
+
+            final_members.append(mem_data)
         except:
             pass
     return final_members, logged_member
@@ -1104,19 +1111,16 @@ def search_orgs_business(request, type_user):
 
 def get_banner_url(username=None, useruid=None, logged_useruid =None):
     # code to get profile banner url    
+    banner_url = 'none'
     user_obj =  UserProfile()
     if username!=None:
-        t_user = user_obj.get_profile_by_username(username)
+        banner_url = user_obj.get_banner_by_username(username)
     if useruid != None:
-        t_user = user_obj.get_profile_by_id(useruid) 
+        banner_url = user_obj.get_banner_by_useruid(useruid) 
     if logged_useruid !=None:
-        t_user = user_obj.get_profile_by_id(logged_useruid) 
-    try:
-        banner_url = t_user['banner_url']
-    except:
-        banner_url = 'none'    
+        banner_url = user_obj.get_banner_by_useruid(logged_useruid)     
             
-    if banner_url != 'none' and banner_url !='':
+    if banner_url != None and banner_url !='':
         banner_url = banner_url+'/web_retina'
 
     else:
@@ -1132,13 +1136,22 @@ def get_banner_url(username=None, useruid=None, logged_useruid =None):
             try:
                 friend_obj = Friends()
                 if username!=None:
-                    t_user = friend_obj.get_one({'friends.screen_name':username})
-                if useruid != None:
-                    t_user = friend_obj.get_one({'friends.id':useruid})        
-                banner_url = t_user['friends']['profile_banner_url']
-                banner_url = banner_url+'/web_retina'
-            except:
+                    banner_url = friend_obj.get_banner_by_screen_name(username)
+                
+                if useruid!=None:
+                    banner_url = friend_obj.get_banner_by_userid(useruid)
+
+                if logged_useruid!=None:
+                    banner_url = friend_obj.get_banner_by_userid(logged_useruid)                
+
+                if banner_url != None and banner_url !='':
+                    banner_url = banner_url+'/web_retina'
+            except: 
                 banner_url ='none'    
+
+    if banner_url == '' or banner_url == None:
+        banner_url = 'none'
+
     return banner_url
 
 
