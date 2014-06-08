@@ -17,9 +17,7 @@
 .main-text
 {
     position: absolute;
-    top: 100px;
-    width: 96.66666666666666%;
-    color: #FFF;
+    bottom: 0px;
 }
 .btn-min-block
 {
@@ -34,45 +32,47 @@
     margin-right: 15px;
 }
 .btn-clear:hover
-{
+{ 
     color: #000;
     background-color: #FFF;
 }
 
-.carousel-caption h1 {
-  background: rgba(0,0,0,0.5);
+.carousel .carousel-caption {
+  background: rgba(0, 0, 0, 0.5);
+  left: 0;
+  padding: 15px 20px 25px;
+  width: 45%;
+  top: 25px !important;
+  height: 100%;
+  bottom: 0; 
+  text-align: left;
+}
+
+.carousel-caption h1 { 
   text-shadow: 1px 1px 2px #444;
-  padding: 10px 20px; 
-  border: 1px solid #ccc;
-  margin:20px 0;
-  color: #eee;
+  margin:30px 0;
+  color: #fff;
   display: inline-block; 
-  font-size: 40px;
+  font-size: 65px;
   font-weight: 100;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !important  ;
   text-transform: none;
+  text-align: left;
+}
+
+.mtop {
+  margin-top: 15px;
+  text-shadow: 1px 1px 0px #444;
 }
 
 .carousel,
 .item {
-  height: 450px;
-}
-
-.carousel-caption a {
-  background: rgba(0,0,0,0.8);
-  text-shadow: 1px 1px 2px #444;
-  border: 3px solid #fff;
-  line-height: 2;
-  color: #fff;
-  font-size: 30px;
-  padding: 15px 30px;
-  margin:20px 0 0 0;
-}
+  height: 510px; 
+} 
 
 .carousel-caption {   
   top: 210px !important;
-  right: 18%;
-  display: none;
+  right: 18%; 
   left: 17%;
 }
 
@@ -96,69 +96,219 @@ display: block; }
 .thumbnail .caption {
   height: 100%;
 }
+
+.quote {
+  font-size:16px;  font-family: georgia; font-style: italic;
+}
+
 </style>
 
 
 <div class="container-responsive" style="">
-    <div class="row" style="height: 450px; padding: 0;">
-        <div class="col-md-12">
-            <div id="carousel-example" class="carousel slide" data-ride="carousel"> 
-                <div class="carousel-inner" style="height: 450px;">
-                    <div class="item active" style="background:url('/static/images/cows.jpg'); background-size: cover;">  
-                        <div class="carousel-caption">
-                            <h1>Discover the people, the place, <br />and the ingredients that made the food you eat. </h1>
+    <div class="row" style="height: 510px; padding: 0;">
+        <div class=" ">
+            <div id="carousel-example" class="carousel slide" data-ride="carousel" style="margin-bottom: 0;"> 
+                <div class="carousel-inner" style="height: 510px;">
+                    <div class="item active" style="background:url('/static/images/cows.jpg'); background-size: cover;" id="biz">  
+                        <div class="carousel-caption" style="padding: 40px;">
+                        <div class="lead">
+                           <h1 style="margin-left: 5px; margin-bottom: 10px;">Meet your match</h1>
+                           <ul style="margin-left: 0; margin-bottom: 20px;">
+                             <li>Find new business</li>  
+                             <li>Showcase your produce, suppliers, &amp; stockists</li> 
+                             <li>Trade in real-time just by sending a tweet</li>  
+                             <li>Works for buying, selling, surplus, and more</li>
+                             <li>We don't take a cut of your sales</li>  
+                           </ul> 
+                        </div>
+
+                    <p style="margin-left: 20px;">
+
+                    <a href="{% provider_login_url "twitter" process="login" %}"  class="btn btn-primary" style="font-size: 24px; text-shadow: 1px 1px 1px #444 !important; line-height: 0.7; padding: 10px; text-align: left;">
+                    <strong>Join as a business</strong><br />
+                    <small style="font-size: 12px; font-weight: normal;">No credit card required</small></a> 
+
+                    <a  data-slide="next" data-target="#individual"  class="btn btn-primary " style="font-size: 20px; background: none; color: rgba(255,255,255,1); border: 1px solid rgba(255,255,255,0.7); font-weight: 200; ">Learn more</a> 
+            
+ 
+                    </p>
+
+                      <blockquote class="clearfix" style="border:0; ">
+                        <span class=" text-left" style="font-size:16px; color: #fff; font-family: georgia; font-style: italic;">
+                      “This technology could change the way our food system operates” 
+                      </span>
+
+                      <span class="pull-right " style="font-size:14px; color: #fff; font-family: georgia; font-style: italic;">
+                      &mdash; HRH Prince Charles 
+                      </span> 
+                      </blockquote> 
                          
                         </div>
                         <div class="text-right small photocredit white">Photo credit: <a href="http://kirstymorris.com/" target="_blank">Kirsty Morris</a></div>
-                    </div>
-                    <div class="item" style="background:url('http://e5bakehouse.com/wp-content/uploads/2013/08/provenence.jpg'); background-size: cover;">
-                      
-                          <div class="carousel-caption">
-                            <h1>
-                               Find your perfect match: producer, stockist or customer</h1> 
+                    </div> 
+
+
+
+                    <div class="item" style="background:url('/static/images/home_heart.jpg'); background-size: cover;" id="individual">  
+                        <div class="carousel-caption" style="padding: 40px;">
+                        <div class="lead">
+                           <h1 style="margin-left: 5px; margin-bottom: 10px;">Discover &amp; swap</h1>
+                           <ul style="margin-left: 0; margin-bottom: 20px;">
+                             <li>Find the best local suppliers</li>  
+                             <li>Trade your surplus</li>  
+                             <li>Vouch for for great food</li> 
+                             <li>Map your food web</li>   
+                           </ul> 
                         </div>
-                    </div>
-                    <div class="item">
-                    <div class="item active" style="background:url('/static/images/apples.jpg'); background-size: cover;">  
-                        <div class="carousel-caption">
-                            <h1>
-                                Together we can get better food onto shelves, menus and dining tables.</h1> 
+
+                    <p style="margin-left: 20px;">
+
+                    <a href="{% provider_login_url "twitter" process="login" %}"  class="btn btn-primary" style="font-size: 24px; text-shadow: 1px 1px 1px #444 !important; line-height: 0.7; padding: 10px; text-align: left;">
+                    <strong>Join as an individual</strong><br />
+                    <small style="font-size: 12px; font-weight: normal;">No credit card required</small></a> 
+
+                    <a href="#business"  class="btn btn-primary " style="font-size: 20px; background: none; color: rgba(255,255,255,1); border: 1px solid rgba(255,255,255,0.7); font-weight: 200; ">For companies</a> 
+
+
+                    </p>
+
+                      <blockquote class="clearfix" style="border:0; ">
+                        <span class=" text-left" style="font-size:16px; color: #fff; font-family: georgia; font-style: italic;">
+                      “This technology could change the way our food system operates” 
+                      </span>
+
+                      <span class="pull-right " style="font-size:14px; color: #fff; font-family: georgia; font-style: italic;">
+                      &mdash; HRH Prince Charles 
+                      </span> 
+                      </blockquote> 
+                         
                         </div>
                         <div class="text-right small photocredit white">Photo credit: <a href="http://kirstymorris.com/" target="_blank">Kirsty Morris</a></div>
-                    </div>
-                </div> 
+                    </div> 
+
+
             </div>
-            <div class="main-text ">
-                <div class="col-md-12">
-                    <form action="/activity" onsubmit="return formSubmit(this);" class=" " role="search">
-                     <div class="col-sm-8 col-sm-offset-2"> 
-                     <div class="input-group">  
-
-                        <input type="text" name="q" id="keyword" class="form-control input-lg" value="" placeholder="Type a food to buy or sell" style="font-size: 39px;">                    
-                        <span class="input-group-btn">
-                          <button class="btn btn-default btn-lg" style="background: #fff;" type="submit"><i class="fa fa-search"></i></button>  
-                        </span> 
-                      </div>
-
-                      <p class="lead" style=" text-shadow: 0 0 4px #000; margin-left: 10px; display: inline-block;">eg Apples, chicken, cider</p>
-                      </div>
-
-                      <input type="hidden" name="location" id="new_search" value="   ">
-                    </form>
+            <div class="main-text col-sm-12"> 
+                 <div class="col-md-6 col-md-offset-6  ">
+                  <img src="/static/images/home_pack.gif" class="img-responsive"  style="max-width: 613px; max-height: 400px; align: right;" />
                 </div>
-
-            </div>
         </div>
     </div>
-</div>
-<div id="push">
+</div> 
+</div>  
+
+
+<div class="container-responsive block-center showcase">
+  <div class="row">
+    <div class="alert clearfix" style="background:#F18219; border: 0; box-shadow: 0px 0px 15px rgba(138, 80, 18, 1.7) inset; border-radius: 0;">
+
+    <div class="col-sm-10 col-sm-offset-1">
+      <form action="/activity" onsubmit="return formSubmit(this);" class="clearfix"  role="search"> 
+        <div class="input-group">  
+          <input type="text" name="q" id="keyword" class="form-control input-lg" value="" placeholder="Type a food to buy or sell" style="font-size: 25px; border: 1px solid #fff; border-radius: 10px 0 0 10px;">                    
+          <span class="input-group-btn">
+            <button class="btn btn-default" style="background: #fff;font-size: 30px; border-radius: 0 10px 10px 0; padding-bottom: 7px;" type="submit"><i class="fa fa-search"></i></button>  
+          </span> 
+        </div>
+
+        <p class="lead hidden" style="margin-left: 10px; margin-bottom: 0; display: inline-block; color: #eee;">eg Apples, chicken, cider</p>
+        
+
+        <input type="hidden" name="location" id="new_search" value="   ">
+        </form>
+
+    </div>
+    </div>
+  </div>
 </div>
 
+
+<div class="container-responsive block-center showcase">
+ 
+<div class="row">
+  <div class="col-md-3">
+    <div class="thumbnail widget-thumbnail">
+
+      
+      <div class="caption"> 
+   <p class="quote">We use FoodTrade to find new business, and collaborate with our stockists and customers – and they can see exactly where their food comes from"
+        </i> </p>
+
+        <img src="https://pbs.twimg.com/profile_images/1764443695/illu-dandelion-clock.315192253_400x400.jpg"  style="height:40px;margin-right: 5px !important;" class="pull-left img-thumbnail"> 
+        <p><b>Steve Glover, Grower</b><br /><a style="color:#444; font-weight:bold;" href="http://foodtrade.com/severnproject/">Severn Project</a></p>
+<p><a href="{% provider_login_url "twitter" process="login" %}"  class="btn btn-block btn-primary mtop" ><strong>Find new business  &raquo;</strong></a> </p>
+         
+      </div>
+    </div>
+  </div>
+  <div class="col-md-3">
+    <div class="thumbnail widget-thumbnail"> 
+      <div class="caption"> 
+        <p class="quote">
+        "FoodTrade’s farm-to-fork network is transforming the way we source – directly from the farm, into the kitchen, onto plates and into mouths. For our customers, freshness and quality is paramount." </p>
+
+
+        <img src="https://pbs.twimg.com/profile_images/465779164008574976/KmUBorPu.jpeg"  style="height:40px;margin-right: 5px !important;" class="pull-left img-thumbnail"> 
+        <p><b>John Smith, Butcher</b><br />
+        <a style="color:#444; font-weight:bold;" href="http://foodtrade.com/blagdonbutchers/">Blagdon Butchers</a></p>
+
+        <p><a href="{% provider_login_url "twitter" process="login" %}"  class="btn btn-block btn-primary mtop" ><strong>Showcase your partners  &raquo;</strong></a> </p>
+         
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-3">
+    <div class="thumbnail widget-thumbnail"> 
+      <div class="caption"> 
+        <p class="quote">
+"FoodTrade’s farm-to-fork network is transforming the way we source – directly from the farm, into the kitchen, onto plates and into mouths. For our customers, freshness and quality is paramount."</p>
+
+        <img src="https://pbs.twimg.com/profile_images/2926758758/2f35df6deb743fbb13b543eaffee0ae5_400x400.png"  style="height:40px; margin-right: 5px !important;" class="pull-left img-thumbnail"> 
+        <p><b>Kieran Jefferson, Chef</b><br />
+        <a style="color:#444; font-weight:bold;" href="http://foodtrade.com/FriskaFood/">Friska</a></p>
+
+<p><a href="{% provider_login_url "twitter" process="login" %}"  class="btn btn-block btn-primary mtop" ><strong>Source quality ingredients &raquo;</strong></a> </p>
+         
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-3">
+    <div class="thumbnail widget-thumbnail"> 
+      <div class="caption"> 
+        <p class="quote">
+"FoodTrade allows us to map our membership and see who’s selling what, where. It’s great that the chefs who support the Slow Food culture can add these credentials to their profile."  </p>
+
+        <img src="https://pbs.twimg.com/profile_images/1690823879/Screen_shot_2011-12-13_at_12.21.20.png"  style="height:40px; margin-right: 5px !important;" class="pull-left img-thumbnail"> 
+
+
+        <p><b>Colin Bom, Leader </b><br />
+        <a style="color:#444; font-weight:bold;" href="http://foodtrade.com/slowfooduk/">Slow Food UK</a>
+        </p>
+
+<p><a href="{% provider_login_url "twitter" process="login" %}"  class="btn btn-block btn-primary mtop" ><strong>Demonstrate your impact  &raquo;</strong></a> </p>
+         
+      </div>
+    </div>
+  </div> 
 </div>
-<a name="more" class="more"></a>
- 
-<div class="container  col-md-12 block-center showcase" style="position: relative; top: -200px;">
- 
+
+
+
+<div class="row hero white" style="background-image: url('/static/images/apples2.jpg'); background-size: cover; padding: 50px 0; margin: 50px 0; background-attachment: fixed;">
+  <div class="col-sm-12"> 
+  <blockquote class="clearfix text-center" style="border:0; ">
+  <p style="font-size:30px; color: #fff; font-family: georgia; font-style: italic; max-width: 900px; margin: 0 auto 20px auto;">
+“The sustainable alternative to the UK’s food network — Together [small companies] are able to enjoy the same advantages as big agri-business.
+”  
+</p>
+<img class="img-thumbnail" src="/static/images/logos/wired.jpg" style="margin-top: 20px; height: 60px; margin: 0 auto;">
+</blockquote> 
+<div class="clearfix"> </div>
+  </div>
+</div>
+
 
 <div class="row">
   <div class="col-md-6">
@@ -169,7 +319,7 @@ display: block; }
           <div class="caption">
 
             <div class="text-center">
-              <a href="{% provider_login_url "twitter" process="login" %}"  class="btn btn-info btn-block" style="font-size: 25px; background: #F5941F; border: #F36037"><strong>Add my Business &raquo;</strong></a> 
+              <a href="{% provider_login_url "twitter" process="login" %}"  class="btn btn-info btn-block" style="font-size: 18px; background: #F5941F; border: #F36037; text-shadow: 1px 1px 1px rgba(0,0,0,0.5);"><strong>Add my Business &raquo;</strong></a> 
             </div>
             <div class="text-center" >
               <ul class="fa-ul text-left" style="display: inline-block; color: #9AA774;">
@@ -188,15 +338,50 @@ display: block; }
               </ul>
               </div>
 
-            <div class="lead">
+            <div class=" ">
                 <p>  
-                Think of FoodTrade like a dating site: we help you find your perfect match, whether you're a farmer, maker, restaurant, shop, or customer. 
-                </p><p>
-                And because your time is precious, updating FoodTrade is <a rel="tooltip" title="You're busy and don't want to spend ages online updating websites. We get it. So just tweet @foodtradeHQ and we'll spread the word.
+                We make it easy and economical to make smarter decisions; connecting you with new suppliers or stockists, resources, market intelligence, or a heap of hungry folk ready to eat.
 
-" href="/pages/business">as easy as sending a tweet</a>.</p>
-                <p>
-                We make it easy and economical to make smarter decisions, connecting you with new suppliers or stockists, resources, market intelligence, or a heap of hungry folk ready to eat. 
+                </p>
+              </div>
+ 
+              <div class="text-center">
+              <a href="/pages/business" class="btn btn-default btn-stroke" >Learn more &raquo;</a>
+              </div>
+
+ 
+          </div>
+      </div>
+      <!-- // Thumbnail END -->
+      </div>
+
+
+  <div class="col-md-3">
+      <!-- Thumbnail -->
+      <div class="thumbnail widget-thumbnail"> 
+          <div style="background-image: url('/static/images/ft_packshot.gif'); min-height:200px; background-size: contain; background-repeat: no-repeat; background-position: center center;">
+          </div>
+          <div class="caption">
+
+            <div class="text-center">
+              <a href="{% provider_login_url "twitter" process="login" %}"  class="btn btn-info btn-block" style="font-size: 18px; background: #F5941F; border: #F36037; text-shadow: 1px 1px 1px rgba(0,0,0,0.5);"><strong>Add my Organisation &raquo;</strong></a> 
+            </div>
+            <div class="text-center" >
+              <ul class="fa-ul text-left" style="display: inline-block; color: #9AA774;">
+                <li>
+                    <span class="fa fa-li fa fa-check"></span>
+                    No credit card needed to get started 
+                </li>  
+                <li>
+                    <span class="fa fa-li fa fa-check"></span>
+                    Free for life for most groups
+                </li>  
+              </ul>
+              </div>
+
+            <div class="">
+                <p>  
+                Certifiers, community groups, networks, awards or public sector. We want to showcase your story, offering you the credentials you deserve and connecting you with the right people. 
                 </p>
               </div>
  
@@ -212,14 +397,14 @@ display: block; }
 
       
 
-      <div class="col-md-6">
+      <div class="col-md-3">
       <!-- Thumbnail -->
       <div class="thumbnail widget-thumbnail"> 
-          <div style="background-image: url('/static/images/pot.jpg'); min-height:200px; background-size: cover;">
+          <div style="background-image: url('/static/images/pot.jpg'); min-height:200px; background-size: cover; ">
           </div>
           <div class="caption">
           <div class="text-center">
-              <a href="{% provider_login_url "twitter" process="login" %}"  class="btn btn-info btn-block" style="font-size: 25px; background: #F5941F; border: #F36037"><strong>Join as an Individual &raquo;</strong></a> 
+              <a href="{% provider_login_url "twitter" process="login" %}"  class="btn btn-info btn-block" style="font-size: 18px; background: #F5941F; border: #F36037; text-shadow: 1px 1px 1px rgba(0,0,0,0.5);"><strong>Join as an Individual &raquo;</strong></a> 
             </div>
             <div class="text-center">
               <ul class="fa-ul text-left" style="display: inline-block; color: #9AA774">
@@ -237,13 +422,9 @@ display: block; }
                 </li>
               </ul>
               </div>
-            <div class="lead">
-            <p>      
-            FoodTrade helps you find the foods you love, sold by the people you trust. 
-            </p><p>
-            By discovering the story behind your food, you can contribute to the health of your family, friends and community.
-            </p><p>
-            Support great producers, restaurants or stores by vouching for them on FoodTrade, or if they aren’t on FoodTrade you can invite them. Because if we’re connected, we can all be part of a better, fairer food system. 
+            <div class="">
+            <p>By discovering the story behind your food, you can contribute to the health of your family, friends and community. Share surplus home grown food and vouch for your favourite places to eat. 
+
              </p>
              </div>
 
@@ -260,62 +441,7 @@ display: block; }
 
  
 </div>
-
-<div class="box-generic" style="margin-top: 30px;">
-  <div class="row">
-    <div class="col-md-9 innerAll">
-      <div class="lead" style="margin:0 0 10px 0;"><p><strong>
-      We do great things for organisations, too</strong></p>
-      <p>
-     Certifiers, community groups, networks, awards or public sector. We want to showcase your story, offering you the credentials you deserve and connecting you with the right people. 
-      </p><p>
-      We’re about honesty and transparency. The more information you share, the smarter you become. This is your food trade network. </p>
-    </div> 
-    </div>
-    <div class="col-sm-3 text-right">
-      <a href="/pages/organisations" class="btn btn-info pull-right btn-block" style="font-size: 25px; background: #fff; border: 1px solid #F5941F; color: #F5941F; margin-top:30px; text-shadow: none;">Learn more &raquo;</a>  
-    </div>
-  </div>
-</div>
-
-
-
-
-<div class="row hero white" style="background-image: url('/static/images/apples2.jpg'); background-size: cover; padding: 50px 0;">
-  <div class="col-sm-12"> 
-  <blockquote class="clearfix" style="border:0; ">
-  <p class=" text-left" style="font-size:40px; color: #fff; font-family: georgia; font-style: italic;">
-“This technology could change the way our food system operates” <br />
-</p>
-
-<p class="text-right " style="font-size:30px; color: #fff; font-family: georgia; font-style: italic;">
-&mdash; HRH Prince Charles 
-</p> 
-</blockquote> 
-<div class="clearfix"> </div>
-  </div>
-</div>
-
  
-    
-<div class="row clearfix" style="padding: 25px 0; margin: 25px 0;"> 
- <div class="col-sm-5  text-center">
-    <img src="/static/images/together.jpg" class="img-responsive img-thumbnail">
-  <div class="text-right small photocredit white" style="position:relative; left: -20px; top: -50px;">Photo credits: <a href="https://twitter.com/GoldhillOrganic" target="_blank">@goldhillorganics</a> <br>&amp; <a href="http://kirstymorris.com/" target="_blank">Kirsty Morris</a></div>
-  </div>
-  <div class="col-sm-7 lead    ">    
-    <p>
-What we choose to cook, and where we choose to eat, affects the people and the places that grew, raised, baked and sold it. 
-</p><p>
-FoodTrade is for those who want to reconnect the farm to the fork. 
-It’s for farmers and families, tapas bars and taco trucks, smallholders and even supermarkets. <acronym ‘if they’re willing to stock good local food at fair prices’>
-</p><p>
-Join us on a mission to create a better, fairer food system. 
-</p>  
-  </div>
- 
-</div>    
-
  
 
  
