@@ -177,14 +177,20 @@ class SignupForm(forms.Form):
                 'description': social_account.extra_data['description'] if social_account!=None else '',
                 'username' : user.username,
                 'screen_name': social_account.extra_data['screen_name'] if social_account!=None else new_username,
-                'profile_img': social_account.extra_data['profile_image_url'] if social_account!=None else default_profile_img,
+                'profile_img': social_account.extra_data['profile_image_url'] if social_account!=None else default_profile_img,                
                 'updates': [],
                 'foods':[],
                 'organisations':[],
                 'subscribed':0,
-                'newsletter_freq':'Weekly'
-
+                'newsletter_freq':'Weekly',            
+                'followers_count':social_account.extra_data['followers_count'],
+                'friends_count':social_account.extra_data['friends_count']
         }
+        try:
+            data['profile_banner_url'] = social_account.extra_data['profile_banner_url']
+        except:
+            data['profile_banner_url'] = ''
+
         if new_password1 != '':
             data['email_registration'] = 1
         join_time = datetime.datetime.now()

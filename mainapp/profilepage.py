@@ -114,10 +114,15 @@ def display_profile(request, username):
     '''Code to get the banner_url, followers_count, friends_count'''
     twitter_counts = TwitterCounts()
     if request.user.is_authenticated():
-        f_count = twitter_counts.get_twitter_followers_and_number(request.user.id, username)    
-        parameters['followers_count'] = f_count['followers_count']
-        parameters['friends_count'] = f_count['friends_count']
-        parameters['banner_url'] = f_count['banner_url']
+        try:
+            parameters['followers_count'] = userprof['followers_count']
+            parameters['followers_count'] = userprof['friends_count']
+            parameters['banner_url'] = userprof['banner_url']
+        except:
+            f_count = twitter_counts.get_twitter_followers_and_number(request.user.id, username)    
+            parameters['followers_count'] = f_count['followers_count']
+            parameters['friends_count'] = f_count['friends_count']
+            parameters['banner_url'] = f_count['banner_url']
     else:
         try:
             from mainapp.classes.TweetFeed import Friends 
@@ -1099,8 +1104,19 @@ def search_orgs_business(request, type_user):
 
 def get_banner_url(username=None, useruid=None, logged_useruid =None):
     # code to get profile banner url    
-    banner_url = 'none'
-    if banner_url != 'none':
+    user_obj =  UserProfile()
+    if username!=None:
+        t_user = user_obj.get_one({'friends.screen_name':username})
+    if useruid != None:
+        t_user = user_obj.get_one({'useruid':useruid}) 
+    if logged_useruid !=None:
+        t_user = user_obj.get_one({'useruid':logged_useruid}) 
+    try:
+        banner_url = t_user['banner_url']
+    except:
+        banner_url = 'none'    
+            
+    if banner_url != 'none' and banner_url !='':
         banner_url = banner_url+'/web_retina'
 
     else:
