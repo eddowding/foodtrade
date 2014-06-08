@@ -1109,8 +1109,7 @@ def search_orgs_business(request, type_user):
     else:
         return HttpResponse(json.dumps({'status':0, 'message':'You are not authorized to perform this action.'}))        
 
-def get_banner_url(username=None, useruid=None, logged_useruid =None):
-    # code to get profile banner url    
+def get_banner_url(username=None, useruid=None, logged_useruid =None): 
     banner_url = 'none'
     user_obj =  UserProfile()
     if username!=None:
@@ -1122,7 +1121,6 @@ def get_banner_url(username=None, useruid=None, logged_useruid =None):
             
     if banner_url != None and banner_url !='':
         banner_url = banner_url+'/web_retina'
-
     else:
         try:
             if username!=None:
@@ -1131,27 +1129,17 @@ def get_banner_url(username=None, useruid=None, logged_useruid =None):
                 account = SocialAccount.objects.get(user__id = int(useruid))            
             banner_url = account.extra_data['profile_banner_url']
             banner_url = banner_url+'/web_retina'
-
+ 
         except:        
             try:
                 friend_obj = Friends()
                 if username!=None:
-                    banner_url = friend_obj.get_banner_by_screen_name(username)
-                
-                if useruid!=None:
-                    banner_url = friend_obj.get_banner_by_userid(useruid)
+                    t_user = friend_obj.get_one({'friends.screen_name':username})
 
-                if logged_useruid!=None:
-                    banner_url = friend_obj.get_banner_by_userid(logged_useruid)                
-
-                if banner_url != None and banner_url !='':
-                    banner_url = banner_url+'/web_retina'
-            except: 
+                banner_url = t_user['friends']['profile_banner_url']
+                banner_url = banner_url+'/web_retina'
+            except:
                 banner_url ='none'    
-
-    if banner_url == '' or banner_url == None:
-        banner_url = 'none'
-
     return banner_url
 
 

@@ -801,7 +801,6 @@ class Friends():
             banner_url = query[0]['profile_banner_url']
         except:
             banner_url = None
-        print "Roshan Friends ", banner_url, " banner_url"
         return banner_url
 
     def get_banner_by_userid(self, useruid):
@@ -812,8 +811,7 @@ class Friends():
         try:
             banner_url = query[0]['profile_banner_url']
         except:
-            banner_url = None
-        print "Roshan Friends ", banner_url, " banner_url"
+            banner_url = None    
         return banner_url
 
 
