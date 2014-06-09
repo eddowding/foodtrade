@@ -114,23 +114,15 @@ def display_profile(request, username):
     '''Code to get the banner_url, followers_count, friends_count'''
     try:
         parameters['followers_count'] = userprof['followers_count']
-        parameters['followers_count'] = userprof['friends_count']
+        parameters['friends_count'] = userprof['friends_count']
         if userprof['banner_url'] !='':
             parameters['banner_url'] = userprof['banner_url'] + '/web_retina'
         else:
-            parameters['banner_url'] = userprof['banner_url'] 
-        
-
+            parameters['banner_url'] = userprof['banner_url']         
     except:
-        twitter_counts = TwitterCounts()
-        f_count = twitter_counts.get_twitter_followers_and_number(request.user.id, username)    
-        parameters['followers_count'] = f_count['followers_count']
-        parameters['friends_count'] = f_count['friends_count']
-        if f_count['banner_url'] !='':
-            parameters['banner_url'] = f_count['banner_url'] + '/web_retina'
-        else:
-            parameters['banner_url'] = f_count['banner_url']        
-
+        parameters['followers_count'] = 0
+        parameters['friends_count'] = 0
+        parameters['banner_url'] = ''
     '''Code to get the banner_url, followers_count, friends_count ends'''
 
     uinfo = UserInfo(userprof['useruid'])
@@ -662,8 +654,6 @@ def get_customers(user_id, logged_id=None):
         else:
             myname = usr_pr['name']                        
         
-
-
         final_customers.append({'id': each['customeruid'],            
         'name': myname,
          # 'name': usr_pr.get('business_org_name') if usr_pr['sign_up_as'] == 'Business' or usr_pr['sign_up_as'] == 'Organisation' else usr_pr['name'],
@@ -1243,7 +1233,6 @@ def get_views_parameters(request):
         data['visit_time'] = time_text
         data['visit_date_time'] = str(datetime.datetime.fromtimestamp(int(eachVisit['visit_time'])).strftime("%A, %d. %B %Y %I:%M%p"))
         results.append(data)
-    print len(results)
     parameters['results'] = results
     parameters['visit_data'] = str(json.dumps(results))
     return parameters
@@ -1252,4 +1241,3 @@ def get_views_count(request):
     if not request.user.is_authenticated():
         return HttpResponseRedirect('/')
     return render_to_response('view_stats.html', get_views_parameters(request), context_instance=RequestContext(request))
-
