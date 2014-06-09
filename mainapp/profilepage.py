@@ -653,8 +653,8 @@ def get_customers(user_id, logged_id=None):
             and usr_pr.get('business_org_name')!='' else usr_pr['name']
         else:
             myname = usr_pr['name']                        
-        
-        final_customers.append({'id': each['customeruid'],            
+
+        data = {'id': each['customeruid'],            
         'name': myname,
          # 'name': usr_pr.get('business_org_name') if usr_pr['sign_up_as'] == 'Business' or usr_pr['sign_up_as'] == 'Organisation' else usr_pr['name'],
          # 'name': account.extra_data['name'],
@@ -663,8 +663,15 @@ def get_customers(user_id, logged_id=None):
          'username' : usr_pr['username'],
          'latitude': usr_pr['latlng']['coordinates'][1],
          'longitude': usr_pr['latlng']['coordinates'][0],
-         'banner_url': usr_pr['profile_banner_url'] if usr_pr['profile_banner_url'] =='' else usr_pr['profile_banner_url'] + '/web_retina'
-         })
+         }
+
+        try:
+            data['banner_url'] = '' if usr_pr['profile_banner_url'] ==None or usr_pr['profile_banner_url'] ==''  else usr_pr['profile_banner_url'] + '/web_retina'
+        except:
+            data['banner_url'] = ''
+
+        final_customers.append(data)
+
     return final_customers[:10], logged_customer
 
 
@@ -722,7 +729,7 @@ def get_connections(user_id, logged_in_id = None):
          'org_conn_no': organisation_connection_no,
          'latitude': usr_pr['latlng']['coordinates'][1],
          'longitude': usr_pr['latlng']['coordinates'][0],
-         'relation': 'buyer',         
+         'relation': 'buyer'      
          }
         
         try:
@@ -730,6 +737,7 @@ def get_connections(user_id, logged_in_id = None):
         except:
             data['banner_url'] = ''
         final_connections.append(data)
+        
     for count, each in enumerate(c_conn):
         try:
             if logged_in_id == None and count == 5:
@@ -752,7 +760,6 @@ def get_connections(user_id, logged_in_id = None):
             rec_food_obj = RecommendFood()
             total_vouches = rec_food_obj.get_recommend_count(each['b_useruid'])                            
 
-
             data = {'id': each['b_useruid'],
 
              # 'name': account.extra_data['name'],
@@ -769,9 +776,13 @@ def get_connections(user_id, logged_in_id = None):
              'org_conn_no': organisation_connection_no,
              'latitude': usr_pr['latlng']['coordinates'][1],
              'longitude': usr_pr['latlng']['coordinates'][0],
-             'relation': 'buyer',
-             'banner_url': usr_pr['profile_banner_url'] if usr_pr['profile_banner_url'] =='' else usr_pr['profile_banner_url'] + '/web_retina'
+             'relation': 'buyer'
              }
+            try:
+                data['banner_url'] = '' if usr_pr['profile_banner_url'] ==None or usr_pr['profile_banner_url'] ==''  else usr_pr['profile_banner_url'] + '/web_retina'
+            except:
+                data['banner_url'] = ''
+
             if data not in final_connections:
                 data['relation'] = 'seller'
                 final_connections.append(data)
@@ -808,8 +819,6 @@ def get_members(user_id, logged_in_id = None):
             food_no = user_connection.get_food_connection_no()
             organisation_connection_no = user_connection.get_organisation_connection_no()
 
-
-
             if logged_in_id!=None and each['memberuid'] == logged_in_id:
                     logged_member = True
             if usr_pr.get('business_org_name')!=None:
@@ -821,8 +830,7 @@ def get_members(user_id, logged_in_id = None):
             rec_food_obj = RecommendFood()
             total_vouches = rec_food_obj.get_recommend_count(each['memberuid'])                            
 
-                         
-            mem_data = {'id': each['memberuid'],
+            data = {'id': each['memberuid'],
              # 'name': account.extra_data['name'],
              'name': myname,
              'description': usr_pr['description'],
@@ -836,10 +844,14 @@ def get_members(user_id, logged_in_id = None):
              'food_no': food_no,
              'org_conn_no': organisation_connection_no,
              'latitude': usr_pr['latlng']['coordinates'][1],
-             'longitude': usr_pr['latlng']['coordinates'][0],
-             'banner_url':usr_pr['profile_banner_url'] if usr_pr['profile_banner_url'] =='' else usr_pr['profile_banner_url'] + '/web_retina'
+             'longitude': usr_pr['latlng']['coordinates'][0]
              }
-            final_members.append(mem_data)
+            try:
+                data['banner_url'] = '' if usr_pr['profile_banner_url'] ==None or usr_pr['profile_banner_url'] ==''  else usr_pr['profile_banner_url'] + '/web_retina'
+            except:
+                data['banner_url'] = ''
+
+            final_members.append(data)
         except:
             pass
     return final_members, logged_member
@@ -864,8 +876,7 @@ def get_organisations(user_id):
         from mainapp.classes.DataConnector import UserConnections
         user_connection =  UserConnections(each['orguid'])
         b_conn_len, c_conn_len = user_connection.get_trade_connection_no()                                                
-
-        final_orgs.append({'id': each['orguid'],
+        data = {'id': each['orguid'],
          # 'name': account.extra_data['name'],
          'name': myname,
          'total_vouches':total_vouches,
@@ -873,9 +884,14 @@ def get_organisations(user_id):
          'c_conn_no':c_conn_len,
          'description': usr_pr['description'],
          'photo': usr_pr['profile_img'],
-         'username' : usr_pr['username'],
-         'banner_url': usr_pr['profile_banner_url'] if usr_pr['profile_banner_url'] =='' else usr_pr['profile_banner_url'] + '/web_retina'
-         })
+         'username' : usr_pr['username']
+         }
+        try:
+            data['banner_url'] = '' if usr_pr['profile_banner_url'] ==None or usr_pr['profile_banner_url'] ==''  else usr_pr['profile_banner_url'] + '/web_retina'
+        except:
+            data['banner_url'] = ''
+        final_orgs.append(data)
+
     return final_orgs[:10]
 
 def get_foods_from_org_members(user_id):
@@ -896,13 +912,18 @@ def get_foods_from_org_members(user_id):
                 and usr_pr.get('business_org_name')!='' else usr_pr['name']
             else:
                 myname = usr_pr['name']                                        
-            all_foods.append({'id': each['memberuid'],
+            data = {'id': each['memberuid'],
              # 'name': account.extra_data['name'],
              'name': myname,
              'photo': usr_pr['profile_img'],
              'username' : usr_pr['username'],
              'foods': mem_foods
-             })
+             }                
+            try:
+                data['banner_url'] = '' if usr_pr['profile_banner_url'] ==None or usr_pr['profile_banner_url'] ==''  else usr_pr['profile_banner_url'] + '/web_retina'
+            except:
+                data['banner_url'] = '' 
+            all_foods.append(data)
         except:
             pass
     return all_foods, len(foods_count)
@@ -931,8 +952,7 @@ def get_team(user_id, logged_in_id=None):
             from mainapp.classes.DataConnector import UserConnections
             user_connection =  UserConnections(each['memberuid'])
             b_conn_len, c_conn_len = user_connection.get_trade_connection_no()            
-
-            final_teams.append({'id': each['memberuid'],
+            data = {'id': each['memberuid'],
              # 'name': account.extra_data['name'],
              'name': myname,
              'total_vouches':total_vouches,
@@ -941,8 +961,12 @@ def get_team(user_id, logged_in_id=None):
              'description': usr_pr['description'],
              'photo': usr_pr['profile_img'],
              'username' : usr_pr['username'],
-             'banner_url': usr_pr['profile_banner_url'] if usr_pr['profile_banner_url'] =='' else usr_pr['profile_banner_url'] + '/web_retina'
-             })
+             }                
+            try:
+                data['banner_url'] = '' if usr_pr['profile_banner_url'] ==None or usr_pr['profile_banner_url'] ==''  else usr_pr['profile_banner_url'] + '/web_retina'
+            except:
+                data['banner_url'] = '' 
+            final_teams.append(data)
         except:
             pass
     return final_teams, logged_team
@@ -969,7 +993,7 @@ def get_all_business(prof_id):
             b_conn_len, c_conn_len = user_connection.get_trade_connection_no()
 
             if prof_id != int(each['useruid']):
-                final_business.append({'id': each['useruid'],
+                data = {'id': each['useruid'],
                     # 'name': account.extra_data['name'],
                     'total_vouches':total_vouches,
                     'b_conn_no':b_conn_len,
@@ -978,7 +1002,12 @@ def get_all_business(prof_id):
                      'description': usr_pr['description'],
                      'photo': usr_pr['profile_img'],
                      'username' : usr_pr['username']
-                    })
+                    }                
+                try:
+                    data['banner_url'] = '' if usr_pr['profile_banner_url'] ==None or usr_pr['profile_banner_url'] ==''  else usr_pr['profile_banner_url'] + '/web_retina'
+                except:
+                    data['banner_url'] = '' 
+                final_business.append(data)
         except:
             pass
     return final_business
