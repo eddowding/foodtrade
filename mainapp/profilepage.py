@@ -110,19 +110,22 @@ def display_profile(request, username):
         a = userprof['sign_up_as']
     except:
         raise Http404
-
     '''Code to get the banner_url, followers_count, friends_count'''
     try:
         parameters['followers_count'] = userprof['followers_count']
-        parameters['friends_count'] = userprof['friends_count']
-        if userprof['banner_url'] !='':
-            parameters['banner_url'] = userprof['banner_url'] + '/web_retina'
-        else:
-            parameters['banner_url'] = userprof['banner_url']         
     except:
         parameters['followers_count'] = 0
+    try:
+        parameters['friends_count'] = userprof['friends_count']
+    except:
         parameters['friends_count'] = 0
-        parameters['banner_url'] = ''
+    try:
+        if userprof['profile_banner_url'] !='':
+            parameters['banner_url'] = userprof['profile_banner_url'] + '/web_retina'
+        else:
+            parameters['banner_url'] = userprof['profile_banner_url']         
+    except:
+        parameters['banner_url'] = ''                
     '''Code to get the banner_url, followers_count, friends_count ends'''
 
     uinfo = UserInfo(userprof['useruid'])
