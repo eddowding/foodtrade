@@ -737,7 +737,7 @@ def get_connections(user_id, logged_in_id = None):
         except:
             data['banner_url'] = ''
         final_connections.append(data)
-        
+
     for count, each in enumerate(c_conn):
         try:
             if logged_in_id == None and count == 5:
@@ -760,7 +760,7 @@ def get_connections(user_id, logged_in_id = None):
             rec_food_obj = RecommendFood()
             total_vouches = rec_food_obj.get_recommend_count(each['b_useruid'])                            
 
-            data = {'id': each['b_useruid'],
+            new_data = {'id': each['b_useruid'],
 
              # 'name': account.extra_data['name'],
              'name': myname,
@@ -779,13 +779,13 @@ def get_connections(user_id, logged_in_id = None):
              'relation': 'buyer'
              }
             try:
-                data['banner_url'] = '' if usr_pr['profile_banner_url'] ==None or usr_pr['profile_banner_url'] ==''  else usr_pr['profile_banner_url'] + '/web_retina'
+                new_data['banner_url'] = '' if usr_pr['profile_banner_url'] ==None or usr_pr['profile_banner_url'] ==''  else usr_pr['profile_banner_url'] + '/web_retina'
             except:
-                data['banner_url'] = ''
+                new_data['banner_url'] = ''
 
-            if data not in final_connections:
-                data['relation'] = 'seller'
-                final_connections.append(data)
+            if new_data not in final_connections:
+                new_data['relation'] = 'seller'
+                final_connections.append(new_data)
                 if logged_in_id!=None and each['b_useruid'] == logged_in_id:
                     logged_conn = 'seller'
             else:
@@ -808,8 +808,6 @@ def get_members(user_id, logged_in_id = None):
         try:
             # account = SocialAccount.objects.get(user__id = each['memberuid'])
             usr_pr = userprof.get_profile_by_id(str(each['memberuid']))
-
-
             # user_info = UserInfo(each['memberuid'])
             from mainapp.classes.DataConnector import UserConnections
             user_connection =  UserConnections(each['memberuid'])
