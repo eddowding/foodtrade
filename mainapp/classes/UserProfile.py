@@ -11,13 +11,13 @@ from pygeocoder import Geocoder
 from MySQLConnect import MySQLConnect
 from twython import Twython
 
-CLASS_PATH = '/srv/www/live/foodtrade-env/foodtrade/mainapp/classes'
-CRON_PATH = '/srv/www/live/foodtrade-env/foodtrade/CronJobs'
-SETTINGS_PATH = '/srv/www/live/foodtrade-env/foodtrade/foodtrade'
+# CLASS_PATH = '/srv/www/live/foodtrade-env/foodtrade/mainapp/classes'
+# CRON_PATH = '/srv/www/live/foodtrade-env/foodtrade/CronJobs'
+# SETTINGS_PATH = '/srv/www/live/foodtrade-env/foodtrade/foodtrade'
 
-# CLASS_PATH = 'C:/Users/Roshan Bhandari/Desktop/foodtrade/mainapp/classes'
-# CRON_PATH = 'C:/Users/Roshan Bhandari/Desktop/foodtrade/CronJobs'
-# SETTINGS_PATH = 'C:/Users/Roshan Bhandari/Desktop/foodtrade/foodtrade'
+CLASS_PATH = 'C:/Users/Roshan Bhandari/Desktop/foodtrade/mainapp/classes'
+CRON_PATH = 'C:/Users/Roshan Bhandari/Desktop/foodtrade/CronJobs'
+SETTINGS_PATH = 'C:/Users/Roshan Bhandari/Desktop/foodtrade/foodtrade'
 
 sys.path.insert(0, CLASS_PATH)
 sys.path.insert(1,SETTINGS_PATH)
@@ -135,6 +135,94 @@ class UserProfile():
                         'username':twitter_user['screen_name']},new_data)
                     # print twitter_user['screen_name'] + ' updated'
                 except:
+                    i += 1
+                    continue
+        return {'status':1}
+
+    def update_all_wronged_profiles_from_banner(self):
+        user_pages_count = int(self.db_object.get_count(self.table_name, 
+            {'profile_banner_url':{'$exists':False}, 'address':{'$exists':False}})/15)+ 1
+        mc = MySQLConnect()
+        i = 0
+        st = mc.get_token_list()
+        for i in range(0,user_pages_count, 1):
+            pag_users = self.db_object.get_paginated_values(self.table_name, 
+                {'profile_banner_url':{'$exists':True}, 'address':{'$exists':False}}, pageNumber = int(i+1))
+            for eachUser in pag_users:
+                try:
+                    ACCESS_TOKEN = st[i][0]
+                    ACCESS_TOKEN_SECRET = st[i][1]
+                    user_twitter = get_twitter_obj(ACCESS_TOKEN, ACCESS_TOKEN_SECRET)     
+                    twitter_user = user_twitter.show_user(screen_name=eachUser['username'])
+                    data = {
+                      'is_unknown_profile':'true',
+                      'recently_updated_by_super_user': 'false',
+                      'sign_up_as': 'unclaimed',
+                      'type_user': [],
+                      'name': twitter_user['name'],
+                      'email': '', 
+                      'description': twitter_user['description'],
+                      'username' : twitter_user['screen_name'],
+                      'screen_name': twitter_user['screen_name'],
+                      'updates': [],
+                      'foods':[],
+                      'organisations':[],
+                      'subscribed':0,
+                      'newsletter_freq':'Never',
+                      'followers_count':twitter_user['followers_count'],
+                      'friends_count':twitter_user['friends_count'],
+                    }
+                    try:
+                        data['profile_img'] = twitter_user['profile_image_url']
+                    except:
+                        data['profile_img'] = twitter_user['profile_img']
+                    try:
+                        data['profile_banner_url'] = twitter_user['profile_banner_url']
+                    except:
+                        data['profile_banner_url'] = ''
+                
+                    try:
+                        location_res = Geocoder.geocode(twitter_user['location'])
+                        data['twitter_address'] = twitter_user['location']
+                        data['address'] = str(location_res)
+                        data['latlng'] = {"type":"Point","coordinates":[float(location_res.longitude),float(location_res.latitude)]}
+                        data['zip_code'] = str(location_res.postal_code)
+                        data['address_geocoded']=True
+                    except:
+                          try:
+                              business_geocoder = Geocoder(api_key='AIzaSyDRNTE8EWOsbZzAQcM3hlBpaNA0zTuVups')
+                              location_res = business_geocoder.geocode(twitter_user['location'])
+                              data['twitter_address'] = twitter_user['location']
+                              data['address'] = str(location_res)
+                              data['latlng'] = {"type":"Point","coordinates":[float(location_res.longitude),float(location_res.latitude)]}
+                              data['zip_code'] = str(location_res.postal_code)
+                              data['address_geocoded']=True
+                          except:
+                                data['address'] = str('Antartica')
+                                data['twitter_address'] = twitter_user['location']
+                                data['latlng'] = {"type":"Point","coordinates":[float(-135.10000000000002) ,float(-82.86275189999999)]}
+                                data['zip_code'] = str('')
+                                data['address_geocoded']=False
+                                data['location_default_on_error'] = 'true'
+
+                    join_time = datetime.datetime.now()
+                    join_time = time.mktime(join_time.timetuple())
+                    data['join_time'] = int(join_time)            
+
+                    from UserProfile import UserProfile
+                    REMOTE_SERVER_LITE = 'localhost'
+                    userprofile = UserProfile(host=REMOTE_SERVER_LITE, port=27017, db_name=REMOTE_MONGO_DBNAME, username=REMOTE_MONGO_USERNAME, password=REMOTE_MONGO_PASSWORD)
+                    min_user_id = int(userprofile.get_minimum_id_of_user()[0]['minId']) -1
+                    data['useruid'] = min_user_id
+                    userprofile.update_profile_upsert({
+                        'screen_name':twitter_user['screen_name'],
+                        'username':twitter_user['screen_name'],
+                        'address':{'$exists':False},
+                        'profile_banner_url':{'$exists':True},
+                        },data)
+                    print twitter_user['screen_name'], " updated"
+                except:
+                    print "Inside Exception"
                     i += 1
                     continue
         return {'status':1}

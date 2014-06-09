@@ -677,7 +677,7 @@ class Organisation():
         self.db_object.create_table(self.table_name,'orguid')
 
     def get_members_by_orgid(self,orguid):
-        return self.db_object.get_all(self.table_name,{'orguid': orguid, 'deleted': 0})
+        return self.db_object.get_all_vals(self.table_name,{'orguid': orguid, 'deleted': 0})
 
     def create_member (self, value):
         value['deleted'] = 0

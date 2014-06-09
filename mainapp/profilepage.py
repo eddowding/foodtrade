@@ -892,7 +892,6 @@ def get_organisations(user_id):
         except:
             data['banner_url'] = ''
         final_orgs.append(data)
-
     return final_orgs[:10]
 
 def get_foods_from_org_members(user_id):
