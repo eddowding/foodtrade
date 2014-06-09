@@ -71,7 +71,7 @@ def resolve_profile(request, username):
             ajax_handle = AjaxHandle()
             ajax_handle.create_fake_profile(result[0]['screen_name'], result[0]['screen_name'], 'twitter','unclaimed')
             userprof = usr_profile.get_profile_by_username(str(result[0]['screen_name']))            
-            return HttpResponseRedirect('/profile/' + str(result[0]['screen_name']))
+            return HttpResponseRedirect('/' + str(result[0]['screen_name']))
         except:
             raise Http404
 

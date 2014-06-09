@@ -6,11 +6,11 @@ import sys
 import time, datetime
 import MySQLdb
 
-# CLASS_PATH = '/srv/www/live/foodtrade-env/foodtrade/mainapp/classes'
-# SETTINGS_PATH = '/srv/www/live/foodtrade-env/foodtrade/foodtrade'
+CLASS_PATH = '/srv/www/live/foodtrade-env/foodtrade/mainapp/classes'
+SETTINGS_PATH = '/srv/www/live/foodtrade-env/foodtrade/foodtrade'
 
-CLASS_PATH = 'C:/Users/Roshan Bhandari/Desktop/project repos/foodtrade/mainapp/classes'
-SETTINGS_PATH = 'C:/Users/Roshan Bhandari/Desktop/project repos/foodtrade/foodtrade'
+# CLASS_PATH = 'C:/Users/Roshan Bhandari/Desktop/project repos/foodtrade/mainapp/classes'
+# SETTINGS_PATH = 'C:/Users/Roshan Bhandari/Desktop/project repos/foodtrade/foodtrade'
 
 
 sys.path.insert(0, CLASS_PATH)
