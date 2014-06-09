@@ -112,39 +112,25 @@ def display_profile(request, username):
         raise Http404
 
     '''Code to get the banner_url, followers_count, friends_count'''
-    twitter_counts = TwitterCounts()
-    if request.user.is_authenticated():
-        try:
-            parameters['followers_count'] = userprof['followers_count']
-            parameters['followers_count'] = userprof['friends_count']
-            parameters['banner_url'] = userprof['banner_url']
-        except:
-            f_count = twitter_counts.get_twitter_followers_and_number(request.user.id, username)    
-            parameters['followers_count'] = f_count['followers_count']
-            parameters['friends_count'] = f_count['friends_count']
-            parameters['banner_url'] = f_count['banner_url']
-    else:
-        try:
-            from mainapp.classes.TweetFeed import Friends 
-            friend_obj = Friends()
-            friend = friend_obj.get_one({'friends.screen_name': { "$regex" : re.compile("^"+str(username)+"$", re.IGNORECASE), "$options" : "-i" }})
-            parameters['followers_count'] = friend['friends']['followers_count']
-            parameters['friends_count'] = friend['friends']['friends_count']
-            try:
-                parameters['banner_url'] = friend['friends']['banner_url']            
-            except:
-                parameters['banner_url'] = 'none'           
-        except:                    
-            try:
-                sa = SocialAccount.objects.get(user__id=userprof['useruid'])            
-                parameters['followers_count'] = sa.extra_data['followers_count']
-                parameters['friends_count'] = sa.extra_data['friends_count']
-                try:
-                    parameters['banner_url'] = sa.extra_data['banner_url']            
-                except:
-                    parameters['banner_url'] = 'none'
-            except:
-                pass
+    try:
+        parameters['followers_count'] = userprof['followers_count']
+        parameters['followers_count'] = userprof['friends_count']
+        if userprof['banner_url'] !='':
+            parameters['banner_url'] = userprof['banner_url'] + '/web_retina'
+        else:
+            parameters['banner_url'] = userprof['banner_url'] 
+        
+
+    except:
+        twitter_counts = TwitterCounts()
+        f_count = twitter_counts.get_twitter_followers_and_number(request.user.id, username)    
+        parameters['followers_count'] = f_count['followers_count']
+        parameters['friends_count'] = f_count['friends_count']
+        if f_count['banner_url'] !='':
+            parameters['banner_url'] = f_count['banner_url'] + '/web_retina'
+        else:
+            parameters['banner_url'] = f_count['banner_url']        
+
     '''Code to get the banner_url, followers_count, friends_count ends'''
 
     uinfo = UserInfo(userprof['useruid'])
@@ -687,7 +673,7 @@ def get_customers(user_id, logged_id=None):
          'username' : usr_pr['username'],
          'latitude': usr_pr['latlng']['coordinates'][1],
          'longitude': usr_pr['latlng']['coordinates'][0],
-         'banner_url': get_banner_url(useruid = int(each['customeruid']))
+         'banner_url': usr_pr['profile_banner_url'] if usr_pr['profile_banner_url'] =='' else usr_pr['profile_banner_url'] + '/web_retina'
          })
     return final_customers[:10], logged_customer
 
@@ -750,7 +736,7 @@ def get_connections(user_id, logged_in_id = None):
          'latitude': usr_pr['latlng']['coordinates'][1],
          'longitude': usr_pr['latlng']['coordinates'][0],
          'relation': 'buyer',
-         'banner_url': get_banner_url(useruid = int(each['c_useruid']), logged_useruid=logged_in_id)
+         'banner_url': usr_pr['profile_banner_url'] if usr_pr['profile_banner_url'] =='' else usr_pr['profile_banner_url'] + '/web_retina'
          })
         
     # except:
@@ -795,7 +781,7 @@ def get_connections(user_id, logged_in_id = None):
              'latitude': usr_pr['latlng']['coordinates'][1],
              'longitude': usr_pr['latlng']['coordinates'][0],
              'relation': 'buyer',
-             'banner_url': get_banner_url(useruid = int(each['b_useruid']), logged_useruid=logged_in_id)
+             'banner_url': usr_pr['profile_banner_url'] if usr_pr['profile_banner_url'] =='' else usr_pr['profile_banner_url'] + '/web_retina'
              }
             if data not in final_connections:
                 data['relation'] = 'seller'
@@ -861,16 +847,9 @@ def get_members(user_id, logged_in_id = None):
              'food_no': food_no,
              'org_conn_no': organisation_connection_no,
              'latitude': usr_pr['latlng']['coordinates'][1],
-             'longitude': usr_pr['latlng']['coordinates'][0]             
+             'longitude': usr_pr['latlng']['coordinates'][0],
+             'banner_url':usr_pr['profile_banner_url'] if usr_pr['profile_banner_url'] =='' else usr_pr['profile_banner_url'] + '/web_retina'
              }
-            try:
-                if usr_pr['profile_banner_url'] !='':
-                    mem_data['banner_url'] = usr_pr['profile_banner_url']
-                else:
-                    mem_data['banner_url'] = get_banner_url(useruid = int(each['memberuid']))
-            except:
-                mem_data['banner_url'] = get_banner_url(useruid = int(each['memberuid']))
-
             final_members.append(mem_data)
         except:
             pass
@@ -906,7 +885,7 @@ def get_organisations(user_id):
          'description': usr_pr['description'],
          'photo': usr_pr['profile_img'],
          'username' : usr_pr['username'],
-         'banner_url': get_banner_url(useruid = int(each['orguid']))
+         'banner_url': usr_pr['profile_banner_url'] if usr_pr['profile_banner_url'] =='' else usr_pr['profile_banner_url'] + '/web_retina'
          })
     return final_orgs[:10]
 
@@ -973,7 +952,7 @@ def get_team(user_id, logged_in_id=None):
              'description': usr_pr['description'],
              'photo': usr_pr['profile_img'],
              'username' : usr_pr['username'],
-             'banner_url': get_banner_url(useruid = int(each['memberuid']), logged_useruid=logged_in_id)
+             'banner_url': usr_pr['profile_banner_url'] if usr_pr['profile_banner_url'] =='' else usr_pr['profile_banner_url'] + '/web_retina'
              })
         except:
             pass
@@ -1123,7 +1102,7 @@ def get_banner_url(username=None, useruid=None, logged_useruid =None):
             elif useruid!=None:
                 account = SocialAccount.objects.get(user__id = int(useruid))            
             banner_url = account.extra_data['profile_banner_url']
-            banner_url = banner_url+'/web_retina'
+            banner_url = banner_url + '/web_retina'
  
         except:        
             try:
