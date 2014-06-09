@@ -70,7 +70,7 @@
                   <div class="map-biz" id="map"></div> 
               </div> 
      
-              {% ifnotequal banner_url 'none' %}
+              {% ifnotequal banner_url '' %}
                 <div class="item">
                     <img src="{{banner_url}}" class="img-responsive" style="height:100%;">
                 </div>
@@ -99,7 +99,7 @@
         <li><a href="#" data-target="#carousel-1" data-slide-to="2"><i class="icon-movie-camera"></i> <span>Video</span> </a></li>  
         {% endif %}  
 
-        {% ifnotequal banner_url 'none' %}
+        {% ifnotequal banner_url '' %}
         <li><a href="#" data-target="#carousel-1" data-slide-to="1"><i class="icon-photo-camera"></i> <span>Photos</span> </a></li>  
         {% endifnotequal %} 
    
