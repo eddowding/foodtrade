@@ -498,7 +498,7 @@ class Search():
                                     "includeLocs": "latlng",
                                     "uniqueDocs": True,
                                     "spherical":True,
-                                    "limit":5000,
+                                    "limit":300,
                                     "distanceMultiplier":6371
                                 }
 
