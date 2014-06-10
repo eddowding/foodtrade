@@ -656,27 +656,64 @@ function show_small_structure()
  <div id="menu-right" style="
 display: block;
 right: 0px;
-top: 57px;
-background: rgba(255,255,255,0.8);
+top: 56px;
+background: rgba(255,255,255,0.9);
+box-shadow: 0 0 12px #ccc inset;
+border-left: 1px solid #444;
 ">
       <div>
           <button class="btn btn-inverse btn-xs btn-close hidden" data-toggle="sidr-close" data-menu="menu-right"><i class="fa fa-times"></i>
           </button> 
-          <div class="innerAll"> 
-            <h3>Marketplace</h3>
+          <div class="innerAll">  
 
             <div class="btn-group">
-              <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                Action <span class="caret"></span>
+              <button type="button" class="btn btn-inverse dropdown-toggle" data-toggle="dropdown">
+                Post a buying request <span class="caret"></span>
               </button>
               <ul class="dropdown-menu" role="menu">
-                <li><a href="#">Action</a></li>
-                <li><a href="#">Another action</a></li>
-                <li><a href="#">Something else here</a></li>
-                <li class="divider"></li>
-                <li><a href="#">Separated link</a></li>
+                <li><a href="#">Post a buy request</a></li>
+                <li><a href="#">Post a sell offer</a></li>
+                <li><a href="#">Offer surplus</a></li> 
+                <li><a href="#">Post other request (eg jobs, help)</a></li>
               </ul>
             </div>
+
+            <form role="search" action="#" method="GET" id="search-form" class=" " >
+            <div class="input-group">
+                <input type="text" class="form-control" placeholder="search" name="q" style="padding:6px 6px;">
+                <div class="input-group-btn">
+                    <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+                </div>
+            </div>
+            <p class="help-block">Within 50 miles of YOUR POSTCODE. <a href="#">Upgrade</a></p>
+            </form>
+
+
+            <div class="btn-group " data-toggle="buttons-radio">
+                <button class="btn btn-default active">Companies</button>
+                <button class="btn btn-default ">Individuals</button>
+            </div>
+
+            <div id="updates">
+
+            <!-- 
+
+@SUJIT - NB THAT POPOVERS CAN ALSO BE DONE PRGRAMATICALLY TO MAKE IT EASIER TO PUT HTML IN
+
+  <script>
+        $('#info').popover({ html: true, container: 'body', placement: 'left', title: 'Popover', content: "<ul><li>The</li><li>popover</li><li>is</li><li>clipped.</li></ul>" });
+    </script>
+
+            -->
+
+              <div class="update" data-toggle="popover" data-container="body" data-placement="left" data-original-title="" title=""
+              data-title="Profile title" 
+              data-content="Sed posuere consectetur est at lobortis. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum." > 
+                <p>I'd like to buy #cheese (asdf). 15 Kg.</p>
+              </div>
+
+
+            </div><!-- updates -->
 
           </div>
       </div>
@@ -805,11 +842,24 @@ background: rgba(255,255,255,0.8);
 
 
   <div class="input-group pull-left">
+
+ 
+
+
     <form action="/activity" onsubmit="return formSubmit(this);">
 
 
     <div class="input-group">
-      <div class="input-group-btn search-panel">
+      <input type="hidden" name="search_param" value="all" id="search_param">         
+ 
+      <div class="col-xs-6">
+        <input type="text" class="form-control pull-left" name="x" placeholder="What? eg apples, cider">
+      </div>
+      <div class="col-xs-6">
+        <input name="loc" class="form-control pull-left" type="text"  placeholder="Location: City, Postcode / zip">
+      </div> 
+
+<!--       <div class="input-group-btn search-panel">
         <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
           <span class="glyphicon glyphicon-search"></span> <span id="search_concept">Produce</span> <span class="caret"></span>
         </button>
@@ -818,12 +868,22 @@ background: rgba(255,255,255,0.8);
           <li><a href="#its_equal">Organisations</a></li>
           <li><a href="#greather_than">People</a></li> 
         </ul>
+      </div> -->
+
+      <div class="input-group-btn">
+        <button type="button" class="btn btn-primary"><span class="glyphicon glyphicon-search"></span>   </button>
+        <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+          <span id="search_concept">Produce</span>
+          <span class="caret"></span>
+          <span class="sr-only">Toggle Dropdown</span>
+        </button>
+        <ul class="dropdown-menu" role="menu">
+          <li><a href="#contains">Companies</a></li>
+          <li><a href="#its_equal">Organisations</a></li>
+          <li><a href="#greather_than">People</a></li>  
+        </ul>
       </div>
-      <input type="hidden" name="search_param" value="all" id="search_param">         
-      <input type="text" class="form-control" name="x" placeholder="Search term...">
-      <span class="input-group-btn">
-          <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-search"></span></button>
-      </span>
+ 
     </div>
 
 

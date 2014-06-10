@@ -72,6 +72,23 @@ input[type="text"]:focus, input[type="text"]:active, input[type="text"]:hover {
 .premium {
 
 }
+
+.popover {
+  z-index: 1000000 !important; 
+  border: 2px solid #444;
+  box-shadow: 3px 3px 5px #ccc;
+}
+
+.popover.left .arrow {
+  border-left-color: #222;
+}
+
+.update {
+  border-top: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
+  padding: 10px;
+  margin: 0 -10px;
+}
  
 .dotdotdot {
   width: 100%;
@@ -651,7 +668,7 @@ input[type="text"]:focus, input[type="text"]:active, input[type="text"]:hover {
 
 }
 .footer-sticky #footer {
-  position: fixed; 
+  position: relative; 
   left: 0;
 }
 
