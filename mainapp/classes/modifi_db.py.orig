@@ -39,7 +39,10 @@ class UserUpdates():
         self.db_object = MongoConnection("localhost",27017,'foodtrade')
         self.table_name = 'userupdates'
         self.db_object.create_table(self.table_name,'useruid')
+<<<<<<< HEAD
+=======
         self.db_object.create_table(self.table_name,'update.time')
+>>>>>>> 4bd690c44eed1dd1faecc382bd91d00df9d5191e
         self.db_object.ensure_index(self.table_name,'latlng')
 
   
@@ -63,6 +66,8 @@ class UserUpdates():
 
 
 
+<<<<<<< HEAD
+=======
     def get_latest_updates(self,lon, lat):
         query_string = {}
         query_string["latlng"]= {"$near": {
@@ -88,6 +93,7 @@ print uu.get_latest_after(lon = "-0.12548719999995228", lat ="51.508515",time_st
 
 
 
+>>>>>>> 4bd690c44eed1dd1faecc382bd91d00df9d5191e
 def main():
     up = UserProfile()
     all_up = up.find({"username":"sujitmhj"})
@@ -196,17 +202,47 @@ class Search():
             "$geometry" : { "type" : "Point" , "coordinates": [float(self.lon), float(self.lat)] },
             "$maxDistance" : 160000
           }}
+<<<<<<< HEAD
+
+        # geo_search = {"$near": [float(self.lon), float(self.lat)],
+        #                             "$distanceField": "distance",
+        #                             # "maxDistance": 0.425260398681,
+        #                             "query": query_string,
+        #                             "includeLocs": "latlng",
+        #                             "uniqueDocs": True,
+        #                             "spherical":True,
+        #                             "limit":20,
+        #                             "distanceMultiplier":6371
+        #                         }
+
+        # if not self.search_global :
+        #     geo_search['maxDistance'] = 0.02511379689
+        # geo_near = {
+        #                 "$geoNear": geo_search
+        #               }
+
+
+
+       
+
+=======
           
+>>>>>>> 4bd690c44eed1dd1faecc382bd91d00df9d5191e
         up = UserProfile()
         return up.find(query_string)
 
 
         
 
+<<<<<<< HEAD
+handle = Search(keyword="", lon = "-0.12548719999995228", lat ="51.508515", place = "", foods="", business="", organisation="",sort="", search_global=False,news="notfornews")
+print len(handle.search())
+=======
 # handle = Search(keyword="", lon = "-0.12548719999995228", lat ="51.508515", place = "", foods="", business="", organisation="",sort="", search_global=False,news="notfornews")
 # print len(handle.search
 
 
+>>>>>>> 4bd690c44eed1dd1faecc382bd91d00df9d5191e
 # db.userprofile.find().forEach( function(doc){
 #     var docpy = doc;
 #     for(var i = 0;i<doc.updates.length;i++)
@@ -215,6 +251,9 @@ class Search():
 #         delete docpy._id;
 #         db.userupdates.insert(docpy);
 #     }
+<<<<<<< HEAD
+#     });
+=======
 #     });
 
 
@@ -231,3 +270,4 @@ class Search():
 
 
 
+>>>>>>> 4bd690c44eed1dd1faecc382bd91d00df9d5191e

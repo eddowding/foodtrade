@@ -71,7 +71,7 @@ def resolve_profile(request, username):
             ajax_handle = AjaxHandle()
             ajax_handle.create_fake_profile(result[0]['screen_name'], result[0]['screen_name'], 'twitter','unclaimed')
             userprof = usr_profile.get_profile_by_username(str(result[0]['screen_name']))            
-            return HttpResponseRedirect('/profile/' + str(result[0]['screen_name']))
+            return HttpResponseRedirect('/' + str(result[0]['screen_name']))
         except:
             raise Http404
 
@@ -110,36 +110,22 @@ def display_profile(request, username):
         a = userprof['sign_up_as']
     except:
         raise Http404
-
     '''Code to get the banner_url, followers_count, friends_count'''
-    twitter_counts = TwitterCounts()
-    if request.user.is_authenticated():
-        f_count = twitter_counts.get_twitter_followers_and_number(request.user.id, username)    
-        parameters['followers_count'] = f_count['followers_count']
-        parameters['friends_count'] = f_count['friends_count']
-        parameters['banner_url'] = f_count['banner_url']
-    else:
-        try:
-            from mainapp.classes.TweetFeed import Friends 
-            friend_obj = Friends()
-            friend = friend_obj.get_one({'friends.screen_name': { "$regex" : re.compile("^"+str(username)+"$", re.IGNORECASE), "$options" : "-i" }})
-            parameters['followers_count'] = friend['friends']['followers_count']
-            parameters['friends_count'] = friend['friends']['friends_count']
-            try:
-                parameters['banner_url'] = friend['friends']['banner_url']            
-            except:
-                parameters['banner_url'] = 'none'           
-        except:                    
-            try:
-                sa = SocialAccount.objects.get(user__id=userprof['useruid'])            
-                parameters['followers_count'] = sa.extra_data['followers_count']
-                parameters['friends_count'] = sa.extra_data['friends_count']
-                try:
-                    parameters['banner_url'] = sa.extra_data['banner_url']            
-                except:
-                    parameters['banner_url'] = 'none'
-            except:
-                pass
+    try:
+        parameters['followers_count'] = userprof['followers_count']
+    except:
+        parameters['followers_count'] = 0
+    try:
+        parameters['friends_count'] = userprof['friends_count']
+    except:
+        parameters['friends_count'] = 0
+    try:
+        if userprof['profile_banner_url'] !='':
+            parameters['banner_url'] = userprof['profile_banner_url'] + '/web_retina'
+        else:
+            parameters['banner_url'] = userprof['profile_banner_url']         
+    except:
+        parameters['banner_url'] = ''                
     '''Code to get the banner_url, followers_count, friends_count ends'''
 
     uinfo = UserInfo(userprof['useruid'])
@@ -670,10 +656,8 @@ def get_customers(user_id, logged_id=None):
             and usr_pr.get('business_org_name')!='' else usr_pr['name']
         else:
             myname = usr_pr['name']                        
-        
 
-
-        final_customers.append({'id': each['customeruid'],            
+        data = {'id': each['customeruid'],            
         'name': myname,
          # 'name': usr_pr.get('business_org_name') if usr_pr['sign_up_as'] == 'Business' or usr_pr['sign_up_as'] == 'Organisation' else usr_pr['name'],
          # 'name': account.extra_data['name'],
@@ -682,8 +666,15 @@ def get_customers(user_id, logged_id=None):
          'username' : usr_pr['username'],
          'latitude': usr_pr['latlng']['coordinates'][1],
          'longitude': usr_pr['latlng']['coordinates'][0],
-         'banner_url': get_banner_url(useruid = int(each['customeruid']))
-         })
+         }
+
+        try:
+            data['banner_url'] = '' if usr_pr['profile_banner_url'] ==None or usr_pr['profile_banner_url'] ==''  else usr_pr['profile_banner_url'] + '/web_retina'
+        except:
+            data['banner_url'] = ''
+
+        final_customers.append(data)
+
     return final_customers[:10], logged_customer
 
 
@@ -717,8 +708,6 @@ def get_connections(user_id, logged_in_id = None):
         organisation_connection_no = user_connection.get_organisation_connection_no()
 
 
-
-
         if logged_in_id!=None and each['c_useruid'] == logged_in_id:
             logged_conn = 'buyer'
         if usr_pr.get('business_org_name')!=None:
@@ -728,8 +717,7 @@ def get_connections(user_id, logged_in_id = None):
             myname = usr_pr['name']           
         rec_food_obj = RecommendFood()
         total_vouches = rec_food_obj.get_recommend_count(each['c_useruid'])
-
-        final_connections.append({'id': each['c_useruid'],
+        data = {'id': each['c_useruid'],
          # 'name': account.extra_data['name'],
          'name': myname,
          'b_conn_no':b_conn_len, 
@@ -744,12 +732,15 @@ def get_connections(user_id, logged_in_id = None):
          'org_conn_no': organisation_connection_no,
          'latitude': usr_pr['latlng']['coordinates'][1],
          'longitude': usr_pr['latlng']['coordinates'][0],
-         'relation': 'buyer',
-         'banner_url': get_banner_url(useruid = int(each['c_useruid']), logged_useruid=logged_in_id)
-         })
+         'relation': 'buyer'      
+         }
         
-    # except:
-    #     pass
+        try:
+            data['banner_url'] = '' if usr_pr['profile_banner_url'] ==None or usr_pr['profile_banner_url'] ==''  else usr_pr['profile_banner_url'] + '/web_retina'
+        except:
+            data['banner_url'] = ''
+        final_connections.append(data)
+
     for count, each in enumerate(c_conn):
         try:
             if logged_in_id == None and count == 5:
@@ -772,8 +763,7 @@ def get_connections(user_id, logged_in_id = None):
             rec_food_obj = RecommendFood()
             total_vouches = rec_food_obj.get_recommend_count(each['b_useruid'])                            
 
-
-            data = {'id': each['b_useruid'],
+            new_data = {'id': each['b_useruid'],
 
              # 'name': account.extra_data['name'],
              'name': myname,
@@ -789,27 +779,26 @@ def get_connections(user_id, logged_in_id = None):
              'org_conn_no': organisation_connection_no,
              'latitude': usr_pr['latlng']['coordinates'][1],
              'longitude': usr_pr['latlng']['coordinates'][0],
-             'relation': 'buyer',
-             'banner_url': get_banner_url(useruid = int(each['b_useruid']), logged_useruid=logged_in_id)
+             'relation': 'buyer'
              }
-            if data not in final_connections:
-                data['relation'] = 'seller'
-                final_connections.append(data)
+            try:
+                new_data['banner_url'] = '' if usr_pr['profile_banner_url'] ==None or usr_pr['profile_banner_url'] ==''  else usr_pr['profile_banner_url'] + '/web_retina'
+            except:
+                new_data['banner_url'] = ''
+
+            if new_data not in final_connections:
+                new_data['relation'] = 'seller'
+                final_connections.append(new_data)
                 if logged_in_id!=None and each['b_useruid'] == logged_in_id:
                     logged_conn = 'seller'
             else:
                 index = final_connections.index(data)
                 final_connections[index]['relation'] = 'both'
                 if logged_in_id!=None and each['b_useruid'] == logged_in_id:
-                    logged_conn = 'both'
-            
+                    logged_conn = 'both'            
         except:
             pass
     return final_connections, logged_conn
-
-
-
-
 
 
 def get_members(user_id, logged_in_id = None):
@@ -822,8 +811,6 @@ def get_members(user_id, logged_in_id = None):
         try:
             # account = SocialAccount.objects.get(user__id = each['memberuid'])
             usr_pr = userprof.get_profile_by_id(str(each['memberuid']))
-
-
             # user_info = UserInfo(each['memberuid'])
             from mainapp.classes.DataConnector import UserConnections
             user_connection =  UserConnections(each['memberuid'])
@@ -832,8 +819,6 @@ def get_members(user_id, logged_in_id = None):
             trade_connections_no = b_conn_len + c_conn_len
             food_no = user_connection.get_food_connection_no()
             organisation_connection_no = user_connection.get_organisation_connection_no()
-
-
 
             if logged_in_id!=None and each['memberuid'] == logged_in_id:
                     logged_member = True
@@ -846,9 +831,7 @@ def get_members(user_id, logged_in_id = None):
             rec_food_obj = RecommendFood()
             total_vouches = rec_food_obj.get_recommend_count(each['memberuid'])                            
 
-                         
-
-            final_members.append({'id': each['memberuid'],
+            data = {'id': each['memberuid'],
              # 'name': account.extra_data['name'],
              'name': myname,
              'description': usr_pr['description'],
@@ -862,9 +845,14 @@ def get_members(user_id, logged_in_id = None):
              'food_no': food_no,
              'org_conn_no': organisation_connection_no,
              'latitude': usr_pr['latlng']['coordinates'][1],
-             'longitude': usr_pr['latlng']['coordinates'][0],
-             'banner_url': get_banner_url(useruid = int(each['memberuid']), logged_useruid= logged_in_id)
-             })
+             'longitude': usr_pr['latlng']['coordinates'][0]
+             }
+            try:
+                data['banner_url'] = '' if usr_pr['profile_banner_url'] ==None or usr_pr['profile_banner_url'] ==''  else usr_pr['profile_banner_url'] + '/web_retina'
+            except:
+                data['banner_url'] = ''
+
+            final_members.append(data)
         except:
             pass
     return final_members, logged_member
@@ -889,8 +877,7 @@ def get_organisations(user_id):
         from mainapp.classes.DataConnector import UserConnections
         user_connection =  UserConnections(each['orguid'])
         b_conn_len, c_conn_len = user_connection.get_trade_connection_no()                                                
-
-        final_orgs.append({'id': each['orguid'],
+        data = {'id': each['orguid'],
          # 'name': account.extra_data['name'],
          'name': myname,
          'total_vouches':total_vouches,
@@ -898,9 +885,13 @@ def get_organisations(user_id):
          'c_conn_no':c_conn_len,
          'description': usr_pr['description'],
          'photo': usr_pr['profile_img'],
-         'username' : usr_pr['username'],
-         'banner_url': get_banner_url(useruid = int(each['orguid']))
-         })
+         'username' : usr_pr['username']
+         }
+        try:
+            data['banner_url'] = '' if usr_pr['profile_banner_url'] ==None or usr_pr['profile_banner_url'] ==''  else usr_pr['profile_banner_url'] + '/web_retina'
+        except:
+            data['banner_url'] = ''
+        final_orgs.append(data)
     return final_orgs[:10]
 
 def get_foods_from_org_members(user_id):
@@ -921,13 +912,18 @@ def get_foods_from_org_members(user_id):
                 and usr_pr.get('business_org_name')!='' else usr_pr['name']
             else:
                 myname = usr_pr['name']                                        
-            all_foods.append({'id': each['memberuid'],
+            data = {'id': each['memberuid'],
              # 'name': account.extra_data['name'],
              'name': myname,
              'photo': usr_pr['profile_img'],
              'username' : usr_pr['username'],
              'foods': mem_foods
-             })
+             }                
+            try:
+                data['banner_url'] = '' if usr_pr['profile_banner_url'] ==None or usr_pr['profile_banner_url'] ==''  else usr_pr['profile_banner_url'] + '/web_retina'
+            except:
+                data['banner_url'] = '' 
+            all_foods.append(data)
         except:
             pass
     return all_foods, len(foods_count)
@@ -956,8 +952,7 @@ def get_team(user_id, logged_in_id=None):
             from mainapp.classes.DataConnector import UserConnections
             user_connection =  UserConnections(each['memberuid'])
             b_conn_len, c_conn_len = user_connection.get_trade_connection_no()            
-
-            final_teams.append({'id': each['memberuid'],
+            data = {'id': each['memberuid'],
              # 'name': account.extra_data['name'],
              'name': myname,
              'total_vouches':total_vouches,
@@ -966,8 +961,12 @@ def get_team(user_id, logged_in_id=None):
              'description': usr_pr['description'],
              'photo': usr_pr['profile_img'],
              'username' : usr_pr['username'],
-             'banner_url': get_banner_url(useruid = int(each['memberuid']), logged_useruid=logged_in_id)
-             })
+             }                
+            try:
+                data['banner_url'] = '' if usr_pr['profile_banner_url'] ==None or usr_pr['profile_banner_url'] ==''  else usr_pr['profile_banner_url'] + '/web_retina'
+            except:
+                data['banner_url'] = '' 
+            final_teams.append(data)
         except:
             pass
     return final_teams, logged_team
@@ -994,7 +993,7 @@ def get_all_business(prof_id):
             b_conn_len, c_conn_len = user_connection.get_trade_connection_no()
 
             if prof_id != int(each['useruid']):
-                final_business.append({'id': each['useruid'],
+                data = {'id': each['useruid'],
                     # 'name': account.extra_data['name'],
                     'total_vouches':total_vouches,
                     'b_conn_no':b_conn_len,
@@ -1003,7 +1002,12 @@ def get_all_business(prof_id):
                      'description': usr_pr['description'],
                      'photo': usr_pr['profile_img'],
                      'username' : usr_pr['username']
-                    })
+                    }                
+                try:
+                    data['banner_url'] = '' if usr_pr['profile_banner_url'] ==None or usr_pr['profile_banner_url'] ==''  else usr_pr['profile_banner_url'] + '/web_retina'
+                except:
+                    data['banner_url'] = '' 
+                final_business.append(data)
         except:
             pass
     return final_business
@@ -1097,12 +1101,18 @@ def search_orgs_business(request, type_user):
     else:
         return HttpResponse(json.dumps({'status':0, 'message':'You are not authorized to perform this action.'}))        
 
-def get_banner_url(username=None, useruid=None, logged_useruid =None):
-    # code to get profile banner url    
+def get_banner_url(username=None, useruid=None, logged_useruid =None): 
     banner_url = 'none'
-    if banner_url != 'none':
+    user_obj =  UserProfile()
+    if username!=None:
+        banner_url = user_obj.get_banner_by_username(username)
+    if useruid != None:
+        banner_url = user_obj.get_banner_by_useruid(useruid) 
+    if logged_useruid !=None:
+        banner_url = user_obj.get_banner_by_useruid(logged_useruid)     
+            
+    if banner_url != None and banner_url !='':
         banner_url = banner_url+'/web_retina'
-
     else:
         try:
             if username!=None:
@@ -1110,15 +1120,14 @@ def get_banner_url(username=None, useruid=None, logged_useruid =None):
             elif useruid!=None:
                 account = SocialAccount.objects.get(user__id = int(useruid))            
             banner_url = account.extra_data['profile_banner_url']
-            banner_url = banner_url+'/web_retina'
-
+            banner_url = banner_url + '/web_retina'
+ 
         except:        
             try:
                 friend_obj = Friends()
                 if username!=None:
                     t_user = friend_obj.get_one({'friends.screen_name':username})
-                if useruid != None:
-                    t_user = friend_obj.get_one({'friends.id':useruid})        
+
                 banner_url = t_user['friends']['profile_banner_url']
                 banner_url = banner_url+'/web_retina'
             except:
@@ -1198,19 +1207,26 @@ def get_views_parameters(request):
             data['username'] = eachVisit['visitor_name']
         else:
             data['username'] = 'Unknown visitor'
+            data['UnknownVisitor']=True
 
         if eachVisit['visitor_name'] == '':
             continue
-
+        data['UnknownVisitor']=False
         chk_usr = user_profile_obj.get_profile_by_username(eachVisit['visitor_name'])
         data['profile_img'] = chk_usr['profile_img']
         data['address'] = chk_usr['address']
+        data['screen_name'] = chk_usr['screen_name']
+        data['email'] = chk_usr['email']
         data['latitude'] = chk_usr['latlng']['coordinates'][1]
         data['longitude'] = chk_usr['latlng']['coordinates'][0]
         data['sign_up_as'] = chk_usr['sign_up_as']
         data['name'] = chk_usr['name']
         data['useruid'] = chk_usr['useruid']
         data['description'] = chk_usr['description']
+        try:
+            data['phone'] = chk_usr['phone_number']            
+        except:
+            data['phone'] = ''
         try:
             if chk_usr['subscribed'] ==1:
                 data['subscribed'] = True
@@ -1253,4 +1269,3 @@ def get_views_count(request):
     if not request.user.is_authenticated():
         return HttpResponseRedirect('/')
     return render_to_response('view_stats.html', get_views_parameters(request), context_instance=RequestContext(request))
-

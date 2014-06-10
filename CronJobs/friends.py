@@ -52,14 +52,14 @@ class Friends():
             return
         next_cursor = -1
         try:
-            while(next_cursor !='0'):
+            while(next_cursor !=0):
                 next_cursor = friends['next_cursor']
                 for eachFriend in friends['users']:
                     '''Register this user'''
                     # self.register_friend(eachFriend, eachUser['username'])
                     self.register_as_unclaimed_user(eachFriend)                    
-                    time.sleep(1)
-                if next_cursor != 0:                    
+                    time.sleep(0.2)
+                if next_cursor != 0: 
                     friends = self.get_friends(eachUser['username'], next_cursor, friend_or_follower)
             return {'status':1}
         except:
@@ -147,10 +147,10 @@ class Friends():
             except:
                 new_data['profile_banner_url'] = ''
             
-            data['updated_recently'] = True
+            new_data['updated_recently'] = True
             update_time = datetime.datetime.now()
             update_time = time.mktime(update_time.timetuple())
-            data['update_time'] = int(update_time)                
+            new_data['update_time'] = int(update_time)                
             userprofile.update_profile_upsert({'screen_name':twitter_user['screen_name'],
                 'username':twitter_user['screen_name']},new_data)
             print twitter_user['screen_name'] + ' updated'
