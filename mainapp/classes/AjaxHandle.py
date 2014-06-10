@@ -77,7 +77,11 @@ class AjaxHandle(AjaxSearch):
                     'subscribed':0,
                     'newsletter_freq':'Never'
                 }   
-
+                try:
+                    data['profile_banner_url'] = invited_friend['friends']['profile_banner_url']
+                except:
+                    data['profile_banner_url'] = ''
+                    
                 if sign_up_as == 'unclaimed':
                     data['sign_up_as'] = 'unclaimed'
                 else:

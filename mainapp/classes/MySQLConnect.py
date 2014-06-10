@@ -24,3 +24,15 @@ class MySQLConnect():
         social_account_id = self.execute_sql('Select id from socialaccount_socialaccount where user_id =\'' + str(auth_usr_id) +'\';')[0][0]
         social_token = self.execute_sql('Select token,token_secret from socialaccount_socialtoken where account_id =\'' + str(social_account_id) +'\';')
         return social_token[0]
+
+    def get_token_list(self):
+        return_list = []
+        auth_usr_ids = self.execute_sql('Select id from auth_user;')
+        for each_id in auth_usr_ids:
+            try:
+                social_account_id = self.execute_sql('Select id from socialaccount_socialaccount where user_id =\'' + str(each_id[0]) +'\';')[0][0]
+                social_token = self.execute_sql('Select token,token_secret from socialaccount_socialtoken where account_id =\'' + str(social_account_id) +'\';')
+                return_list.append(social_token[0])
+            except:
+                continue
+        return return_list

@@ -183,16 +183,14 @@ class SignupForm(forms.Form):
                 'organisations':[],
                 'subscribed':0,
                 'newsletter_freq':'Weekly',            
-                'followers_count':social_account.extra_data['followers_count'],
-                'friends_count':social_account.extra_data['friends_count']
+                'followers_count':social_account.extra_data['followers_count'] if social_account!=None else 0,
+                'friends_count':social_account.extra_data['friends_count'] if social_account!=None else 0,
+                'profile_banner_url':social_account.extra_data['profile_banner_url'] if social_account!=None else ''
         }
-        try:
-            data['profile_banner_url'] = social_account.extra_data['profile_banner_url']
-        except:
-            data['profile_banner_url'] = ''
 
         if new_password1 != '':
             data['email_registration'] = 1
+            
         join_time = datetime.datetime.now()
         join_time = time.mktime(join_time.timetuple())
         data['join_time'] = int(join_time)

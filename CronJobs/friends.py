@@ -147,10 +147,10 @@ class Friends():
             except:
                 new_data['profile_banner_url'] = ''
             
-            data['updated_recently'] = True
+            new_data['updated_recently'] = True
             update_time = datetime.datetime.now()
             update_time = time.mktime(update_time.timetuple())
-            data['update_time'] = int(update_time)                
+            new_data['update_time'] = int(update_time)                
             userprofile.update_profile_upsert({'screen_name':twitter_user['screen_name'],
                 'username':twitter_user['screen_name']},new_data)
             print twitter_user['screen_name'] + ' updated'
