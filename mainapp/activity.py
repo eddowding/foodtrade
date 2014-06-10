@@ -100,6 +100,8 @@ def set_time_date(single_result,keyword):
 
 def get_search_parameters(request):
     parameters = {}
+    while True:
+        pass
 
     default_location = ""
     no_of_results = 5
