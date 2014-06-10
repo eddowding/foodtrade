@@ -39,6 +39,7 @@ class UserUpdates():
         self.db_object = MongoConnection("localhost",27017,'foodtrade')
         self.table_name = 'userupdates'
         self.db_object.create_table(self.table_name,'useruid')
+        self.db_object.create_table(self.table_name,'update.time')
         self.db_object.ensure_index(self.table_name,'latlng')
 
   
@@ -59,6 +60,31 @@ class UserUpdates():
 
     def find (self, query):
         return self.db_object.get_all(table_name=self.table_name,conditions=query, sort_index ='_id', limit=1) #00000)
+
+
+
+    def get_latest_updates(self,lon, lat):
+        query_string = {}
+        query_string["latlng"]= {"$near": {
+            "$geometry" : { "type" : "Point" , "coordinates": [float(lon), float(lat)] },
+            "$maxDistance" : 160000
+          }}
+        return self.db_object.get_all_custom(table_name=self.table_name,fields={"update.time_stamp":1},conditions=query_string, sort_index ='update.time_stamp', limit=5)
+        
+
+    def get_latest_after(self,lon, lat,time_stamp):
+        query_string = {}
+        query_string["latlng"]= {"$near": {
+            "$geometry" : { "type" : "Point" , "coordinates": [float(lon), float(lat)] },
+            "$maxDistance" : 160000
+          }}
+        query_string["update.time_stamp"] = {"$gt":time_stamp}
+        return self.db_object.get_all_custom(table_name=self.table_name,conditions=query_string, sort_index ='update.time_stamp', limit=5)
+        
+uu = UserUpdates()
+# print uu.get_latest_updates(lon = "-0.12548719999995228", lat ="51.508515")
+print uu.get_latest_after(lon = "-0.12548719999995228", lat ="51.508515",time_stamp = 1400590225)
+
 
 
 
@@ -177,8 +203,10 @@ class Search():
 
         
 
-handle = Search(keyword="", lon = "-0.12548719999995228", lat ="51.508515", place = "", foods="", business="", organisation="",sort="", search_global=False,news="notfornews")
-print len(handle.search())
+# handle = Search(keyword="", lon = "-0.12548719999995228", lat ="51.508515", place = "", foods="", business="", organisation="",sort="", search_global=False,news="notfornews")
+# print len(handle.search
+
+
 # db.userprofile.find().forEach( function(doc){
 #     var docpy = doc;
 #     for(var i = 0;i<doc.updates.length;i++)
@@ -188,3 +216,18 @@ print len(handle.search())
 #         db.userupdates.insert(docpy);
 #     }
 #     });
+
+
+# db.userprofile.find().forEach( function(doc){
+    
+#     for(var i = 0;i<doc.foods.length;i++)
+#     {
+#         var food = doc.foods[i];
+#         food.latlng = doc.latlng;
+
+#         db.userfoods.insert(food);
+#     }
+#     });
+
+
+
