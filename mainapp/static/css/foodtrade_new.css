@@ -720,6 +720,7 @@ input[type=text], input[type=password], select, textarea,
   border: 2px solid rgba(97,174,50,1) !important;
 }
 
+.widget.widget-tabs > .widget-body ,
 .widget.widget-tabs-double-2 > .widget-body {
   padding: 10px;
   background: #fff;
