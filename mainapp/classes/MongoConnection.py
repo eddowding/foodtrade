@@ -21,7 +21,11 @@ class MongoConnection():
         # self.db = None
         self.conn = Connection(self.host, self.port)
         self.db = self.conn[self.db_name]
-        self.db.authenticate(self.username, self.password)        
+        self.db.authenticate(self.username, self.password)  
+
+
+
+
 
     def create_connection(self):
         self.conn = Connection(self.host, self.port)
@@ -31,6 +35,8 @@ class MongoConnection():
     def close_connection(self):
         self.conn.close()
 
+    def get_db(self):
+        return self.db
 
     def ensure_index(self, table_name, index=None):
         # self.create_connection()

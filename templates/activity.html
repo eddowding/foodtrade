@@ -202,12 +202,14 @@
 
 
     <script type="text/javascript">
-      map_lat={{ search.lat }};
-      map_lon = {{ search.lon }};
+    var result_object = {{result|safe}};
 
-      food_filters = {{foods_filter |safe}};
-      business_filters = {{business_filter |safe}};
-      organisation_filters = {{organisation_filter |safe}}; 
+      map_lat=result_object.center[1];
+      map_lon = result_object.center[0];
+
+      // food_filters = {{foods_filter |safe}};
+      // business_filters = {{business_filter |safe}};
+      // organisation_filters = {{organisation_filter |safe}}; 
 
       function swith_update_form()
         {
@@ -230,9 +232,9 @@
  {% endblock %}
  {% block javascript %}
  <script type="text/javascript">
-      show_food_filters(food_filters, 0);
-      show_organisation_filters(organisation_filters, 0);
-      show_business_filters(business_filters, 0);
+      // show_food_filters(food_filters, 0);
+      // show_organisation_filters(organisation_filters, 0);
+      // show_business_filters(business_filters, 0);
 </script>
 
  <script src="{% static "js/activity-map.js" %}"></script>
