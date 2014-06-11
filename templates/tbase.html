@@ -186,7 +186,7 @@
 
 
   </head>
-<body class=" menu-right-hidden {% if not user.is_authenticated %}menu-hidden{% endif %}">
+<body class="menu-hidden {% if not user.is_authenticated %}menu-hidden{% endif %}">
     
 
        <!-- New post Modal -->
@@ -652,118 +652,83 @@ function show_small_structure()
 </div>
 <!-- // Main Sidebar Menu END --> 
 
- <div id="menu-right" class="hidden">
-            <div>
-                <button class="btn btn-inverse btn-xs btn-close" data-toggle="sidr-close" data-menu="menu-right"><i class="fa fa-times"></i>
-                </button>
-                <div class="tab-content"> 
-                  <div class="tab-pane active" id="chat-list">
-                    <div class="mixitup" id="mixitup-chat" data-show-default="mixit-chat-1" data-layout-mode="list"
-                    data-target-selector=".mix" data-filter-selector=".filter-chat">
-                      <ul>
-                        <li class="category">Activity</li>
-                        <li class="reset">
-                            <ul>
-                                <li class="media news-item"> 
-                                    <span class="pull-left media-object">
-                                        <i class="fa fa-fw fa-bell"></i>
-                                    </span>
-                                    <div class="media-body">
-                                        <a href="#" class="text-white">Tytherley stores</a> just
-                                        added <a href="#" class="text-white">new produce</a>
-                                        <span class="time">2 min ago</span>
-                                    </div>
-                                </li>  
-                            </ul>
-                        </li> 
-                      </ul>
-                                 
-    {% if   search %}
-    <div class="foodtrade-sidebar">
-    
-   
-   <form action="/activity" class="navbar-form"  onsubmit="return formSubmit(this);"  role="search" data-step="1" data-intro="Search for anyhing, anywhere">
-      <div class="input-group  input-group-sm">
-        <span class="input-group-addon"><i class="fa fa-map-marker"></i></span>
-        <input type="text" name="location" id="pac-input" value="{% if search %}{{ search.place }}{% endif %}{% if not search %}{{userinfo.zip_code}}{% endif %}" class="pac-input form-control  " placeholder="Where?">
-        <div class="input-group-btn">
-          <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
-        </div>
-      </div>
-      <input type="hidden" name="lon" id="lon" value="{{search.lon}}"/>
-      <input type="hidden" name="lat" id="lat" value="{{search.lat}}"/> 
-    </form>
-     
-    <div data-step="3" data-intro="Just start typing to search for specific foods, business type, or filter by organisation membership" data-position="right">
-    <form role="form" >
-      <div class="form-group"> 
-        <input type="text" class="form-control input-sm" id="food_filter" placeholder="Refine by food or drink">
-      </div>
-    </form>
-    
-    <ul class="foodtrade-tag-list">
-    <li data-id="ALL" class="foodtrade-tag foodtrade-tag-click foodtrade-tag-all"><div class="foodtrade-tag-checkbox-column"><input type="checkbox" id="all_foods" checked="checked" onclick="make_search()" aria-label="All Partners" class="foodtrade-tag-checkbox"></div><div class="foodtrade-tag-text">All Foods</div><div class="foodtrade-tag-count">{{food_count}}</div></li>
-    </ul>
 
-    <ul class="foodtrade-tag-list" id="food_filter_results">
-   
-    </ul>
-     <hr> 
+ <div id="menu-right" style="
+display: block;
+right: 0px;
+top: 56px;
+background: rgba(255,255,255,0.9);
+box-shadow: 0 0 12px #ccc inset;
+border-left: 1px solid #444;
+">
+      <div>
+          <button class="btn btn-inverse btn-xs btn-close hidden" data-toggle="sidr-close" data-menu="menu-right"><i class="fa fa-times"></i>
+          </button> 
+          <div class="innerAll">  
 
-    <form role="form">
-      <div class="form-group"> 
-        <input type="email" class="form-control  input-sm" id="business_filter" placeholder="Filter by business type">
-      </div>
-    </form>
-    <ul class="foodtrade-tag-list">
-    <li data-id="ALL" class="foodtrade-tag foodtrade-tag-click foodtrade-tag-all"><div class="foodtrade-tag-checkbox-column"><input type="checkbox" id="all_businesses" checked="checked" onclick="make_search()" aria-label="All Partners" class="foodtrade-tag-checkbox"></div><div class="foodtrade-tag-text">All Businesses</div><div class="foodtrade-tag-count">{{business_count}}</div></li>
-</ul>
+            <div class="btn-group">
+              <button type="button" class="btn btn-inverse dropdown-toggle" data-toggle="dropdown">
+                Post a buying request <span class="caret"></span>
+              </button>
+              <ul class="dropdown-menu" role="menu">
+                <li><a href="#">Post a buy request</a></li>
+                <li><a href="#">Post a sell offer</a></li>
+                <li><a href="#">Offer surplus</a></li> 
+                <li><a href="#">Post other request (eg jobs, help)</a></li>
+              </ul>
+            </div>
 
-<ul class="foodtrade-tag-list" id="business_filter_results">
-    </ul>
-    </div><!-- charding overlay -->
-    <hr />
-     
-
-
-
-     <form role="form">
-      <div class="form-group"> 
-        <input type="email" class="form-control  input-sm" id="organisation_filter" placeholder="Show only members of...">
-      </div>
-    </form>
-    <ul class="foodtrade-tag-list">
-    <li data-id="ALL" class="foodtrade-tag foodtrade-tag-click foodtrade-tag-all"><div class="foodtrade-tag-checkbox-column"><input type="checkbox" id="all_organisations" checked="checked" onclick="make_search()" aria-label="All Partners" class="foodtrade-tag-checkbox"></div><div class="foodtrade-tag-text">All Organisations</div><div class="foodtrade-tag-count">{{organisation_count}}</div></li>
-    </ul>
-
-
-    <ul class="foodtrade-tag-list" id="organisation_filter_results">
-    </ul>
-
-
-    </div><!--sidebar-->
-
-    <hr /> 
-    
-
-    {% endif %}
-                            </ul>
-                        </div>
-                    </div>
+            <form role="search" action="#" method="GET" id="search-form" class=" " >
+            <div class="input-group">
+                <input type="text" class="form-control" placeholder="search" name="q" style="padding:6px 6px;">
+                <div class="input-group-btn">
+                    <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
                 </div>
             </div>
-        </div>
-        
+            <p class="help-block">Within 50 miles of YOUR POSTCODE. <a href="#">Upgrade</a></p>
+            </form>
+
+
+            <div class="btn-group " data-toggle="buttons-radio">
+                <button class="btn btn-default active">Companies</button>
+                <button class="btn btn-default ">Individuals</button>
+            </div>
+
+            <div id="updates">
+
+            <!-- 
+
+@SUJIT - NB THAT POPOVERS CAN ALSO BE DONE PRGRAMATICALLY TO MAKE IT EASIER TO PUT HTML IN
+
+  <script>
+        $('#info').popover({ html: true, container: 'body', placement: 'left', title: 'Popover', content: "<ul><li>The</li><li>popover</li><li>is</li><li>clipped.</li></ul>" });
+    </script>
+
+            -->
+
+              <div class="update" data-toggle="popover" data-container="body" data-placement="left" data-original-title="" title=""
+              data-title="Profile title" 
+              data-content="Sed posuere consectetur est at lobortis. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum." > 
+                <p>I'd like to buy #cheese (asdf). 15 Kg.</p>
+              </div>
+
+
+            </div><!-- updates -->
+
+          </div>
+      </div>
+  </div>
+  
+
 
 <div id="content">
 <div class="navbar hidden-print navbar-default navbar-fixed-top box main" role="navigation" id="topnav" >
 
-
-<!-- set to active when https://app.asana.com/0/6132652941995/10779710100316 is complete
-  <div class="user-action user-action-btn-navbar pull-right border-left">
-      <a href="#menu-right" class="btn btn-sm btn-navbar btn-open-right"><i class="fa fa-bell fa-2x"></i></a>
-  </div> -->
-
+<div class="user-action user-action-btn-navbar pull-right border-left">
+    <a href="#menu-right" class="btn btn-sm btn-navbar btn-open-right"><i class="fa fa-bell fa-2x"></i></a>
+</div>
+  
+ 
 
   {% if request.user.is_authenticated %}
   <div class="user-action pull-right menu-right-hidden-xs menu-left-hidden-xs border-left">
@@ -877,10 +842,75 @@ function show_small_structure()
 
 
   <div class="input-group pull-left">
+
+ 
+
+
     <form action="/activity" onsubmit="return formSubmit(this);">
+
+
+    <div class="input-group">
+      <input type="hidden" name="search_param" value="all" id="search_param">         
+ 
+      <div class="col-xs-6">
+        <input type="text" class="form-control pull-left" name="x" placeholder="What? eg apples, cider">
+      </div>
+      <div class="col-xs-6">
+        <input name="loc" class="form-control pull-left" type="text"  placeholder="Location: City, Postcode / zip">
+      </div> 
+
+<!--       <div class="input-group-btn search-panel">
+        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+          <span class="glyphicon glyphicon-search"></span> <span id="search_concept">Produce</span> <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" role="menu">
+          <li><a href="#contains">Companies</a></li>
+          <li><a href="#its_equal">Organisations</a></li>
+          <li><a href="#greather_than">People</a></li> 
+        </ul>
+      </div> -->
+
+      <div class="input-group-btn">
+        <button type="button" class="btn btn-primary"><span class="glyphicon glyphicon-search"></span>   </button>
+        <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+          <span id="search_concept">Produce</span>
+          <span class="caret"></span>
+          <span class="sr-only">Toggle Dropdown</span>
+        </button>
+        <ul class="dropdown-menu" role="menu">
+          <li><a href="#contains">Companies</a></li>
+          <li><a href="#its_equal">Organisations</a></li>
+          <li><a href="#greather_than">People</a></li>  
+        </ul>
+      </div>
+ 
+    </div>
+
+
+
+      <!-- search snippet from http://bootsnipp.com/snippets/featured/search-panel-with-filters -->
+      <!-- there's some js to use 
+
+            $(document).ready(function(e){
+                $('.search-panel .dropdown-menu').find('a').click(function(e) {
+                e.preventDefault();
+                var param = $(this).attr("href").replace("#","");
+                var concept = $(this).text();
+                $('.search-panel span#search_concept').text(concept);
+                $('.input-group #search_param').val(param);
+              });
+            });
+       --> 
+
+
+<div class="hidden">
+
       <span class="input-group-addon"><i class="icon-search"></i></span> 
       <input type="text" name="q" id="keyword" class="form-control" value="{{ search.query }}" placeholder="eg 'apples', 'fish'...">
       <input type="hidden" name="location" id="new_search" value="{% if search %} {{ search.place }} {% endif %} {% if not search %} {{userinfo.zip_code}}{% endif %} ">
+
+</div>
+
     </form>
   </div>
 
@@ -1193,8 +1223,10 @@ function show_small_structure()
     <script src="{% static "assets/components/plugins/holder/holder.js" %}"></script>
     <script src="{% static "assets/components/core/js/sidebar.main.init.js" %}"></script>
     <script src="{% static "assets/components/core/js/sidebar.collapse.init.js" %}"></script>
+    <script src="{% static "assets/components/plugins/mixitup/jquery.mixitup.min.js" %}"></script>
     <script src="{% static "assets/components/common/forms/elements/bootstrap-select/assets/lib/js/bootstrap-select.js" %}"></script>
     <script src="{% static "assets/components/common/forms/elements/bootstrap-select/assets/custom/js/bootstrap-select.init.js" %}"></script>
+    <script src="{% static "assets/components/modules/admin/menus/menus.sidebar.chat.init.js" %}"></script>
     <script src="{% static "assets/components/core/js/core.init.js" %}"></script>
     <script src='//api.tiles.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v0.0.2/Leaflet.fullscreen.min.js'></script>
     <link href='//api.tiles.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v0.0.2/leaflet.fullscreen.css' rel='stylesheet' />

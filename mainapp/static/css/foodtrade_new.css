@@ -72,6 +72,23 @@ input[type="text"]:focus, input[type="text"]:active, input[type="text"]:hover {
 .premium {
 
 }
+
+.popover {
+  z-index: 1000000 !important; 
+  border: 2px solid #444;
+  box-shadow: 3px 3px 5px #ccc;
+}
+
+.popover.left .arrow {
+  border-left-color: #222;
+}
+
+.update {
+  border-top: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
+  padding: 10px;
+  margin: 0 -10px;
+}
  
 .dotdotdot {
   width: 100%;
@@ -647,6 +664,14 @@ input[type="text"]:focus, input[type="text"]:active, input[type="text"]:hover {
   text-decoration: none;
 }
 
+.sidebar.sidebar-social #footer {
+
+}
+.footer-sticky #footer {
+  position: relative; 
+  left: 0;
+}
+
 #menu>div ul>li>a { 
   color: #999;
 }
@@ -762,7 +787,7 @@ padding: 0em 18px 0em .1em !important;
 /********************************/
 /**  SIDEBAR sizes             **/
 /********************************/
- 
+/* 
 #topnav {
   margin-left: 250px;
 }
@@ -770,7 +795,7 @@ padding: 0em 18px 0em .1em !important;
 .menu-hidden #topnav {
   margin-left: 0;
 }
-
+*/
 /********************************/
 /**  tabs    sizes             **/
 /********************************/
