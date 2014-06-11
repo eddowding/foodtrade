@@ -61,7 +61,7 @@ input[type="text"]:focus, input[type="text"]:active, input[type="text"]:hover {
 }
 
 #content {
-  margin-top: 60px;
+  margin-top: 55px;
   background: #F5F8FA;
 }
 
@@ -147,6 +147,15 @@ input[type="text"]:focus, input[type="text"]:active, input[type="text"]:hover {
 .chosen-container li.highlighted a { 
   color: #fff;
 }
+
+
+#searchfilters .form-group {
+  background: #fff;
+  padding: 5px 0;
+  margin-bottom: 0;
+  border-bottom: 1px solid #eee; 
+}
+
 
 
 
@@ -338,7 +347,7 @@ input[type="text"]:focus, input[type="text"]:active, input[type="text"]:hover {
 
 #cards.marketplace li.singleresult,
 .grid-sizer {
-  width: 49%;
+  width: 100%;
 }
 
 #cards.marketplace li.singleresult {
@@ -655,6 +664,10 @@ input[type="text"]:focus, input[type="text"]:active, input[type="text"]:hover {
 
 }
 
+.navbar-fixed-top, .navbar-fixed-bottom {
+  right: 180px;
+}
+
 .navbar.main .dropdown.username .dropdown-menu {
   left: auto; 
 }
@@ -720,8 +733,35 @@ input[type=text], input[type=password], select, textarea,
   border: 2px solid rgba(97,174,50,1) !important;
 }
 
+.widget.widget-tabs-double > .widget-head ul li { 
+  padding: 0;
+  border-radius: 6px 6px 0 0;
+}
+
+.widget.widget-tabs-double > .widget-head ul li.active { 
+  background: #fff;
+  box-shadow: 3px 3px 3px #ccc; 
+}
+
+.widget.widget-tabs > .widget-head ul li.active:first-child { 
+  margin: 0 0px 0 10px;
+}
+
+.widget.widget-tabs-double > .widget-head {
+  height: 60px;
+}
+
+.widget.widget-tabs-double > .widget-head ul li, 
+.widget.widget-tabs-double > .widget-head ul li.active {
+  height: 62px;
+  border-radius: 6px 6px 0 0 !important;
+  border: 1px solid #ccc;
+  border-bottom: 0;
+}
+
+.widget.widget-tabs > .widget-body ,
 .widget.widget-tabs-double-2 > .widget-body {
-  padding: 10px;
+  padding: 5px;
   background: #fff;
 }
 
@@ -747,6 +787,11 @@ input[type=text], input[type=password], select, textarea,
 .widget.widget-tabs-double-2 > .widget-head ul li.active {
   background: #ffffff !important;
 }
+
+.btn-label {position: relative;left: -12px;display: inline-block;padding: 6px 12px;background: rgba(0,0,0,0.15);border-radius: 3px 0 0 3px;}
+.btn-labeled {padding-top: 0;padding-bottom: 0;}
+
+
 
 ul.tagit li.tagit-choice {
   -moz-border-radius: 3px;
