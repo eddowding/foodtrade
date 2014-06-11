@@ -149,12 +149,14 @@ input[type="text"]:focus, input[type="text"]:active, input[type="text"]:hover {
 }
 
 
-#filters .form-group {
+#searchfilters .form-group {
   background: #fff;
-  padding: 15px 0;
+  padding: 5px 0;
   margin-bottom: 0;
-  border-bottom: 1px solid #eee;
+  border-bottom: 1px solid #eee; 
 }
+
+
 
 
 /********************************/
@@ -729,6 +731,32 @@ input[type=text], input[type=password], select, textarea,
 .box-verified,
 .timeline-activity li.verified .box-generic {
   border: 2px solid rgba(97,174,50,1) !important;
+}
+
+.widget.widget-tabs-double > .widget-head ul li { 
+  padding: 0;
+  border-radius: 6px 6px 0 0;
+}
+
+.widget.widget-tabs-double > .widget-head ul li.active { 
+  background: #fff;
+  box-shadow: 3px 3px 3px #ccc; 
+}
+
+.widget.widget-tabs > .widget-head ul li.active:first-child { 
+  margin: 0 0px 0 10px;
+}
+
+.widget.widget-tabs-double > .widget-head {
+  height: 60px;
+}
+
+.widget.widget-tabs-double > .widget-head ul li, 
+.widget.widget-tabs-double > .widget-head ul li.active {
+  height: 62px;
+  border-radius: 6px 6px 0 0 !important;
+  border: 1px solid #ccc;
+  border-bottom: 0;
 }
 
 .widget.widget-tabs > .widget-body ,

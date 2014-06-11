@@ -31,17 +31,68 @@
 
 
  
-<div class="container-responsive">
+<div class="container-responsive" id="searchfilters">
+
+<div class="widget widget-tabs widget-tabs-double widget-tabs-responsive" style="background: #F5F8FA;   margin: 0 !important; padding-top: 10px;">
+    <!-- Tabs Heading -->
+    <div class="widget-head  " style="background: #F2F6F8;">
+        <ul> 
+            <li class="active" style="padding: 10px; background: #fff;"><a href="#tab1-2" class="glyphicons user" data-toggle="tab"><i></i><span class="strong">Profiles</span><span>Companies, orgs, people</span></a>
+                                </li>
+            <li class=" " style="padding: 10px;"><a href="#tab1-2" class="glyphicons user" data-toggle="tab"><i></i><span class="strong">Market place</span><span>Real-time trading</span></a>
+                                </li>
+        </ul>
+    </div>
+  </div>
+
   <div class="widget innerAll" style="margin:0; background-color: none;">
-    <a data-toggle="collapse" data-target="#filters" class="innerAll"><i class="fa fa-arrow-right"></i> Advanced search
+
+    <form action="/activity" onsubmit="return formSubmit(this);"  role="search" data-step="1" data-intro="Search for anyhing, anywhere" class="form-horizontal">
+
+      <div class="form-group clearfix">
+        <label for="companyType" class="col-sm-3 control-label">I want to</label>
+        <div class="col-sm-9">
+            <div class="btn-group " data-toggle="buttons-radio">
+                <button class="btn btn-default  btn-sm active" >Buy</button>
+                <button class="btn btn-default  btn-sm ">Sell</button>
+            </div> 
+        </div>
+      </div>
+
+      <div class="form-group clearfix hidden">
+        <label for="companyType" class="col-sm-3 control-label">Realm</label>
+        <div class="col-sm-9">
+            <div class="btn-group " data-toggle="buttons-radio">
+                <button class="btn btn-default  btn-sm active" data-toggle="collapse" data-target="#companygroup" >Profiles</button>
+                <button class="btn btn-default  btn-sm ">Real-time Marketplace</button>
+            </div> 
+        </div>
+      </div>
+
+
+      <div class="form-group clearfix" style="background: rgba(200,200,200,0.1);">
+        <label for="companyType" class="col-sm-3 control-label">User type</label>
+        <div class="col-sm-9">
+            <div class="btn-group " data-toggle="buttons-radio">
+                <button class="btn btn-default btn-sm active" data-toggle="collapse" data-target="#companygroup" >Companies</button>
+                <button class="btn btn-default btn-sm ">Individuals</button>
+            </div>
+        </div>
+      </div>
+
+    <div class="text-center">
+    <a data-toggle="collapse" data-target="#filters" class="btn btn-default btn-sm"><i class="fa fa-sliders"></i> Advanced filters
     </a>
+    </div>
 
      <div id="filters" class="innerAll collapse">
     
       <form action="/activity" onsubmit="return formSubmit(this);"  role="search" data-step="1" data-intro="Search for anyhing, anywhere" class="form-horizontal">
 
-      <div class="form-group"> 
-        <div class="col-sm-12">
+
+      <div class="form-group">
+        <label for="loc" class="col-sm-3 control-label">Location</label>
+        <div class="col-sm-9">
           <div class="input-group  input-group-sm">
             <span class="input-group-addon"><i class="fa fa-map-marker"></i></span>
             <input type="text" name="location" id="pac-input" value="{% if search %}{{ search.place }}{% endif %}{% if not search %}{{userinfo.zip_code}}{% endif %}" class="pac-input form-control  " placeholder="Where?">
@@ -54,6 +105,8 @@
           <p class="help-block" style="margin:2px 0 0 0 !important;">Within 50 miles of YOUR POSTCODE. <a href="#">Upgrade</a></p>
         </div>
       </div>
+
+
       
       <div class="form-group">
         <label for="filterOrg" class="col-sm-3 control-label">Organisation</label>
@@ -81,12 +134,12 @@
         </select>
         </div>
       </div>
-   
+ 
 
-      <div class="form-group">
+      <div class="form-group" id="companygroup">
         <label for="companyType" class="col-sm-3 control-label">Company type</label>
         <div class="col-sm-9">
-        <select class="selectpicker show-tick"   data-live-search="true" multiple data-selected-text-format="count>2" title="Filter by company type" name="companyType"  data-style="btn-primary">
+        <select class="selectpicker show-tick"   data-live-search="true" multiple data-selected-text-format="count>2" title="Filter by company type" name="companyType"  data-style="btn-default">
           <optgroup label="Production">
             <option >Grower</option><option>
             Cafe / coffee shop</option><option>
@@ -109,14 +162,14 @@
         </select>
       </div>
 
-   </form> 
    </div>
   </div><!-- filters -->
+   </form> 
 </div> 
 
 <div class="widget widget-tabs widget-tabs-responsive" style="background: #F5F8FA;">
     <!-- Tabs Heading -->
-    <div class="widget-head ">
+    <div class="widget-head hidden">
         <ul>
             <li class="active"><a   href="#biz" data-toggle="tab"><i class="fa fa-fw fa-th-list"></i> Profiles</a>
             </li>
