@@ -21,7 +21,11 @@ class MongoConnection():
         # self.db = None
         self.conn = Connection(self.host, self.port)
         self.db = self.conn[self.db_name]
-        self.db.authenticate(self.username, self.password)        
+        self.db.authenticate(self.username, self.password)  
+
+
+
+
 
     def create_connection(self):
         self.conn = Connection(self.host, self.port)
@@ -31,6 +35,8 @@ class MongoConnection():
     def close_connection(self):
         self.conn.close()
 
+    def get_db(self):
+        return self.db
 
     def ensure_index(self, table_name, index=None):
         # self.create_connection()
@@ -38,6 +44,10 @@ class MongoConnection():
         # self.close_connection()
     
     def create_table(self, table_name, index=None):
+        # self.create_connection()
+        self.db[table_name].create_index( [(index, pymongo.DESCENDING)] )
+
+    def create_index(self, table_name, index=None):
         # self.create_connection()
         self.db[table_name].create_index( [(index, pymongo.DESCENDING)] )
         # self.close_connection()
@@ -52,6 +62,7 @@ class MongoConnection():
         # self.close_connection()
         return json.loads(json_doc)
 
+
     def get_all(self,table_name,conditions={}, sort_index ='_id', limit=100):
         # self.create_connection()
         all_doc = self.db[table_name].find(conditions).sort(sort_index, pymongo.DESCENDING).limit(limit)
@@ -59,6 +70,22 @@ class MongoConnection():
         json_doc = json_doc.replace("$oid", "id")
         json_doc = json_doc.replace("_id", "uid")
         # self.close_connection()
+        return json.loads(str(json_doc))
+
+    def get_all_custom(self,table_name,conditions={},  fields=None, sort_index ='_id', limit=100):
+        # self.create_connection()
+        all_doc = self.db[table_name].find(conditions,fields).sort(sort_index, pymongo.DESCENDING).limit(limit)
+        json_doc = json.dumps(list(all_doc),default=json_util.default)
+        json_doc = json_doc.replace("$oid", "id")
+        json_doc = json_doc.replace("_id", "uid")
+        # self.close_connection()
+        return json.loads(str(json_doc))
+
+    def get_one_field(self, table_name, conditions={}, fields=None, sort_index='_id'):
+        all_doc = self.db[table_name].find(conditions, fields).sort(sort_index, pymongo.ASCENDING)
+        json_doc = json.dumps(list(all_doc), default=json_util.default)
+        json_doc = json_doc.replace("$oid", "id")
+        json_doc = json_doc.replace("_id", "uid")
         return json.loads(str(json_doc))
 
 

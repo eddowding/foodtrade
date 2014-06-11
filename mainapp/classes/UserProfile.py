@@ -8,6 +8,8 @@ from bson.code import Code
 import os
 import sys
 from pygeocoder import Geocoder
+from MySQLConnect import MySQLConnect
+from twython import Twython
 
 CLASS_PATH = '/srv/www/live/foodtrade-env/foodtrade/mainapp/classes'
 CRON_PATH = '/srv/www/live/foodtrade-env/foodtrade/CronJobs'
@@ -22,6 +24,8 @@ sys.path.insert(1,SETTINGS_PATH)
 sys.path.insert(1,CRON_PATH)
 from settingslocal import *
 
+def get_twitter_obj(token, secret):
+    return Twython(app_key = CONSUMER_KEY,app_secret = CONSUMER_SECRET,oauth_token = token,oauth_token_secret = secret)
 
 class UserProfile():
     def __init__ (self, host=REMOTE_SERVER_LITE, port=27017, db_name=REMOTE_MONGO_DBNAME, username=REMOTE_MONGO_USERNAME, password=REMOTE_MONGO_PASSWORD):        
@@ -98,6 +102,131 @@ class UserProfile():
             time.sleep(5)
         return {'status':1}
 
+    def update_banner_for_all_users(self):
+        user_pages_count = int(self.db_object.get_count(self.table_name, {'profile_banner_url':{'$exists':False}})/15)+ 1
+        mc = MySQLConnect()
+        i = 0 
+        st = mc.get_token_list()
+        for i in range(0,user_pages_count, 1):
+            pag_users = self.db_object.get_paginated_values(self.table_name, {'profile_banner_url':{'$exists':False}}, pageNumber = int(i+1))
+            for eachUser in pag_users:
+                try:
+                    ACCESS_TOKEN = st[i][0]
+                    ACCESS_TOKEN_SECRET = st[i][1]
+                    user_twitter = get_twitter_obj(ACCESS_TOKEN, ACCESS_TOKEN_SECRET)     
+                    twitter_user = user_twitter.show_user(screen_name=eachUser['username'])
+                    new_data = {
+                      'followers_count':twitter_user['followers_count'],
+                      'friends_count':twitter_user['friends_count']}
+                    try:
+                        new_data['profile_img'] = twitter_user['profile_image_url']
+                    except:
+                        new_data['profile_img'] = twitter_user['profile_img']
+                    try:
+                        new_data['profile_banner_url'] = twitter_user['profile_banner_url']
+                    except:
+                        new_data['profile_banner_url'] = ''
+
+                    new_data['updated_recently'] = True
+                    update_time = datetime.datetime.now()
+                    update_time = time.mktime(update_time.timetuple())
+                    new_data['update_time'] = int(update_time)                
+                    self.update_profile_upsert({'screen_name':twitter_user['screen_name'],
+                        'username':twitter_user['screen_name']},new_data)
+                    # print twitter_user['screen_name'] + ' updated'
+                except:
+                    i += 1
+                    continue
+        return {'status':1}
+
+    def update_all_wronged_profiles_from_banner(self):
+        user_pages_count = int(self.db_object.get_count(self.table_name, 
+            {'profile_banner_url':{'$exists':False}, 'address':{'$exists':False}})/15)+ 1
+        mc = MySQLConnect()
+        i = 0
+        st = mc.get_token_list()
+        for i in range(0,user_pages_count, 1):
+            pag_users = self.db_object.get_paginated_values(self.table_name, 
+                {'profile_banner_url':{'$exists':True}, 'address':{'$exists':False}}, pageNumber = int(i+1))
+            for eachUser in pag_users:
+                try:
+                    ACCESS_TOKEN = st[i][0]
+                    ACCESS_TOKEN_SECRET = st[i][1]
+                    user_twitter = get_twitter_obj(ACCESS_TOKEN, ACCESS_TOKEN_SECRET)     
+                    twitter_user = user_twitter.show_user(screen_name=eachUser['username'])
+                    data = {
+                      'is_unknown_profile':'true',
+                      'recently_updated_by_super_user': 'false',
+                      'sign_up_as': 'unclaimed',
+                      'type_user': [],
+                      'name': twitter_user['name'],
+                      'email': '', 
+                      'description': twitter_user['description'],
+                      'username' : twitter_user['screen_name'],
+                      'screen_name': twitter_user['screen_name'],
+                      'updates': [],
+                      'foods':[],
+                      'organisations':[],
+                      'subscribed':0,
+                      'newsletter_freq':'Never',
+                      'followers_count':twitter_user['followers_count'],
+                      'friends_count':twitter_user['friends_count'],
+                    }
+                    try:
+                        data['profile_img'] = twitter_user['profile_image_url']
+                    except:
+                        data['profile_img'] = twitter_user['profile_img']
+                    try:
+                        data['profile_banner_url'] = twitter_user['profile_banner_url']
+                    except:
+                        data['profile_banner_url'] = ''
+                
+                    try:
+                        location_res = Geocoder.geocode(twitter_user['location'])
+                        data['twitter_address'] = twitter_user['location']
+                        data['address'] = str(location_res)
+                        data['latlng'] = {"type":"Point","coordinates":[float(location_res.longitude),float(location_res.latitude)]}
+                        data['zip_code'] = str(location_res.postal_code)
+                        data['address_geocoded']=True
+                    except:
+                          try:
+                              business_geocoder = Geocoder(api_key='AIzaSyDRNTE8EWOsbZzAQcM3hlBpaNA0zTuVups')
+                              location_res = business_geocoder.geocode(twitter_user['location'])
+                              data['twitter_address'] = twitter_user['location']
+                              data['address'] = str(location_res)
+                              data['latlng'] = {"type":"Point","coordinates":[float(location_res.longitude),float(location_res.latitude)]}
+                              data['zip_code'] = str(location_res.postal_code)
+                              data['address_geocoded']=True
+                          except:
+                                data['address'] = str('Antartica')
+                                data['twitter_address'] = twitter_user['location']
+                                data['latlng'] = {"type":"Point","coordinates":[float(-135.10000000000002) ,float(-82.86275189999999)]}
+                                data['zip_code'] = str('')
+                                data['address_geocoded']=False
+                                data['location_default_on_error'] = 'true'
+
+                    join_time = datetime.datetime.now()
+                    join_time = time.mktime(join_time.timetuple())
+                    data['join_time'] = int(join_time)            
+
+                    from UserProfile import UserProfile
+                    REMOTE_SERVER_LITE = 'localhost'
+                    userprofile = UserProfile(host=REMOTE_SERVER_LITE, port=27017, db_name=REMOTE_MONGO_DBNAME, username=REMOTE_MONGO_USERNAME, password=REMOTE_MONGO_PASSWORD)
+                    min_user_id = int(userprofile.get_minimum_id_of_user()[0]['minId']) -1
+                    data['useruid'] = min_user_id
+                    userprofile.update_profile_upsert({
+                        'screen_name':twitter_user['screen_name'],
+                        'username':twitter_user['screen_name'],
+                        'address':{'$exists':False},
+                        'profile_banner_url':{'$exists':True},
+                        },data)
+                    print twitter_user['screen_name'], " updated"
+                except:
+                    print "Inside Exception"
+                    i += 1
+                    continue
+        return {'status':1}
+
     def get_minimum_id_of_user(self):
         return self.db_object.aggregrate_all(self.table_name, [ { '$group': { '_id':0, 'minId': { '$min': "$useruid"} } } ] )
 
@@ -108,7 +237,6 @@ class UserProfile():
         return self.db_object.get_one(self.table_name,{'profile_img': img})
 
     def get_profile_by_username(self, username):
-        # return self.db_object.get_one(self.table_name,{'username': str(username)})
         return self.db_object.get_one(self.table_name,{'username': { "$regex" : re.compile("^"+str(username)+"$", re.IGNORECASE), "$options" : "-i" }})
 
     def get_profile_by_type(self, type_usr):
@@ -117,13 +245,18 @@ class UserProfile():
     def get_all_friends_and_register_as_friend(self, start):
         maxtime = datetime.datetime.now() - datetime.timedelta(minutes=30)
         maxtime = int(time.mktime(maxtime.timetuple()))
-        user_pages_count = int(self.db_object.get_count(self.table_name, {'join_time':{'$gt':start}, 'join_time':{'$lt':maxtime}, 'is_unknown_profile': 'false'}))
+        user_pages_count = int(self.db_object.get_count(self.table_name, 
+          {'join_time':{'$gt':start}, 'join_time':{'$lt':maxtime}, 'is_unknown_profile': 'false'}))
         for i in range(0,user_pages_count, 1):
-            pag_users = self.db_object.get_paginated_values(self.table_name, {'join_time':{'$gt':start}, 'join_time':{'$lt':maxtime}, 'is_unknown_profile': 'false'}, pageNumber = int(i+1))
+            pag_users = self.db_object.get_paginated_values(self.table_name, {
+              'join_time':{'$gt':start}, 
+              'join_time':{'$lt':maxtime}, 
+              'is_unknown_profile': 'false'}, pageNumber = int(i+1))
             from friends import Friends                        
-            for eachUser in pag_users:     
+            for eachUser in pag_users:
+                print "processing " + eachUser['username']
                 friend_obj = Friends()
-                friend_obj.process_friends_or_followers(eachUser, 'friends')
+                # friend_obj.process_friends_or_followers(eachUser, 'friends')
                 friend_obj.process_friends_or_followers(eachUser, 'followers')
         return {'status':1}
 

@@ -37,8 +37,9 @@ L.circle([map_lat,map_lon], 160934, {
 
 
 var map_controls = [];
+var markers = new L.MarkerClusterGroup();
 
-
+   
 
 function reload_controls()
 {
@@ -51,20 +52,17 @@ function reload_controls()
   var min_lat = parseFloat(map_lat);
   var max_lon = parseFloat(map_lon);
   var min_lon = parseFloat(map_lon);
-    for(i=0;i<connections.length;i++)
+  var results = result_object.result;
+
+    for(i=0;i<results.length;i++)
     {
-      var con = connections[i];
-      if (typeof(con.user.business_org_name) == undefined){
-        var name = (con.sign_up_as =="Business" || con.sign_up_as == "Organisation") && con.user.business_org_name!= '' ? con.user.business_org_name: con.user.name;
-      }
-      else{
-        var name = con.user.name;
-      }
-      var status =  con.status;
-      var profile_img = con.user.profile_img;
-      var username = con.user.username;
-      var banner = con.user.banner_url;
-      var description = con.user.description;
+      var con = results[i];
+      var name = con.name;
+      var status =  con.description;
+      var profile_img = con.profile_img;
+      var username = con.username;
+      var banner = con.banner_url;
+      var description = con.description;
       var type_user = con.type_user;
       var sign_up_as = con.sign_up_as;
       if(!type_user)
@@ -76,12 +74,12 @@ function reload_controls()
       //  continue;
       // }
 
-      var current_lat = parseFloat(con.location.coordinates[1]);
-      var current_lon = parseFloat(con.location.coordinates[0]);
-      if(current_lon == def_lon && current_lat == def_lat)
-          {
-            continue;
-          }
+      var current_lat = parseFloat(con.latlng.coordinates[1]);
+      var current_lon = parseFloat(con.latlng.coordinates[0]);
+      // if(current_lon == def_lon && current_lat == def_lat)
+      //     {
+      //       continue;
+      //     }
       if(current_lat>max_lat)
       {
         max_lat = current_lat;
@@ -118,10 +116,15 @@ var card_str = '<div class="card-box"><div class="content text-center"><div clas
 
     card_str += '<p>'+description+'</p></div>';
     card_str += '<a href="/profile/'+username+'" class="btn btn-primary btn-sm">View profile &raquo;</a></div> </div>';
+console.log(card_str);
 
-var tweet_id = (con.result_type == username)?con.tweetuid:username;
-var ctrl = L.marker([parseFloat(current_lat), parseFloat(current_lon)],{tweet_id:tweet_id,icon: redIcon}).addTo(map).bindPopup(card_str);
+console.log(con.latlng.coordinates[1]);
+var ctrl = L.marker([parseFloat(current_lat), parseFloat(current_lon)],{icon: redIcon}).bindPopup(card_str);
       
+        markers.addLayer(ctrl);
+    
+   
+
     map_controls.push(ctrl);
 
     }
@@ -147,6 +150,7 @@ var ctrl = L.marker([parseFloat(current_lat), parseFloat(current_lon)],{tweet_id
 
 
     L.control.fullscreen().addTo(map);
+     map.addLayer(markers);
 
 
 

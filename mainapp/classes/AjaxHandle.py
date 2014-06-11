@@ -77,7 +77,11 @@ class AjaxHandle(AjaxSearch):
                     'subscribed':0,
                     'newsletter_freq':'Never'
                 }   
-
+                try:
+                    data['profile_banner_url'] = invited_friend['friends']['profile_banner_url']
+                except:
+                    data['profile_banner_url'] = ''
+                    
                 if sign_up_as == 'unclaimed':
                     data['sign_up_as'] = 'unclaimed'
                 else:
@@ -712,11 +716,12 @@ class AjaxHandle(AjaxSearch):
         sender_email = request.POST.get('sender')
         message = request.POST.get('message')
         subject = sender_name + " has contacted you"
+        print sender_name, receiver_email, message, subject
         if sender_name!="" and receiver_email != "" and sender_email != "" and message != "":
             body = "Hi!" +'\r\n\r\n' + message +'\r\n\r\n'+sender_name +'\r\n' +sender_email
             email = Email()
-            if email.send_mail(subject, template_content = [{'name':'main', 'content':body}], to=[{'email':receiver_email}]):
-                return HttpResponse("{'status':1}")
+            email.send_mail(subject, template_content = [{'name':'main', 'content':body}], to=[{'email':receiver_email}])
+            return HttpResponse("{'status':1}")
         return HttpResponse("{'status':0}")
 
     def vouch_for_food(self, request):
