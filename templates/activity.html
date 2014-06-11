@@ -12,7 +12,9 @@
 
 <div class="container-responsive block-center">
 
-<div class="col-xs-12 col-sm-4" id="activity_switcher" style="padding-top: 60px;">
+<div class="row row-merge">
+
+<div class="col-xs-12 col-sm-4" id="activity_switcher" >
 
 
  
@@ -28,127 +30,114 @@
 </div>
 
 
-<style type="text/css">
-  .btn-label {position: relative;left: -12px;display: inline-block;padding: 6px 12px;background: rgba(0,0,0,0.15);border-radius: 3px 0 0 3px;}
-  .btn-labeled {padding-top: 0;padding-bottom: 0;}
-</style>
-
  
-<div class="container">
-  <a  data-toggle="collapse" data-target="#filters" class="innerAll">Advanced filters
-  </a>
-  <!-- Everything you want hidden at 940px or less, place within here -->
-  <div id="filters" class="innerAll">
-  
-    <form action="/activity"   onsubmit="return formSubmit(this);"  role="search" data-step="1" data-intro="Search for anyhing, anywhere">
-      <div class="input-group  input-group-sm col-sm-3">
-        <span class="input-group-addon"><i class="fa fa-map-marker"></i></span>
-        <input type="text" name="location" id="pac-input" value="{% if search %}{{ search.place }}{% endif %}{% if not search %}{{userinfo.zip_code}}{% endif %}" class="pac-input form-control  " placeholder="Where?">
-        <div class="input-group-btn">
-          <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+<div class="container-responsive">
+  <div class="widget innerAll" style="margin:0; background-color: none;">
+    <a data-toggle="collapse" data-target="#filters" class="innerAll"><i class="fa fa-arrow-right"></i> Advanced search
+    </a>
+
+     <div id="filters" class="innerAll collapse">
+    
+      <form action="/activity" onsubmit="return formSubmit(this);"  role="search" data-step="1" data-intro="Search for anyhing, anywhere" class="form-horizontal">
+
+      <div class="form-group"> 
+        <div class="col-sm-12">
+          <div class="input-group  input-group-sm">
+            <span class="input-group-addon"><i class="fa fa-map-marker"></i></span>
+            <input type="text" name="location" id="pac-input" value="{% if search %}{{ search.place }}{% endif %}{% if not search %}{{userinfo.zip_code}}{% endif %}" class="pac-input form-control  " placeholder="Where?">
+            <div class="input-group-btn">
+              <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+            </div>
+          </div>
+          <input type="hidden" name="lon" id="lon" value="{{search.lon}}"/>
+          <input type="hidden" name="lat" id="lat" value="{{search.lat}}"/> 
+          <p class="help-block" style="margin:2px 0 0 0 !important;">Within 50 miles of YOUR POSTCODE. <a href="#">Upgrade</a></p>
         </div>
       </div>
-      <input type="hidden" name="lon" id="lon" value="{{search.lon}}"/>
-      <input type="hidden" name="lat" id="lat" value="{{search.lat}}"/> 
-    </form> 
- 
-    <p class="help-block">Within 50 miles of YOUR POSTCODE. <a href="#">Upgrade</a></p>
+      
+      <div class="form-group">
+        <label for="filterOrg" class="col-sm-3 control-label">Organisation</label>
+        <div class="col-sm-9">
+          <select class="selectpicker show-tick" data-live-search="true" multiple data-selected-text-format="count>2" title="Filter by organisation" name="filterOrg"   data-style="btn-default">
+          <optgroup label="Production">
+            <option>Grower</option><option>
+            Cafe / coffee shop</option><option>
+            Food manufacturer</option><option>
+            Food Stall</option><option>
+            Restaurant / Pub / Bar</option><option>
+            Ready meals</option><option>
+            Farm Shop</option><option>
+            Health food</option>
+          </optgroup>
+          <optgroup label="Last mile">
+           <option> Drinks manufacturer</option><option>
+            Butcher</option><option>
+            Marketing</option><option>
+            Baker</option><option>
+            Arable Farm</option><option>
+            Chef / Catering</option><option>
+            Individual</option>
+          </optgroup> 
+        </select>
+        </div>
+      </div>
    
 
+      <div class="form-group">
+        <label for="companyType" class="col-sm-3 control-label">Company type</label>
+        <div class="col-sm-9">
+        <select class="selectpicker show-tick"   data-live-search="true" multiple data-selected-text-format="count>2" title="Filter by company type" name="companyType"  data-style="btn-primary">
+          <optgroup label="Production">
+            <option >Grower</option><option>
+            Cafe / coffee shop</option><option>
+            Food manufacturer</option><option>
+            Food Stall</option><option>
+            Restaurant / Pub / Bar</option><option>
+            Ready meals</option><option>
+            Farm Shop</option><option>
+            Health food</option>
+          </optgroup>
+          <optgroup label="Last mile">
+           <option> Drinks manufacturer</option><option>
+            Butcher</option><option>
+            Marketing</option><option>
+            Baker</option><option>
+            Arable Farm</option><option>
+            Chef / Catering</option><option>
+            Individual</option>
+          </optgroup> 
+        </select>
+      </div>
 
-    <div class="btn-group " data-toggle="buttons-radio">
-        <button class="btn btn-default active">Companies</button>
-        <button class="btn btn-default ">Individuals</button>
-    </div>
-
-    <div class="col-xs-12">
-      <select class="selectpicker show-tick" data-live-search="true" multiple data-selected-text-format="count>2" title="Filter by organisation"  data-style="btn-default">
-        <optgroup label="Production">
-          <option>Grower</option><option>
-          Cafe / coffee shop</option><option>
-          Food manufacturer</option><option>
-          Food Stall</option><option>
-          Restaurant / Pub / Bar</option><option>
-          Ready meals</option><option>
-          Farm Shop</option><option>
-          Health food</option>
-        </optgroup>
-        <optgroup label="Last mile">
-         <option> Drinks manufacturer</option><option>
-          Butcher</option><option>
-          Marketing</option><option>
-          Baker</option><option>
-          Arable Farm</option><option>
-          Chef / Catering</option><option>
-          Individual</option>
-        </optgroup> 
-      </select>
-    </div>
-
-    <div class="col-xs-12">
-      <select class="selectpicker show-tick"   data-live-search="true" multiple data-selected-text-format="count>2" title="Filter by company type "  data-style="btn-inverse">
-        <optgroup label="Production">
-          <option >Grower</option><option>
-          Cafe / coffee shop</option><option>
-          Food manufacturer</option><option>
-          Food Stall</option><option>
-          Restaurant / Pub / Bar</option><option>
-          Ready meals</option><option>
-          Farm Shop</option><option>
-          Health food</option>
-        </optgroup>
-        <optgroup label="Last mile">
-         <option> Drinks manufacturer</option><option>
-          Butcher</option><option>
-          Marketing</option><option>
-          Baker</option><option>
-          Arable Farm</option><option>
-          Chef / Catering</option><option>
-          Individual</option>
-        </optgroup> 
-      </select>
-    </div>
-
-
+   </form> 
+   </div>
   </div><!-- filters -->
 </div> 
 
 <div class="widget widget-tabs widget-tabs-responsive" style="background: #F5F8FA;">
     <!-- Tabs Heading -->
-    <div class="widget-head">
+    <div class="widget-head ">
         <ul>
-            <li class="active"><a   href="#tab-1" data-toggle="tab"><i class="fa fa-fw fa-sign-out"></i> Selling</a>
+            <li class="active"><a   href="#biz" data-toggle="tab"><i class="fa fa-fw fa-th-list"></i> Profiles</a>
             </li>
-            <li><a class="  " href="#tab-2" data-toggle="tab"><i class="fa fa-fw fa-sign-in"></i>  Buying</a>
+            <li><a class="  " href="#tab-2" data-toggle="tab"><i class="fa fa-fw fa-clock-o"></i>  Market place</a>
             </li>
         </ul>
     </div>
     <!-- // Tabs Heading END -->
     <div class="widget-body">
         <div class="tab-content">
-            <!-- Tab content -->
-            <div class="tab-pane active" id="tab-1">
-                <p> brunch. Food truck quinoa
-                    nesciunt laborum eiusmod. Brunch 3 wolf
-                    moon tempor, sunt aliqua put a bird on
-                    it squid single-origin coffee nulla assumenda
-                    shoreditch et. Nihil anim keffiyeh helvetica,
-                    craft beer labore wes anderson cred nesciunt
-                    sapiente ea proident.</p>
-            </div>
+            <!-- Tab content --> 
+            <div class="tab-pane active {% if results_updates_count == 0 and results_individual_count == 0  and results_organisation_count == 0 and results_business_count != 0 %}active{% endif %}" id="biz">
+              <div class="activity" id="activity_biz"> 
+                {% include 'activity_biz.html' %}
+              </div>
+            </div> 
             <!-- // Tab content END -->
             <!-- Tab content -->
             <div class="tab-pane" id="tab-2">
-                <p>Anim pariatur cliche reprehenderit, enim eiusmod
-                    high life accusamus terry richardson ad
-                    squid. 3 wolf moon officia aute, non cupidatat
-                    skateboard dolor brunch. Food truck quinoa
-                    nesciunt laborum eiusmod. Brunch 3 wolf
-                    moon tempor, sunt aliqua put a bird on
-                    it squid single-origin coffee nulla assumenda
-                    shoreditch et. Nihil anim keffiyeh helvetica,
-                    craft beer labore wes anderson cred nesciunt
-                    sapiente ea proident.</p>
+                <p>Anim paria 
+                    high l .</p>
             </div>
             <!-- // Tab content END -->
         </div>
@@ -167,7 +156,7 @@
       {% ifequal loggedin_signupas "Business" %}{% endifequal %}
       {% ifequal loggedin_signupas "Organisation" %} {% endifequal %}
       -->
-  <div class="widget-head clearfix">
+  <div class="widget-head clearfix hidden">
     <ul id="activity_selector">
 
         <li {% if results_updates_count != 0  or results_individual_count == 0 and results_business_count == 0 and results_organisation_count == 0  %}class="active dropdown"{% endif %}>
@@ -204,11 +193,11 @@
     </ul>
   </div>
 
-<div class="widget-body">
+<div class="widget-body hidden">
 
 <div class="tab-content reply_text" id = "filtered_content">
 
-  <div class="tab-pane {% if results_updates_count != 0  or results_business_count == 0 and results_organisation_count == 0  %}active{% endif %}" id="near_me">
+  <div class="tab-pane {% if results_updates_count != 0  or results_business_count == 0 and results_organisation_count == 0  %}ac tive{% endif %}" id="near_me">
 
   <!-- isotope filter -->
 
@@ -257,13 +246,13 @@
     </div>  
   </div><!-- tab pane activity -->
 
-  <div class="tab-pane {% if results_updates_count == 0 and results_business_count == 0  and results_organisation_count == 0 and results_individual_count != 0 %}active{% endif %}" id="indiv">
+  <div class="tab-pane  {% if results_updates_count == 0 and results_business_count == 0  and results_organisation_count == 0 and results_individual_count != 0 %}active{% endif %}" id="indiv">
     <div class="activity" id="activity_indiv"> 
       {% include 'activity_indiv.html' %}
     </div> 
   </div> 
 
-  <div class="tab-pane {% if results_updates_count == 0 and results_individual_count == 0  and results_organisation_count == 0 and results_business_count != 0 %}active{% endif %}" id="biz">
+  <div class="tab-pane active {% if results_updates_count == 0 and results_individual_count == 0  and results_organisation_count == 0 and results_business_count != 0 %}active{% endif %}" id="biz">
     <div class="activity" id="activity_biz"> 
       {% include 'activity_biz.html' %}
     </div>
@@ -281,13 +270,15 @@
 </div>
      
     </div><!-- closes main col -->
+    </div>
 
 
       <div class="col-sm-8 col-xs-12 fill"  style="  right:0px;">
-        <div id="map" style=" position: fixed; width:100%; height: 100%;"></div>
+        <div id="map" style=" position: fixed; width:100%; height: 100%; top: 56px;"></div>
       </div>
     </div>
 
+</div>
 
     <script type="text/javascript">
       map_lat={{ search.lat }};
