@@ -40,6 +40,10 @@ class MongoConnection():
     def create_table(self, table_name, index=None):
         # self.create_connection()
         self.db[table_name].create_index( [(index, pymongo.DESCENDING)] )
+
+    def create_index(self, table_name, index=None):
+        # self.create_connection()
+        self.db[table_name].create_index( [(index, pymongo.DESCENDING)] )
         # self.close_connection()
 
 
@@ -56,6 +60,15 @@ class MongoConnection():
     def get_all(self,table_name,conditions={}, sort_index ='_id', limit=100):
         # self.create_connection()
         all_doc = self.db[table_name].find(conditions).sort(sort_index, pymongo.DESCENDING).limit(limit)
+        json_doc = json.dumps(list(all_doc),default=json_util.default)
+        json_doc = json_doc.replace("$oid", "id")
+        json_doc = json_doc.replace("_id", "uid")
+        # self.close_connection()
+        return json.loads(str(json_doc))
+
+    def get_all_custom(self,table_name,conditions={},  fields=None, sort_index ='_id', limit=100):
+        # self.create_connection()
+        all_doc = self.db[table_name].find(conditions,fields).sort(sort_index, pymongo.DESCENDING).limit(limit)
         json_doc = json.dumps(list(all_doc),default=json_util.default)
         json_doc = json_doc.replace("$oid", "id")
         json_doc = json_doc.replace("_id", "uid")
