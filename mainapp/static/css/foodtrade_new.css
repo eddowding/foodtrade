@@ -576,11 +576,6 @@ input[type="text"]:focus, input[type="text"]:active, input[type="text"]:hover {
 
 
 
-.page {
-  margin-right: 200px;
-}
-
-
 
 /********************************/
 /**  DROPDOWN LARGE  MENU      **/
@@ -641,6 +636,12 @@ input[type="text"]:focus, input[type="text"]:active, input[type="text"]:hover {
   border-bottom: 1px solid;
   }
 
+
+#footer,
+.page {
+  margin-right: 200px;
+}  
+
 @media (max-width: 768px) {
   .dropdown-menu-large {
     margin-left: 0 ;
@@ -655,6 +656,17 @@ input[type="text"]:focus, input[type="text"]:active, input[type="text"]:hover {
   .dropdown-menu-large .dropdown-header {
     padding: 3px 15px !important;
   }
+
+
+  #footer,
+  .page {
+    margin-right: 0px;
+  }
+
+  #menu-right {
+    display: none
+  }
+
 
 }
 
