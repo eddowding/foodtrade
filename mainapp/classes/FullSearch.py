@@ -8,9 +8,41 @@ from pygeocoder import Geocoder
 import re
 from bson import json_util
 from bson.json_util import loads
-class GeneralSearch():
-    def __init__(self,request):
 
+
+def get_request(request):
+    search_request = {}
+    search_request['keyword'] = request.POST.get("q",request.GET.get("q","")) 
+
+
+    # location_res = Geocoder.geocode(self.location)
+    # self.lon = float(location_res.longitude)
+    # self.lat = float(location_res.latitude)
+
+
+
+    ### Todo do task get logged in user's location and latlng info from db 
+    default_location = "Bristol, London"
+    default_lng = -2.321
+    default_lat = 54.12
+
+    ########################################################################
+    search_request['location'] = request.POST.get("location",request.GET.get("location",default_location))
+
+    search_request['lng'] = float(request.POST.get("lng",request.GET.get("lng",default_lng)))
+    search_request['lat'] = float(request.POST.get("lat",request.GET.get("lat",default_lat)))
+    search_request['search_for'] = request.POST.get("search",request.GET.get("search","food")) 
+    search_request['indiv_biz'] = request.POST.get("only",request.GET.get("only","Business")) 
+    search_request['biz_type_filters'] = request.POST.get("biz",request.GET.get("biz","[]")) 
+    search_request['org_filters'] = request.POST.get("org",request.GET.get("org","[]")) 
+    search_request['food_filters'] = request.POST.get("food",request.GET.get("food","[]")) 
+    return search_request
+
+    
+
+class GeneralSearch():
+
+    def __init__(self,request):
         db_object = MongoConnection("localhost",27017,'foodtrade')
         table_name = 'userprofile'
         db_object.create_table(table_name,'useruid')
@@ -20,20 +52,24 @@ class GeneralSearch():
 
         self.db = db_object.get_db()[table_name]
 
-        self.keyword = "p"
-        self.search_for = "food"
-        self.location = "Bristol, UK"
-        self.lon = -2.5879099999999653
-        self.lat = 51.454513
 
-        # location_res = Geocoder.geocode(self.location)
-        # self.lon = float(location_res.longitude)
-        # self.lat = float(location_res.latitude)
-        self.indiv_biz = "Business"
-        self.orz_filters = []
-        self.biz_type_filters = []
-        self.food_filters = []
+
+        params = get_request(request)
+
+        self.keyword = params['keyword']
+        self.search_for = params['search_for']
+        self.location = params['location']
+
+        self.lat = params['lat']
+        self.lng = params['lng']
+        self.indiv_biz = params['indiv_biz']
+        self.org_filters = json.loads(params['org_filters'])
+        self.biz_type_filters = json.loads(params['biz_type_filters'])
+        self.food_filters = json.loads(params['food_filters'])
         self.radius = 160900000
+
+
+
 
     def get_result(self):
         query_string = {}
@@ -59,9 +95,6 @@ class GeneralSearch():
 
                     or_conditions.append({'foods':{"$elemMatch":{fd_attr:reg_expression}}})
 
-
-
-            # search by business type"
             if self.search_for != "food":
                 or_conditions.append({'type_user':reg_expression})
         
@@ -86,7 +119,7 @@ class GeneralSearch():
             and_query.append({"type_user":{"$all":self.business}})
         
         # Check organisation filter
-        if len(self.orz_filters) > 0:
+        if len(self.org_filters) > 0:
             and_query.append({"organisations":{"$all":self.orz_filters}})
 
         if len(and_query)>0:
@@ -96,7 +129,7 @@ class GeneralSearch():
 
 
         query_string["latlng"]= {"$near": {
-            "$geometry" : { "type" : "Point" , "coordinates": [float(self.lon), float(self.lat)] },
+            "$geometry" : { "type" : "Point" , "coordinates": [float(self.lng), float(self.lat)] },
             "$maxDistance" : self.radius
           }}
 
@@ -107,14 +140,14 @@ class GeneralSearch():
        
         for i in range(0,len(result)):
             distance= calc_distance(self.lat, 
-                self.lon, 
+                self.lng, 
                 result[i]['latlng']['coordinates'][1],
                 result[i]['latlng']['coordinates'][0])
             # print distance
 
             result[i]['distance']  = distance
         
-        return_val = {"result":result, "total":total,"center":[float(self.lon), float(self.lat)]}
+        return_val = {"result":result, "total":total,"center":[float(self.lng), float(self.lat)]}
 
         return return_val
 
