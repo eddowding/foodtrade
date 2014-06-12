@@ -663,8 +663,8 @@ input[type="text"]:focus, input[type="text"]:active, input[type="text"]:hover {
     margin-right: 0px;
   }
 
-  #menu-right {
-    display: none
+  #menu-right  {
+    display: none !important;
   }
 
 
