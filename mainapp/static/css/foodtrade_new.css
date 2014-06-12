@@ -62,7 +62,7 @@ input[type="text"]:focus, input[type="text"]:active, input[type="text"]:hover {
 }
 
 #content {
-  margin-top: 55px;
+  margin-top: 55px; 
   background: #F5F8FA;
 }
 
@@ -576,6 +576,11 @@ input[type="text"]:focus, input[type="text"]:active, input[type="text"]:hover {
 
 
 
+.page {
+  margin-right: 200px;
+}
+
+
 
 /********************************/
 /**  DROPDOWN LARGE  MENU      **/
@@ -664,10 +669,7 @@ input[type="text"]:focus, input[type="text"]:active, input[type="text"]:hover {
   }
 
 }
-
-.navbar-fixed-top, .navbar-fixed-bottom {
-  right: 180px;
-}
+ 
 
 .navbar.main .dropdown.username .dropdown-menu {
   left: auto; 

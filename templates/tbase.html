@@ -656,10 +656,11 @@ function show_small_structure()
  <div id="menu-right" style="
 display: block;
 right: 0px;
-top: 0;
-background: rgba(232,232,232,0.95);
-box-shadow: 0 0 12px #ccc inset;
-border-left: 1px solid #444;
+top: 56px;
+background: #f5f5f5;
+background: rgba(255,255,255,0.3);
+box-shadow: 0 0 11px #ccc inset;
+border-left: 1px solid #999;
 width: 200px;
 ">
       <div>
@@ -715,7 +716,7 @@ width: 200px;
               </span>
           </a>
           <ul class="dropdown-menu pull-right">
-              <li><a href="/editprofile/{{userinfo.username}}">Edit profile</a>
+              <li><a href="/editprofile/me">Edit profile</a>
               </li>
               <li><a href="/profile/{{userinfo.username}}">View profile</a>
               </li> 
@@ -1086,7 +1087,7 @@ border-radius: 0 5px 5px 0 !important;">
           <li><a href="/pages/organisations">Organisations</a></li>
           <li><a href="/pages/foodwaste">Food surplus &amp; waste</a></li>
           <li><a href="/pages/pricing">Pricing</a></li>      
-          <li><a href="htpp://digest.foodtrade.com">Blog</a></li>      
+          <li><a href="http://digest.foodtrade.com" target="blank">Blog</a></li>      
           <li><a href="/pages/terms">Terms of Service</a></li>
           <li><a href="/pages/privacy">Privacy</a></li>
         </ul>
@@ -1102,8 +1103,7 @@ border-radius: 0 5px 5px 0 !important;">
             <a href="https://plus.google.com/+Foodtrade" rel="publisher"><i class="fa fa-google-plus-square fa-2x"></i></a>
           </li>
         </ul> 
-  
-</div>
+      </div>
        
       </div>  
     </div>
