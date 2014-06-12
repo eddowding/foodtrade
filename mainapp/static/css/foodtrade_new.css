@@ -13,7 +13,8 @@ a {
 }*/
 
 body, 
-.black {
+.black,
+.text-black {
   color: #444 !important;
 }
 
