@@ -19,6 +19,9 @@ L.circle([map_lat,map_lon], 24140.2, {
       weight:2,
       fill: 0,
 }).addTo(layer_group);
+
+
+
 L.circle([map_lat,map_lon], 48280.3, {
       stroke: 1,
       color: '#ff9900',
