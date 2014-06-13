@@ -1046,8 +1046,6 @@ def search_orgs_business(request, type_user):
             b_conn = trade_conn.get_connection_by_business(profile_user_obj['useruid'])
             c_conn = trade_conn.get_connection_by_customer(profile_user_obj['useruid'])
            
-            # print len(b_conn), len(c_conn)
-            # b_conn.extends(c_conn)
             profile_data = [int(each['c_useruid']) for each in b_conn] + [int(each['b_useruid']) for each in c_conn]
             # profile_data = get_connections(profile_user_obj['useruid'], request.user.id)[0]
         elif type_user == 'Organisation':
@@ -1064,9 +1062,6 @@ def search_orgs_business(request, type_user):
             org = Organisation()
             mem_profiles = org.get_members_by_orgid(profile_user_obj['useruid'])
             profile_data = [int(each['memberuid']) for each in mem_profiles]
-            
-
-
 
         data_list = profile_data # [int(each['id']) for each in profile_data]
         keyword_like = re.compile(query + '+', re.IGNORECASE)
@@ -1081,7 +1076,7 @@ def search_orgs_business(request, type_user):
         type_list.extend(type_user_new)
         query_mongo = {'$or': or_conditions, 'sign_up_as': {'$in': type_list}, 'useruid': {'$nin': data_list}}
         mongo = MongoConnection("localhost",27017,'foodtrade')
-        results = mongo.get_all('userprofile', query_mongo)
+        results = mongo.get_paginated_values('userprofile', query_mongo)
         
         final_organisation = []
         if len(results) == 0:
