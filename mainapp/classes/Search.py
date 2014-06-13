@@ -474,6 +474,8 @@ class Search():
         foods_match = []
         for fd in self.foods:
             foods_match.append({ "$elemMatch" : { "food_name": fd}})
+
+            
         if len(self.foods) > 0:
             and_query.append({"foods": {"$all":foods_match}})
         

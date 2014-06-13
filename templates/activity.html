@@ -532,6 +532,11 @@
           $("#update-big").show();
         }
 
+
+
+
+
+
     </script>
       
 
@@ -552,4 +557,67 @@
 </script>
 
  <script src="{% static "js/activity-map.js" %}"></script>
+
+
+
+              <script type="text/javascript">
+
+              function get_time_text(time)
+              {
+
+                var time_elapsed = Date.now()/1000 - parseInt(time); 
+                var time_text = "";
+                if (time_elapsed<60)
+                    time_text = parseInt(time_elapsed) + ' seconds';
+
+                else if(time_elapsed < 3600)
+                {
+
+                    var minutes = time_elapsed/60;
+                    time_text = parseInt(minutes) + ' minutes';
+                  }
+                else if(time_elapsed < 3600*24)
+                {
+                    var hours = time_elapsed/3600;
+                    time_text = parseInt(hours) + ' hours';
+                  }
+                else if(time_elapsed < 3600*24*365)
+                {
+                    var days = time_elapsed/3600/24;
+                    time_text = parseInt(days) + ' days';
+                  }
+                else
+                {
+                    var years = time_elapsed/3600/24/365;
+                    time_text = parseInt(years) + ' years';
+                  }
+                return time_text;
+              }
+
+              function update_latest_updates(data)
+                {
+                    feeds = jQuery.parseJSON(data);
+                    var updates  = "";
+                    for(var i = 0;i<feeds.length;i++)
+                    {
+                      var item = feeds[i];
+                      updates +='<div class="update" data-toggle="popover" data-trigger="click" data-container="body" data-placement="left" data-original-title="" title="" data-title="Aww shucks!!"  data-html="true"  data-content="<div class=\'text-center\'><p class=\'\'>'+item.updates.status+'</p><a href=\'#\' class=\'btn btn-primary\'>Upgrade</a></div>" >';
+                      updates += '<img src="'+item.profile_img+'" class="pull-left" style="width:25px; margin-right: 10px;" /><p class="margin-image-left-small">'+item.updates.status+'<br /><small class="text-muted">'+get_time_text(item.updates.time_stamp)+'</small> </p></div>';
+
+
+                    }
+                    $("#updates").html(updates);
+                }
+
+
+              $(document).ready(function(){
+                ajax_request("get_latest_updates", 'update_latest_updates',{});
+                
+                
+              });
+
+
+
+
+              </script>
 {% endblock %}
