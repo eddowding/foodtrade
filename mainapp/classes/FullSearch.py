@@ -47,6 +47,8 @@ class GeneralSearch():
         table_name = 'userprofile'
         db_object.create_table(table_name,'useruid')
         db_object.ensure_index(table_name,'latlng')
+        db_object.create_table(table_name,'foods')
+        db_object.ensure_index(table_name,'updates')
 
         db_object.create_table(table_name,'username')
 
@@ -68,6 +70,29 @@ class GeneralSearch():
         self.food_filters = json.loads(params['food_filters'])
         self.radius = 160900000
 
+    def get_latest_updates(self, time_stamp=None):
+        query_string = {}
+        agg_pipeline = []
+        or_conditions = []
+
+        
+        if len(and_query)>0:
+            query_string["$and"] = and_query
+        if self.keyword !="":
+            query_string["$or"] = or_conditions
+
+
+        query_string["latlng"]= {"$near": {
+            "$geometry" : { "type" : "Point" , "coordinates": [float(self.lng), float(self.lat)] },
+            "$maxDistance" : self.radius
+          }}
+
+        all_doc = self.db.find(query_string,{"latlng":1,"name":1,"user_type":1,"sign_up_as":1,"description":1,"profile_img":1,"foods":1,"username":1,"_id":0})
+        total =  all_doc.count()
+        first20 = all_doc.limit(20)
+        result = [doc for doc in first20]
+       
+        return return_val
 
 
 
@@ -77,26 +102,27 @@ class GeneralSearch():
         or_conditions = []
 
 
+        # Check if keyword is not empty
         if self.keyword !="":
             keyword_like = re.compile(self.keyword + '+', re.IGNORECASE)
             reg_expression = {"$regex": keyword_like, '$options': '-i'}
 
+
+#### Profile Search ######
             if self.search_for != "food":
                 search_variables = ["business_org_name", "name", "description", "username", "nick_name"]
             
                 
                 for search_item in search_variables:
                     or_conditions.append({search_item:reg_expression})
-            # Searches keyword as food
+####### Searches keyword as food
+
             else:
                 food_attributes = ["food_name","description","food_tags"]
 
                 for fd_attr in food_attributes:
 
                     or_conditions.append({'foods':{"$elemMatch":{fd_attr:reg_expression}}})
-
-            if self.search_for != "food":
-                or_conditions.append({'type_user':reg_expression})
         
         and_query =[]
 
@@ -107,10 +133,15 @@ class GeneralSearch():
 
    
 
-        # check food filters
+        ######################### Food filters ################
         foods_match = []
         for fd in self.food_filters:
             foods_match.append({ "$elemMatch" : { "food_name": fd}})
+
+
+
+
+
         if len(self.food_filters) > 0:
             and_query.append({"foods": {"$all":foods_match}})
         
@@ -153,7 +184,6 @@ class GeneralSearch():
         pipeline = []
         pipeline.append({"$match":query_string})
         pipeline.append({"$project":{"foods":1,"_id":0}})
-
         pipeline.append({"$unwind":"$foods"})
         pipeline.append({"$project":{"name":"$foods.food_name", "count":"$foods.food_name"}})
 
