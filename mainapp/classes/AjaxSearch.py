@@ -14,6 +14,11 @@ import time
 from mainapp.classes.DataConnector import UserInfo
 from mainapp.single_activity import get_post_parameters
 from mainapp.activity import get_search_parameters
+
+
+from FullSearch import GeneralSearch
+
+
 consumer_key = 'seqGJEiDVNPxde7jmrk6dQ'
 consumer_secret = 'sI2BsZHPk86SYB7nRtKy0nQpZX3NP5j5dLfcNiP14'
 access_token = ''
@@ -30,6 +35,11 @@ class AjaxSearch():
     def __init__(self):
         pass
     
+    def get_search_result(self,request):
+        search_obj = GeneralSearch(request)
+        profile_result = search_obj.get_result()
+        return HttpResponse(json.dumps(profile_result))
+
     def single_post_ajax(self,request):
         tweet_id = request.POST.get("parentid",0)
         if tweet_id == 0 :

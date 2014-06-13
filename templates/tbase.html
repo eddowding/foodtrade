@@ -477,82 +477,12 @@ function show_small_structure()
 
 <div class="container-fluid menu-hidden" id="main_page">
 
-<div id="menu" class="hidden-print hidden-xs sidebar-default sidebar-brand-primary {% if not user.is_authenticated %}hidden{% endif %}">
+<div id="menu" class="hidden-print hidden sidebar-default sidebar-brand-primary ">
   <div id="sidebar-social-wrapper">
-    <div id="brandWrapper">
-        <a href="/"> 
-            <img src="{% static 'images/logo_tall.png' %}">
-        </a>
-    </div>
- 
+     
     <ul class="menu list-unstyled" id="navigation_current_page">
-      {% if user.is_superuser %}
-      <li>
-        <a href="/unclaimed-profiles/" id="unclaimed" title="Unclaimed Profiles">
-          <i class="fa fa-certificate fa-fw"></i><span>Unclaimed Profiles</span>
-          </a>
-      </li>  
-      {% endif %}
-
-      <li class="">
-        <a href="/"><i class="fa fa-shopping-cart"></i><span>Marketplace</span></a> 
-      </li> 
-
-      {% if search %}
-        <li class="hasSubmenu active">
-            <a href="#advsearch" data-toggle="collapse"><i class="fa fa-search"></i><span>Advanced search</span></a>
-            <ul id="advsearch" class="{% if not search %}collapse {% endif %}">
-
-              <div class="foodtrade-sidebar">
-
-                <form action="/activity"   onsubmit="return formSubmit(this);"  role="search" data-step="1" data-intro="Search for anyhing, anywhere">
-                  <div class="input-group  input-group-sm">
-                    <span class="input-group-addon"><i class="fa fa-map-marker"></i></span>
-                    <input type="text" name="location" id="pac-input" value="{% if search %}{{ search.place }}{% endif %}{% if not search %}{{userinfo.zip_code}}{% endif %}" class="pac-input form-control  " placeholder="Where?">
-                    <div class="input-group-btn">
-                      <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
-                    </div>
-                  </div>
-                  <input type="hidden" name="lon" id="lon" value="{{search.lon}}"/>
-                  <input type="hidden" name="lat" id="lat" value="{{search.lat}}"/> 
-                </form>
-               
-                <div data-step="3" data-intro="Just start typing to search for specific foods, business type, or filter by organisation membership" data-position="right">
-                  <form role="form" >
-                    <div class="form-group"> 
-                      <input type="text" class="form-control input-sm" id="food_filter" placeholder="Refine by food or drink">
-                    </div>
-                  </form>
-                
-                  <ul class="foodtrade-tag-list">
-                    <li data-id="ALL" class="foodtrade-tag foodtrade-tag-click foodtrade-tag-all"><div class="foodtrade-tag-checkbox-column"><input type="checkbox" id="all_foods" checked="checked" onclick="make_search()" aria-label="All Partners" class="foodtrade-tag-checkbox"></div><div class="foodtrade-tag-text">All Foods</div><div class="foodtrade-tag-count">{{food_count}}</div></li>
-                  </ul>
-
-                  <ul class="foodtrade-tag-list" id="food_filter_results"></ul> 
-
-                  <form role="form">
-                    <div class="form-group"> 
-                      <input type="email" class="form-control  input-sm" id="business_filter" placeholder="Filter by business type">
-                    </div>
-                  </form> 
-
-                  <ul class="foodtrade-tag-list" id="business_filter_results"></ul>
-                </div><!-- charding overlay --> 
-               
-                <form role="form">
-                  <div class="form-group"> 
-                    <input type="email" class="form-control  input-sm" id="organisation_filter" placeholder="Show only members of...">
-                  </div>
-                </form> 
-
-                <ul class="foodtrade-tag-list" id="organisation_filter_results"></ul>
-
-
-              </div><!--sidebar-->
-            </ul>
-        </li> 
-      {% endif %}
-
+     
+ 
         <li class="">
           <a href="/activity/favourites"><i class="fa fa-star"></i><span>Favourites</span></a> 
         </li> 
@@ -586,66 +516,9 @@ function show_small_structure()
             {% endfor %}
              </ul>
         </li>
+ 
 
-        <li class="separator">
-        </li>
-
-        <li>
-          <a href="#" id="help">
-            <i class="fa fa-question-circle"></i><span>Help</span>
-          </a>
-        </li> 
-
-        <li class="category">Did you know..?</li>
-        <li class="reset">
-            <ul>
-
-                <div id="didyouknow" class="carousel slide"> 
-                        <!-- Items -->
-                        <div class="carousel-inner">
-                            <!-- Item -->
-                            <div class="item active"> 
-                                
-                            <li class="media news-item"> 
-                                <span class="pull-left media-object">
-                                    <i class="fa fa-fw fa-question-circle"></i>
-                                </span>
-                                <div class="media-body text-left">
-                                    If you would like to find or offer surplus or gluts, just use as <a href="/activity/?q=surplus">#surplus</a> to your message.  <a href="/activity/?q=surplus" class="text-white">Test it out</a>
-                                </div>
-                            </li> 
-                            </div>
-                            <!-- // Item END -->
-                            <!-- Item -->
-                            <div class="item"> 
-                                
-                            <li class="media news-item"> 
-                                <span class="pull-left media-object">
-                                    <i class="fa fa-fw fa-question-circle"></i>
-                                </span>
-                                <div class="media-body text-left">
-                                  You can  post updates from anywhere! Just tweet your message to @foodtradeHQ and we'll push your message to local businesses!
-                                </div>
-                            </li> 
-                            </div> 
-
-                        </div> 
-                    </div>
-            </ul>
-        </li>
-
-        <li class="reset" style="position: fixed; bottom: 5px;text-align: center;left: 20px; display: block;">
-        <ul>
-            <li class="media news-item">
-                <div class="media-body">
-        <a href="/pages/about">About </a> &bull;
-        <a href="http://digest.foodtrade.com/" target="_blank">Blog</a> &bull;
-        <a href="http://foodtrade.uservoice.com/" target="_blank">Contact</a> &bull;
-        <a href="http://foodtrade.uservoice.com/" target="_blank">Get help</a>
-        </div>
-        </li>
-        </ul>
-        </li>
+         
       </ul>
 
   </div>
@@ -656,37 +529,135 @@ function show_small_structure()
  <div id="menu-right" style="
 display: block;
 right: 0px;
-top: 0;
-background: rgba(232,232,232,0.95);
-box-shadow: 0 0 12px #ccc inset;
-border-left: 1px solid #444;
+top: 56px;
+background: #f5f5f5;
+background: rgba(255,255,255,0.3);
+box-shadow: 0 0 11px #ccc inset;
+border-left: 1px solid #999;
 width: 200px;
 ">
       <div>
           <button class="btn btn-inverse btn-xs btn-close hidden" data-toggle="sidr-close" data-menu="menu-right"><i class="fa fa-times"></i>
           </button> 
-          <div class="innerAll">   
+          <div class="">   
 
             <div id="updates">
+ 
 
-            <!-- 
+              <div class="update" data-toggle="popover" data-trigger="click" data-container="body" data-placement="left" data-original-title="" title=""
+              data-title="the severn project cic" 
+              data-html="true"
+              data-content="
+              <div class=''>
 
-@SUJIT - NB THAT POPOVERS CAN ALSO BE DONE PRGRAMATICALLY TO MAKE IT EASIER TO PUT HTML IN
+              <!--------------------------------------------------------------------------------- --><!--
 
-  <script>
-        $('#info').popover({ html: true, container: 'body', placement: 'left', title: 'Popover', content: "<ul><li>The</li><li>popover</li><li>is</li><li>clipped.</li></ul>" });
-    </script>
+              This is timeline code 
+              - without box generic
+              - time ago
+              - media changed to img-responsive not img-post
+              - innerAll removed on a few places
+              - bg-gray removed on reply
+              - title moved to data-title
+              - added comments as a count, not detail
 
-            -->
 
-              <div class="update" data-toggle="popover" data-container="body" data-placement="left" data-original-title="" title=""
-              data-title="Profile title" 
-              data-content="Sed posuere consectetur est at lobortis. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum." > 
-                <p>I'd like to buy #cheese (asdf). 15 Kg.</p>
+              -->
+              <!--------------------------------------------------------------------------------- -->
+
+            <div class='timeline-top-info   '>
+            
+            <div class='  pull-right' style='margin-left: 5px;'>
+                
+              <a type='button' class='btn btn-primary btn-xs' href='/severnproject/post/476371282137985024'>
+                <i class='fa fa-arrow-right fa-lg' style='color:#fff;'></i> 
+              </a>
+     
+          </div>   
+                 
+            </div>
+
+            <!-- status --> 
+            <div class='media margin-none'>   
+              
+              <div class=' '>
+                @BigBarnSW <a href='/profile/foodtradeHQ/'>@foodtradeHQ</a> <a href='/profile/bristolecojam/'>@bristolecojam</a> @LACHASSELIMITED Guys! this is what <a href='/profile/severnproject/'>@severnproject</a> looks like: <a href='http://t.co/OL0KUPqztN' target='_blank'>http://t.co/OL0KUPqztN</a>
+              </div>
+              
+
+              <!-- images !-->
+              
+                
+                  <div class=''>
+                    <img src='http://pbs.twimg.com/media/BpxpJ9LIQAAy6RS.jpg' class='img-responsive'>
+                  </div>
+                 
+              
+              <!-- /images !-->
+
+            
+
+            </div> 
+
+            <div class='timeline-bottom  border-top clearfix innerTB half'>
+              
+               <a href='http://maps.google.com/maps?saddr=51.4529956141,-2.62451568043&amp;daddr=51.4619294,-2.5891196' target='_blank' data-placement='top' data-toggle='tooltip' class='pull-right' rel='tooltip' title='' data-original-title='Get directions'> 
+               <i class='fa fa-location-arrow fa-fw'></i> 1.6 miles  
+               </a>
+                
+              <!-- tags -->  
+                <i class='fa fa-home fa-fw'></i>
+                <a href='/activity/?b=Grower' class='innerR half'>Grower</a>
+             
+            </div> 
+ 
+            <div class='border-top innerT'> 
+                <p class='small text-center'>
+                  <i class='fa fa-comments fa-fw'></i>
+                  <a href='#'>See all 3 replies</a>
+                </p>
+                <input class='form-control input-sm enterhandler reply_input' data-tweet-id='476371282137985024' data-main='main' type='text' placeholder='Reply to @severnproject' data-mentions='@severnproject'> 
+            </div>
+        </div>
+
+              " > 
+                <img src="https://pbs.twimg.com/profile_images/378800000141996074/6a363e3c4f2a84a956c3cb27c50b2ca0_normal.png" class="pull-left" style="width:25px; margin-right: 10px;" />
+                <p class="margin-image-left-small">I'd like to buy #cheese (asdf). 15 Kg.
+                <br /><small class="text-muted">2 days ago</small> 
+                </p>
+
               </div>
 
 
             </div><!-- updates -->
+
+            <div id="didyouknow" class="carousel slide"> 
+                <!-- Items -->
+                <div class="carousel-inner">
+                    <!-- Item -->
+                    <div class="item active"> 
+                         
+                        <span class="pull-left media-object">
+                            <i class="fa fa-fw fa-question-circle"></i>
+                        </span>
+                        <div class="media-body text-left">
+                            If you would like to find or offer surplus or gluts, just use as <a href="/activity/?q=surplus">#surplus</a> to your message.  <a href="/activity/?q=surplus" class="text-white">Test it out</a>
+                        </div> 
+                    </div>
+                    <!-- // Item END -->
+                    <!-- Item -->
+                    <div class="item"> 
+                         
+                        <span class="pull-left media-object">
+                            <i class="fa fa-fw fa-question-circle"></i>
+                        </span>
+                        <div class="media-body text-left">
+                          You can  post updates from anywhere! Just tweet your message to @foodtradeHQ and we'll push your message to local businesses!
+                        </div> 
+                    </div> 
+
+                </div> 
+            </div>
 
           </div>
       </div>
@@ -701,8 +672,8 @@ width: 200px;
  
 
   {% if request.user.is_authenticated %}
-  <div class="user-action pull-right menu-right-hidden-xs menu-left-hidden-xs border-left">
-      <div class="dropdown username pull-left">
+  <div class="user-action pull-right menu-right-hidden-xs menu-left-hidden-xs border-left border-right">
+      <div class="dropdown username pull-left" style="margin-right: 50px;">
           <a class="dropdown-toggle" data-toggle="dropdown" href="#">
               <span class="media margin-none">
                   <span class="pull-left">
@@ -715,7 +686,7 @@ width: 200px;
               </span>
           </a>
           <ul class="dropdown-menu pull-right">
-              <li><a href="/editprofile/{{userinfo.username}}">Edit profile</a>
+              <li><a href="/editprofile/me">Edit profile</a>
               </li>
               <li><a href="/profile/{{userinfo.username}}">View profile</a>
               </li> 
@@ -802,40 +773,40 @@ width: 200px;
 
 
   <div class="input-group pull-left">
-
- 
-
-
+   
     <form action="/activity" onsubmit="return formSubmit(this);">
-
-
+ 
     <div class="input-group">
-      <input type="hidden" name="search_param" value="all" id="search_param">         
+      <input type="hidden" name="search_param" value="all" id="search_param">   
+
+      <div class="input-group-btn">
+        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" style="
+background: #f5f5f5;
+padding: 8px;
+margin-left: 10px;
+border-radius: 6px 0 0 6px;
+border: 1px solid #ccc;
+border-right: 0;">Produce <i class="fa fa-caret-down text-black"></i></button>
+        <ul class="dropdown-menu">
+          <li><a href="#">Profiles</a></li> 
+        </ul>
+      </div>  
+
       <input type="text" class="form-control pull-left" name="x" placeholder="What are you looking for?" style="height: auto;
-margin: 7px 0 7px 10px;
+margin: 7px 0 7px 0;
 padding: 6px 10px;
 width: 260px;
-border: 1px solid #ccc;
-border-radius: 5px 0 0 5px !important;
+border: 1px solid #ccc; 
 font-size: 17px;">  
 
       <div class="input-group-btn"> 
-        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" style="background-image: none;
-background: #eee;
-padding: 8px;
+        <button type="button" class="btn btn-default" style="background-image: none;
+background: #f5f5f5;
+padding: 8px 12px;
 border: 1px solid #ccc !important;
 border-radius: 0 5px 5px 0 !important;">
-          <span class="glyphicon glyphicon-search"></span>
-          <span class="caret"></span>
-          <span class="sr-only">Toggle Dropdown</span>
-        </button>
-        <ul class="dropdown-menu" role="menu">
-          <li><a href="#contains"><i class="fa fa-fw fa-sign-in"></i> I want to buy <b>chicken</b></a></li>
-          <li><a href="#contains"><i class="fa fa-fw fa-sign-out"></i>  I want to sell <b>chicken</b></a></li>
-          <li><a href="#contains"><i class="fa fa-fw fa-home"></i>  Companies</a></li>
-          <li><a href="#its_equal"><i class="fa fa-fw fa-home"></i> Organisation</a></li>
-          <li><a href="#greather_than"><i class="fa fa-fw fa-user"></i>  People</a></li>  
-        </ul>
+          <span class="glyphicon glyphicon-search"></span> 
+        </button> 
       </div>
  
     </div>
@@ -890,7 +861,7 @@ border-radius: 0 5px 5px 0 !important;">
   </div>
     {% endif %}  
 
-  <div class="user-action hidden-xs hidden-sm pull-right menu-right-hidden-xs menu-left-hidden-xs border-left">
+  <div class="user-action hidden-xs hidden-sm pull-left menu-right-hidden-xs menu-left-hidden-xs">
       <div class="dropdown">
           <a class="dropdown-toggle " data-toggle="dropdown" href="#">
           Browse
@@ -1086,7 +1057,7 @@ border-radius: 0 5px 5px 0 !important;">
           <li><a href="/pages/organisations">Organisations</a></li>
           <li><a href="/pages/foodwaste">Food surplus &amp; waste</a></li>
           <li><a href="/pages/pricing">Pricing</a></li>      
-          <li><a href="htpp://digest.foodtrade.com">Blog</a></li>      
+          <li><a href="http://digest.foodtrade.com" target="blank">Blog</a></li>      
           <li><a href="/pages/terms">Terms of Service</a></li>
           <li><a href="/pages/privacy">Privacy</a></li>
         </ul>
@@ -1102,8 +1073,7 @@ border-radius: 0 5px 5px 0 !important;">
             <a href="https://plus.google.com/+Foodtrade" rel="publisher"><i class="fa fa-google-plus-square fa-2x"></i></a>
           </li>
         </ul> 
-  
-</div>
+      </div>
        
       </div>  
     </div>

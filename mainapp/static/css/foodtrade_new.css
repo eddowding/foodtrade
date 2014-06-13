@@ -13,7 +13,8 @@ a {
 }*/
 
 body, 
-.black {
+.black,
+.text-black {
   color: #444 !important;
 }
 
@@ -61,7 +62,7 @@ input[type="text"]:focus, input[type="text"]:active, input[type="text"]:hover {
 }
 
 #content {
-  margin-top: 55px;
+  margin-top: 55px; 
   background: #F5F8FA;
 }
 
@@ -86,8 +87,7 @@ input[type="text"]:focus, input[type="text"]:active, input[type="text"]:hover {
 .update {
   border-top: 1px solid #ccc;
   border-bottom: 1px solid #ccc;
-  padding: 10px;
-  margin: 0 -10px;
+  padding: 10px 5px; 
 }
  
 .dotdotdot {
@@ -244,6 +244,14 @@ input[type="text"]:focus, input[type="text"]:active, input[type="text"]:hover {
   height: 100%;
 }
 
+#menu-right .carousel .item {
+  background: none;
+  text-align: left;
+  height: 100%;
+  background: rgba(255,255,255,0.9);
+  border-top: 2px solid #444;
+}
+
 /********************************/
 /**  SEASONS                   **/
 /********************************/
@@ -307,6 +315,9 @@ input[type="text"]:focus, input[type="text"]:active, input[type="text"]:hover {
 /**  cards / timeline / marketplace                   **/
 /********************************/
  
+.margin-image-left-small {
+  margin-left: 35px;
+}
  
 .timeline-activity > li:first-of-type {
   padding: 20px 0 10px;
@@ -635,6 +646,12 @@ input[type="text"]:focus, input[type="text"]:active, input[type="text"]:hover {
   border-bottom: 1px solid;
   }
 
+
+#footer,
+.page {
+  margin-right: 200px;
+}  
+
 @media (max-width: 768px) {
   .dropdown-menu-large {
     margin-left: 0 ;
@@ -650,6 +667,17 @@ input[type="text"]:focus, input[type="text"]:active, input[type="text"]:hover {
     padding: 3px 15px !important;
   }
 
+
+  #footer,
+  .page {
+    margin-right: 0px;
+  }
+
+  #menu-right  {
+    display: none !important;
+  }
+
+
 }
 
 @media (max-width: 992px) {
@@ -663,10 +691,7 @@ input[type="text"]:focus, input[type="text"]:active, input[type="text"]:hover {
   }
 
 }
-
-.navbar-fixed-top, .navbar-fixed-bottom {
-  right: 180px;
-}
+ 
 
 .navbar.main .dropdown.username .dropdown-menu {
   left: auto; 
@@ -734,8 +759,9 @@ input[type=text], input[type=password], select, textarea,
 }
 
 .widget.widget-tabs-double > .widget-head ul li { 
-  padding: 0;
+  padding: 5px 0;
   border-radius: 6px 6px 0 0;
+  z-index: 1000;
 }
 
 .widget.widget-tabs-double > .widget-head ul li.active { 
@@ -743,7 +769,7 @@ input[type=text], input[type=password], select, textarea,
   box-shadow: 3px 3px 3px #ccc; 
 }
 
-.widget.widget-tabs > .widget-head ul li.active:first-child { 
+.widget.widget-tabs > .widget-head ul li:first-child { 
   margin: 0 0px 0 10px;
 }
 
