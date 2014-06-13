@@ -214,7 +214,7 @@ def get_search_parameters(request):
         
             results[i]['replies'] = replies
 
-   for i in range(len(results)):
+    for i in range(len(results)):
         # from mainapp.profilepage import get_banner_url
         from mainapp.profilepage import get_video_html
         # banner_url = get_banner_url(username=results[i]['user']['username'],logged_useruid=request.user.id)
