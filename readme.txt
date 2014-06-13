@@ -44,3 +44,12 @@ Go to the dump folder and in terminal type
 
 #########DO NOT TRY
 =>mongo -u ftroot  foodtrade -p --eval "db.dropDatabase();"
+
+
+Read server data to the local computer
+===========================================================
+1. Go to the terminal and type:-
+
+	scp foodtrade@ftstaging.cloudapp.net:~/backups/2014-06-12.zip .
+
+2. Then enter the password for ssh of foodtrade

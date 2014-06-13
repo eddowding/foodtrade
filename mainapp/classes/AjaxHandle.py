@@ -75,7 +75,9 @@ class AjaxHandle(AjaxSearch):
                     'useruid': min_user_id,
                     'username':invited_friend['friends']['screen_name'],
                     'subscribed':0,
-                    'newsletter_freq':'Never'
+                    'newsletter_freq':'Never',
+                    'followers_count':invited_friend['friends']['followers_count'],
+                    'friends_count':invited_friend['friends']['friends_count']
                 }   
                 try:
                     data['profile_banner_url'] = invited_friend['friends']['profile_banner_url']
