@@ -66,8 +66,6 @@ def set_time_date(single_result,keyword):
             if keyword in single_result['status']:
                 result_class = result_class + " updates"
 
-
-
         else:
             result_class = result_class + " profile"
     except:
@@ -300,6 +298,7 @@ def home(request):
     search_obj = GeneralSearch(request)
     profile_result = search_obj.get_result()
     parameters = {"result":json.dumps(profile_result)}
+    # return HttpResponse(json.dumps(parameters))
 
     return render_to_response('activity.html',parameters,context_instance=RequestContext(request))
 

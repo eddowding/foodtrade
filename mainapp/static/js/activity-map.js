@@ -63,6 +63,9 @@ function reload_controls()
       {
         type_user = [];
       }
+
+
+      
       // if(sign_up_as != "Business")
       // {
       //  continue;

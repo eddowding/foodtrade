@@ -149,7 +149,20 @@ class GeneralSearch():
         
         return_val = {"result":result, "total":total,"center":[float(self.lng), float(self.lat)]}
 
+
+        pipeline = []
+        pipeline.append({"$match":query_string})
+        pipeline.append({"$project":{"foods":1,"_id":0}})
+
+        pipeline.append({"$unwind":"$foods"})
+        pipeline.append({"$project":{"name":"$foods.food_name", "count":"$foods.food_name"}})
+
+        pipeline.append({"$group": { "_id": "$name", "count": { "$sum":1} }})
+        pipeline.append({"$sort": SON([("count", -1), ("_id", -1)])})
+        # agg = self.db.aggregate(pipeline)
         return return_val
+
+
 
 import math
 
