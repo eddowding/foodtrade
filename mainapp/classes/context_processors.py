@@ -13,8 +13,8 @@ def user_info(request):
 
         try:
 
-            # invite_tweet = construct_invite_tweet(request, invite_id)            
-            invite_tweet = "join foodtrade.com http://foodtrade.com" #construct_invite_tweet(request, invite_id)
+            invite_tweet = construct_invite_tweet(request, invite_id)            
+            # invite_tweet = "join foodtrade.com http://foodtrade.com" #construct_invite_tweet(request, invite_id)
 
         except:
             pass

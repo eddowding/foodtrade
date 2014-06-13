@@ -58,7 +58,7 @@ class Friends():
                     '''Register this user'''
                     # self.register_friend(eachFriend, eachUser['username'])
                     self.register_as_unclaimed_user(eachFriend)                    
-                    time.sleep(0.2)
+                    time.sleep(0.4)
                 if next_cursor != 0: 
                     friends = self.get_friends(eachUser['username'], next_cursor, friend_or_follower)
             return {'status':1}
