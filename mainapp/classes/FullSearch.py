@@ -47,8 +47,8 @@ class GeneralSearch():
         table_name = 'userprofile'
         db_object.create_table(table_name,'useruid')
         db_object.ensure_index(table_name,'latlng')
-        db_object.create_table(table_name,'foods')
-        db_object.ensure_index(table_name,'updates')
+        db_object.create_table(table_name,'foods.food_name')
+        db_object.create_table(table_name,'updates.status')
 
         db_object.create_table(table_name,'username')
 
@@ -76,27 +76,31 @@ class GeneralSearch():
         or_conditions = []
 
         
-        if len(and_query)>0:
-            query_string["$and"] = and_query
-        if self.keyword !="":
-            query_string["$or"] = or_conditions
+        pipeline = []
+        if time_stamp!=None:
+            pre_match = {'updates':{"$elemMatch":{'time_stamp':{"$gt":int(time_stamp)},"deleted":0}}}
+            post_match = {'updates.time_stamp':{"$gt":int(time_stamp)},"updates.deleted":0}
+
+            pipeline.append({"$match":pre_match})
+        pipeline.append({"$project":{"username":1,"name":1,"updates":1,"profile_img":1,"_id":0}})
+        
 
 
-        query_string["latlng"]= {"$near": {
-            "$geometry" : { "type" : "Point" , "coordinates": [float(self.lng), float(self.lat)] },
-            "$maxDistance" : self.radius
-          }}
+        if time_stamp!=None:
+            pipeline.append({"$match":post_match})
 
-        all_doc = self.db.find(query_string,{"latlng":1,"name":1,"user_type":1,"sign_up_as":1,"description":1,"profile_img":1,"foods":1,"username":1,"_id":0})
-        total =  all_doc.count()
-        first20 = all_doc.limit(20)
-        result = [doc for doc in first20]
-       
-        return return_val
+
+
+        pipeline.append({"$unwind":"$updates"})
+
+        pipeline.append({"$sort": SON([("updates.time_stamp", -1)])})
+        pipeline.append({"$limit":10})
+        return self.db.aggregate(pipeline)['result']
 
 
 
     def get_result(self):
+        self.get_latest_updates()
         query_string = {}
         agg_pipeline = []
         or_conditions = []
@@ -159,6 +163,22 @@ class GeneralSearch():
             query_string["$or"] = or_conditions
 
 
+
+        pipeline = []
+        pipeline.append({"$match":query_string})
+        pipeline.append({"$project":{"foods":1,"_id":0}})
+        pipeline.append({"$unwind":"$foods"})
+        pipeline.append({"$project":{"name":"$foods.food_name", "count":"$foods.food_name"}})
+
+        pipeline.append({"$group": { "_id": "$name", "count": { "$sum":1} }})
+        pipeline.append({"$sort": SON([("count", -1), ("_id", -1)])})
+        agg = self.db.aggregate(pipeline)
+
+
+
+
+        
+
         query_string["latlng"]= {"$near": {
             "$geometry" : { "type" : "Point" , "coordinates": [float(self.lng), float(self.lat)] },
             "$maxDistance" : self.radius
@@ -174,6 +194,7 @@ class GeneralSearch():
                 self.lng, 
                 result[i]['latlng']['coordinates'][1],
                 result[i]['latlng']['coordinates'][0])
+
             # print distance
 
             result[i]['distance']  = distance
@@ -181,15 +202,7 @@ class GeneralSearch():
         return_val = {"result":result, "total":total,"center":[float(self.lng), float(self.lat)]}
 
 
-        pipeline = []
-        pipeline.append({"$match":query_string})
-        pipeline.append({"$project":{"foods":1,"_id":0}})
-        pipeline.append({"$unwind":"$foods"})
-        pipeline.append({"$project":{"name":"$foods.food_name", "count":"$foods.food_name"}})
-
-        pipeline.append({"$group": { "_id": "$name", "count": { "$sum":1} }})
-        pipeline.append({"$sort": SON([("count", -1), ("_id", -1)])})
-        # agg = self.db.aggregate(pipeline)
+        
         return return_val
 
 

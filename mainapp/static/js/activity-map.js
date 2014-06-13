@@ -94,9 +94,7 @@ var card_str = '<div class="card-box"><div class="content text-center"><div clas
 
     card_str += '<p>'+description+'</p></div>';
     card_str += '<a href="/profile/'+username+'" class="btn btn-primary btn-sm">View profile &raquo;</a></div> </div>';
-console.log(card_str);
 
-console.log(con.latlng.coordinates[1]);
 var ctrl = L.marker([parseFloat(current_lat), parseFloat(current_lon)],{icon: redIcon}).bindPopup(card_str);
       
         markers.addLayer(ctrl);

@@ -34,7 +34,11 @@ class AjaxSearch():
     """docstring for AjaxHandle"""
     def __init__(self):
         pass
-    
+    def get_latest_updates(self,request):
+        search_obj = GeneralSearch(request)
+        feed_result = search_obj.get_latest_updates(request.POST.get("time",None))
+        return HttpResponse(json.dumps(feed_result))
+
     def get_search_result(self,request):
         search_obj = GeneralSearch(request)
         profile_result = search_obj.get_result()
