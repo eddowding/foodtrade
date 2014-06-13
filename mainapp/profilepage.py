@@ -1077,6 +1077,7 @@ def search_orgs_business(request, type_user):
         query_mongo = {'$or': or_conditions, 'sign_up_as': {'$in': type_list}, 'useruid': {'$nin': data_list}}
         mongo = MongoConnection("localhost",27017,'foodtrade')
         results = mongo.get_paginated_values('userprofile', query_mongo)
+        results = results[0:5]
         
         final_organisation = []
         if len(results) == 0:
