@@ -128,10 +128,10 @@ class GeneralSearch():
             query_string["$or"] = or_conditions
 
 
-        query_string["latlng"]= {"$near": {
-            "$geometry" : { "type" : "Point" , "coordinates": [float(self.lng), float(self.lat)] },
-            "$maxDistance" : self.radius
-          }}
+        # query_string["latlng"]= {"$near": {
+        #     "$geometry" : { "type" : "Point" , "coordinates": [float(self.lng), float(self.lat)] },
+        #     "$maxDistance" : self.radius
+        #   }}
 
         all_doc = self.db.find(query_string,{"latlng":1,"name":1,"user_type":1,"sign_up_as":1,"description":1,"profile_img":1,"foods":1,"username":1,"_id":0})
         total =  all_doc.count()
@@ -149,7 +149,20 @@ class GeneralSearch():
         
         return_val = {"result":result, "total":total,"center":[float(self.lng), float(self.lat)]}
 
+
+        pipeline = []
+        pipeline.append({"$match":query_string})
+        pipeline.append({"$project":{"foods":1,"_id":0}})
+
+        pipeline.append({"$unwind":"$foods"})
+        pipeline.append({"$project":{"name":"$foods.food_name", "count":"$foods.food_name"}})
+
+        pipeline.append({"$group": { "_id": "$name", "count": { "$sum":1} }})
+        pipeline.append({"$sort": SON([("count", -1), ("_id", -1)])})
+        agg = self.db.aggregate(pipeline)
         return return_val
+
+
 
 import math
 

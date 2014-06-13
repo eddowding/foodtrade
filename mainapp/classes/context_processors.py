@@ -11,10 +11,13 @@ def user_info(request):
         invite_id = invite_id_obj.get_unused_id(request.user.id)
 
         '''Construct New Invite URL.'''
+
         try:
-            invite_tweet = construct_invite_tweet(request, invite_id)
+            invite_tweet = "join foodtrade.com http://foodtrade.com" #construct_invite_tweet(request, invite_id)
         except:
             pass
+
+
 
         subscribed = True
         customer, created = Customer.get_or_create(request.user)
@@ -25,9 +28,12 @@ def user_info(request):
             subscribed = False
         user_id = request.user.id
 
+
+
         try:
             user_info = UserInfo(user_id)
-            ft = TweetFeed()        
+            ft = TweetFeed() 
+
 
             if subscribed:
                 can_tweet = True
@@ -41,6 +47,7 @@ def user_info(request):
                         can_tweet = False
                 else:
                     can_tweet = True
+
 
             return {
                     'userinfo' : user_info, 
