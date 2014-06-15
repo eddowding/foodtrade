@@ -64,6 +64,7 @@ input[type="text"]:focus, input[type="text"]:active, input[type="text"]:hover {
 #content {
   margin-top: 55px; 
   background: #F5F8FA;
+  background: #fff;
 }
 
 #menu #sidebar-social-wrapper #brandWrapper {
@@ -76,13 +77,9 @@ input[type="text"]:focus, input[type="text"]:active, input[type="text"]:hover {
 
 .popover {
   z-index: 1000000 !important; 
-  border: 2px solid #444;
   box-shadow: 3px 3px 5px #ccc;
 }
-
-.popover.left .arrow {
-  border-left-color: #222;
-}
+ 
 
 .update {
   border-top: 1px solid #ccc;
@@ -96,6 +93,14 @@ input[type="text"]:focus, input[type="text"]:active, input[type="text"]:hover {
   overflow: hidden;
   text-overflow: ellipsis;
   display: inline-block;
+}
+
+td.ellipsis
+{
+    max-width: 100px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
  
 .ftstrip {
@@ -252,6 +257,14 @@ input[type="text"]:focus, input[type="text"]:active, input[type="text"]:hover {
   border-top: 2px solid #444;
 }
 
+.foodimage {
+  width: 40px;
+}
+
+.vouch label {
+  font-weight: normal !important;
+}
+
 /********************************/
 /**  SEASONS                   **/
 /********************************/
@@ -277,6 +290,8 @@ input[type="text"]:focus, input[type="text"]:active, input[type="text"]:hover {
 
 .availability td { 
   text-align: center !important;
+  padding: 0 4px;
+  color: rgba(0,0,0,0.5);
 }
 
 .winter {
@@ -292,20 +307,24 @@ input[type="text"]:focus, input[type="text"]:active, input[type="text"]:hover {
   background: rgba(223,83,35,0.1);
 }
 
+.yes {
+  font-weight: bold;
+}
+
 .winter.yes {
-  background: rgba(33,141,187,0.4);
+  background: rgba(33,141,187,0.9);
   color: #fff;
 }
 .spring.yes {
-  background: rgba(119,165,78,0.4);
+  background: rgba(119,165,78,0.9);
   color: #fff;
 }
 .summer.yes {
-  background: rgba(207,150,49,0.4);
+  background: rgba(207,150,49,0.9);
   color: #fff;
 }
 .autumn.yes {
-  background: rgba(223,83,35,0.4);
+  background: rgba(223,83,35,0.9);
   color: #fff;
 }
 
@@ -841,6 +860,16 @@ padding: 0em 18px 0em .1em !important;
   line-height: 1;
   margin-bottom: 8px !important;
 }
+
+
+/********************************/
+/**  PANELS                    **/
+/********************************/
+
+.panel-title {
+  font-weight: 200;
+}
+
 
 /********************************/
 /**  SIDEBAR                   **/
