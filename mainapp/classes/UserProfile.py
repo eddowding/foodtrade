@@ -246,7 +246,7 @@ class UserProfile():
         maxtime = datetime.datetime.now() - datetime.timedelta(minutes=30)
         maxtime = int(time.mktime(maxtime.timetuple()))
         user_pages_count = int(self.db_object.get_count(self.table_name, 
-          {'join_time':{'$gt':start}, 'join_time':{'$lt':maxtime}, 'is_unknown_profile': 'false'}))
+          {'join_time':{'$gt':start}, 'join_time':{'$lt':maxtime}, 'email_registration':{'$ne':1}, 'is_unknown_profile': 'false', 'followers_pulled':{'$exists':False}}))
         for i in range(0,user_pages_count, 1):
             pag_users = self.db_object.get_paginated_values(self.table_name, {
               'join_time':{'$gt':start}, 
@@ -258,6 +258,9 @@ class UserProfile():
                 friend_obj = Friends()
                 # friend_obj.process_friends_or_followers(eachUser, 'friends')
                 friend_obj.process_friends_or_followers(eachUser, 'followers')
+                self.update_profile_fields(self.table_name, {'username':eachUser['username'], 'screen_name':eachUser['screen_name']},
+                  {'followers_pulled':True})
+
         return {'status':1}
 
     def create_profile (self, value):
