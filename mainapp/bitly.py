@@ -10,7 +10,7 @@ class InviteURL():
         self.table_name = 'invitemessage'
         self.db_object.create_table(self.table_name,'_id')
 
-    def save_invite_message(self,doc):
+    def save_invite_url(self,doc):
         return self.db_object.update_upsert(self.table_name,{'invite_id':doc['invite_id']}, doc)
 
     def get_invite_url(self, invite_id):
@@ -60,8 +60,9 @@ def construct_invite_tweet(request, invite_id):
             if json_response['status_txt'] == 'OK':
                 data = json_response['data']
                 short_url = data['url']
+                invite_url_obj.save_invite_url({'invite_id':invite_id, 'invite_url':short_url})
             else:
-                short_url = invite_url
+                short_url = invite_url            
         except:
             short_url = invite_url
     else:
