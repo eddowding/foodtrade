@@ -258,7 +258,7 @@ class UserProfile():
                 friend_obj = Friends()
                 # friend_obj.process_friends_or_followers(eachUser, 'friends')
                 friend_obj.process_friends_or_followers(eachUser, 'followers')
-                self.update_profile_fields(self.table_name, {'username':eachUser['username'], 'screen_name':eachUser['screen_name']},
+                self.update_profile_fields({'username':eachUser['username'], 'screen_name':eachUser['screen_name']},
                   {'followers_pulled':True})
 
         return {'status':1}
