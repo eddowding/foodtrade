@@ -318,6 +318,10 @@ input[type="text"]:focus, input[type="text"]:active, input[type="text"]:hover {
 .margin-image-left-small {
   margin-left: 35px;
 }
+
+.margin0 {
+  margin: 0 !important;
+}
  
 .timeline-activity > li:first-of-type {
   padding: 20px 0 10px;
@@ -352,8 +356,8 @@ input[type="text"]:focus, input[type="text"]:active, input[type="text"]:hover {
   width: 100%;
 }
 
-.marketplace .box-generic {  
-  border: 2px solid #ccc !important;
+.tab-pane .box-generic {  
+  border: 1px solid #ccc !important;
 }
 
 #cards.marketplace li.singleresult,
