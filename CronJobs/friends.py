@@ -115,7 +115,6 @@ class Friends():
                     data['latlng'] = {"type":"Point","coordinates":[float(location_res.longitude),float(location_res.latitude)]}
                     data['zip_code'] = str(location_res.postal_code)
                     data['address_geocoded']=True         
-                    print "Business key used"           
                 except:                
                     data['address'] = str('Antartica')
                     data['twitter_address'] = twitter_user['location']
