@@ -249,9 +249,8 @@ class UserProfile():
           {'join_time':{'$gt':start}, 'join_time':{'$lt':maxtime}, 'email_registration':{'$ne':1}, 'is_unknown_profile': 'false', 'followers_pulled':{'$exists':False}}))
         for i in range(0,user_pages_count, 1):
             pag_users = self.db_object.get_paginated_values(self.table_name, {
-              'join_time':{'$gt':start}, 
-              'join_time':{'$lt':maxtime}, 
-              'is_unknown_profile': 'false'}, pageNumber = int(i+1))
+              'join_time':{'$gt':start}, 'join_time':{'$lt':maxtime}, 'email_registration':{'$ne':1},              
+              'followers_pulled':{'$exists':False}'is_unknown_profile': 'false'},pageNumber = int(i+1))
             from friends import Friends                        
             for eachUser in pag_users:
                 print "processing " + eachUser['username']

@@ -52,7 +52,6 @@ def construct_invite_tweet(request, invite_id):
     }    
     invite_url_obj = InviteURL()
     new_invite_url = invite_url_obj.get_invite_url(invite_id)
-    print new_invite_url, "Roshan"
     if new_invite_url == None:
         r = requests.get(get_url,params=payload)
         json_response = json.loads(r.text)    
