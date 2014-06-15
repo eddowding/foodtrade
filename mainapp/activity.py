@@ -221,11 +221,16 @@ def get_search_parameters(request):
         # results[i]['user']['banner_url'] = banner_url
         user_prof = UserProfile()
         try:
-            video_url = user_prof.get_profile_by_username(results[i]['user']['username'])['video_url']
+            video_url = results[i]['user']['video_url']
             video_html = get_video_html(video_url)
         except:
             video_url = ''
             video_html = ''
+        try:
+            if results[i]['user']['banner_url'] !='':
+                banner_url = results[i]['user']['banner_url'] + '/web_retina'
+            else:
+                banner_url = ''
         results[i]['user']['intro_video'] =  video_html
     
             
