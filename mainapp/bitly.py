@@ -64,6 +64,9 @@ def construct_invite_tweet(request, invite_id):
                 short_url = invite_url
         except:
             short_url = invite_url
-        invite_tweet = 'Join the #realfood search engine '  + short_url
-        return invite_tweet
+    else:
+        short_url = invite_url
+        
+    invite_tweet = 'Join the #realfood search engine '  + short_url
+    return invite_tweet
             
