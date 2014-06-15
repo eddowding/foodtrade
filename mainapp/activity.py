@@ -214,8 +214,15 @@ def get_search_parameters(request):
             results[i]['replies'] = replies
 
     for i in range(len(results)):
+<<<<<<< HEAD
         from mainapp.profilepage import get_video_html
         # banner_url = get_banner_url(username=results[i]['user']['username'],logged_useruid=request.user.id)
+=======
+        # from mainapp.profilepage import get_banner_url
+        from mainapp.profilepage import get_video_html
+        # banner_url = get_banner_url(username=results[i]['user']['username'],logged_useruid=request.user.id)
+        # results[i]['user']['banner_url'] = banner_url
+>>>>>>> a8269ef45fce174aa8955c050f83c56e363ddb62
         user_prof = UserProfile()
         try:
             usr = user_prof.get_profile_by_username(results[i]['user']['username'])
