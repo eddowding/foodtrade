@@ -84,7 +84,8 @@ class Search():
         "tweet_pictures":"$updates.picture",
         "result_type":result_type,
         "subscribed": "$subscribed",
-        "video_url":'$video_url'
+        "video_url":'$video_url',
+        "banner_url":'$profile_banner_url'
         }}
 
 
@@ -500,12 +501,12 @@ class Search():
                                     "includeLocs": "latlng",
                                     "uniqueDocs": True,
                                     "spherical":True,
-                                    "limit":100,
+                                    "limit":30,
                                     "distanceMultiplier":6371
                                 }
 
         if not self.search_global :
-            geo_search['maxDistance'] = 0.02511379689
+            geo_search['maxDistance'] = 0.01511379689
         geo_near = {
                         "$geoNear": geo_search
                       }

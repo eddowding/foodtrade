@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 # encoding: utf-8
 from MongoConnection import MongoConnection
-
 from bson.objectid import ObjectId
 # import time
 from pygeocoder import Geocoder

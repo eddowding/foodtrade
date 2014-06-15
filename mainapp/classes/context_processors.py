@@ -9,11 +9,13 @@ def user_info(request):
         '''Generate new invite ID.'''
         invite_id_obj = InviteId()                        
         invite_id = invite_id_obj.get_unused_id(request.user.id)
-
         '''Construct New Invite URL.'''
 
         try:
-            invite_tweet = "join foodtrade.com http://foodtrade.com" #construct_invite_tweet(request, invite_id)
+
+            invite_tweet = construct_invite_tweet(request, invite_id)            
+            # invite_tweet = "join foodtrade.com http://foodtrade.com" #construct_invite_tweet(request, invite_id)
+
         except:
             pass
 
