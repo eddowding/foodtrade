@@ -135,25 +135,25 @@ class Friends():
             # print twitter_user['screen_name'] + ' added'
             return True
         else:
-            new_data = {
-            'followers_count':twitter_user['followers_count'],
-            'friends_count':twitter_user['friends_count']}
-            try:
-                new_data['profile_img'] = twitter_user['profile_image_url']
-            except:
-                new_data['profile_img'] = twitter_user['profile_img']
-            try:
-                new_data['profile_banner_url'] = twitter_user['profile_banner_url']
-            except:
-                new_data['profile_banner_url'] = ''
+            # new_data = {
+            # 'followers_count':twitter_user['followers_count'],
+            # 'friends_count':twitter_user['friends_count']}
+            # try:
+            #     new_data['profile_img'] = twitter_user['profile_image_url']
+            # except:
+            #     new_data['profile_img'] = twitter_user['profile_img']
+            # try:
+            #     new_data['profile_banner_url'] = twitter_user['profile_banner_url']
+            # except:
+            #     new_data['profile_banner_url'] = ''
             
-            new_data['updated_recently'] = True
-            update_time = datetime.datetime.now()
-            update_time = time.mktime(update_time.timetuple())
-            new_data['update_time'] = int(update_time)                
-            userprofile.update_profile_upsert({'screen_name':twitter_user['screen_name'],
-                'username':twitter_user['screen_name']},new_data)
-            # print twitter_user['screen_name'] + ' updated'
+            # new_data['updated_recently'] = True
+            # update_time = datetime.datetime.now()
+            # update_time = time.mktime(update_time.timetuple())
+            # new_data['update_time'] = int(update_time)                
+            # userprofile.update_profile_upsert({'screen_name':twitter_user['screen_name'],
+            #     'username':twitter_user['screen_name']},new_data)
+            # # print twitter_user['screen_name'] + ' updated'
             return False
 
     def register_friend(self, eachFriend, username=''):
