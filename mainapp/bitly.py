@@ -1,6 +1,6 @@
 import requests
 import json
-from MongoConnection import MongoConnection
+from mainapp.classes.MongoConnection import MongoConnection
 from bson.objectid import ObjectId
 
 
@@ -15,7 +15,7 @@ class InviteURL():
 
     def get_invite_url(self, invite_id):
         try:
-            return self.db_object.get_one(self.table_name,{'invite_id': str(invite_id)})['invite_url']
+            return self.db_object.get_one(self.table_name,{'invite_id': invite_id})['invite_url']
         except:
             return None
 
@@ -52,10 +52,10 @@ def construct_invite_tweet(request, invite_id):
     }    
     invite_url_obj = InviteURL()
     new_invite_url = invite_url_obj.get_invite_url(invite_id)
-    print "ABCD", invite_url
+    print new_invite_url, "Roshan"
     if new_invite_url == None:
         r = requests.get(get_url,params=payload)
-        json_response = json.loads(r.text)
+        json_response = json.loads(r.text)    
         try:
             if json_response['status_txt'] == 'OK':
                 data = json_response['data']
@@ -67,6 +67,6 @@ def construct_invite_tweet(request, invite_id):
             short_url = invite_url
     else:
         short_url = new_invite_url
-    print "BCDEFSDLSBDASB", short_url
+
     invite_tweet = 'Join the #realfood search engine '  + short_url
     return invite_tweet
