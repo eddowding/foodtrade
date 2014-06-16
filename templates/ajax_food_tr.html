@@ -63,22 +63,22 @@
       </div>
     {% endif %}  
 
-    {% if eachfood.how_much %}   
-      <div class='clearfix innerAll half'>
-        <i class='text-primary fa-lg icon-scale-1'></i>
-        {{eachfood.how_much}} {{eachfood.how_often}}
-      </div>
-    {% endif %} 
-
-    {% if eachfood.food_tags %} 
-      <div class='clearfix innerAll half'>
-        <i class='text-primary fa fa-tags fa-fw'></i>
-        {{eachfood.food_tags}}
-      </div>
-    {% endif %}
+     <div class='innerAll text-center border-top border-bottom'>
+    {% if request.user.is_superuser or profile_id == user_id %}
       
+       <a href='' class='btn btn-sm btn-info' data-toggle='modal' data-target='#modal_food_detail'  data-container='body' onClick='get_food_detail('{{profile_id}}', '{{eachfood.food_name|safe}}', '{{eachfood.description}}', '{{eachfood.food_tags}}', '{{eachfood.photo_url}}', '{{eachfood.recomm_tags|safe}}', '{{eachfood.how_much}}', '{{eachfood.how_often}}', '{{eachfood.month_list}}')'>Edit</a>
+       
+       <a class='btn btn-sm btn-danger' onClick='delete_food({{profile_id}}, '{{eachfood.food_name}}', this)'><i class='fa fa-trash-o fa-fw fa-lg' title='Delete'></i> Delete</a>
+
+    {% else %}
+
+       <a class='btn btn-sm btn-primary'><i class='fa fa-envelope-o fa-fw fa-lg' title='Contact'></i> Make enquiry</a>
+    {% endif %}
+    </div>
+
+
     {% if 1 in eachfood.month_list %}
-        <div class='widget border-top-none margin-none'>
+        <div class='innerTB half'>
           <table class='availability'> 
           <tbody><tr>
           <td class='winter {% if eachfood.month_list.0 == 1 %} yes {% endif %}'>J</td>
@@ -96,21 +96,22 @@
           </tr></tbody></table>  
         </div>  
     {% endif %}  
-          
-    <div class='innerAll text-center'>
-    {% if request.user.is_superuser or profile_id == user_id %}
-      
-       <a href='' class='btn btn-sm btn-info' data-toggle='modal' data-target='#modal_food_detail'  data-container='body' onClick='get_food_detail('{{profile_id}}', '{{eachfood.food_name|safe}}', '{{eachfood.description}}', '{{eachfood.food_tags}}', '{{eachfood.photo_url}}', '{{eachfood.recomm_tags|safe}}', '{{eachfood.how_much}}', '{{eachfood.how_often}}', '{{eachfood.month_list}}')'>Edit</a>
-       
-       <a class='btn btn-sm btn-danger' onClick='delete_food({{profile_id}}, '{{eachfood.food_name}}', this)'><i class='fa fa-trash-o fa-fw fa-lg' title='Delete'></i> Delete</a>
+     
 
-    {% else %}
+    {% if eachfood.how_much %}   
+      <div class='clearfix innerAll half'>
+        <i class='text-primary fa-lg icon-scale-1'></i>
+        {{eachfood.how_much}} {{eachfood.how_often}}
+      </div>
+    {% endif %} 
 
-       <a class='btn btn-sm btn-primary'><i class='fa fa-envelope-o fa-fw fa-lg' title='Contact'></i> Make enquiry</a>
+    {% if eachfood.food_tags %} 
+      <div class='clearfix innerAll half'>
+        <i class='text-primary fa fa-tags fa-fw'></i>
+        {{eachfood.food_tags}}
+      </div>
     {% endif %}
-    </div>
-
-
+      
     {% ifnotequal eachfood.vouch_count 0 %}
     <div class='innerAll text-center border-top'>
     <span class='clearfix'>Who vouched for this?</span>
