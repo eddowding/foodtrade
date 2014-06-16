@@ -12,7 +12,7 @@ def user_info(request):
         '''Construct New Invite URL.'''
 
         try:
-
+            # pass
             invite_tweet = construct_invite_tweet(request, invite_id)            
 
         except:
