@@ -94,9 +94,7 @@ def display_profile(request, username):
         if food_form.is_valid():
             food_form.save(month_list)
         
-    parameters = {}
-    
-
+    parameters = {}    
     food_form = FoodForm()
     parameters['form'] = food_form
     foo = AdminFoods()
@@ -138,24 +136,18 @@ def display_profile(request, username):
     except:
         parameters['show_foods'] = True
 
-
+    from mainapp.classes.DataConnector import UserConnections
     rec_food_obj = RecommendFood()
     parameters['total_vouches'] = rec_food_obj.get_recommend_count(userprof['useruid'])
-
-    from mainapp.classes.DataConnector import UserConnections
     user_connection =  UserConnections(userprof['useruid'])
     b_conn_len, c_conn_len = user_connection.get_trade_connection_no()
-
     parameters['b_conn_no'] = b_conn_len
     parameters['c_conn_no'] = c_conn_len
-
     parameters['profile_id'] = userprof['useruid']
     parameters['sign_up_as'] = userprof['sign_up_as']
     parameters['address'] = userprof['address']
     parameters['type_user'] = userprof['type_user']
-
     video_url = userprof.get('video_url') if userprof.get('video_url')!=None else ''
-
     if video_url != '':
         parameters['intro_video'] = get_video_html(video_url)
     else:
