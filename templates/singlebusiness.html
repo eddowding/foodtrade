@@ -58,7 +58,7 @@
 <div class="innerAll page">
 <div class="row row-merge" style="background: #fff;">
 
-<div class="col-lg-9 col-sm-8 col-xs-12">
+<div class="col-lg-12 col-sm-8 col-xs-12">
   <div class="timeline-cover">  
     <div class="cover">
       <div class="top">
@@ -124,60 +124,76 @@
   </div>
 </div><!-- col map --> 
 
-<div class="col-lg-3 col-sm-4 col-xs-12">
+<div class="col-lg-12 col-sm-4 col-xs-12">
 
+<div class="row row-merge border-bottom">
+  <div class="col-md-8 border-left">
+    <div class="innerAll">
+      <img src="{{pic_url}}" width="73" alt="" class="pull-left img-thumbnail marginR10">
+      <h2 class="strong margin-none">{{name}}</h2>
 
-<!-- contact --> 
-<div class=" innerAll">
+      <div class="innerB"> 
+        <p class="lead">{{description}}</p>  
+        {% if type_user|length == 0 or type_user|first == '' %}
+        {% else %}
+        <span class="tags tags-biztype  ">  
+          {% for eachtype in type_user %}
+         <a href="/activity/?b={{eachtype}}">{{eachtype}}</a>
+         {% endfor %}
+        </span> 
+        {% endif %} 
+      </div> 
 
-
-  <div class="widget-body text-center">     
-  
-    <a href="">
-      <img src="{{pic_url}}" width="73" alt="" class=" img-thumbnail">
-    </a> 
-
-  <h2 class="strong margin-none">{{name}}</h2>
-
-  <div class="innerB"> 
-    <p class=" ">{{description}}</p>  
-    {% if type_user|length == 0 or type_user|first == '' %}
-    {% else %}
-    <span class="tags tags-biztype  ">  
-      {% for eachtype in type_user %}
-     <a href="/activity/?b={{eachtype}}">{{eachtype}}</a>
-     {% endfor %}
-    </span> 
-    {% endif %} 
-  </div> 
-
-  <div class="innerTB border-top border-bottom"> 
+    </div> 
+  </div>
+  <div class="col-md-3 border-right border-left">
+    <div class="innerAll">
+    gdsafgd
+    </div> 
+  </div>
+  <div class="col-md-1 border-right">
+    <div class="innerAll"> 
       <div class="{% if loc.lat == -82.86275189999999 and loc.lon == -135.10000000000002 %} hidden {% endif %}">
-        <div class="meta innerAll half">
+        <div class="lead">
           {% if loc.lat == -82.8627519 and loc.lon == -135.0 %}
           {% else %}
           <!-- if logged in or you've allows html5 browser location -->
           <i class="fa fa-location-arrow text-muted"></i> {{distance}} miles  
           {% endif %} 
         </div> <!-- meta --> 
-      </div>  
+      </div>   
     </div> 
+  </div>
+</div>
+
+<!-- contact --> 
+<div class=" innerAll">
+
+
+  <div class="widget-body ">     
+  
+    <a href="">
+    </a> 
+
+  
+
+ 
 
   {% ifequal is_unknown_profile 'false' %}
     {% ifequal profile_id user_id %}
-      <a href="/editprofile/{{userinfo.username}}" class="btn btn-danger btn-block">
+      <a href="/editprofile/{{userinfo.username}}" class="btn btn-danger ">
          Edit my profile
       </a>       
     {% else %}
-      <button class="btn btn-primary text-center btn-block" data-toggle="modal" data-target="#modal_contact"><i class="fa fa-envelope fa-fw"></i> Contact {{name}}</button>
+      <button class="btn btn-primary text-center " data-toggle="modal" data-target="#modal_contact"><i class="fa fa-envelope fa-fw"></i> Contact {{name}}</button>
     {% endifequal %}
   {% else %}
-    <button class="btn btn-primary btn-block" style="margin-top:40px;" data-toggle="modal" data-target="#modal_invite">Invite to connect</button> 
+    <button class="btn btn-primary " style="margin-top:40px;" data-toggle="modal" data-target="#modal_invite">Invite to connect</button> 
   {% endifequal %} 
 
           
   {% if user.is_superuser %}
-    <a href="/editprofile/{{username}}/" class="btn btn-primary btn-block">Edit</a>
+    <a href="/editprofile/{{username}}/" class="btn btn-primary ">Edit</a>
   {% endif %}
 
   {% ifnotequal profile_id user_id %}
@@ -512,17 +528,15 @@
       <div class="panel-body">
 
         {% if user.is_authenticated %}
-        {% for eachUpdate in updates %}
-          <div class="media border-bottom innerAll margin-none">
-            <img src="{{userprof.profileimg}}" class="pull-left media-object" width="20" />
-            <div class="media-body"> 
-                <p class="lead"><a href="" class="text-inverse"> {{eachUpdate.status|recognise_name|safe}}</a>
-                </p>
-                <small class="pull-right">
-                  <a href="/{{username}}/post/{{eachUpdate.tweetuid}}/">  {{eachUpdate.time_elapsed}} ago</a>
-                </small>
-            </div>
+        {% for eachUpdate in updates %} 
+        <div class="update clearfix">
+          <div class="lead">
+            <a href="" class="text-inverse"> {{eachUpdate.status|recognise_name|safe}}</a>
           </div>
+          <small class="pull-right">
+            <a href="/{{username}}/post/{{eachUpdate.tweetuid}}/">  {{eachUpdate.time_elapsed}} ago</a>
+          </small>  
+        </div>
         {% endfor %}  
         {% else %}
           <p class="alert alert-warning"><a href="{% provider_login_url "twitter" process="login" %}" class="">Login</a> or <a href="{% provider_login_url "twitter" process="login" %}" class="">sign up free</a> to see updates and activity. </p>
