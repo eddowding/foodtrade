@@ -10,22 +10,13 @@ def user_info(request):
         invite_id_obj = InviteId()                        
         invite_id = invite_id_obj.get_unused_id(request.user.id)
         '''Construct New Invite URL.'''
-<<<<<<< HEAD
 
         try:
 
             invite_tweet = construct_invite_tweet(request, invite_id)            
-            # invite_tweet = "join foodtrade.com http://foodtrade.com" #construct_invite_tweet(request, invite_id)
 
         except:
             pass
-=======
-        # try:
-        invite_tweet = construct_invite_tweet(request, invite_id)
-        # except:
-        #     pass
->>>>>>> 715ae72fe01b32f80e19788c7c4889eabb42230c
-
 
 
         subscribed = True
