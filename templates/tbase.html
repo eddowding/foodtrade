@@ -476,66 +476,9 @@ function show_small_structure()
 
 
 <div class="container-fluid menu-hidden" id="main_page">
+  
 
-<div id="menu" class="hidden-print hidden sidebar-default sidebar-brand-primary ">
-  <div id="sidebar-social-wrapper">
-     
-    <ul class="menu list-unstyled" id="navigation_current_page">
-     
- 
-        <li class="">
-          <a href="/activity/favourites"><i class="fa fa-star"></i><span>Favourites</span></a> 
-        </li> 
-        <li class="">
-          <a href="/activity/stockists"><i class="fa fa-sign-in"></i><span>My Stockists</span></a> 
-        </li> 
-        <li class="">
-          <a href="/activity/suppliers"><i class="fa fa-sign-out"></i><span>My Suppliers</span></a> 
-        </li> 
-
-        <li data-step="4" data-intro="Building a better food system is going to take all of us. Please invite your suppliers, stockists, customers, friends.. everyone! For everyone you invite who signs up, we'll give you a month free, too." rel="tooltip" title="For everyone you invite who signs up, we'll give you a month free!">
-            <a data-toggle="modal" id="my_invite_twitter" data-target="#modal-tweeter-user"><i class="fa fa-bullhorn"></i><span>Invite</span></a>
-        </li>
-
-        <li class="hasSubmenu">
-          <a href="#trendsWeek" data-toggle="collapse"><i class="fa  fa-bell-o"></i><span>Popular this week</span></a>
-
-          <ul class="collapse" id="trendsWeek"> 
-            {% for eachVal in userinfo.hashtagsthis %}
-              <li><a href="/activity/?q=%23{{eachVal.uid|slice:"1:"}}&location=++None+&lon=&lat=">{{eachVal.uid}} <span class="badge pull-right">{{eachVal.value|floatformat:"0"}}</span></a></li>
-            {% endfor %}
-          </ul>
-        </li>
-
-        <li class="hasSubmenu">
-          <a href="#trendsAll" data-toggle="collapse"><i class="fa  fa-bell"></i><span>Popular all time</span></a>
-
-          <ul class="collapse" id="trendsAll"> 
-            {% for eachVal in userinfo.hashtagsall %}
-              <li><a href="/activity/?q=%23{{eachVal.uid|slice:"1:"}}&location=++None+&lon=&lat=">{{eachVal.uid}} <span class="badge pull-right">{{eachVal.value|floatformat:"0"}}</span></a></li>
-            {% endfor %}
-             </ul>
-        </li>
- 
-
-         
-      </ul>
-
-  </div>
-</div>
-<!-- // Main Sidebar Menu END --> 
-
-
- <div id="menu-right" style="
-display: block;
-right: 0px;
-top: 56px;
-background: #f5f5f5;
-background: rgba(255,255,255,0.3);
-box-shadow: 0 0 11px #ccc inset;
-border-left: 1px solid #999;
-width: 200px;
-">
+ <div id="menu-right">
       <div> 
           <div class="">   
 
@@ -768,7 +711,7 @@ width: 200px;
    
   
   <div class="user-action user-action-btn-navbar pull-left" style="border: 0; padding: 5px;">
-      <a href="#menu" class="btn btn-sm btn-navbar btn-open-left">
+      <a href="/" class="btn btn-sm btn-navbar btn-open-left">
       <img src="{% static 'images/logo_icon.png' %}" alt="FoodTrade logo" width="" /> 
       </a>
   </div> 
@@ -876,7 +819,7 @@ border-radius: 0 5px 5px 0 !important;">
   </div>
     {% endif %}  
 
-  <div class="user-action hidden-xs hidden-sm pull-left menu-right-hidden-xs menu-left-hidden-xs">
+  <div class="user-action hidden-xs hidden-sm pull-right menu-right-hidden-xs menu-left-hidden-xs">
       <div class="dropdown">
           <a class="dropdown-toggle " data-toggle="dropdown" href="#">
           Browse
