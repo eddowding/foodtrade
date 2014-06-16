@@ -307,7 +307,7 @@ def get_search_parameters(request):
 @csrf_exempt
 def home(request): 
     # print request['subscribed']
-    return render_to_response('activity.html',get_search_parameters(request) ,context_instance=RequestContext(request))
+    return render_to_response('activity.html',context_instance=RequestContext(request))
 
 
 @csrf_exempt

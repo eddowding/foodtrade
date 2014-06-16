@@ -8,35 +8,7 @@ from pygeocoder import Geocoder
 import re
 from bson import json_util
 from bson.json_util import loads
-
-
-def get_request(request):
-    search_request = {}
-    search_request['keyword'] = request.POST.get("q",request.GET.get("q","")) 
-
-
-    # location_res = Geocoder.geocode(self.location)
-    # self.lon = float(location_res.longitude)
-    # self.lat = float(location_res.latitude)
-
-
-
-    ### Todo do task get logged in user's location and latlng info from db 
-    default_location = "Bristol, London"
-    default_lng = -2.321
-    default_lat = 54.12
-
-    ########################################################################
-    search_request['location'] = request.POST.get("location",request.GET.get("location",default_location))
-
-    search_request['lng'] = float(request.POST.get("lng",request.GET.get("lng",default_lng)))
-    search_request['lat'] = float(request.POST.get("lat",request.GET.get("lat",default_lat)))
-    search_request['search_for'] = request.POST.get("search",request.GET.get("search","food")) 
-    search_request['indiv_biz'] = request.POST.get("only",request.GET.get("only","Business")) 
-    search_request['biz_type_filters'] = request.POST.get("biz",request.GET.get("biz","[]")) 
-    search_request['org_filters'] = request.POST.get("org",request.GET.get("org","[]")) 
-    search_request['food_filters'] = request.POST.get("food",request.GET.get("food","[]")) 
-    return search_request
+from TweetFeed import UserProfile
 
     
 
@@ -49,15 +21,9 @@ class GeneralSearch():
         db_object.ensure_index(table_name,'latlng')
         db_object.create_table(table_name,'foods.food_name')
         db_object.create_table(table_name,'updates.status')
-
         db_object.create_table(table_name,'username')
-
         self.db = db_object.get_db()[table_name]
-
-
-
-        params = get_request(request)
-
+        params = self.get_request(request)
         self.keyword = params['keyword']
         self.search_for = params['search_for']
         self.location = params['location']
@@ -69,6 +35,37 @@ class GeneralSearch():
         self.biz_type_filters = json.loads(params['biz_type_filters'])
         self.food_filters = json.loads(params['food_filters'])
         self.radius = 160900000
+
+    def get_request(self,request):
+        search_request = {}
+        search_request['keyword'] = request.POST.get("q",request.GET.get("q","")) 
+
+
+        # location_res = Geocoder.geocode(self.location)
+        # self.lon = float(location_res.longitude)
+        # self.lat = float(location_res.latitude)
+
+
+
+        up_object = UserProfile()
+        up = up_object.get_profile_by_id(request.user.id)
+
+        ### Todo do task get logged in user's location and latlng info from db 
+        default_location = up['address']
+        default_lng = up['latlng']['coordinates'][0]
+        default_lat = up['latlng']['coordinates'][0]
+
+        ########################################################################
+        search_request['location'] = request.POST.get("location",request.GET.get("location",default_location))
+
+        search_request['lng'] = float(request.POST.get("lng",request.GET.get("lng",default_lng)))
+        search_request['lat'] = float(request.POST.get("lat",request.GET.get("lat",default_lat)))
+        search_request['search_for'] = request.POST.get("search",request.GET.get("search","food")) 
+        search_request['indiv_biz'] = request.POST.get("only",request.GET.get("only","Business")) 
+        search_request['biz_type_filters'] = request.POST.get("biz",request.GET.get("biz","[]")) 
+        search_request['org_filters'] = request.POST.get("org",request.GET.get("org","[]")) 
+        search_request['food_filters'] = request.POST.get("food",request.GET.get("food","[]")) 
+        return search_request
 
     def get_latest_updates(self, time_stamp=None):
         query_string = {}
@@ -97,10 +94,7 @@ class GeneralSearch():
         pipeline.append({"$limit":10})
         return self.db.aggregate(pipeline)['result']
 
-
-
-    def get_result(self):
-        self.get_latest_updates()
+    def get_query_string():
         query_string = {}
         agg_pipeline = []
         or_conditions = []
@@ -157,10 +151,19 @@ class GeneralSearch():
         if len(self.org_filters) > 0:
             and_query.append({"organisations":{"$all":self.orz_filters}})
 
+
+
+
+
         if len(and_query)>0:
             query_string["$and"] = and_query
         if self.keyword !="":
             query_string["$or"] = or_conditions
+        return query_string
+
+    def get_result(self):
+        self.get_latest_updates()
+        query_string = get_query_string()
 
 
 
