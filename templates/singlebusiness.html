@@ -58,81 +58,19 @@
 <div class="row row-merge" style="background: #fff;">
 
 <div class="col-lg-12 col-sm-8 col-xs-12">
-  <div class="timeline-cover">  
-    <div class="cover">
-      <div class="top">
-        <div id="carousel-1" class="carousel slide"> 
-          <!-- Items -->
-          <div class="carousel-inner">
-     
-              <div class="item active">
-                  <div class="map-biz" id="map"></div> 
-              </div> 
-     
-              {% ifnotequal banner_url '' %}
-                <div class="item">
-                    <img src="{{banner_url}}" class="img-responsive" style="height:100%;">
-                </div>
-              {% endifnotequal %} 
-     
-              {% if intro_video %}
-              <div class="item">
-                <div style="width:100%; height: 400px;">{{intro_video|safe}}</div>                
-              </div>   
-              {% endif %}  
-          </div>
-          <!-- // Items END -->
-          <!-- Navigation -->
-          <a class="left carousel-control" href="#carousel-1" data-slide="prev">
-              <span class="fa fa-prev"></span>
-          </a>
-          <a class="right carousel-control" href="#carousel-1" data-slide="next">
-              <span class="fa fa-next"></span>
-          </a>
-          <!-- // Navigation END -->
-        </div> 
-      </div>
-      <ul class="list-unstyled">
-        <li><a href="#" data-target="#carousel-1" data-slide-to="0"><i class="fa fa-fw fa-clock-o"></i> <span>Map</span></a></li> 
-        {% if intro_video %} 
-        <li><a href="#" data-target="#carousel-1" data-slide-to="2"><i class="icon-movie-camera"></i> <span>Video</span> </a></li>  
-        {% endif %}  
-
-        {% ifnotequal banner_url '' %}
-        <li><a href="#" data-target="#carousel-1" data-slide-to="1"><i class="icon-photo-camera"></i> <span>Photos</span> </a></li>  
-        {% endifnotequal %} 
-   
-        {% if prof_subscribed %}
-        <li class="pull-right" style="background: #88BC62;"><a href="#">
-        <i class="fa fa-check" style="color: #fff;"></i>
-        <span>Verified</span></a>
-        </li> 
-        {% endif %} 
-
-         {% for each in organisations %} 
-        <li class="pull-right hidden-xs" style="background: rgba(0,0,0,0.3);">
-          <a href="#tabMemberships" data-toggle="tab" rel="tooltip" title="{{each.name}}"><img src="{{each.photo}}" alt="{{each.name}}" class="img-responsive" style="margin-top: 5px; width:30px; height:30px;" /></a> </li>
-          {% endfor %}
-      </ul>
-    </div>
-    <div class="cover image">  
-      <div class="widget-body padding-none margin-none"> 
-        
-    </div>
-  </div>
-  </div>
+  <div class="map-biz" id="map"></div> 
 </div><!-- col map --> 
 
 <div class="col-lg-12 col-sm-4 col-xs-12">
 
-<div class="row row-merge border-bottom">
-  <div class="col-md-8 border-left">
+<div class="row row-merge border-bottom border-right">
+  <div class="col-md-7 border-left">
     <div class="innerAll">
+      <div class="media">
       <img src="{{pic_url}}" width="73" alt="" class="pull-left img-thumbnail marginR10">
-      <h2 class="strong margin-none">{{name}}</h2>
-
-      <div class="innerB"> 
-        <p class="lead">{{description}}</p>  
+      <div class="media-body"> 
+        <h2 class="margin-none">{{name}}</h2>
+        <p class="">{{description}}</p>  
         {% if type_user|length == 0 or type_user|first == '' %}
         {% else %}
         <span class="tags tags-biztype  ">  
@@ -142,62 +80,37 @@
         </span> 
         {% endif %} 
       </div> 
+      </div>
 
     </div> 
   </div>
-  <div class="col-md-3 border-right border-left">
+  <div class="col-md-3">
     <div class="innerAll">
-    gdsafgd
-    </div> 
-  </div>
-  <div class="col-md-1 border-right">
-    <div class="innerAll"> 
-      <div class="{% if loc.lat == -82.86275189999999 and loc.lon == -135.10000000000002 %} hidden {% endif %}">
-        <div class="lead">
-          {% if loc.lat == -82.8627519 and loc.lon == -135.0 %}
-          {% else %}
-          <!-- if logged in or you've allows html5 browser location -->
-          <i class="fa fa-location-arrow text-muted"></i> {{distance}} miles  
-          {% endif %} 
-        </div> <!-- meta --> 
-      </div>   
-    </div> 
-  </div>
-</div>
-
-<!-- contact --> 
-<div class=" innerAll">
 
 
-  <div class="widget-body ">     
-  
-    <a href="">
-    </a> 
-
-  
-
- 
-
+    
+  <!-- EDIT / CONTACT -->
+  {% if user.is_superuser %}
+    <a href="/editprofile/{{username}}/" class="btn btn-primary ">Edit</a>
+  {% endif %}
+   
   {% ifequal is_unknown_profile 'false' %}
     {% ifequal profile_id user_id %}
       <a href="/editprofile/{{userinfo.username}}" class="btn btn-danger ">
          Edit my profile
       </a>       
     {% else %}
-      <button class="btn btn-primary text-center " data-toggle="modal" data-target="#modal_contact"><i class="fa fa-envelope fa-fw"></i> Contact {{name}}</button>
+      <button class="btn btn-primary text-center normal btn-block" data-toggle="modal" data-target="#modal_contact"><i class="fa fa-envelope-o fa-fw"></i> Contact</button>
     {% endifequal %}
   {% else %}
     <button class="btn btn-primary " style="margin-top:40px;" data-toggle="modal" data-target="#modal_invite">Invite to connect</button> 
   {% endifequal %} 
+  <!-- EDIT / CONTACT -->
 
-          
-  {% if user.is_superuser %}
-    <a href="/editprofile/{{username}}/" class="btn btn-primary ">Edit</a>
-  {% endif %}
 
+  <!-- CONNECT AS BUSINESS OR CUSTOMER --> 
   {% ifnotequal profile_id user_id %}
-       
-{% if user.is_authenticated %}      
+  {% if user.is_authenticated %}      
 
       <!-- if logged in users = individual --> 
       {% ifequal loggedin_signupas "Individual" %}
@@ -214,10 +127,8 @@
       </div>
       {% endifequal %}
 
-
       <!-- if logged in users = business --> 
       {% ifequal loggedin_signupas "Business" %} 
-
         <div class="btn-group btn-block " data-toggle="buttons">
           <button class="btn btn-default btn-sm " style="background: url('{{userinfo.profileimg}}'); background-size: cover;width:10%;">&nbsp;</button>
           {% if logged_conn == "seller"  or logged_conn == "both" %}
@@ -257,7 +168,21 @@
           <a href="{% provider_login_url "twitter" process="login" %}" class="btn btn-success btn-block">Login for more</a>
         {% endif %}
 
-      {% endifnotequal %}
+  {% endifnotequal %}
+  <!-- / CONNECT AS BUSINESS OR CUSTOMER --> 
+
+
+  <!-- VERIFIED PROFILE -->
+  {% if prof_subscribed %}
+  <div style="background: #88BC62;">
+    <i class="fa fa-check" style="color: #fff;"></i>
+    <span>Verified</span>
+  </div> 
+  {% endif %}  
+  <!-- VERIFIED PROFILE -->
+
+
+  <!-- SHARE -->
 
       <div class="btn-group btn-block">
         <div class="btn-group"  style="width:50%;">
@@ -304,7 +229,7 @@
       </div>
 
       <!-- twitter info --> 
-      <div class="text-center innerT hidden">
+      <div class="text-center innerT ">
         <span class="label label-default label-stroke">{{followers_count}}</span> followers
         <i class="fa fa-fw fa-twitter fa-lg" style="color: #35B8EB;"></i>
         follows
@@ -312,44 +237,26 @@
       </div>
 
     </div>
+    </div> 
+
  
-
-    <div class="widget-body padding-none hidden">
-      <div class="innerAll">
-        <p class=" margin-none"><i class="fa fa-envelope fa-fw text-muted"></i> 
-        <a href="mailto:{{email}}" target="_blank">
-         {{email}} </a>
-        </p>
-      </div>
-      {% if phone_number %}
-      <div class="border-top innerAll">
-        <p class=" margin-none"><i class="fa fa-phone fa-fw text-muted"></i>
-          <a href="callto:{{phone_number}}">{{phone_number}}</a>   
-        </p>
-      </div>
-      {% endif %} 
-      <div class="border-top innerAll">
-        <p class=" margin-none"><i class="fa fa-twitter fa-fw text-muted"></i> 
-          <a href="http://twitter.com/{{screen_name}}"  target="_blank"> {{screen_name}}</a>
-        </p>
-      </div>
-      <div class="border-top innerAll">
-          <p class=" margin-none"><i class="fa fa-link fa-fw text-muted"></i> 
-            <a href="">Visit website</a>
-          </p>
-      </div>
-    </div>
-
+  <div class="col-md-2">
+    <div class="innerAll"> 
+      <div class="{% if loc.lat == -82.86275189999999 and loc.lon == -135.10000000000002 %} hidden {% endif %}">
+        <div class="lead">
+          {% if loc.lat == -82.8627519 and loc.lon == -135.0 %}
+          {% else %}
+          <!-- if logged in or you've allows html5 browser location -->
+          <i class="fa fa-location-arrow text-primary"></i><b> {{distance}} miles  </b>
+          <small>away from you</small>
+          {% endif %} 
+        </div> <!-- meta --> 
+      </div>   
+    </div> 
+  </div>
 </div>
-                          
- 
-      {% if company_num %}
-        <a href="https://www.duedil.com/company/{{company_num}}"><i class="fa fa-legal"></i></a>  
-      {% endif %} 
-
-
-
-</div><!-- col contact -->
+</div>  
+<!-- contact -->  
 
 </div><!-- row -->
 
@@ -357,10 +264,37 @@
 <div class="row innerTB inner-2x">
   <div class="col-md-4">
 
+{% if company_num %}
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title"><i class="fa fa-legal"></i> <b>Company information</b></h3>
+  </div>
+  <div class="panel-body">
+    Company numbner: <a href="https://www.duedil.com/company/{{company_num}}"></a>  
+  </div>
+</div>
+{% endif %} 
+
+{% ifnotequal banner_url '' %}
+  <div class="panel panel-default">
+    <img src="{{banner_url}}" class="img-responsive" style="height:100%;">
+  </div>
+{% endifnotequal %} 
+     
+{% if intro_video %}
+  <div class="panel panel-default">
+    <div style="width:100%; height: 400px;">{{intro_video|safe}}</div>                
+  </div> 
+{% endif %}  
+
+
+
+
+
     <div class="panel panel-default">
       <div class="panel-heading">
         <h3 class="panel-title">
-          <strong>45</strong> Suggestions &middot;
+          <strong>Groups</strong> &amp; organisations &middot;
 
         {% if user.is_authenticated %}
           <a data-target="#addGroup" data-toggle="collapse" class="small">Add your suggestion</a>
@@ -452,7 +386,7 @@
 
 <div class="col-md-4">
 
-    <div class="panel panel-default">
+    <div class="panel panel-default" id="panelProduce">
       <div class="panel-heading">
         <h3 class="panel-title">
           <i class="fa fa-cutlery"></i> <strong>Produce</strong> sold here &middot;
@@ -501,14 +435,16 @@
       <div class="collapse well-sm well" id="searchProduce">
         <input type="text" class="form-control" id="filterFoods" data-action="filter" data-filters="#produceTable" placeholder="Find a food" />
       </div>
-      <table class="table table-hover table-condensed" id="produceTable"> 
-        <tbody>
-          {% include 'ajax_food_tr.html' %}
-        </tbody>
-      </table>
+      <div class="scrollWrapper">
+        <table class="table table-hover table-condensed scrollItem" id="produceTable"> 
+          <tbody>
+            {% include 'ajax_food_tr.html' %}
+          </tbody>
+        </table>
+      </div>
 
       <div class="panel-footer">
-        Panel footer
+        Panel footer 
       </div>
     </div>
 
@@ -1377,25 +1313,51 @@
             <div class="modal-body">
             <div class="container-responsive">
               <div class="row">
-                <div class="col-sm-4">
-             
-                  <address>
-                    <a href="mailto:{{email}}" class="dotdotdot" target="_blank"><i class="fa fa-envelope text-muted fa-fw"></i> {{email}} </a><br />
-                    <a href="http://twitter.com/{{screen_name}}"  target="_blank"><i class="fa fa-twitter text-muted fa-fw"></i> {{screen_name}}</a><br />
-                    {% if phone_number %}
-                    <a href="callto:{{phone_number}}"><i class="fa fa-phone text-muted fa-fw"></i> {{phone_number}}</a>
-                    {% endif %}
-                  </address>
+                <div class="col-sm-6"> 
+                    <div class="widget-body padding-none">
+                      <div class="innerAll half">
+                        <p class=" margin-none"><i class="fa fa-envelope fa-fw text-muted"></i> 
+                        <a href="mailto:{{email}}" target="_blank">
+                         {{email}} </a>
+                        </p>
+                      </div>
+                      {% if phone_number %}
+                      <div class="border-top innerAll half">
+                        <p class=" margin-none"><i class="fa fa-phone fa-fw text-muted"></i>
+                          <a href="callto:{{phone_number}}">{{phone_number}}</a>   
+                        </p>
+                      </div>
+                      {% endif %} 
+                      <div class="border-top innerAll half">
+                        <p class=" margin-none"><i class="fa fa-twitter fa-fw text-muted"></i> 
+                          <a href="http://twitter.com/{{screen_name}}"  target="_blank"> {{screen_name}}</a>
+                        </p>
+                      </div>
+                    </div> 
+                </div>
 
+                <div class="col-sm-6">
                   {% if loc.lat == -82.8627519 and loc.lon == -135.0 %} 
                   {% else %}
-                  <i class="fa fa-map-marker fa-fw text-muted"></i> <a href="http://maps.google.com/maps?saddr={{loggedin_coord.lat}},{{loggedin_coord.lon}}&daddr={{loc.lat}},{{loc.lon}}" target="_blank" data-placement="top" data-toggle="tooltip" title="Get directions" class="" style="margin-right:20px;">
+                  <div class="innerAll half">
+                   <a href="http://maps.google.com/maps?saddr={{loggedin_coord.lat}},{{loggedin_coord.lon}}&daddr={{loc.lat}},{{loc.lon}}" target="_blank" data-placement="top" data-toggle="tooltip" title="Get directions" class="" style="margin-right:20px;">
                     {{address}}
                   </a>   
+                  </div>
                   {% endif %} 
+
+                  <div class="border-top innerAll half">
+                      <p class=" margin-none"><i class="fa fa-link fa-fw text-muted"></i> 
+                        <a href="">Visit website</a>
+                      </p>
+                  </div>
                 </div>
+
+                </div><!-- row -->
+                <div class="row">
                 
-                <div class="col-sm-8 contact-form">
+                <div class="col-sm-12 contact-form">
+
                   <form id="contact" method="post" class="form" role="form">
                     <div class="row">
                       <div class="col-xs-6 col-md-6 form-group">
@@ -1556,20 +1518,7 @@
                       <label class="btn  btn-sm btn-default winter">
                         <input type="checkbox" name="option12_month" id="option12_month"> D
                       </label> 
-                </div> 
-                     <!-- <td class="winter" rel="tooltip" title="January">
-                          <button class="btn btn-default" value="Jan">J</td>
-                    <td class="winter">F</td>
-                    <td class="spring">M</td>
-                    <td class="spring">A</td>
-                    <td class="spring yes">M</td>
-                    <td class="summer yes">J</td>
-                    <td class="summer yes">J</td>
-                    <td class="summer">A</td>  
-                    <td class="autumn">S</td>
-                    <td class="autumn">O</td>
-                    <td class="autumn">N</td>
-                    <td class="winter">D</td>  -->
+                </div>  
                     </tr></tbody></table>  
                   </div> 
 
@@ -1602,13 +1551,18 @@
    {% block footer %}
       {% include "includes/not_logged_in_modal.html" %}
 <script src="/static/js/chosen.jquery.min.js" type="text/javascript"></script> 
-<!--      <script src="{% static "js/hogan-2.0.0.js" %}"></script> -->
-     <script src="{% static "js/typeahead.min.js" %}"></script>
-
-  <script type="text/javascript">
+<script src="{% static "js/typeahead.min.js" %}"></script>
 
 
+<script>
+  $(document).ready(function() {     
+    $(".scrollWrapper").niceScroll(".scrollItem");
+  });
+</script>
 
+
+
+<script type="text/javascript">
  
 /**
 
