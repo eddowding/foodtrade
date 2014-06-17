@@ -182,6 +182,26 @@
   <!-- VERIFIED PROFILE -->
 
 
+  
+
+    </div>
+    </div> 
+
+ 
+  <div class="col-md-2">
+    <div class="{% if loc.lat == -82.86275189999999 and loc.lon == -135.10000000000002 %} hidden {% endif %} lead border-bottom" >
+      <div class="innerAll">
+        {% if loc.lat == -82.8627519 and loc.lon == -135.0 %}
+        {% else %}
+        <!-- if logged in or you've allows html5 browser location -->
+        <i class="fa fa-location-arrow text-primary"></i><b> {{distance}} miles  </b>
+        <small>away from you</small>
+        {% endif %}  
+      </div>   
+    </div> 
+    <div class="innerAll">
+
+
   <!-- SHARE -->
 
       <div class="btn-group btn-block">
@@ -227,33 +247,8 @@
         </label>
         </div>
       </div>
-
-      <!-- twitter info --> 
-      <div class="text-center innerT ">
-        <span class="label label-default label-stroke">{{followers_count}}</span> followers
-        <i class="fa fa-fw fa-twitter fa-lg" style="color: #35B8EB;"></i>
-        follows
-        <span class="label label-default label-stroke">{{friends_count}}</span>  
-      </div>
-
     </div>
-    </div> 
-
- 
-  <div class="col-md-2">
-    <div class="innerAll"> 
-      <div class="{% if loc.lat == -82.86275189999999 and loc.lon == -135.10000000000002 %} hidden {% endif %}">
-        <div class="lead">
-          {% if loc.lat == -82.8627519 and loc.lon == -135.0 %}
-          {% else %}
-          <!-- if logged in or you've allows html5 browser location -->
-          <i class="fa fa-location-arrow text-primary"></i><b> {{distance}} miles  </b>
-          <small>away from you</small>
-          {% endif %} 
-        </div> <!-- meta --> 
-      </div>   
-    </div> 
-  </div>
+  </div><!-- col2 -->
 </div>
 </div>  
 <!-- contact -->  
@@ -264,16 +259,26 @@
 <div class="row innerTB inner-2x">
   <div class="col-md-4">
 
-{% if company_num %}
+
 <div class="panel panel-default" id="panelCompany">
   <div class="panel-heading">
-    <h3 class="panel-title"><i class="fa fa-legal"></i> <b>Company information</b></h3>
+    <h3 class="panel-title"><i class="fa fa-legal"></i> <b>Company</b> information</h3>
   </div>
   <div class="panel-body">
-    Company numbner: <a href="https://www.duedil.com/company/{{company_num}}"></a>  
-  </div>
+{% if company_num %}
+<div class="border-top">
+    Company number: <a href="https://www.duedil.com/company/{{company_num}}"></a>  
 </div>
 {% endif %} 
+        <!-- twitter info --> 
+      <div class="text-center">
+        <span class="label label-default label-stroke">{{followers_count}}</span> followers
+        <i class="fa fa-fw fa-twitter fa-lg" style="color: #35B8EB;"></i>
+        follows
+        <span class="label label-default label-stroke">{{friends_count}}</span>  
+      </div>
+  </div>
+</div>
 
 {% ifnotequal banner_url '' %}
   <div class="panel panel-default">
