@@ -1441,11 +1441,11 @@ $(function() {
 <!-- TOUR SCRIPT --> 
 {% if request.user.is_authenticated %}
 <script type="text/javascript">
-  document.getElementById('help').onclick = function() {
-    introJs().setOption('doneLabel', 'Next page').start().oncomplete(function() {
-      window.location.href = '/activity?multipage=true';
-    });
-  };
+  // document.getElementById('help').onclick = function() {
+  //   introJs().setOption('doneLabel', 'Next page').start().oncomplete(function() {
+  //     window.location.href = '/activity?multipage=true';
+  //   });
+  // };
 </script>
 {% endif %}
 <!-- // TOUR SCRIPT --> 

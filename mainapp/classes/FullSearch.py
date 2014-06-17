@@ -60,7 +60,7 @@ class GeneralSearch():
 
         search_request['lng'] = float(request.POST.get("lng",request.GET.get("lng",default_lng)))
         search_request['lat'] = float(request.POST.get("lat",request.GET.get("lat",default_lat)))
-        search_request['search_for'] = request.POST.get("search_type",request.GET.get("search","food")) 
+        search_request['search_for'] = request.POST.get("search_type",request.GET.get("search_type","food")) 
         search_request['indiv_biz'] = request.POST.get("only",request.GET.get("only","Business")) 
         search_request['biz_type_filters'] = request.POST.get("biz",request.GET.get("biz","[]")) 
         search_request['org_filters'] = request.POST.get("org",request.GET.get("org","[]")) 

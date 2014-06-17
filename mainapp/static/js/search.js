@@ -162,6 +162,12 @@ var Search = {
     }
 
     },
+    load_results : function()
+    {
+        this.show_profiles();
+        show_connections_on_map();
+    },
+
     show_profiles : function()
     {
         var profiles = this.profile_results.result;
@@ -175,9 +181,9 @@ var Search = {
     },
     search_profiles : function()
     {
-        $.post( "/ajax-handler/search_profiles", { q: this.keyword, search_type:this.search_type }, function( data ) {
+        $.post( "/ajax-handler/search_profiles", { q: this.keyword, search_type:this.search_type, lng:this.filters.profile.lng, lat:this.filters.profile.lat }, function( data ) {
   Search.profile_results = data;
-  Search.show_profiles();
+  Search.load_results();
  
 }, "json");
 
@@ -191,7 +197,8 @@ var Search = {
         {
             this.search_profiles();
         }
-        else{
+        else
+        {
             this.search_profiles();
         }
         
@@ -202,9 +209,27 @@ var Search = {
     {
         this.load_state();
         this.set_ui();
+        if(this.tab == "profile")
+        {
+            console.log("profile");
+            this.search_profiles();
+            $("#profile_tab").parent().addClass('active');
+            $("#mkt_tab").parent().removeClass('active');
+            $("#profiles").addClass('active');
+            $("#mktplace").removeClass('active');
+        }
+        else
+        {
+            this.search_profiles();
+            $("#mkt_tab").parent().addClass('active');
+            $("#profile_tab").parent().removeClass('active');
+
+
+             $("#profiles").removeClass('active');
+            $("#mktplace").addClass('active');
+        }
         var lng = parseFloat(this.filters[this.tab].lng);
         var lat = parseFloat(this.filters[this.tab].lat);
-        console.log(lng,lat);
         load_map(lat,lng);
 
     }
@@ -224,11 +249,13 @@ function start_search()
 $("#profile_tab").click(function(){
 Search.tab = "profile";
 Search.set_url();
+show_connections_on_map();
 });
 
 $("#mkt_tab").click(function(){
 Search.tab = "market";
 Search.set_url();
+
 });
 
 $("#search_type_option").click(function(){
