@@ -304,7 +304,7 @@
           {% if userprof.organisation_connection_no != 0 %}{{userprof.organisation_connection_no}}{% endif %} Groups</strong> &amp; organisations &middot;
 
         {% if user.is_authenticated %}
-          <a data-target="#addGroup" data-toggle="collapse" class="small">Add your suggestion</a>
+          <a id="tabMemberships" data-target="#addGroup" data-toggle="collapse" class="small">Add your suggestion</a>
         {% endif %}
 
         </h3>
@@ -611,8 +611,6 @@
           </table> 
 
         {% endif %}
-    
- 
     </div>
 
    <!-- Sells to / Stockists  --> 
@@ -697,7 +695,7 @@
           data-html="true"
           data-content="
           {% if each.banner_url %}
-            <img src='{{each.banner_url}}'' title='{{each.username}}' class='img-responsive'>
+            <img src='{{each.banner_url}}' title='{{each.username}}' class='img-responsive'>
           {% endif %}  
  
           <div class=''>
@@ -1447,15 +1445,11 @@
     
      
 
-   {% endblock %}
-   {% block footer %}
-      {% include "includes/not_logged_in_modal.html" %}
+{% endblock %}
+{% block footer %}
+{% include "includes/not_logged_in_modal.html" %}
 <script src="/static/js/chosen.jquery.min.js" type="text/javascript"></script> 
 <script src="{% static "js/typeahead.min.js" %}"></script>
-
- 
-
-
 <script type="text/javascript">
  
 /**
@@ -1561,26 +1555,30 @@ document.getElementById("myselect").addEventListener("DOMSubtreeModified", funct
 var remove_from_input = false;
 
 });
+
 // adding organisations to business
-$('#tabMemberships').on('click', '.tt-suggestion', function(){
-  var organisation_id = this.getElementsByClassName('result-name')[0];
-  var org_var = $(organisation_id).attr('data-id');
-  if(org_var == 'search'){
-    $('#my_invite_twitter').click();
-  }
+$('#orgs_remote').on('click','.tt-suggestion', function(){
+    var organisation_id = this.getElementsByClassName('result-name')[0];
+    var org_var = $(organisation_id).attr('data-id');
+    if(org_var == 'search'){
+      $('#my_invite_twitter').click();
+    }
   else{
-    add_org_to_biz('{{profile_id}}', org_var)
-    $('#new_orgs_typeahead').val('');
-    $('.tt-hint').val('');
-  }
-});
-$('#new_orgs_typeahead').on('blur', function(){
-  $('#new_orgs_typeahead').val('');
+        add_org_to_biz('{{profile_id}}', org_var)
+        $('#new_orgs_typeahead').val('');
+        $('.tt-hint').val('');
+      }
+    });
+    $('#new_orgs_typeahead').on('blur', function(){
+      $('#new_orgs_typeahead').val('');
 });
 
 // adding stockists to business
-$('#tabStockists').on('click', '.tt-suggestion', function(){
+$('#panelSuppliers').on('click', '.tt-suggestion', function(){
+  alert(this);
+  myvar = this;
   var business_id = this.getElementsByClassName('result-name')[0];
+  alert(business_id);
   var buss_var = $(business_id).attr('data-id');
   if(buss_var == 'search'){
     $('#my_invite_twitter').click();
@@ -1591,11 +1589,12 @@ $('#tabStockists').on('click', '.tt-suggestion', function(){
     $('.tt-hint').val('');
   }
 });
+
 $('#new_stockists_typeahead').on('blur', function(){
   $('#new_stockists_typeahead').val('');
 });
 
-$('#tabSuppliers').on('click', '.tt-suggestion', function(){
+$('#panelStockists').on('click', '.tt-suggestion', function(){
   var business_id = this.getElementsByClassName('result-name')[0];
   var buss_var = $(business_id).attr('data-id');
   if(buss_var == 'search'){

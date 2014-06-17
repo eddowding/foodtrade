@@ -142,11 +142,12 @@ function third_party_connection(prof_id, buss_var, link_type){
 	
 }
 function stockists_ajax(data){
+	new_dat = data;
 // clear selected choice
 $('.search-choice').remove();
 // $("#buss_chosen").val('').trigger('chosen:updated');
 
-$('#all-stockists').html(data);
+$('#panelSuppliers').html(data);
 reload_connections();
 }
 
@@ -155,7 +156,7 @@ function suppliers_ajax(data){
 $('.search-choice').remove();
 // $("#buss_chosen").val('').trigger('chosen:updated');
 
-$('#all-suppliers').html(data);
+$('#panelStockists').html(data);
 reload_connections();
 }
 

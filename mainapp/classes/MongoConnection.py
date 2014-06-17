@@ -23,10 +23,6 @@ class MongoConnection():
         self.db = self.conn[self.db_name]
         self.db.authenticate(self.username, self.password)  
 
-
-
-
-
     def create_connection(self):
         self.conn = Connection(self.host, self.port)
         self.db = self.conn[self.db_name]

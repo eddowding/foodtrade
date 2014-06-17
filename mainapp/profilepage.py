@@ -140,9 +140,7 @@ def display_profile(request, username):
     rec_food_obj = RecommendFood()
     parameters['total_vouches'] = rec_food_obj.get_recommend_count(userprof['useruid'])
     user_connection =  UserConnections(userprof['useruid'])
-    b_conn_len, c_conn_len = user_connection.get_trade_connection_no()
-    parameters['b_conn_no'] = b_conn_len
-    parameters['c_conn_no'] = c_conn_len
+    parameters['b_conn_no'], parameters['c_conn_no']= user_connection.get_trade_connection_no()
     parameters['profile_id'] = userprof['useruid']
     parameters['sign_up_as'] = userprof['sign_up_as']
     parameters['address'] = userprof['address']

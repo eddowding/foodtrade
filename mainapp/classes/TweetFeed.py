@@ -562,8 +562,14 @@ class TradeConnection():
     def get_connection_by_business(self,b_useruid):
         return self.db_object.get_all(self.table_name,{'b_useruid': b_useruid, 'deleted': 0})
 
+    def get_connection_no_by_business(self,b_useruid):
+        return self.db_object.get_count(self.table_name,{'b_useruid': b_useruid, 'deleted': 0})
+
     def get_connection_by_customer(self, c_useruid):
         return self.db_object.get_all(self.table_name,{'c_useruid':c_useruid, 'deleted': 0})
+
+    def get_connection_no_by_customer(self, c_useruid):
+        return self.db_object.get_count(self.table_name,{'c_useruid':c_useruid, 'deleted': 0})
 
     def create_connection (self, value):
         value['deleted'] =0
@@ -587,6 +593,9 @@ class Food():
 
     def get_foods_by_userid(self,useruid):
         return self.db_object.get_all(self.table_name,{'useruid': useruid, 'webuy':0, 'deleted': 0})
+        
+    def get_food_count_by_userid(self,useruid):
+        return self.db_object.get_count(self.table_name,{'useruid': useruid, 'webuy':0, 'deleted': 0})        
 
     def get_webuy_foods_by_userid(self,useruid):
         return self.db_object.get_all(self.table_name,{'useruid': useruid, 'webuy': 1, 'deleted': 0})
