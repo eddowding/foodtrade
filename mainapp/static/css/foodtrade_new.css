@@ -348,6 +348,14 @@ td.ellipsis
 /**  cards / timeline / marketplace                   **/
 /********************************/
  
+.label-tag {
+  color: rgba(0,0,0,0.5) !important;
+  border: 0px solid #ddd !important;
+  padding: 0px 6px 0 0 !important;
+  font-size: 11px !important;
+  font-weight: normal;
+}
+
 .margin-image-left-small {
   margin-left: 35px;
 }
@@ -490,7 +498,7 @@ td.ellipsis
 .card { 
   float: left;
   margin: 0 1% 15px 0;
-  width: 32.3%;
+  width: 47.3%;
   border: 1px solid #ccc; 
   min-height: 52px;  
   -webkit-border-radius: 5px 5px 0 0;
@@ -895,8 +903,21 @@ padding: 0em 18px 0em .1em !important;
 /**  PANELS                    **/
 /********************************/
 
-.scrollWrapper {
+.mCSB_inside>.mCSB_container {
+  margin-right: 5px;
+}
+
+.mCSB_scrollTools { 
+  width: 5px;
+}
+
+.mCSB_scrollTools .mCSB_draggerRail {
+  width: 0;
+}
+
+.scroll300 {
   max-height: 300px;
+  overflow: auto;
 }
 
 .panel-title {
@@ -907,6 +928,38 @@ padding: 0em 18px 0em .1em !important;
   padding: 4px !important;
 }
 
+.panel-heading {
+  padding: 7px;
+}
+
+#panelOrganisations .panel-heading {
+  background: #9B5C47;
+  color: #fff;
+}
+#panelProduce .panel-heading {
+  background: #61AE32;
+  color: #fff;
+}
+#panelSuppliers .panel-heading {
+  background: #576D30;
+  color: #fff;
+}
+#panelStockists .panel-heading {
+  background: #576D30;
+  color: #fff;
+}
+#panelUpdates .panel-heading {
+  background: #34B9D4;
+  color: #fff;
+}
+#panelDeliveries .panel-heading {
+  background: #F08119;
+  color: #fff;
+}
+#panelCompany .panel-heading {
+  background: #576D30;
+  color: #fff;
+}
 
 /********************************/
 /**  SIDEBAR                   **/

@@ -93,6 +93,8 @@
     <link rel="stylesheet" href="{% static "css/docsupport/prism.css" %}">
     <link rel="stylesheet" href="{% static "css/chosen.min.css" %}"> 
 
+    <link rel="stylesheet" href="http://malihu.github.io/custom-scrollbar/jquery.mCustomScrollbar.min.css" />
+
     <link href="{% static "css/dynamic.css" %}" rel="stylesheet"> 
 
 
@@ -1102,8 +1104,9 @@ border-radius: 0 5px 5px 0 !important;">
         inverseColor = '#45484d'; 
     var themerPrimaryColor = primaryColor;
     </script>
+
+    <script src="http://malihu.github.io/custom-scrollbar/jquery.mCustomScrollbar.concat.min.js"></script>
  
-    <script src="{% static "assets/components/plugins/nicescroll/jquery.nicescroll.min.js" %}"></script>
     <script src="{% static "assets/components/plugins/breakpoints/breakpoints.js" %}"></script>
     <script src="{% static "assets/components/plugins/preload/pace/pace.min.js" %}"></script>
     <script src="{% static "assets/components/plugins/menus/sidr/jquery.sidr.js" %}"></script>
@@ -1150,6 +1153,8 @@ border-radius: 0 5px 5px 0 !important;">
  {% endblock %}
 
  <script type="text/javascript">
+
+
  function logout()
   {
     window.location = '/accounts/logout';
