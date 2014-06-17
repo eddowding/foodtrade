@@ -316,7 +316,7 @@
     <div class="col-xs-6" id="price"> 
       <input type="text" name="Price" value="" class="form-control" placeholder="Price"  />  
 
-      <p class="help-block">Total, or per unit. Inc £/$/&euro;</p>
+      <p class="help-block">Total, or per unit. Inc Â£/$/&euro;</p>
     </div>
     <div class="col-xs-6">  
       <input type="text" class="form-control" id="expire_on" placeholder="When?"> 
@@ -714,7 +714,7 @@ function show_small_structure()
   
   <div class="user-action user-action-btn-navbar pull-left" style="border: 0; padding: 5px;">
       <a href="/" class="btn btn-sm btn-navbar btn-open-left">
-      <img src="{% static 'images/logo_icon.png' %}" alt="FoodTrade logo" width="" /> 
+      <img src="{% static 'images/logo_icon.png' %}" alt="FoodTrade logo"/> 
       </a>
   </div> 
 
@@ -734,7 +734,7 @@ function show_small_structure()
 
   <div class="input-group pull-left">
    
-    <form action="/activity" onsubmit="return start_search()">
+    <form action="/activity" onsubmit="return start_search()" ">
  
     <div class="input-group">
       <input type="hidden" name="search_param" value="all" id="search_param">   
@@ -1439,14 +1439,14 @@ $(function() {
 
 
 <!-- TOUR SCRIPT --> 
-<!--{% if request.user.is_authenticated %}
+{% if request.user.is_authenticated %}
 <script type="text/javascript">
-  document.getElementById('help').onclick = function() {
-    introJs().setOption('doneLabel', 'Next page').start().oncomplete(function() {
-      window.location.href = '/activity?multipage=true';
-    });
-  };
-</script>-->
+  // document.getElementById('help').onclick = function() {
+  //   introJs().setOption('doneLabel', 'Next page').start().oncomplete(function() {
+  //     window.location.href = '/activity?multipage=true';
+  //   });
+  // };
+</script>
 {% endif %}
 <!-- // TOUR SCRIPT --> 
 
@@ -1469,8 +1469,8 @@ UserVoice.push(['set', {
 // Identify the user and pass traits
 // To enable, replace sample data with actual user traits and uncomment the line
 // UserVoice.push(['identify', {
-//   email:      'john.doe@example.com', // User’s email address
-//   name:       'John Doe', // User’s real name
+//   email:      'john.doe@example.com', // Userâ€™s email address
+//   name:       'John Doe', // Userâ€™s real name
 //   created_at: 1364406966, // Unix timestamp for the date the user signed up
 //   id:         123, // Optional: Unique id of the user (if set, this should not change)
 //   type:       'Owner', // Optional: segment your users by type

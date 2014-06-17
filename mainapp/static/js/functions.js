@@ -67,3 +67,52 @@ function get_box_profile(user)
 	return content;
 
 }
+
+
+
+function map_profile_card(user)
+{
+  var con = user;
+      var name = con.name;
+      var status =  con.description;
+      var profile_img = con.profile_img;
+      var username = con.username;
+      var banner = con.banner_url;
+      var description = con.description;
+      var type_user = con.type_user;
+      var sign_up_as = con.sign_up_as;
+      if(!type_user)
+      {
+        type_user = [];
+      }
+
+
+      
+      // if(sign_up_as != "Business")
+      // {
+      //  continue;
+      // }
+
+      // if(current_lon == def_lon && current_lat == def_lat)
+      //     {
+      //       continue;
+      //     }
+      
+var card_str = '<div class="card-box"><div class="content text-center"><div class=""><a href="/profile/'+username+'"><img src="'+profile_img+'" alt="'+name+'" class="img-circle img-thumbnail img-responsive" style="width:73px;" /></a>';
+    card_str += '</div><div class="text"><h3><a href="/profile/'+username+'">'+name+'</a></h3>';
+
+    if(type_user.length>0)
+    {
+      card_str += '<div class="  clearfix">';
+      for(var j=0;j<type_user.length;j++)
+      {  
+        
+        card_str +=  '<a class="" href="/activity/?b='+type_user[j]+'">'+type_user[j]+'</a>';
+       }
+        card_str += '</div>';
+    }
+
+    card_str += '<p>'+description+'</p></div>';
+    card_str += '<a href="/profile/'+username+'" class="btn btn-primary btn-sm">View profile &raquo;</a></div> </div>';
+    return card_str;
+}

@@ -411,17 +411,14 @@
 
 
       <div class="col-sm-8 col-xs-12 fill"  style="  right:0px;">
-        <div id="map" style=" position: fixed; width:100%; height: 100%; top: 56px;"></div>
+        <div id="map" style=" position: fixed; width:inherit; height: 100%; top: 56px;"></div>
       </div>
     </div>
 
 </div>
 
     <script type="text/javascript">
-    var result_object = {{result|safe}};
-
-      map_lat=result_object.center[1];
-      map_lon = result_object.center[0];
+ 
 
       // food_filters = {{foods_filter |safe}};
       // business_filters = {{business_filter |safe}};
