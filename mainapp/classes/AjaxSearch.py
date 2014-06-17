@@ -39,6 +39,11 @@ class AjaxSearch():
         feed_result = search_obj.get_latest_updates(request.POST.get("time",None))
         return HttpResponse(json.dumps(feed_result))
 
+    def search_profiles(self,request):
+        search_obj = GeneralSearch(request)
+        profile_result = search_obj.get_result()
+        return HttpResponse(json.dumps(profile_result))
+
     def get_search_result(self,request):
         search_obj = GeneralSearch(request)
         profile_result = search_obj.get_result()

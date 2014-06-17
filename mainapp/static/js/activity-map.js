@@ -1,5 +1,7 @@
-var map = new L.map('map', {
-    center: new L.LatLng(map_lat,map_lon),
+function load_map(lat,lng)
+{
+map = new L.map('map', {
+    center: new L.LatLng(lat,lng),
     crs: default_csr,
     zoom: default_zoom,
       continuousWorld: false,
@@ -7,36 +9,36 @@ var map = new L.map('map', {
     layers: [current_base_layer]
 });
 
-
+}
 
 
 var layer_group = new L.LayerGroup();
 
-L.circle([map_lat,map_lon], 24140.2, {
-      stroke: 1,
-      color: '#00cc00',
-      opacity:0.5,
-      weight:2,
-      fill: 0,
-}).addTo(layer_group);
+// L.circle([map_lat,map_lon], 24140.2, {
+//       stroke: 1,
+//       color: '#00cc00',
+//       opacity:0.5,
+//       weight:2,
+//       fill: 0,
+// }).addTo(layer_group);
 
 
 
-L.circle([map_lat,map_lon], 48280.3, {
-      stroke: 1,
-      color: '#ff9900',
-      opacity:0.5,
-      weight:2,
-      fill: 0,
-}).addTo(layer_group);
+// L.circle([map_lat,map_lon], 48280.3, {
+//       stroke: 1,
+//       color: '#ff9900',
+//       opacity:0.5,
+//       weight:2,
+//       fill: 0,
+// }).addTo(layer_group);
   
-L.circle([map_lat,map_lon], 160934, {
-      stroke: 1,
-      color: '#999',
-      opacity:0.9,
-      weight: 1,
-      fill: 0,
-    }).addTo(layer_group);
+// L.circle([map_lat,map_lon], 160934, {
+//       stroke: 1,
+//       color: '#999',
+//       opacity:0.9,
+//       weight: 1,
+//       fill: 0,
+//     }).addTo(layer_group);
 
 
 var markers = new L.MarkerClusterGroup();
@@ -139,4 +141,4 @@ function update_map(data)
 map.on('dragend', map_dragged);
 
 
-setTimeout(function(){reload_controls()},3000);
+// setTimeout(function(){reload_controls()},3000);

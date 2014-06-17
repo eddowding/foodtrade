@@ -307,6 +307,29 @@ def get_search_parameters(request):
 @csrf_exempt
 def home(request): 
     # print request['subscribed']
+    print "here"
+    if request.GET.get('plng') == None:
+        print "gone plng"
+
+        user_id = request.user.id
+        user_profile_obj = UserProfile()
+        user_profile = user_profile_obj.get_profile_by_id(str(user_id))
+
+        default_lon = str(user_profile['latlng']['coordinates'][0])
+        default_lat = str(user_profile['latlng']['coordinates'][1])
+        location = user_profile['address']
+        query = "plng="+default_lon+"&plat="+default_lat+"&plocation="+location
+        query = query+ "&mlng="+default_lon+"&mlat="+default_lat+"&llocation="+location
+
+        return HttpResponseRedirect('/activity?'+query)            
+
+
+
+
+
+
+
+
     return render_to_response('activity.html',context_instance=RequestContext(request))
 
 

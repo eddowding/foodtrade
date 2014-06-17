@@ -60,7 +60,7 @@ class GeneralSearch():
 
         search_request['lng'] = float(request.POST.get("lng",request.GET.get("lng",default_lng)))
         search_request['lat'] = float(request.POST.get("lat",request.GET.get("lat",default_lat)))
-        search_request['search_for'] = request.POST.get("search",request.GET.get("search","food")) 
+        search_request['search_for'] = request.POST.get("search_type",request.GET.get("search","food")) 
         search_request['indiv_biz'] = request.POST.get("only",request.GET.get("only","Business")) 
         search_request['biz_type_filters'] = request.POST.get("biz",request.GET.get("biz","[]")) 
         search_request['org_filters'] = request.POST.get("org",request.GET.get("org","[]")) 
@@ -94,7 +94,7 @@ class GeneralSearch():
         pipeline.append({"$limit":10})
         return self.db.aggregate(pipeline)['result']
 
-    def get_query_string():
+    def get_query_string(self):
         query_string = {}
         agg_pipeline = []
         or_conditions = []
@@ -163,7 +163,7 @@ class GeneralSearch():
 
     def get_result(self):
         self.get_latest_updates()
-        query_string = get_query_string()
+        query_string = self.get_query_string()
 
 
 
@@ -176,10 +176,6 @@ class GeneralSearch():
         pipeline.append({"$group": { "_id": "$name", "count": { "$sum":1} }})
         pipeline.append({"$sort": SON([("count", -1), ("_id", -1)])})
         agg = self.db.aggregate(pipeline)
-
-
-
-
         
 
         query_string["latlng"]= {"$near": {
@@ -187,7 +183,7 @@ class GeneralSearch():
             "$maxDistance" : self.radius
           }}
 
-        all_doc = self.db.find(query_string,{"latlng":1,"name":1,"user_type":1,"sign_up_as":1,"description":1,"profile_img":1,"foods":1,"username":1,"_id":0})
+        all_doc = self.db.find(query_string,{"latlng":1,"name":1,"type_user":1,"sign_up_as":1,"description":1,"profile_img":1,"foods":1,"username":1,"_id":0})
         total =  all_doc.count()
         first20 = all_doc.limit(20)
         result = [doc for doc in first20]

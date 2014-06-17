@@ -35,13 +35,13 @@
 
 <div class="widget widget-tabs widget-tabs-double widget-tabs-responsive" style="background: #F5F8FA;   margin: 0 !important; padding-top: 10px;">
   <!-- Tabs Heading -->
-  <div class="widget-head  " style="background: #F2F6F8;">
+  <div class="widget-head  "  id="result_tabs" style="background: #F2F6F8;">
     <ul> 
       <li class="active " style="">
-        <a href="#mktplace" class="glyphicons bullhorn" data-toggle="tab"><i></i><span class="strong">Market place</span><span>Real-time trading</span></a>
+        <a href="#mktplace" class="glyphicons bullhorn" id="mkt_tab" data-toggle="tab"><i></i><span class="strong">Market place</span><span>Real-time trading</span></a>
       </li>
       <li class="" style="">
-        <a href="#profiles" class="glyphicons shop" data-toggle="tab"><i></i><span class="strong">Profiles</span><span class="dotdotdot">People &amp; places</span></a>
+        <a href="#profiles" class="glyphicons shop" id="profile_tab" data-toggle="tab"><i></i><span class="strong">Profiles</span><span class="dotdotdot">People &amp; places</span></a>
       </li>
     </ul>
   </div>
@@ -215,105 +215,75 @@
 
 <h1>PROFILE RESULT </h1>
 
-        <div class="box-generic">
+   <script type="text/javascript">
+// function get_box_profile(user)
+// {
+//   var content = "";
 
-            <div class="timeline-top-info border-bottom clearfix">
-            
-            <div class="pull-right" style="margin-left: 5px;">
-  
-              <a type="button" class="dropdown-toggle" data-toggle="dropdown">
-                <i class="fa fa-fw fa-cog text-muted"></i>
-                <span class="sr-only">Toggle Dropdown</span>
-              </a>
-            
-              <a type="button" class="btn btn-primary btn-xs" href="/wallfishbristol">
-                <i class="fa fa-arrow-right fa-lg" style="color:#fff;"></i> 
-              </a>
-               
-              <ul class="dropdown-menu" role="menu">  
-                <li><a href="http://www.facebook.com/sharer/sharer.php?u=http://foodtrade.com/profile/wallfishbristol" target="_blank"><i class="fa fa-facebook fa-fw facebook"></i> Share on Facebook</a></li>
-                <li><a href="http://twitter.com/home?status=We%20are%20now%20open%20and%20taking%20bookings.%20Owned%20and%20run%20by%20staff%20who%20have%20done%20time%20with%20Hix%2C%20River%20Cottage%2C%20Le%20Caf%C3%A9%20Anglais%20and%20Ducksoup%20http://foodtrade.com/profile/wallfishbristol" target="_blank"><i class="fa fa-twitter fa-fw twitter "></i> Share on Twitter</a></li>
-                <li><a type="button" href="/profile/wallfishbristol/">
-                <i class="fa fa-info-circle fa-lg fa-fw"></i> View profile</a></li> 
-                 
-                <li><a href="#" onclick="click_activity('follow','wallfishbristol')"><i class="fa fa-star-o fa-fw"></i>  Follow on Twitter</a></li>
-                  
-                <li><a href="#" class="deletetweet" data-tweet-id="[]"><i class="fa fa-trash-o fa-fw flag"></i> Delete</a></li>
-                
-                <li><a href="#" onclick="click_activity('spam','wallfishbristol')" class=" "><i class="fa fa-flag-o flag fa-fw"></i> Report</a></li>
-              </ul>  
+// content += '<div class="box-generic">';
+// content += '<div class="timeline-top-info border-bottom clearfix">';
+// content += '<div class="pull-right" style="margin-left: 5px;">';
+// content += '<a type="button" class="dropdown-toggle" data-toggle="dropdown">';
+// content += '<i class="fa fa-fw fa-cog text-muted"></i>';
+// content += '<span class="sr-only">Toggle Dropdown</span>';
+// content += '</a>';
+// content += '<a type="button" class="btn btn-primary btn-xs" href="/wallfishbristol">';
+// content += '<i class="fa fa-arrow-right fa-lg" style="color:#fff;"></i> ';
+// content += '</a>';
+// content += '<ul class="dropdown-menu" role="menu">  ';
+// content += '<li><a href="http://www.facebook.com/sharer/sharer.php?u=http://foodtrade.com/profile/wallfishbristol" target="_blank"><i class="fa fa-facebook fa-fw facebook"></i> Share on Facebook</a></li>';
+// content += '<li><a href="http://twitter.com/home?status=We%20are%20now%20open%20and%20taking%20bookings.%20Owned%20and%20run%20by%20staff%20who%20have%20done%20time%20with%20Hix%2C%20River%20Cottage%2C%20Le%20Caf%C3%A9%20Anglais%20and%20Ducksoup%20http://foodtrade.com/profile/wallfishbristol" target="_blank"><i class="fa fa-twitter fa-fw twitter "></i> Share on Twitter</a></li>';
+// content += '<li><a type="button" href="/profile/wallfishbristol/">';
+// content += '<i class="fa fa-info-circle fa-lg fa-fw"></i> View profile</a></li> ';
+// content += '<li><a href="#" onclick="click_activity(\'follow\',\'wallfishbristol\')"><i class="fa fa-star-o fa-fw"></i>  Follow on Twitter</a></li>';
+// content += '<li><a href="#" class="deletetweet" data-tweet-id="[]"><i class="fa fa-trash-o fa-fw flag"></i> Delete</a></li>';
+// content += '<li><a href="#" onclick="click_activity(\'spam\',\'wallfishbristol\')" class=" "><i class="fa fa-flag-o flag fa-fw"></i> Report</a></li>';
+// content += '</ul>  ';
+// content += '</div>  ';
+// content += '<img src="http://pbs.twimg.com/profile_images/378800000020683174/ac7a5c15da2a2a167f2251cd95c4fa31_normal.png" alt="The Wallfish Bistro" class="img-responsive pull-left" style="width:50px; margin-right: 5px;">';
 
-          </div>  
-  
- 
-                <img src="http://pbs.twimg.com/profile_images/378800000020683174/ac7a5c15da2a2a167f2251cd95c4fa31_normal.png" alt="The Wallfish Bistro" class="img-responsive pull-left" style="width:50px; margin-right: 5px;">
-                <h4 class="margin0"><a href="/profile/wallfishbristol" class="text-inverse">
-                  The Wallfish Bistro
-                </a></h4> 
-                <a href="/activity/?b=Restaurant / Pub / Bar" class="  small">Restaurant / Pub / Bar</a> 
+// content += '<h4 class="margin0"><a href="/profile/wallfishbristol" class="text-inverse">';
+// content += 'The Wallfish Bistro';
+// content += '</a></h4> ';
+// content += '<a href="/activity/?b=Restaurant / Pub / Bar" class="  small">Restaurant / Pub / Bar</a> ';
+// content += '</div>';
+// content += '<div class="media margin-none status">  ';
+// content += '<div class="content">';
+// content += '<div class="text  innerAll half"> ';
+// content += '<p class="">We are now open and taking bookings. Owned and run by staff who have done time with Hix, River Cottage, Le Café Anglais and Ducksoup</p>';
+// content += '</div>';
+// content += '<div class="innerTB half border-top border-bottom"> ';
+// content += '<span class="label label-default"><i class="fa fa-sign-in fa-fw"></i>BUYS</span> <b>Carrots</b> &amp; 18 more <br />';
+// content += '<span class="label label-default"><i class="fa fa-sign-out fa-fw"></i>SELLS:</span> Fish <-- this is the name of the matching item';
+// content += '</div> ';
+// content += '<div class="innerTB half clearfix"> ';
+// content += '<img src="http://pbs.twimg.com/profile_images/1690823879/Screen_shot_2011-12-13_at_12.21.20_bigger.png" alt="The Wallfish Bistro" class="img-responsive pull-left" style="width:40px; margin-right: 5px;">';
+// content += '<img src="http://pbs.twimg.com/profile_images/1690823879/Screen_shot_2011-12-13_at_12.21.20_bigger.png" alt="The Wallfish Bistro" class="img-responsive pull-left" style="width:40px; margin-right: 5px;">';
+// content += '<img src="http://pbs.twimg.com/profile_images/1690823879/Screen_shot_2011-12-13_at_12.21.20_bigger.png" alt="The Wallfish Bistro" class="img-responsive pull-left" style="width:40px; margin-right: 5px;">';
+// content += '<img src="http://pbs.twimg.com/profile_images/1690823879/Screen_shot_2011-12-13_at_12.21.20_bigger.png" alt="The Wallfish Bistro" class="img-responsive pull-left" style="width:40px; margin-right: 5px;">';
+// content += '</div> ';
+// content += '</div>   ';
+// content += '</div> ';
+// content += '<div class="timeline-bottom innerTB half small border-top clearfix">';
+// content += '<a href="http://maps.google.com/maps?saddr=51.4529956141,-2.62451568043&amp;daddr=51.454513,-2.58791" target="_blank" data-placement="top" data-toggle="tooltip" class="pull-left" rel="tooltip" title="" data-original-title="Get directions"> ';
+// content += '<span class="hidden-sm hidden-xs truncate100 address">';
+// content += '<i class="fa fa-map-marker fa-fw"></i>';
+// content += 'Bristol, City of Bristol, UK';
+// content += '</span>';
+// content += '</a> ';
+// content += '<a href="http://maps.google.com/maps?saddr=51.4529956141,-2.62451568043&amp;daddr=51.4536248,-2.6241012" target="_blank" data-placement="top" data-toggle="tooltip" class="pull-right" rel="tooltip" title="" data-original-title="Get directions"> ';
+// content += '<i class="fa fa-location-arrow fa-fw"></i> 0.0 miles  ';
+// content += '</a>';
+// content += '</div>  ';
+// content += '<div class="innerAll border-top bg-gray  reply" style="display: none;"> ';
+// content += '<input class="form-control input-sm enterhandler reply_input" data-main="main" type="text" placeholder="Reply to @wallfishbristol" data-mentions="@wallfishbristol"> ';
+// content += '</div>';
+// content += '</div>';
+// return content;
 
-            </div>
-
-            <!-- status --> 
-            <div class="media margin-none status">  
- 
-
-              <div class="content">
-
-                <div class="text  innerAll half"> 
-                  <p class="">We are now open and taking bookings. Owned and run by staff who have done time with Hix, River Cottage, Le Café Anglais and Ducksoup</p>
-                </div>
-
-
-                <div class="innerTB half border-top border-bottom"> 
-                  <span class="label label-default"><i class="fa fa-sign-in fa-fw"></i>BUYS</span> <b>Carrots</b> &amp; 18 more <br />
-                  <span class="label label-default"><i class="fa fa-sign-out fa-fw"></i>SELLS:</span> Fish <-- this is the name of the matching item
-                </div> 
-
-
-                <div class="innerTB half clearfix"> 
-
-                <!-- orgs they're a memeber of, up to 5 --> 
-                
-                <img src="http://pbs.twimg.com/profile_images/1690823879/Screen_shot_2011-12-13_at_12.21.20_bigger.png" alt="The Wallfish Bistro" class="img-responsive pull-left" style="width:40px; margin-right: 5px;">
-                
-                
-                <img src="http://pbs.twimg.com/profile_images/1690823879/Screen_shot_2011-12-13_at_12.21.20_bigger.png" alt="The Wallfish Bistro" class="img-responsive pull-left" style="width:40px; margin-right: 5px;">
-                
-                
-                <img src="http://pbs.twimg.com/profile_images/1690823879/Screen_shot_2011-12-13_at_12.21.20_bigger.png" alt="The Wallfish Bistro" class="img-responsive pull-left" style="width:40px; margin-right: 5px;">
-                
-                
-                <img src="http://pbs.twimg.com/profile_images/1690823879/Screen_shot_2011-12-13_at_12.21.20_bigger.png" alt="The Wallfish Bistro" class="img-responsive pull-left" style="width:40px; margin-right: 5px;">
-                
-                </div> 
-
-
-              </div>   
-            </div> 
-
-            <div class="timeline-bottom innerTB half small border-top clearfix">
-
-              <a href="http://maps.google.com/maps?saddr=51.4529956141,-2.62451568043&amp;daddr=51.454513,-2.58791" target="_blank" data-placement="top" data-toggle="tooltip" class="pull-left" rel="tooltip" title="" data-original-title="Get directions"> 
-               <span class="hidden-sm hidden-xs truncate100 address">
-                <i class="fa fa-map-marker fa-fw"></i>
-                Bristol, City of Bristol, UK
-              </span>
-              
-               </a> 
-
-              
-               <a href="http://maps.google.com/maps?saddr=51.4529956141,-2.62451568043&amp;daddr=51.4536248,-2.6241012" target="_blank" data-placement="top" data-toggle="tooltip" class="pull-right" rel="tooltip" title="" data-original-title="Get directions"> 
-               <i class="fa fa-location-arrow fa-fw"></i> 0.0 miles  
-               </a>
-                
-                
-            </div>  
-
-            <div class="innerAll border-top bg-gray  reply" style="display: none;"> 
-                <input class="form-control input-sm enterhandler reply_input" data-main="main" type="text" placeholder="Reply to @wallfishbristol" data-mentions="@wallfishbristol"> 
-            </div>
-        </div>
+// }
+// document.write(get_box_profile(2));
+   </script>
 
 
 
@@ -331,8 +301,8 @@
               <label for="companyType" class="col-sm-3 control-label">I want to</label>
               <div class="col-sm-9">
                   <div class="btn-group " data-toggle="buttons-radio">
-                      <button class="btn btn-default  btn-sm active" >Buy</button>
-                      <button class="btn btn-default  btn-sm ">Sell</button>
+                      <button class="btn btn-default btn-pwant btn-sm active" >Buy</button>
+                      <button class="btn btn-default btn-pwant btn-sm ">Sell</button>
                   </div> 
               </div>
             </div> 
@@ -356,7 +326,7 @@
                 <label for="loc" class="col-sm-3 control-label">Location</label>
                 <div class="col-sm-9">
                   <div class="input-group  input-group-sm">
-                    <span class="input-group-addon"><i class="fa fa-map-marker"></i></span>
+             f       <span class="input-group-addon"><i class="fa fa-map-marker"></i></span>
                     <input type="text" name="location" id="pac-input" value="{% if search %}{{ search.place }}{% endif %}{% if not search %}{{userinfo.zip_code}}{% endif %}" class="pac-input form-control  " placeholder="Where?">
                     <div class="input-group-btn">
                       <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
@@ -423,6 +393,8 @@
             </div><!-- filters -->
 
           </form> 
+
+          <div id="profile_results"></div>
         </div>
         <!-- // Tab content END -->
 
@@ -433,129 +405,6 @@
  
 
 
- 
-
-
- 
-
-<div class="widget widget-tabs widget-tabs-double-2 widget-tabs-responsive"  style="background: #F5F8FA;">
- 
-<!--  {% ifequal loggedin_signupas "Individual" %}{% endifequal %}
-      {% ifequal loggedin_signupas "Business" %}{% endifequal %}
-      {% ifequal loggedin_signupas "Organisation" %} {% endifequal %}
-      -->
-  <div class="widget-head clearfix hidden">
-    <ul id="activity_selector">
-
-        <li {% if results_updates_count != 0  or results_individual_count == 0 and results_business_count == 0 and results_organisation_count == 0  %}class="active dropdown"{% endif %}>
-        <a href="#near_me" class="glyphicons shopping_cart" data-toggle="tab"><i></i><span class="strong title">Marketplace</span>
-        {% ifnotequal results_updates_count 0 %}
-        <span class="pull-number label label-default">{{results_updates_count}}</span>
-        {% endifnotequal %}
-        </a> 
-        </li>  
-
-        <li {% if results_updates_count == 0 and results_individual_count == 0  and results_organisation_count == 0 and results_business_count != 0 %}class="active"{% endif %}>
-        <a href="#biz" class="glyphicons shop" data-toggle="tab"><i></i><span class="strong title">Companies</span> 
-        {% ifnotequal results_business_count 0 %}
-        <span class="pull-number label label-default">{{results_business_count}}</span>
-        {% endifnotequal %}
-        </a>
-        </li>  
-
-        <li {% if results_updates_count == 0 and results_individual_count == 0 and results_business_count == 0 and results_organisation_count != 0 %}class="active"{% endif %}>
-        <a href="#org" class="glyphicons group" data-toggle="tab"><i></i><span class="strong title">Groups</span>
-        {% if results_organisation_count > 0 %}
-        <span class="pull-number label label-default">{{results_organisation_count}}</span>
-        {% endif %}
-        </a>
-        </li> 
-
-        <li {% if results_updates_count == 0  and results_business_count == 0 and results_organisation_count == 0 and results_individual_count != 0 %}class="active"{% endif %}>
-          <a href="#indiv" class="glyphicons user" data-toggle="tab"><i></i><span class="strong title">People</span>
-          {% if results_individual_count != 0 %}
-          <span class="pull-number label label-default">{{results_individual_count}}</span>
-          {% endif %}
-          </a>
-        </li>  
-    </ul>
-  </div>
-
-<div class="widget-body hidden">
-
-<div class="tab-content reply_text" id = "filtered_content">
-
-  <div class="tab-pane {% if results_updates_count != 0  or results_business_count == 0 and results_organisation_count == 0  %}ac tive{% endif %}" id="near_me">
-
-  <!-- isotope filter -->
-
-
-  <!-- end filter --> 
-    
-    <div id="sort" class="clearfix innerLR innerTop">
-    
-    <div class="text-muted text-center box-generic innerAll half" rel="tooltip" title="Soon you'll be able to upgrade to see further afield, but not just yet!">Showing updates from within 100 miles</div>
-
-
-      <div class="btn-group pull-right">
-        <input type="hidden" id="current_sort_order" value="time" /> 
-        <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown">
-          <span  id="current_sort_text" class=""><i class="fa fa-calendar fa-fw"></i> Time posted</span>
-          <span class="caret text-muted"></span>
-        </button>
-        <ul class="dropdown-menu">
-          <li><a onclick="sort_by('distance',this)"><i class="fa fa-location-arrow fa-fw"></i> Distance from {% if search %} {{ search.place }} {% endif %} {% if not search %} {{userinfo.zip_code}}{% endif %}</a></li>
-          <li><a onclick="sort_by('time',this)"><i class="fa fa-calendar fa-fw"></i> Time posted</a></li>
-        </ul>
-      </div> 
-
-
-    <div class="btn-group pull-left hidden">
-      <a href="/activity/?q=sell" class="btn btn-primary btn-sm btn-stroke "><i class="fa fa-fw fa-sign-out"></i> Companies</a>
-      <a href="/activity" class="btn btn-primary btn-sm btn-stroke "><i class="fa fa-fw fa-bell-o"></i> People </a> 
-    </div>
-
-    <div class="btn-group pull-left">
-      <a href="/activity" class="btn btn-sm btn-stroke {% if request.get_full_path = "/activity/" %} btn-primary active {% else %} btn-default {% endif %}" rel="tooltip" title="All posts">All </a> 
-      <a href="/activity/?q=sell" class="btn btn-sm btn-stroke {% if request.get_full_path = "/activity/?q=sell" %} btn-primary active {% else %} btn-default {% endif %}" rel="tooltip" title="Filter by #sell"><i class="fa fa-fw fa-sign-out"></i></a>
-      <a href="/activity/?q=buy" class="btn btn-sm btn-stroke {% if request.get_full_path = "/activity/?q=buy" %} btn-primary active {% else %} btn-default {% endif %}" rel="tooltip" title="Filter by #buy"><i class="fa fa-fw fa-sign-in"></i></a>
-      <a href="/activity/?q=surplus" class="btn btn-sm btn-stroke {% if request.get_full_path = "/activity/?q=surplus" %} btn-primary active {% else %} btn-default {% endif %}"  rel="tooltip" title="Filter by #surplus"><i class="fa fa-fw fa-refresh"></i></a>
-      <a href="/activity/?q=ask" class="btn btn-sm btn-stroke {% if request.get_full_path = "/activity/?q=ask" %} btn-primary active {% else %} btn-default {% endif %}" rel="tooltip" title="Filter by #ask "><i class="fa fa-fw fa-comment-o"></i></a>
-      <a href="/activity/?q=job" class="btn btn-sm btn-stroke {% if request.get_full_path = "/activity/?q=job" %} btn-primary active {% else %} btn-default {% endif %}"  rel="tooltip" title="Filter by #job"><i class="fa fa-fw fa-eur"></i></a>
-    </div>
-
-
-    </div>
-
-
-
-    <div class="activity" id="activity_updates"> 
-      {% include 'activity_updates.html' %}
-    </div>  
-  </div><!-- tab pane activity -->
-
-  <div class="tab-pane  {% if results_updates_count == 0 and results_business_count == 0  and results_organisation_count == 0 and results_individual_count != 0 %}active{% endif %}" id="indiv">
-    <div class="activity" id="activity_indiv"> 
-      {% include 'activity_indiv.html' %}
-    </div> 
-  </div> 
-
-  <div class="tab-pane active {% if results_updates_count == 0 and results_individual_count == 0  and results_organisation_count == 0 and results_business_count != 0 %}active{% endif %}" id="biz">
-    <div class="activity" id="activity_biz"> 
-      {% include 'activity_biz.html' %}
-    </div>
-  </div> 
-
-  <div class="tab-pane {% if results_updates_count == 0 and results_individual_count == 0 and results_business_count == 0 and results_organisation_count != 0 %}active{% endif %}" id="org"> 
-    <div class="activity" id="activity_org"> 
-      {% include 'activity_org.html' %}
-    </div>
-  </div>  
-
-</div><!-- tab content -->
-
-</div><!-- widget --> 
-</div>
      
     </div><!-- closes main col -->
     </div>
@@ -610,8 +459,8 @@
 </script>
 
  <script src="{% static "js/activity-map.js" %}"></script>
-
-
+ <script src="{% static "js/functions.js" %}"></script>
+ <script src="{% static "js/search.js" %}"></script>
 
               <script type="text/javascript">
 
@@ -673,4 +522,5 @@
 
 
               </script>
+              <
 {% endblock %}
