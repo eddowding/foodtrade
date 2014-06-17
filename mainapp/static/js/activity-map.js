@@ -10,6 +10,7 @@ function load_map(lat,lng)
   });
   L.control.fullscreen().addTo(map);
 map.on('dragend', map_dragged);
+map.fitBounds(markers.getBounds());
 }
 
 
@@ -67,6 +68,7 @@ var ctrl = L.marker([parseFloat(current_lat), parseFloat(current_lon)],{icon: re
          }
     
         map.addLayer(markers);
+
 
 }
 

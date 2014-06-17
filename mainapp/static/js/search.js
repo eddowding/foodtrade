@@ -231,6 +231,7 @@ var Search = {
         var lng = parseFloat(this.filters[this.tab].lng);
         var lat = parseFloat(this.filters[this.tab].lat);
         load_map(lat,lng);
+         
 
     }
 
