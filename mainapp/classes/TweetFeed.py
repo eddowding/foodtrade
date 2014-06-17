@@ -203,7 +203,9 @@ class TweetFeed():
         
 
     def get_near_people(self, query):
-        return self.db_object.get_distinct(self.table_name,'username',query)['count']
+        # print self.db_object.get_distinct(self.table_name,'username',query)['count']
+        # print self.db_object.get_count(self.table_name,query)
+        return self.db_object.get_count(self.table_name,query)
     
     def update_tweets(self, username, first_name, last_name, description, address, sign_up_as,  lat, lon,type_user=[]):
         results = address
