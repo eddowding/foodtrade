@@ -679,7 +679,11 @@ def get_connections(user_id, logged_in_id = None):
 
     final_connections = []
     logged_conn = 'none'
+
+    b_conn_ids = []
+
     from mainapp.classes.DataConnector import UserConnections
+
     for count, each in enumerate(b_conn):
         # try:
         if logged_in_id == None and count == 5:
@@ -689,15 +693,12 @@ def get_connections(user_id, logged_in_id = None):
         usr_pr = userprof.get_profile_by_id(str(each['c_useruid']))
         if usr_pr == None:
             continue
-        # user_info = UserInfo(each['c_useruid'])
 
-        user_connection =  UserConnections(each['c_useruid'])
-        
-        b_conn_len, c_conn_len = user_connection.get_trade_connection_no()
-        trade_connections_no = b_conn_len + c_conn_len
-        food_no = user_connection.get_food_connection_no()
-        organisation_connection_no = user_connection.get_organisation_connection_no()
-
+        # user_connection =  UserConnections(each['c_useruid'])
+        # b_conn_len, c_conn_len = user_connection.get_trade_connection_no()
+        # trade_connections_no = b_conn_len + c_conn_len
+        # food_no = user_connection.get_food_connection_no()
+        # organisation_connection_no = user_connection.get_organisation_connection_no()
 
         if logged_in_id!=None and each['c_useruid'] == logged_in_id:
             logged_conn = 'buyer'
@@ -706,30 +707,30 @@ def get_connections(user_id, logged_in_id = None):
             and usr_pr.get('business_org_name')!='' else usr_pr['name']
         else:
             myname = usr_pr['name']           
-        rec_food_obj = RecommendFood()
-        total_vouches = rec_food_obj.get_recommend_count(each['c_useruid'])
+        # rec_food_obj = RecommendFood()
+        # total_vouches = rec_food_obj.get_recommend_count(each['c_useruid'])
         data = {'id': each['c_useruid'],
          # 'name': account.extra_data['name'],
          'name': myname,
-         'b_conn_no':b_conn_len, 
-         'c_conn_no':c_conn_len,
-         'total_vouches' : total_vouches,
+         # 'b_conn_no':b_conn_len, 
+         # 'c_conn_no':c_conn_len,
+         # 'total_vouches' : total_vouches,
          'description': usr_pr['description'],
          'photo': usr_pr['profile_img'],
          'username' : usr_pr['username'],
          'type': usr_pr['type_user'][:3],
-         'trade_conn_no': trade_connections_no,
-         'food_no': food_no,
-         'org_conn_no': organisation_connection_no,
+         # 'trade_conn_no': trade_connections_no,
+         # 'food_no': food_no,
+         # 'org_conn_no': organisation_connection_no,
          'latitude': usr_pr['latlng']['coordinates'][1],
          'longitude': usr_pr['latlng']['coordinates'][0],
          'relation': 'buyer'      
          }
         
-        try:
-            data['banner_url'] = '' if usr_pr['profile_banner_url'] ==None or usr_pr['profile_banner_url'] ==''  else usr_pr['profile_banner_url'] + '/web_retina'
-        except:
-            data['banner_url'] = ''
+        # try:
+        #     data['banner_url'] = '' if usr_pr['profile_banner_url'] ==None or usr_pr['profile_banner_url'] ==''  else usr_pr['profile_banner_url'] + '/web_retina'
+        # except:
+        #     data['banner_url'] = ''
         final_connections.append(data)
 
     for count, each in enumerate(c_conn):
@@ -740,10 +741,10 @@ def get_connections(user_id, logged_in_id = None):
             usr_pr = userprof.get_profile_by_id(str(each['b_useruid']))
             user_connection =  UserConnections(each['b_useruid'])
             
-            b_conn_len, c_conn_len = user_connection.get_trade_connection_no()
-            trade_connections_no = b_conn_len + c_conn_len
-            food_no = user_connection.get_food_connection_no()
-            organisation_connection_no = user_connection.get_organisation_connection_no()
+            # b_conn_len, c_conn_len = user_connection.get_trade_connection_no()
+            # trade_connections_no = b_conn_len + c_conn_len
+            # food_no = user_connection.get_food_connection_no()
+            # organisation_connection_no = user_connection.get_organisation_connection_no()
 
             if usr_pr.get('business_org_name')!=None:
                 myname = usr_pr.get('business_org_name') if (usr_pr['sign_up_as'] == 'Business' or usr_pr['sign_up_as'] == 'Organisation') \
@@ -751,31 +752,31 @@ def get_connections(user_id, logged_in_id = None):
             else:
                 myname = usr_pr['name']                                        
             
-            rec_food_obj = RecommendFood()
-            total_vouches = rec_food_obj.get_recommend_count(each['b_useruid'])                            
+            # rec_food_obj = RecommendFood()
+            # total_vouches = rec_food_obj.get_recommend_count(each['b_useruid'])                            
 
             new_data = {'id': each['b_useruid'],
 
              # 'name': account.extra_data['name'],
              'name': myname,
-             'total_vouches':total_vouches,
-             'b_conn_no':b_conn_len, 
-             'c_conn_no':c_conn_len,
+             # 'total_vouches':total_vouches,
+             # 'b_conn_no':b_conn_len, 
+             # 'c_conn_no':c_conn_len,
              'description': usr_pr['description'],
              'photo': usr_pr['profile_img'],
              'username' : usr_pr['username'],
              'type': usr_pr['type_user'][:3],
-             'trade_conn_no': trade_connections_no,
-             'food_no': food_no,
-             'org_conn_no': organisation_connection_no,
+             # 'trade_conn_no': trade_connections_no,
+             # 'food_no': food_no,
+             # 'org_conn_no': organisation_connection_no,
              'latitude': usr_pr['latlng']['coordinates'][1],
              'longitude': usr_pr['latlng']['coordinates'][0],
              'relation': 'buyer'
              }
-            try:
-                new_data['banner_url'] = '' if usr_pr['profile_banner_url'] ==None or usr_pr['profile_banner_url'] ==''  else usr_pr['profile_banner_url'] + '/web_retina'
-            except:
-                new_data['banner_url'] = ''
+            # try:
+            #     new_data['banner_url'] = '' if usr_pr['profile_banner_url'] ==None or usr_pr['profile_banner_url'] ==''  else usr_pr['profile_banner_url'] + '/web_retina'
+            # except:
+            #     new_data['banner_url'] = ''
 
             if new_data not in final_connections:
                 new_data['relation'] = 'seller'

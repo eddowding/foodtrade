@@ -165,5 +165,4 @@ class UserInfo():
             if not customer.has_active_subscription():
                 self.subscribed = False
         except:
-            self.subscribed = False
-        
+            self.subscribed = False        

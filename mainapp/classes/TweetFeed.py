@@ -562,13 +562,13 @@ class TradeConnection():
         self.db_object.create_table(self.table_name,'b_useruid')
 
     def get_connection_by_business(self,b_useruid):
-        return self.db_object.get_paginated_values(self.table_name,{'b_useruid': b_useruid, 'deleted': 0})
+        return self.db_object.get_all_vals(self.table_name,{'b_useruid': b_useruid, 'deleted': 0})
 
     def get_connection_no_by_business(self,b_useruid):
         return self.db_object.get_count(self.table_name,{'b_useruid': b_useruid, 'deleted': 0})
 
     def get_connection_by_customer(self, c_useruid):
-        return self.db_object.get_paginated_values(self.table_name,{'c_useruid':c_useruid, 'deleted': 0})
+        return self.db_object.get_all_vals(self.table_name,{'c_useruid':c_useruid, 'deleted': 0})
 
     def get_connection_no_by_customer(self, c_useruid):
         return self.db_object.get_count(self.table_name,{'c_useruid':c_useruid, 'deleted': 0})
@@ -594,7 +594,7 @@ class Food():
         self.db_object.create_table(self.table_name,'food_name')
 
     def get_foods_by_userid(self,useruid):
-        return self.db_object.get_paginated_values(self.table_name,{'useruid': useruid, 'webuy':0, 'deleted': 0})
+        return self.db_object.get_all_vals(self.table_name,{'useruid': useruid, 'webuy':0, 'deleted': 0})
         
     def get_food_count_by_userid(self,useruid):
         return self.db_object.get_count(self.table_name,{'useruid': useruid, 'webuy':0, 'deleted': 0})        
@@ -603,7 +603,7 @@ class Food():
         return self.db_object.get_paginated_values(self.table_name,{'useruid': useruid, 'webuy': 1, 'deleted': 0})
 
     def get_approved_foods_by_useruid(self, useruid):
-        result = self.db_object.get_paginated_values(self.table_name,{'useruid': useruid, 'deleted': 0})
+        result = self.db_object.get_all_vals(self.table_name,{'useruid': useruid, 'deleted': 0})
         myfoo = UnapprovedFood()
         final_result = []
         for each in result:
@@ -669,7 +669,7 @@ class Customer():
         self.db_object.create_table(self.table_name,'useruid')
 
     def get_customers_by_userid(self,useruid):
-        return self.db_object.get_all(self.table_name,{'useruid': useruid, 'deleted': 0})
+        return self.db_object.get_all_vals(self.table_name,{'useruid': useruid, 'deleted': 0})
 
     def create_customer (self, value):
         value['deleted'] =0
