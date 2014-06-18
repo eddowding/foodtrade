@@ -138,7 +138,6 @@ var Search = {
         {
             $("#search_type").html("Profile");
             $("#search_type_option").html("Produce");
-
         }
 
         $("#search_query").val(this.keyword);

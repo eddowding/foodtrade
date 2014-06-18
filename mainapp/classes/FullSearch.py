@@ -9,7 +9,7 @@ import re
 from bson import json_util
 from bson.json_util import loads
 from TweetFeed import UserProfile
-
+import math
     
 
 class GeneralSearch():
@@ -23,6 +23,7 @@ class GeneralSearch():
         db_object.create_table(table_name,'updates.status')
         db_object.create_table(table_name,'username')
         self.db = db_object.get_db()[table_name]
+
         params = self.get_request(request)
         self.keyword = params['keyword']
         self.search_for = params['search_for']
@@ -35,6 +36,7 @@ class GeneralSearch():
         self.biz_type_filters = json.loads(params['biz_type_filters'])
         self.food_filters = json.loads(params['food_filters'])
         self.radius = 160900000
+        self.user = params['up']
 
     def get_request(self,request):
         search_request = {}
@@ -65,6 +67,7 @@ class GeneralSearch():
         search_request['biz_type_filters'] = request.POST.get("biz",request.GET.get("biz","[]")) 
         search_request['org_filters'] = request.POST.get("org",request.GET.get("org","[]")) 
         search_request['food_filters'] = request.POST.get("food",request.GET.get("food","[]")) 
+        search_request['up'] = up
         return search_request
 
     def get_latest_updates(self, time_stamp=None):
@@ -189,8 +192,7 @@ class GeneralSearch():
         result = [doc for doc in first20]
        
         for i in range(0,len(result)):
-            distance= calc_distance(self.lat, 
-                self.lng, 
+            distance= self.calc_distance(
                 result[i]['latlng']['coordinates'][1],
                 result[i]['latlng']['coordinates'][0])
 
@@ -206,37 +208,38 @@ class GeneralSearch():
 
 
 
-import math
 
-def calc_distance(lat1, long1, lat2, long2):
 
-    # Convert latitude and longitude to 
-    # spherical coordinates in radians.
-    degrees_to_radians = math.pi/180.0
+    def calc_distance(self,lat2, long2):
+        lat1 = self.lat
+        long1 = self.lng
+        # Convert latitude and longitude to 
+        # spherical coordinates in radians.
+        degrees_to_radians = math.pi/180.0
+            
+        # phi = 90 - latitude
+        phi1 = (90.0 - lat1)*degrees_to_radians
+        phi2 = (90.0 - lat2)*degrees_to_radians
+            
+        # theta = longitude
+        theta1 = long1*degrees_to_radians
+        theta2 = long2*degrees_to_radians
+            
+        # Compute spherical distance from spherical coordinates.
+            
+        # For two locations in spherical coordinates 
+        # (1, theta, phi) and (1, theta, phi)
+        # cosine( arc length ) = 
+        #    sin phi sin phi' cos(theta-theta') + cos phi cos phi'
+        # distance = rho * arc length
         
-    # phi = 90 - latitude
-    phi1 = (90.0 - lat1)*degrees_to_radians
-    phi2 = (90.0 - lat2)*degrees_to_radians
-        
-    # theta = longitude
-    theta1 = long1*degrees_to_radians
-    theta2 = long2*degrees_to_radians
-        
-    # Compute spherical distance from spherical coordinates.
-        
-    # For two locations in spherical coordinates 
-    # (1, theta, phi) and (1, theta, phi)
-    # cosine( arc length ) = 
-    #    sin phi sin phi' cos(theta-theta') + cos phi cos phi'
-    # distance = rho * arc length
-    
-    cos = (math.sin(phi1)*math.sin(phi2)*math.cos(theta1 - theta2) + 
-           math.cos(phi1)*math.cos(phi2))
-    arc = math.acos( cos )
+        cos = (math.sin(phi1)*math.sin(phi2)*math.cos(theta1 - theta2) + 
+               math.cos(phi1)*math.cos(phi2))
+        arc = math.acos( cos )
 
-    # Remember to multiply arc by the radius of the earth 
-    # in your favorite set of units to get length.
-    return arc * 6371000
+        # Remember to multiply arc by the radius of the earth 
+        # in your favorite set of units to get length.
+        return arc * 3963.1676
 
 
     

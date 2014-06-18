@@ -315,7 +315,7 @@
                     for(var i = 0;i<feeds.length;i++)
                     {
                       var item = feeds[i];
-                      updates +='<div class="update" data-toggle="popover" data-trigger="manual" data-container="body" data-placement="left" data-original-title="" title="" data-title="Aww shucks!!"  data-html="true"  >';
+                      updates +='<div class="update" data-toggle="popover" data-title="help" data-tweet-id="'+item.updates.tweet_id+'" data-trigger="manual" data-container="body" data-placement="left" data-original-title="" title="" data-html="true"  >';
                       updates += '<img src="'+item.profile_img+'" class="pull-left" style="width:25px; margin-right: 10px;" /><p class="margin-image-left-small">'+item.updates.status+'<br /><small class="text-muted">'+get_time_text(item.updates.time_stamp)+'</small> </p></div>';
 
 
@@ -330,13 +330,59 @@
                  $("#updates").on("click",".update",function(e){ 
                   if($(this).attr('data-trigger')!="manual")
                     return;
-                       $(this).popover({
+                  var tweet_id = $(this).attr('data-tweet-id');
+                  var that = this;
+
+                  $.post( "/ajax-handler/get_single_tweet", { tweet_id:tweet_id }, function( data ) {
+                    var content = "<div class='text-center'><p class=''>This is over 50 miles away. If you'd like to see it, please go ahead and ...</p><a href='/subscribe' class='btn btn-primary'>Upgrade</a></div>";
+                      var title = "Aww shucks!!";
+                    if(data.status == "ok")
+                    {
+                      var result = data.result;
+                      var content = "<div class=''><div class='timeline-top-info   '>";
+                      content += "<div class='  pull-right' style='margin-left: 5px;'>";
+                      content += "<a type='button' class='btn btn-primary btn-xs' href='/"+result.username+"/post/"+result.updates.tweet_id+"'>";
+                      content += "<i class='fa fa-arrow-right fa-lg' style='color:#fff;'></i> ";
+                      content += "</a>";
+                      content += "</div>   ";
+                      content += "</div>";
+                      content += "<div class='media margin-none'>   ";
+                      content += "<div class=' '>";
+                      content += result.updates.status;
+                      content += "</div>";
+                      content += "<div class=''>";
+                      content += "<img src='"+result.profile_img+"' class='img-responsive'>";
+                      content += "</div>";
+                      content += "</div> ";
+                      content += "<div class='timeline-bottom  border-top clearfix innerTB half'>";
+                      content += "<a href='http://maps.google.com/maps?saddr=51.4529956141,-2.62451568043&amp;daddr=51.4619294,-2.5891196' target='_blank' data-placement='top' data-toggle='tooltip' class='pull-right' rel='tooltip' title='' data-original-title='Get directions'> ";
+                      content += "<i class='fa fa-location-arrow fa-fw'></i> 1.6 miles  ";
+                      content += "</a>";
+                      content += "<i class='fa fa-home fa-fw'></i>";
+                      content += "<a href='/activity/?b=Grower' class='innerR half'>Grower</a>";
+                      content += "</div> ";
+                      content += "<div class='border-top innerT'> ";
+                      content += "<p class='small text-center'>";
+                      content += "<i class='fa fa-comments fa-fw'></i>";
+                      content += "<a href='#'>See all 3 replies</a>";
+                      content += "</p>";
+                      content += "<input class='form-control input-sm enterhandler reply_input' data-tweet-id='476371282137985024' data-main='main' type='text' placeholder='Reply to @severnproject' data-mentions='@severnproject'> ";
+                      content += "</div>";
+                      content += "</div>";
+                      var title = result.name;
+                    }
+                   
+                   $(that).popover({
                               trigger : "click",
                               placement : 'left',
                               html : true,
-                              content: 'hello text'
+                              title:title,
+                              content: content
                           }).popover("show");
-                       $(this).attr('data-trigger',"click");
+                       $(that).attr('data-trigger',"click");
+ 
+}, "json");
+                      
                 });
                  });
 
