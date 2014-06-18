@@ -8,6 +8,7 @@ var Search = {
     market:{want:"all",lng:"",lat:"", location:"", usertype:"company", org:[], biz:[]}},
     tab:"market",
     profile_results:{},
+    market_results:{},
     load_state: function () {
         this.keyword = getParameterByName('q', this.keyword);
 
@@ -137,7 +138,6 @@ var Search = {
         {
             $("#search_type").html("Profile");
             $("#search_type_option").html("Produce");
-
         }
 
         $("#search_query").val(this.keyword);
@@ -162,10 +162,19 @@ var Search = {
     }
 
     },
-    load_results : function()
+    show_market : function()
     {
-        this.show_profiles();
-        show_connections_on_map();
+        var updates = this.market_results.result;
+        var html_content = "";
+         for(var i=0;i<updates.length;i++)
+          {
+            html_content += get_box_update(updates[i]);
+          }
+          $("#mkt_results").html(html_content);
+          if(this.tab == "market")
+          {
+            show_connections_on_map();
+          }
     },
 
     show_profiles : function()
@@ -177,13 +186,26 @@ var Search = {
             html_content += get_box_profile(profiles[i]);
           }
           $("#profile_results").html(html_content);
+          if(this.tab == "profile")
+          {
+            show_connections_on_map();
+          }
 
     },
     search_profiles : function()
     {
         $.post( "/ajax-handler/search_profiles", { q: this.keyword, search_type:this.search_type, lng:this.filters.profile.lng, lat:this.filters.profile.lat }, function( data ) {
   Search.profile_results = data;
-  Search.load_results();
+Search.show_profiles();
+ 
+}, "json");
+
+    },
+    search_market : function()
+    {
+         $.post( "/ajax-handler/search_market", { q: this.keyword, search_type:this.search_type, lng:this.filters.market.lng, lat:this.filters.market.lat }, function( data ) {
+  Search.market_results = data;
+  Search.show_market();
  
 }, "json");
 
@@ -193,14 +215,13 @@ var Search = {
     {
         this.keyword = $("#search_query").val();
         this.set_url();
-        if(this.tab=="profile")
+        if(this.search_type=="produce")
         {
-            this.search_profiles();
+            
+       
+            this.search_market();
         }
-        else
-        {
-            this.search_profiles();
-        }
+        this.search_profiles();
         
     },
 
@@ -211,8 +232,6 @@ var Search = {
         this.set_ui();
         if(this.tab == "profile")
         {
-            console.log("profile");
-            this.search_profiles();
             $("#profile_tab").parent().addClass('active');
             $("#mkt_tab").parent().removeClass('active');
             $("#profiles").addClass('active');
@@ -220,7 +239,6 @@ var Search = {
         }
         else
         {
-            this.search_profiles();
             $("#mkt_tab").parent().addClass('active');
             $("#profile_tab").parent().removeClass('active');
 
@@ -228,10 +246,17 @@ var Search = {
              $("#profiles").removeClass('active');
             $("#mktplace").addClass('active');
         }
+        if(this.search_type=="produce")
+        {
+            
+       
+            this.search_market();
+        }
+        this.search_profiles();
         var lng = parseFloat(this.filters[this.tab].lng);
         var lat = parseFloat(this.filters[this.tab].lat);
         load_map(lat,lng);
-         
+
 
     }
 
@@ -256,7 +281,7 @@ show_connections_on_map();
 $("#mkt_tab").click(function(){
 Search.tab = "market";
 Search.set_url();
-
+show_connections_on_map();
 });
 
 $("#search_type_option").click(function(){

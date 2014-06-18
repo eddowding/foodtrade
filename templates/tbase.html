@@ -485,110 +485,6 @@ function show_small_structure()
           <div class="">   
 
             <div id="updates"> 
-
-              <div class="update" data-toggle="popover" data-trigger="click" data-container="body" data-placement="left" data-original-title="" title=""
-              data-title="the severn project cic" 
-              data-html="true"
-              data-content="
-              <div class=''>
-
-              <!--------------------------------------------------------------------------------- --><!--
-
-              This is timeline code 
-              - without box generic
-              - time ago
-              - media changed to img-responsive not img-post
-              - innerAll removed on a few places
-              - bg-gray removed on reply
-              - title moved to data-title
-              - added comments as a count, not detail
-
-
-              -->
-              <!--------------------------------------------------------------------------------- -->
-
-            <div class='timeline-top-info   '>
-            
-            <div class='  pull-right' style='margin-left: 5px;'>
-                
-              <a type='button' class='btn btn-primary btn-xs' href='/severnproject/post/476371282137985024'>
-                <i class='fa fa-arrow-right fa-lg' style='color:#fff;'></i> 
-              </a>
-     
-          </div>   
-                 
-            </div>
-
-            <!-- status --> 
-            <div class='media margin-none'>   
-              
-              <div class=' '>
-                @BigBarnSW <a href='/profile/foodtradeHQ/'>@foodtradeHQ</a> <a href='/profile/bristolecojam/'>@bristolecojam</a> @LACHASSELIMITED Guys! this is what <a href='/profile/severnproject/'>@severnproject</a> looks like: <a href='http://t.co/OL0KUPqztN' target='_blank'>http://t.co/OL0KUPqztN</a>
-              </div>
-              
-
-              <!-- images !-->
-              
-                
-                  <div class=''>
-                    <img src='http://pbs.twimg.com/media/BpxpJ9LIQAAy6RS.jpg' class='img-responsive'>
-                  </div>
-                 
-              
-              <!-- /images !-->
-
-            
-
-            </div> 
-
-            <div class='timeline-bottom  border-top clearfix innerTB half'>
-              
-               <a href='http://maps.google.com/maps?saddr=51.4529956141,-2.62451568043&amp;daddr=51.4619294,-2.5891196' target='_blank' data-placement='top' data-toggle='tooltip' class='pull-right' rel='tooltip' title='' data-original-title='Get directions'> 
-               <i class='fa fa-location-arrow fa-fw'></i> 1.6 miles  
-               </a>
-                
-              <!-- tags -->  
-                <i class='fa fa-home fa-fw'></i>
-                <a href='/activity/?b=Grower' class='innerR half'>Grower</a>
-             
-            </div> 
- 
-            <div class='border-top innerT'> 
-                <p class='small text-center'>
-                  <i class='fa fa-comments fa-fw'></i>
-                  <a href='#'>See all 3 replies</a>
-                </p>
-                <input class='form-control input-sm enterhandler reply_input' data-tweet-id='476371282137985024' data-main='main' type='text' placeholder='Reply to @severnproject' data-mentions='@severnproject'> 
-            </div>
-        </div>
-
-              " > 
-                <img src="https://pbs.twimg.com/profile_images/378800000141996074/6a363e3c4f2a84a956c3cb27c50b2ca0_normal.png" class="pull-left" style="width:25px; margin-right: 10px;" />
-                <p class="margin-image-left-small">I'd like to buy #cheese (asdf). 15 Kg.
-                <br /><small class="text-muted">2 days ago</small> 
-                </p>
-
-              </div>
-
-
- <div class="update" data-toggle="popover" data-trigger="click" data-container="body" data-placement="left" data-original-title="" title=""
-              data-title="Aww shucks!!" 
-              data-html="true"
-              data-content="
-              <div class='text-center'>
-               <p class=''>This is over 50 miles away. If you'd like to see it, please go ahead and ...</p>
-               <a href='#' class='btn btn-primary'>Upgrade</a> 
-               </div>
-
-              " > 
-                <img src="https://pbs.twimg.com/profile_images/378800000141996074/6a363e3c4f2a84a956c3cb27c50b2ca0_normal.png" class="pull-left" style="width:25px; margin-right: 10px;" />
-                <p class="margin-image-left-small">This is an update from much futher away
-                <br /><small class="text-muted">2 days ago</small> 
-                </p>
-
-              </div>
-
-
             </div><!-- updates -->
 
             <div id="didyouknow" class="carousel slide"> 
@@ -734,7 +630,7 @@ function show_small_structure()
 
   <div class="input-group pull-left">
    
-    <form action="/activity" onsubmit="return start_search()" ">
+    <form action="/activity" onsubmit="return start_search()">
  
     <div class="input-group">
       <input type="hidden" name="search_param" value="all" id="search_param">   
@@ -1082,7 +978,7 @@ border-radius: 0 5px 5px 0 !important;">
     </script>
 
     <script src="http://malihu.github.io/custom-scrollbar/jquery.mCustomScrollbar.concat.min.js"></script>
- 
+ <script src="{% static "assets/components/plugins/nicescroll/jquery.nicescroll.min.js" %}"></script>
     <script src="{% static "assets/components/plugins/breakpoints/breakpoints.js" %}"></script>
     <script src="{% static "assets/components/plugins/preload/pace/pace.min.js" %}"></script>
     <script src="{% static "assets/components/plugins/menus/sidr/jquery.sidr.js" %}"></script>

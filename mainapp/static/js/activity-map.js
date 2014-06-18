@@ -10,7 +10,7 @@ function load_map(lat,lng)
   });
   L.control.fullscreen().addTo(map);
 map.on('dragend', map_dragged);
-map.fitBounds(markers.getBounds());
+
 }
 
 
@@ -60,30 +60,18 @@ function show_connections_on_map()
       
       var current_lat = parseFloat(results[i].latlng.coordinates[1]);
       var current_lon = parseFloat(results[i].latlng.coordinates[0]);
+      var card = (Search.tab=="market")?map_update_card(results[i]):map_profile_card(results[i]);
 
 
-var ctrl = L.marker([parseFloat(current_lat), parseFloat(current_lon)],{icon: redIcon}).bindPopup(map_profile_card(results[i]));
+var ctrl = L.marker([parseFloat(current_lat), parseFloat(current_lon)],{icon: redIcon}).bindPopup(card);
      
         markers.addLayer(ctrl);
          }
     
         map.addLayer(markers);
-
+map.fitBounds(markers.getBounds());
 
 }
-
- 
-
-//  MAKES MAP ZOOM TO EXTENT OF ALL CONNECTIONS 
-//      map.fitBounds([
-//     [min_lat, min_lon],
-//     [max_lat, max_lon]
-// ]);
-
-
-
-    
-     
 
 
 function map_dragged(e) {
@@ -94,10 +82,3 @@ function map_dragged(e) {
       Search.search_start();
         
 }
-
-
-
-
-
-
-// setTimeout(function(){reload_controls()},3000);
