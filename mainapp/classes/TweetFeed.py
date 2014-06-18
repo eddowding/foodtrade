@@ -203,7 +203,9 @@ class TweetFeed():
         
 
     def get_near_people(self, query):
-        return self.db_object.get_distinct(self.table_name,'username',query)['count']
+        # print self.db_object.get_distinct(self.table_name,'username',query)['count']
+        # print self.db_object.get_count(self.table_name,query)
+        return self.db_object.get_count(self.table_name,query)
     
     def update_tweets(self, username, first_name, last_name, description, address, sign_up_as,  lat, lon,type_user=[]):
         results = address
@@ -560,10 +562,16 @@ class TradeConnection():
         self.db_object.create_table(self.table_name,'b_useruid')
 
     def get_connection_by_business(self,b_useruid):
-        return self.db_object.get_all(self.table_name,{'b_useruid': b_useruid, 'deleted': 0})
+        return self.db_object.get_all_vals(self.table_name,{'b_useruid': b_useruid, 'deleted': 0})
+
+    def get_connection_no_by_business(self,b_useruid):
+        return self.db_object.get_count(self.table_name,{'b_useruid': b_useruid, 'deleted': 0})
 
     def get_connection_by_customer(self, c_useruid):
-        return self.db_object.get_all(self.table_name,{'c_useruid':c_useruid, 'deleted': 0})
+        return self.db_object.get_all_vals(self.table_name,{'c_useruid':c_useruid, 'deleted': 0})
+
+    def get_connection_no_by_customer(self, c_useruid):
+        return self.db_object.get_count(self.table_name,{'c_useruid':c_useruid, 'deleted': 0})
 
     def create_connection (self, value):
         value['deleted'] =0
@@ -586,13 +594,16 @@ class Food():
         self.db_object.create_table(self.table_name,'food_name')
 
     def get_foods_by_userid(self,useruid):
-        return self.db_object.get_all(self.table_name,{'useruid': useruid, 'webuy':0, 'deleted': 0})
+        return self.db_object.get_all_vals(self.table_name,{'useruid': useruid, 'webuy':0, 'deleted': 0})
+        
+    def get_food_count_by_userid(self,useruid):
+        return self.db_object.get_count(self.table_name,{'useruid': useruid, 'webuy':0, 'deleted': 0})        
 
     def get_webuy_foods_by_userid(self,useruid):
-        return self.db_object.get_all(self.table_name,{'useruid': useruid, 'webuy': 1, 'deleted': 0})
+        return self.db_object.get_paginated_values(self.table_name,{'useruid': useruid, 'webuy': 1, 'deleted': 0})
 
     def get_approved_foods_by_useruid(self, useruid):
-        result = self.db_object.get_all(self.table_name,{'useruid': useruid, 'deleted': 0})
+        result = self.db_object.get_all_vals(self.table_name,{'useruid': useruid, 'deleted': 0})
         myfoo = UnapprovedFood()
         final_result = []
         for each in result:
@@ -658,7 +669,7 @@ class Customer():
         self.db_object.create_table(self.table_name,'useruid')
 
     def get_customers_by_userid(self,useruid):
-        return self.db_object.get_all(self.table_name,{'useruid': useruid, 'deleted': 0})
+        return self.db_object.get_all_vals(self.table_name,{'useruid': useruid, 'deleted': 0})
 
     def create_customer (self, value):
         value['deleted'] =0
@@ -689,6 +700,9 @@ class Organisation():
 
     def get_organisations_by_mem_id(self, member_id):
         return self.db_object.get_all(self.table_name,{'memberuid': member_id, 'deleted': 0})
+
+    def get_organisations_count_by_mem_id(self, member_id):
+        return self.db_object.get_count(self.table_name,{'memberuid': member_id, 'deleted': 0})        
 
     def check_member(self, org_id, mem_id):
         return self.db_object.get_one(self.table_name, {'orguid': int(org_id), 'memberuid':int(mem_id), 'deleted': 0})

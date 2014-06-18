@@ -231,6 +231,7 @@ class AjaxHandle(AjaxSearch):
         return HttpResponse("{'status':0}")
 
     def add_connection(self, request):
+        print "Inside"
         trade_conn = TradeConnection()
         data = eval(request.POST.get('conn_data'))
         notification_obj = Notification()
@@ -342,16 +343,21 @@ class AjaxHandle(AjaxSearch):
             buss_obj = user_pro.get_profile_by_id(int(data['buss_id']))
             # if any party is unclaimed user, change it into business
             if pro_obj['sign_up_as'] == 'unclaimed':
-                print pro_obj['name'], ' unclaimed'
                 user_pro.update_profile_fields({'useruid': int(data['prof_id'])}, {'sign_up_as': 'Business',
                     'recently_updated_by_super_user': 'true'})
             elif buss_obj['sign_up_as'] == 'unclaimed':
-                print buss_obj['name'], ' unclaimed'
                 user_pro.update_profile_fields({'useruid': int(data['buss_id'])}, {'sign_up_as': 'Business',
                     'recently_updated_by_super_user': 'true'})
             else:
-                print 'no unclaimed user in new link'
+                pass
+                #print 'no unclaimed user in new link'
             # add parameters
+            from mainapp.classes.DataConnector import UserConnections
+            user_connection =  UserConnections(data['prof_id'])
+            b_conn_len, c_conn_len = user_connection.get_trade_connection_no()
+            parameters['b_conn_no'] = b_conn_len
+            parameters['c_conn_no'] = c_conn_len
+            parameters['user'] = request.user
             parameters['connections'], parameters['conn'] = get_connections(int(data['prof_id']), request.user.id)
             parameters['connections_str'] = json.dumps(parameters['connections'])
             parameters['profile_id'], parameters['user_id'] = int(data['prof_id']), request.user.id
