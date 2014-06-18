@@ -664,41 +664,7 @@
           data-trigger="click" 
           data-container="body" 
           data-title="{{eachfood.food_name|safe}}" 
-          data-html="true"
-          data-content="
-          {% if each.banner_url %}
-            <img src='{{each.banner_url}}' title='{{each.username}}' class='img-responsive'>
-          {% endif %}  
- 
-          <div class=''>
-            <a href='/profile/{{each.username}}' class='black'><strong>{{each.username}}</strong></a>
-          </div>
-
-          {% if each.description %}    
-            <div class='small innerTB half'> 
-            {{each.description}}  
-            </div>
-          {% endif %}  
-
-          <div class='row row-merge border-top'>
-            <!-- number of foods sold -->
-            <div class='{% if show_foods %}col-xs-3{% else %}col-xs-6{% endif %}'>
-              <a href='' class='innerAll half text-center display-block text-muted' data-original-title='{{each.food_no}} foods' rel='tooltip'><i class='fa fa-fw fa fa-cutlery'></i> {{each.food_no}}</a>
-            </div>
-            <!-- number of vouches across all produce --> 
-            <div class='{% if show_foods %}col-xs-3{% else %}col-xs-6{% endif %}'>
-              <a href=''  rel='tooltip' title='{{each.total_vouches}} of vouches for all produce'  class='innerAll half text-center display-block text-muted'><i class='fa fa-fw fa-thumbs-o-up'></i> {{each.total_vouches}}</a>
-            </div> 
-            <!-- number of trade connections --> 
-            <div class='{% if show_foods %}col-xs-3{% else %}col-xs-6{% endif %}'>
-              <a href=''  rel='tooltip' title='{{each.trade_conn_no}} of trade connections' class='innerAll half text-center display-block text-muted'><i class='fa fa-fw fa-link'></i> {{each.trade_conn_no}}</a>
-            </div>
-            <!-- number of group membershpis -->  
-            <div class='{% if show_foods %}col-xs-3{% else %}col-xs-6{% endif %}'>
-              <a href=''  rel='tooltip' title='Member of {{each.org_conn_no}} groups or organisations'  class='innerAll half text-center display-block text-muted'><i class='fa fa-fw fa-group'></i> {{each.org_conn_no}}</a>
-            </div> 
-          </div>  
-          ">
+          data-html="true">
             <i class="fa fa-arrow-circle-right text-primary fa-fw fa-lg"></i>
           </td>
         </tr>
@@ -1713,8 +1679,9 @@ customers = {{customers_str | safe}};
         
      </script>
      <script type="text/javascript">
-      $('.tdSupplierClass').on('show.bs.popover', function () {
+      $('.tdSupplierClass, .tdStockistsClass').on('show.bs.popover', function () {
         username = $(this).attr('data-title');
+        class_name = $(this).attr('class');
            $.ajax({
               type: "POST",
               url: "/ajax-handler/" + 'get_business_counts',
@@ -1722,18 +1689,20 @@ customers = {{customers_str | safe}};
               cache: true,
               async:   false,
               success: function(data) {
-                get_business_counts_success(data);
+                get_business_counts_success(data, class_name);
               }
           });
       });
-      function get_business_counts_success(data){
+
+      function get_business_counts_success(data, td_type){
+        alert(td_type);
         data = jQuery.parseJSON(data);
         mytext = "<img src='" + data['result']['banner_url'] +  "'" + " title='" + data['result']['username'] + "' class='img-responsive'>";
             mytext += "<div class=''><a href='/profile/" + data['result']['username'] + "/' class='black'><strong>" + data['result']['username'] + "</strong></a></div>";
             mytext += "<div class='small innerTB half'>" + data['result']['description'] + "</div><div class='row row-merge border-top'>";
             mytext += "<div class='";
             if (showfoods=='True') {
-              mytext += "mycol-xs-3'>";
+              mytext += "col-xs-3'>";
             }
             else{
               mytext += "col-xs-6'>";
