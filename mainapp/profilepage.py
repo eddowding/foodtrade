@@ -862,18 +862,18 @@ def get_organisations(user_id):
         else:
             myname = usr_pr['name']
 
-        rec_food_obj = RecommendFood()
-        total_vouches = rec_food_obj.get_recommend_count(each['orguid'])                            
+        # rec_food_obj = RecommendFood()
+        # total_vouches = rec_food_obj.get_recommend_count(each['orguid'])                            
 
         from mainapp.classes.DataConnector import UserConnections
-        user_connection =  UserConnections(each['orguid'])
-        b_conn_len, c_conn_len = user_connection.get_trade_connection_no()                                                
+        # user_connection =  UserConnections(each['orguid'])
+        # b_conn_len, c_conn_len = user_connection.get_trade_connection_no()                                                
         data = {'id': each['orguid'],
          # 'name': account.extra_data['name'],
          'name': myname,
-         'total_vouches':total_vouches,
-         'b_conn_no':b_conn_len,
-         'c_conn_no':c_conn_len,
+         # 'total_vouches':total_vouches,
+         # 'b_conn_no':b_conn_len,
+         # 'c_conn_no':c_conn_len,
          'description': usr_pr['description'],
          'photo': usr_pr['profile_img'],
          'username' : usr_pr['username']

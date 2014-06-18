@@ -663,7 +663,7 @@
           class="tdStockistsClass"
           data-trigger="click" 
           data-container="body" 
-          data-title="{{eachfood.food_name|safe}}" 
+          data-title="{{each.username|safe}}" 
           data-html="true">
             <i class="fa fa-arrow-circle-right text-primary fa-fw fa-lg"></i>
           </td>
@@ -1679,9 +1679,8 @@ customers = {{customers_str | safe}};
         
      </script>
      <script type="text/javascript">
-      $('.tdSupplierClass, .tdStockistsClass').on('show.bs.popover', function () {
+      $('.tdSupplierClass').on('show.bs.popover', function () {
         username = $(this).attr('data-title');
-        class_name = $(this).attr('class');
            $.ajax({
               type: "POST",
               url: "/ajax-handler/" + 'get_business_counts',
@@ -1689,13 +1688,26 @@ customers = {{customers_str | safe}};
               cache: true,
               async:   false,
               success: function(data) {
-                get_business_counts_success(data, class_name);
+                get_business_counts_success(data);
               }
           });
       });
 
-      function get_business_counts_success(data, td_type){
-        alert(td_type);
+      $('.tdStockistsClass').on('show.bs.popover', function () {
+        username = $(this).attr('data-title');
+           $.ajax({
+              type: "POST",
+              url: "/ajax-handler/" + 'get_business_counts',
+              data: {'username':username},
+              cache: true,
+              async:   false,
+              success: function(data) {
+                get_business_counts_success(data);
+              }
+          });
+      });
+
+      function get_business_counts_success(data){
         data = jQuery.parseJSON(data);
         mytext = "<img src='" + data['result']['banner_url'] +  "'" + " title='" + data['result']['username'] + "' class='img-responsive'>";
             mytext += "<div class=''><a href='/profile/" + data['result']['username'] + "/' class='black'><strong>" + data['result']['username'] + "</strong></a></div>";
@@ -1708,7 +1720,7 @@ customers = {{customers_str | safe}};
               mytext += "col-xs-6'>";
             }
               
-              mytext+= "<a href='' class='innerAll half text-center display-block text-muted' data-original-title='" + data['result']['food_no'] + " foods' rel='tooltip'><i class='fa fa-fw fa fa-cutlery'></i>" + data['result']['food_no'] + "</a>";
+            mytext+= "<a href='' class='innerAll half text-center display-block text-muted' data-original-title='" + data['result']['food_no'] + " foods' rel='tooltip'><i class='fa fa-fw fa fa-cutlery'></i>" + data['result']['food_no'] + "</a>";
             mytext += "</div><!-- number of vouches across all produce -->";
 
             mytext += "<div class='"; 
