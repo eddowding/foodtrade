@@ -676,6 +676,7 @@ def get_connections(user_id, logged_in_id = None):
     userprof = UserProfile()
     b_conn = trade_conn.get_connection_by_business(user_id)
     c_conn = trade_conn.get_connection_by_customer(user_id)
+
     final_connections = []
     logged_conn = 'none'
     from mainapp.classes.DataConnector import UserConnections

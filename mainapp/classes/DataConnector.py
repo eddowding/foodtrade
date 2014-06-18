@@ -41,8 +41,8 @@ class UserConnections():
 
     def get_organisation_connection_no(self):
         org = Organisation()
-        organisations = org.get_organisations_by_mem_id(self.user_id)
-        return len(organisations)
+        organisations_Count = org.get_organisations_count_by_mem_id(self.user_id)
+        return organisations_Count
 
     def get_nearby_individuals_no(self, lon, lat):
         query_string = {}
