@@ -739,8 +739,7 @@ def get_connections(user_id, logged_in_id = None):
                 break
 
             usr_pr = userprof.get_profile_by_id(str(each['b_useruid']))
-            user_connection =  UserConnections(each['b_useruid'])
-            
+            # user_connection =  UserConnections(each['b_useruid'])            
             # b_conn_len, c_conn_len = user_connection.get_trade_connection_no()
             # trade_connections_no = b_conn_len + c_conn_len
             # food_no = user_connection.get_food_connection_no()

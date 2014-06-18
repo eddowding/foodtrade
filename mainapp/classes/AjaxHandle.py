@@ -1119,3 +1119,51 @@ class AjaxHandle(AjaxSearch):
             return HttpResponse(json.dumps({'status':1}))
         else:
             return HttpResponse(json.dumps({'status':0, 'message':'You are not authorized to perform this action.'}))                
+    
+    def get_business_counts(self, request):
+        if request.user.is_authenticated():
+            username = request.POST.get('username')
+
+            userprof = UserProfile()
+            usr_pr = userprof.get_profile_by_username(str(username))
+
+            from mainapp.classes.DataConnector import UserConnections
+            user_connection =  UserConnections(usr_pr['useruid'])
+            
+            b_conn_len, c_conn_len = user_connection.get_trade_connection_no()
+            trade_connections_no = b_conn_len + c_conn_len
+            food_no = user_connection.get_food_connection_no()
+            organisation_connection_no = user_connection.get_organisation_connection_no()
+
+            if usr_pr.get('business_org_name')!=None:
+                myname = usr_pr.get('business_org_name') if (usr_pr['sign_up_as'] == 'Business' or usr_pr['sign_up_as'] == 'Organisation') \
+                and usr_pr.get('business_org_name')!='' else usr_pr['name']
+            else:
+                myname = usr_pr['name']                    
+
+            rec_food_obj = RecommendFood()
+            total_vouches = rec_food_obj.get_recommend_count(usr_pr['useruid'])                            
+
+            data = {'id': usr_pr['useruid'],
+             # 'name': account.extra_data['name'],
+             'name': myname,
+             'description': usr_pr['description'],
+             'total_vouches':total_vouches, 
+             'b_conn_no':b_conn_len,
+             'c_conn_no':c_conn_len,
+             'photo': usr_pr['profile_img'],
+             'username' : usr_pr['username'],
+             'type': usr_pr['type_user'],
+             'trade_conn_no': trade_connections_no,
+             'food_no': food_no,
+             'org_conn_no': organisation_connection_no,
+             'latitude': usr_pr['latlng']['coordinates'][1],
+             'longitude': usr_pr['latlng']['coordinates'][0]
+             }
+            try:
+                data['banner_url'] = '' if usr_pr['profile_banner_url'] ==None or usr_pr['profile_banner_url'] ==''  else usr_pr['profile_banner_url'] + '/web_retina'
+            except:
+                data['banner_url'] = ''
+            return HttpResponse(json.dumps({'status':'ok', 'result':data}))
+        else:
+            return HttpResponse(json.dumps({'status':0, 'message':'You are not authorized to perform this action.'}))                
