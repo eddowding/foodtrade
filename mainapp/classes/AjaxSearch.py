@@ -17,6 +17,7 @@ from mainapp.activity import get_search_parameters
 
 
 from FullSearch import GeneralSearch
+from MarketSearch import MarketSearch
 
 
 consumer_key = 'seqGJEiDVNPxde7jmrk6dQ'
@@ -38,6 +39,13 @@ class AjaxSearch():
         search_obj = GeneralSearch(request)
         feed_result = search_obj.get_latest_updates(request.POST.get("time",None))
         return HttpResponse(json.dumps(feed_result))
+
+
+    def search_market(self,request):
+        search_obj = MarketSearch(request)
+        market_result = search_obj.get_result()
+        return HttpResponse(json.dumps(market_result))
+
 
     def search_profiles(self,request):
         search_obj = GeneralSearch(request)
@@ -72,3 +80,4 @@ class AjaxSearch():
         ret_val['results_organisation_count'] = parameters['results_organisation_count']
         ret_val['results_updates_count'] = parameters['results_updates_count']
         return HttpResponse(json.dumps(ret_val))
+        

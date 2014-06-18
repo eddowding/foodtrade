@@ -492,20 +492,6 @@ function show_small_structure()
               data-content="
               <div class=''>
 
-              <!--------------------------------------------------------------------------------- --><!--
-
-              This is timeline code 
-              - without box generic
-              - time ago
-              - media changed to img-responsive not img-post
-              - innerAll removed on a few places
-              - bg-gray removed on reply
-              - title moved to data-title
-              - added comments as a count, not detail
-
-
-              -->
-              <!--------------------------------------------------------------------------------- -->
 
             <div class='timeline-top-info   '>
             
@@ -567,7 +553,6 @@ function show_small_structure()
                 <p class="margin-image-left-small">I'd like to buy #cheese (asdf). 15 Kg.
                 <br /><small class="text-muted">2 days ago</small> 
                 </p>
-
               </div>
 
 
@@ -734,7 +719,7 @@ function show_small_structure()
 
   <div class="input-group pull-left">
    
-    <form action="/activity" onsubmit="return start_search()" ">
+    <form action="/activity" onsubmit="return start_search()">
  
     <div class="input-group">
       <input type="hidden" name="search_param" value="all" id="search_param">   
@@ -1082,7 +1067,7 @@ border-radius: 0 5px 5px 0 !important;">
     </script>
 
     <script src="http://malihu.github.io/custom-scrollbar/jquery.mCustomScrollbar.concat.min.js"></script>
- 
+ <script src="{% static "assets/components/plugins/nicescroll/jquery.nicescroll.min.js" %}"></script>
     <script src="{% static "assets/components/plugins/breakpoints/breakpoints.js" %}"></script>
     <script src="{% static "assets/components/plugins/preload/pace/pace.min.js" %}"></script>
     <script src="{% static "assets/components/plugins/menus/sidr/jquery.sidr.js" %}"></script>
