@@ -571,8 +571,7 @@
           data-trigger="click" 
           data-container="body" 
           data-title="{{each.username}}" 
-          data-html="true"
-          data-content="">
+          data-html="true">
             <i class="fa fa-arrow-circle-right text-primary fa-fw fa-lg"></i>
           </td>
         </tr>
@@ -1716,17 +1715,24 @@ customers = {{customers_str | safe}};
      <script type="text/javascript">
       $('.tdSupplierClass').on('show.bs.popover', function () {
         username = $(this).attr('data-title');
-        ajax_request("get_business_counts", 'get_business_counts_success', {'username':username});
+           $.ajax({
+              type: "POST",
+              url: "/ajax-handler/" + 'get_business_counts',
+              data: {'username':username},
+              cache: true,
+              async:   false,
+              success: function(data) {
+                get_business_counts_success(data);
+              }
+          });
       });
       function get_business_counts_success(data){
         data = jQuery.parseJSON(data);
-        mytext = "<img src='" + data['result']['banner_url'] +  "'" + "title='" + data['result']['username'] + "' class='img-responsive'>";
-            mytext += "<div class=''>
-            <a href='/profile/" + data['result']['username'] + "class='black'><strong>" + data['result']['username'] + "</strong></a>
-            </div>";
+        mytext = "<img src='" + data['result']['banner_url'] +  "'" + " title='" + data['result']['username'] + "' class='img-responsive'>";
+            mytext += "<div class=''><a href='/profile/" + data['result']['username'] + "/' class='black'><strong>" + data['result']['username'] + "</strong></a></div>";
             mytext += "<div class='small innerTB half'>" + data['result']['description'] + "</div><div class='row row-merge border-top'>";
             mytext += "<div class='";
-            if (show_foods=='True') {
+            if (showfoods=='True') {
               mytext += "mycol-xs-3'>";
             }
             else{
@@ -1745,14 +1751,25 @@ customers = {{customers_str | safe}};
            }
             mytext += "<a href=''  rel='tooltip' title='" + data['result']['total_vouches'] + " of vouches for all produce'  class='innerAll half text-center display-block text-muted'><i class='fa fa-fw fa-thumbs-o-up'></i>" + data['result']['total_vouches'] + "</a>";
             mytext += "</div> <!-- number of trade connections --> ";
-            mytext += <div class='{% if show_foods %}col-xs-3{% else %}col-xs-6{% endif %}'>
-              <a href=''  rel='tooltip' title='{{each.trade_conn_no}} of trade connections' class='innerAll half text-center display-block text-muted'><i class='fa fa-fw fa-link'></i> {{each.trade_conn_no}}</a>
-            </div>
-            <!-- number of group membershpis -->  
-            <div class='{% if show_foods %}col-xs-3{% else %}col-xs-6{% endif %}'>
-              <a href=''  rel='tooltip' title='Member of {{each.org_conn_no}} groups or organisations'  class='innerAll half text-center display-block text-muted'><i class='fa fa-fw fa-group'></i> {{each.org_conn_no}}</a>
-            </div> 
-          </div>  
+            mytext += "<div class='"; 
+            if (showfoods =='True'){
+               mytext+= "col-xs-3'>";
+            } 
+            else{
+              mytext += "col-xs-6'>";
+            }              
+            mytext += "<a href=''  rel='tooltip' title='" + data['result']['trade_conn_no'] +  " of trade connections' class='innerAll half text-center display-block text-muted'><i class='fa fa-fw fa-link'></i>" + data['result']['trade_conn_no'] + "</a></div><!-- number of group membershpis -->  <div class='";
+
+            if (show_foods = 'True') {
+             mytext += "col-xs-3'>";
+            }
+            else{
+              mytext += "col-xs-6'>";
+            }
+
+            mytext += "<a href=''  rel='tooltip' title='Member of " + data['result']['org_conn_no'] + " groups or organisations'  class='innerAll half text-center display-block text-muted'><i class='fa fa-fw fa-group'></i>" + data['result']['org_conn_no'] + "</a></div> </div>  ";
+
+          $("td[data-title='" + data['result']['username'] + "']").attr('data-content', mytext);
       }
      </script>
  {% endblock %}
