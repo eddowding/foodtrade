@@ -480,40 +480,11 @@ function show_small_structure()
 <div class="container-fluid menu-hidden" id="main_page">
   
 
- <div id="menu-right">
+ <div id="menu-right" class="hidden">
       <div> 
           <div class="">   
 
-            <div id="updates"> 
-            </div><!-- updates -->
-
-            <div id="didyouknow" class="carousel slide"> 
-                <!-- Items -->
-                <div class="carousel-inner">
-                    <!-- Item -->
-                    <div class="item active"> 
-                         
-                        <span class="pull-left media-object">
-                            <i class="fa fa-fw fa-question-circle"></i>
-                        </span>
-                        <div class="media-body text-left">
-                            If you would like to find or offer surplus or gluts, just use as <a href="/activity/?q=surplus">#surplus</a> to your message.  <a href="/activity/?q=surplus" class="text-white">Test it out</a>
-                        </div> 
-                    </div>
-                    <!-- // Item END -->
-                    <!-- Item -->
-                    <div class="item"> 
-                         
-                        <span class="pull-left media-object">
-                            <i class="fa fa-fw fa-question-circle"></i>
-                        </span>
-                        <div class="media-body text-left">
-                          You can  post updates from anywhere! Just tweet your message to @foodtradeHQ and we'll push your message to local businesses!
-                        </div> 
-                    </div> 
-
-                </div> 
-            </div>
+            
 
           </div>
       </div>
@@ -637,154 +608,186 @@ function show_small_structure()
 
       <div class="input-group-btn">
         <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" style="
-background: #f5f5f5;
-padding: 8px;
-margin-left: 10px;
-border-radius: 6px 0 0 6px;
-border: 1px solid #ccc;
-border-right: 0;"><span id = "search_type">Produce</span> <i class="fa fa-caret-down text-black"></i></button>
-        <ul class="dropdown-menu">
-          <li ><a href="#" id="search_type_option">Profiles</a></li> 
-        </ul>
-      </div>  
+        background: #f5f5f5;
+        padding: 8px;
+        margin-left: 10px;
+        border-radius: 6px 0 0 6px;
+        border: 1px solid #ccc;
+        border-right: 0;"><span id = "search_type">Produce</span> <i class="fa fa-caret-down text-black"></i></button>
+                <ul class="dropdown-menu">
+                  <li ><a href="#" id="search_type_option">Profiles</a></li> 
+                </ul>
+              </div>  
 
-      <input type="text" class="form-control pull-left" name="x" id="search_query" placeholder="What are you looking for?" style="height: auto;
-margin: 7px 0 7px 0;
-padding: 6px 10px;
-width: 260px;
-border: 1px solid #ccc; 
-font-size: 17px;">  
+              <input type="text" class="form-control pull-left" name="x" id="search_query" placeholder="What are you looking for?" style="height: auto;
+        margin: 7px 0 7px 0;
+        padding: 6px 10px;
+        width: 260px;
+        border: 1px solid #ccc; 
+        font-size: 17px;">  
 
-      <div class="input-group-btn"> 
-        <button type="submit" class="btn btn-default" style="background-image: none;
-background: #f5f5f5;
-padding: 8px 12px;
-border: 1px solid #ccc !important;
-border-radius: 0 5px 5px 0 !important;">
-          <span class="glyphicon glyphicon-search"></span> 
-        </button> 
-      </div>
- 
-    </div>
-
-
-    </form>
-  </div>
-
-
- 
-
-    {% if request.user.is_authenticated %}
-  <div class=" pull-right border-left user-action "> 
-  
-      <div class="btn-group">
-        <button type="button" class="btn btn-info btn-sm dropdown-toggle" data-toggle="dropdown" style="font-weight: normal;">
-          Post an offer <span class="caret"></span>
-        </button>
-        <ul class="dropdown-menu" role="menu">
-          <li><a href="#" data-toggle="modal" data-target="#newtwitterpost">Post a buy request</a></li>
-          <li><a href="#" data-toggle="modal" data-target="#newtwitterpost">Post a sell offer</a></li>
-          <li><a href="#" data-toggle="modal" data-target="#newtwitterpost">Offer surplus</a></li> 
-          <li><a href="#" data-toggle="modal" data-target="#newtwitterpost">Post other request (eg jobs, help)</a></li>
-        </ul>
-      </div> 
-
-
-  </div>
-    {% endif %}  
-
-  <div class="user-action hidden-xs hidden-sm pull-right menu-right-hidden-xs menu-left-hidden-xs">
-      <div class="dropdown">
-          <a class="dropdown-toggle " data-toggle="dropdown" href="#">
-          Browse
-          <span class="caret"></span>
-          </a>
-          <ul class="dropdown-menu dropdown-menu-large row pull-right">
-          <li class="col-sm-3">
-            <ul>
-              <li class="dropdown-header">Foods</li>
-              <li><a href="/activity/?q=sausages">Sausages</a></li> 
-              <li><a href="/activity/?q=chicken">Chicken</a></li> 
-              <li><a href="/activity/?q=bread">Bread</a></li>  
-              <li><a href="/activity/?q=brownie">Brownies</a></li> 
-              <li><a href="/activity/?q=salad">Salad</a></li>  
-              <li class="dropdown-header">Drink</li>
-              <li><a href="/activity/?q=cider">Cider</a></li> 
-              <li><a href="/activity/?q=beer">Beer</a></li> 
-              <li><a href="/activity/?q=juice">Juice</a></li>  
-              <li><a href="/activity/?q=porter">Porter</a></li>  
-            </ul>
-          </li>
-          <li class="col-sm-4">
-            <ul>
-              <li class="dropdown-header">Biz. Types</li>
-              <li><a href="/activity/?b=Livestock%20Farm">Livestock farm</a></li> 
-              <li><a href="/activity/?q=Baker">Baker</a></li> 
-              <li><a href="/activity/?q=Food%20Stall">Food Stall</a></li> 
-              <li><a href="/activity/?q=Box%20Scheme">Box Scheme</a></li> 
-              <li><a href="/activity/?q=Food%20Manufacturer">Manufacturer</a></li> 
-              <li><a href="/activity/?q=Grower">Grower</a></li> 
-            </ul>
-          </li>
-          <li class="col-sm-5">
-            <ul>
-              <li class="dropdown-header">Organisations</li>
-              <li><a href="/slowfooduk">
-              <span class="result-container" style="white-space: nowrap;">
-              <span class="result-img"><img height="22px" width="22px" src="http://pbs.twimg.com/profile_images/1690823879/Screen_shot_2011-12-13_at_12.21.20_bigger.png"></span>
-              <span>Slow Food UK</span> 
-              </span></a></li> 
-              <li><a href="/soilassociation">
-              <span class="result-container" style="white-space: nowrap;">
-              <span class="result-img"><img height="22px" width="22px" src="http://pbs.twimg.com/profile_images/432822201436229632/Pw5oT1FG_normal.jpeg"></span>
-              <span>Soil Association</span> 
-              </span>
-              </a>
-              </li>
-
-              <li><a href="/FairtradeUK">
-              <span class="result-container" style="white-space: nowrap;">
-              <span class="result-img"><img height="22px" width="22px" src="http://pbs.twimg.com/profile_images/422786454478405632/aSt2mgAO_bigger.png"></span>
-              <span>Fairtrade Foundation</span> 
-              </span></a></li> 
-
-              <li><a href="/farmdrop">
-              <span class="result-container" style="white-space: nowrap;">
-              <span class="result-img"><img height="22px" width="22px" src="http://pbs.twimg.com/profile_images/446219768450650112/ELiLvM6E_bigger.jpeg"></span>
-              <span>FarmDrop</span> 
-              </span></a></li> 
-
-              <li><a href="/slowfoodlondon">
-              <span class="result-container" style="white-space: nowrap;">
-              <span class="result-img"><img height="22px" width="22px" src="http://pbs.twimg.com/profile_images/3376104397/9edf0480e8b1a610b54a62e50e619156_bigger.png"></span>
-              <span>Slow Food London</span> 
-              </span></a></li>  
-            </ul>
-          </li> 
-        </ul>
-        
-      </div>
-  </div>
-
- 
-
+              <div class="input-group-btn"> 
+                <button type="submit" class="btn btn-default" style="background-image: none;
+        background: #f5f5f5;
+        padding: 8px 12px;
+        border: 1px solid #ccc !important;
+        border-radius: 0 5px 5px 0 !important;">
+                  <span class="glyphicon glyphicon-search"></span> 
+                </button> 
+              </div>
+         
             </div>
 
 
-
-     
- 
-
-
-           
- 
-   <span id="reload_warning" class="hidden"> </span>
+            </form>
+          </div>
 
 
+         
+
+            {% if request.user.is_authenticated %}
+          <div class=" pull-right border-left user-action "> 
+          
+              <div class="btn-group">
+                <button type="button" class="btn btn-info btn-sm dropdown-toggle" data-toggle="dropdown" style="font-weight: normal;">
+                  Post an offer <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" role="menu">
+                  <li><a href="#" data-toggle="modal" data-target="#newtwitterpost">Post a buy request</a></li>
+                  <li><a href="#" data-toggle="modal" data-target="#newtwitterpost">Post a sell offer</a></li>
+                  <li><a href="#" data-toggle="modal" data-target="#newtwitterpost">Offer surplus</a></li> 
+                  <li><a href="#" data-toggle="modal" data-target="#newtwitterpost">Post other request (eg jobs, help)</a></li>
+                </ul>
+              </div> 
 
 
- {% block content %}
- {% endblock %}  
+          </div>
+            {% endif %}  
+
+          <div class="user-action hidden-xs hidden-sm pull-right menu-right-hidden-xs menu-left-hidden-xs">
+              <div class="dropdown">
+                  <a class="dropdown-toggle " data-toggle="dropdown" href="#">
+                  Browse
+                  <span class="caret"></span>
+                  </a>
+                  <ul class="dropdown-menu dropdown-menu-large row pull-right">
+                  <li class="col-sm-3">
+                    <ul>
+                      <li class="dropdown-header">Foods</li>
+                      <li><a href="/activity/?q=sausages">Sausages</a></li> 
+                      <li><a href="/activity/?q=chicken">Chicken</a></li> 
+                      <li><a href="/activity/?q=bread">Bread</a></li>  
+                      <li><a href="/activity/?q=brownie">Brownies</a></li> 
+                      <li><a href="/activity/?q=salad">Salad</a></li>  
+                      <li class="dropdown-header">Drink</li>
+                      <li><a href="/activity/?q=cider">Cider</a></li> 
+                      <li><a href="/activity/?q=beer">Beer</a></li> 
+                      <li><a href="/activity/?q=juice">Juice</a></li>  
+                      <li><a href="/activity/?q=porter">Porter</a></li>  
+                    </ul>
+                  </li>
+                  <li class="col-sm-4">
+                    <ul>
+                      <li class="dropdown-header">Biz. Types</li>
+                      <li><a href="/activity/?b=Livestock%20Farm">Livestock farm</a></li> 
+                      <li><a href="/activity/?q=Baker">Baker</a></li> 
+                      <li><a href="/activity/?q=Food%20Stall">Food Stall</a></li> 
+                      <li><a href="/activity/?q=Box%20Scheme">Box Scheme</a></li> 
+                      <li><a href="/activity/?q=Food%20Manufacturer">Manufacturer</a></li> 
+                      <li><a href="/activity/?q=Grower">Grower</a></li> 
+                    </ul>
+                  </li>
+                  <li class="col-sm-5">
+                    <ul>
+                      <li class="dropdown-header">Organisations</li>
+                      <li><a href="/slowfooduk">
+                      <span class="result-container" style="white-space: nowrap;">
+                      <span class="result-img"><img height="22px" width="22px" src="http://pbs.twimg.com/profile_images/1690823879/Screen_shot_2011-12-13_at_12.21.20_bigger.png"></span>
+                      <span>Slow Food UK</span> 
+                      </span></a></li> 
+                      <li><a href="/soilassociation">
+                      <span class="result-container" style="white-space: nowrap;">
+                      <span class="result-img"><img height="22px" width="22px" src="http://pbs.twimg.com/profile_images/432822201436229632/Pw5oT1FG_normal.jpeg"></span>
+                      <span>Soil Association</span> 
+                      </span>
+                      </a>
+                      </li>
+
+                      <li><a href="/FairtradeUK">
+                      <span class="result-container" style="white-space: nowrap;">
+                      <span class="result-img"><img height="22px" width="22px" src="http://pbs.twimg.com/profile_images/422786454478405632/aSt2mgAO_bigger.png"></span>
+                      <span>Fairtrade Foundation</span> 
+                      </span></a></li> 
+
+                      <li><a href="/farmdrop">
+                      <span class="result-container" style="white-space: nowrap;">
+                      <span class="result-img"><img height="22px" width="22px" src="http://pbs.twimg.com/profile_images/446219768450650112/ELiLvM6E_bigger.jpeg"></span>
+                      <span>FarmDrop</span> 
+                      </span></a></li> 
+
+                      <li><a href="/slowfoodlondon">
+                      <span class="result-container" style="white-space: nowrap;">
+                      <span class="result-img"><img height="22px" width="22px" src="http://pbs.twimg.com/profile_images/3376104397/9edf0480e8b1a610b54a62e50e619156_bigger.png"></span>
+                      <span>Slow Food London</span> 
+                      </span></a></li>  
+                    </ul>
+                  </li> 
+                </ul>
+                
+              </div>
+          </div>
+</div>
+
+<span id="reload_warning" class="hidden"> </span>
+
+<div class="row row-merge"  style="height: 100%;">
+  <div class="col-md-10">
+        <div class="container-fluid menu-hidden" id="main_page">
+              <div class="row row-merge">
+                    <div class="col-md-12">
+                     {% block content %}
+                     {% endblock %}  
+                    </div><!-- 12 -->
+              </div><!-- row -->
+        </div><!-- container -->
+  </div><!-- col 10 --> 
+  <div class="col-md-2">
+    <div id="updates"> 
+    </div><!-- updates -->
+
+              <div id="didyouknow" class="carousel slide"> 
+                  <!-- Items -->
+                  <div class="carousel-inner">
+                      <!-- Item -->
+                      <div class="item active"> 
+                           
+                          <span class="pull-left media-object">
+                              <i class="fa fa-fw fa-question-circle"></i>
+                          </span>
+                          <div class="media-body text-left">
+                              If you would like to find or offer surplus or gluts, just use as <a href="/activity/?q=surplus">#surplus</a> to your message.  <a href="/activity/?q=surplus" class="text-white">Test it out</a>
+                          </div> 
+                      </div>
+                      <!-- // Item END -->
+                      <!-- Item -->
+                      <div class="item"> 
+                           
+                          <span class="pull-left media-object">
+                              <i class="fa fa-fw fa-question-circle"></i>
+                          </span>
+                          <div class="media-body text-left">
+                            You can  post updates from anywhere! Just tweet your message to @foodtradeHQ and we'll push your message to local businesses!
+                          </div> 
+                      </div> 
+
+                  </div> 
+              </div>
+    </div>
+  </div>
+
+</div>
+
+
  </div>
         <!-- // Content END -->
         <div class="clearfix"></div>
@@ -1389,6 +1392,7 @@ UserVoice.push(['addTrigger', '#id', { mode: 'contact' }]);
 //Autoprompt for Satisfaction and SmartVote (only displayed under certain conditions)
 UserVoice.push(['autoprompt', {}]);
 </script>
+
 
 
 
