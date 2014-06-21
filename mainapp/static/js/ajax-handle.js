@@ -242,7 +242,7 @@ function delete_food(prof_id, food_name, my_this, we_buy){
 		ajax_request("deletefood", 'food_ajax', {data: JSON.stringify(data)});
 	}
 	global_this = my_this;
-	console.log(global_this)
+	/*console.log(global_this);*/
 	// var del_id = global_this.parentElement.parentElement.parentElement.parentElement.getAttribute('id');
 	// var del_id = global_this.parentElement.parentElement.parentElement.parentElement.parentElement.getAttribute('id');
 	// $('#'+del_id).remove();

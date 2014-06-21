@@ -1514,38 +1514,44 @@ $('#orgs_remote').on('click','.tt-suggestion', function(){
 });
 
 // adding stockists to business
-$('#panelSuppliers').on('click', '.tt-suggestion', function(){
-  alert(this);
-  myvar = this;
-  var business_id = this.getElementsByClassName('result-name')[0];
-  alert(business_id);
-  var buss_var = $(business_id).attr('data-id');
-  if(buss_var == 'search'){
-    $('#my_invite_twitter').click();
-  }
-  else{
-    third_party_connection('{{profile_id}}', buss_var, 'stockists');
-    $('#new_stockists_typeahead').val('');
-    $('.tt-hint').val('');
-  }
+$(document).ready(function(){
+    $('#panelSuppliers').on('click', '.tt-suggestion', function(){
+    alert(this);
+    myvar = this;
+    var business_id = this.getElementsByClassName('result-name')[0];
+    alert(business_id);
+    var buss_var = $(business_id).attr('data-id');
+    if(buss_var == 'search'){
+      $('#my_invite_twitter').click();
+    }
+    else{
+      third_party_connection('{{profile_id}}', buss_var, 'stockists');
+      $('#new_stockists_typeahead').val('');
+      $('.tt-hint').val('');
+    }
+  });
 });
 
 $('#new_stockists_typeahead').on('blur', function(){
   $('#new_stockists_typeahead').val('');
 });
 
-$('#panelStockists').on('click', '.tt-suggestion', function(){  
-  var business_id = this.getElementsByClassName('result-name')[0];
-  var buss_var = $(business_id).attr('data-id');
-  if(buss_var == 'search'){
-    $('#my_invite_twitter').click();
-  }
-  else{
-    third_party_connection('{{profile_id}}', buss_var, 'suppliers');
-    $('#new_suppliers_typeahead').val('');
-    $('.tt-hint').val('');
-  }
+$(document).ready(function(){
+    $('#panelStockists').on('click', '.tt-suggestion', function(){  
+      var business_id = this.getElementsByClassName('result-name')[0];
+      var buss_var = $(business_id).attr('data-id');
+      if(buss_var == 'search'){
+        $('#my_invite_twitter').click();
+      }
+      else{
+        third_party_connection('{{profile_id}}', buss_var, 'suppliers');
+        $('#new_suppliers_typeahead').val('');
+        $('.tt-hint').val('');
+      }
 });
+
+});
+
 $('#new_suppliers_typeahead').on('blur', function(){
   $('#new_suppliers_typeahead').val('');
 });
