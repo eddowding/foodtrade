@@ -1532,8 +1532,7 @@ $('#new_stockists_typeahead').on('blur', function(){
   $('#new_stockists_typeahead').val('');
 });
 
-$('#panelStockists').on('click', '.tt-suggestion', function(){
-  alert('Roshan');
+$('#panelStockists').on('click', '.tt-suggestion', function(){  
   var business_id = this.getElementsByClassName('result-name')[0];
   var buss_var = $(business_id).attr('data-id');
   if(buss_var == 'search'){

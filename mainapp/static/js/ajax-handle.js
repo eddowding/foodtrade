@@ -146,8 +146,8 @@ function stockists_ajax(data){
 // clear selected choice
 $('.search-choice').remove();
 // $("#buss_chosen").val('').trigger('chosen:updated');
-
-$('#panelSuppliers').html(data);
+$('#suppliersTable').html('');
+$('#suppliersTable').html(data);
 reload_connections();
 }
 
