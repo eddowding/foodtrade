@@ -143,21 +143,29 @@ function third_party_connection(prof_id, buss_var, link_type){
 }
 function stockists_ajax(data){
 	new_dat = data;
-// clear selected choice
-$('.search-choice').remove();
-// $("#buss_chosen").val('').trigger('chosen:updated');
-$('#suppliersTable').html('');
-$('#suppliersTable').html(data);
-reload_connections();
+	// clear selected choice
+	$('.search-choice').remove();
+	// $("#buss_chosen").val('').trigger('chosen:updated');
+	current_html = $('#mCSB_2_container tbody').html();
+	new_html =  data + current_html;
+	$('#mCSB_2_container tbody').html(new_html);
+/*	$(".tdSupplierClass").on("click",function(){
+	$(this).popover({
+
+	}).popover("show");*/
+
+	// });
+	reload_connections();
 }
 
 function suppliers_ajax(data){
-// clear selected choice
-$('.search-choice').remove();
-// $("#buss_chosen").val('').trigger('chosen:updated');
-
-$('#panelStockists').html(data);
-reload_connections();
+	// clear selected choice
+	new_dat = data;
+	$('.search-choice').remove();	current_html = $('#mCSB_3_container tbody').html();
+	new_html =  data + current_html;
+	$('#mCSB_3_container tbody').html(new_html);
+	reload_connections();
+		
 }
 
 function create_conn(){
@@ -242,7 +250,7 @@ function delete_food(prof_id, food_name, my_this, we_buy){
 		ajax_request("deletefood", 'food_ajax', {data: JSON.stringify(data)});
 	}
 	global_this = my_this;
-	/*console.log(global_this);*/
+
 	// var del_id = global_this.parentElement.parentElement.parentElement.parentElement.getAttribute('id');
 	// var del_id = global_this.parentElement.parentElement.parentElement.parentElement.parentElement.getAttribute('id');
 	// $('#'+del_id).remove();

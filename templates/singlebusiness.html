@@ -535,7 +535,7 @@
  
       {% if userprof.b_conn_no != 0 %} 
        
-      <table class="table table-hover table-condensed mCustomScrollbar scroll300" id="suppliersTable" width="100%">  
+      <table class="table table-hover table-condensed mCustomScrollbar scroll300 ajaxContents" id="suppliersTable" width="100%">  
 
         {% for each in connections %}
         {% if each.relation == "buyer" or each.relation == "both" %}
@@ -566,9 +566,9 @@
           </td>
           
           <td width="20"
-          data-toggle="popover" 
+          data-toggle="popover1" 
           class="tdSupplierClass"
-          data-trigger="click" 
+          data-trigger="manual" 
           data-container="body" 
           data-title="{{each.username}}" 
           data-html="true">
@@ -628,15 +628,16 @@
  
       {% if userprof.c_conn_no != 0 %} 
        
-      <table class="table table-hover table-condensed mCustomScrollbar scroll300" id="stockistsTable" width="100%">  
-
+      <table class="table table-hover table-condensed mCustomScrollbar scroll300 ajaxContents" id="stockistsTable" width="100%">  
         {% for each in connections %}
         {% if each.relation == "seller" or each.relation == "both" %}
 
         <tr>
           <td width="60">
             <a href="/profile/{{each.username}}">
-              <img src="{{each.photo}}" alt="{{each.name}}" class="img-responsive" style="width:60px" />
+              {% if each.photo != '' %}
+                  <img src="{{each.photo}}" alt="{{each.name}}" class="img-responsive" style="width:60px" />
+              {% endif %}
             </a>
           </td>
           <td class="ellipsis" width="80%"> 
@@ -659,9 +660,9 @@
           </td>
           
           <td width="20"
-          data-toggle="popover" 
+          data-toggle="popover1" 
           class="tdStockistsClass"
-          data-trigger="click" 
+          data-trigger="manual" 
           data-container="body" 
           data-title="{{each.username|safe}}" 
           data-html="true">
@@ -1516,10 +1517,8 @@ $('#orgs_remote').on('click','.tt-suggestion', function(){
 // adding stockists to business
 $(document).ready(function(){
     $('#panelSuppliers').on('click', '.tt-suggestion', function(){
-    alert(this);
     myvar = this;
     var business_id = this.getElementsByClassName('result-name')[0];
-    alert(business_id);
     var buss_var = $(business_id).attr('data-id');
     if(buss_var == 'search'){
       $('#my_invite_twitter').click();
@@ -1686,8 +1685,14 @@ customers = {{customers_str | safe}};
         
      </script>
      <script type="text/javascript">
-      $('.tdSupplierClass').on('show.bs.popover', function () {
-        username = $(this).attr('data-title');
+      $('.ajaxContents').on('click',"[data-toggle=popover1]", function () {
+        username = $(this).attr('data-title'); 
+        if($(this).attr('data-trigger')!="manual")
+        {
+          return;
+        }
+        that = this;         
+        alert(username);
            $.ajax({
               type: "POST",
               url: "/ajax-handler/" + 'get_business_counts',
@@ -1695,28 +1700,25 @@ customers = {{customers_str | safe}};
               cache: true,
               async:   false,
               success: function(data) {
-                get_business_counts_success(data);
+
+                $(that).popover({
+                  content: get_business_counts_success(data),
+                  trigger:"click",
+                  placement:"right",
+                  html:true
+                }).popover("show");
+                $(that).attr('data-trigger',"click");
+                
               }
           });
       });
 
-      $('.tdStockistsClass').on('show.bs.popover', function () {
-        username = $(this).attr('data-title');
-           $.ajax({
-              type: "POST",
-              url: "/ajax-handler/" + 'get_business_counts',
-              data: {'username':username},
-              cache: true,
-              async:   false,
-              success: function(data) {
-                get_business_counts_success(data);
-              }
-          });
-      });
-
+     
       function get_business_counts_success(data){
         data = jQuery.parseJSON(data);
-        mytext = "<img src='" + data['result']['banner_url'] +  "'" + " title='" + data['result']['username'] + "' class='img-responsive'>";
+        if (data['result']['banner_url'] != ''){          
+            mytext = "<img src='" + data['result']['banner_url'] +  "'" + " title='" + data['result']['username'] + "' class='img-responsive'>";
+        }
             mytext += "<div class=''><a href='/profile/" + data['result']['username'] + "/' class='black'><strong>" + data['result']['username'] + "</strong></a></div>";
             mytext += "<div class='small innerTB half'>" + data['result']['description'] + "</div><div class='row row-merge border-top'>";
             mytext += "<div class='";
@@ -1756,8 +1758,9 @@ customers = {{customers_str | safe}};
             }
 
             mytext += "<a href=''  rel='tooltip' title='Member of " + data['result']['org_conn_no'] + " groups or organisations'  class='innerAll half text-center display-block text-muted'><i class='fa fa-fw fa-group'></i>" + data['result']['org_conn_no'] + "</a></div> </div>  ";
+            return mytext;
 
-          $("td[data-title='" + data['result']['username'] + "']").attr('data-content', mytext);
+          //$("td[data-title='" + data['result']['username'] + "']").attr('data-content', mytext);
       }
      </script>
  {% endblock %}
