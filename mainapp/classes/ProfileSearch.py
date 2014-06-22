@@ -126,7 +126,7 @@ class MarketSearch(GeneralSearch):
         
     
 
-    def get_market_filters(self):
+    def get_profile_filters(self):
         org_filter = self.get_filters("org")
         biz_filter = self.get_filters('biz')
 

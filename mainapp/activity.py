@@ -306,20 +306,29 @@ def get_search_parameters(request):
 
 @csrf_exempt
 def home(request): 
-    # print request['subscribed']
-    print "here"
     if request.GET.get('plng') == None:
-        print "gone plng"
+        if request.user.is_authenticated():
+            user_id = request.user.id
+            user_profile_obj = UserProfile()
+            user_profile = user_profile_obj.get_profile_by_id(str(user_id))
+            default_lon = str(user_profile['latlng']['coordinates'][0])
+            default_lat = str(user_profile['latlng']['coordinates'][1])
+            location = user_profile['address']
 
-        user_id = request.user.id
-        user_profile_obj = UserProfile()
-        user_profile = user_profile_obj.get_profile_by_id(str(user_id))
+        else:
+            x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+            if x_forwarded_for:
+                ip = x_forwarded_for.split(',')[0]
 
-        default_lon = str(user_profile['latlng']['coordinates'][0])
-        default_lat = str(user_profile['latlng']['coordinates'][1])
-        location = user_profile['address']
+            else:
+                ip = request.META.get('REMOTE_ADDR')
+                location_info = get_addr_from_ip(ip)
+                default_lon = float(location_info['longitude'])
+                default_lat = float(location_info['latitude'])
+                location = "unknown"
+
         query = "plng="+default_lon+"&plat="+default_lat+"&plocation="+location
-        query = query+ "&mlng="+default_lon+"&mlat="+default_lat+"&llocation="+location
+        query = query+ "&mlng="+default_lon+"&mlat="+default_lat+"&mlocation="+location
 
         return HttpResponseRedirect('/activity?'+query)            
 

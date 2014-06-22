@@ -4,8 +4,8 @@
 var Search = {
     keyword :"",
     search_type:"produce",
-    filters:{profile:{want:"all",lng:"",lat:"", location:"", usertype:"company", org:[], biz:[]},
-    market:{want:"all",lng:"",lat:"", location:"", usertype:"company", org:[], biz:[]}},
+    filters:{profile:{want:"all",lng:"",lat:"", location:"", usertype:"all", org:[], biz:[]},
+    market:{want:"all",lng:"",lat:"", location:"", usertype:"all", org:[], biz:[]}},
     tab:"market",
     profile_results:{},
     market_results:{},
@@ -140,6 +140,28 @@ var Search = {
             $("#search_type_option").html("Produce");
         }
 
+        var want_btns = $(".btn-mwant");
+        for(var i = 0; i<want_btns.length;i++)
+        {
+            if($(want_btns[i]).html()==this.filters.market.want)
+            {
+                $(want_btns[i]).addClass('active');
+            }
+        }
+
+
+        var mut_btns = $(".btn-mut");
+        for(var i = 0; i<mut_btns.length;i++)
+        {
+            if($(mut_btns[i]).html()==this.filters.market.usertype)
+            {
+                $(mut_btns[i]).addClass('active');
+            }
+        }
+
+
+
+
         $("#search_query").val(this.keyword);
 
     },
@@ -152,6 +174,7 @@ var Search = {
         $("#result_tabs").addClass( "hidden" );
         $("#mktplace").removeClass("active");
         $("#profiles").addClass("active");
+        this.tab = "profile";
         
 
     }
@@ -203,13 +226,76 @@ Search.show_profiles();
     },
     search_market : function()
     {
-         $.post( "/ajax-handler/search_market", { q: this.keyword, search_type:this.search_type, lng:this.filters.market.lng, lat:this.filters.market.lat }, function( data ) {
+         $.post( "/ajax-handler/search_market", { q: this.keyword, 
+            search_type:this.search_type, 
+            lng:this.filters.market.lng, 
+            lat:this.filters.market.lat,
+            want:this.filters.market.want,
+            usertype: this.filters.market.usertype }, function( data ) {
   Search.market_results = data;
   Search.show_market();
+  Search.set_market_filters();
  
 }, "json");
 
     },
+      set_market_filters : function()
+    {
+         $.post( "/ajax-handler/get_market_filter", { q: this.keyword, 
+            search_type:this.search_type, 
+            lng:this.filters.market.lng, 
+            lat:this.filters.market.lat,
+            want:this.filters.market.want,
+            usertype: this.filters.market.usertype }, function( data ) {
+                var results = data.result.org;
+                var options = "";
+                for(var i=0;i<results.length;i++)
+                {
+                    options += "<option>"+results[i]._id+"</option>";
+                }
+                $("#filter_mkt_org").html(options);
+                var biz_results = data.result.biz;
+                var biz_options = "";
+                for(var i=0;i<biz_results.length;i++)
+                {
+                    biz_options += "<option>"+biz_results[i]._id+"</option>";
+                }
+                $("#filter_mkt_biz").html(biz_options);
+                 $('.selectpicker').selectpicker('refresh');
+                 
+ 
+}, "json");
+
+    },
+          set_profile_filters : function()
+    {
+         $.post( "/ajax-handler/get_profile_filter", { q: this.keyword, 
+            search_type:this.search_type, 
+            lng:this.filters.profile.lng, 
+            lat:this.filters.profile.lat,
+            want:this.filters.profile.want,
+            usertype: this.filters.profile.usertype }, function( data ) {
+                var results = data.result.org;
+                var options = "";
+                for(var i=0;i<results.length;i++)
+                {
+                    options += "<option>"+results[i]._id+"</option>";
+                }
+                $("#filter_mkt_org").html(options);
+                var biz_results = data.result.biz;
+                var biz_options = "";
+                for(var i=0;i<biz_results.length;i++)
+                {
+                    biz_options += "<option>"+biz_results[i]._id+"</option>";
+                }
+                $("#filter_mkt_biz").html(biz_options);
+                 $('.selectpicker').selectpicker('refresh');
+                 
+ 
+}, "json");
+
+    },
+
 
     search_start: function()
     {
@@ -265,7 +351,6 @@ Search.show_profiles();
 
 function start_search()
 {
-
     Search.search_start();
     return false;
 }
@@ -312,11 +397,92 @@ function getParameterByName(name,initial) {
 
 Search.init();
 
+$(".btn-mwant").on('click', function(e){  
+    if(Search.filters.market.want == $(this).html())
+    {
+        Search.filters.market.want = "all";
+        $(this).removeClass("active").siblings().removeClass('active');
+    }
+    else
+    {
+        Search.filters.market.want = $(this).html();
+        $(this).addClass("active").siblings().removeClass('active');
+    }
+    Search.set_url();
+    Search.search_market();
+});
+
+$(".btn-mut").on('click', function(e){  
+    if(Search.filters.market.usertype == $(this).html())
+    {
+        Search.filters.market.usertype = "all";
+        $(this).removeClass("active").siblings().removeClass('active');
+    }
+    else
+    {
+        Search.filters.market.usertype = $(this).html();
+        $(this).addClass("active").siblings().removeClass('active');
+    }
+    Search.set_url();
+    Search.search_market();
+});
 
 
 
-$(".btn-pwant").click(function(){
-    $(".btn-pwant").removeClass('active');
-    that =  this;
-    $(this).addClass('active');
-})
+$(".btn-pwant").on('click', function(e){  
+    if(Search.filters.profile.want == $(this).html())
+    {
+        Search.filters.profile.want = "all";
+        $(this).removeClass("active").siblings().removeClass('active');
+    }
+    else
+    {
+        Search.filters.profile.want = $(this).html();
+        $(this).addClass("active").siblings().removeClass('active');
+    }
+    Search.set_url();
+    Search.search_profiles();
+});
+
+$(".btn-put").on('click', function(e){  
+    if(Search.filters.profile.usertype == $(this).html())
+    {
+        Search.filters.profile.usertype = "all";
+        $(this).removeClass("active").siblings().removeClass('active');
+    }
+    else
+    {
+        Search.filters.profile.usertype = $(this).html();
+        $(this).addClass("active").siblings().removeClass('active');
+    }
+    Search.set_url();
+    Search.search_profiles();
+});
+
+
+
+function get_address() {
+
+  var input = (document.getElementById('pac_input_market'));
+    geocoder = new google.maps.Geocoder();
+    geocoder.geocode({'address': input.value}, function(results, status) {
+            if (status == google.maps.GeocoderStatus.OK) {
+              if (results[0]) {
+                var formatted_address = results[0].formatted_address;
+
+      input.value = formatted_address;
+      Search.filters.market.lng = results[0].geometry.location.lng();
+      Search.filters.market.lat = results[0].geometry.location.lat();
+     Search.set_url();
+    Search.search_market();
+              } 
+            }
+            else
+            {
+              alert("No address found");
+            }
+          });
+    return false;
+
+    
+}

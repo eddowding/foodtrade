@@ -23,6 +23,9 @@
       <textarea class="form-control"  {% if not user.is_authenticated %}  onfocus="login_redirect()" title="Please login to use this feature." {% else %}  data-toggle="modal" data-target="#newtwitterpost" {% endif %} style="width:100%;">What #food do you have to #buy, #sell, or #surplus?  </textarea> 
     </div>
   </div>
+
+
+
 </div>
 
 
@@ -49,26 +52,27 @@
       <!-- Tab content --> 
       <div class="tab-pane active" id="mktplace">
 
-    <form action="/activity" onsubmit="return formSubmit(this);"  role="search" data-step="1" data-intro="Search for anyhing, anywhere" class="form-horizontal">
+    <form action="/activity" onsubmit="return get_address();"  role="search" data-step="1" data-intro="Search for anyhing, anywhere" class="form-horizontal">
 
       <div class="form-group clearfix">
         <label for="companyType" class="col-sm-3 control-label">Find by keyword</label>
         <div class="col-sm-9">
-            <div class="btn-group " data-toggle="buttons-radio">
-                <button class="btn btn-default  btn-sm" >#buy</button>
-                <button class="btn btn-default  btn-sm ">#sell</button>
-                <button class="btn btn-default  btn-sm ">#surplus</button>
-                <button class="btn btn-default  btn-sm ">#job</button>
+            <div class="btn-group">
+                <button type="button" class="btn btn-default  btn-sm btn-mwant">#buy</button>
+                <button type="button" class="btn btn-default  btn-sm btn-mwant">#sell</button>
+                <button type="button" class="btn btn-default  btn-sm btn-mwant">#surplus</button>
+                <button type="button" class="btn btn-default  btn-sm btn-mwant">#job</button>
             </div> 
         </div>
       </div>
+
   
       <div class="form-group clearfix" style="background: rgba(200,200,200,0.1);">
         <label for="companyType" class="col-sm-3 control-label">User type</label>
         <div class="col-sm-9">
-            <div class="btn-group " data-toggle="buttons-radio">
-                <button class="btn btn-default btn-sm active" data-toggle="collapse" data-target="#companygroup" >Companies</button>
-                <button class="btn btn-default btn-sm ">Individuals</button>
+            <div class="btn-group ">
+                <button type="button" class="btn btn-default btn-sm btn-mut">Companies</button>
+                <button type="button" class="btn btn-default btn-sm btn-mut">Individuals</button>
             </div>
         </div>
       </div>
@@ -83,23 +87,19 @@
           <div class="col-sm-9">
             <div class="input-group  input-group-sm">
               <span class="input-group-addon"><i class="fa fa-map-marker"></i></span>
-              <input type="text" name="location" id="pac-input" value="{% if search %}{{ search.place }}{% endif %}{% if not search %}{{userinfo.zip_code}}{% endif %}" class="pac-input form-control  " placeholder="Where?">
+              <input type="text" name="location" id="pac_input_market" class="pac-input form-control  " placeholder="Where?">
               <div class="input-group-btn">
                 <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
               </div>
             </div>
-            <input type="hidden" name="lon" id="lon" value="{{search.lon}}"/>
-            <input type="hidden" name="lat" id="lat" value="{{search.lat}}"/> 
           </div>
         </div>
         
         <div class="form-group" id="organisationgroup">
           <label for="filterOrg" class="col-sm-3 control-label">Organisation</label>
           <div class="col-sm-9">
-            <select class="selectpicker show-tick" data-live-search="true" multiple data-selected-text-format="count>2" title="Filter by organisation" name="filterOrg"   data-style="btn-default">
-              <option>Soil Association</option><option>
-              Pasture Fed LIvestock </option><option>
-              Fetc</option> 
+            <select class="selectpicker show-tick" data-live-search="true" multiple data-selected-text-format="count>2" title="Filter by organisation" name="filterOrg"   data-style="btn-default" id="filter_mkt_org">
+              
           </select>
           </div>
         </div>
@@ -107,8 +107,8 @@
         <div class="form-group" id="companygroup">
           <label for="companyType" class="col-sm-3 control-label">Company type</label>
           <div class="col-sm-9">
-          <select class="selectpicker show-tick"   data-live-search="true" multiple data-selected-text-format="count>2" title="Filter by company type" name="companyType"  data-style="btn-default">
-            <optgroup label="Production">
+          <select class="selectpicker show-tick"   id="filter_mkt_biz"  data-live-search="true" multiple data-selected-text-format="count>2" title="Filter by company type" name="companyType"  data-style="btn-default">
+         <!--    <optgroup label="Production">
               <option >Grower</option><option>
               Cafe / coffee shop</option><option>
               Food manufacturer</option><option>
@@ -126,7 +126,7 @@
               Arable Farm</option><option>
               Chef / Catering</option><option>
               Individual</option>
-            </optgroup> 
+            </optgroup>  -->
           </select>
           </div>
         </div>
@@ -142,9 +142,9 @@
             <div class="form-group clearfix">
               <label for="companyType" class="col-sm-3 control-label">I want to</label>
               <div class="col-sm-9">
-                  <div class="btn-group " data-toggle="buttons-radio">
-                      <button class="btn btn-default btn-pwant btn-sm active" >Buy</button>
-                      <button class="btn btn-default btn-pwant btn-sm ">Sell</button>
+                  <div class="btn-group ">
+                      <button type="button" class="btn btn-default btn-pwant btn-sm btn-pwant" >Buy</button>
+                      <button type="button" class="btn btn-default btn-pwant btn-sm btn-pwant">Sell</button>
                   </div> 
               </div>
             </div> 
@@ -152,9 +152,9 @@
             <div class="form-group clearfix" style="background: rgba(200,200,200,0.1);">
               <label for="companyType" class="col-sm-3 control-label">User type</label>
               <div class="col-sm-9">
-                  <div class="btn-group " data-toggle="buttons-radio">
-                      <button class="btn btn-default btn-sm active" data-toggle="collapse" data-target="#companygroup" >Companies</button>
-                      <button class="btn btn-default btn-sm ">Individuals</button>
+                  <div class="btn-group ">
+                      <button type="button" class="btn btn-default btn-sm btn-put" data-toggle="collapse" data-target="#companygroup" >Companies</button>
+                      <button type="button" class="btn btn-default btn-sm btn-put">Individuals</button>
                   </div>
               </div>
             </div>
@@ -174,8 +174,6 @@
                       <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
                     </div>
                   </div>
-                  <input type="hidden" name="lon" id="lon" value="{{search.lon}}"/>
-                  <input type="hidden" name="lat" id="lat" value="{{search.lat}}"/>  
                 </div>
               </div>
               
@@ -183,25 +181,7 @@
                 <label for="filterOrg" class="col-sm-3 control-label">Organisation</label>
                 <div class="col-sm-9">
                   <select class="selectpicker show-tick" data-live-search="true" multiple data-selected-text-format="count>2" title="Filter by organisation" name="filterOrg"   data-style="btn-default">
-                  <optgroup label="Production">
-                    <option>Grower</option><option>
-                    Cafe / coffee shop</option><option>
-                    Food manufacturer</option><option>
-                    Food Stall</option><option>
-                    Restaurant / Pub / Bar</option><option>
-                    Ready meals</option><option>
-                    Farm Shop</option><option>
-                    Health food</option>
-                  </optgroup>
-                  <optgroup label="Last mile">
-                   <option> Drinks manufacturer</option><option>
-                    Butcher</option><option>
-                    Marketing</option><option>
-                    Baker</option><option>
-                    Arable Farm</option><option>
-                    Chef / Catering</option><option>
-                    Individual</option>
-                  </optgroup> 
+                  
                 </select>
                 </div>
               </div>
@@ -210,25 +190,7 @@
                 <label for="companyType" class="col-sm-3 control-label">Company type</label>
                 <div class="col-sm-9">
                 <select class="selectpicker show-tick"   data-live-search="true" multiple data-selected-text-format="count>2" title="Filter by company type" name="companyType"  data-style="btn-default">
-                  <optgroup label="Production">
-                    <option >Grower</option><option>
-                    Cafe / coffee shop</option><option>
-                    Food manufacturer</option><option>
-                    Food Stall</option><option>
-                    Restaurant / Pub / Bar</option><option>
-                    Ready meals</option><option>
-                    Farm Shop</option><option>
-                    Health food</option>
-                  </optgroup>
-                  <optgroup label="Last mile">
-                   <option> Drinks manufacturer</option><option>
-                    Butcher</option><option>
-                    Marketing</option><option>
-                    Baker</option><option>
-                    Arable Farm</option><option>
-                    Chef / Catering</option><option>
-                    Individual</option>
-                  </optgroup> 
+                 
                 </select>
                 </div>
               </div>

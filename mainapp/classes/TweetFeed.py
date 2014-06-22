@@ -109,6 +109,7 @@ class TweetFeed():
 
     def insert_tweet(self, user_id, tweet):
         usr_profile = UserProfile()
+        print "gone tweet1"
         up = usr_profile.get_profile_by_id(user_id)
         try: 
             subscribed = up['subscribed']
@@ -128,6 +129,8 @@ class TweetFeed():
                     can_tweet = False
             else:
                 can_tweet = True
+        can_tweet = True
+        print "gone tweet2"
 
         if tweet['parent_tweet_id'] == "0" and not can_tweet: #and self.has_tweet_in_week(user_id) and subscribed != 1:
             return
@@ -154,7 +157,7 @@ class TweetFeed():
                         send_sms(mentioned['phone_number'],sms_text)
                 except:
                     pass
-
+        print tweet
         self.db_object.update_push(self.table_name,{"useruid":int(user_id)},{"updates":tweet})
 
     def insert_tweet_by_username(self, user_name, tweet):

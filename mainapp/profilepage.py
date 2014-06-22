@@ -401,7 +401,9 @@ def edit_profile(request, username):
             edit all unclaimed accounts.Else he/she can edit only his profile.       
         '''
         if request.user.is_authenticated():
-            if request.user.is_superuser:
+            if str(username) == "me":
+                userprof = usr_profile.get_profile_by_username(request.user.username)
+            elif request.user.is_superuser:
                 userprof = usr_profile.get_profile_by_username(str(username))
             else:
                 userprof = usr_profile.get_profile_by_username(request.user.username)

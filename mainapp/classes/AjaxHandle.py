@@ -204,11 +204,10 @@ class AjaxHandle(AjaxSearch):
                     'picture': pic_url_list,
                     
             }
-           
             tweet_feed.insert_tweet(int(user_id),data)
             return HttpResponse(json.dumps({'status':1}))
         else:
-            return HttpResponse(json.dumps({'status':1}))
+            return HttpResponse(json.dumps({'status':0}))
             
 
     def post_tweet_admin(self, request):
@@ -653,7 +652,6 @@ class AjaxHandle(AjaxSearch):
         team = Team()
         data = eval(request.POST.get('data'))
         if data !=None and data !="":
-            print 'inside addteam: ', data
             team.create_member(data)
 
             notification_obj = Notification()

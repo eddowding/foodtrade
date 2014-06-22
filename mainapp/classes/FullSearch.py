@@ -31,7 +31,9 @@ class GeneralSearch():
 
         self.lat = params['lat']
         self.lng = params['lng']
-        self.indiv_biz = params['indiv_biz']
+
+        self.want = params['want']
+        self.user_type = params['usertype']
         self.org_filters = json.loads(params['org_filters'])
         self.biz_type_filters = json.loads(params['biz_type_filters'])
         self.food_filters = json.loads(params['food_filters'])
@@ -52,18 +54,18 @@ class GeneralSearch():
         up_object = UserProfile()
         up = up_object.get_profile_by_id(request.user.id)
 
-        ### Todo do task get logged in user's location and latlng info from db 
         default_location = up['address']
         default_lng = up['latlng']['coordinates'][0]
         default_lat = up['latlng']['coordinates'][0]
 
-        ########################################################################
         search_request['location'] = request.POST.get("location",request.GET.get("location",default_location))
 
         search_request['lng'] = float(request.POST.get("lng",request.GET.get("lng",default_lng)))
         search_request['lat'] = float(request.POST.get("lat",request.GET.get("lat",default_lat)))
-        search_request['search_for'] = request.POST.get("search_type",request.GET.get("search_type","food")) 
-        search_request['indiv_biz'] = request.POST.get("only",request.GET.get("only","Business")) 
+
+        search_request['want'] = request.POST.get("want",request.GET.get("want","all"))
+        search_request['search_for'] = request.POST.get("search_type",request.GET.get("search_type","produce")) 
+        search_request['usertype'] = request.POST.get("usertype",request.GET.get("usertype","all")) 
         search_request['biz_type_filters'] = request.POST.get("biz",request.GET.get("biz","[]")) 
         search_request['org_filters'] = request.POST.get("org",request.GET.get("org","[]")) 
         search_request['food_filters'] = request.POST.get("food",request.GET.get("food","[]")) 
@@ -211,8 +213,10 @@ class GeneralSearch():
 
 
     def calc_distance(self,lat2, long2):
-        lat1 = self.lat
-        long1 = self.lng
+        lat1 = self.user['latlng']['coordinates'][1]
+        long1 = self.user['latlng']['coordinates'][0]
+
+
         # Convert latitude and longitude to 
         # spherical coordinates in radians.
         degrees_to_radians = math.pi/180.0
