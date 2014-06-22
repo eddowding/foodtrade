@@ -31,6 +31,10 @@ a:hover i {
   color: #7BB81A !important;
 }
 
+.fill {
+  height: 100%;
+}
+
 input[type="text"]:focus, input[type="text"]:active, input[type="text"]:hover {
   background: #fff;
 }
@@ -706,10 +710,10 @@ td.ellipsis
   }
 
 
-#footer,
+/*#footer,
 .page {
   margin-right: 200px;
-}  
+}  */
 
 @media (max-width: 768px) {
   .dropdown-menu-large {
