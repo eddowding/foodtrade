@@ -34,13 +34,33 @@
 
 <div class="widget widget-tabs widget-tabs-double widget-tabs-responsive" style="background: #F5F8FA;   margin: 0 !important; padding-top: 10px;">
   <!-- Tabs Heading -->
-  <div class="widget-head  "  id="result_tabs" style="background: #F2F6F8;">
+  <div class="widget-head clearfix"  id="result_tabs" style="background: #F2F6F8;">
     <ul> 
       <li class="active " style="">
-        <a href="#mktplace" class="glyphicons bullhorn" id="mkt_tab" data-toggle="tab"><i></i><span class="strong">Market place</span><span>Real-time trading</span></a>
+        <a href="#mktplace" class="glyphicons bullhorn" id="mkt_tab" data-toggle="tab"><i></i>
+        <div class=" visible-lg">
+          <span class="strong">Market place</span>
+          <span>Real-time trade</span> 
+        </div>
+        <div class="visible-sm visible-xs visible-md">
+          <span class="strong">Market</span>
+          <span>Real-time</span> 
+        </div>
+        </a>
+
+
       </li>
       <li class="" style="">
-        <a href="#profiles" class="glyphicons shop" id="profile_tab" data-toggle="tab"><i></i><span class="strong">Profiles</span><span class="dotdotdot">People &amp; places</span></a>
+        <a href="#profiles" class="glyphicons shop" id="profile_tab" data-toggle="tab"><i></i>
+        <div class=" visible-lg">
+          <span class="strong">Profiles</span>
+          <span>People &amp; places</span> 
+        </div>
+        <div class="visible-sm visible-xs visible-md">
+          <span class="strong">Profiles</span>
+          <span>Who &amp; where</span> 
+        </div>
+        </a>
       </li>
     </ul>
   </div>
@@ -55,22 +75,21 @@
     <form action="/activity" onsubmit="return get_address();"  role="search" data-step="1" data-intro="Search for anyhing, anywhere" class="form-horizontal">
 
       <div class="form-group clearfix">
-        <label for="companyType" class="col-sm-3 control-label">Find by keyword</label>
-        <div class="col-sm-9">
-            <div class="btn-group">
-                <button type="button" class="btn btn-default  btn-sm btn-mwant">#buy</button>
-                <button type="button" class="btn btn-default  btn-sm btn-mwant">#sell</button>
-                <button type="button" class="btn btn-default  btn-sm btn-mwant">#surplus</button>
-                <button type="button" class="btn btn-default  btn-sm btn-mwant">#job</button>
+  
+        <div class="col-sm-12 text-center">
+            <div rel="tooltip" title="Filter by keyword" class="tooltips btn-group">
+                <button type="button" class=" btn btn-default btn-sm btn-mwant">#buy</button>
+                <button type="button" class=" btn btn-default btn-sm btn-mwant">#sell</button>
+                <button type="button" class=" btn btn-default btn-sm btn-mwant">#surplus</button>
+                <button type="button" class=" btn btn-default btn-sm btn-mwant">#job</button>
             </div> 
         </div>
       </div>
 
   
-      <div class="form-group clearfix" style="background: rgba(200,200,200,0.1);">
-        <label for="companyType" class="col-sm-3 control-label">User type</label>
-        <div class="col-sm-9">
-            <div class="btn-group ">
+      <div class="form-group clearfix" style="background: rgba(200,200,200,0.1);"> 
+        <div class="col-sm-12 text-center">
+            <div rel="tooltip" title="Filter by type" class="tooltips btn-group">
                 <button type="button" class="btn btn-default btn-sm btn-mut">Companies</button>
                 <button type="button" class="btn btn-default btn-sm btn-mut">Individuals</button>
             </div>
