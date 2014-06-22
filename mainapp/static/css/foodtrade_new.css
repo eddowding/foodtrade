@@ -26,6 +26,15 @@ body,
   font-weight: normal !important;
 }
 
+
+.light {
+  font-weight: 200;
+}
+
+.vlight {
+  font-weight: 100;
+}
+
 .timeline-activity li .timeline-top-info a:hover i,
 a:hover i {
   color: #7BB81A !important;
@@ -74,6 +83,14 @@ input[type="text"]:focus, input[type="text"]:active, input[type="text"]:hover {
   background: #F5F8FA;
   background: #fff;
 }
+
+@media (max-width: 992px) { 
+  #content { 
+    margin-top: 0px !important;
+  }
+}
+
+ 
 
 #menu #sidebar-social-wrapper #brandWrapper {
   padding: 0;
@@ -834,11 +851,11 @@ input[type=text], input[type=password], select, textarea,
 }
 
 .widget.widget-tabs > .widget-head ul li:first-child { 
-  margin: 0 0px 0 10px;
+  margin: 0 0px 0 3px;
 }
 
 .widget.widget-tabs-double > .widget-head {
-  height: 60px;
+  height: 50px;
 }
 
 .widget.widget-tabs-double > .widget-head ul li, 
@@ -846,6 +863,8 @@ input[type=text], input[type=password], select, textarea,
   height: 62px;
   border-radius: 6px 6px 0 0 !important;
   border: 1px solid #ccc;
+  border-right: 1px solid #ccc;
+  padding: 0;
   border-bottom: 0;
 }
 

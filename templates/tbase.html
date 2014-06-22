@@ -146,45 +146,37 @@
       <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
       <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
     <![endif]-->
-
-
-
-
-
-
-<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
-    <!-- 
-  **********************************************************
-  In development, use the LESS files and the less.js compiler
-  instead of the minified CSS loaded by default.
-  -->
-  <!-- <link rel="stylesheet/less" href="{% static "assets/less/admin/module.admin.stylesheet-complete.less" %}" /> -->
-<link href="{% static "assets/less/admin/compiledstyle.css" %}" rel="stylesheet">
-    <link href="{% static "css/foodtrade_new.css" %}" rel="stylesheet">
   
-    <!--[if lt IE 9]><link rel="stylesheet" href="{% static "assets/components/library/bootstrap/css/bootstrap.min.css" %}" /><![endif]-->
-    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+    <script src="{% static "assets/components/library/jquery/jquery-migrate.min.js" %}"></script>
+    <script src="{% static "assets/components/library/modernizr/modernizr.js" %}"></script>
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>    
     <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js" type="text/javascript" charset="utf-8"></script>
 
-   
- <!--    <link rel="stylesheet" href="{% static "assets/css/admin/module.admin.stylesheet-complete.min.css" %}" />  --> 
 
-    <script src="{% static "assets/components/library/jquery/jquery-migrate.min.js" %}"></script>
-    <script src="{% static "assets/components/library/modernizr/modernizr.js" %}"></script>
-   <!--  <script src="{% static "assets/components/plugins/less-js/less.min.js" %}"></script>  --> 
+
+    <link rel="stylesheet/less" href="{% static "assets/less/admin/module.admin.stylesheet-complete.less" %}" /> 
+    <!-- <link href="{% static "assets/less/admin/compiledstyle.css" %}" rel="stylesheet"> -->
+    <link href="{% static "css/foodtrade.less" %}" rel="stylesheet/less">
+  
+    <!--[if lt IE 9]><link rel="stylesheet" href="{% static "assets/components/library/bootstrap/css/bootstrap.min.css" %}" /><![endif]-->
+    <script>
+      less = {
+        env: "development", 
+        poll: 100
+      };
+    </script>
+
+    <script src="{% static "assets/components/plugins/less-js/less.min.js" %}"></script>  
+    <script>less.watch();</script>
+
     <script src="{% static "assets/components/plugins/browser/ie/ie.prototype.polyfill.js" %}"></script>
     <script>
     if ( /*@cc_on!@*/ false && document.documentMode === 10)
     {
         document.documentElement.className += ' ie ie10';
     }
-    </script>
-
-
-
-
-
+    </script> 
 
 
   </head>
@@ -531,7 +523,7 @@ function show_small_structure()
 
   {% if not request.user.is_authenticated %} 
   <div class="user-action pull-right menu-right-hidden-xs menu-left-hidden-xs border-left">
-    <div class="dropdown username pull-left">
+    <div class="dropdown username pull-left border-right" style="margin-right: 50px;">
       <a class="dropdown-toggle" data-toggle="dropdown" href="#">Login
       </a> 
        <ul class="dropdown-menu pull-right" style="padding: 15px;min-width: 250px;">
@@ -612,6 +604,7 @@ function show_small_structure()
         padding: 8px;
         margin-left: 10px;
         border-radius: 6px 0 0 6px;
+        font-weight: normal;
         border: 1px solid #ccc;
         border-right: 0;"><span id = "search_type">Produce</span> <i class="fa fa-caret-down text-black"></i></button>
                 <ul class="dropdown-menu">
@@ -649,8 +642,9 @@ function show_small_structure()
           <div class=" pull-right border-left user-action "> 
           
               <div class="btn-group">
-                <button type="button" class="btn btn-info btn-sm dropdown-toggle" data-toggle="dropdown" style="font-weight: normal;">
-                  Post an offer <span class="caret"></span>
+                <button type="button" class="btn btn-primary btn-stroke btn-sm dropdown-toggle" data-toggle="dropdown" style="font-weight: normal;">
+                  Post an offer <span class="caret text-primary"></span>
+                  <i class="fa fa-caret-down text-primary"></i>
                 </button>
                 <ul class="dropdown-menu" role="menu">
                   <li><a href="#" data-toggle="modal" data-target="#newtwitterpost">Post a buy request</a></li>
@@ -741,7 +735,7 @@ function show_small_structure()
 <span id="reload_warning" class="hidden"> </span>
 
 <div class="row row-merge"  style="height: 100%;">
-  <div class="col-md-10">
+  <div class="{% if not request.user.is_authenticated %} col-xs-12 {% else %} col-md-10  {% endif %}">
         <div class="container-fluid menu-hidden" id="main_page">
               <div class="row row-merge">
                     <div class="col-md-12">
@@ -751,7 +745,7 @@ function show_small_structure()
               </div><!-- row -->
         </div><!-- container -->
   </div><!-- col 10 --> 
-  <div class="col-md-2">
+  <div class="{% if not request.user.is_authenticated %} hidden {% else %} col-md-2  {% endif %}">
     <div id="updates"> 
     </div><!-- updates -->
 
@@ -953,15 +947,6 @@ function show_small_structure()
     <script src="{% static "js/tag-it.js" %}"></script>
     <script src="{% static "js/twitter-typeahead.js" %}"></script>
     
-    <script src="{% static "css/docsupport/prism.js" %}" charset="utf-8"></script>
-
-    <script src="{% static "js/isotope.pkgd.min.js" %}"></script>
-
-
-<link href="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/css/bootstrap-editable.css" rel="stylesheet"/>
-<script src="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/js/bootstrap-editable.min.js"></script>
-
-    <!-- social net -->
     <!-- social net --> 
 
     <script data-id="App.Config">
@@ -980,18 +965,10 @@ function show_small_structure()
     var themerPrimaryColor = primaryColor;
     </script>
 
-    <script src="http://malihu.github.io/custom-scrollbar/jquery.mCustomScrollbar.concat.min.js"></script>
- <script src="{% static "assets/components/plugins/nicescroll/jquery.nicescroll.min.js" %}"></script>
-    <script src="{% static "assets/components/plugins/breakpoints/breakpoints.js" %}"></script>
-    <script src="{% static "assets/components/plugins/preload/pace/pace.min.js" %}"></script>
-    <script src="{% static "assets/components/plugins/menus/sidr/jquery.sidr.js" %}"></script>
-    <script src="{% static "assets/components/plugins/holder/holder.js" %}"></script>
-    <script src="{% static "assets/components/core/js/sidebar.main.init.js" %}"></script>
-    <script src="{% static "assets/components/core/js/sidebar.collapse.init.js" %}"></script>
-    <script src="{% static "assets/components/plugins/mixitup/jquery.mixitup.min.js" %}"></script>
+    <script src="http://malihu.github.io/custom-scrollbar/jquery.mCustomScrollbar.concat.min.js"></script> 
+    <script src="{% static "assets/components/plugins/preload/pace/pace.min.js" %}"></script> 
     <script src="{% static "assets/components/common/forms/elements/bootstrap-select/assets/lib/js/bootstrap-select.js" %}"></script>
-    <script src="{% static "assets/components/common/forms/elements/bootstrap-select/assets/custom/js/bootstrap-select.init.js" %}"></script>
-    <script src="{% static "assets/components/modules/admin/menus/menus.sidebar.chat.init.js" %}"></script>
+    <script src="{% static "assets/components/common/forms/elements/bootstrap-select/assets/custom/js/bootstrap-select.init.js" %}"></script> 
     <script src="{% static "assets/components/core/js/core.init.js" %}"></script>
     <script src='//api.tiles.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v0.0.2/Leaflet.fullscreen.min.js'></script>
     <link href='//api.tiles.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v0.0.2/leaflet.fullscreen.css' rel='stylesheet' />
