@@ -32,7 +32,7 @@
  
 <div class="container-responsive" id="searchfilters">
 
-<div class="widget widget-tabs widget-tabs-double widget-tabs-responsive" style="background: #F5F8FA;   margin: 0 !important; padding-top: 10px;">
+<div class="widget widget-tabs widget-tabs-double widget-tabs-responsive border0 margin0" style="background: #F5F8FA; padding-top: 10px;">
   <!-- Tabs Heading -->
   <div class="widget-head clearfix"  id="result_tabs" style="background: #F2F6F8;">
     <ul> 
@@ -50,7 +50,7 @@
 
 
       </li>
-      <li class="" style="">
+      <li class="border-right" style="">
         <a href="#profiles" class="glyphicons shop" id="profile_tab" data-toggle="tab"><i></i>
         <div class=" visible-lg">
           <span class="strong">Profiles</span>
@@ -58,7 +58,7 @@
         </div>
         <div class="visible-sm visible-xs visible-md">
           <span class="strong">Profiles</span>
-          <span>Who &amp; where</span> 
+          <span>People &amp; places</span> 
         </div>
         </a>
       </li>
@@ -66,7 +66,7 @@
   </div>
 </div>
 
-  <div class="widget-body innerAll" style="margin:0; background-color: #FFF;">
+  <div class="widget-body innerLR" style="margin:0; background-color: #FFF;">
 
     <div class="tab-content">
       <!-- Tab content --> 
@@ -96,15 +96,14 @@
         </div>
       </div>
 
-      <div class="text-center innerAll">
-        <a data-toggle="collapse" data-target="#filters2" class="btn btn-default btn-sm"><i class="fa fa-sliders"></i> Advanced filters</a>
+      <div class="innerTB half" onclick="$(this).hide();">
+        <a data-toggle="collapse" data-target="#filters2" class="small"><i class="fa fa-caret-right fa-fw fa-lg"></i> Advanced filters</a>
       </div>
 
-      <div id="filters2" class="innerAll collapse"> 
-        <div class="form-group" id="locationgroup">
-          <label for="loc" class="col-sm-3 control-label">Location</label>
-          <div class="col-sm-9">
-            <div class="input-group  input-group-sm">
+      <div id="filters2" class=" collapse"> 
+        <div class="form-group" id="locationgroup"> 
+          <div class="col-sm-12 ">
+            <div class="input-group innerAll input-group-sm">
               <span class="input-group-addon"><i class="fa fa-map-marker"></i></span>
               <input type="text" name="location" id="pac_input_market" class="pac-input form-control  " placeholder="Where?">
               <div class="input-group-btn">
@@ -114,38 +113,17 @@
           </div>
         </div>
         
-        <div class="form-group" id="organisationgroup">
-          <label for="filterOrg" class="col-sm-3 control-label">Organisation</label>
-          <div class="col-sm-9">
+        <div class="form-group" id="organisationgroup"> 
+          <div class="col-sm-12 innerLR">
             <select class="selectpicker show-tick" data-live-search="true" multiple data-selected-text-format="count>2" title="Filter by organisation" name="filterOrg"   data-style="btn-default" id="filter_mkt_org">
               
           </select>
           </div>
         </div>
 
-        <div class="form-group" id="companygroup">
-          <label for="companyType" class="col-sm-3 control-label">Company type</label>
-          <div class="col-sm-9">
+        <div class="form-group innerLR" id="companygroup"> 
+          <div class="col-sm-12">
           <select class="selectpicker show-tick"   id="filter_mkt_biz"  data-live-search="true" multiple data-selected-text-format="count>2" title="Filter by company type" name="companyType"  data-style="btn-default">
-         <!--    <optgroup label="Production">
-              <option >Grower</option><option>
-              Cafe / coffee shop</option><option>
-              Food manufacturer</option><option>
-              Food Stall</option><option>
-              Restaurant / Pub / Bar</option><option>
-              Ready meals</option><option>
-              Farm Shop</option><option>
-              Health food</option>
-            </optgroup>
-            <optgroup label="Last mile">
-             <option> Drinks manufacturer</option><option>
-              Butcher</option><option>
-              Marketing</option><option>
-              Baker</option><option>
-              Arable Farm</option><option>
-              Chef / Catering</option><option>
-              Individual</option>
-            </optgroup>  -->
           </select>
           </div>
         </div>
@@ -158,35 +136,32 @@
 
           <form action="/activity" onsubmit="return formSubmit(this);"  role="search" data-step="1" data-intro="Search for anyhing, anywhere" class="form-horizontal">
 
-            <div class="form-group clearfix">
-              <label for="companyType" class="col-sm-3 control-label">I want to</label>
-              <div class="col-sm-9">
-                  <div class="btn-group ">
-                      <button type="button" class="btn btn-default btn-pwant btn-sm btn-pwant" >Buy</button>
+            <div class="form-group clearfix"> 
+              <div class="col-sm-12 text-center">
+                  <div rel="tooltip" title="Do you want to buy or sell?" class="tooltips btn-group">
+                      <button type="button" class="btn btn-default btn-pwant btn-sm btn-pwant">Buy</button>
                       <button type="button" class="btn btn-default btn-pwant btn-sm btn-pwant">Sell</button>
                   </div> 
               </div>
             </div> 
 
             <div class="form-group clearfix" style="background: rgba(200,200,200,0.1);">
-              <label for="companyType" class="col-sm-3 control-label">User type</label>
-              <div class="col-sm-9">
-                  <div class="btn-group ">
-                      <button type="button" class="btn btn-default btn-sm btn-put" data-toggle="collapse" data-target="#companygroup" >Companies</button>
-                      <button type="button" class="btn btn-default btn-sm btn-put">Individuals</button>
+              <div class="col-sm-12 text-center">
+                  <div rel="tooltip" title="Filter by type" class="tooltips btn-group">
+                    <button type="button" class="btn btn-default btn-sm btn-put" data-toggle="collapse" data-target="#companygroup" >Companies</button>
+                    <button type="button" class="btn btn-default btn-sm btn-put">Individuals</button>
                   </div>
               </div>
             </div>
-
-            <div class="text-center innerAll">
-              <a data-toggle="collapse" data-target="#filters1" class="btn btn-default btn-sm filters1"><i class="fa fa-sliders"></i> Advanced filters</a>
+ 
+            <div class="innerTB half" onclick="$(this).hide();">
+              <a data-toggle="collapse" data-target="#filters1" class="small filters1"><i class="fa fa-caret-right fa-fw fa-lg"></i> Advanced filters</a>
             </div>
 
-            <div id="filters1" class="innerAll collapse"> 
-              <div class="form-group" id="locationgroup">
-                <label for="loc" class="col-sm-3 control-label">Location</label>
-                <div class="col-sm-9">
-                  <div class="input-group  input-group-sm">
+            <div id="filters1" class="collapse"> 
+              <div class="form-group" id="locationgroup"> 
+                <div class="col-sm-12">
+                  <div class="input-group  innerAll input-group-sm">
                    <span class="input-group-addon"><i class="fa fa-map-marker"></i></span>
                     <input type="text" name="location" id="pac-input" value="{% if search %}{{ search.place }}{% endif %}{% if not search %}{{userinfo.zip_code}}{% endif %}" class="pac-input form-control  " placeholder="Where?">
                     <div class="input-group-btn">
@@ -196,18 +171,16 @@
                 </div>
               </div>
               
-              <div class="form-group" id="organisationgroup">
-                <label for="filterOrg" class="col-sm-3 control-label">Organisation</label>
-                <div class="col-sm-9">
+              <div class="form-group" id="organisationgroup"> 
+                <div class="col-sm-12 text-">
                   <select class="selectpicker show-tick" data-live-search="true" multiple data-selected-text-format="count>2" title="Filter by organisation" name="filterOrg"   data-style="btn-default">
                   
                 </select>
                 </div>
               </div>
 
-              <div class="form-group" id="companygroup">
-                <label for="companyType" class="col-sm-3 control-label">Company type</label>
-                <div class="col-sm-9">
+              <div class="form-group" id="companygroup"> 
+                <div class="col-sm-12">
                 <select class="selectpicker show-tick"   data-live-search="true" multiple data-selected-text-format="count>2" title="Filter by company type" name="companyType"  data-style="btn-default">
                  
                 </select>
