@@ -40,6 +40,17 @@ class AjaxSearch():
         feed_result = search_obj.get_latest_updates(request.POST.get("time",None))
         return HttpResponse(json.dumps(feed_result))
 
+    def get_market_filter(self,request):
+        search_obj = MarketSearch(request)
+        result = search_obj.get_market_filters()
+        return HttpResponse(json.dumps(result))
+
+    def get_profile_filter(self,request):
+        search_obj = ProfileSearch(request)
+        result = search_obj.get_profile_filters()
+        return HttpResponse(json.dumps(result))
+
+
     def get_single_tweet(self,request):
         tweet_id = request.POST.get('tweet_id')
         search_obj = MarketSearch(request)
