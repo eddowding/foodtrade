@@ -46,7 +46,7 @@ class MarketSearch(GeneralSearch):
 
 
         geo_search = {"near": [float(self.lng), float(self.lat)],
-`                                    "distanceField": "distance",
+                                   "distanceField": "distance",
                                     "includeLocs": "latlng",
                                     "uniqueDocs": True,
                                     "spherical":True,

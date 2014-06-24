@@ -146,45 +146,37 @@
       <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
       <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
     <![endif]-->
-
-
-
-
-
-
-<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
-    <!-- 
-  **********************************************************
-  In development, use the LESS files and the less.js compiler
-  instead of the minified CSS loaded by default.
-  -->
-  <!-- <link rel="stylesheet/less" href="{% static "assets/less/admin/module.admin.stylesheet-complete.less" %}" /> -->
-<link href="{% static "assets/less/admin/compiledstyle.css" %}" rel="stylesheet">
-    <link href="{% static "css/foodtrade_new.css" %}" rel="stylesheet">
   
-    <!--[if lt IE 9]><link rel="stylesheet" href="{% static "assets/components/library/bootstrap/css/bootstrap.min.css" %}" /><![endif]-->
-    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+    <script src="{% static "assets/components/library/jquery/jquery-migrate.min.js" %}"></script>
+    <script src="{% static "assets/components/library/modernizr/modernizr.js" %}"></script>
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>    
     <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js" type="text/javascript" charset="utf-8"></script>
 
-   
- <!--    <link rel="stylesheet" href="{% static "assets/css/admin/module.admin.stylesheet-complete.min.css" %}" />  --> 
 
-    <script src="{% static "assets/components/library/jquery/jquery-migrate.min.js" %}"></script>
-    <script src="{% static "assets/components/library/modernizr/modernizr.js" %}"></script>
-   <!--  <script src="{% static "assets/components/plugins/less-js/less.min.js" %}"></script>  --> 
+
+    <link rel="stylesheet" href="{% static "assets/less/admin/module.admin.stylesheet-complete.css" %}" /> 
+    <!-- <link href="{% static "assets/less/admin/compiledstyle.css" %}" rel="stylesheet"> -->
+    <link href="{% static "css/foodtrade.less" %}" rel="stylesheet/less">
+  
+    <!--[if lt IE 9]><link rel="stylesheet" href="{% static "assets/components/library/bootstrap/css/bootstrap.min.css" %}" /><![endif]-->
+    <script>
+      less = {
+        env: "development", 
+        poll: 500
+      };
+    </script>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/less.js/1.7.1/less.min.js"></script>  
+   
+
     <script src="{% static "assets/components/plugins/browser/ie/ie.prototype.polyfill.js" %}"></script>
     <script>
     if ( /*@cc_on!@*/ false && document.documentMode === 10)
     {
         document.documentElement.className += ' ie ie10';
     }
-    </script>
-
-
-
-
-
+    </script> 
 
 
   </head>
@@ -477,19 +469,9 @@ function show_small_structure()
 <!-- new post exp -->
 
 
-<div class="container-fluid menu-hidden" id="main_page">
+<div class="container-fluid menu-hidden" id=" ">
   
-
- <div id="menu-right" class="hidden">
-      <div> 
-          <div class="">   
-
-            
-
-          </div>
-      </div>
-  </div>
-  
+ 
 
 
 <div id="content">
@@ -500,7 +482,7 @@ function show_small_structure()
 
   {% if request.user.is_authenticated %}
   <div class="user-action pull-right menu-right-hidden-xs menu-left-hidden-xs border-left border-right">
-      <div class="dropdown username pull-left" style="margin-right: 50px;">
+      <div class="dropdown username pull-left uservoicePadding" style="margin-right: 50px;">
           <a class="dropdown-toggle" data-toggle="dropdown" href="#">
               <span class="media margin-none">
                   <span class="pull-left">
@@ -515,7 +497,7 @@ function show_small_structure()
           <ul class="dropdown-menu pull-right">
               <li><a href="/editprofile/me">Edit profile</a>
               </li>
-              <li><a href="/profile/{{userinfo.username}}">View profile</a>
+              <li><a href="/me">View profile</a>
               </li> 
               <li><a href="/visitors">Who's visited your profile</a>
               </li> 
@@ -531,7 +513,7 @@ function show_small_structure()
 
   {% if not request.user.is_authenticated %} 
   <div class="user-action pull-right menu-right-hidden-xs menu-left-hidden-xs border-left">
-    <div class="dropdown username pull-left">
+    <div class="dropdown username pull-left border-right uservoicePadding">
       <a class="dropdown-toggle" data-toggle="dropdown" href="#">Login
       </a> 
        <ul class="dropdown-menu pull-right" style="padding: 15px;min-width: 250px;">
@@ -579,8 +561,8 @@ function show_small_structure()
   {% endif %}
    
   
-  <div class="user-action user-action-btn-navbar pull-left" style="border: 0; padding: 5px;">
-      <a href="/" class="btn btn-sm btn-navbar btn-open-left">
+  <div class="user-action user-action-btn-navbar pull-left border0" style="padding: 2px;">
+      <a href="/" class="btn btn-sm btn-navbar">
       <img src="{% static 'images/logo_icon.png' %}" alt="FoodTrade logo"/> 
       </a>
   </div> 
@@ -590,7 +572,7 @@ function show_small_structure()
   {% if request.user.is_authenticated %}
   <ul class="notifications pull-right hidden-xs border-left">
       <li>
-          <a href="/inbox/"><i class="notif-block icon-envelope-1"></i>{% if userinfo.notification_count != 0 %}
+          <a href="/inbox/"><i class="notif-block fa fa-envelope-o"></i>{% if userinfo.notification_count != 0 %}
             <span id="spanInbox" class="pull-number label label-success">{{userinfo.notification_count}}</span> 
             {% endif %}
             </a> 
@@ -599,39 +581,30 @@ function show_small_structure()
   {% endif %}
 
 
-  <div class="input-group pull-left">
+  <div class="input-group pull-left border0">
    
     <form action="/activity" onsubmit="return start_search()">
  
-    <div class="input-group">
+    <div class="input-group border0">
       <input type="hidden" name="search_param" value="all" id="search_param">   
 
-      <div class="input-group-btn">
-        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" style="
-        background: #f5f5f5;
-        padding: 8px;
-        margin-left: 10px;
-        border-radius: 6px 0 0 6px;
-        border: 1px solid #ccc;
-        border-right: 0;"><span id = "search_type">Produce</span> <i class="fa fa-caret-down text-black"></i></button>
+      <div class="input-group-btn border0" id="searchGroup">
+        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" id="searchSelect">
+        <span id="search_type">
+            <i class="fa fa-cutlery icon"></i> 
+            <span class="hidden-xs">Produce</span>
+            <i class="fa fa-caret-down"></i>
+        </span> 
+        </button>
                 <ul class="dropdown-menu">
                   <li ><a href="#" id="search_type_option">Profiles</a></li> 
                 </ul>
               </div>  
 
-              <input type="text" class="form-control pull-left" name="x" id="search_query" placeholder="What are you looking for?" style="height: auto;
-        margin: 7px 0 7px 0;
-        padding: 6px 10px;
-        width: 260px;
-        border: 1px solid #ccc; 
-        font-size: 17px;">  
+              <input type="text" class="form-control pull-left" name="x" id="search_query" placeholder="Find...">  
 
               <div class="input-group-btn"> 
-                <button type="submit" class="btn btn-default" style="background-image: none;
-        background: #f5f5f5;
-        padding: 8px 12px;
-        border: 1px solid #ccc !important;
-        border-radius: 0 5px 5px 0 !important;">
+                <button type="submit" class="btn btn-default" id="searchSubmit">
                   <span class="glyphicon glyphicon-search"></span> 
                 </button> 
               </div>
@@ -649,9 +622,16 @@ function show_small_structure()
           <div class=" pull-right border-left user-action "> 
           
               <div class="btn-group">
-                <button type="button" class="btn btn-info btn-sm dropdown-toggle" data-toggle="dropdown" style="font-weight: normal;">
-                  Post an offer <span class="caret"></span>
+
+                <button type="button" class="btn btn-primary btn-stroke btn-sm hidden-xs hidden-sm dropdown-toggle" data-toggle="dropdown" style="font-weight: normal;">
+                  <i class="fa fa-edit text-primary"></i>
+                  New   
                 </button>
+
+                <a class="hidden-md hidden-lg dropdown-toggle" data-toggle="dropdown" style="font-weight: normal;">
+                  <i class="fa fa-edit fa-2x innerT text-primary"></i>
+                </a>
+
                 <ul class="dropdown-menu" role="menu">
                   <li><a href="#" data-toggle="modal" data-target="#newtwitterpost">Post a buy request</a></li>
                   <li><a href="#" data-toggle="modal" data-target="#newtwitterpost">Post a sell offer</a></li>
@@ -741,7 +721,7 @@ function show_small_structure()
 <span id="reload_warning" class="hidden"> </span>
 
 <div class="row row-merge"  style="height: 100%;">
-  <div class="col-md-10">
+  <div class="{% if not request.user.is_authenticated %} col-xs-12 {% else %} col-md-10  {% endif %}">
         <div class="container-fluid menu-hidden" id="main_page">
               <div class="row row-merge">
                     <div class="col-md-12">
@@ -751,7 +731,7 @@ function show_small_structure()
               </div><!-- row -->
         </div><!-- container -->
   </div><!-- col 10 --> 
-  <div class="col-md-2">
+  <div class="{% if not request.user.is_authenticated %} hidden {% else %} col-md-2  {% endif %}">
     <div id="updates"> 
     </div><!-- updates -->
 
@@ -953,15 +933,6 @@ function show_small_structure()
     <script src="{% static "js/tag-it.js" %}"></script>
     <script src="{% static "js/twitter-typeahead.js" %}"></script>
     
-    <script src="{% static "css/docsupport/prism.js" %}" charset="utf-8"></script>
-
-    <script src="{% static "js/isotope.pkgd.min.js" %}"></script>
-
-
-<link href="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/css/bootstrap-editable.css" rel="stylesheet"/>
-<script src="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/js/bootstrap-editable.min.js"></script>
-
-    <!-- social net -->
     <!-- social net --> 
 
     <script data-id="App.Config">
@@ -980,18 +951,10 @@ function show_small_structure()
     var themerPrimaryColor = primaryColor;
     </script>
 
-    <script src="http://malihu.github.io/custom-scrollbar/jquery.mCustomScrollbar.concat.min.js"></script>
- <script src="{% static "assets/components/plugins/nicescroll/jquery.nicescroll.min.js" %}"></script>
-    <script src="{% static "assets/components/plugins/breakpoints/breakpoints.js" %}"></script>
-    <script src="{% static "assets/components/plugins/preload/pace/pace.min.js" %}"></script>
-    <script src="{% static "assets/components/plugins/menus/sidr/jquery.sidr.js" %}"></script>
-    <script src="{% static "assets/components/plugins/holder/holder.js" %}"></script>
-    <script src="{% static "assets/components/core/js/sidebar.main.init.js" %}"></script>
-    <script src="{% static "assets/components/core/js/sidebar.collapse.init.js" %}"></script>
-    <script src="{% static "assets/components/plugins/mixitup/jquery.mixitup.min.js" %}"></script>
+    <script src="http://malihu.github.io/custom-scrollbar/jquery.mCustomScrollbar.concat.min.js"></script> 
+    <script src="{% static "assets/components/plugins/preload/pace/pace.min.js" %}"></script> 
     <script src="{% static "assets/components/common/forms/elements/bootstrap-select/assets/lib/js/bootstrap-select.js" %}"></script>
-    <script src="{% static "assets/components/common/forms/elements/bootstrap-select/assets/custom/js/bootstrap-select.init.js" %}"></script>
-    <script src="{% static "assets/components/modules/admin/menus/menus.sidebar.chat.init.js" %}"></script>
+    <script src="{% static "assets/components/common/forms/elements/bootstrap-select/assets/custom/js/bootstrap-select.init.js" %}"></script> 
     <script src="{% static "assets/components/core/js/core.init.js" %}"></script>
     <script src='//api.tiles.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v0.0.2/Leaflet.fullscreen.min.js'></script>
     <link href='//api.tiles.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v0.0.2/leaflet.fullscreen.css' rel='stylesheet' />
@@ -1364,25 +1327,7 @@ UserVoice.push(['set', {
   trigger_color: 'white',
   trigger_background_color: '#6aba2e'
 }]);
-
-// Identify the user and pass traits
-// To enable, replace sample data with actual user traits and uncomment the line
-// UserVoice.push(['identify', {
-//   email:      'john.doe@example.com', // Userâ€™s email address
-//   name:       'John Doe', // Userâ€™s real name
-//   created_at: 1364406966, // Unix timestamp for the date the user signed up
-//   id:         123, // Optional: Unique id of the user (if set, this should not change)
-//   type:       'Owner', // Optional: segment your users by type
-//   account: {
-//    id:           123, // Optional: associate multiple users with a single account
-//    name:         'Acme, Co.', // Account name
-//    created_at:   1364406966, // Unix timestamp for the date the account was created
-//    monthly_rate: 9.99, // Decimal; monthly rate of the account
-//    ltv:          1495.00, // Decimal; lifetime value of the account
-//    plan:         'Enhanced' // Plan name for the account
-//   }
-// }]);
-
+ 
 //Add default trigger to the bottom-right corner of the window:
 UserVoice.push(['addTrigger', { mode: 'contact', trigger_position: 'top-right' }]);
 

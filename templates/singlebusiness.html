@@ -54,23 +54,17 @@
  
 
 
-<div class="innerAll page">
-<div class="row row-merge" style="background: #fff;">
+<div class="page">
 
-<div class="col-xs-12">
-  <div class="map-biz" id="map"></div> 
-</div><!-- col map --> 
 
-<div class="col-xs-12">
-
-<div class="row row-merge border-bottom border-right">
-  <div class="col-md-7 border-left">
-    <div class="innerAll">
+<div class="row row-merge bizSummary border-left border-top  bg-gray">
+<div class="ftstrip"></div>
+<div class="col-xs-9 bg-gray border-right">
+   <div class="innerAll">
       <div class="media">
-      <img src="{{pic_url}}" width="73" alt="" class="pull-left img-thumbnail marginR10">
+      <img src="{{pic_url}}"  alt="{{name}} logo" class="pull-left avatar">
       <div class="media-body"> 
         <h2 class="margin-none">{{name}}</h2>
-        <p class="">{{description}}</p>  
         {% if type_user|length == 0 or type_user|first == '' %}
         {% else %}
         <span class="tags tags-biztype  ">  
@@ -81,132 +75,192 @@
         {% endif %} 
       </div> 
       </div>
+    </div>
+</div>
+
+<div class="col-xs-3 bg-gray border-right ">
+  <div class="{% if loc.lat == -82.86275189999999 and loc.lon == -135.10000000000002 %} hidden {% endif %}  clearfix" >
+    <div class="innerAll">
+      {% if loc.lat == -82.8627519 and loc.lon == -135.0 %}
+      {% else %}
+      <!-- if logged in or you've allows html5 browser location -->
+      <div class="pull-right ">
+      <i class="fa fa-location-arrow fa-2x text-muted"></i>
+      </div>
+
+
+      <span class="lead "> {{distance}} miles  </span>
+      <small class="small clearfix margin0 hidden-xs">away from you</small>
+       
+      {% endif %}  
+    </div>   
+  </div> 
+</div>
+
+</div>
+
+
+<div class="row row-merge bizSummary">
+  <div class="col-xs-12">
+    <div class="map-biz" id="map"></div> 
+  </div><!-- col map --> 
+</div>
+
+<div class="row row-merge bizSummary">
+<div class="col-xs-12">
+
+<div class="row row-merge border-bottom border-right">
+  <div class="col-sm-7 col-xs-8 border-left">
+    <div class="innerAll">
+       
+
+      <p class="">{{description}}</p>  
 
     </div> 
   </div>
-  <div class="col-md-3">
+  <div class="col-sm-3 hidden-xs">
     <div class="innerAll">
 
 
     
-  <!-- EDIT / CONTACT -->
-  {% if user.is_superuser %}
-    <a href="/editprofile/{{username}}/" class="btn btn-primary ">Edit</a>
-  {% endif %}
-   
-  {% ifequal is_unknown_profile 'false' %}
-    {% ifequal profile_id user_id %}
-      <a href="/editprofile/{{userinfo.username}}" class="btn btn-danger ">
-         Edit my profile
-      </a>       
-    {% else %}
-      <button class="btn btn-primary text-center normal btn-block" data-toggle="modal" data-target="#modal_contact"><i class="fa fa-envelope-o fa-fw"></i> Contact</button>
-    {% endifequal %}
-  {% else %}
-    <button class="btn btn-primary " style="margin-top:40px;" data-toggle="modal" data-target="#modal_invite">Invite to connect</button> 
-  {% endifequal %} 
-  <!-- EDIT / CONTACT -->
-
-
-  <!-- CONNECT AS BUSINESS OR CUSTOMER --> 
-  {% ifnotequal profile_id user_id %}
-  {% if user.is_authenticated %}      
-
-      <!-- if logged in users = individual --> 
-      {% ifequal loggedin_signupas "Individual" %}
-      <div class="btn-group btn-block" data-toggle="buttons">
-        {% if logged_customer %}
-            <label class=" btn btn-info btn-block active" style="width:100%; font-size: 12px;" >
-            <input type="checkbox" checked="checked" id="customer-chkbx" onchange="add_customer({{profile_id}}, {{user_id}})" rel="tooltip" title="{{userinfo.full_name}} is customer of {{name}}"><i class="fa fa-smile-o fa-fw fa-lg"></i>  I'm a customer!
-            </label>      
-            {% else %}
-            <label class=" btn btn-default btn-block" style="width:100%; font-size: 12px;" rel="tooltip" title="{{userinfo.full_name}} is customer of {{name}}" >
-            <input type="checkbox" id="customer-chkbx" onchange="add_customer({{profile_id}}, {{user_id}})"  rel="tooltip" title="{{userinfo.full_name}} is customer of {{name}}"><i class="fa fa-smile-o fa-fw"></i> I'm a customer!
-            </label>      
-        {% endif %}
-      </div>
-      {% endifequal %}
-
-      <!-- if logged in users = business --> 
-      {% ifequal loggedin_signupas "Business" %} 
-        <div class="btn-group btn-block " data-toggle="buttons">
-          <button class="btn btn-default btn-sm " style="background: url('{{userinfo.profileimg}}'); background-size: cover;width:10%;">&nbsp;</button>
-          {% if logged_conn == "seller"  or logged_conn == "both" %}
-            <label class="btn btn-default active btn-sm" rel="tooltip" style="width:40%;" title="{{userinfo.full_name}} buys from {{name}}"> 
-            <input type="checkbox" checked id="buy_from" onchange="conn_handler('buy_from', {{profile_id}})">buys from
-          {% else %}
-            <label class="btn btn-default btn-sm"  rel="tooltip" style="width:40%;"  title="{{userinfo.full_name}} buys from {{name}}"> 
-            <input type="checkbox" id="buy_from" onchange="conn_handler('buy_from', {{profile_id}})"> buys from
-          {% endif %}
-            {% comment %} 
-            <input type="checkbox" id="buy_from" onchange="conn_handler('buy_from', {{profile_id}})"> buys from
-            {% endcomment %}
-          </label>
-
-          <!-- showing active mode if button is selected -->
-          {% if logged_conn == "buyer" or logged_conn == "both" %}
-            <label class="btn btn-default active btn-sm" rel="tooltip" style="width:40%;"  title="{{userinfo.full_name}} sells to {{name}}" > 
-            <input type="checkbox" checked id="sell_to" onchange="conn_handler('sell_to', {{profile_id}})"> sells to
-          {% else %}
-            <label class="btn btn-default btn-sm"  rel="tooltip" style="width:40%;"   title="{{userinfo.full_name}} sells to {{name}}" > 
-            <input type="checkbox" id="sell_to" onchange="conn_handler('sell_to', {{profile_id}})"> sells to
-          {% endif %}
-            {% comment %}
-            <input type="checkbox" id="sell_to" onchange="conn_handler('sell_to', {{profile_id}})"> sells to
-            {% endcomment %}
-          </label> 
-          <button class="btn btn-default btn-sm"  style="background: url('{{pic_url}}'); background-size: cover; width:10%;">&nbsp;</button>
-        </div>
-        {% endifequal %}
-
+      <!-- EDIT / CONTACT -->
+      {% if user.is_superuser %}
+        <a href="/editprofile/{{username}}/" class="btn btn-primary ">Edit</a>
+      {% endif %}
+       
+      {% ifequal is_unknown_profile 'false' %}
+        {% ifequal profile_id user_id %}
+          <a href="/editprofile/{{userinfo.username}}" class="btn btn-info ">
+             Edit
+          </a>       
         {% else %}
-          <!-- if not logged in show login prompt -->
-          <div class="btn-group btn-block" rel="tooltip" data-placement="top" title="Login to connect to {{name}}">
-            <button class="btn btn-default" style="width:50%;" disabled>Buy from</button>
-            <button class="btn btn-default"  style="width:50%;" disabled>Sell to</button>
+          <button class="btn btn-primary text-center normal btn-block" data-toggle="modal" data-target="#modal_contact"><i class="fa fa-envelope-o fa-fw"></i> Contact</button>
+        {% endifequal %}
+      {% else %}
+        <button class="btn btn-primary " style="margin-top:40px;" data-toggle="modal" data-target="#modal_invite">Invite to connect</button> 
+      {% endifequal %} 
+      <!-- EDIT / CONTACT -->
+
+
+      <!-- CONNECT AS BUSINESS OR CUSTOMER --> 
+      {% ifnotequal profile_id user_id %}
+      {% if user.is_authenticated %}      
+
+          <!-- if logged in users = individual --> 
+          {% ifequal loggedin_signupas "Individual" %}
+          <div class="btn-group btn-block" data-toggle="buttons">
+            {% if logged_customer %}
+                <label class=" btn btn-info btn-block active" style="width:100%; font-size: 12px;" >
+                <input type="checkbox" checked="checked" id="customer-chkbx" onchange="add_customer({{profile_id}}, {{user_id}})" rel="tooltip" title="{{userinfo.full_name}} is customer of {{name}}"><i class="fa fa-smile-o fa-fw fa-lg"></i>  I'm a customer!
+                </label>      
+                {% else %}
+                <label class=" btn btn-default btn-block" style="width:100%; font-size: 12px;" rel="tooltip" title="{{userinfo.full_name}} is customer of {{name}}" >
+                <input type="checkbox" id="customer-chkbx" onchange="add_customer({{profile_id}}, {{user_id}})"  rel="tooltip" title="{{userinfo.full_name}} is customer of {{name}}"><i class="fa fa-smile-o fa-fw"></i> I'm a customer!
+                </label>      
+            {% endif %}
           </div>
-          <a href="{% provider_login_url "twitter" process="login" %}" class="btn btn-success btn-block">Login for more</a>
-        {% endif %}
+          {% endifequal %}
 
-  {% endifnotequal %}
-  <!-- / CONNECT AS BUSINESS OR CUSTOMER --> 
+          <!-- if logged in users = business --> 
+          {% ifequal loggedin_signupas "Business" %} 
+            <div class="btn-group btn-block hidden-sm hidden-xs" data-toggle="buttons">
+              <button class="btn btn-default btn-sm " style="background: url('{{userinfo.profileimg}}'); background-size: cover;width:10%;">&nbsp;</button>
+              {% if logged_conn == "seller"  or logged_conn == "both" %}
+                <label class="btn btn-default active btn-sm" rel="tooltip" style="width:40%;" title="{{userinfo.full_name}} buys from {{name}}"> 
+                <input type="checkbox" checked id="buy_from" onchange="conn_handler('buy_from', {{profile_id}})">buys from
+              {% else %}
+                <label class="btn btn-default btn-sm"  rel="tooltip" style="width:40%;"  title="{{userinfo.full_name}} buys from {{name}}"> 
+                <input type="checkbox" id="buy_from" onchange="conn_handler('buy_from', {{profile_id}})"> buys from
+              {% endif %}
+                {% comment %} 
+                <input type="checkbox" id="buy_from" onchange="conn_handler('buy_from', {{profile_id}})"> buys from
+                {% endcomment %}
+              </label>
+
+              <!-- showing active mode if button is selected -->
+              {% if logged_conn == "buyer" or logged_conn == "both" %}
+                <label class="btn btn-default active btn-sm" rel="tooltip" style="width:40%;"  title="{{userinfo.full_name}} sells to {{name}}" > 
+                <input type="checkbox" checked id="sell_to" onchange="conn_handler('sell_to', {{profile_id}})"> sells to
+              {% else %}
+                <label class="btn btn-default btn-sm"  rel="tooltip" style="width:40%;"   title="{{userinfo.full_name}} sells to {{name}}" > 
+                <input type="checkbox" id="sell_to" onchange="conn_handler('sell_to', {{profile_id}})"> sells to
+              {% endif %}
+                {% comment %}
+                <input type="checkbox" id="sell_to" onchange="conn_handler('sell_to', {{profile_id}})"> sells to
+                {% endcomment %}
+              </label> 
+              <button class="btn btn-default btn-sm"  style="background: url('{{pic_url}}'); background-size: cover; width:10%;">&nbsp;</button>
+            </div>
+            {% endifequal %}
+
+            {% else %}
+              <!-- if not logged in show login prompt -->
+              <div class="btn-group btn-block" rel="tooltip" data-placement="top" title="Login to connect to {{name}}">
+                <button class="btn btn-default" style="width:50%;" disabled>Buy from</button>
+                <button class="btn btn-default"  style="width:50%;" disabled>Sell to</button>
+              </div>
+              <a href="{% provider_login_url "twitter" process="login" %}" class="btn btn-success btn-block">Login for more</a>
+            {% endif %}
+
+      {% endifnotequal %}
+      <!-- / CONNECT AS BUSINESS OR CUSTOMER --> 
 
 
-  <!-- VERIFIED PROFILE -->
-  {% if prof_subscribed %}
-  <div style="background: #88BC62;">
-    <i class="fa fa-check" style="color: #fff;"></i>
-    <span>Verified</span>
-  </div> 
-  {% endif %}  
-  <!-- VERIFIED PROFILE -->
+      <!-- VERIFIED PROFILE -->
+      {% if prof_subscribed %}
+      <div style="background: #88BC62;">
+        <i class="fa fa-check" style="color: #fff;"></i>
+        <span>Verified</span>
+      </div> 
+      {% endif %}  
+      <!-- VERIFIED PROFILE -->
 
 
   
 
     </div>
+
+ 
+
+
     </div> 
 
  
-  <div class="col-md-2">
-    <div class="{% if loc.lat == -82.86275189999999 and loc.lon == -135.10000000000002 %} hidden {% endif %} lead border-bottom" >
-      <div class="innerAll">
-        {% if loc.lat == -82.8627519 and loc.lon == -135.0 %}
+  <div class="col-sm-2 col-xs-4">
+    
+
+    <div class="innerAll hidden-md hidden-lg">
+    <!-- EDIT / CONTACT -->
+      {% if user.is_superuser %}
+        <a href="/editprofile/{{username}}/" class="btn btn-primary ">Edit</a>
+      {% endif %}
+       
+      {% ifequal is_unknown_profile 'false' %}
+        {% ifequal profile_id user_id %}
+          <a href="/editprofile/{{userinfo.username}}" class="btn btn-info ">
+             Edit 
+          </a>       
         {% else %}
-        <!-- if logged in or you've allows html5 browser location -->
-        <i class="fa fa-location-arrow text-primary"></i><b> {{distance}} miles  </b>
-        <small>away from you</small>
-        {% endif %}  
-      </div>   
-    </div> 
+          <button class="btn btn-primary text-center normal btn-block" data-toggle="modal" data-target="#modal_contact"><i class="fa fa-envelope-o fa-fw"></i> Contact</button>
+        {% endifequal %}
+      {% else %}
+        <button class="btn btn-primary " style="margin-top:40px;" data-toggle="modal" data-target="#modal_invite">Invite to connect</button> 
+      {% endifequal %} 
+      <!-- EDIT / CONTACT -->
+     </div>
+ 
+
+
+
+
     <div class="innerAll">
 
 
   <!-- SHARE -->
 
       <div class="btn-group btn-block">
-        <div class="btn-group"  style="width:50%;">
-          <button type="button"  style="width:100%;" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown"  ><i class="fa fa-share"></i> Share</button>
+        <div class="btn-group" >
+          <button type="button"  class="btn btn-default dropdown-toggle" data-toggle="dropdown"  ><i class="fa fa-share-alt"></i>  </button>
             <ul class="dropdown-menu ">
              <li> <a href="#" class="" onclick="window.open(
               'https://www.facebook.com/sharer/sharer.php?s=100&amp;p[url]='+encodeURIComponent('{{ request.build_absolute_uri }}') +'&amp;p[images][0]='+encodeURIComponent('{{pic_url}}')+'&amp;p[title]='+encodeURIComponent('{{name}} on FoodTrade')+'&amp;p[summary]='+encodeURIComponent('Hey, see my profile on FoodTrade')+'&amp;u='+encodeURIComponent('{{ request.build_absolute_uri }}') +'&amp;t='+encodeURIComponent('{{name}} on FoodTrade'),
@@ -214,36 +268,37 @@
                     'width=626,height=436,top='+((screen.height - 436) / 2)+',left='+((screen.width - 626)/2 )); 
                   return false;">
 
-                <i class="fa fa-facebook-square fa-2x"></i> Share on facebook 
-              </a></li><li>
+                <i class="fa fa-facebook fa-lg fb fa-fw"></i> Share on facebook 
+              </a></li>
+              <li>
               <a href="#" class="  " onclick="window.open(
                     'https://twitter.com/share?url='+encodeURIComponent('{{ request.build_absolute_uri }}')+'&amp;text='+encodeURIComponent('{{screen_name}} on @foodtradeHQ') + '&amp;count=none/', 
                     'twitter-share-dialog', 
                     'width=626,height=436,top='+((screen.height - 436) / 2)+',left='+((screen.width - 626)/2 )); 
                   return false;">
-                <i class="fa fa-twitter-square fa-2x"></i> Tweet this
+                <i class="fa fa-twitter fa-lg tw fa-fw"></i> Tweet this
               </a></li><li>
   
               <a class=" " href="http://pinterest.com/pin/create/button/?url={{ request.build_absolute_uri|urlencode }}&media={{pic_url|urlencode}}&description={{screen_name|urlencode}}{{' on FoodTrade'|urlencode}}" class="pin-it-button" count-layout="horizontal">
-                <i class="fa fa-pinterest-square fa-2x"></i> Pin to pinterest
+                <i class="fa fa-pinterest fa-lg pinterest fa-fw"></i> Pin to pinterest
               </a> </li><li>
               <a  class="" href="https://plus.google.com/share?url={{ request.build_absolute_uri|urlencode }}">
-                <i class="fa fa-google-plus-square fa-2x"></i> Share on Google+
+                <i class="fa fa-google-plus fa-lg google fa-fw"></i>  Share on Google+
               </a></li><li>
               <a  class=" " href="http://www.tumblr.com/share" title="Share on Tumblr">
-                <i class="fa fa-tumblr-square fa-2x"></i> Post to Tumblr
+                <i class="fa fa-tumblr fa-lg tumblr fa-fw"></i> Post to Tumblr
               </a>
                  </li><li>
               <a  class=" " href="http://www.linkedin.com/shareArticle?mini=true&url={{ request.build_absolute_uri|urlencode}}&title={{screen_name}} on FoodTrade&summary=Hey, view my profile on Foodtrade.&source=">
-                <i class="fa fa-linkedin-square fa-2x"></i> Share on LinkedIn
+                <i class="fa fa-linkedin fa-lg linkin fa-fw"></i>  Share on LinkedIn
               </a></li> 
               <script type="text/javascript" src="http://platform.tumblr.com/v1/share.js"></script>
             </ul>
           </div>
 
-          <div class="btn-group" data-toggle="buttons" width="100%">
-          <label class="btn btn-default fa fa-star-o {% if fav_profile %} active {% else %}{% endif %}" style="font-size: 12px; padding: 8px 20px;">
-          <input type="checkbox" id="favourite_btn" {% if fav_profile %} checked="checked" {% endif %} onchange="save_favourites('{{profile_id}}', '{{user_id}}'); return null;">Favourite
+          <div class="btn- group" data-toggle="buttons">
+          <label class="btn btn-default btn-lg fa fa-star-o {% if fav_profile %} active {% else %}{% endif %}">
+          <input type="checkbox" id="favourite_btn" {% if fav_profile %} checked="checked" {% endif %} onchange="save_favourites('{{profile_id}}', '{{user_id}}'); return null;"> 
         </label>
         </div>
       </div>
@@ -256,166 +311,24 @@
 </div><!-- row -->
 
 
-<div class="row innerTB inner-2x">
-  <div class="col-md-6">
+
+<div class="row innerT inner-2x">
+  <div class="col-md-12" id="bizInfo">
 
 
-<div class="panel panel-default" id="panelCompany">
-  <div class="panel-heading">
-    <h3 class="panel-title"><i class="fa fa-legal"></i> <b>Company</b> information</h3>
-  </div>
-  <div class="panel-body">
-{% if company_num %}
-<div class="border-top">
-    Company number: <a href="https://www.duedil.com/company/{{company_num}}"></a>  
-</div>
-{% endif %} 
-        <!-- twitter info --> 
-      <div class="text-center">
-        <span class="label label-default label-stroke">{{followers_count}}</span> followers
-        <i class="fa fa-fw fa-twitter fa-lg" style="color: #35B8EB;"></i>
-        follows
-        <span class="label label-default label-stroke">{{friends_count}}</span>  
-      </div>
-  </div>
-</div>
 
-{% ifnotequal banner_url '' %}
-  <div class="panel panel-default">
-    <img src="{{banner_url}}" class="img-responsive" style="height:100%;">
-  </div>
-{% endifnotequal %} 
-     
+
+<!-- VIDEO -->      
 {% if intro_video %}
   <div class="panel panel-default">
     <div style="width:100%; height: 400px;">{{intro_video|safe}}</div>                
   </div> 
 {% endif %}  
+<!-- VIDEO --> 
 
 
 
-
-    <!-- groups and organisations -->
-    <div class="panel panel-default" id="panelOrganisations">
-      <div class="panel-heading">
-        <h3 class="panel-title">
-          <strong>
-          <i class="fa fa-certificate"></i> 
-          {% if userprof.organisation_connection_no != 0 %}{{userprof.organisation_connection_no}}{% endif %} Groups</strong> &amp; organisations &middot;
-
-        {% if user.is_authenticated %}
-          <a id="tabMemberships" data-target="#addGroup" data-toggle="collapse" class="small">Add your suggestion</a>
-        {% endif %}
-
-        </h3>
-      </div>
-
-
-      {% if user.is_authenticated %}
-      <div id="addGroup" class="collapse well-sm well clearfix">
-        <div class="form-inline" role="form"> 
-          <div id="orgs_remote" class="form-group  has-feedback">
-            <input class="typeahead form-control col-sm-12" id="new_orgs_typeahead" {% if not user.is_authenticated %} rel="tooltip" title="Please login to use this feature" {% endif %} style="min-width:350px;" type="text" placeholder="Type the name of a group, organisation, or certifier">
-            <span class="fa fa-search form-control-feedback"></span> 
-          </div>     
-        </div>    
-      </div>
-      {% endif %}
-
-      <div class="panel-body">
-        
-       
-
-          <div id="organisations_list" class="clearfix"> 
-            {% if user.is_authenticated %}
-            {% else %}
-              <p class=""><a href="{% provider_login_url "twitter" process="login" %}" class="">Login</a> or <a href="{% provider_login_url "twitter" process="login" %}" class="">sign up free</a> to see a complete list of groups. </p>
-            {% endif %}
-
-            <div class="clearfix isotope js-isotope" data-isotope-options='{ "itemSelector": ".card" }' id="organisation-cards"> 
-              {% for each in organisations %} 
-
-              <div class="card clearfix" data-toggle="popover" 
-              data-trigger="hover" 
-              data-title="{{each.name}}" 
-              data-html="true"
-              data-content="
-              <div class='text-center'>
-                <a href='/profile/{{each.username}}''><img src='{{each.photo}}' alt='{{each.name}}'
-                class='img-thumbnail img-responsive img-circle' style='width:73px; height:73px;' /></a>
-              </div> 
-              <p class='small'>{{each.description|truncatechars:200}}</p>
-              <div class='row row-merge border-top hidden'>
-
-                <!-- number of members -->
-                <div class='col-sm-6'>
-                  <a href='' class='innerAll half text-center display-block text-muted' data-original-title='{{each.food_no}} foods' rel='tooltip'><i class='fa fa-fw fa fa-cutlery'></i> {{each.food_no}}</a>
-                </div>
-
-                <!-- number of group membershpis -->  
-                <div class='col-sm-6'>
-                  <a href=''  rel='tooltip' title='Member of {{each.org_conn_no}} groups or organisations'  class='innerAll half text-center display-block text-muted'><i class='fa fa-fw fa-group'></i> {{each.org_conn_no}}</a>
-                </div> 
-              </div> 
-              ">
-
-              <!--   <div class="card card-organisation">  -->
-                  <div class="content">
-                    <div class="text-center">
-                      <a href="/profile/{{each.username}}"><img src="{{each.photo}}" alt="{{each.name}}"
-                      class="img-thumbnail img-responsive img-circle" style="width:73px; height:73px;" /></a>
-                    </div>
-                    <div class="text">
-                      {% ifequal profile_id user_id %}
-                      <button type="button" class="close" aria-hidden="true" onclick="conn_handler('close_buy_from', {{profile_id}}, {{each.id}})">&times;</button> 
-                      {% endifequal %}
-                      <h5><a href="/profile/{{each.username}}">{{each.name}}</a></h5> 
-                    </div>
-                  </div> 
-                  
-                </div>  
-              {% endfor %}
-            </div> 
-          </div>
-
-
-
-
-      </div>
- 
-    </div>
-
- 
-
-    <!-- ad --> 
-<div class="widget text-center bg-secondary ">
-  <div class="innerAll text-white">
-      <div class="innerB"><i class=" icon-rocket fa fa-4x text-faded"></i>
-      </div>
-      <h2 class="strong margin-none text-white">Better, together</h2>
-      <p class="lead">from &pound;20 / year</p>
-      <p> 
-
-      We don't sell your data or show adverts because you're our customer, not our product. And because we're working for YOU, we charge a small fee for premium features</p>
-      <p>Use the coupon code: LOVESUMMER</p>
-      <button class="btn btn-primary btn-stroke">Upgrade today <i class="fa fa-fw fa-play-circle"></i>
-      </button> 
-  </div>
-  <!-- Ribbon -->
-  <div class="ribbon-wrapper">
-      <div class="ribbon primary">It's spring!</div>
-  </div>
-</div>
-
-  </div> <!-- col 4 -->
-
-
-<div class="col-md-6">
-
-
-          
-
-    {% if show_foods %} 
+   {% if show_foods %} 
     <div class="panel panel-default" id="panelProduce">
       <div class="panel-heading">
         <h3 class="panel-title">
@@ -488,7 +401,13 @@
     {% endif %}
 
 
-
+<!-- PHOTO --> 
+{% ifnotequal banner_url '' %}
+  <div class="panel panel-default">
+    <img src="{{banner_url}}" class="img-responsive" style="height:100%;">
+  </div>
+{% endifnotequal %} 
+<!-- PHOTO --> 
   
 
     <!-- buys from / suppliers --> 
@@ -744,22 +663,204 @@
     </div>
 
    <!-- Sells to / Stockists  --> 
+
+
+
+
+
+    <div class="panel panel-default" id="panelDeliveries">
+      <div class="panel-heading">
+        <h3 class="panel-title">
+          <i class="fa fa-truck"></i> <strong>Deliveries</strong>
+        </h3>
+      </div> 
+      <div class="panel-body">
+        {% if deliverables %} 
+          {{deliverables|linebreaks}}
+        {% else %} 
+          Please contact us directly to discuss deliveries.
+        {% endif %}
+      </div> 
+    </div>
+
+
+
+
+
+<!-- COMPANY INFORMATION --> 
+<div class="panel panel-default" id="panelCompany">
+  <div class="panel-heading">
+    <h3 class="panel-title"><i class="fa fa-legal"></i> <b>Company</b> information</h3>
+  </div>
+  <div class="panel-body">
+
+    {% if company_num %}
+    <div class="border-top">
+        Company number: <a href="https://www.duedil.com/company/{{company_num}}"></a>  
+    </div>
+    {% endif %} 
+
+    <!-- twitter info --> 
+    <div class="text-center">
+      <span class="label label-default label-stroke">{{followers_count}}</span> followers
+      <i class="fa fa-fw fa-twitter fa-lg" style="color: #35B8EB;"></i>
+      follows
+      <span class="label label-default label-stroke">{{friends_count}}</span>  
+    </div>
+
+  </div>
+</div>
+<!-- /COMPANY INFORMATION --> 
+
+
+     
+
+
+
+
+    <!-- GROUPS and organisations -->
+    <div class="panel panel-default" id="panelOrganisations">
+      <div class="panel-heading">
+        <h3 class="panel-title">
+          <strong>
+          <i class="fa fa-certificate"></i> 
+          {% if userprof.organisation_connection_no != 0 %}{{userprof.organisation_connection_no}}{% endif %} Groups</strong> &amp; organisations &middot;
+
+        {% if user.is_authenticated %}
+          <a id="tabMemberships" data-target="#addGroup" data-toggle="collapse" class="small">Add your suggestion</a>
+        {% endif %}
+
+        </h3>
+      </div>
+
+
+      {% if user.is_authenticated %}
+      <div id="addGroup" class="collapse well-sm well clearfix">
+        <div class="form-inline" role="form"> 
+          <div id="orgs_remote" class="form-group  has-feedback">
+            <input class="typeahead form-control col-sm-12" id="new_orgs_typeahead" {% if not user.is_authenticated %} rel="tooltip" title="Please login to use this feature" {% endif %} style="min-width:350px;" type="text" placeholder="Type the name of a group, organisation, or certifier">
+            <span class="fa fa-search form-control-feedback"></span> 
+          </div>     
+        </div>    
+      </div>
+      {% endif %}
+
+      <div class="panel-body">
+        
+       
+
+          <div id="organisations_list" class="clearfix"> 
+            {% if user.is_authenticated %}
+            {% else %}
+              <p class=""><a href="{% provider_login_url "twitter" process="login" %}" class="">Login</a> or <a href="{% provider_login_url "twitter" process="login" %}" class="">sign up free</a> to see a complete list of groups. </p>
+            {% endif %}
+
+            <div class="clearfix isotope js-isotope" data-isotope-options='{ "itemSelector": ".card" }' id="organisation-cards"> 
+              {% for each in organisations %} 
+
+              <div class="card clearfix" data-toggle="popover" 
+              data-trigger="hover" 
+              data-title="{{each.name}}" 
+              data-html="true"
+              data-content="
+              <div class='text-center'>
+                <a href='/profile/{{each.username}}''><img src='{{each.photo}}' alt='{{each.name}}'
+                class='img-thumbnail img-responsive img-circle' style='width:73px; height:73px;' /></a>
+              </div> 
+              <p class='small'>{{each.description|truncatechars:200}}</p>
+              <div class='row row-merge border-top hidden'>
+
+                <!-- number of members -->
+                <div class='col-sm-6'>
+                  <a href='' class='innerAll half text-center display-block text-muted' data-original-title='{{each.food_no}} foods' rel='tooltip'><i class='fa fa-fw fa fa-cutlery'></i> {{each.food_no}}</a>
+                </div>
+
+                <!-- number of group membershpis -->  
+                <div class='col-sm-6'>
+                  <a href=''  rel='tooltip' title='Member of {{each.org_conn_no}} groups or organisations'  class='innerAll half text-center display-block text-muted'><i class='fa fa-fw fa-group'></i> {{each.org_conn_no}}</a>
+                </div> 
+              </div> 
+              ">
+
+              <!--   <div class="card card-organisation">  -->
+                  <div class="content">
+                    <div class="text-center">
+                      <a href="/profile/{{each.username}}"><img src="{{each.photo}}" alt="{{each.name}}"
+                      class="img-thumbnail img-responsive img-circle" style="width:73px; height:73px;" /></a>
+                    </div>
+                    <div class="text">
+                      {% ifequal profile_id user_id %}
+                      <button type="button" class="close" aria-hidden="true" onclick="conn_handler('close_buy_from', {{profile_id}}, {{each.id}})">&times;</button> 
+                      {% endifequal %}
+                      <h5><a href="/profile/{{each.username}}">{{each.name}}</a></h5> 
+                    </div>
+                  </div> 
+                  
+                </div>  
+              {% endfor %}
+            </div> 
+          </div>
+
+
+
+
+      </div>
+ 
+    </div>
+
+ 
+
+    <!-- ad --> 
+
+    <div class="panel panel-default">
+<div class="widget text-center bg-secondary ">
+  <div class="innerAll text-white">
+      <div class="innerB"><i class=" icon-rocket fa fa-4x text-faded"></i>
+      </div>
+      <h2 class="strong margin-none text-white">Better, together</h2>
+      <p class="lead">from &pound;20 / year</p>
+      <p> 
+
+      We don't sell your data or show adverts because you're our customer, not our product. And because we're working for YOU, we charge a small fee for premium features</p>
+      <p>Use the coupon code: LOVESUMMER</p>
+      <button class="btn btn-primary btn-stroke">Upgrade today <i class="fa fa-fw fa-play-circle"></i>
+      </button> 
+  </div>
+  <!-- Ribbon -->
+  <div class="ribbon-wrapper">
+      <div class="ribbon primary">It's spring!</div>
+  </div>
+</div>
+</div>
+
+          
+
+ 
     
+ 
 
-  </div> <!-- col 4 -->
-
-
-
-<div class="col-md-6">
-
+{% if updates_count != 0 or profile_id == user_id %}
     <div class="panel panel-default" id="panelUpdates">
       <div class="panel-heading">
         <h3 class="panel-title">
-          <i class="fa fa-bullhorn"></i> <strong>{% if updates_count != 0 %}{{updates_count}}{% endif %} Updates</strong> in the marketplace  
+          <i class="fa fa-bullhorn"></i> <strong>{% if updates_count != 0 %}{{updates_count}}{% endif %} Marketplace</strong> updates
+          {%if profile_id == user_id %}
+          &middot;
+           <a href="#" data-toggle="modal" data-target="#newtwitterpost" class="small">New update
+           </a>
+          {% endif %}
         </h3>
       </div> 
 
       <div class="panel-body">
+        {% if updates_count = 0 %}
+          <p></p>
+
+          <p><b>You've not yet said anything in the Marketplace!</b></p>
+          <p>You're missing local bargains! What do you want to buy, or sell? Or what would you love help with? </p><p>Thought of something? Then just <a href="#" data-toggle="modal" data-target="#newtwitterpost" class="">say it now</a> and it will show up here, in the activity feed, and be pushed out to local businesses in a regular newsletter. 
+           </a></p>
+            
+        {% endif %}
 
         {% if user.is_authenticated %}
         {% for eachUpdate in updates %} 
@@ -779,23 +880,9 @@
       </div> 
  
     </div>
+    {% endif %} 
 
 
-
-    <div class="panel panel-default" id="panelDeliveries">
-      <div class="panel-heading">
-        <h3 class="panel-title">
-          <i class="fa fa-truck"></i> <strong>Deliveries</strong>
-        </h3>
-      </div> 
-      <div class="panel-body">
-        {% if deliverables %} 
-          {{deliverables|linebreaks}}
-        {% else %} 
-          Please contact us directly to discuss deliveries.
-        {% endif %}
-      </div> 
-    </div>
 
 
   </div> <!-- col 4 -->
@@ -1742,5 +1829,25 @@ customers = {{customers_str | safe}};
 
         
      </script>
+
+
+
+     <script type="text/javascript">
+
+     $.getScript('//cdn.jsdelivr.net/isotope/1.5.25/jquery.isotope.min.js',function(){
+
+          /* activate jquery isotope */
+          $('#bizInfo').imagesLoaded( function(){
+            $('#bizInfo').isotope({
+              itemSelector : '.panel'
+            }).isotope('reLayout');
+
+          });
+          
+        })
+
+     </script>
+
+;
 
  {% endblock %}

@@ -121,8 +121,14 @@
           </div>
         </div>
 
+<<<<<<< HEAD
+        <div class="form-group" id="companygroup">
+          <label for="companyType" class="col-sm-3 control-label">Company type</label>
+          <div class="col-sm-9" >
+=======
         <div class="form-group innerLR" id="companygroup"> 
           <div class="col-sm-12">
+>>>>>>> 2862e4669af15bdb5076e119a1645408360c46b9
           <select class="selectpicker show-tick"   id="filter_mkt_biz"  data-live-search="true" multiple data-selected-text-format="count>2" title="Filter by company type" name="companyType"  data-style="btn-default">
           </select>
           </div>
