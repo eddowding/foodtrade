@@ -73,12 +73,12 @@ class MarketSearch(GeneralSearch):
                       }
 
 
-        # pipeline.append(geo_near)
+        pipeline.append(geo_near)
         
         # if len(query_string)>0:
         #     pipeline.append({"$match":{"$and":query_string}})
 
-        pipeline.append({"$match":{ "geoSearch" : "places", "near" : [float(self.lng), float(self.lat)], "maxDistance" : 6000000, "search" : {'type':'Point'}}})
+        # pipeline.append({"$match":{ "geoSearch" : "places", "near" : [float(self.lng), float(self.lat)], "maxDistance" : 6000000, "search" : {'latlng.type':'Point'}}})
 
         pipeline.append({"$project":{"username":1, "description":1,"type_user":1, "sign_up_as":1,"latlng":1,"name":1,"updates":1,"profile_img":1,"_id":0}})
         pipeline.append({"$unwind":"$updates"})
