@@ -213,6 +213,7 @@ if(parseInt(map_lon) != parseInt(def_lon) || parseInt(def_lat) != parseInt(map_l
 }
 
 
+    map.scrollWheelZoom.disable();
 
 
 

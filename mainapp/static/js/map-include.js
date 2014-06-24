@@ -30,6 +30,7 @@ var default_csr = L.CRS.EPSG3857;
 
 
 
+
 // $("#map").on('click dblclick keyup mousedown mousewheel mousemove', function() {
        
 //     	var current_center = map.getCenter();
