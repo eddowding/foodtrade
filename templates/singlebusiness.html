@@ -391,7 +391,7 @@
 
       <div class="mCustomScrollbar scroll300">
         <table class="table table-hover table-condensed footable toggle-arrow-circle-filled" id="produceTable"> 
-        <thead class="">
+        <thead class="hidden">
             <tr> 
               <th data-hide=""  >
                 Produce
@@ -1641,11 +1641,8 @@ $( document ).ready(function() {
     });
 
 
-    $('.editable').editable();
-
-// activating tooltips
-    // $('#adfoo_id').tooltip();
-// food popover
+    
+ 
 
 // food_detail();
 
@@ -1869,20 +1866,28 @@ customers = {{customers_str | safe}};
 
      <script type="text/javascript">
 
-     $.getScript('//cdn.jsdelivr.net/isotope/1.5.25/jquery.isotope.min.js',function(){
+     $.getScript('{% static "js/isotope.pkgd.min.js" %}',function(){
 
-          /* activate jquery isotope */
-          $('#bizInfo').imagesLoaded( function(){
-            $('#bizInfo').isotope({
-              itemSelector : '.panel'
-            }).isotope('reLayout');
 
-          });
-          
-        })
+        // initialize Isotope
+        var $panels = $('#bizInfo').isotope({
+          // options
+          itemSelector : '.panel'
+        }); 
+     
+      });
+
+      $("#produceTable").on("click", function(){ 
+         $('#bizInfo').isotope('layout',{
+          // options
+          itemSelector : '.panel'
+        });
+         });
+ 
+ 
+
 
      </script>
 
-;
-
+ 
  {% endblock %}
