@@ -35,9 +35,43 @@ class MarketSearch(GeneralSearch):
         if self.user_type != "all":
             sign_up_as = "Business" if self.user_type == "Companies" else "Individual"
             query_string.append({"sign_up_as":sign_up_as})
+
+        if len(self.biz_type_filters) > 0:
+            query_string.append({"type_user":{"$all":self.biz_type_filters}})
+        
+        # Check organisation filter
+        if len(self.org_filters) > 0:
+            query_string.append({"organisations":{"$all":self.org_filters}})
+
+
+
+        geo_search = {"near": [float(self.lng), float(self.lat)],
+                                   "distanceField": "distance",
+                                    "includeLocs": "latlng",
+                                    "uniqueDocs": True,
+                                    "spherical":True,
+                                    "limit":100,
+                                }
+
+        
+
         pipeline = []
+
         if len(query_string)>0:
-            pipeline.append({"$match":{"$and":query_string}})
+            geo_search['query'] = query_string
+
+
+        geo_search['maxDistance'] = 0.01261617096
+        
+        geo_near = {
+                        "$geoNear": geo_search
+                      }
+
+
+        pipeline.append(geo_near)
+        
+        # if len(query_string)>0:
+        #     pipeline.append({"$match":{"$and":query_string}})
 
 
         pipeline.append({"$project":{"username":1, "description":1,"type_user":1, "sign_up_as":1,"latlng":1,"name":1,"updates":1,"profile_img":1,"_id":0}})
@@ -98,8 +132,30 @@ class MarketSearch(GeneralSearch):
             sign_up_as = "Business" if self.user_type == "Companies" else "Individual"
             query_string.append({"sign_up_as":sign_up_as})
         pipeline = []
+        geo_search = {"near": [float(self.lng), float(self.lat)],
+                                    "distanceField": "distance",
+                                    "includeLocs": "latlng",
+                                    "uniqueDocs": True,
+                                    "spherical":True,
+                                    "limit":100,
+        }
+
+        
+
+
+
         if len(query_string)>0:
-            pipeline.append({"$match":{"$and":query_string}})
+            geo_search['query'] = query_string
+
+
+        geo_search['maxDistance'] = 0.01261617096
+        
+        geo_near = {
+                        "$geoNear": geo_search
+                      }
+
+
+        pipeline.append(geo_near)
 
 
         pipeline.append({"$project":{"updates":1,filter_type:1,"_id":0}})

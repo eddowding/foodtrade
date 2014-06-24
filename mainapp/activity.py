@@ -327,8 +327,8 @@ def home(request):
                 default_lat = float(location_info['latitude'])
                 location = "unknown"
 
-        query = "plng="+default_lon+"&plat="+default_lat+"&plocation="+location
-        query = query+ "&mlng="+default_lon+"&mlat="+default_lat+"&mlocation="+location
+        query = "plng="+str(default_lon)+"&plat="+str(default_lat)+"&plocation="+location
+        query = query+ "&mlng="+str(default_lon)+"&mlat="+str(default_lat)+"&mlocation="+location
 
         return HttpResponseRedirect('/activity?'+query)            
 

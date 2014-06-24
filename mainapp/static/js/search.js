@@ -4,8 +4,8 @@
 var Search = {
     keyword :"",
     search_type:"produce",
-    filters:{profile:{want:"all",lng:"",lat:"", location:"", usertype:"all", org:[], biz:[]},
-    market:{want:"all",lng:"",lat:"", location:"", usertype:"all", org:[], biz:[]}},
+    filters:{profile:{want:"all",lng:"",lat:"", location:"", usertype:"all", org:"[]", biz:"[]"},
+    market:{want:"all",lng:"",lat:"", location:"", usertype:"all", org:"[]", biz:"[]"}},
     tab:"market",
     profile_results:{},
     market_results:{},
@@ -32,8 +32,6 @@ var Search = {
         this.filters.market.org = getParameterByName('morg', this.filters.market.org);
         this.filters.market.biz = getParameterByName('mbiz', this.filters.market.biz);
     },
-
-
     set_url:function(){
     	var query="?";
     	var first_item = false;
@@ -53,7 +51,7 @@ var Search = {
     	}
 
 
-// for profile
+        // for profile
     	if(this.filters.profile.want!="")
     	{
     		query += "pwant="+encodeURIComponent(this.filters.profile.want)+"&";
@@ -87,7 +85,7 @@ var Search = {
         }
 
 
-// for market
+        // for market
         if(this.filters.market.want!="")
         {
             query += "mwant="+encodeURIComponent(this.filters.market.want)+"&";
@@ -169,21 +167,21 @@ var Search = {
     toggle_type : function()
     {
 
-    if(this.search_type=="produce")
-    {
-        this.search_type = "profile";
-        $("#result_tabs").addClass( "hidden" );
-        $("#mktplace").removeClass("active");
-        $("#profiles").addClass("active");
-        this.tab = "profile";
-        
+        if(this.search_type=="produce")
+        {
+            this.search_type = "profile";
+            $("#result_tabs").addClass( "hidden" );
+            $("#mktplace").removeClass("active");
+            $("#profiles").addClass("active");
+            this.tab = "profile";
+            
 
-    }
-    else if(this.search_type=="profile")
-    {
-        this.search_type = "produce";
-        $("#result_tabs").removeClass( "hidden" );
-    }
+        }
+        else if(this.search_type=="profile")
+        {
+            this.search_type = "produce";
+            $("#result_tabs").removeClass( "hidden" );
+        }
 
     },
     show_market : function()
@@ -219,27 +217,38 @@ var Search = {
     search_profiles : function()
     {
         $.post( "/ajax-handler/search_profiles", { q: this.keyword, search_type:this.search_type, lng:this.filters.profile.lng, lat:this.filters.profile.lat }, function( data ) {
-  Search.profile_results = data;
-Search.show_profiles();
+        Search.profile_results = data;
+        Search.show_profiles();
  
-}, "json");
+        }, "json");
 
     },
-    search_market : function()
+    search_market : function(with_filter)
     {
-         $.post( "/ajax-handler/search_market", { q: this.keyword, 
+        var req_obj = { q: this.keyword, 
             search_type:this.search_type, 
             lng:this.filters.market.lng, 
             lat:this.filters.market.lat,
             want:this.filters.market.want,
-            usertype: this.filters.market.usertype }, function( data ) {
-  Search.market_results = data;
-  Search.show_market();
-  Search.set_market_filters();
- 
-}, "json");
+            usertype: this.filters.market.usertype };
+            if(with_filter == true)
+            {
+                req_obj.org = this.filters.market.org;
 
-    },
+                req_obj.biz = this.filters.market.biz;
+            }
+
+         $.post( "/ajax-handler/search_market", req_obj , function( data ) {
+              Search.market_results = data;
+              Search.show_market();
+              if(!with_filter)
+              {
+                Search.set_market_filters();
+               }
+
+             }, "json"); 
+     },
+
       set_market_filters : function()
     {
          $.post( "/ajax-handler/get_market_filter", { q: this.keyword, 
@@ -263,9 +272,10 @@ Search.show_profiles();
                 }
                 $("#filter_mkt_biz").html(biz_options);
                  $('.selectpicker').selectpicker('refresh');
-                 
+
+                 listen_filters("mktplace");
  
-}, "json");
+            }, "json");
 
     },
           set_profile_filters : function()
@@ -291,7 +301,7 @@ Search.show_profiles();
                 }
                 $("#filter_mkt_biz").html(biz_options);
                  $('.selectpicker').selectpicker('refresh');
-                 
+                 listen_filters("profiles");
  
 }, "json");
 
@@ -358,6 +368,72 @@ function start_search()
 
 
 
+
+
+
+
+
+
+
+
+
+
+function listen_filters(filter_for)
+{
+    var filter_event = function () {
+        var class_name = $(this).attr('class');
+        if(class_name.indexOf('ticked')>0)
+        {
+            $(this).removeClass("ticked");
+
+        }
+        else
+        {
+            $(this).addClass("ticked");
+        }
+
+        
+    var current_tab = "profile";
+    if(Search.tab == "market")
+    {
+        current_tab = "mkt";
+    }
+    var filter_type = ["org","biz"];
+    for(var i = 0;i<filter_type.length;i++)
+    {
+
+        var selects = $($("#filter_"+current_tab+"_"+filter_type[i]).parent()).find($("ul.dropdown-menu.selectpicker li.ticked a"));
+        var filter_string = [];
+        for(var j = 0;j<selects.length;j++)
+        {
+            
+                filter_string.push(selects[j].text);
+            
+        }
+       
+        Search.filters[Search.tab][filter_type[i]] = JSON.stringify(filter_string);
+        console.log(filter_string);
+        Search.set_url();
+
+
+    }
+    if(Search.tab == "market")
+    {
+
+        Search.search_market(true);
+    }
+};
+    $('div#'+filter_for+' ul.dropdown-menu.selectpicker li').on('click', filter_event);    
+}
+
+
+
+
+
+
+
+
+
 $("#profile_tab").click(function(){
 Search.tab = "profile";
 Search.set_url();
@@ -383,7 +459,6 @@ $("#search_type_option").click(function(){
         Search.toggle_type();
         $("#search_type").html("Produce");
         $("#search_type_option").html("Profile");
-
     }
 });
 
