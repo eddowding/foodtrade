@@ -174,15 +174,15 @@ class GeneralSearch():
         query_string = self.get_query_string()
 
 
-        pipeline = []
-        pipeline.append({"$match":query_string})
-        pipeline.append({"$project":{"foods":1,"_id":0}})
-        pipeline.append({"$unwind":"$foods"})
-        pipeline.append({"$project":{"name":"$foods.food_name", "count":"$foods.food_name"}})
+        # pipeline = []
+        # pipeline.append({"$match":query_string})
+        # pipeline.append({"$project":{"foods":1,"_id":0}})
+        # pipeline.append({"$unwind":"$foods"})
+        # pipeline.append({"$project":{"name":"$foods.food_name", "count":"$foods.food_name"}})
 
-        pipeline.append({"$group": { "_id": "$name", "count": { "$sum":1} }})
-        pipeline.append({"$sort": SON([("count", -1), ("_id", -1)])})
-        agg = self.db.aggregate(pipeline)
+        # pipeline.append({"$group": { "_id": "$name", "count": { "$sum":1} }})
+        # pipeline.append({"$sort": SON([("count", -1), ("_id", -1)])})
+        # agg = self.db.aggregate(pipeline)
         
 
         query_string["latlng"]= {"$near": {

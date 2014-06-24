@@ -34,6 +34,7 @@ class MarketSearch(GeneralSearch):
             query_string .append({'updates':{"$elemMatch":{'status':keyword_re,"deleted":0}}})
         if self.user_type != "all":
             sign_up_as = "Business" if self.user_type == "Companies" else "Individual"
+            print sign_up_as
             query_string.append({"sign_up_as":sign_up_as})
 
         if len(self.biz_type_filters) > 0:
@@ -42,6 +43,8 @@ class MarketSearch(GeneralSearch):
         # Check organisation filter
         if len(self.org_filters) > 0:
             query_string.append({"organisations":{"$all":self.org_filters}})
+
+
 
 
 
@@ -57,8 +60,10 @@ class MarketSearch(GeneralSearch):
 
         pipeline = []
 
+        final_query = {"$and":query_string}
+
         if len(query_string)>0:
-            geo_search['query'] = query_string
+            geo_search['query'] = final_query
 
 
         geo_search['maxDistance'] = 0.01261617096
@@ -68,11 +73,12 @@ class MarketSearch(GeneralSearch):
                       }
 
 
-        pipeline.append(geo_near)
+        # pipeline.append(geo_near)
         
         # if len(query_string)>0:
         #     pipeline.append({"$match":{"$and":query_string}})
 
+        pipeline.append({"$match":{ "geoSearch" : "places", "near" : [float(self.lng), float(self.lat)], "maxDistance" : 6000000, "search" : {'type':'Point'}}})
 
         pipeline.append({"$project":{"username":1, "description":1,"type_user":1, "sign_up_as":1,"latlng":1,"name":1,"updates":1,"profile_img":1,"_id":0}})
         pipeline.append({"$unwind":"$updates"})
