@@ -128,8 +128,7 @@ var Search = {
     {
         if(this.search_type=="produce")
         {
-            $("#search_type").html("<i class='fa fa-cutlery icon'></i> <span class='hidden-xs'>Produce</span>
-            <i class='fa fa-caret-down'></i>");
+            $("#search_type").html("<i class='fa fa-cutlery icon'></i> <span class='hidden-xs'>Produce</span><i class='fa fa-caret-down'></i>");
             $("#search_type_option").html("Profile");
 
         }
@@ -219,7 +218,6 @@ var Search = {
         $.post( "/ajax-handler/search_profiles", { q: this.keyword, search_type:this.search_type, lng:this.filters.profile.lng, lat:this.filters.profile.lat }, function( data ) {
         Search.profile_results = data;
         Search.show_profiles();
- 
         }, "json");
 
     },
@@ -365,15 +363,6 @@ function start_search()
     Search.search_start();
     return false;
 }
-
-
-
-
-
-
-
-
-
 
 
 
