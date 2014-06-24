@@ -5,17 +5,22 @@
     class="{{eachfood.parent_food|slugify}}">
    
 
-  <td class="foodimage">
-  {% if eachfood.photo_url %}
-    <img src="{{eachfood.photo_url}}" title="{{eachdet.food_name}}" rel="tooltip" class="img-responsive" style="width: 40px;">
-  {% endif %}  
-  </td>  
+  <td class="ellipsis"> 
+    <strong>{{eachfood.food_name|safe}}</strong>  
+  </td>
+  
+   <td>
+    {% if eachfood.food_tags %} 
+      <div class='clearfix innerAll half'>
+        <i class='text-primary fa fa-tags fa-fw'></i>
+        {{eachfood.food_tags}}
+      </div>
+    {% endif %}
+    </td>
+      
 
-  <td class="ellipsis">
-    <a href="/activity/?f={{eachfood.food_name}}" class="black"> 
-      <strong>{{eachfood.food_name|safe}}</strong>
-    </a> 
 
+  <td> 
     {% if eachfood.description %}    
       <span class="small clearfix">
         {{eachfood.description}}  
@@ -23,6 +28,12 @@
     {% endif %}  
   </td>
 
+
+  <td class="foodimage">
+  {% if eachfood.photo_url %}
+    <img src="{{eachfood.photo_url}}" title="{{eachdet.food_name}}" rel="tooltip" class="img-responsive" >
+  {% endif %}  
+  </td>  
 
 
   <td class="text-right vouch"> 
@@ -46,39 +57,12 @@
   </td> 
 
 
- <td width="20" 
-    data-toggle="popover" 
-    data-trigger="click" 
-    data-container="body" 
-    data-title="{{eachfood.food_name|safe}}" 
-    data-html="true"
-    data-content="
-    {% if eachfood.photo_url %}
-      <img src='{{eachfood.photo_url}}'' title='{{eachdet.food_name}}' class='img-responsive'>
-    {% endif %}  
-
-    {% if eachfood.description %}    
-      <div class='small innerTB half' style='line-height:1.2;'> 
-      {{eachfood.description}}  
-      </div>
-    {% endif %}  
-
-     <div class='innerAll text-center border-top border-bottom'>
-    {% if request.user.is_superuser or profile_id == user_id %}
-      
-       <a href='' class='btn btn-sm btn-info' data-toggle='modal' data-target='#modal_food_detail'  data-container='body' onClick='get_food_detail('{{profile_id}}', '{{eachfood.food_name|safe}}', '{{eachfood.description}}', '{{eachfood.food_tags}}', '{{eachfood.photo_url}}', '{{eachfood.recomm_tags|safe}}', '{{eachfood.how_much}}', '{{eachfood.how_often}}', '{{eachfood.month_list}}')'>Edit</a>
-       
-       <a class='btn btn-sm btn-danger' onClick='delete_food({{profile_id}}, '{{eachfood.food_name}}', this)'><i class='fa fa-trash-o fa-fw fa-lg' title='Delete'></i> Delete</a>
-
-    {% else %}
-
-       <a class='btn btn-sm btn-primary'><i class='fa fa-envelope-o fa-fw fa-lg' title='Contact'></i> Make enquiry</a>
-    {% endif %}
-    </div>
 
 
-    {% if 1 in eachfood.month_list %}
-        <div class='innerTB half'>
+
+    
+        <td class='innerTB half'>
+        {% if 1 in eachfood.month_list %}
           <table class='availability'> 
           <tbody><tr>
           <td class='winter {% if eachfood.month_list.0 == 1 %} yes {% endif %}'>J</td>
@@ -93,25 +77,22 @@
           <td class='autumn {% if eachfood.month_list.9 == 1 %} yes {% endif %}'>O</td>
           <td class='autumn {% if eachfood.month_list.10 == 1 %} yes {% endif %}'>N</td>
           <td class='winter {% if eachfood.month_list.11 == 1 %} yes {% endif %}'>D</td>
-          </tr></tbody></table>  
-        </div>  
-    {% endif %}  
+          </tr></tbody></table>   
+          {% endif %}  
+        </td>  
+  
      
-
+    <td>
     {% if eachfood.how_much %}   
       <div class='clearfix innerAll half'>
         <i class='text-primary fa-lg icon-scale-1'></i>
         {{eachfood.how_much}} {{eachfood.how_often}}
       </div>
     {% endif %} 
+    </td>
 
-    {% if eachfood.food_tags %} 
-      <div class='clearfix innerAll half'>
-        <i class='text-primary fa fa-tags fa-fw'></i>
-        {{eachfood.food_tags}}
-      </div>
-    {% endif %}
-      
+ 
+    <td>  
     {% ifnotequal eachfood.vouch_count 0 %}
     <div class='innerAll text-center border-top'>
     <span class='clearfix'>Who vouched for this?</span>
@@ -120,10 +101,30 @@
     {% endfor %}
     </div>
     {% endifnotequal %}
- 
-    ">
-    <i class="fa fa-arrow-circle-right text-primary fa-fw fa-lg"></i>
     </td>
+ 
+
+  
+  <td class='innerAll text-center border-top border-bottom'>
+  {% if request.user.is_superuser or profile_id == user_id %}
+
+   <a href='' class='btn btn-sm btn-info' data-toggle='modal' data-target='#modal_food_detail'  data-container='body' onClick='get_food_detail('{{profile_id}}', '{{eachfood.food_name|safe}}', '{{eachfood.description}}', '{{eachfood.food_tags}}', '{{eachfood.photo_url}}', '{{eachfood.recomm_tags|safe}}', '{{eachfood.how_much}}', '{{eachfood.how_often}}', '{{eachfood.month_list}}')'>Edit</a>
+   
+   <a class='btn btn-sm btn-danger' onClick='delete_food({{profile_id}}, '{{eachfood.food_name}}', this)'><i class='fa fa-trash-o fa-fw fa-lg' title='Delete'></i> Delete</a>
+
+  {% else %}
+
+   <a class='btn btn-sm btn-default'><i class='fa fa-envelope-o fa-fw fa-lg' title='Contact'></i> Message</a>
+  {% endif %}
+  </td>
+
+
+
+
+
+<td></td>
+
+
 
 
 </tr>

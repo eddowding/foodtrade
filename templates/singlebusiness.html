@@ -390,7 +390,41 @@
       {% endif %}
 
       <div class="mCustomScrollbar scroll300">
-        <table class="table table-hover table-condensed" id="produceTable"> 
+        <table class="table table-hover table-condensed foot able toggle-arrow-circle-filled" id="produceTable"> 
+        <thead class="">
+            <tr> 
+              <th data-hide="al l"  >
+                Produce
+              </th>
+              <th data-hide="phone,tablet" >
+                desciption
+              </th>
+              <th data-hide=" " >
+                tags
+              </th>
+              <th data-hide="all">
+                image
+              </th>
+              <th data-hide="all">
+                vouch
+              </th>
+              <th data-hide="all">
+                season
+              </th>
+              <th data-hide="all">
+                vouch
+              </th>
+              <th data-hide="all">
+                vouch
+              </th>
+              <th data-hide="all">
+                vouch
+              </th>
+              <th data-hide="" data-toggle="true">
+                more
+              </th> 
+            </tr>
+          </thead>
           <tbody>
             {% include 'ajax_food_tr.html' %}
           </tbody>
@@ -657,9 +691,7 @@
 
         {% endif %}
     
-
-      <div class="panel-footer">
-      </div>
+ 
     </div>
 
    <!-- Sells to / Stockists  --> 
@@ -684,41 +716,7 @@
     </div>
 
 
-
-
-
-<!-- COMPANY INFORMATION --> 
-<div class="panel panel-default" id="panelCompany">
-  <div class="panel-heading">
-    <h3 class="panel-title"><i class="fa fa-legal"></i> <b>Company</b> information</h3>
-  </div>
-  <div class="panel-body">
-
-    {% if company_num %}
-    <div class="border-top">
-        Company number: <a href="https://www.duedil.com/company/{{company_num}}"></a>  
-    </div>
-    {% endif %} 
-
-    <!-- twitter info --> 
-    <div class="text-center">
-      <span class="label label-default label-stroke">{{followers_count}}</span> followers
-      <i class="fa fa-fw fa-twitter fa-lg" style="color: #35B8EB;"></i>
-      follows
-      <span class="label label-default label-stroke">{{friends_count}}</span>  
-    </div>
-
-  </div>
-</div>
-<!-- /COMPANY INFORMATION --> 
-
-
-     
-
-
-
-
-    <!-- GROUPS and organisations -->
+     <!-- GROUPS and organisations -->
     <div class="panel panel-default" id="panelOrganisations">
       <div class="panel-heading">
         <h3 class="panel-title">
@@ -808,6 +806,43 @@
  
     </div>
 
+
+
+
+
+
+<!-- COMPANY INFORMATION --> 
+<div class="panel panel-default" id="panelCompany">
+  <div class="panel-heading">
+    <h3 class="panel-title"><i class="fa fa-legal"></i> <b>Company</b> information</h3>
+  </div>
+  <div class="panel-body">
+
+    {% if company_num %}
+    <div class="border-top">
+        Company number: <a href="https://www.duedil.com/company/{{company_num}}"></a>  
+    </div>
+    {% endif %} 
+
+    <!-- twitter info --> 
+    <div class="text-center">
+      <span class="label label-default label-stroke">{{followers_count}}</span> followers
+      <i class="fa fa-fw fa-twitter fa-lg" style="color: #35B8EB;"></i>
+      follows
+      <span class="label label-default label-stroke">{{friends_count}}</span>  
+    </div>
+
+  </div>
+</div>
+<!-- /COMPANY INFORMATION --> 
+
+
+     
+
+
+
+
+   
  
 
     <!-- ad --> 

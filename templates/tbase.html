@@ -957,9 +957,7 @@ function show_small_structure()
     <script src="{% static "assets/components/common/forms/elements/bootstrap-select/assets/custom/js/bootstrap-select.init.js" %}"></script> 
     <script src="{% static "assets/components/core/js/core.init.js" %}"></script>
     <script src='//api.tiles.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v0.0.2/Leaflet.fullscreen.min.js'></script>
-    <link href='//api.tiles.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v0.0.2/leaflet.fullscreen.css' rel='stylesheet' />
-
-
+    <link href='//api.tiles.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v0.0.2/leaflet.fullscreen.css' rel='stylesheet' /> 
 
 
 <script src='//api.tiles.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v0.4.0/leaflet.markercluster.js'></script>
@@ -976,13 +974,14 @@ function show_small_structure()
 
 <script src="{% static "js/map-include.js" %}"></script>
 
-     
 
-    <!-- social net -->
-    <!-- social net -->
-    <!-- social net -->
-    <!-- social net -->
-
+<script src="{% static "js/footable.js" %}" type="text/javascript"></script>     
+<script type="text/javascript">
+  $(function () {
+    $('.footable').footable();
+  });
+</script>
+ 
 
  {% block footer %}
  {% endblock %}
