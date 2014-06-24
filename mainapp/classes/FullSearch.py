@@ -34,8 +34,8 @@ class GeneralSearch():
 
         self.want = params['want']
         self.user_type = params['usertype']
-        self.org_filters = json.loads(params['org_filters'])
-        self.biz_type_filters = json.loads(params['biz_type_filters'])
+        self.org_filters = params['org']
+        self.biz_type_filters = params['biz']
         self.food_filters = json.loads(params['food_filters'])
         self.radius = 160900000
         self.user = params['up']
@@ -56,7 +56,7 @@ class GeneralSearch():
 
         default_location = up['address']
         default_lng = up['latlng']['coordinates'][0]
-        default_lat = up['latlng']['coordinates'][0]
+        default_lat = up['latlng']['coordinates'][1]
 
         search_request['location'] = request.POST.get("location",request.GET.get("location",default_location))
 
@@ -66,11 +66,15 @@ class GeneralSearch():
         search_request['want'] = request.POST.get("want",request.GET.get("want","all"))
         search_request['search_for'] = request.POST.get("search_type",request.GET.get("search_type","produce")) 
         search_request['usertype'] = request.POST.get("usertype",request.GET.get("usertype","all")) 
-        search_request['biz_type_filters'] = request.POST.get("biz",request.GET.get("biz","[]")) 
-        search_request['org_filters'] = request.POST.get("org",request.GET.get("org","[]")) 
+        print json.loads("[]")
+        search_request['biz'] = json.loads(request.POST.get("biz",request.GET.get("biz","[]")))
+        print 
+
+        search_request['org'] = json.loads(request.POST.get("org",request.GET.get("org","[]")))
         search_request['food_filters'] = request.POST.get("food",request.GET.get("food","[]")) 
         search_request['up'] = up
         return search_request
+
 
     def get_latest_updates(self, time_stamp=None):
         query_string = {}
@@ -133,7 +137,6 @@ class GeneralSearch():
 
         and_query.append(pre_condition)
 
-
    
 
         ######################### Food filters ################
@@ -169,7 +172,6 @@ class GeneralSearch():
     def get_result(self):
         self.get_latest_updates()
         query_string = self.get_query_string()
-
 
 
         pipeline = []
