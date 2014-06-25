@@ -8,6 +8,8 @@ var map = new L.map('map', {
 });
 
 
+var control_dict ={};
+var lines_dic = {};
 
 
 L.circle([map_lat,map_lon], 24140.2, {
@@ -128,11 +130,12 @@ if(parseInt(current_lon) != parseInt(def_lon) || parseInt(def_lat) != parseInt(c
 				weight: 2,
 				opacity: 0.8
 			}).addTo(map);
-}
+
 
 			map_controls.push(polyline);
+			lines_dic[username] = polyline;
 
- 
+ }
 
 var card_str = '<div class="card-box"><div class="content text-center"><div class=""><a href="/profile/'+username+'"><img src="'+photo+'" alt="'+name+'" class="img-circle img-thumbnail img-responsive" style="width:73px;" /></a>';
     card_str += '</div><div class="text"><h3><a href="/profile/'+username+'">'+name+'</a></h3>';
@@ -152,6 +155,8 @@ var card_str = '<div class="card-box"><div class="content text-center"><div clas
 
 
 			var ctrl = L.marker([parseFloat(current_lat), parseFloat(current_lon)], {icon: redIcon}).addTo(map).bindPopup(card_str);			
+			
+			control_dict[username] = ctrl;
 			map_controls.push(ctrl);
 
 }

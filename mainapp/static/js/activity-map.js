@@ -64,7 +64,7 @@ function show_connections_on_map()
 
 
 var ctrl = L.marker([parseFloat(current_lat), parseFloat(current_lon)],{icon: redIcon}).bindPopup(card);
-     
+  
         markers.addLayer(ctrl);
          }
     

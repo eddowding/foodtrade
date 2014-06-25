@@ -297,14 +297,11 @@ class AjaxHandle(AjaxSearch):
                 trade_conn.delete_connection(b_useruid = int(data['prof_id']), c_useruid = request.user.id)
             else:
                 parameters['buy_from_flag'] = False
-                trade_conn.delete_connection(b_useruid = request.user.id, c_useruid = int(data['prof_id']))            
+                trade_conn.delete_connection(b_useruid = request.user.id, c_useruid = int(data['prof_id']))
             parameters['connections'], parameters['conn'] = get_connections(int(data['prof_id']), request.user.id)
             parameters['connections_str'] = json.dumps(parameters['connections'])
             parameters['profile_id'], parameters['user_id'] = int(data['prof_id']), request.user.id
-            # return render_to_response('conn_ajax.html', parameters)
-            user_obj = UserProfile()
-            usr_name = user_obj.get_profile_by_id(int(data['prof_id']))['username']            
-            return HttpResponse(json.dumps({'status':'ok', 'username':usr_name, 'action':'delete'}))
+            return render_to_response('conn_ajax.html', parameters)            
         else:
             return HttpResponse("{'status':0}")
 
@@ -314,18 +311,17 @@ class AjaxHandle(AjaxSearch):
         if data !=None and data !="":
             parameters = {}
             if data['status'] == 'buy_from':
+                print 'stocklists ajax called'
                 parameters['buy_from_flag'] = True
                 trade_conn.delete_connection(b_useruid = int(data['prof_id']), c_useruid = int(data['conn_id']))
             else:
                 parameters['buy_from_flag'] = False
+                print 'suppliers ajax called'
                 trade_conn.delete_connection(b_useruid = int(data['conn_id']), c_useruid = int(data['prof_id']))
             parameters['connections'], parameters['conn'] = get_connections(int(data['prof_id']), request.user.id)
             parameters['connections_str'] = json.dumps(parameters['connections'])
             parameters['profile_id'], parameters['user_id'] = int(data['prof_id']), request.user.id
-            user_obj = UserProfile()
-            usr_name = user_obj.get_profile_by_id(int(data['conn_id']))['username']            
-            return HttpResponse(json.dumps({'status':'ok', 'username':usr_name, 'action':'delete'}))            
-            # return render_to_response('conn_ajax.html', parameters)            
+            return render_to_response('conn_ajax.html', parameters)            
             # return HttpResponse("{'status':1}")
         else:
             return HttpResponse("{'status':0}")
@@ -365,11 +361,10 @@ class AjaxHandle(AjaxSearch):
             # parameters['c_conn_no'] = c_conn_len
             parameters['user'] = request.user
             # parameters['connections'], parameters['conn'] = get_connections(int(data['prof_id']), request.user.id)
-            parameters['connections_str'] = json.dumps(buss_obj)
+            # parameters['connections_str'] = json.dumps(parameters['connections'])
             parameters['profile_id'] = int(data['prof_id'])
             parameters['user_id'] = request.user.id
             parameters['new_connection'] = buss_obj
-            print buss_obj
             return render_to_response('conn_ajax.html', parameters)
         else:
             return HttpResponse("{'status':0}")
