@@ -79,21 +79,14 @@
 </div>
 
 <div class="col-xs-3 bg-gray border-right ">
-  <div class="{% if loc.lat == -82.86275189999999 and loc.lon == -135.10000000000002 %} hidden {% endif %}  clearfix" >
-    <div class="innerAll">
-      {% if loc.lat == -82.8627519 and loc.lon == -135.0 %}
-      {% else %}
+  <div class="{% if not user.is_authenticated %} hidden {% endif %}  clearfix" id="distanceAway">
+     
+  
       <!-- if logged in or you've allows html5 browser location -->
-      <div class="pull-right ">
-      <i class="fa fa-location-arrow fa-2x text-muted"></i>
-      </div>
-
-
-      <span class="lead "> {{distance}} miles  </span>
+   
+      <span class="lead bold"> {{distance}} miles  </span>
       <small class="small clearfix margin0 hidden-xs">away from you</small>
-       
-      {% endif %}  
-    </div>   
+ 
   </div> 
 </div>
 
@@ -134,21 +127,24 @@
              Edit
           </a>       
         {% else %}
+
+          {% if request.user.is_authenticated %}
           <button class="btn btn-primary text-center normal btn-block" data-toggle="modal" data-target="#modal_contact"><i class="fa fa-envelope-o fa-fw"></i> Contact</button>
+          {% endif %}
         {% endifequal %}
       {% else %}
-        <button class="btn btn-primary " style="margin-top:40px;" data-toggle="modal" data-target="#modal_invite">Invite to connect</button> 
+        <button class="btn btn-primary "  data-toggle="modal" data-target="#modal_invite">Invite to connect</button> 
       {% endifequal %} 
       <!-- EDIT / CONTACT -->
 
 
       <!-- CONNECT AS BUSINESS OR CUSTOMER --> 
       {% ifnotequal profile_id user_id %}
-      {% if user.is_authenticated %}      
+        {% if user.is_authenticated %}      
 
           <!-- if logged in users = individual --> 
           {% ifequal loggedin_signupas "Individual" %}
-          <div class="btn-group btn-block" data-toggle="buttons">
+           <div class="btn-group btn-block" data-toggle="buttons">
             {% if logged_customer %}
                 <label class=" btn btn-info btn-block active" style="width:100%; font-size: 12px;" >
                 <input type="checkbox" checked="checked" id="customer-chkbx" onchange="add_customer({{profile_id}}, {{user_id}})" rel="tooltip" title="{{userinfo.full_name}} is customer of {{name}}"><i class="fa fa-smile-o fa-fw fa-lg"></i>  I'm a customer!
@@ -158,7 +154,7 @@
                 <input type="checkbox" id="customer-chkbx" onchange="add_customer({{profile_id}}, {{user_id}})"  rel="tooltip" title="{{userinfo.full_name}} is customer of {{name}}"><i class="fa fa-smile-o fa-fw"></i> I'm a customer!
                 </label>      
             {% endif %}
-          </div>
+           </div>
           {% endifequal %}
 
           <!-- if logged in users = business --> 
@@ -190,20 +186,20 @@
                 {% endcomment %}
               </label> 
               <button class="btn btn-default btn-sm"  style="background: url('{{pic_url}}'); background-size: cover; width:10%;">&nbsp;</button>
-            </div>
-            {% endifequal %}
+             </div>
+          {% endifequal %}
 
-            {% else %}
-              <!-- if not logged in show login prompt -->
-              <div class="btn-group btn-block" rel="tooltip" data-placement="top" title="Login to connect to {{name}}">
-                <button class="btn btn-default" style="width:50%;" disabled>Buy from</button>
-                <button class="btn btn-default"  style="width:50%;" disabled>Sell to</button>
-              </div>
-              <a href="{% provider_login_url "twitter" process="login" %}" class="btn btn-success btn-block">Login for more</a>
-            {% endif %}
+        {% else %}
+
+          <!-- if not logged in show login prompt -->
+          <a href="{% provider_login_url "twitter" process="login" %}" class="btn btn-primary btn-icon-stacked btn-block text-center"><i class="fa fa-2x fa-twitter"></i> <span>Login free <br><span class="normal">for more details</span>
+          </a>
+
+        {% endif %}
 
       {% endifnotequal %}
       <!-- / CONNECT AS BUSINESS OR CUSTOMER --> 
+
 
 
       <!-- VERIFIED PROFILE -->
@@ -218,17 +214,13 @@
 
   
 
-    </div>
-
- 
-
+    </div>  
 
     </div> 
 
  
-  <div class="col-sm-2 col-xs-4">
+  <div class="col-sm-2 col-xs-4 ">
     
-
     <div class="innerAll hidden-md hidden-lg">
     <!-- EDIT / CONTACT -->
       {% if user.is_superuser %}
@@ -247,20 +239,15 @@
         <button class="btn btn-primary " style="margin-top:40px;" data-toggle="modal" data-target="#modal_invite">Invite to connect</button> 
       {% endifequal %} 
       <!-- EDIT / CONTACT -->
-     </div>
+    </div>
+  
+
+    <div class="innerAll "> 
+
+    <!-- SHARE -->
  
-
-
-
-
-    <div class="innerAll">
-
-
-  <!-- SHARE -->
-
-      <div class="btn-group btn-block">
-        <div class="btn-group" >
-          <button type="button"  class="btn btn-default dropdown-toggle" data-toggle="dropdown"  ><i class="fa fa-share-alt"></i>  </button>
+        <div class="btn-group  " >
+          <button type="button"  class="btn btn-default dropdown-toggle btn-sm" data-toggle="dropdown"  ><i class="fa fa-share-alt"></i> share</button>
             <ul class="dropdown-menu ">
              <li> <a href="#" class="" onclick="window.open(
               'https://www.facebook.com/sharer/sharer.php?s=100&amp;p[url]='+encodeURIComponent('{{ request.build_absolute_uri }}') +'&amp;p[images][0]='+encodeURIComponent('{{pic_url}}')+'&amp;p[title]='+encodeURIComponent('{{name}} on FoodTrade')+'&amp;p[summary]='+encodeURIComponent('Hey, see my profile on FoodTrade')+'&amp;u='+encodeURIComponent('{{ request.build_absolute_uri }}') +'&amp;t='+encodeURIComponent('{{name}} on FoodTrade'),
@@ -296,11 +283,14 @@
             </ul>
           </div>
 
+          {% if request.user.is_authenticated %}
           <div class="btn- group" data-toggle="buttons">
-          <label class="btn btn-default btn-lg fa fa-star-o {% if fav_profile %} active {% else %}{% endif %}">
-          <input type="checkbox" id="favourite_btn" {% if fav_profile %} checked="checked" {% endif %} onchange="save_favourites('{{profile_id}}', '{{user_id}}'); return null;"> 
-        </label>
-        </div>
+            <label class="btn btn-default btn-sm fa fa-star-o {% if fav_profile %} active {% else %}{% endif %}">
+              <input type="checkbox" id="favourite_btn" {% if fav_profile %} checked="checked" {% endif %} onchange="save_favourites('{{profile_id}}', '{{user_id}}'); return null;"> 
+            </label>
+          </div>
+          {% endif %}
+
       </div>
     </div>
   </div><!-- col2 -->
@@ -308,14 +298,13 @@
 </div>  
 <!-- contact -->  
 
-</div><!-- row -->
+</div><!-- row --> 
 
 
 
 <div class="row innerT inner-2x">
-  <div class="col-md-12" id="bizInfo">
-
-
+  <div class="  " id="bizInfo">
+ 
 
 
 <!-- VIDEO -->      
@@ -333,9 +322,9 @@
       <div class="panel-heading">
         <h3 class="panel-title">
 
-          <i class="fa fa-cutlery"></i> <strong>Produce</strong> sold here &middot;
+          <i class="fa fa-cutlery"></i> <strong>Produce</strong> sold here
           {% if user.is_authenticated %}
-            <a data-target="#addProduce" data-toggle="collapse" class="small">Add new</a>
+             &middot; <a data-target="#addProduce" data-toggle="collapse" class="small">Add new</a>
           {% endif %}
         </h3>
         <div class="pull-right" style="margin-top: -18px; font-size: 15px;">
@@ -1862,32 +1851,6 @@ customers = {{customers_str | safe}};
         
      </script>
 
-
-
-     <script type="text/javascript">
-
-     $.getScript('{% static "js/isotope.pkgd.min.js" %}',function(){
-
-
-        // initialize Isotope
-        var $panels = $('#bizInfo').isotope({
-          // options
-          itemSelector : '.panel'
-        }); 
-     
-      });
-
-      $("#produceTable").on("click", function(){ 
-         $('#bizInfo').isotope('layout',{
-          // options
-          itemSelector : '.panel'
-        });
-         });
  
- 
-
-
-     </script>
-
  
  {% endblock %}

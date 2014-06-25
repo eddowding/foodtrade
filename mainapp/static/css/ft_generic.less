@@ -1,14 +1,35 @@
+/* 
+
+0.   VARIABLES
+1.   GENERIC
+2.   LAYOUT
+3.   NAVBAR
+3.1  SOCIAL SHARING
+4.   FOOTER
+*/ 
+
+@import "elements.less";
+@import "ft_single_biz.less"; 
 @import 'footable/footable.core.min.css'; 
-// FOOTABLE
 
-.footable-row-detail-name {
-  display: none;
+/* ------------------------------------
+/*  0.   VARIABLES
+/* ------------------------------------ */
+
+@ftgreen:   #61AE32;
+@ftred:     #A30012;
+@ftorange:  #E58022;
+
+/* ------------------------------------
+/*  1.   GENERIC
+/* ------------------------------------ */
+
+
+
+
+.bold {
+  font-weight: bold;
 }
-
-
-
-
-
 
 .tags a {
   margin-right: 10px;
@@ -24,7 +45,30 @@
     }
 }
 
+/* ------------------------------------
+/*  2.   LAYOUT
+/* ------------------------------------ */
 
+.footable-row-detail-name {
+  display: none;
+}
+
+/* ------------------------------------
+/*  3.   NAVBAR
+/* ------------------------------------ */
+
+
+/* ------------------------------------
+/*  3.1  SOCIAL SHARING
+/* ------------------------------------ */
+
+
+#socialShare {
+  position: relative;
+  top: 15px;
+  left: 20px;
+  background: none;
+}
 
  
 
@@ -62,3 +106,28 @@ i.pinterest,span.pinterest{ color: #cb2027 !important; }
 .btn-xs.google-plus-one span{ font-size: 12px;}
 .btn-xs.google-plus-one i{ bottom: -7px; }
 
+
+
+/* ------------------------------------
+/*  4.   FOOTER
+/* ------------------------------------
+*/
+
+
+#notLoggedIn {
+  padding: 15px 10px 7px;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  z-index: 10000;
+  border-top: 1px solid green;
+  background: @ftgreen;
+  color: #fff;
+  font-weight: normal;
+  text-align: center;
+  a {
+    font-weight: bold;
+    color: #fff;
+    text-decoration: underline;
+  }
+}

@@ -202,7 +202,7 @@
         <div class="container-responsive clearfix">
         <div class="tab-content">
           <div class="tab-pane active fade in " id="members">
-{% if user.is_superuser or userinfo.name == screen_name %}
+{% if user.is_superuser or profile_id == user_id  %}
 <div id="member_remote" class="well well-sm">
 <input class="typeahead form-control" id="new_member_typeahead" {% if not user.is_authenticated %} rel="tooltip" title="Please login to use this feature" {% endif %} style="width:310px;" type="text" placeholder="add a member"></div>                  
 {% endif %}

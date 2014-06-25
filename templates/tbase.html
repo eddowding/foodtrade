@@ -164,12 +164,11 @@
     <script>
       less = {
         env: "development", 
-        poll: 500
+        poll: 50
       };
     </script>
-
     <script src="//cdnjs.cloudflare.com/ajax/libs/less.js/1.7.1/less.min.js"></script>  
-   
+    <script>less.watch();</script>
 
     <script src="{% static "assets/components/plugins/browser/ie/ie.prototype.polyfill.js" %}"></script>
     <script>
@@ -597,24 +596,38 @@ function show_small_structure()
             <i class="fa fa-caret-down"></i>
         </span> 
         </button>
-                <ul class="dropdown-menu">
-                  <li ><a href="#" id="search_type_option">Profiles</a></li> 
-                </ul>
-              </div>  
+        <ul class="dropdown-menu">
+          <li ><a href="#" id="search_type_option">Profiles</a></li> 
+        </ul>
+      </div>  
 
-              <input type="text" class="form-control pull-left" name="x" id="search_query" placeholder="Find...">  
+      <input type="text" class="form-control pull-left" name="x" id="search_query" placeholder="Find...">  
 
-              <div class="input-group-btn"> 
-                <button type="submit" class="btn btn-default" id="searchSubmit">
-                  <span class="glyphicon glyphicon-search"></span> 
-                </button> 
-              </div>
-         
-            </div>
+      <div class="input-group-btn"> 
+        <button type="submit" class="btn btn-default" id="searchSubmit">
+          <span class="glyphicon glyphicon-search"></span> 
+        </button> 
+      </div>
+ 
+    </div>
 
 
-            </form>
-          </div>
+    </form>
+  </div>
+
+
+  <div class="input-group pull-left border0" id="socialShare">
+
+    <a href="https://twitter.com/foodtradeHQ" class="twitter-follow-button" data-show-count="true">Follow @foodtradeHQ</a>
+    <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+
+    <iframe src="//www.facebook.com/plugins/like.php?href=http%3A%2F%2Ffacebook.com%2FfoodtradeHQ&amp;width=80&amp;layout=button_count&amp;action=like&amp;show_faces=true&amp;share=false&amp;height=21&amp;appId=1400801613504478" scrolling="no" frameborder="0" style="border:none; overflow:hidden; height:21px;width:80px" allowTransparency="true"></iframe>
+
+  </div>
+
+
+
+
 
 
          
@@ -720,6 +733,18 @@ function show_small_structure()
 </div>
 
 <span id="reload_warning" class="hidden"> </span>
+
+{% if not request.user.is_authenticated %}
+<div class="row" id="notLoggedIn">
+  <div class="col-md-12">
+    <div class=" ">
+    <p>
+    <a href="{% provider_login_url "twitter" process="login" %}">Sign in now</a> to get the best experience - richer profiles, save favourites, easy messaging, and more. It's free to join!</p>
+    </p>
+    </div>
+  </div>
+</div>
+{% endif %}
 
 <div class="row row-merge"  style="height: 100%;">
   <div class="{% if not request.user.is_authenticated %} col-xs-12 {% else %} col-md-10  {% endif %}">
@@ -978,6 +1003,7 @@ function show_small_structure()
 
 
 <script src="{% static "js/footable.js" %}" type="text/javascript"></script>     
+<script src="{% static "js/footable.filter.js" %}" type="text/javascript"></script>     
 <script type="text/javascript">
   $(function () {
     $('.footable').footable();
@@ -1119,17 +1145,12 @@ function success_tweeter_user_invite(data){
 <script type="text/javascript">
 $(document).ready(function() {
  
-  $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
-        /*alert('hello');*/
-        $('.isotope').isotope('layout');
-    });
+  // $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+  //       /*alert('hello');*/
+  //       $('.isotope').isotope('layout');
+  //   });
 
-// tweetlistener('tweetMessage', 'counter', 'contact_tweet', 'newtweet_btn');
  
-
-// function showgrid() {
-//   $container.css('visibility', 'visible');
-// }
 
     var activeSystemClass = $('.list-group-item.active');
     //something is entered in search form
@@ -1389,11 +1410,7 @@ function validate_login(){
     hash && $('ul.nav a[href="' + hash + '"]').tab('show');
 }); 
 
-   /* card flip */
-$(".flip").hover(function(){
-  $(this).find(".note").toggleClass("flipped");
-  return false;
-});
+ 
 
 </script>
 
