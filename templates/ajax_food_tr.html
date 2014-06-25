@@ -94,8 +94,7 @@
  
     <td>  
     {% ifnotequal eachfood.vouch_count 0 %}
-    <div class='innerAll text-center border-top'>
-    <span class='clearfix'>Who vouched for this?</span>
+    <div class=' '> 
     {% for eachdet in eachfood.recomm_details %}
       <img class='img-circle' style='margin:0px 4px 0 0; width:25px' src={{eachdet.photo}} rel='tooltip' title='{{eachdet.name}}'/> 
     {% endfor %}

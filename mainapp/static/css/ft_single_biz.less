@@ -39,8 +39,29 @@
   }
 
 
-} // bizSummary
 
+
+} // bizSummary
+ 
+
+.affix {
+  top: 45px;
+  z-index: 100000000;
+  width: 100%;
+  position: fixed;
+}
+
+
+#shortcuts {
+  display: none;
+  float: left;
+  }
+
+.affix {
+  #shortcuts {
+  display: inline-block;
+  }
+}
 
 
 // PANELS
@@ -71,6 +92,10 @@
    margin:  .5em;
    padding:  0; 
    width:98%;
+  }
+
+  .vcenter {
+    vertical-align: middle;
   }
   
 }
