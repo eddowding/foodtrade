@@ -119,7 +119,7 @@ i.pinterest,span.pinterest{ color: #cb2027 !important; }
   padding: 15px 10px 7px;
   position: fixed;
   bottom: 0;
-  width: 100%;
+  width: 100%; 
   z-index: 10000;
   border-top: 1px solid green;
   background: @ftgreen;
@@ -140,5 +140,30 @@ i.pinterest,span.pinterest{ color: #cb2027 !important; }
 */
 
 #newtwitterpost {
-  background: #222;
-}
+  background: #eee;
+  padding: 20px;
+  .box-shadow(inset 0 0 8px #222);
+  background: url(/static/images/sos.png) repeat;
+  textarea,
+  input {
+    border: 1px solid #999;
+  }
+
+  .btn-default {
+    background: #fefefe;
+    &:hover {
+      background: @ftgreen;
+      color: #fff;
+      i {
+        color: #fff;
+      }
+    }
+  }
+
+  .btn-default.active {
+    background: red;
+    color: #fff;
+    background: @ftgreen; 
+    border: 1px solid @ftgreen - #333;
+  }
+}   
