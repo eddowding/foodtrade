@@ -8,6 +8,7 @@ function initialize() {
   // Create the search box and link it to the UI element.
   var input = /** @type {HTMLInputElement} */(
       document.getElementById('pac_input_market'));
+  var input_profile = (document.getElementById('pac_input_profile'));
 
   var searchBox = new google.maps.places.SearchBox(
     /** @type {HTMLInputElement} */(input));

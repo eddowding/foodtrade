@@ -120,7 +120,13 @@ function get_box_update(update)
 	content +='<img src="'+update.profile_img+'" alt="Navina Bartlett" class="img-responsive pull-left" style="width:40px; margin-right: 5px;">';
 	content +='<h4 class="margin0"><a href="/'+update.username+'" class="text-inverse"> ';
 	content +='<strong>  '+update.name+'  </strong> </a> </h4>';
-	content +='<a href="/activity/?b=Ready meals" class="innerR half small">Ready meals</a>';
+
+
+	for(var index in update.type_user)
+	{
+		var biz_type = update.type_user[index];
+		content += '<a href="/activity/?b='+biz_type+'" class="innerR half small">'+biz_type+'</a> ';
+	}
 	content +='</div>';
 	content +='<div class="media margin-none status">   ';
 	content +='<div class="innerTB ">';
@@ -184,7 +190,7 @@ function get_box_update(update)
 
 function map_profile_card(user)
 {
-  var con = user;
+  		var con = user;
       var name = con.name;
       var status =  con.description;
       var profile_img = con.profile_img;
