@@ -103,7 +103,7 @@ class MarketSearch(GeneralSearch):
 
         if(len(result)>0):
             distance = self.calc_distance(result[0]['latlng']['coordinates'][1],result[0]['latlng']['coordinates'][0])
-            print distance
+            result[0]['distance'] = '%.1f' % distance
             if(distance<50):
                 parameter['status'] = "ok"
                 parameter['result'] = result[0]

@@ -37,7 +37,7 @@ class GeneralSearch():
         self.org_filters = params['org']
         self.biz_type_filters = params['biz']
         self.food_filters = json.loads(params['food_filters'])
-        self.radius = 160900000
+        self.radius = 160.9
         self.user = params['up']
 
     def get_request(self,request):
@@ -66,9 +66,7 @@ class GeneralSearch():
         search_request['want'] = request.POST.get("want",request.GET.get("want","all"))
         search_request['search_for'] = request.POST.get("search_type",request.GET.get("search_type","produce")) 
         search_request['usertype'] = request.POST.get("usertype",request.GET.get("usertype","all")) 
-        print json.loads("[]")
         search_request['biz'] = json.loads(request.POST.get("biz",request.GET.get("biz","[]")))
-        print 
 
         search_request['org'] = json.loads(request.POST.get("org",request.GET.get("org","[]")))
         search_request['food_filters'] = request.POST.get("food",request.GET.get("food","[]")) 
@@ -101,7 +99,14 @@ class GeneralSearch():
 
         pipeline.append({"$sort": SON([("updates.time_stamp", -1)])})
         pipeline.append({"$limit":10})
-        return self.db.aggregate(pipeline)['result']
+        final_result = self.db.aggregate(pipeline)['result']
+        params= {}
+
+        params['result'] = final_result
+        params['status'] = "ok"
+        if len(final_result) > 0:
+            params['time'] = final_result[0]['updates']['time_stamp']
+        return params
 
     def get_query_string(self):
         query_string = {}
@@ -209,8 +214,7 @@ class GeneralSearch():
             webuy_matches = []
             wesell_matches = []
             for fd in result[i]['foods']:
-                print fd
-                if self.keyword in fd['food_name'] and self.search_for == "produce":
+                if self.keyword in fd['food_name'] and self.search_for == "produce" and self.keyword != "":
                     matched = True
                 else:
                     matched = False
@@ -219,7 +223,7 @@ class GeneralSearch():
                     webuy_count = webuy_count + 1
                     if matched:
                         webuy_matches.append(fd['food_name'])
-                    if self.search_for != "produce" and webuy_count == 1:
+                    if (self.search_for != "produce" or self.keyword == "") and webuy_count == 1:
                         webuy_matches.append(fd['food_name'])
 
                 else:
@@ -227,7 +231,7 @@ class GeneralSearch():
                     if matched:
                         wesell_matches.append(fd['food_name'])
 
-                    if self.search_for != "produce" and wesell_count == 1:
+                    if (self.search_for != "produce" or self.keyword == "") and wesell_count == 1:
                         wesell_matches.append(fd['food_name'])
 
 

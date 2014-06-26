@@ -28,7 +28,7 @@ function get_box_profile(user)
 	for(var index in user.type_user)
 	{
 		var biz_type = user.type_user[index];
-		content += '<a href="/activity/?b='+biz_type+' class="  small">'+biz_type+'</a> ';
+		content += '<a href="/activity/?b='+biz_type+'" class="  small">'+biz_type+'</a> ';
 	}
 	content += '</div>';
 	content += '<div class="media margin-none status">  ';
@@ -44,12 +44,23 @@ function get_box_profile(user)
 		{
 			content += ", ";
 		}
-		content += user.foods.webuy_matches[i];
+		content += user.foods.webuy_matches[index];
 	}
 
 	content += '</b> &amp; '+(user.foods.webuy_count-user.foods.webuy_matches.length)+ ' more <br />';
+
+	content += '<span class="label label-default"><i class="fa fa-sign-out fa-fw"></i>SELLS:</span> <b>';
+	for(var index in user.foods.wesell_matches)
+	{
+		if(index>0)
+		{
+			content += ", ";
+		}
+		content += user.foods.wesell_matches[index];
+	}
+	content += '</b> &amp; '+(user.foods.wesell_count-user.foods.wesell_matches.length)+ ' more <br />';
+
 	
-	content += '<span class="label label-default"><i class="fa fa-sign-out fa-fw"></i>SELLS:</span> Fish <-- this is the name of the matching item';
 	content += '</div> ';
 	// content += '<div class="innerTB half clearfix"> ';
 	// content += '<img src="http://pbs.twimg.com/profile_images/1690823879/Screen_shot_2011-12-13_at_12.21.20_bigger.png" alt="The Wallfish Bistro" class="img-responsive pull-left" style="width:40px; margin-right: 5px;">';
