@@ -1,4 +1,88 @@
 
+$("#main_page").on('focus', 'input[data-toggle=market-reply]', function(e) {
+  thot = this;
+  var that = e.target;
+     if(validate_login()['status'] == '1'){
+    if($(that).val()=="")
+    {
+      var mentions = $(that).attr("data-mentions");
+    $(that).val(mentions + " ");
+    }
+  }
+  else{
+    window.location='/accounts/twitter/login/?process=login'
+  }
+});
+
+
+
+$("#main_page").on('blur', 'input[data-toggle=market-reply]', function(e) {
+  var that = e.target;
+     if($(that).val().trim()==$(that).attr("data-mentions")){
+    $(that).val("");
+  }
+});
+
+
+
+
+$("#main_page").on('keypress', 'input[data-toggle=market-reply]', function(e) {
+  if(validate_login()['status'] == '1'){
+    var code = e.keyCode || e.which;
+     if(code == 13) { //Enter keycode
+
+       //Do something\
+       status_msg =this.value;
+       if(status_msg=="")
+       {
+          return;
+       }
+       var  that = this
+        var tweet_id = $(this).attr("data-tweet-id");
+        $(that).val('');
+        $.post( "/ajax-handler/post_tweet", {message: status_msg, parentid:tweet_id}, function( data ) {
+       $($($(thot).parent()).parent()).append(get_box_update(data.result));
+        
+        }, "json");
+       // ajax_request("post_tweet", 'make_search', {message: status_msg, parentid:tweet_id});
+       // this.value = "";
+
+  // activity_html = $('#status_template').html();
+  // activity_html = activity_html.replace('===status===',status_msg);
+  // var input_type = $(this).attr("data-main");
+  // if(input_type=="reply")
+  // {
+  //   $(this).parent().parent().html($(this).parent().parent().html()+activity_html);
+
+  // }
+  // else
+  // {
+  //   $(this).parent().parent().next().children().html($(this).parent().parent().next().children().html()+activity_html);
+  // }
+  
+      
+  //   $(this).focus();
+     
+  }
+}
+  else{
+    /*$('#btn_must_be_logged').click();*/
+    /*$('#' + String(this.attributes.id.value)).tooltip('show');*/
+      /*alert("roshan");*/
+      window.location = '/accounts/twitter/login/?process=login';
+  }
+});
+
+
+
+
+
+
+
+
+
+
+
 $(".reply_text").on('focus', '.reply_input', function(e) {
   var that = e.target;
      if(validate_login()['status'] == '1'){

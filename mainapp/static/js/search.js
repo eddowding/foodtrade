@@ -196,6 +196,7 @@ var Search = {
           {
             show_connections_on_map();
           }
+          $('.dropdown-toggle').dropdown();
     },
 
     show_profiles : function()
@@ -211,11 +212,27 @@ var Search = {
           {
             show_connections_on_map();
           }
+          $('.dropdown-toggle').dropdown();
 
     },
-    search_profiles : function()
+    search_profiles : function(with_filter)
     {
-        $.post( "/ajax-handler/search_profiles", { q: this.keyword, search_type:this.search_type, lng:this.filters.profile.lng, lat:this.filters.profile.lat }, function( data ) {
+        var req_obj = { q: this.keyword, 
+            search_type:this.search_type, 
+            lng:this.filters.profile.lng, 
+            lat:this.filters.profile.lat,
+            want:this.filters.profile.want,
+            usertype:this.filters.profile.usertype
+            };
+            if(with_filter==true)
+            {
+                req_obj.org = this.filters.profile.org;
+                req_obj.biz = this.filters.profile.biz;
+
+            }
+
+
+        $.post( "/ajax-handler/search_profiles", req_obj, function( data ) {
         Search.profile_results = data;
         Search.show_profiles();
         }, "json");

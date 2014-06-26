@@ -21,7 +21,7 @@ from mainapp.views import calculate_time_ago
 from django.contrib.auth.models import User
 from mainapp.bitly import construct_invite_tweet, shorten_url
 import pprint
-
+from MarketSearch import MarketSearch
 # from validate_email import validate_email
 # consumer_key = 'seqGJEiDVNPxde7jmrk6dQ'
 # consumer_secret = 'sI2BsZHPk86SYB7nRtKy0nQpZX3NP5j5dLfcNiP14'
@@ -204,10 +204,13 @@ class AjaxHandle(AjaxSearch):
                     'picture': pic_url_list,
                     
             }
-            tweet_feed.insert_tweet(int(user_id),data)
-            return HttpResponse(json.dumps({'status':1}))
+            response = tweet_feed.insert_tweet(int(user_id),data)
+            search_obj = MarketSearch(request)
+            result = search_obj.get_single_tweet(tweet_id)
+            return HttpResponse(json.dumps(result))
+            
         else:
-            return HttpResponse(json.dumps({'status':0}))
+            return HttpResponse(json.dumps({'status':"error"}))
             
 
     def post_tweet_admin(self, request):

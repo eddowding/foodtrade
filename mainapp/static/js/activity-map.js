@@ -68,7 +68,7 @@ function show_connections_on_map()
     
         map.addLayer(markers);
         if(results.length>0){
-            map.fitBounds(markers.getBounds());
+            // map.fitBounds(markers.getBounds());
         }
 }
 

@@ -130,7 +130,6 @@ class TweetFeed():
             else:
                 can_tweet = True
         can_tweet = True
-        print "gone tweet2"
 
         if tweet['parent_tweet_id'] == "0" and not can_tweet: #and self.has_tweet_in_week(user_id) and subscribed != 1:
             return

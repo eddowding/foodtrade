@@ -116,7 +116,7 @@ class GeneralSearch():
 
 
 #### Profile Search ######
-            if self.search_for != "food":
+            if self.search_for != "produce":
                 search_variables = ["business_org_name", "name", "description", "username", "nick_name"]
             
                 
@@ -139,27 +139,33 @@ class GeneralSearch():
 
    
 
-        ######################### Food filters ################
-        foods_match = []
-        for fd in self.food_filters:
-            foods_match.append({ "$elemMatch" : { "food_name": fd}})
 
 
 
+        if self.user_type != "all":
+            sign_up_as = "Business" if self.user_type == "Companies" else "Individual"
+            
+            and_query.append({"sign_up_as":sign_up_as})
 
-
-        if len(self.food_filters) > 0:
-            and_query.append({"foods": {"$all":foods_match}})
-        
-        # Check business filter
         if len(self.biz_type_filters) > 0:
-            and_query.append({"type_user":{"$all":self.business}})
+            and_query.append({"type_user":{"$all":self.biz_type_filters}})
         
         # Check organisation filter
         if len(self.org_filters) > 0:
-            and_query.append({"organisations":{"$all":self.orz_filters}})
+            and_query.append({"organisations":{"$all":self.org_filters}})
 
 
+
+
+        # ######################### Food filters ################
+        # foods_match = []
+        # for fd in self.food_filters:
+        #     foods_match.append({ "$elemMatch" : { "food_name": fd}})
+
+        # if len(self.food_filters) > 0:
+        #     and_query.append({"foods": {"$all":foods_match}})
+        
+   
 
 
 
@@ -190,19 +196,47 @@ class GeneralSearch():
             "$maxDistance" : self.radius
           }}
 
-        all_doc = self.db.find(query_string,{"latlng":1,"name":1,"type_user":1,"sign_up_as":1,"description":1,"profile_img":1,"foods":1,"username":1,"_id":0})
+        all_doc = self.db.find(query_string,{"latlng":1,"name":1,"type_user":1,"address":1,"foods":1,"sign_up_as":1,"description":1,"profile_img":1,"foods":1,"username":1,"_id":0})
         total =  all_doc.count()
         first20 = all_doc.limit(20)
         result = [doc for doc in first20]
-       
         for i in range(0,len(result)):
             distance= self.calc_distance(
                 result[i]['latlng']['coordinates'][1],
                 result[i]['latlng']['coordinates'][0])
+            webuy_count = 0
+            wesell_count = 0
+            webuy_matches = []
+            wesell_matches = []
+            for fd in result[i]['foods']:
+                print fd
+                if self.keyword in fd['food_name'] and self.search_for == "produce":
+                    matched = True
+                else:
+                    matched = False
 
-            # print distance
+                if fd['webuy']==0:
+                    webuy_count = webuy_count + 1
+                    if matched:
+                        webuy_matches.append(fd['food_name'])
+                    if self.search_for != "produce" and webuy_count == 1:
+                        webuy_matches.append(fd['food_name'])
 
-            result[i]['distance']  = distance
+                else:
+                    wesell_count = wesell_count +1
+                    if matched:
+                        wesell_matches.append(fd['food_name'])
+
+                    if self.search_for != "produce" and wesell_count == 1:
+                        wesell_matches.append(fd['food_name'])
+
+
+
+                    
+
+            result[i]['foods'] = {"webuy_count":webuy_count, "webuy_matches":webuy_matches, "wesell_count":wesell_count,"wesell_matches":wesell_matches}
+
+            result[i]['distance']  = '%.1f' % distance
         
         return_val = {"result":result, "total":total,"center":[float(self.lng), float(self.lat)]}
 
@@ -214,38 +248,48 @@ class GeneralSearch():
 
 
 
-    def calc_distance(self,lat2, long2):
+    def calc_distance(self,lat2, lon2):
         lat1 = self.user['latlng']['coordinates'][1]
-        long1 = self.user['latlng']['coordinates'][0]
+        lon1 = self.user['latlng']['coordinates'][0]
+        from math import sin, cos, sqrt, atan2
+
+        R = 3963.1676
 
 
-        # Convert latitude and longitude to 
-        # spherical coordinates in radians.
-        degrees_to_radians = math.pi/180.0
+        dlon = lon2 - lon1
+        dlat = lat2 - lat1
+        a = (sin(dlat/2))**2 + cos(lat1) * cos(lat2) * (sin(dlon/2))**2
+        c = 2 * atan2(sqrt(a), sqrt(1-a))
+        distance = R * c
+        return distance
+
+        # # Convert latitude and longitude to 
+        # # spherical coordinates in radians.
+        # degrees_to_radians = math.pi/180.0
             
-        # phi = 90 - latitude
-        phi1 = (90.0 - lat1)*degrees_to_radians
-        phi2 = (90.0 - lat2)*degrees_to_radians
+        # # phi = 90 - latitude
+        # phi1 = (90.0 - lat1)*degrees_to_radians
+        # phi2 = (90.0 - lat2)*degrees_to_radians
             
-        # theta = longitude
-        theta1 = long1*degrees_to_radians
-        theta2 = long2*degrees_to_radians
+        # # theta = longitude
+        # theta1 = long1*degrees_to_radians
+        # theta2 = long2*degrees_to_radians
             
-        # Compute spherical distance from spherical coordinates.
+        # # Compute spherical distance from spherical coordinates.
             
-        # For two locations in spherical coordinates 
-        # (1, theta, phi) and (1, theta, phi)
-        # cosine( arc length ) = 
-        #    sin phi sin phi' cos(theta-theta') + cos phi cos phi'
-        # distance = rho * arc length
+        # # For two locations in spherical coordinates 
+        # # (1, theta, phi) and (1, theta, phi)
+        # # cosine( arc length ) = 
+        # #    sin phi sin phi' cos(theta-theta') + cos phi cos phi'
+        # # distance = rho * arc length
         
-        cos = (math.sin(phi1)*math.sin(phi2)*math.cos(theta1 - theta2) + 
-               math.cos(phi1)*math.cos(phi2))
-        arc = math.acos( cos )
+        # cos = (math.sin(phi1)*math.sin(phi2)*math.cos(theta1 - theta2) + 
+        #        math.cos(phi1)*math.cos(phi2))
+        # arc = math.acos( cos )
 
-        # Remember to multiply arc by the radius of the earth 
-        # in your favorite set of units to get length.
-        return arc * 3963.1676
+        # # Remember to multiply arc by the radius of the earth 
+        # # in your favorite set of units to get length.
+        # return arc * 3963.1676
 
 
     

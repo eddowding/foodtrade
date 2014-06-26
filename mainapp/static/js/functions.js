@@ -37,26 +37,37 @@ function get_box_profile(user)
 	content += '<p class="">'+user.description+'</p>';
 	content += '</div>';
 	content += '<div class="innerTB half border-top border-bottom"> ';
-	content += '<span class="label label-default"><i class="fa fa-sign-in fa-fw"></i>BUYS</span> <b>Carrots</b> &amp; 18 more <br />';
+	content += '<span class="label label-default"><i class="fa fa-sign-in fa-fw"></i>BUYS</span> <b>';
+	for(var index in user.foods.webuy_matches)
+	{
+		if(index>0)
+		{
+			content += ", ";
+		}
+		content += user.foods.webuy_matches[i];
+	}
+
+	content += '</b> &amp; '+(user.foods.webuy_count-user.foods.webuy_matches.length)+ ' more <br />';
+	
 	content += '<span class="label label-default"><i class="fa fa-sign-out fa-fw"></i>SELLS:</span> Fish <-- this is the name of the matching item';
 	content += '</div> ';
-	content += '<div class="innerTB half clearfix"> ';
-	content += '<img src="http://pbs.twimg.com/profile_images/1690823879/Screen_shot_2011-12-13_at_12.21.20_bigger.png" alt="The Wallfish Bistro" class="img-responsive pull-left" style="width:40px; margin-right: 5px;">';
-	content += '<img src="http://pbs.twimg.com/profile_images/1690823879/Screen_shot_2011-12-13_at_12.21.20_bigger.png" alt="The Wallfish Bistro" class="img-responsive pull-left" style="width:40px; margin-right: 5px;">';
-	content += '<img src="http://pbs.twimg.com/profile_images/1690823879/Screen_shot_2011-12-13_at_12.21.20_bigger.png" alt="The Wallfish Bistro" class="img-responsive pull-left" style="width:40px; margin-right: 5px;">';
-	content += '<img src="http://pbs.twimg.com/profile_images/1690823879/Screen_shot_2011-12-13_at_12.21.20_bigger.png" alt="The Wallfish Bistro" class="img-responsive pull-left" style="width:40px; margin-right: 5px;">';
-	content += '</div> ';
+	// content += '<div class="innerTB half clearfix"> ';
+	// content += '<img src="http://pbs.twimg.com/profile_images/1690823879/Screen_shot_2011-12-13_at_12.21.20_bigger.png" alt="The Wallfish Bistro" class="img-responsive pull-left" style="width:40px; margin-right: 5px;">';
+	// content += '<img src="http://pbs.twimg.com/profile_images/1690823879/Screen_shot_2011-12-13_at_12.21.20_bigger.png" alt="The Wallfish Bistro" class="img-responsive pull-left" style="width:40px; margin-right: 5px;">';
+	// content += '<img src="http://pbs.twimg.com/profile_images/1690823879/Screen_shot_2011-12-13_at_12.21.20_bigger.png" alt="The Wallfish Bistro" class="img-responsive pull-left" style="width:40px; margin-right: 5px;">';
+	// content += '<img src="http://pbs.twimg.com/profile_images/1690823879/Screen_shot_2011-12-13_at_12.21.20_bigger.png" alt="The Wallfish Bistro" class="img-responsive pull-left" style="width:40px; margin-right: 5px;">';
+	// content += '</div> ';
 	content += '</div>   ';
 	content += '</div> ';
 	content += '<div class="timeline-bottom innerTB half small border-top clearfix">';
 	content += '<a href="http://maps.google.com/maps?saddr=51.4529956141,-2.62451568043&amp;daddr=51.454513,-2.58791" target="_blank" data-placement="top" data-toggle="tooltip" class="pull-left" rel="tooltip" title="" data-original-title="Get directions"> ';
 	content += '<span class="hidden-sm hidden-xs truncate100 address">';
 	content += '<i class="fa fa-map-marker fa-fw"></i>';
-	content += 'Bristol, City of Bristol, UK';
+	content += user.address;
 	content += '</span>';
 	content += '</a> ';
 	content += '<a href="http://maps.google.com/maps?saddr=51.4529956141,-2.62451568043&amp;daddr=51.4536248,-2.6241012" target="_blank" data-placement="top" data-toggle="tooltip" class="pull-right" rel="tooltip" title="" data-original-title="Get directions"> ';
-	content += '<i class="fa fa-location-arrow fa-fw"></i> 0.0 miles  ';
+	content += '<i class="fa fa-location-arrow fa-fw"></i> '+user.distance+' miles  ';
 	content += '</a>';
 	content += '</div>  ';
 	content += '<div class="innerAll border-top bg-gray  reply" style="display: none;"> ';
@@ -106,18 +117,18 @@ function get_box_update(update)
 	content +='</div>';
 	content +='</div> ';
 	content +='<div class="timeline-bottom small border-top clearfix">';
-	content +='<a href="http://maps.google.com/maps?saddr=51.4529956141,-2.62451568043&amp;daddr=51.454513,-2.58791" target="_blank" data-placement="top" data-toggle="tooltip" class="pull-right" rel="tooltip" title="" data-original-title="Get directions"> ';
+	content +='<a href="http://maps.google.com/maps?saddr='+update.latlng.coordinates[0]+',-'+update.latlng.coordinates[1]+'&amp;daddr=51.454513,-2.58791" target="_blank" data-placement="top" data-toggle="tooltip" class="pull-right" rel="tooltip" title="" data-original-title="Get directions"> ';
 	content +='<span class="hidden-sm hidden-xs truncate100 address">';
 	content +='<i class="fa fa-map-marker fa-fw"></i>';
-	content +='Bristol, City of Bristol, UK';
+	content += update.address;
 	content +='</span>';
 	content +='</a> ';
-	content +='<a href="/CoconutChilli/post/476663147080974336">';
-	content +='<i class="fa fa-calendar  fa-fw"></i> 2 days ago';
+	content +='<a href="/'+update.username+'/post/'+update.updates.tweet_id+'">';
+	content +='<i class="fa fa-calendar  fa-fw"></i>' + get_time_text(update.updates.time_stamp)+' ago';
 	content +='</a>';
 	content +='</div>  ';
 	content +='<div class="innerAll half border-top bg-gray "> ';
-	content +='<input class="form-control input-sm enterhandler reply_input" data-tweet-id="476663147080974336" data-main="main" type="text" placeholder="Reply to @CoconutChilli" data-mentions="@CoconutChilli"> ';
+	content +='<input class="form-control input-sm enterhandler reply_input" data-toggle="market-reply" data-tweet-id="'+update.updates.tweet_id+'" data-main="main" type="text" placeholder="Reply to '+update.username+'" data-mentions="@'+update.username+'"> ';
 	content +='</div>';
 	content +='</div>';
 	return content;
