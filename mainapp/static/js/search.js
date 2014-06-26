@@ -543,9 +543,9 @@ $(".btn-put").on('click', function(e){
 
 
 
-function get_address() {
+function get_address(address_for) {
 
-  var input = (document.getElementById('pac_input_market'));
+  var input = (document.getElementById('pac_input_'+address_for));
     geocoder = new google.maps.Geocoder();
     geocoder.geocode({'address': input.value}, function(results, status) {
             if (status == google.maps.GeocoderStatus.OK) {
@@ -553,8 +553,8 @@ function get_address() {
                 var formatted_address = results[0].formatted_address;
 
       input.value = formatted_address;
-      Search.filters.market.lng = results[0].geometry.location.lng();
-      Search.filters.market.lat = results[0].geometry.location.lat();
+      Search.filters[address_for].lng = results[0].geometry.location.lng();
+      Search.filters[address_for].lat = results[0].geometry.location.lat();
      Search.set_url();
     Search.search_market();
               } 
