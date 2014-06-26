@@ -561,14 +561,15 @@ class TradeConnection():
         self.table_name = 'tradeconnection'
         self.db_object.create_table(self.table_name,'b_useruid')
 
-    def get_connection_by_business(self,b_useruid):
-        return self.db_object.get_paginated_values(self.table_name,{'b_useruid': b_useruid, 'deleted': 0})
+    def get_connection_by_business(self,b_useruid, pagenum =1):
+        # return self.db_object.get_all_vals(self.table_name,{'b_useruid': b_useruid, 'deleted': 0})
+        return self.db_object.get_paginated_values(self.table_name,{'b_useruid': b_useruid, 'deleted': 0}, pageNumber=pagenum)
 
     def get_connection_no_by_business(self,b_useruid):
         return self.db_object.get_count(self.table_name,{'b_useruid': b_useruid, 'deleted': 0})
 
-    def get_connection_by_customer(self, c_useruid):
-        return self.db_object.get_paginated_values(self.table_name,{'c_useruid':c_useruid, 'deleted': 0})
+    def get_connection_by_customer(self, c_useruid,pagenum=1):
+        return self.db_object.get_paginated_values(self.table_name,{'c_useruid':c_useruid, 'deleted': 0}, pageNumber=pagenum)
 
     def get_connection_no_by_customer(self, c_useruid):
         return self.db_object.get_count(self.table_name,{'c_useruid':c_useruid, 'deleted': 0})

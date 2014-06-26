@@ -369,8 +369,11 @@ class AjaxHandle(AjaxSearch):
             parameters['profile_id'] = int(data['prof_id'])
             parameters['user_id'] = request.user.id
             parameters['new_connection'] = buss_obj
-            print buss_obj
-            return render_to_response('conn_ajax.html', parameters)
+            # print buss_obj
+            html_str =  str(render_to_response('conn_ajax.html', parameters))
+            html_str = html_str.replace('Content-Type: text/html; charset=utf-8', '')
+
+            return HttpResponse({json.dumps({'status':'ok', 'html':html_str, 'user_added':buss_obj, 'action':'add_conn'})})
         else:
             return HttpResponse("{'status':0}")
 
@@ -1176,3 +1179,37 @@ class AjaxHandle(AjaxSearch):
             return HttpResponse(json.dumps({'status':'ok', 'result':data}))
         else:
             return HttpResponse(json.dumps({'status':0, 'message':'You are not authorized to perform this action.'}))                
+    
+    def pull_connections(self, request):
+        from mainapp.profilepage import get_connections
+        username = request.POST.get('username')
+        pageNum = int(request.POST.get('page_num'))
+        conn_type = request.POST.get('type')
+
+        user_obj = UserProfile()
+        user = user_obj.get_profile_by_username(username)
+
+        trade_conn = TradeConnection()
+        if conn_type =='b':
+            conns = trade_conn.get_connection_by_business(user['useruid'], pagenum=pageNum)
+        else:
+            conns = trade_conn.get_connection_by_customer(user['useruid'], pagenum=pageNum)
+
+        next_page_num = pageNum + 1
+        if len(conns) == 0:
+            return HttpResponse(json.dumps({'status':'finished', 'next_page_num':-1, 'type':conn_type}))    
+
+        conn_data = []    
+        for eachUser in conns:
+            parameters = {}
+            buss_usr = user_obj.get_profile_by_id(int(eachUser['c_useruid']))
+            if buss_usr == None:
+                continue
+            parameters['user'] = request.user            
+            parameters['profile_id'] = int(user['useruid'])
+            parameters['user_id'] = request.user.id
+            parameters['new_connection'] = buss_usr
+            html_str =  str(render_to_response('conn_ajax.html', parameters))
+            html_str = html_str.replace('Content-Type: text/html; charset=utf-8', '')        
+            conn_data.append({'html':html_str, 'user':buss_usr})
+        return HttpResponse(json.dumps({'status':'ok', 'conn_data':conn_data, 'username':username, 'next_page_num':next_page_num, 'type':conn_type}))

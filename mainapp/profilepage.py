@@ -181,7 +181,7 @@ def display_profile(request, username):
         parameters['is_unknown_profile'] = 'false'
 
     try:
-        search_handle = Search(lon = userprof['latlng']['coordinates'][0], lat =userprof['latlng']['coordinates'][1],)
+        search_handle = Search(lon = userprof['latlng']['coordinates'][0], lat = userprof['latlng']['coordinates'][1],)
 
         update_results = search_handle.get_tweets_by_user_id(userprof['useruid'])
         updates = update_results['results'][:10]
@@ -307,6 +307,8 @@ def display_profile(request, username):
 
         parameters['connections_str'] = json.dumps(parameters['connections'])
         parameters['customers_str'] = json.dumps(parameters['customers'])
+        parameters['buss_user'] = str(username)
+        parameters['conn_page_num'] = 1
         return render_to_response('singlebusiness.html', parameters, context_instance=RequestContext(request))
 
     elif parameters['sign_up_as'] == 'Organisation':
@@ -671,7 +673,7 @@ def get_customers(user_id, logged_id=None):
 
 
 
-def get_connections(user_id, logged_in_id = None):
+def get_connections(user_id, logged_in_id = None, page_number = 1):
     trade_conn = TradeConnection()
     userprof = UserProfile()
     b_conn = trade_conn.get_connection_by_business(user_id)

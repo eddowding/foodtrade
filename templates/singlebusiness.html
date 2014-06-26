@@ -1689,7 +1689,6 @@ customers = {{customers_str | safe}};
           return;
         }
         that = this;         
-        alert(username);
            $.ajax({
               type: "POST",
               url: "/ajax-handler/" + 'get_business_counts',
@@ -1759,5 +1758,12 @@ customers = {{customers_str | safe}};
 
           //$("td[data-title='" + data['result']['username'] + "']").attr('data-content', mytext);
       }
+
+      var current_conn_page = {{conn_page_num|safe}};
+      var buss_username = '{{buss_user|safe}}';
+      $(document).ready(function(){
+        get_next_page_b_conn(buss_username,current_conn_page + 1);
+        get_next_page_c_conn(buss_username,current_conn_page + 1);
+      });
      </script>
  {% endblock %}
