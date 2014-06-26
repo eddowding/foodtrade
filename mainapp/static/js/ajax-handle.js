@@ -148,11 +148,11 @@ function plot_connection_layers_on_map(connection){
 	var max_lon = parseFloat(map_lon);
 	var min_lon = parseFloat(map_lon);	
 	var con = connection;
-	var name = con.name;
+	var name = con['name'];
 	// var name = con.business_org_name;
-	var description = con.description;
-	var photo =  con.photo;
-	var username = con.username;
+	var description = con['description'];
+	var photo =  con['profile_img'];
+	var username = con['username'];
 	var type = con['type_user'];
 	var relation = con.relation;
 	var latitude =  con['latlng']['coordinates'][1];
