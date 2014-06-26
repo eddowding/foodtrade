@@ -282,11 +282,17 @@ function resize(){
 
               <script type="text/javascript">
 
-
+              var latest_timestamp = 0;
               function update_latest_updates(data)
                 {
-                    feeds = jQuery.parseJSON(data);
+                    var updates_result = jQuery.parseJSON(data);
+
+                    var feeds = updates_result.result;
                     var updates  = "";
+                    if(feeds.length>0)
+                    {
+                      latest_timestamp = updates_result.time;
+                    }
                     for(var i = 0;i<feeds.length;i++)
                     {
                       var item = feeds[i];
@@ -295,13 +301,26 @@ function resize(){
 
 
                     }
-                    $("#updates").html(updates);
+                    $("#updates").prepend(updates).fadeIn('slow');
                 }
 
 
+function poll_latest_updates()
+{
+
+setTimeout(function() {   
+   ajax_request("get_latest_updates", 'update_latest_updates',{time:latest_timestamp});
+   poll_latest_updates();
+    }, 5000); 
+
+}
+
+
+
               $(document).ready(function(){
-                ajax_request("get_latest_updates", 'update_latest_updates',{});
                 
+                poll_latest_updates();
+                ajax_request("get_latest_updates", 'update_latest_updates',{time:latest_timestamp});
                  $("#updates").on("click",".update",function(e){ 
                   if($(this).attr('data-trigger')!="manual")
                     return;
@@ -331,17 +350,25 @@ function resize(){
                       content += "</div> ";
                       content += "<div class='timeline-bottom  border-top clearfix innerTB half'>";
                       content += "<a href='http://maps.google.com/maps?saddr=51.4529956141,-2.62451568043&amp;daddr=51.4619294,-2.5891196' target='_blank' data-placement='top' data-toggle='tooltip' class='pull-right' rel='tooltip' title='' data-original-title='Get directions'> ";
-                      content += "<i class='fa fa-location-arrow fa-fw'></i> 1.6 miles  ";
+                      content += "<i class='fa fa-location-arrow fa-fw'></i> "+result.distance+" miles  ";
                       content += "</a>";
-                      content += "<i class='fa fa-home fa-fw'></i>";
-                      content += "<a href='/activity/?b=Grower' class='innerR half'>Grower</a>";
+                      if(result.type_user.length>0)
+                      {
+                          content += "<i class='fa fa-home fa-fw'></i>";
+                      }
+                      
+                      for(var index in result.type_user)
+                      {
+                        var biz_type = result.type_user[index];
+                        content += '<a href="/activity/?b='+encodeURIComponent(biz_type)+'" class="innerR half">'+biz_type+'</a> ';
+                      }
                       content += "</div> ";
                       content += "<div class='border-top innerT'> ";
                       content += "<p class='small text-center'>";
                       content += "<i class='fa fa-comments fa-fw'></i>";
                       content += "<a href='#'>See all 3 replies</a>";
                       content += "</p>";
-                      content += "<input class='form-control input-sm enterhandler reply_input' data-tweet-id='476371282137985024' data-main='main' type='text' placeholder='Reply to @severnproject' data-mentions='@severnproject'> ";
+                      content += "<input class='form-control input-sm enterhandler reply_input' data-tweet-id='"+result.updates.tweet_id+"' data-main='main' type='text' placeholder='Reply to "+result.username+"'  data-toggle='market-reply'  data-mentions='"+result.username+"'> ";
                       content += "</div>";
                       content += "</div>";
                       var title = result.name;
@@ -360,7 +387,6 @@ function resize(){
                       
                 });
                  });
-
 
 
               </script>
