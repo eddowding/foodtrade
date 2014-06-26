@@ -58,7 +58,11 @@ class Friends():
                     '''Register this user'''
                     # self.register_friend(eachFriend, eachUser['username'])
                     self.register_as_unclaimed_user(eachFriend)                    
+<<<<<<< HEAD
+                    time.sleep(0.5)
+=======
                     time.sleep(0.6)
+>>>>>>> 715ae72fe01b32f80e19788c7c4889eabb42230c
                 if next_cursor != 0: 
                     friends = self.get_friends(eachUser['username'], next_cursor, friend_or_follower)
             return {'status':1}
@@ -115,7 +119,6 @@ class Friends():
                     data['latlng'] = {"type":"Point","coordinates":[float(location_res.longitude),float(location_res.latitude)]}
                     data['zip_code'] = str(location_res.postal_code)
                     data['address_geocoded']=True         
-                    print "Business key used"           
                 except:                
                     data['address'] = str('Antartica')
                     data['twitter_address'] = twitter_user['location']
