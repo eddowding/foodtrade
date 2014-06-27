@@ -28,21 +28,21 @@ class UserConnections():
 
     def get_trade_connection_no(self):
         trade_conn = TradeConnection()
-        b_conn = trade_conn.get_connection_by_business(self.user_id)
-        c_conn = trade_conn.get_connection_by_customer(self.user_id)
-        total_conn = len(b_conn) + len(c_conn)
-        return len(b_conn), len(c_conn)
+        b_conn_no = trade_conn.get_connection_no_by_business(self.user_id)
+        c_conn_no = trade_conn.get_connection_no_by_customer(self.user_id)
+        total_conn = b_conn_no + c_conn_no
+        return b_conn_no, c_conn_no
         # return self.db_object.get_all_count(self.table_name,{"$or":[{'buyer':self.twitter_user_id},{'seller':self.twitter_user_id}]}, 'time_stamp')
 
     def get_food_connection_no(self):
         foo = Food()
-        foods = foo.get_foods_by_userid(self.user_id)
-        return len(foods)
+        food_count = foo.get_food_count_by_userid(self.user_id)
+        return food_count
 
     def get_organisation_connection_no(self):
         org = Organisation()
-        organisations = org.get_organisations_by_mem_id(self.user_id)
-        return len(organisations)
+        organisations_Count = org.get_organisations_count_by_mem_id(self.user_id)
+        return organisations_Count
 
     def get_nearby_individuals_no(self, lon, lat):
         query_string = {}
@@ -165,5 +165,4 @@ class UserInfo():
             if not customer.has_active_subscription():
                 self.subscribed = False
         except:
-            self.subscribed = False
-        
+            self.subscribed = False        

@@ -1,6 +1,7 @@
 #map-canvas {
       height: 100%;
       margin: 0px;
+      background: #fff !important;
       padding: 0px
     }
     #target {

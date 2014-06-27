@@ -306,8 +306,40 @@ def get_search_parameters(request):
 
 @csrf_exempt
 def home(request): 
-    # print request['subscribed']
-    return render_to_response('activity.html',get_search_parameters(request) ,context_instance=RequestContext(request))
+    if request.GET.get('plng') == None:
+        if request.user.is_authenticated():
+            user_id = request.user.id
+            user_profile_obj = UserProfile()
+            user_profile = user_profile_obj.get_profile_by_id(str(user_id))
+            default_lon = str(user_profile['latlng']['coordinates'][0])
+            default_lat = str(user_profile['latlng']['coordinates'][1])
+            location = user_profile['address']
+
+        else:
+            x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+            if x_forwarded_for:
+                ip = x_forwarded_for.split(',')[0]
+
+            else:
+                ip = request.META.get('REMOTE_ADDR')
+                location_info = get_addr_from_ip(ip)
+                default_lon = float(location_info['longitude'])
+                default_lat = float(location_info['latitude'])
+                location = "unknown"
+
+        query = "plng="+str(default_lon)+"&plat="+str(default_lat)+"&plocation="+location
+        query = query+ "&mlng="+str(default_lon)+"&mlat="+str(default_lat)+"&mlocation="+location
+
+        return HttpResponseRedirect('/activity?'+query)            
+
+
+
+
+
+
+
+
+    return render_to_response('activity.html',context_instance=RequestContext(request))
 
 
 @csrf_exempt

@@ -21,7 +21,7 @@ from mainapp.views import calculate_time_ago
 from django.contrib.auth.models import User
 from mainapp.bitly import construct_invite_tweet, shorten_url
 import pprint
-
+from MarketSearch import MarketSearch
 # from validate_email import validate_email
 # consumer_key = 'seqGJEiDVNPxde7jmrk6dQ'
 # consumer_secret = 'sI2BsZHPk86SYB7nRtKy0nQpZX3NP5j5dLfcNiP14'
@@ -204,11 +204,13 @@ class AjaxHandle(AjaxSearch):
                     'picture': pic_url_list,
                     
             }
-           
-            tweet_feed.insert_tweet(int(user_id),data)
-            return HttpResponse(json.dumps({'status':1}))
+            response = tweet_feed.insert_tweet(int(user_id),data)
+            search_obj = MarketSearch(request)
+            result = search_obj.get_single_tweet(tweet_id)
+            return HttpResponse(json.dumps(result))
+            
         else:
-            return HttpResponse(json.dumps({'status':1}))
+            return HttpResponse(json.dumps({'status':"error"}))
             
 
     def post_tweet_admin(self, request):
@@ -231,6 +233,7 @@ class AjaxHandle(AjaxSearch):
         return HttpResponse("{'status':0}")
 
     def add_connection(self, request):
+        print "Inside"
         trade_conn = TradeConnection()
         data = eval(request.POST.get('conn_data'))
         notification_obj = Notification()
@@ -342,16 +345,21 @@ class AjaxHandle(AjaxSearch):
             buss_obj = user_pro.get_profile_by_id(int(data['buss_id']))
             # if any party is unclaimed user, change it into business
             if pro_obj['sign_up_as'] == 'unclaimed':
-                print pro_obj['name'], ' unclaimed'
                 user_pro.update_profile_fields({'useruid': int(data['prof_id'])}, {'sign_up_as': 'Business',
                     'recently_updated_by_super_user': 'true'})
             elif buss_obj['sign_up_as'] == 'unclaimed':
-                print buss_obj['name'], ' unclaimed'
                 user_pro.update_profile_fields({'useruid': int(data['buss_id'])}, {'sign_up_as': 'Business',
                     'recently_updated_by_super_user': 'true'})
             else:
-                print 'no unclaimed user in new link'
+                pass
+                #print 'no unclaimed user in new link'
             # add parameters
+            from mainapp.classes.DataConnector import UserConnections
+            user_connection =  UserConnections(data['prof_id'])
+            b_conn_len, c_conn_len = user_connection.get_trade_connection_no()
+            parameters['b_conn_no'] = b_conn_len
+            parameters['c_conn_no'] = c_conn_len
+            parameters['user'] = request.user
             parameters['connections'], parameters['conn'] = get_connections(int(data['prof_id']), request.user.id)
             parameters['connections_str'] = json.dumps(parameters['connections'])
             parameters['profile_id'], parameters['user_id'] = int(data['prof_id']), request.user.id
@@ -647,7 +655,6 @@ class AjaxHandle(AjaxSearch):
         team = Team()
         data = eval(request.POST.get('data'))
         if data !=None and data !="":
-            print 'inside addteam: ', data
             team.create_member(data)
 
             notification_obj = Notification()

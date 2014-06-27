@@ -184,9 +184,13 @@ class SignupForm(forms.Form):
                 'subscribed':0,
                 'newsletter_freq':'Weekly',            
                 'followers_count':social_account.extra_data['followers_count'] if social_account!=None else 0,
-                'friends_count':social_account.extra_data['friends_count'] if social_account!=None else 0,
-                'profile_banner_url':social_account.extra_data['profile_banner_url'] if social_account!=None else ''
+                'friends_count':social_account.extra_data['friends_count'] if social_account!=None else 0
+                
         }
+        try:
+            data['profile_banner_url'] = social_account.extra_data['profile_banner_url'] if social_account!=None else ''
+        except:
+            pass
 
         if new_password1 != '':
             data['email_registration'] = 1
