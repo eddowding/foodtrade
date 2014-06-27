@@ -162,13 +162,13 @@
   
     <!--[if lt IE 9]><link rel="stylesheet" href="{% static "assets/components/library/bootstrap/css/bootstrap.min.css" %}" /><![endif]-->
     <script>
-      // less = {
-      //   env: "development", 
-      //   poll: 50
-      // };
+      less = {
+        env: "development", 
+        poll: 50
+      };
     </script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/less.js/1.7.1/less.min.js"></script>  
-    <script>//less.watch();</script>
+    <script>less.watch();</script>
 
     <script src="{% static "assets/components/plugins/browser/ie/ie.prototype.polyfill.js" %}"></script>
     <script>
@@ -183,290 +183,7 @@
 <body class="menu-hidden {% if not user.is_authenticated %}menu-hidden{% endif %}">
     
 
-       <!-- New post Modal -->
-      <div class="modal fade" id="modal-tweeter-user" tabindex="-1" role="dialog" aria-labelledby="newtwitterpost" aria-hidden="true">
-        <div class="modal-dialog">
-          <div class="modal-content"> 
-            <div class="modal-header text-white">
-              Invite someone to join FoodTrade
-            </div>
-            <div class="modal-body">  
-            <div class="input-group twitter-user-suggestions" id="my_twitter_search">
-                <input class="typeahead form-control" id="invite_tweeter_user"  type="text" placeholder="Search Twitter users"> 
-                <div class="input-group-btn">
-                  <button type="submit" id="btnSearchTweeterUsers" onclick="search_tweeter_users()" class="btn btn-default pull-left"><i class="glyphicon glyphicon-search"></i></button>
-                </div>
-            </div>
-             
-
-            <textarea id="invite_tweeter_user_text"  onkeyup="check_limit()" class="form-control counted-invite margin-ta" name="message" placeholder="Type in your message" rows="3">Join the #realfood search engine:  </textarea>
-            </div>
-
-            <div class="modal-footer">
-              <button id="btnClose" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-
-
-              <div class="btn-group">
-              <button id="dropdown-tweeter-user" class="dropdown-toggle btn btn-primary" data-toggle="dropdown">Invite <b class="caret"></b></button>
-                <ul class="dropdown-menu text-left" role="menu" aria-labelledby="drop2">
-                  <li role="presentation"><a role="menuitem" onclick="invite_tweeter_user('Individual')" tabindex="-1">As Individual</a></li>
-                  <li role="presentation"><a role="menuitem" onclick="invite_tweeter_user('Business')" tabindex="-1">As Business</a></li>
-                  <li role="presentation"><a role="menuitem" onclick="invite_tweeter_user('Organisation')" tabindex="-1">As Organisation</a></li>
-                </ul>
-              </div> 
-            </div>
-
-          </div><!-- /.modal-content -->
-        </div><!-- /.modal-dialog -->
-      </div><!-- /.modal -->
-
-
-<!-- new post exp --> 
-   <div class="modal fade" id="newtwitterpost" tabindex="-1" role="dialog" aria-labelledby="newtwitterpost" aria-hidden="true">
-
-            <div class="modal-dialog">
-              <div class="modal-content"> 
-                <div class="modal-body">  
-<div id="structured_postupdate" class="">
-
-<form action="r" method="post" id="structured_input_form" accept-charset="utf-8" onsubmit="generate_update(); $('#newtwitterpost').modal('hide')" class="form" role="form">   
-
-<div class="row innerTB">
-    <div class="col-xs-12 border-bottom"> 
-      <h4>What would you like to do?</h4>
-    </div>
-  </div>
-  <div class="row" style="margin-bottom:0;"> 
-    <div class="col-xs-12">  
-     <p style="line-height: 2.5; margin: 0 10px 0 0;" class="pull-left"> 
-      <div class="btn-group" id="post_for">
-      <!-- <input type="hidden" /> -->
-        <button type="button" onclick="show_small_structure();$('#price').show();"  class="btn btn-primary btn-stroke btn-lg" value="buy" ><i class="fa fa-sign-in fa-fw"></i> buy</button>
-        <button type="button" onclick="show_small_structure();$('#price').show();" class="btn btn-primary btn-stroke btn-lg" value="sell" ><i class="fa fa-sign-out fa-fw"></i> sell</button>
-        <button type="button" onclick="show_small_structure();$('#price').hide();"   class="btn btn-primary btn-stroke btn-lg" value="offer surplus"  ><i class="fa fa-random fa-fw"></i> offer surplus</button>
-        <button type="button" onclick="swith_update_form()"   class="btn btn-primary btn-stroke btn-lg" value="offer surplus"  ><i class="fa fa-rocket fa-fw"></i> go freestyle</button>
-      </div>                     
-    </div>
-  </div>
-  
-  
-
-<span class="hidden" id="structured_hidden_block">
- 
-  <div class="row" style="margin-top: 10px;"> 
-    <div class="col-xs-6"> 
-      <input type="text" name="produce" value="" class="form-control" placeholder="What?"  />  
-      <p class="help-block">eg 'apples', 'veg curry'</p>
-    </div>
-    <div class="col-xs-6"> 
-      
-<div class="row">
-    <div class="col-xs-7" style="padding-right:0;">
-      <input type="text" name="qty" value="" class="form-control" placeholder="How much?"  />  
-    <p class="help-block">Weight / vol / size</p>
-    </div>
-
-    <div class="col-xs-5" style="padding-left: 0;">
-
-       <select id="qtyUnit" class="form-control btn-sm selectpicker">        
-        <option value="">Select unit</option>   
-        <option value="Pieces">Pieces</option>
-        <option value="20' Container">20' Container</option>
-        <option value="40' Container">40' Container</option>
-        <option value="Acre/Acres">Acre(s)</option>
-        <option value="Bags">Bags</option>
-        <option value="Barrel/Barrels">Barrel(s)</option>
-        <option value="Boxes">Boxes</option>
-        <option value="Bushel/Bushels">Bushel(s)</option>
-        <option value="Case/Cases">Case(s)</option>
-        <option value="Centimeter/Centimeters">Centimeter(s)</option>
-        <option value="Cubic Meter/Cubic Meters">Cubic Meter(s)</option>
-        <option value="cubic yards">Cubic Yard(s)</option>
-        <option value="doz">Dozen</option>   
-        <option value="gall">Gallon(s)</option> 
-        <option value="ha">Hectare(s)</option> 
-        <option selected="selected" value="Kg">kg(s)</option>
-        <option value="l">Litre(s)</option> 
-        <option value="m">Meter(s)</option>    
-        <option value="pallet(s)">Pallet(s)</option> 
-        <option value="pint(s)">Pint(s)</option>
-        <option value="pound(s)">Pound(s)</option>  
-        <option value="roll(s)">Roll(s)</option>
-        <option value="sets">Sets</option>
-        <option value="sheet(s)">Sheet(s)</option>  
-        <option value="stone">Stone(s)</option> 
-        <option value="ton(s)">Ton(s)</option> 
-        <option value="tray(s)">Tray(s)</option>
-        <option value="unit(s)">Unit(s)</option>
-        <option value="yard(s)">Yard(s)</option>
-      </select>
-    </div>
-    </div> 
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-xs-6" id="price"> 
-      <input type="text" name="Price" value="" class="form-control" placeholder="Price"  />  
-
-      <p class="help-block">Total, or per unit. Inc Â£/$/&euro;</p>
-    </div>
-    <div class="col-xs-6">  
-      <input type="text" class="form-control" id="expire_on" placeholder="When?"> 
-      <p class="help-block" id="date_help">try 'next Friday', '8 sept 17'</p>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-xs-12"> 
-      <textarea class="form-control" id="update_description" rows="3" placeholder="Add detail: eg quality, variety, grade, packaging, etc.  "></textarea>
-      <p class="help-block">
-      Add detail: eg quality, variety, grade, packaging, etc.
-</p>
-    </div> 
-  </div> 
-  <div class="row" style="margin-top: 5px;">
-     
-            <div class="col-xs-7">
-              <ul class="list-inline small" style="margin-bottom:0;">
-                <li class="">Also send to </li>
-                <li>
-                  <label>
-                    <input type="checkbox" id="structured_post_to_twitter" name="post_to_twitter" value="1" checked="checked">
-                    <i class="fa fa-twitter-square fa-lg text-muted"></i>
-                  </label>
-                </li>
-                <li> 
-                  <label rel="tooltip" title="Post to Facebook, coming soon!">
-                    <input type="checkbox" name="post_to_facebook" value="1" disabled > 
-                    <i class="fa fa-facebook-square fa-lg text-muted"></i>
-                  </label>
-                </li>
-                <li> 
-                  <label rel="tooltip" title="Follower newsletters, coming soon!">
-                    <input type="checkbox" name="post_to_newsletter" value="1" disabled> 
-                    <i class="fa fa-list-alt fa-lg text-muted"></i> 
-                  </label>
-                </li> 
-              </ul> 
-            </div>
-            <div class="col-xs-5 text-right">
-            {% if not user.is_authenticated %}
-                <a href="/payments" class="btn btn-success pull-right"  rel="tooltip" title="Join free to post an upate">LOGIN TO POST
-                <br />
-                <span class="small">Get started free</span></a>
-            {% else %}
-
-                <button type="button" id="btn_update_activity" class="btn btn-lg btn-success pull-right" rel="tooltip"  {% if not user.is_authenticated %}  title="Please login to use this feature." {% endif %} onclick="generate_update();"> Post this</button>
-
-            {% endif %}
-
-
-
-            {% comment %}
-        <!--       {% if can_tweet %} 
-                <button type="button" id="btn_update_activity" class="btn  btn-success pull-right" rel="tooltip"  {% if not user.is_authenticated %}  title="Please login to use this feature." {% endif %} onclick="generate_update();"> Post this</button>
-              {% else %} 
-                <a href="/payments" class="btn  btn-success pull-right"  rel="tooltip" title="Please upgrade your account to unlock."  {% if not user.is_authenticated %}  title="Please login to use this feature." {% endif %} > Upgrade to post</a>
-              {% endif %} -->
-            {% endcomment %}
-
-            </div>
-          </div> 
-</span>
-</form>
-
-<script type="text/javascript">
-function swith_update_form()
-{
-  switch_text_area();
-  $("#structured_postupdate").hide();
-  $("#update-big").show();
-}
-
-function show_full_structure()
-{
-  $("#structured_hidden_block").removeClass("hidden");
-}
-
-function show_small_structure()
-{ 
-  switch_text_area
-  $("#update-big").hide();
-  $("#structured_postupdate").show();
-  $("#structured_hidden_block").removeClass("hidden");
-}
-</script>
-</div>
-
-
-<div id="update-small" class="clearfix hidden" style="margin-top: 10px;">
-  <input class="form-control col-xs-12"  {% if not user.is_authenticated %}  onfocus="login_redirect()" title="Please login to use this feature." {% else %}   onfocus= "switch_text_area()" {% endif %} placeholder="What #food do you have to #buy, #sell, or #surplus?"> 
-  {% comment %} 
-  <input class="form-control col-xs-12"  {% if not user.is_authenticated %}  onfocus="login_redirect()" title="Please login to use this feature." {% else %} {% if can_tweet %} onfocus= "switch_text_area()"{% else %} rel="tooltip" title="You're limited to 1 update every 7 days. Please upgrade your account to unlock." {% endif %}{% endif %} placeholder="What #food do you have to #buy, #sell, or #surplus?">   
-  {% endcomment %} 
-</div> 
-
-<div id="update-big" class=" clearfix hidden" style="margin-top:10px; display: none;">
-<form class="form-horizontal">
-  <div class="row" style="margin-bottom:0;"> 
-    <div class="col-xs-12">  
-     <p style="line-height: 2.5; margin: 0 10px 0 0;" class="pull-left"><strong>I'd like to...</strong> 
-      <div class="btn-group btn-bl ock pull-left" id="post_for">
-      <!-- <input type="hidden" /> -->
-        <button type="button" onclick="show_small_structure();$('#price').show();"  class="btn btn-default" value="buy" ><i class="fa fa-sign-in fa-fw"></i> buy</button>
-        <button type="button" onclick="show_small_structure();$('#price').show();" class="btn btn-default" value="sell" ><i class="fa fa-sign-out fa-fw"></i> sell</button>
-        <button type="button" onclick="show_small_structure();$('#price').hide();"   class="btn btn-default" value="offer surplus"  ><i class="fa fa-random fa-fw"></i> offer surplus</button>
-        <button type="button" onclick="swith_update_form()"   class="btn btn-default" value="offer surplus"  ><i class="fa fa-rocket fa-fw"></i> go freestyle</button>
-      </div>                     
-    </div>
-  </div>
-  <div class="row" style="margin-top:10px;">
-    <div class="col-xs-12">
-      <textarea class="form-control col-xs-12 counted" onkeyup="check_limit()" rows="3" name="q" id="newstatus" {% if not user.is_authenticated %}  onfocus="login_redirect()" title="Please login to use this feature." {% endif %} placeholder="What would you like? Eg '300kg #surplus conference #pears for #sale or #surplus' or 'I want to  #buy organic #honey for my farm shop.' "></textarea>
-    </div>
-  </div>
-
-  <div class="row" style="margin-top: 5px;">
-    <div class="col-xs-7">
-      <ul class="list-inline small" style="margin-bottom:0;">
-        <li class="text-muted">Also send to </li>
-        <li> 
-          <label>
-            <input type="checkbox" id="post_to_twitter" name="post_to_twitter" value="1" checked="checked">
-            <i class="fa fa-twitter-square fa-lg text-muted"></i>
-          </label>
-        </li>
-        <li> 
-          <label rel="tooltip" title="Post to Facebook, coming soon!">
-            <input type="checkbox" name="post_to_facebook" value="1" disabled > 
-            <i class="fa fa-facebook-square fa-lg text-muted"></i>
-          </label>
-        </li>
-        <li> 
-          <label rel="tooltip" title="Follower newsletters, coming soon!">
-            <input type="checkbox" name="post_to_newsletter" value="1" disabled> 
-            <i class="fa fa-list-alt fa-lg text-muted"></i> 
-          </label>
-        </li> 
-      </ul> 
-    </div>
-    <div class="col-xs-5 text-right">
-      <span class="small text-muted counted" id="charsRem">
-        120 characters remaining
-      </span>
-    </div>
-  </div>
-
-
-      <button type="button" id="btn_update_activity" class="btn btn-sm btn-success pull-right" {% if not user.is_authenticated %}  title="Please login to use this feature." {% endif %} onclick="post_new_status();"> Post</button>
-
-      <button type="button" id="btn_update_close"  data-dismiss="modal" class="btn btn-sm btn-success pull-right hidden"> Close </button>
-  </form>
-</div> <!-- /well --> 
-</div>
-</div>
-</div>
-</div>
-<!-- new post exp -->
+    
 
 
 <div class="container-fluid menu-hidden" id=" ">
@@ -476,9 +193,6 @@ function show_small_structure()
 
 <div id="content">
 <div class="navbar hidden-print navbar-default navbar-fixed-top box main" role="navigation" id="topnav" >
-
- 
- 
 
   {% if request.user.is_authenticated %}
   <div class="user-action pull-right menu-right-hidden-xs menu-left-hidden-xs border-left border-right">
@@ -616,7 +330,7 @@ function show_small_structure()
   </div>
 
 
-  <div class="input-group pull-left border0" id="socialShare">
+  <div class="input-group pull-left border0 visible-md visible-ld" id="socialShare">
 
     <a href="https://twitter.com/foodtradeHQ" class="twitter-follow-button" data-show-count="true">Follow @foodtradeHQ</a>
     <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
@@ -633,29 +347,18 @@ function show_small_structure()
          
 
             {% if request.user.is_authenticated %}
-          <div class=" pull-right border-left user-action "> 
-          
-              <div class="btn-group">
+            <div class=" pull-right border-left user-action ">  
 
-                <button type="button" class="btn btn-primary btn-stroke btn-sm hidden-xs hidden-sm dropdown-toggle" data-toggle="dropdown" style="font-weight: normal;">
+                <button type="button" class="btn btn-primary btn-stroke btn-sm hidden-xs hidden-sm" data-toggle="collapse" data-target="#newtwitterpost" style="font-weight: normal;">
                   <i class="fa fa-edit text-primary"></i>
                   New   
                 </button>
 
-                <a class="hidden-md hidden-lg dropdown-toggle" data-toggle="dropdown" style="font-weight: normal;">
+                <a class="hidden-md hidden-lg" data-toggle="collapse" data-target="#newtwitterpost" style="font-weight: normal;">
                   <i class="fa fa-edit fa-2x innerT text-primary"></i>
                 </a>
-
-                <ul class="dropdown-menu" role="menu">
-                  <li><a href="#" data-toggle="modal" data-target="#newtwitterpost">Post a buy request</a></li>
-                  <li><a href="#" data-toggle="modal" data-target="#newtwitterpost">Post a sell offer</a></li>
-                  <li><a href="#" data-toggle="modal" data-target="#newtwitterpost">Offer surplus</a></li> 
-                  <li><a href="#" data-toggle="modal" data-target="#newtwitterpost">Post other request (eg jobs, help)</a></li>
-                </ul>
-              </div> 
-
-
-          </div>
+ 
+            </div> 
             {% endif %}  
 
           <div class="user-action hidden-xs hidden-sm pull-right menu-right-hidden-xs menu-left-hidden-xs">
@@ -731,6 +434,239 @@ function show_small_structure()
               </div>
           </div>
 </div>
+
+
+
+<!-- *************** -->
+<!-- NEW POST FORM   --> 
+<!-- *************** -->
+
+ 
+<div class="collapse clearfix" id="newtwitterpost" tabindex="-1" role="dialog" aria-labelledby="newtwitterpost" aria-hidden="true">
+  <div class="innerAll 
+  col-md-6 col-md-offset-3 
+  col-sm-12
+  col-xs-12
+   "> 
+
+    <div id="structured_postu pdate" class="">
+
+      <form action="r" method="post" id="structured_input_form" accept-charset="utf-8" onsubmit="generate_update(); $('#newtwitterpost').addClass('collapse')" class="form" role="form">   
+
+     
+      <div class="row" style="margin-bottom:0;"> 
+     
+        <div class="col-xs-12">   <!-- unclosed -->
+
+          <div class="btn-group" id="post_for"  >
+            <button type="button"  disabled="disabled" class="btn btn-default btn-sm text-black normal" style="background: #fff; color: #222; "> I'd like to</button>
+            <button type="button" onclick="show_small_structure();$('#price').show();"  class="btn btn-default btn-sm" value="buy" ><i class="fa fa-sign-in fa-fw"></i> buy</button>
+            <button type="button" onclick="show_small_structure();$('#price').show();" class="btn btn-default  btn-sm" value="sell" ><i class="fa fa-sign-out fa-fw"></i> sell</button>
+            <button type="button" onclick="show_small_structure();$('#price').hide();"   class="btn btn-default   btn-sm" value="offer surplus"  ><i class="fa fa-random fa-fw"></i> offer surplus</button>
+            <button type="button" onclick="swith_update_form()"   class="btn btn-default btn-sm" value="offer surplus"  ><i class="fa fa-rocket fa-fw"></i> go freestyle</button> 
+          </div>
+
+
+          <div class=" " id="structured_hidden_block">
+              <div class="row" style="margin-top: 10px;"> 
+                <div class="col-xs-6"> 
+                  <input type="text" name="produce" value="" class="form-control" placeholder="What?"  />   
+                  <p class="help-block">eg 'apples', 'veg curry'</p>
+                </div>
+                <div class="col-xs-6"> 
+                  <div class="row">
+                    <div class="col-xs-7" style="padding-right:0;">
+                      <input type="text" name="qty" value="" class="form-control" placeholder="How much?"  />  
+                      <p class="help-block">Weight / vol / size</p>
+                    </div>
+                    <div class="col-xs-5" style="padding-left: 0;">
+                      <select id="qtyUnit" class="form-control btn-sm selectpicker">        
+                        <option value="">Select unit</option>   
+                        <option value="Pieces">Pieces</option>
+                        <option value="20' Container">20' Container</option>
+                        <option value="40' Container">40' Container</option>
+                        <option value="Acre/Acres">Acre(s)</option>
+                        <option value="Bags">Bags</option>
+                        <option value="Barrel/Barrels">Barrel(s)</option>
+                        <option value="Boxes">Boxes</option>
+                        <option value="Bushel/Bushels">Bushel(s)</option>
+                        <option value="Case/Cases">Case(s)</option>
+                        <option value="Centimeter/Centimeters">Centimeter(s)</option>
+                        <option value="Cubic Meter/Cubic Meters">Cubic Meter(s)</option>
+                        <option value="cubic yards">Cubic Yard(s)</option>
+                        <option value="doz">Dozen</option>   
+                        <option value="gall">Gallon(s)</option> 
+                        <option value="ha">Hectare(s)</option> 
+                        <option selected="selected" value="Kg">kg(s)</option>
+                        <option value="l">Litre(s)</option> 
+                        <option value="m">Meter(s)</option>    
+                        <option value="pallet(s)">Pallet(s)</option> 
+                        <option value="pint(s)">Pint(s)</option>
+                        <option value="pound(s)">Pound(s)</option>  
+                        <option value="roll(s)">Roll(s)</option>
+                        <option value="sets">Sets</option>
+                        <option value="sheet(s)">Sheet(s)</option>  
+                        <option value="stone">Stone(s)</option> 
+                        <option value="ton(s)">Ton(s)</option> 
+                        <option value="tray(s)">Tray(s)</option>
+                        <option value="unit(s)">Unit(s)</option>
+                        <option value="yard(s)">Yard(s)</option>
+                      </select>
+                    </div>
+                  </div> 
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-xs-6" id="price"> 
+                  <input type="text" name="Price" value="" class="form-control" placeholder="Price"  />  
+                  <p class="help-block">Total, or per unit. Inc Â£/$/&euro;</p>
+                </div>
+                <div class="col-xs-6">  
+                  <input type="text" class="form-control" id="expire_on" placeholder="When?"> 
+                  <p class="help-block" id="date_help">try 'next Friday', '8 sept 17'</p>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-xs-12"> 
+                  <textarea class="form-control" id="update_description" rows="3" placeholder="Add detail: eg quality, variety, grade, packaging, etc.  "></textarea>
+                  <p class="help-block">Add detail: eg quality, variety, grade, packaging, etc.</p>
+                </div> 
+              </div> 
+
+              <div class="row" style="margin-top: 5px;">
+                <div class="col-xs-7">
+                  <ul class="list-inline small" style="margin-bottom:0;">
+                    <li class="">Also send to </li>
+                    <li>
+                      <label>
+                        <input type="checkbox" id="structured_post_to_twitter" name="post_to_twitter" value="1" checked="checked"> <i class="fa fa-twitter-square fa-lg twitter"></i>
+                      </label>
+                    </li> 
+                  </ul> 
+                </div>
+                <div class="col-xs-5 text-right">
+                  {% if not user.is_authenticated %}
+                    <a href="/payments" class="btn btn-success pull-right"  rel="tooltip" title="Join free to post an upate">LOGIN TO POST
+                    <br />
+                    <span class="small">Get started free</span></a>
+                  {% else %}
+                    <button type="button" id="btn_update_activity" class="btn btn-sm btn-success pull-right" rel="tooltip"  {% if not user.is_authenticated %}  title="Please login to use this feature." {% endif %} onclick="generate_update();"><i class="fa fa-bullhorn fa-lg"></i> Post this</button>
+                  {% endif %}
+                </div>
+              </div> 
+          </div><!--structured_hidden_block-->
+      </form>
+
+      <script type="text/javascript">
+      function switch_text_area(){
+        $('#update-small').hide();
+        $('#update-big').attr('class', ' clearfix');
+        $("#update-big").removeClass("hidden");
+      }
+      function swith_update_form()
+      {
+        switch_text_area();
+        $("#structured_hidden_block").hide();
+        $("#update-big").removeClass("hidden");
+      }
+
+      function show_full_structure()
+      {
+        $("#structured_hidden_block").removeClass("hidden");
+      }
+
+      function show_small_structure()
+      { 
+        switch_text_area
+        $("#update-big").hide();
+        $("#structured_postupdate").show();
+        $("#structured_hidden_block").removeClass("hidden");
+      }
+      </script>
+    </div>
+
+
+<div id="update-small" class="clearfix  hidden" style="margin-top: 10px;">
+  <input class="form-control col-xs-12"  {% if not user.is_authenticated %}  onfocus="login_redirect()" title="Please login to use this feature." {% else %}   onfocus= "switch_text_area()" {% endif %} placeholder="What #food do you have to #buy, #sell, or #surplus?">  
+</div> 
+
+<div id="update-big" class=" clearfix  hidden" style="margin-top:10px;">
+<form class="form-horizontal">
+  <div class="row" style="margin-bottom:0;"> 
+    <div class="col-xs-12">  
+     <p style="line-height: 2.5; margin: 0 10px 0 0;" class="pull-left"><strong>I'd like to...</strong> 
+      <div class="btn-group btn-bl ock pull-left" id="post_for">
+      <!-- <input type="hidden" /> -->
+        <button type="button" onclick="show_small_structure();$('#price').show();"  class="btn btn-default" value="buy" ><i class="fa fa-sign-in fa-fw"></i> buy</button>
+        <button type="button" onclick="show_small_structure();$('#price').show();" class="btn btn-default" value="sell" ><i class="fa fa-sign-out fa-fw"></i> sell</button>
+        <button type="button" onclick="show_small_structure();$('#price').hide();"   class="btn btn-default" value="offer surplus"  ><i class="fa fa-random fa-fw"></i> offer surplus</button>
+        <button type="button" onclick="swith_update_form()"   class="btn btn-default" value="offer surplus"  ><i class="fa fa-rocket fa-fw"></i> go freestyle</button>
+      </div>                     
+    </div>
+  </div>
+  <div class="row" style="margin-top:10px;">
+    <div class="col-xs-12">
+      <textarea class="form-control col-xs-12 counted" onkeyup="check_limit()" rows="3" name="q" id="newstatus" {% if not user.is_authenticated %}  onfocus="login_redirect()" title="Please login to use this feature." {% endif %} placeholder="What would you like? Eg '300kg #surplus conference #pears for #sale or #surplus' or 'I want to  #buy organic #honey for my farm shop.' "></textarea>
+    </div>
+  </div>
+
+  <div class="row" style="margin-top: 5px;">
+    <div class="col-xs-7">
+      <ul class="list-inline small" style="margin-bottom:0;">
+        <li class="text-muted">Also send to </li>
+        <li> 
+          <label>
+            <input type="checkbox" id="post_to_twitter" name="post_to_twitter" value="1" checked="checked">
+            <i class="fa fa-twitter-square fa-lg text-muted"></i>
+          </label>
+        </li>
+        <li> 
+          <label rel="tooltip" title="Post to Facebook, coming soon!">
+            <input type="checkbox" name="post_to_facebook" value="1" disabled > 
+            <i class="fa fa-facebook-square fa-lg text-muted"></i>
+          </label>
+        </li>
+        <li> 
+          <label rel="tooltip" title="Follower newsletters, coming soon!">
+            <input type="checkbox" name="post_to_newsletter" value="1" disabled> 
+            <i class="fa fa-list-alt fa-lg text-muted"></i> 
+          </label>
+        </li> 
+      </ul> 
+    </div>
+    <div class="col-xs-5 text-right">
+      <span class="small text-muted counted" id="charsRem">
+        120 characters remaining
+      </span>
+    </div>
+  </div>
+
+
+      <button type="button" id="btn_update_activity" class="btn btn-sm btn-success pull-right" {% if not user.is_authenticated %}  title="Please login to use this feature." {% endif %} onclick="post_new_status();"> Post</button>
+
+      <button type="button" id="btn_update_close"  data-dismiss="modal" class="btn btn-sm btn-success pull-right hidden"> Close </button>
+  </form>
+</div> <!-- /well --> 
+</div>
+</div>
+</div>
+</div>
+
+<!-- *************** -->
+<!-- / NEW POST FORM --> 
+<!-- *************** -->
+
+
+
+
+
+
+
+
+
+
 
 <span id="reload_warning" class="hidden"> </span>
 
@@ -1435,9 +1371,9 @@ function validate_login(){
           var childrens = $('#post_for').children();
           for(var i=0;i<childrens.length;i++)
           {
-            $(childrens[i]).removeClass("btn-success");
+            $(childrens[i]).removeClass("active");
           }
-          $(this).addClass("btn-success");
+          $(this).addClass("active");
           post_for = value;
       });
 
