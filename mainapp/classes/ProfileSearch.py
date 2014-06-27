@@ -13,7 +13,72 @@ from FullSearch import GeneralSearch
 
     
 
-class MarketSearch(GeneralSearch):
+class ProfileSearch(GeneralSearch):
+
+    def get_query_string(self):
+        query_string = {}
+        agg_pipeline = []
+        or_conditions = []
+
+
+        # Check if keyword is not empty
+        if self.keyword !="":
+            keyword_like = re.compile(self.keyword + '+', re.IGNORECASE)
+            reg_expression = {"$regex": keyword_like, '$options': '-i'}
+
+
+#### Profile Search ######
+            if self.search_for != "produce":
+                search_variables = ["business_org_name", "name", "description", "username", "nick_name"]
+            
+                
+                for search_item in search_variables:
+                    or_conditions.append({search_item:reg_expression})
+####### Searches keyword as food
+
+            else:
+                food_attributes = ["food_name","description","food_tags"]
+                 if self.want != "all":
+                    want_text = 0 if self.want=="Buy" else 1
+            
+                for fd_attr in food_attributes:
+                    if self.want == "all":
+                        or_conditions.append({'foods':{"$elemMatch":{fd_attr:reg_expression}}})
+                    else:
+                        or_conditions.append({'foods':{"$elemMatch":{fd_attr:reg_expression,'webuy':want_text}}})
+
+        
+        and_query =[]
+
+        pre_condition = {"sign_up_as":{"$ne":"unclaimed"}}
+
+        and_query.append(pre_condition)
+
+   
+
+
+
+
+        if self.user_type != "all":
+            sign_up_as = "Business" if self.user_type == "Companies" else "Individual"
+            
+            and_query.append({"sign_up_as":sign_up_as})
+
+        if len(self.biz_type_filters) > 0:
+            and_query.append({"type_user":{"$all":self.biz_type_filters}})
+        
+        # Check organisation filter
+        if len(self.org_filters) > 0:
+            and_query.append({"organisations":{"$all":self.org_filters}})
+
+
+        if len(and_query)>0:
+            query_string["$and"] = and_query
+        if self.keyword !="":
+            query_string["$or"] = or_conditions
+        return query_string
+
+
     def get_result(self):
         query_string = []
 
@@ -94,6 +159,8 @@ class MarketSearch(GeneralSearch):
             keyword_like = re.compile(self.keyword + '+', re.IGNORECASE)
             keyword_re = {"$regex": keyword_like, '$options': '-i'}
             query_string .append({'updates':{"$elemMatch":{'status':keyword_re,"deleted":0}}})
+
+
         if self.user_type != "all":
             sign_up_as = "Business" if self.user_type == "Companies" else "Individual"
             query_string.append({"sign_up_as":sign_up_as})
@@ -103,15 +170,7 @@ class MarketSearch(GeneralSearch):
 
 
         pipeline.append({"$project":{"updates":1,filter_type:1,"_id":0}})
-        pipeline.append({"$unwind":"$updates"})
-        and_query = [{"updates.deleted":0}]
-
-        if self.keyword !="":
-            and_query.append({"updates.status":keyword_re})
-        if self.want!="all":
-            and_query.append({"updates.status":want_re})
-
-        pipeline.append({"$match":{"$and":and_query}})
+        
 
         pipeline.append({"$project":{filter_type:1,"_id":0}})
 
