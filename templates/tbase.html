@@ -164,11 +164,11 @@
     <script>
       less = {
         env: "development", 
-        poll: 50
+        poll: 5000
       };
     </script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/less.js/1.7.1/less.min.js"></script>  
-    <script>less.watch();</script>
+    <script>//less.watch();</script>
 
     <script src="{% static "assets/components/plugins/browser/ie/ie.prototype.polyfill.js" %}"></script>
     <script>
@@ -330,13 +330,13 @@
   </div>
 
 
-  <div class="input-group pull-left border0 visible-md visible-ld" id="socialShare">
+  <div class="input-group pull-left border0  visible-md visible-lg" id="socialShare">
 
-    <a href="https://twitter.com/foodtradeHQ" class="twitter-follow-button" data-show-count="true">Follow @foodtradeHQ</a>
+    <a href="https://twitter.com/foodtradeHQ" class="twitter-follow-button " data-show-count="true">Follow @foodtradeHQ</a>
     <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
-
+ 
     <iframe src="//www.facebook.com/plugins/like.php?href=http%3A%2F%2Ffacebook.com%2FfoodtradeHQ&amp;width=80&amp;layout=button_count&amp;action=like&amp;show_faces=true&amp;share=false&amp;height=21&amp;appId=1400801613504478" scrolling="no" frameborder="0" style="border:none; overflow:hidden; height:21px;width:80px" allowTransparency="true"></iframe>
-
+      
   </div>
 
 
@@ -354,7 +354,7 @@
                   New   
                 </button>
 
-                <a class="hidden-md hidden-lg" data-toggle="collapse" data-target="#newtwitterpost" style="font-weight: normal;">
+                <a class="hidden-md hidden-lg" data-toggle="collapse" data-target="#newtwitterpost" style="font-weight: normal; position: relative; top: -7px;">
                   <i class="fa fa-edit fa-2x innerT text-primary"></i>
                 </a>
  
@@ -459,7 +459,7 @@
         <div class="col-xs-12">   <!-- unclosed -->
 
           <div class="btn-group" id="post_for"  >
-            <button type="button"  disabled="disabled" class="btn btn-default btn-sm text-black normal" style="background: #fff; color: #222; "> I'd like to</button>
+            <button type="button"  disabled="disabled" class="btn btn-default btn-sm text-black normal hidden-xs" style="background: #fff; color: #222; "> I'd like to</button>
             <button type="button" onclick="show_small_structure();$('#price').show();"  class="btn btn-default btn-sm" value="buy" ><i class="fa fa-sign-in fa-fw"></i> buy</button>
             <button type="button" onclick="show_small_structure();$('#price').show();" class="btn btn-default  btn-sm" value="sell" ><i class="fa fa-sign-out fa-fw"></i> sell</button>
             <button type="button" onclick="show_small_structure();$('#price').hide();"   class="btn btn-default   btn-sm" value="offer surplus"  ><i class="fa fa-random fa-fw"></i> offer surplus</button>
@@ -476,8 +476,7 @@
                 <div class="col-xs-6"> 
                   <div class="row">
                     <div class="col-xs-7" style="padding-right:0;">
-                      <input type="text" name="qty" value="" class="form-control" placeholder="How much?"  />  
-                      <p class="help-block">Weight / vol / size</p>
+                      <input type="text" name="qty" value="" class="form-control" placeholder="Qty"  />
                     </div>
                     <div class="col-xs-5" style="padding-left: 0;">
                       <select id="qtyUnit" class="form-control btn-sm selectpicker">        
@@ -514,13 +513,15 @@
                       </select>
                     </div>
                   </div> 
+
+                      <p class="help-block">Weight / vol / size</p>
                 </div>
               </div>
 
               <div class="row">
                 <div class="col-xs-6" id="price"> 
                   <input type="text" name="Price" value="" class="form-control" placeholder="Price"  />  
-                  <p class="help-block">Total, or per unit. Inc Â£/$/&euro;</p>
+                  <p class="help-block">Total, or per unit. Inc &pound;/$/&euro;</p>
                 </div>
                 <div class="col-xs-6">  
                   <input type="text" class="form-control" id="expire_on" placeholder="When?"> 
@@ -530,18 +531,18 @@
 
               <div class="row">
                 <div class="col-xs-12"> 
-                  <textarea class="form-control" id="update_description" rows="3" placeholder="Add detail: eg quality, variety, grade, packaging, etc.  "></textarea>
-                  <p class="help-block">Add detail: eg quality, variety, grade, packaging, etc.</p>
+                  <textarea class="form-control" id="update_description" rows="3" placeholder="Add detail (optional)  "></textarea>
+                  <p class="help-block">eg. quality, variety, grade, packaging...</p>
                 </div> 
               </div> 
 
               <div class="row" style="margin-top: 5px;">
                 <div class="col-xs-7">
                   <ul class="list-inline small" style="margin-bottom:0;">
-                    <li class="">Also send to </li>
+                    <li class="">Also post this to my twitter {{userinfo.full_name}} </li>
                     <li>
                       <label>
-                        <input type="checkbox" id="structured_post_to_twitter" name="post_to_twitter" value="1" checked="checked"> <i class="fa fa-twitter-square fa-lg twitter"></i>
+                        <input type="checkbox" id="structured_post_to_twitter" name="post_to_twitter" value="1" checked="checked"> <i class="fa fa-twitter-square fa-lg tw"></i>
                       </label>
                     </li> 
                   </ul> 
