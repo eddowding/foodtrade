@@ -228,7 +228,6 @@ var Search = {
             {
                 req_obj.org = this.filters.profile.org;
                 req_obj.biz = this.filters.profile.biz;
-
             }
 
 
@@ -236,6 +235,11 @@ var Search = {
         Search.profile_results = data;
 
         Search.show_profiles();
+        if(!with_filter)
+        {
+            Search.set_profile_filters();
+        }
+
         }, "json");
 
     },
@@ -258,9 +262,9 @@ var Search = {
               Search.market_results = data;
               Search.show_market();
               if(!with_filter)
-              {
-                Search.set_market_filters();
-               }
+              {  
+                    Search.set_market_filters();
+                }
 
              }, "json"); 
      },
@@ -308,14 +312,14 @@ var Search = {
                 {
                     options += "<option>"+results[i]._id+"</option>";
                 }
-                $("#filter_mkt_org").html(options);
+                $("#filter_profile_org").html(options);
                 var biz_results = data.result.biz;
                 var biz_options = "";
                 for(var i=0;i<biz_results.length;i++)
                 {
                     biz_options += "<option>"+biz_results[i]._id+"</option>";
                 }
-                $("#filter_mkt_biz").html(biz_options);
+                $("#filter_profile_biz").html(biz_options);
                  $('.selectpicker').selectpicker('refresh');
                  listen_filters("profiles");
  
@@ -389,7 +393,8 @@ function listen_filters(filter_for)
 {
     var filter_event = function () {
         var class_name = $(this).attr('class');
-        if(class_name.indexOf('ticked')>0)
+        console.log("ticked");
+        if(class_name.indexOf('ticked')!=-1)
         {
             $(this).removeClass("ticked");
 
@@ -408,26 +413,24 @@ function listen_filters(filter_for)
     var filter_type = ["org","biz"];
     for(var i = 0;i<filter_type.length;i++)
     {
-
         var selects = $($("#filter_"+current_tab+"_"+filter_type[i]).parent()).find($("ul.dropdown-menu.selectpicker li.ticked a"));
         var filter_string = [];
         for(var j = 0;j<selects.length;j++)
-        {
-            
-                filter_string.push(selects[j].text);
-            
+        {            
+                filter_string.push(selects[j].text);            
         }
        
         Search.filters[Search.tab][filter_type[i]] = JSON.stringify(filter_string);
         console.log(filter_string);
         Search.set_url();
-
-
     }
     if(Search.tab == "market")
     {
 
         Search.search_market(true);
+    }
+    else{
+        Search.search_profiles(true);
     }
 };
     $('div#'+filter_for+' ul.dropdown-menu.selectpicker li').on('click', filter_event);    
@@ -570,7 +573,5 @@ function get_address(address_for) {
               alert("No address found");
             }
           });
-    return false;
-
-    
+    return false;  
 }
