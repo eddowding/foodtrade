@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 # encoding: utf-8
 from MongoConnection import MongoConnection
-
 from bson.objectid import ObjectId
 # import time
 from pygeocoder import Geocoder
@@ -204,7 +203,9 @@ class TweetFeed():
         
 
     def get_near_people(self, query):
-        return self.db_object.get_distinct(self.table_name,'username',query)['count']
+        # print self.db_object.get_distinct(self.table_name,'username',query)['count']
+        # print self.db_object.get_count(self.table_name,query)
+        return self.db_object.get_count(self.table_name,query)
     
     def update_tweets(self, username, first_name, last_name, description, address, sign_up_as,  lat, lon,type_user=[]):
         results = address
@@ -560,11 +561,18 @@ class TradeConnection():
         self.table_name = 'tradeconnection'
         self.db_object.create_table(self.table_name,'b_useruid')
 
-    def get_connection_by_business(self,b_useruid):
-        return self.db_object.get_all(self.table_name,{'b_useruid': b_useruid, 'deleted': 0})
+    def get_connection_by_business(self,b_useruid, pagenum =1):
+        # return self.db_object.get_all_vals(self.table_name,{'b_useruid': b_useruid, 'deleted': 0})
+        return self.db_object.get_paginated_values(self.table_name,{'b_useruid': b_useruid, 'deleted': 0}, pageNumber=pagenum)
 
-    def get_connection_by_customer(self, c_useruid):
-        return self.db_object.get_all(self.table_name,{'c_useruid':c_useruid, 'deleted': 0})
+    def get_connection_no_by_business(self,b_useruid):
+        return self.db_object.get_count(self.table_name,{'b_useruid': b_useruid, 'deleted': 0})
+
+    def get_connection_by_customer(self, c_useruid,pagenum=1):
+        return self.db_object.get_paginated_values(self.table_name,{'c_useruid':c_useruid, 'deleted': 0}, pageNumber=pagenum)
+
+    def get_connection_no_by_customer(self, c_useruid):
+        return self.db_object.get_count(self.table_name,{'c_useruid':c_useruid, 'deleted': 0})
 
     def create_connection (self, value):
         value['deleted'] =0
@@ -587,13 +595,16 @@ class Food():
         self.db_object.create_table(self.table_name,'food_name')
 
     def get_foods_by_userid(self,useruid):
-        return self.db_object.get_all(self.table_name,{'useruid': useruid, 'webuy':0, 'deleted': 0})
+        return self.db_object.get_all_vals(self.table_name,{'useruid': useruid, 'webuy':0, 'deleted': 0})
+        
+    def get_food_count_by_userid(self,useruid):
+        return self.db_object.get_count(self.table_name,{'useruid': useruid, 'webuy':0, 'deleted': 0})        
 
     def get_webuy_foods_by_userid(self,useruid):
-        return self.db_object.get_all(self.table_name,{'useruid': useruid, 'webuy': 1, 'deleted': 0})
+        return self.db_object.get_all_vals(self.table_name,{'useruid': useruid, 'webuy': 1, 'deleted': 0})
 
     def get_approved_foods_by_useruid(self, useruid):
-        result = self.db_object.get_all(self.table_name,{'useruid': useruid, 'deleted': 0})
+        result = self.db_object.get_all_vals(self.table_name,{'useruid': useruid, 'deleted': 0})
         myfoo = UnapprovedFood()
         final_result = []
         for each in result:
@@ -606,7 +617,7 @@ class Food():
         return self.db_object.group(self.table_name,key, condition, initial, reducer)
 
     def get_all_new_foods(self):
-        return self.db_object.get_all(self.table_name, {'deleted': 0})
+        return self.db_object.get_all_vals(self.table_name, {'deleted': 0})
 
     # def count_foods(self, useruid):
     #     return 
@@ -624,7 +635,7 @@ class Food():
             {'useruid':user_id, 'food_name':food_name, 'deleted': 0})
 
     def get_foods_by_food_name(self, food_name):
-        return self.db_object.get_all(self.table_name, 
+        return self.db_object.get_all_vals(self.table_name, 
             {'food_name':food_name, 'deleted': 0})
 
     def delete_food(self, useruid, food_name, we_buy=0):
@@ -659,7 +670,7 @@ class Customer():
         self.db_object.create_table(self.table_name,'useruid')
 
     def get_customers_by_userid(self,useruid):
-        return self.db_object.get_all(self.table_name,{'useruid': useruid, 'deleted': 0})
+        return self.db_object.get_all_vals(self.table_name,{'useruid': useruid, 'deleted': 0})
 
     def create_customer (self, value):
         value['deleted'] =0
@@ -689,7 +700,10 @@ class Organisation():
         self.db_object.update(self.table_name,{'orguid': orguid, 'memberuid': member_id}, {'deleted':1})
 
     def get_organisations_by_mem_id(self, member_id):
-        return self.db_object.get_all(self.table_name,{'memberuid': member_id, 'deleted': 0})
+        return self.db_object.get_all_vals(self.table_name,{'memberuid': member_id, 'deleted': 0})
+
+    def get_organisations_count_by_mem_id(self, member_id):
+        return self.db_object.get_count(self.table_name,{'memberuid': member_id, 'deleted': 0})        
 
     def check_member(self, org_id, mem_id):
         return self.db_object.get_one(self.table_name, {'orguid': int(org_id), 'memberuid':int(mem_id), 'deleted': 0})
@@ -702,7 +716,7 @@ class Team():
         self.db_object.create_table(self.table_name,'orguid')
 
     def get_members_by_orgid(self,orguid):
-        return self.db_object.get_all(self.table_name,{'orguid': orguid, 'deleted': 0})
+        return self.db_object.get_all_vals(self.table_name,{'orguid': orguid, 'deleted': 0})
 
     def create_member (self, value):
         value['deleted'] =0
@@ -722,9 +736,9 @@ class RecommendFood():
 
     def get_recomm(self,business_id, food_name, we_buy=0):
         if we_buy==1:
-            return self.db_object.get_all(self.table_name,{'food_name': food_name, 'business_id': business_id, 'webuy': we_buy, 'deleted': 0})
+            return self.db_object.get_all_vals(self.table_name,{'food_name': food_name, 'business_id': business_id, 'webuy': we_buy, 'deleted': 0})
         else:
-            return self.db_object.get_all(self.table_name,{'food_name': food_name, 'business_id': business_id, 'webuy': {'$exists': False}, 'deleted': 0})
+            return self.db_object.get_all_vals(self.table_name,{'food_name': food_name, 'business_id': business_id, 'webuy': {'$exists': False}, 'deleted': 0})
 
     def create_recomm(self, value):
         value['deleted'] =0

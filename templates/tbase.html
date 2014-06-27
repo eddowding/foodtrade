@@ -5,7 +5,7 @@
 {% include "socialaccount/snippets/login_extra.html" %}
 {% load account %}
 <!DOCTYPE html>
-<html lang="en" class="sidebar sidebar-social footer-sticky js flexbox flexboxlegacy no-touch rgba hsla multiplebgs backgroundsize borderimage borderradius boxshadow textshadow opacity cssanimations csscolumns cssgradients cssreflections csstransforms csstransforms3d csstransitions fontface generatedcontent">
+<html lang="en" class="  sidebar-social  js flexbox flexboxlegacy no-touch rgba hsla multiplebgs backgroundsize borderimage borderradius boxshadow textshadow opacity cssanimations csscolumns cssgradients cssreflections csstransforms csstransforms3d csstransitions fontface generatedcontent">
   <head>
     <meta charset="utf-8">
 <!-- 
@@ -93,11 +93,13 @@
     <link rel="stylesheet" href="{% static "css/docsupport/prism.css" %}">
     <link rel="stylesheet" href="{% static "css/chosen.min.css" %}"> 
 
+    <link rel="stylesheet" href="http://malihu.github.io/custom-scrollbar/jquery.mCustomScrollbar.min.css" />
+
     <link href="{% static "css/dynamic.css" %}" rel="stylesheet"> 
 
 
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places"></script>
-    <!-- <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet"> -->
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet"> 
     
     {% block contact %}
       
@@ -186,7 +188,7 @@
 
 
   </head>
-<body class=" menu-right-hidden {% if not user.is_authenticated %}menu-hidden{% endif %}">
+<body class="menu-hidden {% if not user.is_authenticated %}menu-hidden{% endif %}">
     
 
        <!-- New post Modal -->
@@ -314,7 +316,7 @@
     <div class="col-xs-6" id="price"> 
       <input type="text" name="Price" value="" class="form-control" placeholder="Price"  />  
 
-      <p class="help-block">Total, or per unit. Inc £/$/&euro;</p>
+      <p class="help-block">Total, or per unit. Inc Â£/$/&euro;</p>
     </div>
     <div class="col-xs-6">  
       <input type="text" class="form-control" id="expire_on" placeholder="When?"> 
@@ -476,298 +478,29 @@ function show_small_structure()
 
 
 <div class="container-fluid menu-hidden" id="main_page">
-
-<div id="menu" class="hidden-print hidden-xs sidebar-default sidebar-brand-primary {% if not user.is_authenticated %}hidden{% endif %}">
-  <div id="sidebar-social-wrapper">
-    <div id="brandWrapper">
-        <a href="/"> 
-            <img src="{% static 'images/logo_tall.png' %}">
-        </a>
-    </div>
- 
-    <ul class="menu list-unstyled" id="navigation_current_page">
-      {% if user.is_superuser %}
-      <li>
-        <a href="/unclaimed-profiles/" id="unclaimed" title="Unclaimed Profiles">
-          <i class="fa fa-certificate fa-fw"></i><span>Unclaimed Profiles</span>
-          </a>
-      </li>  
-      {% endif %}
-
-      <li class="">
-        <a href="/"><i class="fa fa-shopping-cart"></i><span>Marketplace</span></a> 
-      </li> 
-
-      {% if search %}
-        <li class="hasSubmenu active">
-            <a href="#advsearch" data-toggle="collapse"><i class="fa fa-search"></i><span>Advanced search</span></a>
-            <ul id="advsearch" class="{% if not search %}collapse {% endif %}">
-
-              <div class="foodtrade-sidebar">
-
-                <form action="/activity"   onsubmit="return formSubmit(this);"  role="search" data-step="1" data-intro="Search for anyhing, anywhere">
-                  <div class="input-group  input-group-sm">
-                    <span class="input-group-addon"><i class="fa fa-map-marker"></i></span>
-                    <input type="text" name="location" id="pac-input" value="{% if search %}{{ search.place }}{% endif %}{% if not search %}{{userinfo.zip_code}}{% endif %}" class="pac-input form-control  " placeholder="Where?">
-                    <div class="input-group-btn">
-                      <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
-                    </div>
-                  </div>
-                  <input type="hidden" name="lon" id="lon" value="{{search.lon}}"/>
-                  <input type="hidden" name="lat" id="lat" value="{{search.lat}}"/> 
-                </form>
-               
-                <div data-step="3" data-intro="Just start typing to search for specific foods, business type, or filter by organisation membership" data-position="right">
-                  <form role="form" >
-                    <div class="form-group"> 
-                      <input type="text" class="form-control input-sm" id="food_filter" placeholder="Refine by food or drink">
-                    </div>
-                  </form>
-                
-                  <ul class="foodtrade-tag-list">
-                    <li data-id="ALL" class="foodtrade-tag foodtrade-tag-click foodtrade-tag-all"><div class="foodtrade-tag-checkbox-column"><input type="checkbox" id="all_foods" checked="checked" onclick="make_search()" aria-label="All Partners" class="foodtrade-tag-checkbox"></div><div class="foodtrade-tag-text">All Foods</div><div class="foodtrade-tag-count">{{food_count}}</div></li>
-                  </ul>
-
-                  <ul class="foodtrade-tag-list" id="food_filter_results"></ul> 
-
-                  <form role="form">
-                    <div class="form-group"> 
-                      <input type="email" class="form-control  input-sm" id="business_filter" placeholder="Filter by business type">
-                    </div>
-                  </form> 
-
-                  <ul class="foodtrade-tag-list" id="business_filter_results"></ul>
-                </div><!-- charding overlay --> 
-               
-                <form role="form">
-                  <div class="form-group"> 
-                    <input type="email" class="form-control  input-sm" id="organisation_filter" placeholder="Show only members of...">
-                  </div>
-                </form> 
-
-                <ul class="foodtrade-tag-list" id="organisation_filter_results"></ul>
-
-
-              </div><!--sidebar-->
-            </ul>
-        </li> 
-      {% endif %}
-
-        <li class="">
-          <a href="/activity/favourites"><i class="fa fa-star"></i><span>Favourites</span></a> 
-        </li> 
-        <li class="">
-          <a href="/activity/stockists"><i class="fa fa-sign-in"></i><span>My Stockists</span></a> 
-        </li> 
-        <li class="">
-          <a href="/activity/suppliers"><i class="fa fa-sign-out"></i><span>My Suppliers</span></a> 
-        </li> 
-
-        <li data-step="4" data-intro="Building a better food system is going to take all of us. Please invite your suppliers, stockists, customers, friends.. everyone! For everyone you invite who signs up, we'll give you a month free, too." rel="tooltip" title="For everyone you invite who signs up, we'll give you a month free!">
-            <a data-toggle="modal" id="my_invite_twitter" data-target="#modal-tweeter-user"><i class="fa fa-bullhorn"></i><span>Invite</span></a>
-        </li>
-
-        <li class="hasSubmenu">
-          <a href="#trendsWeek" data-toggle="collapse"><i class="fa  fa-bell-o"></i><span>Popular this week</span></a>
-
-          <ul class="collapse" id="trendsWeek"> 
-            {% for eachVal in userinfo.hashtagsthis %}
-              <li><a href="/activity/?q=%23{{eachVal.uid|slice:"1:"}}&location=++None+&lon=&lat=">{{eachVal.uid}} <span class="badge pull-right">{{eachVal.value|floatformat:"0"}}</span></a></li>
-            {% endfor %}
-          </ul>
-        </li>
-
-        <li class="hasSubmenu">
-          <a href="#trendsAll" data-toggle="collapse"><i class="fa  fa-bell"></i><span>Popular all time</span></a>
-
-          <ul class="collapse" id="trendsAll"> 
-            {% for eachVal in userinfo.hashtagsall %}
-              <li><a href="/activity/?q=%23{{eachVal.uid|slice:"1:"}}&location=++None+&lon=&lat=">{{eachVal.uid}} <span class="badge pull-right">{{eachVal.value|floatformat:"0"}}</span></a></li>
-            {% endfor %}
-             </ul>
-        </li>
-
-        <li class="separator">
-        </li>
-
-        <li>
-          <a href="#" id="help">
-            <i class="fa fa-question-circle"></i><span>Help</span>
-          </a>
-        </li> 
-
-        <li class="category">Did you know..?</li>
-        <li class="reset">
-            <ul>
-
-                <div id="didyouknow" class="carousel slide"> 
-                        <!-- Items -->
-                        <div class="carousel-inner">
-                            <!-- Item -->
-                            <div class="item active"> 
-                                
-                            <li class="media news-item"> 
-                                <span class="pull-left media-object">
-                                    <i class="fa fa-fw fa-question-circle"></i>
-                                </span>
-                                <div class="media-body text-left">
-                                    If you would like to find or offer surplus or gluts, just use as <a href="/activity/?q=surplus">#surplus</a> to your message.  <a href="/activity/?q=surplus" class="text-white">Test it out</a>
-                                </div>
-                            </li> 
-                            </div>
-                            <!-- // Item END -->
-                            <!-- Item -->
-                            <div class="item"> 
-                                
-                            <li class="media news-item"> 
-                                <span class="pull-left media-object">
-                                    <i class="fa fa-fw fa-question-circle"></i>
-                                </span>
-                                <div class="media-body text-left">
-                                  You can  post updates from anywhere! Just tweet your message to @foodtradeHQ and we'll push your message to local businesses!
-                                </div>
-                            </li> 
-                            </div> 
-
-                        </div> 
-                    </div>
-            </ul>
-        </li>
-
-        <li class="reset" style="position: fixed; bottom: 5px;text-align: center;left: 20px; display: block;">
-        <ul>
-            <li class="media news-item">
-                <div class="media-body">
-        <a href="/pages/about">About </a> &bull;
-        <a href="http://digest.foodtrade.com/" target="_blank">Blog</a> &bull;
-        <a href="http://foodtrade.uservoice.com/" target="_blank">Contact</a> &bull;
-        <a href="http://foodtrade.uservoice.com/" target="_blank">Get help</a>
-        </div>
-        </li>
-        </ul>
-        </li>
-      </ul>
-
-  </div>
-</div>
-<!-- // Main Sidebar Menu END --> 
+  
 
  <div id="menu-right" class="hidden">
-            <div>
-                <button class="btn btn-inverse btn-xs btn-close" data-toggle="sidr-close" data-menu="menu-right"><i class="fa fa-times"></i>
-                </button>
-                <div class="tab-content"> 
-                  <div class="tab-pane active" id="chat-list">
-                    <div class="mixitup" id="mixitup-chat" data-show-default="mixit-chat-1" data-layout-mode="list"
-                    data-target-selector=".mix" data-filter-selector=".filter-chat">
-                      <ul>
-                        <li class="category">Activity</li>
-                        <li class="reset">
-                            <ul>
-                                <li class="media news-item"> 
-                                    <span class="pull-left media-object">
-                                        <i class="fa fa-fw fa-bell"></i>
-                                    </span>
-                                    <div class="media-body">
-                                        <a href="#" class="text-white">Tytherley stores</a> just
-                                        added <a href="#" class="text-white">new produce</a>
-                                        <span class="time">2 min ago</span>
-                                    </div>
-                                </li>  
-                            </ul>
-                        </li> 
-                      </ul>
-                                 
-    {% if   search %}
-    <div class="foodtrade-sidebar">
-    
-   
-   <form action="/activity" class="navbar-form"  onsubmit="return formSubmit(this);"  role="search" data-step="1" data-intro="Search for anyhing, anywhere">
-      <div class="input-group  input-group-sm">
-        <span class="input-group-addon"><i class="fa fa-map-marker"></i></span>
-        <input type="text" name="location" id="pac-input" value="{% if search %}{{ search.place }}{% endif %}{% if not search %}{{userinfo.zip_code}}{% endif %}" class="pac-input form-control  " placeholder="Where?">
-        <div class="input-group-btn">
-          <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
-        </div>
+      <div> 
+          <div class="">   
+
+            
+
+          </div>
       </div>
-      <input type="hidden" name="lon" id="lon" value="{{search.lon}}"/>
-      <input type="hidden" name="lat" id="lat" value="{{search.lat}}"/> 
-    </form>
-     
-    <div data-step="3" data-intro="Just start typing to search for specific foods, business type, or filter by organisation membership" data-position="right">
-    <form role="form" >
-      <div class="form-group"> 
-        <input type="text" class="form-control input-sm" id="food_filter" placeholder="Refine by food or drink">
-      </div>
-    </form>
-    
-    <ul class="foodtrade-tag-list">
-    <li data-id="ALL" class="foodtrade-tag foodtrade-tag-click foodtrade-tag-all"><div class="foodtrade-tag-checkbox-column"><input type="checkbox" id="all_foods" checked="checked" onclick="make_search()" aria-label="All Partners" class="foodtrade-tag-checkbox"></div><div class="foodtrade-tag-text">All Foods</div><div class="foodtrade-tag-count">{{food_count}}</div></li>
-    </ul>
+  </div>
+  
 
-    <ul class="foodtrade-tag-list" id="food_filter_results">
-   
-    </ul>
-     <hr> 
-
-    <form role="form">
-      <div class="form-group"> 
-        <input type="email" class="form-control  input-sm" id="business_filter" placeholder="Filter by business type">
-      </div>
-    </form>
-    <ul class="foodtrade-tag-list">
-    <li data-id="ALL" class="foodtrade-tag foodtrade-tag-click foodtrade-tag-all"><div class="foodtrade-tag-checkbox-column"><input type="checkbox" id="all_businesses" checked="checked" onclick="make_search()" aria-label="All Partners" class="foodtrade-tag-checkbox"></div><div class="foodtrade-tag-text">All Businesses</div><div class="foodtrade-tag-count">{{business_count}}</div></li>
-</ul>
-
-<ul class="foodtrade-tag-list" id="business_filter_results">
-    </ul>
-    </div><!-- charding overlay -->
-    <hr />
-     
-
-
-
-     <form role="form">
-      <div class="form-group"> 
-        <input type="email" class="form-control  input-sm" id="organisation_filter" placeholder="Show only members of...">
-      </div>
-    </form>
-    <ul class="foodtrade-tag-list">
-    <li data-id="ALL" class="foodtrade-tag foodtrade-tag-click foodtrade-tag-all"><div class="foodtrade-tag-checkbox-column"><input type="checkbox" id="all_organisations" checked="checked" onclick="make_search()" aria-label="All Partners" class="foodtrade-tag-checkbox"></div><div class="foodtrade-tag-text">All Organisations</div><div class="foodtrade-tag-count">{{organisation_count}}</div></li>
-    </ul>
-
-
-    <ul class="foodtrade-tag-list" id="organisation_filter_results">
-    </ul>
-
-
-    </div><!--sidebar-->
-
-    <hr /> 
-    
-
-    {% endif %}
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
 
 <div id="content">
 <div class="navbar hidden-print navbar-default navbar-fixed-top box main" role="navigation" id="topnav" >
 
-
-<!-- set to active when https://app.asana.com/0/6132652941995/10779710100316 is complete
-  <div class="user-action user-action-btn-navbar pull-right border-left">
-      <a href="#menu-right" class="btn btn-sm btn-navbar btn-open-right"><i class="fa fa-bell fa-2x"></i></a>
-  </div> -->
-
+ 
+ 
 
   {% if request.user.is_authenticated %}
-  <div class="user-action pull-right menu-right-hidden-xs menu-left-hidden-xs border-left">
-      <div class="dropdown username pull-left">
+  <div class="user-action pull-right menu-right-hidden-xs menu-left-hidden-xs border-left border-right">
+      <div class="dropdown username pull-left" style="margin-right: 50px;">
           <a class="dropdown-toggle" data-toggle="dropdown" href="#">
               <span class="media margin-none">
                   <span class="pull-left">
@@ -780,7 +513,7 @@ function show_small_structure()
               </span>
           </a>
           <ul class="dropdown-menu pull-right">
-              <li><a href="/editprofile/{{userinfo.username}}">Edit profile</a>
+              <li><a href="/editprofile/me">Edit profile</a>
               </li>
               <li><a href="/profile/{{userinfo.username}}">View profile</a>
               </li> 
@@ -845,22 +578,12 @@ function show_small_structure()
 
   {% endif %}
    
- 
-  {% if not user.is_authenticated %} 
-  <div class=" pull-left">
-      <a href="/" class="">
-      <img src="{% static 'images/logo_tall.png' %}" alt="FoodTrade logo" width="" />
+  
+  <div class="user-action user-action-btn-navbar pull-left" style="border: 0; padding: 5px;">
+      <a href="/" class="btn btn-sm btn-navbar btn-open-left">
+      <img src="{% static 'images/logo_icon.png' %}" alt="FoodTrade logo"/> 
       </a>
-  </div>
-  {% else %}
-  <div class="user-action user-action-btn-navbar pull-left">
-      <a href="#menu" class="btn btn-sm btn-navbar btn-open-left">
-      <i class="fa fa-bars fa-2x"></i>
-      <!-- <img src="{% static 'images/logo_icon_menu.png' %}" alt="FoodTrade logo" width="" /> -->
-      </a>
-  </div>
-  {% endif %}
-
+  </div> 
 
 
 
@@ -877,122 +600,194 @@ function show_small_structure()
 
 
   <div class="input-group pull-left">
-    <form action="/activity" onsubmit="return formSubmit(this);">
-      <span class="input-group-addon"><i class="icon-search"></i></span> 
-      <input type="text" name="q" id="keyword" class="form-control" value="{{ search.query }}" placeholder="eg 'apples', 'fish'...">
-      <input type="hidden" name="location" id="new_search" value="{% if search %} {{ search.place }} {% endif %} {% if not search %} {{userinfo.zip_code}}{% endif %} ">
-    </form>
-  </div>
-
-
+   
+    <form action="/activity" onsubmit="return start_search()">
  
+    <div class="input-group">
+      <input type="hidden" name="search_param" value="all" id="search_param">   
 
-    {% if request.user.is_authenticated %}
-  <div class=" pull-right border-left user-action "> 
-      <div class="dropdown">     
-      <a href="#" class="dropdown-toggle visible-md visible-lg" data-step="2" data-intro="Post an update from any screen" data-position="bottom" data-placement="bottom"  data-toggle="modal" data-target="#newtwitterpost" rel="tooltip" title="Post a trade update"> 
-       <i class="fa fa-edit fa-lg"></i>  New 
-      </a> 
+      <div class="input-group-btn">
+        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" style="
+        background: #f5f5f5;
+        padding: 8px;
+        margin-left: 10px;
+        border-radius: 6px 0 0 6px;
+        border: 1px solid #ccc;
+        border-right: 0;"><span id = "search_type">Produce</span> <i class="fa fa-caret-down text-black"></i></button>
+                <ul class="dropdown-menu">
+                  <li ><a href="#" id="search_type_option">Profiles</a></li> 
+                </ul>
+              </div>  
 
-      <a href="#" class="dropdown-toggle visible-sm visible-xs" data-toggle="modal" data-target="#newtwitterpost"> 
-       <i class="fa fa-edit"></i>  
-      </a>
-      </div>
-  </div>
-    {% endif %}  
+              <input type="text" class="form-control pull-left" name="x" id="search_query" placeholder="What are you looking for?" style="height: auto;
+        margin: 7px 0 7px 0;
+        padding: 6px 10px;
+        width: 260px;
+        border: 1px solid #ccc; 
+        font-size: 17px;">  
 
-  <div class="user-action hidden-xs hidden-sm pull-right menu-right-hidden-xs menu-left-hidden-xs border-left">
-      <div class="dropdown">
-          <a class="dropdown-toggle " data-toggle="dropdown" href="#">
-          Browse
-          <span class="caret"></span>
-          </a>
-          <ul class="dropdown-menu dropdown-menu-large row pull-right">
-          <li class="col-sm-3">
-            <ul>
-              <li class="dropdown-header">Foods</li>
-              <li><a href="/activity/?q=sausages">Sausages</a></li> 
-              <li><a href="/activity/?q=chicken">Chicken</a></li> 
-              <li><a href="/activity/?q=bread">Bread</a></li>  
-              <li><a href="/activity/?q=brownie">Brownies</a></li> 
-              <li><a href="/activity/?q=salad">Salad</a></li>  
-              <li class="dropdown-header">Drink</li>
-              <li><a href="/activity/?q=cider">Cider</a></li> 
-              <li><a href="/activity/?q=beer">Beer</a></li> 
-              <li><a href="/activity/?q=juice">Juice</a></li>  
-              <li><a href="/activity/?q=porter">Porter</a></li>  
-            </ul>
-          </li>
-          <li class="col-sm-4">
-            <ul>
-              <li class="dropdown-header">Biz. Types</li>
-              <li><a href="/activity/?b=Livestock%20Farm">Livestock farm</a></li> 
-              <li><a href="/activity/?q=Baker">Baker</a></li> 
-              <li><a href="/activity/?q=Food%20Stall">Food Stall</a></li> 
-              <li><a href="/activity/?q=Box%20Scheme">Box Scheme</a></li> 
-              <li><a href="/activity/?q=Food%20Manufacturer">Manufacturer</a></li> 
-              <li><a href="/activity/?q=Grower">Grower</a></li> 
-            </ul>
-          </li>
-          <li class="col-sm-5">
-            <ul>
-              <li class="dropdown-header">Organisations</li>
-              <li><a href="/slowfooduk">
-              <span class="result-container" style="white-space: nowrap;">
-              <span class="result-img"><img height="22px" width="22px" src="http://pbs.twimg.com/profile_images/1690823879/Screen_shot_2011-12-13_at_12.21.20_bigger.png"></span>
-              <span>Slow Food UK</span> 
-              </span></a></li> 
-              <li><a href="/soilassociation">
-              <span class="result-container" style="white-space: nowrap;">
-              <span class="result-img"><img height="22px" width="22px" src="http://pbs.twimg.com/profile_images/432822201436229632/Pw5oT1FG_normal.jpeg"></span>
-              <span>Soil Association</span> 
-              </span>
-              </a>
-              </li>
-
-              <li><a href="/FairtradeUK">
-              <span class="result-container" style="white-space: nowrap;">
-              <span class="result-img"><img height="22px" width="22px" src="http://pbs.twimg.com/profile_images/422786454478405632/aSt2mgAO_bigger.png"></span>
-              <span>Fairtrade Foundation</span> 
-              </span></a></li> 
-
-              <li><a href="/farmdrop">
-              <span class="result-container" style="white-space: nowrap;">
-              <span class="result-img"><img height="22px" width="22px" src="http://pbs.twimg.com/profile_images/446219768450650112/ELiLvM6E_bigger.jpeg"></span>
-              <span>FarmDrop</span> 
-              </span></a></li> 
-
-              <li><a href="/slowfoodlondon">
-              <span class="result-container" style="white-space: nowrap;">
-              <span class="result-img"><img height="22px" width="22px" src="http://pbs.twimg.com/profile_images/3376104397/9edf0480e8b1a610b54a62e50e619156_bigger.png"></span>
-              <span>Slow Food London</span> 
-              </span></a></li>  
-            </ul>
-          </li> 
-        </ul>
-        
-      </div>
-  </div>
-
- 
-
+              <div class="input-group-btn"> 
+                <button type="submit" class="btn btn-default" style="background-image: none;
+        background: #f5f5f5;
+        padding: 8px 12px;
+        border: 1px solid #ccc !important;
+        border-radius: 0 5px 5px 0 !important;">
+                  <span class="glyphicon glyphicon-search"></span> 
+                </button> 
+              </div>
+         
             </div>
 
 
-
-     
- 
-
-
-           
- 
-   <span id="reload_warning" class="hidden"> </span>
+            </form>
+          </div>
 
 
+         
+
+            {% if request.user.is_authenticated %}
+          <div class=" pull-right border-left user-action "> 
+          
+              <div class="btn-group">
+                <button type="button" class="btn btn-info btn-sm dropdown-toggle" data-toggle="dropdown" style="font-weight: normal;">
+                  Post an offer <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" role="menu">
+                  <li><a href="#" data-toggle="modal" data-target="#newtwitterpost">Post a buy request</a></li>
+                  <li><a href="#" data-toggle="modal" data-target="#newtwitterpost">Post a sell offer</a></li>
+                  <li><a href="#" data-toggle="modal" data-target="#newtwitterpost">Offer surplus</a></li> 
+                  <li><a href="#" data-toggle="modal" data-target="#newtwitterpost">Post other request (eg jobs, help)</a></li>
+                </ul>
+              </div> 
 
 
- {% block content %}
- {% endblock %}  
+          </div>
+            {% endif %}  
+
+          <div class="user-action hidden-xs hidden-sm pull-right menu-right-hidden-xs menu-left-hidden-xs">
+              <div class="dropdown">
+                  <a class="dropdown-toggle " data-toggle="dropdown" href="#">
+                  Browse
+                  <span class="caret"></span>
+                  </a>
+                  <ul class="dropdown-menu dropdown-menu-large row pull-right">
+                  <li class="col-sm-3">
+                    <ul>
+                      <li class="dropdown-header">Foods</li>
+                      <li><a href="/activity/?q=sausages">Sausages</a></li> 
+                      <li><a href="/activity/?q=chicken">Chicken</a></li> 
+                      <li><a href="/activity/?q=bread">Bread</a></li>  
+                      <li><a href="/activity/?q=brownie">Brownies</a></li> 
+                      <li><a href="/activity/?q=salad">Salad</a></li>  
+                      <li class="dropdown-header">Drink</li>
+                      <li><a href="/activity/?q=cider">Cider</a></li> 
+                      <li><a href="/activity/?q=beer">Beer</a></li> 
+                      <li><a href="/activity/?q=juice">Juice</a></li>  
+                      <li><a href="/activity/?q=porter">Porter</a></li>  
+                    </ul>
+                  </li>
+                  <li class="col-sm-4">
+                    <ul>
+                      <li class="dropdown-header">Biz. Types</li>
+                      <li><a href="/activity/?b=Livestock%20Farm">Livestock farm</a></li> 
+                      <li><a href="/activity/?q=Baker">Baker</a></li> 
+                      <li><a href="/activity/?q=Food%20Stall">Food Stall</a></li> 
+                      <li><a href="/activity/?q=Box%20Scheme">Box Scheme</a></li> 
+                      <li><a href="/activity/?q=Food%20Manufacturer">Manufacturer</a></li> 
+                      <li><a href="/activity/?q=Grower">Grower</a></li> 
+                    </ul>
+                  </li>
+                  <li class="col-sm-5">
+                    <ul>
+                      <li class="dropdown-header">Organisations</li>
+                      <li><a href="/slowfooduk">
+                      <span class="result-container" style="white-space: nowrap;">
+                      <span class="result-img"><img height="22px" width="22px" src="http://pbs.twimg.com/profile_images/1690823879/Screen_shot_2011-12-13_at_12.21.20_bigger.png"></span>
+                      <span>Slow Food UK</span> 
+                      </span></a></li> 
+                      <li><a href="/soilassociation">
+                      <span class="result-container" style="white-space: nowrap;">
+                      <span class="result-img"><img height="22px" width="22px" src="http://pbs.twimg.com/profile_images/432822201436229632/Pw5oT1FG_normal.jpeg"></span>
+                      <span>Soil Association</span> 
+                      </span>
+                      </a>
+                      </li>
+
+                      <li><a href="/FairtradeUK">
+                      <span class="result-container" style="white-space: nowrap;">
+                      <span class="result-img"><img height="22px" width="22px" src="http://pbs.twimg.com/profile_images/422786454478405632/aSt2mgAO_bigger.png"></span>
+                      <span>Fairtrade Foundation</span> 
+                      </span></a></li> 
+
+                      <li><a href="/farmdrop">
+                      <span class="result-container" style="white-space: nowrap;">
+                      <span class="result-img"><img height="22px" width="22px" src="http://pbs.twimg.com/profile_images/446219768450650112/ELiLvM6E_bigger.jpeg"></span>
+                      <span>FarmDrop</span> 
+                      </span></a></li> 
+
+                      <li><a href="/slowfoodlondon">
+                      <span class="result-container" style="white-space: nowrap;">
+                      <span class="result-img"><img height="22px" width="22px" src="http://pbs.twimg.com/profile_images/3376104397/9edf0480e8b1a610b54a62e50e619156_bigger.png"></span>
+                      <span>Slow Food London</span> 
+                      </span></a></li>  
+                    </ul>
+                  </li> 
+                </ul>
+                
+              </div>
+          </div>
+</div>
+
+<span id="reload_warning" class="hidden"> </span>
+
+<div class="row row-merge"  style="height: 100%;">
+  <div class="col-md-10">
+        <div class="container-fluid menu-hidden" id="main_page">
+              <div class="row row-merge">
+                    <div class="col-md-12">
+                     {% block content %}
+                     {% endblock %}  
+                    </div><!-- 12 -->
+              </div><!-- row -->
+        </div><!-- container -->
+  </div><!-- col 10 --> 
+  <div class="col-md-2">
+    <div id="updates"> 
+    </div><!-- updates -->
+
+              <div id="didyouknow" class="carousel slide"> 
+                  <!-- Items -->
+                  <div class="carousel-inner">
+                      <!-- Item -->
+                      <div class="item active"> 
+                           
+                          <span class="pull-left media-object">
+                              <i class="fa fa-fw fa-question-circle"></i>
+                          </span>
+                          <div class="media-body text-left">
+                              If you would like to find or offer surplus or gluts, just use as <a href="/activity/?q=surplus">#surplus</a> to your message.  <a href="/activity/?q=surplus" class="text-white">Test it out</a>
+                          </div> 
+                      </div>
+                      <!-- // Item END -->
+                      <!-- Item -->
+                      <div class="item"> 
+                           
+                          <span class="pull-left media-object">
+                              <i class="fa fa-fw fa-question-circle"></i>
+                          </span>
+                          <div class="media-body text-left">
+                            You can  post updates from anywhere! Just tweet your message to @foodtradeHQ and we'll push your message to local businesses!
+                          </div> 
+                      </div> 
+
+                  </div> 
+              </div>
+    </div>
+  </div>
+
+</div>
+
+
  </div>
         <!-- // Content END -->
         <div class="clearfix"></div>
@@ -1097,7 +892,7 @@ function show_small_structure()
           <li><a href="/pages/organisations">Organisations</a></li>
           <li><a href="/pages/foodwaste">Food surplus &amp; waste</a></li>
           <li><a href="/pages/pricing">Pricing</a></li>      
-          <li><a href="htpp://digest.foodtrade.com">Blog</a></li>      
+          <li><a href="http://digest.foodtrade.com" target="blank">Blog</a></li>      
           <li><a href="/pages/terms">Terms of Service</a></li>
           <li><a href="/pages/privacy">Privacy</a></li>
         </ul>
@@ -1113,8 +908,7 @@ function show_small_structure()
             <a href="https://plus.google.com/+Foodtrade" rel="publisher"><i class="fa fa-google-plus-square fa-2x"></i></a>
           </li>
         </ul> 
-  
-</div>
+      </div>
        
       </div>  
     </div>
@@ -1185,19 +979,30 @@ function show_small_structure()
         inverseColor = '#45484d'; 
     var themerPrimaryColor = primaryColor;
     </script>
- 
-    <script src="{% static "assets/components/plugins/nicescroll/jquery.nicescroll.min.js" %}"></script>
+
+    <script src="http://malihu.github.io/custom-scrollbar/jquery.mCustomScrollbar.concat.min.js"></script>
+ <script src="{% static "assets/components/plugins/nicescroll/jquery.nicescroll.min.js" %}"></script>
     <script src="{% static "assets/components/plugins/breakpoints/breakpoints.js" %}"></script>
     <script src="{% static "assets/components/plugins/preload/pace/pace.min.js" %}"></script>
     <script src="{% static "assets/components/plugins/menus/sidr/jquery.sidr.js" %}"></script>
     <script src="{% static "assets/components/plugins/holder/holder.js" %}"></script>
     <script src="{% static "assets/components/core/js/sidebar.main.init.js" %}"></script>
     <script src="{% static "assets/components/core/js/sidebar.collapse.init.js" %}"></script>
+    <script src="{% static "assets/components/plugins/mixitup/jquery.mixitup.min.js" %}"></script>
     <script src="{% static "assets/components/common/forms/elements/bootstrap-select/assets/lib/js/bootstrap-select.js" %}"></script>
     <script src="{% static "assets/components/common/forms/elements/bootstrap-select/assets/custom/js/bootstrap-select.init.js" %}"></script>
+    <script src="{% static "assets/components/modules/admin/menus/menus.sidebar.chat.init.js" %}"></script>
     <script src="{% static "assets/components/core/js/core.init.js" %}"></script>
     <script src='//api.tiles.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v0.0.2/Leaflet.fullscreen.min.js'></script>
     <link href='//api.tiles.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v0.0.2/leaflet.fullscreen.css' rel='stylesheet' />
+
+
+
+
+<script src='//api.tiles.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v0.4.0/leaflet.markercluster.js'></script>
+<link href='//api.tiles.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v0.4.0/MarkerCluster.css' rel='stylesheet' />
+<link href='//api.tiles.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v0.4.0/MarkerCluster.Default.css' rel='stylesheet' />
+
 
 
 
@@ -1223,6 +1028,8 @@ function show_small_structure()
  {% endblock %}
 
  <script type="text/javascript">
+
+
  function logout()
   {
     window.location = '/accounts/logout';
@@ -1533,11 +1340,11 @@ $(function() {
 <!-- TOUR SCRIPT --> 
 {% if request.user.is_authenticated %}
 <script type="text/javascript">
-  document.getElementById('help').onclick = function() {
-    introJs().setOption('doneLabel', 'Next page').start().oncomplete(function() {
-      window.location.href = '/activity?multipage=true';
-    });
-  };
+  // document.getElementById('help').onclick = function() {
+  //   introJs().setOption('doneLabel', 'Next page').start().oncomplete(function() {
+  //     window.location.href = '/activity?multipage=true';
+  //   });
+  // };
 </script>
 {% endif %}
 <!-- // TOUR SCRIPT --> 
@@ -1561,8 +1368,8 @@ UserVoice.push(['set', {
 // Identify the user and pass traits
 // To enable, replace sample data with actual user traits and uncomment the line
 // UserVoice.push(['identify', {
-//   email:      'john.doe@example.com', // User’s email address
-//   name:       'John Doe', // User’s real name
+//   email:      'john.doe@example.com', // Userâ€™s email address
+//   name:       'John Doe', // Userâ€™s real name
 //   created_at: 1364406966, // Unix timestamp for the date the user signed up
 //   id:         123, // Optional: Unique id of the user (if set, this should not change)
 //   type:       'Owner', // Optional: segment your users by type
@@ -1585,6 +1392,7 @@ UserVoice.push(['addTrigger', '#id', { mode: 'contact' }]);
 //Autoprompt for Satisfaction and SmartVote (only displayed under certain conditions)
 UserVoice.push(['autoprompt', {}]);
 </script>
+
 
 
 

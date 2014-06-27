@@ -14,6 +14,12 @@ import time
 from mainapp.classes.DataConnector import UserInfo
 from mainapp.single_activity import get_post_parameters
 from mainapp.activity import get_search_parameters
+
+
+from FullSearch import GeneralSearch
+from MarketSearch import MarketSearch
+
+
 consumer_key = 'seqGJEiDVNPxde7jmrk6dQ'
 consumer_secret = 'sI2BsZHPk86SYB7nRtKy0nQpZX3NP5j5dLfcNiP14'
 access_token = ''
@@ -29,7 +35,33 @@ class AjaxSearch():
     """docstring for AjaxHandle"""
     def __init__(self):
         pass
-    
+    def get_latest_updates(self,request):
+        search_obj = GeneralSearch(request)
+        feed_result = search_obj.get_latest_updates(request.POST.get("time",None))
+        return HttpResponse(json.dumps(feed_result))
+
+    def get_single_tweet(self,request):
+        tweet_id = request.POST.get('tweet_id')
+        search_obj = MarketSearch(request)
+        result = search_obj.get_single_tweet(tweet_id)
+        return HttpResponse(json.dumps(result))
+
+    def search_market(self,request):
+        search_obj = MarketSearch(request)
+        market_result = search_obj.get_result()
+        return HttpResponse(json.dumps(market_result))
+
+
+    def search_profiles(self,request):
+        search_obj = GeneralSearch(request)
+        profile_result = search_obj.get_result()
+        return HttpResponse(json.dumps(profile_result))
+
+    def get_search_result(self,request):
+        search_obj = GeneralSearch(request)
+        profile_result = search_obj.get_result()
+        return HttpResponse(json.dumps(profile_result))
+
     def single_post_ajax(self,request):
         tweet_id = request.POST.get("parentid",0)
         if tweet_id == 0 :
@@ -53,3 +85,4 @@ class AjaxSearch():
         ret_val['results_organisation_count'] = parameters['results_organisation_count']
         ret_val['results_updates_count'] = parameters['results_updates_count']
         return HttpResponse(json.dumps(ret_val))
+        

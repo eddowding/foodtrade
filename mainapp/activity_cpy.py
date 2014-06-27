@@ -215,22 +215,17 @@ def get_search_parameters(request):
             results[i]['replies'] = replies
 
     for i in range(len(results)):
+        from mainapp.profilepage import get_banner_url
         from mainapp.profilepage import get_video_html
+        banner_url = get_banner_url(username=results[i]['user']['username'],logged_useruid=request.user.id)
+        results[i]['user']['banner_url'] = banner_url
         user_prof = UserProfile()
         try:
-            video_url = results[i]['user']['video_url']
+            video_url = user_prof.get_profile_by_username(results[i]['user']['username'])['video_url']
             video_html = get_video_html(video_url)
         except:
             video_url = ''
             video_html = ''
-        try:
-            if results[i]['user']['banner_url'] !='':
-                banner_url = results[i]['user']['banner_url'] + '/web_retina'
-            else:
-                banner_url = ''
-        except:
-            banner_url =''
-        results[i]['user']['banner_url'] =  banner_url
         results[i]['user']['intro_video'] =  video_html
     
             
@@ -307,30 +302,7 @@ def get_search_parameters(request):
 @csrf_exempt
 def home(request): 
     # print request['subscribed']
-    print "here"
-    if request.GET.get('plng') == None:
-        print "gone plng"
-
-        user_id = request.user.id
-        user_profile_obj = UserProfile()
-        user_profile = user_profile_obj.get_profile_by_id(str(user_id))
-
-        default_lon = str(user_profile['latlng']['coordinates'][0])
-        default_lat = str(user_profile['latlng']['coordinates'][1])
-        location = user_profile['address']
-        query = "plng="+default_lon+"&plat="+default_lat+"&plocation="+location
-        query = query+ "&mlng="+default_lon+"&mlat="+default_lat+"&llocation="+location
-
-        return HttpResponseRedirect('/activity?'+query)            
-
-
-
-
-
-
-
-
-    return render_to_response('activity.html',context_instance=RequestContext(request))
+    return render_to_response('activity.html',get_search_parameters(request) ,context_instance=RequestContext(request))
 
 
 @csrf_exempt
