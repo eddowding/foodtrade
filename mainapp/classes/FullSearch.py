@@ -37,7 +37,7 @@ class GeneralSearch():
         self.org_filters = params['org']
         self.biz_type_filters = params['biz']
         self.food_filters = json.loads(params['food_filters'])
-        self.radius = 160.9
+        self.radius = 160900
         self.user = params['up']
 
     def get_request(self,request):
@@ -203,7 +203,7 @@ class GeneralSearch():
 
         all_doc = self.db.find(query_string,{"latlng":1,"name":1,"type_user":1,"address":1,"foods":1,"sign_up_as":1,"description":1,"profile_img":1,"foods":1,"username":1,"_id":0})
         total =  all_doc.count()
-        first20 = all_doc.limit(20)
+        first20 = all_doc.limit(100)
         result = [doc for doc in first20]
         for i in range(0,len(result)):
             distance= self.calc_distance(
@@ -235,8 +235,6 @@ class GeneralSearch():
                         wesell_matches.append(fd['food_name'])
 
 
-
-                    
 
             result[i]['foods'] = {"webuy_count":webuy_count, "webuy_matches":webuy_matches, "wesell_count":wesell_count,"wesell_matches":wesell_matches}
 

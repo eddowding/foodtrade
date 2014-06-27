@@ -85,7 +85,7 @@ class MarketSearch(GeneralSearch):
         pipeline.append({"$match":{"$and":and_query}})
 
         pipeline.append({"$sort": SON([("updates.time_stamp", -1)])})
-        pipeline.append({"$limit":20})
+        pipeline.append({"$limit":100})
         agg = self.db.aggregate(pipeline)['result']
         return {"result":agg, "total":200,"center":[float(self.lng), float(self.lat)]}
 

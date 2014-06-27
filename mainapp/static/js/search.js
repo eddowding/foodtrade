@@ -234,6 +234,7 @@ var Search = {
 
         $.post( "/ajax-handler/search_profiles", req_obj, function( data ) {
         Search.profile_results = data;
+
         Search.show_profiles();
         }, "json");
 
@@ -435,16 +436,13 @@ function listen_filters(filter_for)
 
 
 
-
-
-
-
-
 $("#profile_tab").click(function(){
 Search.tab = "profile";
 Search.set_url();
 show_connections_on_map();
 });
+
+
 
 $("#mkt_tab").click(function(){
 Search.tab = "market";
@@ -556,7 +554,15 @@ function get_address(address_for) {
       Search.filters[address_for].lng = results[0].geometry.location.lng();
       Search.filters[address_for].lat = results[0].geometry.location.lat();
      Search.set_url();
-    Search.search_market();
+     if(address_for=="market")
+     {
+
+        Search.search_market();
+     }
+     else
+     {
+        Search.search_profiles();
+     }
               } 
             }
             else
