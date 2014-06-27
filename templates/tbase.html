@@ -463,7 +463,7 @@
             <button type="button" onclick="show_small_structure();$('#price').show();"  class="btn btn-default btn-sm" value="buy" ><i class="fa fa-sign-in fa-fw"></i> buy</button>
             <button type="button" onclick="show_small_structure();$('#price').show();" class="btn btn-default  btn-sm" value="sell" ><i class="fa fa-sign-out fa-fw"></i> sell</button>
             <button type="button" onclick="show_small_structure();$('#price').hide();"   class="btn btn-default   btn-sm" value="offer surplus"  ><i class="fa fa-random fa-fw"></i> offer surplus</button>
-            <button type="button" onclick="swith_update_form()"   class="btn btn-default btn-sm" value="offer surplus"  ><i class="fa fa-rocket fa-fw"></i> go freestyle</button> 
+            <button type="button" onclick="switch_update_form()"   class="btn btn-default btn-sm" value="offer surplus"  ><i class="fa fa-rocket fa-fw"></i> go freestyle</button> 
           </div>
 
 
@@ -531,22 +531,33 @@
 
               <div class="row">
                 <div class="col-xs-12"> 
-                  <textarea class="form-control" id="update_description" rows="3" placeholder="Add detail (optional)  "></textarea>
-                  <p class="help-block">eg. quality, variety, grade, packaging...</p>
+                  <textarea class="form-control" onkeyup="check_limit1()" id="update_description" rows="3" placeholder="Add detail (optional)  "></textarea>
                 </div> 
               </div> 
 
-              <div class="row" style="margin-top: 5px;">
+              <div class="row">
+                <div class="col-xs-7">
+                  <p class="help-block">eg. quality, variety, grade, packaging...</p>
+                </div>
+                <div class="col-xs-5 text-right">
+                  <span class="small text-muted counted" id="charsRem1">
+                    120 characters remaining
+                  </span>
+                </div>
+              </div>
+
+              <div class="row">
                 <div class="col-xs-7">
                   <ul class="list-inline small" style="margin-bottom:0;">
-                    <li class="">Also post this to my twitter {{userinfo.full_name}} </li>
+                    <li class="">Also post this to my twitter  </li>
                     <li>
                       <label>
                         <input type="checkbox" id="structured_post_to_twitter" name="post_to_twitter" value="1" checked="checked"> <i class="fa fa-twitter-square fa-lg tw"></i>
                       </label>
                     </li> 
                   </ul> 
-                </div>
+                </div> 
+                
                 <div class="col-xs-5 text-right">
                   {% if not user.is_authenticated %}
                     <a href="/payments" class="btn btn-success pull-right"  rel="tooltip" title="Join free to post an upate">LOGIN TO POST
@@ -557,99 +568,58 @@
                   {% endif %}
                 </div>
               </div> 
-          </div><!--structured_hidden_block-->
       </form>
+ 
 
-      <script type="text/javascript">
-      function switch_text_area(){
-        $('#update-small').hide();
-        $('#update-big').attr('class', ' clearfix');
-        $("#update-big").removeClass("hidden");
-      }
-      function swith_update_form()
-      {
-        switch_text_area();
-        $("#structured_hidden_block").hide();
-        $("#update-big").removeClass("hidden");
-      }
+          </div><!--structured_hidden_block-->
 
-      function show_full_structure()
-      {
-        $("#structured_hidden_block").removeClass("hidden");
-      }
 
-      function show_small_structure()
-      { 
-        switch_text_area
-        $("#update-big").hide();
-        $("#structured_postupdate").show();
-        $("#structured_hidden_block").removeClass("hidden");
-      }
-      </script>
+              <div id="update-big" class="clearfix hidden">
+                <form class="form-horizontal"> 
+                  <div class="row" style="margin-top:10px;">
+                    <div class="col-xs-12">
+                      <textarea class="form-control col-xs-12 counted" onkeyup="check_limit()" rows="3" name="q" id="newstatus" {% if not user.is_authenticated %}  onfocus="login_redirect()" title="Please login to use this feature." {% endif %} placeholder="What would you like? Eg '300kg #surplus conference #pears for #sale or #surplus' or 'I want to  #buy organic #honey for my farm shop.' "></textarea>
+                    </div>
+                  </div> 
+
+                <div class="row">
+                  <div class="col-xs-7">
+                    <ul class="list-inline small" style="margin-bottom:0;">
+                      <li class="">Also post this to my twitter   </li>
+                      <li>
+                        <label>
+                          <input type="checkbox" id="structured_post_to_twitter" name="post_to_twitter" value="1" checked="checked"> <i class="fa fa-twitter-square fa-lg tw"></i>
+                        </label>
+                      </li> 
+                    </ul> 
+                  </div> 
+                  
+                  <div class="col-xs-5 text-right">
+                    <span class="small text-muted counted" id="charsRem">
+                      120 characters remaining
+                    </span>
+                  </div>
+                </div> 
+
+                <div class="row">
+                  <div class="col-sm-12">
+                    {% if not user.is_authenticated %}
+                      <a href="/payments" class="btn btn-success pull-right"  rel="tooltip" title="Join free to post an upate">LOGIN TO POST
+                      <br />
+                      <span class="small">Get started free</span></a>
+                    {% else %}
+                      <button type="button" id="btn_update_activity" class="btn btn-sm btn-success pull-right" {% if not user.is_authenticated %}  title="Please login to use this feature." {% endif %} onclick="post_new_status();"> <i class="fa fa-bullhorn fa-lg"></i> Post this</button></button> 
+                    {% endif %}
+                  </div>
+                </div>
+              </form>
+              </div>
+
     </div>
 
-
-<div id="update-small" class="clearfix  hidden" style="margin-top: 10px;">
-  <input class="form-control col-xs-12"  {% if not user.is_authenticated %}  onfocus="login_redirect()" title="Please login to use this feature." {% else %}   onfocus= "switch_text_area()" {% endif %} placeholder="What #food do you have to #buy, #sell, or #surplus?">  
-</div> 
-
-<div id="update-big" class=" clearfix  hidden" style="margin-top:10px;">
-<form class="form-horizontal">
-  <div class="row" style="margin-bottom:0;"> 
-    <div class="col-xs-12">  
-     <p style="line-height: 2.5; margin: 0 10px 0 0;" class="pull-left"><strong>I'd like to...</strong> 
-      <div class="btn-group btn-bl ock pull-left" id="post_for">
-      <!-- <input type="hidden" /> -->
-        <button type="button" onclick="show_small_structure();$('#price').show();"  class="btn btn-default" value="buy" ><i class="fa fa-sign-in fa-fw"></i> buy</button>
-        <button type="button" onclick="show_small_structure();$('#price').show();" class="btn btn-default" value="sell" ><i class="fa fa-sign-out fa-fw"></i> sell</button>
-        <button type="button" onclick="show_small_structure();$('#price').hide();"   class="btn btn-default" value="offer surplus"  ><i class="fa fa-random fa-fw"></i> offer surplus</button>
-        <button type="button" onclick="swith_update_form()"   class="btn btn-default" value="offer surplus"  ><i class="fa fa-rocket fa-fw"></i> go freestyle</button>
-      </div>                     
-    </div>
-  </div>
-  <div class="row" style="margin-top:10px;">
-    <div class="col-xs-12">
-      <textarea class="form-control col-xs-12 counted" onkeyup="check_limit()" rows="3" name="q" id="newstatus" {% if not user.is_authenticated %}  onfocus="login_redirect()" title="Please login to use this feature." {% endif %} placeholder="What would you like? Eg '300kg #surplus conference #pears for #sale or #surplus' or 'I want to  #buy organic #honey for my farm shop.' "></textarea>
-    </div>
-  </div>
-
-  <div class="row" style="margin-top: 5px;">
-    <div class="col-xs-7">
-      <ul class="list-inline small" style="margin-bottom:0;">
-        <li class="text-muted">Also send to </li>
-        <li> 
-          <label>
-            <input type="checkbox" id="post_to_twitter" name="post_to_twitter" value="1" checked="checked">
-            <i class="fa fa-twitter-square fa-lg text-muted"></i>
-          </label>
-        </li>
-        <li> 
-          <label rel="tooltip" title="Post to Facebook, coming soon!">
-            <input type="checkbox" name="post_to_facebook" value="1" disabled > 
-            <i class="fa fa-facebook-square fa-lg text-muted"></i>
-          </label>
-        </li>
-        <li> 
-          <label rel="tooltip" title="Follower newsletters, coming soon!">
-            <input type="checkbox" name="post_to_newsletter" value="1" disabled> 
-            <i class="fa fa-list-alt fa-lg text-muted"></i> 
-          </label>
-        </li> 
-      </ul> 
-    </div>
-    <div class="col-xs-5 text-right">
-      <span class="small text-muted counted" id="charsRem">
-        120 characters remaining
-      </span>
-    </div>
-  </div>
+ 
 
 
-      <button type="button" id="btn_update_activity" class="btn btn-sm btn-success pull-right" {% if not user.is_authenticated %}  title="Please login to use this feature." {% endif %} onclick="post_new_status();"> Post</button>
-
-      <button type="button" id="btn_update_close"  data-dismiss="modal" class="btn btn-sm btn-success pull-right hidden"> Close </button>
-  </form>
-</div> <!-- /well --> 
 </div>
 </div>
 </div>
