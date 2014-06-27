@@ -36,13 +36,14 @@ class GeneralSearch():
         self.org_filters = params['org']
         self.biz_type_filters = params['biz']
         self.food_filters = json.loads(params['food_filters'])
-        self.radius = 160900
+        self.radius = 160934
+        self.max_distance = 0.15853908597
         self.user = params['up']
 
     def get_request(self,request):
         search_request = {}
         search_request['keyword'] = request.POST.get("q",request.GET.get("q","")) 
-        
+
         up_object = UserProfile()
         up = up_object.get_profile_by_id(request.user.id)
 

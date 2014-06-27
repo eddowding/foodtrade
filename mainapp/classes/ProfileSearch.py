@@ -103,7 +103,7 @@ class ProfileSearch(GeneralSearch):
             geo_search['query'] = query_string
 
 
-        geo_search['maxDistance'] = 0.425260398681
+        geo_search['maxDistance'] = self.max_distance
         
         geo_near = {
                         "$geoNear": geo_search
