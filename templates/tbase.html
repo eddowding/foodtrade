@@ -164,11 +164,11 @@
     <script>
       less = {
         env: "development", 
-        poll: 5000
+        poll: 100
       };
     </script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/less.js/1.7.1/less.min.js"></script>  
-    <script>//less.watch();</script>
+    <script>less.watch();</script>
 
     <script src="{% static "assets/components/plugins/browser/ie/ie.prototype.polyfill.js" %}"></script>
     <script>
@@ -349,7 +349,7 @@
             {% if request.user.is_authenticated %}
             <div class=" pull-right border-left user-action ">  
 
-                <button type="button" class="btn btn-primary btn-stroke btn-sm hidden-xs hidden-sm" data-toggle="collapse" data-target="#newtwitterpost" style="font-weight: normal;">
+                <button type="button" class="btn btn-primary btn-stroke btn-sm hidden-xs hidden-sm" data-toggle="collapse" data-target="#newtwitterpost" style="font-weight: normal;" onclick="window.scrollTo(0,0);">
                   <i class="fa fa-edit text-primary"></i>
                   New   
                 </button>
@@ -913,7 +913,8 @@
 <script src="{% static "js/footable.filter.js" %}" type="text/javascript"></script>     
 <script type="text/javascript">
   $(function () {
-    $('.footable').footable();
+    $('.footable').footable(); 
+    $('.footable').trigger('footable_expand_first_row');
   });
 </script>
  
@@ -1052,13 +1053,7 @@ function success_tweeter_user_invite(data){
 <script type="text/javascript">
 $(document).ready(function() {
  
-  // $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
-  //       /*alert('hello');*/
-  //       $('.isotope').isotope('layout');
-  //   });
-
- 
-
+   
     var activeSystemClass = $('.list-group-item.active');
     //something is entered in search form
     $('.system-search').keyup( function() {
