@@ -5,7 +5,7 @@
 {% include "socialaccount/snippets/login_extra.html" %}
 {% load account %}
 <!DOCTYPE html>
-<html lang="en" class="  sidebar-social  js flexbox flexboxlegacy no-touch rgba hsla multiplebgs backgroundsize borderimage borderradius boxshadow textshadow opacity cssanimations csscolumns cssgradients cssreflections csstransforms csstransforms3d csstransitions fontface generatedcontent">
+<html lang="en" class="js flexbox flexboxlegacy no-touch rgba hsla multiplebgs backgroundsize borderimage borderradius boxshadow textshadow opacity cssanimations csscolumns cssgradients   csstransforms csstransforms3d csstransitions fontface generatedcontent">
   <head>
     <meta charset="utf-8">
 <!-- 
@@ -168,7 +168,7 @@
       };
     </script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/less.js/1.7.1/less.min.js"></script>  
-    <script>/*less.watch();*/</script>
+    <script>less.watch();</script>
 
     <script src="{% static "assets/components/plugins/browser/ie/ie.prototype.polyfill.js" %}"></script>
     <script>
@@ -180,9 +180,10 @@
 
 
   </head>
-<body class="menu-hidden {% if not user.is_authenticated %}menu-hidden{% endif %}">
+<body {% ifequal request.path '/' %} id="home" {% endifequal %}>
     
 
+        
     
 
 

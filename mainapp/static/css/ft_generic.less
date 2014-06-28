@@ -11,6 +11,7 @@
 
 @import "elements.less";
 @import "ft_single_biz.less"; 
+@import "ft_home.less"; 
 @import 'footable/footable.core.min.css'; 
 
 /* ------------------------------------
@@ -77,6 +78,15 @@
   background: rgba(0,0,0,0.1); 
   .topbottom(8px);
   background: url(/static/images/sos.png) repeat;
+}
+
+.equal, .equal > div[class*='col-'] {  
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    flex:1 0 auto;
 }
 
 /* ------------------------------------
