@@ -84,7 +84,8 @@ class Search():
         "tweet_pictures":"$updates.picture",
         "result_type":result_type,
         "subscribed": "$subscribed",
-        "video_url":'$video_url'
+        "video_url":'$video_url',
+        "banner_url":'$profile_banner_url'
         }}
 
 
