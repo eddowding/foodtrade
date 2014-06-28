@@ -618,29 +618,6 @@ $('#organisation_filter').keyup( function() {
         });
 
 
-function switch_update_form()
-{
-  switch_text_area();
-  $("#structured_hidden_block").toggleClass("hidden");
-  $("#update-big").removeClass("hidden");
-}
-
-function switch_text_area(){ 
-  $('#update-big').attr('class', ' ');
-}
-function show_full_structure()
-{
-  $("#structured_hidden_block").removeClass("hidden");
-}
-
-function show_small_structure()
-{ 
-  switch_text_area
-  $("#update-big").hide();
-  $("#structured_postupdate").show();
-  $("#structured_hidden_block").removeClass("hidden");
-}
-
 
 
 function click_activity(activity, changeID){
