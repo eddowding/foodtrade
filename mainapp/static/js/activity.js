@@ -651,21 +651,3 @@ function sort_by(sort,that)
    
 
 }
-function check_limit(){
-  tweet = $('#newstatus').val();
-  if(tweet.length > 120){
-    $('#charsRem').html( 'Max of 120 characters exceeded.');
-  }
-  else{
-    $('#charsRem').html(String(120-tweet.length) + ' characters remaining.');
-  }
-}
-function check_limit1(){
-  tweet = $('#update_description').val();
-  if(tweet.length > 120){
-    $('#charsRem1').html( 'Max of 120 characters exceeded.');
-  }
-  else{
-    $('#charsRem1').html(String(120-tweet.length) + ' characters remaining.');
-  }
-}

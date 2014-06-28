@@ -1439,7 +1439,7 @@ function post_new_status(){
         var foodtrade_only = "true";
       }
       if(validate_login()['status'] == '1'){
-        ajax_request("post_tweet", 'clear_input', {message: message,foodtrade_only:foodtrade_only});
+        ajax_request("post_tweet", 'clear_input', {message: message,foodtrade_only:foodtrade_only}); 
       }
       else{
           /*$('#btn_must_be_logged').click();*/
@@ -1510,6 +1510,25 @@ function show_small_structure()
   $("#update-big").hide();
   $("#structured_postupdate").show();
   $("#structured_hidden_block").removeClass("hidden");
+}
+
+function check_limit(){
+  tweet = $('#newstatus').val();
+  if(tweet.length > 120){
+    $('#charsRem').html( 'Max of 120 characters exceeded.');
+  }
+  else{
+    $('#charsRem').html(String(120-tweet.length) + ' characters remaining.');
+  }
+}
+function check_limit1(){
+  tweet = $('#update_description').val();
+  if(tweet.length > 120){
+    $('#charsRem1').html( 'Max of 120 characters exceeded.');
+  }
+  else{
+    $('#charsRem1').html(String(120-tweet.length) + ' characters remaining.');
+  }
 }
 
 
