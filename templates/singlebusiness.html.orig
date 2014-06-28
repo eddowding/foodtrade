@@ -118,7 +118,11 @@
 
     </div> 
   </div>
+<<<<<<< HEAD
   <div class="col-sm-3 ">
+=======
+  <div class="col-sm-3 hidden-xs">
+>>>>>>> 31f9f352f5ab202d002f86534dc4d4698c3e05ad
     <div class="innerAll">
 
 
@@ -226,7 +230,11 @@
     </div> 
 
  
+<<<<<<< HEAD
   <div class="col-sm-2 ">
+=======
+  <div class="col-sm-2 col-xs-4 ">
+>>>>>>> 31f9f352f5ab202d002f86534dc4d4698c3e05ad
     
     <div class="innerAll hidden-md hidden-lg">
     <!-- EDIT / CONTACT -->
@@ -555,6 +563,7 @@
             <div class='row row-merge border-top'>
               <!-- number of foods sold -->
               <div class='{% if show_foods %}col-xs-3{% else %}col-xs-6{% endif %}'>
+<<<<<<< HEAD
                 <a href='' class='innerAll half text-center display-block ' data-original-title='{{each.food_no}} foods' rel='tooltip'><i class='fa fa-fw fa fa-cutlery'></i> {{each.food_no}}</a>
               </div>
               <!-- number of vouches across all produce --> 
@@ -568,6 +577,21 @@
               <!-- number of group membershpis -->  
               <div class='{% if show_foods %}col-xs-3{% else %}col-xs-6{% endif %}'>
                 <a href=''  rel='tooltip' title='Member of {{each.org_conn_no}} groups or organisations'  class='innerAll half text-center display-block'><i class='fa fa-fw fa-group'></i> {{each.org_conn_no}}</a>
+=======
+                <a href='' class='innerAll half text-center display-block text-muted' data-original-title='{{each.food_no}} foods' rel='tooltip'><i class='fa fa-fw fa fa-cutlery'></i> {{each.food_no}}</a>
+              </div>
+              <!-- number of vouches across all produce --> 
+              <div class='{% if show_foods %}col-xs-3{% else %}col-xs-6{% endif %}'>
+                <a href=''  rel='tooltip' title='{{each.total_vouches}} of vouches for all produce'  class='innerAll half text-center display-block text-muted'><i class='fa fa-fw fa-thumbs-o-up'></i> {{each.total_vouches}}</a>
+              </div> 
+              <!-- number of trade connections --> 
+              <div class='{% if show_foods %}col-xs-3{% else %}col-xs-6{% endif %}'>
+                <a href=''  rel='tooltip' title='{{each.trade_conn_no}} of trade connections' class='innerAll half text-center display-block text-muted'><i class='fa fa-fw fa-link'></i> {{each.trade_conn_no}}</a>
+              </div>
+              <!-- number of group membershpis -->  
+              <div class='{% if show_foods %}col-xs-3{% else %}col-xs-6{% endif %}'>
+                <a href=''  rel='tooltip' title='Member of {{each.org_conn_no}} groups or organisations'  class='innerAll half text-center display-block text-muted'><i class='fa fa-fw fa-group'></i> {{each.org_conn_no}}</a>
+>>>>>>> 31f9f352f5ab202d002f86534dc4d4698c3e05ad
               </div> 
             </div>  
           </td>
@@ -694,6 +718,7 @@
             {% if each.banner_url %}
               <img src='{{each.banner_url}}' title='{{each.username}}' class='img-responsive'>
             {% endif %}  
+<<<<<<< HEAD
           </td>
           <td>
             <div class='row row-merge border-top'>
@@ -715,6 +740,29 @@
               </div> 
             </div>   
           </td>
+=======
+          </td>
+          <td>
+            <div class='row row-merge border-top'>
+              <!-- number of foods sold -->
+              <div class='{% if show_foods %}col-xs-3{% else %}col-xs-6{% endif %}'>
+                <a href='' class='innerAll half text-center display-block text-muted' data-original-title='{{each.food_no}} foods' rel='tooltip'><i class='fa fa-fw fa fa-cutlery'></i> {{each.food_no}}</a>
+              </div>
+              <!-- number of vouches across all produce --> 
+              <div class='{% if show_foods %}col-xs-3{% else %}col-xs-6{% endif %}'>
+                <a href=''  rel='tooltip' title='{{each.total_vouches}} of vouches for all produce'  class='innerAll half text-center display-block text-muted'><i class='fa fa-fw fa-thumbs-o-up'></i> {{each.total_vouches}}</a>
+              </div> 
+              <!-- number of trade connections --> 
+              <div class='{% if show_foods %}col-xs-3{% else %}col-xs-6{% endif %}'>
+                <a href=''  rel='tooltip' title='{{each.trade_conn_no}} of trade connections' class='innerAll half text-center display-block text-muted'><i class='fa fa-fw fa-link'></i> {{each.trade_conn_no}}</a>
+              </div>
+              <!-- number of group membershpis -->  
+              <div class='{% if show_foods %}col-xs-3{% else %}col-xs-6{% endif %}'>
+                <a href=''  rel='tooltip' title='Member of {{each.org_conn_no}} groups or organisations'  class='innerAll half text-center display-block text-muted'><i class='fa fa-fw fa-group'></i> {{each.org_conn_no}}</a>
+              </div> 
+            </div>   
+          </td>
+>>>>>>> 31f9f352f5ab202d002f86534dc4d4698c3e05ad
           <td></td>
         </tr>
                
@@ -727,6 +775,121 @@
         {% endif %}
     
  
+<<<<<<< HEAD
+=======
+    </div>
+
+   <!-- Sells to / Stockists  --> 
+
+
+
+
+
+    <div class="panel panel-default" id="panelDeliveries">
+      <div class="panel-heading">
+        <h3 class="panel-title">
+          <i class="fa fa-truck"></i> <strong>Deliveries</strong>
+        </h3>
+      </div> 
+      <div class="panel-body">
+        {% if deliverables %} 
+          {{deliverables|linebreaks}}
+        {% else %} 
+          Please contact us directly to discuss deliveries.
+        {% endif %}
+      </div> 
+    </div>
+
+
+     <!-- GROUPS and organisations -->
+    <div class="panel panel-default" id="panelOrganisations">
+      <div class="panel-heading">
+        <h3 class="panel-title">
+          <strong>
+          <i class="fa fa-certificate"></i> 
+          {% if userprof.organisation_connection_no != 0 %}{{userprof.organisation_connection_no}}{% endif %} Groups</strong> &amp; organisations &middot;
+
+        {% if user.is_authenticated %}
+          <a id="tabMemberships" data-target="#addGroup" data-toggle="collapse" class="small">Add your suggestion</a>
+        {% endif %}
+
+        </h3>
+      </div>
+
+
+      {% if user.is_authenticated %}
+      <div id="addGroup" class="collapse well-sm well clearfix">
+        <div class="form-inline" role="form"> 
+          <div id="orgs_remote" class="form-group  has-feedback">
+            <input class="typeahead form-control col-sm-12" id="new_orgs_typeahead" {% if not user.is_authenticated %} rel="tooltip" title="Please login to use this feature" {% endif %} style="min-width:350px;" type="text" placeholder="Type the name of a group, organisation, or certifier">
+            <span class="fa fa-search form-control-feedback"></span> 
+          </div>     
+        </div>    
+      </div>
+      {% endif %}
+
+      <div class="panel-body">
+        
+       
+
+          <div id="organisations_list" class="clearfix"> 
+            {% if user.is_authenticated %}
+            {% else %}
+              <p class=""><a href="{% provider_login_url "twitter" process="login" %}" class="">Login</a> or <a href="{% provider_login_url "twitter" process="login" %}" class="">sign up free</a> to see a complete list of groups. </p>
+            {% endif %}
+
+            <div class="clearfix isotope js-isotope" data-isotope-options='{ "itemSelector": ".card" }' id="organisation-cards"> 
+              {% for each in organisations %} 
+
+              <div class="card clearfix" data-toggle="popover" 
+              data-trigger="hover" 
+              data-title="{{each.name}}" 
+              data-html="true"
+              data-content="
+              <div class='text-center'>
+                <a href='/profile/{{each.username}}''><img src='{{each.photo}}' alt='{{each.name}}'
+                class='img-thumbnail img-responsive img-circle' style='width:73px; height:73px;' /></a>
+              </div> 
+              <p class='small'>{{each.description|truncatechars:200}}</p>
+              <div class='row row-merge border-top hidden'>
+
+                <!-- number of members -->
+                <div class='col-sm-6'>
+                  <a href='' class='innerAll half text-center display-block text-muted' data-original-title='{{each.food_no}} foods' rel='tooltip'><i class='fa fa-fw fa fa-cutlery'></i> {{each.food_no}}</a>
+                </div>
+
+                <!-- number of group membershpis -->  
+                <div class='col-sm-6'>
+                  <a href=''  rel='tooltip' title='Member of {{each.org_conn_no}} groups or organisations'  class='innerAll half text-center display-block text-muted'><i class='fa fa-fw fa-group'></i> {{each.org_conn_no}}</a>
+                </div> 
+              </div> 
+              ">
+
+              <!--   <div class="card card-organisation">  -->
+                  <div class="content">
+                    <div class="text-center">
+                      <a href="/profile/{{each.username}}"><img src="{{each.photo}}" alt="{{each.name}}"
+                      class="img-thumbnail img-responsive img-circle" style="width:73px; height:73px;" /></a>
+                    </div>
+                    <div class="text">
+                      {% ifequal profile_id user_id %}
+                      <button type="button" class="close" aria-hidden="true" onclick="conn_handler('close_buy_from', {{profile_id}}, {{each.id}})">&times;</button> 
+                      {% endifequal %}
+                      <h5><a href="/profile/{{each.username}}">{{each.name}}</a></h5> 
+                    </div>
+                  </div> 
+                  
+                </div>  
+              {% endfor %}
+            </div> 
+          </div>
+
+
+
+
+      </div>
+ 
+>>>>>>> 31f9f352f5ab202d002f86534dc4d4698c3e05ad
     </div>
  
 
@@ -787,6 +950,7 @@
         <input type="text" class="form-control" id="filterShopping" placeholder="Search... " />
       </div>
 
+<<<<<<< HEAD
       <div class="mCustomScrollbar scroll300">
         <table class="table table-hover table-condensed footable toggle-arrow-circle-filled" id="shoppinglistTable" data-filter="#filterShopping" data-filter-text-only="true"> 
         <thead class="hidden">
@@ -868,7 +1032,94 @@
 
                 {% endif %}
 
+=======
+
+<!-- COMPANY INFORMATION --> 
+<div class="panel panel-default" id="panelCompany">
+  <div class="panel-heading">
+    <h3 class="panel-title"><i class="fa fa-legal"></i> <b>Company</b> information</h3>
+  </div>
+  <div class="panel-body">
+
+    {% if company_num %}
+    <div class="border-top">
+        Company number: <a href="https://www.duedil.com/company/{{company_num}}"></a>  
+    </div>
+    {% endif %} 
+
+    <!-- twitter info --> 
+    <div class="text-center">
+      <span class="label label-default label-stroke">{{followers_count}}</span> followers
+      <i class="fa fa-fw fa-twitter fa-lg" style="color: #35B8EB;"></i>
+      follows
+      <span class="label label-default label-stroke">{{friends_count}}</span>  
+    </div>
+
+  </div>
+</div>
+<!-- /COMPANY INFORMATION --> 
+
+
      
+
+
+
+
+   
+ 
+
+    <!-- ad --> 
+
+    <div class="panel panel-default">
+<div class="widget text-center bg-secondary ">
+  <div class="innerAll text-white">
+      <div class="innerB"><i class=" icon-rocket fa fa-4x text-faded"></i>
+      </div>
+      <h2 class="strong margin-none text-white">Better, together</h2>
+      <p class="lead">from &pound;20 / year</p>
+      <p> 
+
+      We don't sell your data or show adverts because you're our customer, not our product. And because we're working for YOU, we charge a small fee for premium features</p>
+      <p>Use the coupon code: LOVESUMMER</p>
+      <button class="btn btn-primary btn-stroke">Upgrade today <i class="fa fa-fw fa-play-circle"></i>
+      </button> 
+  </div>
+  <!-- Ribbon -->
+  <div class="ribbon-wrapper">
+      <div class="ribbon primary">It's spring!</div>
+  </div>
+</div>
+</div>
+
+          
+
+ 
+    
+ 
+
+{% if updates_count != 0 or profile_id == user_id %}
+    <div class="panel panel-default" id="panelUpdates">
+      <div class="panel-heading">
+        <h3 class="panel-title">
+          <i class="fa fa-bullhorn"></i> <strong>{% if updates_count != 0 %}{{updates_count}}{% endif %} Marketplace</strong> updates
+          {%if profile_id == user_id %}
+          &middot;
+           <a href="#" data-toggle="modal" data-target="#newtwitterpost" class="small">New update
+           </a>
+          {% endif %}
+        </h3>
+      </div> 
+
+      <div class="panel-body">
+        {% if updates_count = 0 %}
+          <p></p>
+
+          <p><b>You've not yet said anything in the Marketplace!</b></p>
+          <p>You're missing local bargains! What do you want to buy, or sell? Or what would you love help with? </p><p>Thought of something? Then just <a href="#" data-toggle="modal" data-target="#newtwitterpost" class="">say it now</a> and it will show up here, in the activity feed, and be pushed out to local businesses in a regular newsletter. 
+           </a></p>
+            
+        {% endif %}
+>>>>>>> 31f9f352f5ab202d002f86534dc4d4698c3e05ad
 
                 <a href="/activity/?f={{eachfood.food_name}}" class="black"> 
                   Find {{eachfood.food_name|safe}}
@@ -882,6 +1133,7 @@
         </table>
       </div>
  
+<<<<<<< HEAD
  
     </div><!-- end panel --> 
     {% endif %}
@@ -906,12 +1158,16 @@
         {% else %} 
           Please contact us directly to discuss deliveries.
         {% endif %}
-
-           
       </div> 
- 
     </div>
 
+=======
+    </div>
+    {% endif %} 
+
+
+
+>>>>>>> 31f9f352f5ab202d002f86534dc4d4698c3e05ad
 
 
 
@@ -1126,7 +1382,6 @@
  
     </div>
     {% endif %} 
-
 
 
 
@@ -1398,8 +1653,62 @@
 <script src="/static/js/chosen.jquery.min.js" type="text/javascript"></script> 
 <script src="{% static "js/typeahead.min.js" %}"></script>
 <script type="text/javascript">
+<<<<<<< HEAD
   
 
+=======
+ 
+/**
+
+PRODUCE FILTER JS 
+
+*   I don't recommend using this plugin on large tables, I just wrote it to make the demo useable. It will work fine for smaller tables 
+*   but will likely encounter performance issues on larger tables.
+*
+*   <input type="text" class="form-control" id="dev-table-filter" data-action="filter" data-filters="#dev-table" placeholder="Filter Developers" />
+*   $(input-element).filterTable()
+*   
+* The important attributes are 'data-action="filter"' and 'data-filters="#table-selector"'
+*/
+(function(){
+    'use strict';
+  var $ = jQuery;
+  $.fn.extend({
+    filterTable: function(){
+      return this.each(function(){
+        $(this).on('keyup', function(e){
+          $('.filterTable_no_results').remove();
+          var $this = $(this), search = $this.val().toLowerCase(), target = $this.attr('data-filters'), $target = $(target), $rows = $target.find('tbody tr');
+          if(search == '') {
+            $rows.show(); 
+          } else {
+            $rows.each(function(){
+              var $this = $(this);
+              $this.text().toLowerCase().indexOf(search) === -1 ? $this.hide() : $this.show();
+            })
+            if($target.find('tbody tr:visible').size() === 0) {
+              var col_count = $target.find('tr').first().find('td').size();
+              var no_results = $('<tr class="filterTable_no_results"><td colspan="'+col_count+'">No results found</td></tr>')
+              $target.find('tbody').append(no_results);
+            }
+          }
+        });
+      });
+    }
+  });
+  $('[data-action="filter"]').filterTable();
+})(jQuery);
+
+$(function(){
+    // attach table filter plugin to inputs
+  $('[data-action="filter"]').filterTable();
+ 
+})
+
+// end produce filter
+
+var showfoods = '{{show_foods|safe}}';
+>>>>>>> 31f9f352f5ab202d002f86534dc4d4698c3e05ad
 
 
 $( document ).ready(function() {
@@ -1666,6 +1975,10 @@ customers = {{customers_str | safe}};
           });
       });
 
+<<<<<<< HEAD
+ 
+ 
+=======
      
       function get_business_counts_success(data){
         data = jQuery.parseJSON(data);
@@ -1723,4 +2036,5 @@ customers = {{customers_str | safe}};
         get_next_page_c_conn(buss_username,current_conn_page + 1);
       });
      </script>
+>>>>>>> 31f9f352f5ab202d002f86534dc4d4698c3e05ad
  {% endblock %}

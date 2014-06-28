@@ -21,7 +21,7 @@ from mainapp.views import calculate_time_ago
 from django.contrib.auth.models import User
 from mainapp.bitly import construct_invite_tweet, shorten_url
 import pprint
-from MarketSearch import MarketSearch
+
 # from validate_email import validate_email
 # consumer_key = 'seqGJEiDVNPxde7jmrk6dQ'
 # consumer_secret = 'sI2BsZHPk86SYB7nRtKy0nQpZX3NP5j5dLfcNiP14'
@@ -204,13 +204,11 @@ class AjaxHandle(AjaxSearch):
                     'picture': pic_url_list,
                     
             }
-            response = tweet_feed.insert_tweet(int(user_id),data)
-            search_obj = MarketSearch(request)
-            result = search_obj.get_single_tweet(tweet_id)
-            return HttpResponse(json.dumps(result))
-            
+           
+            tweet_feed.insert_tweet(int(user_id),data)
+            return HttpResponse(json.dumps({'status':1}))
         else:
-            return HttpResponse(json.dumps({'status':"error"}))
+            return HttpResponse(json.dumps({'status':1}))
             
 
     def post_tweet_admin(self, request):
@@ -299,14 +297,11 @@ class AjaxHandle(AjaxSearch):
                 trade_conn.delete_connection(b_useruid = int(data['prof_id']), c_useruid = request.user.id)
             else:
                 parameters['buy_from_flag'] = False
-                trade_conn.delete_connection(b_useruid = request.user.id, c_useruid = int(data['prof_id']))            
+                trade_conn.delete_connection(b_useruid = request.user.id, c_useruid = int(data['prof_id']))
             parameters['connections'], parameters['conn'] = get_connections(int(data['prof_id']), request.user.id)
             parameters['connections_str'] = json.dumps(parameters['connections'])
             parameters['profile_id'], parameters['user_id'] = int(data['prof_id']), request.user.id
-            # return render_to_response('conn_ajax.html', parameters)
-            user_obj = UserProfile()
-            usr_name = user_obj.get_profile_by_id(int(data['prof_id']))['username']            
-            return HttpResponse(json.dumps({'status':'ok', 'username':usr_name, 'action':'delete'}))
+            return render_to_response('conn_ajax.html', parameters)            
         else:
             return HttpResponse("{'status':0}")
 
@@ -316,18 +311,17 @@ class AjaxHandle(AjaxSearch):
         if data !=None and data !="":
             parameters = {}
             if data['status'] == 'buy_from':
+                print 'stocklists ajax called'
                 parameters['buy_from_flag'] = True
                 trade_conn.delete_connection(b_useruid = int(data['prof_id']), c_useruid = int(data['conn_id']))
             else:
                 parameters['buy_from_flag'] = False
+                print 'suppliers ajax called'
                 trade_conn.delete_connection(b_useruid = int(data['conn_id']), c_useruid = int(data['prof_id']))
             parameters['connections'], parameters['conn'] = get_connections(int(data['prof_id']), request.user.id)
             parameters['connections_str'] = json.dumps(parameters['connections'])
             parameters['profile_id'], parameters['user_id'] = int(data['prof_id']), request.user.id
-            user_obj = UserProfile()
-            usr_name = user_obj.get_profile_by_id(int(data['conn_id']))['username']            
-            return HttpResponse(json.dumps({'status':'ok', 'username':usr_name, 'action':'delete'}))            
-            # return render_to_response('conn_ajax.html', parameters)            
+            return render_to_response('conn_ajax.html', parameters)            
             # return HttpResponse("{'status':1}")
         else:
             return HttpResponse("{'status':0}")
@@ -367,15 +361,11 @@ class AjaxHandle(AjaxSearch):
             # parameters['c_conn_no'] = c_conn_len
             parameters['user'] = request.user
             # parameters['connections'], parameters['conn'] = get_connections(int(data['prof_id']), request.user.id)
-            parameters['connections_str'] = json.dumps(buss_obj)
+            # parameters['connections_str'] = json.dumps(parameters['connections'])
             parameters['profile_id'] = int(data['prof_id'])
             parameters['user_id'] = request.user.id
             parameters['new_connection'] = buss_obj
-            # print buss_obj
-            html_str =  str(render_to_response('conn_ajax.html', parameters))
-            html_str = html_str.replace('Content-Type: text/html; charset=utf-8', '')
-
-            return HttpResponse({json.dumps({'status':'ok', 'html':html_str, 'user_added':buss_obj, 'action':'add_conn'})})
+            return render_to_response('conn_ajax.html', parameters)
         else:
             return HttpResponse("{'status':0}")
 
@@ -667,6 +657,7 @@ class AjaxHandle(AjaxSearch):
         team = Team()
         data = eval(request.POST.get('data'))
         if data !=None and data !="":
+            print 'inside addteam: ', data
             team.create_member(data)
 
             notification_obj = Notification()
@@ -1180,37 +1171,3 @@ class AjaxHandle(AjaxSearch):
             return HttpResponse(json.dumps({'status':'ok', 'result':data}))
         else:
             return HttpResponse(json.dumps({'status':0, 'message':'You are not authorized to perform this action.'}))                
-    
-    def pull_connections(self, request):
-        from mainapp.profilepage import get_connections
-        username = request.POST.get('username')
-        pageNum = int(request.POST.get('page_num'))
-        conn_type = request.POST.get('type')
-
-        user_obj = UserProfile()
-        user = user_obj.get_profile_by_username(username)
-
-        trade_conn = TradeConnection()
-        if conn_type =='b':
-            conns = trade_conn.get_connection_by_business(user['useruid'], pagenum=pageNum)
-        else:
-            conns = trade_conn.get_connection_by_customer(user['useruid'], pagenum=pageNum)
-
-        next_page_num = pageNum + 1
-        if len(conns) == 0:
-            return HttpResponse(json.dumps({'status':'finished', 'next_page_num':-1, 'type':conn_type}))    
-
-        conn_data = []    
-        for eachUser in conns:
-            parameters = {}
-            buss_usr = user_obj.get_profile_by_id(int(eachUser['c_useruid']))
-            if buss_usr == None:
-                continue
-            parameters['user'] = request.user            
-            parameters['profile_id'] = int(user['useruid'])
-            parameters['user_id'] = request.user.id
-            parameters['new_connection'] = buss_usr
-            html_str =  str(render_to_response('conn_ajax.html', parameters))
-            html_str = html_str.replace('Content-Type: text/html; charset=utf-8', '')        
-            conn_data.append({'html':html_str, 'user':buss_usr})
-        return HttpResponse(json.dumps({'status':'ok', 'conn_data':conn_data, 'username':username, 'next_page_num':next_page_num, 'type':conn_type}))

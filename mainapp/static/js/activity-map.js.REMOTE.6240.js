@@ -61,19 +61,21 @@ function show_connections_on_map()
       var current_lat = parseFloat(results[i].latlng.coordinates[1]);
       var current_lon = parseFloat(results[i].latlng.coordinates[0]);
       var card = (Search.tab=="market")?map_update_card(results[i]):map_profile_card(results[i]);
-      var ctrl = L.marker([parseFloat(current_lat), parseFloat(current_lon)],{icon: redIcon}).bindPopup(card);
-     
+
+
+var ctrl = L.marker([parseFloat(current_lat), parseFloat(current_lon)],{icon: redIcon}).bindPopup(card);
+  
         markers.addLayer(ctrl);
          }
     
         map.addLayer(markers);
-        if(results.length>0){
-            // map.fitBounds(markers.getBounds());
-        }
+map.fitBounds(markers.getBounds());
+
 }
 
 
 function map_dragged(e) {
+      
       var current_center = map.getCenter();
       Search.filters[Search.tab].lng = current_center.lng;
       Search.filters[Search.tab].lat = current_center.lat;    
