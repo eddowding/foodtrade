@@ -259,17 +259,24 @@
       <div class="panel-heading">
         <div class="panel-title">
           <i class="fa fa-group"></i> <strong>Members</strong>
+          {% if user.is_superuser or profile_id == user_id  %}
+          &middot; <a href="#" class="small" data-target="#member_remote" data-toggle="collapse" >Add</a>
+          <span data-target="#searchMembers" data-toggle="collapse" class="border-left innerL pull-right">
+            <i class="glyphicon glyphicon-search"></i>
+          </span>
+          {% endif %}
           {% if members|length != 0 %}<span class="badge pull-right">{{members|length}}</span>{% endif %}
         </div>
       </div>  
-
-      <!-- fix -->
+ 
       {% if user.is_superuser or profile_id == user_id  %}
-<div id="member_remote" class="well well-sm">
-<input class="typeahead form-control" id="new_member_typeahead" {% if not user.is_authenticated %} rel="tooltip" title="Please login to use this feature" {% endif %} style="width:310px;" type="text" placeholder="add a member"></div>                  
-{% endif %} 
+      <div id="member_remote" class="well well-sm collapse">
+      <input class="typeahead form-control" id="new_member_typeahead" {% if not user.is_authenticated %} rel="tooltip" title="Please login to use this feature" {% endif %} style="width:310px;" type="text" placeholder="add a member"></div>                  
+      {% endif %}   
 
-<!-- add filter -->
+      <div class="collapse well-sm well" id="searchMembers">
+        <input type="text" class="form-control" id="filterMembers" placeholder="Find a member" />
+      </div>
 
        <div class="mCustomScrollbar scroll300">
         <table class="table table-hover table-condensed footable toggle-arrow-circle-filled" id="suppliersTable" data-filter="#filterMembers" data-filter-text-only="true"> 
@@ -376,7 +383,7 @@
     <div class="panel panel-default" id="panelFoods">
       <div class="panel-heading">
         <div class="panel-title">
-          <i class="fa fa-truck"></i> <strong>Foods</strong>
+          <i class="fa fa-truck"></i> <strong>Produce</strong> from members
           <div class="pull-right">
             {% if userprof.food_no != 0 %}<span class="badge">{{userprof.food_no}}</span>{% endif %}
             <span data-target="#searchFoods" data-toggle="collapse" class="border-left innerL">
@@ -414,7 +421,7 @@
                   </a>
                 </td>
                 <td>
-                  <a href="/activity/?f={{eachfood.food_name}}">{{eachfood.food_name}}</a>
+                  <a href="/profile/{{each.username}}/">{{eachfood.food_name}}</a>
                 </td>
                 <td>
                   <a href="/profile/{{each.username}}/" class="text-muted pull-right"> 
@@ -437,10 +444,10 @@
       <div class="panel-heading">
         <div class="panel-title">
           <i class="fa fa-bullhorn"></i> <strong>Marketplace</strong>
+          <span data-target="#searchMarket" data-toggle="collapse" class="border-left innerL pull-right">
+            <i class="glyphicon glyphicon-search"></i>
+          </span>
           {% if updates_count != 0 %}<span class="badge pull-right">{{updates_count}}</span>{% endif %}
-          <span data-target="#searchMarket" data-toggle="collapse" class="border-left innerL">
-              <i class="glyphicon glyphicon-search"></i>
-            </span>
         </div>   
       </div> 
 

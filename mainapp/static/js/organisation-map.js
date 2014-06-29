@@ -145,13 +145,13 @@ if(parseInt(current_lon) != parseInt(def_lon) || parseInt(def_lat) != parseInt(c
 
 			var dot = L.circleMarker([parseFloat(latitude), parseFloat(longitude)],  {
 			
-			color: '#FF4700',
+			color: '#61AE32',
 			opacity:0,
 			weight:0,
 			fill:1,
-			radius: 6,
-			fillColor: "#FF4700",
-			fillOpacity: 0.8,
+			radius: 4,
+			fillColor: "#9B5C47",
+			fillOpacity: 1,
 
 		}).addTo(map).bindPopup(card_str);
 			map_controls.push(dot);
