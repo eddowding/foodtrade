@@ -63,6 +63,11 @@
     }
 }
 
+.fav {
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  font-weight: normal;
+}
 
 /* ------------------------------------
 /*  2.   LAYOUT
@@ -289,9 +294,17 @@ i.pinterest,span.pinterest{ color: #cb2027 !important; }
 /*  6.  ORGANISATION
 /* ------------------------------------
 */
-
-#organisation {
-  #map {
-    height: 500px;
-  }
+ 
+ 
+#panelMembers .panel-heading  {
+  border-top-color: @organisation;
+} 
+#panelFoods .panel-heading  {
+  border-top-color: @produce;
+} 
+#panelTeam .panel-heading  {
+  border-top-color: @information;
+} 
+#panelMarketplace .panel-heading  {
+  border-top-color: @marketplace;
 }
