@@ -35,14 +35,61 @@
 
 {% block content %}
 {% include 'modal_invite.html' %}
-    <div class="col-md-6 col-sm-7 
-{% if loc.lat == -82.86275189999999 and loc.lon == -135.10000000000002 %} col-sm-12 {% endif %}
-    " id="single">
 
-    <div class="widget">
-      <div class="widget-body innerAll inner-4x" style="background:url('{{banner_url}}'); background-size: cover;">
-        <img class="img-thumbnail img-circle center-block innerAll" src="{{pic_url}}"  />
+<div id="organisation">
+
+
+
+
+<div class="row row-merge bizSummary border-left border-top  bg-gray" data-spy="affix" data-offset-top="45">
+<div class="ftstrip"></div>
+<div class="col-xs-9 bg-gray border-right">
+   <div class="innerAll">
+      <div class="media">
+      <img src="{{pic_url}}"  alt="{{name}} logo" class="pull-left avatar">
+      <div class="media-body"> 
+        <h2 class="margin-none">{{name}}</h2>
+        <span class="tags tags-biztype  ">   
+         <a href="#">Organisation</a> 
+        </span>  
+      </div> 
       </div>
+    </div>
+</div>
+
+<div class="col-xs-3 bg-gray border-right ">
+  <div class="{% if not user.is_authenticated %} hidden {% endif %}  clearfix" id="distanceAway">   
+      <span class="lead bold"> {{distance}} miles  </span>
+      <small class="small clearfix margin0 hidden-xs">away from you</small> 
+  </div> 
+</div>
+
+</div>
+
+{% if loc.lat == -82.86275189999999 and loc.lon == -135.10000000000002 %}
+{% else %} 
+<div class="row row-merge bizSummary">
+  <div class="col-xs-12">
+    <div class="map-biz" id="map"></div> 
+  </div><!-- col map --> 
+</div>
+{% endif %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="col-md-12" id="single">
+
+    <div class="widget"> 
       <div class="widget-body innerAll border-bottom">
  
         <!-- certificate -->
@@ -465,18 +512,9 @@
 </div>
 
 
-{% if loc.lat == -82.86275189999999 and loc.lon == -135.10000000000002 %}
-{% else %}
-<div class="col-md-6 col-sm-5 fill ">
-  
-    <div id="map"></div> 
- 
-</div>
-{% endif %}
 
 
-
-
+</div><!-- organisation -->
 
 
 <!-- modals -->
@@ -638,24 +676,7 @@
     
 
 
-<!-- resizes the map -->
-<script type="text/javascript">
-var mapmargin = 0;
-$('#map').css("height", ($(window).height() - mapmargin));
-$(window).on("resize", resize);
-resize();
-function resize(){
-
-    if($(window).width()>=980){
-        $('#map').css("height", ($(window).height() - mapmargin));    
-        $('#map').css("margin-top",50);
-    }else{
-        $('#map').css("height", ($(window).height() - (mapmargin+12)));    
-        $('#map').css("margin-top",-21);
-    }
-
-}
-</script>
+ 
 
 
 

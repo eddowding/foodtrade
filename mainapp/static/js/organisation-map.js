@@ -187,6 +187,7 @@ if(parseInt(current_lon) != parseInt(def_lon) || parseInt(def_lat) != parseInt(c
 		}
 
 		
+    map.scrollWheelZoom.disable();
     L.control.fullscreen().addTo(map);
 
 
