@@ -1469,7 +1469,7 @@ $('#orgs_remote').on('click','.tt-suggestion', function(){
 });
 
 // adding stockists to business
-$(document).ready(function(){
+
     $('#panelSuppliers').on('click', '.tt-suggestion', function(){
     myvar = this;
     var business_id = this.getElementsByClassName('result-name')[0];
@@ -1483,14 +1483,14 @@ $(document).ready(function(){
       $('.tt-hint').val('');
     }
   });
-});
+
 
 $('#new_stockists_typeahead').on('blur', function(){
   $('#new_stockists_typeahead').val('');
 });
 
-$(document).ready(function(){
-    $('#panelStockists').on('click', '.tt-suggestion', function(){  
+
+$('#panelStockists').on('click', '.tt-suggestion', function(){  
       var business_id = this.getElementsByClassName('result-name')[0];
       var buss_var = $(business_id).attr('data-id');
       if(buss_var == 'search'){
@@ -1503,7 +1503,6 @@ $(document).ready(function(){
       }
 });
 
-});
 
 $('#new_suppliers_typeahead').on('blur', function(){
   $('#new_suppliers_typeahead').val('');
@@ -1639,7 +1638,7 @@ customers = {{customers_str | safe}};
         
      </script>
      <script type="text/javascript">
-      $('.ajaxContents').on('click',"[data-toggle=popover1]", function () {
+      $('#panelSuppliers').on('click',"[data-toggle=popover1]", function () {
         username = $(this).attr('data-title'); 
         if($(this).attr('data-trigger')!="manual")
         {
@@ -1668,6 +1667,7 @@ customers = {{customers_str | safe}};
 
      
       function get_business_counts_success(data){
+        showfoods ='True'; 
         data = jQuery.parseJSON(data);
         if (data['result']['banner_url'] != ''){          
             mytext = "<img src='" + data['result']['banner_url'] +  "'" + " title='" + data['result']['username'] + "' class='img-responsive'>";

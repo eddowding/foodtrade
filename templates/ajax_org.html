@@ -3,31 +3,25 @@
 {% load i18n %}
 {% include "socialaccount/snippets/login_extra.html" %}
 {% load account %}
+  
+    {% if user.is_authenticated %}
+    {% else %}
+      <p class=""><a href="{% provider_login_url "twitter" process="login" %}" class="">Login</a> or <a href="{% provider_login_url "twitter" process="login" %}" class="">sign up free</a> to see a complete list of groups. </p>
+    {% endif %}
 
-            {% if user.is_authenticated %}
-            {% else %}
-             <p class="alert alert-warning"><a href="{% provider_login_url "twitter" process="login" %}" class="">Login</a> or <a href="{% provider_login_url "twitter" process="login" %}" class="">sign up free</a> to see the organisations or groups they belong to. </p>
-
-            {% endif %}
-          {% for each in organisations %}
-                <div class="card card-organisation"> 
-                  <div class="content" style="background-image:url('{{each.banner_url}}');"> 
-                    <div class="text-center">
-                      <a href="/profile/{{each.username}}">
-                      <img src="{{each.photo}}" alt="{{each.name}}"
-                      class="img-thumbnail img-responsive img-circle" style="width:73px; height:73px;" /></a>
-                    </div>
-
-                    <div class="text">
-                      {% ifequal profile_id user_id %}
-                      <button type="button" class="close" aria-hidden="true" onclick="del_org_from_biz({{profile_id}}, {{each.id}})">&times;</button>
-                      
-                      <!-- <button type="button" class="close" aria-hidden="true">&times;</button> -->
-                      {% endifequal %}
-
-                      <h5><a href="/profile/{{each.username}}">{{each.name}}</a></h5> 
-                      <p class="small">{{each.description}}</p> 
-                    </div>
-                  </div> 
-                </div> 
-                {% endfor %}
+    {% for each in organisations %}  
+      <div class="groupItem clearfix">
+        <div class="text-center">
+          <a href="/profile/{{each.username}}"><img src="{{each.photo}}" alt="{{each.name}}"
+          class="img-thumbnail img-responsive img-circle" style="width:73px; height:73px;" /></a>
+          <strong class="clearfix"><a href="/profile/{{each.username}}" class="text-black">{{each.name}}</a></strong> 
+        </div>
+        <p class='small'>{{each.description|truncatechars:80}}</p>
+       
+        {% ifequal profile_id user_id %}
+        <button type="button" class="btn btn-danger btn-xs pull-right" aria-hidden="true" onclick="conn_handler('close_buy_from', {{profile_id}}, {{each.id}})"><i class="fa-trash-o fa"></i> Remove</button> 
+        {% endifequal %}
+         
+      </div>  
+    {% endfor %}  
+  

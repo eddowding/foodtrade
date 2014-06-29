@@ -73,7 +73,7 @@ ajax_request("third_party_delete_org", 'org_ajax', {data: "{'memberuid': " + mem
 function org_ajax(data){
 $('.search-choice').remove();
 $("#org_chosen").val('').trigger('chosen:updated');
-$('#organisations_list').html(data);
+$('#groupsGrid').html(data);
 }
 function conn_handler(value, prof_id, conn_id)
 {
@@ -109,11 +109,13 @@ function conn_handler(value, prof_id, conn_id)
 				}
 				else if(value == "close_buy_from"){
 					
-					ajax_request("profile_user_delete_conn", 'stockists_ajax', {conn_data: "{'prof_id': " +prof_id +", 'status': 'buy_from'" + ", 'conn_id': " + conn_id +"}"});
+					/*ajax_request("profile_user_delete_conn", 'stockists_ajax', {conn_data: "{'prof_id': " +prof_id +", 'status': 'buy_from'" + ", 'conn_id': " + conn_id +"}"});*/
+					ajax_request("del_connection", 'stockists_ajax', {conn_data: "{'prof_id': " +prof_id +", 'status': 'buy_from'" + ", 'conn_id': " + conn_id +"}"});
+
 				}
-				else if(value == "close_sell_to"){
-					
-					ajax_request("profile_user_delete_conn", 'suppliers_ajax', {conn_data: "{'prof_id': " +prof_id +", 'status': 'sell_to'" + ", 'conn_id': " + conn_id +"}"});
+				else if(value == "close_sell_to"){					
+					/*ajax_request("profile_user_delete_conn", 'suppliers_ajax', {conn_data: "{'prof_id': " +prof_id +", 'status': 'sell_to'" + ", 'conn_id': " + conn_id +"}"});*/
+					ajax_request("del_connection", 'suppliers_ajax', {conn_data: "{'prof_id': " +prof_id +", 'status': 'sell_to'" + ", 'conn_id': " + conn_id +"}"});
 				}				
 	}
 	else{
@@ -232,12 +234,14 @@ function stockists_ajax(data){
 		if(data['action']=='delete'){
 			$('[data-title="' + data['username'] + '"]').parent().remove()
 			remove_con(data['username']);
+
 		}
 		else{
 			$('.search-choice').remove();
 			current_html = $('#mCSB_2_container tbody').html();
 			new_html =  data['html'] + current_html;
 			$('#mCSB_2_container tbody').html(new_html);	
+			$('#suppliersTable').trigger('footable_initialize');
 		}
 	}
 }
@@ -275,6 +279,8 @@ function get_next_page_conn_success(data){
 		else{
 			get_next_page_c_conn(data['username'], data['next_page_num']);				
 		}
+		$('#suppliersTable').trigger('footable_initialize');
+		$('#stockistsTable').trigger('footable_initialize');
 	}
 }
 
@@ -296,6 +302,7 @@ function suppliers_ajax(data){
 		current_html = $('#mCSB_3_container tbody').html();
 		new_html =  data['html'] + current_html;
 		$('#mCSB_3_container tbody').html(new_html);	
+		$('#stockistsTable').trigger('footable_initialize');
 	}
 		
 }
