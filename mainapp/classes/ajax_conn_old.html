@@ -1,0 +1,87 @@
+{% if buy_from_flag %} 
+      <!-- {% if userprof.b_conn_no != 0 %}  -->       
+        <!-- {% for new_connection in connections %} -->
+        <!-- {% if new_connection.relation == "buyer" or new_connection.relation == "both" %} -->
+
+        <tr>
+          <td width="60">
+            <a href="/profile/{{new_connection.username}}">
+              <img src="{{new_connection.photo}}" alt="{{new_connection.name}}" class="img-responsive" style="width:60px" />
+            </a>
+          </td>
+
+          <td class="ellipsis" width="80%"> 
+                {% if request.user.is_superuser or profile_id == user_id %}
+                <button type="button" class="close" aria-hidden="true" onclick="conn_handler('close_buy_from', {{profile_id}}, {{new_connection.id}})">&times;</button> 
+                {% endif %}
+
+                <a href="/profile/{{new_connection.username}}" class="black"><strong>{{new_connection.name}}</strong></a> 
+                <p class="small visible-lg margin0">{{new_connection.description|truncatechars:100}}</p>
+
+            {% if new_connection.type|length == 0 or new_connection.type|first == '' %}
+              {% else %} 
+              <p class="ellipsis  margin0">
+               {% for e in new_connection.type %}
+               <a href="/activity/?b={{e}}" class="label label-default label-stroke label-tag">{{e}}</a>
+               {% endfor %} 
+               </p>
+             {% endif %} 
+          
+          </td>
+          
+          <td width="20" data-toggle="popover" class="tdSupplierClass" data-trigger="click" data-container="body" data-title="{{new_connection.username}}"  data-html="true" data-content="">
+            <i class="fa fa-arrow-circle-right text-primary fa-fw fa-lg"></i>
+          </td>
+        </tr>
+               
+          <!-- {% endif %} -->
+          <!-- {% endfor %}   -->
+
+        <!-- {% endif %} -->
+{% else %}
+
+      <!-- {% if userprof.c_conn_no != 0 %}  -->
+       
+        <!-- {% for new_connection in connections %} -->
+        <!-- {% if relation == "seller" or new_connection.relation == "both" %} -->
+
+        <tr>
+          <td width="60">
+            <a href="/profile/{{new_connection.username}}">
+              <img src="{{new_connection.photo}}" alt="{{new_connection.name}}" class="img-responsive" style="width:60px" />
+            </a>
+          </td>
+          <td class="ellipsis" width="80%"> 
+                {% if request.user.is_superuser or profile_id == user_id %}
+                <button type="button" class="close" aria-hidden="true" onclick="conn_handler('close_sell_to', {{profile_id}}, {{new_connection.id}})">&times;</button> 
+                {% endif %}
+
+                <a href="/profile/{{new_connection.username}}" class="black"><strong>{{new_connection.name}}</strong></a> 
+                <p class="small visible-lg margin0">{{new_connection.description|truncatechars:100}}</p>
+
+            {% if new_connection.type|length == 0 or new_connection.type|first == '' %}
+              {% else %} 
+              <p class="ellipsis  margin0">
+               {% for e in new_connection.type %}
+               <a href="/activity/?b={{e}}" class="label label-default label-stroke label-tag">{{e}}</a>
+               {% endfor %} 
+               </p>
+             {% endif %} 
+          
+          </td>
+          
+          <td width="20" class="tdStockistsClass" data-toggle="popover" data-trigger="click" data-container="body" data-title="{{new_connection.username|safe}}" data-html="true" data-content="">
+            <i class="fa fa-arrow-circle-right text-primary fa-fw fa-lg"></i>
+          </td>
+        </tr>
+               
+
+<!--           {% endif %}
+          {% endfor %}  
+      
+
+        {% endif %} -->
+{% endif %}
+<script type="text/javascript">
+var new_connections = {{connections_str|safe}};
+</script>

@@ -73,7 +73,7 @@ function show_connections_on_map()
 }
 
 
-function map_dragged(e) {      
+function map_dragged(e) {
       var current_center = map.getCenter();
       Search.filters[Search.tab].lng = current_center.lng;
       Search.filters[Search.tab].lat = current_center.lat;    

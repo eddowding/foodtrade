@@ -299,11 +299,14 @@ class AjaxHandle(AjaxSearch):
                 trade_conn.delete_connection(b_useruid = int(data['prof_id']), c_useruid = request.user.id)
             else:
                 parameters['buy_from_flag'] = False
-                trade_conn.delete_connection(b_useruid = request.user.id, c_useruid = int(data['prof_id']))
+                trade_conn.delete_connection(b_useruid = request.user.id, c_useruid = int(data['prof_id']))            
             parameters['connections'], parameters['conn'] = get_connections(int(data['prof_id']), request.user.id)
             parameters['connections_str'] = json.dumps(parameters['connections'])
             parameters['profile_id'], parameters['user_id'] = int(data['prof_id']), request.user.id
-            return render_to_response('conn_ajax.html', parameters)            
+            # return render_to_response('conn_ajax.html', parameters)
+            user_obj = UserProfile()
+            usr_name = user_obj.get_profile_by_id(int(data['prof_id']))['username']            
+            return HttpResponse(json.dumps({'status':'ok', 'username':usr_name, 'action':'delete'}))
         else:
             return HttpResponse("{'status':0}")
 
@@ -313,17 +316,18 @@ class AjaxHandle(AjaxSearch):
         if data !=None and data !="":
             parameters = {}
             if data['status'] == 'buy_from':
-                print 'stocklists ajax called'
                 parameters['buy_from_flag'] = True
                 trade_conn.delete_connection(b_useruid = int(data['prof_id']), c_useruid = int(data['conn_id']))
             else:
                 parameters['buy_from_flag'] = False
-                print 'suppliers ajax called'
                 trade_conn.delete_connection(b_useruid = int(data['conn_id']), c_useruid = int(data['prof_id']))
             parameters['connections'], parameters['conn'] = get_connections(int(data['prof_id']), request.user.id)
             parameters['connections_str'] = json.dumps(parameters['connections'])
             parameters['profile_id'], parameters['user_id'] = int(data['prof_id']), request.user.id
-            return render_to_response('conn_ajax.html', parameters)            
+            user_obj = UserProfile()
+            usr_name = user_obj.get_profile_by_id(int(data['conn_id']))['username']            
+            return HttpResponse(json.dumps({'status':'ok', 'username':usr_name, 'action':'delete'}))            
+            # return render_to_response('conn_ajax.html', parameters)            
             # return HttpResponse("{'status':1}")
         else:
             return HttpResponse("{'status':0}")
@@ -336,8 +340,10 @@ class AjaxHandle(AjaxSearch):
             if data['status'] == 'buy_from':
                 trade_conn.create_connection({'b_useruid': int(data['prof_id']), 'c_useruid': int(data['buss_id'])})
                 parameters['buy_from_flag'] = True
+                parameters['relation'] = 'buyer'
             elif data['status'] == 'sell_to':
                 parameters['buy_from_flag'] = False
+                parameters['relation'] = 'seller'
                 trade_conn.create_connection({'b_useruid': int(data['buss_id']), 'c_useruid': int(data['prof_id'])})
 
             user_pro = UserProfile()
@@ -354,16 +360,22 @@ class AjaxHandle(AjaxSearch):
                 pass
                 #print 'no unclaimed user in new link'
             # add parameters
-            from mainapp.classes.DataConnector import UserConnections
-            user_connection =  UserConnections(data['prof_id'])
-            b_conn_len, c_conn_len = user_connection.get_trade_connection_no()
-            parameters['b_conn_no'] = b_conn_len
-            parameters['c_conn_no'] = c_conn_len
+            # from mainapp.classes.DataConnector import UserConnections
+            # user_connection =  UserConnections(data['prof_id'])
+            # b_conn_len, c_conn_len = user_connection.get_trade_connection_no()
+            # parameters['b_conn_no'] = b_conn_len
+            # parameters['c_conn_no'] = c_conn_len
             parameters['user'] = request.user
-            parameters['connections'], parameters['conn'] = get_connections(int(data['prof_id']), request.user.id)
-            parameters['connections_str'] = json.dumps(parameters['connections'])
-            parameters['profile_id'], parameters['user_id'] = int(data['prof_id']), request.user.id
-            return render_to_response('conn_ajax.html', parameters)
+            # parameters['connections'], parameters['conn'] = get_connections(int(data['prof_id']), request.user.id)
+            parameters['connections_str'] = json.dumps(buss_obj)
+            parameters['profile_id'] = int(data['prof_id'])
+            parameters['user_id'] = request.user.id
+            parameters['new_connection'] = buss_obj
+            # print buss_obj
+            html_str =  str(render_to_response('conn_ajax.html', parameters))
+            html_str = html_str.replace('Content-Type: text/html; charset=utf-8', '')
+
+            return HttpResponse({json.dumps({'status':'ok', 'html':html_str, 'user_added':buss_obj, 'action':'add_conn'})})
         else:
             return HttpResponse("{'status':0}")
 
@@ -1120,3 +1132,85 @@ class AjaxHandle(AjaxSearch):
             return HttpResponse(json.dumps({'status':1}))
         else:
             return HttpResponse(json.dumps({'status':0, 'message':'You are not authorized to perform this action.'}))                
+    
+    def get_business_counts(self, request):
+        if request.user.is_authenticated():
+            username = request.POST.get('username')
+
+            userprof = UserProfile()
+            usr_pr = userprof.get_profile_by_username(str(username))
+
+            from mainapp.classes.DataConnector import UserConnections
+            user_connection =  UserConnections(usr_pr['useruid'])
+            
+            b_conn_len, c_conn_len = user_connection.get_trade_connection_no()
+            trade_connections_no = b_conn_len + c_conn_len
+            food_no = user_connection.get_food_connection_no()
+            organisation_connection_no = user_connection.get_organisation_connection_no()
+
+            if usr_pr.get('business_org_name')!=None:
+                myname = usr_pr.get('business_org_name') if (usr_pr['sign_up_as'] == 'Business' or usr_pr['sign_up_as'] == 'Organisation') \
+                and usr_pr.get('business_org_name')!='' else usr_pr['name']
+            else:
+                myname = usr_pr['name']                    
+
+            rec_food_obj = RecommendFood()
+            total_vouches = rec_food_obj.get_recommend_count(usr_pr['useruid'])                            
+
+            data = {'id': usr_pr['useruid'],
+             # 'name': account.extra_data['name'],
+             'name': myname,
+             'description': usr_pr['description'],
+             'total_vouches':total_vouches, 
+             'b_conn_no':b_conn_len,
+             'c_conn_no':c_conn_len,
+             'photo': usr_pr['profile_img'],
+             'username' : usr_pr['username'],
+             'type': usr_pr['type_user'],
+             'trade_conn_no': trade_connections_no,
+             'food_no': food_no,
+             'org_conn_no': organisation_connection_no,
+             'latitude': usr_pr['latlng']['coordinates'][1],
+             'longitude': usr_pr['latlng']['coordinates'][0]
+             }
+            try:
+                data['banner_url'] = '' if usr_pr['profile_banner_url'] ==None or usr_pr['profile_banner_url'] ==''  else usr_pr['profile_banner_url'] + '/web_retina'
+            except:
+                data['banner_url'] = ''
+            return HttpResponse(json.dumps({'status':'ok', 'result':data}))
+        else:
+            return HttpResponse(json.dumps({'status':0, 'message':'You are not authorized to perform this action.'}))                
+    
+    def pull_connections(self, request):
+        from mainapp.profilepage import get_connections
+        username = request.POST.get('username')
+        pageNum = int(request.POST.get('page_num'))
+        conn_type = request.POST.get('type')
+
+        user_obj = UserProfile()
+        user = user_obj.get_profile_by_username(username)
+
+        trade_conn = TradeConnection()
+        if conn_type =='b':
+            conns = trade_conn.get_connection_by_business(user['useruid'], pagenum=pageNum)
+        else:
+            conns = trade_conn.get_connection_by_customer(user['useruid'], pagenum=pageNum)
+
+        next_page_num = pageNum + 1
+        if len(conns) == 0:
+            return HttpResponse(json.dumps({'status':'finished', 'next_page_num':-1, 'type':conn_type}))    
+
+        conn_data = []    
+        for eachUser in conns:
+            parameters = {}
+            buss_usr = user_obj.get_profile_by_id(int(eachUser['c_useruid']))
+            if buss_usr == None:
+                continue
+            parameters['user'] = request.user            
+            parameters['profile_id'] = int(user['useruid'])
+            parameters['user_id'] = request.user.id
+            parameters['new_connection'] = buss_usr
+            html_str =  str(render_to_response('conn_ajax.html', parameters))
+            html_str = html_str.replace('Content-Type: text/html; charset=utf-8', '')        
+            conn_data.append({'html':html_str, 'user':buss_usr})
+        return HttpResponse(json.dumps({'status':'ok', 'conn_data':conn_data, 'username':username, 'next_page_num':next_page_num, 'type':conn_type}))

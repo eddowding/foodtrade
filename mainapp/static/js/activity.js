@@ -618,29 +618,6 @@ $('#organisation_filter').keyup( function() {
         });
 
 
-function switch_update_form()
-{
-  switch_text_area();
-  $("#structured_hidden_block").toggleClass("hidden");
-  $("#update-big").removeClass("hidden");
-}
-
-function switch_text_area(){ 
-  $('#update-big').attr('class', ' ');
-}
-function show_full_structure()
-{
-  $("#structured_hidden_block").removeClass("hidden");
-}
-
-function show_small_structure()
-{ 
-  switch_text_area
-  $("#update-big").hide();
-  $("#structured_postupdate").show();
-  $("#structured_hidden_block").removeClass("hidden");
-}
-
 
 
 function click_activity(activity, changeID){
@@ -673,22 +650,4 @@ function sort_by(sort,that)
    $("#current_sort_text").html($(that).html());
    
 
-}
-function check_limit(){
-  tweet = $('#newstatus').val();
-  if(tweet.length > 120){
-    $('#charsRem').html( 'Max of 120 characters exceeded.');
-  }
-  else{
-    $('#charsRem').html(String(120-tweet.length) + ' characters remaining.');
-  }
-}
-function check_limit1(){
-  tweet = $('#update_description').val();
-  if(tweet.length > 120){
-    $('#charsRem1').html( 'Max of 120 characters exceeded.');
-  }
-  else{
-    $('#charsRem1').html(String(120-tweet.length) + ' characters remaining.');
-  }
 }

@@ -45,7 +45,7 @@
  
 
 .affix {
-  top: 45px;
+  top: 0px;
   z-index: 100000000;
   width: 100%;
   position: fixed;
@@ -72,10 +72,21 @@
   background: #fff !Important;
 }
 
-// .panel {
-//   float: left;
-//   width: 40%;
-// }
+#groupsGrid {
+ -moz-column-width: 10em;
+ -webkit-column-width: 10em;
+ -moz-column-gap: .5em;
+ -webkit-column-gap: .5em;  
+  .groupItem {
+    border: 1px solid #eee; 
+    -webkit-column-break-inside: avoid; 
+    page-break-inside: avoid;
+    margin: 0 0 10px 0;
+    .rounded(10px);
+    .drop-shadow(1px, 1px, 0px, 0.2); 
+    padding: 10px;
+  } 
+}
 
 
 *, *:before, *:after {box-sizing:  border-box !important;}
@@ -108,8 +119,14 @@
 #panelOrganisations .panel-heading  {
   border-top-color: #9B5C47;
 }
+#panelCustomers .panel-heading  {
+  border-top-color: #531E35;
+}
 #panelProduce .panel-heading {
   border-top-color: #61AE32;
+}
+#panelShoppingList .panel-heading {
+  border-top-color: #EA5162;
 }
 #panelSuppliers .panel-heading  {
   border-top-color: #576D30;
