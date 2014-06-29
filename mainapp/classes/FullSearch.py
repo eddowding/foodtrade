@@ -77,8 +77,12 @@ class GeneralSearch():
         if time_stamp!=None:
             pre_match = {'updates':{"$elemMatch":{'time_stamp':{"$gt":int(time_stamp)},"deleted":0}}}
             post_match = {'updates.time_stamp':{"$gt":int(time_stamp)},"updates.deleted":0}
-
-            pipeline.append({"$match":pre_match})
+        if self.user['sign_up_as'] == "Individual":
+            pre_match['sign_up_as'] = "Individual"
+        else:
+            pre_match['sign_up_as'] = {"$ne":"Individual"}
+        
+        pipeline.append({"$match":pre_match})
         pipeline.append({"$project":{"username":1,"name":1,"updates":1,"profile_img":1,"_id":0}})
         
 
@@ -207,7 +211,7 @@ class GeneralSearch():
             webuy_matches = []
             wesell_matches = []
             for fd in result[i]['foods']:
-                if self.keyword in fd['food_name'] and self.search_for == "produce" and self.keyword != "":
+                if self.keyword.lower() in fd['food_name'].lower() and self.search_for == "produce" and self.keyword != "":
                     matched = True
                 else:
                     matched = False

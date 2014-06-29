@@ -64,6 +64,7 @@ def construct_invite_tweet(request, invite_id):
                 short_url = invite_url            
         except:
             short_url = invite_url
+
         invite_url_obj.save_invite_url({'invite_id':invite_id, 'invite_url':short_url})        
     else:
         short_url = new_invite_url

@@ -37,37 +37,47 @@ function get_box_profile(user)
 	content += '<p class="">'+user.description+'</p>';
 	content += '</div>';
 	content += '<div class="innerTB half border-top border-bottom"> ';
-	content += '<span class="label label-default"><i class="fa fa-sign-in fa-fw"></i>BUYS</span> <b>';
-	for(var index in user.foods.webuy_matches)
+	if(user.foods.webuy_count>0)
 	{
-		if(index>0)
+		content += '<span class="label label-default"><i class="fa fa-sign-in fa-fw"></i>BUYS</span> <b>';
+		for(var index in user.foods.webuy_matches)
 		{
-			content += ", ";
+			if(index>0)
+			{
+				content += ", ";
+			}
+			content += user.foods.webuy_matches[index];
 		}
-		content += user.foods.webuy_matches[index];
+		content += '</b>';
+		var more_count = (user.foods.wesell_count-user.foods.wesell_matches.length);
+		if(more_count>0)
+		{
+			content += ' &amp; '+more_count+ ' more <br />';
+		}
+
+		content += ' &amp; '+(user.foods.webuy_count-user.foods.webuy_matches.length)+ ' more <br />';
 	}
 
-	content += '</b> &amp; '+(user.foods.webuy_count-user.foods.webuy_matches.length)+ ' more <br />';
-
-	content += '<span class="label label-default"><i class="fa fa-sign-out fa-fw"></i>SELLS:</span> <b>';
-	for(var index in user.foods.wesell_matches)
+	if(user.foods.wesell_count>0)
 	{
-		if(index>0)
+		content += '<span class="label label-default"><i class="fa fa-sign-out fa-fw"></i>SELLS:</span> <b>';
+		for(var index in user.foods.wesell_matches)
 		{
-			content += ", ";
+			if(index>0)
+			{
+				content += ", ";
+			}
+			content += user.foods.wesell_matches[index];
 		}
-		content += user.foods.wesell_matches[index];
+		content += '</b>';
+		var more_count = (user.foods.wesell_count-user.foods.wesell_matches.length);
+		if(more_count>0)
+		{
+			content += ' &amp; '+more_count+ ' more <br />';
+		}
 	}
-	content += '</b> &amp; '+(user.foods.wesell_count-user.foods.wesell_matches.length)+ ' more <br />';
-
 	
 	content += '</div> ';
-	// content += '<div class="innerTB half clearfix"> ';
-	// content += '<img src="http://pbs.twimg.com/profile_images/1690823879/Screen_shot_2011-12-13_at_12.21.20_bigger.png" alt="The Wallfish Bistro" class="img-responsive pull-left" style="width:40px; margin-right: 5px;">';
-	// content += '<img src="http://pbs.twimg.com/profile_images/1690823879/Screen_shot_2011-12-13_at_12.21.20_bigger.png" alt="The Wallfish Bistro" class="img-responsive pull-left" style="width:40px; margin-right: 5px;">';
-	// content += '<img src="http://pbs.twimg.com/profile_images/1690823879/Screen_shot_2011-12-13_at_12.21.20_bigger.png" alt="The Wallfish Bistro" class="img-responsive pull-left" style="width:40px; margin-right: 5px;">';
-	// content += '<img src="http://pbs.twimg.com/profile_images/1690823879/Screen_shot_2011-12-13_at_12.21.20_bigger.png" alt="The Wallfish Bistro" class="img-responsive pull-left" style="width:40px; margin-right: 5px;">';
-	// content += '</div> ';
 	content += '</div>   ';
 	content += '</div> ';
 	content += '<div class="timeline-bottom innerTB half small border-top clearfix">';
@@ -155,38 +165,7 @@ function get_box_update(update)
 
 
 
-              function get_time_text(time)
-              {
-
-                var time_elapsed = Date.now()/1000 - parseInt(time); 
-                var time_text = "";
-                if (time_elapsed<60)
-                    time_text = parseInt(time_elapsed) + ' seconds';
-
-                else if(time_elapsed < 3600)
-                {
-
-                    var minutes = time_elapsed/60;
-                    time_text = parseInt(minutes) + ' minutes';
-                  }
-                else if(time_elapsed < 3600*24)
-                {
-                    var hours = time_elapsed/3600;
-                    time_text = parseInt(hours) + ' hours';
-                  }
-                else if(time_elapsed < 3600*24*365)
-                {
-                    var days = time_elapsed/3600/24;
-                    time_text = parseInt(days) + ' days';
-                  }
-                else
-                {
-                    var years = time_elapsed/3600/24/365;
-                    time_text = parseInt(years) + ' years';
-                  }
-                return time_text;
-              }
-
+              
 
 function map_profile_card(user)
 {
