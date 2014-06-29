@@ -14,5 +14,4 @@ def stats(request):
     parameters['total_replies'] = stats.replies_count()
     kpi_obj = KPI()
     kpi_obj.create_kpi(parameters)
-    print "KPI saved"
     return render_to_response('kpi.html', parameters, context_instance=RequestContext(request))
