@@ -8,250 +8,121 @@
 
 {% block content %}
  
-
-<div class="col-md-12">
-
-<div class="container-responsive block-center showcase">
-
-<style type="text/css">
-
-#topnav {
-  display: none;
-}
-
-#content {
-  margin: 0;
-  background: #F5F8FA !important;
-}
-
-.main-text
-{
-    position: absolute;
-    top: 40%;
-}
-.btn-min-block
-{
-    min-width: 170px;
-    line-height: 26px;
-}
-.btn-clear
-{
-    color: #FFF;
-    background-color: transparent;
-    border-color: #FFF;
-    margin-right: 15px;
-}
-.btn-clear:hover
-{ 
-    color: #000;
-    background-color: #FFF;
-}
-
-.carousel .carousel-caption {
-  background: rgba(0, 0, 0, 0.5);
-  left: 20%;
-  right: 20%;
-  padding: 15px 20px 25px;
-  /*width: 45%;*/
-  /*top: 25px !important;*/
-  /*height: 100%;*/
-  bottom: 0; 
-  text-align: left; 
-}
-
-.carousel-caption h1 { 
-  text-shadow: 1px 1px 2px #444;
-  margin:30px 0;
-  color: #fff;
-  display: inline-block; 
-  font-size: 65px;
-  font-weight: 100;
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !important  ;
-  text-transform: none;
-  text-align: left;
-}
-
-.mtop {
-  margin-top: 15px;
-  text-shadow: 1px 1px 0px #444;
-}
-
-.carousel,
-.item {
-  min-height: 800px;
-  height: 100%;
-} 
- 
-
-.input-lg {
-  height: auto;
-  font-size: 40px;
-}
-
-.btn-lg {
-  padding: 10px 20px;
-  font-size: 40px;
-}
-
-.showcase .row {
-  padding: 0;
-}
-
-.more {   height: 70px;
-display: block; }
-
-.thumbnail .caption {
-  height: 100%;
-}
-
-.quote {
-  font-size:16px;  font-family: georgia; font-style: italic;
-}
-
-</style>
-
-
-<div class="container-responsive" style="">
-    <div class="row" style="   padding: 0;">
-    <div class="ftstrip"></div>
-        <div class=" ">
-            <div id="carousel-example" class="carousel slide" data-ride="carousel" style="margin-bottom: 0;"> 
-                <div class="carousel-inner" style="">
-                    <div class="item active" style="background:url('/static/images/asparagus.jpg'); background-size: cover;" id="biz">  
-                        <div class="carousel-caption" style="padding: 40px;">
-                        <div class="lead">
-                           <h1 style="margin-left: 5px; margin-bottom: 10px;">Meet your match</h1>
-                           <ul style="margin-left: 0; margin-bottom: 20px;">
-                             <li>Find new business</li>  
-                             <li>Showcase your produce, suppliers, &amp; stockists</li> 
-                             <li>Trade in real-time just by sending a tweet</li>  
-                             <li>Works for buying, selling, surplus, and more</li>
-                             <li>We don't take a cut of your sales</li>  
-                           </ul> 
-                        </div>
-
-                    <p style="margin-left: 20px;">
-
-                    <a href="{% provider_login_url "twitter" process="login" %}"  class="btn btn-primary" style="font-size: 24px; text-shadow: 1px 1px 1px #444 !important; line-height: 0.7; padding: 10px; text-align: left;">
-                    <strong>Join as a business</strong><br />
-                    <small style="font-size: 12px; font-weight: normal;">No credit card required</small></a> 
-
-                    <a   href="pages/business"  class="btn btn-primary " style="font-size: 20px; background: none; color: rgba(255,255,255,1); border: 1px solid rgba(255,255,255,0.7); font-weight: 200; ">Learn more</a> 
-            
- 
-                    </p>
-
-                      <blockquote class="clearfix" style="border:0; ">
-                        <span class=" text-left" style="font-size:16px; color: #fff; font-family: georgia; font-style: italic;">
-                      “This technology could change the way our food system operates” 
-                      </span>
-
-                      <span class="pull-right " style="font-size:14px; color: #fff; font-family: georgia; font-style: italic;">
-                      &mdash; HRH Prince Charles 
-                      </span> 
-                      </blockquote> 
-                         
-                        </div>
-                    </div> 
+<link href="{% static "css/ft_home.less" %}" rel="stylesheet/less"> 
 
 
 
-                    <div class="item" style="background:url('/static/images/home_heart.jpg'); background-size: cover;" id="individual">  
-                        <div class="carousel-caption" style="padding: 40px;">
-                        <div class="lead">
-                           <h1 style="margin-left: 5px; margin-bottom: 10px;">Discover &amp; swap</h1>
-                           <ul style="margin-left: 0; margin-bottom: 20px;">
-                             <li>Find the best local suppliers</li>  
-                             <li>Trade your surplus</li>  
-                             <li>Vouch for for great food</li> 
-                             <li>Map your food web</li>   
-                           </ul> 
-                        </div>
-
-                    <p style="margin-left: 20px;">
-
-                    <a href="{% provider_login_url "twitter" process="login" %}"  class="btn btn-primary" style="font-size: 24px; text-shadow: 1px 1px 1px #444 !important; line-height: 0.7; padding: 10px; text-align: left;">
-                    <strong>Join as an individual</strong><br />
-                    <small style="font-size: 12px; font-weight: normal;">No credit card required</small></a> 
-
-                    <a href="/pages/individual"  class="btn btn-primary " style="font-size: 20px; background: none; color: rgba(255,255,255,1); border: 1px solid rgba(255,255,255,0.7); font-weight: 200; ">Learn more</a> 
-
-
-                    </p>
-
-                      <blockquote class="clearfix" style="border:0; ">
-                        <span class=" text-left" style="font-size:16px; color: #fff; font-family: georgia; font-style: italic;">
-                      “This technology could change the way our food system operates” 
-                      </span>
-
-                      <span class="pull-right " style="font-size:14px; color: #fff; font-family: georgia; font-style: italic;">
-                      &mdash; HRH Prince Charles 
-                      </span> 
-                      </blockquote> 
-                         
-                        </div> 
-                    </div> 
 
 <div class="ftstrip"></div>
-            </div>
-            <div class="main-text col-sm-12"> 
+<div class="clearfix" style="background:url('/static/images/apples_blur.jpg'); background-size: cover;" id="homeimage">  
+ <div class="col-sm-8 col-sm-offset-2 col-xs-10 col-xs-offset-1">
+    <form action="/activity" onsubmit="return formSubmit(this);" class="clearfix"  role="search"> 
+      <div class="input-group" id="homeSearch">  
+        <input type="text" name="q" id="keyword" class="form-control input-lg" value="" placeholder="Type a food to buy or sell">                    
+        <span class="input-group-btn">
+          <button class="btn btn-default" style="background: #fff;font-size: 30px; border-radius: 0 10px 10px 0; padding-bottom: 7px;" type="submit"><i class="fa fa-search"></i></button>  
+        </span> 
+      </div>
+      <p class="lead text-white" id="proof">Join {{user_count.business_count}} 1,324 businesses,  89 {{user_count.organisation_count}} organisations, and 212{{user_count.individual_count}} people making {{total_connections}} 354 connections and {{total_activity}} 548 updates.
+      </p>
 
- <div class="col-sm-8 col-sm-offset-2">
-      <form action="/activity" onsubmit="return formSubmit(this);" class="clearfix"  role="search"> 
-        <div class="input-group" style="border: 1px solid #ccc; border-radius: 10px;">  
-          <input type="text" name="q" id="keyword" class="form-control input-lg" value="" placeholder="Type a food to buy or sell" style="font-size: 25px; border: 1px solid #fff; border-radius: 10px 0 0 10px;">                    
-          <span class="input-group-btn">
-            <button class="btn btn-default" style="background: #fff;font-size: 30px; border-radius: 0 10px 10px 0; padding-bottom: 7px;" type="submit"><i class="fa fa-search"></i></button>  
-          </span> 
-        </div>
+      <p class="text-center" id="joinButton">
+        <a href="{% provider_login_url "twitter" process="login" %}"  class="btn btn-primary">
+        <strong>Get started</strong><br />
+        <small>Signup is free and takes 20 seconds</small>
+        </a> 
+      </p>
 
-        <p class="lead hidden" style="margin-left: 10px; margin-bottom: 0; display: inline-block; color: #eee;">eg Apples, chicken, cider</p>
-        
+      <input type="hidden" name="location" id="new_search" value="   ">
+      </form>
 
-        <input type="hidden" name="location" id="new_search" value="   ">
-        </form>
-
-    </div>
-
-
-                 <div class="col-md-6 col-md-offset-6 hidden ">
-                  <img src="/static/images/home_pack.gif" class="img-r esponsive"  style="max-width: 613px; max-height: 200px; float: right;" />
-                </div>
-        </div>
-    </div>
-</div> 
-</div>  
-
-
-<div class="container-responsive block-center showcase">
-  <div class="row">
-    <div class="alert clearfix" style="background:#fff; border: 0; box-shadow: 0px 0px 15px rgba(0,0,0,0.3) inset; border-radius: 0; padding: 50px 0;">
-
-    <div class="col-sm-10 col-sm-offset-1">
-      <form action="/activity" onsubmit="return formSubmit(this);" class="clearfix"  role="search"> 
-        <div class="input-group" style="border: 1px solid #ccc; border-radius: 10px;">  
-          <input type="text" name="q" id="keyword" class="form-control input-lg" value="" placeholder="Type a food to buy or sell" style="font-size: 25px; border: 1px solid #fff; border-radius: 10px 0 0 10px;">                    
-          <span class="input-group-btn">
-            <button class="btn btn-default" style="background: #fff;font-size: 30px; border-radius: 0 10px 10px 0; padding-bottom: 7px;" type="submit"><i class="fa fa-search"></i></button>  
-          </span> 
-        </div>
-
-        <p class="lead hidden" style="margin-left: 10px; margin-bottom: 0; display: inline-block; color: #eee;">eg Apples, chicken, cider</p>
-        
-
-        <input type="hidden" name="location" id="new_search" value="   ">
-        </form>
-
-    </div>
-    </div>
-  </div>
+  </div> 
 </div>
+<div class="ftstrip"></div>
 
+ 
+   map your food web
+   trade with a tweet
+   search and connect
+   0% cut
+   great for real time, hard to find, 
+   surplus - food charrites
+
+
+
+<div class="row clearfix">
+  <div class="col-sm-12">
+
+    <div  style="padding: 40px;">
+      <div class="lead">
+         <h1 style="margin-left: 5px; margin-bottom: 10px;">Meet your match</h1>
+         <ul style="margin-left: 0; margin-bottom: 20px;">
+           <li>Find new business</li>  
+           <li>Showcase your produce, suppliers, &amp; stockists</li> 
+           <li>Trade in real-time just by sending a tweet</li>  
+           <li>Works for buying, selling, surplus, and more</li>
+           <li>We don't take a cut of your sales</li>  
+         </ul> 
+      </div>
+
+      
+
+      <blockquote class="clearfix" style="border:0; ">
+        <span class=" text-left" style="font-size:16px; color: #fff; font-family: georgia; font-style: italic;">
+      “This technology could change the way our food system operates” 
+      </span>
+
+      <span class="pull-right " style="font-size:14px; color: #fff; font-family: georgia; font-style: italic;">
+      &mdash; HRH Prince Charles 
+      </span> 
+      </blockquote> 
+     
+    </div>
+
+
+    <div   style="padding: 40px;">
+      <div class="lead">
+         <h1 style="margin-left: 5px; margin-bottom: 10px;">Discover &amp; swap</h1>
+         <ul style="margin-left: 0; margin-bottom: 20px;">
+           <li>Find the best local suppliers</li>  
+           <li>Trade your surplus</li>  
+           <li>Vouch for for great food</li> 
+           <li>Map your food web</li>   
+         </ul> 
+      </div>
+
+      <p style="margin-left: 20px;">
+        <a href="{% provider_login_url "twitter" process="login" %}"  class="btn btn-primary" style="font-size: 24px; text-shadow: 1px 1px 1px #444 !important; line-height: 0.7; padding: 10px; text-align: left;">
+        <strong>Join as an individual</strong><br />
+        <small style="font-size: 12px; font-weight: normal;">No credit card required</small></a> 
+        <a href="/pages/individual"  class="btn btn-primary " style="font-size: 20px; background: none; color: rgba(255,255,255,1); border: 1px solid rgba(255,255,255,0.7); font-weight: 200; ">Learn more</a> 
+      </p>
+
+      <blockquote class="clearfix" style="border:0; ">
+        <span class=" text-left" style="font-size:16px; color: #fff; font-family: georgia; font-style: italic;">
+      “This technology could change the way our food system operates” 
+      </span>
+
+      <span class="pull-right " style="font-size:14px; color: #fff; font-family: georgia; font-style: italic;">
+      &mdash; HRH Prince Charles 
+      </span> 
+      </blockquote> 
+    </div> 
+
+
+  </div><!-- col -->
+</div><!-- row -->
+
+
+
+
+
+ 
 
 <div class="container-responsive block-center showcase">
 
 
-<div class="row">
+<div class="row equal innerAll" id="wiifm">
   <div class="col-md-4">
       <!-- Thumbnail -->
       <div class="thumbnail widget-thumbnail"> 
@@ -390,7 +261,7 @@ display: block; }
 </div>
 
 
-<div class="row hero white" style="background-image: url('/static/images/apples2.jpg'); background-size: cover; padding: 50px 0; margin: 50px 0; background-attachment: fixed;">
+<div class="row hero white" style="background-image: url('/static/images/home.jpg'); background-size: cover; padding: 50px 0; margin: 50px 0; background-attachment: fixed;">
   <div class="col-sm-12"> 
   <blockquote class="clearfix text-center" style="border:0; ">
   <p style="font-size:30px; color: #fff; font-family: georgia; font-style: italic; max-width: 900px; margin: 0 auto 20px auto;">
@@ -403,7 +274,7 @@ display: block; }
   </div>
 </div>
 
- 
+ <!-- 
 <div class="row">
   <div class="col-md-6">
     <div class="thumbnail widget-thumbnail">
@@ -471,7 +342,7 @@ display: block; }
       </div>
     </div>
   </div> 
-</div>
+</div> -->
 
 
 
@@ -479,12 +350,5 @@ display: block; }
 
                         <div class="text-center small photocredit white">Photo credits: <a href="http://kirstymorris.com/" target="_blank">Kirsty Morris</a></div>
  
-</div>
  
- 
-
- 
-
- 
-</div>
 </div><!-- col10 --> {% endblock %}

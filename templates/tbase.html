@@ -5,7 +5,7 @@
 {% include "socialaccount/snippets/login_extra.html" %}
 {% load account %}
 <!DOCTYPE html>
-<html lang="en" class="  sidebar-social  js flexbox flexboxlegacy no-touch rgba hsla multiplebgs backgroundsize borderimage borderradius boxshadow textshadow opacity cssanimations csscolumns cssgradients cssreflections csstransforms csstransforms3d csstransitions fontface generatedcontent">
+<html lang="en" class="js flexbox flexboxlegacy no-touch rgba hsla multiplebgs backgroundsize borderimage borderradius boxshadow textshadow opacity cssanimations csscolumns cssgradients   csstransforms csstransforms3d csstransitions fontface generatedcontent">
   <head>
     <meta charset="utf-8">
 <!-- 
@@ -168,7 +168,7 @@
       };
     </script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/less.js/1.7.1/less.min.js"></script>  
-    <script>/*less.watch();*/</script>
+    <script>less.watch();</script>
 
     <script src="{% static "assets/components/plugins/browser/ie/ie.prototype.polyfill.js" %}"></script>
     <script>
@@ -180,9 +180,10 @@
 
 
   </head>
-<body class="menu-hidden {% if not user.is_authenticated %}menu-hidden{% endif %}">
+<body {% ifequal request.path '/' %} id="home" {% endifequal %}>
     
 
+        
     
 
 
@@ -1052,7 +1053,11 @@ function success_tweeter_user_invite(data){
 </script> 
 <script type="text/javascript">
 $(document).ready(function() {
- 
+
+   $('.mCustomScrollbar').mCustomScrollbar({
+        theme:"dark"
+    });
+
    
     var activeSystemClass = $('.list-group-item.active');
     //something is entered in search form
@@ -1439,7 +1444,7 @@ function post_new_status(){
         var foodtrade_only = "true";
       }
       if(validate_login()['status'] == '1'){
-        ajax_request("post_tweet", 'clear_input', {message: message,foodtrade_only:foodtrade_only});
+        ajax_request("post_tweet", 'clear_input', {message: message,foodtrade_only:foodtrade_only}); 
       }
       else{
           /*$('#btn_must_be_logged').click();*/
@@ -1487,6 +1492,50 @@ function clear_input(data){
         $('#btn_update_close').click();
         make_search();
 }
+
+
+function switch_update_form()
+{
+  switch_text_area();
+  $("#structured_hidden_block").toggleClass('hidden');
+  $("#update-big").show();
+}
+
+function switch_text_area(){ 
+  $('#update-big').attr('class', ' ');
+}
+function show_full_structure()
+{
+  $("#structured_hidden_block").removeClass("hidden");
+}
+
+function show_small_structure()
+{ 
+  switch_text_area
+  $("#update-big").hide();
+  $("#structured_postupdate").show();
+  $("#structured_hidden_block").removeClass("hidden");
+}
+
+function check_limit(){
+  tweet = $('#newstatus').val();
+  if(tweet.length > 120){
+    $('#charsRem').html( 'Max of 120 characters exceeded.');
+  }
+  else{
+    $('#charsRem').html(String(120-tweet.length) + ' characters remaining.');
+  }
+}
+function check_limit1(){
+  tweet = $('#update_description').val();
+  if(tweet.length > 120){
+    $('#charsRem1').html( 'Max of 120 characters exceeded.');
+  }
+  else{
+    $('#charsRem1').html(String(120-tweet.length) + ' characters remaining.');
+  }
+}
+
 
 </script>
 </body>

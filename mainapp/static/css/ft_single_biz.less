@@ -45,7 +45,7 @@
  
 
 .affix {
-  top: 45px;
+  top: 0px;
   z-index: 100000000;
   width: 100%;
   position: fixed;
@@ -71,81 +71,33 @@
   .rounded(0);
   background: #fff !Important;
 }
+ 
 
-#groupsGrid {
- -moz-column-width: 10em;
- -webkit-column-width: 10em;
- -moz-column-gap: .5em;
- -webkit-column-gap: .5em;  
-  .groupItem {
-    border: 1px solid #eee; 
-    -webkit-column-break-inside: avoid; 
-    page-break-inside: avoid;
-    margin: 0 0 10px 0;
-    .rounded(10px);
-    .drop-shadow(1px, 1px, 0px, 0.2); 
-    padding: 10px;
-  } 
-}
-
-
-*, *:before, *:after {box-sizing:  border-box !important;}
-
-#bizInfo {
- -moz-column-width: 30em;
- -webkit-column-width: 30em;
- -moz-column-gap: .5em;
- -webkit-column-gap: .5em;  
-
- .panel {
-   display: inline-block;
-   margin:  .5em;
-   padding:  0; 
-   width:98%;
-  }
-
-  .vcenter {
-    vertical-align: middle;
-  }
-  
-}
-
-
-  
-.panel-heading {
-  border-top: 3px solid #fff;
-}
 
 #panelOrganisations .panel-heading  {
-  border-top-color: #9B5C47;
+  border-top-color: @organisation;
 }
 #panelCustomers .panel-heading  {
-  border-top-color: #531E35;
+  border-top-color: @customers;
 }
 #panelProduce .panel-heading {
-  border-top-color: #61AE32;
+  border-top-color: @produce;
 }
 #panelShoppingList .panel-heading {
-  border-top-color: #EA5162;
+  border-top-color: @shoppingList;
 }
 #panelSuppliers .panel-heading  {
-  border-top-color: #576D30;
+  border-top-color: @suppliers;
 }
 #panelStockists .panel-heading  {
-  border-top-color: #576D30;
+  border-top-color: @stockists;
 }
 #panelUpdates .panel-heading  {
-  border-top-color: #34B9D4;
+  border-top-color: @marketplace;
 }
 #panelDeliveries .panel-heading {
-  border-top-color: #F08119;
+  border-top-color: @deliveries;
 }
 #panelCompany .panel-heading  {
-  border-top-color: #576D30;
+  border-top-color: @information;
 }
-
-
-
-
-
-  
