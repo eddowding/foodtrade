@@ -4,6 +4,23 @@
     display: none;
   }
 
+  #main_page {
+    background: #fff;
+  }
+
+  h2 {
+    font-weight: 100;
+    color: #444;
+    font-size: 40px;
+    strong {
+      font-weight: 400;
+    }
+  }
+
+  .showcase {
+    margin: 80px 0;
+  }
+
   #content {
     margin: 0;
     background: #F5F8FA !important;
@@ -22,8 +39,8 @@
   }
 
   #homeimage { 
-    min-height: 500px;
-    padding-top: 200px;
+    min-height: 600px;
+    padding-top: 180px;
     box-shadow: 0 0 100px #000 inset;
     height: 100%;
     @media (max-width: 768px) {
@@ -33,7 +50,7 @@
   }
 
    #joinButton {
-    margin-top: 30px;
+    margin-top: 80px;
 
 
     a {
@@ -48,12 +65,32 @@
       small {
         font-size: 12px;
         font-weight: normal;
+        color: rgba(255,255,255,0.7);
+        text-shadow: none;
       }
     }
+
+    a.secondary { 
+      background: rgba(0,0,0,0.2); 
+      color: rgba(255,255,255,1); 
+      border: 1px solid rgba(255,255,255,0.7); 
+      font-weight: 200; 
+    }
+
    }
 
   
-   
+  .logos {
+    text-align: center;
+    img {
+    width: auto;
+    height: auto;
+    max-height: 100px;
+    max-width: 160px;
+    display: inline-block;
+    margin: 10px 30px;
+    }
+  } 
 
   .input-lg {
     height: auto;

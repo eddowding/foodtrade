@@ -187,7 +187,7 @@ def home(request):
     parameters['total_connections'] = stats.total_connections()
     parameters['connections_per_business'] = stats.avg_conn_per_business()
     parameters['total_activity'] = stats.activity_count()
-    parameters['total_replies'] = stats.replies_count()
+    parameters['total_replies'] = stats.replies_count() 
    
     
     if request.user.is_authenticated():
