@@ -11,8 +11,7 @@
 
 @import "elements.less";
 @import "ft_single_biz.less"; 
-@import "ft_home.less"; 
-@import "ft_organisation.less"; 
+@import "ft_home.less";  
 @import 'footable/footable.core.min.css'; 
 
 /* ------------------------------------
@@ -63,6 +62,11 @@
     }
 }
 
+.fav {
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  font-weight: normal;
+}
 
 /* ------------------------------------
 /*  2.   LAYOUT
@@ -130,6 +134,15 @@
 
   .vcenter {
     vertical-align: middle;
+  }
+
+  .panel-title {
+    .badge {
+      margin-right: 10px;
+    }
+    .small {
+      font-size: 11px;
+    }
   }
   
 }
@@ -289,9 +302,17 @@ i.pinterest,span.pinterest{ color: #cb2027 !important; }
 /*  6.  ORGANISATION
 /* ------------------------------------
 */
-
-#organisation {
-  #map {
-    height: 500px;
-  }
+ 
+ 
+#panelMembers .panel-heading  {
+  border-top-color: @organisation;
+} 
+#panelFoods .panel-heading  {
+  border-top-color: @produce;
+} 
+#panelTeam .panel-heading  {
+  border-top-color: @information;
+} 
+#panelMarketplace .panel-heading  {
+  border-top-color: @marketplace;
 }

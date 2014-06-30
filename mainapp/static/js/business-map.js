@@ -38,8 +38,8 @@ L.circle([map_lat,map_lon], 160934, {
 
 
 
-var card_str = '<div class="card-box"><div class="content text-center"><div class=""><a href="/profile/'+username+'"><img src="'+photo+'" alt="'+name+'" class="img-circle img-thumbnail img-responsive" style="width:73px;" /></a>';
-    card_str += '</div><div class="text"><h3><a href="/profile/'+username+'">'+name+'</a></h3>';
+var card_str = '<div class="card-box"><div class="content text-center"><div class=""><a href="/profile/'+username+'"><img src="'+photo+'" alt="'+name+'" class="img-circle img-thumbnail img-responsive" style="width:40px;" /></a>';
+    card_str += '</div><div class="text"><b><a href="/profile/'+username+'">'+name+'</a></b>';
     card_str += '<p>'+description+'</p></div>';
     card_str += '<a href="/profile/'+username+'" class="btn btn-primary btn-sm">View profile &raquo;</a></div> </div>';    
 
@@ -137,8 +137,8 @@ if(parseInt(current_lon) != parseInt(def_lon) || parseInt(def_lat) != parseInt(c
 
  }
 
-var card_str = '<div class="card-box"><div class="content text-center"><div class=""><a href="/profile/'+username+'"><img src="'+photo+'" alt="'+name+'" class="img-circle img-thumbnail img-responsive" style="width:73px;" /></a>';
-    card_str += '</div><div class="text"><h3><a href="/profile/'+username+'">'+name+'</a></h3>';
+var card_str = '<div class="card-box"><div class="text-center"><div class=""><a href="/profile/'+username+'"><img src="'+photo+'" alt="'+name+'" class="img-circle img-thumbnail img-responsive" style="width:40px;" /></a>';
+    card_str += '</div><div class="text"><b><a href="/profile/'+username+'">'+name+'</a></b>';
 
     if(type.length>0)
       {
@@ -150,7 +150,7 @@ var card_str = '<div class="card-box"><div class="content text-center"><div clas
         card_str += '</div>';
     }
 
-    card_str += '<p>'+description+'</p></div>';
+    card_str += '<p class="scroll50">'+description+'</p></div>';
     card_str += '<a href="/profile/'+username+'" class="btn btn-primary btn-sm">View profile &raquo;</a></div> </div>';    
 
 

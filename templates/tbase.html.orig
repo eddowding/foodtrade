@@ -164,11 +164,15 @@
     <script>
       less = {
         env: "development", 
-        poll: 100
+        poll: 50
       };
     </script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/less.js/1.7.1/less.min.js"></script>  
+<<<<<<< HEAD
     <script>/*less.watch();*/</script>
+=======
+    <script>//less.watch();</script>
+>>>>>>> 551b1457146ea313da26477c92bb48cc78480bae
 
     <script src="{% static "assets/components/plugins/browser/ie/ie.prototype.polyfill.js" %}"></script>
     <script>
@@ -847,13 +851,6 @@
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
-
-
-
-
-
- 
-
 
     <!-- Bootstrap core JavaScript
     ================================================== -->

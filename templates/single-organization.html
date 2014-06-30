@@ -77,112 +77,171 @@
 
 
 
+<div class="row row-merge bizSummary">
+<div class="col-xs-12">
 
+<div class="row row-merge border-bottom border-right">
+  <div class="col-sm-7 col-xs-8 border-left">
+    <div class="innerAll">
+       
 
-
-
-
-
-
-
-
-
-<div class="col-md-12" id="single">
-
-    <div class="widget"> 
-      <div class="widget-body innerAll border-bottom">
- 
-        <!-- certificate -->
-          {% if prof_subscribed %}
-          <span class="fa-stack fa-lg pull-right" id="verified" rel="tooltip" title="Verified profile">
-            <i class="fa fa-certificate fa-stack-2x" style="color: #1DBD3C;"></i>
-            <i class="fa fa-check fa-stack-1x" style="color: #fff;"></i>
-          </span>
-          {% endif %}
-        <!-- certificate --> 
-
-     <div class="icons pull-right">
-        {% if facebook_page %}
-          <a href="{{facebook_page}}"><i class="fa fa-facebook-square fa-lg fa-fw text-muted"></i></a>
-        {% endif %} 
-        {% if userinfo.username %}
-          <a href="http://twitter.com/{{userprof.username}}"><i class="fa fa-lg  fa-fw fa-twitter-square text-muted"></i></a> 
-        {% endif %} 
-        {% if phone_number %}
-          <a href="callto:{{phone_number}}"><i class="fa  fa-lg  fa-fw fa-phone-square text-muted"></i></a>  
-        {% endif %}   
-        {% if website_url %}
-          <a href="{{website_url}}"><i class="fa fa-lg fa-fw fa-globe text-muted"></i></a>  
-        {% endif %} 
-        {% if company_num %}
-          <a href="https://www.duedil.com/company/{{company_num}}"><i class="fa fa-lg fa-edit fa-legal text-muted"></i></a>  
-        {% endif %} 
-      </div>  
-
-
-         <h3 class="margin-none">{{name}}</h3>
-         <div class="innerTB">{{description}}</div> 
-      </div>
-      <div class="widget-body innerAll">
-
-        {% ifequal profile_id user_id %}
-        <a href="/editprofile/{{userinfo.username}}" class="btn btn-danger btn-block">
-           Edit my profile
-        </a>
-       {% endifequal %}
-
-
-      {% ifnotequal profile_id user_id %} 
-  
-      {% if user.is_authenticated %}  
-
-      <!-- are you a member -->
-      <div class="btn-group btn-blo ck" data-toggle="buttons">
-        {% if logged_member %}
-          <label class="fa fa-smile-o btn btn-default active" style="width:100%; padding: 8px 12px;" title="{{userinfo.full_name}} is member of {{name}}" >
-          <input type="checkbox" checked="checked" class="member-chkbx" onchange="add_member({{profile_id}}, {{user_id}}, 'self')">
-          <span>I'm a member!</span>
-          </label>
-        {% else %}
-          <label class="fa fa-smile-o fa-fw btn btn-default " style="width:100%;" title="{{userinfo.full_name}} is member of {{name}}" >
-          <input type="checkbox" class="member-chkbx" onchange="add_member({{profile_id}}, {{user_id}}, 'self')">
-          <span>I'm a member!</span>
-          </label>
-        {% endif %}
-      </div> 
-      <!-- /are you a member -->
- 
-      <!-- Button trigger modal -->
-      {% ifequal is_unknown_profile 'false' %}
-        <button class="btn btn-primary btn-blo ck" data-toggle="modal" data-target="#modal_contact"><i class="fa fa-fw fa-envelope-o"></i> Contact</button>
-      {% else %}
-        <button class="btn btn-primary btn-b lock"  data-toggle="modal" data-target="#modal_invite">Invite to connect</button> 
-      {% endifequal %}
-
+      <p class="">{{description}}</p>  
       {% if user.is_superuser %}
-            <a href="/editprofile/{{username}}/" class="btn btn-primary btn-b lock">Edit</a>
+        <a href="/editprofile/{{username}}/" class="btn btn-info btn-xs">Edit</a>
       {% endif %}
 
+    </div> 
+  </div>
+  <div class="col-sm-3 ">
+    <div class="innerAll">
+
+
+    
+      <!-- EDIT / CONTACT -->
+        
+      
+      {% ifequal profile_id user_id %}
+        <a href="/editprofile/{{userinfo.username}}" class="btn btn-info btn-block btn-sm ">
+           Edit
+        </a>       
+      {% endifequal %}
+      
+      {% if request.user.is_authenticated %}
+        <button class="btn btn-primary text-center normal btn-block" data-toggle="modal" data-target="#modal_contact"><i class="fa fa-envelope-o fa-fw"></i> Contact</button>
+      {% endif %} 
+
+      {% ifequal is_unknown_profile 'false' %}
       {% else %}
-      <!-- if not logged in show login prompt -->
-      <div class="btn-group btn-blo ck" rel="tooltip" data-placement="top" title="Login to be a member of {{name}}">
-        <button class="btn btn-default btn-bl ock" style="width:100%;" disabled><i class="fa fa-smile-o fa-fw"></i> I'm a member!</button>
-      </div>
+        <button class="btn btn-primary btn-stroke btn-block"  data-toggle="modal" data-target="#modal_invite">Invite to connect</button> 
+      {% endifequal %} 
+      <!-- EDIT / CONTACT -->
 
-      <a href="{% provider_login_url "twitter" process="login" %}" class="btn btn-primary btn-bl ock">Login for more</a>
-      {% endif %}
-      {% endifnotequal %} 
-      <button class="btn btn-default btn-b ock" data-toggle="modal" data-target="#sharer">
-        <i class="fa fa-share-square-o text-muted"></i> Share
-      </button>
+
+      <!-- CONNECT AS BUSINESS OR CUSTOMER --> 
+      {% ifnotequal profile_id user_id %}
+        {% if user.is_authenticated %}      
+
+         <!-- are you a member -->
+          <div class="btn-group btn-block" data-toggle="buttons">
+            {% if logged_member %}
+              <label class="fa fa-smile-o btn btn-default active" style="width:100%; padding: 8px 12px;" title="{{userinfo.full_name}} is member of {{name}}" >
+              <input type="checkbox" checked="checked" class="member-chkbx" onchange="add_member({{profile_id}}, {{user_id}}, 'self')">
+              <span class="fav">I'm a member!</span>
+              </label>
+            {% else %}
+              <label class="fa fa-smile-o fa-fw btn btn-default " style="width:100%;" title="{{userinfo.full_name}} is member of {{name}}" >
+              <input type="checkbox" class="member-chkbx" onchange="add_member({{profile_id}}, {{user_id}}, 'self')">
+              <span class="fav">I'm a member!</span>
+              </label>
+            {% endif %}
+          </div> 
+          <!-- /are you a member -->
+
+        {% else %}
+
+          <!-- if not logged in show login prompt -->
+          <a href="{% provider_login_url "twitter" process="login" %}" class="btn btn-primary btn-icon-stacked btn-block text-center"><i class="fa fa-2x fa-twitter"></i> <span>Login free <br><span class="normal">for more details</span>
+          </a>
+
+        {% endif %}
+
+      {% endifnotequal %}
+      <!-- / CONNECT AS BUSINESS OR CUSTOMER --> 
+
+
+
+      <!-- VERIFIED PROFILE -->
+      {% if prof_subscribed %}
+      <div style="background: #88BC62;">
+        <i class="fa fa-check" style="color: #fff;"></i>
+        <span>Verified</span>
+      </div> 
+      {% endif %}  
+      <!-- VERIFIED PROFILE -->
+
+
+  
+
+    </div>  
+
+    </div> 
 
  
+  <div class="col-sm-2 hidden-xs">
+    
+    
+  
+
+    <div class="innerAll "> 
+
+    <!-- SHARE -->
+ 
+        <div class="btn-group btn-block" >
+          <button type="button"  class="btn btn-default btn-block dropdown-toggle normal" data-toggle="dropdown"  ><i class="fa fa-fw fa-share-alt text-black "></i> share</button>
+            <ul class="dropdown-menu ">
+             <li> <a href="#" class="" onclick="window.open(
+              'https://www.facebook.com/sharer/sharer.php?s=100&amp;p[url]='+encodeURIComponent('{{ request.build_absolute_uri }}') +'&amp;p[images][0]='+encodeURIComponent('{{pic_url}}')+'&amp;p[title]='+encodeURIComponent('{{name}} on FoodTrade')+'&amp;p[summary]='+encodeURIComponent('Hey, see my profile on FoodTrade')+'&amp;u='+encodeURIComponent('{{ request.build_absolute_uri }}') +'&amp;t='+encodeURIComponent('{{name}} on FoodTrade'),
+                    'facebook-share-dialog', 
+                    'width=626,height=436,top='+((screen.height - 436) / 2)+',left='+((screen.width - 626)/2 )); 
+                  return false;">
+
+                <i class="fa fa-facebook fa-lg fb fa-fw"></i> Share on facebook 
+              </a></li>
+              <li>
+              <a href="#" class="  " onclick="window.open(
+                    'https://twitter.com/share?url='+encodeURIComponent('{{ request.build_absolute_uri }}')+'&amp;text='+encodeURIComponent('{{screen_name}} on @foodtradeHQ') + '&amp;count=none/', 
+                    'twitter-share-dialog', 
+                    'width=626,height=436,top='+((screen.height - 436) / 2)+',left='+((screen.width - 626)/2 )); 
+                  return false;">
+                <i class="fa fa-twitter fa-lg tw fa-fw"></i> Tweet this
+              </a></li><li>
+  
+              <a class=" " href="http://pinterest.com/pin/create/button/?url={{ request.build_absolute_uri|urlencode }}&media={{pic_url|urlencode}}&description={{screen_name|urlencode}}{{' on FoodTrade'|urlencode}}" class="pin-it-button" count-layout="horizontal">
+                <i class="fa fa-pinterest fa-lg pinterest fa-fw"></i> Pin to pinterest
+              </a> </li><li>
+              <a  class="" href="https://plus.google.com/share?url={{ request.build_absolute_uri|urlencode }}">
+                <i class="fa fa-google-plus fa-lg google fa-fw"></i>  Share on Google+
+              </a></li><li>
+              <a  class=" " href="http://www.tumblr.com/share" title="Share on Tumblr">
+                <i class="fa fa-tumblr fa-lg tumblr fa-fw"></i> Post to Tumblr
+              </a>
+                 </li><li>
+              <a  class=" " href="http://www.linkedin.com/shareArticle?mini=true&url={{ request.build_absolute_uri|urlencode}}&title={{screen_name}} on FoodTrade&summary=Hey, view my profile on Foodtrade.&source=">
+                <i class="fa fa-linkedin fa-lg linkin fa-fw"></i>  Share on LinkedIn
+              </a></li> 
+              <script type="text/javascript" src="http://platform.tumblr.com/v1/share.js"></script>
+            </ul>
+          </div>
+
+          {% if request.user.is_authenticated %}
+          <div class="btn-group btn-block" data-toggle="buttons">
+            <label class="btn btn-default btn-block  {% if fav_profile %} active {% else %}{% endif %}">
+              <input type="checkbox" id="favourite_btn" {% if fav_profile %} checked="checked" {% endif %} onchange="save_favourites('{{profile_id}}', '{{user_id}}'); return null;"> <i class="fa fa-star-o fa-fw text-black"></i> 
+              <span class="fav">Favourite</span>
+            </label> 
+          </div>
+          {% endif %}
+
+      </div>
+    </div>
+  </div><!-- col2 -->
+</div>
+</div>  
+<!-- contact -->  
+
+</div><!-- row --> 
 
 
-      </div><!-- widget body -->
-    </div><!-- widget -->
 
 
+
+
+
+
+
+
+ 
+   
 
 <div class="row  ">
   <div class="  " id="panelContainer">
@@ -200,19 +259,26 @@
       <div class="panel-heading">
         <div class="panel-title">
           <i class="fa fa-group"></i> <strong>Members</strong>
+          {% if user.is_superuser or profile_id == user_id  %}
+          &middot; <a href="#" class="small" data-target="#member_remote" data-toggle="collapse" >Add</a>
+          <span data-target="#searchMembers" data-toggle="collapse" class="border-left innerL pull-right">
+            <i class="glyphicon glyphicon-search"></i>
+          </span>
+          {% endif %}
           {% if members|length != 0 %}<span class="badge pull-right">{{members|length}}</span>{% endif %}
         </div>
       </div>  
-
-      <!-- fix -->
+ 
       {% if user.is_superuser or profile_id == user_id  %}
-<div id="member_remote" class="well well-sm">
-<input class="typeahead form-control" id="new_member_typeahead" {% if not user.is_authenticated %} rel="tooltip" title="Please login to use this feature" {% endif %} style="width:310px;" type="text" placeholder="add a member"></div>                  
-{% endif %} 
+      <div id="member_remote" class="well well-sm collapse">
+      <input class="typeahead form-control" id="new_member_typeahead" {% if not user.is_authenticated %} rel="tooltip" title="Please login to use this feature" {% endif %} style="width:310px;" type="text" placeholder="add a member"></div>                  
+      {% endif %}   
 
-<!-- add filter -->
+      <div class="collapse well-sm well" id="searchMembers">
+        <input type="text" class="form-control" id="filterMembers" placeholder="Find a member" />
+      </div>
 
-       <div class="mCustomScrollbar scroll600">
+       <div class="mCustomScrollbar scroll300">
         <table class="table table-hover table-condensed footable toggle-arrow-circle-filled" id="suppliersTable" data-filter="#filterMembers" data-filter-text-only="true"> 
         <thead class="hidden">
             <tr> 
@@ -317,7 +383,7 @@
     <div class="panel panel-default" id="panelFoods">
       <div class="panel-heading">
         <div class="panel-title">
-          <i class="fa fa-truck"></i> <strong>Foods</strong>
+          <i class="fa fa-truck"></i> <strong>Produce</strong> from members
           <div class="pull-right">
             {% if userprof.food_no != 0 %}<span class="badge">{{userprof.food_no}}</span>{% endif %}
             <span data-target="#searchFoods" data-toggle="collapse" class="border-left innerL">
@@ -330,7 +396,7 @@
       <div class="collapse well-sm well" id="searchFoods">
         <input type="text" class="form-control" id="filterFoods" placeholder="Find a food" />
       </div>
-      <div class="mCustomScrollbar scroll300">
+      <div class="mCustomScrollbar scroll600">
         <table class="table table-hover table-condensed footable toggle-arrow-circle-filled" id="foodTable" data-filter="#filterFoods" data-filter-text-only="true"> 
         <thead class="hidden">
             <tr> 
@@ -355,7 +421,7 @@
                   </a>
                 </td>
                 <td>
-                  <a href="/activity/?f={{eachfood.food_name}}">{{eachfood.food_name}}</a>
+                  <a href="/profile/{{each.username}}/">{{eachfood.food_name}}</a>
                 </td>
                 <td>
                   <a href="/profile/{{each.username}}/" class="text-muted pull-right"> 
@@ -372,59 +438,16 @@
     </div>
     <!-- FOODS -->
 
-
-    <!-- TEAM -->
-    <div class="panel panel-default" id="panelTeam">
-      <div class="panel-heading">
-        <div class="panel-title">
-          <i class="fa fa-truck"></i> <strong>Team</strong>
-          {% if teams|length != 0 %}<span class="badge pull-right">{{teams|length}}</span>{% endif %}
-        </div>
-      </div> 
-      <div class="panel-body groupsGrid" id="people">
-        {% ifequal loggedin_signupas "Individual" %} 
-          <div class="btn-group btn-block" data-toggle="buttons">
-          {% if logged_team %}
-              <label class="fa fa-check btn btn-default btn-block active" style="width:30%;">
-              <input type="checkbox" checked="checked" id="team-chkbx" onchange="add_team({{profile_id}}, {{user_id}})">I work here
-              {% else %}
-              <label class="btn btn-default btn-block" style="width:30%;" >
-              <input type="checkbox" id="team-chkbx" onchange="add_team({{profile_id}}, {{user_id}})">I work here
-          {% endif %}
-              </label>
-          </div>
-        {% endifequal %}
-          
-        <div class="clearfix">
-          {% for each in teams %}    
-            <div class="groupItem clearfix">
-              <div class="text-center">
-                <a href="/profile/{{each.username}}"><img src="{{each.photo}}" alt="{{each.name}}"
-                class="img-thumbnail img-responsive img-circle" style="width:50px; height:50px;" /></a>
-                <strong class="clearfix"><a href="/profile/{{each.username}}" class="text-black">{{each.name}}</a></strong> 
-              </div>
-              <p class='small'>{{each.description|truncatechars:80}}</p>
-             
-              {% ifequal profile_id user_id %}
-              <button type="button" class="btn btn-danger btn-xs pull-right" aria-hidden="true" onclick="conn_handler('close_buy_from', {{profile_id}}, {{each.id}})"><i class="fa-trash-o fa"></i> Remove</button> 
-              {% endifequal %}
-            </div>  
-          {% endfor %}
-        </div>
-      </div>  
-    </div>
-    <!-- TEAM -->
-
-
+ 
     <!-- ACTIVITY -->
     <div class="panel panel-default" id="panelMarketplace">
       <div class="panel-heading">
         <div class="panel-title">
           <i class="fa fa-bullhorn"></i> <strong>Marketplace</strong>
+          <span data-target="#searchMarket" data-toggle="collapse" class="border-left innerL pull-right">
+            <i class="glyphicon glyphicon-search"></i>
+          </span>
           {% if updates_count != 0 %}<span class="badge pull-right">{{updates_count}}</span>{% endif %}
-          <span data-target="#searchMarket" data-toggle="collapse" class="border-left innerL">
-              <i class="glyphicon glyphicon-search"></i>
-            </span>
         </div>   
       </div> 
 
@@ -510,15 +533,58 @@
           </tbody>
           
       </table>   
+      </div>  
+    </div>  
+    <!-- ACTIVITY -->
+
+
+    <!-- TEAM -->
+    <div class="panel panel-default" id="panelTeam">
+      <div class="panel-heading">
+        <div class="panel-title">
+          <i class="fa fa-truck"></i> <strong>Team</strong>
+          {% if teams|length != 0 %}<span class="badge pull-right">{{teams|length}}</span>{% endif %}
+        </div>
       </div> 
- 
-           
+      <div class="panel-body groupsGrid" id="people">
+        {% ifequal loggedin_signupas "Individual" %} 
+          <div class="btn-group btn-block" data-toggle="buttons">
+          {% if logged_team %}
+              <label class="fa fa-check btn btn-default btn-block active" style="width:30%;">
+              <input type="checkbox" checked="checked" id="team-chkbx" onchange="add_team({{profile_id}}, {{user_id}})">I work here
+              {% else %}
+              <label class="btn btn-default btn-block" style="width:30%;" >
+              <input type="checkbox" id="team-chkbx" onchange="add_team({{profile_id}}, {{user_id}})">I work here
+          {% endif %}
+              </label>
+          </div>
+        {% endifequal %}
+          
+        <div class="clearfix">
+          {% for each in teams %}    
+            <div class="groupItem clearfix">
+              <div class="text-center">
+                <a href="/profile/{{each.username}}"><img src="{{each.photo}}" alt="{{each.name}}"
+                class="img-thumbnail img-responsive img-circle" style="width:50px; height:50px;" /></a>
+                <strong class="clearfix"><a href="/profile/{{each.username}}" class="text-black">{{each.name}}</a></strong> 
+              </div>
+              <p class='small'>{{each.description|truncatechars:80}}</p>
+             
+              {% ifequal profile_id user_id %}
+              <button type="button" class="btn btn-danger btn-xs pull-right" aria-hidden="true" onclick="conn_handler('close_buy_from', {{profile_id}}, {{each.id}})"><i class="fa-trash-o fa"></i> Remove</button> 
+              {% endifequal %}
+            </div>  
+          {% endfor %}
+        </div>
       </div>  
     </div>
-    <!-- ACTIVITY -->
- 
+    <!-- TEAM -->
+
+
   </div>
-</div>
+
+
+   
 </div> 
  
 

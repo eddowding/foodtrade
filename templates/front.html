@@ -23,15 +23,20 @@
           <button class="btn btn-default" style="background: #fff;font-size: 30px; border-radius: 0 10px 10px 0; padding-bottom: 7px;" type="submit"><i class="fa fa-search"></i></button>  
         </span> 
       </div>
-      <p class="lead text-white" id="proof">Join {{user_count.business_count}} 1,324 businesses,  89 {{user_count.organisation_count}} organisations, and 212{{user_count.individual_count}} people making {{total_connections}} 354 connections and {{total_activity}} 548 updates.
+      <p class="lead text-white" id="proof">Join {{user_count.business_count}}  businesses,  {{user_count.organisation_count}} organisations, and {{user_count.individual_count}} people in creating a better food system. So far, we've made {{total_activity|add:total_replies|add:total_connections}} exchanges.
       </p>
 
-      <p class="text-center" id="joinButton">
+      <div class="text-center" id="joinButton">
         <a href="{% provider_login_url "twitter" process="login" %}"  class="btn btn-primary">
-        <strong>Get started</strong><br />
-        <small>Signup is free and takes 20 seconds</small>
+        <strong>Join Now, it's free &raquo;</strong><br />
+        <small>Companies can always upgrade to a paid plan later</small>
         </a> 
-      </p>
+
+        <a href="{% provider_login_url "twitter" process="login" %}"  class="btn btn-primary secondary">
+        <strong>Login instantly</strong><br />
+        <small>I'm already completely awesome</small>
+        </a> 
+      </div>
 
       <input type="hidden" name="location" id="new_search" value="   ">
       </form>
@@ -40,6 +45,76 @@
 </div>
 <div class="ftstrip"></div>
 
+
+<div class="row showcase">
+  <div class="col-sm-5 col-sm-offset-1">
+  <h2>A proud and flourishing food system</h2>
+  <p>fdsjfkljasdfkjas dajsdfhla sdfh dssd
+  </p>
+  </div>
+  <div class="col-sm-4 col-sm-offset-1">
+    <img src="/static/images/map.png" class="img-responsive img-thumbnail" />
+  </div>
+</div>
+
+<div class="row showcase">
+  <div class="col-sm-3 col-sm-offset-1">
+    <img src="http://digest.foodtrade.com/wp-content/uploads/2014/06/connections_flat.png" class="img-responsive img-thumbnail" />
+  </div>
+  <div class="col-sm-5 col-sm-offset-1">
+  <h2>Matchmaking companies</h2>
+  <p>fdsjfkljasdfkjas dajsdfhla sdfh dssd
+  </p>
+  <div class=" " >
+              <ul class="fa-ul text-left lead" style="display: inline-block; color: #447A23;">
+                <li>
+                    <span class="fa fa-li fa fa-check"></span>
+                    No credit card needed to get started 
+                </li> 
+                <li>
+                    <span class="fa fa-li fa fa-check"></span>
+                    Trade effortlessly with local companies
+                </li>
+                <li>
+                    <span class="fa fa-li fa fa-check"></span>
+                    Don't miss out on local business opportunities 
+                </li>
+
+           <li>Find new business</li>  
+           <li>Showcase your produce, suppliers, &amp; stockists</li> 
+           <li>Trade in real-time just by sending a tweet</li>  
+           <li>Works for buying, selling, surplus, and more</li>
+           <li>We don't take a cut of your sales</li> 
+              </ul>
+              </div>
+
+            <div class=" ">
+                <p>  
+                We make it easy and economical to make smarter decisions; connecting you with new suppliers or stockists, resources, market intelligence, or a heap of hungry folk ready to eat.
+
+                </p>
+              </div>
+ 
+              <div class="text-center">
+              <a href="{% provider_login_url "twitter" process="login" %}"  class="btn btn-primary" ><strong>Get started &raquo;</strong></a> 
+              <a href="/pages/business" class="btn btn-stroke" >Learn more &raquo;</a>
+              </div>
+
+ 
+          </div>
+  </div>
+</div>
+
+<div class="row showcase">
+  <div class="col-sm-5 col-sm-offset-1">
+  <h2>Connecting people</h2>
+  <p>fdsjfkljasdfkjas dajsdfhla sdfh dssd
+  </p>
+  </div>
+  <div class="col-sm-4 col-sm-offset-1">
+    <img src="/static/images/map.png" class="img-responsive img-thumbnail" />
+  </div>
+</div>
  
    map your food web
    trade with a tweet
@@ -119,7 +194,7 @@
 
  
 
-<div class="container-responsive block-center showcase">
+<div class="container-responsive block-center  ">
 
 
 <div class="row equal innerAll" id="wiifm">
@@ -258,6 +333,31 @@
       </div>
       <!-- // Thumbnail END -->
   </div>
+</div>
+
+<div class="row text-center showcase logos">
+<h2>Partners &amp; Supporters</h2>
+<hr />
+  <img src="/static/images/logos/bga.png" class="img-responsive">
+  <img src="/static/images/logos/fairtrade.png" class="img-responsive">
+  <img src="/static/images/logos/supporter_o2.png" class="img-responsive">
+  <img src="/static/images/logos/supporter_geovation.png" class="img-responsive">
+  <img src="/static/images/logos/supporter_slowfood.png" class="img-responsive">
+  <img src="/static/images/logos/thinkeatdrink.png" class="img-responsive">
+  
+  <img src="/static/images/logos/foodcycle.jpg" class="img-responsive">
+</div>
+
+<div class="row text-center showcase logos">
+<h2>In the Press</h2>
+<hr />
+  <img src="/static/images/logos/financialtimes.png" class="img-responsive">
+  <img src="/static/images/logos/fastcompany.jpg" class="img-responsive">
+  <img src="/static/images/logos/huffpo.png" class="img-responsive">
+  <img src="/static/images/logos/bbcr4.png" class="img-responsive">
+  <img src="/static/images/logos/virgin.png" class="img-responsive">
+  <img src="/static/images/logos/wired.jpg" class="img-responsive">
+  <img src="/static/images/logos/modernfarmer.png" class="img-responsive">
 </div>
 
 
