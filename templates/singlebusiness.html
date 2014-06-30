@@ -443,7 +443,7 @@
     <div class="panel panel-default" id="panelSuppliers">
       <div class="panel-heading">
         <h3 class="panel-title">
-          <i class="fa fa-sign-in"></i> <strong>Buys from</strong> {{b_conn_no}} Suppliers
+          <i class="fa fa-sign-in"></i> <strong>Buys from</strong> <span id="b_con_no">{{b_conn_no}}</span> Suppliers
           {% if user.is_authenticated %}
             &middot; <a data-target="#addSupplier" data-toggle="collapse" class="small">Add one</a>
           {% endif %} 
@@ -523,7 +523,7 @@
           </td>
           <td > 
             {% if request.user.is_superuser or profile_id == user_id %}
-            <button type="button" class="close" aria-hidden="true" onclick="conn_handler('close_buy_from', {{profile_id}}, {{each.id}})">&times;</button> 
+            <button type="button" class="close" aria-hidden="true" data-content="{{profile_id}}, {{each.id}}">&times;</button> 
             {% endif %}
 
             <a href="/profile/{{each.username}}" class="black"><strong>{{each.name}}</strong></a> 
@@ -589,7 +589,7 @@
     <div class="panel panel-default" id="panelStockists">
       <div class="panel-heading">
         <h3 class="panel-title">
-          <i class="fa fa-sign-out"></i> <strong>Sells to </strong> {{c_conn_no}} Stockists
+          <i class="fa fa-sign-out"></i> <strong>Sells to </strong> <span id="c_con_no">{{c_conn_no}}</span> Stockists
           {% if user.is_authenticated %}
             &middot; <a data-target="#addStockist" data-toggle="collapse" class="small">Add one</a>
           {% endif %} 
@@ -670,7 +670,7 @@
           </td>
           <td> 
               {% if request.user.is_superuser or profile_id == user_id %}
-              <button type="button" class="close" aria-hidden="true" onclick="conn_handler('close_sell_to', {{profile_id}}, {{each.id}})">&times;</button> 
+              <button type="button" class="close" aria-hidden="true" data-content="{{profile_id}}, {{each.id}}">&times;</button> 
               {% endif %}
 
               <a href="/profile/{{each.username}}" class="black"><strong>{{each.name}}</strong></a> 
@@ -1718,5 +1718,39 @@ customers = {{customers_str | safe}};
         get_next_page_b_conn(buss_username,current_conn_page + 1);
         get_next_page_c_conn(buss_username,current_conn_page + 1);
       });
+
+var footable_row = '';     
+var myfootable = '' ;
+control_dict = control_dict;
+lines_dic = lines_dic;
+$('#suppliersTable').footable().on('click', '.close', function(e) {
+        e.preventDefault();
+        //get the footable object
+        myfootable = $('#suppliersTable').data('footable');
+
+        //get the row we are wanting to delete
+        footable_row = $(this).parents('tr:first');
+        var content = this.attributes['data-content'].value;
+        var content_split = content.split(',');
+        var rel_1 = content_split[0];
+        var rel_2 = content_split[1]
+        conn_handler('close_buy_from', rel_1,rel_2);
+
+});
+
+$('#stockistsTable').footable().on('click', '.close', function(e) {
+        e.preventDefault();
+        //get the footable object
+        myfootable = $('#stockistsTable').data('footable');
+
+        //get the row we are wanting to delete
+        footable_row = $(this).parents('tr:first');
+        var content = this.attributes['data-content'].value;
+        var content_split = content.split(',');
+        var rel_1 = content_split[0];
+        var rel_2 = content_split[1]
+        conn_handler('close_sell_to', rel_1, rel_2);
+});
+      /*conn_handler('close_buy_from', */
      </script>
  {% endblock %}

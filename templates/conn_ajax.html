@@ -6,7 +6,7 @@
           </td>
           <td > 
             {% if user.is_superuser or profile_id == user_id %}
-            <button type="button" class="close" aria-hidden="true" onclick="conn_handler('close_buy_from', {{profile_id}}, {{new_connection.id}})">&times;</button> 
+            <button type="button" class="close" aria-hidden="true" data-content="{{profile_id}}, {{new_connection.useruid}}">&times;</button> 
             {% endif %}
 
             <a href="/profile/{{new_connection.username}}" class="black"><strong>{{new_connection.name}}</strong></a> 

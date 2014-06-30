@@ -296,17 +296,21 @@ class AjaxHandle(AjaxSearch):
             parameters = {}
             if data['status'] == 'buy_from':
                 parameters['buy_from_flag'] = True
-                trade_conn.delete_connection(b_useruid = int(data['prof_id']), c_useruid = request.user.id)
+                trade_conn.delete_connection(b_useruid = int(data['prof_id']), c_useruid = int(request.user.id))
+                print "inside Status"
             else:
                 parameters['buy_from_flag'] = False
-                trade_conn.delete_connection(b_useruid = request.user.id, c_useruid = int(data['prof_id']))            
-            parameters['connections'], parameters['conn'] = get_connections(int(data['prof_id']), request.user.id)
-            parameters['connections_str'] = json.dumps(parameters['connections'])
-            parameters['profile_id'], parameters['user_id'] = int(data['prof_id']), request.user.id
+                trade_conn.delete_connection(b_useruid = int(request.user.id), c_useruid = int(data['prof_id']))            
+            # parameters['connections'], parameters['conn'] = get_connections(int(data['prof_id']), request.user.id)
+            # parameters['connections_str'] = json.dumps(parameters['connections'])
+            # parameters['profile_id'], parameters['user_id'] = int(data['prof_id']), request.user.id
             # return render_to_response('conn_ajax.html', parameters)
             user_obj = UserProfile()
-            usr_name = user_obj.get_profile_by_id(int(data['prof_id']))['username']            
-            return HttpResponse(json.dumps({'status':'ok', 'username':usr_name, 'action':'delete'}))
+            usr_name = user_obj.get_profile_by_id(int(data['prof_id']))['username'] 
+            from mainapp.classes.DataConnector import UserConnections
+            user_connection =  UserConnections(data['prof_id'])
+            b_conn_len, c_conn_len = user_connection.get_trade_connection_no()                       
+            return HttpResponse(json.dumps({'status':'ok','b_conn_no':c_conn_len, 'c_conn_no':b_conn_len ,'username':usr_name, 'action':'delete'}))
         else:
             return HttpResponse("{'status':0}")
 
@@ -318,15 +322,23 @@ class AjaxHandle(AjaxSearch):
             if data['status'] == 'buy_from':
                 parameters['buy_from_flag'] = True
                 trade_conn.delete_connection(b_useruid = int(data['prof_id']), c_useruid = int(data['conn_id']))
+                from mainapp.classes.DataConnector import UserConnections
+                user_connection =  UserConnections(data['prof_id'])
+                b_conn_len, c_conn_len = user_connection.get_trade_connection_no()                                       
             else:
                 parameters['buy_from_flag'] = False
                 trade_conn.delete_connection(b_useruid = int(data['conn_id']), c_useruid = int(data['prof_id']))
-            parameters['connections'], parameters['conn'] = get_connections(int(data['prof_id']), request.user.id)
-            parameters['connections_str'] = json.dumps(parameters['connections'])
-            parameters['profile_id'], parameters['user_id'] = int(data['prof_id']), request.user.id
+                from mainapp.classes.DataConnector import UserConnections
+                user_connection =  UserConnections(data['conn_id'])
+                b_conn_len, c_conn_len = user_connection.get_trade_connection_no()                       
+            # parameters['connections'], parameters['conn'] = get_connections(int(data['prof_id']), request.user.id)
+            # parameters['connections_str'] = json.dumps(parameters['connections'])
+            # parameters['profile_id'], parameters['user_id'] = int(data['prof_id']), request.user.id
             user_obj = UserProfile()
-            usr_name = user_obj.get_profile_by_id(int(data['conn_id']))['username']            
-            return HttpResponse(json.dumps({'status':'ok', 'username':usr_name, 'action':'delete'}))            
+            # usr_name = user_obj.get_profile_by_id(int(data['conn_id']))['username'] 
+
+
+            return HttpResponse(json.dumps({'status':'ok', 'action':'delete', 'b_conn_no':b_conn_len, 'c_conn_no':c_conn_len}))            
             # return render_to_response('conn_ajax.html', parameters)            
             # return HttpResponse("{'status':1}")
         else:
@@ -341,10 +353,17 @@ class AjaxHandle(AjaxSearch):
                 trade_conn.create_connection({'b_useruid': int(data['prof_id']), 'c_useruid': int(data['buss_id'])})
                 parameters['buy_from_flag'] = True
                 parameters['relation'] = 'buyer'
+                from mainapp.classes.DataConnector import UserConnections
+                user_connection =  UserConnections(data['prof_id'])
+                b_conn_len, c_conn_len = user_connection.get_trade_connection_no() 
+
             elif data['status'] == 'sell_to':
                 parameters['buy_from_flag'] = False
-                parameters['relation'] = 'seller'
+                parameters['relation'] = 'seller'                 
                 trade_conn.create_connection({'b_useruid': int(data['buss_id']), 'c_useruid': int(data['prof_id'])})
+                from mainapp.classes.DataConnector import UserConnections
+                user_connection =  UserConnections(data['buss_id'])
+                b_conn_len, c_conn_len = user_connection.get_trade_connection_no()
 
             user_pro = UserProfile()
             pro_obj = user_pro.get_profile_by_id(int(data['prof_id']))
