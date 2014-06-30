@@ -168,7 +168,7 @@
       };
     </script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/less.js/1.7.1/less.min.js"></script>  
-    <script>/*less.watch();*/</script>
+    <script>less.watch();</script>
 
     <script src="{% static "assets/components/plugins/browser/ie/ie.prototype.polyfill.js" %}"></script>
     <script>
@@ -667,36 +667,47 @@
         </div><!-- container -->
   </div><!-- col 10 --> 
   <div class="{% if not request.user.is_authenticated %} hidden {% else %} col-md-2  {% endif %}">
+
+    <div id="didyouknow" class="carousel slide"> 
+        <!-- Items -->
+        <div class="carousel-inner">
+            <!-- Item -->
+            <div class="item active"> 
+                 
+                <span class="pull-left media-object innerLR half">
+                    <i class="fa fa-fw fa-question-circle"></i>
+                </span>
+                <div class="media-body text-left">
+                    If you would like to find or offer surplus or gluts, just use as <a href="/activity/?q=surplus">#surplus</a> to your message.  <a href="/activity/?q=surplus" class="text-white">Check it out</a>
+                </div> 
+            </div>
+            <!-- // Item END -->
+            <!-- Item -->
+            <div class="item"> 
+                 
+                <span class="pull-left media-object innerLR half">
+                    <i class="fa fa-fw fa-question-circle"></i>
+                </span>
+                <div class="media-body text-left">
+                  You can  post updates from anywhere! Just tweet your message to @foodtradeHQ and we'll push your message to local businesses!
+                </div> 
+            </div> 
+            <div class="item"> 
+                 
+                <span class="pull-left media-object innerLR half">
+                    <i class="fa fa-fw fa-question-circle"></i>
+                </span>
+                <div class="media-body text-left">
+                  See who's checking you out by clicking on your account icon at the top of the page and selecting "Who's visited my profile"
+                </div> 
+            </div>  
+
+        </div> 
+    </div>
+
     <div id="updates"> 
     </div><!-- updates -->
 
-              <div id="didyouknow" class="carousel slide"> 
-                  <!-- Items -->
-                  <div class="carousel-inner">
-                      <!-- Item -->
-                      <div class="item active"> 
-                           
-                          <span class="pull-left media-object">
-                              <i class="fa fa-fw fa-question-circle"></i>
-                          </span>
-                          <div class="media-body text-left">
-                              If you would like to find or offer surplus or gluts, just use as <a href="/activity/?q=surplus">#surplus</a> to your message.  <a href="/activity/?q=surplus" class="text-white">Test it out</a>
-                          </div> 
-                      </div>
-                      <!-- // Item END -->
-                      <!-- Item -->
-                      <div class="item"> 
-                           
-                          <span class="pull-left media-object">
-                              <i class="fa fa-fw fa-question-circle"></i>
-                          </span>
-                          <div class="media-body text-left">
-                            You can  post updates from anywhere! Just tweet your message to @foodtradeHQ and we'll push your message to local businesses!
-                          </div> 
-                      </div> 
-
-                  </div> 
-              </div>
     </div>
   </div>
 
