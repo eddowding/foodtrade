@@ -196,7 +196,6 @@ class GeneralSearch():
         return query_string
 
     def get_result(self):
-        self.get_latest_updates()
         query_string = self.get_query_string()
 
 
