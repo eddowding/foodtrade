@@ -74,6 +74,7 @@ class GeneralSearch():
 
         
         pipeline = []
+        pre_match = {}
         if time_stamp!=None:
             pre_match = {'updates':{"$elemMatch":{'time_stamp':{"$gt":int(time_stamp)},"deleted":0}}}
             post_match = {'updates.time_stamp':{"$gt":int(time_stamp)},"updates.deleted":0}

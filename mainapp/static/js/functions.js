@@ -81,13 +81,13 @@ function get_box_profile(user)
 	content += '</div>   ';
 	content += '</div> ';
 	content += '<div class="timeline-bottom innerTB half small border-top clearfix">';
-	content += '<a href="http://maps.google.com/maps?saddr=51.4529956141,-2.62451568043&amp;daddr=51.454513,-2.58791" target="_blank" data-placement="top" data-toggle="tooltip" class="pull-left" rel="tooltip" title="" data-original-title="Get directions"> ';
+	content += '<a href="http://maps.google.com/maps?saddr='+Search.filters.profile.lat+','+Search.filters.profile.lng+'&amp;daddr='+user.latlng.coordinates[1]+','+user.latlng.coordinates[0]+'" target="_blank" data-placement="top" data-toggle="tooltip" class="pull-left" rel="tooltip" title="" data-original-title="Get directions"> ';
 	content += '<span class="hidden-sm hidden-xs truncate100 address">';
 	content += '<i class="fa fa-map-marker fa-fw"></i>';
 	content += user.address;
 	content += '</span>';
 	content += '</a> ';
-	content += '<a href="http://maps.google.com/maps?saddr=51.4529956141,-2.62451568043&amp;daddr=51.4536248,-2.6241012" target="_blank" data-placement="top" data-toggle="tooltip" class="pull-right" rel="tooltip" title="" data-original-title="Get directions"> ';
+	content += '<a href="http://maps.google.com/maps?saddr='+Search.filters.profile.lat+','+Search.filters.profile.lng+'&amp;daddr='+user.latlng.coordinates[1]+','+user.latlng.coordinates[0]+'" target="_blank" data-placement="top" data-toggle="tooltip" class="pull-right" rel="tooltip" title="" data-original-title="Get directions"> ';
 	content += '<i class="fa fa-location-arrow fa-fw"></i> '+user.distance+' miles  ';
 	content += '</a>';
 	content += '</div>  ';
@@ -144,7 +144,7 @@ function get_box_update(update)
 	content +='</div>';
 	content +='</div> ';
 	content +='<div class="timeline-bottom small border-top clearfix">';
-	content +='<a href="http://maps.google.com/maps?saddr='+update.latlng.coordinates[0]+',-'+update.latlng.coordinates[1]+'&amp;daddr=51.454513,-2.58791" target="_blank" data-placement="top" data-toggle="tooltip" class="pull-right" rel="tooltip" title="" data-original-title="Get directions"> ';
+	content +='<a href="http://maps.google.com/maps?saddr='+Search.filters.market.lat+','+Search.filters.market.lng+'&amp;daddr='+update.latlng.coordinates[1]+','+update.latlng.coordinates[0]+'" target="_blank" data-placement="top" data-toggle="tooltip" class="pull-right" rel="tooltip" title="" data-original-title="Get directions"> ';
 	content +='<span class="hidden-sm hidden-xs truncate100 address">';
 	content +='<i class="fa fa-map-marker fa-fw"></i>';
 	content += update.address;

@@ -156,10 +156,13 @@ setTimeout(function() {
                       }
                       content += "</div> ";
                       content += "<div class='border-top innerT'> ";
-                      content += "<p class='small text-center'>";
-                      content += "<i class='fa fa-comments fa-fw'></i>";
-                      content += "<a href='#'>See all 3 replies</a>";
-                      content += "</p>";
+                      if(result.replies_count>0)
+                      {
+                        content += "<p class='small text-center'>";
+                        content += "<i class='fa fa-comments fa-fw'></i>";
+                        content += "<a href='#'>See all "+result.replies_count+" replies</a>";
+                        content += "</p>";
+                      }
                       content += "<input class='form-control input-sm enterhandler reply_input' data-tweet-id='"+result.updates.tweet_id+"' data-main='main' type='text' placeholder='Reply to "+result.username+"'  data-toggle='market-reply'  data-mentions='"+result.username+"'> ";
                       content += "</div>";
                       content += "</div>";
