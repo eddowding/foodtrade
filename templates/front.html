@@ -23,7 +23,7 @@
           <button class="btn btn-default" style="background: #fff;font-size: 30px; border-radius: 0 10px 10px 0; padding-bottom: 7px;" type="submit"><i class="fa fa-search"></i></button>  
         </span> 
       </div>
-      <p class="lead text-white" id="proof">Join {{user_count.business_count}}  businesses,  {{user_count.organisation_count}} organisations, and {{user_count.individual_count}} people in creating a better food system. So far, we've made {{total_activity|add:total_replies|add:total_connections}} exchanges.
+      <p class="lead text-white" id="proof">Join {{user_count.business_count}}  businesses,  {{user_count.organisation_count}} organisations, and {{user_count.individual_count}} people in creating a better food system. So far, we've made {{total_activity|add:total_replies|add:total_connections}} new connections.
       </p>
 
       <div class="text-center" id="joinButton">
@@ -63,8 +63,16 @@
   </div>
   <div class="col-sm-5 col-sm-offset-1">
   <h2>Matchmaking companies</h2>
-  <p>fdsjfkljasdfkjas dajsdfhla sdfh dssd
-  </p>
+  <div class="lead">
+     <ul style="margin-left: 0; margin-bottom: 20px;">
+       <li>Find new business</li>  
+       <li>Showcase your produce, suppliers, &amp; stockists</li> 
+       <li>Trade in real-time just by sending a tweet</li>  
+       <li>Works for buying, selling, surplus, and more</li>
+       <li>We don't take a cut of your sales</li>  
+     </ul> 
+  </div>
+
   <div class=" " >
               <ul class="fa-ul text-left lead" style="display: inline-block; color: #447A23;">
                 <li>
@@ -108,232 +116,82 @@
 <div class="row showcase">
   <div class="col-sm-5 col-sm-offset-1">
   <h2>Connecting people</h2>
-  <p>fdsjfkljasdfkjas dajsdfhla sdfh dssd
-  </p>
+    <div class="lead"> 
+       <ul style="margin-left: 0; margin-bottom: 20px;">
+         <li>Find the best local suppliers</li>  
+         <li>Trade your garden surplus</li>  
+         <li>Vouch for for great food</li> 
+         <li>Map your local food web</li>   
+       </ul> 
+       <p>
+
+For individuals
+
+    100% free for individuals, forever
+    Find businesses, new schemes, and join local groups
+    Trade surpluses with others nearby
+
+By discovering the story behind your food, you can contribute to the health of your family, friends and community. Share surplus home grown food and vouch for your favourite places to eat.
+</p>
+    </div>
+    <p style="margin-left: 20px;">
+      <a href="{% provider_login_url "twitter" process="login" %}"  class="btn btn-primary" style="font-size: 24px; text-shadow: 1px 1px 1px #444 !important; line-height: 0.7; padding: 10px; text-align: left;">
+      <strong>Join as an individual</strong><br />
+      <small style="font-size: 12px; font-weight: normal;">No credit card required</small></a> 
+      <a href="/pages/individual"  class="btn btn-primary " style="font-size: 20px; background: none; color: rgba(255,255,255,1); border: 1px solid rgba(255,255,255,0.7); font-weight: 200; ">Learn more</a> 
+    </p>
   </div>
   <div class="col-sm-4 col-sm-offset-1">
-    <img src="/static/images/map.png" class="img-responsive img-thumbnail" />
+    <img src="http://farm5.staticflickr.com/4032/4620044329_dd3bc8cca1_o.jpg" class="img-responsive img-thumbnail" />
   </div>
 </div>
- 
-   map your food web
-   trade with a tweet
-   search and connect
-   0% cut
-   great for real time, hard to find, 
-   surplus - food charrites
 
+<div class="row showcase"> 
+  <div class="col-sm-3 col-sm-offset-1">
+    <img src="/static/images/redpoll.jpg" class="img-responsive img-thumbnail" />
+  </div>  
+  <div class="col-sm-5 col-sm-offset-1">
+  <h2>Championing organisations</h2>
+    <div class="lead"> 
+       <ul style="margin-left: 0; margin-bottom: 20px;">
+         <li>Find the best local suppliers</li>  
+         <li>Trade your garden surplus</li>  
+         <li>Vouch for for great food</li> 
+         <li>Map your local food web</li>   
+       </ul> 
+       <p>
+For organisations
 
+    No credit card needed to get started
+    Free for life for most groups
 
-<div class="row clearfix">
-  <div class="col-sm-12">
-
-    <div  style="padding: 40px;">
-      <div class="lead">
-         <h1 style="margin-left: 5px; margin-bottom: 10px;">Meet your match</h1>
-         <ul style="margin-left: 0; margin-bottom: 20px;">
-           <li>Find new business</li>  
-           <li>Showcase your produce, suppliers, &amp; stockists</li> 
-           <li>Trade in real-time just by sending a tweet</li>  
-           <li>Works for buying, selling, surplus, and more</li>
-           <li>We don't take a cut of your sales</li>  
-         </ul> 
-      </div>
-
-      
-
-      <blockquote class="clearfix" style="border:0; ">
-        <span class=" text-left" style="font-size:16px; color: #fff; font-family: georgia; font-style: italic;">
-      “This technology could change the way our food system operates” 
-      </span>
-
-      <span class="pull-right " style="font-size:14px; color: #fff; font-family: georgia; font-style: italic;">
-      &mdash; HRH Prince Charles 
-      </span> 
-      </blockquote> 
-     
+Certifiers, community groups, networks, awards or public sector. We want to showcase your story, offering you the credentials you deserve and connecting you with the right people.
+</p>
     </div>
-
-
-    <div   style="padding: 40px;">
-      <div class="lead">
-         <h1 style="margin-left: 5px; margin-bottom: 10px;">Discover &amp; swap</h1>
-         <ul style="margin-left: 0; margin-bottom: 20px;">
-           <li>Find the best local suppliers</li>  
-           <li>Trade your surplus</li>  
-           <li>Vouch for for great food</li> 
-           <li>Map your food web</li>   
-         </ul> 
-      </div>
-
-      <p style="margin-left: 20px;">
-        <a href="{% provider_login_url "twitter" process="login" %}"  class="btn btn-primary" style="font-size: 24px; text-shadow: 1px 1px 1px #444 !important; line-height: 0.7; padding: 10px; text-align: left;">
-        <strong>Join as an individual</strong><br />
-        <small style="font-size: 12px; font-weight: normal;">No credit card required</small></a> 
-        <a href="/pages/individual"  class="btn btn-primary " style="font-size: 20px; background: none; color: rgba(255,255,255,1); border: 1px solid rgba(255,255,255,0.7); font-weight: 200; ">Learn more</a> 
-      </p>
-
-      <blockquote class="clearfix" style="border:0; ">
-        <span class=" text-left" style="font-size:16px; color: #fff; font-family: georgia; font-style: italic;">
-      “This technology could change the way our food system operates” 
-      </span>
-
-      <span class="pull-right " style="font-size:14px; color: #fff; font-family: georgia; font-style: italic;">
-      &mdash; HRH Prince Charles 
-      </span> 
-      </blockquote> 
-    </div> 
-
-
-  </div><!-- col -->
-</div><!-- row -->
-
-
-
-
-
- 
-
-<div class="container-responsive block-center  ">
-
-
-<div class="row equal innerAll" id="wiifm">
-  <div class="col-md-4">
-      <!-- Thumbnail -->
-      <div class="thumbnail widget-thumbnail"> 
-          <div style="background-image: url('http://farm5.staticflickr.com/4032/4620044329_dd3bc8cca1_o.jpg'); min-height:200px; background-size: cover; background-repeat: no-repeat; background-position: center center;">
-          </div>
-          <div class="caption">
-
-            <div class="text-center">
-            <h2 class="light margin0">For companies</h2>
-              
-            </div>
-            <div class="text-center" >
-              <ul class="fa-ul text-left" style="display: inline-block; color: #447A23;">
-                <li>
-                    <span class="fa fa-li fa fa-check"></span>
-                    No credit card needed to get started 
-                </li> 
-                <li>
-                    <span class="fa fa-li fa fa-check"></span>
-                    Trade effortlessly with local companies
-                </li>
-                <li>
-                    <span class="fa fa-li fa fa-check"></span>
-                    Don't miss out on local business opportunities 
-                </li>
-              </ul>
-              </div>
-
-            <div class=" ">
-                <p>  
-                We make it easy and economical to make smarter decisions; connecting you with new suppliers or stockists, resources, market intelligence, or a heap of hungry folk ready to eat.
-
-                </p>
-              </div>
- 
-              <div class="text-center">
-              <a href="{% provider_login_url "twitter" process="login" %}"  class="btn btn-primary" ><strong>Get started &raquo;</strong></a> 
-              <a href="/pages/business" class="btn btn-stroke" >Learn more &raquo;</a>
-              </div>
-
- 
-          </div>
-      </div>
-      <!-- // Thumbnail END -->
-      </div>
-
-
-  <div class="col-md-4">
-      <!-- Thumbnail -->
-      <div class="thumbnail widget-thumbnail"> 
-          <div style="background-image: url('/static/images/redpoll.jpg'); min-height:200px; background-size: cover; background-repeat: no-repeat; background-position: center center; ">
-          </div>
-          <div class="caption">
-
-            <div class="text-center">
- 
-            <h2 class="light margin0">For organisations</h2>
-            </div>
-            <div class="text-center" >
-              <ul class="fa-ul text-left" style="display: inline-block; color: #447A23;">
-                <li>
-                    <span class="fa fa-li fa fa-check"></span>
-                    No credit card needed to get started 
-                </li>  
-                <li>
-                    <span class="fa fa-li fa fa-check"></span>
-                    Free for life for most groups
-                </li>  
-              </ul>
-              </div>
-
-            <div class="">
-                <p>  
-                Certifiers, community groups, networks, awards or public sector. We want to showcase your story, offering you the credentials you deserve and connecting you with the right people. 
-                </p>
-              </div>
-  
-              <div class="text-center">
-              <a href="{% provider_login_url "twitter" process="login" %}"  class="btn btn-primary" ><strong>Get started &raquo;</strong></a> 
-              
-              <a href="/pages/business" class="btn " >Learn more &raquo;</a>
-              </div>
-
- 
-          </div>
-      </div>
-      <!-- // Thumbnail END -->
-      </div>
-
-      
-
-      <div class="col-md-4">
-      <!-- Thumbnail -->
-      <div class="thumbnail widget-thumbnail"> 
-          <div style="background-image: url('/static/images/pot.jpg'); min-height:200px; background-size: cover; ">
-          </div>
-          <div class="caption">
-          <div class="text-center">
-             
-            <h2 class="light margin0">For individuals</h2>
-            </div>
-            <div class="text-center">
-              <ul class="fa-ul text-left" style="display: inline-block; color: #447A23">
-                <li>
-                    <span class="fa fa-li fa fa-check"></span>
-                    100% free for individuals, forever
-                </li> 
-                <li>
-                    <span class="fa fa-li fa fa-check"></span>
-                    Find businesses, new schemes, and join local groups
-                </li>
-                <li>
-                    <span class="fa fa-li fa fa-check"></span>
-                    Trade surpluses with others nearby
-                </li>
-              </ul>
-              </div>
-            <div class="">
-            <p>By discovering the story behind your food, you can contribute to the health of your family, friends and community. Share surplus home grown food and vouch for your favourite places to eat. 
-
-             </p>
-             </div>
-
-              
-            <div class="text-center">
-
-              <a href="{% provider_login_url "twitter" process="login" %}"  class="btn btn-primary" ><strong>Get started &raquo;</strong></a> 
-
-              <a href="http://www.foodtrade.com/pages/individuals" class="btn">Learn more &raquo;</a>
-            </div>
-
-          </div>
-      </div>
-      <!-- // Thumbnail END -->
+    <p style="margin-left: 20px;">
+      <a href="{% provider_login_url "twitter" process="login" %}"  class="btn btn-primary" style="font-size: 24px; text-shadow: 1px 1px 1px #444 !important; line-height: 0.7; padding: 10px; text-align: left;">
+      <strong>Join as an individual</strong><br />
+      <small style="font-size: 12px; font-weight: normal;">No credit card required</small></a> 
+      <a href="/pages/individual"  class="btn btn-primary " style="font-size: 20px; background: none; color: rgba(255,255,255,1); border: 1px solid rgba(255,255,255,0.7); font-weight: 200; ">Learn more</a> 
+    </p>
   </div>
 </div>
+
+
+<div class="row">
+  <div class="col-md-8 col-md-offset-2 col-sm-8 col-sm-offset-2">
+    <blockquote class="quote clearfix">
+    <p>
+    “This technology could change the way our food system operates” 
+    </p>
+
+    <cite>
+    &mdash; HRH Prince Charles 
+    </cite> 
+    </blockquote> 
+  </div>
+</div>
+  
 
 <div class="row text-center showcase logos">
 <h2>Partners &amp; Supporters</h2>
