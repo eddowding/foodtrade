@@ -164,11 +164,15 @@
     <script>
       less = {
         env: "development", 
-        poll: 100
+        poll: 50
       };
     </script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/less.js/1.7.1/less.min.js"></script>  
+<<<<<<< HEAD
     <script>/*less.watch();*/</script>
+=======
+    <script>//less.watch();</script>
+>>>>>>> 551b1457146ea313da26477c92bb48cc78480bae
 
     <script src="{% static "assets/components/plugins/browser/ie/ie.prototype.polyfill.js" %}"></script>
     <script>
@@ -525,7 +529,7 @@
                   <p class="help-block">Total, or per unit. Inc &pound;/$/&euro;</p>
                 </div>
                 <div class="col-xs-6">  
-                  <input type="text" class="form-control" name="date_val" id="expire_on" placeholder="When?"> 
+                  <input type="text" class="form-control" id="expire_on" placeholder="When?"> 
                   <p class="help-block" id="date_help">try 'next Friday', '8 sept 17'</p>
                 </div>
               </div>
@@ -847,13 +851,6 @@
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
-
-
-
-
-
- 
-
 
     <!-- Bootstrap core JavaScript
     ================================================== -->
@@ -1242,9 +1239,6 @@ $(function() {
 <!-- // TOUR SCRIPT --> 
 
    <script>
-   $(document).ready(function(){
-
-
 //Include the UserVoice JavaScript SDK (only needed once on a page)
 UserVoice=window.UserVoice||[];(function(){var uv=document.createElement('script');uv.type='text/javascript';uv.async=true;uv.src='//widget.uservoice.com/HloB2aRxdk7fbhWMOI5AlQ.js';var s=document.getElementsByTagName('script')[0];s.parentNode.insertBefore(uv,s)})();
 
@@ -1268,8 +1262,6 @@ UserVoice.push(['addTrigger', '#id', { mode: 'contact' }]);
 
 //Autoprompt for Satisfaction and SmartVote (only displayed under certain conditions)
 UserVoice.push(['autoprompt', {}]);
-
-});
 </script>
 
 

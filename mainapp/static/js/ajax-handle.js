@@ -73,7 +73,7 @@ ajax_request("third_party_delete_org", 'org_ajax', {data: "{'memberuid': " + mem
 function org_ajax(data){
 $('.search-choice').remove();
 $("#org_chosen").val('').trigger('chosen:updated');
-$('#organisations_list').html(data);
+$('#groupsGrid').html(data);
 }
 function conn_handler(value, prof_id, conn_id)
 {
@@ -108,12 +108,13 @@ function conn_handler(value, prof_id, conn_id)
 
 				}
 				else if(value == "close_buy_from"){
-					
-					ajax_request("profile_user_delete_conn", 'stockists_ajax', {conn_data: "{'prof_id': " +prof_id +", 'status': 'buy_from'" + ", 'conn_id': " + conn_id +"}"});
+						ajax_request("profile_user_delete_conn", 'stockists_ajax', {conn_data: "{'prof_id': " +prof_id +", 'status': 'buy_from'" + ", 'conn_id': " + conn_id +"}"});
+						/*ajax_request("del_connection", 'stockists_ajax', {conn_data: "{'prof_id': " +prof_id +", 'status': 'buy_from'" + ", 'conn_id': " + conn_id +"}"});*/
+
 				}
-				else if(value == "close_sell_to"){
-					
+				else if(value == "close_sell_to"){				
 					ajax_request("profile_user_delete_conn", 'suppliers_ajax', {conn_data: "{'prof_id': " +prof_id +", 'status': 'sell_to'" + ", 'conn_id': " + conn_id +"}"});
+					/*ajax_request("del_connection", 'suppliers_ajax', {conn_data: "{'prof_id': " +prof_id +", 'status': 'sell_to'" + ", 'conn_id': " + conn_id +"}"});*/
 				}				
 	}
 	else{
@@ -231,13 +232,19 @@ function stockists_ajax(data){
 	if(data['status']=='ok'){
 		if(data['action']=='delete'){
 			$('[data-title="' + data['username'] + '"]').parent().remove()
-			remove_con(data['username']);
+			//delete the row
+        	myfootable.removeRow(footable_row);
+        	$('#b_con_no').html(data['b_conn_no']);
+			$('#c_con_no').html(data['c_conn_no']);	
+			remove_con(data['username']);		
 		}
 		else{
 			$('.search-choice').remove();
 			current_html = $('#mCSB_2_container tbody').html();
 			new_html =  data['html'] + current_html;
 			$('#mCSB_2_container tbody').html(new_html);	
+			$('#suppliersTable').trigger('footable_initialize');
+			$('#suppliersTable').trigger('footable_resize');			
 		}
 	}
 }
@@ -275,29 +282,36 @@ function get_next_page_conn_success(data){
 		else{
 			get_next_page_c_conn(data['username'], data['next_page_num']);				
 		}
+		$('#suppliersTable').trigger('footable_initialize');
+		$('#stockistsTable').trigger('footable_resize');
+		$('#suppliersTable tbody').trigger('footable_initialize');
+		$('#suppliersTable').trigger('footable_resize');
 	}
 }
 
 
 function suppliers_ajax(data){
 	// clear selected choice	
-	try{
 		data=jQuery.parseJSON(data);
 		if(data['action'] == 'delete'){
 			$('[data-title="' + data['username'] + '"]').parent().remove()
-			map.removeLayer(control_dict[data['username']]);
-			map.removeLayer(lines_dic[data['username']]);
-			new_connections = connections;
+			new_connections = connections;						
+			//delete the row
+        	myfootable.removeRow(footable_row);
+        	$('#b_con_no').html(data['b_conn_no']);
+			$('#c_con_no').html(data['c_conn_no']);	       	
+			remove_con(data['username']);
 		}		
-	}
-	catch(err){
-		$('.search-choice').remove();
-		// $("#buss_chosen").val('').trigger('chosen:updated');
-		current_html = $('#mCSB_3_container tbody').html();
-		new_html =  data['html'] + current_html;
-		$('#mCSB_3_container tbody').html(new_html);	
-	}
-		
+		else{
+			$('.search-choice').remove();
+			// $("#buss_chosen").val('').trigger('chosen:updated');
+			current_html = $('#mCSB_3_container tbody').html();
+			new_html =  data['html'] + current_html;
+			$('#mCSB_3_container tbody').html(new_html);	
+			$('#stockistsTable').trigger('footable_initialize');
+			$('#stockistsTable').trigger('footable_resize');
+			/*$('#stockistsTable tbody').trigger('footable_redraw');			*/
+		}
 }
 
 function create_conn(){
@@ -342,7 +356,7 @@ function webuy_food_ajax(data){
 $('.search-choice').remove();
 $("#webuy_select").val('').trigger('chosen:updated');
 $('#webuy_foods').html(data);
-var $container1 = $('#webuy_foods').isotope({itemSelector: '.food'});
+/*var $container1 = $('#webuy_foods').isotope({itemSelector: '.food'});*/
 }
 
 function recommend_food(logged_in_id, food_name, prof_id, username, my_this, we_buy){

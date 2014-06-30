@@ -115,6 +115,9 @@
        
 
       <p class="">{{description}}</p>  
+      {% if user.is_superuser %}
+        <a href="/editprofile/{{username}}/" class="btn btn-info btn-xs">Edit</a>
+      {% endif %}
 
     </div> 
   </div>
@@ -124,23 +127,21 @@
 
     
       <!-- EDIT / CONTACT -->
-      {% if user.is_superuser %}
-        <a href="/editprofile/{{username}}/" class="btn btn-primary ">Edit</a>
-      {% endif %}
-       
-      {% ifequal is_unknown_profile 'false' %}
-        {% ifequal profile_id user_id %}
-          <a href="/editprofile/{{userinfo.username}}" class="btn btn-info ">
-             Edit
-          </a>       
-        {% else %}
+        
+      
+      {% ifequal profile_id user_id %}
+        <a href="/editprofile/{{userinfo.username}}" class="btn btn-info btn-block btn-sm ">
+           Edit
+        </a>       
+      {% endifequal %}
+      
+      {% if request.user.is_authenticated %}
+        <button class="btn btn-primary text-center normal btn-block" data-toggle="modal" data-target="#modal_contact"><i class="fa fa-envelope-o fa-fw"></i> Contact</button>
+      {% endif %} 
 
-          {% if request.user.is_authenticated %}
-          <button class="btn btn-primary text-center normal btn-block" data-toggle="modal" data-target="#modal_contact"><i class="fa fa-envelope-o fa-fw"></i> Contact</button>
-          {% endif %}
-        {% endifequal %}
+      {% ifequal is_unknown_profile 'false' %}
       {% else %}
-        <button class="btn btn-primary "  data-toggle="modal" data-target="#modal_invite">Invite to connect</button> 
+        <button class="btn btn-primary btn-stroke btn-block"  data-toggle="modal" data-target="#modal_invite">Invite to connect</button> 
       {% endifequal %} 
       <!-- EDIT / CONTACT -->
 
@@ -166,7 +167,7 @@
 
           <!-- if logged in users = business --> 
           {% ifequal loggedin_signupas "Business" %} 
-            <div class="btn-group btn-block hidden-sm hidden-xs" data-toggle="buttons">
+            <div class="btn-group btn-block " data-toggle="buttons">
               <button class="btn btn-default btn-sm " style="background: url('{{userinfo.profileimg}}'); background-size: cover;width:10%;">&nbsp;</button>
               {% if logged_conn == "seller"  or logged_conn == "both" %}
                 <label class="btn btn-default active btn-sm" rel="tooltip" style="width:40%;" title="{{userinfo.full_name}} buys from {{name}}"> 
@@ -226,35 +227,17 @@
     </div> 
 
  
-  <div class="col-sm-2 ">
+  <div class="col-sm-2 hidden-xs">
     
-    <div class="innerAll hidden-md hidden-lg">
-    <!-- EDIT / CONTACT -->
-      {% if user.is_superuser %}
-        <a href="/editprofile/{{username}}/" class="btn btn-primary ">Edit</a>
-      {% endif %}
-       
-      {% ifequal is_unknown_profile 'false' %}
-        {% ifequal profile_id user_id %}
-          <a href="/editprofile/{{userinfo.username}}" class="btn btn-info ">
-             Edit 
-          </a>       
-        {% else %}
-          <button class="btn btn-primary text-center normal btn-block" data-toggle="modal" data-target="#modal_contact"><i class="fa fa-envelope-o fa-fw"></i> Contact</button>
-        {% endifequal %}
-      {% else %}
-        <button class="btn btn-primary " style="margin-top:40px;" data-toggle="modal" data-target="#modal_invite">Invite to connect</button> 
-      {% endifequal %} 
-      <!-- EDIT / CONTACT -->
-    </div>
+    
   
 
     <div class="innerAll "> 
 
     <!-- SHARE -->
  
-        <div class="btn-group  " >
-          <button type="button"  class="btn btn-default dropdown-toggle btn-sm" data-toggle="dropdown"  ><i class="fa fa-share-alt"></i> share</button>
+        <div class="btn-group btn-block" >
+          <button type="button"  class="btn btn-default btn-block dropdown-toggle normal" data-toggle="dropdown"  ><i class="fa fa-fw fa-share-alt text-black "></i> share</button>
             <ul class="dropdown-menu ">
              <li> <a href="#" class="" onclick="window.open(
               'https://www.facebook.com/sharer/sharer.php?s=100&amp;p[url]='+encodeURIComponent('{{ request.build_absolute_uri }}') +'&amp;p[images][0]='+encodeURIComponent('{{pic_url}}')+'&amp;p[title]='+encodeURIComponent('{{name}} on FoodTrade')+'&amp;p[summary]='+encodeURIComponent('Hey, see my profile on FoodTrade')+'&amp;u='+encodeURIComponent('{{ request.build_absolute_uri }}') +'&amp;t='+encodeURIComponent('{{name}} on FoodTrade'),
@@ -291,10 +274,11 @@
           </div>
 
           {% if request.user.is_authenticated %}
-          <div class="btn- group" data-toggle="buttons">
-            <label class="btn btn-default btn-sm fa fa-star-o {% if fav_profile %} active {% else %}{% endif %}">
-              <input type="checkbox" id="favourite_btn" {% if fav_profile %} checked="checked" {% endif %} onchange="save_favourites('{{profile_id}}', '{{user_id}}'); return null;"> 
-            </label>
+          <div class="btn-group btn-block" data-toggle="buttons">
+            <label class="btn btn-default btn-block  {% if fav_profile %} active {% else %}{% endif %}">
+              <input type="checkbox" id="favourite_btn" {% if fav_profile %} checked="checked" {% endif %} onchange="save_favourites('{{profile_id}}', '{{user_id}}'); return null;"> <i class="fa fa-star-o fa-fw text-black"></i> 
+              <span class="fav">Favourite</span>
+            </label> 
           </div>
           {% endif %}
 
@@ -309,8 +293,8 @@
 
 
 
-<div class="row innerT inner-2x">
-  <div class="  " id="bizInfo">
+<div class="row  ">
+  <div class="  " id="panelContainer">
  
 
 
@@ -443,7 +427,7 @@
     <div class="panel panel-default" id="panelSuppliers">
       <div class="panel-heading">
         <h3 class="panel-title">
-          <i class="fa fa-sign-in"></i> <strong>Buys from</strong> {{b_conn_no}} Suppliers
+          <i class="fa fa-sign-in"></i> <strong>Buys from</strong> <span id="b_con_no">{{b_conn_no}}</span> Suppliers
           {% if user.is_authenticated %}
             &middot; <a data-target="#addSupplier" data-toggle="collapse" class="small">Add one</a>
           {% endif %} 
@@ -523,7 +507,7 @@
           </td>
           <td > 
             {% if request.user.is_superuser or profile_id == user_id %}
-            <button type="button" class="close" aria-hidden="true" onclick="conn_handler('close_buy_from', {{profile_id}}, {{each.id}})">&times;</button> 
+            <button type="button" class="close" aria-hidden="true" data-content="{{profile_id}}, {{each.id}}">&times;</button> 
             {% endif %}
 
             <a href="/profile/{{each.username}}" class="black"><strong>{{each.name}}</strong></a> 
@@ -589,7 +573,7 @@
     <div class="panel panel-default" id="panelStockists">
       <div class="panel-heading">
         <h3 class="panel-title">
-          <i class="fa fa-sign-out"></i> <strong>Sells to </strong> {{c_conn_no}} Stockists
+          <i class="fa fa-sign-out"></i> <strong>Sells to </strong> <span id="c_con_no">{{c_conn_no}}</span> Stockists
           {% if user.is_authenticated %}
             &middot; <a data-target="#addStockist" data-toggle="collapse" class="small">Add one</a>
           {% endif %} 
@@ -670,7 +654,7 @@
           </td>
           <td> 
               {% if request.user.is_superuser or profile_id == user_id %}
-              <button type="button" class="close" aria-hidden="true" onclick="conn_handler('close_sell_to', {{profile_id}}, {{each.id}})">&times;</button> 
+              <button type="button" class="close" aria-hidden="true" data-content="{{profile_id}}, {{each.id}}">&times;</button> 
               {% endif %}
 
               <a href="/profile/{{each.username}}" class="black"><strong>{{each.name}}</strong></a> 
@@ -943,7 +927,7 @@
   </div>
   {% endif %}
 
-  <div class="panel-body" id="groupsGrid">
+  <div class="panel-body groupsGrid" id="">
  
     {% if user.is_authenticated %}
     {% else %}
@@ -954,7 +938,7 @@
       <div class="groupItem clearfix">
         <div class="text-center">
           <a href="/profile/{{each.username}}"><img src="{{each.photo}}" alt="{{each.name}}"
-          class="img-thumbnail img-responsive img-circle" style="width:73px; height:73px;" /></a>
+          class="img-thumbnail img-responsive img-circle" style="width:50px; height:50px;" /></a>
           <strong class="clearfix"><a href="/profile/{{each.username}}" class="text-black">{{each.name}}</a></strong> 
         </div>
         <p class='small'>{{each.description|truncatechars:80}}</p>
@@ -970,7 +954,7 @@
 
 
 
-<!-- DELIVERIES -->
+<!-- customers -->
 <div class="panel panel-default" id="panelCustomers">
   <div class="panel-heading">
     <div class="panel-title">
@@ -990,7 +974,7 @@
   <div class="panel-body">
     {% if user.is_authenticated %}
     {% else %} 
-      <p class="alert alert-warning"><a href="{% provider_login_url "twitter" process="login" %}" class="">Login</a> or <a href="{% provider_login_url "twitter" process="login" %}" class="">sign up free</a> to see where their customers live. Maybe they'll do home deliveries if you ask nicely! </p> 
+      <p class=""><a href="{% provider_login_url "twitter" process="login" %}" class="">Login</a> or <a href="{% provider_login_url "twitter" process="login" %}" class="">sign up free</a> to see where their customers live. Maybe they'll do home deliveries if there are enough people in your area? </p> 
     {% endif %}
 
      {% for each in customers %}
@@ -1404,10 +1388,6 @@
 
 $( document ).ready(function() {
 
- $('.mCustomScrollbar').mCustomScrollbar({
-    theme:"dark"
-});
-
 
   $("#myTags").tagit({
       placeholderText: 'Add tags, eg free-range',
@@ -1469,7 +1449,7 @@ $('#orgs_remote').on('click','.tt-suggestion', function(){
 });
 
 // adding stockists to business
-$(document).ready(function(){
+
     $('#panelSuppliers').on('click', '.tt-suggestion', function(){
     myvar = this;
     var business_id = this.getElementsByClassName('result-name')[0];
@@ -1483,14 +1463,14 @@ $(document).ready(function(){
       $('.tt-hint').val('');
     }
   });
-});
+
 
 $('#new_stockists_typeahead').on('blur', function(){
   $('#new_stockists_typeahead').val('');
 });
 
-$(document).ready(function(){
-    $('#panelStockists').on('click', '.tt-suggestion', function(){  
+
+$('#panelStockists').on('click', '.tt-suggestion', function(){  
       var business_id = this.getElementsByClassName('result-name')[0];
       var buss_var = $(business_id).attr('data-id');
       if(buss_var == 'search'){
@@ -1503,7 +1483,6 @@ $(document).ready(function(){
       }
 });
 
-});
 
 $('#new_suppliers_typeahead').on('blur', function(){
   $('#new_suppliers_typeahead').val('');
@@ -1639,7 +1618,7 @@ customers = {{customers_str | safe}};
         
      </script>
      <script type="text/javascript">
-      $('.ajaxContents').on('click',"[data-toggle=popover1]", function () {
+      $('#panelSuppliers').on('click',"[data-toggle=popover1]", function () {
         username = $(this).attr('data-title'); 
         if($(this).attr('data-trigger')!="manual")
         {
@@ -1668,6 +1647,7 @@ customers = {{customers_str | safe}};
 
      
       function get_business_counts_success(data){
+        showfoods ='True'; 
         data = jQuery.parseJSON(data);
         if (data['result']['banner_url'] != ''){          
             mytext = "<img src='" + data['result']['banner_url'] +  "'" + " title='" + data['result']['username'] + "' class='img-responsive'>";
@@ -1718,9 +1698,45 @@ customers = {{customers_str | safe}};
 
       var current_conn_page = {{conn_page_num|safe}};
       var buss_username = '{{buss_user|safe}}';
-      $(document).ready(function(){
-        get_next_page_b_conn(buss_username,current_conn_page + 1);
-        get_next_page_c_conn(buss_username,current_conn_page + 1);
-      });
+      {% if request.user.is_authenticated %}
+        $(document).ready(function(){
+          get_next_page_b_conn(buss_username,current_conn_page + 1);
+          get_next_page_c_conn(buss_username,current_conn_page + 1);
+        });
+      {% endif %}
+
+var footable_row = '';     
+var myfootable = '' ;
+control_dict = control_dict;
+lines_dic = lines_dic;
+$('#suppliersTable').footable().on('click', '.close', function(e) {
+        e.preventDefault();
+        //get the footable object
+        myfootable = $('#suppliersTable').data('footable');
+
+        //get the row we are wanting to delete
+        footable_row = $(this).parents('tr:first');
+        var content = this.attributes['data-content'].value;
+        var content_split = content.split(',');
+        var rel_1 = content_split[0];
+        var rel_2 = content_split[1]
+        conn_handler('close_buy_from', rel_1,rel_2);
+
+});
+
+$('#stockistsTable').footable().on('click', '.close', function(e) {
+        e.preventDefault();
+        //get the footable object
+        myfootable = $('#stockistsTable').data('footable');
+
+        //get the row we are wanting to delete
+        footable_row = $(this).parents('tr:first');
+        var content = this.attributes['data-content'].value;
+        var content_split = content.split(',');
+        var rel_1 = content_split[0];
+        var rel_2 = content_split[1]
+        conn_handler('close_sell_to', rel_1, rel_2);
+});
+      /*conn_handler('close_buy_from', */
      </script>
  {% endblock %}

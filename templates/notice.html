@@ -100,10 +100,7 @@ Contact
             <div class="modal-header">
               <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
               <h4 class="modal-title" id="myModalLabel">Message </h4>
-              <div class="pull-right">
-                <a href="#" id="modalReply" style="margin-right: 4px" data-dismiss="modal"><i class="fa fa-reply"></i> Reply</a>
-                <a href="#" id="modalArchive"><i class="fa fa-archive" data-dismiss="click"></i> Archive</a> 
-              </div>
+             
             </div>
             <div class="modal-body">
             <div class="container-responsive">
@@ -131,7 +128,7 @@ Contact
 
 
 
-<div class="col-sm-10" >
+<div class="col-sm-12 innerAll inner-2x" >
   <ul class="nav nav-tabs">
     <li class="active"><a href="#all" onclick="toggle_notification('all')" data-toggle="tab" onclick="set_width()"> All <span class="badge" id = "spanAll">{{all_notification_count}}</span></a> </li>
 
@@ -141,44 +138,75 @@ Contact
   </ul>
 
  
-  <ul class="list-group" id="myNoticesLi"> 
+
+  <table id="myNoticesLi" class="table table-hover  footable toggle-arrow-circle-filled" id="email" data-filter="#filterEmail" data-filter-text-only="true" style="background: white;"> 
+    <thead class="hidden">
+        <tr> 
+          <th data-hide=""  >
+            img
+          </th>
+          <th data-hide=" " data-class="vcenter">
+            name
+          </th>
+          <th data-hide=" " data-toggle="true" >
+            content
+          </th>
+          <th data-hide=" ">
+            time ago
+          </th>  
+          <th data-hide="" data-class="vcenter">
+            reply
+          </th> 
+          <th data-hide=" ">
+            archive
+          </th>  
+        </tr>
+      </thead>
+
 
       {% for each_notification in notifications %}
-        <li id ="li{{each_notification.notification_id}}" class="clearfix list-group-item {% if each_notification.notification_view_status %} notice-transparent {% endif %}">
+        <tr id ="li{{each_notification.notification_id}}" class="{% if each_notification.notification_view_status %} notice-transparent {% endif %}">
  
-            <span class="col-sm-2">
+            <td>
             <img src="{{each_notification.notifying_user_profile.profile_img}}" style="width:25px;" />
+            </td>
+            <td>
             <strong>
               <a href="/profile/{{each_notification.notifying_user}}">
                 {{each_notification.notifying_user_profile.name}}
               </a>
             </strong>
-            </span>
+            </td>
 
-            <p class="col-sm-5">
-              <a href="#" onclick="view_message('{{each_notification.notifying_user_profile.name}}','{{each_notification.notifying_user_email}}', '{{each_notification.notification_message_full}}', '{{each_notification.notification_id}}', '{{each_notification.notifying_user_screenname}}')">
-                {{each_notification.notification_message}}
-              </a>
-            </p>
+            <td class="   "> 
+                {{each_notification.notification_message_full}} 
+            </td>
 
-            <p class="col-sm-3">
-              
-              <a href="#" onclick="reply_click('{{each_notification.notifying_user_screenname}}','{{each_notification.notifying_user_email}}', '{{each_notification.notification_id}}', '{{each_notification.notifying_user_profile.name}}')" style="margin-right: 4px"><i class="fa fa-reply"></i> Reply</a>
 
-              <a href="#" onclick="archive_click('{{each_notification.notification_id}}','{{each_notification.notifying_user}}')"><i class="fa fa-archive"></i> Archive</a>  
-
-            </p>
-
-            <p class="col-sm-2">
-            <small class="text-muted text-right">
+            <td>
+            <small class="text-right">
               <span class="glyphicon glyphicon-time"></span>
-              {{each_notification.time_elapsed}} ago
+              {{each_notification.time_elapsed}}
             </small>
-            </p>
+            </td>
+
+            <td>
+              
+              <a href="#" onclick="reply_click('{{each_notification.notifying_user_screenname}}','{{each_notification.notifying_user_email}}', '{{each_notification.notification_id}}', '{{each_notification.notifying_user_profile.name}}')" style="margin-right: 4px"><i class="fa fa-reply"></i></a>
+            </td>
+            <td>
+              <a href="#" onclick="archive_click('{{each_notification.notification_id}}','{{each_notification.notifying_user}}')"><i class="fa fa-archive"></i></a>  
+
+            </td>
+
+            
+
         
-        </li>
+        </tr>
       {% endfor %}  
-      </ul>     
+      </table>     
+
+ 
         <ul class="pagination pull-left mymargin">
         </ul>   
       
@@ -318,60 +346,54 @@ function parse_notices_ajax(data){
   var str ='';
   $('#myNoticesLi').html('');
   for (each_notification in notices['notifications']){
-    str = str + '<li id ="li'; 
-    str = str + String(notices['notifications'][each_notification].notification_id) +'" class="clearfix list-group-item '; 
+    str = str + '<tr id ="li'; 
+    str = str + String(notices['notifications'][each_notification].notification_id) +'" class=" '; 
     if (notices['notifications'][each_notification].notification_view_status == 'true'){
       str = str + 'notice-transparent';
     }
     str = str + '">';
  
-    str = str + '<span class="col-sm-2"><img src="';
+    str = str + '<td><img src="';
     str = str + String(notices['notifications'][each_notification].notifying_user_profile.profile_img);
     str = str +  '" style="width:25px;" />';
+    str = str + '</td><td>'
     str = str + '<strong>';
     str = str + '<a href="/profile/' + String(notices['notifications'][each_notification].notifying_user) + '">';
     str = str + String(notices['notifications'][each_notification].notifying_user_profile.name);
     str = str + '</a>';
     str = str + '</strong>';
-    str = str + '</span>';
+    str = str + '</td>';
 
-    str = str + '<p class="col-sm-5">';
-    str = str + '<a href="#" onclick="view_message(\''; 
-    str = str+ String(notices['notifications'][each_notification].notifying_user_profile.name) + '\',\''; 
-    str = str + String (notices['notifications'][each_notification].notifying_user_email) + '\',\'';
-    str = str + String( notices['notifications'][each_notification].notification_message_full) + '\',\'';
-    str = str + String( notices['notifications'][each_notification].notification_id) + '\',\'';        
-    str = str + String(notices['notifications'][each_notification].notifying_user_screenname) + '\')">';
-    str = str + String(notices['notifications'][each_notification].notification_message);
-    str = str + '</a>';
-    str = str + '</p>';
-    str = str + '<p class="col-sm-3">';
-              
+    str = str + '<td>'; 
+    str = str + String(notices['notifications'][each_notification].notification_message_full);
+    str = str + '</td>';
+
+    str = str + '<td>';
+    str = str + '<small class="text-right">';
+    str = str + '<span class="glyphicon glyphicon-time"></span>';
+    str = str + String(notices['notifications'][each_notification].time_elapsed);
+    str = str + '</small>';
+    str = str + '</td><td>';
     str = str + '<a href="#" onclick="reply_click(\'';
     str = str + String(notices['notifications'][each_notification].notifying_user_screenname) + '\',\'';
     str = str +  String(notices['notifications'][each_notification].notifying_user_email)+ '\',\'';str = str + String(notices['notifications'][each_notification].notification_id) + '\',\'';
-    str = str + String(notices['notifications'][each_notification].notifying_user_profile.name) + '\')" style="margin-right: 4px"><i class="fa fa-reply"></i> Reply</a>';
-    if (not_type == 'all'){
+    str = str + String(notices['notifications'][each_notification].notifying_user_profile.name) + '\')"><i class="fa fa-reply"></i></a>';
+
+    str = str + '</td><td>';
+    if (not_type == 'unread'){
     str = str + '<a href="#" onclick="archive_click(\'' + String(notices['notifications'][each_notification].notification_id) + '\',\''; 
-    str = str + String(notices['notifications'][each_notification].notifying_user) + '\')"><i class="fa fa-archive"></i> Archive</a>';
+    str = str + String(notices['notifications'][each_notification].notifying_user) + '\')"><i class="fa fa-archive"></i></a>';
     }
     else if (not_type == 'archive') {
     str = str + '<a href="#" onclick="un_archive_click(\'' + String(notices['notifications'][each_notification].notification_id) + '\',\''; 
-    str = str + String(notices['notifications'][each_notification].notifying_user) + '\')"><i class="fa fa-archive"></i> Un-Archive</a>';
+    str = str + String(notices['notifications'][each_notification].notifying_user) + '\')"><i class="fa fa-envelope-o"></i> Move to inbox</a>';
     }
-
-
-    str = str + '</p>';
-
-    str = str + '<p class="col-sm-2">';
-    str = str + '<small class="text-muted text-right">';
-    str = str + '<span class="glyphicon glyphicon-time"></span>';
-    str = str + String(notices['notifications'][each_notification].time_elapsed) + 'ago';
-    str = str + '</small>';
-    str = str + '</p>';
-    str = str + '</li>';
+    str = str + '</td></tr>';
   }
   $('#myNoticesLi').html(str);
+  
+  var footable = $('.footable').data('footable');
+  footable.redraw();
 }
 function view_message(notifying_user_profile_name , notifying_user_email, notification_message, notification_id,  notitying_screen_name){
   $('#btnModalView').click();
