@@ -36,20 +36,35 @@ class GeneralSearch():
         self.org_filters = params['org']
         self.biz_type_filters = params['biz']
         self.food_filters = json.loads(params['food_filters'])
-        self.radius = 160934000
+        self.radius = 160934
         self.max_distance = 0.15853908597
         self.user = params['up']
 
     def get_request(self,request):
         search_request = {}
         search_request['keyword'] = request.POST.get("q",request.GET.get("q","")) 
+        if request.user.is_authenticated():
 
-        up_object = UserProfile()
-        up = up_object.get_profile_by_id(request.user.id)
 
-        default_location = up['address']
-        default_lng = up['latlng']['coordinates'][0]
-        default_lat = up['latlng']['coordinates'][1]
+            up_object = UserProfile()
+            up = up_object.get_profile_by_id(request.user.id)
+
+            default_location = up['address']
+            default_lng = up['latlng']['coordinates'][0]
+            default_lat = up['latlng']['coordinates'][1]
+
+        
+        else:
+            x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+            if x_forwarded_for:
+                ip = x_forwarded_for.split(',')[0]
+
+            else:
+                ip = request.META.get('REMOTE_ADDR')
+            location_info = get_addr_from_ip(ip)
+            default_lon = float(location_info['longitude'])
+            default_lat = float(location_info['latitude'])
+            default_location = "unknown"
 
         search_request['location'] = request.POST.get("location",request.GET.get("location",default_location))
 
@@ -118,14 +133,14 @@ class GeneralSearch():
             reg_expression = {"$regex": keyword_like, '$options': '-i'}
 
 
-#### Profile Search ######
+        #### Profile Search ######
             if self.search_for != "produce":
                 search_variables = ["business_org_name", "name", "description", "username", "nick_name"]
             
                 
                 for search_item in search_variables:
                     or_conditions.append({search_item:reg_expression})
-####### Searches keyword as food
+        ####### Searches keyword as food
 
             else:
                 food_attributes = ["food_name","description","food_tags"]

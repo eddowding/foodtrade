@@ -348,8 +348,8 @@ function add_food(prof_id, we_buy){
 function food_ajax(data){
 $('.search-choice').remove();
 $("#myselect").val('').trigger('chosen:updated');
-$('#foods').html(data);
-var $container1 = $('#foods').isotope({itemSelector: '.food'});
+$('#ajax_food_tr').html(data);
+// var $container1 = $('#foods').isotope({itemSelector: '.food'});
 }
 
 function webuy_food_ajax(data){
