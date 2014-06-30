@@ -44,8 +44,16 @@ s
     /* fix rtl for demo */
     .chosen-rtl .chosen-drop { left: -9000px; }
   </style>
+ 
 
- <div class="col-md-6 col-sm-7" id="single">
+{% if loc.lat == -82.86275189999999 and loc.lon == -135.10000000000002 %}
+{% else %}
+<div class="col-sm-12">
+  <div class="map-biz" id="map"></div> 
+</div>
+{% endif %}
+
+ <div class="col-sm-12" id="single">
 
     <div class="widget">
       <div class="widget-body innerAll inner-4x" style="background:url('{{banner_url}}'); background-size: cover;">
@@ -226,12 +234,11 @@ s
 </div></div></div></div>
 
 
-</div> 
-
-
-<div class="col-md-6 col-sm-5 {% if loc.lat == -82.86275189999999 and loc.lon == -135.10000000000002 %} hidden {% endif %}">
-  <div style="position: fixed; width:50%; height: 100%; " id="map"></div> 
 </div>
+</div>
+
+
+
 
 
 <!-- modals -->
