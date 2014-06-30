@@ -9,10 +9,10 @@
 
     <div class=" ">
       <div class="">
-        <div class="col-md-6 col-xs-8" id="single_post_content">
+        <div class="col-md-10 col-md-offset-1 innerAll inner-2x " id="">
 
 
-          {% if userinfo.subscribed %}
+          {% if not prof_subscribed %}
           <div class="box-generic bg-primary-light text-center">
 
           <p>
@@ -22,11 +22,11 @@
           </div>
           {% endif %}
                  
-          <div class="widget innerAll">
-            <h3 class="margin-none">
-              <i class="fa fa-user pull-right fa-2x text-muted"></i>
-             <img src="{{userinfo.profileimg}}" class="img-"> 
-              {{userinfo.username}} visitors
+          <div class="widget innerAll clearfix ">
+            <h3 class="margin-none" style="vertical-align: middle;">
+              <i class="fa fa-user pull-right fa-lg text-muted" style="vertical-align: middle;"></i>
+              
+              Who's viewed your profile
             </h3>  
            </div> 
 
@@ -40,12 +40,11 @@
                     {% for result in results %}
                       <!--Single Activity Template -->                      
                       <li class="{{result.result_class}} singleresult {% if result.subscribed %} verified {% endif %}">
-                        <div class="block-inline" style="margin-left:2%"> 
-                        <span class="marker"></span>
-                        <div class="caret"></div>
+                        <div class="block-inline"  > 
+                        
                         <div class="box-generic">
                         
-                          <div class="timeline-top-info   border-bottom" {% if result.subscribed %} rel="tooltip" title="Verified profile" {% endif %} {% if not userinfo.subscribed %}style="height: 40px;"{% endif %}>            
+                          <div class="timeline -top-info   border-bottom" {% if result.subscribed %} rel="tooltip" title="Verified profile" {% endif %} {% if not userinfo.subscribed %}style="height: 40px;"{% endif %}>            
                           <div class="  pull-right" style="margin-left: 5px;">
                             <a type="button" class="dropdown-toggle" data-toggle="dropdown">
                             <i class="fa fa-fw fa-cog fa-lg"></i>
