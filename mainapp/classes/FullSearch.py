@@ -10,7 +10,7 @@ from bson import json_util
 from bson.json_util import loads
 from TweetFeed import UserProfile
 import math
-    
+from mainapp.geolocation import get_addr_from_ip
 class GeneralSearch():
 
     def __init__(self,request):
@@ -38,7 +38,9 @@ class GeneralSearch():
         self.food_filters = json.loads(params['food_filters'])
         self.radius = 160934
         self.max_distance = 0.15853908597
-        self.user = params['up']
+        if request.user.is_authenticated():
+
+            self.user = params['up']
 
     def get_request(self,request):
         search_request = {}
@@ -53,6 +55,7 @@ class GeneralSearch():
             default_lng = up['latlng']['coordinates'][0]
             default_lat = up['latlng']['coordinates'][1]
 
+            search_request['up'] = up
         
         else:
             x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
@@ -62,7 +65,7 @@ class GeneralSearch():
             else:
                 ip = request.META.get('REMOTE_ADDR')
             location_info = get_addr_from_ip(ip)
-            default_lon = float(location_info['longitude'])
+            default_lng = float(location_info['longitude'])
             default_lat = float(location_info['latitude'])
             default_location = "unknown"
 
@@ -78,7 +81,6 @@ class GeneralSearch():
 
         search_request['org'] = json.loads(request.POST.get("org",request.GET.get("org","[]")))
         search_request['food_filters'] = request.POST.get("food",request.GET.get("food","[]")) 
-        search_request['up'] = up
         return search_request
 
 
