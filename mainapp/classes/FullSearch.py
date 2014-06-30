@@ -36,7 +36,7 @@ class GeneralSearch():
         self.org_filters = params['org']
         self.biz_type_filters = params['biz']
         self.food_filters = json.loads(params['food_filters'])
-        self.radius = 160934
+        self.radius = 160934000
         self.max_distance = 0.15853908597
         self.user = params['up']
 
