@@ -356,7 +356,7 @@ function webuy_food_ajax(data){
 $('.search-choice').remove();
 $("#webuy_select").val('').trigger('chosen:updated');
 $('#webuy_foods').html(data);
-var $container1 = $('#webuy_foods').isotope({itemSelector: '.food'});
+/*var $container1 = $('#webuy_foods').isotope({itemSelector: '.food'});*/
 }
 
 function recommend_food(logged_in_id, food_name, prof_id, username, my_this, we_buy){
