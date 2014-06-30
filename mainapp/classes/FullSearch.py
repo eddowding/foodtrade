@@ -265,8 +265,12 @@ class GeneralSearch():
 
 
     def calc_distance(self,lat2, lon2):
-        lat1 = self.user['latlng']['coordinates'][1]
-        lon1 = self.user['latlng']['coordinates'][0]
+        try:
+            lat1 = self.user['latlng']['coordinates'][1]
+            lon1 = self.user['latlng']['coordinates'][0]
+        except:
+            lat1 = self.lat
+            lon1 = self.lng
         from math import sin, cos, sqrt, atan2
 
         R = 3963.1676
