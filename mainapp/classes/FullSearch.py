@@ -146,10 +146,16 @@ class GeneralSearch():
 
             else:
                 food_attributes = ["food_name","description","food_tags"]
+                we_buy = 0
+                if self.want!="all":
+                    if self.want == "Sell":
+                        we_buy = 0
+                    if self.want == "Buy":
+                        we_buy = 1
 
                 for fd_attr in food_attributes:
 
-                    or_conditions.append({'foods':{"$elemMatch":{fd_attr:reg_expression}}})
+                    or_conditions.append({'foods':{"$elemMatch":{fd_attr:reg_expression, "webuy":{"$ne":we_buy}}}})
         
         and_query =[]
 
@@ -271,9 +277,17 @@ class GeneralSearch():
         except:
             lat1 = self.lat
             lon1 = self.lng
-        from math import sin, cos, sqrt, atan2
+        from math import sin, cos, sqrt, atan2, radians
 
         R = 3963.1676
+
+
+        lat1 = radians(lat1)
+        lon1 = radians(lon1)
+        lat2 = radians(lat2)
+        lon2 = radians(lon2)
+
+
 
 
         dlon = lon2 - lon1
