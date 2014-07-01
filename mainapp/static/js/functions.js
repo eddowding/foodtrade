@@ -28,7 +28,7 @@ function get_box_profile(user)
 	for(var index in user.type_user)
 	{
 		var biz_type = user.type_user[index];
-		content += '<a href="/activity/?q='+encodeURIComponent(biz_type)+'" class="  small">'+biz_type+'</a> ';
+		content += '<a href="/activity/?q='+encodeURIComponent(biz_type)+'&tab=profile&stype=profile&pwant=all&put=Companies" class="  small">'+biz_type+'</a> ';
 	}
 	content += '</div>';
 	content += '<div class="media margin-none status">  ';
@@ -134,7 +134,7 @@ function get_box_update(update)
 	for(var index in update.type_user)
 	{
 		var biz_type = update.type_user[index];
-		content += '<a href="/activity/?q='+encodeURIComponent(biz_type)+'" class="innerR half small">'+biz_type+'</a> ';
+		content += '<a href="/activity/?q='+encodeURIComponent(biz_type)+'&tab=profile&stype=profile&pwant=all&put=Companies" class="innerR half small">'+biz_type+'</a> ';
 	}
 	content +='</div>';
 	content +='<div class="media margin-none status">   ';
@@ -201,7 +201,7 @@ var card_str = '<div class="card-box"><div class="content text-center"><div clas
       for(var j=0;j<type_user.length;j++)
       {  
         
-        card_str +=  '<a class="" href="/activity/?q='+encodeURIComponent(type_user[j])+'">'+type_user[j]+'</a>';
+        card_str +=  '<a class="" href="/activity/?q='+encodeURIComponent(type_user[j])+'&tab=profile&stype=profile&pwant=all&put=Companies">'+type_user[j]+'</a>';
        }
         card_str += '</div>';
     }
@@ -246,7 +246,7 @@ var card_str = '<div class="card-box"><div class="content text-center"><div clas
       for(var j=0;j<type_user.length;j++)
       {  
         
-        card_str +=  '<a class="" href="/activity/?q='+encodeURIComponent(type_user[j])+'">'+type_user[j]+'</a>';
+        card_str +=  '<a class="" href="/activity/?q='+encodeURIComponent(type_user[j])+'&tab=profile&stype=profile&pwant=all&put=Companies">'+type_user[j]+'</a>';
        }
         card_str += '</div>';
     }

@@ -136,7 +136,12 @@ var Search = {
         {
             $("#search_type").html("Profile");
             $("#search_type_option").html("Produce");
+            $("#result_tabs").addClass( "hidden" );
+             $("#mktplace").removeClass("active");
+            $("#profiles").addClass("active");
         }
+
+
 
         var want_btns = $(".btn-mwant");
         for(var i = 0; i<want_btns.length;i++)

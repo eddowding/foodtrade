@@ -157,6 +157,8 @@ class GeneralSearch():
                 
                 for search_item in search_variables:
                     or_conditions.append({search_item:reg_expression})
+
+                or_conditions.append({"type_user":reg_expression})
         ####### Searches keyword as food
 
             else:
