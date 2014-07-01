@@ -4,11 +4,45 @@
     display: none;
   }
 
+  .padTop {
+    padding-top: 50px;
+  }
+
   #main_page {
     background: #fff;
   }
 
+  h2 {
+    padding-bottom: 0.2em;
+    border-bottom: 1px solid #ccc;
+  }
 
+  .lead {
+
+    ul {
+      margin-top: 0.5em;
+    }
+
+    li {
+      list-style:none;
+      line-height: 1.2;
+      margin-bottom: 0.7em;
+      span {
+        font-size: 16px;
+        display: block;
+      }
+    }
+
+    li:before {
+      font-family:'FontAwesome';
+      content:"\f046";
+      margin:0 10px 0 -30px;
+      color: @ftgreen;
+    }
+    strong {
+      font-weight: 400;
+    }
+  }
 
   #content {
     margin: 0;
