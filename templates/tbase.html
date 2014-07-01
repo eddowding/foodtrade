@@ -787,10 +787,9 @@ line-height: 34px; font-size: 16px;">
    </div>
             </div>
             <div class="modal-footer"> 
-              <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cancel</button>
-              
-          <!-- <a href="{% provider_login_url "twitter" process="login" %}" class="btn btn-lg btn-info btn-block"><i class="fa fa-twitter"></i> Continue Login</a> -->
-                       <a href="{% provider_login_url "twitter" process="login" %}"><button type="button" class="btn btn-primary"><i class="fa fa-twitter"></i> Continue Registration</button></a>
+              <a class="btn btn-primary btn-stroke text-black normal pull-left" href="/accounts/signup"><i class="fa fa-envelope text-black"></i> I'd rather sign up by email</a>
+               
+              <a href="{% provider_login_url "twitter" process="login" %}"><button type="button" class="btn btn-primary"><i class="fa fa-twitter"></i> Sign up with Twitter</button></a>
               
             </div>
           </div><!-- /.modal-content -->

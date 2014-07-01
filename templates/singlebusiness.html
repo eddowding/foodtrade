@@ -239,6 +239,7 @@
         <div class="btn-group btn-block" >
           <button type="button"  class="btn btn-default btn-block dropdown-toggle normal" data-toggle="dropdown"  ><i class="fa fa-fw fa-share-alt text-black "></i> share</button>
             <ul class="dropdown-menu ">
+             <li><a href="/{{username}}"><i class="fa fa-fw fa-lg fa-link"></i> foodtrade.com/{{username}}</a></li>
              <li> <a href="#" class="" onclick="window.open(
               'https://www.facebook.com/sharer/sharer.php?s=100&amp;p[url]='+encodeURIComponent('{{ request.build_absolute_uri }}') +'&amp;p[images][0]='+encodeURIComponent('{{pic_url}}')+'&amp;p[title]='+encodeURIComponent('{{name}} on FoodTrade')+'&amp;p[summary]='+encodeURIComponent('Hey, see my profile on FoodTrade')+'&amp;u='+encodeURIComponent('{{ request.build_absolute_uri }}') +'&amp;t='+encodeURIComponent('{{name}} on FoodTrade'),
                     'facebook-share-dialog', 

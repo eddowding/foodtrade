@@ -10,9 +10,6 @@
  
 <link href="{% static "css/ft_home.less" %}" rel="stylesheet/less"> 
 
-
-
-
 <div class="ftstrip"></div>
 <div class="clearfix" style="background:url('/static/images/apples_blur.jpg'); background-size: cover;" id="homeimage">  
  <div class="col-sm-8 col-sm-offset-2 col-xs-10 col-xs-offset-1">
@@ -27,7 +24,7 @@
       </p>
 
       <div class="text-center" id="joinButton">
-        <a href="{% provider_login_url "twitter" process="login" %}"  class="btn btn-primary">
+        <a data-toggle="modal" data-target="#modal_signup"  class="btn btn-primary">
         <strong>Join Now, it's free &raquo;</strong><br />
         <small>Companies can always upgrade to a paid plan later</small>
         </a> 

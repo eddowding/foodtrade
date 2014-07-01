@@ -43,16 +43,7 @@
         </div>
         <div class="navbar-collapse collapse">
           
-          <form class="navbar-form navbar-left nav-justified" role="search">
-            <div class="form-group" style="margin-right:5px;">
-              <input type="text" class="form-control" placeholder="What?"> 
-            </div>
-            <div class="form-group" style="margin-right:5px;">
-              <input type="text" class="form-control" placeholder="Where?">
-            </div>
-            <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
-
-          </form>
+          
 
           <button type="button" class="btn btn-success navbar-btn pull-right">Signup / Login</button>
   
