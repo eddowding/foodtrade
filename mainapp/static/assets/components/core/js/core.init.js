@@ -240,57 +240,57 @@ if (window.location != window.parent.location)
 		.removeClass('open');
 	}
 
-	$(window).setBreakpoints({
-		distinct: false,
-		breakpoints: [ 767, 992, 1280 ]
-	});
+	// $(window).setBreakpoints({
+	// 	distinct: false,
+	// 	breakpoints: [ 767, 992, 1280 ]
+	// });
 
-	$(window).bind('exitBreakpoint767',function() {		
-	});
+	// $(window).bind('exitBreakpoint767',function() {		
+	// });
 
-	$(window).bind('enterBreakpoint767',function() {
-	});
+	// $(window).bind('enterBreakpoint767',function() {
+	// });
 
-	$(window).bind('exitBreakpoint992',function() {		
-		disableContentNiceScroll();
-		$('.container-fluid').addClass('menu-hidden'); 
-		disableNavbarMenusHover();
-		enableResponsiveNavbarSubmenus();
-	});
+	// $(window).bind('exitBreakpoint992',function() {		
+	// 	disableContentNiceScroll();
+	// 	$('.container-fluid').addClass('menu-hidden'); 
+	// 	disableNavbarMenusHover();
+	// 	enableResponsiveNavbarSubmenus();
+	// });
 
-	$(window).bind('enterBreakpoint992',function() {
-		enableContentNiceScroll(false);
-		$('.container-fluid').removeClass('menu-hidden'); 
-		enableNavbarMenusHover();
-		disableResponsiveNavbarSubmenus();
-	});
+	// $(window).bind('enterBreakpoint992',function() {
+	// 	enableContentNiceScroll(false);
+	// 	$('.container-fluid').removeClass('menu-hidden'); 
+	// 	enableNavbarMenusHover();
+	// 	disableResponsiveNavbarSubmenus();
+	// });
 
 	window.coreInit = true;
 
-	$(window).on('load', function()
-	{
-		window.loadTriggered = true;
+	// $(window).on('load', function()
+	// {
+	// 	window.loadTriggered = true;
 
-		if ($(window).width() < 992)
-			$('.hasNiceScroll').getNiceScroll().stop();
+	// 	if ($(window).width() < 992)
+	// 		$('.hasNiceScroll').getNiceScroll().stop();
 
-		if ($(window).width() < 770)
-			enableResponsiveNavbarSubmenus(); 
-		else
-			enableNavbarMenusHover();
+	// 	if ($(window).width() < 770)
+	// 		enableResponsiveNavbarSubmenus(); 
+	// 	else
+	// 		enableNavbarMenusHover();
 
-		if (typeof animations == 'undefined')
-			$('.hasNiceScroll, #menu-right, #menu').getNiceScroll().show().resize();
+	// 	if (typeof animations == 'undefined')
+	// 		$('.hasNiceScroll, #menu-right, #menu').getNiceScroll().show().resize();
 
-		if (typeof Holder != 'undefined')
-		{
-			Holder.add_theme("dark", {background:"#424242", foreground:"#aaa", size:9}).run();
-			Holder.add_theme("white", {background:"#fff", foreground:"#c9c9c9", size:9}).run();
-		}
+	// 	if (typeof Holder != 'undefined')
+	// 	{
+	// 		Holder.add_theme("dark", {background:"#424242", foreground:"#aaa", size:9}).run();
+	// 		Holder.add_theme("white", {background:"#fff", foreground:"#c9c9c9", size:9}).run();
+	// 	}
 
-		if ($('.scripts-async').length)
-			$('.scripts-async .container-fluid').css('visibility', 'visible');
-	});
+	// 	if ($('.scripts-async').length)
+	// 		$('.scripts-async .container-fluid').css('visibility', 'visible');
+	// });
 
 	// weird chrome bug, sometimes the window load event isn't triggered
 	setTimeout(function(){
