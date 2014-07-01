@@ -53,7 +53,7 @@ function save_favourites(profile_id, user_id){
 function add_org_to_biz(member_id, orguid){
 	// var org_ids_list = $('#org_chosen').val();
 	// for(i=0;i<org_ids_list.length;i++){
-	ajax_request("third_party_add_org", 'org_ajax', {data: "{'memberuid': " + member_id + ",'orguid': " + parseInt(orguid) +"}"});
+	ajax_request("third_party_add_org", 'org_ajax_add', {data: "{'memberuid': " + member_id + ",'orguid': " + parseInt(orguid) +"}"});
 	// }
 }
 // get business tags
@@ -75,6 +75,15 @@ function org_ajax(data){
 	if(data['status']=='ok'){
 		$('.search-choice').remove();
 		$("#org_chosen").val('').trigger('chosen:updated');
+		$('#groupsGrid').html(data['html']);
+		$('#orgConnNo').html('');
+		$('#orgConnNo').html(data['org_count']);
+	}
+}
+
+function org_ajax_add(data){
+	data= jQuery.parseJSON(data);
+	if(data['status']=='ok'){
 		$('#groupsGrid').html(data['html']);
 		$('#orgConnNo').html('');
 		$('#orgConnNo').html(data['org_count']);
@@ -251,7 +260,7 @@ function stockists_ajax(data){
 		  $('#suppliersTable').trigger('footable_initialize');
           $('#stockistsTable').trigger('footable_resize');
           $('#suppliersTable').trigger('footable_initialize');
-          $('#suppliersTable').trigger('footable_resize');						
+          $('#suppliersTable').trigger('footable_resize');
 		}
 	}
 }

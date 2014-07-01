@@ -18,10 +18,11 @@
         </div>
         <p class='small'>{{each.description|truncatechars:80}}</p>
        
-        
+        {% ifequal profile_id user_id %} 
         <button type="button" class="btn btn-danger btn-xs pull-right" aria-hidden="true" onclick="del_org_from_biz( {{profile_id}}, {{each.id}})"><i class="fa-trash-o fa"></i> Remove</button> 
-        
+        {% endif %}
          
       </div>  
+        }
     {% endfor %}  
   

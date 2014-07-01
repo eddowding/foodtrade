@@ -1437,7 +1437,7 @@ $('#orgs_remote').on('click','.tt-suggestion', function(){
       $('#my_invite_twitter').click();
     }
   else{
-        add_org_to_biz('{{profile_id}}', org_var)
+        add_org_to_biz('{{profile_id}}', org_var);
         $('#new_orgs_typeahead').val('');
         $('.tt-hint').val('');
       }
