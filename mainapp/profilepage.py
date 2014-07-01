@@ -283,7 +283,7 @@ def display_profile(request, username):
         if request.user.is_authenticated():
 
             parameters['connections'], parameters['logged_conn'] = get_connections(userprof['useruid'], request.user.id)
-            parameters['company_num'] = userprof['company_num']
+            parameters['company_num'] = userprof.get('company_num') if userprof.get('company_num')!=None else ''
             parameters['all_foods'], parameters['food_parents'] = get_all_foods(userprof['useruid'], request.user.id)
 
             parameters['all_buying_foods'], parameters['webuy_food_parents'] = get_all_buying_foods(userprof['useruid'], request.user.id)

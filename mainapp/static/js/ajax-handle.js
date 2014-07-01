@@ -440,13 +440,12 @@ function add_member(org_id, mem_id, action){
 	else if(action == 'third_delete'){
 		ajax_request("deletemember", 'member_ajax', {data: JSON.stringify(data)});
 	}
-	
-	
 }
 
 function member_ajax(data){
 	$('#member_ajax').html(data);
 }
+
 function add_team(org_id, team_id){
 	// var data = {orguid: org_id, memberuid: team_id};
 	// ajax_request("addteam", 'create_conn', {data: JSON.stringify(data)});
