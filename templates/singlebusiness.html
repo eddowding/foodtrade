@@ -297,6 +297,29 @@
   <div class="  " id="panelContainer">
  
 
+<!-- if any = empt, show.. -->
+<!-- if this is your profile --> 
+<!--ADD CODE -->
+
+<div class="panel panel-info">
+  <div class="panel-heading">
+    <div class="panel-title">
+      Make your profile even better
+    </div>
+  </div>
+  <div class="panel-body">
+    <ol>
+    {% if customers|length = 0 %}
+      <li><a href="#"><strong>Engage your customers</strong></a> - you have {{customers|length}} customers</li>
+    {% endif %}
+    </ol>
+  </div>         
+</div> 
+
+
+
+
+
 
 <!-- VIDEO -->      
 {% if intro_video %}
@@ -1041,7 +1064,7 @@
 
     {% ifequal loggedin_signupas "Individual" %}  
     <div class="panel panel-default">
-      <div class="widg et text-center">
+      <div class="widget text-center">
         <div class="innerAll text-white" style="background: #8BD1ED;">
             <div class="innerB">
               <img src="/static/images/farmdrop.png" style="max-height: 100px;" />
