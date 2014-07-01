@@ -71,9 +71,14 @@ ajax_request("third_party_delete_org", 'org_ajax', {data: "{'memberuid': " + mem
 }
 
 function org_ajax(data){
-$('.search-choice').remove();
-$("#org_chosen").val('').trigger('chosen:updated');
-$('#groupsGrid').html(data);
+	data= jQuery.parseJSON(data);
+	if(data['status']=='ok'){
+		$('.search-choice').remove();
+		$("#org_chosen").val('').trigger('chosen:updated');
+		$('#groupsGrid').html(data['html']);
+		$('#orgConnNo').html('');
+		$('#orgConnNo').html(data['org_count']);
+	}
 }
 function conn_handler(value, prof_id, conn_id)
 {

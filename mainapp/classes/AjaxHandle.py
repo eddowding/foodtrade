@@ -450,7 +450,11 @@ class AjaxHandle(AjaxSearch):
             parameters = {}
             parameters['organisations'] = get_organisations(int(data['memberuid']))
             parameters['profile_id'], parameters['user_id'] = int(data['memberuid']), request.user.id
-            return render_to_response('ajax_org.html', parameters, context_instance=RequestContext(request))
+            org_obj = Organisation()
+            org_count = org_obj.get_organisations_count_by_mem_id(data['memberuid'])
+            html_str =  str(render_to_response('ajax_org.html', parameters, context_instance=RequestContext(request)))
+            html_str = html_str.replace('Content-Type: text/html; charset=utf-8', '')
+            return HttpResponse(json.dumps({'html':html_str, 'status':'ok', 'org_count':org_count}))
         else:
             return HttpResponse("{'status':0}")
 

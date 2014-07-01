@@ -10,7 +10,7 @@
     {% endif %}
 
     {% for each in organisations %}  
-      <div class="groupItem clearfix">
+      <div class="groupItem clearfix" id="orgGroupItem{{each.username}}">
         <div class="text-center">
           <a href="/profile/{{each.username}}"><img src="{{each.photo}}" alt="{{each.name}}"
           class="img-thumbnail img-responsive img-circle" style="width:73px; height:73px;" /></a>
@@ -18,9 +18,9 @@
         </div>
         <p class='small'>{{each.description|truncatechars:80}}</p>
        
-        {% ifequal profile_id user_id %}
-        <button type="button" class="btn btn-danger btn-xs pull-right" aria-hidden="true" onclick="conn_handler('close_buy_from', {{profile_id}}, {{each.id}})"><i class="fa-trash-o fa"></i> Remove</button> 
-        {% endifequal %}
+        
+        <button type="button" class="btn btn-danger btn-xs pull-right" aria-hidden="true" onclick="del_org_from_biz( {{profile_id}}, {{each.id}})"><i class="fa-trash-o fa"></i> Remove</button> 
+        
          
       </div>  
     {% endfor %}  
