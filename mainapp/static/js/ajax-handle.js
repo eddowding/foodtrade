@@ -242,9 +242,11 @@ function stockists_ajax(data){
 			$('.search-choice').remove();
 			current_html = $('#mCSB_2_container tbody').html();
 			new_html =  data['html'] + current_html;
-			$('#mCSB_2_container tbody').html(new_html);	
-			$('#suppliersTable').trigger('footable_initialize');
-			$('#suppliersTable').trigger('footable_resize');			
+			$('#mCSB_2_container tbody').html(new_html);
+		  $('#suppliersTable').trigger('footable_initialize');
+          $('#stockistsTable').trigger('footable_resize');
+          $('#suppliersTable').trigger('footable_initialize');
+          $('#suppliersTable').trigger('footable_resize');						
 		}
 	}
 }
@@ -282,10 +284,12 @@ function get_next_page_conn_success(data){
 		else{
 			get_next_page_c_conn(data['username'], data['next_page_num']);				
 		}
-		$('#suppliersTable').trigger('footable_initialize');
-		$('#stockistsTable').trigger('footable_resize');
-		$('#suppliersTable tbody').trigger('footable_initialize');
-		$('#suppliersTable').trigger('footable_resize');
+	}
+	else{
+		  $('#suppliersTable').trigger('footable_initialize');
+          $('#stockistsTable').trigger('footable_resize');
+          $('#suppliersTable').trigger('footable_initialize');
+          $('#suppliersTable').trigger('footable_resize');
 	}
 }
 
@@ -308,9 +312,10 @@ function suppliers_ajax(data){
 			current_html = $('#mCSB_3_container tbody').html();
 			new_html =  data['html'] + current_html;
 			$('#mCSB_3_container tbody').html(new_html);	
-			$('#stockistsTable').trigger('footable_initialize');
-			$('#stockistsTable').trigger('footable_resize');
-			/*$('#stockistsTable tbody').trigger('footable_redraw');			*/
+			$('#suppliersTable').trigger('footable_initialize');
+          	$('#stockistsTable').trigger('footable_resize');
+          	$('#suppliersTable').trigger('footable_initialize');
+          	$('#suppliersTable').trigger('footable_resize');
 		}
 }
 

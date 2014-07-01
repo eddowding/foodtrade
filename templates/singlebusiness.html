@@ -1015,7 +1015,7 @@
   <div class="panel-body">
 
     {% if company_num %} 
-      Company number: <a href="https://www.duedil.com/company/{{company_num}}"></a>  
+      Company number: <a href="https://www.duedil.com/company/{{company_num}}">{{company_num}}</a>  
     {% endif %} 
 
     <!-- twitter info --> 
@@ -1700,8 +1700,8 @@ customers = {{customers_str | safe}};
       var buss_username = '{{buss_user|safe}}';
       {% if request.user.is_authenticated %}
         $(document).ready(function(){
-          get_next_page_b_conn(buss_username,current_conn_page + 1);
-          get_next_page_c_conn(buss_username,current_conn_page + 1);
+          get_next_page_b_conn(buss_username, current_conn_page + 1);
+          get_next_page_c_conn(buss_username,current_conn_page + 1);      
         });
       {% endif %}
 

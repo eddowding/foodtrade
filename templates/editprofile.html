@@ -215,10 +215,10 @@
       <label for="newsletter_freq_txt" class="col-sm-2 control-label">Local activity newsletter</label>
       <div class="col-sm-5">
 
-<select id="newsletter_freq_txt" class="form-control" name="newsletter_freq" tabindex="6">
-              <option value="Never">Never</option>
+<select id="newsletter_freq_txt" class="form-control" name="newsletter_freq" required tabindex="6">
+              <option value="Never" >Never</option>
               <option value="Monthly">Monthly</option>
-              <option value="Weekly">Weekly {% if not subscribed %}(7 day delay){% endif %}</option>
+              <option value="Weekly" selected="selected">Weekly {% if not subscribed %}(7 day delay){% endif %}</option>
               {% if subscribed %}
               <option value="Daily">Daily</option>
               {% else %}
