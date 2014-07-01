@@ -268,8 +268,10 @@ class SignupForm(forms.Form):
             except:
                 return HttpResponseRedirect('/activity/')
         if str(self.cleaned_data['sign_up_as']) == "Business":
-            settings.LOGIN_REDIRECT_URL = "/payments/subscribe"
-            return HttpResponseRedirect('/payments/subscribe')
+            # settings.LOGIN_REDIRECT_URL = "/payments/subscribe"
+            # return HttpResponseRedirect('/payments/subscribe')
+            settings.LOGIN_REDIRECT_URL = "/me/"
+            return HttpResponseRedirect('/me/')
         else:
             # settings.LOGIN_REDIRECT_URL = "/activity"
             return HttpResponseRedirect('/activity/')
