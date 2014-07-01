@@ -10,7 +10,7 @@ from bson import json_util
 from bson.json_util import loads
 from TweetFeed import UserProfile
 import math
-    
+from mainapp.geolocation import get_addr_from_ip
 class GeneralSearch():
 
     def __init__(self,request):
@@ -38,18 +38,36 @@ class GeneralSearch():
         self.food_filters = json.loads(params['food_filters'])
         self.radius = 160934
         self.max_distance = 0.15853908597
-        self.user = params['up']
+        if request.user.is_authenticated():
+
+            self.user = params['up']
 
     def get_request(self,request):
         search_request = {}
         search_request['keyword'] = request.POST.get("q",request.GET.get("q","")) 
+        if request.user.is_authenticated():
 
-        up_object = UserProfile()
-        up = up_object.get_profile_by_id(request.user.id)
 
-        default_location = up['address']
-        default_lng = up['latlng']['coordinates'][0]
-        default_lat = up['latlng']['coordinates'][1]
+            up_object = UserProfile()
+            up = up_object.get_profile_by_id(request.user.id)
+
+            default_location = up['address']
+            default_lng = up['latlng']['coordinates'][0]
+            default_lat = up['latlng']['coordinates'][1]
+
+            search_request['up'] = up
+        
+        else:
+            x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+            if x_forwarded_for:
+                ip = x_forwarded_for.split(',')[0]
+
+            else:
+                ip = request.META.get('REMOTE_ADDR')
+            location_info = get_addr_from_ip(ip)
+            default_lng = float(location_info['longitude'])
+            default_lat = float(location_info['latitude'])
+            default_location = "unknown"
 
         search_request['location'] = request.POST.get("location",request.GET.get("location",default_location))
 
@@ -63,7 +81,6 @@ class GeneralSearch():
 
         search_request['org'] = json.loads(request.POST.get("org",request.GET.get("org","[]")))
         search_request['food_filters'] = request.POST.get("food",request.GET.get("food","[]")) 
-        search_request['up'] = up
         return search_request
 
 
@@ -74,6 +91,7 @@ class GeneralSearch():
 
         
         pipeline = []
+        pre_match = {}
         if time_stamp!=None:
             pre_match = {'updates':{"$elemMatch":{'time_stamp':{"$gt":int(time_stamp)},"deleted":0}}}
             post_match = {'updates.time_stamp':{"$gt":int(time_stamp)},"updates.deleted":0}
@@ -117,14 +135,14 @@ class GeneralSearch():
             reg_expression = {"$regex": keyword_like, '$options': '-i'}
 
 
-#### Profile Search ######
+        #### Profile Search ######
             if self.search_for != "produce":
                 search_variables = ["business_org_name", "name", "description", "username", "nick_name"]
             
                 
                 for search_item in search_variables:
                     or_conditions.append({search_item:reg_expression})
-####### Searches keyword as food
+        ####### Searches keyword as food
 
             else:
                 food_attributes = ["food_name","description","food_tags"]
@@ -178,7 +196,6 @@ class GeneralSearch():
         return query_string
 
     def get_result(self):
-        self.get_latest_updates()
         query_string = self.get_query_string()
 
 
@@ -248,8 +265,12 @@ class GeneralSearch():
 
 
     def calc_distance(self,lat2, lon2):
-        lat1 = self.user['latlng']['coordinates'][1]
-        lon1 = self.user['latlng']['coordinates'][0]
+        try:
+            lat1 = self.user['latlng']['coordinates'][1]
+            lon1 = self.user['latlng']['coordinates'][0]
+        except:
+            lat1 = self.lat
+            lon1 = self.lng
         from math import sin, cos, sqrt, atan2
 
         R = 3963.1676

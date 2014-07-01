@@ -90,6 +90,24 @@ class MarketSearch(GeneralSearch):
         return {"result":agg, "total":200,"center":[float(self.lng), float(self.lat)]}
 
 
+    def replies_count(self,parent_tweet_id):
+        query_string = {'updates':{"$elemMatch":{'parent_tweet_id':parent_tweet_id,"deleted":0}}}
+        pipeline = []
+        pipeline.append({"$match":query_string})
+        pipeline.append({"$project":{"updates":1, "_id":0}})
+        pipeline.append({"$unwind":"$updates"})
+        pipeline.append({"$match":{"updates.parent_tweet_id":parent_tweet_id}})
+
+        pipeline.append({"$group": { "_id": "same", "count": { "$sum":1} }})
+        agg = self.db.aggregate(pipeline)
+        result = self.db.aggregate(pipeline)['result']
+
+        if len(result)>0:
+            return result[0]['count']
+        return 0
+
+
+
     def get_single_tweet(self,tweet_id):
         query_string = {'updates':{"$elemMatch":{'tweet_id':tweet_id,"deleted":0}}}
         pipeline = []
@@ -100,12 +118,14 @@ class MarketSearch(GeneralSearch):
         result = self.db.aggregate(pipeline)['result']
         parameter = {"status":"error"}
 
-
+        print self.replies_count(tweet_id)
         if(len(result)>0):
             distance = self.calc_distance(result[0]['latlng']['coordinates'][1],result[0]['latlng']['coordinates'][0])
             result[0]['distance'] = '%.1f' % distance
             if(distance<50):
                 parameter['status'] = "ok"
+                result[0]['replies_count'] = self.replies_count(tweet_id)
+
                 parameter['result'] = result[0]
         return parameter
 

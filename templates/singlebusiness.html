@@ -404,7 +404,7 @@
               </th> 
             </tr>
           </thead>
-          <tbody>
+          <tbody id="ajax_food_tr">
             {% include 'ajax_food_tr.html' %}
           </tbody>
         </table>
@@ -1075,7 +1075,7 @@
           <i class="fa fa-bullhorn"></i> <strong>{% if updates_count != 0 %}{{updates_count}}{% endif %} Marketplace</strong> updates
           {%if profile_id == user_id %}
           &middot;
-           <a href="#" data-toggle="modal" data-target="#newtwitterpost" class="small">New update
+           <a href="#" data-toggle="collapse" data-target="#newtwitterpost" class="small">New update
            </a>
           {% endif %} 
         </div>

@@ -322,10 +322,10 @@ def home(request):
 
             else:
                 ip = request.META.get('REMOTE_ADDR')
-                location_info = get_addr_from_ip(ip)
-                default_lon = float(location_info['longitude'])
-                default_lat = float(location_info['latitude'])
-                location = "unknown"
+            location_info = get_addr_from_ip(ip)
+            default_lon = float(location_info['longitude'])
+            default_lat = float(location_info['latitude'])
+            location = "unknown"
 
         query = "plng="+str(default_lon)+"&plat="+str(default_lat)+"&plocation="+location
         query = query+ "&mlng="+str(default_lon)+"&mlat="+str(default_lat)+"&mlocation="+location

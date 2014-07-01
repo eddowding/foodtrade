@@ -8,6 +8,8 @@ var map = new L.map('map', {
 });
 
 
+    map.scrollWheelZoom.disable();
+
 L.circle([map_lat,map_lon], 24140.2, {
 			stroke: 1,
 			color: '#00cc00',
