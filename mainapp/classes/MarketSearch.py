@@ -87,6 +87,8 @@ class MarketSearch(GeneralSearch):
         pipeline.append({"$sort": SON([("updates.time_stamp", -1)])})
         pipeline.append({"$limit":100})
         agg = self.db.aggregate(pipeline)['result']
+        for result in agg:
+            result['updates']['status'] = self.recognise_name(result['updates']['status'])
         return {"result":agg, "total":200,"center":[float(self.lng), float(self.lat)]}
 
 
@@ -108,6 +110,8 @@ class MarketSearch(GeneralSearch):
 
 
 
+
+
     def get_single_tweet(self,tweet_id):
         query_string = {'updates':{"$elemMatch":{'tweet_id':tweet_id,"deleted":0}}}
         pipeline = []
@@ -122,6 +126,7 @@ class MarketSearch(GeneralSearch):
         if(len(result)>0):
             distance = self.calc_distance(result[0]['latlng']['coordinates'][1],result[0]['latlng']['coordinates'][0])
             result[0]['distance'] = '%.1f' % distance
+            result[0]['updates']['status'] = self.recognise_name(result[0]['updates']['status'])
             if(distance<50):
                 parameter['status'] = "ok"
                 result[0]['replies_count'] = self.replies_count(tweet_id)
