@@ -1700,8 +1700,12 @@ customers = {{customers_str | safe}};
       var buss_username = '{{buss_user|safe}}';
       {% if request.user.is_authenticated %}
         $(document).ready(function(){
-          get_next_page_b_conn(buss_username,current_conn_page + 1);
-          get_next_page_c_conn(buss_username,current_conn_page + 1);
+          get_next_page_b_conn(buss_username, current_conn_page + 1);
+          get_next_page_c_conn(buss_username,current_conn_page + 1);      
+          $('#suppliersTable').trigger('footable_initialize');
+          $('#stockistsTable').trigger('footable_resize');
+          $('#suppliersTable').trigger('footable_initialize');
+          $('#suppliersTable').trigger('footable_resize');
         });
       {% endif %}
 
