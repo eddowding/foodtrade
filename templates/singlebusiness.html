@@ -64,13 +64,13 @@
       <div class="media">
       <img src="{{pic_url}}"  alt="{{name}} logo" class="pull-left avatar">
       <div class="media-body"> 
-        <h2 class="margin-none">{{name}}</h2>
-
-        {% if request.user.is_authenticated %}
-        <div id="shortcuts">
-          <button class="btn btn-default" data-toggle="modal" data-target="#modal_contact"><i class="fa fa-envelope-o fa-fw"></i></button>
+      {% if request.user.is_authenticated %}
+        <div id="shortcuts" class=" pull-right">
+          <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modal_contact"><i class="fa fa-envelope-o fa-fw"></i> Contact</button>
         </div>
-        {% endif %}
+      {% endif %}
+
+        <h2 class="margin-none">{{name}}</h2>
 
         {% if type_user|length == 0 or type_user|first == '' %}
         {% else %}
@@ -93,7 +93,7 @@
    
       <span class="lead bold"> {{distance}} miles  </span>
       <small class="small clearfix margin0 hidden-xs">away from you</small>
- 
+
   </div> 
 </div>
 
@@ -296,25 +296,43 @@
 <div class="row  ">
   <div class="  " id="panelContainer">
  
-
-<!-- if any = empt, show.. -->
-<!-- if this is your profile --> 
-<!--ADD CODE -->
-
+ 
+{% if profile_id == user_id %}
 <div class="panel panel-info">
   <div class="panel-heading">
     <div class="panel-title">
-      Make your profile even better
+      Tips for your profile
     </div>
   </div>
-  <div class="panel-body">
-    <ol>
-    {% if customers|length = 0 %}
-      <li><a href="#"><strong>Engage your customers</strong></a> - you have {{customers|length}} customers</li>
-    {% endif %}
+  <div class="panel-body small">
+    <ol class="margin0" style="padding-left: 10px;">
+      {% if show_foods != "false"%}  
+         <li><a href="#" rel="tooltip" title="You can add photos, description, quantity, seasonality... If you don't want to list anything here, edit your profile and turn off the foods option."><strong>Add produce you sell</strong></a></li>   
+      {% endif %}
+ 
+
+      {% if intro_video = '' %}      
+       <li><a href="/editprofile/me" rel="tooltip" title="A 15 second video on instagram (or youtube, vine, etc) literally adds character"><strong>Make a video</strong></a> </li>
+      {% endif %}
+
+       <li><a href="#" rel="tooltip" title="Find the 'Buys from' panel and click 'add one' to get going"><strong>Add suppliers</strong></a> - you currently have {{b_conn_no}} suppliers listed.  </li>
+       
+       <li><a href="#" rel="tooltip" title="Find the 'Sells to' panel and click 'add one' to get going"><strong>Add stockists</strong></a> - you currently have {{c_conn_no}} stockists listed.  </li>
+       
+       {% if all_buying_foods|length != 0 %}
+       <li><a href="#" rel="tooltip" title="If there's things you need, add 'em here and let the good(s) come to you.."><strong>What's on your shopping list?</strong></a> </li>
+       {% endif %}
+
+       <li><a href="#" rel="tooltip" title="Be sure to add any organisations or certifiers you work with. People uses them as filters to narrow the selection."><strong>Check your memberships </strong></a></li>
+
+       <li><a href="#" rel="tooltip" title="Make sure this is up to date to help new customers trust you."><strong>Keep your company information updated</strong></a> </li>
+
+       <li><a href="#" rel="tooltip" title="Individual users will see an 'I'm a customer' link on this page. Clicking it starts building up a map of your where they live, allowing you to better plan deliveries and expansion."><strong>Engage your customers</strong></a> - you currently have {{customers|length}}.  </li>
+    
     </ol>
   </div>         
 </div> 
+{% endif %}
 
 
 
@@ -324,7 +342,7 @@
 <!-- VIDEO -->      
 {% if intro_video %}
   <div class="panel panel-default">
-    <div style="width:100%; height: 400px;">{{intro_video|safe}}</div>                
+    <div style="width:100%; height: 400px;">{{intro_video|safe}}</div>
   </div> 
 {% endif %}  
 <!-- VIDEO --> 
@@ -1064,7 +1082,7 @@
 
     {% ifequal loggedin_signupas "Individual" %}  
     <div class="panel panel-default">
-      <div class="widget text-center">
+      <div class="widget text-center margin0">
         <div class="innerAll text-white" style="background: #8BD1ED;">
             <div class="innerB">
               <img src="/static/images/farmdrop.png" style="max-height: 100px;" />
