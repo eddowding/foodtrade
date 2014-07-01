@@ -306,6 +306,8 @@ def get_search_parameters(request):
 
 @csrf_exempt
 def home(request): 
+
+    params = {}
     if request.GET.get('plng') == None:
         if request.user.is_authenticated():
             user_id = request.user.id
@@ -314,6 +316,7 @@ def home(request):
             default_lon = str(user_profile['latlng']['coordinates'][0])
             default_lat = str(user_profile['latlng']['coordinates'][1])
             location = user_profile['address']
+
 
         else:
             x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
@@ -327,16 +330,25 @@ def home(request):
             default_lat = float(location_info['latitude'])
             location = "unknown"
 
-        query = "plng="+str(default_lon)+"&plat="+str(default_lat)+"&plocation="+location
-        query = query+ "&mlng="+str(default_lon)+"&mlat="+str(default_lat)+"&mlocation="+location
+        params['plng'] = default_lon
+        params['plat'] = default_lat
+        params['mlng'] = default_lon
+        params['mlat'] = default_lat
 
-        return HttpResponseRedirect('/activity?'+query)            
+        # query = "plng="+str(default_lon)+"&plat="+str(default_lat)+"&plocation="+location
+        # query = query+ "&mlng="+str(default_lon)+"&mlat="+str(default_lat)+"&mlocation="+location
+
+        query = []
+        for key, value in request.GET.iteritems():
+            params[key] = value
+
+        for key, value in params.iteritems():
+            query.append(key+"="+str(value))
 
 
 
 
-
-
+        return HttpResponseRedirect('/activity?'+"&".join(query))            
 
 
     return render_to_response('activity.html',context_instance=RequestContext(request))

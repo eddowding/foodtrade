@@ -163,7 +163,7 @@ setTimeout(function() {
                         content += "<a href='#'>See all "+result.replies_count+" replies</a>";
                         content += "</p>";
                       }
-                      content += "<input class='form-control input-sm enterhandler reply_input' data-tweet-id='"+result.updates.tweet_id+"' data-main='main' type='text' placeholder='Reply to "+result.username+"'  data-toggle='market-reply'  data-mentions='"+result.username+"'> ";
+                      content += "<input class='form-control input-sm enterhandler reply_input' data-tweet-id='"+result.updates.tweet_id+"' data-main='main' type='text' placeholder='Reply to @"+result.username+"'  data-toggle='market-reply'  data-mentions='@"+result.username+"'> ";
                       content += "</div>";
                       content += "</div>";
                       var title = result.name;

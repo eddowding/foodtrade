@@ -203,7 +203,7 @@ class MarketSearch(GeneralSearch):
         pipeline.append({"$sort": SON([("count", -1), ("_id", -1)])})
         agg = self.db.aggregate(pipeline)
 
-        pipeline.append({"$limit":100})
+        pipeline.append({"$limit":self.result_limit})
         return self.db.aggregate(pipeline)['result']
         
     

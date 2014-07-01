@@ -39,11 +39,21 @@ class GeneralSearch():
         self.org_filters = params['org']
         self.biz_type_filters = params['biz']
         self.food_filters = json.loads(params['food_filters'])
-        self.radius = 160934
-        self.max_distance = 0.15853908597
+        self.distance_limit = 30
+        self.result_limit = 10
         if request.user.is_authenticated():
 
             self.user = params['up']
+            try:
+                if self.user['subscribed'] == 1:
+                    self.result_limit = 20
+                    self.distance_limit = 50
+            except:
+                pass
+
+        self.radius = self.distance_limit*1609.34
+        self.max_distance = self.distance_limit/3963.1676*2*math.pi
+
 
     def get_request(self,request):
         search_request = {}
@@ -151,7 +161,7 @@ class GeneralSearch():
 
             else:
                 food_attributes = ["food_name","description","food_tags"]
-                we_buy = 0
+                we_buy = 3
                 if self.want!="all":
                     if self.want == "Sell":
                         we_buy = 0
@@ -228,7 +238,7 @@ class GeneralSearch():
 
         all_doc = self.db.find(query_string,{"latlng":1,"name":1,"type_user":1,"address":1,"foods":1,"sign_up_as":1,"description":1,"profile_img":1,"foods":1,"username":1,"_id":0})
         total =  all_doc.count()
-        first20 = all_doc.limit(100)
+        first20 = all_doc.limit(self.result_limit)
         result = [doc for doc in first20]
         for i in range(0,len(result)):
             distance= self.calc_distance(
