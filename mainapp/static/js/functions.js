@@ -1,7 +1,7 @@
 function get_box_profile(user)
 {
   var content = "";
-	content += '<div class="box-generic">';
+	content += '<div class="box-generic" data-username="'+user.username+'">';
 	content += '<div class="timeline-top-info border-bottom clearfix">';
 	content += '<div class="pull-right" style="margin-left: 5px;">';
 	content += '<a type="button" class="dropdown-toggle" data-toggle="dropdown">';
@@ -106,7 +106,7 @@ function get_box_profile(user)
 
 function get_box_update(update)
 {
-	content ='<div class="box-generic">';
+	content ='<div class="box-generic" data-username="'+update.username+'">';
 	content +='<div class="timeline-top-info   border-bottom clearfix">';
 	content +='<div class="pull-right" style="margin-left: 5px;">';
 	content +='<a type="button" class="dropdown-toggle" data-toggle="dropdown">';
