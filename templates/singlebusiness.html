@@ -212,10 +212,10 @@
 
       <!-- VERIFIED PROFILE -->
       {% if prof_subscribed %}
-      <div style="background: #88BC62;">
-        <i class="fa fa-check" style="color: #fff;"></i>
+      <button class="btn btn-primary btn-block btn-sm btn-stroke">
+        <i class="fa fa-check"></i>
         <span>Verified</span>
-      </div> 
+      </button> 
       {% endif %}  
       <!-- VERIFIED PROFILE -->
 
@@ -953,20 +953,19 @@
 
 
 <!-- customers -->
+{% if customers|length != 0 %}
 <div class="panel panel-default" id="panelCustomers">
   <div class="panel-heading">
     <div class="panel-title">
       <i class="fa fa-truck"></i> <strong>Customers</strong>
     </div>
-
-    {% if customers|length != 0 %}
+ 
     <div class="pull-right"> 
       <span class="badge">{{customers|length}}</span>
       <span data-target="#searchProduce" data-toggle="collapse" class="border-left innerL">
         <i class="glyphicon glyphicon-search"></i>
       </span>
     </div>
-    {% endif %} 
 
   </div> 
   <div class="panel-body">
@@ -996,6 +995,7 @@
     {% endfor %} 
   </div> 
 </div>
+{% endif %} 
 
 
 
@@ -1039,26 +1039,49 @@
 
     <!-- ad --> 
 
+    {% ifequal loggedin_signupas "Individual" %}  
     <div class="panel panel-default">
-<div class="widget text-center bg-secondary ">
-  <div class="innerAll text-white">
-      <div class="innerB"><i class=" icon-rocket fa fa-4x text-faded"></i>
+      <div class="widg et text-center">
+        <div class="innerAll text-white" style="background: #8BD1ED;">
+            <div class="innerB">
+              <img src="/static/images/farmdrop.png" style="max-height: 100px;" />
+            </div>
+            <p class="lead"> Join FarmDrop to get delicious, local &amp; seasonal food whilst supporting independent producers in your community.</p>
+            <a href="https://www.farmdrop.co.uk" target="_blank" class="btn btn-default btn-stroke text-white">Find out more <i class="fa fa-fw fa-play-circle  text-white"></i>
+            </a> 
+        </div>
+        <!-- Ribbon -->
+        <div class="ribbon-wrapper">
+            <div class="ribbon primary">Buy local!</div>
+        </div>
       </div>
-      <h2 class="strong margin-none text-white">Better, together</h2>
-      <p class="lead">from &pound;20 / year</p>
-      <p> 
+    </div>
+    {% endifequal %}
 
-      We don't sell your data or show adverts because you're our customer, not our product. And because we're working for YOU, we charge a small fee for premium features</p>
-      <p>Use the coupon code: LOVESUMMER</p>
-      <button class="btn btn-primary btn-stroke">Upgrade today <i class="fa fa-fw fa-play-circle"></i>
-      </button> 
-  </div>
-  <!-- Ribbon -->
-  <div class="ribbon-wrapper">
-      <div class="ribbon primary">It's spring!</div>
-  </div>
-</div>
-</div>
+
+
+    {% ifequal loggedin_signupas "Business" %}  
+    <div class="panel panel-default">
+      <div class="widget text-center bg-secondary ">
+        <div class="innerAll text-white">
+            <div class="innerB"><i class=" icon-rocket fa fa-4x text-faded"></i>
+            </div>
+            <h2 class="strong margin-none text-white">Better, together</h2>
+            <p class="lead">from &pound;20 / year</p>
+            <p> 
+
+            We don't sell your data or show adverts because you're our customer, not our product. And because we're working for YOU, we charge a small fee for premium features</p>
+            <p>Use the coupon code: LOVESUMMER</p>
+            <button class="btn btn-primary btn-stroke">Upgrade today <i class="fa fa-fw fa-play-circle"></i>
+            </button> 
+        </div>
+        <!-- Ribbon -->
+        <div class="ribbon-wrapper">
+            <div class="ribbon primary">It's spring!</div>
+        </div>
+      </div>
+    </div>
+    {% endifequal %}
 
           
 
