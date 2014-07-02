@@ -610,7 +610,7 @@ class AjaxHandle(AjaxSearch):
                 return render_to_response('webuy_foods.html', parameters, context_instance=RequestContext(request))
             else:
                 parameters['all_foods'], parameters['food_parents'] = get_all_foods(int(data['useruid']), request.user.id)
-                return render_to_response('ajax_food.html', parameters, context_instance=RequestContext(request))
+                return render_to_response('ajax_food_tr.html', parameters, context_instance=RequestContext(request))
             # return HttpResponse("{'status':1}")
         else:
             return HttpResponse("{'status':0}")    
@@ -901,10 +901,12 @@ class AjaxHandle(AjaxSearch):
             parameters = {}
             if data.get('we_buy')==1:
                 parameters['all_foods'], parameters['food_parents'] = get_all_buying_foods(int(data['business_id']), request.user.id)
+                
             else:
                 parameters['all_foods'], parameters['food_parents'] = get_all_foods(int(data['business_id']), request.user.id)
             parameters['profile_id'], parameters['user_id'] = int(data['business_id']), request.user.id
-            return render_to_response('ajax_food.html', parameters, context_instance=RequestContext(request))
+            print parameters['all_foods']
+            return render_to_response('ajax_food_tr.html', parameters, context_instance=RequestContext(request))
             # return HttpResponse("{'status':1}")
         else:
             return HttpResponse("{'status':0}")

@@ -45,6 +45,9 @@ class MarketSearch(GeneralSearch):
             query_string.append({"organisations":{"$all":self.org_filters}})
 
 
+        query_string.append({"$nor":[{"$exists": False},{"updates": { "$size": 0 }}]})
+   
+
 
 
 
@@ -53,7 +56,7 @@ class MarketSearch(GeneralSearch):
                                     "includeLocs": "latlng",
                                     "uniqueDocs": True,
                                     "spherical":True,
-                                    "limit":5000,
+                                    "limit":50,
                                 }
 
         
@@ -157,13 +160,17 @@ class MarketSearch(GeneralSearch):
         if self.user_type != "all":
             sign_up_as = "Business" if self.user_type == "Companies" else "Individual"
             query_string.append({"sign_up_as":sign_up_as})
+
+
+
+        query_string.append({"$nor":[{"$exists": False},{"updates": { "$size": 0 }}]})
         pipeline = []
         geo_search = {"near": [float(self.lng), float(self.lat)],
                                     "distanceField": "distance",
                                     "includeLocs": "latlng",
                                     "uniqueDocs": True,
                                     "spherical":True,
-                                    "limit":100,
+                                    "limit":50,
         }
 
         
