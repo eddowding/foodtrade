@@ -552,6 +552,7 @@ line-height: 34px; font-size: 16px;">
 
               <div class="row">
                 <div class="col-xs-7">
+              {% if userinfo.email_registration == 0 %}
                   <ul class="list-inline small" style="margin-bottom:0;">
                     <li class="">Also post this to my twitter  </li>
                     <li>
@@ -560,6 +561,7 @@ line-height: 34px; font-size: 16px;">
                       </label>
                     </li> 
                   </ul> 
+                {% endif %}
                 </div> 
                 
                 <div class="col-xs-5 text-right">

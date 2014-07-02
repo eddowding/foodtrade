@@ -119,8 +119,13 @@ class UserInfo():
         try:
             self.business_org_name = userprof['business_org_name']
         except:
-            self.business_org_name = ''            
+            self.business_org_name = ''      
 
+        self.email_registration = 0
+        try:
+            self.email_registration  = userprof['email_registration']
+        except:
+            pass
         
         user_connection =  UserConnections(user_id)
         if userprof.get('business_org_name')!=None:
