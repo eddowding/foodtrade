@@ -419,6 +419,8 @@ class AjaxHandle(AjaxSearch):
 
             notification_obj = Notification()
             user_profile_obj = UserProfile()
+            org_obj = Organisation()
+            org_count = org_obj.get_organisations_count_by_mem_id(data['memberuid'])
             try:
                 mem = user_profile_obj.get_profile_by_id(int(data['memberuid']))
                 org  = user_profile_obj.get_profile_by_id(int(data['orguid']))
@@ -436,7 +438,9 @@ class AjaxHandle(AjaxSearch):
                     pass
             except:
                 pass
-            return render_to_response('ajax_org.html', parameters, context_instance=RequestContext(request))
+            html_str =  str(render_to_response('ajax_org.html', parameters, context_instance=RequestContext(request)))
+            html_str = html_str.replace('Content-Type: text/html; charset=utf-8', '')
+            return HttpResponse(json.dumps({'html':html_str, 'status':'ok', 'org_count':org_count}))
             # return HttpResponse("{'status':1}")
         else:
             return HttpResponse("{'status':0}")
