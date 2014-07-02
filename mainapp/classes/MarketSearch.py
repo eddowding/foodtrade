@@ -88,7 +88,7 @@ class MarketSearch(GeneralSearch):
         pipeline.append({"$match":{"$and":and_query}})
 
         pipeline.append({"$sort": SON([("updates.time_stamp", -1)])})
-        pipeline.append({"$limit":100})
+        pipeline.append({"$limit":self.result_limit})
         agg = self.db.aggregate(pipeline)['result']
         for result in agg:
             result['updates']['status'] = self.recognise_name(result['updates']['status'])
