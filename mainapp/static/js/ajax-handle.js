@@ -249,8 +249,6 @@ function stockists_ajax(data){
 
 			//delete the row
 			
-        	$('#b_con_no').html(data['b_conn_no']);
-			$('#c_con_no').html(data['c_conn_no']);	
 			remove_con(data['username']);		
 		}
 		else{
@@ -264,6 +262,9 @@ function stockists_ajax(data){
           $('#suppliersTable').trigger('footable_resize');
           
 		}
+
+        	$('#c_con_no').html(data['b_conn_no']);
+			$('#b_con_no').html(data['c_conn_no']);	
 	}
 }
 
@@ -282,9 +283,7 @@ function suppliers_ajax(data){
 
 
 			new_connections = connections;						
-			//delete the row
-        	$('#b_con_no').html(data['b_conn_no']);
-			$('#c_con_no').html(data['c_conn_no']);	       	
+			//delete the row      	
 			remove_con(data['username']);
 		}		
 		else{
@@ -300,6 +299,10 @@ function suppliers_ajax(data){
           	$('#stockistsTable').trigger('footable_resize');
           	
 		}
+
+
+        	$('#c_con_no').html(data['b_conn_no']);
+			$('#b_con_no').html(data['c_conn_no']);	
 }
 
 function get_next_page_b_conn(buss_username, current_conn_page){
@@ -381,6 +384,11 @@ function food_ajax(data){
 $('.search-choice').remove();
 $("#myselect").val('').trigger('chosen:updated');
 $('#ajax_food_tr').html(data);
+
+$('#produceTable').trigger('footable_initialize');
+$('#produceTable').trigger('footable_resize');
+$('#produceTable').trigger('footable_initialize');
+$('#produceTable').trigger('footable_resize');
 // var $container1 = $('#foods').isotope({itemSelector: '.food'});
 }
 
@@ -388,6 +396,10 @@ function webuy_food_ajax(data){
 $('.search-choice').remove();
 $("#webuy_select").val('').trigger('chosen:updated');
 $('#webuy_foods').html(data);
+$('#webuy_foods').trigger('footable_initialize');
+$('#webuy_foods').trigger('footable_resize');
+$('#webuy_foods').trigger('footable_initialize');
+$('#webuy_foods').trigger('footable_resize');
 /*var $container1 = $('#webuy_foods').isotope({itemSelector: '.food'});*/
 }
 

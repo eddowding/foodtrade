@@ -328,7 +328,11 @@ class AjaxHandle(AjaxSearch):
             html_str =  str(render_to_response('conn_ajax.html', parameters, context_instance=RequestContext(request)))
             html_str = html_str.replace('Content-Type: text/html; charset=utf-8', '')
 
-            return HttpResponse({json.dumps({'status':'ok', 'html':html_str, 'user_added':each, 'action':'add_conn'})})
+            from mainapp.classes.DataConnector import UserConnections
+            user_connection =  UserConnections(data['prof_id'])
+            b_conn_len, c_conn_len = user_connection.get_trade_connection_no()   
+
+            return HttpResponse({json.dumps({'status':'ok','b_conn_no':c_conn_len, 'c_conn_no':b_conn_len , 'html':html_str, 'user_added':each, 'action':'add_conn'})})
         else:
             return HttpResponse("{'status':0}")
 
@@ -365,15 +369,13 @@ class AjaxHandle(AjaxSearch):
             if data['status'] == 'buy_from':
                 parameters['buy_from_flag'] = True
                 trade_conn.delete_connection(b_useruid = int(data['prof_id']), c_useruid = int(data['conn_id']))
-                from mainapp.classes.DataConnector import UserConnections
-                user_connection =  UserConnections(data['prof_id'])
-                b_conn_len, c_conn_len = user_connection.get_trade_connection_no()                                       
+                                                     
             else:
                 parameters['buy_from_flag'] = False
                 trade_conn.delete_connection(b_useruid = int(data['conn_id']), c_useruid = int(data['prof_id']))
-                from mainapp.classes.DataConnector import UserConnections
-                user_connection =  UserConnections(data['conn_id'])
-                b_conn_len, c_conn_len = user_connection.get_trade_connection_no()                       
+            from mainapp.classes.DataConnector import UserConnections
+            user_connection =  UserConnections(data['prof_id'])
+            b_conn_len, c_conn_len = user_connection.get_trade_connection_no()                       
             # parameters['connections'], parameters['conn'] = get_connections(int(data['prof_id']), request.user.id)
             # parameters['connections_str'] = json.dumps(parameters['connections'])
             # parameters['profile_id'], parameters['user_id'] = int(data['prof_id']), request.user.id
@@ -474,8 +476,12 @@ class AjaxHandle(AjaxSearch):
             html_str =  str(render_to_response('conn_ajax.html', parameters, context_instance=RequestContext(request)))
             html_str = html_str.replace('Content-Type: text/html; charset=utf-8', '')
 
-            return HttpResponse({json.dumps({'status':'ok', 'html':html_str, 'user_added':each, 'action':'add_conn'})})
-
+            from mainapp.classes.DataConnector import UserConnections
+            user_connection =  UserConnections(data['prof_id'])
+            b_conn_len, c_conn_len = user_connection.get_trade_connection_no()   
+            
+            return HttpResponse({json.dumps({'status':'ok','b_conn_no':c_conn_len, 'c_conn_no':b_conn_len , 'html':html_str, 'user_added':each, 'action':'add_conn'})})
+        
 
         else:
             return HttpResponse("{'status':0}")
@@ -569,14 +575,15 @@ class AjaxHandle(AjaxSearch):
                 pass
 
             parameters = {}
+            parameters['profile_id'], parameters['user_id'] = int(data['useruid']), request.user.id
             if data['we_buy'] == 1:
-                parameters['all_foods'], parameters['food_parents'] = get_all_buying_foods(int(data['useruid']), request.user.id)
+                parameters['all_buying_foods'], parameters['food_parents'] = get_all_buying_foods(int(data['useruid']), request.user.id)
                 parameters['webuy_flag'] = True
+                return render_to_response('webuy_foods.html', parameters, context_instance=RequestContext(request))
             else:
                 parameters['all_foods'], parameters['food_parents'] = get_all_foods(int(data['useruid']), request.user.id)
             # print pprint.pprint(parameters['all_foods'])
-            parameters['profile_id'], parameters['user_id'] = int(data['useruid']), request.user.id
-            return render_to_response('ajax_food_tr.html', parameters, context_instance=RequestContext(request))
+                return render_to_response('ajax_food_tr.html', parameters, context_instance=RequestContext(request))
             # return HttpResponse("{'status':1}")
         else:
             return HttpResponse("{'status':0}")
@@ -597,12 +604,13 @@ class AjaxHandle(AjaxSearch):
         if data !=None and data !="":
             foo.delete_food(useruid = data['useruid'], food_name = data['food_name'], we_buy = data['we_buy']);
             parameters = {}
+            parameters['profile_id'], parameters['user_id'] = int(data['useruid']), request.user.id
             if data['we_buy'] == 1:
-                parameters['all_foods'],  = get_all_buying_foods(int(data['useruid']), request.user.id)
+                parameters['all_buying_foods'], parameters['food_parents']  = get_all_buying_foods(int(data['useruid']), request.user.id)
+                return render_to_response('webuy_foods.html', parameters, context_instance=RequestContext(request))
             else:
                 parameters['all_foods'], parameters['food_parents'] = get_all_foods(int(data['useruid']), request.user.id)
-            parameters['profile_id'], parameters['user_id'] = int(data['useruid']), request.user.id
-            return render_to_response('ajax_food.html', parameters, context_instance=RequestContext(request))
+                return render_to_response('ajax_food.html', parameters, context_instance=RequestContext(request))
             # return HttpResponse("{'status':1}")
         else:
             return HttpResponse("{'status':0}")    
