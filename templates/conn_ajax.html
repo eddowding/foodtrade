@@ -1,25 +1,25 @@
-<tr>
-          <td width="40">
-            <a href="/profile/{{new_connection.username}}">
-              <img src="{{new_connection.profile_img}}" alt="{{new_connection.name}}" class="img-responsive" style="width:40px" />
+<tr {% if request.user.id == each.id %}class="self_conn"{% endif %}>
+           <td width="40">
+            <a href="/profile/{{each.username}}">
+              <img src="{{each.photo}}" alt="{{each.name}}" class="img-responsive" style="width:40px" />
             </a>
           </td>
           <td > 
-            {% if user.is_superuser or profile_id == user_id %}
-            <button type="button" class="close" aria-hidden="true" data-content="{{profile_id}}, {{new_connection.useruid}}">&times;</button> 
+            {% if request.user.is_superuser or profile_id == user_id %}
+            <button type="button" class="close" aria-hidden="true" data-content="{{profile_id}}, {{each.id}}">&times;</button> 
             {% endif %}
 
-            <a href="/profile/{{new_connection.username}}" class="black"><strong>{{new_connection.name}}</strong></a> 
+            <a href="/profile/{{each.username}}" class="black"><strong>{{each.name}}</strong></a> 
           </td>
           <td>
-            <p class="">{{new_connection.description}}</p>
+            <p class="">{{each.description}}</p>
           </td>
           <td>
 
-            {% if new_connection.type|length == 0 or new_connection.type|first == '' %}
+            {% if each.type|length == 0 or each.type|first == '' %}
               {% else %} 
               <p class="ellipsis  margin0">
-               {% for e in new_connection.type %}
+               {% for e in each.type %}
                <a href="/activity/?b={{e}}" class="label label-default label-stroke label-tag">{{e}}</a>
                {% endfor %} 
                </p>
@@ -28,8 +28,8 @@
           </td>
           
           <td>
-          {% if new_connection.banner_url %}
-            <img src='{{new_connection.banner_url}}' title='{{new_connection.username}}' class='img-responsive'>
+          {% if each.banner_url %}
+            <img src='{{each.banner_url}}' title='{{each.username}}' class='img-responsive'>
           {% endif %}  
           </td>
 
@@ -38,22 +38,23 @@
             <div class='row row-merge border-top'>
               <!-- number of foods sold -->
               <div class='{% if show_foods %}col-xs-3{% else %}col-xs-6{% endif %}'>
-                <a href='' class='innerAll half text-center display-block ' data-original-title='{{new_connection.food_no}} foods' rel='tooltip'><i class='fa fa-fw fa fa-cutlery'></i> {{new_connection.food_no}}</a>
+                <a href='' class='innerAll half text-center display-block ' data-original-title='{{each.food_no}} foods' rel='tooltip'><i class='fa fa-fw fa fa-cutlery'></i> {{each.food_no}}</a>
               </div>
               <!-- number of vouches across all produce --> 
               <div class='{% if show_foods %}col-xs-3{% else %}col-xs-6{% endif %}'>
-                <a href=''  rel='tooltip' title='{{new_connection.total_vouches}} of vouches for all produce'  class='innerAll half text-center display-block '><i class='fa fa-fw fa-thumbs-o-up'></i> {{new_connection.total_vouches}}</a>
+                <a href=''  rel='tooltip' title='{{each.total_vouches}} of vouches for all produce'  class='innerAll half text-center display-block '><i class='fa fa-fw fa-thumbs-o-up'></i> {{each.total_vouches}}</a>
               </div> 
               <!-- number of trade connections --> 
               <div class='{% if show_foods %}col-xs-3{% else %}col-xs-6{% endif %}'>
-                <a href=''  rel='tooltip' title='{{new_connection.trade_conn_no}} of trade connections' class='innerAll half text-center display-block'><i class='fa fa-fw fa-link'></i> {{new_connection.trade_conn_no}}</a>
+                <a href=''  rel='tooltip' title='{{each.trade_conn_no}} of trade connections' class='innerAll half text-center display-block'><i class='fa fa-fw fa-link'></i> {{each.trade_conn_no}}</a>
               </div>
               <!-- number of group membershpis -->  
               <div class='{% if show_foods %}col-xs-3{% else %}col-xs-6{% endif %}'>
-                <a href=''  rel='tooltip' title='Member of {{new_connection.org_conn_no}} groups or organisations'  class='innerAll half text-center display-block'><i class='fa fa-fw fa-group'></i> {{new_connection.org_conn_no}}</a>
+                <a href=''  rel='tooltip' title='Member of {{each.org_conn_no}} groups or organisations'  class='innerAll half text-center display-block'><i class='fa fa-fw fa-group'></i> {{each.org_conn_no}}</a>
               </div> 
             </div>  
           </td>
           <td>
           </td>
-</tr>
+
+        </tr>

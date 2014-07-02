@@ -519,9 +519,9 @@
           </div> 
           {% endif %}
  
-      {% if userprof.b_conn_no != 0 %} 
        
-      <div class="mCustomScrollbar scroll300">
+       
+      <div  class="mCustomScrollbar scroll300">
         <table class="table table-hover table-condensed footable toggle-arrow-circle-filled" id="suppliersTable" data-filter="#filterSuppliers" data-filter-text-only="true"> 
         <thead class="hidden">
             <tr> 
@@ -549,78 +549,20 @@
             </tr>
           </thead>
 
-
+          <tbody id="supplier_connections">
         {% for each in connections %}
         {% if each.relation == "buyer" or each.relation == "both" %}
 
-        <tr>
-          <td width="40">
-            <a href="/profile/{{each.username}}">
-              <img src="{{each.photo}}" alt="{{each.name}}" class="img-responsive" style="width:40px" />
-            </a>
-          </td>
-          <td > 
-            {% if request.user.is_superuser or profile_id == user_id %}
-            <button type="button" class="close" aria-hidden="true" data-content="{{profile_id}}, {{each.id}}">&times;</button> 
-            {% endif %}
-
-            <a href="/profile/{{each.username}}" class="black"><strong>{{each.name}}</strong></a> 
-          </td>
-          <td>
-            <p class="">{{each.description}}</p>
-          </td>
-          <td>
-
-            {% if each.type|length == 0 or each.type|first == '' %}
-              {% else %} 
-              <p class="ellipsis  margin0">
-               {% for e in each.type %}
-               <a href="/activity/?b={{e}}" class="label label-default label-stroke label-tag">{{e}}</a>
-               {% endfor %} 
-               </p>
-             {% endif %} 
-          
-          </td>
-          
-          <td>
-          {% if each.banner_url %}
-            <img src='{{each.banner_url}}' title='{{each.username}}' class='img-responsive'>
-          {% endif %}  
-          </td>
-
- 
-          <td>
-            <div class='row row-merge border-top'>
-              <!-- number of foods sold -->
-              <div class='{% if show_foods %}col-xs-3{% else %}col-xs-6{% endif %}'>
-                <a href='' class='innerAll half text-center display-block ' data-original-title='{{each.food_no}} foods' rel='tooltip'><i class='fa fa-fw fa fa-cutlery'></i> {{each.food_no}}</a>
-              </div>
-              <!-- number of vouches across all produce --> 
-              <div class='{% if show_foods %}col-xs-3{% else %}col-xs-6{% endif %}'>
-                <a href=''  rel='tooltip' title='{{each.total_vouches}} of vouches for all produce'  class='innerAll half text-center display-block '><i class='fa fa-fw fa-thumbs-o-up'></i> {{each.total_vouches}}</a>
-              </div> 
-              <!-- number of trade connections --> 
-              <div class='{% if show_foods %}col-xs-3{% else %}col-xs-6{% endif %}'>
-                <a href=''  rel='tooltip' title='{{each.trade_conn_no}} of trade connections' class='innerAll half text-center display-block'><i class='fa fa-fw fa-link'></i> {{each.trade_conn_no}}</a>
-              </div>
-              <!-- number of group membershpis -->  
-              <div class='{% if show_foods %}col-xs-3{% else %}col-xs-6{% endif %}'>
-                <a href=''  rel='tooltip' title='Member of {{each.org_conn_no}} groups or organisations'  class='innerAll half text-center display-block'><i class='fa fa-fw fa-group'></i> {{each.org_conn_no}}</a>
-              </div> 
-            </div>  
-          </td>
-          <td>
-          </td>
-
-        </tr>
+       {% include "conn_ajax.html" %}
                
 
           {% endif %}
-          {% endfor %}  
+          {% endfor %}
+          </tbody>  
           </table> 
 
     </div> 
-        {% endif %}
+        
     </div>
 
    <!-- Sells to / Stockists  --> 
@@ -670,7 +612,6 @@
           </div> 
           {% endif %}
  
-      {% if userprof.c_conn_no != 0 %} 
         
 
        <div class="mCustomScrollbar scroll300">
@@ -701,73 +642,19 @@
             </tr>
           </thead>
 
-
+          <tbody id="stockist_connections">
         {% for each in connections %}
         {% if each.relation == "seller" or each.relation == "both" %}
 
-        <tr>
-          <td width="40">
-            <a href="/profile/{{each.username}}">
-              <img src="{{each.photo}}" alt="{{each.name}}" class="img-responsive" style="width:40px" />
-            </a>
-          </td>
-          <td> 
-              {% if request.user.is_superuser or profile_id == user_id %}
-              <button type="button" class="close" aria-hidden="true" data-content="{{profile_id}}, {{each.id}}">&times;</button> 
-              {% endif %}
-
-              <a href="/profile/{{each.username}}" class="black"><strong>{{each.name}}</strong></a> 
-          </td>
-          <td>
-              <p class="  ">{{each.description}}</p>
-          </td>
-          <td>
-
-            {% if each.type|length == 0 or each.type|first == '' %}
-              {% else %} 
-              <p class="ellipsis  margin0">
-               {% for e in each.type %}
-               <a href="/activity/?b={{e}}" class="label label-default label-stroke label-tag">{{e}}</a>
-               {% endfor %} 
-               </p>
-             {% endif %} 
-          
-          </td>
-          <td>
-            {% if each.banner_url %}
-              <img src='{{each.banner_url}}' title='{{each.username}}' class='img-responsive'>
-            {% endif %}  
-          </td>
-          <td>
-            <div class='row row-merge border-top'>
-              <!-- number of foods sold -->
-              <div class='{% if show_foods %}col-xs-3{% else %}col-xs-6{% endif %}'>
-                <a href='' class='innerAll half text-center display-block' data-original-title='{{each.food_no}} foods' rel='tooltip'><i class='fa fa-fw fa fa-cutlery'></i> {{each.food_no}}</a>
-              </div>
-              <!-- number of vouches across all produce --> 
-              <div class='{% if show_foods %}col-xs-3{% else %}col-xs-6{% endif %}'>
-                <a href=''  rel='tooltip' title='{{each.total_vouches}} of vouches for all produce'  class='innerAll half text-center display-block'><i class='fa fa-fw fa-thumbs-o-up'></i> {{each.total_vouches}}</a>
-              </div> 
-              <!-- number of trade connections --> 
-              <div class='{% if show_foods %}col-xs-3{% else %}col-xs-6{% endif %}'>
-                <a href=''  rel='tooltip' title='{{each.trade_conn_no}} of trade connections' class='innerAll half text-center display-block'><i class='fa fa-fw fa-link'></i> {{each.trade_conn_no}}</a>
-              </div>
-              <!-- number of group membershpis -->  
-              <div class='{% if show_foods %}col-xs-3{% else %}col-xs-6{% endif %}'>
-                <a href=''  rel='tooltip' title='Member of {{each.org_conn_no}} groups or organisations'  class='innerAll half text-center display-block'><i class='fa fa-fw fa-group'></i> {{each.org_conn_no}}</a>
-              </div> 
-            </div>   
-          </td>
-          <td></td>
-        </tr>
+       {% include "conn_ajax.html" %}
                
 
           {% endif %}
           {% endfor %}  
+          </tbody>
           </table> 
           </div>
 
-        {% endif %}
     
  
     </div>
@@ -1803,7 +1690,7 @@ $('#suppliersTable').footable().on('click', '.close', function(e) {
         var content = this.attributes['data-content'].value;
         var content_split = content.split(',');
         var rel_1 = content_split[0];
-        var rel_2 = content_split[1]
+        var rel_2 = content_split[1];
         conn_handler('close_buy_from', rel_1,rel_2);
 
 });
@@ -1818,7 +1705,7 @@ $('#stockistsTable').footable().on('click', '.close', function(e) {
         var content = this.attributes['data-content'].value;
         var content_split = content.split(',');
         var rel_1 = content_split[0];
-        var rel_2 = content_split[1]
+        var rel_2 = content_split[1];
         conn_handler('close_sell_to', rel_1, rel_2);
 });
       /*conn_handler('close_buy_from', */

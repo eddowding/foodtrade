@@ -238,10 +238,16 @@ class AjaxHandle(AjaxSearch):
         data = eval(request.POST.get('conn_data'))
         notification_obj = Notification()
         user_profile_obj = UserProfile()
+
+
+
+
+
         if data !=None and data !="":
             parameters = {}
             if data['status'] == 'buy_from':
                 parameters['buy_from_flag'] = True
+                parameters['relation'] = 'seller'
                 trade_conn.create_connection({'b_useruid': int(data['prof_id']), 'c_useruid': request.user.id})
                 try:
                     buyer = user_profile_obj.get_profile_by_id(int(data['prof_id']))
@@ -261,6 +267,7 @@ class AjaxHandle(AjaxSearch):
                     pass
             else:
                 parameters['buy_from_flag'] = False
+                parameters['relation'] = 'buyer'
 
                 trade_conn.create_connection({'b_useruid': request.user.id, 'c_useruid': int(data['prof_id'])})
                 try:
@@ -280,12 +287,48 @@ class AjaxHandle(AjaxSearch):
                 except:
                     pass
             
+
+
             # parameters['connections'], parameters['logged_conn'] = get_connections(userprof['useruid'], request.user.id)
-            
+            user_pro = UserProfile()
+
+            usr_pr = user_pro.get_profile_by_id(request.user.id)
+
+
+            each = {'id':usr_pr['useruid'],
+             # 'name': account.extra_data['name'],
+             'name': usr_pr['name'],
+             # 'b_conn_no':b_conn_len, 
+             # 'c_conn_no':c_conn_len,
+             # 'total_vouches' : total_vouches,
+             'description': usr_pr['description'],
+             'photo': usr_pr['profile_img'],
+             'username' : usr_pr['username'],
+             'type': usr_pr['type_user'][:3],
+             # 'trade_conn_no': trade_connections_no,
+             # 'food_no': food_no,
+             # 'org_conn_no': organisation_connection_no,
+             'latitude': usr_pr['latlng']['coordinates'][1],
+             'longitude': usr_pr['latlng']['coordinates'][0],
+             'relation': 'both'      
+             }
+
             parameters['connections'], parameters['conn'] = get_connections(int(data['prof_id']), request.user.id)
-            parameters['connections_str'] = str(json.dumps(parameters['connections']))
             parameters['profile_id'], parameters['user_id'] = int(data['prof_id']), request.user.id
-            return render_to_response('conn_ajax.html', parameters)
+
+
+
+             
+            parameters['user'] = request.user
+            # parameters['connections'], parameters['conn'] = get_connections(int(data['prof_id']), request.user.id)
+            parameters['connections_str'] = json.dumps(each)
+            
+            parameters['each'] = each
+            
+            html_str =  str(render_to_response('conn_ajax.html', parameters, context_instance=RequestContext(request)))
+            html_str = html_str.replace('Content-Type: text/html; charset=utf-8', '')
+
+            return HttpResponse({json.dumps({'status':'ok', 'html':html_str, 'user_added':each, 'action':'add_conn'})})
         else:
             return HttpResponse("{'status':0}")
 
@@ -310,7 +353,7 @@ class AjaxHandle(AjaxSearch):
             from mainapp.classes.DataConnector import UserConnections
             user_connection =  UserConnections(data['prof_id'])
             b_conn_len, c_conn_len = user_connection.get_trade_connection_no()                       
-            return HttpResponse(json.dumps({'status':'ok','b_conn_no':c_conn_len, 'c_conn_no':b_conn_len ,'username':usr_name, 'action':'delete'}))
+            return HttpResponse(json.dumps({'status':'ok','b_conn_no':c_conn_len, 'c_conn_no':b_conn_len ,'username':request.user.username, 'action':'delete'}))
         else:
             return HttpResponse("{'status':0}")
 
@@ -334,11 +377,13 @@ class AjaxHandle(AjaxSearch):
             # parameters['connections'], parameters['conn'] = get_connections(int(data['prof_id']), request.user.id)
             # parameters['connections_str'] = json.dumps(parameters['connections'])
             # parameters['profile_id'], parameters['user_id'] = int(data['prof_id']), request.user.id
-            user_obj = UserProfile()
+            # user_obj = UserProfile()
             # usr_name = user_obj.get_profile_by_id(int(data['conn_id']))['username'] 
+            user_pro = UserProfile()
 
+            buss_obj = user_pro.get_profile_by_id(int(data['prof_id']))
 
-            return HttpResponse(json.dumps({'status':'ok', 'action':'delete', 'b_conn_no':b_conn_len, 'c_conn_no':c_conn_len}))            
+            return HttpResponse(json.dumps({'status':'ok', 'action':'delete', 'b_conn_no':b_conn_len, 'c_conn_no':c_conn_len, 'username':buss_obj['username']}))
             # return render_to_response('conn_ajax.html', parameters)            
             # return HttpResponse("{'status':1}")
         else:
@@ -384,17 +429,54 @@ class AjaxHandle(AjaxSearch):
             # b_conn_len, c_conn_len = user_connection.get_trade_connection_no()
             # parameters['b_conn_no'] = b_conn_len
             # parameters['c_conn_no'] = c_conn_len
+            
+            # parameters['connections'], parameters['conn'] = get_connections(int(data['prof_id']), request.user.id)
+            
+            
+       
+
+            user_pro = UserProfile()
+
+            usr_pr = user_pro.get_profile_by_id(int(data['buss_id']))
+
+
+            each = {'id':usr_pr['useruid'],
+             # 'name': account.extra_data['name'],
+             'name': usr_pr['name'],
+             # 'b_conn_no':b_conn_len, 
+             # 'c_conn_no':c_conn_len,
+             # 'total_vouches' : total_vouches,
+             'description': usr_pr['description'],
+             'photo': usr_pr['profile_img'],
+             'username' : usr_pr['username'],
+             'type': usr_pr['type_user'][:3],
+             # 'trade_conn_no': trade_connections_no,
+             # 'food_no': food_no,
+             # 'org_conn_no': organisation_connection_no,
+             'latitude': usr_pr['latlng']['coordinates'][1],
+             'longitude': usr_pr['latlng']['coordinates'][0],
+             'relation': 'both'      
+             }
+
+            parameters['connections'], parameters['conn'] = get_connections(int(data['prof_id']), request.user.id)
+            parameters['profile_id'], parameters['user_id'] = int(data['prof_id']), request.user.id
+
+
+
+             
             parameters['user'] = request.user
             # parameters['connections'], parameters['conn'] = get_connections(int(data['prof_id']), request.user.id)
-            parameters['connections_str'] = json.dumps(buss_obj)
-            parameters['profile_id'] = int(data['prof_id'])
-            parameters['user_id'] = request.user.id
-            parameters['new_connection'] = buss_obj
-            # print buss_obj
-            html_str =  str(render_to_response('conn_ajax.html', parameters))
+            parameters['connections_str'] = json.dumps(each)
+            parameters['new_connection'] = user_pro
+            
+            parameters['each'] = each
+            
+            html_str =  str(render_to_response('conn_ajax.html', parameters, context_instance=RequestContext(request)))
             html_str = html_str.replace('Content-Type: text/html; charset=utf-8', '')
 
-            return HttpResponse({json.dumps({'status':'ok', 'html':html_str, 'user_added':buss_obj, 'action':'add_conn'})})
+            return HttpResponse({json.dumps({'status':'ok', 'html':html_str, 'user_added':each, 'action':'add_conn'})})
+
+
         else:
             return HttpResponse("{'status':0}")
 
