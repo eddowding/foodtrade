@@ -10,9 +10,6 @@
  
 <link href="{% static "css/ft_home.less" %}" rel="stylesheet/less"> 
 
-
-
-
 <div class="ftstrip"></div>
 <div class="clearfix" style="background:url('/static/images/apples_blur.jpg'); background-size: cover;" id="homeimage">  
  <div class="col-sm-8 col-sm-offset-2 col-xs-10 col-xs-offset-1">
@@ -27,12 +24,12 @@
       </p>
 
       <div class="text-center" id="joinButton">
-        <a href="{% provider_login_url "twitter" process="login" %}"  class="btn btn-primary">
+        <a data-toggle="modal" data-target="#modal_signup"  class="btn btn-primary">
         <strong>Join Now, it's free &raquo;</strong><br />
         <small>Companies can always upgrade to a paid plan later</small>
         </a> 
 
-        <a href="{% provider_login_url "twitter" process="login" %}"  class="btn btn-primary secondary">
+        <a data-toggle="modal" data-target="#modal_signup"  class="btn btn-primary secondary">
         <strong>Login instantly</strong><br />
         <small>I'm already completely awesome</small>
         </a> 
@@ -45,68 +42,33 @@
 </div>
 <div class="ftstrip"></div>
 
+ 
 
-<div class="row showcase">
-  <div class="col-sm-5 col-sm-offset-1">
-  <h2>A proud and flourishing food system</h2>
-  <p>fdsjfkljasdfkjas dajsdfhla sdfh dssd
-  </p>
+<div class="row showcase equ al">
+  <div class="col-sm-4 col-sm-offset-1 padTop">
+    <img src="/static/images/screen.png" class="img-responsive" />
   </div>
-  <div class="col-sm-4 col-sm-offset-1">
-    <img src="/static/images/map.png" class="img-responsive img-thumbnail" />
-  </div>
-</div>
-
-<div class="row showcase">
-  <div class="col-sm-3 col-sm-offset-1">
-    <img src="http://digest.foodtrade.com/wp-content/uploads/2014/06/connections_flat.png" class="img-responsive img-thumbnail" />
-  </div>
-  <div class="col-sm-5 col-sm-offset-1">
-  <h2>Matchmaking companies</h2>
+  <div class="col-sm-6 col-sm-offs et-1" style="padding-left:50px;">
+  <h2>For smarter companies</h2>
   <div class="lead">
      <ul style="margin-left: 0; margin-bottom: 20px;">
-       <li>Find new business</li>  
-       <li>Showcase your produce, suppliers, &amp; stockists</li> 
-       <li>Trade in real-time just by sending a tweet</li>  
-       <li>Works for buying, selling, surplus, and more</li>
-       <li>We don't take a cut of your sales</li>  
-     </ul> 
-  </div>
-
-  <div class=" " >
-              <ul class="fa-ul text-left lead" style="display: inline-block; color: #447A23;">
-                <li>
-                    <span class="fa fa-li fa fa-check"></span>
-                    No credit card needed to get started 
-                </li> 
-                <li>
-                    <span class="fa fa-li fa fa-check"></span>
-                    Trade effortlessly with local companies
-                </li>
-                <li>
-                    <span class="fa fa-li fa fa-check"></span>
-                    Don't miss out on local business opportunities 
-                </li>
-
-           <li>Find new business</li>  
-           <li>Showcase your produce, suppliers, &amp; stockists</li> 
-           <li>Trade in real-time just by sending a tweet</li>  
-           <li>Works for buying, selling, surplus, and more</li>
-           <li>We don't take a cut of your sales</li> 
-              </ul>
-              </div>
-
-            <div class=" ">
-                <p>  
-                We make it easy and economical to make smarter decisions; connecting you with new suppliers or stockists, resources, market intelligence, or a heap of hungry folk ready to eat.
-
-                </p>
-              </div>
+       <li><strong>Find your perfect match</strong> <span>Search and connect directly with people who sell what you seek, or what what you make</span></li>  
+      <li><strong>Market intelligence &amp; intelligent markets </strong> 
+      <span>Publish your shopping lists (so the best comes to you), find collaborators to cut costs, and more.</span>
+      </li>
+       <li><strong>Feature your produce</strong> <span>Add photos, description, seasonal availability, and ease <acronym title="Food Information to Consumers regulation">FIC compliance</acronym></span></li>
+       <li><strong>Real-time trading</strong> <span>Make and respond to offers directly from the smartphone-friendly app, or send a tweet.</li> 
+       <li><strong>Showcase your suppliers, &amp; stockists</strong> <span>Use the food map on your website, menus, apps.. </span></li>  
+      <li><strong>No transaction fees</strong> <span>Because we want you to invest in better food, we work like a dating site to match-make members, not like a shop taking a cut.</li>  
+       </ul> 
+  </div> 
  
-              <div class="text-center">
-              <a href="{% provider_login_url "twitter" process="login" %}"  class="btn btn-primary" ><strong>Get started &raquo;</strong></a> 
-              <a href="/pages/business" class="btn btn-stroke" >Learn more &raquo;</a>
-              </div>
+  <div class="text-left">
+    <a data-toggle="modal" data-target="#modal_signup"  class="btn btn-primary btn-stroke" ><strong class="clearfix">GET STARTED &raquo;</strong></a> 
+      
+   <small class="text-muted normal "><i class="fa fa-check"></i>
+        No credit card needed  </small>
+  </div>
 
  
           </div>
@@ -114,34 +76,29 @@
 </div>
 
 <div class="row showcase">
-  <div class="col-sm-5 col-sm-offset-1">
-  <h2>Connecting people</h2>
+  <div class="col-sm-6 col-sm-offset-1">
+  <h2>Connecting customers</h2>
     <div class="lead"> 
        <ul style="margin-left: 0; margin-bottom: 20px;">
-         <li>Find the best local suppliers</li>  
-         <li>Trade your garden surplus</li>  
-         <li>Vouch for for great food</li> 
-         <li>Map your local food web</li>   
+         <li><strong>Find the best shops &amp; restaurants</strong> 
+         <span>The best produce from the companies who do the most for your community</span></li>
+         <li><strong>Trade garden or allotment surplus</strong><span>It's as easy as sending a tweet</span></li>
+         <li><strong>Vouch for for great food</strong><span>Show your support for your favourite producers to help them stand out</span></li>
+         <li><strong>Map your local food web</strong><span>FoodTrade is open to contributions: if you know who trades what with who, share it!</span></li>
+         <li><strong>100% free for individuals</strong><span></span></li>  
        </ul> 
-       <p>
-
-For individuals
-
-    100% free for individuals, forever
-    Find businesses, new schemes, and join local groups
-    Trade surpluses with others nearby
-
-By discovering the story behind your food, you can contribute to the health of your family, friends and community. Share surplus home grown food and vouch for your favourite places to eat.
-</p>
     </div>
-    <p style="margin-left: 20px;">
-      <a href="{% provider_login_url "twitter" process="login" %}"  class="btn btn-primary" style="font-size: 24px; text-shadow: 1px 1px 1px #444 !important; line-height: 0.7; padding: 10px; text-align: left;">
-      <strong>Join as an individual</strong><br />
-      <small style="font-size: 12px; font-weight: normal;">No credit card required</small></a> 
-      <a href="/pages/individual"  class="btn btn-primary " style="font-size: 20px; background: none; color: rgba(255,255,255,1); border: 1px solid rgba(255,255,255,0.7); font-weight: 200; ">Learn more</a> 
-    </p>
+
+  <div class="text-left">
+    <a data-toggle="modal" data-target="#modal_signup"  class="btn btn-primary btn-stroke" ><strong class="clearfix">Join as an individual &raquo;</strong></a> 
+      
+   <small class="text-muted normal "><i class="fa fa-check"></i>
+        Free forever </small>
   </div>
-  <div class="col-sm-4 col-sm-offset-1">
+
+    
+  </div>
+  <div class="col-sm-3 col-sm-offset-1 padTop">
     <img src="http://farm5.staticflickr.com/4032/4620044329_dd3bc8cca1_o.jpg" class="img-responsive img-thumbnail" />
   </div>
 </div>
@@ -154,26 +111,20 @@ By discovering the story behind your food, you can contribute to the health of y
   <h2>Championing organisations</h2>
     <div class="lead"> 
        <ul style="margin-left: 0; margin-bottom: 20px;">
-         <li>Find the best local suppliers</li>  
-         <li>Trade your garden surplus</li>  
-         <li>Vouch for for great food</li> 
-         <li>Map your local food web</li>   
+         <li><strong>Show your <em>real</em> impact</strong><span>Map your members, and where they trade</span></li>
+         <li><strong>Grow your group</strong><span>
+Our intelligent search tools can find who buys and sells any type of food, so you can cut to the chase and instantly find the right people for your group.</span></li>
+         <li><strong>Empower your members</strong><span>With instant local messaging, it's easier than ever to share resources, collaborate, and strengthen your community. </span></li>
+         <li><strong>We want to work with you</strong><span>Certifiers, community groups, networks, awards or public sector - whatever your sector or scale, we built these tools for you. </span></li>
        </ul> 
-       <p>
-For organisations
-
-    No credit card needed to get started
-    Free for life for most groups
-
-Certifiers, community groups, networks, awards or public sector. We want to showcase your story, offering you the credentials you deserve and connecting you with the right people.
-</p>
     </div>
-    <p style="margin-left: 20px;">
-      <a href="{% provider_login_url "twitter" process="login" %}"  class="btn btn-primary" style="font-size: 24px; text-shadow: 1px 1px 1px #444 !important; line-height: 0.7; padding: 10px; text-align: left;">
-      <strong>Join as an individual</strong><br />
-      <small style="font-size: 12px; font-weight: normal;">No credit card required</small></a> 
-      <a href="/pages/individual"  class="btn btn-primary " style="font-size: 20px; background: none; color: rgba(255,255,255,1); border: 1px solid rgba(255,255,255,0.7); font-weight: 200; ">Learn more</a> 
-    </p>
+    <div class="text-left">
+      <a data-toggle="modal" data-target="#modal_signup"  class="btn btn-primary btn-stroke" ><strong class="clearfix">Join as an organisation &raquo;</strong></a> 
+        
+     <small class="text-muted normal "><i class="fa fa-check"></i>
+          {{user_count.organisation_count}} others already have</small>
+    </div>
+ 
   </div>
 </div>
 
@@ -252,7 +203,7 @@ Certifiers, community groups, networks, awards or public sector. We want to show
 
         <img src="https://pbs.twimg.com/profile_images/1764443695/illu-dandelion-clock.315192253_400x400.jpg"  style="height:40px;margin-right: 5px !important;" class="pull-left img-thumbnail"> 
         <p><b>Steve Glover, Grower</b><br /><a style="color:#444; font-weight:bold;" href="http://foodtrade.com/severnproject/">Severn Project</a></p>
-<p><a href="{% provider_login_url "twitter" process="login" %}"  class="btn btn-block btn-primary mtop" ><strong>Find new business  &raquo;</strong></a> </p>
+<p><a data-toggle="modal" data-target="#modal_signup"  class="btn btn-block btn-primary mtop" ><strong>Find new business  &raquo;</strong></a> </p>
          
       </div>
     </div>
@@ -268,7 +219,7 @@ Certifiers, community groups, networks, awards or public sector. We want to show
         <p><b>, Butcher</b><br />
         <a style="color:#444; font-weight:bold;" href="http://foodtrade.com/blagdonbutchers/">Blagdon Butchers</a></p>
 
-        <p><a href="{% provider_login_url "twitter" process="login" %}"  class="btn btn-block btn-primary mtop" ><strong>Showcase your partners  &raquo;</strong></a> </p>
+        <p><a data-toggle="modal" data-target="#modal_signup"  class="btn btn-block btn-primary mtop" ><strong>Showcase your partners  &raquo;</strong></a> </p>
          
       </div>
     </div>
@@ -284,7 +235,7 @@ Certifiers, community groups, networks, awards or public sector. We want to show
         <p><b>Kieran Jefferson, Chef</b><br />
         <a style="color:#444; font-weight:bold;" href="http://foodtrade.com/FriskaFood/">Friska</a></p>
 
-<p><a href="{% provider_login_url "twitter" process="login" %}"  class="btn btn-block btn-primary mtop" ><strong>Source quality ingredients &raquo;</strong></a> </p>
+<p><a data-toggle="modal" data-target="#modal_signup"  class="btn btn-block btn-primary mtop" ><strong>Source quality ingredients &raquo;</strong></a> </p>
          
       </div>
     </div>
@@ -303,7 +254,7 @@ Certifiers, community groups, networks, awards or public sector. We want to show
         <a style="color:#444; font-weight:bold;" href="http://foodtrade.com/slowfooduk/">Slow Food UK</a>
         </p>
 
-<p><a href="{% provider_login_url "twitter" process="login" %}"  class="btn btn-block btn-primary mtop" ><strong>Demonstrate your impact  &raquo;</strong></a> </p>
+<p><a data-toggle="modal" data-target="#modal_signup"  class="btn btn-block btn-primary mtop" ><strong>Demonstrate your impact  &raquo;</strong></a> </p>
          
       </div>
     </div>

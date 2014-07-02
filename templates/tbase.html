@@ -157,18 +157,20 @@
 
 
     <link rel="stylesheet" href="{% static "assets/less/admin/module.admin.stylesheet-complete.css" %}" /> 
+
+    <!-- <link rel="stylesheet" href="/assets/css/foodtrade.css" />  -->
     <!-- <link href="{% static "assets/less/admin/compiledstyle.css" %}" rel="stylesheet"> -->
     <link href="{% static "css/foodtrade.less" %}" rel="stylesheet/less">
   
     <!--[if lt IE 9]><link rel="stylesheet" href="{% static "assets/components/library/bootstrap/css/bootstrap.min.css" %}" /><![endif]-->
-    <script>
+    <!-- <script>
       less = {
-        env: "development", 
+        env: "production", 
         poll: 100
       };
-    </script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/less.js/1.7.1/less.min.js"></script>  
+    </script> -->
     <script>//less.watch();</script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/less.js/1.7.1/less.min.js"></script>  
 
     <script src="{% static "assets/components/plugins/browser/ie/ie.prototype.polyfill.js" %}"></script>
     <script>
@@ -267,7 +269,8 @@
 
   <div class="user-action pull-right  border-left">
     <div class="dropdown username pull-left">
-      <a   data-toggle="modal" data-target="#modal_signup">
+      <a   data-toggle="modal" data-target="#modal_signup" style="font-weight: 400;
+line-height: 34px; font-size: 16px;">
         Sign up
       </a>
     </div>
@@ -752,7 +755,7 @@
                   <li>
                       <span class="fa fa-li fa fa-check" style="color: #85B963;"></span>We work for you: You're our customer, not our product.</li>
                 </ul> 
-                <p>If you're not happy with these assurances, you can also <a href="#">register with an email and password</a>, but you will not be able to take full advantage of all the great features.</p>
+                <p>If you're not happy with these assurances, you can also <a href="/accounts/signup">register with an email and password</a>, but you will not be able to take full advantage of all the great features.</p>
                 </div>
 
               </div>
@@ -786,10 +789,9 @@
    </div>
             </div>
             <div class="modal-footer"> 
-              <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cancel</button>
-              
-          <!-- <a href="{% provider_login_url "twitter" process="login" %}" class="btn btn-lg btn-info btn-block"><i class="fa fa-twitter"></i> Continue Login</a> -->
-                       <a href="{% provider_login_url "twitter" process="login" %}"><button type="button" class="btn btn-primary"><i class="fa fa-twitter"></i> Continue Registration</button></a>
+              <a class="btn btn-primary btn-stroke text-black normal pull-left" href="/accounts/signup"><i class="fa fa-envelope text-black"></i> I'd rather sign up by email</a>
+               
+              <a href="{% provider_login_url "twitter" process="login" %}"><button type="button" class="btn btn-primary"><i class="fa fa-twitter"></i> Sign up with Twitter</button></a>
               
             </div>
           </div><!-- /.modal-content -->
