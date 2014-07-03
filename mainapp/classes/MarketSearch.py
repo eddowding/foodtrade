@@ -46,8 +46,8 @@ class MarketSearch(GeneralSearch):
 
 
         query_string.append({"$nor":[{"$exists": False},{"updates": { "$size": 0 }}]})
-   
-
+        time_stamp = int(time.time()) - 30*24*3600
+        query_string.append({'updates':{"$elemMatch":{'time_stamp':{"$gt":int(time_stamp)},"deleted":0}}})
 
 
 
@@ -85,6 +85,9 @@ class MarketSearch(GeneralSearch):
             and_query.append({"updates.status":keyword_re})
         if self.want!="all":
             and_query.append({"updates.status":want_re})
+
+        and_query.append({'updates.time_stamp':{"$gt":time_stamp},"updates.deleted":0})
+
         pipeline.append({"$match":{"$and":and_query}})
 
         pipeline.append({"$sort": SON([("updates.time_stamp", -1)])})
