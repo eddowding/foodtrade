@@ -52,7 +52,7 @@ urlpatterns = patterns('',
     url(r'^merge-data/$', 'mainapp.merge_data.merge'),
     url(r'^update-image/$', 'mainapp.merge_data.update_image'),
     url(r'^visitors/$', 'mainapp.profilepage.get_views_count'),    
-    url(r'^activity/(?P<request_type>\w{1,40})$', 'mainapp.activity.activity_suppliers'),
+    # url(r'^activity/(?P<request_type>\w{1,40})$', 'mainapp.activity.activity_suppliers'),
     url(r'^myprofile/favourites/$', 'mainapp.favpage.display_favourites'),
     ## any user    
     url(r'^(?P<username>\w{1,40})/$', 'mainapp.profilepage.profile_url_resolve'),    

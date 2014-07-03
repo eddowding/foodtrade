@@ -5,7 +5,7 @@
 {% include "socialaccount/snippets/login_extra.html" %}
 {% load account %}
 <!DOCTYPE html>
-<html lang="en" class="sidebar sidebar-social footer-sticky js flexbox flexboxlegacy no-touch rgba hsla multiplebgs backgroundsize borderimage borderradius boxshadow textshadow opacity cssanimations csscolumns cssgradients cssreflections csstransforms csstransforms3d csstransitions fontface generatedcontent">
+<html lang="en" class="js flexbox flexboxlegacy no-touch rgba hsla multiplebgs backgroundsize borderimage borderradius boxshadow textshadow opacity cssanimations csscolumns cssgradients   csstransforms csstransforms3d csstransitions fontface generatedcontent">
   <head>
     <meta charset="utf-8">
 <!-- 
@@ -93,11 +93,13 @@
     <link rel="stylesheet" href="{% static "css/docsupport/prism.css" %}">
     <link rel="stylesheet" href="{% static "css/chosen.min.css" %}"> 
 
+    <link rel="stylesheet" href="http://malihu.github.io/custom-scrollbar/jquery.mCustomScrollbar.min.css" />
+
     <link href="{% static "css/dynamic.css" %}" rel="stylesheet"> 
 
 
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places"></script>
-    <!-- <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet"> -->
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet"> 
     
     {% block contact %}
       
@@ -144,630 +146,60 @@
       <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
       <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
     <![endif]-->
+  
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+    <script src="{% static "assets/components/library/modernizr/modernizr.js" %}"></script>
+    <script type="text/javascript" src="http://code.jquery.com/jquery-2.1.1.min.js"></script>    
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="{% static "assets/components/library/jquery/jquery-migrate.min.js" %}"></script>
+  
 
 
 
+    <link rel="stylesheet" href="{% static "assets/less/admin/module.admin.stylesheet-complete.css" %}" /> 
 
-
-
-<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
-    <!-- 
-  **********************************************************
-  In development, use the LESS files and the less.js compiler
-  instead of the minified CSS loaded by default.
-  -->
-  <!-- <link rel="stylesheet/less" href="{% static "assets/less/admin/module.admin.stylesheet-complete.less" %}" /> -->
-<link href="{% static "assets/less/admin/compiledstyle.css" %}" rel="stylesheet">
-    <link href="{% static "css/foodtrade_new.css" %}" rel="stylesheet">
+    <!-- <link rel="stylesheet" href="/assets/css/foodtrade.css" />  -->
+    <!-- <link href="{% static "assets/less/admin/compiledstyle.css" %}" rel="stylesheet"> -->
+    <link href="{% static "css/foodtrade.less" %}" rel="stylesheet/less">
   
     <!--[if lt IE 9]><link rel="stylesheet" href="{% static "assets/components/library/bootstrap/css/bootstrap.min.css" %}" /><![endif]-->
-    
-    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>    
-    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js" type="text/javascript" charset="utf-8"></script>
+    <!-- <script>
+      less = {
+        env: "production", 
+        poll: 100
+      };
+    </script> -->
+    <script>//less.watch();</script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/less.js/1.7.1/less.min.js"></script>  
 
-   
- <!--    <link rel="stylesheet" href="{% static "assets/css/admin/module.admin.stylesheet-complete.min.css" %}" />  --> 
-
-    <script src="{% static "assets/components/library/jquery/jquery-migrate.min.js" %}"></script>
-    <script src="{% static "assets/components/library/modernizr/modernizr.js" %}"></script>
-   <!--  <script src="{% static "assets/components/plugins/less-js/less.min.js" %}"></script>  --> 
     <script src="{% static "assets/components/plugins/browser/ie/ie.prototype.polyfill.js" %}"></script>
     <script>
     if ( /*@cc_on!@*/ false && document.documentMode === 10)
     {
         document.documentElement.className += ' ie ie10';
     }
-    </script>
-
-
-
-
-
+    </script> 
 
 
   </head>
-<body class=" menu-right-hidden {% if not user.is_authenticated %}menu-hidden{% endif %}">
+<body {% ifequal request.path '/' %} id="home" {% endifequal %}>
     
 
-       <!-- New post Modal -->
-      <div class="modal fade" id="modal-tweeter-user" tabindex="-1" role="dialog" aria-labelledby="newtwitterpost" aria-hidden="true">
-        <div class="modal-dialog">
-          <div class="modal-content"> 
-            <div class="modal-header text-white">
-              Invite someone to join FoodTrade
-            </div>
-            <div class="modal-body">  
-            <div class="input-group twitter-user-suggestions" id="my_twitter_search">
-                <input class="typeahead form-control" id="invite_tweeter_user"  type="text" placeholder="Search Twitter users"> 
-                <div class="input-group-btn">
-                  <button type="submit" id="btnSearchTweeterUsers" onclick="search_tweeter_users()" class="btn btn-default pull-left"><i class="glyphicon glyphicon-search"></i></button>
-                </div>
-            </div>
-             
-
-            <textarea id="invite_tweeter_user_text"  onkeyup="check_limit()" class="form-control counted-invite margin-ta" name="message" placeholder="Type in your message" rows="3">Join the #realfood search engine:  </textarea>
-            </div>
-
-            <div class="modal-footer">
-              <button id="btnClose" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-
-
-              <div class="btn-group">
-              <button id="dropdown-tweeter-user" class="dropdown-toggle btn btn-primary" data-toggle="dropdown">Invite <b class="caret"></b></button>
-                <ul class="dropdown-menu text-left" role="menu" aria-labelledby="drop2">
-                  <li role="presentation"><a role="menuitem" onclick="invite_tweeter_user('Individual')" tabindex="-1">As Individual</a></li>
-                  <li role="presentation"><a role="menuitem" onclick="invite_tweeter_user('Business')" tabindex="-1">As Business</a></li>
-                  <li role="presentation"><a role="menuitem" onclick="invite_tweeter_user('Organisation')" tabindex="-1">As Organisation</a></li>
-                </ul>
-              </div> 
-            </div>
-
-          </div><!-- /.modal-content -->
-        </div><!-- /.modal-dialog -->
-      </div><!-- /.modal -->
-
-
-<!-- new post exp --> 
-   <div class="modal fade" id="newtwitterpost" tabindex="-1" role="dialog" aria-labelledby="newtwitterpost" aria-hidden="true">
-
-            <div class="modal-dialog">
-              <div class="modal-content"> 
-                <div class="modal-body">  
-<div id="structured_postupdate" class="">
-
-<form action="r" method="post" id="structured_input_form" accept-charset="utf-8" onsubmit="generate_update(); $('#newtwitterpost').modal('hide')" class="form" role="form">   
-
-<div class="row innerTB">
-    <div class="col-xs-12 border-bottom"> 
-      <h4>What would you like to do?</h4>
-    </div>
-  </div>
-  <div class="row" style="margin-bottom:0;"> 
-    <div class="col-xs-12">  
-     <p style="line-height: 2.5; margin: 0 10px 0 0;" class="pull-left"> 
-      <div class="btn-group" id="post_for">
-      <!-- <input type="hidden" /> -->
-        <button type="button" onclick="show_small_structure();$('#price').show();"  class="btn btn-primary btn-stroke btn-lg" value="buy" ><i class="fa fa-sign-in fa-fw"></i> buy</button>
-        <button type="button" onclick="show_small_structure();$('#price').show();" class="btn btn-primary btn-stroke btn-lg" value="sell" ><i class="fa fa-sign-out fa-fw"></i> sell</button>
-        <button type="button" onclick="show_small_structure();$('#price').hide();"   class="btn btn-primary btn-stroke btn-lg" value="offer surplus"  ><i class="fa fa-random fa-fw"></i> offer surplus</button>
-        <button type="button" onclick="swith_update_form()"   class="btn btn-primary btn-stroke btn-lg" value="offer surplus"  ><i class="fa fa-rocket fa-fw"></i> go freestyle</button>
-      </div>                     
-    </div>
-  </div>
-  
-  
-
-<span class="hidden" id="structured_hidden_block">
- 
-  <div class="row" style="margin-top: 10px;"> 
-    <div class="col-xs-6"> 
-      <input type="text" name="produce" value="" class="form-control" placeholder="What?"  />  
-      <p class="help-block">eg 'apples', 'veg curry'</p>
-    </div>
-    <div class="col-xs-6"> 
-      
-<div class="row">
-    <div class="col-xs-7" style="padding-right:0;">
-      <input type="text" name="qty" value="" class="form-control" placeholder="How much?"  />  
-    <p class="help-block">Weight / vol / size</p>
-    </div>
-
-    <div class="col-xs-5" style="padding-left: 0;">
-
-       <select id="qtyUnit" class="form-control btn-sm selectpicker">        
-        <option value="">Select unit</option>   
-        <option value="Pieces">Pieces</option>
-        <option value="20' Container">20' Container</option>
-        <option value="40' Container">40' Container</option>
-        <option value="Acre/Acres">Acre(s)</option>
-        <option value="Bags">Bags</option>
-        <option value="Barrel/Barrels">Barrel(s)</option>
-        <option value="Boxes">Boxes</option>
-        <option value="Bushel/Bushels">Bushel(s)</option>
-        <option value="Case/Cases">Case(s)</option>
-        <option value="Centimeter/Centimeters">Centimeter(s)</option>
-        <option value="Cubic Meter/Cubic Meters">Cubic Meter(s)</option>
-        <option value="cubic yards">Cubic Yard(s)</option>
-        <option value="doz">Dozen</option>   
-        <option value="gall">Gallon(s)</option> 
-        <option value="ha">Hectare(s)</option> 
-        <option selected="selected" value="Kg">kg(s)</option>
-        <option value="l">Litre(s)</option> 
-        <option value="m">Meter(s)</option>    
-        <option value="pallet(s)">Pallet(s)</option> 
-        <option value="pint(s)">Pint(s)</option>
-        <option value="pound(s)">Pound(s)</option>  
-        <option value="roll(s)">Roll(s)</option>
-        <option value="sets">Sets</option>
-        <option value="sheet(s)">Sheet(s)</option>  
-        <option value="stone">Stone(s)</option> 
-        <option value="ton(s)">Ton(s)</option> 
-        <option value="tray(s)">Tray(s)</option>
-        <option value="unit(s)">Unit(s)</option>
-        <option value="yard(s)">Yard(s)</option>
-      </select>
-    </div>
-    </div> 
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-xs-6" id="price"> 
-      <input type="text" name="Price" value="" class="form-control" placeholder="Price"  />  
-
-      <p class="help-block">Total, or per unit. Inc £/$/&euro;</p>
-    </div>
-    <div class="col-xs-6">  
-      <input type="text" class="form-control" id="expire_on" placeholder="When?"> 
-      <p class="help-block" id="date_help">try 'next Friday', '8 sept 17'</p>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-xs-12"> 
-      <textarea class="form-control" id="update_description" rows="3" placeholder="Add detail: eg quality, variety, grade, packaging, etc.  "></textarea>
-      <p class="help-block">
-      Add detail: eg quality, variety, grade, packaging, etc.
-</p>
-    </div> 
-  </div> 
-  <div class="row" style="margin-top: 5px;">
-     
-            <div class="col-xs-7">
-              <ul class="list-inline small" style="margin-bottom:0;">
-                <li class="">Also send to </li>
-                <li>
-                  <label>
-                    <input type="checkbox" id="structured_post_to_twitter" name="post_to_twitter" value="1" checked="checked">
-                    <i class="fa fa-twitter-square fa-lg text-muted"></i>
-                  </label>
-                </li>
-                <li> 
-                  <label rel="tooltip" title="Post to Facebook, coming soon!">
-                    <input type="checkbox" name="post_to_facebook" value="1" disabled > 
-                    <i class="fa fa-facebook-square fa-lg text-muted"></i>
-                  </label>
-                </li>
-                <li> 
-                  <label rel="tooltip" title="Follower newsletters, coming soon!">
-                    <input type="checkbox" name="post_to_newsletter" value="1" disabled> 
-                    <i class="fa fa-list-alt fa-lg text-muted"></i> 
-                  </label>
-                </li> 
-              </ul> 
-            </div>
-            <div class="col-xs-5 text-right">
-            {% if not user.is_authenticated %}
-                <a href="/payments" class="btn btn-success pull-right"  rel="tooltip" title="Join free to post an upate">LOGIN TO POST
-                <br />
-                <span class="small">Get started free</span></a>
-            {% else %}
-
-                <button type="button" id="btn_update_activity" class="btn btn-lg btn-success pull-right" rel="tooltip"  {% if not user.is_authenticated %}  title="Please login to use this feature." {% endif %} onclick="generate_update();"> Post this</button>
-
-            {% endif %}
-
-
-
-            {% comment %}
-        <!--       {% if can_tweet %} 
-                <button type="button" id="btn_update_activity" class="btn  btn-success pull-right" rel="tooltip"  {% if not user.is_authenticated %}  title="Please login to use this feature." {% endif %} onclick="generate_update();"> Post this</button>
-              {% else %} 
-                <a href="/payments" class="btn  btn-success pull-right"  rel="tooltip" title="Please upgrade your account to unlock."  {% if not user.is_authenticated %}  title="Please login to use this feature." {% endif %} > Upgrade to post</a>
-              {% endif %} -->
-            {% endcomment %}
-
-            </div>
-          </div> 
-</span>
-</form>
-
-<script type="text/javascript">
-function swith_update_form()
-{
-  switch_text_area();
-  $("#structured_postupdate").hide();
-  $("#update-big").show();
-}
-
-function show_full_structure()
-{
-  $("#structured_hidden_block").removeClass("hidden");
-}
-
-function show_small_structure()
-{ 
-  switch_text_area
-  $("#update-big").hide();
-  $("#structured_postupdate").show();
-  $("#structured_hidden_block").removeClass("hidden");
-}
-</script>
-</div>
-
-
-<div id="update-small" class="clearfix hidden" style="margin-top: 10px;">
-  <input class="form-control col-xs-12"  {% if not user.is_authenticated %}  onfocus="login_redirect()" title="Please login to use this feature." {% else %}   onfocus= "switch_text_area()" {% endif %} placeholder="What #food do you have to #buy, #sell, or #surplus?"> 
-  {% comment %} 
-  <input class="form-control col-xs-12"  {% if not user.is_authenticated %}  onfocus="login_redirect()" title="Please login to use this feature." {% else %} {% if can_tweet %} onfocus= "switch_text_area()"{% else %} rel="tooltip" title="You're limited to 1 update every 7 days. Please upgrade your account to unlock." {% endif %}{% endif %} placeholder="What #food do you have to #buy, #sell, or #surplus?">   
-  {% endcomment %} 
-</div> 
-
-<div id="update-big" class=" clearfix hidden" style="margin-top:10px; display: none;">
-<form class="form-horizontal">
-  <div class="row" style="margin-bottom:0;"> 
-    <div class="col-xs-12">  
-     <p style="line-height: 2.5; margin: 0 10px 0 0;" class="pull-left"><strong>I'd like to...</strong> 
-      <div class="btn-group btn-bl ock pull-left" id="post_for">
-      <!-- <input type="hidden" /> -->
-        <button type="button" onclick="show_small_structure();$('#price').show();"  class="btn btn-default" value="buy" ><i class="fa fa-sign-in fa-fw"></i> buy</button>
-        <button type="button" onclick="show_small_structure();$('#price').show();" class="btn btn-default" value="sell" ><i class="fa fa-sign-out fa-fw"></i> sell</button>
-        <button type="button" onclick="show_small_structure();$('#price').hide();"   class="btn btn-default" value="offer surplus"  ><i class="fa fa-random fa-fw"></i> offer surplus</button>
-        <button type="button" onclick="swith_update_form()"   class="btn btn-default" value="offer surplus"  ><i class="fa fa-rocket fa-fw"></i> go freestyle</button>
-      </div>                     
-    </div>
-  </div>
-  <div class="row" style="margin-top:10px;">
-    <div class="col-xs-12">
-      <textarea class="form-control col-xs-12 counted" onkeyup="check_limit()" rows="3" name="q" id="newstatus" {% if not user.is_authenticated %}  onfocus="login_redirect()" title="Please login to use this feature." {% endif %} placeholder="What would you like? Eg '300kg #surplus conference #pears for #sale or #surplus' or 'I want to  #buy organic #honey for my farm shop.' "></textarea>
-    </div>
-  </div>
-
-  <div class="row" style="margin-top: 5px;">
-    <div class="col-xs-7">
-      <ul class="list-inline small" style="margin-bottom:0;">
-        <li class="text-muted">Also send to </li>
-        <li> 
-          <label>
-            <input type="checkbox" id="post_to_twitter" name="post_to_twitter" value="1" checked="checked">
-            <i class="fa fa-twitter-square fa-lg text-muted"></i>
-          </label>
-        </li>
-        <li> 
-          <label rel="tooltip" title="Post to Facebook, coming soon!">
-            <input type="checkbox" name="post_to_facebook" value="1" disabled > 
-            <i class="fa fa-facebook-square fa-lg text-muted"></i>
-          </label>
-        </li>
-        <li> 
-          <label rel="tooltip" title="Follower newsletters, coming soon!">
-            <input type="checkbox" name="post_to_newsletter" value="1" disabled> 
-            <i class="fa fa-list-alt fa-lg text-muted"></i> 
-          </label>
-        </li> 
-      </ul> 
-    </div>
-    <div class="col-xs-5 text-right">
-      <span class="small text-muted counted" id="charsRem">
-        120 characters remaining
-      </span>
-    </div>
-  </div>
-
-
-      <button type="button" id="btn_update_activity" class="btn btn-sm btn-success pull-right" {% if not user.is_authenticated %}  title="Please login to use this feature." {% endif %} onclick="post_new_status();"> Post</button>
-
-      <button type="button" id="btn_update_close"  data-dismiss="modal" class="btn btn-sm btn-success pull-right hidden"> Close </button>
-  </form>
-</div> <!-- /well --> 
-</div>
-</div>
-</div>
-</div>
-<!-- new post exp -->
-
-
-<div class="container-fluid menu-hidden" id="main_page">
-
-<div id="menu" class="hidden-print hidden-xs sidebar-default sidebar-brand-primary {% if not user.is_authenticated %}hidden{% endif %}">
-  <div id="sidebar-social-wrapper">
-    <div id="brandWrapper">
-        <a href="/"> 
-            <img src="{% static 'images/logo_tall.png' %}">
-        </a>
-    </div>
- 
-    <ul class="menu list-unstyled" id="navigation_current_page">
-      {% if user.is_superuser %}
-      <li>
-        <a href="/unclaimed-profiles/" id="unclaimed" title="Unclaimed Profiles">
-          <i class="fa fa-certificate fa-fw"></i><span>Unclaimed Profiles</span>
-          </a>
-      </li>  
-      {% endif %}
-
-      <li class="">
-        <a href="/"><i class="fa fa-shopping-cart"></i><span>Marketplace</span></a> 
-      </li> 
-
-      {% if search %}
-        <li class="hasSubmenu active">
-            <a href="#advsearch" data-toggle="collapse"><i class="fa fa-search"></i><span>Advanced search</span></a>
-            <ul id="advsearch" class="{% if not search %}collapse {% endif %}">
-
-              <div class="foodtrade-sidebar">
-
-                <form action="/activity"   onsubmit="return formSubmit(this);"  role="search" data-step="1" data-intro="Search for anyhing, anywhere">
-                  <div class="input-group  input-group-sm">
-                    <span class="input-group-addon"><i class="fa fa-map-marker"></i></span>
-                    <input type="text" name="location" id="pac-input" value="{% if search %}{{ search.place }}{% endif %}{% if not search %}{{userinfo.zip_code}}{% endif %}" class="pac-input form-control  " placeholder="Where?">
-                    <div class="input-group-btn">
-                      <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
-                    </div>
-                  </div>
-                  <input type="hidden" name="lon" id="lon" value="{{search.lon}}"/>
-                  <input type="hidden" name="lat" id="lat" value="{{search.lat}}"/> 
-                </form>
-               
-                <div data-step="3" data-intro="Just start typing to search for specific foods, business type, or filter by organisation membership" data-position="right">
-                  <form role="form" >
-                    <div class="form-group"> 
-                      <input type="text" class="form-control input-sm" id="food_filter" placeholder="Refine by food or drink">
-                    </div>
-                  </form>
-                
-                  <ul class="foodtrade-tag-list">
-                    <li data-id="ALL" class="foodtrade-tag foodtrade-tag-click foodtrade-tag-all"><div class="foodtrade-tag-checkbox-column"><input type="checkbox" id="all_foods" checked="checked" onclick="make_search()" aria-label="All Partners" class="foodtrade-tag-checkbox"></div><div class="foodtrade-tag-text">All Foods</div><div class="foodtrade-tag-count">{{food_count}}</div></li>
-                  </ul>
-
-                  <ul class="foodtrade-tag-list" id="food_filter_results"></ul> 
-
-                  <form role="form">
-                    <div class="form-group"> 
-                      <input type="email" class="form-control  input-sm" id="business_filter" placeholder="Filter by business type">
-                    </div>
-                  </form> 
-
-                  <ul class="foodtrade-tag-list" id="business_filter_results"></ul>
-                </div><!-- charding overlay --> 
-               
-                <form role="form">
-                  <div class="form-group"> 
-                    <input type="email" class="form-control  input-sm" id="organisation_filter" placeholder="Show only members of...">
-                  </div>
-                </form> 
-
-                <ul class="foodtrade-tag-list" id="organisation_filter_results"></ul>
-
-
-              </div><!--sidebar-->
-            </ul>
-        </li> 
-      {% endif %}
-
-        <li class="">
-          <a href="/activity/favourites"><i class="fa fa-star"></i><span>Favourites</span></a> 
-        </li> 
-        <li class="">
-          <a href="/activity/stockists"><i class="fa fa-sign-in"></i><span>My Stockists</span></a> 
-        </li> 
-        <li class="">
-          <a href="/activity/suppliers"><i class="fa fa-sign-out"></i><span>My Suppliers</span></a> 
-        </li> 
-
-        <li data-step="4" data-intro="Building a better food system is going to take all of us. Please invite your suppliers, stockists, customers, friends.. everyone! For everyone you invite who signs up, we'll give you a month free, too." rel="tooltip" title="For everyone you invite who signs up, we'll give you a month free!">
-            <a data-toggle="modal" id="my_invite_twitter" data-target="#modal-tweeter-user"><i class="fa fa-bullhorn"></i><span>Invite</span></a>
-        </li>
-
-        <li class="hasSubmenu">
-          <a href="#trendsWeek" data-toggle="collapse"><i class="fa  fa-bell-o"></i><span>Popular this week</span></a>
-
-          <ul class="collapse" id="trendsWeek"> 
-            {% for eachVal in userinfo.hashtagsthis %}
-              <li><a href="/activity/?q=%23{{eachVal.uid|slice:"1:"}}&location=++None+&lon=&lat=">{{eachVal.uid}} <span class="badge pull-right">{{eachVal.value|floatformat:"0"}}</span></a></li>
-            {% endfor %}
-          </ul>
-        </li>
-
-        <li class="hasSubmenu">
-          <a href="#trendsAll" data-toggle="collapse"><i class="fa  fa-bell"></i><span>Popular all time</span></a>
-
-          <ul class="collapse" id="trendsAll"> 
-            {% for eachVal in userinfo.hashtagsall %}
-              <li><a href="/activity/?q=%23{{eachVal.uid|slice:"1:"}}&location=++None+&lon=&lat=">{{eachVal.uid}} <span class="badge pull-right">{{eachVal.value|floatformat:"0"}}</span></a></li>
-            {% endfor %}
-             </ul>
-        </li>
-
-        <li class="separator">
-        </li>
-
-        <li>
-          <a href="#" id="help">
-            <i class="fa fa-question-circle"></i><span>Help</span>
-          </a>
-        </li> 
-
-        <li class="category">Did you know..?</li>
-        <li class="reset">
-            <ul>
-
-                <div id="didyouknow" class="carousel slide"> 
-                        <!-- Items -->
-                        <div class="carousel-inner">
-                            <!-- Item -->
-                            <div class="item active"> 
-                                
-                            <li class="media news-item"> 
-                                <span class="pull-left media-object">
-                                    <i class="fa fa-fw fa-question-circle"></i>
-                                </span>
-                                <div class="media-body text-left">
-                                    If you would like to find or offer surplus or gluts, just use as <a href="/activity/?q=surplus">#surplus</a> to your message.  <a href="/activity/?q=surplus" class="text-white">Test it out</a>
-                                </div>
-                            </li> 
-                            </div>
-                            <!-- // Item END -->
-                            <!-- Item -->
-                            <div class="item"> 
-                                
-                            <li class="media news-item"> 
-                                <span class="pull-left media-object">
-                                    <i class="fa fa-fw fa-question-circle"></i>
-                                </span>
-                                <div class="media-body text-left">
-                                  You can  post updates from anywhere! Just tweet your message to @foodtradeHQ and we'll push your message to local businesses!
-                                </div>
-                            </li> 
-                            </div> 
-
-                        </div> 
-                    </div>
-            </ul>
-        </li>
-
-        <li class="reset" style="position: fixed; bottom: 5px;text-align: center;left: 20px; display: block;">
-        <ul>
-            <li class="media news-item">
-                <div class="media-body">
-        <a href="/pages/about">About </a> &bull;
-        <a href="http://digest.foodtrade.com/" target="_blank">Blog</a> &bull;
-        <a href="http://foodtrade.uservoice.com/" target="_blank">Contact</a> &bull;
-        <a href="http://foodtrade.uservoice.com/" target="_blank">Get help</a>
-        </div>
-        </li>
-        </ul>
-        </li>
-      </ul>
-
-  </div>
-</div>
-<!-- // Main Sidebar Menu END --> 
-
- <div id="menu-right" class="hidden">
-            <div>
-                <button class="btn btn-inverse btn-xs btn-close" data-toggle="sidr-close" data-menu="menu-right"><i class="fa fa-times"></i>
-                </button>
-                <div class="tab-content"> 
-                  <div class="tab-pane active" id="chat-list">
-                    <div class="mixitup" id="mixitup-chat" data-show-default="mixit-chat-1" data-layout-mode="list"
-                    data-target-selector=".mix" data-filter-selector=".filter-chat">
-                      <ul>
-                        <li class="category">Activity</li>
-                        <li class="reset">
-                            <ul>
-                                <li class="media news-item"> 
-                                    <span class="pull-left media-object">
-                                        <i class="fa fa-fw fa-bell"></i>
-                                    </span>
-                                    <div class="media-body">
-                                        <a href="#" class="text-white">Tytherley stores</a> just
-                                        added <a href="#" class="text-white">new produce</a>
-                                        <span class="time">2 min ago</span>
-                                    </div>
-                                </li>  
-                            </ul>
-                        </li> 
-                      </ul>
-                                 
-    {% if   search %}
-    <div class="foodtrade-sidebar">
-    
-   
-   <form action="/activity" class="navbar-form"  onsubmit="return formSubmit(this);"  role="search" data-step="1" data-intro="Search for anyhing, anywhere">
-      <div class="input-group  input-group-sm">
-        <span class="input-group-addon"><i class="fa fa-map-marker"></i></span>
-        <input type="text" name="location" id="pac-input" value="{% if search %}{{ search.place }}{% endif %}{% if not search %}{{userinfo.zip_code}}{% endif %}" class="pac-input form-control  " placeholder="Where?">
-        <div class="input-group-btn">
-          <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
-        </div>
-      </div>
-      <input type="hidden" name="lon" id="lon" value="{{search.lon}}"/>
-      <input type="hidden" name="lat" id="lat" value="{{search.lat}}"/> 
-    </form>
-     
-    <div data-step="3" data-intro="Just start typing to search for specific foods, business type, or filter by organisation membership" data-position="right">
-    <form role="form" >
-      <div class="form-group"> 
-        <input type="text" class="form-control input-sm" id="food_filter" placeholder="Refine by food or drink">
-      </div>
-    </form>
-    
-    <ul class="foodtrade-tag-list">
-    <li data-id="ALL" class="foodtrade-tag foodtrade-tag-click foodtrade-tag-all"><div class="foodtrade-tag-checkbox-column"><input type="checkbox" id="all_foods" checked="checked" onclick="make_search()" aria-label="All Partners" class="foodtrade-tag-checkbox"></div><div class="foodtrade-tag-text">All Foods</div><div class="foodtrade-tag-count">{{food_count}}</div></li>
-    </ul>
-
-    <ul class="foodtrade-tag-list" id="food_filter_results">
-   
-    </ul>
-     <hr> 
-
-    <form role="form">
-      <div class="form-group"> 
-        <input type="email" class="form-control  input-sm" id="business_filter" placeholder="Filter by business type">
-      </div>
-    </form>
-    <ul class="foodtrade-tag-list">
-    <li data-id="ALL" class="foodtrade-tag foodtrade-tag-click foodtrade-tag-all"><div class="foodtrade-tag-checkbox-column"><input type="checkbox" id="all_businesses" checked="checked" onclick="make_search()" aria-label="All Partners" class="foodtrade-tag-checkbox"></div><div class="foodtrade-tag-text">All Businesses</div><div class="foodtrade-tag-count">{{business_count}}</div></li>
-</ul>
-
-<ul class="foodtrade-tag-list" id="business_filter_results">
-    </ul>
-    </div><!-- charding overlay -->
-    <hr />
-     
-
-
-
-     <form role="form">
-      <div class="form-group"> 
-        <input type="email" class="form-control  input-sm" id="organisation_filter" placeholder="Show only members of...">
-      </div>
-    </form>
-    <ul class="foodtrade-tag-list">
-    <li data-id="ALL" class="foodtrade-tag foodtrade-tag-click foodtrade-tag-all"><div class="foodtrade-tag-checkbox-column"><input type="checkbox" id="all_organisations" checked="checked" onclick="make_search()" aria-label="All Partners" class="foodtrade-tag-checkbox"></div><div class="foodtrade-tag-text">All Organisations</div><div class="foodtrade-tag-count">{{organisation_count}}</div></li>
-    </ul>
-
-
-    <ul class="foodtrade-tag-list" id="organisation_filter_results">
-    </ul>
-
-
-    </div><!--sidebar-->
-
-    <hr /> 
-    
-
-    {% endif %}
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
         
+    
+
+
+<div class="container-fluid menu-hidden" id=" ">
+  
+ 
+
 
 <div id="content">
 <div class="navbar hidden-print navbar-default navbar-fixed-top box main" role="navigation" id="topnav" >
 
-
-<!-- set to active when https://app.asana.com/0/6132652941995/10779710100316 is complete
-  <div class="user-action user-action-btn-navbar pull-right border-left">
-      <a href="#menu-right" class="btn btn-sm btn-navbar btn-open-right"><i class="fa fa-bell fa-2x"></i></a>
-  </div> -->
-
-
   {% if request.user.is_authenticated %}
-  <div class="user-action pull-right menu-right-hidden-xs menu-left-hidden-xs border-left">
-      <div class="dropdown username pull-left">
+  <div class="user-action pull-right menu-right-hidden-xs menu-left-hidden-xs border-left border-right">
+      <div class="dropdown username pull-left uservoicePadding" style="margin-right: 50px;">
           <a class="dropdown-toggle" data-toggle="dropdown" href="#">
               <span class="media margin-none">
                   <span class="pull-left">
@@ -780,9 +212,9 @@ function show_small_structure()
               </span>
           </a>
           <ul class="dropdown-menu pull-right">
-              <li><a href="/editprofile/{{userinfo.username}}">Edit profile</a>
+              <li><a href="/editprofile/me">Edit profile</a>
               </li>
-              <li><a href="/profile/{{userinfo.username}}">View profile</a>
+              <li><a href="/me">View profile</a>
               </li> 
               <li><a href="/visitors">Who's visited your profile</a>
               </li> 
@@ -798,7 +230,7 @@ function show_small_structure()
 
   {% if not request.user.is_authenticated %} 
   <div class="user-action pull-right menu-right-hidden-xs menu-left-hidden-xs border-left">
-    <div class="dropdown username pull-left">
+    <div class="dropdown username pull-left border-right uservoicePadding">
       <a class="dropdown-toggle" data-toggle="dropdown" href="#">Login
       </a> 
        <ul class="dropdown-menu pull-right" style="padding: 15px;min-width: 250px;">
@@ -837,7 +269,8 @@ function show_small_structure()
 
   <div class="user-action pull-right  border-left">
     <div class="dropdown username pull-left">
-      <a class="dropdown-toggle" data-toggle="modal" data-target="#modal_signup">
+      <a   data-toggle="modal" data-target="#modal_signup" style="font-weight: 400;
+line-height: 34px; font-size: 16px;">
         Sign up
       </a>
     </div>
@@ -845,29 +278,19 @@ function show_small_structure()
 
   {% endif %}
    
- 
-  {% if not user.is_authenticated %} 
-  <div class=" pull-left">
-      <a href="/" class="">
-      <img src="{% static 'images/logo_tall.png' %}" alt="FoodTrade logo" width="" />
+  
+  <div class="user-action user-action-btn-navbar pull-left border0" style="padding: 2px;">
+      <a href="/" class="btn btn-sm btn-navbar">
+      <img src="{% static 'images/logo_icon.png' %}" alt="FoodTrade logo"/> 
       </a>
-  </div>
-  {% else %}
-  <div class="user-action user-action-btn-navbar pull-left">
-      <a href="#menu" class="btn btn-sm btn-navbar btn-open-left">
-      <i class="fa fa-bars fa-2x"></i>
-      <!-- <img src="{% static 'images/logo_icon_menu.png' %}" alt="FoodTrade logo" width="" /> -->
-      </a>
-  </div>
-  {% endif %}
-
+  </div> 
 
 
 
   {% if request.user.is_authenticated %}
   <ul class="notifications pull-right hidden-xs border-left">
       <li>
-          <a href="/inbox/"><i class="notif-block icon-envelope-1"></i>{% if userinfo.notification_count != 0 %}
+          <a href="/inbox/"><i class="notif-block fa fa-envelope-o"></i>{% if userinfo.notification_count != 0 %}
             <span id="spanInbox" class="pull-number label label-success">{{userinfo.notification_count}}</span> 
             {% endif %}
             </a> 
@@ -876,123 +299,426 @@ function show_small_structure()
   {% endif %}
 
 
-  <div class="input-group pull-left">
-    <form action="/activity" onsubmit="return formSubmit(this);">
-      <span class="input-group-addon"><i class="icon-search"></i></span> 
-      <input type="text" name="q" id="keyword" class="form-control" value="{{ search.query }}" placeholder="eg 'apples', 'fish'...">
-      <input type="hidden" name="location" id="new_search" value="{% if search %} {{ search.place }} {% endif %} {% if not search %} {{userinfo.zip_code}}{% endif %} ">
+  <div class="input-group pull-left border0">
+   
+    <form action="/activity" onsubmit="return start_search()">
+ 
+    <div class="input-group border0">
+      <input type="hidden" name="search_param" value="all" id="search_param">   
+
+      <div class="input-group-btn border0" id="searchGroup">
+        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" id="searchSelect">
+        <span id="search_type">
+            <i class="fa fa-cutlery icon"></i> 
+            <span class="hidden-xs">Produce</span>
+            <i class="fa fa-caret-down"></i>
+        </span> 
+        </button>
+        <ul class="dropdown-menu">
+          <li ><a href="#" id="search_type_option">Profiles</a></li> 
+        </ul>
+      </div>  
+
+      <input type="text" class="form-control pull-left" name="x" id="search_query" placeholder="Find...">  
+
+      <div class="input-group-btn"> 
+        <button type="submit" class="btn btn-default" id="searchSubmit">
+          <span class="glyphicon glyphicon-search"></span> 
+        </button> 
+      </div>
+ 
+    </div>
+
+
     </form>
   </div>
 
 
+  <div class="input-group pull-left border0  visible-md visible-lg" id="socialShare">
+
+    <a href="https://twitter.com/foodtradeHQ" class="twitter-follow-button " data-show-count="false">Follow @foodtradeHQ</a>
+    <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
  
-
-    {% if request.user.is_authenticated %}
-  <div class=" pull-right border-left user-action "> 
-      <div class="dropdown">     
-      <a href="#" class="dropdown-toggle visible-md visible-lg" data-step="2" data-intro="Post an update from any screen" data-position="bottom" data-placement="bottom"  data-toggle="modal" data-target="#newtwitterpost" rel="tooltip" title="Post a trade update"> 
-       <i class="fa fa-edit fa-lg"></i>  New 
-      </a> 
-
-      <a href="#" class="dropdown-toggle visible-sm visible-xs" data-toggle="modal" data-target="#newtwitterpost"> 
-       <i class="fa fa-edit"></i>  
-      </a>
-      </div>
-  </div>
-    {% endif %}  
-
-  <div class="user-action hidden-xs hidden-sm pull-right menu-right-hidden-xs menu-left-hidden-xs border-left">
-      <div class="dropdown">
-          <a class="dropdown-toggle " data-toggle="dropdown" href="#">
-          Browse
-          <span class="caret"></span>
-          </a>
-          <ul class="dropdown-menu dropdown-menu-large row pull-right">
-          <li class="col-sm-3">
-            <ul>
-              <li class="dropdown-header">Foods</li>
-              <li><a href="/activity/?q=sausages">Sausages</a></li> 
-              <li><a href="/activity/?q=chicken">Chicken</a></li> 
-              <li><a href="/activity/?q=bread">Bread</a></li>  
-              <li><a href="/activity/?q=brownie">Brownies</a></li> 
-              <li><a href="/activity/?q=salad">Salad</a></li>  
-              <li class="dropdown-header">Drink</li>
-              <li><a href="/activity/?q=cider">Cider</a></li> 
-              <li><a href="/activity/?q=beer">Beer</a></li> 
-              <li><a href="/activity/?q=juice">Juice</a></li>  
-              <li><a href="/activity/?q=porter">Porter</a></li>  
-            </ul>
-          </li>
-          <li class="col-sm-4">
-            <ul>
-              <li class="dropdown-header">Biz. Types</li>
-              <li><a href="/activity/?b=Livestock%20Farm">Livestock farm</a></li> 
-              <li><a href="/activity/?q=Baker">Baker</a></li> 
-              <li><a href="/activity/?q=Food%20Stall">Food Stall</a></li> 
-              <li><a href="/activity/?q=Box%20Scheme">Box Scheme</a></li> 
-              <li><a href="/activity/?q=Food%20Manufacturer">Manufacturer</a></li> 
-              <li><a href="/activity/?q=Grower">Grower</a></li> 
-            </ul>
-          </li>
-          <li class="col-sm-5">
-            <ul>
-              <li class="dropdown-header">Organisations</li>
-              <li><a href="/slowfooduk">
-              <span class="result-container" style="white-space: nowrap;">
-              <span class="result-img"><img height="22px" width="22px" src="http://pbs.twimg.com/profile_images/1690823879/Screen_shot_2011-12-13_at_12.21.20_bigger.png"></span>
-              <span>Slow Food UK</span> 
-              </span></a></li> 
-              <li><a href="/soilassociation">
-              <span class="result-container" style="white-space: nowrap;">
-              <span class="result-img"><img height="22px" width="22px" src="http://pbs.twimg.com/profile_images/432822201436229632/Pw5oT1FG_normal.jpeg"></span>
-              <span>Soil Association</span> 
-              </span>
-              </a>
-              </li>
-
-              <li><a href="/FairtradeUK">
-              <span class="result-container" style="white-space: nowrap;">
-              <span class="result-img"><img height="22px" width="22px" src="http://pbs.twimg.com/profile_images/422786454478405632/aSt2mgAO_bigger.png"></span>
-              <span>Fairtrade Foundation</span> 
-              </span></a></li> 
-
-              <li><a href="/farmdrop">
-              <span class="result-container" style="white-space: nowrap;">
-              <span class="result-img"><img height="22px" width="22px" src="http://pbs.twimg.com/profile_images/446219768450650112/ELiLvM6E_bigger.jpeg"></span>
-              <span>FarmDrop</span> 
-              </span></a></li> 
-
-              <li><a href="/slowfoodlondon">
-              <span class="result-container" style="white-space: nowrap;">
-              <span class="result-img"><img height="22px" width="22px" src="http://pbs.twimg.com/profile_images/3376104397/9edf0480e8b1a610b54a62e50e619156_bigger.png"></span>
-              <span>Slow Food London</span> 
-              </span></a></li>  
-            </ul>
-          </li> 
-        </ul>
-        
-      </div>
+    <iframe src="//www.facebook.com/plugins/like.php?href=http%3A%2F%2Ffacebook.com%2FfoodtradeHQ&amp;width=80&amp;layout=button&amp;action=like&amp;show_faces=true&amp;share=false&amp;height=21&amp;appId=1400801613504478" scrolling="no" frameborder="0" style="border:none; overflow:hidden; height:21px;width:80px" allowTransparency="true"></iframe>
+      
   </div>
 
+
+
+
+
+
+         
+
+            {% if request.user.is_authenticated %}
+            <div class=" pull-right border-left user-action ">  
+
+                <button type="button" class="btn btn-primary btn-stroke btn-sm hidden-xs hidden-sm" data-toggle="collapse" data-target="#newtwitterpost" style="font-weight: normal;" onclick="window.scrollTo(0,0);">
+                  <i class="fa fa-edit text-primary"></i>
+                  New   
+                </button>
+
+                <a class="hidden-md hidden-lg" data-toggle="collapse" data-target="#newtwitterpost" style="font-weight: normal; position: relative; top: -7px;">
+                  <i class="fa fa-edit fa-2x innerT text-primary"></i>
+                </a>
  
+            </div> 
+            {% endif %}  
 
-            </div>
+          <div class="user-action hidden-xs hidden-sm pull-right menu-right-hidden-xs menu-left-hidden-xs">
+              <div class="dropdown">
+                  <a class="dropdown-toggle " data-toggle="dropdown" href="#">
+                  Browse
+                  <span class="caret"></span>
+                  </a>
+                  <ul class="dropdown-menu dropdown-menu-large row pull-right">
+                  <li class="col-sm-3">
+                    <ul>
+                      <li class="dropdown-header">Foods</li>
+                      <li><a href="/activity/?q=sausages">Sausages</a></li> 
+                      <li><a href="/activity/?q=chicken">Chicken</a></li> 
+                      <li><a href="/activity/?q=bread">Bread</a></li>  
+                      <li><a href="/activity/?q=brownie">Brownies</a></li> 
+                      <li><a href="/activity/?q=salad">Salad</a></li>  
+                      <li class="dropdown-header">Drink</li>
+                      <li><a href="/activity/?q=cider">Cider</a></li> 
+                      <li><a href="/activity/?q=beer">Beer</a></li> 
+                      <li><a href="/activity/?q=juice">Juice</a></li>  
+                      <li><a href="/activity/?q=porter">Porter</a></li>  
+                    </ul>
+                  </li>
+                  <li class="col-sm-4">
+                    <ul>
+                      <li class="dropdown-header">Biz. Types</li>
+                      <li><a href="/activity/?b=Livestock%20Farm">Livestock farm</a></li> 
+                      <li><a href="/activity/?q=Baker">Baker</a></li> 
+                      <li><a href="/activity/?q=Food%20Stall">Food Stall</a></li> 
+                      <li><a href="/activity/?q=Box%20Scheme">Box Scheme</a></li> 
+                      <li><a href="/activity/?q=Food%20Manufacturer">Manufacturer</a></li> 
+                      <li><a href="/activity/?q=Grower">Grower</a></li> 
+                    </ul>
+                  </li>
+                  <li class="col-sm-5">
+                    <ul>
+                      <li class="dropdown-header">Organisations</li>
+                      <li><a href="/slowfooduk">
+                      <span class="result-container" style="white-space: nowrap;">
+                      <span class="result-img"><img height="22px" width="22px" src="http://pbs.twimg.com/profile_images/1690823879/Screen_shot_2011-12-13_at_12.21.20_bigger.png"></span>
+                      <span>Slow Food UK</span> 
+                      </span></a></li> 
+                      <li><a href="/soilassociation">
+                      <span class="result-container" style="white-space: nowrap;">
+                      <span class="result-img"><img height="22px" width="22px" src="http://pbs.twimg.com/profile_images/432822201436229632/Pw5oT1FG_normal.jpeg"></span>
+                      <span>Soil Association</span> 
+                      </span>
+                      </a>
+                      </li>
+
+                      <li><a href="/FairtradeUK">
+                      <span class="result-container" style="white-space: nowrap;">
+                      <span class="result-img"><img height="22px" width="22px" src="http://pbs.twimg.com/profile_images/422786454478405632/aSt2mgAO_bigger.png"></span>
+                      <span>Fairtrade Foundation</span> 
+                      </span></a></li> 
+
+                      <li><a href="/farmdrop">
+                      <span class="result-container" style="white-space: nowrap;">
+                      <span class="result-img"><img height="22px" width="22px" src="http://pbs.twimg.com/profile_images/446219768450650112/ELiLvM6E_bigger.jpeg"></span>
+                      <span>FarmDrop</span> 
+                      </span></a></li> 
+
+                      <li><a href="/slowfoodlondon">
+                      <span class="result-container" style="white-space: nowrap;">
+                      <span class="result-img"><img height="22px" width="22px" src="http://pbs.twimg.com/profile_images/3376104397/9edf0480e8b1a610b54a62e50e619156_bigger.png"></span>
+                      <span>Slow Food London</span> 
+                      </span></a></li>  
+                    </ul>
+                  </li> 
+                </ul>
+                
+              </div>
+          </div>
+</div>
 
 
+
+<!-- *************** -->
+<!-- NEW POST FORM   --> 
+<!-- *************** -->
+
+ 
+<div class="collapse clearfix" id="newtwitterpost" tabindex="-1" role="dialog" aria-labelledby="newtwitterpost" aria-hidden="true">
+  <div class="innerAll 
+  col-md-6 col-md-offset-3 
+  col-sm-12
+  col-xs-12
+   "> 
+
+    <div id="structured_postu pdate" class="">
+
+      <form action="r" method="post" id="structured_input_form" accept-charset="utf-8" onsubmit="generate_update(); $('#newtwitterpost').addClass('collapse')" class="form" role="form">   
 
      
+      <div class="row" style="margin-bottom:0;"> 
+     
+        <div class="col-xs-12">   <!-- unclosed -->
+
+          <div class="btn-group" id="post_for"  >
+            <button type="button"  disabled="disabled" class="btn btn-default btn-sm text-black normal hidden-xs" style="background: #fff; color: #222; "> I'd like to</button>
+            <button type="button" onclick="show_small_structure();$('#price').show();"  class="btn btn-default btn-sm" value="buy" ><i class="fa fa-sign-in fa-fw"></i> buy</button>
+            <button type="button" onclick="show_small_structure();$('#price').show();" class="btn btn-default  btn-sm" value="sell" ><i class="fa fa-sign-out fa-fw"></i> sell</button>
+            <button type="button" onclick="show_small_structure();$('#price').hide();"   class="btn btn-default   btn-sm" value="offer surplus"  ><i class="fa fa-random fa-fw"></i> offer surplus</button>
+            <button type="button" onclick="switch_update_form()"   class="btn btn-default btn-sm" value="offer surplus"  ><i class="fa fa-rocket fa-fw"></i> go freestyle</button> 
+          </div>
+
+
+          <div class=" " id="structured_hidden_block">
+              <div class="row" style="margin-top: 10px;"> 
+                <div class="col-xs-6"> 
+                  <input type="text" name="produce" value="" class="form-control" placeholder="What?"  />   
+                  <p class="help-block">eg 'apples', 'veg curry'</p>
+                </div>
+                <div class="col-xs-6"> 
+                  <div class="row">
+                    <div class="col-xs-7" style="padding-right:0;">
+                      <input type="text" name="qty" value="" class="form-control" placeholder="Qty"  />
+                    </div>
+                    <div class="col-xs-5" style="padding-left: 0;">
+                      <select id="qtyUnit" class="form-control btn-sm selectpicker">        
+                        <option value="">Select unit</option>   
+                        <option value="Pieces">Pieces</option>
+                        <option value="20' Container">20' Container</option>
+                        <option value="40' Container">40' Container</option>
+                        <option value="Acre/Acres">Acre(s)</option>
+                        <option value="Bags">Bags</option>
+                        <option value="Barrel/Barrels">Barrel(s)</option>
+                        <option value="Boxes">Boxes</option>
+                        <option value="Bushel/Bushels">Bushel(s)</option>
+                        <option value="Case/Cases">Case(s)</option>
+                        <option value="Centimeter/Centimeters">Centimeter(s)</option>
+                        <option value="Cubic Meter/Cubic Meters">Cubic Meter(s)</option>
+                        <option value="cubic yards">Cubic Yard(s)</option>
+                        <option value="doz">Dozen</option>   
+                        <option value="gall">Gallon(s)</option> 
+                        <option value="ha">Hectare(s)</option> 
+                        <option selected="selected" value="Kg">kg(s)</option>
+                        <option value="l">Litre(s)</option> 
+                        <option value="m">Meter(s)</option>    
+                        <option value="pallet(s)">Pallet(s)</option> 
+                        <option value="pint(s)">Pint(s)</option>
+                        <option value="pound(s)">Pound(s)</option>  
+                        <option value="roll(s)">Roll(s)</option>
+                        <option value="sets">Sets</option>
+                        <option value="sheet(s)">Sheet(s)</option>  
+                        <option value="stone">Stone(s)</option> 
+                        <option value="ton(s)">Ton(s)</option> 
+                        <option value="tray(s)">Tray(s)</option>
+                        <option value="unit(s)">Unit(s)</option>
+                        <option value="yard(s)">Yard(s)</option>
+                      </select>
+                    </div>
+                  </div> 
+
+                      <p class="help-block">Weight / vol / size</p>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-xs-6" id="price"> 
+                  <input type="text" name="Price" value="" class="form-control" placeholder="Price"  />  
+                  <p class="help-block">Total, or per unit. Inc &pound;/$/&euro;</p>
+                </div>
+                <div class="col-xs-6">  
+                  <input type="text" class="form-control" name="date_val" id="expire_on" placeholder="When?"> 
+                  <p class="help-block" id="date_help">try 'next Friday', '8 sept 17'</p>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-xs-12"> 
+                  <textarea class="form-control" onkeyup="check_limit1()" id="update_description" rows="3" placeholder="Add detail (optional)  "></textarea>
+                </div> 
+              </div> 
+
+              <div class="row">
+                <div class="col-xs-7">
+                  <p class="help-block">eg. quality, variety, grade, packaging...</p>
+                </div>
+                <div class="col-xs-5 text-right">
+                  <span class="small text-muted counted" id="charsRem1">
+                    120 characters remaining
+                  </span>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-xs-7">
+              {% if userinfo.email_registration == 0 %}
+                  <ul class="list-inline small" style="margin-bottom:0;">
+                    <li class="">Also post this to my twitter  </li>
+                    <li>
+                      <label>
+                        <input type="checkbox" id="structured_post_to_twitter" name="post_to_twitter" value="1" checked="checked"> <i class="fa fa-twitter-square fa-lg tw"></i>
+                      </label>
+                    </li> 
+                  </ul> 
+                {% endif %}
+                </div> 
+                
+                <div class="col-xs-5 text-right">
+                  {% if not user.is_authenticated %}
+                    <a href="/payments" class="btn btn-success pull-right"  rel="tooltip" title="Join free to post an upate">LOGIN TO POST
+                    <br />
+                    <span class="small">Get started free</span></a>
+                  {% else %}
+                    <button type="button" id="btn_update_activity" class="btn btn-sm btn-success pull-right" rel="tooltip"  {% if not user.is_authenticated %}  title="Please login to use this feature." {% endif %} onclick="generate_update();"><i class="fa fa-bullhorn fa-lg"></i> Post this</button>
+                  {% endif %}
+                </div>
+              </div> 
+      </form>
+ 
+
+          </div><!--structured_hidden_block-->
+
+
+              <div id="update-big" class="clearfix hidden">
+                <form class="form-horizontal"> 
+                  <div class="row" style="margin-top:10px;">
+                    <div class="col-xs-12">
+                      <textarea class="form-control col-xs-12 counted" onkeyup="check_limit()" rows="3" name="q" id="newstatus" {% if not user.is_authenticated %}  onfocus="login_redirect()" title="Please login to use this feature." {% endif %} placeholder="What would you like? Eg '300kg #surplus conference #pears for #sale or #surplus' or 'I want to  #buy organic #honey for my farm shop.' "></textarea>
+                    </div>
+                  </div> 
+
+                <div class="row">
+                  <div class="col-xs-7">
+                    <ul class="list-inline small" style="margin-bottom:0;">
+                      <li class="">Also post this to my twitter   </li>
+                      <li>
+                        <label>
+                          <input type="checkbox" id="structured_post_to_twitter" name="post_to_twitter" value="1" checked="checked"> <i class="fa fa-twitter-square fa-lg tw"></i>
+                        </label>
+                      </li> 
+                    </ul> 
+                  </div> 
+                  
+                  <div class="col-xs-5 text-right">
+                    <span class="small text-muted counted" id="charsRem">
+                      120 characters remaining
+                    </span>
+                  </div>
+                </div> 
+
+                <div class="row">
+                  <div class="col-sm-12">
+                    {% if not user.is_authenticated %}
+                      <a href="/payments" class="btn btn-success pull-right"  rel="tooltip" title="Join free to post an upate">LOGIN TO POST
+                      <br />
+                      <span class="small">Get started free</span></a>
+                    {% else %}
+                      <button type="button" id="btn_update_activity" class="btn btn-sm btn-success pull-right" {% if not user.is_authenticated %}  title="Please login to use this feature." {% endif %} onclick="post_new_status();"> <i class="fa fa-bullhorn fa-lg"></i> Post this</button></button> 
+                    {% endif %}
+                  </div>
+                </div>
+              </form>
+              </div>
+
+    </div>
+
  
 
 
-           
- 
-   <span id="reload_warning" class="hidden"> </span>
+</div>
+</div>
+</div>
+</div>
+
+<!-- *************** -->
+<!-- / NEW POST FORM --> 
+<!-- *************** -->
 
 
 
 
- {% block content %}
- {% endblock %}  
+
+
+
+
+
+
+
+<span id="reload_warning" class="hidden"> </span>
+
+{% if not request.user.is_authenticated %}
+<div class="row" id="notLoggedIn">
+  <div class="col-md-12">
+    <div class=" ">
+    <p>
+    <a href="{% provider_login_url "twitter" process="login" %}">Sign in now</a> to get the best experience - richer profiles, save favourites, easy messaging, and more. It's free to join!</p>
+    </p>
+    </div>
+  </div>
+</div>
+{% endif %}
+
+<div class="row row-merge"  style="height: 100%;">
+  <div class="{% if not request.user.is_authenticated %} col-xs-12 {% else %} col-md-10  {% endif %}">
+        <div class="container-fluid menu-hidden" id="main_page">
+              <div class="row row-merge">
+                    <div class="col-md-12">
+                     {% block content %}
+                     
+                     {% endblock %}  
+                    </div><!-- 12 -->
+              </div><!-- row -->
+        </div><!-- container -->
+  </div><!-- col 10 --> 
+  <div class="{% if not request.user.is_authenticated %} hidden {% else %} col-md-2  {% endif %}" id="updatesContainer">
+
+    <div id="didyouknow" class="carousel slide"> 
+        <!-- Items -->
+        <div class="carousel-inner">
+            <!-- Item -->
+            <div class="item active"> 
+                 
+                <span class="pull-left media-object innerLR half">
+                    <i class="fa fa-fw fa-question-circle"></i>
+                </span>
+                <div class="media-body text-left">
+                    If you would like to find or offer surplus or gluts, just use as <a href="/activity/?q=surplus">#surplus</a> to your message.  <a href="/activity/?q=surplus" class="text-white">Check it out</a>
+                </div> 
+            </div>
+            <!-- // Item END -->
+            <!-- Item -->
+            <div class="item"> 
+                 
+                <span class="pull-left media-object innerLR half">
+                    <i class="fa fa-fw fa-question-circle"></i>
+                </span>
+                <div class="media-body text-left">
+                  You can  post updates from anywhere! Just tweet your message to @foodtradeHQ and we'll push your message to local businesses!
+                </div> 
+            </div> 
+            <div class="item"> 
+                 
+                <span class="pull-left media-object innerLR half">
+                    <i class="fa fa-fw fa-question-circle"></i>
+                </span>
+                <div class="media-body text-left">
+                  See who's checking you out by clicking on your account icon at the top of the page and selecting "Who's visited my profile"
+                </div> 
+            </div>  
+
+        </div> 
+    </div>
+
+    <div id="updates"> 
+    </div><!-- updates -->
+
+    </div>
+  </div>
+
+</div>
+
+
  </div>
         <!-- // Content END -->
         <div class="clearfix"></div>
@@ -1031,7 +757,7 @@ function show_small_structure()
                   <li>
                       <span class="fa fa-li fa fa-check" style="color: #85B963;"></span>We work for you: You're our customer, not our product.</li>
                 </ul> 
-                <p>If you're not happy with these assurances, you can also <a href="#">register with an email and password</a>, but you will not be able to take full advantage of all the great features.</p>
+                <p>If you're not happy with these assurances, you can also <a href="/accounts/signup">register with an email and password</a>, but you will not be able to take full advantage of all the great features.</p>
                 </div>
 
               </div>
@@ -1065,10 +791,9 @@ function show_small_structure()
    </div>
             </div>
             <div class="modal-footer"> 
-              <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cancel</button>
-              
-          <!-- <a href="{% provider_login_url "twitter" process="login" %}" class="btn btn-lg btn-info btn-block"><i class="fa fa-twitter"></i> Continue Login</a> -->
-                       <a href="{% provider_login_url "twitter" process="login" %}"><button type="button" class="btn btn-primary"><i class="fa fa-twitter"></i> Continue Registration</button></a>
+              <a class="btn btn-primary btn-stroke text-black normal pull-left" href="/accounts/signup"><i class="fa fa-envelope text-black"></i> I'd rather sign up by email</a>
+               
+              <a href="{% provider_login_url "twitter" process="login" %}"><button type="button" class="btn btn-primary"><i class="fa fa-twitter"></i> Sign up with Twitter</button></a>
               
             </div>
           </div><!-- /.modal-content -->
@@ -1097,7 +822,7 @@ function show_small_structure()
           <li><a href="/pages/organisations">Organisations</a></li>
           <li><a href="/pages/foodwaste">Food surplus &amp; waste</a></li>
           <li><a href="/pages/pricing">Pricing</a></li>      
-          <li><a href="htpp://digest.foodtrade.com">Blog</a></li>      
+          <li><a href="http://digest.foodtrade.com" target="blank">Blog</a></li>      
           <li><a href="/pages/terms">Terms of Service</a></li>
           <li><a href="/pages/privacy">Privacy</a></li>
         </ul>
@@ -1113,8 +838,7 @@ function show_small_structure()
             <a href="https://plus.google.com/+Foodtrade" rel="publisher"><i class="fa fa-google-plus-square fa-2x"></i></a>
           </li>
         </ul> 
-  
-</div>
+      </div>
        
       </div>  
     </div>
@@ -1159,15 +883,6 @@ function show_small_structure()
     <script src="{% static "js/tag-it.js" %}"></script>
     <script src="{% static "js/twitter-typeahead.js" %}"></script>
     
-    <script src="{% static "css/docsupport/prism.js" %}" charset="utf-8"></script>
-
-    <script src="{% static "js/isotope.pkgd.min.js" %}"></script>
-
-
-<link href="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/css/bootstrap-editable.css" rel="stylesheet"/>
-<script src="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/js/bootstrap-editable.min.js"></script>
-
-    <!-- social net -->
     <!-- social net --> 
 
     <script data-id="App.Config">
@@ -1185,19 +900,20 @@ function show_small_structure()
         inverseColor = '#45484d'; 
     var themerPrimaryColor = primaryColor;
     </script>
- 
-    <script src="{% static "assets/components/plugins/nicescroll/jquery.nicescroll.min.js" %}"></script>
-    <script src="{% static "assets/components/plugins/breakpoints/breakpoints.js" %}"></script>
-    <script src="{% static "assets/components/plugins/preload/pace/pace.min.js" %}"></script>
-    <script src="{% static "assets/components/plugins/menus/sidr/jquery.sidr.js" %}"></script>
-    <script src="{% static "assets/components/plugins/holder/holder.js" %}"></script>
-    <script src="{% static "assets/components/core/js/sidebar.main.init.js" %}"></script>
-    <script src="{% static "assets/components/core/js/sidebar.collapse.init.js" %}"></script>
+
+    <script src="http://malihu.github.io/custom-scrollbar/jquery.mCustomScrollbar.concat.min.js"></script> 
+    <script src="{% static "assets/components/plugins/preload/pace/pace.min.js" %}"></script> 
     <script src="{% static "assets/components/common/forms/elements/bootstrap-select/assets/lib/js/bootstrap-select.js" %}"></script>
-    <script src="{% static "assets/components/common/forms/elements/bootstrap-select/assets/custom/js/bootstrap-select.init.js" %}"></script>
+    <script src="{% static "assets/components/common/forms/elements/bootstrap-select/assets/custom/js/bootstrap-select.init.js" %}"></script> 
     <script src="{% static "assets/components/core/js/core.init.js" %}"></script>
     <script src='//api.tiles.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v0.0.2/Leaflet.fullscreen.min.js'></script>
-    <link href='//api.tiles.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v0.0.2/leaflet.fullscreen.css' rel='stylesheet' />
+    <link href='//api.tiles.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v0.0.2/leaflet.fullscreen.css' rel='stylesheet' /> 
+
+
+<script src='//api.tiles.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v0.4.0/leaflet.markercluster.js'></script>
+<link href='//api.tiles.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v0.4.0/MarkerCluster.css' rel='stylesheet' />
+<link href='//api.tiles.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v0.4.0/MarkerCluster.Default.css' rel='stylesheet' />
+
 
 
 
@@ -1208,13 +924,16 @@ function show_small_structure()
 
 <script src="{% static "js/map-include.js" %}"></script>
 
-     
 
-    <!-- social net -->
-    <!-- social net -->
-    <!-- social net -->
-    <!-- social net -->
-
+<script src="{% static "js/footable.js" %}" type="text/javascript"></script>     
+<script src="{% static "js/footable.filter.js" %}" type="text/javascript"></script>     
+<script type="text/javascript">
+  $(function () {
+    $('.footable').footable(); 
+    // $('.footable').trigger('footable_expand_first_row');
+  });
+</script>
+ 
 
  {% block footer %}
  {% endblock %}
@@ -1223,6 +942,8 @@ function show_small_structure()
  {% endblock %}
 
  <script type="text/javascript">
+
+
  function logout()
   {
     window.location = '/accounts/logout';
@@ -1347,19 +1068,12 @@ function success_tweeter_user_invite(data){
 </script> 
 <script type="text/javascript">
 $(document).ready(function() {
- 
-  $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
-        /*alert('hello');*/
-        $('.isotope').isotope('layout');
+
+   $('.mCustomScrollbar').mCustomScrollbar({
+        theme:"dark"
     });
 
-// tweetlistener('tweetMessage', 'counter', 'contact_tweet', 'newtweet_btn');
- 
-
-// function showgrid() {
-//   $container.css('visibility', 'visible');
-// }
-
+   
     var activeSystemClass = $('.list-group-item.active');
     //something is entered in search form
     $('.system-search').keyup( function() {
@@ -1533,16 +1247,19 @@ $(function() {
 <!-- TOUR SCRIPT --> 
 {% if request.user.is_authenticated %}
 <script type="text/javascript">
-  document.getElementById('help').onclick = function() {
-    introJs().setOption('doneLabel', 'Next page').start().oncomplete(function() {
-      window.location.href = '/activity?multipage=true';
-    });
-  };
+  // document.getElementById('help').onclick = function() {
+  //   introJs().setOption('doneLabel', 'Next page').start().oncomplete(function() {
+  //     window.location.href = '/activity?multipage=true';
+  //   });
+  // };
 </script>
 {% endif %}
 <!-- // TOUR SCRIPT --> 
 
    <script>
+   $(document).ready(function(){
+
+
 //Include the UserVoice JavaScript SDK (only needed once on a page)
 UserVoice=window.UserVoice||[];(function(){var uv=document.createElement('script');uv.type='text/javascript';uv.async=true;uv.src='//widget.uservoice.com/HloB2aRxdk7fbhWMOI5AlQ.js';var s=document.getElementsByTagName('script')[0];s.parentNode.insertBefore(uv,s)})();
 
@@ -1557,25 +1274,7 @@ UserVoice.push(['set', {
   trigger_color: 'white',
   trigger_background_color: '#6aba2e'
 }]);
-
-// Identify the user and pass traits
-// To enable, replace sample data with actual user traits and uncomment the line
-// UserVoice.push(['identify', {
-//   email:      'john.doe@example.com', // User’s email address
-//   name:       'John Doe', // User’s real name
-//   created_at: 1364406966, // Unix timestamp for the date the user signed up
-//   id:         123, // Optional: Unique id of the user (if set, this should not change)
-//   type:       'Owner', // Optional: segment your users by type
-//   account: {
-//    id:           123, // Optional: associate multiple users with a single account
-//    name:         'Acme, Co.', // Account name
-//    created_at:   1364406966, // Unix timestamp for the date the account was created
-//    monthly_rate: 9.99, // Decimal; monthly rate of the account
-//    ltv:          1495.00, // Decimal; lifetime value of the account
-//    plan:         'Enhanced' // Plan name for the account
-//   }
-// }]);
-
+ 
 //Add default trigger to the bottom-right corner of the window:
 UserVoice.push(['addTrigger', { mode: 'contact', trigger_position: 'top-right' }]);
 
@@ -1584,7 +1283,10 @@ UserVoice.push(['addTrigger', '#id', { mode: 'contact' }]);
 
 //Autoprompt for Satisfaction and SmartVote (only displayed under certain conditions)
 UserVoice.push(['autoprompt', {}]);
+
+});
 </script>
+
 
 
 
@@ -1621,26 +1323,7 @@ function validate_login(){
 
 
 
-function formSubmit(form) {
 
-  var input = (document.getElementById('pac-input'));
-    geocoder = new google.maps.Geocoder();
-    geocoder.geocode({'address': input.value}, function(results, status) {
-            if (status == google.maps.GeocoderStatus.OK) {
-              if (results[0]) {
-                var formatted_address = results[0].formatted_address;
-
-                 $("#lon").val(results[0].geometry.location.lng());
-      $("#lat").val(results[0].geometry.location.lat());
-              } 
-            } 
-          });
-
-    setTimeout(function() {   
-        form.submit();
-    }, 3000);  // 3 seconds
-    return false;
-}
 
 </script>
 
@@ -1654,11 +1337,7 @@ function formSubmit(form) {
     hash && $('ul.nav a[href="' + hash + '"]').tab('show');
 }); 
 
-   /* card flip */
-$(".flip").hover(function(){
-  $(this).find(".note").toggleClass("flipped");
-  return false;
-});
+ 
 
 </script>
 
@@ -1683,9 +1362,9 @@ $(".flip").hover(function(){
           var childrens = $('#post_for').children();
           for(var i=0;i<childrens.length;i++)
           {
-            $(childrens[i]).removeClass("btn-success");
+            $(childrens[i]).removeClass("active");
           }
-          $(this).addClass("btn-success");
+          $(this).addClass("active");
           post_for = value;
       });
 
@@ -1785,7 +1464,7 @@ function post_new_status(){
         var foodtrade_only = "true";
       }
       if(validate_login()['status'] == '1'){
-        ajax_request("post_tweet", 'clear_input', {message: message,foodtrade_only:foodtrade_only});
+        ajax_request("post_tweet", 'clear_input', {message: message,foodtrade_only:foodtrade_only}); 
       }
       else{
           /*$('#btn_must_be_logged').click();*/
@@ -1816,7 +1495,7 @@ function clear_structured_input(data){
         $('#structured_input_form').trigger("reset");
         $('#newstatus').val('');        
         $('#btn_update_close').click();
-        $('#btnClose').click();
+        $('#newtwitterpost').hide();
         make_search();
 }
 
@@ -1831,8 +1510,53 @@ function clear_input(data){
         $('#newstatus').val('');
         $('#btnClose').click();        
         $('#btn_update_close').click();
+        $('#newtwitterpost').hide();
         make_search();
 }
+
+
+function switch_update_form()
+{
+  switch_text_area();
+  $("#structured_hidden_block").toggleClass('hidden');
+  $("#update-big").show();
+}
+
+function switch_text_area(){ 
+  $('#update-big').attr('class', ' ');
+}
+function show_full_structure()
+{
+  $("#structured_hidden_block").removeClass("hidden");
+}
+
+function show_small_structure()
+{ 
+  switch_text_area
+  $("#update-big").hide();
+  $("#structured_postupdate").show();
+  $("#structured_hidden_block").removeClass("hidden");
+}
+
+function check_limit(){
+  tweet = $('#newstatus').val();
+  if(tweet.length > 120){
+    $('#charsRem').html( 'Max of 120 characters exceeded.');
+  }
+  else{
+    $('#charsRem').html(String(120-tweet.length) + ' characters remaining.');
+  }
+}
+function check_limit1(){
+  tweet = $('#update_description').val();
+  if(tweet.length > 120){
+    $('#charsRem1').html( 'Max of 120 characters exceeded.');
+  }
+  else{
+    $('#charsRem1').html(String(120-tweet.length) + ' characters remaining.');
+  }
+}
+
 
 </script>
 </body>

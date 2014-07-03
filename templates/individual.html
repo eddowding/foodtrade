@@ -44,80 +44,169 @@ s
     /* fix rtl for demo */
     .chosen-rtl .chosen-drop { left: -9000px; }
   </style>
-
- <div class="col-md-6 col-sm-7" id="single">
-
-    <div class="widget">
-      <div class="widget-body innerAll inner-4x" style="background:url('{{banner_url}}'); background-size: cover;">
-        <img class="img-thumbnail img-cirle center-block" src="{{pic_url}}"  />
-      </div>
-      <div class="widget-body innerAll border-bottom">
-
-          {% if prof_subscribed %}
-          <span class="fa-stack fa-lg pull-right" id="verified" rel="tooltip" title="Verified profile">
-            <i class="fa fa-certificate fa-stack-2x" style="color: #1DBD3C;"></i>
-            <i class="fa fa-check fa-stack-1x" style="color: #fff;"></i>
-          </span>
-          {% endif %}
-
-      <div class="icons pull-right">
-
-      {% if facebook_page %}
-        <a href="{{facebook_page}}"><i class="fa fa-facebook-square fa-lg fa-fw  text-muted"></i></a>
-      {% endif %} 
-      {% if userprof.username %}
-        <a href="http://twitter.com/{{userprof.username}}"><i class="fa fa-twitter-square fa-lg fa-fw  text-muted"></i></a> 
-      {% endif %} 
-      {% if phone_number %}
-        <a href="callto:{{phone_number}}"><i class="fa fa-phone-square fa-lg fa-fw  text-muted"></i></a>  
-      {% endif %}   
-      {% if website_url %}
-        <a href="{{website_url}}"><i class="fa fa-globe fa-lg fa-fw  text-muted"></i></a>  
-      {% endif %} 
-      {% if company_num %}
-        <a href="https://www.duedil.com/company/{{company_num}}"><i class="fa fa-legal fa-lg fa-fw text-muted"></i></a>  
-      {% endif %} 
  
-      </div>  
 
-        <h3 class="margin-none">{{name}}</h3>
-        <div class="innerTB">{{description}}</div> 
-      </div>
-
-      <div class="widget-body innerAll">
-        {% ifequal profile_id user_id %}
-        <a href="/editprofile/{{userinfo.username}}" class="btn btn-danger ">
-           Edit my profile
-        </a>
-        {% endifequal %}
-        
-        {% ifnotequal profile_id user_id %}
-
-        <!-- Button trigger modal -->
-        {% if user.is_authenticated %}
-            {% ifequal is_unknown_profile 'false' %}
-            <button class="btn btn-primary " data-toggle="modal" data-target="#modal_contact">Contact</button>
-            {% else %}
-              <button class="btn btn-primary " style="margin-top:40px;" data-toggle="modal" data-target="#modal_invite">Invite to connect</button> 
-            {% endifequal %}
-
-            {% if user.is_superuser %}
-              <a href="/editprofile/{{username}}/" class="btn btn-primary ">Edit</a>
-            {% endif %}
-
-        {% else %}
-
-        <!-- if not logged in show login prompt -->
-        <a href="{% provider_login_url "twitter" process="login" %}" class="btn btn-primary ">Login for more</a>
-        {% endif %}
-        {% endifnotequal %}
-
-        <button class="btn btn-default " data-toggle="modal" data-target="#sharer">
-          <i class="fa fa-share-square-o text-muted"></i> Share
-        </button>
+<div class="row row-merge bizSummary border-left border-top  bg-gray" data-spy="affix" data-offset-top="45">
+<div class="ftstrip"></div>
+<div class="col-xs-9 bg-gray border-right">
+   <div class="innerAll">
+      <div class="media">
+      <img src="{{pic_url}}"  alt="{{name}} logo" class="pull-left avatar">
+      <div class="media-body"> 
+        <h2 class="margin-none">{{name}}</h2>
+        <span class="tags tags-biztype  ">   
+         <a href="#">Individual</a> 
+        </span>  
+      </div> 
       </div>
     </div>
+</div>
 
+<div class="col-xs-3 bg-gray border-right ">
+  <div class="{% if not user.is_authenticated %} hidden {% endif %}  clearfix" id="distanceAway">   
+      <span class="lead bold"> {{distance}} miles  </span>
+      <small class="small clearfix margin0 hidden-xs">away from you</small> 
+  </div> 
+</div>
+
+</div>
+
+
+{% if loc.lat == -82.86275189999999 and loc.lon == -135.10000000000002 %}
+{% else %}
+<div class="row">
+<div class="col-sm-12">
+  <div class="map-biz" id="map"></div> 
+</div>
+</div>
+{% endif %}
+
+
+
+
+
+
+
+
+
+
+<div class="row row-merge bizSummary">
+<div class="col-xs-12">
+
+<div class="row row-merge border-bottom border-right ">
+  <div class="col-sm-7  border-left">
+    <div class="innerAll">
+       
+
+      <p class="">{{description}}</p>  
+      {% if user.is_superuser %}
+        <a href="/editprofile/{{username}}/" class="btn btn-info btn-xs">Edit</a>
+      {% endif %}
+
+    </div> 
+  </div>
+  <div class="col-sm-3 ">
+    <div class="innerAll">
+      <!-- EDIT / CONTACT -->
+      {% ifequal profile_id user_id %}
+        <a href="/editprofile/{{userinfo.username}}" class="btn btn-info btn-block btn-sm ">
+           Edit
+        </a>       
+      {% endifequal %}
+      
+      {% if request.user.is_authenticated %}
+        <button class="btn btn-primary text-center normal btn-block" data-toggle="modal" data-target="#modal_contact"><i class="fa fa-envelope-o fa-fw"></i> Contact</button>
+      {% endif %} 
+
+      {% ifequal is_unknown_profile 'false' %}
+      {% else %}
+        <button class="btn btn-primary btn-stroke btn-block"  data-toggle="modal" data-target="#modal_invite">Invite to connect</button> 
+      {% endifequal %} 
+      <!-- EDIT / CONTACT -->
+  
+      <!-- VERIFIED PROFILE -->
+      {% if prof_subscribed %}
+      <button class="btn btn-primary btn-block btn-sm btn-stroke">
+        <i class="fa fa-check"></i>
+        <span>Verified</span>
+      </button> 
+      {% endif %}  
+      <!-- VERIFIED PROFILE -->
+    </div>  
+  </div>  
+ 
+  <div class="col-sm-2 hidden-xs"> 
+    <div class="innerAll "> 
+
+    <!-- SHARE -->
+      <div class="btn-group btn-block" >
+        <button type="button"  class="btn btn-default btn-block dropdown-toggle normal" data-toggle="dropdown"  ><i class="fa fa-fw fa-share-alt text-black "></i> share</button>
+          <ul class="dropdown-menu ">
+           <li> <a href="#" class="" onclick="window.open(
+            'https://www.facebook.com/sharer/sharer.php?s=100&amp;p[url]='+encodeURIComponent('{{ request.build_absolute_uri }}') +'&amp;p[images][0]='+encodeURIComponent('{{pic_url}}')+'&amp;p[title]='+encodeURIComponent('{{name}} on FoodTrade')+'&amp;p[summary]='+encodeURIComponent('Hey, see my profile on FoodTrade')+'&amp;u='+encodeURIComponent('{{ request.build_absolute_uri }}') +'&amp;t='+encodeURIComponent('{{name}} on FoodTrade'),
+                  'facebook-share-dialog', 
+                  'width=626,height=436,top='+((screen.height - 436) / 2)+',left='+((screen.width - 626)/2 )); 
+                return false;">
+
+              <i class="fa fa-facebook fa-lg fb fa-fw"></i> Share on facebook 
+            </a></li>
+            <li>
+            <a href="#" class="  " onclick="window.open(
+                  'https://twitter.com/share?url='+encodeURIComponent('{{ request.build_absolute_uri }}')+'&amp;text='+encodeURIComponent('{{screen_name}} on @foodtradeHQ') + '&amp;count=none/', 
+                  'twitter-share-dialog', 
+                  'width=626,height=436,top='+((screen.height - 436) / 2)+',left='+((screen.width - 626)/2 )); 
+                return false;">
+              <i class="fa fa-twitter fa-lg tw fa-fw"></i> Tweet this
+            </a></li><li>
+
+            <a class=" " href="http://pinterest.com/pin/create/button/?url={{ request.build_absolute_uri|urlencode }}&media={{pic_url|urlencode}}&description={{screen_name|urlencode}}{{' on FoodTrade'|urlencode}}" class="pin-it-button" count-layout="horizontal">
+              <i class="fa fa-pinterest fa-lg pinterest fa-fw"></i> Pin to pinterest
+            </a> </li><li>
+            <a  class="" href="https://plus.google.com/share?url={{ request.build_absolute_uri|urlencode }}">
+              <i class="fa fa-google-plus fa-lg google fa-fw"></i>  Share on Google+
+            </a></li><li>
+            <a  class=" " href="http://www.tumblr.com/share" title="Share on Tumblr">
+              <i class="fa fa-tumblr fa-lg tumblr fa-fw"></i> Post to Tumblr
+            </a>
+               </li><li>
+            <a  class=" " href="http://www.linkedin.com/shareArticle?mini=true&url={{ request.build_absolute_uri|urlencode}}&title={{screen_name}} on FoodTrade&summary=Hey, view my profile on Foodtrade.&source=">
+              <i class="fa fa-linkedin fa-lg linkin fa-fw"></i>  Share on LinkedIn
+            </a></li> 
+            <script type="text/javascript" src="http://platform.tumblr.com/v1/share.js"></script>
+          </ul>
+        </div>
+
+        {% if request.user.is_authenticated %}
+        <div class="btn-group btn-block" data-toggle="buttons">
+          <label class="btn btn-default btn-block  {% if fav_profile %} active {% else %}{% endif %}">
+            <input type="checkbox" id="favourite_btn" {% if fav_profile %} checked="checked" {% endif %} onchange="save_favourites('{{profile_id}}', '{{user_id}}'); return null;"> <i class="fa fa-star-o fa-fw text-black"></i> 
+            <span class="fav">Favourite</span>
+          </label> 
+        </div>
+        {% endif %}
+    </div>
+  </div>
+  
+</div>  
+<!-- contact -->  
+
+</div><!-- row --> 
+</div>
+
+</div>
+
+
+
+
+
+
+
+
+<div class="row">
+ 
+
+ <div class="col-sm-12" id="single">
+ 
 
 <div class="widget widget-tabs widget-tabs-double-2 widget-tabs-responsive">
    
@@ -226,12 +315,11 @@ s
 </div></div></div></div>
 
 
-</div> 
-
-
-<div class="col-md-6 col-sm-5 {% if loc.lat == -82.86275189999999 and loc.lon == -135.10000000000002 %} hidden {% endif %}">
-  <div style="position: fixed; width:50%; height: 100%; " id="map"></div> 
 </div>
+</div>
+
+
+
 
 
 <!-- modals -->

@@ -71,9 +71,14 @@ ajax_request("third_party_delete_org", 'org_ajax', {data: "{'memberuid': " + mem
 }
 
 function org_ajax(data){
-$('.search-choice').remove();
-$("#org_chosen").val('').trigger('chosen:updated');
-$('#organisations_list').html(data);
+	data= jQuery.parseJSON(data);
+	if(data['status']=='ok'){
+		$('.search-choice').remove();
+		$("#org_chosen").val('').trigger('chosen:updated');
+		$('#groupsGrid').html(data['html']);
+		$('#orgConnNo').html('');
+		$('#orgConnNo').html(data['org_count']);
+	}
 }
 function conn_handler(value, prof_id, conn_id)
 {
@@ -87,6 +92,8 @@ function conn_handler(value, prof_id, conn_id)
 						ajax_request("add_connection", 'suppliers_ajax', {conn_data: "{'prof_id': " +prof_id +", 'status': 'sell_to'}"});
 					}
 					else{
+
+						footable_row = $("#stockist_connections tr.self_conn");
 						// delete connection
 						// ajax_request("del_connection", 'conn_ajax', {conn_data: "{'prof_id': " +prof_id +", 'status': 'buy_from'}"})
 						ajax_request("del_connection", 'suppliers_ajax', {conn_data: "{'prof_id': " +prof_id +", 'status': 'sell_to'}"})
@@ -101,6 +108,7 @@ function conn_handler(value, prof_id, conn_id)
 						ajax_request("add_connection", 'stockists_ajax', {conn_data: "{'prof_id': " +prof_id +", 'status': 'buy_from'}"});
 					}
 					else{
+						footable_row = $("#supplier_connections tr.self_conn");
 						// delete connection
 						// ajax_request("del_connection", 'conn_ajax', {conn_data: "{'prof_id': " +prof_id +",'status': 'sell_to'}"});
 						ajax_request("del_connection", 'stockists_ajax', {conn_data: "{'prof_id': " +prof_id +",'status': 'buy_from'}"});
@@ -108,12 +116,13 @@ function conn_handler(value, prof_id, conn_id)
 
 				}
 				else if(value == "close_buy_from"){
-					
-					ajax_request("profile_user_delete_conn", 'stockists_ajax', {conn_data: "{'prof_id': " +prof_id +", 'status': 'buy_from'" + ", 'conn_id': " + conn_id +"}"});
+						ajax_request("profile_user_delete_conn", 'stockists_ajax', {conn_data: "{'prof_id': " +prof_id +", 'status': 'buy_from'" + ", 'conn_id': " + conn_id +"}"});
+						/*ajax_request("del_connection", 'stockists_ajax', {conn_data: "{'prof_id': " +prof_id +", 'status': 'buy_from'" + ", 'conn_id': " + conn_id +"}"});*/
+
 				}
-				else if(value == "close_sell_to"){
-					
+				else if(value == "close_sell_to"){				
 					ajax_request("profile_user_delete_conn", 'suppliers_ajax', {conn_data: "{'prof_id': " +prof_id +", 'status': 'sell_to'" + ", 'conn_id': " + conn_id +"}"});
+					/*ajax_request("del_connection", 'suppliers_ajax', {conn_data: "{'prof_id': " +prof_id +", 'status': 'sell_to'" + ", 'conn_id': " + conn_id +"}"});*/
 				}				
 	}
 	else{
@@ -141,23 +150,204 @@ function third_party_connection(prof_id, buss_var, link_type){
 	// }
 	
 }
-function stockists_ajax(data){
-// clear selected choice
-$('.search-choice').remove();
-// $("#buss_chosen").val('').trigger('chosen:updated');
 
-$('#all-stockists').html(data);
-reload_connections();
+function plot_connection_layers_on_map(connection){
+	var max_lat = parseFloat(map_lat);
+	var min_lat = parseFloat(map_lat);
+	var max_lon = parseFloat(map_lon);
+	var min_lon = parseFloat(map_lon);	
+	var con = connection;
+	var name = con['name'];
+	// var name = con.business_org_name;
+	var description = con['description'];
+	var photo =  con['profile_img'];
+	var username = con['username'];
+	var type = con['type_user'];
+	var relation = con.relation;
+	var latitude =  con['latlng']['coordinates'][1];
+	var longitude =  con['latlng']['coordinates'][0];
+	var current_lat = parseFloat(latitude);
+	var current_lon = parseFloat(longitude);
+	if (current_lat==undefined || current_lon ==undefined){
+		return
+	}
+	if(parseInt(current_lon) == parseInt(def_lon) && parseInt(def_lat) == parseInt(current_lat)){
+		return;
+	}
+	if(current_lat>max_lat){
+		max_lat = current_lat;
+	}
+	if(current_lat<min_lat){
+		min_lat = current_lat;
+	}
+	if(current_lon>max_lon){
+		max_lon = current_lon;
+	}
+
+	if(current_lon<min_lon){
+		min_lon = current_lon;
+	}
+
+	color = '#890D2F';
+	if(relation=="buyer"){
+		color = "#FC8628";
+	}
+
+	if(parseInt(current_lon) != parseInt(def_lon) || parseInt(def_lat) != parseInt(current_lat)){
+		var polyline = L.polyline([
+			[parseFloat(map_lat), parseFloat(map_lon)],
+			[parseFloat(latitude), parseFloat(longitude)]
+			],{
+			color: color,
+			weight: 2,
+			opacity: 0.8
+			}).addTo(map);
+
+		/*map_controls.push(polyline);*/
+		lines_dic[username] = polyline;
+	}
+
+	var card_str = '<div class="card-box"><div class="content text-center"><div class=""><a href="/profile/'+username+'"><img src="'+photo+'" alt="'+name+'" class="img-circle img-thumbnail img-responsive" style="width:73px;" /></a>';
+		card_str += '</div><div class="text"><h3><a href="/profile/'+username+'">'+name+'</a></h3>';
+	
+	if(type.length>0){
+		card_str += '<div class="clearfix">';
+	for(var j=0;j<type.length;j++){  
+		card_str +=  '<a class="" href="/activity/?q='+type[j]+'">'+type[j]+'</a>';
+	}
+		card_str += '</div>';
+	}
+
+	card_str += '<p>'+description+'</p></div>';
+	card_str += '<a href="/profile/'+username+'" class="btn btn-primary btn-sm">View profile &raquo;</a></div> </div>';    
+
+	var ctrl = L.marker([parseFloat(current_lat), parseFloat(current_lon)], {icon: redIcon}).addTo(map).bindPopup(card_str);			
+	control_dict[username] = ctrl;
+	/*map_controls.push(ctrl);*/
 }
+
+function remove_con(username1)
+{
+	cnt = control_dict[username1];
+	cnt1 = lines_dic[username1];
+	map.removeLayer(cnt);
+	map.removeLayer(cnt1);
+}
+
+function stockists_ajax(data){
+	new_dat = data;
+	data = jQuery.parseJSON(data);
+	if(data['status']=='ok'){
+		if(data['action']=='delete'){
+			try{
+			$('[data-title="' + data['username'] + '"]').parent().remove();
+        	myfootable.removeRow(footable_row);
+		}
+		catch(e){
+			footable_row.remove();
+		}
+
+			//delete the row
+			
+			remove_con(data['username']);		
+		}
+		else{
+			$('.search-choice').remove();
+			current_html = $("#supplier_connections").html();
+			new_html =  data['html'] + current_html;
+			$("#supplier_connections").html(new_html);
+		  $('#suppliersTable').trigger('footable_initialize');
+          $('#stockistsTable').trigger('footable_resize');
+          $('#suppliersTable').trigger('footable_initialize');
+          $('#suppliersTable').trigger('footable_resize');
+          
+		}
+
+        	$('#c_con_no').html(data['b_conn_no']);
+			$('#b_con_no').html(data['c_conn_no']);	
+	}
+}
+
 
 function suppliers_ajax(data){
-// clear selected choice
-$('.search-choice').remove();
-// $("#buss_chosen").val('').trigger('chosen:updated');
+	// clear selected choice	
+		data=jQuery.parseJSON(data);
+		if(data['action'] == 'delete'){
+			try{
+			$('[data-title="' + data['username'] + '"]').parent().remove();
+        	myfootable.removeRow(footable_row);
+		}
+		catch(e){
+			footable_row.remove();
+		}
 
-$('#all-suppliers').html(data);
-reload_connections();
+
+			new_connections = connections;						
+			//delete the row      	
+			remove_con(data['username']);
+		}		
+		else{
+			$('.search-choice').remove();
+			// $("#buss_chosen").val('').trigger('chosen:updated');
+			current_html = $('#stockist_connections').html();
+
+			new_html =  data['html'] + current_html;
+			$('#stockist_connections').html(new_html);	
+			$('#stockistsTable').trigger('footable_initialize');
+          	$('#stockistsTable').trigger('footable_resize');
+          	$('#stockistsTable').trigger('footable_initialize');
+          	$('#stockistsTable').trigger('footable_resize');
+          	
+		}
+
+
+        	$('#c_con_no').html(data['b_conn_no']);
+			$('#b_con_no').html(data['c_conn_no']);	
 }
+
+function get_next_page_b_conn(buss_username, current_conn_page){
+	ajax_request('pull_connections', 'get_next_page_conn_success', {'username':buss_username,'page_num':current_conn_page, 'type':'b'});
+}
+
+function get_next_page_c_conn(buss_username, current_conn_page){
+	ajax_request('pull_connections', 'get_next_page_conn_success', {'username':buss_username,'page_num':current_conn_page, 'type':'c'});	
+}
+
+function get_next_page_conn_success(data){
+	data = jQuery.parseJSON(data);
+	if (data['status']=='ok'){
+		conn_arr = data['conn_data'];
+		for (var i=0; i<conn_arr.length; i++){
+			if (data['type']=='b'){			
+				current_html = $('#mCSB_2_container tbody').html();
+				new_html =  conn_arr[i]['html'] + current_html;
+				$('#mCSB_2_container tbody').html(new_html);			
+			}
+			else{
+				current_html = $('#mCSB_3_container tbody').html();
+				new_html =  conn_arr[i]['html'] + current_html;
+				$('#mCSB_3_container tbody').html(new_html);			
+			}
+			if (conn_arr[i]['user']['address'] != 'Antartica'){
+				plot_connection_layers_on_map(conn_arr[i]['user']);				
+			}
+		}
+		if(data['type']=='b'){
+			get_next_page_b_conn(data['username'], data['next_page_num']);			
+		}
+		else{
+			get_next_page_c_conn(data['username'], data['next_page_num']);				
+		}
+	}
+	else{
+		  $('#suppliersTable').trigger('footable_initialize');
+          $('#stockistsTable').trigger('footable_resize');
+          $('#suppliersTable').trigger('footable_initialize');
+          $('#suppliersTable').trigger('footable_resize');
+	}
+}
+
+
 
 function create_conn(){
 	location.reload();
@@ -193,15 +383,24 @@ function add_food(prof_id, we_buy){
 function food_ajax(data){
 $('.search-choice').remove();
 $("#myselect").val('').trigger('chosen:updated');
-$('#foods').html(data);
-var $container1 = $('#foods').isotope({itemSelector: '.food'});
+$('#ajax_food_tr').html(data);
+
+$('#produceTable').trigger('footable_initialize');
+$('#produceTable').trigger('footable_resize');
+$('#produceTable').trigger('footable_initialize');
+$('#produceTable').trigger('footable_resize');
+// var $container1 = $('#foods').isotope({itemSelector: '.food'});
 }
 
 function webuy_food_ajax(data){
 $('.search-choice').remove();
 $("#webuy_select").val('').trigger('chosen:updated');
 $('#webuy_foods').html(data);
-var $container1 = $('#webuy_foods').isotope({itemSelector: '.food'});
+$('#webuy_foods').trigger('footable_initialize');
+$('#webuy_foods').trigger('footable_resize');
+$('#webuy_foods').trigger('footable_initialize');
+$('#webuy_foods').trigger('footable_resize');
+/*var $container1 = $('#webuy_foods').isotope({itemSelector: '.food'});*/
 }
 
 function recommend_food(logged_in_id, food_name, prof_id, username, my_this, we_buy){
@@ -241,7 +440,7 @@ function delete_food(prof_id, food_name, my_this, we_buy){
 		ajax_request("deletefood", 'food_ajax', {data: JSON.stringify(data)});
 	}
 	global_this = my_this;
-	console.log(global_this)
+
 	// var del_id = global_this.parentElement.parentElement.parentElement.parentElement.getAttribute('id');
 	// var del_id = global_this.parentElement.parentElement.parentElement.parentElement.parentElement.getAttribute('id');
 	// $('#'+del_id).remove();
@@ -280,13 +479,12 @@ function add_member(org_id, mem_id, action){
 	else if(action == 'third_delete'){
 		ajax_request("deletemember", 'member_ajax', {data: JSON.stringify(data)});
 	}
-	
-	
 }
 
 function member_ajax(data){
 	$('#member_ajax').html(data);
 }
+
 function add_team(org_id, team_id){
 	// var data = {orguid: org_id, memberuid: team_id};
 	// ajax_request("addteam", 'create_conn', {data: JSON.stringify(data)});

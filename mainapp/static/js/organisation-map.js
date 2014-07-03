@@ -29,24 +29,18 @@ L.circle([map_lat,map_lon], 160934, {
 			weight:1,
 			fill: 0,
 		}).addTo(map);
+ 
 
-var card_str = '<div class="card-box"><div class="content"><div class="pull-left"><a href="/profile/'+username+'"><img src="'+photo+'" alt="'+name+'" class="img-rounded img-responsive" style="width:40px;" /></a>';
+var card_str = '<div class="card-box"><div class="content text-center"><div class=""><a href="/profile/'+username+'"><img src="'+photo+'" alt="'+name+'" class="img-circle img-thumbnail img-responsive" style="width:40px;" /></a>';
+    card_str += '</div><div class="text"><b><a href="/profile/'+username+'">'+name+'</a></b>';
+    card_str += '<p>'+description+'</p></div>';
+    card_str += '<a href="/profile/'+username+'" class="btn btn-primary btn-sm">View profile &raquo;</a></div> </div>';    
 
-                
-                      card_str += '</div><div class="text"><h5><a href="/profile/'+username+'">'+name+'</a></h5>';
+if(parseInt(map_lon) != parseInt(def_lon) || parseInt(def_lat) != parseInt(map_lat))
+         	{
+         		L.marker([parseFloat(map_lat), parseFloat(map_lon)], {icon: redIcon}).addTo(map).bindPopup(card_str);
+         	}
 
-                      card_str += '<p class="small">'+description+'</p></div></div>';
-                      if(type.length>0)
-                      {
-                    card_str += '<div class="numbers clearfix"><div class="tags tags-biztype pull-left">';
-                    for(var j=0;j<type.length;j++)
-                    {  
-                      
-                      card_str +=  '<a href="/activity/?q='+type[j]+'">'+type[j]+'</a>';
-                     }
-                      card_str += '</div></div>';
-                }
-                  card_str += '</div> ';
 
 if(parseInt(map_lon) != parseInt(def_lon) || parseInt(def_lat) != parseInt(map_lat))
          	{
@@ -127,24 +121,21 @@ function reload_connections()
 			// 	opacity: 0.8
 			// }).addTo(map);
 			// map_controls.push(polyline);
+var card_str = '<div class="card-box"><div class="text-center"><div class=""><a href="/profile/'+username+'"><img src="'+photo+'" alt="'+name+'" class="img-circle img-thumbnail img-responsive" style="width:40px;" /></a>';
+    card_str += '</div><div class="text"><b><a href="/profile/'+username+'">'+name+'</a></b>';
 
-var card_str = '<div class="card-box"><div class="content"><div class="pull-left"><a href="/profile/'+username+'"><img src="'+profile_img+'" alt="'+name+'" class="img-rounded img-responsive" style="width:40px;" /></a>';
+    if(type.length>0)
+      {
+      card_str += '<div class="clearfix">';
+        for(var j=0;j<type.length;j++)
+        {  
+        card_str +=  '<a class="" href="/activity/?q='+type[j]+'">'+type[j]+'</a>';
+        }
+        card_str += '</div>';
+    }
 
-                
-                      card_str += '</div><div class="text"><h5><a href="/profile/'+username+'">'+name+'</a></h5>';
-
-                      card_str += '<p class="small">'+description+'</p></div></div>';
-                      if(type_user.length>0)
-                      {
-                    card_str += '<div class="numbers clearfix"><div class="tags tags-biztype pull-left">';
-                    for(var j=0;j<type_user.length;j++)
-                    {  
-                      card_str +=  '<a href="/activity/?b='+type_user[j]+'">'+type_user[j]+'</a>';
-                     }
-                      card_str += '</div></div>';
-                }
-                  card_str += '</div> ';
-              
+    card_str += '<p class="scroll50">'+description+'</p></div>';
+    card_str += '<a href="/profile/'+username+'" class="btn btn-primary btn-sm">View profile &raquo;</a></div> </div>';    
 
 
 
@@ -154,13 +145,13 @@ if(parseInt(current_lon) != parseInt(def_lon) || parseInt(def_lat) != parseInt(c
 
 			var dot = L.circleMarker([parseFloat(latitude), parseFloat(longitude)],  {
 			
-			color: '#FF4700',
+			color: '#61AE32',
 			opacity:0,
 			weight:0,
 			fill:1,
-			radius: 6,
-			fillColor: "#FF4700",
-			fillOpacity: 0.8,
+			radius: 4,
+			fillColor: "#9B5C47",
+			fillOpacity: 1,
 
 		}).addTo(map).bindPopup(card_str);
 			map_controls.push(dot);
@@ -187,6 +178,7 @@ if(parseInt(current_lon) != parseInt(def_lon) || parseInt(def_lat) != parseInt(c
 		}
 
 		
+    map.scrollWheelZoom.disable();
     L.control.fullscreen().addTo(map);
 
 

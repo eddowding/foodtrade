@@ -69,11 +69,9 @@ def get_twitter_obj(token, secret):
 
 def home(request):
     parameters={}
-
     user_profile_obj = UserProfile()
     userprofile = user_profile_obj.get_profile_by_id(request.user.id)
-    parameters['userprofile'] = UserProfile    
-    
+    parameters['userprofile'] = UserProfile        
     parameters['user'] = request.user
     parameters['total_food_count'] = 2
     parameters['food'] = [{'name': 'Cauliflowers', 'tagcount': 7},{'name': 'Mutton', 'tagcount': 5}]
@@ -696,4 +694,3 @@ def create_profile_from_mention(email, location, data):
         pass
 
     return {'status':1}
-    

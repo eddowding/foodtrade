@@ -1,0 +1,104 @@
+.page {
+  background: #eee;
+}
+
+.bizSummary {
+   
+  background: #fff;
+  
+  .avatar {
+    width: 60px;
+    border: 1px solid #ccc;
+    .rounded(5px);
+    padding: 0;
+    @media (max-width: 768px) {
+        width: 30px;
+        border: 0
+      }
+  }
+
+  h2 {
+    @media (max-width: 768px) {
+        font-size: 18px;
+        font-weight: bold;
+      } 
+  }
+
+  p {
+    margin-top: 10px;
+    @media (max-width: 768px) {
+        line-height: 1.2;
+        font-size: 12px; 
+      }
+  }
+
+  #distanceAway {
+    background: url('/static/images/distance.png') top right no-repeat;
+    padding: 10px;
+    min-height: 70px;
+  }
+
+
+
+
+} // bizSummary
+ 
+
+.affix {
+  top: 0px;
+  z-index: 100000000;
+  width: 100%;
+  position: fixed;
+  .box-shadow(0 0 8px #444);
+}
+
+
+#shortcuts {
+  display: none;
+  float: left;
+  }
+
+.affix {
+  #shortcuts {
+  display: inline-block;
+  }
+}
+
+
+// PANELS
+
+.panel,
+.panel-heading {
+  .rounded(0);
+  background: #fff !Important;
+}
+ 
+
+
+#panelOrganisations .panel-heading  {
+  border-top-color: @organisation;
+}
+#panelCustomers .panel-heading  {
+  border-top-color: @customers;
+}
+#panelProduce .panel-heading {
+  border-top-color: @produce;
+}
+#panelShoppingList .panel-heading {
+  border-top-color: @shoppingList;
+}
+#panelSuppliers .panel-heading  {
+  border-top-color: @suppliers;
+}
+#panelStockists .panel-heading  {
+  border-top-color: @stockists;
+}
+#panelUpdates .panel-heading  {
+  border-top-color: @marketplace;
+}
+#panelDeliveries .panel-heading {
+  border-top-color: @deliveries;
+}
+#panelCompany .panel-heading  {
+  border-top-color: @information;
+}

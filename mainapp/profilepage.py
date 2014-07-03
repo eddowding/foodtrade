@@ -94,9 +94,7 @@ def display_profile(request, username):
         if food_form.is_valid():
             food_form.save(month_list)
         
-    parameters = {}
-    
-
+    parameters = {}    
     food_form = FoodForm()
     parameters['form'] = food_form
     foo = AdminFoods()
@@ -138,24 +136,16 @@ def display_profile(request, username):
     except:
         parameters['show_foods'] = True
 
-
+    from mainapp.classes.DataConnector import UserConnections
     rec_food_obj = RecommendFood()
     parameters['total_vouches'] = rec_food_obj.get_recommend_count(userprof['useruid'])
-
-    from mainapp.classes.DataConnector import UserConnections
     user_connection =  UserConnections(userprof['useruid'])
-    b_conn_len, c_conn_len = user_connection.get_trade_connection_no()
-
-    parameters['b_conn_no'] = b_conn_len
-    parameters['c_conn_no'] = c_conn_len
-
+    parameters['b_conn_no'], parameters['c_conn_no']= user_connection.get_trade_connection_no()
     parameters['profile_id'] = userprof['useruid']
     parameters['sign_up_as'] = userprof['sign_up_as']
     parameters['address'] = userprof['address']
     parameters['type_user'] = userprof['type_user']
-
     video_url = userprof.get('video_url') if userprof.get('video_url')!=None else ''
-
     if video_url != '':
         parameters['intro_video'] = get_video_html(video_url)
     else:
@@ -191,7 +181,7 @@ def display_profile(request, username):
         parameters['is_unknown_profile'] = 'false'
 
     try:
-        search_handle = Search(lon = userprof['latlng']['coordinates'][0], lat =userprof['latlng']['coordinates'][1],)
+        search_handle = Search(lon = userprof['latlng']['coordinates'][0], lat = userprof['latlng']['coordinates'][1],)
 
         update_results = search_handle.get_tweets_by_user_id(userprof['useruid'])
         updates = update_results['results'][:10]
@@ -289,10 +279,11 @@ def display_profile(request, username):
             })
     '''Code to track who views my profile'''
         
-    if parameters['sign_up_as'] == 'Business':
+    if parameters['sign_up_as'] == 'Business':        
         if request.user.is_authenticated():
-            parameters['connections'], parameters['logged_conn'] = get_connections(userprof['useruid'], request.user.id)
 
+            parameters['connections'], parameters['logged_conn'] = get_connections(userprof['useruid'], request.user.id)
+            parameters['company_num'] = userprof.get('company_num') if userprof.get('company_num')!=None else ''
             parameters['all_foods'], parameters['food_parents'] = get_all_foods(userprof['useruid'], request.user.id)
 
             parameters['all_buying_foods'], parameters['webuy_food_parents'] = get_all_buying_foods(userprof['useruid'], request.user.id)
@@ -317,6 +308,8 @@ def display_profile(request, username):
 
         parameters['connections_str'] = json.dumps(parameters['connections'])
         parameters['customers_str'] = json.dumps(parameters['customers'])
+        parameters['buss_user'] = str(username)
+        parameters['conn_page_num'] = 1
         return render_to_response('singlebusiness.html', parameters, context_instance=RequestContext(request))
 
     elif parameters['sign_up_as'] == 'Organisation':
@@ -411,7 +404,9 @@ def edit_profile(request, username):
             edit all unclaimed accounts.Else he/she can edit only his profile.       
         '''
         if request.user.is_authenticated():
-            if request.user.is_superuser:
+            if str(username) == "me":
+                userprof = usr_profile.get_profile_by_username(request.user.username)
+            elif request.user.is_superuser:
                 userprof = usr_profile.get_profile_by_username(str(username))
             else:
                 userprof = usr_profile.get_profile_by_username(request.user.username)
@@ -681,14 +676,19 @@ def get_customers(user_id, logged_id=None):
 
 
 
-def get_connections(user_id, logged_in_id = None):
+def get_connections(user_id, logged_in_id = None, page_number = 1):
     trade_conn = TradeConnection()
     userprof = UserProfile()
     b_conn = trade_conn.get_connection_by_business(user_id)
     c_conn = trade_conn.get_connection_by_customer(user_id)
+
     final_connections = []
     logged_conn = 'none'
+
+    b_conn_ids = []
+
     from mainapp.classes.DataConnector import UserConnections
+
     for count, each in enumerate(b_conn):
         # try:
         if logged_in_id == None and count == 5:
@@ -698,15 +698,12 @@ def get_connections(user_id, logged_in_id = None):
         usr_pr = userprof.get_profile_by_id(str(each['c_useruid']))
         if usr_pr == None:
             continue
-        # user_info = UserInfo(each['c_useruid'])
 
-        user_connection =  UserConnections(each['c_useruid'])
-        
-        b_conn_len, c_conn_len = user_connection.get_trade_connection_no()
-        trade_connections_no = b_conn_len + c_conn_len
-        food_no = user_connection.get_food_connection_no()
-        organisation_connection_no = user_connection.get_organisation_connection_no()
-
+        # user_connection =  UserConnections(each['c_useruid'])
+        # b_conn_len, c_conn_len = user_connection.get_trade_connection_no()
+        # trade_connections_no = b_conn_len + c_conn_len
+        # food_no = user_connection.get_food_connection_no()
+        # organisation_connection_no = user_connection.get_organisation_connection_no()
 
         if logged_in_id!=None and each['c_useruid'] == logged_in_id:
             logged_conn = 'buyer'
@@ -715,30 +712,30 @@ def get_connections(user_id, logged_in_id = None):
             and usr_pr.get('business_org_name')!='' else usr_pr['name']
         else:
             myname = usr_pr['name']           
-        rec_food_obj = RecommendFood()
-        total_vouches = rec_food_obj.get_recommend_count(each['c_useruid'])
+        # rec_food_obj = RecommendFood()
+        # total_vouches = rec_food_obj.get_recommend_count(each['c_useruid'])
         data = {'id': each['c_useruid'],
          # 'name': account.extra_data['name'],
          'name': myname,
-         'b_conn_no':b_conn_len, 
-         'c_conn_no':c_conn_len,
-         'total_vouches' : total_vouches,
+         # 'b_conn_no':b_conn_len, 
+         # 'c_conn_no':c_conn_len,
+         # 'total_vouches' : total_vouches,
          'description': usr_pr['description'],
          'photo': usr_pr['profile_img'],
          'username' : usr_pr['username'],
          'type': usr_pr['type_user'][:3],
-         'trade_conn_no': trade_connections_no,
-         'food_no': food_no,
-         'org_conn_no': organisation_connection_no,
+         # 'trade_conn_no': trade_connections_no,
+         # 'food_no': food_no,
+         # 'org_conn_no': organisation_connection_no,
          'latitude': usr_pr['latlng']['coordinates'][1],
          'longitude': usr_pr['latlng']['coordinates'][0],
          'relation': 'buyer'      
          }
         
-        try:
-            data['banner_url'] = '' if usr_pr['profile_banner_url'] ==None or usr_pr['profile_banner_url'] ==''  else usr_pr['profile_banner_url'] + '/web_retina'
-        except:
-            data['banner_url'] = ''
+        # try:
+        #     data['banner_url'] = '' if usr_pr['profile_banner_url'] ==None or usr_pr['profile_banner_url'] ==''  else usr_pr['profile_banner_url'] + '/web_retina'
+        # except:
+        #     data['banner_url'] = ''
         final_connections.append(data)
 
     for count, each in enumerate(c_conn):
@@ -747,12 +744,11 @@ def get_connections(user_id, logged_in_id = None):
                 break
 
             usr_pr = userprof.get_profile_by_id(str(each['b_useruid']))
-            user_connection =  UserConnections(each['b_useruid'])
-            
-            b_conn_len, c_conn_len = user_connection.get_trade_connection_no()
-            trade_connections_no = b_conn_len + c_conn_len
-            food_no = user_connection.get_food_connection_no()
-            organisation_connection_no = user_connection.get_organisation_connection_no()
+            # user_connection =  UserConnections(each['b_useruid'])            
+            # b_conn_len, c_conn_len = user_connection.get_trade_connection_no()
+            # trade_connections_no = b_conn_len + c_conn_len
+            # food_no = user_connection.get_food_connection_no()
+            # organisation_connection_no = user_connection.get_organisation_connection_no()
 
             if usr_pr.get('business_org_name')!=None:
                 myname = usr_pr.get('business_org_name') if (usr_pr['sign_up_as'] == 'Business' or usr_pr['sign_up_as'] == 'Organisation') \
@@ -760,31 +756,31 @@ def get_connections(user_id, logged_in_id = None):
             else:
                 myname = usr_pr['name']                                        
             
-            rec_food_obj = RecommendFood()
-            total_vouches = rec_food_obj.get_recommend_count(each['b_useruid'])                            
+            # rec_food_obj = RecommendFood()
+            # total_vouches = rec_food_obj.get_recommend_count(each['b_useruid'])                            
 
             new_data = {'id': each['b_useruid'],
 
              # 'name': account.extra_data['name'],
              'name': myname,
-             'total_vouches':total_vouches,
-             'b_conn_no':b_conn_len, 
-             'c_conn_no':c_conn_len,
+             # 'total_vouches':total_vouches,
+             # 'b_conn_no':b_conn_len, 
+             # 'c_conn_no':c_conn_len,
              'description': usr_pr['description'],
              'photo': usr_pr['profile_img'],
              'username' : usr_pr['username'],
              'type': usr_pr['type_user'][:3],
-             'trade_conn_no': trade_connections_no,
-             'food_no': food_no,
-             'org_conn_no': organisation_connection_no,
+             # 'trade_conn_no': trade_connections_no,
+             # 'food_no': food_no,
+             # 'org_conn_no': organisation_connection_no,
              'latitude': usr_pr['latlng']['coordinates'][1],
              'longitude': usr_pr['latlng']['coordinates'][0],
              'relation': 'buyer'
              }
-            try:
-                new_data['banner_url'] = '' if usr_pr['profile_banner_url'] ==None or usr_pr['profile_banner_url'] ==''  else usr_pr['profile_banner_url'] + '/web_retina'
-            except:
-                new_data['banner_url'] = ''
+            # try:
+            #     new_data['banner_url'] = '' if usr_pr['profile_banner_url'] ==None or usr_pr['profile_banner_url'] ==''  else usr_pr['profile_banner_url'] + '/web_retina'
+            # except:
+            #     new_data['banner_url'] = ''
 
             if new_data not in final_connections:
                 new_data['relation'] = 'seller'
@@ -871,18 +867,18 @@ def get_organisations(user_id):
         else:
             myname = usr_pr['name']
 
-        rec_food_obj = RecommendFood()
-        total_vouches = rec_food_obj.get_recommend_count(each['orguid'])                            
+        # rec_food_obj = RecommendFood()
+        # total_vouches = rec_food_obj.get_recommend_count(each['orguid'])                            
 
         from mainapp.classes.DataConnector import UserConnections
-        user_connection =  UserConnections(each['orguid'])
-        b_conn_len, c_conn_len = user_connection.get_trade_connection_no()                                                
+        # user_connection =  UserConnections(each['orguid'])
+        # b_conn_len, c_conn_len = user_connection.get_trade_connection_no()                                                
         data = {'id': each['orguid'],
          # 'name': account.extra_data['name'],
          'name': myname,
-         'total_vouches':total_vouches,
-         'b_conn_no':b_conn_len,
-         'c_conn_no':c_conn_len,
+         # 'total_vouches':total_vouches,
+         # 'b_conn_no':b_conn_len,
+         # 'c_conn_no':c_conn_len,
          'description': usr_pr['description'],
          'photo': usr_pr['profile_img'],
          'username' : usr_pr['username']
@@ -1043,12 +1039,18 @@ def search_orgs_business(request, type_user):
         if type_user == 'Business':
             type_user_new = [type_user]
             trade_conn = TradeConnection()
-            b_conn = trade_conn.get_connection_by_business(profile_user_obj['useruid'])
-            c_conn = trade_conn.get_connection_by_customer(profile_user_obj['useruid'])
+            req_type = request.GET.get('type')
+            print req_type
+            if req_type == "stockist":
+                b_conn = trade_conn.get_connection_by_business(profile_user_obj['useruid'])
+                profile_data = [int(each['c_useruid']) for each in b_conn] 
+            else:            
+                c_conn = trade_conn.get_connection_by_customer(profile_user_obj['useruid'])
+                profile_data = [int(each['b_useruid']) for each in c_conn] 
            
-            # print len(b_conn), len(c_conn)
-            # b_conn.extends(c_conn)
-            profile_data = [int(each['c_useruid']) for each in b_conn] + [int(each['b_useruid']) for each in c_conn]
+            # for each in c_conn:
+            #     if int(each['b_useruid'] in b_profile_data:
+            #         profile_data.append(int(each['b_useruid'])
             # profile_data = get_connections(profile_user_obj['useruid'], request.user.id)[0]
         elif type_user == 'Organisation':
             type_user_new = [type_user]
@@ -1064,9 +1066,6 @@ def search_orgs_business(request, type_user):
             org = Organisation()
             mem_profiles = org.get_members_by_orgid(profile_user_obj['useruid'])
             profile_data = [int(each['memberuid']) for each in mem_profiles]
-            
-
-
 
         data_list = profile_data # [int(each['id']) for each in profile_data]
         keyword_like = re.compile(query + '+', re.IGNORECASE)
@@ -1081,7 +1080,8 @@ def search_orgs_business(request, type_user):
         type_list.extend(type_user_new)
         query_mongo = {'$or': or_conditions, 'sign_up_as': {'$in': type_list}, 'useruid': {'$nin': data_list}}
         mongo = MongoConnection("localhost",27017,'foodtrade')
-        results = mongo.get_all('userprofile', query_mongo)
+        results = mongo.get_paginated_values('userprofile', query_mongo)
+        results = results[0:5]
         
         final_organisation = []
         if len(results) == 0:

@@ -5,17 +5,16 @@
 
 {% endblock %}
 {% block content %}
-  <script src="https://rawgithub.com/kartena/Proj4Leaflet/master/lib/proj4-compressed.js"></script><!-- proj4js -->
-  <script src="https://rawgithub.com/kartena/Proj4Leaflet/master/src/proj4leaflet.js"></script><!-- proj4leaflet -->
-  <script src="https://rawgithub.com/rob-murray/os-leaflet/master/src/osopenspace.js"></script><!-- OS OpenSpace layer -->
-
 
 <div class="container-responsive block-center">
 
-<div class="col-xs-12 col-sm-7" id="activity_switcher">
+<div class="row row-merge">
+
+<div class="col-xs-12 col-sm-4" id="activity_switcher" >
+
 
  
-<div class="widget" style="width:100%;">
+<div class="widget hidden" style="width:100%;">
   <div class="padding-none"> 
     <div class="input-group"  style="width:100%;">
     {% comment %}
@@ -24,145 +23,205 @@
       <textarea class="form-control"  {% if not user.is_authenticated %}  onfocus="login_redirect()" title="Please login to use this feature." {% else %}  data-toggle="modal" data-target="#newtwitterpost" {% endif %} style="width:100%;">What #food do you have to #buy, #sell, or #surplus?  </textarea> 
     </div>
   </div>
+
+
+
 </div>
 
+
  
+<div class="container-responsive" id="searchfilters">
 
-<div class="widget widget-tabs widget-tabs-double-2 widget-tabs-responsive"  style="background: #F5F8FA;">
- 
-<!--  {% ifequal loggedin_signupas "Individual" %}{% endifequal %}
-      {% ifequal loggedin_signupas "Business" %}{% endifequal %}
-      {% ifequal loggedin_signupas "Organisation" %} {% endifequal %}
-      -->
-  <div class="widget-head clearfix">
-    <ul id="activity_selector">
 
-        <li {% if results_updates_count != 0  or results_individual_count == 0 and results_business_count == 0 and results_organisation_count == 0  %}class="active dropdown"{% endif %}>
-        <a href="#near_me" class="glyphicons shopping_cart" data-toggle="tab"><i></i><span class="strong title">Marketplace</span>
-        {% ifnotequal results_updates_count 0 %}
-        <span class="pull-number label label-default">{{results_updates_count}}</span>
-        {% endifnotequal %}
-        </a> 
-        </li>  
-
-        <li {% if results_updates_count == 0 and results_individual_count == 0  and results_organisation_count == 0 and results_business_count != 0 %}class="active"{% endif %}>
-        <a href="#biz" class="glyphicons shop" data-toggle="tab"><i></i><span class="strong title">Companies</span> 
-        {% ifnotequal results_business_count 0 %}
-        <span class="pull-number label label-default">{{results_business_count}}</span>
-        {% endifnotequal %}
+<div class="widget widget-tabs widget-tabs-double widget-tabs-responsive border0 margin0" style="background: #F5F8FA; padding-top: 10px;">
+  <!-- Tabs Heading -->
+  <div class="widget-head clearfix"  id="result_tabs" style="background: #F2F6F8;">
+    <ul> 
+      <li class="active " style="">
+        <a href="#mktplace" class="glyphicons bullhorn" id="mkt_tab" data-toggle="tab"><i></i>
+        <div class=" visible-lg">
+          <span class="strong">Market place</span>
+          <span>Real-time trade</span> 
+        </div>
+        <div class="visible-sm visible-xs visible-md">
+          <span class="strong">Market</span>
+          <span>Real-time</span> 
+        </div>
         </a>
-        </li>  
 
-        <li {% if results_updates_count == 0 and results_individual_count == 0 and results_business_count == 0 and results_organisation_count != 0 %}class="active"{% endif %}>
-        <a href="#org" class="glyphicons group" data-toggle="tab"><i></i><span class="strong title">Groups</span>
-        {% if results_organisation_count > 0 %}
-        <span class="pull-number label label-default">{{results_organisation_count}}</span>
-        {% endif %}
+
+      </li>
+      <li class="border-right" style="">
+        <a href="#profiles" class="glyphicons shop" id="profile_tab" data-toggle="tab"><i></i>
+        <div class=" visible-lg">
+          <span class="strong">Profiles</span>
+          <span>People &amp; places</span> 
+        </div>
+        <div class="visible-sm visible-xs visible-md">
+          <span class="strong">Profiles</span>
+          <span>People &amp; places</span> 
+        </div>
         </a>
-        </li> 
-
-        <li {% if results_updates_count == 0  and results_business_count == 0 and results_organisation_count == 0 and results_individual_count != 0 %}class="active"{% endif %}>
-          <a href="#indiv" class="glyphicons user" data-toggle="tab"><i></i><span class="strong title">People</span>
-          {% if results_individual_count != 0 %}
-          <span class="pull-number label label-default">{{results_individual_count}}</span>
-          {% endif %}
-          </a>
-        </li>  
+      </li>
     </ul>
   </div>
-
-<div class="widget-body">
-
-<div class="tab-content reply_text" id = "filtered_content">
-
-  <div class="tab-pane {% if results_updates_count != 0  or results_business_count == 0 and results_organisation_count == 0  %}active{% endif %}" id="near_me">
-
-  <!-- isotope filter -->
-
-
-  <!-- end filter --> 
-    
-    <div id="sort" class="clearfix innerLR innerTop">
-    
-    <div class="text-muted text-center box-generic innerAll half" rel="tooltip" title="Soon you'll be able to upgrade to see further afield, but not just yet!">Showing updates from within 100 miles</div>
-
-
-      <div class="btn-group pull-right">
-        <input type="hidden" id="current_sort_order" value="time" /> 
-        <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown">
-          <span  id="current_sort_text" class=""><i class="fa fa-calendar fa-fw"></i> Time posted</span>
-          <span class="caret text-muted"></span>
-        </button>
-        <ul class="dropdown-menu">
-          <li><a onclick="sort_by('distance',this)"><i class="fa fa-location-arrow fa-fw"></i> Distance from {% if search %} {{ search.place }} {% endif %} {% if not search %} {{userinfo.zip_code}}{% endif %}</a></li>
-          <li><a onclick="sort_by('time',this)"><i class="fa fa-calendar fa-fw"></i> Time posted</a></li>
-        </ul>
-      </div> 
-
-
-    <div class="btn-group pull-left hidden">
-      <a href="/activity/?q=sell" class="btn btn-primary btn-sm btn-stroke "><i class="fa fa-fw fa-sign-out"></i> Companies</a>
-      <a href="/activity" class="btn btn-primary btn-sm btn-stroke "><i class="fa fa-fw fa-bell-o"></i> People </a> 
-    </div>
-
-    <div class="btn-group pull-left">
-      <a href="/activity" class="btn btn-sm btn-stroke {% if request.get_full_path = "/activity/" %} btn-primary active {% else %} btn-default {% endif %}" rel="tooltip" title="All posts">All </a> 
-      <a href="/activity/?q=sell" class="btn btn-sm btn-stroke {% if request.get_full_path = "/activity/?q=sell" %} btn-primary active {% else %} btn-default {% endif %}" rel="tooltip" title="Filter by #sell"><i class="fa fa-fw fa-sign-out"></i></a>
-      <a href="/activity/?q=buy" class="btn btn-sm btn-stroke {% if request.get_full_path = "/activity/?q=buy" %} btn-primary active {% else %} btn-default {% endif %}" rel="tooltip" title="Filter by #buy"><i class="fa fa-fw fa-sign-in"></i></a>
-      <a href="/activity/?q=surplus" class="btn btn-sm btn-stroke {% if request.get_full_path = "/activity/?q=surplus" %} btn-primary active {% else %} btn-default {% endif %}"  rel="tooltip" title="Filter by #surplus"><i class="fa fa-fw fa-refresh"></i></a>
-      <a href="/activity/?q=ask" class="btn btn-sm btn-stroke {% if request.get_full_path = "/activity/?q=ask" %} btn-primary active {% else %} btn-default {% endif %}" rel="tooltip" title="Filter by #ask "><i class="fa fa-fw fa-comment-o"></i></a>
-      <a href="/activity/?q=job" class="btn btn-sm btn-stroke {% if request.get_full_path = "/activity/?q=job" %} btn-primary active {% else %} btn-default {% endif %}"  rel="tooltip" title="Filter by #job"><i class="fa fa-fw fa-eur"></i></a>
-    </div>
-
-
-    </div>
-
-
-
-    <div class="activity" id="activity_updates"> 
-      {% include 'activity_updates.html' %}
-    </div>  
-  </div><!-- tab pane activity -->
-
-  <div class="tab-pane {% if results_updates_count == 0 and results_business_count == 0  and results_organisation_count == 0 and results_individual_count != 0 %}active{% endif %}" id="indiv">
-    <div class="activity" id="activity_indiv"> 
-      {% include 'activity_indiv.html' %}
-    </div> 
-  </div> 
-
-  <div class="tab-pane {% if results_updates_count == 0 and results_individual_count == 0  and results_organisation_count == 0 and results_business_count != 0 %}active{% endif %}" id="biz">
-    <div class="activity" id="activity_biz"> 
-      {% include 'activity_biz.html' %}
-    </div>
-  </div> 
-
-  <div class="tab-pane {% if results_updates_count == 0 and results_individual_count == 0 and results_business_count == 0 and results_organisation_count != 0 %}active{% endif %}" id="org"> 
-    <div class="activity" id="activity_org"> 
-      {% include 'activity_org.html' %}
-    </div>
-  </div>  
-
-</div><!-- tab content -->
-
-</div><!-- widget --> 
 </div>
+
+  <div class="widget-body innerLR" style="margin:0; background-color: #FFF;">
+
+    <div class="tab-content">
+      <!-- Tab content --> 
+      <div class="tab-pane active" id="mktplace">
+
+    <form action="/activity" onsubmit="return get_address('market');"  role="search" data-step="1" data-intro="Search for anyhing, anywhere" class="form-horizontal">
+
+      <div class="form-group clearfix">
+  
+        <div class="col-sm-12 text-center">
+            <div rel="tooltip" title="Filter by keyword" class="tooltips btn-group">
+                <button type="button" class=" btn btn-default btn-sm btn-mwant">#buy</button>
+                <button type="button" class=" btn btn-default btn-sm btn-mwant">#sell</button>
+                <button type="button" class=" btn btn-default btn-sm btn-mwant">#surplus</button>
+                <button type="button" class=" btn btn-default btn-sm btn-mwant">#job</button>
+            </div> 
+        </div>
+      </div>
+
+  
+      <div class="form-group clearfix" style="background: rgba(200,200,200,0.1);"> 
+        <div class="col-sm-12 text-center">
+            <div rel="tooltip" title="Filter by type" class="tooltips btn-group">
+                <button type="button" class="btn btn-default btn-sm btn-mut">Companies</button>
+                <button type="button" class="btn btn-default btn-sm btn-mut">Individuals</button>
+            </div>
+        </div>
+      </div>
+
+      <div class="innerTB half" onclick="$(this).hide();">
+        <a data-toggle="collapse" data-target="#filters2" class="small"><i class="fa fa-caret-right fa-fw fa-lg"></i> Advanced filters</a>
+      </div>
+
+      <div id="filters2" class=" collapse"> 
+        <div class="form-group" id="locationgroup"> 
+          <div class="col-sm-12 ">
+            <div class="input-group innerAll input-group-sm">
+              <span class="input-group-addon"><i class="fa fa-map-marker"></i></span>
+              <input type="text" name="location" id="pac_input_market" class="pac-input form-control  " placeholder="Where?">
+              <div class="input-group-btn">
+                <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="form-group" id="organisationgroup"> 
+          <div class="col-sm-12 innerLR">
+            <select class="selectpicker show-tick" data-live-search="true" multiple data-selected-text-format="count>2" title="Filter by organisation" name="filterOrg"   data-style="btn-default" id="filter_mkt_org">
+              
+          </select>
+          </div>
+        </div>
+
+        <div class="form-group innerLR" id="companygroup"> 
+          <div class="col-sm-12">
+          <select class="selectpicker show-tick"   id="filter_mkt_biz"  data-live-search="true" multiple data-selected-text-format="count>2" title="Filter by company type" name="companyType"  data-style="btn-default">
+          </select>
+          </div>
+        </div>
+      </div><!-- filters -->
+
+    </form> 
+<div id="mkt_results"></div>
+        </div> 
+        <div class="tab-pane" id="profiles"> 
+
+          <form action="/activity" onsubmit="return get_address('profile');" role="search" data-step="1" data-intro="Search for anyhing, anywhere" class="form-horizontal">
+
+            <div class="form-group clearfix"> 
+              <div class="col-sm-12 text-center">
+                  <div rel="tooltip" title="Do you want to buy or sell?" class="tooltips btn-group">
+                      <button type="button" class="btn btn-default btn-pwant btn-sm btn-pwant">Buy</button>
+                      <button type="button" class="btn btn-default btn-pwant btn-sm btn-pwant">Sell</button>
+                  </div> 
+              </div>
+            </div> 
+
+            <div class="form-group clearfix" style="background: rgba(200,200,200,0.1);">
+              <div class="col-sm-12 text-center">
+                  <div rel="tooltip" title="Filter by type" class="tooltips btn-group">
+                    <button type="button" class="btn btn-default btn-sm btn-put" data-toggle="collapse" data-target="#companygroup" >Companies</button>
+                    <button type="button" class="btn btn-default btn-sm btn-put">Individuals</button>
+                  </div>
+              </div>
+            </div>
+ 
+            <div class="innerTB half" onclick="$(this).hide();">
+              <a data-toggle="collapse" data-target="#filters1" class="small filters1"><i class="fa fa-caret-right fa-fw fa-lg"></i> Advanced filters</a>
+            </div>
+
+            <div id="filters1" class="collapse"> 
+              <div class="form-group" id="locationgroup"> 
+                <div class="col-sm-12">
+                  <div class="input-group  innerAll input-group-sm">
+                   <span class="input-group-addon"><i class="fa fa-map-marker"></i></span>
+                    <input type="text" name="location" id="pac_input_profile" class="pac-input form-control  " placeholder="Where?">
+                    <div class="input-group-btn">
+                      <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="form-group" id="organisationgroup"> 
+                <div class="col-sm-12 text-">
+                  <select class="selectpicker show-tick" id="filter_profile_org" data-live-search="true" multiple data-selected-text-format="count>2" title="Filter by organisation" name="filterOrg"   data-style="btn-default">
+                  
+                </select>
+                </div>
+              </div>
+
+              <div class="form-group" id="companygroup"> 
+                <div class="col-sm-12">
+                <select class="selectpicker show-tick" id="filter_profile_biz"   data-live-search="true" multiple data-selected-text-format="count>2" title="Filter by company type" name="companyType"  data-style="btn-default">
+                 
+                </select>
+                </div>
+              </div>
+            </div><!-- filters -->
+
+          </form> 
+
+          <div id="profile_results"></div>
+        </div>
+        <!-- // Tab content END -->
+
+
+    </div>
+
+ </div> <!-- widget -->
+ 
+
+
      
     </div><!-- closes main col -->
+    </div>
 
 
-      <div class="col-sm-5 col-xs-12 fill"  style="  right:0px;">
-        <div id="map" style=" position: fixed; width:40%; height: 100%;"></div>
+      <div class="col-sm-8 col-xs-12 fill">
+         
+          <div id="map"></div>
+        
       </div>
     </div>
 
+</div>
 
     <script type="text/javascript">
-      map_lat={{ search.lat }};
-      map_lon = {{ search.lon }};
+ 
 
-      food_filters = {{foods_filter |safe}};
-      business_filters = {{business_filter |safe}};
-      organisation_filters = {{organisation_filter |safe}}; 
+      // food_filters = {{foods_filter |safe}};
+      // business_filters = {{business_filter |safe}};
+      // organisation_filters = {{organisation_filter |safe}}; 
 
       function swith_update_form()
         {
@@ -170,6 +229,11 @@
           $("#structured_postupdate").hide();
           $("#update-big").show();
         }
+
+
+
+
+
 
     </script>
       
@@ -185,10 +249,42 @@
  {% endblock %}
  {% block javascript %}
  <script type="text/javascript">
-      show_food_filters(food_filters, 0);
-      show_organisation_filters(organisation_filters, 0);
-      show_business_filters(business_filters, 0);
+      // show_food_filters(food_filters, 0);
+      // show_organisation_filters(organisation_filters, 0);
+      // show_business_filters(business_filters, 0);
 </script>
 
+
+<!-- resizes the map -->
+<script type="text/javascript">
+var mapmargin = 0;
+$('#map').css("height", ($(window).height() - mapmargin));
+$(window).on("resize", resize);
+resize();
+function resize(){
+
+    if($(window).width()>=980){
+        $('#map').css("height", ($(window).height() - mapmargin));    
+        $('#map').css("margin-top",0);
+    }else{
+        $('#map').css("height", ($(window).height() - (mapmargin)));    
+        $('#map').css("margin-top",0);
+    }
+
+}
+
+</script>
+   
+
+
  <script src="{% static "js/activity-map.js" %}"></script>
+ <script src="{% static "js/functions.js" %}"></script>
+ <script src="{% static "js/search.js" %}"></script>
+
+              <script type="text/javascript">
+
+             
+
+              </script>
+              
 {% endblock %}

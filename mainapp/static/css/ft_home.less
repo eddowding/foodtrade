@@ -1,0 +1,166 @@
+#home {
+
+  #topnav {
+    display: none;
+  }
+
+  .text-white {
+  color: #fff !important;
+  &:hover {
+    color: #fff !important;
+  }
+}
+
+  .padTop {
+    padding-top: 50px;
+  }
+
+  #main_page {
+    background: #fff;
+  }
+
+  h2 {
+    padding-bottom: 0.2em;
+    border-bottom: 1px solid #ccc;
+  }
+
+  .lead {
+
+    ul {
+      margin-top: 0.5em;
+    }
+
+    li {
+      list-style:none;
+      line-height: 1.2;
+      margin-bottom: 0.7em;
+      span {
+        font-size: 16px;
+        display: block;
+      }
+    }
+
+    li:before {
+      font-family:'FontAwesome';
+      content:"\f046";
+      margin:0 10px 0 -30px;
+      color: @ftgreen;
+    }
+    strong {
+      font-weight: 400;
+    }
+  }
+
+  #content {
+    margin: 0;
+    background: #F5F8FA !important;
+  }
+
+  #proof {
+    font-weight: 500;
+    text-shadow: 2px 2px 1px #000;
+    font-size: 30px;
+    line-height: 1.2;
+    margin-top: 20px;
+    font-family: georgia;
+    @media (max-width: 768px) {
+      font-size: 22px;
+    }
+  }
+
+  #homeimage { 
+    min-height: 600px;
+    padding-top: 180px;
+    box-shadow: 0 0 100px #000 inset;
+    height: 100%;
+    @media (max-width: 768px) {
+        min-height: 300px;
+        padding-top: 120px;
+      }
+  }
+
+   #joinButton {
+    margin-top: 80px;
+
+
+    a {
+      font-size: 24px; 
+      text-shadow: 1px 1px 0px #000 !important; 
+      .box-shadow(1px 1px 1px #444) !important; 
+      background: @ftgreen;
+      line-height: 0.7; 
+      padding: 20px 35px; 
+      text-align: center; 
+
+      small {
+        font-size: 12px;
+        font-weight: normal;
+        color: rgba(255,255,255,0.7);
+        text-shadow: none;
+      }
+    }
+
+    a.secondary { 
+      background: rgba(0,0,0,0.2); 
+      color: rgba(255,255,255,1); 
+      border: 1px solid rgba(255,255,255,0.7); 
+      font-weight: 200; 
+    }
+
+   }
+
+  
+  .logos {
+    text-align: center;
+    img {
+    width: auto;
+    height: auto;
+    max-height: 100px;
+    max-width: 160px;
+    display: inline-block;
+    margin: 10px 30px;
+    }
+  } 
+
+  .input-lg {
+    height: auto;
+    font-size: 40px;
+  }
+
+  .btn-lg {
+    padding: 10px 20px;
+    font-size: 40px;
+  } 
+
+  .quote { 
+    border-top: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;  
+    padding: 30px 20px; 
+    border-left: 0;
+    p { 
+      font-size: 50px;
+      font-family: Georgia;
+      font-style: italic;
+    }
+  }
+
+  cite {
+    font-size: 24px;
+    float: right;
+    font-family: Georgia;
+    font-style: italic;
+  }
+
+  #homeSearch {
+    border-radius: 10px;
+    box-shadow: 0px 0px 0px 1px #555 inset, 0px 0px 0px 6px rgba(255, 255, 255, 0.5), 0px 0px 4px 6px rgba(0, 0, 0, 0.25);
+  }
+
+  #keyword {
+    font-size: 25px; 
+    border: 1px solid #fff; 
+    border-radius: 10px 0 0 10px;
+    height: 56px;
+  }
+
+}

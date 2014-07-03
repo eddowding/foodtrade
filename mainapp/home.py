@@ -179,6 +179,17 @@ def food_tags(request):
 def home(request):
     parameters = {}
     parameters.update(csrf(request))
+    from mainapp.classes.TweetFeed import UserProfile, KPI
+    from mainapp.classes.KpiClass import KPIStats
+    user_prof = UserProfile()
+    stats = KPIStats()
+    parameters['user_count'] = stats.user_count()
+    parameters['total_connections'] = stats.total_connections()
+    parameters['connections_per_business'] = stats.avg_conn_per_business()
+    parameters['total_activity'] = stats.activity_count()
+    parameters['total_replies'] = stats.replies_count() 
+   
+    
     if request.user.is_authenticated():
         return HttpResponseRedirect('/activity/')
     return render_to_response('front.html',parameters,context_instance=RequestContext(request))
