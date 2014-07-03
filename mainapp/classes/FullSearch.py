@@ -166,9 +166,9 @@ class GeneralSearch():
                 we_buy = 3
                 if self.want!="all":
                     if self.want == "Sell":
-                        we_buy = 0
-                    if self.want == "Buy":
                         we_buy = 1
+                    if self.want == "Buy":
+                        we_buy = 0
 
                 for fd_attr in food_attributes:
 
