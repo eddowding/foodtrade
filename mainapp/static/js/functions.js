@@ -126,7 +126,7 @@ function get_box_update(update)
 	content +='<li><a href="#" onclick="click_activity(\'spam\',\'476663147080974336 \')" class=" "><i class="fa fa-flag-o flag fa-fw"></i> Report</a></li>';
 	content +='</ul>  ';
 	content +='</div>  ';
-	content +='<img src="'+update.profile_img+'" alt="Navina Bartlett" class="img-responsive pull-left" style="width:40px; margin-right: 5px;">';
+	content +='<img src="'+update.profile_img+'" alt="'+update.username+'" class="img-responsive pull-left" style="width:40px; margin-right: 5px;">';
 	content +='<h4 class="margin0"><a href="/'+update.username+'" class="text-inverse"> ';
 	content +='<strong>  '+update.name+'  </strong> </a> </h4>';
 
