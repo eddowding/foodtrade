@@ -103,7 +103,7 @@ function poll_latest_updates()
 setTimeout(function() {   
    ajax_request("get_latest_updates", 'update_latest_updates',{time:latest_timestamp});
    poll_latest_updates();
-    }, 5000); 
+    }, 60000); 
 
 }
 

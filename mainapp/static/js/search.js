@@ -192,6 +192,10 @@ var Search = {
     {
         var updates = this.market_results.result;
         var html_content = "";
+        if(updates.length==0)
+        {
+            html_content = "There are no results for this search. Try removing filters, broadening your search term, or zooming out to cover a larger area.";
+        }
          for(var i=0;i<updates.length;i++)
           {
             html_content += get_box_update(updates[i]);
@@ -208,6 +212,10 @@ var Search = {
     {
         var profiles = this.profile_results.result;
         var html_content = "";
+        if(profiles.length==0)
+        {
+            html_content = "There are no results for this search. Try removing filters, broadening your search term, or zooming out to cover a larger area.";
+        }
          for(var i=0;i<profiles.length;i++)
           {
             html_content += get_box_profile(profiles[i]);
