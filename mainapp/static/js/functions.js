@@ -39,7 +39,7 @@ function get_box_profile(user)
 	content += '<div class="innerTB half border-top border-bottom"> ';
 	if(user.foods.webuy_matches.length>0)
 	{
-		content += '<span class="label label-default"><i class="fa fa-sign-in fa-fw"></i>SELLS: </span> <b>';
+		content += '<span class="label label-default"><i class="fa fa-sign-in fa-fw"></i>BUYS</span> <b>';
 		for(var index in user.foods.webuy_matches)
 		{
 			if(index>0)
@@ -59,7 +59,7 @@ function get_box_profile(user)
 
 	if(user.foods.wesell_matches.length>0)
 	{
-		content += '<span class="label label-default"><i class="fa fa-sign-out fa-fw"></i>BUYS: </span> <b>';
+		content += '<span class="label label-default"><i class="fa fa-sign-out fa-fw"></i>SELLS</span> <b>';
 		for(var index in user.foods.wesell_matches)
 		{
 			if(index>0)
