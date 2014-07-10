@@ -28,7 +28,7 @@ function get_box_profile(user)
 	for(var index in user.type_user)
 	{
 		var biz_type = user.type_user[index];
-		content += '<a href="/activity/?b='+biz_type+'" class="  small">'+biz_type+'</a> ';
+		content += '<a href="/activity/?q='+encodeURIComponent(biz_type)+'&tab=profile&stype=profile&pwant=all&put=Companies" class="  small">'+biz_type+'</a> ';
 	}
 	content += '</div>';
 	content += '<div class="media margin-none status">  ';
@@ -39,7 +39,7 @@ function get_box_profile(user)
 	content += '<div class="innerTB half border-top border-bottom"> ';
 	if(user.foods.webuy_matches.length>0)
 	{
-		content += '<span class="label label-default"><i class="fa fa-sign-in fa-fw"></i>BUYS</span> <b>';
+		content += '<span class="label label-default"><i class="fa fa-sign-in fa-fw"></i>SELLS: </span> <b>';
 		for(var index in user.foods.webuy_matches)
 		{
 			if(index>0)
@@ -59,7 +59,7 @@ function get_box_profile(user)
 
 	if(user.foods.wesell_matches.length>0)
 	{
-		content += '<span class="label label-default"><i class="fa fa-sign-out fa-fw"></i>SELLS:</span> <b>';
+		content += '<span class="label label-default"><i class="fa fa-sign-out fa-fw"></i>BUYS: </span> <b>';
 		for(var index in user.foods.wesell_matches)
 		{
 			if(index>0)
@@ -126,7 +126,7 @@ function get_box_update(update)
 	content +='<li><a href="#" onclick="click_activity(\'spam\',\'476663147080974336 \')" class=" "><i class="fa fa-flag-o flag fa-fw"></i> Report</a></li>';
 	content +='</ul>  ';
 	content +='</div>  ';
-	content +='<img src="'+update.profile_img+'" alt="Navina Bartlett" class="img-responsive pull-left" style="width:40px; margin-right: 5px;">';
+	content +='<img src="'+update.profile_img+'" alt="'+update.username+'" class="img-responsive pull-left" style="width:40px; margin-right: 5px;">';
 	content +='<h4 class="margin0"><a href="/'+update.username+'" class="text-inverse"> ';
 	content +='<strong>  '+update.name+'  </strong> </a> </h4>';
 
@@ -134,7 +134,7 @@ function get_box_update(update)
 	for(var index in update.type_user)
 	{
 		var biz_type = update.type_user[index];
-		content += '<a href="/activity/?b='+biz_type+'" class="innerR half small">'+biz_type+'</a> ';
+		content += '<a href="/activity/?q='+encodeURIComponent(biz_type)+'&tab=profile&stype=profile&pwant=all&put=Companies" class="innerR half small">'+biz_type+'</a> ';
 	}
 	content +='</div>';
 	content +='<div class="media margin-none status">   ';
@@ -201,7 +201,7 @@ var card_str = '<div class="card-box"><div class="content text-center"><div clas
       for(var j=0;j<type_user.length;j++)
       {  
         
-        card_str +=  '<a class="" href="/activity/?b='+type_user[j]+'">'+type_user[j]+'</a>';
+        card_str +=  '<a class="" href="/activity/?q='+encodeURIComponent(type_user[j])+'&tab=profile&stype=profile&pwant=all&put=Companies">'+type_user[j]+'</a>';
        }
         card_str += '</div>';
     }
@@ -246,7 +246,7 @@ var card_str = '<div class="card-box"><div class="content text-center"><div clas
       for(var j=0;j<type_user.length;j++)
       {  
         
-        card_str +=  '<a class="" href="/activity/?b='+type_user[j]+'">'+type_user[j]+'</a>';
+        card_str +=  '<a class="" href="/activity/?q='+encodeURIComponent(type_user[j])+'&tab=profile&stype=profile&pwant=all&put=Companies">'+type_user[j]+'</a>';
        }
         card_str += '</div>';
     }

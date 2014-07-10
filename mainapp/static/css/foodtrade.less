@@ -2,13 +2,21 @@
 // remove isotope
 // tidy css file and group  
 
+@import 'elements.less';
+@import 'ft_generic.less';
+@import 'ft_single_biz.less'; 
+@import 'ft_home.less';  
+@import 'footable/footable.core.min.css'; 
 
-@import "ft_generic.less";
 
 body, 
 .black,
 .text-black {
   color: #444 !important;
+}
+
+.text-white {
+  color: #fff !important;
 }
  
 
@@ -213,7 +221,7 @@ td.ellipsis
   
 
 .carousel .item {
-  background: @ftorange;
+  background: #3D8ACF;
   text-align: center;
   height: 100%;
   padding: 3px 0;
@@ -986,6 +994,10 @@ padding: 0em 18px 0em .1em !important;
 }
 .scroll600 {
   max-height: 600px;
+  overflow: auto;
+}
+.scroll100p {
+  height: 100%;
   overflow: auto;
 }
 

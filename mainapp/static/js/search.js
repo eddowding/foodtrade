@@ -136,7 +136,12 @@ var Search = {
         {
             $("#search_type").html("Profile");
             $("#search_type_option").html("Produce");
+            $("#result_tabs").addClass( "hidden" );
+             $("#mktplace").removeClass("active");
+            $("#profiles").addClass("active");
         }
+
+
 
         var want_btns = $(".btn-mwant");
         for(var i = 0; i<want_btns.length;i++)
@@ -187,6 +192,10 @@ var Search = {
     {
         var updates = this.market_results.result;
         var html_content = "";
+        if(updates.length==0)
+        {
+            html_content = "There are no results for this search. Try removing filters, broadening your search term, or zooming out to cover a larger area.";
+        }
          for(var i=0;i<updates.length;i++)
           {
             html_content += get_box_update(updates[i]);
@@ -203,6 +212,10 @@ var Search = {
     {
         var profiles = this.profile_results.result;
         var html_content = "";
+        if(profiles.length==0)
+        {
+            html_content = "There are no results for this search. Try removing filters, broadening your search term, or zooming out to cover a larger area.";
+        }
          for(var i=0;i<profiles.length;i++)
           {
             html_content += get_box_profile(profiles[i]);
@@ -477,7 +490,7 @@ var ctrl = Search.map_controls[box_username];
 var latlng = ctrl.getLatLng();
 var lat = latlng.lat;
 var lng = latlng.lng;
-map.setView([lat, lng], 18);
+//map.setView([lat, lng], 18);
 ctrl.openPopup({keepInView:true});
 
 

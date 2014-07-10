@@ -1710,18 +1710,26 @@ $('#orgs_remote .typeahead').typeahead(null, {
 
 
 // code for links addition in single business
-var buss = new Bloodhound({
+var buss_stockist = new Bloodhound({
   datumTokenizer: function(d) { return d.tokens; },
   queryTokenizer: Bloodhound.tokenizers.whitespace,
-  remote: '/queries/Business/?q=%QUERY'
+  remote: '/queries/Business/?type=stockist&q=%QUERY'
 });
-buss.initialize();
+buss_stockist.initialize();
  
+
+ // code for links addition in single business
+var buss_supplier = new Bloodhound({
+  datumTokenizer: function(d) { return d.tokens; },
+  queryTokenizer: Bloodhound.tokenizers.whitespace,
+  remote: '/queries/Business/?type=supplier&q=%QUERY'
+});
+buss_supplier.initialize();
  
 $('#stockists_remote .typeahead').typeahead(null, {
   name: 'twitter-oss',
   displayKey: 'name',
-  source: buss.ttAdapter(),
+  source: buss_stockist.ttAdapter(),
   templates: {
     suggestion: Handlebars.compile([
       '<span class="result-container"><span class="result-img"><img height="32px" width="32px" src="{{profile_image_url_https}}"></span>',
@@ -1734,7 +1742,7 @@ $('#stockists_remote .typeahead').typeahead(null, {
 $('#suppliers_remote .typeahead').typeahead(null, {
   name: 'twitter-oss',
   displayKey: 'name',
-  source: buss.ttAdapter(),
+  source: buss_supplier.ttAdapter(),
   templates: {
     suggestion: Handlebars.compile([
       '<span class="result-container"><span class="result-img"><img height="32px" width="32px" src="{{profile_image_url_https}}"></span>',

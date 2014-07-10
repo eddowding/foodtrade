@@ -45,6 +45,9 @@ class MarketSearch(GeneralSearch):
             query_string.append({"organisations":{"$all":self.org_filters}})
 
 
+        query_string.append({"$nor":[{"$exists": False},{"updates": { "$size": 0 }}]})
+        time_stamp = int(time.time()) - 30*24*3600
+        query_string.append({'updates':{"$elemMatch":{'time_stamp':{"$gt":int(time_stamp)},"deleted":0}}})
 
 
 
@@ -53,7 +56,7 @@ class MarketSearch(GeneralSearch):
                                     "includeLocs": "latlng",
                                     "uniqueDocs": True,
                                     "spherical":True,
-                                    "limit":5000,
+                                    "limit":50,
                                 }
 
         
@@ -82,10 +85,13 @@ class MarketSearch(GeneralSearch):
             and_query.append({"updates.status":keyword_re})
         if self.want!="all":
             and_query.append({"updates.status":want_re})
+
+        and_query.append({'updates.time_stamp':{"$gt":time_stamp},"updates.deleted":0})
+
         pipeline.append({"$match":{"$and":and_query}})
 
         pipeline.append({"$sort": SON([("updates.time_stamp", -1)])})
-        pipeline.append({"$limit":100})
+        pipeline.append({"$limit":self.result_limit})
         agg = self.db.aggregate(pipeline)['result']
         for result in agg:
             result['updates']['status'] = self.recognise_name(result['updates']['status'])
@@ -157,13 +163,17 @@ class MarketSearch(GeneralSearch):
         if self.user_type != "all":
             sign_up_as = "Business" if self.user_type == "Companies" else "Individual"
             query_string.append({"sign_up_as":sign_up_as})
+
+
+
+        query_string.append({"$nor":[{"$exists": False},{"updates": { "$size": 0 }}]})
         pipeline = []
         geo_search = {"near": [float(self.lng), float(self.lat)],
                                     "distanceField": "distance",
                                     "includeLocs": "latlng",
                                     "uniqueDocs": True,
                                     "spherical":True,
-                                    "limit":100,
+                                    "limit":50,
         }
 
         
@@ -203,7 +213,7 @@ class MarketSearch(GeneralSearch):
         pipeline.append({"$sort": SON([("count", -1), ("_id", -1)])})
         agg = self.db.aggregate(pipeline)
 
-        pipeline.append({"$limit":100})
+        pipeline.append({"$limit":self.result_limit})
         return self.db.aggregate(pipeline)['result']
         
     

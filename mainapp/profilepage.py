@@ -1039,10 +1039,18 @@ def search_orgs_business(request, type_user):
         if type_user == 'Business':
             type_user_new = [type_user]
             trade_conn = TradeConnection()
-            b_conn = trade_conn.get_connection_by_business(profile_user_obj['useruid'])
-            c_conn = trade_conn.get_connection_by_customer(profile_user_obj['useruid'])
+            req_type = request.GET.get('type')
+            print req_type
+            if req_type == "stockist":
+                b_conn = trade_conn.get_connection_by_business(profile_user_obj['useruid'])
+                profile_data = [int(each['c_useruid']) for each in b_conn] 
+            else:            
+                c_conn = trade_conn.get_connection_by_customer(profile_user_obj['useruid'])
+                profile_data = [int(each['b_useruid']) for each in c_conn] 
            
-            profile_data = [int(each['c_useruid']) for each in b_conn] + [int(each['b_useruid']) for each in c_conn]
+            # for each in c_conn:
+            #     if int(each['b_useruid'] in b_profile_data:
+            #         profile_data.append(int(each['b_useruid'])
             # profile_data = get_connections(profile_user_obj['useruid'], request.user.id)[0]
         elif type_user == 'Organisation':
             type_user_new = [type_user]
