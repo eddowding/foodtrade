@@ -490,7 +490,7 @@ var ctrl = Search.map_controls[box_username];
 var latlng = ctrl.getLatLng();
 var lat = latlng.lat;
 var lng = latlng.lng;
-map.setView([lat, lng], 18);
+//map.setView([lat, lng], 18);
 ctrl.openPopup({keepInView:true});
 
 
