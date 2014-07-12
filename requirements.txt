@@ -15,4 +15,3 @@ pyDNS
 validate_email
 twilio
 embedly
-fabric
