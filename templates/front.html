@@ -29,7 +29,7 @@
         <small>Companies can always upgrade to a paid plan later</small>
         </a> 
 
-        <a href="{% provider_login_url "twitter" process="login" %}" class="btn btn-primary secondary">
+        <a data-toggle="modal" data-target="#modal_emaillogin"  class="btn btn-primary secondary">
         <strong>Login instantly</strong><br />
         <small>I'm already completely awesome</small>
         </a> 
@@ -190,6 +190,8 @@ Our intelligent search tools can find who buys and sells any type of food, so yo
 <div class="clearfix"> </div>
   </div>
 </div>
+
+{% include "email_login_form.html" %}
 
  <!-- 
 <div class="row">
