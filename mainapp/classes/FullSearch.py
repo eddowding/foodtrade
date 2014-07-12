@@ -52,7 +52,7 @@ class GeneralSearch():
                 pass
 
         self.radius = self.distance_limit*1609.34
-        self.max_distance = self.distance_limit/3963.1676*2*math.pi
+        self.max_distance = self.distance_limit/3963.1676
 
 
     def get_request(self,request):

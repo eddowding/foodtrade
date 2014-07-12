@@ -113,7 +113,26 @@ def tweets(request):
                     pic_url_list.append(each['media_url'])
             h = HTMLParser.HTMLParser()
             tweet_id = str(tweet['id'])
-            parent_tweet_id = 0 if tweet['in_reply_to_status_id'] == None else tweet['in_reply_to_status_id']
+
+            parent_id = tweet.get('in_reply_to_status_id')
+
+            if parent_id == None:
+                h = HTMLParser.HTMLParser()
+                str_text = h.unescape(tweet['text'].strip()).encode('utf-8')
+                str_text = str_text[:11].lower()
+                if(str_text != "@foodtradehq"):
+                    continue
+
+            else:
+                single_tweet = tweet_feed.get_tweet_by_id(str(parent_id))
+                if single_tweet.get("username") == None:
+                    continue
+
+
+
+
+
+            parent_tweet_id = "0" if parent_id == None else str(parent_id)
             tweet_feed = TweetFeed()
             data = {'tweet_id': str(tweet_id),
             'parent_tweet_id': str(parent_tweet_id),
