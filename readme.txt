@@ -53,3 +53,17 @@ Read server data to the local computer
 	scp foodtrade@ftstaging.cloudapp.net:~/backups/2014-06-12.zip .
 
 2. Then enter the password for ssh of foodtrade
+
+
+
+
+To access server without password 
+=================================================================================================
+For live:
+cat ~/.ssh/id_rsa.pub | ssh kathmandu@foodtradelite.cloudapp.net "cat >> ~/.ssh/authorized_keys"
+
+For Staging server:
+cat ~/.ssh/id_rsa.pub | ssh foodtrade@ftstaging.cloudapp.net "cat >> ~/.ssh/authorized_keys"
+
+
+You will be prompted to enter password. Enter password and its done. :)
