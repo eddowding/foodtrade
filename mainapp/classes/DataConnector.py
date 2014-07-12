@@ -93,6 +93,7 @@ class UserInfo():
         self.address = userprof['address']
         self.type = userprof['type_user']
         
+        
         self.post_count = user_profile.get_post_count(user_id)
 
         try:

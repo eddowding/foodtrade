@@ -116,9 +116,14 @@ function box_update_content(update)
 	content +='<li><a href="http://twitter.com/home?status=%40foodtradeHQ%20Did%20u%20read%20shocking%20%40guardian%20story%202ay%20about%20human%20slavery%20on%20boats%20catching%20shrimps%3F%20Truly%20horrific%20http%3A//t.co/SIXbWohPT6%20http://foodtrade.com/CoconutChilli/post/476663147080974336" target="_blank"><i class="fa fa-twitter fa-fw twitter "></i> Share on Twitter</a></li>';
 	content +='<li><a type="button" href="/'+update.username+'">';
 	content +='<i class="fa fa-info-circle fa-lg fa-fw"></i> View profile</a></li>   ';
-	content +='<li><a href="#" onclick="click_activity(\'follow\',\'CoconutChilli\')"><i class="fa fa-star-o fa-fw"></i>  Follow on Twitter</a></li>';
-	content +='<li><a href="#" class="deletetweet" data-tweet-id="476663147080974336"><i class="fa fa-trash-o fa-fw flag"></i> Delete</a></li>';
-	content +='<li><a href="#" onclick="click_activity(\'spam\',\'476663147080974336 \')" class=" "><i class="fa fa-flag-o flag fa-fw"></i> Report</a></li>';
+	content +='<li><a href="#follow" onclick="click_activity(\'follow\',\''+update.username+'\')"><i class="fa fa-star-o fa-fw"></i>  Follow on Twitter</a></li>';
+	
+
+	if(is_superuser || update.username == user_username)
+	{
+		content +='<li><a href="#deletetweet" class="deletetweet"  data-username="'+update.username+'" data-tweet-id="'+update.updates.tweet_id+'"><i class="fa fa-trash-o fa-fw flag"></i> Delete</a></li>';
+	}
+	content +='<li><a href="#markspam" onclick="click_activity(\'spam\',\''+update.updates.tweet_id+' \')" class=" "><i class="fa fa-flag-o flag fa-fw"></i> Report</a></li>';
 	content +='</ul>  ';
 	content +='</div>  ';
 	content +='<img src="'+update.profile_img+'" alt="'+update.username+'" class="img-responsive pull-left" style="width:40px; margin-right: 5px;">';

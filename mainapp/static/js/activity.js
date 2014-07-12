@@ -107,13 +107,8 @@ $(".reply_text").on('blur', '.reply_input', function(e) {
 });
 
 
-
-
-$(".reply_text").on("click",".deletetweet",function(e){
-
-  
- 
-  var that = $(this);
+function delete_tweet(that)
+{
   $.ajax({
     type: "POST",
     url: "/ajax-handler/activity_handle",
@@ -127,6 +122,13 @@ $(".reply_text").on("click",".deletetweet",function(e){
       
     }
     });
+}
+
+
+
+$("body").on("click",".deletetweet",function(e){
+
+  delete_tweet($(this));
   
 });
 

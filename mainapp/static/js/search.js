@@ -523,11 +523,11 @@ var ctrl = Search.map_controls[box_username];
 var latlng = ctrl.getLatLng();
 var lat = latlng.lat;
 var lng = latlng.lng;
-//map.setView([lat, lng], 18);
-ctrl.openPopup({keepInView:true});
+map.panTo(new L.LatLng(lat,lng));
 
+// ctrl.openPopup({keepInView:true});
+ctrl.openPopup();
 
-console.log(box_username);
 }).on('mouseleave','.box-generic',function(){
     var box_username = $(this).attr('data-username');
     var ctrl = Search.map_controls[box_username];
