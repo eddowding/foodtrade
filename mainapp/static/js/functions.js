@@ -100,14 +100,9 @@ function get_box_profile(user)
 
 
 
-
-
-
-
-function get_box_update(update)
+function box_update_content(update)
 {
-	content ='<div class="box-generic" data-username="'+update.username+'">';
-	content +='<div class="timeline-top-info   border-bottom clearfix">';
+	content ='<div class="timeline-top-info   border-bottom clearfix">';
 	content +='<div class="pull-right" style="margin-left: 5px;">';
 	content +='<a type="button" class="dropdown-toggle" data-toggle="dropdown">';
 	content +='<i class="fa fa-fw fa-cog text-muted"></i>';
@@ -153,6 +148,16 @@ function get_box_update(update)
 	content +='<i class="fa fa-calendar  fa-fw"></i>' + get_time_text(update.updates.time_stamp)+' ago';
 	content +='</a>';
 	content +='</div>  ';
+	
+	return content;
+}
+
+
+
+function get_box_update(update)
+{
+	content ='<div class="box-generic" data-username="'+update.username+'">';
+	content += box_update_content(update);
 	content +='<div class="innerAll half border-top bg-gray "> ';
 	content +='<input class="form-control input-sm enterhandler reply_input" data-toggle="market-reply" data-tweet-id="'+update.updates.tweet_id+'" data-main="main" type="text" placeholder="Reply to '+update.username+'" data-mentions="@'+update.username+'"> ';
 	content +='</div>';
@@ -161,7 +166,13 @@ function get_box_update(update)
 }
 
 
-
+function get_box_update_map(update)
+{
+	content ='<div class="box-generic" data-username="'+update.username+'">';
+	content += box_update_content(update);
+	content +='</div>';
+	return content;
+}
 
 
               

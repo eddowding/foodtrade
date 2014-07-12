@@ -295,7 +295,7 @@ class GeneralSearch():
                 value = value.replace(str(each_link[0]), '<a href="'+str(each_link[0])+'" target="_blank">'+ str(each_link[0]) + '</a>')
         if tags:
             for each_tag in tags:
-                value = value.replace("#"+each_tag, '<a href="/activity/?q=%23'+each_tag+'">#'+each_tag+'</a>')
+                value = value.replace("#"+each_tag, '<a href="/activity/?q=%23'+each_tag+'&tab=market&stype=produce&pwant=all">#'+each_tag+'</a>')
         if result:
             user_prof = UserProfile()
             for each in result:
@@ -303,7 +303,7 @@ class GeneralSearch():
                     # usr = User.objects.get(username = str(each))
                     usr_pr = user_prof.get_profile_by_username(each)
                     if usr_pr['sign_up_as'] != 'unclaimed':
-                        value = value.replace("@"+each, '<a href="/profile/'+each+'/">@'+each+'</a>')
+                        value = value.replace("@"+each, '<a href="/'+each+'/">@'+each+'</a>')
                 except:
                     pass
 
