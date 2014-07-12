@@ -15,7 +15,7 @@ source_folder = '%s/%s' % (SITES_FOLDER, HOST_FOLDER)
 STATIC_URL = '/static/'
 push_type = "real"
 
-code_only_folder = '%s/%s/source/%s' % (SITES_FOLDER, HOST_FOLDER, 'twitter_audit')
+code_only_folder = '%s/%s/source/%s' % (SITES_FOLDER, HOST_FOLDER, 'foodtrade')
 
 def live():
     env.user = 'kathmandu'
@@ -29,8 +29,6 @@ def deploy():
     # _create_directory_structure_if_necessary(HOST_FOLDER)
     _get_latest_source(source_folder)
     _update_virtualenv(source_folder)
-    # _update_settings(source_folder)
-    # run('cd /srv/www/meroanswer/source/ && source ../virtualenv/bin/activate && python manage.py collectstatic')
     run('source /srv/www/live/foodtrade-env/bin/activate && cd /srv/www/live/foodtrade-env/foodtrade && sudo python manage.py collectstatic --noinput')
     sudo ('sudo supervisorctl restart all')
 
