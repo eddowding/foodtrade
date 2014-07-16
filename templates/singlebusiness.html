@@ -980,7 +980,7 @@
     
  
 
-{% if updates_count != 0 or profile_id == user_id %}
+ 
     <div class="panel panel-default" id="panelUpdates">
       <div class="panel-heading">
         <div class="panel-title">
@@ -994,13 +994,16 @@
       </div> 
 
       <div class="panel-body">
-        {% if updates_count = 0 %}
+        {% if updates_count = 0 and profile_id == user_id %}
           <p></p>
 
           <p><b>You've not yet said anything in the Marketplace!</b></p>
           <p>You're missing local bargains! What do you want to buy, or sell? Or what would you love help with? </p><p>Thought of something? Then just <a href="#" data-toggle="modal" data-target="#newtwitterpost" class="">say it now</a> and it will show up here, in the activity feed, and be pushed out to local businesses in a regular newsletter. 
            </a></p>
-            
+        {% else %}
+          <p></p>
+          <p>They've not posted any updates yet.</p>
+
         {% endif %}
 
         {% if user.is_authenticated %}
@@ -1021,7 +1024,7 @@
       </div> 
  
     </div>
-    {% endif %} 
+ 
 
 
 
