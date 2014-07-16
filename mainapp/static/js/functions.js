@@ -12,15 +12,15 @@ function get_box_profile(user)
 	content += '<i class="fa fa-arrow-right fa-lg" style="color:#fff;"></i> ';
 	content += '</a>';
 	content += '<ul class="dropdown-menu" role="menu">  ';
-	content += '<li><a href="http://www.facebook.com/sharer/sharer.php?u=http://foodtrade.com/profile/wallfishbristol" target="_blank"><i class="fa fa-facebook fa-fw facebook"></i> Share on Facebook</a></li>';
-	content += '<li><a href="http://twitter.com/home?status=We%20are%20now%20open%20and%20taking%20bookings.%20Owned%20and%20run%20by%20staff%20who%20have%20done%20time%20with%20Hix%2C%20River%20Cottage%2C%20Le%20Caf%C3%A9%20Anglais%20and%20Ducksoup%20http://foodtrade.com/profile/wallfishbristol" target="_blank"><i class="fa fa-twitter fa-fw twitter "></i> Share on Twitter</a></li>';
-	content += '<li><a type="button" href="/profile/wallfishbristol/">';
+	content += '<li><a href="http://www.facebook.com/sharer/sharer.php?u=xxxx target="_blank"><i class="fa fa-facebook fa-fw facebook"></i> Share on Facebook</a></li>';
+	content += '<li><a href="http://twitter.com/home?status=xxxx" target="_blank"><i class="fa fa-twitter fa-fw twitter "></i> Share on Twitter</a></li>';
+	content += '<li><a type="button" href="/profile/xxxx/">';
 	content += '<i class="fa fa-info-circle fa-lg fa-fw"></i> View profile</a></li> ';
 	content += '<li><a href="#" onclick="click_activity(\'follow\',\''+user.username+'\')"><i class="fa fa-star-o fa-fw"></i>  Follow on Twitter</a></li>';
 	content += '<li><a href="#" onclick="click_activity(\'spam\',\''+user.username+'\')" class=" "><i class="fa fa-flag-o flag fa-fw"></i> Report</a></li>';
 	content += '</ul>  ';
 	content += '</div>  ';
-	content += '<img src="'+user.profile_img+'" alt="The Wallfish Bistro" class="img-responsive pull-left" style="width:50px; margin-right: 5px;">';
+	content += '<img src="'+user.profile_img+'" alt="xxxx" class="img-responsive pull-left" style="width:50px; margin-right: 5px;">';
 
 	content += '<h4 class="margin0"><a href="/'+user.username+'" class="text-inverse">';
 	content += user.name;
@@ -91,7 +91,7 @@ function get_box_profile(user)
 	content += '</a>';
 	content += '</div>  ';
 	content += '<div class="innerAll border-top bg-gray  reply" style="display: none;"> ';
-	content += '<input class="form-control input-sm enterhandler reply_input" data-main="main" type="text" placeholder="Reply to @wallfishbristol" data-mentions="@wallfishbristol"> ';
+	content += '<input class="form-control input-sm enterhandler reply_input" data-main="main" type="text" placeholder="Reply to @xxxx" data-mentions="@xxxx"> ';
 	content += '</div>';
 	content += '</div>';
 	return content;
