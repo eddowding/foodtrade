@@ -107,7 +107,7 @@ function get_box_profile(user)
 function get_box_update(update)
 {
 	content ='<div class="box-generic" data-username="'+update.username+'">';
-	content +='<div class="timeline-top-info   border-bottom clearfix">';
+	content +='<div class="timeline-top-info border-bottom clearfix">';
 	content +='<div class="pull-right" style="margin-left: 5px;">';
 	content +='<a type="button" class="dropdown-toggle" data-toggle="dropdown">';
 	content +='<i class="fa fa-fw fa-cog text-muted"></i>';
