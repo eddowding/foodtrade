@@ -112,7 +112,7 @@ function box_update_content(update)
 	content +='<i class="fa fa-arrow-right " style="color:#fff;"></i> ';
 	content +='</a>';
 	content +='<ul class="dropdown-menu" role="menu">  ';
-	content +='<li><a href="http://www.facebook.com/sharer/sharer.php?u=http://foodtrade.com/CoconutChilli/post/476663147080974336" target="_blank"><i class="fa fa-facebook fa-fw facebook"></i> Share on Facebook</a></li>';
+	content +='<li><a href="http://www.facebook.com/sharer/sharer.php?u=http://foodtrade.com/' + update.username + '/post/' + update.updates.tweet_id + ' target="_blank"><i class="fa fa-facebook fa-fw facebook"></i> Share on Facebook</a></li>';
 	content +='<li><a href="http://twitter.com/home?status=%40foodtradeHQ%20Did%20u%20read%20shocking%20%40guardian%20story%202ay%20about%20human%20slavery%20on%20boats%20catching%20shrimps%3F%20Truly%20horrific%20http%3A//t.co/SIXbWohPT6%20http://foodtrade.com/CoconutChilli/post/476663147080974336" target="_blank"><i class="fa fa-twitter fa-fw twitter "></i> Share on Twitter</a></li>';
 	content +='<li><a type="button" href="/'+update.username+'">';
 	content +='<i class="fa fa-info-circle fa-lg fa-fw"></i> View profile</a></li>   ';
