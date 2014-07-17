@@ -1330,6 +1330,7 @@ class AjaxHandle(AjaxSearch):
             parameters['user_id'] = request.user.id
             parameters['each'] = buss_usr            
             parameters['each']['photo'] =  buss_usr['profile_img']
+            parameters['each']['type'] =  buss_usr['type_user']
             parameters['each']['id'] = buss_usr['useruid']
             html_str =  str(render_to_response('conn_ajax.html', parameters, context_instance=RequestContext(request)))
             html_str = html_str.replace('Content-Type: text/html; charset=utf-8', '')        
