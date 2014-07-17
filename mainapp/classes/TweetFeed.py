@@ -54,7 +54,7 @@ class TweetFeed():
         self.db_object.ensure_index(self.table_name,'latlng')
     
     def get_tweet_by_id(self,tweet_id):
-        return self.db_object.get_one(self.table_name,{'tweet_id':tweet_id, 'deleted':0})
+        return self.db_object.get_one(self.table_name,{'updates.tweet_id':str(tweet_id), 'updates.deleted':0})
 
     def get_business_users(self):
         return self.db_object.get_distinct(self.table_name, "useruid", {"sign_up_as":"Business"})["results"]

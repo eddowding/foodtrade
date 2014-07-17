@@ -338,17 +338,18 @@ def home(request):
         # query = "plng="+str(default_lon)+"&plat="+str(default_lat)+"&plocation="+location
         # query = query+ "&mlng="+str(default_lon)+"&mlat="+str(default_lat)+"&mlocation="+location
 
+        import urllib
         query = []
         for key, value in request.GET.iteritems():
             params[key] = value
 
-        for key, value in params.iteritems():
-            query.append(key+"="+str(value))
+        # for key, value in params.iteritems():
+        #     query.append(key+"="+str(value))
 
 
 
 
-        return HttpResponseRedirect('/activity?'+"&".join(query))            
+        return HttpResponseRedirect('/activity?'+urllib.urlencode(params))            
 
 
     return render_to_response('activity.html',context_instance=RequestContext(request))

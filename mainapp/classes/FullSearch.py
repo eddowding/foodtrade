@@ -52,7 +52,7 @@ class GeneralSearch():
                 pass
 
         self.radius = self.distance_limit*1609.34
-        self.max_distance = self.distance_limit/3963.1676*2*math.pi
+        self.max_distance = self.distance_limit/3963.1676
 
 
     def get_request(self,request):
@@ -170,6 +170,7 @@ class GeneralSearch():
                     if self.want == "Buy":
                         we_buy = 0
 
+                print "help", we_buy
                 for fd_attr in food_attributes:
 
                     or_conditions.append({'foods':{"$elemMatch":{fd_attr:reg_expression, "webuy":{"$ne":we_buy}}}})
@@ -257,19 +258,20 @@ class GeneralSearch():
                     matched = False
 
                 if fd['webuy']==0:
-                    webuy_count = webuy_count + 1
-                    if matched:
-                        webuy_matches.append(fd['food_name'])
-                    if (self.search_for != "produce" or self.keyword == "") and webuy_count == 1:
-                        webuy_matches.append(fd['food_name'])
-
-                else:
                     wesell_count = wesell_count +1
                     if matched:
                         wesell_matches.append(fd['food_name'])
 
                     if (self.search_for != "produce" or self.keyword == "") and wesell_count == 1:
                         wesell_matches.append(fd['food_name'])
+
+                else:
+                    webuy_count = webuy_count + 1
+                    if matched:
+                        webuy_matches.append(fd['food_name'])
+                    if (self.search_for != "produce" or self.keyword == "") and webuy_count == 1:
+                        webuy_matches.append(fd['food_name'])
+                    
 
 
 
@@ -293,7 +295,7 @@ class GeneralSearch():
                 value = value.replace(str(each_link[0]), '<a href="'+str(each_link[0])+'" target="_blank">'+ str(each_link[0]) + '</a>')
         if tags:
             for each_tag in tags:
-                value = value.replace("#"+each_tag, '<a href="/activity/?q=%23'+each_tag+'">#'+each_tag+'</a>')
+                value = value.replace("#"+each_tag, '<a href="/activity/?q=%23'+each_tag+'&tab=market&stype=produce&pwant=all">#'+each_tag+'</a>')
         if result:
             user_prof = UserProfile()
             for each in result:
@@ -301,7 +303,7 @@ class GeneralSearch():
                     # usr = User.objects.get(username = str(each))
                     usr_pr = user_prof.get_profile_by_username(each)
                     if usr_pr['sign_up_as'] != 'unclaimed':
-                        value = value.replace("@"+each, '<a href="/profile/'+each+'/">@'+each+'</a>')
+                        value = value.replace("@"+each, '<a href="/'+each+'/">@'+each+'</a>')
                 except:
                     pass
 

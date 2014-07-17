@@ -58,5 +58,4 @@ class XsSharing(object):
  
         response['Access-Control-Allow-Origin']  = XS_SHARING_ALLOWED_ORIGINS 
         response['Access-Control-Allow-Methods'] = ",".join( XS_SHARING_ALLOWED_METHODS )
- 
         return response
