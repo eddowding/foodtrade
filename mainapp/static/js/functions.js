@@ -108,7 +108,7 @@ function box_update_content(update)
 	content +='<i class="fa fa-fw fa-cog text-muted"></i>';
 	content +='<span class="sr-only">Toggle Dropdown</span>';
 	content +='</a>';
-	content +='<a type="button" class="btn btn-primary btn-xs" href="/' + update.username + '/post/' +update.updates.tweet_id + '">';
+	content +='<a type="button" class="btn btn-primary btn-xs" href="/' + update.username + '/post/' + update.updates.tweet_id + '">';
 	content +='<i class="fa fa-arrow-right " style="color:#fff;"></i> ';
 	content +='</a>';
 	content +='<ul class="dropdown-menu" role="menu">  ';
