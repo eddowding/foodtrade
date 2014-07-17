@@ -351,10 +351,8 @@ var Search = {
 
                 
                 $('div#profiles').on('click',"ul.dropdown-menu.selectpicker li", function () {
-                    console.log("l33333333333333333333333lfj");
+                  
                     handle_filter(this,"profiles");
-        
-                 console.log("l3istinginkjsdfjlsdjflsjadflsjadlfj");
         });
                  // listen_filters("profiles");
  
@@ -614,18 +612,22 @@ function get_address(address_for) {
                 var formatted_address = results[0].formatted_address;
 
       input.value = formatted_address;
-      Search.filters[address_for].lng = results[0].geometry.location.lng();
-      Search.filters[address_for].lat = results[0].geometry.location.lat();
+      var lat = results[0].geometry.location.lat();
+      var lng = results[0].geometry.location.lng();
+      Search.filters[address_for].lng = lng;
+      Search.filters[address_for].lat = lat;
      Search.set_url();
      if(address_for=="market")
      {
 
         Search.search_market();
+        
      }
      else
      {
         Search.search_profiles();
      }
+     map.panTo(new L.LatLng(lat,lng));
               } 
             }
             else

@@ -98,6 +98,7 @@ class MarketSearch(GeneralSearch):
         pipeline.append({"$limit":self.result_limit})
         agg = self.db.aggregate(pipeline)['result']
         for result in agg:
+            result['updates']['status_raw'] = result['updates']['status']
             result['updates']['status'] = self.recognise_name(result['updates']['status'])
         return {"result":agg, "total":200,"center":[float(self.lng), float(self.lat)]}
 
@@ -132,12 +133,11 @@ class MarketSearch(GeneralSearch):
         result = self.db.aggregate(pipeline)['result']
         parameter = {"status":"error"}
 
-        print self.replies_count(tweet_id)
-        if(len(result)>0):
+        if len(result)>0:
             distance = self.calc_distance(result[0]['latlng']['coordinates'][1],result[0]['latlng']['coordinates'][0])
             result[0]['distance'] = '%.1f' % distance
             result[0]['updates']['status'] = self.recognise_name(result[0]['updates']['status'])
-            if(distance<50):
+            if distance<50 or self.user['subscribed'] == 1:
                 parameter['status'] = "ok"
                 result[0]['replies_count'] = self.replies_count(tweet_id)
 
