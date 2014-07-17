@@ -151,10 +151,8 @@ function open_popup(map_ctrl)
 }
 $(".reply_text").on("mouseover",".singleresult",function(e){
  var result_id = $(this).attr("data-id");
-   // console.log(result_id);
  for(var i = 0; i<map_controls.length;i++)
  {
-    // console.log(map_controls[i].options.tweet_id);
   if(String(map_controls[i].options.tweet_id).trim() == String(result_id).trim())
   {
     result_mouseout = false;
@@ -338,7 +336,6 @@ function ajax_update_single_post(data)
             if(food_filters[i].uid==food)
             {
               var status = ref.checked;
-              //console.log(status);
               food_filters[i].prev = status;
             }
             }
@@ -401,7 +398,6 @@ for(var i = 0; i < business_filters.length;i++){
           if(business_filters[i].uid==business)
           {
             var status = ref.checked;
-            //console.log(status);
             business_filters[i].prev = status;
           }
           }
@@ -471,7 +467,6 @@ for(var i = 0; i < business_filters.length;i++){
           if(organisation_filters[i].uid==organisation)
           {
             var status = ref.checked;
-            //console.log(status);
             organisation_filters[i].prev = status;
           }
           }
