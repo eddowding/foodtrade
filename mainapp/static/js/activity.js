@@ -343,7 +343,8 @@ for(var i = 0; i < food_filters.length;i++){
           }
           }
           make_search();
-        }          
+        }
+          
 
           function business_value_changed(more_no)
           {

@@ -351,10 +351,8 @@ var Search = {
 
                 
                 $('div#profiles').on('click',"ul.dropdown-menu.selectpicker li", function () {
-                    console.log("l33333333333333333333333lfj");
+                  
                     handle_filter(this,"profiles");
-        
-                 console.log("l3istinginkjsdfjlsdjflsjadflsjadlfj");
         });
                  // listen_filters("profiles");
  
