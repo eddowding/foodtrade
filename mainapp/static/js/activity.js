@@ -213,23 +213,6 @@ $("#filtered_body").on('keypress', '.reply_input', function(e) {
        }
         var tweet_id = $(this).attr("data-tweet-id");
        ajax_request("post_tweet", 'make_search', {message: status_msg, parentid:tweet_id});
-       // this.value = "";
-
-  // activity_html = $('#status_template').html();
-  // activity_html = activity_html.replace('===status===',status_msg);
-  // var input_type = $(this).attr("data-main");
-  // if(input_type=="reply")
-  // {
-  //   $(this).parent().parent().html($(this).parent().parent().html()+activity_html);
-
-  // }
-  // else
-  // {
-  //   $(this).parent().parent().next().children().html($(this).parent().parent().next().children().html()+activity_html);
-  // }
-  
-      
-  //   $(this).focus();
      
   }
 }
@@ -251,7 +234,6 @@ function single_post_body_new_post(){
        }
         var tweet_id = $("#main_post_input").attr("data-tweet-id");
        ajax_request("post_tweet", 'update_single_post_body', {message: status_msg, parentid:tweet_id});
-
 }
 
 $("#single_post_body").on('keypress', '.reply_input', function(e) {
@@ -361,17 +343,7 @@ for(var i = 0; i < food_filters.length;i++){
           }
           }
           make_search();
-        }
-
-
-
-
-
-
-
-
-
-          
+        }          
 
           function business_value_changed(more_no)
           {
