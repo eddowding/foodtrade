@@ -113,7 +113,7 @@ function box_update_content(update)
 	content +='</a>';
 	content +='<ul class="dropdown-menu" role="menu">  ';
 	content +='<li><a href="http://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent('http://www.foodtrade.com/'+update.username+'/post/'+update.updates.tweet_id)+'" target="_blank"><i class="fa fa-facebook fa-fw facebook"></i> Share on Facebook</a></li>';
-	content +='<li><a href="http://twitter.com/home?status='+encodeURIComponent(update.updates.status+' http://www.foodtrade.com/'+update.username+'/post/'+update.updates.tweet_id)+'" target="_blank"><i class="fa fa-twitter fa-fw twitter "></i> Share on Twitter</a></li>';
+	content +='<li><a href="http://twitter.com/home?status='+encodeURIComponent(update.updates.status_raw+' http://www.foodtrade.com/'+update.username+'/post/'+update.updates.tweet_id)+'" target="_blank"><i class="fa fa-twitter fa-fw twitter "></i> Share on Twitter</a></li>';
 	content +='<li><a type="button" href="/'+update.username+'">';
 	content +='<i class="fa fa-info-circle fa-lg fa-fw"></i> View profile</a></li>   ';
 	content +='<li><a href="#follow" onclick="click_activity(\'follow\',\''+update.username+'\')"><i class="fa fa-star-o fa-fw"></i>  Follow on Twitter</a></li>';

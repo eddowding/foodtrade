@@ -334,16 +334,16 @@ function ajax_update_single_post(data)
 
             function foods_changed(ref,food)
           {
-for(var i = 0; i < food_filters.length;i++){
-          if(food_filters[i].uid==food)
-          {
-            var status = ref.checked;
-            //console.log(status);
-            food_filters[i].prev = status;
+            for(var i = 0; i < food_filters.length;i++){
+            if(food_filters[i].uid==food)
+            {
+              var status = ref.checked;
+              //console.log(status);
+              food_filters[i].prev = status;
+            }
+            }
+            make_search();
           }
-          }
-          make_search();
-        }
           
 
           function business_value_changed(more_no)

@@ -98,6 +98,7 @@ class MarketSearch(GeneralSearch):
         pipeline.append({"$limit":self.result_limit})
         agg = self.db.aggregate(pipeline)['result']
         for result in agg:
+            result['updates']['status_raw'] = result['updates']['status']
             result['updates']['status'] = self.recognise_name(result['updates']['status'])
         return {"result":agg, "total":200,"center":[float(self.lng), float(self.lat)]}
 
