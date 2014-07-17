@@ -265,10 +265,11 @@ function stockists_ajax(data){
 			current_html = $("#supplier_connections").html();
 			new_html =  data['html'] + current_html;
 			$("#supplier_connections").html(new_html);
-		  $('#suppliersTable').trigger('footable_initialize');
+			
+		 /*	$('#suppliersTable').trigger('footable_initialize');
           $('#stockistsTable').trigger('footable_resize');
           $('#suppliersTable').trigger('footable_initialize');
-          $('#suppliersTable').trigger('footable_resize');
+          $('#suppliersTable').trigger('footable_resize');*/
 		}
 
         	$('#c_con_no').html(data['b_conn_no']);
@@ -300,11 +301,11 @@ function suppliers_ajax(data){
 			current_html = $('#stockist_connections').html();
 
 			new_html =  data['html'] + current_html;
-			$('#stockist_connections').html(new_html);	
+			/*$('#stockist_connections').html(new_html);	
 			$('#stockistsTable').trigger('footable_initialize');
           	$('#stockistsTable').trigger('footable_resize');
           	$('#stockistsTable').trigger('footable_initialize');
-          	$('#stockistsTable').trigger('footable_resize');
+          	$('#stockistsTable').trigger('footable_resize');*/
           	
 		}
 
