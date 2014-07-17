@@ -19,7 +19,7 @@ sys.path.insert(1,SETTINGS_PATH)
 from settingslocal import *
 from UserProfile import UserProfile
     
-start_time = datetime.datetime.now() - datetime.timedelta(2)
+start_time = datetime.datetime.now() - datetime.timedelta(1)
 start_time = time.mktime(start_time.timetuple())
 start_time = int(start_time)
 
