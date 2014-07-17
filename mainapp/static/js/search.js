@@ -311,12 +311,8 @@ var Search = {
                  for(var i=0;i<selected_results.length;i++)
                 {
                     $('div#mktplace ul.dropdown-menu.selectpicker li:contains("'+selected_results[i]+'")').addClass('ticked selected');
-                }
-
-                 console.log("gine tolllllll");
-                 // listen_filters("mktplace");
-
- 
+                }                
+                 listen_filters("mktplace"); 
             }, "json");
 
     },

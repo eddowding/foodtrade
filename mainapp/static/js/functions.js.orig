@@ -102,7 +102,12 @@ function get_box_profile(user)
 
 function box_update_content(update)
 {
+<<<<<<< HEAD
 	content ='<div class="timeline-top-info   border-bottom clearfix">';
+=======
+	content ='<div class="box-generic" data-username="'+update.username+'">';
+	content +='<div class="timeline-top-info border-bottom clearfix">';
+>>>>>>> d0e50ccb1a5a4705b55181ca4fa2a53b6335a5f8
 	content +='<div class="pull-right" style="margin-left: 5px;">';
 	content +='<a type="button" class="dropdown-toggle" data-toggle="dropdown">';
 	content +='<i class="fa fa-fw fa-cog text-muted"></i>';
@@ -116,6 +121,7 @@ function box_update_content(update)
 	content +='<li><a href="http://twitter.com/home?status='+update.updates.status+' http://www.foodtrade.com/'+update.username+'/post/'+update.updates.tweet_id+'" target="_blank"><i class="fa fa-twitter fa-fw twitter "></i> Share on Twitter</a></li>';
 	content +='<li><a type="button" href="/'+update.username+'">';
 	content +='<i class="fa fa-info-circle fa-lg fa-fw"></i> View profile</a></li>   ';
+<<<<<<< HEAD
 	content +='<li><a href="#follow" onclick="click_activity(\'follow\',\''+update.username+'\')"><i class="fa fa-star-o fa-fw"></i>  Follow on Twitter</a></li>';
 	
 
@@ -124,6 +130,11 @@ function box_update_content(update)
 		content +='<li><a href="#deletetweet" class="deletetweet"  data-username="'+update.username+'" data-tweet-id="'+update.updates.tweet_id+'"><i class="fa fa-trash-o fa-fw flag"></i> Delete</a></li>';
 	}
 	content +='<li><a href="#markspam" onclick="click_activity(\'spam\',\''+update.updates.tweet_id+' \')" class=" "><i class="fa fa-flag-o flag fa-fw"></i> Report</a></li>';
+=======
+	content +='<li><a href="#" onclick="click_activity(\'follow\',\'xxxx\')"><i class="fa fa-star-o fa-fw"></i>  Follow on Twitter</a></li>';
+	content +='<li><a href="#" class="deletetweet" data-tweet-id="xxxxx"><i class="fa fa-trash-o fa-fw flag"></i> Delete</a></li>';
+	content +='<li><a href="#" onclick="click_activity(\'spam\',\'xxxx \')" class=" "><i class="fa fa-flag-o flag fa-fw"></i> Report</a></li>';
+>>>>>>> d0e50ccb1a5a4705b55181ca4fa2a53b6335a5f8
 	content +='</ul>  ';
 	content +='</div>  ';
 	content +='<img src="'+update.profile_img+'" alt="'+update.username+'" class="img-responsive pull-left" style="width:40px; margin-right: 5px;">';

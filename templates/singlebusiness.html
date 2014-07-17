@@ -121,7 +121,7 @@
 
     </div> 
   </div>
-  <div class="col-sm-3 ">
+  <div class="col-sm-3 col-xs-4">
     <div class="innerAll">
 
 
@@ -200,7 +200,7 @@
         {% else %}
 
           <!-- if not logged in show login prompt -->
-          <a href="{% provider_login_url "twitter" process="login" %}" class="btn btn-primary btn-icon-stacked btn-block text-center"><i class="fa fa-2x fa-twitter"></i> <span>Login free <br><span class="normal">for more details</span>
+          <a href="{% provider_login_url "twitter" process="login" %}" class="btn btn-primary btn-block text-center"><i class="fa fa-2x fa-twitter"></i> <span>Login free <br><span class="normal">for more details</span>
           </a>
 
         {% endif %}
@@ -980,7 +980,7 @@
     
  
 
-{% if updates_count != 0 or profile_id == user_id %}
+ 
     <div class="panel panel-default" id="panelUpdates">
       <div class="panel-heading">
         <div class="panel-title">
@@ -994,13 +994,16 @@
       </div> 
 
       <div class="panel-body">
-        {% if updates_count = 0 %}
+        {% if updates_count = 0 and profile_id == user_id %}
           <p></p>
 
           <p><b>You've not yet said anything in the Marketplace!</b></p>
           <p>You're missing local bargains! What do you want to buy, or sell? Or what would you love help with? </p><p>Thought of something? Then just <a href="#" data-toggle="modal" data-target="#newtwitterpost" class="">say it now</a> and it will show up here, in the activity feed, and be pushed out to local businesses in a regular newsletter. 
            </a></p>
-            
+        {% else %}
+          <p></p>
+          <p>They've not posted any updates yet.</p>
+
         {% endif %}
 
         {% if user.is_authenticated %}
@@ -1021,7 +1024,7 @@
       </div> 
  
     </div>
-    {% endif %} 
+ 
 
 
 

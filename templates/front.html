@@ -11,32 +11,42 @@
 <link href="{% static "css/ft_home.less" %}" rel="stylesheet/less"> 
 
 <div class="ftstrip"></div>
-<div class="clearfix" style="background:url('/static/images/apples_blur.jpg'); background-size: cover;" id="homeimage">  
+<div class="clearfix" style="background:url('/static/images/map_home.jpg'); background-size: cover;" id="homeimage">  
  <div class="col-sm-8 col-sm-offset-2 col-xs-10 col-xs-offset-1">
     <form action="/activity" onsubmit="return formSubmit(this);" class="clearfix"  role="search"> 
+<div id="homeText">
       <div class="input-group" id="homeSearch">  
         <input type="text" name="q" id="keyword" class="form-control input-lg" value="" placeholder="Type a food to buy or sell">                    
         <span class="input-group-btn">
           <button class="btn btn-default" style="background: #fff;font-size: 30px; border-radius: 0 10px 10px 0; padding-bottom: 7px;" type="submit"><i class="fa fa-search"></i></button>  
         </span> 
       </div>
-      <p class="lead text-white" id="proof">Join {{user_count.business_count}}  businesses,  {{user_count.organisation_count}} organisations, and {{user_count.individual_count}} people in creating a better food system. So far, we've made {{total_activity|add:total_replies|add:total_connections}} new connections.
-      </p>
+
+      <input type="hidden" name="location" id="new_search" value="   ">
+      </form>
+
+ 
+        <p  id="proof">
+          FoodTrade is a membership organisation matchmaking businesses to work together for a responsible and efficient food system.
+        </p>
+
+        <p   id="proof">
+        So far, we've made <strong>{{total_activity|add:total_replies|add:total_connections}} connections</strong>  with  <strong>{{user_count.business_count}}  businesses</strong>,  <strong>{{user_count.organisation_count}} organisations</strong>, and <strong>{{user_count.individual_count}} people</strong>.
+        </p>
+      </div>
 
       <div class="text-center" id="joinButton">
+
         <a data-toggle="modal" data-target="#modal_signup"  class="btn btn-primary">
         <strong>Join Now, it's free &raquo;</strong><br />
-        <small>Companies can always upgrade to a paid plan later</small>
+        <small>Companies can always upgrade later</small>
         </a> 
 
         <a data-toggle="modal" data-target="#modal_emaillogin"  class="btn btn-primary secondary">
         <strong>Login instantly</strong><br />
-        <small>I'm already completely awesome</small>
+        <small>I'm already a member</small>
         </a> 
       </div>
-
-      <input type="hidden" name="location" id="new_search" value="   ">
-      </form>
 
   </div> 
 </div>
@@ -45,10 +55,10 @@
  
 
 <div class="row showcase equ al">
-  <div class="col-sm-4 col-sm-offset-1 padTop">
+  <div class="col-sm-4 col-sm-offset-1 padTop hidden-xs">
     <img src="/static/images/screen.png" class="img-responsive" />
   </div>
-  <div class="col-sm-6 col-sm-offs et-1" style="padding-left:50px;">
+  <div class="col-sm-6 leftpad">
   <h2>For smarter companies</h2>
   <div class="lead">
      <ul style="margin-left: 0; margin-bottom: 20px;">
@@ -58,7 +68,7 @@
       </li>
        <li><strong>Feature your produce</strong> <span>Add photos, description, seasonal availability, and ease <acronym title="Food Information to Consumers regulation">FIC compliance</acronym></span></li>
        <li><strong>Real-time trading</strong> <span>Make and respond to offers directly from the smartphone-friendly app, or send a tweet.</li> 
-       <li><strong>Showcase your suppliers, &amp; stockists</strong> <span>Use the food map on your website, menus, apps.. </span></li>  
+       <li><strong>Map your food-web</strong> <span>Showcase your suppliers, &amp; stockists on your website, menus, apps.. </span></li>  
       <li><strong>No transaction fees</strong> <span>Because we want you to invest in better food, we work like a dating site to match-make members, not like a shop taking a cut.</li>  
        </ul> 
   </div> 
@@ -98,13 +108,13 @@
 
     
   </div>
-  <div class="col-sm-3 col-sm-offset-1 padTop">
+  <div class="col-sm-3 col-sm-offset-1 padTop hidden-xs">
     <img src="http://farm5.staticflickr.com/4032/4620044329_dd3bc8cca1_o.jpg" class="img-responsive img-thumbnail" />
   </div>
 </div>
 
 <div class="row showcase"> 
-  <div class="col-sm-3 col-sm-offset-1">
+  <div class="col-sm-3 col-sm-offset-1  hidden-xs">
     <img src="/static/images/redpoll.jpg" class="img-responsive img-thumbnail" />
   </div>  
   <div class="col-sm-5 col-sm-offset-1">
