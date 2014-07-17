@@ -98,9 +98,12 @@ def tweets(request):
     tweet_list = []
     user_profile = UserProfile()
     display_tweets = [] 
+    tweet_feed = TweetFeed()
 
     for tweet in mentions:
+        print tweet
         tweet_list.append(tweet['id'])
+
         try:
             user_profile = UserProfile()
             usr = user_profile.get_profile_by_username(tweet['user']['screen_name'])
@@ -113,8 +116,27 @@ def tweets(request):
                     pic_url_list.append(each['media_url'])
             h = HTMLParser.HTMLParser()
             tweet_id = str(tweet['id'])
-            parent_tweet_id = 0 if tweet['in_reply_to_status_id'] == None else tweet['in_reply_to_status_id']
-            tweet_feed = TweetFeed()
+
+            parent_id = tweet.get('in_reply_to_status_id')
+            if parent_id == None:
+                h = HTMLParser.HTMLParser()
+                str_text = h.unescape(tweet['text'].strip()).encode('utf-8')
+                str_text = str_text[:12].lower()
+                if(str_text != "@foodtradehq"):
+                    continue
+
+            else:
+                single_tweet = tweet_feed.get_tweet_by_id(str(parent_id))
+                if single_tweet == None:
+                    continue
+
+
+
+
+
+            parent_tweet_id = "0" if parent_id == None else str(parent_id)
+            
+            
             data = {'tweet_id': str(tweet_id),
             'parent_tweet_id': str(parent_tweet_id),
             'status': h.unescape(tweet['text']),                    
@@ -123,7 +145,6 @@ def tweets(request):
             tweet_feed.insert_tweet_by_username(usr['username'],data)
 
             
-            display_tweets.append(data)
         except:
             tweet_id = str(tweet['id'])
             text = "@" + tweet['user']['screen_name'] + " Thanks! Please confirm your post by clicking this http://foodtrade.com/?tweetid=" + str(tweet_id) + " You'll only have to do this once."
@@ -157,7 +178,6 @@ def tweets(request):
     if len(tweet_list)!=0:
         max_id.max_tweet_id = max(tweet_list)
         max_id.save()
-    parameters['tweet_list'] = display_tweets
     return render_to_response('home.html', parameters)
 
 def get_client_ip(request):

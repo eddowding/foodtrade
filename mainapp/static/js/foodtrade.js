@@ -125,8 +125,8 @@ setTimeout(function() {
                     if(data.status == "ok")
                     {
                       var result = data.result;
-                      var content = "<div class=''><div class='timeline-top-info   '>";
-                      content += "<div class='  pull-right' style='margin-left: 5px;'>";
+                      var content = "<div class=''><div class='timeline-top-info'>";
+                      content += "<div class='pull-right' style='margin-left: 5px;'>";
                       content += "<a type='button' class='btn btn-primary btn-xs' href='/"+result.username+"/post/"+result.updates.tweet_id+"'>";
                       content += "<i class='fa fa-arrow-right fa-lg' style='color:#fff;'></i> ";
                       content += "</a>";
@@ -135,10 +135,7 @@ setTimeout(function() {
                       content += "<div class='media margin-none'>   ";
                       content += "<div class=' '>";
                       content += result.updates.status;
-                      content += "</div>";
-                      content += "<div class=''>";
-                      content += "<img src='"+result.profile_img+"' class='img-responsive'>";
-                      content += "</div>";
+                      content += "</div>"; 
                       content += "</div> ";
                       content += "<div class='timeline-bottom  border-top clearfix innerTB half'>";
                       content += "<a href='http://maps.google.com/maps?saddr=51.4529956141,-2.62451568043&amp;daddr=51.4619294,-2.5891196' target='_blank' data-placement='top' data-toggle='tooltip' class='pull-right' rel='tooltip' title='' data-original-title='Get directions'> ";
