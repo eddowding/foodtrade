@@ -526,19 +526,10 @@ class AjaxHandle(AjaxSearch):
                     pass
             except:
                 pass
-<<<<<<< HEAD
-            
-            org_obj = Organisation()
-            org_count = org_obj.get_organisations_count_by_mem_id(data['memberuid'])
-            html_str =  str(render_to_response('ajax_org.html', parameters, context_instance=RequestContext(request)))
-            html_str = html_str.replace('Content-Type: text/html; charset=utf-8', '')
-            return HttpResponse(json.dumps({'html':html_str, 'status':'ok', 'org_count':org_count}))
-=======
             html_str =  str(render_to_response('ajax_org.html', parameters, context_instance=RequestContext(request)))
             html_str = html_str.replace('Content-Type: text/html; charset=utf-8', '')
             return HttpResponse(json.dumps({'html':html_str, 'status':'ok', 'org_count':org_count}))
             # return HttpResponse("{'status':1}")
->>>>>>> b639f189cc972d49a90fb9be7b942870083ea245
         else:
             return HttpResponse("{'status':0}")
 
@@ -1337,8 +1328,10 @@ class AjaxHandle(AjaxSearch):
             parameters['user'] = request.user            
             parameters['profile_id'] = int(user['useruid'])
             parameters['user_id'] = request.user.id
-            parameters['new_connection'] = buss_usr
-            html_str =  str(render_to_response('conn_ajax.html', parameters))
+            parameters['each'] = buss_usr            
+            parameters['each']['photo'] =  buss_usr['profile_img']
+            parameters['each']['id'] = buss_usr['useruid']
+            html_str =  str(render_to_response('conn_ajax.html', parameters, context_instance=RequestContext(request)))
             html_str = html_str.replace('Content-Type: text/html; charset=utf-8', '')        
-            conn_data.append({'html':html_str, 'user':buss_usr})
+            conn_data.append({'html':html_str, 'user':buss_usr})      
         return HttpResponse(json.dumps({'status':'ok', 'conn_data':conn_data, 'username':username, 'next_page_num':next_page_num, 'type':conn_type}))
