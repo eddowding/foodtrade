@@ -451,7 +451,6 @@ function start_search()
 }
 function handle_filter(that,filter_for)
 {
-    console.log("help");
     var class_name = $(that).attr('class');
         
         if(class_name.indexOf('ticked')!=-1)
@@ -498,7 +497,6 @@ function handle_filter(that,filter_for)
 
 function listen_filters(filter_for)
 {
-    console.log("looking for llll");
     if(filter_for == "mktplace")
     {
         $('div#'+filter_for+' ul.dropdown-menu.selectpicker li').on('click', function () {
@@ -550,16 +548,20 @@ var ctrl = Search.map_controls[box_username];
 var latlng = ctrl.getLatLng();
 var lat = latlng.lat;
 var lng = latlng.lng;
+markers.removeLayer(ctrl);
+ctrl.addTo(map)
+        .openPopup();
+
 map.panTo(new L.LatLng(lat,lng));
 
 // ctrl.openPopup({keepInView:true});
-ctrl.openPopup();
 
 }).on('mouseleave','.box-generic',function(){
     var box_username = $(this).attr('data-username');
     var ctrl = Search.map_controls[box_username];
-
-    ctrl.closePopup();
+markers.addLayer(ctrl);
+        map.removeLayer(ctrl);
+    // ctrl.closePopup();
 });
 
 function getParameterByName(name,initial) {

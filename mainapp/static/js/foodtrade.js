@@ -23,6 +23,12 @@ function initialize() {
     placeCord = places[0].geometry.location;
     $("#lon").val(placeCord.lng());
     $("#lat").val(placeCord.lat());
+
+     get_address("profile");
+
+
+
+
   });
 
   // [START region_getplaces]
@@ -34,6 +40,7 @@ function initialize() {
     placeCord = places[0].geometry.location;
     $("#lon").val(placeCord.lng());
     $("#lat").val(placeCord.lat());
+    get_address("market");
   });
 
 
