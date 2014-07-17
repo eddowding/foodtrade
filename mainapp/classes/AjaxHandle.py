@@ -22,6 +22,8 @@ from django.contrib.auth.models import User
 from mainapp.bitly import construct_invite_tweet, shorten_url
 import pprint
 from MarketSearch import MarketSearch
+from mainapp.classes.DataConnector import UserConnections
+
 # from validate_email import validate_email
 # consumer_key = 'seqGJEiDVNPxde7jmrk6dQ'
 # consumer_secret = 'sI2BsZHPk86SYB7nRtKy0nQpZX3NP5j5dLfcNiP14'
@@ -1328,8 +1330,25 @@ class AjaxHandle(AjaxSearch):
             parameters['user'] = request.user            
             parameters['profile_id'] = int(user['useruid'])
             parameters['user_id'] = request.user.id
-            parameters['each'] = buss_usr            
+            parameters['each'] = buss_usr  
+
+            user_connection =  UserConnections(buss_usr['useruid'])
+            b_conn_len, c_conn_len = user_connection.get_trade_connection_no()
+            trade_connections_no = b_conn_len + c_conn_len
+            food_no = user_connection.get_food_connection_no()
+            organisation_connection_no = user_connection.get_organisation_connection_no()	        
+            rec_food_obj = RecommendFood()
+            total_vouches = rec_food_obj.get_recommend_count(buss_usr['useruid'])
+            
             parameters['each']['photo'] =  buss_usr['profile_img']
+            parameters['each']['total_vouches'] = total_vouches
+            parameters['each']['trade_conn_no'] = trade_connections_no
+            parameters['each']['food_no'] = food_no
+            parameters['each']['org_conn_no'] = organisation_connection_no
+            try:
+                parameters['show_foods'] = buss_usr['show_foods']
+            except:
+                parameters['show_foods'] = False
             parameters['each']['type'] =  buss_usr['type_user']
             parameters['each']['id'] = buss_usr['useruid']
             html_str =  str(render_to_response('conn_ajax.html', parameters, context_instance=RequestContext(request)))
