@@ -7,8 +7,8 @@ var Search = {
     filters:{profile:{want:"all",lng:"",lat:"", location:"", usertype:"all", org:"[]", biz:"[]"},
     market:{want:"all",lng:"",lat:"", location:"", usertype:"all", org:"[]", biz:"[]"}},
     tab:"market",
-    profile_results:{},
-    market_results:{},
+    profile_results:[],
+    market_results:[],
     load_state: function () {
         this.keyword = getParameterByName('q', this.keyword);
 
@@ -190,11 +190,17 @@ var Search = {
     },
     show_market : function()
     {
-        var updates = this.market_results.result;
+        var updates = this.market_results;
         var html_content = "";
         if(updates.length==0)
         {
+
             html_content = "There are no results for this search. Try removing filters, broadening your search term, or zooming out to cover a larger area.";
+
+        }
+        else
+        {
+            show_connections_on_map();
         }
          for(var i=0;i<updates.length;i++)
           {
@@ -203,18 +209,33 @@ var Search = {
           $("#mkt_results").html(html_content);
           if(this.tab == "market")
           {
-            show_connections_on_map();
+            
+
+
+            if(this.profile_results.length>0 && updates.length == 0)
+            {
+                this.tab = "profile"
+                $("#profile_tab").parent().addClass('active');
+            $("#mkt_tab").parent().removeClass('active');
+            $("#profiles").addClass('active');
+            $("#mktplace").removeClass('active');
+       
+            }
           }
           $('.dropdown-toggle').dropdown();
     },
 
     show_profiles : function()
     {
-        var profiles = this.profile_results.result;
+        var profiles = this.profile_results;
         var html_content = "";
         if(profiles.length==0)
         {
             html_content = "There are no results for this search. Try removing filters, broadening your search term, or zooming out to cover a larger area.";
+        }
+        else
+        {
+            show_connections_on_map();
         }
          for(var i=0;i<profiles.length;i++)
           {
@@ -223,7 +244,20 @@ var Search = {
           $("#profile_results").html(html_content);
           if(this.tab == "profile")
           {
-            show_connections_on_map();
+            
+
+
+            if(this.market_results.length>0 && profiles.length == 0)
+            {
+                this.tab = "market"
+                $("#mkt_tab").parent().addClass('active');
+            $("#profile_tab").parent().removeClass('active');
+
+
+             $("#profiles").removeClass('active');
+            $("#mktplace").addClass('active');
+       
+            }
           }
           $('.dropdown-toggle').dropdown();
 
@@ -243,7 +277,7 @@ var Search = {
                 req_obj.biz = this.filters.profile.biz;
             }
         $.post( "/ajax-handler/search_profiles", req_obj, function( data ) {
-        Search.profile_results = data;
+        Search.profile_results = data.result;
 
         Search.show_profiles();
         if(!with_filter)
@@ -270,7 +304,7 @@ var Search = {
             }
 
          $.post( "/ajax-handler/search_market", req_obj , function( data ) {
-              Search.market_results = data;
+              Search.market_results = data.result;
               Search.show_market();
               if(!with_filter)
               {  
@@ -417,7 +451,6 @@ function start_search()
 }
 function handle_filter(that,filter_for)
 {
-    console.log("help");
     var class_name = $(that).attr('class');
         
         if(class_name.indexOf('ticked')!=-1)
@@ -464,7 +497,6 @@ function handle_filter(that,filter_for)
 
 function listen_filters(filter_for)
 {
-    console.log("looking for llll");
     if(filter_for == "mktplace")
     {
         $('div#'+filter_for+' ul.dropdown-menu.selectpicker li').on('click', function () {
@@ -473,7 +505,6 @@ function listen_filters(filter_for)
     });    
         
     }
-    console.log("nepal");
 }
 
 
@@ -517,16 +548,20 @@ var ctrl = Search.map_controls[box_username];
 var latlng = ctrl.getLatLng();
 var lat = latlng.lat;
 var lng = latlng.lng;
+markers.removeLayer(ctrl);
+ctrl.addTo(map)
+        .openPopup();
+
 map.panTo(new L.LatLng(lat,lng));
 
 // ctrl.openPopup({keepInView:true});
-ctrl.openPopup();
 
 }).on('mouseleave','.box-generic',function(){
     var box_username = $(this).attr('data-username');
     var ctrl = Search.map_controls[box_username];
-
-    ctrl.closePopup();
+markers.addLayer(ctrl);
+        map.removeLayer(ctrl);
+    // ctrl.closePopup();
 });
 
 function getParameterByName(name,initial) {
