@@ -39,7 +39,7 @@ function get_box_profile(user)
 	content += '<div class="innerTB half border-top border-bottom"> ';
 	if(user.foods.webuy_matches.length>0)
 	{
-		content += '<span class="label label-default"><i class="fa fa-sign-in fa-fw"></i>SELLS: </span> <b>';
+		content += '<span class="label label-default"><i class="fa fa-sign-in fa-fw"></i>BUYS</span> <b>';
 		for(var index in user.foods.webuy_matches)
 		{
 			if(index>0)
@@ -59,7 +59,7 @@ function get_box_profile(user)
 
 	if(user.foods.wesell_matches.length>0)
 	{
-		content += '<span class="label label-default"><i class="fa fa-sign-out fa-fw"></i>BUYS: </span> <b>';
+		content += '<span class="label label-default"><i class="fa fa-sign-out fa-fw"></i>SELLS</span> <b>';
 		for(var index in user.foods.wesell_matches)
 		{
 			if(index>0)
@@ -100,19 +100,37 @@ function get_box_profile(user)
 
 
 
-
-
-
-
-function get_box_update(update)
+function box_update_content(update)
 {
+<<<<<<< HEAD
+	content ='<div class="timeline-top-info   border-bottom clearfix">';
+=======
 	content ='<div class="box-generic" data-username="'+update.username+'">';
 	content +='<div class="timeline-top-info border-bottom clearfix">';
+>>>>>>> d0e50ccb1a5a4705b55181ca4fa2a53b6335a5f8
 	content +='<div class="pull-right" style="margin-left: 5px;">';
 	content +='<a type="button" class="dropdown-toggle" data-toggle="dropdown">';
 	content +='<i class="fa fa-fw fa-cog text-muted"></i>';
 	content +='<span class="sr-only">Toggle Dropdown</span>';
 	content +='</a>';
+<<<<<<< HEAD
+	content +='<a type="button" class="btn btn-primary btn-xs" href="/' + update.username + '/post/' + update.updates.tweet_id + '">';
+	content +='<i class="fa fa-arrow-right " style="color:#fff;"></i> ';
+	content +='</a>';
+	content +='<ul class="dropdown-menu" role="menu">  ';
+	content +='<li><a href="http://www.facebook.com/sharer/sharer.php?u=http://foodtrade.com/' + update.username + '/post/' + update.updates.tweet_id + ' target="_blank"><i class="fa fa-facebook fa-fw facebook"></i> Share on Facebook</a></li>';
+	content +='<li><a href="http://twitter.com/home?status=%40foodtradeHQ%20Did%20u%20read%20shocking%20%40guardian%20story%202ay%20about%20human%20slavery%20on%20boats%20catching%20shrimps%3F%20Truly%20horrific%20http%3A//t.co/SIXbWohPT6%20http://foodtrade.com/CoconutChilli/post/476663147080974336" target="_blank"><i class="fa fa-twitter fa-fw twitter "></i> Share on Twitter</a></li>';
+	content +='<li><a type="button" href="/'+update.username+'">';
+	content +='<i class="fa fa-info-circle fa-lg fa-fw"></i> View profile</a></li>   ';
+	content +='<li><a href="#follow" onclick="click_activity(\'follow\',\''+update.username+'\')"><i class="fa fa-star-o fa-fw"></i>  Follow on Twitter</a></li>';
+	
+
+	if(is_superuser || update.username == user_username)
+	{
+		content +='<li><a href="#deletetweet" class="deletetweet"  data-username="'+update.username+'" data-tweet-id="'+update.updates.tweet_id+'"><i class="fa fa-trash-o fa-fw flag"></i> Delete</a></li>';
+	}
+	content +='<li><a href="#markspam" onclick="click_activity(\'spam\',\''+update.updates.tweet_id+' \')" class=" "><i class="fa fa-flag-o flag fa-fw"></i> Report</a></li>';
+=======
 	content +='<a type="button" class="btn btn-primary btn-xs" href="/'+update.username+'/post/'+update.updates.tweet_id+'">';
 	content +='<i class="fa fa-arrow-right " style="color:#fff;"></i> ';
 	content +='</a>';
@@ -124,6 +142,7 @@ function get_box_update(update)
 	content +='<li><a href="#" onclick="click_activity(\'follow\',\'xxxx\')"><i class="fa fa-star-o fa-fw"></i>  Follow on Twitter</a></li>';
 	content +='<li><a href="#" class="deletetweet" data-tweet-id="xxxxx"><i class="fa fa-trash-o fa-fw flag"></i> Delete</a></li>';
 	content +='<li><a href="#" onclick="click_activity(\'spam\',\'xxxx \')" class=" "><i class="fa fa-flag-o flag fa-fw"></i> Report</a></li>';
+>>>>>>> d0e50ccb1a5a4705b55181ca4fa2a53b6335a5f8
 	content +='</ul>  ';
 	content +='</div>  ';
 	content +='<img src="'+update.profile_img+'" alt="'+update.username+'" class="img-responsive pull-left" style="width:40px; margin-right: 5px;">';
@@ -153,6 +172,16 @@ function get_box_update(update)
 	content +='<i class="fa fa-calendar  fa-fw"></i>' + get_time_text(update.updates.time_stamp)+' ago';
 	content +='</a>';
 	content +='</div>  ';
+	
+	return content;
+}
+
+
+
+function get_box_update(update)
+{
+	content ='<div class="box-generic" data-username="'+update.username+'">';
+	content += box_update_content(update);
 	content +='<div class="innerAll half border-top bg-gray "> ';
 	content +='<input class="form-control input-sm enterhandler reply_input" data-toggle="market-reply" data-tweet-id="'+update.updates.tweet_id+'" data-main="main" type="text" placeholder="Reply to '+update.username+'" data-mentions="@'+update.username+'"> ';
 	content +='</div>';
@@ -161,7 +190,13 @@ function get_box_update(update)
 }
 
 
-
+function get_box_update_map(update)
+{
+	content ='<div class="box-generic" data-username="'+update.username+'">';
+	content += box_update_content(update);
+	content +='</div>';
+	return content;
+}
 
 
               
