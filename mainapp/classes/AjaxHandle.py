@@ -1348,7 +1348,7 @@ class AjaxHandle(AjaxSearch):
             try:
                 parameters['show_foods'] = buss_usr['show_foods']
             except:
-                parameters['show_foods'] = False
+                parameters['show_foods'] = True
             parameters['each']['type'] =  buss_usr['type_user']
             parameters['each']['id'] = buss_usr['useruid']
             html_str =  str(render_to_response('conn_ajax.html', parameters, context_instance=RequestContext(request)))
