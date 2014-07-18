@@ -333,7 +333,7 @@ function get_next_page_conn_success(data){
 			}
 		}
 		if (data['type']=='b'){								  
-			$('#suppliers_connections').prepend(data['table_html']);
+			$('#supplier_connections').prepend(data['table_html']);
 		}
 		else{
 			$('#stockist_connections').prepend(data['table_html']);			
