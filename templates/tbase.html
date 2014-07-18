@@ -1002,11 +1002,22 @@ var default_csr = L.CRS.EPSG3857;
     window.location = '/accounts/logout';
   }
 
-  $(".img-thumbnail").bind('error', function (e) {
-    var img_src = this.src;
-    console.log(img_src);
-      $.post( "/update-image/", { img: img_src });
-  });
+  function correct_image_load_errors()
+{
+
+    $('img').bind('error', function() {
+        var img_src = $(this).attr("src");
+var that = this;
+ $.post( "/update-image/", { img: img_src }, function(data)
+    {
+        if(data.status == "ok")
+        $(that).attr("src", data.src);
+    }, "json");
+
+    });
+}
+
+ correct_image_load_errors();
 
   var invite_id = String('{{invite_id|safe}}');
   var tweet = String('{{invite_tweet|safe}}');

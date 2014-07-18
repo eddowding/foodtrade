@@ -37,7 +37,12 @@ def update_image(request):
         bot_twitter = get_twitter_obj(settings.BOT_ACCESS_TOKEN, settings.BOT_ACCESS_TOKEN_SECRET)
         details = bot_twitter.show_user(screen_name=user_details['username'])
         image_desc = {'profile_img': details['profile_image_url']}
+
+
         up.update_profile_fields({"useruid":user_details['useruid']}, image_desc)
+        return HttpResponse(json.dumps({"status":"ok","src":details['profile_image_url']}))
+
+
     except:
         pass
-    return HttpResponse("sorry")
+    return HttpResponse(json.dumps({"status":"error","message":"No image was found"}))
