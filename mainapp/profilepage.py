@@ -1087,17 +1087,12 @@ def search_orgs_business(request, type_user):
         mongo = MongoConnection("localhost",27017,'foodtrade')
         results = mongo.get_paginated_values('userprofile', query_mongo)
         results = results[0:5]
-        
-        print "roshan"
 
         final_organisation = []
         if len(results) == 0:
-            print "Inside make fake profile"
             from mainapp.classes.AjaxHandle import AjaxHandle
             ajx_obj = AjaxHandle()
             fake_profile = ajx_obj.create_fake_profile('', query, 'showuser' ,'unclaimed')
-            print "fake profile made"
-            print fake_profile
             if len(fake_profile) == 0:
                 final_organisation.append({'id': 'search', 'name': 'Sorry! There are no results!!', 'screen_name': '', 'profile_image_url_https':'', 'show_hide':'hidden'})
             else:
