@@ -266,10 +266,10 @@ function stockists_ajax(data){
 			new_html =  data['html'] + current_html;
 			$("#supplier_connections").html(new_html);
 			
-		  $('#suppliersTable').trigger('footable_initialize');
-          /*$('#stockistsTable').trigger('footable_resize');*/
-          $('#suppliersTable').trigger('footable_initialize');
-          /*$('#suppliersTable').trigger('footable_resize');*/
+		  /*$('#suppliersTable').trigger('footable_initialize');*/
+          $('#stockistsTable').trigger('footable_resize');
+          /*$('#stockistsTable').trigger('footable_initialize');*/
+          $('#suppliersTable').trigger('footable_resize');
 /*          $('#suppliersTable').footable();
 		  $('#stockistsTable').footable();*/
 		}
@@ -304,10 +304,10 @@ function suppliers_ajax(data){
 
 			new_html =  data['html'] + current_html;
 			$('#stockist_connections').html(new_html);	
-		  $('#suppliersTable').trigger('footable_initialize');
-          /*$('#stockistsTable').trigger('footable_resize');*/
-          $('#suppliersTable').trigger('footable_initialize');
-          /*$('#suppliersTable').trigger('footable_resize');*/
+		  /*$('#suppliersTable').trigger('footable_initialize');*/
+          $('#stockistsTable').trigger('footable_resize');
+          /*$('#suppliersTable').trigger('footable_initialize');*/
+          $('#suppliersTable').trigger('footable_resize');
 /*          $('#suppliersTable').footable();
 		  $('#stockistsTable').footable();*/
 		}
@@ -352,10 +352,10 @@ function get_next_page_conn_success(data){
 		}
 	}
 	else{
-		  $('#suppliersTable').trigger('footable_initialize');
-          /*$('#stockistsTable').trigger('footable_resize');*/
-          $('#suppliersTable').trigger('footable_initialize');
-          /*$('#suppliersTable').trigger('footable_resize');*/
+		  /*$('#suppliersTable').trigger('footable_initialize');*/
+          $('#stockistsTable').trigger('footable_resize');
+          /*$('#suppliersTable').trigger('footable_initialize');*/
+          $('#suppliersTable').trigger('footable_resize');
 /*          $('#suppliersTable').footable();
 		  $('#stockistsTable').footable();*/
 	}
