@@ -333,12 +333,12 @@ function get_next_page_conn_success(data){
 			}
 		}
 		if (data['type']=='b'){								  
-			$('#suppliers_connections').prepend(data['html']);
+			$('#suppliers_connections').prepend(data['table_html']);
 		}
 		else{
-			$('#stockist_connections').prepend(data['html']);			
+			$('#stockist_connections').prepend(data['table_html']);			
 		}
-		
+
 		if(data['type']=='b'){
 			get_next_page_b_conn(data['username'], data['next_page_num']);			
 		}
