@@ -32,7 +32,7 @@ def merge(request):
 def update_image(request):
     img_url = request.POST.get('img')
     img_url = img_url.replace("bigger","normal")
-    
+    img_url = img_url.replace("/web_retina","")
     up = UserProfile()
     try:
         user_details = up.get_profile_by_profile_img(img_url)
