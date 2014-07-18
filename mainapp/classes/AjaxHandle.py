@@ -1348,7 +1348,8 @@ class AjaxHandle(AjaxSearch):
         if len(conns) == 0:
             return HttpResponse(json.dumps({'status':'finished', 'next_page_num':-1, 'type':conn_type}))    
 
-        conn_data = []    
+        conn_data = [] 
+        table_html = ''   
         for eachUser in conns:
             parameters = {}
             buss_usr = user_obj.get_profile_by_id(int(eachUser['c_useruid']))
@@ -1379,6 +1380,7 @@ class AjaxHandle(AjaxSearch):
             parameters['each']['type'] =  buss_usr['type_user']
             parameters['each']['id'] = buss_usr['useruid']
             html_str =  str(render_to_response('conn_ajax.html', parameters, context_instance=RequestContext(request)))
-            html_str = html_str.replace('Content-Type: text/html; charset=utf-8', '')        
-            conn_data.append({'html':html_str, 'user':buss_usr})      
-        return HttpResponse(json.dumps({'status':'ok', 'conn_data':conn_data, 'username':username, 'next_page_num':next_page_num, 'type':conn_type}))
+            html_str = html_str.replace('Content-Type: text/html; charset=utf-8', '')
+            table_html += html_str
+            conn_data.append({'user':buss_usr})      
+        return HttpResponse(json.dumps({'status':'ok','table_html':table_html, 'conn_data':conn_data, 'username':username, 'next_page_num':next_page_num, 'type':conn_type}))
