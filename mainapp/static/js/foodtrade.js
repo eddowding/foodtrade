@@ -145,7 +145,7 @@ setTimeout(function() {
                       content += "</div>"; 
                       content += "</div> ";
                       content += "<div class='timeline-bottom  border-top clearfix innerTB half'>";
-                      content += "<a href='http://maps.google.com/maps?saddr=51.4529956141,-2.62451568043&amp;daddr=51.4619294,-2.5891196' target='_blank' data-placement='top' data-toggle='tooltip' class='pull-right' rel='tooltip' title='' data-original-title='Get directions'> ";
+                      content += "<a href='http://maps.google.com/maps?saddr="+Search.filters.market.lat+','+Search.filters.market.lng+'&amp;daddr='+result.latlng.coordinates[1]+','+result.latlng.coordinates[0]+"' target='_blank' data-placement='top' data-toggle='tooltip' class='pull-right' rel='tooltip' title='' data-original-title='Get directions'> ";
                       content += "<i class='fa fa-location-arrow fa-fw'></i> "+result.distance+" miles  ";
                       content += "</a>";
                       if(result.type_user.length>0)
@@ -164,7 +164,7 @@ setTimeout(function() {
                       {
                         content += "<p class='small text-center'>";
                         content += "<i class='fa fa-comments fa-fw'></i>";
-                        content += "<a href='#'>See all "+result.replies_count+" replies</a>";
+                        content += "<a href='/"+result.username+"/post/"+result.updates.tweet_id+"'>See all "+result.replies_count+" replies</a>";
                         content += "</p>";
                       }
                       content += "<input class='form-control input-sm enterhandler reply_input' data-tweet-id='"+result.updates.tweet_id+"' data-main='main' type='text' placeholder='Reply to @"+result.username+"'  data-toggle='market-reply'  data-mentions='@"+result.username+"'> ";
