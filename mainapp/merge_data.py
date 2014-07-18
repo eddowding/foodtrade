@@ -42,15 +42,17 @@ def update_image(request):
         up.update_profile_fields({"useruid":user_details['useruid']}, image_desc)
         return HttpResponse(json.dumps({"status":"ok","src":details['profile_image_url']}))
 
-
     except:
-        
-        user_details = up.get_profile_by_profile_banner_url(img_url)
-        bot_twitter = get_twitter_obj(settings.BOT_ACCESS_TOKEN, settings.BOT_ACCESS_TOKEN_SECRET)
-        details = bot_twitter.show_user(screen_name=user_details['username'])       
-        image_desc = {'profile_banner_url': details.get("profile_background_image_url_https","")}
+        try:
+            user_details = up.get_profile_by_profile_banner_url(img_url)
+            bot_twitter = get_twitter_obj(settings.BOT_ACCESS_TOKEN, settings.BOT_ACCESS_TOKEN_SECRET)
+            details = bot_twitter.show_user(screen_name=user_details['username'])       
+            image_desc = {'profile_banner_url': details.get("profile_background_image_url_https","")}
 
 
-        up.update_profile_fields({"useruid":user_details['useruid']}, image_desc)
-        return HttpResponse(json.dumps({"status":"ok","src":details.get("profile_background_image_url_https","")}))
+            up.update_profile_fields({"useruid":user_details['useruid']}, image_desc)
+            return HttpResponse(json.dumps({"status":"ok","src":details.get("profile_background_image_url_https","")}))
+        except:
+            pass
+
     return HttpResponse(json.dumps({"status":"error","message":"No image was found"}))
