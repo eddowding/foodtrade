@@ -332,11 +332,15 @@ function get_next_page_conn_success(data){
 				plot_connection_layers_on_map(conn_arr[i]['user']);				
 			}
 		}
-		if (data['type']=='b'){								  
+		if (data['type']=='b'){								  			
 			$('#supplier_connections').prepend(data['table_html']);
+            $('#suppliersTable').trigger('footable_initialize');
+            $('#suppliersTable').trigger('footable_resize');
 		}
 		else{
 			$('#stockist_connections').prepend(data['table_html']);			
+			$('#stockistsTable').trigger('footable_initialize');
+            $('#stockistsTable').trigger('footable_resize');
 		}
 
 		if(data['type']=='b'){
@@ -345,12 +349,6 @@ function get_next_page_conn_success(data){
 		else{
 			get_next_page_c_conn(data['username'], data['next_page_num']);				
 		}
-	}
-	else{
-		  $('#suppliersTable').trigger('footable_initialize');
-          $('#stockistsTable').trigger('footable_resize');
-          $('#suppliersTable').trigger('footable_initialize');
-          $('#suppliersTable').trigger('footable_resize');
 	}
 }
 
