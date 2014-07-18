@@ -30,6 +30,11 @@ from mainapp.classes.TweetFeed import Friends
 from classes.Search import Search
 from mainapp.classes.DataConnector import UserConnections
 
+from twython import Twython
+from foodtrade.settings_local import *
+
+def get_twitter_obj(token, secret):
+    return Twython(app_key = CONSUMER_KEY,app_secret = CONSUMER_SECRET,oauth_token = token,oauth_token_secret = secret)
 
 def profile_url_resolve(request, username):
     if username == 'me':
@@ -1041,7 +1046,6 @@ def search_orgs_business(request, type_user):
             type_user_new = [type_user]
             trade_conn = TradeConnection()
             req_type = request.GET.get('type')
-            print req_type
             if req_type == "stockist":
                 b_conn = trade_conn.get_connection_by_business(profile_user_obj['useruid'])
                 profile_data = [int(each['c_useruid']) for each in b_conn] 
@@ -1084,10 +1088,21 @@ def search_orgs_business(request, type_user):
         results = mongo.get_paginated_values('userprofile', query_mongo)
         results = results[0:5]
         
+        print "roshan"
+
         final_organisation = []
         if len(results) == 0:
-            final_organisation.append({'id': 'search', 'name': 'Search all users from twitter', 'screen_name': 'twitter',
-             'profile_image_url_https':'https://pbs.twimg.com/profile_images/2284174758/v65oai7fxn47qv9nectx_bigger.png'})
+            print "Inside make fake profile"
+            from mainapp.classes.AjaxHandle import AjaxHandle
+            ajx_obj = AjaxHandle()
+            fake_profile = ajx_obj.create_fake_profile('', query, 'showuser' ,'unclaimed')
+            print "fake profile made"
+            print fake_profile
+            if len(fake_profile) == 0:
+                final_organisation.append({'id': 'search', 'name': 'Sorry! There are no results!!', 'screen_name': '', 'profile_image_url_https':'', 'show_hide':'hidden'})
+            else:
+                requests = fake_profile
+
         for each in results:
             if each.get('business_org_name')!=None:
                 myname = each.get('business_org_name') if (each['sign_up_as'] == 'Business' or each['sign_up_as'] == 'Organisation') \

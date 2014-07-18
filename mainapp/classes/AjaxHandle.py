@@ -48,66 +48,93 @@ class AjaxHandle(AjaxSearch):
             collection.
         '''
         user_profile_obj = UserProfile()
-        registered_user = user_profile_obj.get_profile_by_username(invitee_name)
+        if invitee_name != '':
+            registered_user = user_profile_obj.get_profile_by_username(invitee_name)
+        else:
+            registered_user = None
+
         min_user_id = int(user_profile_obj.get_minimum_id_of_user()[0]['minId']) -1
 
-        try:
-            if registered_user == None or len(registered_user) == 0:
-                if tweeter_or_friend == 'friend':
-                    friend_obj = Friends()            
-                    invited_friend = friend_obj.get_friend_from_screen_name(invitee_name.replace('@',''), username)
-                else:
-                    tweeter_user_obj = TweeterUser()
-                    invited_friend = {}
-                    invited_friend['friends'] = tweeter_user_obj.get_tweeter_user(invitee_name.replace('@',''))
-
-                data = {
-                    'is_unknown_profile': 'true',
-                    'recently_updated_by_super_user': 'false',                    
-                    'email' : '',
-                    'description' : invited_friend['friends']['description'],
-                    'foods': [],
-                    'name' : invited_friend['friends']['name'],
-                    'phone_number' : '',
-                    'profile_img':invited_friend['friends']['profile_image_url'],
-                    'type_user':[],
-                    'updates': [],
-                    'screen_name': invited_friend['friends']['screen_name'],
-                    'Organisations':[],
-                    'useruid': min_user_id,
-                    'username':invited_friend['friends']['screen_name'],
-                    'subscribed':0,
-                    'newsletter_freq':'Never',
-                    'followers_count':invited_friend['friends']['followers_count'],
-                    'friends_count':invited_friend['friends']['friends_count']
-                }   
+        # try:
+        if registered_user == None or len(registered_user) == 0:
+            if tweeter_or_friend == 'showuser':
+                from mainapp.classes.MySQLConnect import MySQLConnect
+                mc = MySQLConnect()
                 try:
-                    data['profile_banner_url'] = invited_friend['friends']['profile_banner_url']
+                    st = mc.get_token(request.user.username)
                 except:
-                    data['profile_banner_url'] = ''
-                    
-                if sign_up_as == 'unclaimed':
-                    data['sign_up_as'] = 'unclaimed'
-                else:
-                    data['sign_up_as'] = str(sign_up_as)
+                    st = mc.get_token('examplefarm')                        
 
+                ACCESS_TOKEN = st[0]
+                ACCESS_TOKEN_SECRET = st[1]
+                user_twitter = get_twitter_obj(ACCESS_TOKEN, ACCESS_TOKEN_SECRET)
+                invited_friend = {}
                 try:
-                    location_res = Geocoder.geocode(invited_friend['friends']['location'])
-                    data['address'] = str(location_res)
-                    data['latlng'] = {"type":"Point","coordinates":[float(location_res.longitude) ,float(location_res.latitude)]}
-                    data['zip_code'] = str(location_res.postal_code)
+                    invited_friend['friends'] = user_twitter.show_user(screen_name=username)
                 except:
-                    data['address'] = str('Antartica')
-                    data['latlng'] = {"type":"Point","coordinates":[float(-135.10000000000002) ,float(-82.86275189999999)]}
-                    data['zip_code'] = str('')
-                    data['location_default_on_error'] = 'true'
-                                    
-                user_profile_obj.create_profile(data)
-                return {'status':1}
+                    invited_friend['friends'] = []
+                if len(invited_friend['friends']) == 0:
+                    return []
+
+            elif tweeter_or_friend == 'friend':
+                friend_obj = Friends()            
+                invited_friend = friend_obj.get_friend_from_screen_name(invitee_name.replace('@',''), username)
             else:
-                return {'status':0}
-        except:
+                tweeter_user_obj = TweeterUser()
+                invited_friend = {}
+                invited_friend['friends'] = tweeter_user_obj.get_tweeter_user(invitee_name.replace('@',''))
+
+            data = {
+                'is_unknown_profile': 'true',
+                'recently_updated_by_super_user': 'false',                    
+                'email' : '',
+                'description' : invited_friend['friends']['description'],
+                'foods': [],
+                'name' : invited_friend['friends']['name'],
+                'phone_number' : '',
+                'profile_img':invited_friend['friends']['profile_image_url'],
+                'type_user':[],
+                'updates': [],
+                'screen_name': invited_friend['friends']['screen_name'],
+                'Organisations':[],
+                'useruid': min_user_id,
+                'username':invited_friend['friends']['screen_name'],
+                'subscribed':0,
+                'newsletter_freq':'Never',
+                'followers_count':invited_friend['friends']['followers_count'],
+                'friends_count':invited_friend['friends']['friends_count']
+            }
+
+            try:
+                data['profile_banner_url'] = invited_friend['friends']['profile_banner_url']
+            except:
+                data['profile_banner_url'] = ''
+                
+            if sign_up_as == 'unclaimed':
+                data['sign_up_as'] = 'unclaimed'
+            else:
+                data['sign_up_as'] = str(sign_up_as)
+
+            try:
+                location_res = Geocoder.geocode(invited_friend['friends']['location'])
+                data['address'] = str(location_res)
+                data['latlng'] = {"type":"Point","coordinates":[float(location_res.longitude) ,float(location_res.latitude)]}
+                data['zip_code'] = str(location_res.postal_code)
+            except:
+                data['address'] = str('Antartica')
+                data['latlng'] = {"type":"Point","coordinates":[float(-135.10000000000002) ,float(-82.86275189999999)]}
+                data['zip_code'] = str('')
+                data['location_default_on_error'] = 'true'
+                                
+            user_profile_obj.create_profile(data)
+            if tweeter_or_friend == 'showuser':
+                return [data]
+            else:
+                return {'status':1}
+        else:
             return {'status':0}
+        # except:
+        #     return {'status':0}
 
     def post_tweet(self, request):
         if not request.user.is_authenticated():
