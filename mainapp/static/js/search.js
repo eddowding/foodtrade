@@ -207,6 +207,7 @@ var Search = {
             html_content += get_box_update(updates[i]);
           }
           $("#mkt_results").html(html_content);
+          correct_image_load_errors();
           if(this.tab == "market")
           {
             
@@ -242,6 +243,7 @@ var Search = {
             html_content += get_box_profile(profiles[i]);
           }
           $("#profile_results").html(html_content);
+          correct_image_load_errors();
           if(this.tab == "profile")
           {
             
@@ -539,7 +541,6 @@ $("#search_type_option").click(function(){
         $("#search_type_option").html("Profile");
     }
 });
-
 
 
 $(".tab-content").on("mouseenter",".box-generic",function(){
