@@ -370,7 +370,8 @@ class UserProfile():
 
     def get_profile_by_profile_img(self, img):
         return self.db_object.get_one(self.table_name,{'profile_img': img})
-
+    def get_profile_by_profile_banner_url(self, img):
+        return self.db_object.get_one(self.table_name,{'rofile_banner_url': img})
     def get_profile_by_username(self, username):
         # return self.db_object.get_one(self.table_name,{'username': str(username)})
         return self.db_object.get_one(self.table_name,{'username': { "$regex" : re.compile("^"+str(username)+"$", re.IGNORECASE), "$options" : "-i" }})

@@ -434,6 +434,7 @@ line-height: 34px; font-size: 16px;">
                       <span class="result-container" style="white-space: nowrap;">
                       <span class="result-img"><img height="22px" width="22px" src="http://pbs.twimg.com/profile_images/432822201436229632/Pw5oT1FG_normal.jpeg"></span>
                       <span>Soil Association</span> 
+                      <script type="text/javascript"> console.log("14");</script>
                       </span>
                       </a>
                       </li>
@@ -890,8 +891,27 @@ line-height: 34px; font-size: 16px;">
 
 
 
+<script type="text/javascript">
+  function correct_image_load_errors()
+{
 
- 
+    $('img').bind('error', function() {
+        var img_src = $(this).attr("src");
+var that = this;
+ $.post( "/update-image/", { img: img_src }, function(data)
+    {
+        if(data.status == "ok")
+        $(that).attr("src", data.src);
+    }, "json");
+
+    });
+}
+
+ correct_image_load_errors();
+
+
+</script>
+ <script type="text/javascript"> console.log("14");</script>
 
 
     <!-- Bootstrap core JavaScript
@@ -1002,22 +1022,7 @@ var default_csr = L.CRS.EPSG3857;
     window.location = '/accounts/logout';
   }
 
-  function correct_image_load_errors()
-{
-
-    $('img').bind('error', function() {
-        var img_src = $(this).attr("src");
-var that = this;
- $.post( "/update-image/", { img: img_src }, function(data)
-    {
-        if(data.status == "ok")
-        $(that).attr("src", data.src);
-    }, "json");
-
-    });
-}
-
- correct_image_load_errors();
+  
 
   var invite_id = String('{{invite_id|safe}}');
   var tweet = String('{{invite_tweet|safe}}');
