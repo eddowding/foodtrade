@@ -352,12 +352,7 @@ function get_next_page_conn_success(data){
 		}
 	}
 	else{
-		  /*$('#suppliersTable').trigger('footable_initialize');*/
-          $('#stockistsTable').trigger('footable_resize');
-          /*$('#suppliersTable').trigger('footable_initialize');*/
-          $('#suppliersTable').trigger('footable_resize');
-/*          $('#suppliersTable').footable();
-		  $('#stockistsTable').footable();*/
+
 	}
 }
 
