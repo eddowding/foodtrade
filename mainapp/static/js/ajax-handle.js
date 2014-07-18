@@ -386,26 +386,26 @@ function add_food(prof_id, we_buy){
 }
 
 function food_ajax(data){
-$('.search-choice').remove();
-$("#myselect").val('').trigger('chosen:updated');
-$('#ajax_food_tr').html(data);
+	$('.search-choice').remove();
+	$("#myselect").val('').trigger('chosen:updated');
+	$('#ajax_food_tr').html(data);
 
-$('#produceTable').trigger('footable_initialize');
-$('#produceTable').trigger('footable_resize');
-$('#produceTable').trigger('footable_initialize');
-$('#produceTable').trigger('footable_resize');
-// var $container1 = $('#foods').isotope({itemSelector: '.food'});
+	$('#produceTable').trigger('footable_initialize');
+	$('#produceTable').trigger('footable_resize');
+	$('#produceTable').trigger('footable_initialize');
+	$('#produceTable').trigger('footable_resize');
+	// var $container1 = $('#foods').isotope({itemSelector: '.food'});
 }
 
 function webuy_food_ajax(data){
-$('.search-choice').remove();
-$("#webuy_select").val('').trigger('chosen:updated');
-$('#webuy_foods').html(data);
-$('#webuy_foods').trigger('footable_initialize');
-$('#webuy_foods').trigger('footable_resize');
-$('#webuy_foods').trigger('footable_initialize');
-$('#webuy_foods').trigger('footable_resize');
-/*var $container1 = $('#webuy_foods').isotope({itemSelector: '.food'});*/
+	$('.search-choice').remove();
+	$("#webuy_select").val('').trigger('chosen:updated');
+	$('#webuy_foods').html(data);
+	$('#webuy_foods').trigger('footable_initialize');
+	$('#webuy_foods').trigger('footable_resize');
+	$('#webuy_foods').trigger('footable_initialize');
+	$('#webuy_foods').trigger('footable_resize');
+	/*var $container1 = $('#webuy_foods').isotope({itemSelector: '.food'});*/
 }
 
 function recommend_food(logged_in_id, food_name, prof_id, username, my_this, we_buy){
@@ -431,7 +431,9 @@ function recommend_food(logged_in_id, food_name, prof_id, username, my_this, we_
 	// ajax_request("vouch_for_food", 'empty', {data: JSON.stringify(data)});
 }
 
-function empty(){}
+function empty(){
+
+}
 
 
 function delete_food(prof_id, food_name, my_this, we_buy){
@@ -573,20 +575,6 @@ function CloseNewPostModal()
 {
 	$('#newtwitterpost').modal('hide');
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 /*function ajax_success_validate_logged_in(data){
 	alert(data);
