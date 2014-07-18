@@ -53,7 +53,7 @@ function save_favourites(profile_id, user_id){
 function add_org_to_biz(member_id, orguid){
 	// var org_ids_list = $('#org_chosen').val();
 	// for(i=0;i<org_ids_list.length;i++){
-	ajax_request("third_party_add_org", 'org_ajax', {data: "{'memberuid': " + member_id + ",'orguid': " + parseInt(orguid) +"}"});
+	ajax_request("third_party_add_org", 'org_ajax_add', {data: "{'memberuid': " + member_id + ",'orguid': " + parseInt(orguid) +"}"});
 	// }
 }
 // get business tags
@@ -75,6 +75,15 @@ function org_ajax(data){
 	if(data['status']=='ok'){
 		$('.search-choice').remove();
 		$("#org_chosen").val('').trigger('chosen:updated');
+		$('#groupsGrid').html(data['html']);
+		$('#orgConnNo').html('');
+		$('#orgConnNo').html(data['org_count']);
+	}
+}
+
+function org_ajax_add(data){
+	data= jQuery.parseJSON(data);
+	if(data['status']=='ok'){
 		$('#groupsGrid').html(data['html']);
 		$('#orgConnNo').html('');
 		$('#orgConnNo').html(data['org_count']);
@@ -256,11 +265,11 @@ function stockists_ajax(data){
 			current_html = $("#supplier_connections").html();
 			new_html =  data['html'] + current_html;
 			$("#supplier_connections").html(new_html);
-		  $('#suppliersTable').trigger('footable_initialize');
-          $('#stockistsTable').trigger('footable_resize');
-          $('#suppliersTable').trigger('footable_initialize');
-          $('#suppliersTable').trigger('footable_resize');
-          
+			
+		 	$('#suppliersTable').trigger('footable_initialize');
+            $('#stockistsTable').trigger('footable_resize');
+            $('#suppliersTable').trigger('footable_initialize');
+            $('#suppliersTable').trigger('footable_resize');
 		}
 
         	$('#c_con_no').html(data['b_conn_no']);
@@ -319,14 +328,14 @@ function get_next_page_conn_success(data){
 		conn_arr = data['conn_data'];
 		for (var i=0; i<conn_arr.length; i++){
 			if (data['type']=='b'){			
-				current_html = $('#mCSB_2_container tbody').html();
+				current_html = $('#supplier_connections').html();
 				new_html =  conn_arr[i]['html'] + current_html;
-				$('#mCSB_2_container tbody').html(new_html);			
+				$('#supplier_connections').html(new_html);			
 			}
 			else{
-				current_html = $('#mCSB_3_container tbody').html();
+				current_html = $('#stockist_connections').html();
 				new_html =  conn_arr[i]['html'] + current_html;
-				$('#mCSB_3_container tbody').html(new_html);			
+				$('#stockist_connections').html(new_html);			
 			}
 			if (conn_arr[i]['user']['address'] != 'Antartica'){
 				plot_connection_layers_on_map(conn_arr[i]['user']);				

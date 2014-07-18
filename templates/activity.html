@@ -273,7 +273,7 @@ function resize(){
 
 }
 var is_superuser = {% if request.user.is_superuser %}true{% else %}false{% endif %};
-var user_username = {{userinfo.username}};
+var user_username = '{{userinfo.username}}';
 </script>
    
 
