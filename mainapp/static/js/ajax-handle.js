@@ -317,6 +317,8 @@ function suppliers_ajax(data){
 			$('#b_con_no').html(data['c_conn_no']);	
 }
 
+var suppliers_table_html = '';
+var stockists_table_html = '';
 function get_next_page_b_conn(buss_username, current_conn_page){
 	ajax_request('pull_connections', 'get_next_page_conn_success', {'username':buss_username,'page_num':current_conn_page, 'type':'b'});
 }
@@ -329,21 +331,19 @@ function get_next_page_conn_success(data){
 	data = jQuery.parseJSON(data);
 	if (data['status']=='ok'){
 		conn_arr = data['conn_data'];
+		if (data['type']=='b'){								  
+		    $('#suppliers_connections').prepend(data['html']);
+		}
+		else{
+			$('#stockist_connections').prepend(data['html']);			
+		}
+
 		for (var i=0; i<conn_arr.length; i++){
-			if (data['type']=='b'){			
-				current_html = $('#supplier_connections').html();
-				new_html =  conn_arr[i]['html'] + current_html;
-				$('#supplier_connections').html(new_html);			
-			}
-			else{
-				current_html = $('#stockist_connections').html();
-				new_html =  conn_arr[i]['html'] + current_html;
-				$('#stockist_connections').html(new_html);			
-			}
 			if (conn_arr[i]['user']['address'] != 'Antartica'){
 				plot_connection_layers_on_map(conn_arr[i]['user']);				
 			}
 		}
+		
 		if(data['type']=='b'){
 			get_next_page_b_conn(data['username'], data['next_page_num']);			
 		}
@@ -351,8 +351,13 @@ function get_next_page_conn_success(data){
 			get_next_page_c_conn(data['username'], data['next_page_num']);				
 		}
 	}
-	else{
-
+	else{		   	
+		  $('#suppliersTable').trigger('footable_initialize');
+          $('#stockistsTable').trigger('footable_resize');
+          $('#stockistsTable').trigger('footable_initialize');
+          $('#suppliersTable').trigger('footable_resize');
+/*          $('#suppliersTable').footable();
+		  $('#stockistsTable').footable();*/
 	}
 }
 
