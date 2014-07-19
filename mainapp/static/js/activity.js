@@ -151,10 +151,8 @@ function open_popup(map_ctrl)
 }
 $(".reply_text").on("mouseover",".singleresult",function(e){
  var result_id = $(this).attr("data-id");
-   // console.log(result_id);
  for(var i = 0; i<map_controls.length;i++)
  {
-    // console.log(map_controls[i].options.tweet_id);
   if(String(map_controls[i].options.tweet_id).trim() == String(result_id).trim())
   {
     result_mouseout = false;
@@ -213,23 +211,6 @@ $("#filtered_body").on('keypress', '.reply_input', function(e) {
        }
         var tweet_id = $(this).attr("data-tweet-id");
        ajax_request("post_tweet", 'make_search', {message: status_msg, parentid:tweet_id});
-       // this.value = "";
-
-  // activity_html = $('#status_template').html();
-  // activity_html = activity_html.replace('===status===',status_msg);
-  // var input_type = $(this).attr("data-main");
-  // if(input_type=="reply")
-  // {
-  //   $(this).parent().parent().html($(this).parent().parent().html()+activity_html);
-
-  // }
-  // else
-  // {
-  //   $(this).parent().parent().next().children().html($(this).parent().parent().next().children().html()+activity_html);
-  // }
-  
-      
-  //   $(this).focus();
      
   }
 }
@@ -251,7 +232,6 @@ function single_post_body_new_post(){
        }
         var tweet_id = $("#main_post_input").attr("data-tweet-id");
        ajax_request("post_tweet", 'update_single_post_body', {message: status_msg, parentid:tweet_id});
-
 }
 
 $("#single_post_body").on('keypress', '.reply_input', function(e) {
@@ -352,25 +332,15 @@ function ajax_update_single_post(data)
 
             function foods_changed(ref,food)
           {
-for(var i = 0; i < food_filters.length;i++){
-          if(food_filters[i].uid==food)
-          {
-            var status = ref.checked;
-            //console.log(status);
-            food_filters[i].prev = status;
+            for(var i = 0; i < food_filters.length;i++){
+            if(food_filters[i].uid==food)
+            {
+              var status = ref.checked;
+              food_filters[i].prev = status;
+            }
+            }
+            make_search();
           }
-          }
-          make_search();
-        }
-
-
-
-
-
-
-
-
-
           
 
           function business_value_changed(more_no)
@@ -428,7 +398,6 @@ for(var i = 0; i < business_filters.length;i++){
           if(business_filters[i].uid==business)
           {
             var status = ref.checked;
-            //console.log(status);
             business_filters[i].prev = status;
           }
           }
@@ -498,7 +467,6 @@ for(var i = 0; i < business_filters.length;i++){
           if(organisation_filters[i].uid==organisation)
           {
             var status = ref.checked;
-            //console.log(status);
             organisation_filters[i].prev = status;
           }
           }

@@ -4,23 +4,23 @@ function get_box_profile(user)
 	content += '<div class="box-generic" data-username="'+user.username+'">';
 	content += '<div class="timeline-top-info border-bottom clearfix">';
 	content += '<div class="pull-right" style="margin-left: 5px;">';
-	content += '<a type="button" class="dropdown-toggle" data-toggle="dropdown">';
+	content += '<span class="dropdown"><a type="button" class="dropdown-toggle" data-toggle="dropdown">';
 	content += '<i class="fa fa-fw fa-cog text-muted"></i>';
 	content += '<span class="sr-only">Toggle Dropdown</span>';
 	content += '</a>';
-	content += '<a type="button" class="btn btn-primary btn-xs" href="/'+user.username+'">';
-	content += '<i class="fa fa-arrow-right fa-lg" style="color:#fff;"></i> ';
-	content += '</a>';
 	content += '<ul class="dropdown-menu" role="menu">  ';
-	content += '<li><a href="http://www.facebook.com/sharer/sharer.php?u=xxxx target="_blank"><i class="fa fa-facebook fa-fw facebook"></i> Share on Facebook</a></li>';
-	content += '<li><a href="http://twitter.com/home?status=xxxx" target="_blank"><i class="fa fa-twitter fa-fw twitter "></i> Share on Twitter</a></li>';
-	content += '<li><a type="button" href="/profile/xxxx/">';
+	content += '<li><a href="http://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent(window.location.origin)+'" target="_blank"><i class="fa fa-facebook fa-fw facebook"></i> Share on Facebook</a></li>';
+	content += '<li><a href="http://twitter.com/home?status='+encodeURIComponent('@'+user.username+' on @foodtradeHQ '+window.location.origin)+'" target="_blank"><i class="fa fa-twitter fa-fw twitter "></i> Share on Twitter</a></li>';
+	content += '<li><a type="button" href="/'+user.username+'/">';
 	content += '<i class="fa fa-info-circle fa-lg fa-fw"></i> View profile</a></li> ';
 	content += '<li><a href="#" onclick="click_activity(\'follow\',\''+user.username+'\')"><i class="fa fa-star-o fa-fw"></i>  Follow on Twitter</a></li>';
 	content += '<li><a href="#" onclick="click_activity(\'spam\',\''+user.username+'\')" class=" "><i class="fa fa-flag-o flag fa-fw"></i> Report</a></li>';
-	content += '</ul>  ';
+	content += '</ul> </span> ';
+	content += '<a type="button" class="btn btn-primary btn-xs" href="/'+user.username+'">';
+	content += '<i class="fa fa-arrow-right fa-lg" style="color:#fff;"></i> ';
+	content += '</a>';
 	content += '</div>  ';
-	content += '<img src="'+user.profile_img+'" alt="xxxx" class="img-responsive pull-left" style="width:50px; margin-right: 5px;">';
+	content += '<img src="'+user.profile_img+'" alt="'+user.name+'" class="img-responsive pull-left" style="width:50px; margin-right: 5px;">';
 
 	content += '<h4 class="margin0"><a href="/'+user.username+'" class="text-inverse">';
 	content += user.name;
@@ -91,7 +91,7 @@ function get_box_profile(user)
 	content += '</a>';
 	content += '</div>  ';
 	content += '<div class="innerAll border-top bg-gray  reply" style="display: none;"> ';
-	content += '<input class="form-control input-sm enterhandler reply_input" data-main="main" type="text" placeholder="Reply to @xxxx" data-mentions="@xxxx"> ';
+	content += '<input class="form-control input-sm enterhandler reply_input" data-main="main" type="text" placeholder="Reply to @'+user.username+'" data-mentions="'+user.username+'"> ';
 	content += '</div>';
 	content += '</div>';
 	return content;
@@ -104,16 +104,13 @@ function box_update_content(update)
 {
 	content ='<div class="timeline-top-info   border-bottom clearfix">';
 	content +='<div class="pull-right" style="margin-left: 5px;">';
-	content +='<a type="button" class="dropdown-toggle" data-toggle="dropdown">';
+	content +='<span class="dropdown"><a type="button" class="dropdown-toggle" data-toggle="dropdown">';
 	content +='<i class="fa fa-fw fa-cog text-muted"></i>';
 	content +='<span class="sr-only">Toggle Dropdown</span>';
 	content +='</a>';
-	content +='<a type="button" class="btn btn-primary btn-xs" href="/'+update.username+'/post/'+update.updates.tweet_id+'">';
-	content +='<i class="fa fa-arrow-right " style="color:#fff;"></i> ';
-	content +='</a>';
 	content +='<ul class="dropdown-menu" role="menu">  ';
-	content +='<li><a href="http://www.facebook.com/sharer/sharer.php?u=http://www.foodtrade.com/'+update.username+'/post/'+update.updates.tweet_id+'" target="_blank"><i class="fa fa-facebook fa-fw facebook"></i> Share on Facebook</a></li>';
-	content +='<li><a href="http://twitter.com/home?status='+update.updates.status+' http://www.foodtrade.com/'+update.username+'/post/'+update.updates.tweet_id+'" target="_blank"><i class="fa fa-twitter fa-fw twitter "></i> Share on Twitter</a></li>';
+	content +='<li><a href="http://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent('http://www.foodtrade.com/'+update.username+'/post/'+update.updates.tweet_id)+'" target="_blank"><i class="fa fa-facebook fa-fw facebook"></i> Share on Facebook</a></li>';
+	content +='<li><a href="http://twitter.com/home?status='+encodeURIComponent(update.updates.status_raw+' http://www.foodtrade.com/'+update.username+'/post/'+update.updates.tweet_id)+'" target="_blank"><i class="fa fa-twitter fa-fw twitter "></i> Share on Twitter</a></li>';
 	content +='<li><a type="button" href="/'+update.username+'">';
 	content +='<i class="fa fa-info-circle fa-lg fa-fw"></i> View profile</a></li>   ';
 	content +='<li><a href="#follow" onclick="click_activity(\'follow\',\''+update.username+'\')"><i class="fa fa-star-o fa-fw"></i>  Follow on Twitter</a></li>';
@@ -124,7 +121,10 @@ function box_update_content(update)
 		content +='<li><a href="#deletetweet" class="deletetweet"  data-username="'+update.username+'" data-tweet-id="'+update.updates.tweet_id+'"><i class="fa fa-trash-o fa-fw flag"></i> Delete</a></li>';
 	}
 	content +='<li><a href="#markspam" onclick="click_activity(\'spam\',\''+update.updates.tweet_id+' \')" class=" "><i class="fa fa-flag-o flag fa-fw"></i> Report</a></li>';
-	content +='</ul>  ';
+	content +='</ul> </span> ';
+	content +='<a type="button" class="btn btn-primary btn-xs" href="/'+update.username+'/post/'+update.updates.tweet_id+'">';
+	content +='<i class="fa fa-arrow-right " style="color:#fff;"></i> ';
+	content +='</a>';
 	content +='</div>  ';
 	content +='<img src="'+update.profile_img+'" alt="'+update.username+'" class="img-responsive pull-left" style="width:40px; margin-right: 5px;">';
 	content +='<h4 class="margin0"><a href="/'+update.username+'" class="text-inverse"> ';

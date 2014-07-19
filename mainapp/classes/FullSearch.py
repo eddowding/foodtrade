@@ -41,10 +41,20 @@ class GeneralSearch():
         self.food_filters = json.loads(params['food_filters'])
         self.distance_limit = 30
         self.result_limit = 10
+        
+
+        
+
         if request.user.is_authenticated():
 
             self.user = params['up']
             try:
+                
+
+                ## make all super user subscribed permission
+                if request.user.is_superuser:
+                    self.user['subscribed'] = 1
+
                 if self.user['subscribed'] == 1:
                     self.result_limit = 20
                     self.distance_limit = 50
@@ -108,6 +118,13 @@ class GeneralSearch():
         if time_stamp!=None:
             pre_match = {'updates':{"$elemMatch":{'time_stamp':{"$gt":int(time_stamp)},"deleted":0}}}
             post_match = {'updates.time_stamp':{"$gt":int(time_stamp)},"updates.deleted":0}
+        else:
+            time_stamp = int(time.time()) - 30*24*3600
+            pre_match = {'updates':{"$elemMatch":{'time_stamp':{"$gt":int(time_stamp)},"deleted":0}}}
+            post_match = {'updates.time_stamp':{"$gt":int(time_stamp)},"updates.deleted":0}
+
+
+
         if self.user['sign_up_as'] == "Individual":
             pre_match['sign_up_as'] = "Individual"
         else:
@@ -118,12 +135,13 @@ class GeneralSearch():
         
 
 
-        if time_stamp!=None:
-            pipeline.append({"$match":post_match})
 
 
 
         pipeline.append({"$unwind":"$updates"})
+
+        if time_stamp!=None:
+            pipeline.append({"$match":post_match})
 
         pipeline.append({"$sort": SON([("updates.time_stamp", -1)])})
         pipeline.append({"$limit":10})

@@ -171,8 +171,32 @@
     </script> -->
     <script>//less.watch();</script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/less.js/1.7.1/less.min.js"></script>  
+<script type="text/javascript">
+  
+  // IE function.bind polyfill
+if (!Function.prototype.bind) {
+        Function.prototype.bind = function (oThis) {
+                if (typeof this !== "function") {
+                        // closest thing possible to the ECMAScript 5 internal IsCallable function
+                        throw new TypeError("Function.prototype.bind - what is trying to be bound is not callable");
+                }
 
-    <script src="{% static "assets/components/plugins/browser/ie/ie.prototype.polyfill.js" %}"></script>
+                var aArgs = Array.prototype.slice.call(arguments, 1),
+                        fToBind = this,
+                        fNOP = function () {},
+                        fBound = function () {
+                                return fToBind.apply(this instanceof fNOP && oThis ? this : oThis,
+                        aArgs.concat(Array.prototype.slice.call(arguments)));
+                };
+
+                fNOP.prototype = this.prototype;
+                fBound.prototype = new fNOP();
+
+                return fBound;
+        };
+}
+</script>
+    
     <script>
     if ( /*@cc_on!@*/ false && document.documentMode === 10)
     {
@@ -904,7 +928,9 @@ line-height: 34px; font-size: 16px;">
     <script src="http://malihu.github.io/custom-scrollbar/jquery.mCustomScrollbar.concat.min.js"></script> 
     <script src="{% static "assets/components/plugins/preload/pace/pace.min.js" %}"></script> 
     <script src="{% static "assets/components/common/forms/elements/bootstrap-select/assets/lib/js/bootstrap-select.js" %}"></script>
-    <script src="{% static "assets/components/common/forms/elements/bootstrap-select/assets/custom/js/bootstrap-select.init.js" %}"></script> 
+
+
+
     <script src="{% static "assets/components/core/js/core.init.js" %}"></script>
     <script src='//api.tiles.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v0.0.2/Leaflet.fullscreen.min.js'></script>
     <link href='//api.tiles.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v0.0.2/leaflet.fullscreen.css' rel='stylesheet' /> 
@@ -921,8 +947,35 @@ line-height: 34px; font-size: 16px;">
   <script src="https://rawgithub.com/kartena/Proj4Leaflet/master/src/proj4leaflet.js"></script><!-- proj4leaflet -->
   <script src="https://rawgithub.com/rob-murray/os-leaflet/master/src/osopenspace.js"></script><!-- OS OpenSpace layer -->
 
+<script type="text/javascript">
+  
 
-<script src="{% static "js/map-include.js" %}"></script>
+var base_layer = L.tileLayer('https://{s}.tiles.mapbox.com/v3/foodtrade.i26pc0n5/{z}/{x}/{y}.png', {
+maxZoom: 18,
+attribution: 'Data &copy; <a href="http://openstreetmap.org">OSM</a> contribs <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a> | Img &copy; <a href="http://mapbox.com">Mapbox</a>'
+});
+var openspaceLayer = L.tileLayer.osopenspace("F481BBF739A5038DE0430B6CA40AB6D2", {debug: false}); 
+      var show_os_map = true;
+var default_csr = L.CRS.EPSG3857;
+  var current_base_layer = base_layer;
+  var default_zoom = 9;
+
+</script>
+
+<script type="text/javascript">
+  
+
+  (function($)
+{
+  $(window).on('load', function(){
+    // custom select for Boostrap using dropdowns
+    if ($('.selectpicker').length) 
+      $('.selectpicker').selectpicker();
+  })
+
+})(jQuery);
+</script>
+
 
 
 <script src="{% static "js/footable.js" %}" type="text/javascript"></script>     
@@ -949,11 +1002,22 @@ line-height: 34px; font-size: 16px;">
     window.location = '/accounts/logout';
   }
 
-  $(".img-thumbnail").bind('error', function (e) {
-    var img_src = this.src;
-    console.log(img_src);
-      $.post( "/update-image/", { img: img_src });
-  });
+  function correct_image_load_errors()
+{
+
+    $('img').bind('error', function() {
+        var img_src = $(this).attr("src");
+var that = this;
+ $.post( "/update-image/", { img: img_src }, function(data)
+    {
+        if(data.status == "ok")
+        $(that).attr("src", data.src);
+    }, "json");
+
+    });
+}
+
+ correct_image_load_errors();
 
   var invite_id = String('{{invite_id|safe}}');
   var tweet = String('{{invite_tweet|safe}}');

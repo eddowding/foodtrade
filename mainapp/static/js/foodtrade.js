@@ -23,6 +23,12 @@ function initialize() {
     placeCord = places[0].geometry.location;
     $("#lon").val(placeCord.lng());
     $("#lat").val(placeCord.lat());
+
+     get_address("profile");
+
+
+
+
   });
 
   // [START region_getplaces]
@@ -34,6 +40,7 @@ function initialize() {
     placeCord = places[0].geometry.location;
     $("#lon").val(placeCord.lng());
     $("#lat").val(placeCord.lat());
+    get_address("market");
   });
 
 
@@ -138,7 +145,7 @@ setTimeout(function() {
                       content += "</div>"; 
                       content += "</div> ";
                       content += "<div class='timeline-bottom  border-top clearfix innerTB half'>";
-                      content += "<a href='http://maps.google.com/maps?saddr=51.4529956141,-2.62451568043&amp;daddr=51.4619294,-2.5891196' target='_blank' data-placement='top' data-toggle='tooltip' class='pull-right' rel='tooltip' title='' data-original-title='Get directions'> ";
+                      content += "<a href='http://maps.google.com/maps?saddr="+Search.filters.market.lat+','+Search.filters.market.lng+'&amp;daddr='+result.latlng.coordinates[1]+','+result.latlng.coordinates[0]+"' target='_blank' data-placement='top' data-toggle='tooltip' class='pull-right' rel='tooltip' title='' data-original-title='Get directions'> ";
                       content += "<i class='fa fa-location-arrow fa-fw'></i> "+result.distance+" miles  ";
                       content += "</a>";
                       if(result.type_user.length>0)
@@ -157,7 +164,7 @@ setTimeout(function() {
                       {
                         content += "<p class='small text-center'>";
                         content += "<i class='fa fa-comments fa-fw'></i>";
-                        content += "<a href='#'>See all "+result.replies_count+" replies</a>";
+                        content += "<a href='/"+result.username+"/post/"+result.updates.tweet_id+"'>See all "+result.replies_count+" replies</a>";
                         content += "</p>";
                       }
                       content += "<input class='form-control input-sm enterhandler reply_input' data-tweet-id='"+result.updates.tweet_id+"' data-main='main' type='text' placeholder='Reply to @"+result.username+"'  data-toggle='market-reply'  data-mentions='@"+result.username+"'> ";
@@ -179,3 +186,15 @@ setTimeout(function() {
                       
                 });
                  });
+
+
+window.onerror = function(msg, url, line, col, error) {
+   // Note that col & error are new to the HTML 5 spec and may not be 
+   // supported in every browser.  It worked for me in Chrome.
+   var spliter = " , ";
+   console.log(msg+spliter+url+spliter+line+spliter+col+spliter+error);
+   var suppressErrorAlert = true;
+   // If you return true, then error alerts (like in older versions of 
+   // Internet Explorer) will be suppressed.
+   return suppressErrorAlert;
+};

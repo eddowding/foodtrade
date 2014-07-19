@@ -54,7 +54,7 @@ function show_connections_on_map()
   
    markers.clearLayers();
 
-  var results = Search[Search.tab+"_results"].result;
+  var results = Search[Search.tab+"_results"];
 
     Search.map_controls = {};
     for(var i=0;i<results.length;i++)
@@ -65,7 +65,7 @@ function show_connections_on_map()
       var ctrl = L.marker([parseFloat(current_lat), parseFloat(current_lon)],{icon: redIcon}).bindPopup(card);
       Search.map_controls[results[i].username] = ctrl;
         markers.addLayer(ctrl);
-         }
+    }
     
         map.addLayer(markers);
         if(results.length>0){
