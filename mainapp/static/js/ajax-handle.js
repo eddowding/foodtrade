@@ -421,7 +421,6 @@ function recommend_food(logged_in_id, food_name, prof_id, username, checked_or_n
 	else{
 		data['action'] = 'remove';
 	}
-	console.log(data);
 	if(data['we_buy']==1){
 		ajax_request("vouch_for_food", 'webuy_food_ajax', {data: JSON.stringify(data)});	
 	}
