@@ -408,12 +408,12 @@ function webuy_food_ajax(data){
 	/*var $container1 = $('#webuy_foods').isotope({itemSelector: '.food'});*/
 }
 
-function recommend_food(logged_in_id, food_name, prof_id, username, my_this, we_buy){
+function recommend_food(logged_in_id, food_name, prof_id, username, checked_or_not_checked, my_this, we_buy){
 	var data = {recommender_id: logged_in_id, food_name: food_name, business_id: prof_id, action: 'add'};
 	vouch_this = my_this;
 	we_buy = typeof we_buy !== 'undefined' ? we_buy : '';
     data['we_buy'] = we_buy== '' ? 0 : 1;
-	if(!(vouch_this.checked)){
+	if(checked_or_not_checked == 'not_checked'){
 		var url = window.location.href;
 		msg = "I've just vouched for #" + food_name.toLocaleLowerCase() + " from " + username + " " + url;
 		$('#tweet-recomm').val(msg);
