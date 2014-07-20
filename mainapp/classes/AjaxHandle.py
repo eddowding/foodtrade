@@ -883,7 +883,7 @@ class AjaxHandle(AjaxSearch):
         sender_email = request.POST.get('sender')
         message = request.POST.get('message')
         subject = sender_name + " has contacted you"
-        print sender_name, receiver_email, message, subject
+        # print sender_name, receiver_email, message, subject
         if sender_name!="" and receiver_email != "" and sender_email != "" and message != "":
             body = "Hi!" +'\r\n\r\n' + message +'\r\n\r\n'+sender_name +'\r\n' +sender_email
             email = Email()
@@ -899,7 +899,7 @@ class AjaxHandle(AjaxSearch):
             if data['action'] == 'add':
                 if data['we_buy']==0:
                     data.pop('we_buy')
-                print 'add: ', data
+                # print 'add: ', data
                 recomm.create_recomm(data)
 
                 notification_obj = Notification()
@@ -922,7 +922,7 @@ class AjaxHandle(AjaxSearch):
                 except:
                     pass
             else:
-                print 'remove: ', data
+                # print 'remove: ', data
                 if data['we_buy']==1:
                     recomm.delete_recomm(data['business_id'], data['food_name'], data['recommender_id'], data['we_buy'])
                 else:
@@ -934,7 +934,7 @@ class AjaxHandle(AjaxSearch):
             else:
                 parameters['all_foods'], parameters['food_parents'] = get_all_foods(int(data['business_id']), request.user.id)
             parameters['profile_id'], parameters['user_id'] = int(data['business_id']), request.user.id
-            print parameters['all_foods']
+            # print parameters['all_foods']
             return render_to_response('ajax_food_tr.html', parameters, context_instance=RequestContext(request))
             # return HttpResponse("{'status':1}")
         else:
