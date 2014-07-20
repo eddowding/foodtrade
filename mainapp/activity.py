@@ -350,7 +350,7 @@ def home(request):
 
 
         return HttpResponseRedirect('/activity?'+urllib.urlencode(params))            
-
+    print request.GET.get("morg")
 
     return render_to_response('activity.html',context_instance=RequestContext(request))
 

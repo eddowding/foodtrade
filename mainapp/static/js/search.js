@@ -6,7 +6,7 @@ var Search = {
     search_type:"produce",
     filters:{profile:{want:"all",lng:"",lat:"", location:"", usertype:"all", org:"[]", biz:"[]"},
     market:{want:"all",lng:"",lat:"", location:"", usertype:"all", org:"[]", biz:"[]"}},
-    tab:"market",
+    tab:"profile",
     profile_results:[],
     market_results:[],
     load_state: function () {
@@ -30,7 +30,9 @@ var Search = {
         this.filters.market.lng = getParameterByName('mlng', this.filters.market.lng);
         this.filters.market.lat = getParameterByName('mlat', this.filters.market.lat);
         this.filters.market.usertype = getParameterByName('mut', this.filters.market.usertype);
+        console.log("sijan1"+this.filters.market.org);
         this.filters.market.org = getParameterByName('morg', this.filters.market.org);
+        console.log("sija2n"+this.filters.market.org);
         this.filters.market.biz = getParameterByName('mbiz', this.filters.market.biz);
     },
     set_url:function(){
@@ -38,7 +40,6 @@ var Search = {
     	var first_item = false;
     	if(this.keyword!="")
     	{
-
     		query += "q="+encodeURIComponent(this.keyword)+"&";
     	}
         if(this.tab!="")
@@ -111,9 +112,9 @@ var Search = {
 
         if(this.filters.market.org != "")
         {           
+            console.log("sijan"+this.filters.market.org);
             query += "morg="+encodeURIComponent(this.filters.market.org)+'&';
-        }
-        
+        }        
         if(this.filters.market.biz != "")
         {           
             query += "mbiz="+encodeURIComponent(this.filters.market.biz)+'&';
@@ -338,7 +339,9 @@ var Search = {
                     }
                     options += "<option"+selected_text+"value='"+results[i]._id+"'>"+results[i]._id+"</option>";
                 }
+                console.log("htm2_added");
                 $("#filter_mkt_org").html(options);
+                console.log("html2_added");
                 var biz_results = data.result.biz;
                 var biz_options = "";
                 var market_filters_biz = JSON.parse(Search.filters.market.biz);
@@ -353,17 +356,18 @@ var Search = {
                 }
 
                 $("#filter_mkt_biz").html(biz_options);
+                console.log("html2_added");
 
 
 
                  $('.selectpicker').selectpicker('refresh');
+                 console.log("html3refreshed");
 
 
+                 // $("#filter_mkt_biz").selectpicker('val', market_filters_biz); 
 
-                 $("#filter_mkt_biz").selectpicker('val', market_filters_biz); 
 
-
-                 $("#filter_mkt_org").selectpicker('val', market_filters_org); 
+                 // $("#filter_mkt_org").selectpicker('val', market_filters_org); 
                
             }, "json");
 
@@ -391,6 +395,7 @@ var Search = {
                     options += "<option"+selected_text+"value='"+results[i]._id+"'>"+results[i]._id+"</option>";
                 }
                 $("#filter_profile_org").html(options);
+
                 var biz_results = data.result.biz;
                 var biz_options = "";
                 var profile_filters_biz = JSON.parse(Search.filters.profile.biz);
@@ -406,8 +411,8 @@ var Search = {
 
                 $("#filter_profile_biz").html(biz_options);
                  $('.selectpicker').selectpicker('refresh');
-                 $("#filter_profile_biz").selectpicker('val', profile_filters_biz); 
-                 $("#filter_profile_org").selectpicker('val', profile_filters_org);  
+                 // $("#filter_profile_biz").selectpicker('val', profile_filters_biz); 
+                 // $("#filter_profile_org").selectpicker('val', profile_filters_org);  
 }, "json"); },
 
 
@@ -445,8 +450,6 @@ var Search = {
         }
         if(this.search_type=="produce")
         {
-            
-       
             this.search_market();
         }
         this.search_profiles();
@@ -479,7 +482,9 @@ $(".selectpicker").change(function(){
         var current_filters = $("#filter_"+current_tab+"_"+filter_type[i]).val();
         if(current_filters==null)
         {
-            current_filters = [];
+            
+            console.log($(this).html());
+            current_filters = "[]";
         }
         Search.filters[Search.tab][filter_type[i]] = JSON.stringify(current_filters);
     }   
