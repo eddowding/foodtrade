@@ -188,13 +188,13 @@ setTimeout(function() {
                  });
 
 
-window.onerror = function(msg, url, line, col, error) {
-   // Note that col & error are new to the HTML 5 spec and may not be 
-   // supported in every browser.  It worked for me in Chrome.
-   var spliter = " , ";
-   console.log(msg+spliter+url+spliter+line+spliter+col+spliter+error);
-   var suppressErrorAlert = true;
-   // If you return true, then error alerts (like in older versions of 
-   // Internet Explorer) will be suppressed.
-   return suppressErrorAlert;
-};
+// window.onerror = function(msg, url, line, col, error) {
+//    // Note that col & error are new to the HTML 5 spec and may not be 
+//    // supported in every browser.  It worked for me in Chrome.
+//    var spliter = " , ";
+//    console.log(msg+spliter+url+spliter+line+spliter+col+spliter+error);
+//    var suppressErrorAlert = true;
+//    // If you return true, then error alerts (like in older versions of 
+//    // Internet Explorer) will be suppressed.
+//    return suppressErrorAlert;
+// };
