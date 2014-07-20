@@ -330,7 +330,7 @@ line-height: 34px; font-size: 16px;">
     <form action="/activity" onsubmit="return start_search()">
  
     <div class="input-group border0">
-      <input type="hidden" name="search_param" value="all" id="search_param">   
+      <input type="hidden" name="stype" value="produce" id="search_stype">   
 
       <div class="input-group-btn border0" id="searchGroup">
         <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" id="searchSelect">
@@ -345,7 +345,7 @@ line-height: 34px; font-size: 16px;">
         </ul>
       </div>  
 
-      <input type="text" class="form-control pull-left" name="x" id="search_query" placeholder="Find...">  
+      <input type="text" class="form-control pull-left" name="q" id="search_query" placeholder="Find...">  
 
       <div class="input-group-btn"> 
         <button type="submit" class="btn btn-default" id="searchSubmit">
@@ -1628,6 +1628,23 @@ function check_limit1(){
   }
 }
 
+
+$("#search_type_option").click(function(){
+  var current_search = $("#search_stype").val();
+    if(current_search=="produce")
+    {        
+      $("#search_stype").val("profile");
+        $("#search_type").html("Profile");
+        $("#search_type_option").html("Produce");
+
+    }
+    else if(current_search=="profile")
+    {        
+      $("#search_stype").val("produce");
+        $("#search_type").html("Produce");
+        $("#search_type_option").html("Profile");
+    }
+});
 
 </script>
 </body>

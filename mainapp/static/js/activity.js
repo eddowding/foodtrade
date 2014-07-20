@@ -16,15 +16,6 @@ $("body").on('focus', 'input[data-toggle=market-reply]', function(e) {
 
 
 
-$("body").on('blur', 'input[data-toggle=market-reply]', function(e) {
-  var that = e.target;
-     if($(that).val().trim()==$(that).attr("data-mentions")){
-    $(that).val("");
-  }
-});
-
-
-
 
 $("body").on('keypress', 'input[data-toggle=market-reply]', function(e) {
   if(validate_login()['status'] == '1'){

@@ -19,8 +19,6 @@ class MarketSearch(GeneralSearch):
 
         agg_pipeline = []
         or_conditions = []
-
-
         # Check if keyword is not empty
         if self.want != "all":
             want_like = re.compile(self.want + '+', re.IGNORECASE)

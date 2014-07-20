@@ -13,6 +13,7 @@ var Search = {
         this.keyword = getParameterByName('q', this.keyword);
 
         this.search_type = getParameterByName('stype', this.search_type);
+        $("#search_stype").val(this.search_type);
         
         this.tab= getParameterByName('tab', this.tab);
         
@@ -30,9 +31,9 @@ var Search = {
         this.filters.market.lng = getParameterByName('mlng', this.filters.market.lng);
         this.filters.market.lat = getParameterByName('mlat', this.filters.market.lat);
         this.filters.market.usertype = getParameterByName('mut', this.filters.market.usertype);
-        console.log("sijan1"+this.filters.market.org);
+        
         this.filters.market.org = getParameterByName('morg', this.filters.market.org);
-        console.log("sija2n"+this.filters.market.org);
+        
         this.filters.market.biz = getParameterByName('mbiz', this.filters.market.biz);
     },
     set_url:function(){
@@ -112,7 +113,6 @@ var Search = {
 
         if(this.filters.market.org != "")
         {           
-            console.log("sijan"+this.filters.market.org);
             query += "morg="+encodeURIComponent(this.filters.market.org)+'&';
         }        
         if(this.filters.market.biz != "")
@@ -246,7 +246,7 @@ var Search = {
           }
           $("#profile_results").html(html_content);
           correct_image_load_errors();
-          if(this.tab == "profile")
+          if(this.tab == "profile"&& this.search_type=="produce")
           {
             
 
@@ -339,9 +339,7 @@ var Search = {
                     }
                     options += "<option"+selected_text+"value='"+results[i]._id+"'>"+results[i]._id+"</option>";
                 }
-                console.log("htm2_added");
                 $("#filter_mkt_org").html(options);
-                console.log("html2_added");
                 var biz_results = data.result.biz;
                 var biz_options = "";
                 var market_filters_biz = JSON.parse(Search.filters.market.biz);
@@ -356,14 +354,7 @@ var Search = {
                 }
 
                 $("#filter_mkt_biz").html(biz_options);
-                console.log("html2_added");
-
-
-
                  $('.selectpicker').selectpicker('refresh');
-                 console.log("html3refreshed");
-
-
                  // $("#filter_mkt_biz").selectpicker('val', market_filters_biz); 
 
 

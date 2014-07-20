@@ -90,7 +90,7 @@ function get_box_profile(user)
 	content += '<i class="fa fa-location-arrow fa-fw"></i> '+user.distance+' miles  ';
 	content += '</a>';
 	content += '</div>  ';
-	content += '<div class="innerAll border-top bg-gray  reply" style="display: none;"> ';
+	content += '<div class="innerAll border-top bg-gray  r eply" style="display: none;"> ';
 	content += '<input class="form-control input-sm enterhandler reply_input" data-main="main" type="text" placeholder="Reply to @'+user.username+'" data-mentions="'+user.username+'"> ';
 	content += '</div>';
 	content += '</div>';
