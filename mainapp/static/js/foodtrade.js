@@ -145,7 +145,7 @@ setTimeout(function() {
                       content += "</div>"; 
                       content += "</div> ";
                       content += "<div class='timeline-bottom  border-top clearfix innerTB half'>";
-                      content += "<a href='http://maps.google.com/maps?saddr="+Search.filters.market.lat+','+Search.filters.market.lng+'&amp;daddr='+result.latlng.coordinates[1]+','+result.latlng.coordinates[0]+"' target='_blank' data-placement='top' data-toggle='tooltip' class='pull-right' rel='tooltip' title='' data-original-title='Get directions'> ";
+                      content += "<a href='http://maps.google.com/maps?saddr="+ticker_lat+','+ticker_lon+'&amp;daddr='+result.latlng.coordinates[1]+','+result.latlng.coordinates[0]+"' target='_blank' data-placement='top' data-toggle='tooltip' class='pull-right' rel='tooltip' title='' data-original-title='Get directions'> ";
                       content += "<i class='fa fa-location-arrow fa-fw'></i> "+result.distance+" miles  ";
                       content += "</a>";
                       if(result.type_user.length>0)

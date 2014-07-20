@@ -495,83 +495,13 @@ $(".selectpicker").change(function(){
     }
 });
 
-function handle_filter(that,filter_for)
-{
-    
-    return;
-     var class_name = $(that).attr('class');
-        
-        if(class_name.indexOf('ticked')!=-1)
-        {
-            $(that).removeClass("ticked");
-
-        }
-        else
-        {
-            $(that).addClass("ticked");
-        }
-
-        
-    var current_tab = "profile";
-    if(filter_for != "profiles")
-    {
-        current_tab = "mkt";
-    }
-    var filter_type = ["org","biz"];
-    for(var i = 0;i<filter_type.length;i++)
-    {
-        var selects = $($("#filter_"+current_tab+"_"+filter_type[i]).parent()).find($("ul.dropdown-menu.selectpicker li.ticked a"));
-        var filter_string = [];
-        for(var j = 0;j<selects.length;j++)
-        {            
-                filter_string.push(selects[j].text);            
-        }
-       
-        Search.filters[Search.tab][filter_type[i]] = JSON.stringify(filter_string);
-        
-        Search.set_url();
-    }
-    if(Search.tab == "market")
-    {
-
-        Search.search_market(true);
-    }
-    else{
-        Search.search_profiles(true);
-    }
-}
-
-
-
-function listen_filters(filter_for)
-{
-    
-    if(filter_for == "mktplace")
-    {
-        $('div#'+filter_for+' ul.dropdown-menu.selectpicker li').on('click', function () {
-        handle_filter(this,"mktplace");
-        
-    });    
-        
-    }
-    if(filter_for == "profiles")
-    {
-        $('div#'+filter_for+' ul.dropdown-menu.selectpicker li').on('click', function () {
-        handle_filter(this,"profiles");
-        
-    });    
-        
-    }
-}
-
-
 
 
 $("#profile_tab").click(function(){
 Search.tab = "profile";
 Search.set_url();
 show_connections_on_map();
-listen_filters("profiles");
+
 });
 
 
@@ -580,7 +510,7 @@ $("#mkt_tab").click(function(){
 Search.tab = "market";
 Search.set_url();
 show_connections_on_map();
-listen_filters("mktplace");
+
 });
 
 $("#search_type_option").click(function(){
