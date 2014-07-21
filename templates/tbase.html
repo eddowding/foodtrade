@@ -699,6 +699,7 @@ line-height: 34px; font-size: 16px;">
         </div><!-- container -->
   </div><!-- col 10 --> 
   <div class="{% if not request.user.is_authenticated %} hidden {% else %} col-md-2  {% endif %}" id="updatesContainer">
+  <div class="fixed">
 
     <div id="didyouknow" class="carousel slide"> 
         <!-- Items -->
@@ -737,10 +738,12 @@ line-height: 34px; font-size: 16px;">
         </div> 
     </div>
 
-    <div id="updates"> 
-    </div><!-- updates -->
-
+    <div class="mCustomScrollbar scroll100p">
+      <div id="updates" class=""> 
+      </div><!-- updates -->
     </div>
+
+  </div>
   </div>
 
 </div>
@@ -1141,7 +1144,7 @@ function success_tweeter_user_invite(data){
 $(document).ready(function() {
 
    $('.mCustomScrollbar').mCustomScrollbar({
-        theme:"dark"
+        theme:"dark-3"
     });
 
    
