@@ -37,7 +37,11 @@
 
    
     <div class="row">
-      <div class="col-md-6 col-xs-8 reply_text" id="single_post_content">
+      <div class="col-sm-12 col-xs-12">
+       <div id="map"></div>
+      </div><!-- end col4 -->
+
+      <div class="col-sm-12 col-xs-12 reply_text" id="single_post_content">
 
 <div class="widget {% if parent_tweet.subscribed %}box-verified{% endif %}">
     {% if parent_tweet.subscribed %}
@@ -51,7 +55,7 @@
 
     {% endif %}
     <div class="row row-merge margin-none">
-        <div class="col-xs-10">
+        <div class="col-xs-12 col-sm-10">
             <div class="innerAll">
                 <div class="media innerAll">
 
@@ -102,6 +106,7 @@
                         <i class="fa fa-location-arrow" style="margin-left: 20px;"></i> {{parent_tweet.distance_text}}  
                         </span>
                         {% endif %}
+                        <br />{{parent_tweet.time_elapsed}} ago 
              
                      </div> <!-- meta -->
  
@@ -110,7 +115,7 @@
             </div>
         </div>
 
-        <div class="col-xs-2">
+        <div class="col-sm-2 hidden-xs">
             <div class="innerAll text-center">
                 <div class="media"> 
                   <i class="fa fa-calendar fa-2x visible-sm "></i> 
@@ -120,27 +125,12 @@
                 </div>
             </div>
         </div>
-
-        <div class="col-md-3 hidden">
-            <div class="innerAll text-center">
-                <div class="media"> 
-                <!-- Button trigger modal -->
-                <button class="btn btn-default btn-block" data-toggle="modal" data-target="#modal_contact">
-                  <i class="fa fa-envelope fa-fw"></i> Contact
-                </button>     
-
-                <button class="btn btn-default btn-block" data-toggle="modal" data-target="#sharer">
-                  <i class="fa fa-share-square-o text-muted"></i> Share
-                </button>
-                </div>
-            </div>
-        </div>
-
+ 
 
     </div>
     <div class="row row-merge margin-none ">
         <div class="col-md-12">
-            <div class="innerAll  i nner-2x">
+            <div class="innerAll">
                 <span class="text-large lead innerAll ">
                   {{parent_tweet.status|recognise_name|safe}}
                 </span>
@@ -152,8 +142,8 @@
 
 
 <div class="widget" id="convo" >
-    <div class="widget-head bg-primary-light">
-      <h4 class="heading pull-left">Join the conversation</h4> 
+    <div class="widget-head bg-inverse">
+      <h4 class="heading pull-left text-white">Join the conversation</h4> 
     </div>
     <div class="widget-body padding-none">
       <div id="update" class="innerAll">
@@ -184,8 +174,7 @@
               {% endif %}
             <li>
                 <div class="marker"></div>
-                <div class="block">
-                    <div class="caret"></div>
+                <div class="block"> 
                     <div class="box-generic bg-primary-light">
                         <div class="timeline-top-info border-bottom">
                             <a href="" class="text-regular">Original post</a> 
@@ -207,9 +196,6 @@
       </div><!-- end col8 --> 
 
 
-      <div class="col-md-6 col-xs-4">
-       <div id="map"  style="position: fixed; width:40%; height: 100%;"></div>
-      </div><!-- end col4 -->
 
     </div><!-- row -->
 

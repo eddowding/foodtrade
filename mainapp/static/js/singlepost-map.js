@@ -181,6 +181,8 @@ var card_str = '<div class="card-box"><div class="content"><div class="pull-left
 }
 
 
+map.scrollWheelZoom.disable();
+
 L.control.fullscreen().addTo(map);
 
 
