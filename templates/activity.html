@@ -7,228 +7,215 @@
 {% block content %}
 
 <div class="container-responsive block-center">
-
 <div class="row row-merge">
 
-<div class="col-xs-12 col-sm-5" id="activity_switcher" >
+  <div class="col-sm-7 col-sm-push-5">         
+      <div id="map"></div>        
+  </div>
 
-
- 
-<div class="widget hidden" style="width:100%;">
-  <div class="padding-none"> 
-    <div class="input-group"  style="width:100%;">
-    {% comment %}
-      <textarea class="form-control"  {% if not user.is_authenticated %}  onfocus="login_redirect()" title="Please login to use this feature." {% else %} {% if not can_tweet %} data-toggle="modal" data-target="#newtwitterpost" {% else %} rel="tooltip" title="Please upgrade your account to post." {% endif %}{% endif %} style="width:100%;">What #food do you have to #buy, #sell, or #surplus?  </textarea> 
-    {% endcomment %}
-      <textarea class="form-control"  {% if not user.is_authenticated %}  onfocus="login_redirect()" title="Please login to use this feature." {% else %}  data-toggle="modal" data-target="#newtwitterpost" {% endif %} style="width:100%;">What #food do you have to #buy, #sell, or #surplus?  </textarea> 
+  <div class="col-sm-5 col-sm-pull-7" id="activity_switcher" >
+   
+    <div class="widget hidden" style="width:100%;">
+      <div class="padding-none"> 
+        <div class="input-group"  style="width:100%;">
+        {% comment %}
+          <textarea class="form-control"  {% if not user.is_authenticated %}  onfocus="login_redirect()" title="Please login to use this feature." {% else %} {% if not can_tweet %} data-toggle="modal" data-target="#newtwitterpost" {% else %} rel="tooltip" title="Please upgrade your account to post." {% endif %}{% endif %} style="width:100%;">What #food do you have to #buy, #sell, or #surplus?  </textarea> 
+        {% endcomment %}
+          <textarea class="form-control"  {% if not user.is_authenticated %}  onfocus="login_redirect()" title="Please login to use this feature." {% else %}  data-toggle="modal" data-target="#newtwitterpost" {% endif %} style="width:100%;">What #food do you have to #buy, #sell, or #surplus?  </textarea> 
+        </div>
+      </div>
     </div>
-  </div>
 
+   
+    <div class="container-responsive" id="searchfilters">
 
-
-</div>
-
-
- 
-<div class="container-responsive" id="searchfilters">
-
-
-<div class="widget widget-tabs widget-tabs-double widget-tabs-responsive border0 margin0" style="background: #F5F8FA; padding-top: 10px;">
-  <!-- Tabs Heading -->
-  <div class="widget-head clearfix"  id="result_tabs" style="background: #F2F6F8;">
-    <ul> 
-      
-      <li class="border-right" style="">
-        <a href="#profiles" class="glyphicons shop" id="profile_tab" data-toggle="tab"><i></i>
-        <div class=" visible-lg">
-          <span class="strong">Profiles</span>
-          <span>People &amp; places</span> 
-        </div>
-        <div class="visible-sm visible-xs visible-md">
-          <span class="strong">Profiles</span>
-          <span>People &amp; places</span> 
-        </div>
-        </a>
-      </li>
-      <li class="" style="">
-        <a href="#mktplace" class="glyphicons bullhorn" id="mkt_tab" data-toggle="tab"><i></i>
-        <div class=" visible-lg">
-          <span class="strong">Market place</span>
-          <span>Real-time trade</span> 
-        </div>
-        <div class="visible-sm visible-xs visible-md">
-          <span class="strong">Market</span>
-          <span>Real-time</span> 
-        </div>
-        </a>
-      </li>
-    </ul>
-  </div>
-</div>
-
-  <div class="widget-body" style="margin:0; background-color: #FFF; position: relative;">
-
-    <div class="tab-content">
-      <!-- Tab content --> 
-      
-        <div class="tab-pane" id="profiles"> 
-
-          <form action="/activity" onsubmit="return get_address('profile');" role="search" data-step="1" data-intro="Search for anyhing, anywhere" class="form-horizontal">
-
-            <div class="form-group clearfix"  style="background:#fff;"> 
-              <div class="col-sm-12 text-center">
-                  <label class="inline">I want to:</label>
-                  <div rel="tooltip" title="Do you want to buy or sell?" class="tooltips btn-group inline"> 
-                      <button type="button" class="btn btn-default btn-pwant btn-sm btn-pwant">Buy</button>
-                      <button type="button" class="btn btn-default btn-pwant btn-sm btn-pwant">Sell</button>
-                  </div> 
+      <div class="widget widget-tabs widget-tabs-double widget-tabs-responsive border0 margin0" style="background: #F5F8FA; padding-top: 10px;">
+        <!-- Tabs Heading -->
+        <div class="widget-head clearfix"  id="result_tabs" style="background: #F2F6F8;">
+          <ul> 
+            
+            <li class="border-right" style="">
+              <a href="#profiles" class="glyphicons shop" id="profile_tab" data-toggle="tab"><i></i>
+              <div class=" visible-lg">
+                <span class="strong">Profiles</span>
+                <span>People &amp; places</span> 
               </div>
-            </div> 
+              <div class="visible-sm visible-xs visible-md">
+                <span class="strong">Profiles</span>
+                <span>People &amp; places</span> 
+              </div>
+              </a>
+            </li>
+            <li class="" style="">
+              <a href="#mktplace" class="glyphicons bullhorn" id="mkt_tab" data-toggle="tab"><i></i>
+              <div class=" visible-lg">
+                <span class="strong">Market place</span>
+                <span>Real-time trade</span> 
+              </div>
+              <div class="visible-sm visible-xs visible-md">
+                <span class="strong">Market</span>
+                <span>Real-time</span> 
+              </div>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
 
-            <div class="form-group clearfix">
-              <div class="col-sm-12 text-center">
-                    <label class="inline">Trade with:</label>
-                  <div rel="tooltip" title="Filter by type" class="tooltips btn-group inline">
-                    <button type="button" class="btn btn-default btn-sm btn-put" data-toggle="collapse" data-target="#companygroup" >Companies</button>
-                    <button type="button" class="btn btn-default btn-sm btn-put">Individuals</button>
+      <div class="widget-body" style="margin:0; background-color: #FFF; position: relative;">
+
+        <div class="tab-content">
+          <!-- Tab content --> 
+          
+            <div class="tab-pane" id="profiles"> 
+
+              <form action="/activity" onsubmit="return get_address('profile');" role="search" data-step="1" data-intro="Search for anyhing, anywhere" class="form-horizontal">
+
+                <div class="form-group clearfix"  style="background:#fff;"> 
+                  <div class="col-sm-12 text-center">
+                      <label class="inline">I want to:</label>
+                      <div rel="tooltip" title="Do you want to buy or sell?" class="tooltips btn-group inline"> 
+                          <button type="button" class="btn btn-default btn-pwant btn-sm btn-pwant">Buy</button>
+                          <button type="button" class="btn btn-default btn-pwant btn-sm btn-pwant">Sell</button>
+                      </div> 
                   </div>
-              </div>
-            </div>
+                </div> 
 
-            <div class="clearfix">
-              <div class="innerAll pull-left" onclick="$(this).hide();">
-                <a data-toggle="collapse" data-target="#filters1" class="btn btn-default btn-sm filters1 normal"><i class="fa fa-caret-right"></i> Advanced filters</a>
-              </div>
-            </div>
+                <div class="form-group clearfix">
+                  <div class="col-sm-12 text-center">
+                        <label class="inline">Trade with:</label>
+                      <div rel="tooltip" title="Filter by type" class="tooltips btn-group inline">
+                        <button type="button" class="btn btn-default btn-sm btn-put" data-toggle="collapse" data-target="#companygroup" >Companies</button>
+                        <button type="button" class="btn btn-default btn-sm btn-put">Individuals</button>
+                      </div>
+                  </div>
+                </div>
 
-            <div id="filters1" class="collapse"> 
-              <div class="form-group" id="locationgroup"> 
-                <div class="col-sm-6 col-sm-offset-3 col-xs-6 col-xs-offset-3">
-                  <div class="input-group  innerAll input-group-sm">
-                   <span class="input-group-addon"><i class="fa fa-map-marker"></i></span>
-                    <input type="text" name="location" id="pac_input_profile" class="pac-input form-control  " placeholder="Where?">
-                    <div class="input-group-btn">
-                      <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+                <div class="clearfix border-bottom">
+                  <div class="innerAll pull-left" onclick="$(this).hide();">
+                    <a data-toggle="collapse" data-target="#filters1" class="btn btn-default btn-sm filters1 normal"><i class="fa fa-caret-right"></i> Advanced filters</a>
+                  </div>
+                </div>
+
+                <div id="filters1" class="collapse"> 
+                  <div class="form-group" id="locationgroup"> 
+                    <div class="col-sm-6 col-sm-offset-3 col-xs-6 col-xs-offset-3">
+                      <div class="input-group  innerAll input-group-sm">
+                       <span class="input-group-addon"><i class="fa fa-map-marker"></i></span>
+                        <input type="text" name="location" id="pac_input_profile" class="pac-input form-control  " placeholder="Where?">
+                        <div class="input-group-btn">
+                          <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+                        </div>
+                      </div>
                     </div>
                   </div>
-                </div>
-              </div>
-              
-              <div class="form-group" id="organisationgroup"> 
-                <div class="col-sm-12 text-">
-                  <select class="selectpicker show-tick" id="filter_profile_org" data-live-search="true" multiple data-selected-text-format="count>2" title="Filter by organisation" name="filterOrg"   data-style="btn-default">
                   
-                </select>
-                </div>
-              </div>
+                  <div class="form-group" id="organisationgroup"> 
+                    <div class="col-sm-12 text-">
+                      <select class="selectpicker show-tick" id="filter_profile_org" data-live-search="true" multiple data-selected-text-format="count>2" title="Filter by organisation" name="filterOrg"   data-style="btn-default">
+                      
+                    </select>
+                    </div>
+                  </div>
 
-              <div class="form-group" id="companygroup"> 
-                <div class="col-sm-12">
-                <select class="selectpicker show-tick" id="filter_profile_biz"   data-live-search="true" multiple data-selected-text-format="count>2" title="Filter by company type" name="companyType"  data-style="btn-default">
-                 
-                </select>
-                </div>
-              </div>
-            </div><!-- filters -->
+                  <div class="form-group" id="companygroup"> 
+                    <div class="col-sm-12">
+                    <select class="selectpicker show-tick" id="filter_profile_biz"   data-live-search="true" multiple data-selected-text-format="count>2" title="Filter by company type" name="companyType"  data-style="btn-default">
+                     
+                    </select>
+                    </div>
+                  </div>
+                </div><!-- filters -->
 
-          </form> 
+              </form> 
 
-          <div id="profile_results"></div>
-        </div>
+              <div id="profile_results" class="innerAll mCustomScrollbar"></div>
 
-        <div class="tab-pane" id="mktplace">
-
-    <form action="/activity" onsubmit="return get_address('market');"  role="search" data-step="1" data-intro="Search for anyhing, anywhere" class="form-horizontal">
-
-      <div class="form-group clearfix innerT"> 
-        <div class="col-sm-12 text-center">
-            <label class="inline">Only posts from: </label>
-            <div rel="tooltip" title="Filter by type" class="tooltips btn-group inline">
-                <button type="button" class="btn btn-default btn-sm btn-mut">Companies</button>
-                <button type="button" class="btn btn-default btn-sm btn-mut">Individuals</button>
             </div>
-        </div>
-      </div>
 
-      <div class="form-group clearfix">
-        <div class="col-sm-12 text-center"  style="background:#fff;">
-            <div rel="tooltip" title="Filter by keyword" class="tooltips btn-group inline">
-                <button type="button" class=" btn btn-default btn-sm btn-mwant">#buy</button>
-                <button type="button" class=" btn btn-default btn-sm btn-mwant">#sell</button>
-                <button type="button" class=" btn btn-default btn-sm btn-mwant">#surplus</button>
-                <button type="button" class=" btn btn-default btn-sm btn-mwant">#job</button>
+            <div class="tab-pane" id="mktplace">
+
+        <form action="/activity" onsubmit="return get_address('market');"  role="search" data-step="1" data-intro="Search for anyhing, anywhere" class="form-horizontal">
+
+          <div class="form-group clearfix innerT"> 
+            <div class="col-sm-12 text-center">
+                <label class="inline">Only posts from: </label>
+                <div rel="tooltip" title="Filter by type" class="tooltips btn-group inline">
+                    <button type="button" class="btn btn-default btn-sm btn-mut">Companies</button>
+                    <button type="button" class="btn btn-default btn-sm btn-mut">Individuals</button>
+                </div>
+            </div>
+          </div>
+
+          <div class="form-group clearfix">
+            <div class="col-sm-12 text-center"  style="background:#fff;">
+                <div rel="tooltip" title="Filter by keyword" class="tooltips btn-group inline">
+                    <button type="button" class=" btn btn-default btn-sm btn-mwant">#buy</button>
+                    <button type="button" class=" btn btn-default btn-sm btn-mwant">#sell</button>
+                    <button type="button" class=" btn btn-default btn-sm btn-mwant">#surplus</button>
+                    <button type="button" class=" btn btn-default btn-sm btn-mwant">#job</button>
+                </div> 
+            </div>
+          </div> 
+
+          <div class="clearfix border-bottom" id="functional">
+
+          {% if request.user.is_authenticated %}
+            <div class="innerAll pull-right">
+                <button type="button" class="btn btn-default btn-sm normal" data-toggle="collapse" data-target="#newtwitterpost"  onclick="window.scrollTo(0,0);">
+                  <i class="fa fa-fw fa-bullhorn text-primary"></i>
+                  Add a new post
+                </button>
             </div> 
-        </div>
-      </div> 
+          {% endif %}  
 
-      <div class="clearfix" id="functional">
-
-      {% if request.user.is_authenticated %}
-        <div class="innerAll pull-right">
-            <button type="button" class="btn btn-default btn-sm normal" data-toggle="collapse" data-target="#newtwitterpost"  onclick="window.scrollTo(0,0);">
-              <i class="fa fa-fw fa-bullhorn text-primary"></i>
-              Add a new post
-            </button>
-        </div> 
-      {% endif %}  
-
-        <div class="innerAll pull-left" onclick="$('#functional').hide();">
-          <a data-toggle="collapse" data-target="#filters2" class="btn btn-default btn-sm normal"><i class="fa fa-caret-right fa-fw"></i> Advanced filters</a>
-        </div>
-      </div>
-
-      <div id="filters2" class="collapse"> 
-        <div class="form-group" id="locationgroup"> 
-          <div class="col-sm-6 col-sm-offset-3 col-xs-6 col-xs-offset-3">
-            <div class="input-group innerAll input-group-sm">
-              <span class="input-group-addon"><i class="fa fa-map-marker"></i></span>
-              <input type="text" name="location" id="pac_input_market" class="pac-input form-control" placeholder="Where?" style="border: 1px solid #E1E1E1;"> 
+            <div class="innerAll pull-left" onclick="$('#functional').hide();">
+              <a data-toggle="collapse" data-target="#filters2" class="btn btn-default btn-sm normal"><i class="fa fa-caret-right fa-fw"></i> Advanced filters</a>
             </div>
           </div>
+
+          <div id="filters2" class="collapse"> 
+            <div class="form-group" id="locationgroup"> 
+              <div class="col-sm-6 col-sm-offset-3 col-xs-6 col-xs-offset-3">
+                <div class="input-group innerAll input-group-sm">
+                  <span class="input-group-addon"><i class="fa fa-map-marker"></i></span>
+                  <input type="text" name="location" id="pac_input_market" class="pac-input form-control" placeholder="Where?" style="border: 1px solid #E1E1E1;"> 
+                </div>
+              </div>
+            </div>
+            
+            <div class="form-group" id="organisationgroup"> 
+              <div class="col-sm-12 innerLR">
+                <select class="selectpicker show-tick text-left" data-live-search="true" multiple data-selected-text-format="count>2" title="Filter by organisation" name="filterOrg"   data-style="btn-default" id="filter_mkt_org">
+                  
+              </select>
+              </div>
+            </div>
+
+            <div class="form-group innerLR" id="companygroup"> 
+              <div class="col-sm-12">
+              <select class="selectpicker show-tick text-left" id="filter_mkt_biz"  data-live-search="true" multiple data-selected-text-format="count>2" title="Filter by company type" name="companyType"  data-style="btn-default">
+              </select>
+              </div>
+            </div>
+          </div><!-- filters -->
+
+        </form> 
+
+
+        <div id="mkt_results" class="innerAll mCustomScrollbar"></div>
+            </div> 
+            <!-- // Tab content END -->
+
+
         </div>
-        
-        <div class="form-group" id="organisationgroup"> 
-          <div class="col-sm-12 innerLR">
-            <select class="selectpicker show-tick text-left" data-live-search="true" multiple data-selected-text-format="count>2" title="Filter by organisation" name="filterOrg"   data-style="btn-default" id="filter_mkt_org">
-              
-          </select>
-          </div>
-        </div>
-
-        <div class="form-group innerLR" id="companygroup"> 
-          <div class="col-sm-12">
-          <select class="selectpicker show-tick text-left" id="filter_mkt_biz"  data-live-search="true" multiple data-selected-text-format="count>2" title="Filter by company type" name="companyType"  data-style="btn-default">
-          </select>
-          </div>
-        </div>
-      </div><!-- filters -->
-
-    </form> 
- 
-
-    <div id="mkt_results" class="innerAll mCustomScrollbar"></div>
-        </div> 
-        <!-- // Tab content END -->
-
-
-    </div>
-
- </div> <!-- widget -->
- 
-
-
-     
+      </div> <!-- widget -->
+   
     </div><!-- closes main col -->
-    </div>
+  </div>
 
 
-      <div class="col-sm-7 col-xs-12 fill">
-         
-          <div id="map"></div>
-        
-      </div>
-    </div>
-
+</div>
 </div>
 
     <script type="text/javascript">
@@ -243,12 +230,7 @@
           switch_text_area();
           $("#structured_postupdate").hide();
           $("#update-big").show();
-        }
-
-
-
-
-
+        } 
 
     </script>
       
@@ -259,9 +241,7 @@
   {% block footer %}
     {% include "includes/not_logged_in_modal.html" %}
      <script src="{% static "js/activity.js" %}"></script>
-     
-
- {% endblock %}
+  {% endblock %}
  {% block javascript %}
  <script type="text/javascript">
       // show_food_filters(food_filters, 0);
@@ -272,7 +252,10 @@
 
 <!-- resizes the map -->
 <script type="text/javascript">
-var mapmargin = 55;
+var mapmargin = 105;
+
+$('#activity_switcher').css("height", ($(window).height() - mapmargin));
+
 $('#map').css("height", ($(window).height() - mapmargin));
 $(window).on("resize", resize);
 resize();
@@ -296,11 +279,6 @@ var user_username = '{{userinfo.username}}';
  <script src="{% static "js/activity-map.js" %}"></script>
  <script src="{% static "js/functions.js" %}"></script>
  <script src="{% static "js/search.js" %}"></script>
-
-              <script type="text/javascript">
-
-             
-
-              </script>
+ 
               
 {% endblock %}

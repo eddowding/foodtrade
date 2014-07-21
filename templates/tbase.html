@@ -688,7 +688,7 @@ line-height: 34px; font-size: 16px;">
 
 <div class="row row-merge"  style="height: 100%;">
   <div class="{% if not request.user.is_authenticated %} col-xs-12 {% else %} col-md-10  {% endif %}">
-        <div class="container-fluid menu-hidden" id="main_page">
+        <div class="container-fluid menu-hidden" id="main_page" style="padding-bottom: 0;">
               <div class="row row-merge">
                     <div class="col-md-12">
                      {% block content %}
@@ -698,7 +698,7 @@ line-height: 34px; font-size: 16px;">
               </div><!-- row -->
         </div><!-- container -->
   </div><!-- col 10 --> 
-  <div class="{% if not request.user.is_authenticated %} hidden {% else %} col-md-2  {% endif %}" id="updatesContainer">
+  <div class="{% if not request.user.is_authenticated %} hidden {% else %} col-md-2  {% endif %} hidden-sm hidden-xs" id="updatesContainer">
   <div class="fixed">
 
     <div id="didyouknow" class="carousel slide"> 
