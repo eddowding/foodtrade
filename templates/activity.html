@@ -10,7 +10,7 @@
 
 <div class="row row-merge">
 
-<div class="col-xs-12 col-sm-4" id="activity_switcher" >
+<div class="col-xs-12 col-sm-5" id="activity_switcher" >
 
 
  
@@ -66,7 +66,7 @@
   </div>
 </div>
 
-  <div class="widget-body innerLR" style="margin:0; background-color: #FFF;">
+  <div class="widget-body" style="margin:0; background-color: #FFF; position: relative;">
 
     <div class="tab-content">
       <!-- Tab content --> 
@@ -75,7 +75,7 @@
 
           <form action="/activity" onsubmit="return get_address('profile');" role="search" data-step="1" data-intro="Search for anyhing, anywhere" class="form-horizontal">
 
-            <div class="form-group clearfix"> 
+            <div class="form-group clearfix"  style="background:#fff;"> 
               <div class="col-sm-12 text-center">
                   <div rel="tooltip" title="Do you want to buy or sell?" class="tooltips btn-group">
                       <button type="button" class="btn btn-default btn-pwant btn-sm btn-pwant">Buy</button>
@@ -93,8 +93,8 @@
               </div>
             </div>
  
-            <div class="innerTB half" onclick="$(this).hide();">
-              <a data-toggle="collapse" data-target="#filters1" class="small filters1"><i class="fa fa-caret-right fa-fw fa-lg"></i> Advanced filters</a>
+            <div class="innerTB half text-center" onclick="$(this).hide();">
+              <a data-toggle="collapse" data-target="#filters1" class="btn btn-default btn-sm filters1"><i class="fa fa-caret-right fa-fw fa-lg"></i> Advanced filters</a>
             </div>
 
             <div id="filters1" class="collapse"> 
@@ -138,7 +138,7 @@
 
       <div class="form-group clearfix">
   
-        <div class="col-sm-12 text-center">
+        <div class="col-sm-12 text-center"  style="background:#fff;">
             <div rel="tooltip" title="Filter by keyword" class="tooltips btn-group">
                 <button type="button" class=" btn btn-default btn-sm btn-mwant">#buy</button>
                 <button type="button" class=" btn btn-default btn-sm btn-mwant">#sell</button>
@@ -149,7 +149,7 @@
       </div>
 
   
-      <div class="form-group clearfix" style="background: rgba(200,200,200,0.1);"> 
+      <div class="form-group clearfix"> 
         <div class="col-sm-12 text-center">
             <div rel="tooltip" title="Filter by type" class="tooltips btn-group">
                 <button type="button" class="btn btn-default btn-sm btn-mut">Companies</button>
@@ -158,26 +158,23 @@
         </div>
       </div>
 
-      <div class="innerTB half" onclick="$(this).hide();">
-        <a data-toggle="collapse" data-target="#filters2" class="small"><i class="fa fa-caret-right fa-fw fa-lg"></i> Advanced filters</a>
+      <div class="innerTB half border-bottom text-center" onclick="$(this).hide();">
+        <a data-toggle="collapse" data-target="#filters2" class="btn btn-default btn-sm "><i class="fa fa-caret-right fa-fw fa-lg"></i> Advanced filters</a>
       </div>
 
-      <div id="filters2" class=" collapse"> 
+      <div id="filters2" class="collapse"> 
         <div class="form-group" id="locationgroup"> 
-          <div class="col-sm-12 ">
+          <div class="col-sm-6 col-sm-offset-3 ">
             <div class="input-group innerAll input-group-sm">
               <span class="input-group-addon"><i class="fa fa-map-marker"></i></span>
-              <input type="text" name="location" id="pac_input_market" class="pac-input form-control  " placeholder="Where?">
-              <div class="input-group-btn">
-                <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
-              </div>
+              <input type="text" name="location" id="pac_input_market" class="pac-input form-control" placeholder="Where?" style="border: 1px solid #E1E1E1;"> 
             </div>
           </div>
         </div>
         
         <div class="form-group" id="organisationgroup"> 
           <div class="col-sm-12 innerLR">
-            <select class="selectpicker show-tick" data-live-search="true" multiple data-selected-text-format="count>2" title="Filter by organisation" name="filterOrg"   data-style="btn-default" id="filter_mkt_org">
+            <select class="selectpicker show-tick text-left" data-live-search="true" multiple data-selected-text-format="count>2" title="Filter by organisation" name="filterOrg"   data-style="btn-default" id="filter_mkt_org">
               
           </select>
           </div>
@@ -185,14 +182,14 @@
 
         <div class="form-group innerLR" id="companygroup"> 
           <div class="col-sm-12">
-          <select class="selectpicker show-tick"   id="filter_mkt_biz"  data-live-search="true" multiple data-selected-text-format="count>2" title="Filter by company type" name="companyType"  data-style="btn-default">
+          <select class="selectpicker show-tick text-left" id="filter_mkt_biz"  data-live-search="true" multiple data-selected-text-format="count>2" title="Filter by company type" name="companyType"  data-style="btn-default">
           </select>
           </div>
         </div>
       </div><!-- filters -->
 
     </form> 
-<div id="mkt_results"></div>
+    <div id="mkt_results" class="innerAll mCustomScrollbar"></div>
         </div> 
         <!-- // Tab content END -->
 
@@ -208,7 +205,7 @@
     </div>
 
 
-      <div class="col-sm-8 col-xs-12 fill">
+      <div class="col-sm-7 col-xs-12 fill">
          
           <div id="map"></div>
         
@@ -258,7 +255,7 @@
 
 <!-- resizes the map -->
 <script type="text/javascript">
-var mapmargin = 0;
+var mapmargin = 55;
 $('#map').css("height", ($(window).height() - mapmargin));
 $(window).on("resize", resize);
 resize();

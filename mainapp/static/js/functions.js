@@ -104,8 +104,8 @@ function box_update_content(update)
 {
 	content ='<div class="timeline-top-info   border-bottom clearfix">';
 	content +='<div class="pull-right" style="margin-left: 5px;">';
-	content +='<span class="dropdown"><a type="button" class="dropdown-toggle" data-toggle="dropdown">';
-	content +='<i class="fa fa-fw fa-cog text-muted"></i>';
+	content +='<span class="dropdown"><a type="button" class="dropdown-toggle btn btn-xs btn-default" data-toggle="dropdown">';
+	content +='<i class="fa fa-fw fa-share text-muted"></i>';
 	content +='<span class="sr-only">Toggle Dropdown</span>';
 	content +='</a>';
 	content +='<ul class="dropdown-menu" role="menu">  ';
@@ -123,7 +123,7 @@ function box_update_content(update)
 	content +='<li><a href="#markspam" onclick="click_activity(\'spam\',\''+update.updates.tweet_id+' \')" class=" "><i class="fa fa-flag-o flag fa-fw"></i> Report</a></li>';
 	content +='</ul> </span> ';
 	content +='<a type="button" class="btn btn-primary btn-xs" href="/'+update.username+'/post/'+update.updates.tweet_id+'">';
-	content +='<i class="fa fa-arrow-right " style="color:#fff;"></i> ';
+	content +='Enquire';
 	content +='</a>';
 	content +='</div>  ';
 	content +='<img src="'+update.profile_img+'" alt="'+update.username+'" class="img-responsive pull-left" style="width:40px; margin-right: 5px;">';
@@ -142,15 +142,15 @@ function box_update_content(update)
 	content +=update.updates.status;
 	content +='</div>';
 	content +='</div> ';
-	content +='<div class="timeline-bottom small border-top clearfix">';
+	content +='<div class="timeline-bottom small border-top clearfix innerTB half">';
 	content +='<a href="http://maps.google.com/maps?saddr='+Search.filters.market.lat+','+Search.filters.market.lng+'&amp;daddr='+update.latlng.coordinates[1]+','+update.latlng.coordinates[0]+'" target="_blank" data-placement="top" data-toggle="tooltip" class="pull-right" rel="tooltip" title="" data-original-title="Get directions"> ';
-	content +='<span class="hidden-sm hidden-xs truncate100 address">';
+	content +='<span class="hidden-sm hidden-xs truncate100 address text-muted">';
 	content +='<i class="fa fa-map-marker fa-fw"></i>';
 	content += update.address;
-	content +='</span>';
+	content +='</span>'; 
 	content +='</a> ';
-	content +='<a href="/'+update.username+'/post/'+update.updates.tweet_id+'">';
-	content +='<i class="fa fa-calendar  fa-fw"></i>' + get_time_text(update.updates.time_stamp)+' ago';
+	content +='<a href="/'+update.username+'/post/'+update.updates.tweet_id+'" class="text-muted">';
+	content +='<i class="fa fa-calendar  fa-fw"></i> ' + get_time_text(update.updates.time_stamp)+' ago';
 	content +='</a>';
 	content +='</div>  ';
 	
@@ -163,9 +163,9 @@ function get_box_update(update)
 {
 	content ='<div class="box-generic" data-username="'+update.username+'">';
 	content += box_update_content(update);
-	content +='<div class="innerAll half border-top bg-gray "> ';
-	content +='<input class="form-control input-sm enterhandler reply_input" data-toggle="market-reply" data-tweet-id="'+update.updates.tweet_id+'" data-main="main" type="text" placeholder="Reply to '+update.username+'" data-mentions="@'+update.username+'"> ';
-	content +='</div>';
+	// content +='<div class="innerAll half border-top bg-gray "> ';
+	// content +='<input class="form-control input-sm enterhandler reply_input" data-toggle="market-reply" data-tweet-id="'+update.updates.tweet_id+'" data-main="main" type="text" placeholder="Reply to '+update.username+'" data-mentions="@'+update.username+'"> ';
+	// content +='</div>';
 	content +='</div>';
 	return content;
 }
