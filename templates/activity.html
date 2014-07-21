@@ -77,29 +77,33 @@
 
             <div class="form-group clearfix"  style="background:#fff;"> 
               <div class="col-sm-12 text-center">
-                  <div rel="tooltip" title="Do you want to buy or sell?" class="tooltips btn-group">
+                  <label class="inline">I want to:</label>
+                  <div rel="tooltip" title="Do you want to buy or sell?" class="tooltips btn-group inline"> 
                       <button type="button" class="btn btn-default btn-pwant btn-sm btn-pwant">Buy</button>
                       <button type="button" class="btn btn-default btn-pwant btn-sm btn-pwant">Sell</button>
                   </div> 
               </div>
             </div> 
 
-            <div class="form-group clearfix" style="background: rgba(200,200,200,0.1);">
+            <div class="form-group clearfix">
               <div class="col-sm-12 text-center">
-                  <div rel="tooltip" title="Filter by type" class="tooltips btn-group">
+                    <label class="inline">Trade with:</label>
+                  <div rel="tooltip" title="Filter by type" class="tooltips btn-group inline">
                     <button type="button" class="btn btn-default btn-sm btn-put" data-toggle="collapse" data-target="#companygroup" >Companies</button>
                     <button type="button" class="btn btn-default btn-sm btn-put">Individuals</button>
                   </div>
               </div>
             </div>
- 
-            <div class="innerTB half text-center" onclick="$(this).hide();">
-              <a data-toggle="collapse" data-target="#filters1" class="btn btn-default btn-sm filters1"><i class="fa fa-caret-right fa-fw fa-lg"></i> Advanced filters</a>
+
+            <div class="clearfix">
+              <div class="innerAll pull-left" onclick="$(this).hide();">
+                <a data-toggle="collapse" data-target="#filters1" class="btn btn-default btn-sm filters1 normal"><i class="fa fa-caret-right"></i> Advanced filters</a>
+              </div>
             </div>
 
             <div id="filters1" class="collapse"> 
               <div class="form-group" id="locationgroup"> 
-                <div class="col-sm-12">
+                <div class="col-sm-6 col-sm-offset-3 col-xs-6 col-xs-offset-3">
                   <div class="input-group  innerAll input-group-sm">
                    <span class="input-group-addon"><i class="fa fa-map-marker"></i></span>
                     <input type="text" name="location" id="pac_input_profile" class="pac-input form-control  " placeholder="Where?">
@@ -136,35 +140,46 @@
 
     <form action="/activity" onsubmit="return get_address('market');"  role="search" data-step="1" data-intro="Search for anyhing, anywhere" class="form-horizontal">
 
-      <div class="form-group clearfix">
-  
-        <div class="col-sm-12 text-center"  style="background:#fff;">
-            <div rel="tooltip" title="Filter by keyword" class="tooltips btn-group">
-                <button type="button" class=" btn btn-default btn-sm btn-mwant">#buy</button>
-                <button type="button" class=" btn btn-default btn-sm btn-mwant">#sell</button>
-                <button type="button" class=" btn btn-default btn-sm btn-mwant">#surplus</button>
-                <button type="button" class=" btn btn-default btn-sm btn-mwant">#job</button>
-            </div> 
-        </div>
-      </div>
-
-  
-      <div class="form-group clearfix"> 
+      <div class="form-group clearfix innerT"> 
         <div class="col-sm-12 text-center">
-            <div rel="tooltip" title="Filter by type" class="tooltips btn-group">
+            <label class="inline">Only posts from: </label>
+            <div rel="tooltip" title="Filter by type" class="tooltips btn-group inline">
                 <button type="button" class="btn btn-default btn-sm btn-mut">Companies</button>
                 <button type="button" class="btn btn-default btn-sm btn-mut">Individuals</button>
             </div>
         </div>
       </div>
 
-      <div class="innerTB half border-bottom text-center" onclick="$(this).hide();">
-        <a data-toggle="collapse" data-target="#filters2" class="btn btn-default btn-sm "><i class="fa fa-caret-right fa-fw fa-lg"></i> Advanced filters</a>
+      <div class="form-group clearfix">
+        <div class="col-sm-12 text-center"  style="background:#fff;">
+            <div rel="tooltip" title="Filter by keyword" class="tooltips btn-group inline">
+                <button type="button" class=" btn btn-default btn-sm btn-mwant">#buy</button>
+                <button type="button" class=" btn btn-default btn-sm btn-mwant">#sell</button>
+                <button type="button" class=" btn btn-default btn-sm btn-mwant">#surplus</button>
+                <button type="button" class=" btn btn-default btn-sm btn-mwant">#job</button>
+            </div> 
+        </div>
+      </div> 
+
+      <div class="clearfix" id="functional">
+
+      {% if request.user.is_authenticated %}
+        <div class="innerAll pull-right">
+            <button type="button" class="btn btn-default btn-sm normal" data-toggle="collapse" data-target="#newtwitterpost"  onclick="window.scrollTo(0,0);">
+              <i class="fa fa-fw fa-bullhorn text-primary"></i>
+              Add a new post
+            </button>
+        </div> 
+      {% endif %}  
+
+        <div class="innerAll pull-left" onclick="$('#functional').hide();">
+          <a data-toggle="collapse" data-target="#filters2" class="btn btn-default btn-sm normal"><i class="fa fa-caret-right fa-fw"></i> Advanced filters</a>
+        </div>
       </div>
 
       <div id="filters2" class="collapse"> 
         <div class="form-group" id="locationgroup"> 
-          <div class="col-sm-6 col-sm-offset-3 ">
+          <div class="col-sm-6 col-sm-offset-3 col-xs-6 col-xs-offset-3">
             <div class="input-group innerAll input-group-sm">
               <span class="input-group-addon"><i class="fa fa-map-marker"></i></span>
               <input type="text" name="location" id="pac_input_market" class="pac-input form-control" placeholder="Where?" style="border: 1px solid #E1E1E1;"> 
@@ -189,6 +204,8 @@
       </div><!-- filters -->
 
     </form> 
+ 
+
     <div id="mkt_results" class="innerAll mCustomScrollbar"></div>
         </div> 
         <!-- // Tab content END -->

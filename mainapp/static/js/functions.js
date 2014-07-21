@@ -142,7 +142,7 @@ function box_update_content(update)
 	content +=update.updates.status;
 	content +='</div>';
 	content +='</div> ';
-	content +='<div class="timeline-bottom small border-top clearfix innerTB half">';
+	content +='<div class="timeline-bottom small border-top clearfix innerT">';
 	content +='<a href="http://maps.google.com/maps?saddr='+Search.filters.market.lat+','+Search.filters.market.lng+'&amp;daddr='+update.latlng.coordinates[1]+','+update.latlng.coordinates[0]+'" target="_blank" data-placement="top" data-toggle="tooltip" class="pull-right" rel="tooltip" title="" data-original-title="Get directions"> ';
 	content +='<span class="hidden-sm hidden-xs truncate100 address text-muted">';
 	content +='<i class="fa fa-map-marker fa-fw"></i>';
