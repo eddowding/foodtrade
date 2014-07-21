@@ -701,6 +701,14 @@ line-height: 34px; font-size: 16px;">
   <div class="{% if not request.user.is_authenticated %} hidden {% else %} col-md-2  {% endif %} hidden-sm hidden-xs" id="updatesContainer">
   <div class="fixed">
 
+  <h4><i class="fa fa-bullhorn"></i> Marketplace updates</h4>
+
+    <div class="mCustomScrollbar" id="updateScroller">
+      <div id="updates" class=""> 
+      </div><!-- updates -->
+    </div>
+
+
     <div id="didyouknow" class="carousel slide"> 
         <!-- Items -->
         <div class="carousel-inner">
@@ -736,11 +744,6 @@ line-height: 34px; font-size: 16px;">
             </div>  
 
         </div> 
-    </div>
-
-    <div class="mCustomScrollbar scroll100p">
-      <div id="updates" class=""> 
-      </div><!-- updates -->
     </div>
 
   </div>

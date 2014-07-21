@@ -356,18 +356,21 @@
         <div class="panel-title">
 
           <i class="fa fa-cutlery"></i> <strong>Produce</strong> sold here
-          {% if user.is_authenticated %}
-             &middot; <a data-target="#addProduce" data-toggle="collapse" class="small">Add new</a>
-          {% endif %}
 
           <div class="pull-right">
             {% if userprof.food_no != 0 %}<span class="badge">{{userprof.food_no}}</span>{% endif %}
 
             {% if userprof.food_no != 0 %}
             <span data-target="#searchProduce" data-toggle="collapse" class="border-left innerL">
-              <i class="glyphicon glyphicon-search"></i>
+              <i class="fa fa-search fa-fw"></i>
             </span>
-            {% endif %}  
+            {% endif %} 
+
+            {% if user.is_authenticated %}
+              <a data-toggle="collapse" class="" data-target="#addProduce" rel="tooltip" title="Add new produce">
+               <i class="fa fa-plus-circle fa-fw text-primary"></i>
+              </a> 
+            {% endif %} 
           </div>
         </div>
       </div> 
@@ -476,18 +479,22 @@
     <div class="panel panel-default" id="panelSuppliers">
       <div class="panel-heading">
         <h3 class="panel-title">
-          <i class="fa fa-sign-in"></i> <strong>Buys from</strong> <span id="b_con_no">{{b_conn_no}}</span> Suppliers
-          {% if user.is_authenticated %}
-            &middot; <a data-target="#addSupplier" data-toggle="collapse" class="small">Add one</a>
-          {% endif %} 
+          <i class="fa fa-sign-in"></i> <strong>Buys from</strong> <span id="b_con_no" class="normal black">{{b_conn_no}}</span> Suppliers 
         </h3>
-        {% if userprof.b_conn_no != 0 %}
+
         <div class="pull-right" style="margin-top: -18px; font-size: 15px;"> 
-          <span data-target="#searchSuppliers" data-toggle="collapse" class="border-left innerL">
-            <i class="glyphicon glyphicon-search"></i>
-          </span>
+          {% if userprof.b_conn_no != 0 %}
+            <span data-target="#searchSuppliers" data-toggle="collapse" class="border-left innerL">
+              <i class="fa fa-search fa-fw"></i>
+            </span>
+          {% endif %}
+
+          {% if user.is_authenticated %}
+            <a data-toggle="collapse" class="" data-target="#addSupplier" rel="tooltip" title="Add a supplier">
+             <i class="fa fa-plus-circle fa-fw text-primary"></i>
+            </a> 
+          {% endif %} 
         </div>
-        {% endif %}
       </div> 
 
       <!-- filter -->
@@ -569,18 +576,22 @@
     <div class="panel panel-default" id="panelStockists">
       <div class="panel-heading">
         <h3 class="panel-title">
-          <i class="fa fa-sign-out"></i> <strong>Sells to </strong> <span id="c_con_no">{{c_conn_no}}</span> Stockists
-          {% if user.is_authenticated %}
-            &middot; <a data-target="#addStockist" data-toggle="collapse" class="small">Add one</a>
-          {% endif %} 
+          <i class="fa fa-sign-out"></i> <strong>Sells to </strong> <span id="c_con_no" class="normal black">{{c_conn_no}}</span> Stockists 
         </h3>
-        {% if userprof.c_conn_no != 0 %}
         <div class="pull-right" style="margin-top: -18px; font-size: 15px;"> 
+
+          {% if userprof.c_conn_no != 0 %}
           <span data-target="#searchStockists" data-toggle="collapse" class="border-left innerL">
-            <i class="glyphicon glyphicon-search"></i>
+            <i class="fa fa-search fa-fw"></i>
           </span>
+          {% endif %}
+
+          {% if user.is_authenticated %}
+            <a data-toggle="collapse" class="" data-target="#addStockist" rel="tooltip" title="Add a supplier">
+             <i class="fa fa-plus-circle fa-fw text-primary"></i>
+            </a> 
+          {% endif %} 
         </div>
-        {% endif %}
       </div> 
 
       <!-- filter -->
@@ -669,17 +680,21 @@
       <div class="panel-heading">
         <div class="panel-title">
           <i class="fa fa-list"></i> <strong>Shopping List</strong>
-          {% if user.is_authenticated %}
-             &middot; <a data-target="#addShopping" data-toggle="collapse" class="small">Add new</a>
-          {% endif %}
+      
 
           <div class="pull-right">
             {% if all_buying_foods|length != 0 %}
               <span class="badge">{{all_buying_foods|length}}</span>
               <span data-target="#searchShopping" data-toggle="collapse" class="border-left innerL">
-                <i class="glyphicon glyphicon-search"></i>
+                <i class="fa fa-search fa-fw"></i>
               </span>
             {% endif %}
+
+            {% if user.is_authenticated %}
+              <a data-toggle="collapse" class="" data-target="#addShopping" rel="tooltip" title="Add to purchased items">
+               <i class="fa fa-plus-circle fa-fw text-primary"></i>
+              </a> 
+            {% endif %} 
           </div>
         </div>
       </div>
@@ -795,11 +810,13 @@
     <h3 class="panel-title">
       <strong>
       <i class="fa fa-certificate"></i> 
-      <span id="orgConnNo">{% if userprof.organisation_connection_no != 0 %}{{userprof.organisation_connection_no}}{% endif %}</span> Groups</strong> &amp; organisations &middot;
-
-    {% if user.is_authenticated %}
-      <a id="tabMemberships" data-target="#addGroup" data-toggle="collapse" class="small">Add to a group</a>
-    {% endif %}
+      <span id="orgConnNo" class="normal black">{% if userprof.organisation_connection_no != 0 %}{{userprof.organisation_connection_no}}{% endif %}</span> Groups</strong> &amp; organisations
+      
+      <div class="pull-right">
+        {% if user.is_authenticated %}
+          <a data-target="#addGroup" data-toggle="collapse" rel="tooltip" title="Add to a group"><i class="fa fa-fw fa-plus-circle text-primary"></i></a>
+        {% endif %}
+      </div>
 
     </h3>
   </div>
@@ -818,13 +835,14 @@
   </div>
   {% endif %}
 
+  {% if user.is_authenticated %}
+    {% else %}
+      <div class="clearfix"><a href="{% provider_login_url "twitter" process="login" %}" class="">Login</a> or <a href="{% provider_login_url "twitter" process="login" %}" class="">sign up free</a> to see a complete list of groups. </div>
+  {% endif %}
+
   <div class="panel-body groupsGrid" id="groupsGrid">
  
-    {% if user.is_authenticated %}
-    {% else %}
-      <p class=""><a href="{% provider_login_url "twitter" process="login" %}" class="">Login</a> or <a href="{% provider_login_url "twitter" process="login" %}" class="">sign up free</a> to see a complete list of groups. </p>
-    {% endif %}
-
+    
     {% for each in organisations %}  
       <div class="groupItem clearfix" id="orgGroupItem{{each.username}}">
         <div class="text-center">
@@ -854,7 +872,7 @@
     <div class="pull-right"> 
       <span class="badge">{{customers|length}}</span>
       <span data-target="#searchProduce" data-toggle="collapse" class="border-left innerL">
-        <i class="glyphicon glyphicon-search"></i>
+        <i class="fa fa-search fa-fw"></i>
       </span>
     </div>
 

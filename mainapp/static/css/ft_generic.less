@@ -95,6 +95,15 @@
     background: #E8EBE8;
     // .box-shadow(0 0 15px #444 inset);
     .leftright(15px);
+  } 
+  h4 {
+    margin: 0;
+    font-size: 13px;
+    text-align: center;
+    padding: 5px 0;
+    background: #999;
+    color: #eee;
+    font-weight: bold;
   }
 }
 
@@ -111,6 +120,13 @@
   color: #333 !important;
 }
 
+#didyouknow { 
+  position: fixed;
+  bottom: 0;
+  height: 90px;
+  background: #999;
+  line-height: 1.2;
+}
 
 /* ------------------------------------
 /*  2.   LAYOUT
@@ -236,8 +252,7 @@ position: relative;
     -webkit-column-break-inside: avoid; 
     page-break-inside: avoid;
     margin: 0 0 10px 0;
-    .rounded(10px);
-    .drop-shadow(1px, 1px, 0px, 0.2); 
+    .rounded(3px); 
     padding: 10px;
   } 
 }
@@ -413,6 +428,11 @@ i.pinterest,span.pinterest{ color: #cb2027 !important; }
 /*  7.  ACTIVITY
 /* ------------------------------------
 */
+
+#updateScroller {
+  @winheight:`$(window).height() - 170`;
+  height: ~"@{winheight}px";
+}
 
 #profile_results,
 #mkt_results {
