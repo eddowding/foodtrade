@@ -96,7 +96,7 @@ function get_time_text(time)
                     {
                       var item = feeds[i];
                       updates +='<div class="update" data-toggle="popover" data-title="help" data-tweet-id="'+item.updates.tweet_id+'" data-trigger="manual" data-container="body" data-placement="left" data-original-title="" title="" data-html="true"  >';
-                      updates += '<img src="'+item.profile_img+'" class="pull-left" style="width:25px; margin-right: 10px;" /><p class="margin-image-left-small">'+item.updates.status+'<br /><small class="text-muted">'+get_time_text(item.updates.time_stamp)+'</small> </p></div>';
+                      updates += '<img src="'+item.profile_img+'" class="pull-left" style="width:25px; margin-right: 10px;" /><p class="margin-image-left-small">'+item.updates.status+'<br /><small class="timeago">'+get_time_text(item.updates.time_stamp)+' ago</small> </p></div>';
 
 
                     }
