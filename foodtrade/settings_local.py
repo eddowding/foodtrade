@@ -79,5 +79,3 @@ ACCOUNT_LOGOUT_ON_GET = True
 
 
 REMOVE_WWW = False
-
-PREPEND_WWW = True

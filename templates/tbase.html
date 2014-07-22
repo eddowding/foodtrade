@@ -120,9 +120,10 @@
 
 
 <script type="text/javascript">
-
+{% if request.user.is_authenticated %}
 var ticker_lat = {{userinfo.lat}};
 var ticker_lon = {{userinfo.lon}};
+{% endif %}
    var RedIcon = L.Icon.Default.extend({
             options: {
                   iconUrl:'/static/images/map_marker.png',
@@ -936,6 +937,16 @@ var that = this;
     <script src="{% static "js/twitter-typeahead.js" %}"></script>
     
     <!-- social net --> 
+    {% if request.user.is_authenticated %}
+   <script type="text/javascript">
+$(document).ready(function(){
+                
+                poll_latest_updates();
+                ajax_request("get_latest_updates", 'update_latest_updates',{time:latest_timestamp});
+              });
+    </script>
+{% endif %}
+ 
 
     <script data-id="App.Config">
     var App = {};
