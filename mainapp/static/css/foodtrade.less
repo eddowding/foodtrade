@@ -693,11 +693,6 @@ td.ellipsis
   border-bottom: 1px solid;
   }
 
-
-#footer { 
-  background: #000;
-}  
-
 @media (max-width: 768px) {
   .dropdown-menu-large {
     margin-left: 0 ;
@@ -725,10 +720,7 @@ td.ellipsis
     position: relative; 
     margin-bottom: 5px !important;
   }
-
-  #footer {
-    display: none;
-  }
+ 
 
 }
  
@@ -736,10 +728,18 @@ td.ellipsis
 .navbar.main .dropdown.username .dropdown-menu {
   left: auto; 
 }
-  
-#footer a {
-  color: #999;
-  text-decoration: none;
+
+#footer { 
+  background: #000;    
+  font-weight: 300;
+  text-align: center;
+  line-height: 2;
+  height: auto;
+  color: #ccc;
+  a {
+    color: #eee;
+    text-decoration: none;
+  }
 }
 
 .footer-sticky #footer {
