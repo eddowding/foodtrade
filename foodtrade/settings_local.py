@@ -78,4 +78,5 @@ ACCOUNT_LOGOUT_ON_GET = True
 # ACCOUNT_SIGNUP_FORM_CLASS = "djstripe.forms.StripeSubscriptionSignupForm"
 
 
-REMOVE_WWW = True
+# REMOVE_WWW = True
+
