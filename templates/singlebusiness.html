@@ -1003,7 +1003,7 @@
       <div class="panel-heading">
         <div class="panel-title">
           <i class="fa fa-bullhorn"></i> <strong>{% if updates_count != 0 %}{{updates_count}}{% endif %} Marketplace</strong> updates
-          {%if profile_id == user_id %}
+          {% if profile_id == user_id %}
           &middot;
            <a href="#" data-toggle="collapse" data-target="#newtwitterpost" class="small">New update
            </a>
@@ -1013,7 +1013,7 @@
 
       <div class="panel-body">
         {% if updates_count == 0 %}
-        {% profile_id == user_id %}
+        {% if profile_id == user_id %}
           <p></p>
 
           <p><b>You've not yet said anything in the Marketplace!</b></p>
