@@ -210,21 +210,7 @@ var Search = {
           }
           $("#mkt_results").html(html_content);
           correct_image_load_errors();
-          if(this.tab == "market")
-          {
-            
-
-
-            if(this.profile_results.length>0 && updates.length == 0)
-            {
-                this.tab = "profile"
-                $("#profile_tab").parent().addClass('active');
-            $("#mkt_tab").parent().removeClass('active');
-            $("#profiles").addClass('active');
-            $("#mktplace").removeClass('active');
-       
-            }
-          }
+          
           $('.dropdown-toggle').dropdown();
     },
 
@@ -246,23 +232,7 @@ var Search = {
           }
           $("#profile_results").html(html_content);
           correct_image_load_errors();
-          if(this.tab == "profile"&& this.search_type=="produce")
-          {
-            
-
-
-            if(this.market_results.length>0 && profiles.length == 0)
-            {
-                this.tab = "market"
-                $("#mkt_tab").parent().addClass('active');
-            $("#profile_tab").parent().removeClass('active');
-
-
-             $("#profiles").removeClass('active');
-            $("#mktplace").addClass('active');
-       
-            }
-          }
+          
           $('.dropdown-toggle').dropdown();
 
     },
@@ -456,8 +426,42 @@ var Search = {
 
 function start_search()
 {
+    Search.
     Search.search_start();
     return false;
+
+    if(this.tab == "profile"&& this.search_type=="produce")
+          {
+            
+
+
+            if(this.market_results.length>0 && profiles.length == 0)
+            {
+                this.tab = "market"
+                $("#mkt_tab").parent().addClass('active');
+            $("#profile_tab").parent().removeClass('active');
+
+
+             $("#profiles").removeClass('active');
+            $("#mktplace").addClass('active');
+       
+            }
+          }
+          if(this.tab == "market")
+          {
+            
+
+
+            if(this.profile_results.length>0 && updates.length == 0)
+            {
+                this.tab = "profile"
+                $("#profile_tab").parent().addClass('active');
+            $("#mkt_tab").parent().removeClass('active');
+            $("#profiles").addClass('active');
+            $("#mktplace").removeClass('active');
+       
+            }
+          }
 }
 
 $(".selectpicker").change(function(){

@@ -16,7 +16,7 @@ map.on('zoomend', map_dragged);
 }
 
 
-var layer_group = new L.LayerGroup();
+
 
 // L.circle([map_lat,map_lon], 24140.2, {
 //       stroke: 1,
@@ -45,11 +45,12 @@ var layer_group = new L.LayerGroup();
 //     }).addTo(layer_group);
  
 
-var markers = new L.MarkerClusterGroup();
+var layer_group = new L.MarkerClusterGroup();
+var layer_group = new L.LayerGroup();
 function show_connections_on_map()
 {
   
-   markers.clearLayers();
+   layer_group.clearLayers();
 
   var results = Search[Search.tab+"_results"];
 
@@ -61,12 +62,12 @@ function show_connections_on_map()
       var card = (Search.tab=="market")?get_box_update_map(results[i]):map_profile_card(results[i]);
       var ctrl = L.marker([parseFloat(current_lat), parseFloat(current_lon)],{icon: redIcon}).bindPopup(card);
       Search.map_controls[results[i].username] = ctrl;
-        markers.addLayer(ctrl);
+        layer_group.addLayer(ctrl);
     }
     
-        map.addLayer(markers);
+        map.addLayer(layer_group);
         if(results.length>0){
-            // map.fitBounds(markers.getBounds());
+            // map.fitBounds(layer_group.getBounds());
         }
 }
 
