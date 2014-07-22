@@ -120,9 +120,10 @@
 
 
 <script type="text/javascript">
-
+{% if request.user.is_authenticated %}
 var ticker_lat = {{userinfo.lat}};
 var ticker_lon = {{userinfo.lon}};
+{% endif %}
    var RedIcon = L.Icon.Default.extend({
             options: {
                   iconUrl:'/static/images/map_marker.png',
@@ -936,6 +937,16 @@ var that = this;
     <script src="{% static "js/twitter-typeahead.js" %}"></script>
     
     <!-- social net --> 
+    {% if request.user.is_authenticated %}
+   <script type="text/javascript">
+$(document).ready(function(){
+                
+                poll_latest_updates();
+                ajax_request("get_latest_updates", 'update_latest_updates',{time:latest_timestamp});
+              });
+    </script>
+{% endif %}
+ 
 
     <script data-id="App.Config">
     var App = {};
@@ -987,6 +998,58 @@ var openspaceLayer = L.tileLayer.osopenspace("F481BBF739A5038DE0430B6CA40AB6D2",
 var default_csr = L.CRS.EPSG3857;
   var current_base_layer = base_layer;
   var default_zoom = 9;
+
+
+  $("#map").on('dblclick keyup mousedown mousewheel mousemove', function() {
+       
+      var current_center = map.getCenter();
+      var cent_lon = current_center.lng;
+      var cent_lat = current_center.lat;
+      var current_zoom_level = map.getZoom();
+
+      var is_current_base = (map.options.crs == L.CRS.EPSG3857);
+      var switching_zoom_level = 7;
+// Check if the view is set to UK 
+  if(cent_lat>49.89193 && cent_lat<61.08466 && cent_lon>-9.38053 && cent_lon<2.07316&&show_os_map)
+    {
+      // Check if it is showing non OS map
+      if(is_current_base)
+      {
+
+        if(current_zoom_level > 17)
+        {
+          map.options.crs=L.OSOpenSpace.getCRS();
+          map.removeLayer(base_layer)
+          map.addLayer(openspaceLayer);
+        map.setView([cent_lat,cent_lon],9);
+
+        }
+        var over_zoom = current_zoom_level-5;
+      }
+       else
+      {
+
+        if(current_zoom_level<9)
+        {
+          map.options.crs=L.CRS.EPSG3857;
+          map.removeLayer(openspaceLayer)
+          map.addLayer(base_layer);
+          map.setView([cent_lat,cent_lon],18+current_zoom_level-9);
+        }
+      }
+    }
+    else
+    {
+ 
+      if((!is_current_base))
+      {
+        map.options.crs=L.CRS.EPSG3857;
+        map.removeLayer(openspaceLayer)
+        map.addLayer(base_layer);
+      map.setView([cent_lat,cent_lon],9);
+      }
+    }        
+});
 
 </script>
 

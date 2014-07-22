@@ -117,9 +117,6 @@ setTimeout(function() {
 
 
               $(document).ready(function(){
-                
-                poll_latest_updates();
-                ajax_request("get_latest_updates", 'update_latest_updates',{time:latest_timestamp});
                  $("#updates").on("click",".update",function(e){ 
                   if($(this).attr('data-trigger')!="manual")
                     return;
