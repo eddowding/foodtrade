@@ -375,7 +375,7 @@ def notifications(request):
     user_email = request.user.email
 
     notices = Notification()
-    my_notifications = notices.get_notification(user_name, page_number=1, n_type = 'all')
+    my_notifications = notices.get_notification(user_name, page_number=1, n_type = 'all')    
     parameters['archived_notification_count'] = my_notifications['archived_notification_count']
     parameters['all_notification_count'] = my_notifications['all_notification_count']
     parameters['unread_notification_count'] = my_notifications['unread_notification_count']
@@ -384,6 +384,8 @@ def notifications(request):
 
     myNotice = []
     for eachNotification in my_notifications['notifications']:
+        if eachNotification['notification_archived_status'] =='true':
+            continue
         processed_notice = {}
         user_profile_obj = UserProfile()
         notifying_user_profile = user_profile_obj.get_profile_by_username(eachNotification['notifying_user'])

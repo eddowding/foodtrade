@@ -1093,6 +1093,10 @@ class AjaxHandle(AjaxSearch):
             
             myNotice = []
             for eachNotification in my_notifications['notifications']:
+                if n_type == 'unread' and eachNotification['notification_archived_status'] == 'true':
+                    continue
+                if n_type == 'archive' and eachNotification['notification_archived_status'] == 'false':
+                    continue
                 processed_notice = {}
                 user_profile_obj = UserProfile()
                 notifying_user_profile = user_profile_obj.get_profile_by_username(eachNotification['notifying_user'])

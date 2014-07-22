@@ -179,6 +179,11 @@ Contact
             </td>
 
             <td class="   "> 
+            <!-- <p class="col-sm-5">
+              <a href="#" onclick="view_message('{{each_notification.notifying_user_profile.name}}','{{each_notification.notifying_user_email}}', '{{each_notification.notification_message_full}}', '{{each_notification.notification_id}}', '{{each_notification.notifying_user_screenname}}')">
+                {{each_notification.notification_message}}
+              </a>
+            </p> -->
                 {{each_notification.notification_message_full}} 
             </td>
 
@@ -228,6 +233,7 @@ var pg_count = 30;
 var old = 0;
 /*{{each_notification.notifying_user_screenname}}','{{each_notification.notifying_user_email}}', '{{each_notification.notification_id}}','{{user.username}}', '{{userprofile.name}}','{{user.email}}'*/
 function reply_click(notifying_user_screenname, notifying_user_email, notification_id, nofifying_user_full_name){
+    ajax_request('change_notification_view_status', 'notification_view_success', {'notification_id':notification_id});
     $('#myModalLabel').html('Contact ' + nofifying_user_full_name);
     $('#btnModalReply').click();
     $('#ahrefNotifyerEmail').attr('href','mailto:' + notifying_user_email);
@@ -274,17 +280,12 @@ $(document).ready(function(){
 function parse_notification_counts(data){
   $('.pagination').show();
   data =jQuery.parseJSON(data);
-  $('#spanAll').html('');
-  $('#spanAll').html(data['all']);
+  /*  $('#spanAll').html('');
+  $('#spanAll').html(data['all']);*/
   $('#spanArchive').html('');
   $('#spanArchive').html(data['archived']);
   $('#spanUnread').html('');
-  $('#spanUnread').html(data['unread']);
-  $('#spanInbox').html('');
-  $('#spanInbox').html(data['unread']);
-  if ((not_type == 'unread' && String(data['unread']) == '0') || (not_type == 'all' &&  String(data['all']) == '0') || (not_type == 'archive' && String(data['archived']) == '0')){
-    $('.pagination').hide();
-  }
+  $('#spanUnread').html(data['unread']);  
 }
 
 function un_archive_notification_success(data){
@@ -296,47 +297,23 @@ function un_archive_notification_success(data){
 }
 $(document).ready(function(){
   var str = '<li><a id="notification_page_dec" onclick="update_ul_notification_dec()">&laquo;</a></li>';
-  for (var i =0; i<5; i++){
-    str = str + '<li id=\"pg_'+ String(i+1) +'\"><a id="notification_page_' + String(i+1) + '"onclick="update_ul_notification('+ String(i+1) + ')">' + String(i+1) + '</a></li>';
-  }
   str = str + '<li><a id="notification_page_inc" onclick="update_ul_notification_inc()">&raquo;</a></li>';
   $('.pagination').html(str);
 
 });
 
 function update_ul_notification_dec(){
-  if(mn_count !=0 ){
-    $('.pagination').html('');
-    var str = '<li><a id="notification_page_dec" onclick="update_ul_notification_dec()">&laquo;</a></li>';
-    for (var i =mn_count-1; i<mn_count+4; i++){
-      str = str + '<li id=\"pg_'+ String(i+1) +'\"><a id="notification_page_' + String(i+1) + '"onclick="update_ul_notification('+ String(i+1) + ')">' + String(i+1) + '</a></li>';
-    }
-    str = str + '<li><a id="notification_page_inc" onclick="update_ul_notification_inc()">&raquo;</a></li>';
-    $('.pagination').html(str);
-    mn_count = mn_count - 1;
-    mx_count = mx_count - 1;
+  if(cur_page !=0 ){
+    cur_page = cur_page -1;
+    update_ul_notification(cur_page);
   }
 }
 function update_ul_notification_inc(){
-  if(mx_count != pg_count){
-    $('.pagination').html('');
-    var str = '<li><a id="notification_page_dec" onclick="update_ul_notification_dec()">&laquo;</a></li>';
-    for (var i =mn_count+1; i<mn_count+6; i++){
-      str = str + '<li id=\"pg_'+ String(i+1) +'\"><a id="notification_page_' + 
-      String(i+1) + '" onclick="update_ul_notification(' +  
-        String(i+1) + ')">' + String(i+1) + '</a></li>';
-    }
-    str = str + '<li><a id="notification_page_inc" onclick="update_ul_notification_inc()">&raquo;</a></li>';
-    $('.pagination').html(str);
-    mn_count = mn_count + 1;
-    mx_count = mx_count + 1;
-  }
+    cur_page = cur_page + 1;
+    update_ul_notification(cur_page);
 }
 
 function update_ul_notification(cur_page){
-  $('#pg_' +String(old)).removeClass('active');
-  $('#pg_' +String(cur_page)).addClass('active');
-  old = cur_page;
   ajax_request('get_notices_paginated', 'parse_notices_ajax',{'pgnum':cur_page, 'n_type':not_type});
 }
 
