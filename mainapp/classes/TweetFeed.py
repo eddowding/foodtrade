@@ -945,9 +945,10 @@ class Notification():
 
     def get_notification(self,username, page_number = 1, n_type = 'unread'):
         all_notification_count = self.db_object.get_count(self.table_name,
-            {'notification_to':username, 'notification_archived_status':'false'})
+            {'notification_to':username})
+            # {'notification_to':username, 'notification_archived_status':'false'})
         unread_notification_count = self.db_object.get_count(self.table_name,
-            {'notification_to':username, 'notification_view_status':'false'})
+            {'notification_to':username, 'notification_view_status':'false', 'notification_archived_status':'false'})
         archived_notification_count = self.db_object.get_count(self.table_name,
             {'notification_to':username, 'notification_archived_status':'true'})
         if n_type == 'unread':
@@ -956,7 +957,7 @@ class Notification():
                     'unread_notification_count':unread_notification_count, 
                     'notifications':self.db_object.get_paginated_values(self.table_name,
                     {'notification_to':username,
-                    'notification_view_status':'false'},
+                    'notification_archived_status':'false'},
                     sort_index ='notification_time', pageNumber = page_number)}
 
         elif n_type == 'archive':
@@ -981,7 +982,7 @@ class Notification():
         all_notification_count = self.db_object.get_count(self.table_name,
             {'notification_to':username, 'notification_archived_status':'false'})
         unread_notification_count = self.db_object.get_count(self.table_name,
-            {'notification_to':username, 'notification_view_status':'false'})
+            {'notification_to':username, 'notification_view_status':'false', 'notification_archived_status':'false'})
         archived_notification_count = self.db_object.get_count(self.table_name,
             {'notification_to':username, 'notification_archived_status':'true'})
         return {'all':all_notification_count, 'unread':unread_notification_count, 'archived':archived_notification_count}
