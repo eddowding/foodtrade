@@ -43,10 +43,7 @@ var layer_group = new L.LayerGroup();
 //       weight: 1,
 //       fill: 0,
 //     }).addTo(layer_group);
-
-
-
-
+ 
 
 var markers = new L.MarkerClusterGroup();
 function show_connections_on_map()

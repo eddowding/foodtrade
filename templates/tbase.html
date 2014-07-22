@@ -120,9 +120,10 @@
 
 
 <script type="text/javascript">
-
+{% if request.user.is_authenticated %}
 var ticker_lat = {{userinfo.lat}};
 var ticker_lon = {{userinfo.lon}};
+{% endif %}
    var RedIcon = L.Icon.Default.extend({
             options: {
                   iconUrl:'/static/images/map_marker.png',
@@ -215,7 +216,7 @@ if (!Function.prototype.bind) {
     
 
 
-<div class="container-fluid menu-hidden" id=" ">
+<div class="container-fluid menu-hidden" id="wrapper">
   
  
 
@@ -259,7 +260,7 @@ if (!Function.prototype.bind) {
     <div class="dropdown username pull-left border-right uservoicePadding">
       <a class="dropdown-toggle" data-toggle="dropdown" href="#">Login
       </a> 
-       <ul class="dropdown-menu pull-right" style="padding: 15px;min-width: 250px;">
+       <ul class="dropdown-menu pull-right" id="login" style="padding: 15px;min-width: 250px;">
           <li>
              <a href="{% provider_login_url "twitter" process="login" %}"><button class="btn btn-primary btn-block" style="background: #5398D8; border-color: #4B80B5;" id="sign-in-twitter" value="Sign In with Twitter">Sign In with Twitter</button></a>
           </li>
@@ -380,8 +381,8 @@ line-height: 34px; font-size: 16px;">
             <div class=" pull-right border-left user-action ">  
 
                 <button type="button" class="btn btn-primary btn-stroke btn-sm hidden-xs hidden-sm" data-toggle="collapse" data-target="#newtwitterpost" style="font-weight: normal;" onclick="window.scrollTo(0,0);">
-                  <i class="fa fa-edit text-primary"></i>
-                  New   
+                  <i class="fa fa-bullhorn fa-fw text-primary"></i>
+                  Post in marketplace
                 </button>
 
                 <a class="hidden-md hidden-lg" data-toggle="collapse" data-target="#newtwitterpost" style="font-weight: normal; position: relative; top: -7px;">
@@ -688,7 +689,7 @@ line-height: 34px; font-size: 16px;">
 
 <div class="row row-merge"  style="height: 100%;">
   <div class="{% if not request.user.is_authenticated %} col-xs-12 {% else %} col-md-10  {% endif %}">
-        <div class="container-fluid menu-hidden" id="main_page">
+        <div class="container-fluid menu-hidden" id="main_page" style="padding-bottom: 0;">
               <div class="row row-merge">
                     <div class="col-md-12">
                      {% block content %}
@@ -698,7 +699,16 @@ line-height: 34px; font-size: 16px;">
               </div><!-- row -->
         </div><!-- container -->
   </div><!-- col 10 --> 
-  <div class="{% if not request.user.is_authenticated %} hidden {% else %} col-md-2  {% endif %}" id="updatesContainer">
+  <div class="{% if not request.user.is_authenticated %} hidden {% else %} col-md-2  {% endif %} hidden-sm hidden-xs" id="updatesContainer">
+  <div class="fixed">
+
+  <h4><i class="fa fa-bullhorn"></i> Marketplace updates</h4>
+
+    <div class="mCustomScrollbar" id="updateScroller">
+      <div id="updates" class=""> 
+      </div><!-- updates -->
+    </div>
+
 
     <div id="didyouknow" class="carousel slide"> 
         <!-- Items -->
@@ -737,10 +747,7 @@ line-height: 34px; font-size: 16px;">
         </div> 
     </div>
 
-    <div id="updates"> 
-    </div><!-- updates -->
-
-    </div>
+  </div>
   </div>
 
 </div>
@@ -839,10 +846,15 @@ line-height: 34px; font-size: 16px;">
 <div class="container-responsive clearfix" id="footer" >    
   <div class="row"  id="footer_container">
       
-      <div class="col-sm-8">
+      <div class="col-sm-12">
       <!-- 
       developers
       timeline --> 
+
+        <p class="">&copy; 2012 - {% now "Y" %} Sustaination Ltd. Data is CCBY: <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/80x15.png" /></a> </p>
+
+        
+
         <ul class="list-unstyled list-inline pull-left" style="display: inline;">  
           <li><a href="/pages/individuals">Individuals</a></li>
           <li><a href="/pages/business">Business</a></li>
@@ -853,11 +865,7 @@ line-height: 34px; font-size: 16px;">
           <li><a href="/pages/terms">Terms of Service</a></li>
           <li><a href="/pages/privacy">Privacy</a></li>
         </ul>
-        <p class="text-muted pull-left">&copy; 2012 - {% now "Y" %} Sustaination Ltd. All rights reserved. All data remains the property of its creator. </p>
 
-      </div> 
-
-      <div class="col-sm-4"> 
         <ul class="list-unstyled list-inline pull-right">
           <li>
             <a href="http://www.facebook.com/foodtradeHQ"><i class="fa fa-facebook-square fa-2x"></i></a></li><li> 
@@ -865,8 +873,8 @@ line-height: 34px; font-size: 16px;">
             <a href="https://plus.google.com/+Foodtrade" rel="publisher"><i class="fa fa-google-plus-square fa-2x"></i></a>
           </li>
         </ul> 
-      </div>
-       
+
+      </div>  
       </div>  
     </div>
   </div> 
@@ -930,6 +938,16 @@ var that = this;
     <script src="{% static "js/twitter-typeahead.js" %}"></script>
     
     <!-- social net --> 
+    {% if request.user.is_authenticated %}
+   <script type="text/javascript">
+$(document).ready(function(){
+                
+                poll_latest_updates();
+                ajax_request("get_latest_updates", 'update_latest_updates',{time:latest_timestamp});
+              });
+    </script>
+{% endif %}
+ 
 
     <script data-id="App.Config">
     var App = {};
@@ -981,6 +999,58 @@ var openspaceLayer = L.tileLayer.osopenspace("F481BBF739A5038DE0430B6CA40AB6D2",
 var default_csr = L.CRS.EPSG3857;
   var current_base_layer = base_layer;
   var default_zoom = 9;
+
+
+  $("#map").on('dblclick keyup mousedown mousewheel mousemove', function() {
+       
+      var current_center = map.getCenter();
+      var cent_lon = current_center.lng;
+      var cent_lat = current_center.lat;
+      var current_zoom_level = map.getZoom();
+
+      var is_current_base = (map.options.crs == L.CRS.EPSG3857);
+      var switching_zoom_level = 7;
+// Check if the view is set to UK 
+  if(cent_lat>49.89193 && cent_lat<61.08466 && cent_lon>-9.38053 && cent_lon<2.07316&&show_os_map)
+    {
+      // Check if it is showing non OS map
+      if(is_current_base)
+      {
+
+        if(current_zoom_level > 17)
+        {
+          map.options.crs=L.OSOpenSpace.getCRS();
+          map.removeLayer(base_layer)
+          map.addLayer(openspaceLayer);
+        map.setView([cent_lat,cent_lon],9);
+
+        }
+        var over_zoom = current_zoom_level-5;
+      }
+       else
+      {
+
+        if(current_zoom_level<9)
+        {
+          map.options.crs=L.CRS.EPSG3857;
+          map.removeLayer(openspaceLayer)
+          map.addLayer(base_layer);
+          map.setView([cent_lat,cent_lon],18+current_zoom_level-9);
+        }
+      }
+    }
+    else
+    {
+ 
+      if((!is_current_base))
+      {
+        map.options.crs=L.CRS.EPSG3857;
+        map.removeLayer(openspaceLayer)
+        map.addLayer(base_layer);
+      map.setView([cent_lat,cent_lon],9);
+      }
+    }        
+});
 
 </script>
 
@@ -1141,7 +1211,7 @@ function success_tweeter_user_invite(data){
 $(document).ready(function() {
 
    $('.mCustomScrollbar').mCustomScrollbar({
-        theme:"dark"
+        theme:"dark-3"
     });
 
    

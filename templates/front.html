@@ -11,28 +11,24 @@
 <link href="{% static "css/ft_home.less" %}" rel="stylesheet/less"> 
 
 <div class="ftstrip"></div>
-<div class="clearfix" style="background:url('/static/images/map_home.jpg'); background-size: cover;" id="homeimage">  
+<div class="clearfix" style="background:url('/static/images/map_home_dark.jpg'); background-size: cover;" id="homeimage">  
  <div class="col-sm-8 col-sm-offset-2 col-xs-10 col-xs-offset-1">
-    <form action="/activity" onsubmit="return formSubmit(this);" class="clearfix"  role="search"> 
-<div id="homeText">
+
+    <form action="/activity" onsubmit="return formSubmit(this);" class="clearfix hidden"  role="search"> 
       <div class="input-group" id="homeSearch">  
         <input type="text" name="q" id="keyword" class="form-control input-lg" value="" placeholder="Type a food to buy or sell">                    
         <span class="input-group-btn">
           <button class="btn btn-default" style="background: #fff;font-size: 30px; border-radius: 0 10px 10px 0; padding-bottom: 7px;" type="submit"><i class="fa fa-search"></i></button>  
         </span> 
       </div>
-
       <input type="hidden" name="location" id="new_search" value="   ">
-      </form>
+    </form>
 
- 
+     <div id="homeText">
         <p  id="proof">
-          FoodTrade is a membership organisation matchmaking businesses to work together for a responsible and efficient food system.
+          Let's rewire the food system, for good.
         </p>
 
-        <p   id="proof">
-        So far, we've made <strong>{{total_activity|add:total_replies|add:total_connections}} connections</strong>  with  <strong>{{user_count.business_count}}  businesses</strong>,  <strong>{{user_count.organisation_count}} organisations</strong>, and <strong>{{user_count.individual_count}} people</strong>.
-        </p>
       </div>
 
       <div class="text-center" id="joinButton">
@@ -51,6 +47,14 @@
   </div> 
 </div>
 <div class="ftstrip"></div>
+
+  <div id="numbers">
+    <p>FoodTrade is a membership organisation matchmaking businesses to work together for a responsible and efficient food system. </p>
+
+    <p  id="">
+    So far, we've made <strong>{{total_activity|add:total_replies|add:total_connections}} connections</strong>  with  <strong>{{user_count.business_count}}  businesses</strong>,  <strong>{{user_count.organisation_count}} organisations</strong>, and <strong>{{user_count.individual_count}} people</strong>.
+    </p>
+  </div>
 
  
 
