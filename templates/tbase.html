@@ -215,7 +215,7 @@ if (!Function.prototype.bind) {
     
 
 
-<div class="container-fluid menu-hidden" id=" ">
+<div class="container-fluid menu-hidden" id="wrapper">
   
  
 
@@ -380,8 +380,8 @@ line-height: 34px; font-size: 16px;">
             <div class=" pull-right border-left user-action ">  
 
                 <button type="button" class="btn btn-primary btn-stroke btn-sm hidden-xs hidden-sm" data-toggle="collapse" data-target="#newtwitterpost" style="font-weight: normal;" onclick="window.scrollTo(0,0);">
-                  <i class="fa fa-edit text-primary"></i>
-                  New   
+                  <i class="fa fa-bullhorn fa-fw text-primary"></i>
+                  Post in marketplace
                 </button>
 
                 <a class="hidden-md hidden-lg" data-toggle="collapse" data-target="#newtwitterpost" style="font-weight: normal; position: relative; top: -7px;">
@@ -688,7 +688,7 @@ line-height: 34px; font-size: 16px;">
 
 <div class="row row-merge"  style="height: 100%;">
   <div class="{% if not request.user.is_authenticated %} col-xs-12 {% else %} col-md-10  {% endif %}">
-        <div class="container-fluid menu-hidden" id="main_page">
+        <div class="container-fluid menu-hidden" id="main_page" style="padding-bottom: 0;">
               <div class="row row-merge">
                     <div class="col-md-12">
                      {% block content %}
@@ -698,7 +698,16 @@ line-height: 34px; font-size: 16px;">
               </div><!-- row -->
         </div><!-- container -->
   </div><!-- col 10 --> 
-  <div class="{% if not request.user.is_authenticated %} hidden {% else %} col-md-2  {% endif %}" id="updatesContainer">
+  <div class="{% if not request.user.is_authenticated %} hidden {% else %} col-md-2  {% endif %} hidden-sm hidden-xs" id="updatesContainer">
+  <div class="fixed">
+
+  <h4><i class="fa fa-bullhorn"></i> Marketplace updates</h4>
+
+    <div class="mCustomScrollbar" id="updateScroller">
+      <div id="updates" class=""> 
+      </div><!-- updates -->
+    </div>
+
 
     <div id="didyouknow" class="carousel slide"> 
         <!-- Items -->
@@ -737,10 +746,7 @@ line-height: 34px; font-size: 16px;">
         </div> 
     </div>
 
-    <div id="updates"> 
-    </div><!-- updates -->
-
-    </div>
+  </div>
   </div>
 
 </div>
@@ -1141,7 +1147,7 @@ function success_tweeter_user_invite(data){
 $(document).ready(function() {
 
    $('.mCustomScrollbar').mCustomScrollbar({
-        theme:"dark"
+        theme:"dark-3"
     });
 
    
