@@ -36,8 +36,8 @@ class GeneralSearch():
 
         self.want = params['want']
         self.user_type = params['usertype']
-        self.org_filters = params['org']
-        self.biz_type_filters = params['biz']
+        self.org_filters = json.loads(params['org'])
+        self.biz_type_filters = json.loads(params['biz'])
         self.food_filters = json.loads(params['food_filters'])
         self.distance_limit = 30
         self.result_limit = 10
@@ -100,9 +100,11 @@ class GeneralSearch():
         search_request['want'] = request.POST.get("want",request.GET.get("want","all"))
         search_request['search_for'] = request.POST.get("search_type",request.GET.get("search_type","produce")) 
         search_request['usertype'] = request.POST.get("usertype",request.GET.get("usertype","all")) 
-        search_request['biz'] = json.loads(request.POST.get("biz",request.GET.get("biz","[]")))
+        search_request['biz'] = request.POST.get("biz",request.GET.get("biz","[]"))
 
-        search_request['org'] = json.loads(request.POST.get("org",request.GET.get("org","[]")))
+        search_request['org'] = request.POST.get("org",request.GET.get("org","[]"))
+
+        print "after_loads",type(search_request['org'])
         search_request['food_filters'] = request.POST.get("food",request.GET.get("food","[]")) 
         return search_request
 
@@ -208,6 +210,7 @@ class GeneralSearch():
             sign_up_as = "Business" if self.user_type == "Companies" else "Individual"
             
             and_query.append({"sign_up_as":sign_up_as})
+        
 
         if len(self.biz_type_filters) > 0:
             and_query.append({"type_user":{"$all":self.biz_type_filters}})

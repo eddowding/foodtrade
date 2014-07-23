@@ -245,11 +245,10 @@ var Search = {
             want:this.filters.profile.want,
             usertype:this.filters.profile.usertype
             };
-            if(with_filter==true)
-            {
+            
                 req_obj.org = this.filters.profile.org;
                 req_obj.biz = this.filters.profile.biz;
-            }
+            
         $.post( "/ajax-handler/search_profiles", req_obj, function( data ) {
         Search.profile_results = data.result;
 
@@ -270,12 +269,11 @@ var Search = {
             lat:this.filters.market.lat,
             want:this.filters.market.want,
             usertype: this.filters.market.usertype };
-            if(with_filter == true)
-            {
-                req_obj.org = this.filters.market.org;
+            
+            req_obj.org = this.filters.market.org;
 
-                req_obj.biz = this.filters.market.biz;
-            }
+            req_obj.biz = this.filters.market.biz;
+            
 
          $.post( "/ajax-handler/search_market", req_obj , function( data ) {
               Search.market_results = data.result;
@@ -286,6 +284,11 @@ var Search = {
                 }
 
              }, "json"); 
+     },
+     clear_filters : function(filter_type)
+     {
+        Search.filters[filter_type].org = "[]";
+        Search.filters[filter_type].biz = "[]";
      },
 
       set_market_filters : function()
@@ -380,6 +383,8 @@ var Search = {
     search_start: function()
     {
         this.keyword = $("#search_query").val();
+        this.clear_filters("market");
+        this.clear_filters("profile");
         this.set_url();
         if(this.search_type=="produce")
         {
@@ -426,8 +431,9 @@ var Search = {
 
 function start_search()
 {
-    Search.
+
     Search.search_start();
+
     return false;
 
     if(this.tab == "profile"&& this.search_type=="produce")
@@ -479,7 +485,7 @@ $(".selectpicker").change(function(){
         {
             
             console.log($(this).html());
-            current_filters = "[]";
+            current_filters = [];
         }
         Search.filters[Search.tab][filter_type[i]] = JSON.stringify(current_filters);
     }   
@@ -642,12 +648,13 @@ function get_address(address_for) {
      Search.set_url();
      if(address_for=="market")
      {
-
+        Search.clear_filters("market");
         Search.search_market();
         
      }
      else
      {
+        Search.clear_filters("profile");
         Search.search_profiles();
      }
      map.panTo(new L.LatLng(lat,lng));

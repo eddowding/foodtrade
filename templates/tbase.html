@@ -435,9 +435,9 @@ line-height: 34px; font-size: 16px;">
                       </span></a></li> 
                       <li><a href="/soilassociation">
                       <span class="result-container" style="white-space: nowrap;">
-                      <span class="result-img"><img height="22px" width="22px" src="http://pbs.twimg.com/profile_images/432822201436229632/Pw5oT1FG_normal.jpeg"></span>
+                      <span class="result-img"><img height="22px" width="22px" src="http://pbs.twimg.com/profile_images/478576050532655105/5nrVkyw9_bigger.jpeg"></span>
                       <span>Soil Association</span> 
-                      <script type="text/javascript"> console.log("14");</script>
+                      
                       </span>
                       </a>
                       </li>
@@ -914,7 +914,7 @@ var that = this;
 
 
 </script>
- <script type="text/javascript"> console.log("14");</script>
+ 
 
 
     <!-- Bootstrap core JavaScript
@@ -991,7 +991,7 @@ var openspaceLayer = L.tileLayer.osopenspace("F481BBF739A5038DE0430B6CA40AB6D2",
       var show_os_map = true;
 var default_csr = L.CRS.EPSG3857;
   var current_base_layer = base_layer;
-  var default_zoom = 9;
+  var default_zoom = 7;
 
 
   $("#map").on('dblclick keyup mousedown mousewheel mousemove', function() {
@@ -1016,6 +1016,7 @@ var default_csr = L.CRS.EPSG3857;
           map.removeLayer(base_layer)
           map.addLayer(openspaceLayer);
         map.setView([cent_lat,cent_lon],9);
+        map._layersMinZoom=default_zoom;
 
         }
         var over_zoom = current_zoom_level-5;

@@ -1,3 +1,4 @@
+  var markers = new L.LayerGroup();
 function load_map(lat,lng)
 {
   map = new L.map('map', {
@@ -13,10 +14,20 @@ map.on('dragend', map_dragged);
 
 map.on('zoomend', map_dragged);
 
+
+
+map._layersMinZoom=default_zoom;
+
 }
 
 
-
+// L.circle([lat,lng], 320934, {
+//       stroke: 1,
+//       color: '#999',
+//       opacity:0.9,
+//       weight: 1,
+//       fill: 0,
+//     }).addTo(markers);
 
 // L.circle([map_lat,map_lon], 24140.2, {
 //       stroke: 1,
@@ -24,7 +35,7 @@ map.on('zoomend', map_dragged);
 //       opacity:0.5,
 //       weight:2,
 //       fill: 0,
-// }).addTo(layer_group);
+// }).addTo(markers);
 
 
 
@@ -34,23 +45,16 @@ map.on('zoomend', map_dragged);
 //       opacity:0.5,
 //       weight:2,
 //       fill: 0,
-// }).addTo(layer_group);
-  
-// L.circle([map_lat,map_lon], 160934, {
-//       stroke: 1,
-//       color: '#999',
-//       opacity:0.9,
-//       weight: 1,
-//       fill: 0,
-//     }).addTo(layer_group);
+// }).addTo(markers);
+
  
 
-var layer_group = new L.MarkerClusterGroup();
-var layer_group = new L.LayerGroup();
+// var markers = new L.MarkerClusterGroup();
+
 function show_connections_on_map()
 {
   
-   layer_group.clearLayers();
+   markers.clearLayers();
 
   var results = Search[Search.tab+"_results"];
 
@@ -62,12 +66,14 @@ function show_connections_on_map()
       var card = (Search.tab=="market")?get_box_update_map(results[i]):map_profile_card(results[i]);
       var ctrl = L.marker([parseFloat(current_lat), parseFloat(current_lon)],{icon: redIcon}).bindPopup(card);
       Search.map_controls[results[i].username] = ctrl;
-        layer_group.addLayer(ctrl);
+        markers.addLayer(ctrl);
     }
     
-        map.addLayer(layer_group);
+        map.addLayer(markers);
         if(results.length>0){
-            // map.fitBounds(layer_group.getBounds());
+            // map.fitBounds(markers.getBounds());
+
+            map.panTo(new L.LatLng(Search.filters[Search.tab].lat,Search.filters[Search.tab].lng));
         }
 }
 
@@ -76,6 +82,7 @@ function map_dragged(e) {
       var current_center = map.getCenter();
       Search.filters[Search.tab].lng = current_center.lng;
       Search.filters[Search.tab].lat = current_center.lat;    
+      Search.clear_filters(Search.tab);
       Search.search_start();
         
 }
