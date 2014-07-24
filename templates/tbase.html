@@ -121,8 +121,8 @@
 
 <script type="text/javascript">
 {% if request.user.is_authenticated %}
-var ticker_lat = 12; //{{userinfo.lat}};
-var ticker_lon = 12; //{{userinfo.lon}}; save this file
+var ticker_lat = {{userinfo.lat}};
+var ticker_lon = {{userinfo.lon}}; 
 {% endif %}
    var RedIcon = L.Icon.Default.extend({
             options: {
