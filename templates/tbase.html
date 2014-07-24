@@ -994,6 +994,7 @@ var openspaceLayer = L.tileLayer.osopenspace("F481BBF739A5038DE0430B6CA40AB6D2",
 var default_csr = L.CRS.EPSG3857;
   var current_base_layer = base_layer;
   var default_zoom = 11;
+  var min_zoom_level = 1;
 
 
   $("#map").on('dblclick keyup mousedown mousewheel mousemove', function() {
@@ -1018,7 +1019,7 @@ var default_csr = L.CRS.EPSG3857;
           map.removeLayer(base_layer)
           map.addLayer(openspaceLayer);
         map.setView([cent_lat,cent_lon],9);
-        map._layersMinZoom=default_zoom;
+        map._layersMinZoom= min_zoom_level;
 
         }
         var over_zoom = current_zoom_level-5;

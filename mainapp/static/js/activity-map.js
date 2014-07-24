@@ -13,7 +13,7 @@ function load_map(lat,lng)
 map.on('dragend', map_dragged);
 
 map.on('zoomend', map_dragged);
-map._layersMinZoom=default_zoom;
+map._layersMinZoom=min_zoom_level;
 }
 
 
