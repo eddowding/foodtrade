@@ -3,6 +3,7 @@ from django.views.generic import TemplateView, RedirectView
 # Uncomment the next two lines to enable the admin:
 from django.contrib import admin
 from django.conf import settings
+from mainapp.forms import PassworResetForm
 admin.autodiscover()
 
 urlpatterns = patterns('',
@@ -21,9 +22,22 @@ urlpatterns = patterns('',
     url(r'^(?i)organisation/(?P<username>[-\w]+)/$', 'mainapp.profilepage.display_profile', name='profile'),
     url(r'^(?i)unclaimed/(?P<username>[-\w]+)/$', 'mainapp.profilepage.display_profile', name='profile'),
     # url(r'^foodtrade/', include('foodtrade.foo.urls')),
+
+    
+    (r'^accounts/password/reset/done/$', 'django.contrib.auth.views.password_reset_done'),
+    (r'^accounts/password/reset/(?P<uidb36>[0-9A-Za-z]+)-(?P<token>.+)/$', 'django.contrib.auth.views.password_reset_confirm',
+     {'post_reset_redirect' : '/accounts/password/done/'}),
+    (r'^accounts/password/done/$', 'django.contrib.auth.views.password_reset_complete'),
+
+#     url(r'^accounts/password/reset/confirm/$', 
+#              'django.contrib.auth.views.password_reset_confirm', name="auth_password_reset_confirm"),
+#     url(r'^accounts/password/reset/complete/$', 
+#              'django.contrib.auth.views.password_reset_complete'),
+
+
     url(r'^accounts/social/signup/', 'mainapp.signup_views.signup_view', name = 'account_signup'),
     # url(r'^accounts/signup/', 'mainapp.signup_views.signup_view_new'),
-    url(r'^accounts/', include('allauth.urls')),
+    
     # Uncomment the admin/doc line below to enable admin documentation:
     url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
     url(r'^(?i)editprofile/(?P<username>[-\w]+)/$','mainapp.profilepage.edit_profile'),
@@ -55,8 +69,17 @@ urlpatterns = patterns('',
     # url(r'^activity/(?P<request_type>\w{1,40})$', 'mainapp.activity.activity_suppliers'),
     url(r'^myprofile/favourites/$', 'mainapp.favpage.display_favourites'),
     ## any user    
-    url(r'^(?P<username>\w{1,40})/$', 'mainapp.profilepage.profile_url_resolve'),    
+       
 )
 urlpatterns += patterns('',
         (r'^media/(?P<path>.*)$', 'django.views.static.serve', {
         'document_root': settings.MEDIA_ROOT}))
+
+urlpatterns += patterns('',
+        (r'^accounts/password/reset/$', 'django.contrib.auth.views.password_reset',
+     {'post_reset_redirect' : '/accounts/password/reset/done/','password_reset_form':PassworResetForm, 'template_name': 'account/password_reset.html'}),)
+urlpatterns += patterns('',
+        url(r'^accounts/', include('allauth.urls')),)
+
+urlpatterns += patterns('',
+        url(r'^(?P<username>\w{1,40})/$', 'mainapp.profilepage.profile_url_resolve'), )
