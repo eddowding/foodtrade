@@ -1,7 +1,7 @@
 var map = new L.map('map', {
     center: new L.LatLng(map_lat,map_lon),
     crs: default_csr,
-    zoom: 9,
+    zoom: 7,
       continuousWorld: false,
         worldCopyJump: false,
     layers: [current_base_layer]
