@@ -38,6 +38,11 @@
         {% ifequal request.path '/' %}
           Welcome to FoodTrade - Login, Signup, become the part of Food revolution
         {% endifequal %}
+        
+        {% if '/accounts/password/set' in request.path %}
+          Set Password
+        {% endif %}
+
         {% if 'payments' in request.path %}
           Subscription
         {% endif %}
