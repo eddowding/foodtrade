@@ -24,10 +24,10 @@ urlpatterns = patterns('',
     # url(r'^foodtrade/', include('foodtrade.foo.urls')),
 
     
-    (r'^accounts/password/reset/done/$', 'django.contrib.auth.views.password_reset_done'),
-    (r'^accounts/password/reset/(?P<uidb36>[0-9A-Za-z]+)-(?P<token>.+)/$', 'django.contrib.auth.views.password_reset_confirm',
-     {'post_reset_redirect' : '/accounts/password/done/'}),
-    (r'^accounts/password/done/$', 'django.contrib.auth.views.password_reset_complete'),
+    # (r'^accounts/password/reset/done/$', 'django.contrib.auth.views.password_reset_done'),
+    # (r'^accounts/password/reset/(?P<uidb36>[0-9A-Za-z]+)-(?P<token>.+)/$', 'django.contrib.auth.views.password_reset_confirm',
+    #  {'post_reset_redirect' : '/accounts/password/done/'}),
+    # (r'^accounts/password/done/$', 'django.contrib.auth.views.password_reset_complete'),
 
 #     url(r'^accounts/password/reset/confirm/$', 
 #              'django.contrib.auth.views.password_reset_confirm', name="auth_password_reset_confirm"),
@@ -36,6 +36,7 @@ urlpatterns = patterns('',
 
 
     url(r'^accounts/social/signup/', 'mainapp.signup_views.signup_view', name = 'account_signup'),
+    url(r'^accounts/', include('allauth.urls')),
     # url(r'^accounts/signup/', 'mainapp.signup_views.signup_view_new'),
     
     # Uncomment the admin/doc line below to enable admin documentation:
