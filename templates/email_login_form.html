@@ -2,61 +2,76 @@
 
 <div class="modal fade" id="modal_emaillogin" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog">
-          <div class="modal-content">
+          <div class="modal-content"> 
             <div class="modal-header">
               <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-              <h4 class="modal-title" id="myModalLabel">Sign up to FoodTrade</h4>
+              <h4 class="modal-title" id="myModalLabel">Sign in</h4>
             </div>
+           
             <div class="modal-body">
-            <h1>Sign In</h1>
-
-
-<p>Please sign in with one
-of your existing third party accounts. Or, <a href="/accounts/signup/">sign up</a>
-for a example.com account and sign in below:</p>
-
-<div class="socialaccount_ballot">
-
-  <ul class="socialaccount_providers">
-    
+           <div class="row"> 
+            <div class="col-sm-8 col-sm-offset-2">
 
 
 
-<li>
-  <a title="Twitter" class="socialaccount_provider twitter" href="/accounts/twitter/login/?process=login">Twitter</a>
-</li>
+              <div class="row"> 
+                  <div class="col-sm-12 text-center clearfix">
+                      <a href="/accounts/twitter/login/?process=login"><button type="button" class="btn btn-block btn-info" style="font-size: 20px;"><i class="fa fa-twitter fa-lg"></i> Sign in with Twitter</button></a>
+                  </div>
+              </div>
+
+              <div class="or-box"> 
+                  <span class="or">OR</span>
+              </div>
+              
+
+              <form class="signup form-horizontal text-center" method="POST" id="main_login_form" action="/accounts/login/">
+              {% csrf_token %}
 
 
+              <p><b>Sign in with your username and password:</b></p>
 
-  </ul>
+              <div id="login_error_message"></div>
 
-  <div class="login-or">or</div>
+ 
 
-</div>
+                <div class="form-group text-center">
+                  <div class="col-sm-8 col-sm-offset-2">
+                    <input autofocus id="id_login" name="login" placeholder="Username or e-mail" type="text"  class="form-control">
+                  </div>
+                </div>
+                <div class="form-group text-center"> 
+                  <div class="col-sm-8 col-sm-offset-2">
+                    <input id="id_password" name="password" placeholder="Password"  class="form-control" type="password" required>
 
+                    <label class="checkbox text-left"> 
+                      <input id="id_remember" name="remember" type="checkbox">
+                      Keep me signed in
+                  </label>
+                  </div>
+                </div> 
+                <input type="hidden" name="next" value="foodtrade.com" />
+                <div class=" col-sm-8 col-sm-offset-2">
+                  <button class="btn btn-default btn-block " type="submit">
+                    Sign in</button>
+                </div>
+                 <br />
+                 <br />
+ 
+                  <a class="small text-muted" href="/accounts/password/reset/">Forgot Password?</a>
+              </form>  
+               
+ 
+            </div>
 
-
-
-
-
-
-<div id="login_error_message"></div>
-
-<form class="login" method="POST" id="main_login_form" action="/accounts/login/">
-  {% csrf_token %}
-  <p><label for="id_login">Login:</label> <input autofocus="autofocus" id="id_login" name="login" placeholder="Username or e-mail" type="text"></p>
-<p><label for="id_password">Password:</label> <input id="id_password" name="password" placeholder="Password" type="password"></p>
-<p><label for="id_remember">Remember Me:</label> <input id="id_remember" name="remember" type="checkbox"></p>
-   <input type="hidden" name="next" value="foodtrade.com" />
-  <a class="button secondaryAction" href="/accounts/password/reset/">Forgot Password?</a>
-  <button class="primaryAction" type="submit">Sign In</button>
-</form>
-
+            </div>
             </div>
             <div class="modal-footer"> 
+
+
+             <a class="btn btn-primary btn-stroke text-black normal pull-left" class="close" data-dismiss="modal" data-toggle="modal" data-target="#modal_signup" >  Create an account</a>
               
-               
-              <a href="/accounts/twitter/login/?process=login"><button type="button" class="btn btn-primary"><i class="fa fa-twitter"></i> Sign in with Twitter</button></a>
+                
               
             </div>
           </div><!-- /.modal-content -->

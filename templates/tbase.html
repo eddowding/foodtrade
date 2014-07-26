@@ -127,7 +127,7 @@
 <script type="text/javascript">
 {% if request.user.is_authenticated %}
 var ticker_lat = {{userinfo.lat}};
-var ticker_lon = {{userinfo.lon}};
+var ticker_lon = {{userinfo.lon}}; 
 {% endif %}
    var RedIcon = L.Icon.Default.extend({
             options: {
@@ -853,15 +853,17 @@ line-height: 34px; font-size: 16px;">
       
       <div class="col-sm-12"> 
         <ul class="list-unstyled list-inline pull-left" style="display: inline;">  
-          <li class="hidden-sm hidden-xs"><a href="/pages/individuals">Individuals</a></li>
-          <li class="hidden-sm hidden-xs"><a href="/pages/business">Business</a></li>
-          <li class="hidden-sm hidden-xs"><a href="/pages/organisations">Organisations</a></li>
-          <li class="hidden-sm hidden-xs"><a href="/pages/foodwaste">Surplus &amp; waste</a></li>
+           
+          <li class="hidesmall"><a href="/pages/individuals">Individuals</a></li>
+          <li class="hidesmall"><a href="/pages/business">Business</a></li>
+          <li class="hidesmall"><a href="/pages/organisations">Organisations</a></li>
+          <li class="hidesmall"><a href="/pages/foodwaste">Surplus &amp; waste</a></li>
+
           <li><a href="/pages/pricing">Pricing</a></li>      
           <li><a href="http://digest.foodtrade.com" target="blank">Blog</a></li>      
           <li><a href="/pages/terms">Terms</a></li>
           <li><a href="/pages/privacy">Privacy</a></li>
-          <li class="hidden-sm hidden-xs">&copy; 2012 - {% now "Y" %} Sustaination Ltd. <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Data is CCBY4 licenced</a></li>
+          <li class="hidesmall">&copy; 2012 - {% now "Y" %} Sustaination Ltd. <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Data is CCBY4 licenced</a></li>
         </ul>
 
         <ul class="list-unstyled list-inline pull-left">
@@ -996,7 +998,8 @@ var openspaceLayer = L.tileLayer.osopenspace("F481BBF739A5038DE0430B6CA40AB6D2",
       var show_os_map = true;
 var default_csr = L.CRS.EPSG3857;
   var current_base_layer = base_layer;
-  var default_zoom = 7;
+  var default_zoom = 11;
+  var min_zoom_level = 1;
 
 
   $("#map").on('dblclick keyup mousedown mousewheel mousemove', function() {
@@ -1021,7 +1024,7 @@ var default_csr = L.CRS.EPSG3857;
           map.removeLayer(base_layer)
           map.addLayer(openspaceLayer);
         map.setView([cent_lat,cent_lon],9);
-        map._layersMinZoom=default_zoom;
+        map._layersMinZoom= min_zoom_level;
 
         }
         var over_zoom = current_zoom_level-5;

@@ -484,7 +484,7 @@ $(".selectpicker").change(function(){
         if(current_filters==null)
         {
             
-            
+        
             current_filters = [];
         }
         Search.filters[Search.tab][filter_type[i]] = JSON.stringify(current_filters);

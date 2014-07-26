@@ -1,3 +1,4 @@
+from __future__ import unicode_literals
 from django import forms
 from django.contrib.auth.models import User
 from mainapp.classes.TweetFeed import UserProfile, Notification, Invites, InviteAccept, TradeConnection
@@ -12,6 +13,145 @@ from mainapp.classes.MailchimpClass import MailChimpClass
 from django.conf import settings
 import pprint
 from classes.MongoConnection import MongoConnection
+from django.contrib.auth.tokens import default_token_generator
+
+from django.contrib.auth import authenticate, get_user_model
+from django.contrib.auth.hashers import UNUSABLE_PASSWORD_PREFIX, identify_hasher
+from collections import OrderedDict
+from django.utils.translation import ugettext, ugettext_lazy as _
+from django.template import loader
+from django.contrib.sites.models import get_current_site
+from django.utils.http import urlsafe_base64_encode
+from django.utils.encoding import force_bytes
+
+
+class PassworResetForm(forms.Form):
+    email = forms.EmailField(label=_("Email"), max_length=254)
+
+    def send_mail(self, subject_template_name, email_template_name,
+                  context, from_email, to_email, html_email_template_name=None):
+        """
+        Sends a django.core.mail.EmailMultiAlternatives to `to_email`.
+        """
+        from mainapp.classes.Email import Email
+
+        subject = loader.render_to_string(subject_template_name, context)
+        # Email subject *must not* contain newlines
+        subject = ''.join(subject.splitlines())
+        body = loader.render_to_string(email_template_name, context)
+
+        # email_message = EmailMultiAlternatives(subject, body, from_email, [to_email])
+        # if html_email_template_name is not None:
+        #     html_email = loader.render_to_string(html_email_template_name, context)
+        email = Email()
+        # email.send_mail(to_email, subject , body)
+        email.send_mail(subject, 
+                    template_content=[{'name':'main', 'content':body}], to = [{'email':to_email}])
+                    
+
+            # email_message.attach_alternative(html_email, 'text/html')
+
+        # email_message.send()
+
+    def save(self, domain_override=None,
+             subject_template_name='registration/password_reset_subject.txt',
+             email_template_name='registration/password_reset_email.html',
+             use_https=False, token_generator=default_token_generator,
+             from_email=None, request=None, html_email_template_name=None):
+        """
+        Generates a one-use only link for resetting password and sends to the
+        user.
+        """
+        UserModel = get_user_model()
+        email = self.cleaned_data["email"]
+        active_users = UserModel._default_manager.filter(
+            email__iexact=email, is_active=True)
+        for user in active_users:
+            # Make sure that no email is sent to a user that actually has
+            # a password marked as unusable
+            if not user.has_usable_password():
+                continue
+            if not domain_override:
+                current_site = get_current_site(request)
+                site_name = current_site.name
+                domain = current_site.domain
+            else:
+                site_name = domain = domain_override
+            context = {
+                'email': user.email,
+                'domain': domain,
+                'site_name': site_name,
+                'uid': urlsafe_base64_encode(force_bytes(user.pk)),
+                'user': user,
+                'token': token_generator.make_token(user),
+                'protocol': 'https' if use_https else 'http',
+            }
+
+            self.send_mail(subject_template_name, email_template_name,
+                           context, from_email, user.email,
+                           html_email_template_name=html_email_template_name)
+
+
+
+
+
+    error_messages = {
+        'unknown': ("That email address doesn't have an associated "
+                     "user account. Are you sure you've registered?"),
+        'unusable': ("The user account associated with this email "
+                      "address cannot reset the password."),
+        }
+    # email = forms.CharField(required=True) 
+    # def clean_email(self):
+    #     """
+    #     Validates that an active user exists with the given email address.
+    #     """
+    #     UserModel = get_user_model()
+    #     email = self.cleaned_data["email"]
+    #     self.users_cache = UserModel._default_manager.filter(email__iexact=email)
+    #     if not len(self.users_cache):
+    #         raise forms.ValidationError(self.error_messages['unknown'])
+    #     if not any(user.is_active for user in self.users_cache):
+    #         # none of the filtered users are active
+    #         raise forms.ValidationError(self.error_messages['unknown'])
+    #     if any((user.password == UNUSABLE_PASSWORD)
+    #         for user in self.users_cache):
+    #         raise forms.ValidationError(self.error_messages['unusable'])
+    #     return email
+
+    # def save(self, domain_override=None,
+    #          subject_template_name='registration/password_reset_subject.txt',
+    #          email_template_name='registration/password_reset_email.html',
+    #          use_https=False, token_generator=default_token_generator,
+    #          from_email=None, request=None):
+    #     """
+    #     Generates a one-use only link for resetting password and sends to the
+    #     user.
+    #     """
+    #     print "saved"
+    #     from django.core.mail import send_mail
+    #     for user in self.users_cache:
+    #         if not domain_override:
+    #             current_site = get_current_site(request)
+    #             site_name = current_site.name
+    #             domain = current_site.domain
+    #         else:
+    #             site_name = domain = domain_override
+    #         c = {
+    #             'email': user.email,
+    #             'domain': domain,
+    #             'site_name': site_name,
+    #             'uid': int_to_base36(user.pk),
+    #             'user': user,
+    #             'token': token_generator.make_token(user),
+    #             'protocol': use_https and 'https' or 'http',
+    #             }
+    #         subject = loader.render_to_string(subject_template_name, c)
+    #         # Email subject *must not* contain newlines
+    #         subject = ''.join(subject.splitlines())
+    #         email = loader.render_to_string(email_template_name, c)
+            
+            # send_mail(subject, email, from_email, [user.email])
 
 def update_all_values(old_useruid, new_useruid):
     '''This function updates all other affected collections when unclaimed profile changes to claimed'''
