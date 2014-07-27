@@ -152,6 +152,7 @@ INSTALLED_APPS = (
     'django.contrib.admindocs',
     "djstripe",
     "floppyforms",
+    'django-crispy-forms',
     'crispy_forms',
 )
 
