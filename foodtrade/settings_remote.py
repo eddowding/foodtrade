@@ -155,8 +155,6 @@ INSTALLED_APPS = (
     'django.contrib.admindocs',
     "djstripe",
     "floppyforms",
-    'django-crispy-forms',
-    'crispy_forms',
 )
 
 # A sample logging configuration. The only tangible logging
