@@ -22,7 +22,7 @@ REMOTE_MONGO_PASSWORD = 'ftroot'
 #..................Server Settings............................
 
 EMBEDLY_KEY = 'dda65dba82724765b3b82e79525286cc'
-
+DEFAULT_FROM_EMAIL = 'FoodTrade <no-reply@foodtrade.com>'
 # old ones of my twitter app
 # CONSUMER_KEY = 'seqGJEiDVNPxde7jmrk6dQ'
 # CONSUMER_SECRET = 'sI2BsZHPk86SYB7nRtKy0nQpZX3NP5j5dLfcNiP14'
