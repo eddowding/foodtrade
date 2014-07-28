@@ -33,6 +33,7 @@ urlpatterns = patterns('',
 #              'django.contrib.auth.views.password_reset_confirm', name="auth_password_reset_confirm"),
 #     url(r'^accounts/password/reset/complete/$', 
 #              'django.contrib.auth.views.password_reset_complete'),
+    # url(r'^accounts/password/change/$', 'mainapp.views.my_password_change ', name='my_password_change '),
 
 
     url(r'^accounts/social/signup/', 'mainapp.signup_views.signup_view', name = 'account_signup'),

@@ -716,3 +716,8 @@ def create_profile_from_mention(email, location, data):
         pass
 
     return {'status':1}
+
+# from django-allauth.allauth.account.views import PasswordChangeView
+# class MyPasswordChangeView(PasswordChangeView):
+#     success_url = "/"
+# my_password_change = login_required(MyPasswordChangeView.as_view())
