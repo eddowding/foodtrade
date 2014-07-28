@@ -34,7 +34,20 @@
 
     <link rel="shortcut icon" href="/static/images/favicon.ico">
     <title>
+
       {% block titlemain %}
+        {% if 'accounts/password/change/' in request.path %}
+          Change Password
+        {% endif %}
+        {% if 'accounts/password/set/' in request.path %}
+          Set Password
+        {% endif %}
+        {% if 'accounts/password/reset/' in request.path %}
+          Reset Password
+        {% endif %}
+        {% if 'accounts/login' in request.path %}
+          Login
+        {% endif %}        
         {% ifequal request.path '/' %}
           Welcome to FoodTrade - Login, Signup, become the part of Food revolution
         {% endifequal %}
