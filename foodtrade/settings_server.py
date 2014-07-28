@@ -95,16 +95,12 @@ AUTHENTICATION_BACKENDS = (
 )
 
 TEMPLATE_CONTEXT_PROCESSORS = (
-        # Required by allauth template tags
-    "django.core.context_processors.request",
-
-    # allauth specific context processors
-    "allauth.account.context_processors.account",
-    "allauth.socialaccount.context_processors.socialaccount",
-
     "django.contrib.auth.context_processors.auth",
     "django.core.context_processors.request",
-    
+    "allauth.account.context_processors.account",
+    "allauth.socialaccount.context_processors.socialaccount",
+    'djstripe.context_processors.djstripe_settings',
+    'mainapp.classes.context_processors.user_info',        
 )
 
 # List of callables that know how to import templates from various sources.
