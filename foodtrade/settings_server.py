@@ -152,6 +152,7 @@ INSTALLED_APPS = (
     'django.contrib.admindocs',
     "djstripe",
     "floppyforms",
+    "bootstrapform",
 )
 
 # A sample logging configuration. The only tangible logging
