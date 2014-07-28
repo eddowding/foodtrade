@@ -16,3 +16,4 @@ validate_email
 twilio
 embedly
 django-crispy-forms
+django-bootstrap-forms
