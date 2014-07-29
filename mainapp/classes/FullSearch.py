@@ -39,8 +39,8 @@ class GeneralSearch():
         self.org_filters = json.loads(params['org'])
         self.biz_type_filters = json.loads(params['biz'])
         self.food_filters = json.loads(params['food_filters'])
-        self.distance_limit = 30
-        self.result_limit = 10
+        self.distance_limit = 300
+        self.result_limit = 20
         
 
         
