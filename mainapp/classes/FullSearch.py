@@ -277,21 +277,23 @@ class GeneralSearch():
                     matched = True
                 else:
                     matched = False
+                try:
+                    if fd['webuy']==0:
+                        wesell_count = wesell_count +1
+                        if matched:
+                            wesell_matches.append(fd['food_name'])
 
-                if fd['webuy']==0:
-                    wesell_count = wesell_count +1
-                    if matched:
-                        wesell_matches.append(fd['food_name'])
+                        if (self.search_for != "produce" or self.keyword == "") and wesell_count == 1:
+                            wesell_matches.append(fd['food_name'])
 
-                    if (self.search_for != "produce" or self.keyword == "") and wesell_count == 1:
-                        wesell_matches.append(fd['food_name'])
-
+                    else:
+                        webuy_count = webuy_count + 1
+                        if matched:
+                            webuy_matches.append(fd['food_name'])
+                        if (self.search_for != "produce" or self.keyword == "") and webuy_count == 1:
+                            webuy_matches.append(fd['food_name'])
                 else:
-                    webuy_count = webuy_count + 1
-                    if matched:
-                        webuy_matches.append(fd['food_name'])
-                    if (self.search_for != "produce" or self.keyword == "") and webuy_count == 1:
-                        webuy_matches.append(fd['food_name'])
+                    continue
                     
 
 
