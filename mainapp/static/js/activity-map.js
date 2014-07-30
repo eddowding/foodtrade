@@ -67,7 +67,12 @@ function show_connections_on_map()
     
         map.addLayer(markers);
         if(results.length>0){
-            // map.fitBounds(markers.getBounds());
+          if(initial_flag)
+          {
+            initial_flag = false;
+            map.fitBounds(markers.getBounds());
+          }
+
 
             map.panTo(new L.LatLng(Search.filters[Search.tab].lat,Search.filters[Search.tab].lng));
         }
