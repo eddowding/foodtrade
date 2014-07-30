@@ -48,9 +48,7 @@ class GeneralSearch():
         if request.user.is_authenticated():
 
             self.user = params['up']
-            try:
-                
-
+            try:  
                 ## make all super user subscribed permission
                 if request.user.is_superuser:
                     self.user['subscribed'] = 1
