@@ -1,6 +1,6 @@
 
 
-
+var initial_flag = true;
 var Search = {
     keyword :"",
     search_type:"produce",

@@ -48,9 +48,7 @@ class GeneralSearch():
         if request.user.is_authenticated():
 
             self.user = params['up']
-            try:
-                
-
+            try:  
                 ## make all super user subscribed permission
                 if request.user.is_superuser:
                     self.user['subscribed'] = 1
@@ -277,6 +275,7 @@ class GeneralSearch():
                     matched = True
                 else:
                     matched = False
+<<<<<<< HEAD
                 try:
                     if fd['webuy']==0:
                         wesell_count = wesell_count +1
@@ -292,7 +291,18 @@ class GeneralSearch():
                             webuy_matches.append(fd['food_name'])
                         if (self.search_for != "produce" or self.keyword == "") and webuy_count == 1:
                             webuy_matches.append(fd['food_name'])
-                except:
+=======
+
+                if fd.get('webuy')==0:
+                    wesell_count = wesell_count +1
+                    if matched:
+                        wesell_matches.append(fd['food_name'])
+
+                    if (self.search_for != "produce" or self.keyword == "") and wesell_count == 1:
+                        wesell_matches.append(fd['food_name'])
+
+>>>>>>> 447ec02cba14e99b838a7d0d9dffccf9aa94f923
+                else:
                     continue
                     
 
