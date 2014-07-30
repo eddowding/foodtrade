@@ -42,7 +42,7 @@ def deploy_test():
 def update_latest_code():
     settings_server_file = 'settings_server.py'
     if push_type == 'staging':
-        settings_server_file = 'settings_staging_server.py'
+        settings_server_file = 'settings_server.py'
     # run('cd %s && git reset --hard && git clean -f -d && git checkout master && git pull && git pull origin master' % (source_folder))
     run('cd %s && git reset --hard && git clean -f -d && git checkout master && git pull && git pull origin master' % (source_folder))
     _update_virtualenv(source_folder)

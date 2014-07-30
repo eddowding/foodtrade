@@ -41,7 +41,7 @@ class MongoConnection():
     
     def create_table(self, table_name, index=None):
         # self.create_connection()
-        self.db[table_name].create_index( [(index, pymongo.DESCENDING)] )
+        self.db[table_name].create_index([(index, pymongo.DESCENDING)])
 
     def create_index(self, table_name, index=None):
         # self.create_connection()

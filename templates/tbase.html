@@ -34,10 +34,28 @@
 
     <link rel="shortcut icon" href="/static/images/favicon.ico">
     <title>
+
       {% block titlemain %}
+        {% if 'accounts/password/change/' in request.path %}
+          Change Password
+        {% endif %}
+        {% if 'accounts/password/set/' in request.path %}
+          Set Password
+        {% endif %}
+        {% if 'accounts/password/reset/' in request.path %}
+          Reset Password
+        {% endif %}
+        {% if 'accounts/login' in request.path %}
+          Login
+        {% endif %}        
         {% ifequal request.path '/' %}
           Welcome to FoodTrade - Login, Signup, become the part of Food revolution
         {% endifequal %}
+        
+        {% if '/accounts/password/set' in request.path %}
+          Set Password
+        {% endif %}
+
         {% if 'payments' in request.path %}
           Subscription
         {% endif %}
@@ -239,10 +257,9 @@ if (!Function.prototype.bind) {
               </span>
           </a>
           <ul class="dropdown-menu pull-right">
-              <li><a href="/editprofile/me">Edit profile</a>
-              </li>
-              <li><a href="/me">View profile</a>
-              </li> 
+              <li><a href="/editprofile/me">Edit profile</a></li>
+              <li><a href="/me">View profile</a></li> 
+              <li><a href="/accounts/password/change/">Change Password</a></li>
               <li><a href="/visitors">Who's visited your profile</a>
               </li> 
               <li><a href="/payments">Account &amp; billing</a>
