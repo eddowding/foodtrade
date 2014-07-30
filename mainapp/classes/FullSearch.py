@@ -276,7 +276,7 @@ class GeneralSearch():
                 else:
                     matched = False
 
-                if fd['webuy']==0:
+                if fd.get('webuy')==0:
                     wesell_count = wesell_count +1
                     if matched:
                         wesell_matches.append(fd['food_name'])
