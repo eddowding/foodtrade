@@ -332,7 +332,7 @@ line-height: 34px; font-size: 16px;">
 
 
   {% if request.user.is_authenticated %}
-  <ul class="notifications pull-right hidden-xs border-left">
+  <ul class="notifications pull-right hidden-xs border-left {% if userinfo.notification_count != 0 %}gotmail{% endif %}">
       <li>
           <a href="/inbox/"><i class="notif-block fa fa-envelope-o"></i>{% if userinfo.notification_count != 0 %}
             <span id="spanInbox" class="pull-number label label-success">{{userinfo.notification_count}}</span> 
