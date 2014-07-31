@@ -989,7 +989,7 @@ class Notification():
 
     def get_notification_count(self, username):
         notification_count = self.db_object.get_count(self.table_name,
-            {'notification_to':username, 'notification_view_status':'false'})
+            {'notification_to':username, 'notification_view_status':'false', 'notification_archived_status':'false'})
         return notification_count
 
     def get_archive_count(self, username):
