@@ -40,9 +40,9 @@ def deploy_test():
     sudo ('sudo supervisorctl restart all')
 
 def update_latest_code():
-    settings_server_file = 'settings_server.py'
+    settings_server_file = 'settings_liveserver.py'
     if push_type == 'staging':
-        settings_server_file = 'settings_server.py'
+        settings_server_file = 'settings_liveserver.py'
     # run('cd %s && git reset --hard && git clean -f -d && git checkout master && git pull && git pull origin master' % (source_folder))
     run('cd %s && git reset --hard && git clean -f -d && git checkout master && git pull && git pull origin master' % (source_folder))
     _update_virtualenv(source_folder)
@@ -79,7 +79,7 @@ def _get_latest_source(source_folder):
     # run('cd %s && git reset --hard %s' % (source_folder, current_commit))
 
 
-def _update_settings(source_folder, settings_file = 'settings_remote.py'):
+def _update_settings(source_folder, settings_file = 'settings_liveserver.py'):
     settings_path = source_folder + '/' + PROJECT_NAME + '/settings.py'
     settings_server_path = source_folder + '/' + PROJECT_NAME + '/' + settings_file
     run("touch %s" % (settings_path))
