@@ -29,7 +29,17 @@ def deploy():
     # _create_directory_structure_if_necessary(HOST_FOLDER)
     _get_latest_source(source_folder)
     _update_virtualenv(source_folder)
-    run('source /srv/www/live/foodtrade-env/bin/activate && cd /srv/www/live/foodtrade-env/foodtrade && sudo python manage.py collectstatic --noinput')
+    settings_server_file = 'settings_liveserver.py'
+    if push_type == 'staging':
+        settings_server_file = 'settings_liveserver.py'
+    # run('cd %s && git reset --hard && git clean -f -d && git checkout master && git pull && git pull origin master' % (source_folder))
+    _update_virtualenv(source_folder)
+    settings_path = source_folder + '/' + PROJECT_NAME + '/settings.py'
+    settings_server_path = source_folder + '/' + PROJECT_NAME + '/' + settings_server_file
+    run("sudo touch %s" % (settings_path))
+    run("sudo rm %s" % (settings_path))
+    run('sudo cp %s %s' % (settings_server_path, settings_path))
+    run('source /srv/www/live/foodtrade-env/bin/activate && cd /srv/www/live/foodtrade-env/foodtrade && '+source_folder + '/../bin/python manage.py collectstatic --noinput')
     sudo ('sudo supervisorctl restart all')
 
 def deploy_test():
@@ -44,7 +54,6 @@ def update_latest_code():
     if push_type == 'staging':
         settings_server_file = 'settings_liveserver.py'
     # run('cd %s && git reset --hard && git clean -f -d && git checkout master && git pull && git pull origin master' % (source_folder))
-    run('cd %s && git reset --hard && git clean -f -d && git checkout master && git pull && git pull origin master' % (source_folder))
     _update_virtualenv(source_folder)
     settings_path = source_folder + '/' + PROJECT_NAME + '/settings.py'
     settings_server_path = source_folder + '/' + PROJECT_NAME + '/' + settings_server_file
@@ -52,6 +61,7 @@ def update_latest_code():
     run("rm %s" % (settings_path))
     run('cp %s %s' % (settings_server_path, settings_path))
     # run ("cd %s && python manage.py collectstatic"%(source_folder))
+    run('cd %s && git reset --hard && git clean -f -d && git checkout master && git pull && git pull origin master' % (source_folder))
     _update_static_files(source_folder)
     _update_database(source_folder)
     # _run_gunicorn()
