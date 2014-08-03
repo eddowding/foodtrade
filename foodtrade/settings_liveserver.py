@@ -192,3 +192,5 @@ LOGGING = {
 from settings_local import *
 # django.contrib.sites is also necessary
 
+
+REMOVE_WWW = True
