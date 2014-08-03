@@ -16,11 +16,6 @@ map.on('zoomend', map_dragged);
 map._layersMinZoom=min_zoom_level;
 }
 
-// var group = new L.featureGroup(markers.getLayers());
-
-//  map.fitBounds(group.getBounds());
-
-
 
 // L.circle([lat,lng], 320934, {
 //       stroke: 1,
@@ -76,7 +71,9 @@ function show_connections_on_map()
           if(initial_flag)
           {
             initial_flag = false;
-            map.fitBounds(map.getBounds());
+            var group = new L.featureGroup(markers.getLayers());
+            map.fitBounds(group.getBounds());
+            // map.fitBounds(map.getBounds());
           }
 
 

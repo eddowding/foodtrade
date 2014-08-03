@@ -540,9 +540,10 @@ var ctrl = Search.map_controls[box_username];
 var latlng = ctrl.getLatLng();
 var lat = latlng.lat;
 var lng = latlng.lng;
-markers.removeLayer(ctrl);
-ctrl.addTo(map)
-        .openPopup();
+// markers.removeLayer(ctrl);
+// ctrl.addTo(map)
+//         .openPopup();
+ctrl.openPopup();
 
 map.panTo(new L.LatLng(lat,lng));
 
@@ -551,9 +552,9 @@ map.panTo(new L.LatLng(lat,lng));
 }).on('mouseleave','.box-generic',function(){
     var box_username = $(this).attr('data-username');
     var ctrl = Search.map_controls[box_username];
-markers.addLayer(ctrl);
+// markers.addLayer(ctrl);
         // map.removeLayer(ctrl);
-    // ctrl.closePopup();
+    ctrl.closePopup();
 });
 
 function getParameterByName(name,initial) {

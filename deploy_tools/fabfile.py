@@ -39,7 +39,7 @@ def deploy():
     run("sudo touch %s" % (settings_path))
     run("sudo rm %s" % (settings_path))
     run('sudo cp %s %s' % (settings_server_path, settings_path))
-    run('source /srv/www/live/foodtrade-env/bin/activate && cd /srv/www/live/foodtrade-env/foodtrade && '+source_folder + '/../bin/python manage.py collectstatic --noinput')
+    run("sudo "+ source_folder + '/../bin/python '+ source_folder + '/manage.py collectstatic --noinput')
     sudo ('sudo supervisorctl restart all')
 
 def deploy_test():
