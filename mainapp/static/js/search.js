@@ -554,7 +554,7 @@ map.panTo(new L.LatLng(lat,lng));
     var box_username = $(this).attr('data-username');
     var ctrl = Search.map_controls[box_username];
 markers.addLayer(ctrl);
-        map.removeLayer(ctrl);
+        // map.removeLayer(ctrl);
     // ctrl.closePopup();
 });
 

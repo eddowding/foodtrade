@@ -16,6 +16,11 @@ map.on('zoomend', map_dragged);
 map._layersMinZoom=min_zoom_level;
 }
 
+// var group = new L.featureGroup(markers.getLayers());
+
+//  map.fitBounds(group.getBounds());
+
+
 
 // L.circle([lat,lng], 320934, {
 //       stroke: 1,
@@ -61,6 +66,7 @@ function show_connections_on_map()
       var current_lon = parseFloat(results[i].latlng.coordinates[0]);
       var card = (Search.tab=="market")?get_box_update_map(results[i]):map_profile_card(results[i]);
       var ctrl = L.marker([parseFloat(current_lat), parseFloat(current_lon)],{icon: redIcon}).bindPopup(card);
+      var marker_index = (Search.tab=="market")?results[i].username+"_"+results[i].updates.tweet_id:results[i].username;
       Search.map_controls[results[i].username] = ctrl;
         markers.addLayer(ctrl);
     }

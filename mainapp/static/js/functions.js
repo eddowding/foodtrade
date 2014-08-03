@@ -1,6 +1,6 @@
 function get_box_profile(user)
 {
-  var content = "";
+  	var content = "";
 	content += '<div class="box-generic" data-username="'+user.username+'">';
 	content += '<div class="timeline-top-info border-bottom clearfix">';
 	content += '<div class="pull-right" style="margin-left: 5px;">';
@@ -21,7 +21,6 @@ function get_box_profile(user)
 	content += '</a>';
 	content += '</div>  ';
 	content += '<img src="'+user.profile_img+'" alt="'+user.name+'" class="img-responsive pull-left" style="width:50px; margin-right: 5px;">';
-
 	content += '<h4 class="margin0"><a href="/'+user.username+'" class="text-inverse">';
 	content += user.name;
 	content += '</a></h4> ';
@@ -54,7 +53,6 @@ function get_box_profile(user)
 		{
 			content += ' &amp; '+more_count+ ' more <br />';
 		}
-
 	}
 
 	if(user.foods.wesell_matches.length>0)
@@ -118,7 +116,7 @@ function box_update_content(update)
 
 	if(is_superuser || update.username == user_username)
 	{
-		content +='<li><a href="#deletetweet" class="deletetweet"  data-username="'+update.username+'" data-tweet-id="'+update.updates.tweet_id+'"><i class="fa fa-trash-o fa-fw flag"></i> Delete</a></li>';
+		content +='<li><a href="#deletetweet" class="deletetweet"  data-username="'+update.username+"_"+update.updates.tweet_id+'" data-tweet-id="'+update.updates.tweet_id+'"><i class="fa fa-trash-o fa-fw flag"></i> Delete</a></li>';
 	}
 	content +='<li><a href="#markspam" onclick="click_activity(\'spam\',\''+update.updates.tweet_id+' \')" class=" "><i class="fa fa-flag-o flag fa-fw"></i> Report</a></li>';
 	content +='</ul> </span> ';
