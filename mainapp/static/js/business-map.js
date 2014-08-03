@@ -1,3 +1,4 @@
+  var markers = new L.LayerGroup();
 var map = new L.map('map', {
     center: new L.LatLng(map_lat,map_lon),
     crs: default_csr,
@@ -6,7 +7,6 @@ var map = new L.map('map', {
         worldCopyJump: false,
     layers: [current_base_layer]
 });
-
 
 var control_dict ={};
 var lines_dic = {};
@@ -36,6 +36,7 @@ L.circle([map_lat,map_lon], 160934, {
 		}).addTo(map);
 
 
+	markers.clearLayers();
 
 
 var card_str = '<div class="card-box"><div class="content text-center"><div class=""><a href="/profile/'+username+'"><img src="'+photo+'" alt="'+name+'" class="img-circle img-thumbnail img-responsive" style="width:40px;" /></a>';
@@ -43,9 +44,11 @@ var card_str = '<div class="card-box"><div class="content text-center"><div clas
     card_str += '<p>'+description+'</p></div>';
     card_str += '<a href="/profile/'+username+'" class="btn btn-primary btn-sm">View profile &raquo;</a></div> </div>';    
 
-if(parseInt(map_lon) != parseInt(def_lon) || parseInt(def_lat) != parseInt(map_lat))
+			if(parseInt(map_lon) != parseInt(def_lon) || parseInt(def_lat) != parseInt(map_lat))
          	{
-         		L.marker([parseFloat(map_lat), parseFloat(map_lon)], {icon: redIcon}).addTo(map).bindPopup(card_str);
+         		var cntrl = L.marker([parseFloat(map_lat), parseFloat(map_lon)], {icon: redIcon}).addTo(map).bindPopup(card_str);
+         		markers.addLayer(cntrl);
+
          	}
 
 			
@@ -91,25 +94,7 @@ function reload_connections()
          	{
          		continue;
          	}
-			if(current_lat>max_lat)
-			{
-				max_lat = current_lat;
-			}
-			if(current_lat<min_lat)
-			{
-				min_lat = current_lat;
-			}
-
-			
-			if(current_lon>max_lon)
-			{
-				max_lon = current_lon;
-			}
-
-			if(current_lon<min_lon)
-			{
-				min_lon = current_lon;
-			}
+		
 
 
 
@@ -154,11 +139,10 @@ var card_str = '<div class="card-box"><div class="text-center"><div class=""><a 
     card_str += '<a href="/profile/'+username+'" class="btn btn-primary btn-sm">View profile &raquo;</a></div> </div>';    
 
 
-			var ctrl = L.marker([parseFloat(current_lat), parseFloat(current_lon)], {icon: redIcon}).addTo(map).bindPopup(card_str);			
-			
+			ctrl = L.marker([parseFloat(current_lat), parseFloat(current_lon)], {icon: redIcon}).addTo(map).bindPopup(card_str);			
+			markers.addLayer(ctrl);
 			control_dict[username] = ctrl;
 			map_controls.push(ctrl);
-
 }
 
 
@@ -176,25 +160,7 @@ for(var j=0;j<customers.length;j++)
 
 			var current_lat = parseFloat(latitude);
 			var current_lon = parseFloat(longitude);
-			// if(current_lat>max_lat)
-			// {
-			// 	max_lat = current_lat;
-			// }
-			// if(current_lat<min_lat)
-			// {
-			// 	min_lat = current_lat;
-			// }
-
 			
-			// if(current_lon>max_lon)
-			// {
-			// 	max_lon = current_lon;
-			// }
-
-			// if(current_lon<min_lon)
-			// {
-			// 	min_lon = current_lon;
-			// }
 
 
 if(parseInt(map_lon) != parseInt(def_lon) || parseInt(def_lat) != parseInt(map_lat))
@@ -215,27 +181,24 @@ if(parseInt(map_lon) != parseInt(def_lon) || parseInt(def_lat) != parseInt(map_l
 		}
 
 }
-
+ 
 
     map.scrollWheelZoom.disable();
 
+var group = new L.featureGroup(markers.getLayers());
+var mb = map.getBounds();
+var lb = group.getBounds();
+
+if((lb._northEast.lng-lb._southWest.lng)<(mb._northEast.lng-mb._southWest.lng))
+{
 
 
-// 	if(max_lat == min_lat && max_lon==min_lon)
-// 		{
-// 			var padding = 0.3
-// 			max_lat += padding;
-// 			min_lat -= padding;
-// 			max_lon += padding;
-// 			min_lon -= padding;
-// 		}
-
-
-// 					  map.fitBounds([
-//     [min_lat, min_lon],
-//     [max_lat, max_lon]
-// ]);
+            map.fitBounds(lb);
+            
+         		}
+ 
 		}
+
 
     L.control.fullscreen().addTo(map);
 
