@@ -37,7 +37,7 @@ def get_twitter_obj(token, secret):
     return Twython(app_key = CONSUMER_KEY,app_secret = CONSUMER_SECRET,oauth_token = token,oauth_token_secret = secret)
 
 def profile_url_resolve(request, username):
-    raise Http404
+    
     if username == 'me':
         if request.user.is_authenticated():
             username = request.user.username
