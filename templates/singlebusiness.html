@@ -421,39 +421,39 @@
       {% endif %}
  
       <div class="mCustomScrollbar scroll300">
-        <table class="table table-hover table-condensed footable toggle-arrow-circle-filled" id="produceTable" data-filter="#filterFoods" data-filter-text-only="true"> 
+        <table class="table table-hover table-condensed footable toggle-circle" id="produceTable" data-filter="#filterFoods" data-filter-text-only="true"> 
         <thead class="hidden">
             <tr> 
+              <th data-hide="" data-toggle="true">
+                more arrow
+              </th> 
               <th data-hide=""  >
                 Produce
               </th>
               <th data-hide=" " >
-                tags
+                Tags
               </th>
               <th data-hide="all" >
-                desciption
+                Description
               </th>
               <th data-hide="all">
-                image
+                 
               </th>
               <th data-hide="">
-                vouch
+                Vouch
               </th>
               <th data-hide="all">
-                season
+                Season
               </th>
               <th data-hide="all">
-                quantity
+                Quantity
               </th>
               <th data-hide=" ">
-                vouchers
+                Vouchers
               </th>
               <th data-hide="all">
-                functions
+                Actions
               </th>
-              <th data-hide="" data-toggle="true">
-                more arrow
-              </th> 
             </tr>
           </thead>
           <tbody id="ajax_food_tr">
@@ -529,9 +529,12 @@
        
        
       <div  class="mCustomScrollbar scroll300">
-        <table class="table table-hover table-condensed footable toggle-arrow-circle-filled" id="suppliersTable" data-filter="#filterSuppliers" data-filter-text-only="true"> 
+        <table class="table table-hover table-condensed footable toggle-circle" id="suppliersTable" data-filter="#filterSuppliers" data-filter-text-only="true"> 
         <thead class="hidden">
             <tr> 
+              <th data-hide="" data-toggle="true" data-class="vcenter">
+                popover
+              </th> 
               <th data-hide=""  >
                 Image
               </th>
@@ -549,9 +552,6 @@
               </th> 
               <th data-hide="all">
                 vouches
-              </th> 
-              <th data-hide="" data-toggle="true" data-class="vcenter">
-                popover
               </th> 
             </tr>
           </thead>
@@ -626,9 +626,12 @@
         
 
        <div class="mCustomScrollbar scroll300">
-        <table class="table table-hover table-condensed footable toggle-arrow-circle-filled" id="stockistsTable" data-filter="#filterStockists" data-filter-text-only="true"> 
+        <table class="table table-hover table-condensed footable toggle-circle" id="stockistsTable" data-filter="#filterStockists" data-filter-text-only="true"> 
         <thead class="hidden">
             <tr> 
+              <th data-hide="" data-toggle="true" data-class="vcenter">
+                popover
+              </th> 
               <th data-hide=""  >
                 Image
               </th>
@@ -646,9 +649,6 @@
               </th> 
               <th data-hide="all">
                 vouches
-              </th> 
-              <th data-hide="" data-toggle="true" data-class="vcenter">
-                popover
               </th> 
             </tr>
           </thead>
@@ -735,30 +735,33 @@
       </div>
 
       <div class="mCustomScrollbar scroll300">
-        <table class="table table-hover table-condensed footable toggle-arrow-circle-filled" id="shoppinglistTable" data-filter="#filterShopping" data-filter-text-only="true"> 
+        <table class="table table-hover table-condensed footable toggle-circle" id="shoppinglistTable" data-filter="#filterShopping" data-filter-text-only="true"> 
         <thead class="hidden">
             <tr> 
+              <th data-hide="" data-toggle="true">
+                more arrow
+              </th> 
               <th data-hide=""  >
                 Produce
               </th>
               <th data-hide=" " >
-                tags
+                Tags
               </th>
               <th data-hide="all" >
-                desciption
+                Description
               </th> 
               <th data-hide="all">
-                season
+                Season
               </th>
               <th data-hide="">
-                quantity
+                Quantity
               </th> 
-              <th data-hide="all">
-                functions
+              <th data-hide="">
+                Search
               </th>
-              <th data-hide="" data-toggle="true">
-                more arrow
-              </th> 
+              <th data-hide="all">
+                Actions
+              </th>
             </tr>
           </thead>
           <tbody id="webuy_foods">
@@ -852,7 +855,7 @@
         </div>
         <p class='small'>{{each.description|truncatechars:80}}</p>
         {% ifequal profile_id user_id %}
-        <button type="button" class="btn btn-danger btn-xs pull-right" aria-hidden="true" onclick="del_org_from_biz( {{profile_id}}, {{each.id}})"><i class="fa-trash-o fa"></i> Remove</button> 
+        <button type="button" class="btn btn-danger btn-xs pull-right" aria-hidden="true" onclick="del_org_from_biz( {{profile_id}}, {{each.id}})" title="Remove" rel="tooltip"><i class="fa-trash-o fa"></i></button> 
         {% endifequal %}
       </div>  
     {% endfor %}  
@@ -922,16 +925,19 @@
   <div class="panel-body">
 
     {% if company_num %} 
-      Company number: <a href="https://www.duedil.com/company/{{company_num}}">{{company_num}}</a>  
+    <p>
+      <b>Company number:</b> <a href="https://www.duedil.com/company/{{company_num}}">{{company_num}}</a>  
+    </p>
     {% endif %} 
 
     <!-- twitter info --> 
-    <div class="text-center">
+    <p><b>Twitter followers</b>: {{followers_count}} </p>
+<!-- 
       <span class="label label-default label-stroke">{{followers_count}}</span> followers
       <i class="fa fa-fw fa-twitter fa-lg" style="color: #35B8EB;"></i>
       follows
       <span class="label label-default label-stroke">{{friends_count}}</span>  
-    </div>
+  -->
 
   </div>
 </div>

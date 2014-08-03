@@ -130,14 +130,14 @@ var Search = {
     {
         if(this.search_type=="produce")
         {
-            $("#search_type").html("<i class='fa fa-cutlery icon'></i> <span class='hidden-xs'>Produce</span><i class='fa fa-caret-down'></i>");
-            $("#search_type_option").html("Profile");
+            $("#search_type").html(" <span class='hidden-xs'>in Produce</span><i class='fa fa-caret-down'></i>");
+            $("#search_type_option").html("in Profiles ");
 
         }
         else
         {
-            $("#search_type").html("Profile");
-            $("#search_type_option").html("Produce");
+            $("#search_type").html("in Profiles <i class='fa fa-caret-down'></i>");
+            $("#search_type_option").html("in Produce");
             $("#result_tabs").addClass( "hidden" );
              $("#mktplace").removeClass("active");
             $("#profiles").addClass("active");
@@ -196,9 +196,7 @@ var Search = {
         var html_content = "";
         if(updates.length==0)
         {
-
-            html_content = "There are no results for this search. Try removing filters, broadening your search term, or zooming out to cover a larger area.";
-
+            html_content = "<div class='alert alert-info lead'><p><b>There are no results for this search.</b></p>  <p>Things to try:</p><ul><li>check the spelling</li><li> removing filters</li><li>broadening your search term</li><li>zooming out to cover a larger area</li></ul></div>";
         }
         else
         {
@@ -220,7 +218,7 @@ var Search = {
         var html_content = "";
         if(profiles.length==0)
         {
-            html_content = "There are no results for this search. Try removing filters, broadening your search term, or zooming out to cover a larger area.";
+            html_content = "<div class='alert alert-info lead'><p><b>There are no results for this search.</b></p>  <p>Things to try:</p><ul><li>check the spelling</li><li> removing filters</li><li>broadening your search term</li><li>zooming out to cover a larger area</li></ul></div>";
         }
         else
         {
@@ -523,15 +521,15 @@ $("#search_type_option").click(function(){
     if(Search.search_type=="produce")
     {
         Search.toggle_type();
-        $("#search_type").html("Profile");
-        $("#search_type_option").html("Produce");
+        $("#search_type").html("in Profiles");
+        $("#search_type_option").html("in Produce");
 
     }
     else if(Search.search_type=="profile")
     {
         Search.toggle_type();
-        $("#search_type").html("Produce");
-        $("#search_type_option").html("Profile");
+        $("#search_type").html("in Produce");
+        $("#search_type_option").html("in Profiles");
     }
 });
 

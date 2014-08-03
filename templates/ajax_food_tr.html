@@ -3,6 +3,9 @@
 
 <tr 
     class="{{eachfood.parent_food|slugify}}">
+
+
+<td></td>
    
 
   <td class="ellipsis"> 
@@ -102,9 +105,9 @@
   <td class='innerAll text-center border-top border-bottom'>
   {% if request.user.is_superuser or profile_id == user_id %}
 
-   <a href='javascript:void(0)' class='btn btn-sm btn-info' data-container='body' onClick="show_upload(); get_food_detail({{profile_id}}, '{{eachfood.food_name|safe|escapejs}}', '{{eachfood.description|escapejs }}', '{{eachfood.food_tags|escapejs }}', '{{eachfood.photo_url|escapejs }}', '{{eachfood.recomm_tags|safe|escapejs }}', '{{eachfood.how_much|escapejs }}', '{{eachfood.how_often|escapejs }}', '{{eachfood.month_list|escapejs }}');">Edit</a>
+   <a href='javascript:void(0)' class='btn btn-xs btn-info' data-container='body' onClick="show_upload(); get_food_detail({{profile_id}}, '{{eachfood.food_name|safe|escapejs}}', '{{eachfood.description|escapejs }}', '{{eachfood.food_tags|escapejs }}', '{{eachfood.photo_url|escapejs }}', '{{eachfood.recomm_tags|safe|escapejs }}', '{{eachfood.how_much|escapejs }}', '{{eachfood.how_often|escapejs }}', '{{eachfood.month_list|escapejs }}');">Edit</a>
    
-   <a class='btn btn-sm btn-danger' onClick="delete_food({{profile_id}}, '{{eachfood.food_name}}', this)"><i class='fa fa-trash-o fa-fw fa-lg' title='Delete'></i> Delete</a>
+   <a class='text-danger small' onClick="delete_food({{profile_id}}, '{{eachfood.food_name}}', this)">Delete</a>
 
   {% else %}
 
@@ -114,9 +117,6 @@
 
 
 
-
-
-<td></td>
 
 
 

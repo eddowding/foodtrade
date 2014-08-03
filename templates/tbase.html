@@ -332,7 +332,7 @@ line-height: 34px; font-size: 16px;">
 
 
   {% if request.user.is_authenticated %}
-  <ul class="notifications pull-right hidden-xs border-left">
+  <ul class="notifications pull-right hidden-xs border-left {% if userinfo.notification_count != 0 %}gotmail{% endif %}">
       <li>
           <a href="/inbox/"><i class="notif-block fa fa-envelope-o"></i>{% if userinfo.notification_count != 0 %}
             <span id="spanInbox" class="pull-number label label-success">{{userinfo.notification_count}}</span> 
@@ -348,22 +348,22 @@ line-height: 34px; font-size: 16px;">
     <form action="/activity" onsubmit="return start_search()">
  
     <div class="input-group border0">
-      <input type="hidden" name="stype" value="produce" id="search_stype">   
+      <input type="hidden" name="stype" value="produce" id="search_stype">  
+
+
+
+      <input type="text" class="form-control pull-left" name="q" id="search_query" placeholder="Find...">  
 
       <div class="input-group-btn border0" id="searchGroup">
         <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" id="searchSelect">
-        <span id="search_type">
-            <i class="fa fa-cutlery icon"></i> 
-            <span class="hidden-xs">Produce</span>
-            <i class="fa fa-caret-down"></i>
+        <span id="search_type"> 
+            <span class="hidden-xs">in Produce <i class='fa fa-caret-down'></i></span> 
         </span> 
         </button>
         <ul class="dropdown-menu">
-          <li ><a href="#" id="search_type_option">Profiles</a></li> 
+          <li><a href="#" id="search_type_option"> in Profiles </a></li> 
         </ul>
       </div>  
-
-      <input type="text" class="form-control pull-left" name="q" id="search_query" placeholder="Find...">  
 
       <div class="input-group-btn"> 
         <button type="submit" class="btn btn-default" id="searchSubmit">
@@ -1598,10 +1598,11 @@ function validate_login(){
   (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
   m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
   })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-  ga('create', 'UA-3315919-37', 'foodtrade.com');
+  
+  ga('create', 'UA-3315919-37', 'auto');
+  ga('require', 'linkid', 'linkid.js');
+  ga('require', 'displayfeatures');
   ga('send', 'pageview');
-
 </script>
 
 <script type="text/javascript">
@@ -1718,15 +1719,15 @@ $("#search_type_option").click(function(){
     if(current_search=="produce")
     {        
       $("#search_stype").val("profile");
-        $("#search_type").html("Profile");
-        $("#search_type_option").html("Produce");
+        $("#search_type").html("in Profiles <i class='fa fa-caret-down'></i>");
+        $("#search_type_option").html("in Produce");
 
     }
     else if(current_search=="profile")
     {        
       $("#search_stype").val("produce");
-        $("#search_type").html("Produce");
-        $("#search_type_option").html("Profile");
+        $("#search_type").html("in Produce <i class='fa fa-caret-down'></i>");
+        $("#search_type_option").html("in Profiles");
     }
 });
 

@@ -76,7 +76,7 @@ function show_connections_on_map()
           if(initial_flag)
           {
             initial_flag = false;
-            map.fitBounds(markers.getBounds());
+            map.fitBounds(map.getBounds());
           }
 
 
