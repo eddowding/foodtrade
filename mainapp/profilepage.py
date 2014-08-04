@@ -192,6 +192,7 @@ def display_profile(request, username):
 
         update_results = search_handle.get_tweets_by_user_id(userprof['useruid'])
         updates = update_results['results'][:10]
+
         # tweet_feed_obj = TweetFeed()
         # user_updates = tweet_feed_obj.get_tweet_by_user_id(userprof['useruid'])
         # user_updates["updates"].reverse()
@@ -204,6 +205,8 @@ def display_profile(request, username):
         #         new_updates.append(eachUpdate)
         # updates = new_updates[0:10]
 
+        from mainapp.classes.MarketSearch import MarketSearch
+        mkt_search = MarketSearch(request)
         for i in range(len(updates)):
             time_elapsed = int(time.time()) - updates[i]['time_stamp']
             if time_elapsed<60:
@@ -221,6 +224,9 @@ def display_profile(request, username):
                 years = time_elapsed/3600/24/365
                 time_text = str(years) + ' years'
             updates[i]['time_elapsed'] = time_text
+            
+            updates[i]['replies_count'] = mkt_search.replies_count(updates[i].get('tweet_id'))
+
         parameters['updates'] = updates
         parameters['updates_count'] = update_results["update_count"]
     except:

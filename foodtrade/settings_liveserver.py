@@ -193,4 +193,5 @@ from settings_local import *
 # django.contrib.sites is also necessary
 
 
-REMOVE_WWW = True
+REMOVE_WWW = False
+PREPEND_WWW = True
