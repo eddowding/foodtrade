@@ -194,4 +194,4 @@ from settings_local import *
 
 
 REMOVE_WWW = False
-PREPEND_WWW = True
+PREPEND_WWW = False
