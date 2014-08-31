@@ -67,3 +67,4 @@ cat ~/.ssh/id_rsa.pub | ssh foodtrade@ftstaging.cloudapp.net "cat >> ~/.ssh/auth
 
 
 You will be prompted to enter password. Enter password and its done. :)
+

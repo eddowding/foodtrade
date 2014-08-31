@@ -101,7 +101,7 @@ def _update_virtualenv(source_folder):
     virtualenv_folder = source_folder + '/..'
     if not exists(virtualenv_folder + '/bin/pip'): #1
         run('virtualenv --python=python2.7 %s' % (virtualenv_folder,))
-    run('sudo %s/bin/pip install -r %s/requirements.txt' % ( #2
+    sudo('%s/bin/pip install -r %s/requirements.txt' % ( #2
             virtualenv_folder, source_folder
     ))
     run('source %s/bin/activate' % (virtualenv_folder))
