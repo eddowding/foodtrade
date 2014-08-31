@@ -13,17 +13,19 @@ source_folder = '%s/%s' % (SITES_FOLDER, HOST_FOLDER)
 # test_source_folder = '%s/mcq.phunka.com/application' % (SITES_FOLDER)
 
 STATIC_URL = '/static/'
-push_type = "real"
+push_type = "live"
 
 code_only_folder = '%s/%s/source/%s' % (SITES_FOLDER, HOST_FOLDER, 'foodtrade')
 
 def live():
+
     env.user = 'kathmandu'
     env.hosts = ['foodtradelite.cloudapp.net']
 
 def staging():
     env.user = 'foodtrade'
     env.hosts = ['ftstaging.cloudapp.net']
+    push_type = "staging"
 
 def deploy():
     # _create_directory_structure_if_necessary(HOST_FOLDER)
@@ -31,7 +33,7 @@ def deploy():
     _update_virtualenv(source_folder)
     settings_server_file = 'settings_liveserver.py'
     if push_type == 'staging':
-        settings_server_file = 'settings_liveserver.py'
+        settings_server_file = 'settings_stagingserver.py'
     # run('cd %s && git reset --hard && git clean -f -d && git checkout master && git pull && git pull origin master' % (source_folder))
     _update_virtualenv(source_folder)
     settings_path = source_folder + '/' + PROJECT_NAME + '/settings.py'
@@ -39,8 +41,25 @@ def deploy():
     run("sudo touch %s" % (settings_path))
     run("sudo rm %s" % (settings_path))
     run('sudo cp %s %s' % (settings_server_path, settings_path))
-    run('source /srv/www/live/foodtrade-env/bin/activate && cd /srv/www/live/foodtrade-env/foodtrade && '+source_folder + '/../bin/python manage.py collectstatic --noinput')
+    run("sudo "+ source_folder + '/../bin/python '+ source_folder + '/manage.py collectstatic --noinput')
     sudo ('sudo supervisorctl restart all')
+
+
+def deploy_staging():
+    # _create_directory_structure_if_necessary(HOST_FOLDER)
+    _get_latest_source(source_folder)
+    _update_virtualenv(source_folder)
+    settings_server_file = 'settings_stagingserver.py'
+    # run('cd %s && git reset --hard && git clean -f -d && git checkout master && git pull && git pull origin master' % (source_folder))
+    _update_virtualenv(source_folder)
+    settings_path = source_folder + '/' + PROJECT_NAME + '/settings.py'
+    settings_server_path = source_folder + '/' + PROJECT_NAME + '/' + settings_server_file
+    run("sudo touch %s" % (settings_path))
+    run("sudo rm %s" % (settings_path))
+    run('sudo cp %s %s' % (settings_server_path, settings_path))
+    run("sudo "+ source_folder + '/../bin/python '+ source_folder + '/manage.py collectstatic --noinput')
+    sudo ('sudo supervisorctl restart all')
+
 
 def deploy_test():
     _get_latest_source(source_folder)

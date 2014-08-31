@@ -91,8 +91,6 @@ class MongoConnection():
         # self.close_connection()
 
     def update_push(self, table_name, where, what):
-        
-        print where, what
         # self.create_connection()
         self.db[table_name].update(where,{"$push":what},upsert=False)
         # self.close_connection()

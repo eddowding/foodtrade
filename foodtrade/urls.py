@@ -5,7 +5,7 @@ from django.contrib import admin
 from django.conf import settings
 from mainapp.forms import PassworResetForm
 admin.autodiscover()
-
+# handler404 = 'mainapp.views.my_404_view'
 urlpatterns = patterns('',
     url(r'^$', 'mainapp.home.home', name='home'),
     url(r'^kpi/$', 'mainapp.kpi.stats'),
