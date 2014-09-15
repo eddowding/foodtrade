@@ -1037,6 +1037,9 @@
           <div class="lead">
             <a href="" class="text-inverse"> {{eachUpdate.status|recognise_name|safe}}</a>
           </div>
+          <small class="pull-left">
+            <a href="/{{username}}/post/{{eachUpdate.tweetuid}}/">  {{eachUpdate.replies_count}} replies</a>
+          </small>  
           <small class="pull-right">
             <a href="/{{username}}/post/{{eachUpdate.tweetuid}}/">  {{eachUpdate.time_elapsed}} ago</a>
           </small>  
