@@ -100,8 +100,56 @@
 </div>
 
 
-<div class="row row-merge bizSummary">
-  <div class="col-xs-12">
+<!---    -->
+
+
+<div class="row row-merge bizSummary equal">
+  <div class="col-xs-4 equal" style="background: #444;"> 
+    <div class="row">
+
+<div class="col-xs-9 bg-gray border-right equal">
+   <div class="innerAll">
+      <div class="media">
+      <img src="{{pic_url}}"  alt="{{name}} logo" class="pull-left avatar">
+      <div class="media-body"> 
+      {% if request.user.is_authenticated %}
+        <div id="shortcuts" class=" pull-right">
+          <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modal_contact"><i class="fa fa-envelope-o fa-fw"></i> Contact</button>
+        </div>
+      {% endif %}
+
+        <h2 class="margin-none">{{name}}</h2>
+
+        {% if type_user|length == 0 or type_user|first == '' %}
+        {% else %}
+        <span class="tags tags-biztype  ">  
+          {% for eachtype in type_user %}
+         <a href="/activity/?b={{eachtype}}">{{eachtype}}</a>
+         {% endfor %}
+        </span> 
+        {% endif %} 
+      </div> 
+      </div>
+    </div>
+</div>
+
+<div class="col-xs-3 bg-gray border-right ">
+  <div class="{% if not user.is_authenticated %} hidden {% endif %}  clearfix" id="distanceAway">
+     
+  
+      <!-- if logged in or you've allows html5 browser location -->
+   
+      <span class="lead bold"> {{distance}} miles  </span>
+      <small class="small clearfix margin0 hidden-xs">away from you</small>
+
+  </div> 
+</div>
+
+
+
+    </div>
+  </div>
+  <div class="col-xs-8">
     <div class="map-biz" id="map"></div> 
   </div><!-- col map --> 
 </div>
@@ -200,7 +248,9 @@
         {% else %}
 
           <!-- if not logged in show login prompt -->
-          <a href="{% provider_login_url "twitter" process="login" %}" class="btn btn-primary btn-block text-center"><i class="fa fa-2x fa-twitter"></i> <span>Login free <br><span class="normal">for more details</span>
+          <a href="{% provider_login_url "twitter" process="login" %}" class="btn btn-primary btn-block text-center"><i class="fa fa-lg fa-twitter"></i> 
+
+          Sign in <span class="normal">for more detail</span>
           </a>
 
         {% endif %}
@@ -840,7 +890,7 @@
 
   {% if user.is_authenticated %}
     {% else %}
-      <div class="clearfix"><a href="{% provider_login_url "twitter" process="login" %}" class="">Login</a> or <a href="{% provider_login_url "twitter" process="login" %}" class="">sign up free</a> to see a complete list of groups. </div>
+      <p class="innerAll"><a href="{% provider_login_url "twitter" process="login" %}" class="">Login</a> or <a href="{% provider_login_url "twitter" process="login" %}" class="">sign up free</a> to see a complete list of groups. </p>
   {% endif %}
 
   <div class="panel-body groupsGrid" id="groupsGrid">

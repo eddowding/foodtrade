@@ -186,11 +186,11 @@ var ticker_lon = {{userinfo.lon}};
     <!--[if lt IE 9]><link rel="stylesheet" href="{% static "assets/components/library/bootstrap/css/bootstrap.min.css" %}" /><![endif]-->
     <script>
       less = {
-        env: "production", 
+        env: "development", 
         poll: 100
       };
     </script>
-    <script>//less.watch();</script>
+    <script>less.watch();</script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/less.js/1.7.1/less.min.js"></script>  
 <script type="text/javascript">
   
@@ -234,7 +234,7 @@ if (!Function.prototype.bind) {
     
 
 
-<div class="container menu-hidden" id="wrapper">
+<div class="container-responsive menu-hidden" id="wrapper">
   
  
 
@@ -273,9 +273,9 @@ if (!Function.prototype.bind) {
 
 
   {% if not request.user.is_authenticated %} 
-  <div class="user-action pull-right menu-right-hidden-xs menu-left-hidden-xs border-left">
+  <div class="user-action pull-right menu-right-hidden-xs menu-left-hidden-xs border-left border-right">
     <div class="dropdown username pull-left border-right uservoicePadding">
-      <a class="dropdown-toggle" data-toggle="dropdown" href="#">Login
+      <a class="dropdown-toggle black" data-toggle="dropdown" href="#" style="font-weight: 400; line-height: 34px; font-size: 14px;">Login
       </a> 
        <ul class="dropdown-menu pull-right" id="login" style="padding: 15px;min-width: 250px;">
           <li>
@@ -314,7 +314,7 @@ if (!Function.prototype.bind) {
   <div class="user-action pull-right  border-left">
     <div class="dropdown username pull-left">
       <a   data-toggle="modal" data-target="#modal_signup" style="font-weight: 400;
-line-height: 34px; font-size: 16px;">
+line-height: 34px; font-size: 14px;" class="black">
         Sign up
       </a>
     </div>
@@ -323,9 +323,9 @@ line-height: 34px; font-size: 16px;">
   {% endif %}
    
   
-  <div class="user-action user-action-btn-navbar pull-left border0" style="padding: 2px;">
-      <a href="/" class="btn btn-sm btn-navbar">
-      <img src="{% static 'images/logo_icon.png' %}" alt="FoodTrade logo"/> 
+  <div class="pull-left" style="margin-right: 10px;">
+      <a href="/" class="">
+      <img src="{% static 'images/logo_tall.png' %}" alt="FoodTrade logo"/> 
       </a>
   </div> 
 
@@ -380,10 +380,13 @@ line-height: 34px; font-size: 16px;">
 
   <div class="input-group pull-left border0  visible-md visible-lg" id="socialShare">
 
-    <a href="https://twitter.com/foodtradeHQ" class="twitter-follow-button " data-show-count="false">Follow @foodtradeHQ</a>
+<a href="https://twitter.com/foodtradeHQ" class="btn btn-info btn-xs btn-stroke"><i class="fa fa-twitter fa-fw fa-lg twitter"></i></a>
+<a href="https://facebook.com/foodtradeHQ" class="btn btn-info facebook btn-xs btn-stroke"><i class="fa fa-facebook fa-fw fa-lg "></i></a>
+
+<!--     <a href="https://twitter.com/foodtradeHQ" class="twitter-follow-button " data-show-count="false"> @foodtradeHQ</a>
     <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
  
-    <iframe src="//www.facebook.com/plugins/like.php?href=http%3A%2F%2Ffacebook.com%2FfoodtradeHQ&amp;width=80&amp;layout=button&amp;action=like&amp;show_faces=true&amp;share=false&amp;height=21&amp;appId=1400801613504478" scrolling="no" frameborder="0" style="border:none; overflow:hidden; height:21px;width:80px" allowTransparency="true"></iframe>
+    <iframe src="//www.facebook.com/plugins/like.php?href=http%3A%2F%2Ffacebook.com%2FfoodtradeHQ&amp;width=80&amp;layout=button&amp;action=like&amp;show_faces=true&amp;share=false&amp;height=21&amp;appId=1400801613504478" scrolling="no" frameborder="0" style="border:none; overflow:hidden; height:21px;width:80px" allowTransparency="true"></iframe> -->
       
   </div>
 
@@ -397,9 +400,9 @@ line-height: 34px; font-size: 16px;">
             {% if request.user.is_authenticated %}
             <div class=" pull-right border-left user-action ">  
 
-                <button type="button" class="btn btn-primary btn-stroke btn-sm hidden-xs hidden-sm" data-toggle="collapse" data-target="#newtwitterpost" style="font-weight: normal;" onclick="window.scrollTo(0,0);">
-                  <i class="fa fa-bullhorn fa-fw text-primary"></i>
-                  Post in marketplace
+                <button type="button" class="btn btn-primary  btn-sm hidden-xs hidden-sm" data-toggle="collapse" data-target="#newtwitterpost" style="font-weight: normal;" onclick="window.scrollTo(0,0);">
+                  <i class="fa fa-bullhorn fa-lg fa-fw"></i>
+                  Get quotes / Make offers
                 </button>
 
                 <a class="hidden-md hidden-lg" data-toggle="collapse" data-target="#newtwitterpost" style="font-weight: normal; position: relative; top: -7px;">
@@ -408,6 +411,13 @@ line-height: 34px; font-size: 16px;">
  
             </div> 
             {% endif %}  
+
+          <div class="pull-right border-left user-action ">  
+            <a class="black" href="http://digest.foodtrade.com" target="_blank" style="font-weight: 400; line-height: 34px; font-size: 14px; padding-left: 6px; padding-right: 6px;">
+            Blog 
+            </a>
+          </div>
+  
 
           <div class="user-action hidden-xs hidden-sm pull-right menu-right-hidden-xs menu-left-hidden-xs">
               <div class="dropdown">
@@ -705,7 +715,8 @@ line-height: 34px; font-size: 16px;">
 {% endif %}
 
 <div class="row row-merge"  style="height: 100%;">
-  <div class="{% if not request.user.is_authenticated %} col-xs-12 {% else %} col-md-10  {% endif %}">
+  <!-- <div class="{% if not request.user.is_authenticated %} col-xs-12 {% else %} col-md-10  {% endif %}"> -->
+  <div class=" col-xs-12  ">
         <div class="container-fluid menu-hidden" id="main_page" style="padding-bottom: 0;">
               <div class="row row-merge">
                     <div class="col-md-12">
@@ -716,7 +727,8 @@ line-height: 34px; font-size: 16px;">
               </div><!-- row -->
         </div><!-- container -->
   </div><!-- col 10 --> 
-  <div class="{% if not request.user.is_authenticated %} hidden {% else %} col-md-2  {% endif %} hidden-sm hidden-xs" id="updatesContainer">
+  <!-- <div class="  {% if not request.user.is_authenticated %} hidden {% else %} col-md-2  {% endif %} hidden-sm hidden-xs" id="updatesContainer"> -->
+  <div class="hidden" id="updatesContainer">
   <div class="fixed">
 
   <h4><i class="fa fa-bullhorn"></i> Marketplace updates</h4>

@@ -705,7 +705,7 @@ def get_connections(user_id, logged_in_id = None, page_number = 1):
 
     for count, each in enumerate(b_conn):
         # try:
-        if logged_in_id == None and count == 5:
+        if logged_in_id == None and count == 25:
             break
         # account = SocialAccount.objects.get(user__id = each['c_useruid'])
         

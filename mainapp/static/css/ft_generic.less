@@ -41,6 +41,17 @@
   margin-bottom: 0;
 }
 
+.pace .pace-progress:after {
+  background: #444 !important;
+  padding: 1px 5px 2px 5px !important;
+  border-radius: 0 0 9px 9px !important;
+  text-shadow: none !important;
+  right: 30% !important;
+  color: #fff  !important;
+  font-size: 11px;
+  font-weight: bold  !important;
+}
+
 .badge {
   border: 0;
 }
@@ -61,6 +72,11 @@
       margin-right: 2px;
 
     }
+}
+
+body {
+  font-size: 13px;
+
 }
 
 .fav {
@@ -298,6 +314,37 @@ td.footable-visible.footable-first-column {
 /*  3.   NAVBAR
 /* ------------------------------------ */
 
+.navbar .user-action {
+  padding: 12px 6px;
+}
+
+.navbar {
+  border: 0;
+}
+
+.navbar.main { 
+    height: 54px;
+}
+
+.navbar .user-action.user-action-btn-navbar,
+.navbar .input-group {
+  background: none;
+}
+
+#topnav { 
+  background-image: -webkit-gradient(
+    linear,
+    left top,
+    left bottom,
+    color-stop(0, #FFFFFF),
+    color-stop(1, #EBEEF1)
+  );
+  background-image: -o-linear-gradient(bottom, #FFFFFF 0%, #EBEEF1 100%);
+  background-image: -moz-linear-gradient(bottom, #FFFFFF 0%, #EBEEF1 100%);
+  background-image: -webkit-linear-gradient(bottom, #FFFFFF 0%, #EBEEF1 100%);
+  background-image: -ms-linear-gradient(bottom, #FFFFFF 0%, #EBEEF1 100%);
+  background-image: linear-gradient(to bottom, #FFFFFF 0%, #EBEEF1 100%);
+}
 
 /* ------------------------------------
 /*  3.1  SOCIAL SHARING
@@ -359,6 +406,7 @@ i.pinterest,span.pinterest{ color: #cb2027 !important; }
   padding: 15px 10px 7px;
   position: fixed;
   bottom: 0;
+  left: 0;
   width: 100%; 
   z-index: 10000;
   border-top: 1px solid green;
@@ -468,8 +516,29 @@ i.pinterest,span.pinterest{ color: #cb2027 !important; }
 
 #profile_results,
 #mkt_results {
-  background: @lightgrey; 
+  background: @lightgrey;  
   @winheight:`$(window).height() - 272`;
   height: ~"@{winheight}px";
-  overflow: auto;
+  overflow: auto; 
+  flex-direction:row;
+  -webkit-flex-direction: row;
+  display:flex;
+  display: -webkit-flex;
+  flex-wrap:wrap;
+   -webkit-flex-wrap: wrap; 
+
+  .box-generic {   
+    display: inline-block; 
+    width: 31%;
+    margin: 1%;
+    border-bottom: 2px solid #ccc !important;
+    @media (max-width: 992px) {
+      width: 48%;
+      margin: 1%;
+    }
+    @media (max-width: 400px) {
+      width: 100%; 
+    }
+  }
+
 }
