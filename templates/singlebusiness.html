@@ -411,14 +411,14 @@
             {% if userprof.food_no != 0 %}<span class="badge">{{userprof.food_no}}</span>{% endif %}
 
             {% if userprof.food_no != 0 %}
-            <span data-target="#searchProduce" data-toggle="collapse" class="border-left innerL">
+            <span data-target="#searchProduce" data-toggle="collapse" class=" innerL">
               <i class="fa fa-search fa-fw"></i>
             </span>
             {% endif %} 
 
             {% if user.is_authenticated %}
-              <a data-toggle="collapse" class="" data-target="#addProduce" rel="tooltip" title="Add new produce">
-               <i class="fa fa-plus-circle fa-fw text-primary"></i>
+              <a data-toggle="collapse" class="label label-primary label-stroke" data-target="#addProduce" rel="tooltip" title="Add new produce">
+               <i class="fa fa-plus-circle"></i> Add
               </a> 
             {% endif %} 
           </div>
@@ -428,7 +428,7 @@
       {% if user.is_authenticated %}
       <div id="addProduce" class="{% if userprof.food_no != 0 %}collapse{% endif %} well-sm well clearfix">
       {% if userprof.food_no = 0 %}
-        <p class="small text-center">What does {{username}} produce?</p>
+        <p class="small text-center">What does {{username}} sell?</p>
       {% endif %}
             <div class="input-group" style="margin: 0 auto;"> 
               <div class='pull-left'>
@@ -534,14 +534,14 @@
 
         <div class="pull-right" style="margin-top: -18px; font-size: 15px;"> 
           {% if userprof.b_conn_no != 0 %}
-            <span data-target="#searchSuppliers" data-toggle="collapse" class="border-left innerL">
+            <span data-target="#searchSuppliers" data-toggle="collapse" class="innerL">
               <i class="fa fa-search fa-fw"></i>
             </span>
           {% endif %}
 
           {% if user.is_authenticated %}
-            <a data-toggle="collapse" class="" data-target="#addSupplier" rel="tooltip" title="Add a supplier">
-             <i class="fa fa-plus-circle fa-fw text-primary"></i>
+            <a data-toggle="collapse" class="label label-primary label-stroke" data-target="#addSupplier" rel="tooltip" title="Add a supplier">
+             <i class="fa fa-plus-circle"></i> Add
             </a> 
           {% endif %} 
         </div>
@@ -549,7 +549,7 @@
 
       <!-- filter -->
       <div class="collapse well-sm well" id="searchSuppliers">
-        <input type="text" class="form-control" id="filterSuppliers" placeholder="Find a supplier" />
+        <input type="text" class="form-control" id="filterSuppliers" placeholder="Filter suppliers" />
       </div>
 
       <!-- WIKI ADD CONNECTIONS --> 
@@ -631,14 +631,14 @@
         <div class="pull-right" style="margin-top: -18px; font-size: 15px;"> 
 
           {% if userprof.c_conn_no != 0 %}
-          <span data-target="#searchStockists" data-toggle="collapse" class="border-left innerL">
+          <span data-target="#searchStockists" data-toggle="collapse" class="innerL">
             <i class="fa fa-search fa-fw"></i>
           </span>
           {% endif %}
 
           {% if user.is_authenticated %}
-            <a data-toggle="collapse" class="" data-target="#addStockist" rel="tooltip" title="Add a supplier">
-             <i class="fa fa-plus-circle fa-fw text-primary"></i>
+            <a data-toggle="collapse" class="label label-primary label-stroke" data-target="#addStockist" rel="tooltip" title="Add a stockist">
+             <i class="fa fa-plus-circle"></i> Add
             </a> 
           {% endif %} 
         </div>
@@ -735,14 +735,14 @@
           <div class="pull-right">
             {% if all_buying_foods|length != 0 %}
               <span class="badge">{{all_buying_foods|length}}</span>
-              <span data-target="#searchShopping" data-toggle="collapse" class="border-left innerL">
+              <span data-target="#searchShopping" data-toggle="collapse" class="innerL">
                 <i class="fa fa-search fa-fw"></i>
               </span>
             {% endif %}
 
             {% if user.is_authenticated %}
-              <a data-toggle="collapse" class="" data-target="#addShopping" rel="tooltip" title="Add to purchased items">
-               <i class="fa fa-plus-circle fa-fw text-primary"></i>
+              <a data-toggle="collapse" class="label label-primary label-stroke" data-target="#addShopping" rel="tooltip" title="Add to purchased items">
+               <i class="fa fa-plus-circle"></i> Add
               </a> 
             {% endif %} 
           </div>
@@ -867,7 +867,7 @@
       
       <div class="pull-right">
         {% if user.is_authenticated %}
-          <a data-target="#addGroup" data-toggle="collapse" rel="tooltip" title="Add to a group"><i class="fa fa-fw fa-plus-circle text-primary"></i></a>
+          <a data-target="#addGroup" class="label label-primary label-stroke" data-toggle="collapse" rel="tooltip" title="Add to a group"><i class="fa fa-plus-circle"></i> Add</a>
         {% endif %}
       </div>
 
@@ -919,15 +919,15 @@
 <div class="panel panel-default" id="panelCustomers">
   <div class="panel-heading">
     <div class="panel-title">
-      <i class="fa fa-truck"></i> <strong>Customers</strong>
-    </div>
- 
     <div class="pull-right"> 
       <span class="badge">{{customers|length}}</span>
-      <span data-target="#searchProduce" data-toggle="collapse" class="border-left innerL">
+      <span data-target="#searchProduce" data-toggle="collapse" class="innerL">
         <i class="fa fa-search fa-fw"></i>
       </span>
     </div>
+      <i class="fa fa-truck"></i> <strong>Customers</strong>
+    </div>
+ 
 
   </div> 
   <div class="panel-body">
