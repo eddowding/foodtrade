@@ -24,6 +24,7 @@ function get_box_profile(user)
 	content += '<img src="'+user.profile_img+'" alt="'+user.name+'" class="img-rounded img-thumbnail" style="width:50px; margin-right: 0px;">';
 	content += '<h4 class="margin0"><a href="/'+user.username+'" class="text-inverse">';
 	content += user.name;
+	content += user.sign_up_as;
 	content += '</a></h4> ';
 	content += '</div>  ';
 	for(var index in user.type_user)

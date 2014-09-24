@@ -325,7 +325,8 @@ line-height: 34px; font-size: 14px;" class="black">
   
   <div class="pull-left" style="margin-right: 10px;">
       <a href="/" class="">
-      <img src="{% static 'images/logo_tall.png' %}" alt="FoodTrade logo"/> 
+      <img src="{% static 'images/logo_tall.png' %}" alt="FoodTrade logo" class="visible-md visible-lg" /> 
+      <img src="{% static 'images/logo_sm.png' %}" alt="FoodTrade logo" class="visible-xs visible-sm"/> 
       </a>
   </div> 
 
@@ -358,6 +359,7 @@ line-height: 34px; font-size: 14px;" class="black">
         <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" id="searchSelect">
         <span id="search_type"> 
             <span class="hidden-xs">in Produce <i class='fa fa-caret-down'></i></span> 
+            <span class="visible-xs"><i class='fa fa-cutlery fa-lg'></i><i class='fa fa-caret-down'></i></span> 
         </span> 
         </button>
         <ul class="dropdown-menu">
@@ -402,7 +404,7 @@ line-height: 34px; font-size: 14px;" class="black">
 
                 <button type="button" class="btn btn-primary  btn-sm hidden-xs hidden-sm" data-toggle="collapse" data-target="#newtwitterpost" style="font-weight: normal;" onclick="window.scrollTo(0,0);">
                   <i class="fa fa-bullhorn fa-lg fa-fw"></i>
-                  Get quotes / Make offers
+                  Marketplace
                 </button>
 
                 <a class="hidden-md hidden-lg" data-toggle="collapse" data-target="#newtwitterpost" style="font-weight: normal; position: relative; top: -7px;">
@@ -693,11 +695,41 @@ line-height: 34px; font-size: 14px;" class="black">
 
 
 
+<nav class="navbar navbar-fixed-top navbar-default" role="navigation" id="nav2">
+  <div class="container-responsive">   
+    <ul class="nav navbar-nav">
+        <li class="active"><a href="/activity/#profiles"><i class="fa fa-map-marker"></i> Near me</a></li>
+        <li><a href="/activity/#mktplace"><i class="fa fa-bullhorn"></i> Marketplace</a></li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <span class="caret"></span></a>
+          <ul class="dropdown-menu" role="menu">
+            <li><a href="#">Action</a></li>
+            <li><a href="#">Another action</a></li>
+            <li><a href="#">Something else here</a></li>
+            <li class="divider"></li>
+            <li><a href="#">Separated link</a></li>
+            <li class="divider"></li>
+            <li><a href="#">One more separated link</a></li>
+          </ul>
+        </li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="#">Link</a></li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <span class="caret"></span></a>
+          <ul class="dropdown-menu" role="menu">
+            <li><a href="#">Action</a></li>
+            <li><a href="#">Another action</a></li>
+            <li><a href="#">Something else here</a></li>
+            <li class="divider"></li>
+            <li><a href="#">Separated link</a></li>
+          </ul>
+        </li>
+      </ul>
+  </div>
+</nav>
 
-
-
-
-
+ 
 
 
 <span id="reload_warning" class="hidden"> </span>
@@ -1726,6 +1758,10 @@ function check_limit1(){
   }
 }
 
+$(function () {
+var activeTab = $('[href=' + location.hash + ']');
+activeTab && activeTab.tab('show');
+});
 
 $("#search_type_option").click(function(){
   var current_search = $("#search_stype").val();

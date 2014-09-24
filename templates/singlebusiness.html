@@ -57,7 +57,7 @@
 <div class="page">
 
 
-<div class="row row-merge bizSummary border-left border-top  bg-gray" data-spy="affix" data-offset-top="45">
+<div class="row row-merge bizSummary border-left border-top  bg-gray hidden" data-spy="affix" data-offset-top="45">
 <div class="ftstrip"></div>
 <div class="col-xs-9 bg-gray border-right">
    <div class="innerAll">
@@ -105,12 +105,10 @@
 
 <div class="row row-merge bizSummary equal">
   <div class="col-xs-4 equal" style="background: #444;"> 
-    <div class="row">
-
-<div class="col-xs-9 bg-gray border-right equal">
+    <div class="text-center"> 
    <div class="innerAll">
       <div class="media">
-      <img src="{{pic_url}}"  alt="{{name}} logo" class="pull-left avatar">
+      <img src="{{pic_url}}"  alt="{{name}} logo" class="  avatar">
       <div class="media-body"> 
       {% if request.user.is_authenticated %}
         <div id="shortcuts" class=" pull-right">
@@ -118,7 +116,7 @@
         </div>
       {% endif %}
 
-        <h2 class="margin-none">{{name}}</h2>
+        <h2 class="text-white">{{name}}</h2>
 
         {% if type_user|length == 0 or type_user|first == '' %}
         {% else %}
@@ -127,14 +125,17 @@
          <a href="/activity/?b={{eachtype}}">{{eachtype}}</a>
          {% endfor %}
         </span> 
-        {% endif %} 
-      </div> 
-      </div>
-    </div>
-</div>
+        {% endif %}  
 
-<div class="col-xs-3 bg-gray border-right ">
-  <div class="{% if not user.is_authenticated %} hidden {% endif %}  clearfix" id="distanceAway">
+        <p class="text-white">{{description}}</p>  
+        {% if user.is_superuser %}
+          <a href="/editprofile/{{username}}/" class="btn btn-info btn-xs">Edit</a>
+        {% endif %}
+
+
+      </div>
+    </div> 
+  <div class="{% if not user.is_authenticated %} hidden {% endif %}  clearfix text-white" id="">
      
   
       <!-- if logged in or you've allows html5 browser location -->
