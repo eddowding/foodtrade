@@ -337,16 +337,30 @@ td.footable-visible.footable-first-column {
 
 #topnav { 
   background: #444;
-  color: ##fff;
-  li a, li * {
-    color: #fff;
-    font-size: 11px !important;
+  #sociallinks,
+  li a {
+    color: #ccc;
+    font-size: 12px !important;
   }
   li li a {
     color: #444;
   }
   ul {
     z-index: 10000000;
+    padding: 5px 10px;
+  }
+  .caret {
+    border-top: 4px solid #fff;
+  }
+  ul.nav > li {
+    height: 2em !important;
+    line-height: 1 !important;
+  }
+  
+  .dropdown a.dropdown-toggle {
+    line-height: 1 !important;
+    padding: 3px 5px !important; 
+    height: auto;
   }
 }
 

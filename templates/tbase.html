@@ -241,36 +241,7 @@ if (!Function.prototype.bind) {
 
 <div id="content">
 <div class="navbar hidden-print navbar-default navbar-fixed-top box main" role="navigation" id="topnav" >
-
-  {% if request.user.is_authenticated %}
-  <div class="user-action pull-right menu-right-hidden-xs menu-left-hidden-xs border-left border-right">
-      <div class="dropdown username pull-left uservoicePadding" style="margin-right: 50px;">
-          <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-              <span class="media margin-none">
-                  <span class="pull-left">
-                      <img src="{{userinfo.profileimg}}" alt="{{userinfo.full_name}}"
-                      class="img-circle">
-                  </span>
-                  <span class="media-body"> 
-                      <span class="caret"></span>
-                  </span>
-              </span>
-          </a>
-          <ul class="dropdown-menu pull-right">
-              <li><a href="/editprofile/me">Edit profile</a></li>
-              <li><a href="/me">View profile</a></li> 
-              <li><a href="/accounts/password/change/">Change Password</a></li>
-              <li><a href="/visitors">Who's visited your profile</a>
-              </li> 
-              <li><a href="/payments">Account &amp; billing</a>
-              </li>  
-              <li><a href="/accounts/logout">Logout</a>
-              </li> 
-          </ul>
-      </div>
-  </div>
-  {% endif %}
-
+ 
 
   {% if not request.user.is_authenticated %} 
   <div class="user-action pull-right menu-right-hidden-xs menu-left-hidden-xs border-left border-right">
@@ -329,21 +300,18 @@ line-height: 34px; font-size: 14px;" class="black">
       <img src="{% static 'images/logo_sm.png' %}" alt="FoodTrade logo" class="visible-xs visible-sm"/> 
       </a>
   </div> 
+  
+      <ul class="list-unstyled list-inline navbar-right" id="sociallinks">
+        <li>
+          <a href="http://www.facebook.com/foodtradeHQ"><i class="fa fa-facebook-square "></i></a></li><li> 
+          <a href="http://www.twitter.com/foodtradeHQ"><i class="fa fa-twitter-square"></i></a></li><li>
+          <a href="http://www.instagram.com/foodtradeHQ"><i class="fa fa-instagram "></i></a></li><li>
+          <a href="https://plus.google.com/+Foodtrade"><i class="fa fa-google-plus-square"></i></a></li>
+          <li><a href="https://foodtrade.uservoice.com" data-uv-trigger="smartvote" id="support">Support</a>﻿﻿﻿</li>
+      </ul> 
+ 
 
-
-
-  {% if request.user.is_authenticated %}
-  <ul class="notifications pull-right hidden-xs border-left {% if userinfo.notification_count != 0 %}gotmail{% endif %}">
-      <li>
-          <a href="/inbox/"><i class="notif-block fa fa-envelope-o"></i>{% if userinfo.notification_count != 0 %}
-            <span id="spanInbox" class="pull-number label label-success">{{userinfo.notification_count}}</span> 
-            {% endif %}
-            </a> 
-      </li>
-    </ul> 
-  {% endif %}
-
-<ul class="nav navbar-nav navbar-left"> 
+      <ul class="nav navbar-nav navbar-left"> 
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown">Produce <span class="caret"></span></a>
           <ul class="dropdown-menu" role="menu"> 
@@ -352,7 +320,7 @@ line-height: 34px; font-size: 14px;" class="black">
             <li><a href="/activity/?q=bread">Bread</a></li>  
             <li><a href="/activity/?q=brownie">Brownies</a></li> 
             <li><a href="/activity/?q=salad">Salad</a></li>  
-            <li class="dropdown-header">Drink</li>
+            <li><hr /></li>
             <li><a href="/activity/?q=cider">Cider</a></li> 
             <li><a href="/activity/?q=beer">Beer</a></li> 
             <li><a href="/activity/?q=juice">Juice</a></li>  
@@ -419,43 +387,22 @@ line-height: 34px; font-size: 14px;" class="black">
             </span></a></li>  
           </ul>
         </li> 
-      </ul>
+      </ul> 
 
 
-  <div class="input-group pull-left border0  visible-md visible-lg" id="socialShare">
-
+<!--   <div class="input-group pull-left border0  visible-md visible-lg" id="socialShare">
+ 
 <a href="https://twitter.com/foodtradeHQ" class="btn btn-info btn-xs btn-stroke"><i class="fa fa-twitter fa-fw fa-lg twitter"></i></a>
-<a href="https://facebook.com/foodtradeHQ" class="btn btn-info facebook btn-xs btn-stroke"><i class="fa fa-facebook fa-fw fa-lg "></i></a>
+<a href="https://facebook.com/foodtradeHQ" class="btn btn-info facebook btn-xs btn-stroke"><i class="fa fa-facebook fa-fw fa-lg "></i></a> 
 
-<!--     <a href="https://twitter.com/foodtradeHQ" class="twitter-follow-button " data-show-count="false"> @foodtradeHQ</a>
+    <a href="https://twitter.com/foodtradeHQ" class="twitter-follow-button " data-show-count="false"> @foodtradeHQ</a>
     <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
  
-    <iframe src="//www.facebook.com/plugins/like.php?href=http%3A%2F%2Ffacebook.com%2FfoodtradeHQ&amp;width=80&amp;layout=button&amp;action=like&amp;show_faces=true&amp;share=false&amp;height=21&amp;appId=1400801613504478" scrolling="no" frameborder="0" style="border:none; overflow:hidden; height:21px;width:80px" allowTransparency="true"></iframe> -->
+    <iframe src="//www.facebook.com/plugins/like.php?href=http%3A%2F%2Ffacebook.com%2FfoodtradeHQ&amp;width=80&amp;layout=button&amp;action=like&amp;show_faces=true&amp;share=false&amp;height=21&amp;appId=1400801613504478" scrolling="no" frameborder="0" style="border:none; overflow:hidden; height:21px;width:80px" allowTransparency="true"></iframe>
       
   </div>
-
-
-
-
-
-
-         
-
-            {% if request.user.is_authenticated %}
-            <div class=" pull-right border-left user-action ">  
-
-                <button type="button" class="btn btn-primary  btn-xs hidden-xs hidden-sm" data-toggle="collapse" data-target="#newtwitterpost" style="font-weight: normal;" onclick="window.scrollTo(0,0);">
-                  <i class="fa fa-bullhorn  fa-fw"></i>
-                  Post a buy or sell request
-                </button>
-
-                <a class="hidden-md hidden-lg" data-toggle="collapse" data-target="#newtwitterpost" style="font-weight: normal; position: relative; top: -7px;">
-                  <i class="fa fa-edit fa-2x innerT text-primary"></i>
-                </a>
+ -->
  
-            </div> 
-            {% endif %}  
-  
 </div>
 
 
@@ -690,10 +637,35 @@ line-height: 34px; font-size: 14px;" class="black">
       <li><a href="/activity/#mktplace"><i class="fa fa-bullhorn"></i> Marketplace</a></li>         
     </ul>
     <ul class="nav navbar-nav navbar-right">
-      <li><a href="#">Link</a></li>
+
+    <li>
+
+
+            {% if request.user.is_authenticated %} 
+
+                <button type="button" class="btn btn-primary  btn-xs hidden-xs hidden-sm" data-toggle="collapse" data-target="#newtwitterpost" style="font-weight: normal;" onclick="window.scrollTo(0,0);">
+                  <i class="fa fa-bullhorn  fa-fw"></i>
+                  Post a buy or sell request
+                </button>
+
+                <a class="hidden-md hidden-lg" data-toggle="collapse" data-target="#newtwitterpost" style="font-weight: normal; position: relative; top: -7px;">
+                  <i class="fa fa-edit fa-2x innerT text-primary"></i>
+                </a> 
+            {% endif %} 
+    </li>
+       
+       {% if request.user.is_authenticated %}
+       <li>
+          <a href="/inbox/"><i class="notif-block fa fa-envelope-o fa-lg fa-fw"></i>{% if userinfo.notification_count != 0 %}
+            <span id="spanInbox" class="pull-number label label-success">{{userinfo.notification_count}}</span> 
+            {% endif %}
+            </a> 
+      </li>
+ 
+  {% endif %} 
      
       {% if request.user.is_authenticated %}
-        <li class="dropdown username pull-left uservoicePadding" style="margin-right: 50px;">
+        <li class="dropdown username pull-left">
             <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                 <span class="media margin-none">
                     <span class="pull-left">
@@ -918,14 +890,7 @@ line-height: 34px; font-size: 14px;" class="black">
           <li><a href="/pages/privacy">Privacy</a></li>
           <li class="hidesmall">&copy; 2012 - {% now "Y" %} Sustaination Ltd. <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Data is CCBY4 licenced</a></li>
         </ul>
-
-        <ul class="list-unstyled list-inline pull-left">
-          <li>
-            <a href="http://www.facebook.com/foodtradeHQ"><i class="fa fa-facebook-square "></i></a></li><li> 
-            <a href="http://www.twitter.com/foodtradeHQ"><i class="fa fa-twitter-square"></i></a></li><li> 
-            <a href="https://plus.google.com/+Foodtrade" rel="publisher"><i class="fa fa-google-plus-square "></i></a>
-          </li>
-        </ul> 
+ 
 
       </div>  
       </div>  
@@ -1473,10 +1438,10 @@ UserVoice.push(['set', {
 }]);
  
 //Add default trigger to the bottom-right corner of the window:
-UserVoice.push(['addTrigger', { mode: 'contact', trigger_position: 'top-right' }]);
+// UserVoice.push(['addTrigger', { mode: 'contact', trigger_position: 'top-right' }]);
 
 //Or, use your own custom trigger:
-UserVoice.push(['addTrigger', '#id', { mode: 'contact' }]);
+UserVoice.push(['addTrigger', '#support', { mode: 'contact' }]);
 
 //Autoprompt for Satisfaction and SmartVote (only displayed under certain conditions)
 UserVoice.push(['autoprompt', {}]);
