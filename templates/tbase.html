@@ -303,10 +303,10 @@ line-height: 34px; font-size: 14px;" class="black">
   
       <ul class="list-unstyled list-inline navbar-right" id="sociallinks">
         <li>
-          <a href="http://www.facebook.com/foodtradeHQ"><i class="fa fa-facebook-square "></i></a></li><li> 
-          <a href="http://www.twitter.com/foodtradeHQ"><i class="fa fa-twitter-square"></i></a></li><li>
-          <a href="http://www.instagram.com/foodtradeHQ"><i class="fa fa-instagram "></i></a></li><li>
-          <a href="https://plus.google.com/+Foodtrade"><i class="fa fa-google-plus-square"></i></a></li>
+          <a href="http://www.facebook.com/foodtradeHQ"><i class="fa  fa-lg fa-facebook-square "></i></a></li><li> 
+          <a href="http://www.twitter.com/foodtradeHQ"><i class="fa  fa-lg fa-twitter-square"></i></a></li><li>
+          <a href="http://www.instagram.com/foodtradeHQ"><i class="fa fa-lg fa-instagram "></i></a></li><li>
+          <a href="https://plus.google.com/+Foodtrade"><i class="fa  fa-lg fa-google-plus-square"></i></a></li>
           <li><a href="https://foodtrade.uservoice.com" data-uv-trigger="smartvote" id="support">Support</a>﻿﻿﻿</li>
       </ul> 
  
@@ -343,11 +343,9 @@ line-height: 34px; font-size: 14px;" class="black">
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown">Cities <span class="caret"></span></a>
           <ul class="dropdown-menu" role="menu">
-            <li><a href="#">Action</a></li>
-            <li><a href="#">Another action</a></li>
-            <li><a href="#">Something else here</a></li>
-            <li class="divider"></li>
-            <li><a href="#">Separated link</a></li>
+            <li><a href="/activity?tab=profile&stype=produce&pwant=all&plng=-2.6174926757812496&plat=51.45529052633677&put=all&porg=[]&pbiz=[]&mwant=all&mlng=-2.6241509&mlat=51.4530491&mut=all&morg=[]&mbiz=[]">Bristol</a></li>
+            <li><a href="/activity?tab=profile&stype=produce&pwant=all&plng=-0.12908935546875&plat=51.47796179607124&put=all&porg=[]&pbiz=[]&mwant=all&mlng=-2.6241509&mlat=51.4530491&mut=all&morg=[]&mbiz=[]">London</a></li>
+            <li><a href="/activity?tab=profile&stype=produce&pwant=all&plng=-3.188266999999996&plat=55.953252&put=all&porg=[]&pbiz=[]&mwant=all&mlng=-2.6241509&mlat=51.4530491&mut=all&morg=[]&mbiz=[]">Edinburgh</a></li>
           </ul>
         </li>
 
@@ -359,14 +357,20 @@ line-height: 34px; font-size: 14px;" class="black">
             <span class="result-img"><img height="22px" width="22px" src="http://pbs.twimg.com/profile_images/1690823879/Screen_shot_2011-12-13_at_12.21.20_bigger.png"></span>
             <span>Slow Food UK</span> 
             </span></a></li> 
-            <li><a href="/soilassociation">
+        <!--     <li><a href="/soilassociation">
             <span class="result-container" style="white-space: nowrap;">
             <span class="result-img"><img height="22px" width="22px" src="http://pbs.twimg.com/profile_images/478576050532655105/5nrVkyw9_bigger.jpeg"></span>
             <span>Soil Association</span> 
             
             </span>
             </a>
-            </li>
+            </li> -->
+            <li><a href="/RBSTrarebreeds">
+            <span class="result-container" style="white-space: nowrap;">
+            <span class="result-img"><img height="22px" width="22px" src="http://pbs.twimg.com/profile_images/425306987270664193/Xy6t5Spk_bigger.jpeg"></span>
+            <span>Rare Breeds Survival Trust</span> 
+            </span></a></li> 
+
 
             <li><a href="/FairtradeUK">
             <span class="result-container" style="white-space: nowrap;">
@@ -638,12 +642,12 @@ line-height: 34px; font-size: 14px;" class="black">
     </ul>
     <ul class="nav navbar-nav navbar-right">
 
-    <li>
+    <li class="innerAll">
 
 
             {% if request.user.is_authenticated %} 
 
-                <button type="button" class="btn btn-primary  btn-xs hidden-xs hidden-sm" data-toggle="collapse" data-target="#newtwitterpost" style="font-weight: normal;" onclick="window.scrollTo(0,0);">
+                <button type="button" class="btn btn-primary btn-sm hidden-xs hidden-sm" data-toggle="collapse" data-target="#newtwitterpost" style="font-weight: normal; margin-top:13px;" onclick="window.scrollTo(0,0);">
                   <i class="fa fa-bullhorn  fa-fw"></i>
                   Post a buy or sell request
                 </button>
