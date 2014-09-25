@@ -325,7 +325,7 @@ line-height: 34px; font-size: 14px;" class="black">
   
   <div class="pull-left" style="margin-right: 10px;">
       <a href="/" class="">
-      <img src="{% static 'images/logo_tall.png' %}" alt="FoodTrade logo" class="visible-md visible-lg" /> 
+      <img src="{% static 'images/logo_28.png' %}" alt="FoodTrade logo" class="visible-md visible-lg" /> 
       <img src="{% static 'images/logo_sm.png' %}" alt="FoodTrade logo" class="visible-xs visible-sm"/> 
       </a>
   </div> 
@@ -343,41 +343,83 @@ line-height: 34px; font-size: 14px;" class="black">
     </ul> 
   {% endif %}
 
+<ul class="nav navbar-nav navbar-left"> 
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Produce <span class="caret"></span></a>
+          <ul class="dropdown-menu" role="menu"> 
+            <li><a href="/activity/?q=sausages">Sausages</a></li> 
+            <li><a href="/activity/?q=chicken">Chicken</a></li> 
+            <li><a href="/activity/?q=bread">Bread</a></li>  
+            <li><a href="/activity/?q=brownie">Brownies</a></li> 
+            <li><a href="/activity/?q=salad">Salad</a></li>  
+            <li class="dropdown-header">Drink</li>
+            <li><a href="/activity/?q=cider">Cider</a></li> 
+            <li><a href="/activity/?q=beer">Beer</a></li> 
+            <li><a href="/activity/?q=juice">Juice</a></li>  
+            <li><a href="/activity/?q=porter">Porter</a></li>  
+          </ul>
+        </li>
 
-  <div class="input-group pull-left border0">
-   
-    <form action="/activity" onsubmit="return start_search()">
- 
-    <div class="input-group border0">
-      <input type="hidden" name="stype" value="produce" id="search_stype">  
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Types <span class="caret"></span></a>
+          <ul class="dropdown-menu" role="menu">
+            <li><a href="/activity/?b=Livestock%20Farm">Livestock farm</a></li> 
+            <li><a href="/activity/?q=Baker">Baker</a></li> 
+            <li><a href="/activity/?q=Food%20Stall">Food Stall</a></li> 
+            <li><a href="/activity/?q=Box%20Scheme">Box Scheme</a></li> 
+            <li><a href="/activity/?q=Food%20Manufacturer">Manufacturer</a></li> 
+            <li><a href="/activity/?q=Grower">Grower</a></li> 
+          </ul>
+        </li>
 
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Cities <span class="caret"></span></a>
+          <ul class="dropdown-menu" role="menu">
+            <li><a href="#">Action</a></li>
+            <li><a href="#">Another action</a></li>
+            <li><a href="#">Something else here</a></li>
+            <li class="divider"></li>
+            <li><a href="#">Separated link</a></li>
+          </ul>
+        </li>
 
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Organisations <span class="caret"></span></a>
+          <ul class="dropdown-menu" role="menu">
+            <li><a href="/slowfooduk">
+            <span class="result-container" style="white-space: nowrap;">
+            <span class="result-img"><img height="22px" width="22px" src="http://pbs.twimg.com/profile_images/1690823879/Screen_shot_2011-12-13_at_12.21.20_bigger.png"></span>
+            <span>Slow Food UK</span> 
+            </span></a></li> 
+            <li><a href="/soilassociation">
+            <span class="result-container" style="white-space: nowrap;">
+            <span class="result-img"><img height="22px" width="22px" src="http://pbs.twimg.com/profile_images/478576050532655105/5nrVkyw9_bigger.jpeg"></span>
+            <span>Soil Association</span> 
+            
+            </span>
+            </a>
+            </li>
 
-      <input type="text" class="form-control pull-left" name="q" id="search_query" placeholder="Find...">  
+            <li><a href="/FairtradeUK">
+            <span class="result-container" style="white-space: nowrap;">
+            <span class="result-img"><img height="22px" width="22px" src="http://pbs.twimg.com/profile_images/490164578051833856/7m-a0uuW_bigger.jpeg"></span>
+            <span>Fairtrade Foundation</span> 
+            </span></a></li> 
 
-      <div class="input-group-btn border0" id="searchGroup">
-        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" id="searchSelect">
-        <span id="search_type"> 
-            <span class="hidden-xs">in Produce <i class='fa fa-caret-down'></i></span> 
-            <span class="visible-xs"><i class='fa fa-cutlery fa-lg'></i><i class='fa fa-caret-down'></i></span> 
-        </span> 
-        </button>
-        <ul class="dropdown-menu">
-          <li><a href="#" id="search_type_option"> in Profiles </a></li> 
-        </ul>
-      </div>  
+            <li><a href="/farmdrop">
+            <span class="result-container" style="white-space: nowrap;">
+            <span class="result-img"><img height="22px" width="22px" src="http://pbs.twimg.com/profile_images/446219768450650112/ELiLvM6E_bigger.jpeg"></span>
+            <span>FarmDrop</span> 
+            </span></a></li> 
 
-      <div class="input-group-btn"> 
-        <button type="submit" class="btn btn-default" id="searchSubmit">
-          <span class="glyphicon glyphicon-search"></span> 
-        </button> 
-      </div>
- 
-    </div>
-
-
-    </form>
-  </div>
+            <li><a href="/slowfoodlondon">
+            <span class="result-container" style="white-space: nowrap;">
+            <span class="result-img"><img height="22px" width="22px" src="http://pbs.twimg.com/profile_images/3376104397/9edf0480e8b1a610b54a62e50e619156_bigger.png"></span>
+            <span>Slow Food London</span> 
+            </span></a></li>  
+          </ul>
+        </li> 
+      </ul>
 
 
   <div class="input-group pull-left border0  visible-md visible-lg" id="socialShare">
@@ -402,9 +444,9 @@ line-height: 34px; font-size: 14px;" class="black">
             {% if request.user.is_authenticated %}
             <div class=" pull-right border-left user-action ">  
 
-                <button type="button" class="btn btn-primary  btn-sm hidden-xs hidden-sm" data-toggle="collapse" data-target="#newtwitterpost" style="font-weight: normal;" onclick="window.scrollTo(0,0);">
-                  <i class="fa fa-bullhorn fa-lg fa-fw"></i>
-                  Marketplace
+                <button type="button" class="btn btn-primary  btn-xs hidden-xs hidden-sm" data-toggle="collapse" data-target="#newtwitterpost" style="font-weight: normal;" onclick="window.scrollTo(0,0);">
+                  <i class="fa fa-bullhorn  fa-fw"></i>
+                  Post a buy or sell request
                 </button>
 
                 <a class="hidden-md hidden-lg" data-toggle="collapse" data-target="#newtwitterpost" style="font-weight: normal; position: relative; top: -7px;">
@@ -413,87 +455,7 @@ line-height: 34px; font-size: 14px;" class="black">
  
             </div> 
             {% endif %}  
-
-          <div class="pull-right border-left user-action ">  
-            <a class="black" href="http://digest.foodtrade.com" target="_blank" style="font-weight: 400; line-height: 34px; font-size: 14px; padding-left: 6px; padding-right: 6px;">
-            Blog 
-            </a>
-          </div>
   
-
-          <div class="user-action hidden-xs hidden-sm pull-right menu-right-hidden-xs menu-left-hidden-xs">
-              <div class="dropdown">
-                  <a class="dropdown-toggle " data-toggle="dropdown" href="#">
-                  Browse
-                  <span class="caret"></span>
-                  </a>
-                  <ul class="dropdown-menu dropdown-menu-large row pull-right">
-                  <li class="col-sm-3">
-                    <ul>
-                      <li class="dropdown-header">Foods</li>
-                      <li><a href="/activity/?q=sausages">Sausages</a></li> 
-                      <li><a href="/activity/?q=chicken">Chicken</a></li> 
-                      <li><a href="/activity/?q=bread">Bread</a></li>  
-                      <li><a href="/activity/?q=brownie">Brownies</a></li> 
-                      <li><a href="/activity/?q=salad">Salad</a></li>  
-                      <li class="dropdown-header">Drink</li>
-                      <li><a href="/activity/?q=cider">Cider</a></li> 
-                      <li><a href="/activity/?q=beer">Beer</a></li> 
-                      <li><a href="/activity/?q=juice">Juice</a></li>  
-                      <li><a href="/activity/?q=porter">Porter</a></li>  
-                    </ul>
-                  </li>
-                  <li class="col-sm-4">
-                    <ul>
-                      <li class="dropdown-header">Biz. Types</li>
-                      <li><a href="/activity/?b=Livestock%20Farm">Livestock farm</a></li> 
-                      <li><a href="/activity/?q=Baker">Baker</a></li> 
-                      <li><a href="/activity/?q=Food%20Stall">Food Stall</a></li> 
-                      <li><a href="/activity/?q=Box%20Scheme">Box Scheme</a></li> 
-                      <li><a href="/activity/?q=Food%20Manufacturer">Manufacturer</a></li> 
-                      <li><a href="/activity/?q=Grower">Grower</a></li> 
-                    </ul>
-                  </li>
-                  <li class="col-sm-5">
-                    <ul>
-                      <li class="dropdown-header">Organisations</li>
-                      <li><a href="/slowfooduk">
-                      <span class="result-container" style="white-space: nowrap;">
-                      <span class="result-img"><img height="22px" width="22px" src="http://pbs.twimg.com/profile_images/1690823879/Screen_shot_2011-12-13_at_12.21.20_bigger.png"></span>
-                      <span>Slow Food UK</span> 
-                      </span></a></li> 
-                      <li><a href="/soilassociation">
-                      <span class="result-container" style="white-space: nowrap;">
-                      <span class="result-img"><img height="22px" width="22px" src="http://pbs.twimg.com/profile_images/478576050532655105/5nrVkyw9_bigger.jpeg"></span>
-                      <span>Soil Association</span> 
-                      
-                      </span>
-                      </a>
-                      </li>
-
-                      <li><a href="/FairtradeUK">
-                      <span class="result-container" style="white-space: nowrap;">
-                      <span class="result-img"><img height="22px" width="22px" src="http://pbs.twimg.com/profile_images/422786454478405632/aSt2mgAO_bigger.png"></span>
-                      <span>Fairtrade Foundation</span> 
-                      </span></a></li> 
-
-                      <li><a href="/farmdrop">
-                      <span class="result-container" style="white-space: nowrap;">
-                      <span class="result-img"><img height="22px" width="22px" src="http://pbs.twimg.com/profile_images/446219768450650112/ELiLvM6E_bigger.jpeg"></span>
-                      <span>FarmDrop</span> 
-                      </span></a></li> 
-
-                      <li><a href="/slowfoodlondon">
-                      <span class="result-container" style="white-space: nowrap;">
-                      <span class="result-img"><img height="22px" width="22px" src="http://pbs.twimg.com/profile_images/3376104397/9edf0480e8b1a610b54a62e50e619156_bigger.png"></span>
-                      <span>Slow Food London</span> 
-                      </span></a></li>  
-                    </ul>
-                  </li> 
-                </ul>
-                
-              </div>
-          </div>
 </div>
 
 
@@ -695,37 +657,69 @@ line-height: 34px; font-size: 14px;" class="black">
 
 
 
-<nav class="navbar navbar-fixed-top navbar-default" role="navigation" id="nav2">
+<nav class="navbar   navbar-default" role="navigation" id="nav2">
   <div class="container-responsive">   
-    <ul class="nav navbar-nav">
-        <li class="active"><a href="/activity/#profiles"><i class="fa fa-map-marker"></i> Near me</a></li>
-        <li><a href="/activity/#mktplace"><i class="fa fa-bullhorn"></i> Marketplace</a></li>
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <span class="caret"></span></a>
-          <ul class="dropdown-menu" role="menu">
-            <li><a href="#">Action</a></li>
-            <li><a href="#">Another action</a></li>
-            <li><a href="#">Something else here</a></li>
-            <li class="divider"></li>
-            <li><a href="#">Separated link</a></li>
-            <li class="divider"></li>
-            <li><a href="#">One more separated link</a></li>
+
+    <div class="">
+    <form action="/activity" onsubmit="return start_search()" class="navbar-form navbar-left">
+      <div class="input-group border0">
+        <input type="hidden" name="stype" value="produce" id="search_stype">  
+        <input type="text" class="form-control pull-left" name="q" id="search_query" placeholder="Find...">  
+        <div class="input-group-btn border0" id="searchGroup">
+          <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" id="searchSelect">
+          <span id="search_type"> 
+              <span class="hidden-xs">in Produce <i class='fa fa-caret-down'></i></span> 
+              <span class="visible-xs"><i class='fa fa-cutlery fa-lg'></i><i class='fa fa-caret-down'></i></span> 
+          </span> 
+          </button>
+          <ul class="dropdown-menu">
+            <li><a href="#" id="search_type_option"> in Profiles </a></li> 
           </ul>
-        </li>
-      </ul>
-      <ul class="nav navbar-nav navbar-right">
-        <li><a href="#">Link</a></li>
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <span class="caret"></span></a>
-          <ul class="dropdown-menu" role="menu">
-            <li><a href="#">Action</a></li>
-            <li><a href="#">Another action</a></li>
-            <li><a href="#">Something else here</a></li>
-            <li class="divider"></li>
-            <li><a href="#">Separated link</a></li>
-          </ul>
-        </li>
-      </ul>
+        </div>  
+
+        <div class="input-group-btn"> 
+          <button type="submit" class="btn btn-default" id="searchSubmit">
+            <span class="glyphicon glyphicon-search"></span> 
+          </button> 
+        </div>
+      </div>
+    </form>
+    </div>
+    <ul class="nav navbar-nav navbar-left">
+      <li><a href="/activity/#profiles"><i class="fa fa-map-marker"></i> Near me</a></li>
+      <li><a href="/activity/#mktplace"><i class="fa fa-bullhorn"></i> Marketplace</a></li>         
+    </ul>
+    <ul class="nav navbar-nav navbar-right">
+      <li><a href="#">Link</a></li>
+     
+      {% if request.user.is_authenticated %}
+        <li class="dropdown username pull-left uservoicePadding" style="margin-right: 50px;">
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                <span class="media margin-none">
+                    <span class="pull-left">
+                        <img src="{{userinfo.profileimg}}" alt="{{userinfo.full_name}}"
+                        class="img-rounded " style="width: 30px;">
+                    </span>
+                    <span class="media-body"> 
+                        <span class="caret"></span>
+                    </span>
+                </span>
+            </a>
+            <ul class="dropdown-menu pull-right">
+                <li><a href="/editprofile/me">Edit profile</a></li>
+                <li><a href="/me">View profile</a></li> 
+                <li><a href="/accounts/password/change/">Change Password</a></li>
+                <li><a href="/visitors">Who's visited your profile</a>
+                </li> 
+                <li><a href="/payments">Account &amp; billing</a>
+                </li>  
+                <li><a href="/accounts/logout">Logout</a>
+                </li> 
+            </ul> 
+          </li>
+      {% endif %}
+    
+    </ul>
   </div>
 </nav>
 
@@ -916,7 +910,10 @@ line-height: 34px; font-size: 14px;" class="black">
           <li class="hidesmall"><a href="/pages/foodwaste">Surplus &amp; waste</a></li>
 
           <li><a href="/pages/pricing">Pricing</a></li>      
-          <li><a href="http://digest.foodtrade.com" target="blank">Blog</a></li>      
+          <li><a href="http://digest.foodtrade.com" target="blank">Blog</a></li>    
+        </ul>
+
+        <ul class="list-unstyled list-inline pull-right" style="display: inline;">    
           <li><a href="/pages/terms">Terms</a></li>
           <li><a href="/pages/privacy">Privacy</a></li>
           <li class="hidesmall">&copy; 2012 - {% now "Y" %} Sustaination Ltd. <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Data is CCBY4 licenced</a></li>

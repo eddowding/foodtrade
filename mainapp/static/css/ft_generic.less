@@ -314,6 +314,10 @@ td.footable-visible.footable-first-column {
 /*  3.   NAVBAR
 /* ------------------------------------ */
 
+.navbar-form {
+  margin: 0;
+}
+
 .navbar .user-action {
   padding: 12px 6px;
 }
@@ -323,7 +327,7 @@ td.footable-visible.footable-first-column {
 }
 
 .navbar.main { 
-    height: 54px;
+    height: 28px;
 }
 
 .navbar .user-action.user-action-btn-navbar,
@@ -332,7 +336,25 @@ td.footable-visible.footable-first-column {
 }
 
 #topnav { 
-  background-image: -webkit-gradient(
+  background: #444;
+  color: ##fff;
+  li a, li * {
+    color: #fff;
+    font-size: 11px !important;
+  }
+  li li a {
+    color: #444;
+  }
+  ul {
+    z-index: 10000000;
+  }
+}
+
+#nav2 {
+  margin:0; 
+  border-top: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
+    background-image: -webkit-gradient(
     linear,
     left top,
     left bottom,
@@ -344,18 +366,11 @@ td.footable-visible.footable-first-column {
   background-image: -webkit-linear-gradient(bottom, #FFFFFF 0%, #EBEEF1 100%);
   background-image: -ms-linear-gradient(bottom, #FFFFFF 0%, #EBEEF1 100%);
   background-image: linear-gradient(to bottom, #FFFFFF 0%, #EBEEF1 100%);
-}
-
-#nav2 {
-  margin-top: 55px;
-  color: #fff;
-  border-top: 1px solid #ccc;
-  border-bottom: 1px solid #ccc;
+  color: #444;
   li {
     padding-left: 12px;
     padding-right: 12px;
     a {
-      font-size: 13px;
     }
   }
   .active a {
@@ -527,6 +542,11 @@ i.pinterest,span.pinterest{ color: #cb2027 !important; }
 /* ------------------------------------
 */
 
+
+#activity_switcher .Individual {
+  display: none !important;
+}
+
 #updateScroller {
   @winheight:`$(window).height() - 170`;
   height: ~"@{winheight}px";
@@ -535,7 +555,7 @@ i.pinterest,span.pinterest{ color: #cb2027 !important; }
 #profile_results,
 #mkt_results {
   background: @lightgrey;  
-  @winheight:`$(window).height() - 272`;
+  @winheight:`$(window).height() - 178`;
   height: ~"@{winheight}px";
   overflow: auto; 
   flex-direction:row;
@@ -547,6 +567,7 @@ i.pinterest,span.pinterest{ color: #cb2027 !important; }
 
   .box-generic {   
     display: inline-block; 
+    position: relative;
     width: 31%;
     margin: 1%;
     border-bottom: 2px solid #ccc !important;
@@ -556,6 +577,11 @@ i.pinterest,span.pinterest{ color: #cb2027 !important; }
     }
     @media (max-width: 400px) {
       width: 100%; 
+    }
+
+    .timeline-bottom {
+      position: relative;
+      bottom: 0;
     }
   }
 

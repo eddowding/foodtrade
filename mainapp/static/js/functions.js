@@ -1,7 +1,7 @@
 function get_box_profile(user)
 {
   	var content = "";
-	content += '<div class="box-generic" data-username="'+user.username+'">';
+	content += '<div class="box-generic '+user.sign_up_as+'" data-username="'+user.username+'">';
 	content += '<div class="timeline-top-info   clearfix">';
 	content += '<div class="pull-right" style="margin-left: 5px;">';
 	content += '<span class="dropdown hidden"><a type="button" class="dropdown-toggle" data-toggle="dropdown">';
@@ -23,8 +23,7 @@ function get_box_profile(user)
 	content += '<div class="text-center">  ';
 	content += '<img src="'+user.profile_img+'" alt="'+user.name+'" class="img-rounded img-thumbnail" style="width:50px; margin-right: 0px;">';
 	content += '<h4 class="margin0"><a href="/'+user.username+'" class="text-inverse">';
-	content += user.name;
-	content += user.sign_up_as;
+	content += user.name; 
 	content += '</a></h4> ';
 	content += '</div>  ';
 	for(var index in user.type_user)
