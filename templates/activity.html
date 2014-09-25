@@ -10,14 +10,14 @@
 <div class="row row-merge">
 
   <div class="col-sm-5 col-sm-push-7">      
-    <div class="row">
+    <div class="row hidden-xs" style="background: #F2F6F8; height:45px;">
       <div class="col-sm-8">
-        <p class="innerAll" style="margin-top: 0px;">Searching 1518 companies.<br />Drag the map to see more places</p>
+        <p class="" style="margin: 0px; padding-top: 5px;">Searching 1518 companies.<br />Drag the map to see more places</p>
       </div>
       <div class="col-sm-4">
 
-        <form action="/activity" onsubmit="return get_address('profile');" role="search" data-step="1" data-intro="Search for anything, anywhere" class="form-horizontal innerLR innerT" style="margin-right: 10px;">
-          <div class="form-group" id="locationgroup"> 
+        <form action="/activity" onsubmit="return get_address('profile');" role="search" data-step="1" data-intro="Search for anything, anywhere" class="form-horizontal innerLR" style="margin: 7px 0px 0 0;">
+          <div class="form-group" id="locationgroup" style="margin: 0;"> 
              
               <div class="input-group input-group-sm"> 
                 <input type="text" name="location" id="pac_input_profile" class="pac-input form-control  " placeholder="Change location">
@@ -49,37 +49,23 @@
    
     <div class="container-responsive" id="searchfilters">
 
-      <div class="widget widget-tabs widget-tabs-double widget-tabs-responsive border0 margin0" style="background: #F5F8FA;">
+      <div class="widget widget-tabs  widget-tabs-responsive border0 margin0" style="background: #F5F8FA;">
         <!-- Tabs Heading -->
-       <!--  <div class="widget-head clearfix hidden"  id="result_tabs" style="background: #F2F6F8;">
+        <div class="widget-head clearfix "  id="result_tabs" style="background: #F2F6F8;">
           <ul> 
             
             <li class="border-right" style="">
-              <a href="#profiles" class="glyphicons shop" id="profile_tab" data-toggle="tab"><i></i>
-              <div class=" visible-lg">
-                <span class="strong">Profiles</span>
-                <span>People &amp; places</span> 
-              </div>
-              <div class="visible-sm visible-xs visible-md">
-                <span class="strong">Profiles</span>
-                <span>People &amp; places</span> 
-              </div>
+              <a href="#profiles" class="glyphicons shop strong" id="profile_tab" data-toggle="tab"><i></i>
+                Companies
               </a>
             </li>
             <li class="" style="">
-              <a href="#mktplace" class="glyphicons bullhorn" id="mkt_tab" data-toggle="tab"><i></i>
-              <div class=" visible-lg">
-                <span class="strong">Market place</span>
-                <span>Real-time trade</span> 
-              </div>
-              <div class="visible-sm visible-xs visible-md">
-                <span class="strong">Market</span>
-                <span>Real-time</span> 
-              </div>
+              <a href="#mktplace" class="glyphicons bullhorn strong" id="mkt_tab" data-toggle="tab"><i></i>
+                Market place 
               </a>
             </li>
           </ul>
-        </div> -->
+        </div>
       </div>
 
       <div class="widget-body" style="margin:0; background-color: #FFF; position: relative;">
@@ -104,26 +90,26 @@
 
                 <div class="clearfix">
 
-                  <div class="col-sm-4">
+                  <div class="col-md-4 col-xs-6">
                     <div class="form-group" id="companygroup"> 
-                      <select class="selectpicker show-tick" id="filter_profile_biz"   data-live-search="true" multiple data-selected-text-format="count>2" title="Filter by company type" name="companyType"  data-style="btn-default">
+                      <select class="selectpicker show-tick" id="filter_profile_biz"   data-live-search="true" multiple data-selected-text-format="count>2" title="Filter by company type" name="companyType"  data-style="btn-default btn-sm">
                       </select>
                     </div> 
                   </div>
                   
-                  <div class="col-sm-4">
+                  <div class="col-md-4 hidden-sm hidden-xs col-xs-6">
                     <div class="form-group" id="organisationgroup"> 
-                        <select class="selectpicker show-tick" id="filter_profile_org" data-live-search="true" multiple data-selected-text-format="count>2" title="Filter by organisation" name="filterOrg"   data-style="btn-default">
+                        <select class="selectpicker show-tick" id="filter_profile_org" data-live-search="true" multiple data-selected-text-format="count>2" title="Filter by organisation" name="filterOrg"   data-style="btn-default btn-sm">
                       </select>
                     </div>
                   </div>
 
-                  <div class="col-sm-4">
+                  <div class="col-md-4   col-xs-6">
                     <div class="form-group text-center">    
                         <!-- <label class="inline">I want to:</label> -->
                         <div rel="tooltip" title="Do you want to buy or sell?" class="tooltips btn-block btn-group inline"> 
-                            <button type="button" class="btn btn-default btn-pwant btn-pwant">Buyers</button>
-                            <button type="button" class="btn btn-default btn-pwant btn-pwant">Sellers</button>
+                            <button type="button" class="btn btn-default btn-sm btn-pwant btn-pwant">Buyers</button>
+                            <button type="button" class="btn btn-default btn-sm btn-pwant btn-pwant">Sellers</button>
                         </div> 
                     </div>
                   </div> 
@@ -164,10 +150,10 @@
 
             <div class="tab-pane" id="mktplace">
 
-        <form action="/activity" onsubmit="return get_address('market');"  role="search" data-step="1" data-intro="Search for anyhing, anywhere" class="form-horizontal">
-
-          <div class="form-group clearfix innerT"> 
-            <div class="col-sm-12 text-center">
+        <form action="/activity" onsubmit="return get_address('market');"  role="search" data-step="1" data-intro="Search for anyhing, anywhere" class="form-horizontal clearfix">
+  
+     <!--      <div class="col-sm-4">
+            <div class="form-group clearfix innerT"> 
                 <label class="inline">Only posts from: </label>
                 <div rel="tooltip" title="Filter by type" class="tooltips btn-group inline">
                     <button type="button" class="btn btn-default btn-sm btn-mut">Companies</button>
@@ -175,9 +161,9 @@
                 </div>
             </div>
           </div>
-
-          <div class="form-group clearfix">
-            <div class="col-sm-12 text-center"  style="background:#fff;">
+ -->
+          <div class="col-md-4 col-sm-6 col-xs-6">
+            <div class="form-group clearfix">
                 <div rel="tooltip" title="Filter by keyword" class="tooltips btn-group inline">
                     <button type="button" class=" btn btn-default btn-sm btn-mwant">#buy</button>
                     <button type="button" class=" btn btn-default btn-sm btn-mwant">#sell</button>
@@ -187,9 +173,27 @@
             </div>
           </div> 
 
+          
+          <div class="col-md-4 hidden-sm hidden-xs col-xs-6">
+            <div class="form-group" id="organisationgroup"> 
+              <select class="selectpicker show-tick text-left" data-live-search="true" multiple data-selected-text-format="count>2" title="Filter by organisation" name="filterOrg"   data-style="btn-default btn-sm" id="filter_mkt_org">
+              </select>
+            </div>
+          </div>
+
+          <div class="col-md-4 col-sm-6 col-xs-6">
+            <div class="form-group innerLR" id="companygroup"> 
+            <select class="selectpicker show-tick text-left" id="filter_mkt_biz"  data-live-search="true" multiple data-selected-text-format="count>2" title="Filter by company type" name="companyType"  data-style="btn-default btn-sm">
+            </select>
+            </div>
+          </div>
+
+        </form> 
+
+
           <div class="clearfix border-bottom" id="functional">
 
-          {% if request.user.is_authenticated %}
+<!--           {% if request.user.is_authenticated %}
             <div class="innerAll pull-right">
                 <button type="button" class="btn btn-default btn-sm normal" data-toggle="collapse" data-target="#newtwitterpost"  onclick="window.scrollTo(0,0);">
                   <i class="fa fa-fw fa-bullhorn text-primary"></i>
@@ -197,13 +201,13 @@
                 </button>
             </div> 
           {% endif %}  
-
-            <div class="innerAll pull-left" onclick="$('#functional').hide();">
+ -->
+     <!--        <div class="innerAll pull-left" onclick="$('#functional').hide();">
               <a data-toggle="collapse" data-target="#filters2" class="btn btn-default btn-sm normal"><i class="fa fa-caret-right fa-fw"></i> Advanced filters</a>
             </div>
-          </div>
+          </div> -->
 
-          <div id="filters2" class="collapse"> 
+       <!--    <div id="filters2" class="collapse"> 
             <div class="form-group" id="locationgroup"> 
               <div class="col-sm-6 col-sm-offset-3 col-xs-6 col-xs-offset-3">
                 <div class="input-group innerAll input-group-sm">
@@ -212,24 +216,8 @@
                 </div>
               </div>
             </div>
-            
-            <div class="form-group" id="organisationgroup"> 
-              <div class="col-sm-12 innerLR">
-                <select class="selectpicker show-tick text-left" data-live-search="true" multiple data-selected-text-format="count>2" title="Filter by organisation" name="filterOrg"   data-style="btn-default" id="filter_mkt_org">
-                  
-              </select>
-              </div>
-            </div>
 
-            <div class="form-group innerLR" id="companygroup"> 
-              <div class="col-sm-12">
-              <select class="selectpicker show-tick text-left" id="filter_mkt_biz"  data-live-search="true" multiple data-selected-text-format="count>2" title="Filter by company type" name="companyType"  data-style="btn-default">
-              </select>
-              </div>
-            </div>
-          </div><!-- filters -->
-
-        </form> 
+          </div> --><!-- filters -->
 
 
         <div id="mkt_results" class="innerAll mCustomScrollbar"></div>

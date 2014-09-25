@@ -566,6 +566,13 @@ i.pinterest,span.pinterest{ color: #cb2027 !important; }
   height: ~"@{winheight}px";
 }
 
+.leaflet-popup-content-wrapper {
+  .box-generic {
+    border: 0;
+    padding: 0;
+  }
+}
+
 #profile_results,
 #mkt_results {
   background: @lightgrey;  
@@ -583,6 +590,7 @@ i.pinterest,span.pinterest{ color: #cb2027 !important; }
     display: inline-block; 
     position: relative;
     width: 31%;
+    max-height: 350px;
     margin: 1%;
     border-bottom: 2px solid #ccc !important;
     @media (max-width: 992px) {

@@ -29,7 +29,7 @@ function get_box_profile(user)
 	for(var index in user.type_user)
 	{
 		var biz_type = user.type_user[index];
-		content += '<a href="/activity/?q='+encodeURIComponent(biz_type)+'&tab=profile&stype=profile&pwant=all&put=Companies" class="  small">'+biz_type+'</a> ';
+		content += '<a href="/activity/?q='+encodeURIComponent(biz_type)+'&tab=profile&stype=profile&pwant=all&put=Companies" class="tag small">'+biz_type+'</a> ';
 	}
 	content += '</div>';
 	content += '<div class="media margin-none status">  ';
@@ -126,7 +126,7 @@ function box_update_content(update)
 	content +='<div class="text-center">';
 	content +='<img src="'+update.profile_img+'" alt="'+update.username+'" class="img-responsive img-thumbnail" style="width:50px; margin-right: 5px;">';
 	
-	content +='<h4 class="margin0"><a href="/'+update.username+'" class="text-inverse"> ';
+	content +='<h4 class="margin0"><a href="/'+update.username+'" class="text-inverse tag"> ';
 	content +='<strong>  '+update.name+'  </strong> </a> </h4>';
 
 

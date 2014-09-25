@@ -187,11 +187,11 @@ var ticker_lon = {{userinfo.lon}};
     <script>
       less = {
         env: "development", 
-        poll: 100
+        poll: 2000
       };
     </script>
-    <script>less.watch();</script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/less.js/1.7.1/less.min.js"></script>  
+    <script>less.watch();</script>
 <script type="text/javascript">
   
   // IE function.bind polyfill
@@ -240,7 +240,7 @@ if (!Function.prototype.bind) {
 
 
 <div id="content">
-<div class="navbar hidden-print navbar-default navbar-fixed-top box main" role="navigation" id="topnav" >
+<div class="navbar hidden-print navbar-default navbar-fixed-top box main  hidden-sm hidden-xs" role="navigation" id="topnav" >
  
 
   {% if not request.user.is_authenticated %} 
@@ -297,7 +297,6 @@ line-height: 34px; font-size: 14px;" class="black">
   <div class="pull-left" style="margin-right: 10px;">
       <a href="/" class="">
       <img src="{% static 'images/logo_28.png' %}" alt="FoodTrade logo" class="visible-md visible-lg" /> 
-      <img src="{% static 'images/logo_sm.png' %}" alt="FoodTrade logo" class="visible-xs visible-sm"/> 
       </a>
   </div> 
   
@@ -611,16 +610,28 @@ line-height: 34px; font-size: 14px;" class="black">
 <nav class="navbar   navbar-default" role="navigation" id="nav2">
   <div class="container-responsive">   
 
+    <div class="pull-left" style="margin-right: 10px;">
+      <a href="/" class="">
+      <img src="{% static 'images/logo_sm.png' %}" alt="FoodTrade logo" class="visible-xs visible-sm" /> 
+      </a>
+    </div> 
+
     <div class="">
-    <form action="/activity" onsubmit="return start_search()" class="navbar-form navbar-left">
+    <form action="/activity" onsubmit="return start_search()" class="navbar-form navbar-left col-sm-6">
       <div class="input-group border0">
         <input type="hidden" name="stype" value="produce" id="search_stype">  
-        <input type="text" class="form-control pull-left" name="q" id="search_query" placeholder="Find...">  
+        <input type="text" class="form-control pull-left" name="q" id="search_query" placeholder="eg 'apples'">  
         <div class="input-group-btn border0" id="searchGroup">
           <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" id="searchSelect">
           <span id="search_type"> 
-              <span class="hidden-xs">in Produce <i class='fa fa-caret-down'></i></span> 
-              <span class="visible-xs"><i class='fa fa-cutlery fa-lg'></i><i class='fa fa-caret-down'></i></span> 
+              <div class="hidden-xs">
+                in Produce 
+                <i class='fa fa-caret-down'></i>
+              </div> 
+              <div class="hidden-sm hidden-md hidden-lg">
+                <i class='fa fa-cutlery fa-lg'></i>
+                <i class='fa fa-caret-down'></i>
+              </div> 
           </span> 
           </button>
           <ul class="dropdown-menu">
@@ -636,10 +647,10 @@ line-height: 34px; font-size: 14px;" class="black">
       </div>
     </form>
     </div>
-    <ul class="nav navbar-nav navbar-left">
+<!--     <ul class="nav navbar-nav navbar-left">
       <li><a href="/activity/#profiles"><i class="fa fa-map-marker"></i> Near me</a></li>
       <li><a href="/activity/#mktplace"><i class="fa fa-bullhorn"></i> Marketplace</a></li>         
-    </ul>
+    </ul> -->
     <ul class="nav navbar-nav navbar-right">
 
     <li class="innerAll">
