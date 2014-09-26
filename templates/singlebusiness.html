@@ -57,7 +57,7 @@
 <div class="page">
 
 
-<div class="row row-merge bizSummary border-left border-top  bg-gray hidden" data-spy="affix" data-offset-top="45">
+<div class="row row-merge bizSummary border-left border-top  bg-gray" data-spy="affix" data-offset-top="155">
 <div class="ftstrip"></div>
 <div class="col-xs-9 bg-gray border-right">
    <div class="innerAll">
@@ -104,58 +104,117 @@
 
 
 <div class="row row-merge bizSummary equal">
-  <div class="col-xs-4 equal" style="background: #444;"> 
-    <div class="text-center"> 
-   <div class="innerAll">
-      <div class="media">
-      <img src="{{pic_url}}"  alt="{{name}} logo" class="  avatar">
-      <div class="media-body"> 
-      {% if request.user.is_authenticated %}
-        <div id="shortcuts" class=" pull-right">
-          <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modal_contact"><i class="fa fa-envelope-o fa-fw"></i> Contact</button>
-        </div>
-      {% endif %}
-
-        <h2 class="text-white">{{name}}</h2>
-
-        {% if type_user|length == 0 or type_user|first == '' %}
-        {% else %}
-        <span class="tags tags-biztype  ">  
-          {% for eachtype in type_user %}
-         <a href="/activity/?b={{eachtype}}">{{eachtype}}</a>
-         {% endfor %}
-        </span> 
-        {% endif %}  
-
-        <p class="text-white">{{description}}</p>  
-        {% if user.is_superuser %}
-          <a href="/editprofile/{{username}}/" class="btn btn-info btn-xs">Edit</a>
-        {% endif %}
-
-
-      </div>
-    </div> 
-  <div class="{% if not user.is_authenticated %} hidden {% endif %}  clearfix text-white" id="">
-     
-  
-      <!-- if logged in or you've allows html5 browser location -->
+  <div class="col-xs-12 equal" style="background: rgba(0,0,0,0.4);"> 
    
-      <span class="lead bold"> {{distance}} miles  </span>
-      <small class="small clearfix margin0 hidden-xs">away from you</small>
+    <div class="map-biz" id="map"></div> 
+    <div id="biz-info" class="text-center innerAll"> 
+      <div class="media">
+        <img src="{{pic_url}}"  alt="{{name}} logo" class="  avatar">
+        <div class="media-body"> 
+          {% if request.user.is_authenticated %}
+            <div id="shortcuts" class=" pull-right">
+              <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modal_contact"><i class="fa fa-envelope-o fa-fw"></i> Contact</button>
+            </div>
+          {% endif %}
 
-  </div> 
-</div>
+          <h2 class="text-white">{{name}}</h2>
 
+          {% if type_user|length == 0 or type_user|first == '' %}
+          {% else %}
+          <span class="tags tags-biztype  ">  
+            {% for eachtype in type_user %}
+           <a href="/activity/?b={{eachtype}}">{{eachtype}}</a>
+           {% endfor %}
+          </span> 
+          {% endif %}  
+
+          <p class="text-white">{{description}}</p>  
+  
+          {% if user.is_superuser %}
+            <a href="/editprofile/{{username}}/" class="btn btn-info btn-xs">Edit</a>
+          {% endif %}
+        </div>
+      </div> 
+  
+      <div class="{% if not user.is_authenticated %} hidden {% endif %}  clearfix text-white" id="">
+        <span class="lead bold margin0"> {{distance}} miles  </span>
+        <small class="small clearfix margin0 hidden-xs">away from you</small>
+      </div> 
+
+      <!-- EDIT / CONTACT -->
+      {% ifequal profile_id user_id %}
+        <a href="/editprofile/{{userinfo.username}}" class="btn btn-info btn-block btn-sm ">
+           Edit
+        </a>       
+      {% endifequal %}
+      
+      {% if request.user.is_authenticated %}
+        <button class="btn btn-primary text-center normal" data-toggle="modal" data-target="#modal_contact"><i class="fa fa-envelope-o fa-fw"></i> Contact</button>
+      {% endif %} 
+
+      {% ifequal is_unknown_profile 'false' %}
+      {% else %}
+        <button class="btn btn-primary btn-stroke"  data-toggle="modal" data-target="#modal_invite">Invite to connect</button> 
+      {% endifequal %} 
+      <!-- EDIT / CONTACT -->
+
+      <!-- SHARE -->
+      <div class="btn-group pull-left" >
+        <button type="button"  class="btn btn-default dropdown-toggle normal btn-stroke text-white" data-toggle="dropdown"  ><i class="fa fa-fw fa-share-alt  text-white "></i> share</button>
+          <ul class="dropdown-menu ">
+           <li><a href="/{{username}}"><i class="fa fa-fw fa-lg fa-link"></i> foodtrade.com/{{username}}</a></li>
+           <li> <a href="#" class="" onclick="window.open(
+            'https://www.facebook.com/sharer/sharer.php?s=100&amp;p[url]='+encodeURIComponent('{{ request.build_absolute_uri }}') +'&amp;p[images][0]='+encodeURIComponent('{{pic_url}}')+'&amp;p[title]='+encodeURIComponent('{{name}} on FoodTrade')+'&amp;p[summary]='+encodeURIComponent('Hey, see my profile on FoodTrade')+'&amp;u='+encodeURIComponent('{{ request.build_absolute_uri }}') +'&amp;t='+encodeURIComponent('{{name}} on FoodTrade'),
+                  'facebook-share-dialog', 
+                  'width=626,height=436,top='+((screen.height - 436) / 2)+',left='+((screen.width - 626)/2 )); 
+                return false;">
+
+              <i class="fa fa-facebook fa-lg fb fa-fw"></i> Share on facebook 
+            </a></li>
+            <li>
+            <a href="#" class="  " onclick="window.open(
+                  'https://twitter.com/share?url='+encodeURIComponent('{{ request.build_absolute_uri }}')+'&amp;text='+encodeURIComponent('{{screen_name}} on @foodtradeHQ') + '&amp;count=none/', 
+                  'twitter-share-dialog', 
+                  'width=626,height=436,top='+((screen.height - 436) / 2)+',left='+((screen.width - 626)/2 )); 
+                return false;">
+              <i class="fa fa-twitter fa-lg tw fa-fw"></i> Tweet this
+            </a></li><li>
+
+            <a class=" " href="http://pinterest.com/pin/create/button/?url={{ request.build_absolute_uri|urlencode }}&media={{pic_url|urlencode}}&description={{screen_name|urlencode}}{{' on FoodTrade'|urlencode}}" class="pin-it-button" count-layout="horizontal">
+              <i class="fa fa-pinterest fa-lg pinterest fa-fw"></i> Pin to pinterest
+            </a> </li><li>
+            <a  class="" href="https://plus.google.com/share?url={{ request.build_absolute_uri|urlencode }}">
+              <i class="fa fa-google-plus fa-lg google fa-fw"></i>  Share on Google+
+            </a></li><li>
+            <a  class=" " href="http://www.tumblr.com/share" title="Share on Tumblr">
+              <i class="fa fa-tumblr fa-lg tumblr fa-fw"></i> Post to Tumblr
+            </a>
+               </li><li>
+            <a  class=" " href="http://www.linkedin.com/shareArticle?mini=true&url={{ request.build_absolute_uri|urlencode}}&title={{screen_name}} on FoodTrade&summary=Hey, view my profile on Foodtrade.&source=">
+              <i class="fa fa-linkedin fa-lg linkin fa-fw"></i>  Share on LinkedIn
+            </a></li> 
+            <script type="text/javascript" src="http://platform.tumblr.com/v1/share.js"></script>
+          </ul>
+        </div>
+
+        {% if request.user.is_authenticated %}
+        <div class="btn-group pull-right" data-toggle="buttons">
+          <label class="btn btn-default btn-stroke  {% if fav_profile %} active {% else %}{% endif %}">
+            <input type="checkbox" id="favourite_btn" {% if fav_profile %} checked="checked" {% endif %} onchange="save_favourites('{{profile_id}}', '{{user_id}}'); return null;"> <i class="fa fa-star-o fa-fw  text-white"></i> 
+            <span class="fav text-white">Favourite</span>
+          </label> 
+        </div>
+        {% endif %}
+      </div>
 
 
     </div>
-  </div>
-  <div class="col-xs-8">
-    <div class="map-biz" id="map"></div> 
   </div><!-- col map --> 
 </div>
 
-<div class="row row-merge bizSummary">
+
+
+<div class="row row-merge bizSummary hidden">
 <div class="col-xs-12">
 
 <div class="row row-merge border-bottom border-right">
@@ -345,8 +404,8 @@
 
 
 
-<div class="row  ">
-  <div class="  " id="panelContainer">
+<div class="row innerLR ">
+  <div class="" id="panelContainer">
  
  
 {% if profile_id == user_id %}
