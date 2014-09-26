@@ -401,6 +401,7 @@ td.footable-visible.footable-first-column {
     padding-right: 12px;
     @media (max-width:767px) {
       display: inline-block;
+      float: left;
       padding-right: 4px;
       padding-left: 4px;
     }
@@ -587,9 +588,20 @@ i.pinterest,span.pinterest{ color: #cb2027 !important; }
 }
 
 .leaflet-popup-content-wrapper {
+  .card-box,
   .box-generic {
     border: 0;
     padding: 0;
+     @media (max-width: 767px) {
+      img {
+        display: none;
+      }
+      padding: 3px;
+      h3 {
+        margin: 0;
+        font-size: 14px;
+      }
+     }
   }
 }
 

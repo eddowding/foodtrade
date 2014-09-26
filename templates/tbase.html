@@ -651,19 +651,19 @@ line-height: 34px; font-size: 14px;" class="black">
       <li><a href="/activity/#profiles"><i class="fa fa-map-marker"></i> Near me</a></li>
       <li><a href="/activity/#mktplace"><i class="fa fa-bullhorn"></i> Marketplace</a></li>         
     </ul> -->
-    <ul class="nav navbar-nav navbar-right">
+    <ul class="nav navbar-nav navbar-right pull-right">
 
-    <li class="innerAll">
+    <li class="">
 
 
             {% if request.user.is_authenticated %} 
 
-                <button type="button" class="btn btn-primary btn-sm hidden-xs hidden-sm" data-toggle="collapse" data-target="#newtwitterpost" style="font-weight: normal; margin-top:13px;" onclick="window.scrollTo(0,0);">
+                <button type="button" class="btn btn-primary btn-sm hidden-xs" data-toggle="collapse" data-target="#newtwitterpost" style="font-weight: normal; margin-top:14px;" onclick="window.scrollTo(0,0);">
                   <i class="fa fa-bullhorn  fa-fw"></i>
                   Post a buy or sell request
                 </button>
 
-                <a class="hidden-md hidden-lg" data-toggle="collapse" data-target="#newtwitterpost" style="font-weight: normal; position: relative; top: -7px;">
+                <a class="hidden-sm hidden-md hidden-lg" data-toggle="collapse" data-target="#newtwitterpost" style="font-weight: normal; position: relative; top: -7px;">
                   <i class="fa fa-edit fa-2x innerT text-primary"></i>
                 </a> 
             {% endif %} 
