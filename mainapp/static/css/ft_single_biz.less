@@ -15,6 +15,17 @@
   position: absolute; 
   top: 0; 
   left: 0;
+  z-index: 10000;
+  .tags a {
+    background: none !important;
+    color: #eee;
+    padding: 2px 4px;
+  }
+}
+
+.leaflet-left {
+    right: 0px !important;
+    left: auto !important;
 }
 
 
@@ -42,6 +53,20 @@
       }
   }
 
+  #bizactions {
+    position: absolute; 
+    bottom: 10px;
+    width: 95%;
+    .btn {
+      color: #fff;
+      &:hover {
+        background: rgba(255,255,255,0.2);
+        i {
+          color: #fff !important;
+        }
+      }
+    }
+  }
 
   h2 {
     @media (max-width: 768px) {
