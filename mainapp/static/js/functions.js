@@ -34,11 +34,16 @@ function get_box_profile(user)
 	content += '</div>  ';
 	content += '</div>';
 	content += '<div class="media margin-none status">  ';
-	content += '<div class="content innerAll">';
-	content += '<div class="text"> ';
+	content += '<div class="content">';
+	content += '<div class="text innerAll"> ';
 	content += '<p class="">'+jQuery.trim(user.description).substring(0, 150)+'</p>';
-	content += '</div>';
-	content += '<div class="innerAll   "> ';
+	content += '</div>'; 
+
+	if((user.foods.wesell_matches.length>0) || (user.foods.webuy_matches.length>0)) {
+
+		content += '<div class="innerAll border-top border-bottom"> ';
+	}
+
 	if(user.foods.webuy_matches.length>0)
 	{
 		content += '<span class="label label-default"><i class="fa fa-sign-in fa-fw"></i>BUYS</span> <b>';
@@ -76,8 +81,12 @@ function get_box_profile(user)
 			content += ' &amp; '+more_count+ ' more <br />';
 		}
 	}
-	
+
+	if((user.foods.wesell_matches.length>0) || (user.foods.webuy_matches.length>0)) {
+
 	content += '</div> ';
+	}
+	
 	content += '</div>   ';
 	content += '</div> ';
 	content += '<div class="timeline-bottom innerAll small clearfix">';
@@ -103,7 +112,7 @@ function get_box_profile(user)
 
 function box_update_content(update)
 {
-	content ='<div class="timeline-top-info   border-bottom clearfix">';
+	content ='<div class="timeline-top-info clearfix">';
 	content +='<div class="pull-right" style="margin-left: 5px;">';
 	content +='<span class="dropdown hidden"><a type="button" class="dropdown-toggle btn btn-xs btn-default" data-toggle="dropdown">';
 	content +='<i class="fa fa-fw fa-share text-muted"></i>';
@@ -124,10 +133,14 @@ function box_update_content(update)
 	content +='<li><a href="#markspam" onclick="click_activity(\'spam\',\''+update.updates.tweet_id+' \')" class=" "><i class="fa fa-flag-o flag fa-fw"></i> Report</a></li>';
 	content +='</ul> </span> ';
 	content +='</div>  ';
-	content +='<div class="text-center">';
-	content +='<img src="'+update.profile_img+'" alt="'+update.username+'" class="img-responsive img-thumbnail" style="width:50px; margin-right: 5px;">';
 	
-	content +='<h4 class="margin0"><a href="/'+update.username+'" class="text-inverse tag"> ';
+	content += '<div class="text-center innerAll" style="background: url('+update.profile_banner_url+'); background-size: cover;">  '; 
+
+	content +='<img src="'+update.profile_img+'" alt="'+update.username+'" class="img-responsive img-thumbnail" style="width:73px; margin-right: 0px;">';
+	   
+	content +='</div>  ';
+	content +='<div class="text-center">  ';
+	content +='<h4 class="margin0"><a href="/'+update.username+'" class="text-inverse"> ';
 	content +='<strong>  '+update.name+'  </strong> </a> </h4>';
 
 
@@ -135,30 +148,30 @@ function box_update_content(update)
 	for(var index in update.type_user)
 	{
 		var biz_type = update.type_user[index];
-		content += '<a href="/activity/?q='+encodeURIComponent(biz_type)+'&tab=profile&stype=profile&pwant=all&put=Companies" class="innerR half small">'+biz_type+'</a> ';
+		content += '<a href="/activity/?q='+encodeURIComponent(biz_type)+'&tab=profile&stype=profile&pwant=all&put=Companies" class="tag">'+biz_type+'</a> ';
 	}
 	content +='</div>'; 
 	content +='</div>';
 	content +='<div class="media margin-none status">   ';
-	content +='<div class="innerTB ">';
+	content +='<div class="innerAll lead">';
 	content +=update.updates.status;
 	content +='</div>';
 	content +='</div> ';
-	content +='<div class="text-center">';
-	content +='<a type="button" class="btn btn-primary btn-xs" href="/'+update.username+'/post/'+update.updates.tweet_id+'">';
+	content +='<div class="text-center ">';
+	content +='<a type="button" class="btn btn-primary btn-sm" href="/'+update.username+'/post/'+update.updates.tweet_id+'">';
 	content +='I\'m interested';
 	content +='</a>';
 	content +='</div> ';
-	content +='<div class="timeline-bottom small clearfix innerT">';
+	content +='<div class="timeline-bottom small clearfix innerAll">';
+	content +='<a href="/'+update.username+'/post/'+update.updates.tweet_id+'" class="lead">';
+	content +='<i class="fa fa-calendar  fa-fw"></i> ' + get_time_text(update.updates.time_stamp)+' ago';
+	content +='</a>';
 	content +='<a href="http://maps.google.com/maps?saddr='+Search.filters.market.lat+','+Search.filters.market.lng+'&amp;daddr='+update.latlng.coordinates[1]+','+update.latlng.coordinates[0]+'" target="_blank" data-placement="top" data-toggle="tooltip" rel="tooltip" title="" data-original-title="Get directions"> ';
-	content +='<span class="hidden-sm hidden-xs address text-muted">';
+	content +='<span class="hidden-sm hidden-xs address  ">';
 	content +='<i class="fa fa-map-marker fa-fw"></i>';
 	content += jQuery.trim(update.address).substring(0, 25);
 	content +='...</span>'; 
 	content +='</a> '; 
-	content +='<a href="/'+update.username+'/post/'+update.updates.tweet_id+'" class="text-muted">';
-	content +='<i class="fa fa-calendar  fa-fw"></i> ' + get_time_text(update.updates.time_stamp)+' ago';
-	content +='</a>';
 	content +='</div>  ';
 	
 	return content;
