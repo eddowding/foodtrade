@@ -1,7 +1,7 @@
 function get_box_profile(user)
 {
   	var content = "";
-	content += '<div class="box-generic '+user.sign_up_as+'" data-username="'+user.username+'">';
+	content += '<div class="box-generic '+user.sign_up_as+'" data-username="'+user.username+'" >';
 	content += '<div class="timeline-top-info   clearfix">';
 	content += '<div class="pull-right" style="margin-left: 5px;">';
 	content += '<span class="dropdown hidden"><a type="button" class="dropdown-toggle" data-toggle="dropdown">';
@@ -20,24 +20,25 @@ function get_box_profile(user)
 	content += '<i class="fa fa-arrow-right fa-lg" style="color:#fff;"></i> ';
 	content += '</a>';
 	content += '</div>  ';
-	content += '<div class="text-center">  ';
-	content += '<img src="'+user.profile_img+'" alt="'+user.name+'" class="img-rounded img-thumbnail" style="width:50px; margin-right: 0px;">';
+	content += '<div class="text-center innerAll" style="background: url('+user.profile_banner_url+'); background-size: cover;">  '; 
+	content += '<img src="'+user.profile_img+'" alt="'+user.name+'" class="img-rounded img-thumbnail" style="width:73px; margin-right: 0px;">';
+	content += '</div><div class="text-center innerAll">';
 	content += '<h4 class="margin0"><a href="/'+user.username+'" class="text-inverse">';
 	content += user.name; 
 	content += '</a></h4> ';
-	content += '</div>  ';
 	for(var index in user.type_user)
 	{
 		var biz_type = user.type_user[index];
 		content += '<a href="/activity/?q='+encodeURIComponent(biz_type)+'&tab=profile&stype=profile&pwant=all&put=Companies" class="tag small">'+biz_type+'</a> ';
 	}
+	content += '</div>  ';
 	content += '</div>';
 	content += '<div class="media margin-none status">  ';
-	content += '<div class="content">';
-	content += '<div class="text  innerAll half"> ';
-	content += '<p class="">'+jQuery.trim(user.description).substring(0, 200)+'</p>';
+	content += '<div class="content innerAll">';
+	content += '<div class="text"> ';
+	content += '<p class="">'+jQuery.trim(user.description).substring(0, 150)+'</p>';
 	content += '</div>';
-	content += '<div class="innerTB half  "> ';
+	content += '<div class="innerAll   "> ';
 	if(user.foods.webuy_matches.length>0)
 	{
 		content += '<span class="label label-default"><i class="fa fa-sign-in fa-fw"></i>BUYS</span> <b>';
@@ -79,7 +80,7 @@ function get_box_profile(user)
 	content += '</div> ';
 	content += '</div>   ';
 	content += '</div> ';
-	content += '<div class="timeline-bottom innerTB half small clearfix">';
+	content += '<div class="timeline-bottom innerAll small clearfix">';
 	content += '<a href="http://maps.google.com/maps?saddr='+Search.filters.profile.lat+','+Search.filters.profile.lng+'&amp;daddr='+user.latlng.coordinates[1]+','+user.latlng.coordinates[0]+'" target="_blank" data-placement="top" data-toggle="tooltip"   rel="tooltip" title="" data-original-title="Get directions"> ';
 	content += '<span class="hidden-sm hidden-xs truncate100 address">';
 	content += '<i class="fa fa-map-marker fa-fw"></i>';

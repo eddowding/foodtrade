@@ -62,16 +62,27 @@
 
 .tags a {
   margin-right: 10px;
-  border: 1px solid ;
-  padding: 0 3px;
-  background: #fafafa;
-  .rounded(2px);
+  border: 1px solid #CCC;
+  padding: 0px 3px;
+  background: none repeat scroll 0% 0% #FFF;
   font-size: 12px;
+  border-radius: 3px;
+  color: #999;
   @media (max-width: 768px) {
       font-size: 11px;
       margin-right: 2px;
 
     }
+}
+
+.tag {
+  margin-right: 10px;
+  border: 1px solid #CCC;
+  padding: 0px 3px;
+  background: none repeat scroll 0% 0% #FFF;
+  font-size: 12px;
+  border-radius: 3px;
+  color: #999;
 }
 
 body {
@@ -590,7 +601,8 @@ i.pinterest,span.pinterest{ color: #cb2027 !important; }
     display: inline-block; 
     position: relative;
     width: 31%;
-    max-height: 350px;
+    max-height: 450px;
+    padding: 0;
     margin: 1%;
     border-bottom: 2px solid #ccc !important;
     @media (max-width: 992px) {
