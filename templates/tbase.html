@@ -616,8 +616,8 @@ line-height: 34px; font-size: 14px;" class="black">
       </a>
     </div> 
 
-    <div class="">
-    <form action="/activity" onsubmit="return start_search()" class="navbar-form navbar-left col-sm-6">
+    <div class="" id="">
+    <form action="/activity" onsubmit="return start_search()" class="navbar-form navbar-left col-sm-6" id="searchform">
       <div class="input-group border0">
         <input type="hidden" name="stype" value="produce" id="search_stype">  
         <input type="text" class="form-control pull-left" name="q" id="search_query" placeholder="eg 'apples'">  
@@ -670,7 +670,7 @@ line-height: 34px; font-size: 14px;" class="black">
     </li>
        
        {% if request.user.is_authenticated %}
-       <li>
+       <li id="notifications">
           <a href="/inbox/"><i class="notif-block fa fa-envelope-o fa-lg fa-fw"></i>{% if userinfo.notification_count != 0 %}
             <span id="spanInbox" class="pull-number label label-success">{{userinfo.notification_count}}</span> 
             {% endif %}
