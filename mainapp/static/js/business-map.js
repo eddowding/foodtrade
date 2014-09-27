@@ -1,4 +1,4 @@
-  var markers = new L.LayerGroup();
+var markers = new L.LayerGroup();
 var map = new L.map('map', {
     center: new L.LatLng(map_lat,map_lon),
     crs: default_csr,
@@ -185,6 +185,7 @@ if(parseInt(map_lon) != parseInt(def_lon) || parseInt(def_lat) != parseInt(map_l
 
     map.scrollWheelZoom.disable();
 
+    
 var group = new L.featureGroup(markers.getLayers());
 var mb = map.getBounds();
 var lb = group.getBounds();

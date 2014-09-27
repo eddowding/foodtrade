@@ -33,12 +33,12 @@
 =>mongo -uftroot -pftroot foodtrade
 =>db.dropDatabase()
 Extract the backup zip file and inside the folder in terminal type
-=>mysl -u root -p root
+=>mysql -uroot -proot
 =>drop database foodtrade;
 =>create database foodtrade;
 =>exit;
 Inside the extracted folder where the backup file lies type
-=>mysql -u root -p root foodtrade < foodtrade.sql
+=>mysql -uroot -proot foodtrade < foodtrade.sql
 Go to the dump folder and in terminal type
 =>mongorestore -uftroot -pftroot foodtrade/
 

@@ -57,7 +57,7 @@
 <div class="page">
 
 
-<div class="row row-merge bizSummary border-left border-top  bg-gray" data-spy="affix" data-offset-top="45">
+<div class="row row-merge bizSummary border-left border-top  bg-gray" data-spy="affix" data-offset-top="155">
 <div class="ftstrip"></div>
 <div class="col-xs-9 bg-gray border-right">
    <div class="innerAll">
@@ -100,13 +100,125 @@
 </div>
 
 
-<div class="row row-merge bizSummary">
-  <div class="col-xs-12">
+<!---    -->
+
+
+<div class="row row-merge bizSummary equal">
+  <div class="col-xs-12 equal" style="background: rgba(0,0,0,0.4);"> 
+   
     <div class="map-biz" id="map"></div> 
+    <div id="biz-info" class="text-center innerAll"> 
+      <div class="media">
+        <img src="{{pic_url}}"  alt="{{name}} logo" class="  avatar">
+        <div class="media-body"> 
+          {% if request.user.is_authenticated %}
+            <div id="shortcuts" class=" pull-right">
+              <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modal_contact"><i class="fa fa-envelope-o fa-fw"></i> Contact</button>
+            </div>
+          {% endif %}
+
+          <h2 class="text-white">{{name}}</h2>
+
+          {% if type_user|length == 0 or type_user|first == '' %}
+          {% else %}
+          <span class="tags tags-biztype  ">  
+            {% for eachtype in type_user %}
+           <a href="/activity/?b={{eachtype}}">{{eachtype}}</a>
+           {% endfor %}
+          </span> 
+          {% endif %}  
+
+          <p class="text-white">{{description}}</p>  
+  
+          {% if user.is_superuser %}
+            <a href="/editprofile/{{username}}/" class="btn btn-info btn-xs">Edit</a>
+          {% endif %}
+        </div>
+      </div> 
+  
+      <div class="{% if not user.is_authenticated %} hidden {% endif %}  clearfix text-white" id="">
+        <span class="lead bold margin0"> {{distance}} miles  </span>
+        <small class="small clearfix margin0 hidden-xs">away from you</small>
+      </div> 
+
+      <!-- EDIT / CONTACT -->
+      {% ifequal profile_id user_id %}
+        <a href="/editprofile/{{userinfo.username}}" class="btn btn-info btn-block btn-sm ">
+           Edit
+        </a>       
+      {% endifequal %}
+      
+      {% if request.user.is_authenticated %}
+        <div class="innerT">
+          <button class="btn btn-primary text-center normal" data-toggle="modal" data-target="#modal_contact"><i class="fa fa-envelope-o fa-fw"></i> Contact</button>
+        </div>
+      {% endif %} 
+
+      {% ifequal is_unknown_profile 'false' %}
+      {% else %}<br />
+        <a class="text-white strong"  data-toggle="modal" data-target="#modal_invite">Invite to connect</a> 
+      {% endifequal %} 
+      <!-- EDIT / CONTACT -->
+
+      <div class="clearfix" id="bizactions">
+        <!-- SHARE -->
+        <div class="btn-group pull-left" >
+          <button type="button"  class="btn btn-default dropdown-toggle normal btn-stroke text-white" data-toggle="dropdown"  ><i class="fa fa-fw fa-share-alt  text-white "></i> share</button>
+            <ul class="dropdown-menu text-left">
+             <li><a href="/{{username}}"><i class="fa fa-fw fa-lg fa-link"></i> foodtrade.com/{{username}}</a></li>
+             <li> <a href="#" class="" onclick="window.open(
+              'https://www.facebook.com/sharer/sharer.php?s=100&amp;p[url]='+encodeURIComponent('{{ request.build_absolute_uri }}') +'&amp;p[images][0]='+encodeURIComponent('{{pic_url}}')+'&amp;p[title]='+encodeURIComponent('{{name}} on FoodTrade')+'&amp;p[summary]='+encodeURIComponent('Hey, see my profile on FoodTrade')+'&amp;u='+encodeURIComponent('{{ request.build_absolute_uri }}') +'&amp;t='+encodeURIComponent('{{name}} on FoodTrade'),
+                    'facebook-share-dialog', 
+                    'width=626,height=436,top='+((screen.height - 436) / 2)+',left='+((screen.width - 626)/2 )); 
+                  return false;">
+
+                <i class="fa fa-facebook fa-lg fb fa-fw"></i> Share on facebook 
+              </a></li>
+              <li>
+              <a href="#" class="  " onclick="window.open(
+                    'https://twitter.com/share?url='+encodeURIComponent('{{ request.build_absolute_uri }}')+'&amp;text='+encodeURIComponent('{{screen_name}} on @foodtradeHQ') + '&amp;count=none/', 
+                    'twitter-share-dialog', 
+                    'width=626,height=436,top='+((screen.height - 436) / 2)+',left='+((screen.width - 626)/2 )); 
+                  return false;">
+                <i class="fa fa-twitter fa-lg tw fa-fw"></i> Tweet this
+              </a></li><li>
+
+              <a class=" " href="http://pinterest.com/pin/create/button/?url={{ request.build_absolute_uri|urlencode }}&media={{pic_url|urlencode}}&description={{screen_name|urlencode}}{{' on FoodTrade'|urlencode}}" class="pin-it-button" count-layout="horizontal">
+                <i class="fa fa-pinterest fa-lg pinterest fa-fw"></i> Pin to pinterest
+              </a> </li><li>
+              <a  class="" href="https://plus.google.com/share?url={{ request.build_absolute_uri|urlencode }}">
+                <i class="fa fa-google-plus fa-lg google fa-fw"></i>  Share on Google+
+              </a></li><li>
+              <a  class=" " href="http://www.tumblr.com/share" title="Share on Tumblr">
+                <i class="fa fa-tumblr fa-lg tumblr fa-fw"></i> Post to Tumblr
+              </a>
+                 </li><li>
+              <a  class=" " href="http://www.linkedin.com/shareArticle?mini=true&url={{ request.build_absolute_uri|urlencode}}&title={{screen_name}} on FoodTrade&summary=Hey, view my profile on Foodtrade.&source=">
+                <i class="fa fa-linkedin fa-lg linkin fa-fw"></i>  Share on LinkedIn
+              </a></li> 
+              <script type="text/javascript" src="http://platform.tumblr.com/v1/share.js"></script>
+            </ul>
+          </div>
+
+          {% if request.user.is_authenticated %}
+          <div class="btn-group pull-right" data-toggle="buttons">
+            <label class="btn btn-default btn-stroke btn-sm {% if fav_profile %} active {% else %}{% endif %}">
+              <input type="checkbox" id="favourite_btn" {% if fav_profile %} checked="checked" {% endif %} onchange="save_favourites('{{profile_id}}', '{{user_id}}'); return null;"> <i class="fa fa-star-o fa-fw  text-white"></i> 
+              <span class="fav text-white">Favourite</span>
+            </label> 
+          </div>
+          {% endif %}
+        </div>
+      </div>
+
+
+    </div>
   </div><!-- col map --> 
 </div>
 
-<div class="row row-merge bizSummary">
+
+
+<div class="row row-merge bizSummary hidden">
 <div class="col-xs-12">
 
 <div class="row row-merge border-bottom border-right">
@@ -127,8 +239,6 @@
 
     
       <!-- EDIT / CONTACT -->
-        
-      
       {% ifequal profile_id user_id %}
         <a href="/editprofile/{{userinfo.username}}" class="btn btn-info btn-block btn-sm ">
            Edit
@@ -200,7 +310,9 @@
         {% else %}
 
           <!-- if not logged in show login prompt -->
-          <a href="{% provider_login_url "twitter" process="login" %}" class="btn btn-primary btn-block text-center"><i class="fa fa-2x fa-twitter"></i> <span>Login free <br><span class="normal">for more details</span>
+          <a href="{% provider_login_url "twitter" process="login" %}" class="btn btn-primary btn-block text-center"><i class="fa fa-lg fa-twitter"></i> 
+
+          Sign in <span class="normal">for more detail</span>
           </a>
 
         {% endif %}
@@ -294,8 +406,8 @@
 
 
 
-<div class="row  ">
-  <div class="  " id="panelContainer">
+<div class="row innerLR ">
+  <div class="" id="panelContainer">
  
  
 {% if profile_id == user_id %}
@@ -361,14 +473,14 @@
             {% if userprof.food_no != 0 %}<span class="badge">{{userprof.food_no}}</span>{% endif %}
 
             {% if userprof.food_no != 0 %}
-            <span data-target="#searchProduce" data-toggle="collapse" class="border-left innerL">
+            <span data-target="#searchProduce" data-toggle="collapse" class=" innerL">
               <i class="fa fa-search fa-fw"></i>
             </span>
             {% endif %} 
 
             {% if user.is_authenticated %}
-              <a data-toggle="collapse" class="" data-target="#addProduce" rel="tooltip" title="Add new produce">
-               <i class="fa fa-plus-circle fa-fw text-primary"></i>
+              <a data-toggle="collapse" class="label label-primary label-stroke" data-target="#addProduce" rel="tooltip" title="Add new produce">
+               <i class="fa fa-plus-circle"></i> Add
               </a> 
             {% endif %} 
           </div>
@@ -378,7 +490,7 @@
       {% if user.is_authenticated %}
       <div id="addProduce" class="{% if userprof.food_no != 0 %}collapse{% endif %} well-sm well clearfix">
       {% if userprof.food_no = 0 %}
-        <p class="small text-center">What does {{username}} produce?</p>
+        <p class="small text-center">What does {{username}} sell?</p>
       {% endif %}
             <div class="input-group" style="margin: 0 auto;"> 
               <div class='pull-left'>
@@ -469,7 +581,7 @@
 <!-- PHOTO --> 
 {% ifnotequal banner_url '' %}
   <div class="panel panel-default">
-    <img src="{{banner_url}}" class="img-responsive" style="height:100%;">
+    <img src="{{banner_url}}" class="img-responsive">
   </div>
 {% endifnotequal %} 
 <!-- PHOTO --> 
@@ -484,14 +596,14 @@
 
         <div class="pull-right" style="margin-top: -18px; font-size: 15px;"> 
           {% if userprof.b_conn_no != 0 %}
-            <span data-target="#searchSuppliers" data-toggle="collapse" class="border-left innerL">
+            <span data-target="#searchSuppliers" data-toggle="collapse" class="innerL">
               <i class="fa fa-search fa-fw"></i>
             </span>
           {% endif %}
 
           {% if user.is_authenticated %}
-            <a data-toggle="collapse" class="" data-target="#addSupplier" rel="tooltip" title="Add a supplier">
-             <i class="fa fa-plus-circle fa-fw text-primary"></i>
+            <a data-toggle="collapse" class="label label-primary label-stroke" data-target="#addSupplier" rel="tooltip" title="Add a supplier">
+             <i class="fa fa-plus-circle"></i> Add
             </a> 
           {% endif %} 
         </div>
@@ -499,7 +611,7 @@
 
       <!-- filter -->
       <div class="collapse well-sm well" id="searchSuppliers">
-        <input type="text" class="form-control" id="filterSuppliers" placeholder="Find a supplier" />
+        <input type="text" class="form-control" id="filterSuppliers" placeholder="Filter suppliers" />
       </div>
 
       <!-- WIKI ADD CONNECTIONS --> 
@@ -581,14 +693,14 @@
         <div class="pull-right" style="margin-top: -18px; font-size: 15px;"> 
 
           {% if userprof.c_conn_no != 0 %}
-          <span data-target="#searchStockists" data-toggle="collapse" class="border-left innerL">
+          <span data-target="#searchStockists" data-toggle="collapse" class="innerL">
             <i class="fa fa-search fa-fw"></i>
           </span>
           {% endif %}
 
           {% if user.is_authenticated %}
-            <a data-toggle="collapse" class="" data-target="#addStockist" rel="tooltip" title="Add a supplier">
-             <i class="fa fa-plus-circle fa-fw text-primary"></i>
+            <a data-toggle="collapse" class="label label-primary label-stroke" data-target="#addStockist" rel="tooltip" title="Add a stockist">
+             <i class="fa fa-plus-circle"></i> Add
             </a> 
           {% endif %} 
         </div>
@@ -685,14 +797,14 @@
           <div class="pull-right">
             {% if all_buying_foods|length != 0 %}
               <span class="badge">{{all_buying_foods|length}}</span>
-              <span data-target="#searchShopping" data-toggle="collapse" class="border-left innerL">
+              <span data-target="#searchShopping" data-toggle="collapse" class="innerL">
                 <i class="fa fa-search fa-fw"></i>
               </span>
             {% endif %}
 
             {% if user.is_authenticated %}
-              <a data-toggle="collapse" class="" data-target="#addShopping" rel="tooltip" title="Add to purchased items">
-               <i class="fa fa-plus-circle fa-fw text-primary"></i>
+              <a data-toggle="collapse" class="label label-primary label-stroke" data-target="#addShopping" rel="tooltip" title="Add to purchased items">
+               <i class="fa fa-plus-circle"></i> Add
               </a> 
             {% endif %} 
           </div>
@@ -817,7 +929,7 @@
       
       <div class="pull-right">
         {% if user.is_authenticated %}
-          <a data-target="#addGroup" data-toggle="collapse" rel="tooltip" title="Add to a group"><i class="fa fa-fw fa-plus-circle text-primary"></i></a>
+          <a data-target="#addGroup" class="label label-primary label-stroke" data-toggle="collapse" rel="tooltip" title="Add to a group"><i class="fa fa-plus-circle"></i> Add</a>
         {% endif %}
       </div>
 
@@ -840,7 +952,7 @@
 
   {% if user.is_authenticated %}
     {% else %}
-      <div class="clearfix"><a href="{% provider_login_url "twitter" process="login" %}" class="">Login</a> or <a href="{% provider_login_url "twitter" process="login" %}" class="">sign up free</a> to see a complete list of groups. </div>
+      <p class="innerAll"><a href="{% provider_login_url "twitter" process="login" %}" class="">Login</a> or <a href="{% provider_login_url "twitter" process="login" %}" class="">sign up free</a> to see a complete list of groups. </p>
   {% endif %}
 
   <div class="panel-body groupsGrid" id="groupsGrid">
@@ -869,15 +981,15 @@
 <div class="panel panel-default" id="panelCustomers">
   <div class="panel-heading">
     <div class="panel-title">
-      <i class="fa fa-truck"></i> <strong>Customers</strong>
-    </div>
- 
     <div class="pull-right"> 
       <span class="badge">{{customers|length}}</span>
-      <span data-target="#searchProduce" data-toggle="collapse" class="border-left innerL">
+      <span data-target="#searchProduce" data-toggle="collapse" class="innerL">
         <i class="fa fa-search fa-fw"></i>
       </span>
     </div>
+      <i class="fa fa-truck"></i> <strong>Customers</strong>
+    </div>
+ 
 
   </div> 
   <div class="panel-body">

@@ -4,7 +4,38 @@
 /************************************************/
 
 .page {
-  background: #eee;
+  background: #fff !important;
+}
+
+#biz-info {
+  width: 30%; 
+  background: rgba(0,0,0,0.5); 
+  height: 100%; 
+  float: left; 
+  position: absolute; 
+  top: 0; 
+  left: 0;
+  z-index: 10000;
+  .tags a {
+    background: none !important;
+    color: #eee;
+    padding: 2px 4px;
+  }
+}
+
+.leaflet-left {
+    right: 0px !important;
+    left: auto !important;
+}
+
+
+.affix-top {
+  visibility: hidden;
+  height: 0px !important;
+}
+
+.affix {
+  visibility: visible;
 }
 
 .bizSummary {
@@ -20,6 +51,21 @@
         width: 30px;
         border: 0
       }
+  }
+
+  #bizactions {
+    position: absolute; 
+    bottom: 10px;
+    width: 95%;
+    .btn {
+      color: #fff;
+      &:hover {
+        background: rgba(255,255,255,0.2);
+        i {
+          color: #fff !important;
+        }
+      }
+    }
   }
 
   h2 {
@@ -77,35 +123,45 @@
   .rounded(0);
   background: #fff !Important;
 }
+
+.panel-heading {
+  border-bottom: 3px solid;
+  border-top: 0;
+  padding: 15px 10px !important;
+}
+
+.panel-body {
+  padding: 10px !important;
+}
  
 
 
 #panelOrganisations .panel-heading  {
-  border-top-color: @organisation;
+  border-bottom-color: @organisation;
 }
 #panelCustomers .panel-heading  {
-  border-top-color: @customers;
+  border-bottom-color: @customers;
 }
 #panelProduce .panel-heading {
-  border-top-color: @produce;
+  border-bottom-color: @produce;
 }
 #panelShoppingList .panel-heading {
-  border-top-color: @shoppingList;
+  border-bottom-color: @shoppingList;
 }
 #panelSuppliers .panel-heading  {
-  border-top-color: @suppliers;
+  border-bottom-color: @suppliers;
 }
 #panelStockists .panel-heading  {
-  border-top-color: @stockists;
+  border-bottom-color: @stockists;
 }
 #panelUpdates .panel-heading  {
-  border-top-color: @marketplace;
+  border-bottom-color: @marketplace;
 }
 #panelDeliveries .panel-heading {
-  border-top-color: @deliveries;
+  border-bottom-color: @deliveries;
 }
 #panelCompany .panel-heading  {
-  border-top-color: @information;
+  border-bottom-color: @information;
 }
 
 /************************************************
