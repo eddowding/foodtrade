@@ -410,6 +410,23 @@ td.footable-visible.footable-first-column {
       padding-left: 0px;
       line-height: 2;
     }
+    ul {
+      position: absolute;
+      top: 40px;
+      right: 0;
+      background: #000;
+      z-index: 100000;
+    }
+    li {
+      float: none;
+      display: block;
+      a {
+        color: #eee;
+        line-height: 2;
+        padding: 0 5px;
+        border-bottom: 1px solid #444;
+      }
+    }
   }
   #avatar {
       width: 30px;
@@ -631,7 +648,7 @@ i.pinterest,span.pinterest{ color: #cb2027 !important; }
     display: inline-block; 
     position: relative;
     width: 31%;
-    max-height: 500px;
+    max-height: 650px;
     padding: 0;
     margin: 1%;
     border-bottom: 2px solid #ccc !important;

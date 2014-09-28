@@ -153,7 +153,7 @@ function box_update_content(update)
 	content +='</div>'; 
 	content +='</div>';
 	content +='<div class="media margin-none status">   ';
-	content +='<div class="innerAll lead">';
+	content +='<div class="innerAll ">';
 	content +=update.updates.status;
 	content +='</div>';
 	content +='</div> ';
