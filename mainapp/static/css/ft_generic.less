@@ -402,10 +402,19 @@ td.footable-visible.footable-first-column {
     @media (max-width:767px) {
       display: inline-block;
       float: left;
-      padding-right: 4px;
-      padding-left: 4px;
+      padding-right: 2px;
+      padding-left: 0px;
     }
     a {
+      padding-right: 2px;
+      padding-left: 0px;
+      line-height: 2;
+    }
+  }
+  #avatar {
+      width: 30px;
+    @media (max-width:767px) {
+      width: 20px;
     }
   }
   .active a {
@@ -622,7 +631,7 @@ i.pinterest,span.pinterest{ color: #cb2027 !important; }
     display: inline-block; 
     position: relative;
     width: 31%;
-    max-height: 450px;
+    max-height: 500px;
     padding: 0;
     margin: 1%;
     border-bottom: 2px solid #ccc !important;

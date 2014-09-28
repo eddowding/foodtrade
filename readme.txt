@@ -67,3 +67,15 @@ cat ~/.ssh/id_rsa.pub | ssh foodtrade@ftstaging.cloudapp.net "cat >> ~/.ssh/auth
 
 
 You will be prompted to enter password. Enter password and its done. :)
+
+
+
+
+LIVE DEPLOY
+=========================
+[27/09/2014 14:06:23] Roshan Bhandari: 1. in terminal do
+[27/09/2014 14:06:33] Roshan Bhandari: sudo pip install fabric
+[27/09/2014 14:06:57] Roshan Bhandari: 2. Then go to project folder and inside that go to deploy_tools in terminal
+[27/09/2014 14:07:23] Roshan Bhandari: 3. type "fab live deploy" for deploying in live server
+[27/09/2014 14:07:38] Roshan Bhandari: 4. type" fab staging deploy" for deploying in staging server
+[27/09/2014 14:08:10] Roshan Bhandari: that might prompt you password of user Kau: "We are life in Kau" if live

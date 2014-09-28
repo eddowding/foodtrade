@@ -186,7 +186,7 @@ var ticker_lon = {{userinfo.lon}};
     <!--[if lt IE 9]><link rel="stylesheet" href="{% static "assets/components/library/bootstrap/css/bootstrap.min.css" %}" /><![endif]-->
     <script>
       less = {
-        env: "production", 
+        env: "development", 
         poll: 500
       };
     </script>
@@ -661,11 +661,11 @@ line-height: 34px; font-size: 14px;" class="black">
 
                 <button type="button" class="btn btn-primary btn-sm hidden-xs" data-toggle="collapse" data-target="#newtwitterpost" style="font-weight: normal; margin-top:14px;" onclick="window.scrollTo(0,0);">
                   <i class="fa fa-bullhorn  fa-fw"></i>
-                  Post a buy or sell request
+                  Post a trade
                 </button>
 
-                <a class="hidden-sm hidden-md hidden-lg" data-toggle="collapse" data-target="#newtwitterpost" style="font-weight: normal; position: relative; top: -7px;">
-                  <i class="fa fa-edit fa-2x innerT text-primary"></i>
+                <a class="hidden-sm hidden-md hidden-lg " data-toggle="collapse" data-target="#newtwitterpost" style="font-weight: normal; position: relative; top: 2px;">
+                  <i class="fa fa-edit fa-lg text-primary "></i>
                 </a> 
             {% endif %} 
     </li>
@@ -686,7 +686,7 @@ line-height: 34px; font-size: 14px;" class="black">
                 <span class="media margin-none">
                     <span class="pull-left">
                         <img src="{{userinfo.profileimg}}" alt="{{userinfo.full_name}}"
-                        class="img-rounded " style="width: 30px;">
+                        class="img-rounded" id="avatar">
                     </span>
                     <span class="media-body"> 
                         <span class="caret"></span>
