@@ -1734,6 +1734,17 @@ function check_limit1(){
   }
 }
 
+$(function() {
+    $('#scrollInfo').slideUp('fast');
+    $(window).scroll(function() {
+        if($(window).scrollTop() >= 155) {  
+            $('#scrollInfo').slideDown('slow');
+        }else{
+            $('#scrollInfo').slideUp('fast');
+        }
+    });
+});
+
 $(function () {
 var activeTab = $('[href=' + location.hash + ']');
 activeTab && activeTab.tab('show');
