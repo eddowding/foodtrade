@@ -25,7 +25,7 @@
   position: absolute; 
   top: 0; 
   left: 0;
-  z-index: 10000;
+  z-index: 1000;
   .tags a {
     background: none !important;
     color: #eee;
@@ -68,7 +68,13 @@
         }
       }
     }
+
+    .btn-group.open .btn-default.dropdown-toggle, .btn-default.disabled, .btn-default[disabled], .btn-default:hover, .btn-default:focus  {
+        background: rgba(255,255,255,0.2);
+      }
   }
+
+
 
   h2 {
     @media (max-width: 768px) {
