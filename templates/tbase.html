@@ -186,12 +186,12 @@ var ticker_lon = {{userinfo.lon}};
     <!--[if lt IE 9]><link rel="stylesheet" href="{% static "assets/components/library/bootstrap/css/bootstrap.min.css" %}" /><![endif]-->
     <script>
       less = {
-        env: "development", 
+        env: "production", 
         poll: 500
       };
     </script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/less.js/1.7.1/less.min.js"></script>  
-    <script>less.watch();</script>
+    <!-- <script>less.watch();</script> -->
 <script type="text/javascript">
   
   // IE function.bind polyfill
@@ -709,7 +709,7 @@ if (!Function.prototype.bind) {
   <div class="col-md-12">
     <div class=" ">
     <p>
-    <a href="{% provider_login_url "twitter" process="login" %}">Sign in now</a> to get the best experience - richer profiles, save favourites, easy messaging, and more. It's free to join!</p>
+    <a href="{% provider_login_url "twitter" process="login" %}">Sign in</a> to see richer profiles, save favourites, contact people, and more.</p>
     </p>
     </div>
   </div>
