@@ -186,12 +186,12 @@ var ticker_lon = {{userinfo.lon}};
     <!--[if lt IE 9]><link rel="stylesheet" href="{% static "assets/components/library/bootstrap/css/bootstrap.min.css" %}" /><![endif]-->
     <script>
       less = {
-        env: "production", 
+        env: "development", 
         poll: 500
       };
     </script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/less.js/1.7.1/less.min.js"></script>  
-    <!-- <script>less.watch();</script> -->
+    <script>less.watch();</script>
 <script type="text/javascript">
   
   // IE function.bind polyfill
@@ -243,55 +243,7 @@ if (!Function.prototype.bind) {
 <div class="navbar hidden-print navbar-default navbar-fixed-top box main  hidden-sm hidden-xs" role="navigation" id="topnav" >
  
 
-  {% if not request.user.is_authenticated %} 
-  <div class="user-action pull-right menu-right-hidden-xs menu-left-hidden-xs border-left border-right">
-    <div class="dropdown username pull-left border-right uservoicePadding">
-      <a class="dropdown-toggle black" data-toggle="dropdown" href="#" style="font-weight: 400; line-height: 34px; font-size: 14px;">Login
-      </a> 
-       <ul class="dropdown-menu pull-right" id="login" style="padding: 15px;min-width: 250px;">
-          <li>
-             <a href="{% provider_login_url "twitter" process="login" %}"><button class="btn btn-primary btn-block" style="background: #5398D8; border-color: #4B80B5;" id="sign-in-twitter" value="Sign In with Twitter">Sign In with Twitter</button></a>
-          </li>
-          <li class="divider"></li>
-          <li>
-             <div class="row">
-                <div class="col-md-12">
-                   <form class="form" role="form" method="post" action="/accounts/login/" accept-charset="UTF-8" id="login-nav">{% csrf_token %}
-                      <div class="form-group">
-                         <label class="sr-only" for="exampleInputEmail2">Email address</label>
-                         <input type="email" class="form-control" id="exampleInputEmail2" name="login" placeholder="Email address" required>
-                      </div>
-                      <div class="form-group">
-                         <label class="sr-only" for="exampleInputPassword2">Password</label>
-                         <input type="password" class="form-control" id="exampleInputPassword2" name="password" placeholder="Password" required>
-                      </div>
-                      <div class="checkbox">
-                         <label>
-                         <input type="checkbox" name="remember"> Remember me
-                         </label>
-                      </div>
-                      <a class="help-block" href="/accounts/password/reset/"/>Forgot Password?</a>
-                      <div class="form-group">
-                         <button type="submit" class="btn btn-success btn-block">Sign in</button>
-                      </div>
-                    </form>
-                </div>
-             </div>
-          </li>
-       </ul> 
-    </div> 
-  </div>
-
-  <div class="user-action pull-right  border-left">
-    <div class="dropdown username pull-left">
-      <a   data-toggle="modal" data-target="#modal_signup" style="font-weight: 400;
-line-height: 34px; font-size: 14px;" class="black">
-        Sign up
-      </a>
-    </div>
-  </div>
-
-  {% endif %}
+ 
    
   
   <div class="pull-left" style="margin-right: 10px;">
@@ -302,11 +254,49 @@ line-height: 34px; font-size: 14px;" class="black">
   
       <ul class="list-unstyled list-inline navbar-right" id="sociallinks">
         <li>
-          <a href="http://www.facebook.com/foodtradeHQ"><i class="fa  fa-lg fa-facebook-square "></i></a></li><li> 
-          <a href="http://www.twitter.com/foodtradeHQ"><i class="fa  fa-lg fa-twitter-square"></i></a></li><li>
-          <a href="http://www.instagram.com/foodtradeHQ"><i class="fa fa-lg fa-instagram "></i></a></li><li>
-          <a href="https://plus.google.com/+Foodtrade"><i class="fa  fa-lg fa-google-plus-square"></i></a></li>
-          <li><a href="https://foodtrade.uservoice.com" data-uv-trigger="smartvote" id="support">Support</a>﻿﻿﻿</li>
+          <a href="http://www.facebook.com/foodtradeHQ" target="_blank"><i class="fa  fa-lg fa-facebook-square "></i></a></li><li> 
+          <a href="http://www.twitter.com/foodtradeHQ" target="_blank"><i class="fa  fa-lg fa-twitter-square"></i></a></li><li>
+          <a href="http://www.instagram.com/foodtradeHQ" target="_blank"><i class="fa fa-lg fa-instagram "></i></a></li><li>
+          <a href="https://plus.google.com/+Foodtrade" target="_blank"><i class="fa  fa-lg fa-google-plus-square"></i></a></li>
+          <li><a href="https://foodtrade.uservoice.com" data-uv-trigger="contact" id="support">Contact</a>﻿﻿﻿</li>
+          {% if not request.user.is_authenticated %} 
+          <li><a data-toggle="modal" data-target="#modal_signup">Sign up</a>
+          <li>
+            <a class="dropdown-toggle label label-primary text-white" data-toggle="dropdown" href="#">Login
+            </a> 
+             <ul class="dropdown-menu pull-right" id="login" style="padding: 15px;min-width: 250px;">
+                <li>
+                   <a href="{% provider_login_url "twitter" process="login" %}"><button class="btn btn-primary btn-block" style="background: #5398D8; border-color: #4B80B5;" id="sign-in-twitter" value="Sign In with Twitter">Sign In with Twitter</button></a>
+                </li>
+                <li class="divider"></li>
+                <li>
+                   <div class="row">
+                      <div class="col-md-12">
+                         <form class="form" role="form" method="post" action="/accounts/login/" accept-charset="UTF-8" id="login-nav">{% csrf_token %}
+                            <div class="form-group">
+                               <label class="sr-only" for="exampleInputEmail2">Email address</label>
+                               <input type="email" class="form-control" id="exampleInputEmail2" name="login" placeholder="Email address" required>
+                            </div>
+                            <div class="form-group">
+                               <label class="sr-only" for="exampleInputPassword2">Password</label>
+                               <input type="password" class="form-control" id="exampleInputPassword2" name="password" placeholder="Password" required>
+                            </div>
+                            <div class="checkbox">
+                               <label>
+                               <input type="checkbox" name="remember"> Remember me
+                               </label>
+                            </div>
+                            <a class="help-block" href="/accounts/password/reset/"/>Forgot Password?</a>
+                            <div class="form-group">
+                               <button type="submit" class="btn btn-success btn-block">Sign in</button>
+                            </div>
+                          </form>
+                      </div>
+                   </div>
+                </li>
+             </ul> 
+          </li>
+          {% endif %}
       </ul> 
  
 
