@@ -740,6 +740,10 @@ td.ellipsis
   height: auto;
   color: #999;
   font-size: 12px;
+  @media (max-width: 992px) {
+    max-height: 20px;
+    overflow: hidden;
+  }
   a {
     color: #999 !important;
     text-decoration: none;
@@ -841,11 +845,12 @@ td.ellipsis
 
 .map-biz {
   width: 100%;
+  z-index: 5;
   height: 400px; 
   box-shadow: 0 0 50px #444 inset;
 }
 
-@media(max-width: 768px) {
+@media(max-width: 767px) {
   #map,
   .map-biz { 
     height: 200px !important; 

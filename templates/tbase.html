@@ -243,55 +243,7 @@ if (!Function.prototype.bind) {
 <div class="navbar hidden-print navbar-default navbar-fixed-top box main  hidden-sm hidden-xs" role="navigation" id="topnav" >
  
 
-  {% if not request.user.is_authenticated %} 
-  <div class="user-action pull-right menu-right-hidden-xs menu-left-hidden-xs border-left border-right">
-    <div class="dropdown username pull-left border-right uservoicePadding">
-      <a class="dropdown-toggle black" data-toggle="dropdown" href="#" style="font-weight: 400; line-height: 34px; font-size: 14px;">Login
-      </a> 
-       <ul class="dropdown-menu pull-right" id="login" style="padding: 15px;min-width: 250px;">
-          <li>
-             <a href="{% provider_login_url "twitter" process="login" %}"><button class="btn btn-primary btn-block" style="background: #5398D8; border-color: #4B80B5;" id="sign-in-twitter" value="Sign In with Twitter">Sign In with Twitter</button></a>
-          </li>
-          <li class="divider"></li>
-          <li>
-             <div class="row">
-                <div class="col-md-12">
-                   <form class="form" role="form" method="post" action="/accounts/login/" accept-charset="UTF-8" id="login-nav">{% csrf_token %}
-                      <div class="form-group">
-                         <label class="sr-only" for="exampleInputEmail2">Email address</label>
-                         <input type="email" class="form-control" id="exampleInputEmail2" name="login" placeholder="Email address" required>
-                      </div>
-                      <div class="form-group">
-                         <label class="sr-only" for="exampleInputPassword2">Password</label>
-                         <input type="password" class="form-control" id="exampleInputPassword2" name="password" placeholder="Password" required>
-                      </div>
-                      <div class="checkbox">
-                         <label>
-                         <input type="checkbox" name="remember"> Remember me
-                         </label>
-                      </div>
-                      <a class="help-block" href="/accounts/password/reset/"/>Forgot Password?</a>
-                      <div class="form-group">
-                         <button type="submit" class="btn btn-success btn-block">Sign in</button>
-                      </div>
-                    </form>
-                </div>
-             </div>
-          </li>
-       </ul> 
-    </div> 
-  </div>
-
-  <div class="user-action pull-right  border-left">
-    <div class="dropdown username pull-left">
-      <a   data-toggle="modal" data-target="#modal_signup" style="font-weight: 400;
-line-height: 34px; font-size: 14px;" class="black">
-        Sign up
-      </a>
-    </div>
-  </div>
-
-  {% endif %}
+ 
    
   
   <div class="pull-left" style="margin-right: 10px;">
@@ -302,11 +254,49 @@ line-height: 34px; font-size: 14px;" class="black">
   
       <ul class="list-unstyled list-inline navbar-right" id="sociallinks">
         <li>
-          <a href="http://www.facebook.com/foodtradeHQ"><i class="fa  fa-lg fa-facebook-square "></i></a></li><li> 
-          <a href="http://www.twitter.com/foodtradeHQ"><i class="fa  fa-lg fa-twitter-square"></i></a></li><li>
-          <a href="http://www.instagram.com/foodtradeHQ"><i class="fa fa-lg fa-instagram "></i></a></li><li>
-          <a href="https://plus.google.com/+Foodtrade"><i class="fa  fa-lg fa-google-plus-square"></i></a></li>
-          <li><a href="https://foodtrade.uservoice.com" data-uv-trigger="smartvote" id="support">Support</a>﻿﻿﻿</li>
+          <a href="http://www.facebook.com/foodtradeHQ" target="_blank"><i class="fa  fa-lg fa-facebook-square "></i></a></li><li> 
+          <a href="http://www.twitter.com/foodtradeHQ" target="_blank"><i class="fa  fa-lg fa-twitter-square"></i></a></li><li>
+          <a href="http://www.instagram.com/foodtradeHQ" target="_blank"><i class="fa fa-lg fa-instagram "></i></a></li><li>
+          <a href="https://plus.google.com/+Foodtrade" target="_blank"><i class="fa  fa-lg fa-google-plus-square"></i></a></li>
+          <li><a href="https://foodtrade.uservoice.com" data-uv-trigger="contact" id="support">Contact</a>﻿﻿﻿</li>
+          {% if not request.user.is_authenticated %} 
+          <li><a data-toggle="modal" data-target="#modal_signup">Sign up</a>
+          <li>
+            <a class="dropdown-toggle label label-primary text-white" data-toggle="dropdown" href="#">Login
+            </a> 
+             <ul class="dropdown-menu pull-right" id="login" style="padding: 15px;min-width: 250px;">
+                <li>
+                   <a href="{% provider_login_url "twitter" process="login" %}"><button class="btn btn-primary btn-block" style="background: #5398D8; border-color: #4B80B5;" id="sign-in-twitter" value="Sign In with Twitter">Sign In with Twitter</button></a>
+                </li>
+                <li class="divider"></li>
+                <li>
+                   <div class="row">
+                      <div class="col-md-12">
+                         <form class="form" role="form" method="post" action="/accounts/login/" accept-charset="UTF-8" id="login-nav">{% csrf_token %}
+                            <div class="form-group">
+                               <label class="sr-only" for="exampleInputEmail2">Email address</label>
+                               <input type="email" class="form-control" id="exampleInputEmail2" name="login" placeholder="Email address" required>
+                            </div>
+                            <div class="form-group">
+                               <label class="sr-only" for="exampleInputPassword2">Password</label>
+                               <input type="password" class="form-control" id="exampleInputPassword2" name="password" placeholder="Password" required>
+                            </div>
+                            <div class="checkbox">
+                               <label>
+                               <input type="checkbox" name="remember"> Remember me
+                               </label>
+                            </div>
+                            <a class="help-block" href="/accounts/password/reset/"/>Forgot Password?</a>
+                            <div class="form-group">
+                               <button type="submit" class="btn btn-success btn-block">Sign in</button>
+                            </div>
+                          </form>
+                      </div>
+                   </div>
+                </li>
+             </ul> 
+          </li>
+          {% endif %}
       </ul> 
  
 
@@ -661,11 +651,11 @@ line-height: 34px; font-size: 14px;" class="black">
 
                 <button type="button" class="btn btn-primary btn-sm hidden-xs" data-toggle="collapse" data-target="#newtwitterpost" style="font-weight: normal; margin-top:14px;" onclick="window.scrollTo(0,0);">
                   <i class="fa fa-bullhorn  fa-fw"></i>
-                  Post a buy or sell request
+                  Post a trade
                 </button>
 
-                <a class="hidden-sm hidden-md hidden-lg" data-toggle="collapse" data-target="#newtwitterpost" style="font-weight: normal; position: relative; top: -7px;">
-                  <i class="fa fa-edit fa-2x innerT text-primary"></i>
+                <a class="hidden-sm hidden-md hidden-lg " data-toggle="collapse" data-target="#newtwitterpost" style="font-weight: normal; position: relative; top: 2px;">
+                  <i class="fa fa-edit fa-lg text-primary "></i>
                 </a> 
             {% endif %} 
     </li>
@@ -686,7 +676,7 @@ line-height: 34px; font-size: 14px;" class="black">
                 <span class="media margin-none">
                     <span class="pull-left">
                         <img src="{{userinfo.profileimg}}" alt="{{userinfo.full_name}}"
-                        class="img-rounded " style="width: 30px;">
+                        class="img-rounded" id="avatar">
                     </span>
                     <span class="media-body"> 
                         <span class="caret"></span>
@@ -694,13 +684,11 @@ line-height: 34px; font-size: 14px;" class="black">
                 </span>
             </a>
             <ul class="dropdown-menu pull-right">
-                <li><a href="/editprofile/me">Edit profile</a></li>
-                <li><a href="/me">View profile</a></li> 
+                <li><a href="/visitors">My visitors</a></li> 
+                <li><a href="/editprofile/me">Edit my profile</a></li>
+                <li><a href="/me">View my profile</a></li> 
+                <li><a href="/payments">Account &amp; billing</a></li>
                 <li><a href="/accounts/password/change/">Change Password</a></li>
-                <li><a href="/visitors">Who's visited your profile</a>
-                </li> 
-                <li><a href="/payments">Account &amp; billing</a>
-                </li>  
                 <li><a href="/accounts/logout">Logout</a>
                 </li> 
             </ul> 
@@ -721,7 +709,7 @@ line-height: 34px; font-size: 14px;" class="black">
   <div class="col-md-12">
     <div class=" ">
     <p>
-    <a href="{% provider_login_url "twitter" process="login" %}">Sign in now</a> to get the best experience - richer profiles, save favourites, easy messaging, and more. It's free to join!</p>
+    <a href="{% provider_login_url "twitter" process="login" %}">Sign in</a> to see richer profiles, save favourites, contact people, and more.</p>
     </p>
     </div>
   </div>
@@ -1735,6 +1723,17 @@ function check_limit1(){
     $('#charsRem1').html(String(120-tweet.length) + ' characters remaining.');
   }
 }
+
+$(function() {
+    $('#scrollInfo').slideUp('fast');
+    $(window).scroll(function() {
+        if($(window).scrollTop() >= 155) {  
+            $('#scrollInfo').slideDown('slow');
+        }else{
+            $('#scrollInfo').slideUp('fast');
+        }
+    });
+});
 
 $(function () {
 var activeTab = $('[href=' + location.hash + ']');

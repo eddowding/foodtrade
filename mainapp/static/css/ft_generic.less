@@ -174,6 +174,11 @@ body {
   color: #fff !important;
 }
 
+a,
+.pointer {
+  cursor: pointer !important;
+}
+
 /* ------------------------------------
 /*  2.   LAYOUT
 /* ------------------------------------ */
@@ -327,6 +332,7 @@ td.footable-visible.footable-first-column {
 
 .navbar-form {
   margin: 0;
+  max-width: 200px;
 }
 
 .navbar .user-action {
@@ -402,10 +408,39 @@ td.footable-visible.footable-first-column {
     @media (max-width:767px) {
       display: inline-block;
       float: left;
-      padding-right: 4px;
-      padding-left: 4px;
+      padding-right: 2px;
+      padding-left: 0px;
     }
     a {
+      padding-right: 2px;
+      padding-left: 0px;
+      line-height: 3.5; 
+      @media (max-width:767px) {
+        line-height: 2;
+      }
+    }
+    ul {
+      position: absolute;
+      top: 40px;
+      right: 0;
+      background: #000;
+      z-index: 100000;
+    }
+    li {
+      float: none;
+      display: block;
+      a {
+        color: #eee;
+        line-height: 2;
+        padding: 0 5px;
+        border-bottom: 1px solid #444;
+      }
+    }
+  }
+  #avatar {
+      width: 30px;
+    @media (max-width:767px) {
+      width: 20px;
     }
   }
   .active a {
@@ -471,7 +506,7 @@ i.pinterest,span.pinterest{ color: #cb2027 !important; }
 
 
 #notLoggedIn {
-  padding: 15px 10px 7px;
+  padding: 5px 0 0 0;
   position: fixed;
   bottom: 0;
   left: 0;
@@ -622,7 +657,7 @@ i.pinterest,span.pinterest{ color: #cb2027 !important; }
     display: inline-block; 
     position: relative;
     width: 31%;
-    max-height: 450px;
+    max-height: 650px;
     padding: 0;
     margin: 1%;
     border-bottom: 2px solid #ccc !important;

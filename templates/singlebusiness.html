@@ -57,7 +57,7 @@
 <div class="page">
 
 
-<div class="row row-merge bizSummary border-left border-top  bg-gray" data-spy="affix" data-offset-top="155">
+<div class="row row-merge bizSummary bg-gray" data-spy="affix" id="scrollInfo">
 <div class="ftstrip"></div>
 <div class="col-xs-9 bg-gray border-right">
    <div class="innerAll">
@@ -103,8 +103,8 @@
 <!---    -->
 
 
-<div class="row row-merge bizSummary equal">
-  <div class="col-xs-12 equal" style="background: rgba(0,0,0,0.4);"> 
+<div class="row row-merge bizSummary">
+  <div class="col-xs-12"> 
    
     <div class="map-biz" id="map"></div> 
     <div id="biz-info" class="text-center innerAll"> 
@@ -156,7 +156,7 @@
 
       {% ifequal is_unknown_profile 'false' %}
       {% else %}<br />
-        <a class="text-white strong"  data-toggle="modal" data-target="#modal_invite">Invite to connect</a> 
+        <a class="text-white strong pointer"  data-toggle="modal" data-target="#modal_invite">Invite to connect</a> 
       {% endifequal %} 
       <!-- EDIT / CONTACT -->
 
@@ -166,7 +166,7 @@
           <button type="button"  class="btn btn-default dropdown-toggle normal btn-stroke text-white" data-toggle="dropdown"  ><i class="fa fa-fw fa-share-alt  text-white "></i> share</button>
             <ul class="dropdown-menu text-left">
              <li><a href="/{{username}}"><i class="fa fa-fw fa-lg fa-link"></i> foodtrade.com/{{username}}</a></li>
-             <li> <a href="#" class="" onclick="window.open(
+             <li> <a href="#" class="" target="_blank" onclick="window.open(
               'https://www.facebook.com/sharer/sharer.php?s=100&amp;p[url]='+encodeURIComponent('{{ request.build_absolute_uri }}') +'&amp;p[images][0]='+encodeURIComponent('{{pic_url}}')+'&amp;p[title]='+encodeURIComponent('{{name}} on FoodTrade')+'&amp;p[summary]='+encodeURIComponent('Hey, see my profile on FoodTrade')+'&amp;u='+encodeURIComponent('{{ request.build_absolute_uri }}') +'&amp;t='+encodeURIComponent('{{name}} on FoodTrade'),
                     'facebook-share-dialog', 
                     'width=626,height=436,top='+((screen.height - 436) / 2)+',left='+((screen.width - 626)/2 )); 
@@ -175,7 +175,7 @@
                 <i class="fa fa-facebook fa-lg fb fa-fw"></i> Share on facebook 
               </a></li>
               <li>
-              <a href="#" class="  " onclick="window.open(
+              <a href="#" class="  " target="_blank" onclick="window.open(
                     'https://twitter.com/share?url='+encodeURIComponent('{{ request.build_absolute_uri }}')+'&amp;text='+encodeURIComponent('{{screen_name}} on @foodtradeHQ') + '&amp;count=none/', 
                     'twitter-share-dialog', 
                     'width=626,height=436,top='+((screen.height - 436) / 2)+',left='+((screen.width - 626)/2 )); 
@@ -183,17 +183,17 @@
                 <i class="fa fa-twitter fa-lg tw fa-fw"></i> Tweet this
               </a></li><li>
 
-              <a class=" " href="http://pinterest.com/pin/create/button/?url={{ request.build_absolute_uri|urlencode }}&media={{pic_url|urlencode}}&description={{screen_name|urlencode}}{{' on FoodTrade'|urlencode}}" class="pin-it-button" count-layout="horizontal">
+              <a class=" " target="_blank" href="http://pinterest.com/pin/create/button/?url={{ request.build_absolute_uri|urlencode }}&media={{pic_url|urlencode}}&description={{screen_name|urlencode}}{{' on FoodTrade'|urlencode}}" class="pin-it-button" count-layout="horizontal">
                 <i class="fa fa-pinterest fa-lg pinterest fa-fw"></i> Pin to pinterest
               </a> </li><li>
-              <a  class="" href="https://plus.google.com/share?url={{ request.build_absolute_uri|urlencode }}">
+              <a  class="" target="_blank" href="https://plus.google.com/share?url={{ request.build_absolute_uri|urlencode }}">
                 <i class="fa fa-google-plus fa-lg google fa-fw"></i>  Share on Google+
               </a></li><li>
-              <a  class=" " href="http://www.tumblr.com/share" title="Share on Tumblr">
+              <a  class=" " target="_blank" href="http://www.tumblr.com/share" title="Share on Tumblr">
                 <i class="fa fa-tumblr fa-lg tumblr fa-fw"></i> Post to Tumblr
               </a>
                  </li><li>
-              <a  class=" " href="http://www.linkedin.com/shareArticle?mini=true&url={{ request.build_absolute_uri|urlencode}}&title={{screen_name}} on FoodTrade&summary=Hey, view my profile on Foodtrade.&source=">
+              <a  class=" " target="_blank" href="http://www.linkedin.com/shareArticle?mini=true&url={{ request.build_absolute_uri|urlencode}}&title={{screen_name}} on FoodTrade&summary=Hey, view my profile on Foodtrade.&source=">
                 <i class="fa fa-linkedin fa-lg linkin fa-fw"></i>  Share on LinkedIn
               </a></li> 
               <script type="text/javascript" src="http://platform.tumblr.com/v1/share.js"></script>

@@ -141,16 +141,15 @@ var card_str = '<div class="card-box"><div class="text-center"><div class=""><a 
 
 
 if(parseInt(current_lon) != parseInt(def_lon) || parseInt(def_lat) != parseInt(current_lat))
-{
-
+{ 
 			var dot = L.circleMarker([parseFloat(latitude), parseFloat(longitude)],  {
 			
-			color: '#61AE32',
-			opacity:0,
-			weight:0,
+			color: '#000',
+			opacity:0.7,
+			weight:1,
 			fill:1,
-			radius: 4,
-			fillColor: "#9B5C47",
+			radius: 6,
+			fillColor: "#cc0000",
 			fillOpacity: 1,
 
 		}).addTo(map).bindPopup(card_str);
@@ -158,6 +157,8 @@ if(parseInt(current_lon) != parseInt(def_lon) || parseInt(def_lat) != parseInt(c
 		}
 
 }
+
+
 
 	if(max_lat == min_lat && max_lon==min_lon)
 		{
