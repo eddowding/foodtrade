@@ -108,7 +108,7 @@
    
     <div class="map-biz" id="map"></div> 
     <div id="biz-info" class="text-center innerAll"> 
-      <div class="media">
+      <div class="media" {% ifnotequal banner_url '' %} style="background:url('{{banner_url}}'); background-size:cover; "{% endifnotequal %} >
         <img src="{{pic_url}}"  alt="{{name}} logo" class="  avatar">
         <div class="media-body"> 
           {% if request.user.is_authenticated %}
