@@ -1065,6 +1065,7 @@ def search_orgs_business(request, type_user):
             #     if int(each['b_useruid'] in b_profile_data:
             #         profile_data.append(int(each['b_useruid'])
             # profile_data = get_connections(profile_user_obj['useruid'], request.user.id)[0]
+
         elif type_user == 'Organisation':
             type_user_new = [type_user]
             # profile_data = get_organisations(profile_user_obj['useruid'])
@@ -1075,16 +1076,16 @@ def search_orgs_business(request, type_user):
        
         elif type_user == 'Member':
             type_user_new = ['Business', 'Organisation', 'Individual']
-            # profile_data = get_members(profile_user_obj['useruid'], request.user.id)[0]            
+            # profile_data = get_members(profile_user_obj['useruid'], request.user.id)[0]
             org = Organisation()
             mem_profiles = org.get_members_by_orgid(profile_user_obj['useruid'])
             profile_data = [int(each['memberuid']) for each in mem_profiles]
 
         data_list = profile_data # [int(each['id']) for each in profile_data]
-        keyword_like = re.compile(query + '+', re.IGNORECASE)
-        reg_expression = {"$regex": keyword_like, '$options': '-i'}
+        
+        reg_expression = {"$regex": query, '$options': '-i'}
 
-        search_variables = ["name", "business_org_name", "screen_name"]
+        search_variables = ["name", "business_org_name", "screen_name", "username"]
         or_conditions = []
         for search_item in search_variables:
             or_conditions.append({search_item:reg_expression})
@@ -1093,18 +1094,27 @@ def search_orgs_business(request, type_user):
         type_list.extend(type_user_new)
         query_mongo = {'$or': or_conditions, 'sign_up_as': {'$in': type_list}, 'useruid': {'$nin': data_list}}
         mongo = MongoConnection("localhost",27017,'foodtrade')
+        # print query_mongo
         results = mongo.get_paginated_values('userprofile', query_mongo)
         results = results[0:5]
+        
 
         final_organisation = []
         if len(results) == 0:
             from mainapp.classes.AjaxHandle import AjaxHandle
             ajx_obj = AjaxHandle()
-            fake_profile = ajx_obj.create_fake_profile('', query, 'showuser' ,'unclaimed')
+
+            # fake_profile = ajx_obj.create_fake_profile('', query, 'showuser' ,'unclaimed')
+            # fake_profile = ajx_obj.create_fake_profile('', query, 'gplaces' ,'unclaimed')
+            
+            from mainapp.classes.gplaces import GPlaces
+            gplaces_api = GPlaces()
+            fake_profile = gplaces_api.search_google_places(request.user.id, query)
+                        
             if len(fake_profile) == 0:
                 final_organisation.append({'id': 'search', 'name': 'Sorry! There are no results!!', 'screen_name': '', 'profile_image_url_https':'', 'show_hide':'hidden'})
             else:
-                requests = fake_profile
+                results = fake_profile
 
         for each in results:
             if each.get('business_org_name')!=None:

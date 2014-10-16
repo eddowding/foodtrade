@@ -1,0 +1,41 @@
+<!-- modal_twitter_user_check -->
+<input type="hidden" name="usernameStockistOrSupplier" id="idUserNameStockistOrSupplier" value="" />
+<a href='' id="trigger_modal_twitter_user_check" class='btn btn-sm btn-info hidden' data-toggle='modal' data-target='#modal_twitter_user_check'  data-container='body'>Trigger Food Detail Modal Hidden</a>
+<div class="modal fade" id="modal_twitter_user_check" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="myModalLabel">Do you want to help us find this user in twitter?</h4>
+      </div>
+
+      <div class="modal-footer"> 
+        <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+        <button type="button" class="btn btn-success" data-dismiss="modal" onclick="find_user_in_twitter()">Yes</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
+
+<!-- modal_customer -->
+
+<a href='' id="trigger_modal_idTwitterUserLinkSuggest" class='btn btn-sm btn-info hidden' data-toggle='modal' data-target='#idTwitterUserLinkSuggest'  data-container='body'>Trigger Food Detail Modal Hidden</a>
+<div class="modal fade" id="idTwitterUserLinkSuggest" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" id="twitterLinkClose" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="myModalLabel">Do you see a match below? </h4>
+      </div>
+      <div class="modal-body" id="idTwitterUserLinkSuggestModalBody">
+  
+      </div>
+      <div class="modal-footer"> 
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+

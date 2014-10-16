@@ -270,7 +270,7 @@ class TweetFeed():
             if res == None:
                 return_results.append(result)                       
         return return_results[0:10]
-
+        
     def get_followers(self, twitter_id):
         pass
         
@@ -362,6 +362,9 @@ class UserProfile():
             fields={'useruid':1})        
         return query[0]['useruid']
 
+    def get_user_count_by_user_name_similar(self,user_name):
+        return self.db_object.get_count(self.table_name,{'username': { "$regex" : str(user_name)}})
+
     def get_minimum_id_of_user(self):
         return self.db_object.aggregrate_all(self.table_name, [ { '$group': { '_id':0, 'minId': { '$min': "$useruid"} } } ] )
 
@@ -370,11 +373,17 @@ class UserProfile():
 
     def get_profile_by_profile_img(self, img):
         return self.db_object.get_one(self.table_name,{'profile_img': img})
+
     def get_profile_by_profile_banner_url(self, img):
         return self.db_object.get_one(self.table_name,{'profile_banner_url': img})
+
     def get_profile_by_username(self, username):
         # return self.db_object.get_one(self.table_name,{'username': str(username)})
         return self.db_object.get_one(self.table_name,{'username': { "$regex" : re.compile("^"+str(username)+"$", re.IGNORECASE), "$options" : "-i" }})
+
+    def get_profile_by_condition(self, condition = {}):
+        return self.db_object.get_one(self.table_name,condition)
+
 
     def get_post_count(self, useruid):
         updates = self.db_object.get_one(self.table_name, {'useruid':useruid})['updates']
@@ -392,6 +401,9 @@ class UserProfile():
 
     def update_profile_fields(self, where, what):
         self.db_object.update(self.table_name, where, what)
+
+    def update_profile_fields_with_upsert(self, where, what):
+        self.db_object.update_upsert(self.table_name, where, what)
 
     def subscribe(self, useruid):
         self.db_object.update(self.table_name, {"useruid":useruid}, {"subscribed":1})

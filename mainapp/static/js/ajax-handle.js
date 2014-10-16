@@ -84,6 +84,7 @@ function org_ajax(data){
 function org_ajax_add(data){
 	data= jQuery.parseJSON(data);
 	if(data['status']=='ok'){
+		alert('Here member add');
 		$('#groupsGrid').html(data['html']);
 		$('#orgConnNo').html('');
 		$('#orgConnNo').html(data['org_count']);
@@ -235,8 +236,9 @@ function plot_connection_layers_on_map(connection){
 	/*map_controls.push(ctrl);*/
 }
 
-function remove_con(username1)
-{
+
+function remove_con(username1){
+
 	cnt = control_dict[username1];
 	cnt1 = lines_dic[username1];
 	map.removeLayer(cnt);
@@ -270,6 +272,12 @@ function stockists_ajax(data){
             $('#stockistsTable').trigger('footable_resize');
             $('#suppliersTable').trigger('footable_initialize');
             $('#suppliersTable').trigger('footable_resize');
+
+            if(data['user_added']['username'].indexOf('_gp_')>-1 && data['user_added']['profile_linked_to_twitter'][0] == false){
+				$('#trigger_modal_twitter_user_check').click();
+				$('#idUserNameStockistOrSupplier').val(data['user_added']['username']);            	
+            }
+
 		}
 
         	$('#c_con_no').html(data['b_conn_no']);
@@ -279,7 +287,7 @@ function stockists_ajax(data){
 
 
 function suppliers_ajax(data){
-	// clear selected choice	
+	// clear selected choice			
 		data=jQuery.parseJSON(data);
 		if(data['action'] == 'delete'){
 			try{
@@ -307,8 +315,11 @@ function suppliers_ajax(data){
           	$('#stockistsTable').trigger('footable_initialize');
           	$('#stockistsTable').trigger('footable_resize');
           	
+          	if(data['user_added']['username'].indexOf('_gp_')>-1 && data['user_added']['profile_linked_to_twitter'][0] == false){
+				$('#trigger_modal_twitter_user_check').click();
+				$('#idUserNameStockistOrSupplier').val(data['user_added']['username']);            	
+            }
 		}
-
 
         	$('#c_con_no').html(data['b_conn_no']);
 			$('#b_con_no').html(data['c_conn_no']);	
@@ -494,8 +505,6 @@ function member_ajax(data){
 function add_team(org_id, team_id){
 	// var data = {orguid: org_id, memberuid: team_id};
 	// ajax_request("addteam", 'create_conn', {data: JSON.stringify(data)});
-	console.log(org_id);
-	console.log(team_id);
 	var checked = $('#team-chkbx').is(':checked');
 	var data = {orguid: org_id, memberuid: team_id};
 	if (checked){
@@ -580,3 +589,38 @@ function CloseNewPostModal()
 	data = jQuery.parseJSON(data);
 	loggedIn = data['status'];
  }*/
+
+ function get_twitter_user_suggestions(username){
+	ajax_request("get_twitter_user_suggestions", 'get_twitter_user_suggestions_success', {'username':username}); 	
+ }
+
+function get_twitter_user_suggestions_success(data){
+	data = jQuery.parseJSON(data);
+	if(data['status'] == 'ok'){
+		$('#trigger_modal_idTwitterUserLinkSuggest').click();		
+		var results_count = data['results'].length;
+		var html_str = '';
+		for (var i = 0; i <results_count; i++){
+	 			html_str  += '<li id= "li' + String(data['results'][i]['username']) +  '" class="list-group-item twitterLink">';
+                html_str  += '<img src="' + String(data['results'][i]['profile_img']) + '" title="'+ String(data['results'][i]['name'])  + '" class="img-responsive pull-left" style="width:20px; margin-right: 5px;" />'; 
+	           	html_str  += String(data['results'][i]['name']) + '&nbsp;<span class="text-muted small">@' + String(data['results'][i]['username']) + '</span>';                  
+      			html_str  += '</li>';
+		}
+		$('#idTwitterUserLinkSuggestModalBody').html(html_str);
+	}
+}
+
+$('#idTwitterUserLinkSuggestModalBody').on('click', '.twitterLink', function(){
+  
+  u_name = $('#idUserNameStockistOrSupplier').val();
+  username = (this.id).substring(2, this.id.length);  
+  ajax_request("link_twitter_and_gplus_account", 'link_twitter_and_gplus_account_success', {'twitter_username':username, 'gplus_username':u_name});
+
+});
+
+function link_twitter_and_gplus_account_success(data){
+	data = jQuery.parseJSON(data);
+	if(data['status']=='ok'){
+		$('#twitterLinkClose').click();
+	}
+}
