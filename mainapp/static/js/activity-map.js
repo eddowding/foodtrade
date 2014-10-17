@@ -72,11 +72,18 @@ function show_connections()
             var current_user1 = connections[i]['b_useruid'];
             var current_user2 = connections[i]['c_useruid'];
             console.log(current_user1, current_user2);
+            try
+            {
             var user_lng1 = user_dict['user_'+current_user1]['latlng']['coordinates'][0];
             var user_lat1 = user_dict['user_'+current_user1]['latlng']['coordinates'][1];
 
             var user_lng2 = user_dict['user_'+current_user2]['latlng']['coordinates'][0];
             var user_lat2 = user_dict['user_'+current_user2]['latlng']['coordinates'][1];
+          }
+          catch(err)
+          {
+            continue;
+          }
             console.log(user_lat1, user_lat2, user_lng1, parseFloat(user_lng2));
             var opacity = 0.1;
             if(ids.indexOf(current_user1)<0)
@@ -172,8 +179,16 @@ function show_connections_on_map()
       var current_lat = parseFloat(results[i].latlng.coordinates[1]);
       var current_lon = parseFloat(results[i].latlng.coordinates[0]);
       var card = (Search.tab=="market")?get_box_update_map(results[i]):map_profile_card(results[i]);
-      var ctrl = L.marker([parseFloat(current_lat), parseFloat(current_lon)],{icon: redIcon}).bindPopup(card);
+      var ctrl = L.marker([parseFloat(current_lat), parseFloat(current_lon)],{icon: redIcon, userid: results[i].useruid}).bindPopup(card);
       var marker_index = (Search.tab=="market")?results[i].username+"_"+results[i].updates.tweet_id:results[i].username;
+      ctrl.on('mouseover', function (e) {
+            var user_id = this.options.userid;
+            highlight_connections(user_id);
+        });
+        ctrl.on('mouseout', function (e) {
+            var user_id = this.options.userid;
+            unhightlight_connections(user_id);
+        });
       Search.map_controls[results[i].username] = ctrl;
         markers.addLayer(ctrl);
     }

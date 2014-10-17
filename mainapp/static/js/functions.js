@@ -1,3 +1,65 @@
+function highlight_connections(userid)
+{
+	    var con_dots = Search.dot_controls['user_'+userid];
+	    console.log(userid);
+
+    var con_lines = Search.line_controls['user_'+userid];
+
+if(con_dots == undefined)
+{
+    con_dots = [];
+}
+if(con_lines == undefined)
+{
+    con_lines = [];
+}
+for(var i = 0;i<con_dots.length;i++)
+{
+    var item = con_dots[i];
+    item.setStyle({fillColor:"#cc0000", color:"#cc0000", opacity:1, fillOpacity:1});
+    
+}
+
+
+for(var i = 0;i<con_lines.length;i++)
+{
+    var item = con_lines[i];
+    item.setStyle({color:"#cc0000", opacity:1, fillOpacity:1});
+}
+
+}
+function unhightlight_connections(userid)
+{
+	    var con_dots = Search.dot_controls['user_'+userid];
+
+
+    var con_lines = Search.line_controls['user_'+userid];
+
+    if(con_dots == undefined)
+    {
+        con_dots = [];
+    }
+    if(con_lines == undefined)
+    {
+        con_lines = [];
+    }
+
+    for(var i = 0;i<con_dots.length;i++)
+    {
+        var item = con_dots[i];
+        item.setStyle({fillColor:"#cc0000", weight:1,
+              fill:1,
+              radius: 6, color:"#cc0000", opacity:0.1, fillOpacity:0.1});
+    }
+
+
+    for(var i = 0;i<con_lines.length;i++)
+    {
+        var item = con_lines[i];
+        item.setStyle({color:"#cc0000", opacity:0.1, fillOpacity:0.1});
+    }
+}
+
 function get_box_profile(user)
 {
   	var content = "";
