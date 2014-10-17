@@ -1125,7 +1125,13 @@ def search_orgs_business(request, type_user):
             # final_organisation.append({'id': each['useruid'],
             #     'name':myname
             #     })
-            final_organisation.append({'id': each['useruid'], 'name':myname, 'screen_name':each['screen_name'], 'profile_image_url_https':each['profile_img']})
+            if each['address'].lower() == 'antartica':
+                final_organisation.append({'id': each['useruid'], 'name':myname, 'screen_name':each['screen_name'], 'profile_image_url_https':each['profile_img']})
+            else:
+                final_organisation.append({'id': each['useruid'], 'name':myname,'address':each['address'], 'screen_name':each['screen_name'], 'profile_image_url_https':each['profile_img']})
+
+        # html_str += '<li class="list-group-item><img src="//maps.gstatic.com/mapfiles/api-3/images/powered-by-google-on-white2.png"></li>';
+        final_organisation.append({'id':'search', 'name':'', 'screen_name': '', 'profile_image_url_https':'http://maps.gstatic.com/mapfiles/api-3/images/powered-by-google-on-white2.png'})
         return HttpResponse(json.dumps(final_organisation))
     else:
         return HttpResponse(json.dumps({'status':0, 'message':'You are not authorized to perform this action.'}))        

@@ -603,9 +603,10 @@ function get_twitter_user_suggestions_success(data){
 		for (var i = 0; i <results_count; i++){
 	 			html_str  += '<li id= "li' + String(data['results'][i]['username']) +  '" class="list-group-item twitterLink">';
                 html_str  += '<img src="' + String(data['results'][i]['profile_img']) + '" title="'+ String(data['results'][i]['name'])  + '" class="img-responsive pull-left" style="width:20px; margin-right: 5px;" />'; 
-	           	html_str  += String(data['results'][i]['name']) + '&nbsp;<span class="text-muted small">@' + String(data['results'][i]['username']) + '</span>';                  
+	           	html_str  += String(data['results'][i]['name']) + '&nbsp;<span class="text-muted small">' + String(data['results'][i]['username']) + '</span>';                  
       			html_str  += '</li>';
 		}
+		
 		$('#idTwitterUserLinkSuggestModalBody').html(html_str);
 	}
 }

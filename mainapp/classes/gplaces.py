@@ -21,13 +21,15 @@ class GPlaces():
         payload = {
             'key':KEY,
             'name':q.lower(),
+            'keyword':q.lower(),
             'location':location,
-            'radius':'5000000'
+            'radius':'50000'
         }
+
         r = requests.get(get_url,params=payload)
         json_response = json.loads(r.text)
-        search_results =  json_response['results'][0:5]
-
+        search_results =  json_response['results'][0:6]
+        
         return_results = []
 
         for eachResult in search_results:
@@ -59,7 +61,7 @@ class GPlaces():
                 'description' :'',
                 'foods': [],
                 'name' : eachResult['name'],            
-                'profile_img':'http://a0.twimg.com/sticky/default_profile_images/default_profile_6_normal.png',
+                'profile_img':'/static/images/gimage.png',
                 'type_user':[],
                 'updates': [],
                 'gPlacesProfile':True,
