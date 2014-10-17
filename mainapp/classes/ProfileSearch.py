@@ -66,7 +66,7 @@ class ProfileSearch(GeneralSearch):
 
         if(len(result)>0):
             distance = self.calc_distance(result[0]['latlng']['coordinates'][1],result[0]['latlng']['coordinates'][0])
-            print distance
+            # print distance
             if(distance<50):
                 parameter['status'] = "ok"
                 parameter['result'] = result[0]

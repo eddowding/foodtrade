@@ -1045,6 +1045,7 @@ def search_orgs_business(request, type_user):
         user_id = request.user.id
 
         referal_url = request.META.get('HTTP_REFERER')
+
         split_user = referal_url.split('/')
         profile_user = split_user[-2] if split_user[-2] != 'me' else request.user.username
 
@@ -1109,7 +1110,10 @@ def search_orgs_business(request, type_user):
             
             from mainapp.classes.gplaces import GPlaces
             gplaces_api = GPlaces()
-            fake_profile = gplaces_api.search_google_places(request.user.id, query)
+            if profile_user_obj['address'].lower() != 'antartica':
+                fake_profile = gplaces_api.search_google_places(profile_user_obj['useruid'], query)
+            else:
+                fake_profile = gplaces_api.search_google_places(request.user.id, query)
                         
             if len(fake_profile) == 0:
                 final_organisation.append({'id': 'search', 'name': 'Sorry! There are no results!!', 'screen_name': '', 'profile_image_url_https':'', 'show_hide':'hidden'})
@@ -1131,7 +1135,7 @@ def search_orgs_business(request, type_user):
                 final_organisation.append({'id': each['useruid'], 'name':myname,'address':each['address'], 'screen_name':each['screen_name'], 'profile_image_url_https':each['profile_img']})
 
         # html_str += '<li class="list-group-item><img src="//maps.gstatic.com/mapfiles/api-3/images/powered-by-google-on-white2.png"></li>';
-        final_organisation.append({'id':'search', 'name':'', 'screen_name': '', 'profile_image_url_https':'http://maps.gstatic.com/mapfiles/api-3/images/powered-by-google-on-white2.png'})
+        # final_organisation.append({'id':'search', 'name':'', 'screen_name': '', 'profile_image_url_https':'http://maps.gstatic.com/mapfiles/api-3/images/powered-by-google-on-white2.png'})
         return HttpResponse(json.dumps(final_organisation))
     else:
         return HttpResponse(json.dumps({'status':0, 'message':'You are not authorized to perform this action.'}))        
