@@ -539,9 +539,41 @@ var ctrl = Search.map_controls[box_username];
 var latlng = ctrl.getLatLng();
 var lat = latlng.lat;
 var lng = latlng.lng;
+
+var box_userid = $(this).attr('data-userid');
+
+
+    var con_dots = Search.dot_controls['user_'+box_userid];
+
+
+    var con_lines = Search.line_controls['user_'+box_userid];
+
+if(con_dots == undefined)
+{
+    con_dots = [];
+}
+if(con_lines == undefined)
+{
+    con_lines = [];
+}
+console.log(box_userid);
+for(var i = 0;i<con_dots.length;i++)
+{
+    var item = con_dots[i];
+    item.setStyle({fillColor:"#00ff00", color:"#00ff00", opacity:1, fillOpacity:1});
+    console.log("gone");
+}
+
+
+for(var i = 0;i<con_lines.length;i++)
+{
+    var item = con_lines[i];
+    item.setStyle({color:"#00ff00", opacity:1, fillOpacity:1});
+}
+
 // markers.removeLayer(ctrl);
 // ctrl.addTo(map)
-//         .openPopup();
+// .openPopup();
 ctrl.openPopup();
 
 map.panTo(new L.LatLng(lat,lng));
@@ -551,6 +583,39 @@ map.panTo(new L.LatLng(lat,lng));
 }).on('mouseleave','.box-generic',function(){
     var box_username = $(this).attr('data-username');
     var ctrl = Search.map_controls[box_username];
+
+
+    var box_userid = $(this).attr('data-userid');
+
+
+    var con_dots = Search.dot_controls['user_'+box_userid];
+
+
+    var con_lines = Search.line_controls['user_'+box_userid];
+
+    if(con_dots == undefined)
+    {
+        con_dots = [];
+    }
+    if(con_lines == undefined)
+    {
+        con_lines = [];
+    }
+
+    for(var i = 0;i<con_dots.length;i++)
+    {
+        var item = con_dots[i];
+        item.setStyle({fillColor:"#cc0000", weight:1,
+              fill:1,
+              radius: 6, color:"#cc0000", opacity:0.1, fillOpacity:0.1});
+    }
+
+
+    for(var i = 0;i<con_lines.length;i++)
+    {
+        var item = con_lines[i];
+        item.setStyle({color:"#cc0000", opacity:0.1, fillOpacity:0.1});
+    }
 // markers.addLayer(ctrl);
         // map.removeLayer(ctrl);
     ctrl.closePopup();

@@ -52,7 +52,6 @@ class ConnectionMap():
         self.db1 = db_object.get_db()["userprofile"]
 
 
-        print self.ids
 
         # pipeline = []
         pipeline1 ={"$match":{"deleted":0,"$or":[{"b_useruid":{"$in":self.ids}},{"b_useruid":{"$in":self.ids}}]}}
@@ -66,7 +65,6 @@ class ConnectionMap():
         # return
 
         unique_user_ids = []
-        print results
         for usr in results:
             b_user = int(usr['b_useruid'])
             c_user = int(usr['c_useruid'])
@@ -78,7 +76,7 @@ class ConnectionMap():
 
         if len(unique_user_ids)==0:
             return HttpResponse("no result")
-
+        print len(unique_user_ids)
         pipeline = []
         pipeline1 ={"$match":{"useruid":{"$in":unique_user_ids}}}
         pipeline2 = {"$project":{"useruid":1,"latlng":1, "_id":0}}
@@ -86,7 +84,6 @@ class ConnectionMap():
 
         results1 = self.db1.aggregate(pipeline)['result']
         user_dict = {}
-        print results1
         for result in results1:
             user_dict["user_"+str(int(result['useruid']))] = result['latlng']
 
