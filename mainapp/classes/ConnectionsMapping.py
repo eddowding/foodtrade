@@ -79,13 +79,13 @@ class ConnectionMap():
         print len(unique_user_ids)
         pipeline = []
         pipeline1 ={"$match":{"useruid":{"$in":unique_user_ids}}}
-        pipeline2 = {"$project":{"useruid":1,"latlng":1, "_id":0}}
+        pipeline2 = {"$project":{"useruid":1,"username":1, "description":1,"type_user":1, "sign_up_as":1,"latlng":1,"name":1,"updates":1,"profile_img":1,"_id":0}}
         pipeline = [pipeline1, pipeline2]
 
         results1 = self.db1.aggregate(pipeline)['result']
         user_dict = {}
         for result in results1:
-            user_dict["user_"+str(int(result['useruid']))] = result['latlng']
+            user_dict["user_"+str(int(result['useruid']))] = result
 
         ret_val = {"connections":results,"users":user_dict}
             

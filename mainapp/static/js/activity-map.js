@@ -72,11 +72,11 @@ function show_connections()
             var current_user1 = connections[i]['b_useruid'];
             var current_user2 = connections[i]['c_useruid'];
             console.log(current_user1, current_user2);
-            var user_lng1 = user_dict['user_'+current_user1]['coordinates'][0];
-            var user_lat1 = user_dict['user_'+current_user1]['coordinates'][1];
+            var user_lng1 = user_dict['user_'+current_user1]['latlng']['coordinates'][0];
+            var user_lat1 = user_dict['user_'+current_user1]['latlng']['coordinates'][1];
 
-            var user_lng2 = user_dict['user_'+current_user2]['coordinates'][0];
-            var user_lat2 = user_dict['user_'+current_user2]['coordinates'][1];
+            var user_lng2 = user_dict['user_'+current_user2]['latlng']['coordinates'][0];
+            var user_lat2 = user_dict['user_'+current_user2]['latlng']['coordinates'][1];
             console.log(user_lat1, user_lat2, user_lng1, parseFloat(user_lng2));
             var opacity = 0.1;
             if(ids.indexOf(current_user1)<0)
@@ -90,7 +90,7 @@ function show_connections()
             fillColor: "#cc0000",
             fillOpacity: opacity,
 
-        });
+        }).bindPopup(map_profile_card(user_dict['user_'+current_user1]));
             connection_dots.addLayer(con_dot1);
             try {
                 Search.dot_controls['user_'+current_user1].push(con_dot1);
@@ -113,7 +113,7 @@ function show_connections()
               radius: 6,
               fillColor: "#cc0000",
               fillOpacity: opacity,
-            });
+            }).bindPopup(map_profile_card(user_dict['user_'+current_user1]));
                 connection_dots.addLayer(con_dot2);
                 try {
                 Search.dot_controls['user_'+current_user1].push(con_dot2);
