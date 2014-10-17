@@ -63,7 +63,7 @@ class Friends():
                     friends = self.get_friends(eachUser['username'], next_cursor, friend_or_follower)
             return {'status':1}
         except:
-            print 'landed in exception'
+            # print 'landed in exception'
             return {'status':0, 'msg':'landed in exception'}
 
     def register_as_unclaimed_user(self,twitter_user):
@@ -115,7 +115,7 @@ class Friends():
                     data['latlng'] = {"type":"Point","coordinates":[float(location_res.longitude),float(location_res.latitude)]}
                     data['zip_code'] = str(location_res.postal_code)
                     data['address_geocoded']=True         
-                    print "Business key used"           
+                    # print "Business key used"           
                 except:                
                     data['address'] = str('Antartica')
                     data['twitter_address'] = twitter_user['location']

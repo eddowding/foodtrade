@@ -433,34 +433,56 @@ class AjaxHandle(AjaxSearch):
 
     def third_party_conn(self, request):
         trade_conn = TradeConnection()
+        print request.POST.get('conn_data')
         data = eval(request.POST.get('conn_data'))
+
         if data !=None and data !="":
             parameters = {}
+
+
+            user_pro = UserProfile()
+            try:
+                pro_obj = user_pro.get_profile_by_id(int(data['prof_id']))
+            except:
+                if '__gp__' in data['prof_id']:
+                    gp_id = data['prof_id'].replace('__gp__','')
+                    from mainapp.classes.gplaces import GPlaces
+                    gp_obj = GPlaces()
+                    prof_obj = gp_obj.get_details_and_create_profile(gp_id)
+                    
+                
+            try:
+                buss_obj = user_pro.get_profile_by_id(int(data['buss_id']))
+            except:
+                if '__gp__' in data['buss_id']:
+                    gp_id = data['buss_id'].replace('__gp__', '')
+                    from mainapp.classes.gplaces import GPlaces
+                    gp_obj = GPlaces()
+                    buss_obj = gp_obj.get_details_and_create_profile(gp_id)
+
             if data['status'] == 'buy_from':
-                trade_conn.create_connection({'b_useruid': int(data['prof_id']), 'c_useruid': int(data['buss_id'])})
+                trade_conn.create_connection({'b_useruid': int(pro_obj['useruid']), 'c_useruid': int(buss_obj['useruid'])})
                 parameters['buy_from_flag'] = True
                 parameters['relation'] = 'buyer'
                 from mainapp.classes.DataConnector import UserConnections
-                user_connection =  UserConnections(data['prof_id'])
+                user_connection =  UserConnections(pro_obj['useruid'])
                 b_conn_len, c_conn_len = user_connection.get_trade_connection_no() 
 
             elif data['status'] == 'sell_to':
                 parameters['buy_from_flag'] = False
                 parameters['relation'] = 'seller'                 
-                trade_conn.create_connection({'b_useruid': int(data['buss_id']), 'c_useruid': int(data['prof_id'])})
+                trade_conn.create_connection({'b_useruid': int(buss_obj['useruid']), 'c_useruid': int(pro_obj['useruid'])})
                 from mainapp.classes.DataConnector import UserConnections
-                user_connection =  UserConnections(data['buss_id'])
+                user_connection =  UserConnections(buss_obj['useruid'])
                 b_conn_len, c_conn_len = user_connection.get_trade_connection_no()
 
-            user_pro = UserProfile()
-            pro_obj = user_pro.get_profile_by_id(int(data['prof_id']))
-            buss_obj = user_pro.get_profile_by_id(int(data['buss_id']))
+
             # if any party is unclaimed user, change it into business
             if pro_obj['sign_up_as'] == 'unclaimed':
-                user_pro.update_profile_fields({'useruid': int(data['prof_id'])}, {'sign_up_as': 'Business',
+                user_pro.update_profile_fields({'useruid': int(pro_obj['useruid'])}, {'sign_up_as': 'Business',
                     'recently_updated_by_super_user': 'true'})
             elif buss_obj['sign_up_as'] == 'unclaimed':
-                user_pro.update_profile_fields({'useruid': int(data['buss_id'])}, {'sign_up_as': 'Business',
+                user_pro.update_profile_fields({'useruid': int(buss_obj['useruid'])}, {'sign_up_as': 'Business',
                     'recently_updated_by_super_user': 'true'})
             else:
                 pass
@@ -479,7 +501,7 @@ class AjaxHandle(AjaxSearch):
 
             user_pro = UserProfile()
 
-            usr_pr = user_pro.get_profile_by_id(int(data['buss_id']))
+            usr_pr = buss_obj
 
 
             each = {'id':usr_pr['useruid'],
@@ -505,8 +527,8 @@ class AjaxHandle(AjaxSearch):
             except:
                 pass
 
-            parameters['connections'], parameters['conn'] = get_connections(int(data['prof_id']), request.user.id)
-            parameters['profile_id'], parameters['user_id'] = int(data['prof_id']), request.user.id
+            parameters['connections'], parameters['conn'] = get_connections(int(pro_obj['useruid']), request.user.id)
+            parameters['profile_id'], parameters['user_id'] = int(pro_obj['useruid']), request.user.id
 
 
 

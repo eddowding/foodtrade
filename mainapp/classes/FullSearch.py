@@ -190,7 +190,7 @@ class GeneralSearch():
                     if self.want == "Buy":
                         we_buy = 0
 
-                print "help", we_buy
+                # print "help", we_buy
                 for fd_attr in food_attributes:
 
                     or_conditions.append({'foods':{"$elemMatch":{fd_attr:reg_expression, "webuy":{"$ne":we_buy}}}})

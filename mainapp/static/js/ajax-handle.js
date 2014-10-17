@@ -149,13 +149,13 @@ function third_party_connection(prof_id, buss_var, link_type){
 
 	if(link_type=='stockists' && buss_var!=""){
 		// var conn_data = {prof_id: prof_id, status: 'buy_from', buss_id: businesses_id };
-		ajax_request("third_party_conn", 'stockists_ajax', {conn_data: "{'prof_id': " + prof_id + ",'buss_id': " + parseInt(buss_var) + ",'status': 'buy_from'}"});
+		ajax_request("third_party_conn", 'stockists_ajax', {conn_data: "{'prof_id': " + prof_id + ",'buss_id':'" + String(buss_var) + "','status': 'buy_from'}"});
 		
 	}
 	// seller checked
 	if(link_type=='suppliers' && buss_var!=""){
 		// var conn_data = {prof_id: prof_id, status: 'sell_to', buss_id: businesses_id };
-		ajax_request("third_party_conn", 'suppliers_ajax', {conn_data: "{'prof_id': " + prof_id + ",'buss_id': " + parseInt(buss_var) + ",'status': 'sell_to'}"});
+		ajax_request("third_party_conn", 'suppliers_ajax', {conn_data: "{'prof_id': " + prof_id + ",'buss_id':'" + String(buss_var) + "','status': 'sell_to'}"});
 	}
 	// }
 	
@@ -605,6 +605,10 @@ function get_twitter_user_suggestions_success(data){
                 html_str  += '<img src="' + String(data['results'][i]['profile_img']) + '" title="'+ String(data['results'][i]['name'])  + '" class="img-responsive pull-left" style="width:20px; margin-right: 5px;" />'; 
 	           	html_str  += String(data['results'][i]['name']) + '&nbsp;<span class="text-muted small">' + String(data['results'][i]['username']) + '</span>';                  
       			html_str  += '</li>';
+		}
+
+		if(results_count == 0){
+			html_str  += '<li class="list-group-item twitterLink">Sorry !!! We could not find any twitter profile. </li>';
 		}
 		
 		$('#idTwitterUserLinkSuggestModalBody').html(html_str);

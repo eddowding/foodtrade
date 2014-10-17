@@ -89,8 +89,8 @@ class UserInfo():
         self.lon = userprof['latlng']['coordinates'][0]
         self.lat = userprof['latlng']['coordinates'][1]
 
-        print self.lon
-        print self.lat
+        # print self.lon
+        # print self.lat
         self.user_type = userprof['sign_up_as']
         self.zip_code = userprof.get('zip_code')
         self.address = userprof['address']
