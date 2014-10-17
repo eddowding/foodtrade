@@ -8,19 +8,13 @@ from pygeocoder import Geocoder
 import re
 from bson import json_util
 from bson.json_util import loads
-
 from FullSearch import GeneralSearch
 
     
 
 class ProfileSearch(GeneralSearch):
-
-
-
-
     def get_result(self):
         query_string = []
-
         agg_pipeline = []
         or_conditions = []
 
@@ -44,7 +38,7 @@ class ProfileSearch(GeneralSearch):
             pipeline.append({"$match":{"$and":query_string}})
 
 
-        pipeline.append({"$project":{"username":1, "description":1,"type_user":1, "sign_up_as":1,"latlng":1,"name":1,"updates":1,"profile_img":1,"_id":0}})
+        pipeline.append({"$project":{"useruid":1,"username":1, "description":1,"type_user":1, "sign_up_as":1,"latlng":1,"name":1,"updates":1,"profile_img":1,"_id":0}})
         pipeline.append({"$unwind":"$updates"})
         and_query = [{"updates.deleted":0}]
         if self.keyword !="":
@@ -63,7 +57,7 @@ class ProfileSearch(GeneralSearch):
         query_string = {'updates':{"$elemMatch":{'tweet_id':tweet_id,"deleted":0}}}
         pipeline = []
         pipeline.append({"$match":query_string})
-        pipeline.append({"$project":{"username":1, "description":1,"type_user":1, "sign_up_as":1,"latlng":1,"name":1,"updates":1,"profile_img":1,"_id":0}})
+        pipeline.append({"$project":{"useruid":1,"username":1, "description":1,"type_user":1, "sign_up_as":1,"latlng":1,"name":1,"updates":1,"profile_img":1,"_id":0}})
         pipeline.append({"$unwind":"$updates"})
         pipeline.append({"$match":{"updates.tweet_id":tweet_id}})
         result = self.db.aggregate(pipeline)['result']

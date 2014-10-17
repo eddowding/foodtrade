@@ -18,6 +18,7 @@ from mainapp.activity import get_search_parameters
 
 from FullSearch import GeneralSearch
 from MarketSearch import MarketSearch
+from ConnectionsMapping import ConnectionMap
 from ProfileSearch import ProfileSearch
 
 consumer_key = 'seqGJEiDVNPxde7jmrk6dQ'
@@ -35,6 +36,12 @@ class AjaxSearch():
     """docstring for AjaxHandle"""
     def __init__(self):
         pass
+
+    def get_connection_network(self,request):
+        con_mapping = ConnectionMap(request)
+        return con_mapping.get_connection_network()
+        
+
     def get_latest_updates(self,request):
         search_obj = GeneralSearch(request)
         feed_result = search_obj.get_latest_updates(request.POST.get("time",None))

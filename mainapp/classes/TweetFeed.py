@@ -142,7 +142,7 @@ class TweetFeed():
         usr_profile = UserProfile()
 
         sender = usr_profile.get_profile_by_id(user_id)
-        email_text = sender['username'] + " has metioned you in his post <a href='http://foodtrade.com/"+sender['username']+"/post/"+tweet['tweet_id']+"/'>"+tweet['status']+"</a>"
+        email_text = sender['username'] + " has metioned you in his post <a href='http://www.foodtrade.com/"+sender['username']+"/post/"+tweet['tweet_id']+"/'>"+tweet['status']+"</a>"
         sms_text = sender['username'] + " has metioned you in his post as "+tweet['status']+" in FoodTrade"
         email_subject = sender['username']+" has mentioned you in FoodTrade."
         if result:
@@ -578,7 +578,7 @@ class TradeConnection():
         return self.db_object.get_count(self.table_name,{'c_useruid':c_useruid, 'deleted': 0})
 
     def create_connection (self, value):
-        value['deleted'] =0
+        value['deleted'] = 0
         # self.db_object.insert_one(self.table_name,value)
         self.db_object.update_upsert(self.table_name, 
             {'c_useruid': value['c_useruid'], 'b_useruid': value['b_useruid']}, {'deleted': 0})

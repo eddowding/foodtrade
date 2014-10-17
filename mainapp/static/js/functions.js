@@ -1,7 +1,7 @@
 function get_box_profile(user)
 {
   	var content = "";
-	content += '<div class="box-generic '+user.sign_up_as+'" data-username="'+user.username+'" >';
+	content += '<div class="box-generic '+user.sign_up_as+'" data-username="'+user.username+'" data-userid="'+user.useruid+'" >';
 	content += '<div class="timeline-top-info   clearfix">';
 	content += '<div class="pull-right" style="margin-left: 5px;">';
 	content += '<span class="dropdown hidden"><a type="button" class="dropdown-toggle" data-toggle="dropdown">';
@@ -181,7 +181,7 @@ function box_update_content(update)
 
 function get_box_update(update)
 {
-	content ='<div class="box-generic" data-username="'+update.username+'">';
+	content ='<div class="box-generic" data-username="'+update.username+'"  data-userid="'+update.useruid+'">';
 	content += box_update_content(update);
 	// content +='<div class="innerAll half border-top bg-gray "> ';
 	// content +='<input class="form-control input-sm enterhandler reply_input" data-toggle="market-reply" data-tweet-id="'+update.updates.tweet_id+'" data-main="main" type="text" placeholder="Reply to '+update.username+'" data-mentions="@'+update.username+'"> ';

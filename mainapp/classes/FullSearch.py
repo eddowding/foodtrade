@@ -133,7 +133,7 @@ class GeneralSearch():
             pre_match['sign_up_as'] = {"$ne":"Individual"}
         
         pipeline.append({"$match":pre_match})
-        pipeline.append({"$project":{"username":1,"name":1,"updates":1,"profile_img":1,"_id":0}})
+        pipeline.append({"$project":{"useruid":1,"username":1,"name":1,"updates":1,"profile_img":1,"_id":0}})
         
 
 
@@ -260,7 +260,7 @@ class GeneralSearch():
             "$maxDistance" : self.radius
           }}
 
-        all_doc = self.db.find(query_string,{"latlng":1,"name":1,"type_user":1,"address":1,"foods":1,"sign_up_as":1,"description":1,"profile_img":1,"foods":1,"username":1,"_id":0,"profile_banner_url":1})
+        all_doc = self.db.find(query_string,{"useruid":1,"latlng":1,"name":1,"type_user":1,"address":1,"foods":1,"sign_up_as":1,"description":1,"profile_img":1,"foods":1,"username":1,"_id":0,"profile_banner_url":1})
         total =  all_doc.count()
         first20 = all_doc.limit(self.result_limit)
         result = [doc for doc in first20]

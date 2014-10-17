@@ -1,4 +1,6 @@
   var markers = new L.LayerGroup();
+  var connection_lines = new L.LayerGroup();
+  var connection_dots = new L.LayerGroup();
 function load_map(lat,lng)
 {
   map = new L.map('map', {
@@ -47,14 +49,113 @@ map._layersMinZoom=min_zoom_level;
 
 // var markers = new L.MarkerClusterGroup();
 
+function get_current_users()
+{
+    var results = Search[Search.tab+"_results"];
+     var ids = [];
+
+     for(var i=0;i<results.length;i++)
+     { 
+        console.log(results[i]['useruid']);
+            ids.push(parseInt(results[i]['useruid']))
+     }
+     return ids;
+}
+function show_connections()
+{
+    $.post( "/ajax-handler/get_connection_network", {ids:JSON.stringify(get_current_users())} , function( data ) {
+        connections = data.connections;
+        user_dict = data.users;
+        var ids = get_current_users();
+        for(var i = 0;i<connections.length;i++)
+        {
+            var current_user1 = connections[i]['b_useruid'];
+            var current_user2 = connections[i]['c_useruid'];
+            console.log(current_user1, current_user2);
+            var user_lng1 = user_dict['user_'+current_user1]['coordinates'][0];
+            var user_lat1 = user_dict['user_'+current_user1]['coordinates'][1];
+
+            var user_lng2 = user_dict['user_'+current_user2]['coordinates'][0];
+            var user_lat2 = user_dict['user_'+current_user2]['coordinates'][1];
+            console.log(user_lat1, user_lat2, user_lng1, parseFloat(user_lng2));
+            var opacity = 0.3;
+            if(ids.indexOf(current_user1)<0)
+            {
+            var con_dot1 = L.circleMarker([parseFloat(user_lat1),parseFloat(user_lng1)], {
+            color: '#000',
+            opacity:opacity,
+            weight:1,
+            fill:1,
+            radius: 6,
+            fillColor: "#cc0000",
+            fillOpacity: opacity,
+
+        });
+            connection_dots.addLayer(con_dot1);
+            try {
+                Search.dot_controls['user_'+current_user1].push(con_dot1);
+            }
+            catch(err) {
+              Search.dot_controls['user_'+current_user1] = [];
+                 Search.dot_controls['user_'+current_user1].push(con_dot1);
+            }
+            
+
+
+            }
+            if(ids.indexOf(current_user2)<0)
+            {
+            var con_dot2 = L.circleMarker([parseFloat(user_lat2),parseFloat(user_lng2)], {
+            color: '#000',
+            opacity:opacity,
+            weight:1,
+            fill:1,
+            radius: 6,
+            fillColor: "#cc0000",
+            fillOpacity: opacity,
+
+        });
+                connection_dots.addLayer(con_dot2);
+                try {
+                Search.dot_controls['user_'+current_user2].push(con_dot2);
+            }
+            catch(err) {
+              Search.dot_controls['user_'+current_user2] = [];
+                 Search.dot_controls['user_'+current_user2].push(con_dot2);
+            }
+            }
+
+var color = '#890D2F';
+            var con_line = L.polyline([
+            [parseFloat(user_lat1), parseFloat(user_lng1)],
+            [parseFloat(user_lat2), parseFloat(user_lng2)]
+            ],{
+                color: color,
+                weight: 2,
+                opacity: opacity
+            });
+            connection_lines.addLayer(con_line);
+          Search.line_controls['user_'+current_user1] = con_line;
+          Search.line_controls['user_'+current_user2] = con_line;
+        }
+        map.addLayer(connection_dots);
+        map.addLayer(connection_lines);
+     }, "json");
+
+}
+
 function show_connections_on_map()
 {
   
    markers.clearLayers();
+   connection_dots.clearLayers();
+   connection_lines.clearLayers();
 
   var results = Search[Search.tab+"_results"];
 
     Search.map_controls = {};
+    Search.dot_controls = {};
+    Search.line_controls = {};
     for(var i=0;i<results.length;i++)
     {      
       var current_lat = parseFloat(results[i].latlng.coordinates[1]);
@@ -79,6 +180,7 @@ function show_connections_on_map()
 
             map.panTo(new L.LatLng(Search.filters[Search.tab].lat,Search.filters[Search.tab].lng));
         }
+        show_connections();
 }
 
 
