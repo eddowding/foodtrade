@@ -1,6 +1,29 @@
   var markers = new L.LayerGroup();
   var connection_lines = new L.LayerGroup();
   var connection_dots = new L.LayerGroup();
+  // add the event handler
+function handleCommand() {
+   
+   var checked = this.checked;
+   if(!checked)
+   {
+     connection_dots.clearLayers();
+     connection_lines.clearLayers();
+     showcon = "hide";
+     $.post( "/ajax-handler/update_map_settings", {status:"hide"} , function( data ) {
+
+     });
+
+   }
+   else
+   {
+      $.post( "/ajax-handler/update_map_settings", {status:"show"} , function( data ) {
+
+     });
+      showcon = "show";
+      show_connections();
+   }
+}
 function load_map(lat,lng)
 {
   map = new L.map('map', {
@@ -16,6 +39,23 @@ map.on('dragend', map_dragged);
 
 map.on('zoomend', map_dragged);
 map._layersMinZoom=min_zoom_level;
+
+// create the control
+var command = L.control({position: 'topright'});
+
+command.onAdd = function (map) {
+    var div = L.DomUtil.create('div', 'command');
+
+    div.innerHTML = '<form><input id="command" type="checkbox" '+ ((showcon=="show")?"checked":"") +' />Show Connections</form>'; 
+    return div;
+};
+
+command.addTo(map);
+
+
+
+
+document.getElementById ("command").addEventListener ("click", handleCommand, false);
 }
 
 

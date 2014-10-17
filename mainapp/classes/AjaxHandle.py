@@ -45,7 +45,13 @@ class AjaxHandle(AjaxSearch):
     """docstring for AjaxHandle"""
     def __init__(self):
         pass
-        
+    def update_map_settings(self, request):
+        command = request.POST.get('status', "show");
+        if command != "show" or command == "hide":
+            command = "hide"
+        uProfile = UserProfile()
+        uProfile.update_profile_upsert({'useruid':request.user.id},{'showcon':command})
+        return HttpResponse("{'status':'ok'}")
     def create_fake_profile(self, invitee_name, username, tweeter_or_friend,sign_up_as):
         '''
             This function checks if the invited user is already a member or not.Then

@@ -350,9 +350,11 @@ def home(request):
 
 
         return HttpResponseRedirect('/activity?'+urllib.urlencode(params))            
-    print request.GET.get("morg")
+    
+    user_profile_obj = UserProfile()
+    user_profile = user_profile_obj.get_profile_by_id(request.user.id)
 
-    return render_to_response('activity.html',context_instance=RequestContext(request))
+    return render_to_response('activity.html',{'showcon':user_profile.get('showcon',"show")}, context_instance=RequestContext(request))
 
 
 @csrf_exempt
