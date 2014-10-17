@@ -1442,6 +1442,7 @@ class AjaxHandle(AjaxSearch):
             user_twitter = get_twitter_obj(ACCESS_TOKEN, ACCESS_TOKEN_SECRET)            
             results = user_twitter.search_users(q=usr_pr['name'], page=1, count = 20)
 
+            results = results[0:10]
             return_results = []
             for eachResult in results:            
                 data = {                   
@@ -1458,7 +1459,6 @@ class AjaxHandle(AjaxSearch):
                 
                 if userprof.get_profile_by_username(eachResult['screen_name']) == None:                    
                     return_results.append(data)
-            results = results[0:10]
             return HttpResponse(json.dumps({'status':'ok', 'results':return_results}))
 
     def link_twitter_and_gplus_account(self, request):
