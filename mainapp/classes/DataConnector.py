@@ -142,7 +142,7 @@ class UserInfo():
         # and  userprof.get('business_org_name')!='' else userprof['name']
 
         self.username = userprof['screen_name']
-        self.description = userprof['description']
+        self.description = userprof['description']        
         self.profileimg = userprof['profile_img']
         b_conn_len, c_conn_len = user_connection.get_trade_connection_no()
         self.trade_connections_no = b_conn_len + c_conn_len

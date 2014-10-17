@@ -33,6 +33,13 @@ ACCESS_TOKEN_SECRET = ''
 # admin_access_token = '2248425234-EgPSi3nDAZ1VXjzRpPGMChkQab5P0V4ZeG1d7KN'
 # admin_access_token_secret = 'ST8W9TWqqHpyskMADDSpZ5r9hl7ND6sEfaLvhcqNfk1v4'
 
+def get_twitter_obj(token, secret):
+    return Twython(
+        app_key = settings.CONSUMER_KEY,
+        app_secret = settings.CONSUMER_SECRET,
+        oauth_token = token,
+        oauth_token_secret = secret
+        )
 
 class AjaxHandle(AjaxSearch):
     """docstring for AjaxHandle"""
@@ -57,7 +64,11 @@ class AjaxHandle(AjaxSearch):
 
         # try:
         if registered_user == None or len(registered_user) == 0:
-            if tweeter_or_friend == 'showuser':
+            if tweeter_or_friend == 'gplaces':
+                from mainapp.classes.gplaces import GPlaces
+                pass
+
+            elif tweeter_or_friend == 'showuser':
                 from mainapp.classes.MySQLConnect import MySQLConnect
                 mc = MySQLConnect()
                 try:
@@ -488,6 +499,11 @@ class AjaxHandle(AjaxSearch):
              'longitude': usr_pr['latlng']['coordinates'][0],
              'relation': 'both'      
              }
+             
+            try:
+                each['profile_linked_to_twitter'] = usr_pr['profile_linked_to_twitter'],
+            except:
+                pass
 
             parameters['connections'], parameters['conn'] = get_connections(int(data['prof_id']), request.user.id)
             parameters['profile_id'], parameters['user_id'] = int(data['prof_id']), request.user.id
@@ -1388,3 +1404,100 @@ class AjaxHandle(AjaxSearch):
             table_html += html_str
             conn_data.append({'user':buss_usr})      
         return HttpResponse(json.dumps({'status':'ok','table_html':table_html, 'conn_data':conn_data, 'username':username, 'next_page_num':next_page_num, 'type':conn_type}))
+
+
+    def get_twitter_user_suggestions(self, request):
+        if request.user.is_authenticated():
+            username = request.POST.get('username')
+            userprof = UserProfile()
+            usr_pr = userprof.get_profile_by_username(str(username))
+            try:
+                st = SocialToken.objects.get(account__user__id=request.user.id)
+            except:
+                st = SocialToken.objects.get(account__user__id=99)
+            ACCESS_TOKEN = st.token
+            ACCESS_TOKEN_SECRET = st.token_secret        
+            user_twitter = get_twitter_obj(ACCESS_TOKEN, ACCESS_TOKEN_SECRET)            
+            results = user_twitter.search_users(q=usr_pr['name'], page=1, count = 20)
+
+            return_results = []
+            for eachResult in results:            
+                data = {                   
+                    'name' : eachResult['name'],            
+                    'profile_img':eachResult['profile_image_url'],      
+                    'username':eachResult['screen_name'],
+                    'screen_name': eachResult['screen_name'],
+                }
+                
+                try:
+                    data['profile_banner_url'] = eachResult['profile_banner_url']
+                except:
+                    data['profile_banner_url'] = ''
+                
+                if userprof.get_profile_by_username(eachResult['screen_name']) == None:                    
+                    return_results.append(data)
+            results = results[0:10]
+            return HttpResponse(json.dumps({'status':'ok', 'results':return_results}))
+
+    def link_twitter_and_gplus_account(self, request):
+        if request.user.is_authenticated():
+            twitter_username = request.POST.get('twitter_username')
+            gplus_username = request.POST.get('gplus_username')
+
+            userprof = UserProfile()
+            usr_pr = userprof.get_profile_by_username(str(gplus_username))
+
+            try:
+                st = SocialToken.objects.get(account__user__id=request.user.id)
+            except:
+                st = SocialToken.objects.get(account__user__id=99)
+            ACCESS_TOKEN = st.token
+            ACCESS_TOKEN_SECRET = st.token_secret        
+            user_twitter = get_twitter_obj(ACCESS_TOKEN, ACCESS_TOKEN_SECRET)   
+            result = user_twitter.show_user(screen_name=twitter_username.lower())
+            
+            update_data = {}
+
+            try:
+                update_data['profile_banner_url'] = result['profile_banner_url']
+            except:
+                pass
+
+            try:
+                update_data['followers_count'] = result['followers_count']
+            except:
+                pass            
+
+            try:
+                update_data['friends_count'] = result['friends_count']
+            except:
+                pass 
+
+            try:
+                if usr_pr['description'] == '':
+                    update_data['description'] = result['description']                    
+            except:
+                pass             
+
+            try:
+                update_data['twitter_screen_name'] = result['screen_name']
+            except:
+                pass 
+
+            try:
+                update_data['twitter_data'] = result
+            except:
+                pass 
+
+            update_data['profile_linked_to_twitter'] = True
+
+            userprof.update_profile_fields_with_upsert({'username':usr_pr['username']}, update_data)
+            return HttpResponse(json.dumps({'status':'ok', 'message':'link successful'}))
+
+        else:
+            return HttpResponse(json.dumps({'status':'error', 'message':'You are not authorized to perform this action.'}))
+
+
+                
+
+                

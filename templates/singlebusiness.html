@@ -35,7 +35,9 @@
 {% endblock %}
 
 {% block content %}
+
 {% include 'modal_invite.html' %}
+{% include "modal_user_twitter_check_request.html" %}
 
   <link rel="stylesheet" href="/static/css/chosen.min.css">
 
@@ -101,14 +103,12 @@
 
 
 <!---    -->
-
-
 <div class="row row-merge bizSummary">
   <div class="col-xs-12"> 
    
     <div class="map-biz" id="map"></div> 
     <div id="biz-info" class="text-center innerAll"> 
-      <div class="media">
+      <div class="media" {% ifnotequal banner_url '' %} style="background:url('{{banner_url}}'); background-size:cover; "{% endifnotequal %} >
         <img src="{{pic_url}}"  alt="{{name}} logo" class="  avatar">
         <div class="media-body"> 
           {% if request.user.is_authenticated %}
@@ -1796,5 +1796,12 @@ $('#stockistsTable').footable().on('click', '.close', function(e) {
         conn_handler('close_sell_to', rel_1, rel_2);
 });
       /*conn_handler('close_buy_from', */
-     </script>
- {% endblock %}
+
+
+function find_user_in_twitter(){
+    u_name = $('#idUserNameStockistOrSupplier').val();
+    get_twitter_user_suggestions(u_name);    
+}
+
+</script>
+{% endblock %}

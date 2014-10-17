@@ -1676,7 +1676,8 @@ $('.twitter-user-suggestions .typeahead').typeahead(null, {
     suggestion: Handlebars.compile([
       '<span class="result-container"><span class="result-img"><img height="32px" width="32px" src="{{profile_image_url_https}}"></span>',
       '<span class="result-name">{{name}}</span> ',
-      '<span class="result-screen-name"> @{{screen_name}}</span></span>'     
+      '<span class=""> {{address}}</span></span>'
+      //'<span class="result-screen-name"> @{{screen_name}}</span></span>'     
     ].join(''))
   }
 });
@@ -1703,7 +1704,8 @@ $('#orgs_remote .typeahead').typeahead(null, {
     suggestion: Handlebars.compile([
       '<span class="result-container"><span class="result-img"><img height="32px" width="32px" src="{{profile_image_url_https}}"></span>',
       '<span data-id="{{id}}" class="result-name">{{name}}</span> ',
-      '<span class="result-screen-name"> @{{screen_name}}</span></span>'     
+      '<span class=""> {{address}}</span></span>'
+      //'<span class="result-screen-name"> @{{screen_name}}</span></span>'     
     ].join(''))
   }
 });
@@ -1734,7 +1736,8 @@ $('#stockists_remote .typeahead').typeahead(null, {
     suggestion: Handlebars.compile([
       '<span class="result-container"><span class="result-img  {{show_hide}}"><img height="32px" width="32px" src="{{profile_image_url_https}}"></span>',
       '<span data-id="{{id}}" class="result-name">{{name}}</span> ',
-      '<span class="result-screen-name  {{show_hide}}"> @{{screen_name}}</span></span>'     
+      '<span class=""> {{address}}</span></span>'
+      //'<span class="result-screen-name  {{show_hide}}"> @{{screen_name}}</span></span>'     
     ].join(''))
   }
 });
@@ -1747,7 +1750,8 @@ $('#suppliers_remote .typeahead').typeahead(null, {
     suggestion: Handlebars.compile([
       '<span class="result-container"><span class="result-img {{show_hide}}"><img height="32px" width="32px" src="{{profile_image_url_https}}"></span>',
       '<span data-id="{{id}}" class="result-name">{{name}}</span> ',
-      '<span class="result-screen-name  {{show_hide}}"> @{{screen_name}}</span></span>'     
+      '<span class=""> {{address}}</span></span>'
+      //'<span class="result-screen-name  {{show_hide}}"> @{{screen_name}}</span></span>'     
     ].join(''))
   }
 });
@@ -1770,7 +1774,8 @@ $('#member_remote .typeahead').typeahead(null, {
     suggestion: Handlebars.compile([
       '<span class="result-container"><span class="result-img  {{show_hide}}"><img height="32px" width="32px" src="{{profile_image_url_https}}"></span>',
       '<span data-id="{{id}}" class="result-name">{{name}}</span> ',
-      '<span class="result-screen-name  {{show_hide}}"> @{{screen_name}}</span></span>'     
+      '<span class=""> {{address}}</span></span>'
+      //'<span class="result-screen-name  {{show_hide}}"> @{{screen_name}}</span></span>'     
     ].join(''))
   }
 });
