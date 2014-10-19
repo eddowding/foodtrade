@@ -2,7 +2,9 @@
 # encoding: utf-8
 import requests, json
 
-KEY = 'AIzaSyCANIHQ_D-ZkXoNWmGrXAmgcR_vxKSG0pw'
+# KEY = 'AIzaSyCANIHQ_D-ZkXoNWmGrXAmgcR_vxKSG0pw'
+# KEY = 'AIzaSyDfZIYIxosBoIiEF0rNW_h_Gax3ZBuRANs'
+KEY = 'AIzaSyDLP8Dd3JQKAZgiQ-M32Oq7oTRoOThvHZQ'
 
 class GPlaces():
     def __init__ (self):
@@ -38,13 +40,12 @@ class GPlaces():
         
         data = {
             'name' : json_response['result']['name'],
-            'profile_img':'/static/images/gimage.png',
             'is_unknown_profile': 'true',
             'recently_updated_by_super_user': 'false',                    
             'email' : '',
             'description' :'',
             'foods': [],
-            'type_user':[],
+            'type_user':json_response['result']['types'],
             'updates': [],
             'gPlacesProfile':True,
             'subscribed':0,
@@ -58,9 +59,14 @@ class GPlaces():
             'screen_name': user_name.lower(),
             'profile_linked_to_twitter':False
         }
+        # print json_response
+        try:
+            data['profile_img'] = 'https://maps.googleapis.com/maps/api/place/photo?key=AIzaSyCANIHQ_D-ZkXoNWmGrXAmgcR_vxKSG0pw&maxwidth=400&photoreference='+json_response['result']['photos'][0]['photo_reference']
+        except:
+            data['profile_img'] = 'https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&key=AIzaSyCANIHQ_D-ZkXoNWmGrXAmgcR_vxKSG0pw&photoreference='+json_response['result']['reference']
 
         try:
-            data['phone_number_international'] = json_response['result']['international_phone_number']
+            data['phone_number'] = json_response['result']['international_phone_number']
         except:
             data['phone_number'] = ''
         
@@ -174,13 +180,18 @@ class GPlaces():
         search_results =  json_response['results'][0:6]
         
         return_results = []
+        # print json_response
 
         for eachResult in search_results:            
+            print eachResult
             data = {
-                'name' : eachResult['name'],
-                'profile_img':'/static/images/gimage.png'           
+                'name' : eachResult['name']
             }
 
+            try:
+                data['profile_img'] = 'https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&key=AIzaSyCANIHQ_D-ZkXoNWmGrXAmgcR_vxKSG0pw&photoreference='+eachResult['photos'][0]['photo_reference']
+            except:
+                data['profile_img'] = 'https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&key=AIzaSyCANIHQ_D-ZkXoNWmGrXAmgcR_vxKSG0pw&photoreference='+eachResult['reference']
             try:
                 data['useruid'] = str(eachResult['place_id']) + '__gp__'
                 data['username'] = ''
