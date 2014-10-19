@@ -166,7 +166,7 @@ class GPlaces():
             'name':q.lower(),
             'keyword':q.lower(),
             'location':location,
-            'radius':'50000'
+            'rankby':'distance'
         }
 
         r = requests.get(get_url,params=payload)
