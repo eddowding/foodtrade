@@ -97,6 +97,68 @@ function handleCommand() {
    }
 }
 
+function highlight_connections(userid)
+{
+	    var con_dots = Search.dot_controls['user_'+userid];
+	    console.log(userid);
+
+    var con_lines = Search.line_controls['user_'+userid];
+
+if(con_dots == undefined)
+{
+    con_dots = [];
+}
+if(con_lines == undefined)
+{
+    con_lines = [];
+}
+for(var i = 0;i<con_dots.length;i++)
+{
+    var item = con_dots[i];
+    item.setStyle({fillColor:"#cc0000", color:"#cc0000", opacity:1, fillOpacity:1});
+    
+}
+
+
+for(var i = 0;i<con_lines.length;i++)
+{
+    var item = con_lines[i];
+    item.setStyle({color:"#cc0000", opacity:1, fillOpacity:1});
+}
+
+}
+function unhightlight_connections(userid)
+{
+	    var con_dots = Search.dot_controls['user_'+userid];
+
+
+    var con_lines = Search.line_controls['user_'+userid];
+
+    if(con_dots == undefined)
+    {
+        con_dots = [];
+    }
+    if(con_lines == undefined)
+    {
+        con_lines = [];
+    }
+
+    for(var i = 0;i<con_dots.length;i++)
+    {
+        var item = con_dots[i];
+        item.setStyle({fillColor:"#cc0000", weight:1,
+              fill:1,
+              radius: 6, color:"#cc0000", opacity:0.1, fillOpacity:0.1});
+    }
+
+
+    for(var i = 0;i<con_lines.length;i++)
+    {
+        var item = con_lines[i];
+        item.setStyle({color:"#cc0000", opacity:0.1, fillOpacity:0.1});
+    }
+}
+
 
 
   function map_profile_card(user)
@@ -351,7 +413,7 @@ var card_str = '<div class="card-box"><div class="text-center"><div class=""><a 
 if(parseInt(current_lon) != parseInt(def_lon) || parseInt(def_lat) != parseInt(current_lat))
 { 
 			var dot = L.circleMarker([parseFloat(latitude), parseFloat(longitude)],  {
-			
+			userid: connections[i].id,
 			color: '#000',
 			opacity:0.7,
 			weight:1,
@@ -362,6 +424,16 @@ if(parseInt(current_lon) != parseInt(def_lon) || parseInt(def_lat) != parseInt(c
 
 		}).addTo(map).bindPopup(card_str);
 			map_controls.push(dot);
+			dot.on('mouseover', function (e) {
+            var user_id = this.options.userid;
+            highlight_connections(user_id);
+        });
+        dot.on('mouseout', function (e) {
+            var user_id = this.options.userid;
+            unhightlight_connections(user_id);
+        });
+
+
 		}
 		show_connections();
 }
