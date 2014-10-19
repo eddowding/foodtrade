@@ -1734,9 +1734,9 @@ $('#stockists_remote .typeahead').typeahead(null, {
   source: buss_stockist.ttAdapter(),
   templates: {
     suggestion: Handlebars.compile([
-      '<span class="result-container"><span class="result-img  {{show_hide}}"><img height="32px" width="32px" src="{{profile_image_url_https}}"></span>',
-      '<span data-id="{{id}}" class="result-name">{{name}}</span> ',
-      '<span class=""> {{address}}</span></span>'
+        '<span class="result-container"><span class="result-img {{show_hide}} {{powered_by_off}}"><img height="32px" width="32px" src="{{profile_image_url_https}}"></span>',
+        '<span data-id="{{id}}" class="result-name {{powered_by_off}}">{{name}}</span> <span class="{{powered_by_on}}"><img src="{{powered_by_image}}" height="16px"/></span>',
+        '<span class="{{powered_by_off}}"> {{address}}</span></span>'
       //'<span class="result-screen-name  {{show_hide}}"> @{{screen_name}}</span></span>'     
     ].join(''))
   }
@@ -1748,9 +1748,9 @@ $('#suppliers_remote .typeahead').typeahead(null, {
   source: buss_supplier.ttAdapter(),
   templates: {
     suggestion: Handlebars.compile([
-      '<span class="result-container"><span class="result-img {{show_hide}}"><img height="32px" width="32px" src="{{profile_image_url_https}}"></span>',
-      '<span data-id="{{id}}" class="result-name">{{name}}</span> ',
-      '<span class=""> {{address}}</span></span>'
+      '<span class="result-container"><span class="result-img {{show_hide}} {{powered_by_off}}"><img height="32px" width="32px" src="{{profile_image_url_https}}"></span>',
+      '<span data-id="{{id}}" class="result-name {{powered_by_off}}">{{name}}</span> <span class="{{powered_by_on}}"><img src="{{powered_by_image}}" height="16px"/></span>',
+      '<span class="{{powered_by_off}}"> {{address}}</span></span>'
       //'<span class="result-screen-name  {{show_hide}}"> @{{screen_name}}</span></span>'     
     ].join(''))
   }

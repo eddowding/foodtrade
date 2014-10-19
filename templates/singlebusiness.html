@@ -616,7 +616,7 @@
 
       <!-- WIKI ADD CONNECTIONS --> 
           {% if user.is_authenticated %}  
-          <div id="addSupplier" class="{% if userprof.b_conn_no != 0 %} collapse {% endif %} well-sm well clearfix">
+          <div id="addSupplier" class="{% if userprof.b_conn_no != 0 %} collapse {% endif %} well-sm well clearfix" style="z-index: 100000;">
             {% if userprof.b_conn_no = 0 %}
               <p class="small">Do you know anyone who supplies {{username}}?</p>
             {% endif %}
@@ -713,7 +713,7 @@
 
       <!-- WIKI ADD CONNECTIONS --> 
           {% if user.is_authenticated %}  
-          <div id="addStockist" class="{% if userprof.c_conn_no != 0 %}collapse{% endif %} well-sm well clearfix">
+          <div id="addStockist" class="{% if userprof.c_conn_no != 0 %}collapse{% endif %} well-sm well clearfix" style="z-index: 100000;">
             {% if userprof.c_conn_no = 0 %}
               <p class="small">Do you know anyone who sells {{username}} produce?</p>
             {% endif %}

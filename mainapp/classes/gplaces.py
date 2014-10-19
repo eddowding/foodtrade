@@ -182,8 +182,7 @@ class GPlaces():
         return_results = []
         # print json_response
 
-        for eachResult in search_results:            
-            print eachResult
+        for eachResult in search_results:
             data = {
                 'name' : eachResult['name']
             }
