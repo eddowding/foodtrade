@@ -6,7 +6,7 @@ from django.utils.cache import patch_vary_headers
 import json 
 from django import http
 from mainapp.classes.TweetFeed import UserProfile
-from mainapp.classes.TweetFeed import Analytics
+# from mainapp.classes.TweetFeed import Analytics
 from allauth.socialaccount.models import SocialToken, SocialAccount
 from django.conf import settings
 from django.utils.http import urlquote
@@ -59,11 +59,11 @@ class XsSharing(object):
         # return None
 
 
-        request_data  = json.dumps(str(request))
-        analytics_obj = Analytics()
-        request_time  = datetime.datetime.now()
-        request_time  = time.mktime(request_time.timetuple())
-        analytics_obj.save_data({'request_data':request_data, 'request_time':request_time})
+        # request_data  = json.dumps(str(request))
+        # analytics_obj = Analytics()
+        # request_time  = datetime.datetime.now()
+        # request_time  = time.mktime(request_time.timetuple())
+        # analytics_obj.save_data({'request_data':request_data, 'request_time':request_time})
 
         if 'HTTP_ACCESS_CONTROL_REQUEST_METHOD' in request.META:
             response = http.HttpResponse()
