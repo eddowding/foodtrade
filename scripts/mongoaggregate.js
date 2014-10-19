@@ -18,7 +18,7 @@ db.userprofile.find().forEach( function(myDoc) {
        cust_conn = db.customer.find({'customeruid':myDoc['useruid']});
        cust_conn_mem = db.customer.find({'useruid':myDoc['useruid']});       
        
-       mem_conn = db.team.fin({'memberuid':myDoc['useruid']});
+       mem_conn = db.team.find({'memberuid':myDoc['useruid']});
               
        if(u_conn.length()==0 && u_c_conn.length() ==0 && 
            mem_conn.length() ==0 && cust_conn_mem.length() == 0 && 
