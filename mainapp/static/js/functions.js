@@ -304,7 +304,7 @@ var card_str = '<div class="card-box"><div class="content text-center"><div clas
         card_str += '</div>';
     }
 
-    card_str += '<p>'+description+'</p></div>';
+    card_str += '<p>'+jQuery.trim(user.description).substring(0, 50)+'...</p></div>';
     card_str += '<a href="/profile/'+username+'" class="btn btn-primary btn-sm">View profile &raquo;</a></div> </div>';
     return card_str;
 }
