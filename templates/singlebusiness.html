@@ -418,7 +418,7 @@
     </div>
   </div>
   <div class="panel-body small">
-    <ol class="margin0" style="padding-left: 10px;">
+    <ol class="margin0 lead" style="padding-left: 10px;">
       {% if show_foods != "false"%}  
          <li><a href="#" rel="tooltip" title="You can add photos, description, quantity, seasonality... If you don't want to list anything here, edit your profile and turn off the foods option."><strong>Add produce you sell</strong></a></li>   
       {% endif %}
@@ -1099,12 +1099,12 @@
 
             We don't sell your data or show adverts because you're our customer, not our product. And because we're working for YOU, we charge a small fee for premium features</p>
             <p>Use the coupon code: LOVESUMMER</p>
-            <button class="btn btn-primary btn-stroke">Upgrade today <i class="fa fa-fw fa-play-circle"></i>
-            </button> 
+            <a href="/payments/" class="btn btn-primary btn-stroke">Upgrade today <i class="fa fa-fw fa-play-circle"></i>
+            </a> 
         </div>
         <!-- Ribbon -->
         <div class="ribbon-wrapper">
-            <div class="ribbon primary">It's spring!</div>
+            <div class="ribbon primary">Special</div>
         </div>
       </div>
     </div>
@@ -1146,7 +1146,7 @@
         {% if user.is_authenticated %}
         {% for eachUpdate in updates %} 
         <div class="update clearfix">
-          <div class="lead">
+          <div class="">
             <a href="" class="text-inverse"> {{eachUpdate.status|recognise_name|safe}}</a>
           </div>
           <small class="pull-left">

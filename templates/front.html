@@ -25,9 +25,21 @@
     </form>
 
      <div id="homeText">
-        <p  id="proof">
+<!--         <p  id="proof">
           Together we can rewire the food system.
-        </p>
+        </p> -->
+        <form id="proof" action="/activity" onsubmit="return get_address('profile');" role="search" data-step="1" data-intro="Search for anything, anywhere" class="form-horizontal innerLR" style="margin: 7px 0px 0 0;">
+          <div class="form-group" id="locationgroup" style="margin: 0;"> 
+             
+              <div class="input-group input-group-lg"> 
+                <input type="text" name="location" id="pac_input_profile" class="pac-input form-control   " placeholder="Where are you?">
+                <div class="input-group-btn">
+                  <button class="btn btn-inverse" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+                </div>
+              </div>
+            
+          </div>
+        </form>
 
       </div>
 
