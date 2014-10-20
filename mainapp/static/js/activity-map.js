@@ -46,7 +46,7 @@ var command = L.control({position: 'topright'});
 command.onAdd = function (map) {
     var div = L.DomUtil.create('div', 'command');
 
-    div.innerHTML = '<form><input id="command" type="checkbox" '+ ((showcon=="show")?"checked":"") +' />Show Connections</form>'; 
+    div.innerHTML = '<form><input id="command" type="checkbox" '+ ((showcon=="show")?"checked":"") +' /> Show Connections</form>'; 
     return div;
 };
 
