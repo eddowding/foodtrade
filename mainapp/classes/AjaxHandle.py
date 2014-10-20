@@ -485,9 +485,11 @@ class AjaxHandle(AjaxSearch):
 
             # if any party is unclaimed user, change it into business
             if pro_obj['sign_up_as'] == 'unclaimed':
+                user_pro = UserProfile()
                 user_pro.update_profile_fields({'useruid': int(pro_obj['useruid'])}, {'sign_up_as': 'Business','recently_updated_by_super_user': 'true'})
-                print "Shandar momo prof_obj"
-            elif buss_obj['sign_up_as'] == 'unclaimed':    
+            elif buss_obj['sign_up_as'] == 'unclaimed':
+                print buss_obj
+                user_pro = UserProfile()
                 user_pro.update_profile_fields({'useruid': int(buss_obj['useruid'])}, {'sign_up_as': 'Business','recently_updated_by_super_user': 'true'})
                 print "Shandar momo buys_from"
             else:
