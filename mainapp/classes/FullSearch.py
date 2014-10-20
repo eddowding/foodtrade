@@ -184,12 +184,13 @@ class GeneralSearch():
             else:
                 food_attributes = ["food_name","description","food_tags"]
                 we_buy = 3
+                print self.want
                 if self.want!="all":
-                    if self.want == "Sell":
+                    if self.want == "Sellers":
                         we_buy = 1
-                    if self.want == "Buy":
+                    if self.want == "Buyers":
                         we_buy = 0
-
+                print we_buy, "this is get_latest_updates"
                 # print "help", we_buy
                 for fd_attr in food_attributes:
 
