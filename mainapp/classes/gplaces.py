@@ -31,7 +31,10 @@ class GPlaces():
         
         registered_user_count = user_profile_obj.get_user_count_by_user_name_similar(find_user_name.lower())
 
-        user_name = " ".join(re.findall("[a-zA-Z]+", json_response['result']['name'])) + '_gp_' + str(registered_user_count)
+        if registered_user_count == 0:
+            user_name = " ".join(re.findall("[a-zA-Z]+", json_response['result']['name']))
+        else:
+            user_name = " ".join(re.findall("[a-zA-Z]+", json_response['result']['name']))  + str(registered_user_count)
         user_name = user_name.replace(" ","")
         # user_name = eachResult['name'].replace(' ', '').replace("'",'') + '_gp_' + str(registered_user_count)
         
