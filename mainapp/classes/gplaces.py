@@ -56,7 +56,7 @@ class GPlaces():
             'Organisations':[],
             'useruid': min_user_id,
             'username':user_name.lower(),
-            'screen_name': user_name.lower(),
+            'screen_name':'',
             'profile_linked_to_twitter':False
         }
         # print json_response
@@ -115,7 +115,7 @@ class GPlaces():
             pass
 
         try:
-            data['website'] = json_response['result']['website']
+            data['website_url'] = json_response['result']['website']
         except:
             pass                
 

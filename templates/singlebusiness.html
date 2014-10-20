@@ -156,7 +156,9 @@
 
       {% ifequal is_unknown_profile 'false' %}
       {% else %}<br />
+        {% if screen_name != '@' %}
         <a class="text-white strong pointer"  data-toggle="modal" data-target="#modal_invite">Invite to connect</a> 
+        {% endif %}        
       {% endifequal %} 
       <!-- EDIT / CONTACT -->
 
@@ -1200,10 +1202,12 @@
                 <div class="col-sm-6"> 
                     <div class="widget-body padding-none">
                       <div class="innerAll half">
+                        {% if email != '' %}
                         <p class=" margin-none"><i class="fa fa-envelope fa-fw text-muted"></i> 
                         <a href="mailto:{{email}}" target="_blank">
                          {{email}} </a>
                         </p>
+                        {% endif %}
                       </div>
                       {% if phone_number %}
                       <div class="border-top innerAll half">
@@ -1211,12 +1215,14 @@
                           <a href="callto:{{phone_number}}">{{phone_number}}</a>   
                         </p>
                       </div>
-                      {% endif %} 
+                      {% endif %}
+                      {% if screen_name != "@" %}
                       <div class="border-top innerAll half">
                         <p class=" margin-none"><i class="fa fa-twitter fa-fw text-muted"></i> 
                           <a href="http://twitter.com/{{screen_name}}"  target="_blank"> {{screen_name}}</a>
                         </p>
                       </div>
+                      {% endif %}
                     </div> 
                 </div>
 
@@ -1232,8 +1238,9 @@
 
                   <div class="border-top innerAll half">
                       <p class=" margin-none"><i class="fa fa-link fa-fw text-muted"></i> 
-                        <a href="">Visit website</a>
+                        <a href="{{website_url}}">Visit website</a>
                       </p>
+
                   </div>
                 </div>
 
