@@ -31,7 +31,10 @@ class GPlaces():
         
         registered_user_count = user_profile_obj.get_user_count_by_user_name_similar(find_user_name.lower())
 
-        user_name = " ".join(re.findall("[a-zA-Z]+", json_response['result']['name'])) + '_gp_' + str(registered_user_count)
+        if registered_user_count == 0:
+            user_name = " ".join(re.findall("[a-zA-Z]+", json_response['result']['name']))
+        else:
+            user_name = " ".join(re.findall("[a-zA-Z]+", json_response['result']['name']))  + str(registered_user_count)
         user_name = user_name.replace(" ","")
         # user_name = eachResult['name'].replace(' ', '').replace("'",'') + '_gp_' + str(registered_user_count)
         
@@ -56,7 +59,7 @@ class GPlaces():
             'Organisations':[],
             'useruid': min_user_id,
             'username':user_name.lower(),
-            'screen_name': user_name.lower(),
+            'screen_name':'',
             'profile_linked_to_twitter':False
         }
         # print json_response
@@ -115,7 +118,7 @@ class GPlaces():
             pass
 
         try:
-            data['website'] = json_response['result']['website']
+            data['website_url'] = json_response['result']['website']
         except:
             pass                
 
