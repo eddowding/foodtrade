@@ -350,11 +350,15 @@ def home(request):
 
 
         return HttpResponseRedirect('/activity?'+urllib.urlencode(params))            
-    
-    user_profile_obj = UserProfile()
-    user_profile = user_profile_obj.get_profile_by_id(request.user.id)
+    try: 
 
-    return render_to_response('activity.html',{'showcon':user_profile.get('showcon',"show")}, context_instance=RequestContext(request))
+        user_profile_obj = UserProfile()
+        user_profile = user_profile_obj.get_profile_by_id(request.user.id)
+        show_option = user_profile.get('showcon',"show")
+    except:
+        show_option = "show"
+
+    return render_to_response('activity.html',{'showcon':show_option}, context_instance=RequestContext(request))
 
 
 @csrf_exempt
