@@ -46,7 +46,7 @@ var command = L.control({position: 'topright'});
 command.onAdd = function (map) {
     var div = L.DomUtil.create('div', 'command');
 
-    div.innerHTML = '<form><input id="command" type="checkbox" '+ ((showcon=="show")?"checked":"") +' />Show Connections</form>'; 
+    div.innerHTML = '<form><input id="command" type="checkbox" '+ ((showcon=="show")?"checked":"") +' /> Show Connections</form>'; 
     return div;
 };
 
@@ -219,7 +219,9 @@ function show_connections_on_map()
       var current_lat = parseFloat(results[i].latlng.coordinates[1]);
       var current_lon = parseFloat(results[i].latlng.coordinates[0]);
       var card = (Search.tab=="market")?get_box_update_map(results[i]):map_profile_card(results[i]);
-      var ctrl = L.marker([parseFloat(current_lat), parseFloat(current_lon)],{icon: redIcon, userid: results[i].useruid}).bindPopup(card);
+      var rIcon = new RedIcon();
+      rIcon.options.iconUrl = results[i].profile_img;
+      var ctrl = L.marker([parseFloat(current_lat), parseFloat(current_lon)],{icon: rIcon, userid: results[i].useruid}).bindPopup(card);
       var marker_index = (Search.tab=="market")?results[i].username+"_"+results[i].updates.tweet_id:results[i].username;
       ctrl.on('mouseover', function (e) {
             var user_id = this.options.userid;
@@ -240,7 +242,7 @@ function show_connections_on_map()
             initial_flag = false;
             var group = new L.featureGroup(markers.getLayers());
             map.fitBounds(group.getBounds());
-            // map.fitBounds(map.getBounds());
+            map.fitBounds(map.getBounds());
           }
 
 
