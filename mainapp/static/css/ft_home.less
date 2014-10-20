@@ -26,6 +26,10 @@
     border-bottom: 1px solid #ccc;
   }
 
+  #fsearch {
+    .rounded(0 10px 10px 0);
+  }
+
   .lead {
 
     ul {
@@ -62,6 +66,7 @@
     text-align: center;
     font-size: 18px;
     padding: 10px;
+    color: #444;
     background: #eee;
   }
 
@@ -108,14 +113,16 @@
 
 
     a {
-      font-size: 24px; 
+      font-size: 20px; 
       text-shadow: 1px 1px 0px #000 !important; 
       .box-shadow(1px 1px 1px #444) !important; 
       background: @ftgreen;
       line-height: 0.7; 
-      padding: 20px; 
+      padding: 10px 20px; 
+      border: 1px solid rgba(255,255,255,0.7); 
       text-align: center; 
       margin-bottom: 20px;
+      font-weight: 300 !important;
       margin-right: 10px;
       @media (max-width: 768px) {
         margin-right: 2px;
@@ -130,11 +137,9 @@
     }
 
     a.secondary { 
-      background: @ftorange;
-        
-
-      border: 1px solid rgba(255,255,255,0.7); 
-      font-weight: 200; 
+      background: @ftorange; 
+      border: 1px solid rgba(255,255,255,0.7);
+      font-weight: 300 !important; 
     }
 
    }

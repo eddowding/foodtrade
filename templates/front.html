@@ -12,7 +12,7 @@
 
 <div class="ftstrip"></div>
 <div class="clearfix" style="background:url('/static/images/map_home_dark.jpg'); background-size: cover;" id="homeimage">  
- <div class="col-sm-8 col-sm-offset-2 col-xs-10 col-xs-offset-1">
+ <div class="col-sm-6 col-sm-offset-3 col-xs-10 col-xs-offset-1">
 
     <form action="/activity" onsubmit="return formSubmit(this);" class="clearfix hidden"  role="search"> 
       <div class="input-group" id="homeSearch">  
@@ -25,22 +25,34 @@
     </form>
 
      <div id="homeText">
-        <p  id="proof">
+<!--         <p  id="proof">
           Together we can rewire the food system.
-        </p>
+        </p> -->
+        <form id="proof" action="/activity" onsubmit="return get_address('profile');" role="search" data-step="1" data-intro="Search for anything, anywhere" class="form-horizontal innerLR" style="margin: 7px 0px 0 0;">
+          <div class="form-group" id="locationgroup" style="margin: 0;"> 
+             
+              <div class="input-group input-group-lg"> 
+                <input type="text" name="location" id="pac_input_profile" class="pac-input form-control   " placeholder="Where are you?">
+                <div class="input-group-btn">
+                  <button class="btn btn-primary" type="submit" id="fsearch"><i class="glyphicon glyphicon-search"></i></button>
+                </div>
+              </div>
+            
+          </div>
+        </form>
 
       </div>
 
       <div class="text-center" id="joinButton">
 
         <a data-toggle="modal" data-target="#modal_signup"  class="btn btn-primary">
-        <strong>Join the food web &raquo;</strong><br />
+        SIGN UP<br />
         <small>It's free for everyone</small>
         </a>  
 
 
-        <a data-toggle="modal" data-target="#modal_emaillogin"  class="btn btn-primary secondary">
-        <strong>Login instantly</strong><br />
+        <a data-toggle="modal" data-target="#modal_emaillogin"  class="btn btn-inverse secondary">
+        LOGIN<br />
         <small>I'm already a member</small>
         </a> 
       </div>

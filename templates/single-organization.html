@@ -773,7 +773,7 @@ $('#new_member_typeahead').on('blur', function(){
   $('#new_member_typeahead').val('');
 });
 
-
+var showcon = '{{showcon}}';
     map_lat={{ loc.lat }};
     map_lon = {{ loc.lon }};
 connections = {{members_str | safe}};
@@ -791,5 +791,6 @@ var name = "{{userprof.full_name}}";
 
 {% endblock %}
 {% block javascript%}
+
      <script src="{% static "js/organisation-map.js" %}"></script>
 {% endblock %}

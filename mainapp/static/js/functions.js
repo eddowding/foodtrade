@@ -83,7 +83,7 @@ function get_box_profile(user)
 	content += '</a>';
 	content += '</div>  ';
 	content += '<div class="text-center innerAll" style="background: url('+user.profile_banner_url+'); background-size: cover;">  '; 
-	content += '<img src="'+user.profile_img+'" alt="'+user.name+'" class="img-rounded img-thumbnail" style="width:73px; margin-right: 0px;">';
+	content += '<a href="/profile/'+user.username+'"><img src="'+user.profile_img+'" alt="'+user.name+'" class="img-rounded img-thumbnail" style="width:73px; margin-right: 0px;"></a>';
 	content += '</div><div class="text-center innerAll">';
 	content += '<h4 class="margin0"><a href="/'+user.username+'" class="text-inverse">';
 	content += user.name; 
@@ -304,7 +304,7 @@ var card_str = '<div class="card-box"><div class="content text-center"><div clas
         card_str += '</div>';
     }
 
-    card_str += '<p>'+description+'</p></div>';
+    card_str += '<p>'+jQuery.trim(user.description).substring(0, 50)+'...</p></div>';
     card_str += '<a href="/profile/'+username+'" class="btn btn-primary btn-sm">View profile &raquo;</a></div> </div>';
     return card_str;
 }

@@ -337,6 +337,7 @@ def display_profile(request, username):
             team_limited, parameters['logged_team'] = get_team(userprof['useruid'])
             parameters['teams'] = team_limited[:10]
         parameters['members_str'] = json.dumps(parameters['members'])
+        parameters['showcon'] = usr_profile.get('showcon',"show")
         return render_to_response('single-organization.html', parameters, context_instance=RequestContext(request))
     elif parameters['sign_up_as'] == 'Individual':
         if request.user.is_authenticated():
