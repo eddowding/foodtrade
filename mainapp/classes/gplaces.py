@@ -29,12 +29,23 @@ class GPlaces():
         find_user_name = " ".join(re.findall("[a-zA-Z]+", json_response['result']['name']))
         find_user_name = find_user_name.replace(" ","")
         
+        try:
+            address_char = " ".join(re.findall("[a-zA-Z0-9]+", json_response['result']['formatted_address']))
+            address_char = address_char.replace(" ", "")
+        except:
+            pass
+
+
         registered_user_count = user_profile_obj.get_user_count_by_user_name_similar(find_user_name.lower())
 
         if registered_user_count == 0:
             user_name = " ".join(re.findall("[a-zA-Z]+", json_response['result']['name']))
         else:
-            user_name = " ".join(re.findall("[a-zA-Z]+", json_response['result']['name']))  + str(registered_user_count)
+            try:
+                user_name = " ".join(re.findall("[a-zA-Z]+", json_response['result']['name']))  + '_' + address_char
+            except:
+                user_name = " ".join(re.findall("[a-zA-Z]+", json_response['result']['name']))  +  str(registered_user_count)
+
         user_name = user_name.replace(" ","")
         # user_name = eachResult['name'].replace(' ', '').replace("'",'') + '_gp_' + str(registered_user_count)
         
@@ -172,7 +183,6 @@ class GPlaces():
         get_url = 'https://maps.googleapis.com/maps/api/place/nearbysearch/json'
         payload = {
             'key':KEY,
-            'name':q.lower(),
             'keyword':q.lower(),
             'location':location,
             'rankby':'distance'

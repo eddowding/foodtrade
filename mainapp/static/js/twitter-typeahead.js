@@ -527,7 +527,7 @@
             if (!o || !o.local && !o.prefetch && !o.remote) {
                 $.error("one of local, prefetch, or remote is required");
             }
-            this.limit = o.limit || 5;
+            this.limit = o.limit || 7;
             this.sorter = getSorter(o.sorter);
             this.dupDetector = o.dupDetector || ignoreDuplicates;
             this.local = oParser.local(o);
@@ -1663,7 +1663,8 @@
 var repos = new Bloodhound({
   datumTokenizer: function(d) { return d.tokens; },
   queryTokenizer: Bloodhound.tokenizers.whitespace,
-  remote: '/twitteruser/queries/?q=%QUERY'
+  remote: '/twitteruser/queries/?q=%QUERY',
+  limit: 7
 });
  
 repos.initialize();
@@ -1692,7 +1693,8 @@ add_user(username);
 var orgs = new Bloodhound({
   datumTokenizer: function(d) { return d.tokens; },
   queryTokenizer: Bloodhound.tokenizers.whitespace,
-  remote: '/queries/Organisation/?q=%QUERY'
+  remote: '/queries/Organisation/?q=%QUERY',
+  limit: 7
 });
 orgs.initialize();
  
@@ -1715,7 +1717,8 @@ $('#orgs_remote .typeahead').typeahead(null, {
 var buss_stockist = new Bloodhound({
   datumTokenizer: function(d) { return d.tokens; },
   queryTokenizer: Bloodhound.tokenizers.whitespace,
-  remote: '/queries/Business/?type=stockist&q=%QUERY'
+  remote: '/queries/Business/?type=stockist&q=%QUERY',
+  limit: 7
 });
 buss_stockist.initialize();
  
@@ -1724,7 +1727,8 @@ buss_stockist.initialize();
 var buss_supplier = new Bloodhound({
   datumTokenizer: function(d) { return d.tokens; },
   queryTokenizer: Bloodhound.tokenizers.whitespace,
-  remote: '/queries/Business/?type=supplier&q=%QUERY'
+  remote: '/queries/Business/?type=supplier&q=%QUERY',
+  limit: 7
 });
 buss_supplier.initialize();
  
@@ -1761,7 +1765,8 @@ $('#suppliers_remote .typeahead').typeahead(null, {
 var member = new Bloodhound({
   datumTokenizer: function(d) { return d.tokens; },
   queryTokenizer: Bloodhound.tokenizers.whitespace,
-  remote: '/queries/Member/?q=%QUERY'
+  remote: '/queries/Member/?q=%QUERY',
+  limit: 7
 });
 member.initialize();
  
