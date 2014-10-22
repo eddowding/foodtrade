@@ -129,7 +129,7 @@
           </span> 
           {% endif %}  
 
-          <p class="text-white">{{description}}</p>  
+          <p class="text-white">{{description|truncatechars:200}}</p>  
   
           {% if user.is_superuser %}
             <a href="/editprofile/{{username}}/" class="btn btn-info btn-xs">Edit</a>
