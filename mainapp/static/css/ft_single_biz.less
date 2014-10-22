@@ -33,6 +33,26 @@
   }
 }
 
+.nav-tabs > li, .nav-pills > li {
+    float:none;
+    display:inline-block;
+    *display:inline; /* ie7 fix */
+     zoom:1; /* hasLayout ie7 trigger */
+    background: none;
+    a {
+    }
+}
+
+.nav-tabs>li.active>a, .nav-tabs>li.active>a:hover, .nav-tabs>li.active>a:focus {
+    .rounded(0px);
+    background: #F6F6F6;
+}
+
+.nav-tabs, .nav-pills {
+    text-align:center;
+    background: #fff;
+}
+
 
 .bizSummary {
    

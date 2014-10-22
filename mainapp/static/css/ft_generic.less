@@ -272,11 +272,14 @@ td.footable-visible.footable-first-column {
 }
 
 #panelContainer {
- -moz-column-width: 35em;
- -webkit-column-width: 35em;
- padding: 1.5em 0em;
- -moz-column-gap: 1em;
- -webkit-column-gap: 1em;  
+  .columns(50%, 2, 20px, #eee , 0, solid); 
+  padding-top: 20px;
+
+ // -moz-column-width: 35em;
+ // -webkit-column-width: 35em;
+ // padding: 1.5em 0em;
+ // -moz-column-gap: 1em;
+ // -webkit-column-gap: 1em;  
  @media (max-width: 1023px) {
    padding: 1em;
    -moz-column-gap: 1em;
