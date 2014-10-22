@@ -191,7 +191,7 @@ class GPlaces():
 
         r = requests.get(get_url,params=payload)
         json_response = json.loads(r.text)
-        search_results =  json_response['predictions'][0:6]
+        search_results =  json_response['predictions'][0:5]
         
         return_results = []
         # print json_response
@@ -201,8 +201,19 @@ class GPlaces():
                 'name' : eachResult['description']
             }
 
+
+            get_url = 'https://maps.googleapis.com/maps/api/place/details/json'
+            payload = {
+            'placeid':eachResult['place_id'],
+            'key':KEY
+            }
+            r = requests.get(get_url,params=payload)
+
+            json_response = json.loads(r.text)
+        
+
             try:
-                data['profile_img'] = 'https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&key=' + KEY + '&photoreference='+eachResult['reference']
+                data['profile_img'] = 'https://maps.googleapis.com/maps/api/place/photo?key=' + KEY + '&maxwidth=400&photoreference='+json_response['result']['photos'][0]['photo_reference']
             except:
                 data['profile_img'] = 'https://maps.googleapis.com/maps/api/place/photo?key=' + KEY + '&photoreference='+eachResult['reference']
             try:
@@ -211,6 +222,7 @@ class GPlaces():
                 data['screen_name'] = ''
             except:
                 pass
+
             data['address'] = ''                    
             return_results.append(data)                        
         return return_results
