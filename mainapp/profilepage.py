@@ -402,6 +402,10 @@ def edit_profile(request, username):
             parameters['display_name'] = userprof['name']
             parameters['email'] = userprof['email']
             parameters['description'] = userprof['description']
+            parameters['site_url1'] = userprof.get('site_url1',"")
+            parameters['site_url2'] = userprof.get('site_url2',"")
+            parameters['site_url3'] = userprof.get('site_url3',"")
+
             try:
                 parameters['phone'] = userprof['phone_number']
             except:
@@ -446,6 +450,9 @@ def edit_profile(request, username):
         newsletter_freq = request.POST['newsletter_freq']
         display_name = request.POST['display_name']
         video_url = request.POST.get('video_url')
+        site_url1 = request.POST.get('site_url1',"")
+        site_url2 = request.POST.get('site_url2',"")
+        site_url3 = request.POST.get('site_url3',"")
         we_buy = request.POST.get('we_buy')
         we_buy = True if we_buy == 'Yes' else False
         email = request.POST['email']
@@ -486,7 +493,7 @@ def edit_profile(request, username):
 
         usr_profile.update_profile_by_username(userprof['username'], description, address, 
             usr_type, sign_up_as, phone, lat, lon, postal_code, display_name, is_superuser, company_num,
-            website_url, facebook_page, deliverables, business_org_name, email, newsletter_freq, show_food_db, video_url, we_buy)
+            website_url, facebook_page, deliverables, business_org_name, email, newsletter_freq, show_food_db, site_url1,site_url2, site_url3, video_url,we_buy)
         twt = TweetFeed()
         twt.update_data(userprof['useruid'])
 

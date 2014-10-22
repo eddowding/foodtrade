@@ -422,7 +422,7 @@ class UserProfile():
              )
 
     def update_profile_by_username(self, username, description, address, type_usr, sign_up_as, phone, lat, lon, postal_code, name, is_superuser,
-      company_num, website_url, facebook_page, deliverables, business_org_name, email, newsletter_freq, show_foods, video_url = '',
+      company_num, website_url, facebook_page, deliverables, business_org_name, email, newsletter_freq, show_foods,site_url1,site_url2,site_url3, video_url = '',
       we_buy=False):
 
         data = {'zip_code':str(postal_code),
@@ -443,6 +443,9 @@ class UserProfile():
                  'newsletter_freq':newsletter_freq,
                  'show_foods': show_foods,
                  'video_url': video_url,
+                 'site_url1':site_url1,
+                 'site_url2':site_url2,
+                 'site_url3':site_url3,
                  'we_buy': we_buy
                  }
         if not is_superuser: 
