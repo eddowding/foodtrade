@@ -58,15 +58,12 @@ var card_str = '<div class="card-box"><div class="content text-center"><div clas
 
 if(parseInt(map_lon) != parseInt(def_lon) || parseInt(def_lat) != parseInt(map_lat))
          	{
-         		L.marker([parseFloat(map_lat), parseFloat(map_lon)], {icon: redIcon}).addTo(map).bindPopup(card_str);
+            var rIcon = new RedIcon();
+      rIcon.options.iconUrl = photo;
+         		L.marker([parseFloat(map_lat), parseFloat(map_lon)], {icon: rIcon}).addTo(map).bindPopup(card_str);
          	}
 
-
-if(parseInt(map_lon) != parseInt(def_lon) || parseInt(def_lat) != parseInt(map_lat))
-         	{
-		 L.marker([parseFloat(map_lat), parseFloat(map_lon)], {icon: redIcon}).addTo(map).bindPopup(card_str);
-}
-// 
+ 
 var map_controls = [];
 Search = {dot_controls:[], line_controls:[]};
 

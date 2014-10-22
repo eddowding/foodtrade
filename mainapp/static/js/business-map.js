@@ -46,7 +46,9 @@ var card_str = '<div class="card-box"><div class="content text-center"><div clas
 
 			if(parseInt(map_lon) != parseInt(def_lon) || parseInt(def_lat) != parseInt(map_lat))
          	{
-         		var cntrl = L.marker([parseFloat(map_lat), parseFloat(map_lon)], {icon: redIcon}).addTo(map).bindPopup(card_str);
+         		var rIcon = new RedIcon();
+      			rIcon.options.iconUrl = photo;
+         		var cntrl = L.marker([parseFloat(map_lat), parseFloat(map_lon)], {icon: rIcon}).addTo(map).bindPopup(card_str);
          		markers.addLayer(cntrl);
 
          	}
@@ -138,8 +140,9 @@ var card_str = '<div class="card-box"><div class="text-center"><div class=""><a 
     card_str += '<p class="scroll50">'+description+'</p></div>';
     card_str += '<a href="/profile/'+username+'" class="btn btn-primary btn-sm">View profile &raquo;</a></div> </div>';    
 
-
-			ctrl = L.marker([parseFloat(current_lat), parseFloat(current_lon)], {icon: redIcon}).addTo(map).bindPopup(card_str);			
+var rIcon = new RedIcon();
+      			rIcon.options.iconUrl = photo;
+			ctrl = L.marker([parseFloat(current_lat), parseFloat(current_lon)], {icon: rIcon}).addTo(map).bindPopup(card_str);			
 			markers.addLayer(ctrl);
 			control_dict[username] = ctrl;
 			map_controls.push(ctrl);
