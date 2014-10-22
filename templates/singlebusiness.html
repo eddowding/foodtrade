@@ -1246,9 +1246,8 @@
 
                 </div><!-- row -->
                 <div class="row">
-                
+                {% if screen_name != '@' and email != '' %}
                 <div class="col-sm-12 contact-form">
-
                   <form id="contact" method="post" class="form" role="form">
                     <div class="row">
                       <div class="col-xs-6 col-md-6 form-group">
@@ -1258,19 +1257,23 @@
                         <input class="form-control" id="sender_email" name="email" placeholder="Email" type="email" required value = "{{userinfo.email}}" />
                       </div>
                     </div> 
+
                     <textarea class="form-control" id="email_message" placeholder="Type in your message" rows="5"></textarea>
                     <h6 class="pull-right" id="contact_counter">120 characters remaining</h6>
                      
                   </form>
                 </div>
+                {% endif %}
               </div>
             </div>
  
    
             </div>
             <div class="modal-footer">  
+            {% if screen_name != '@' and email != '' %}
               <button type="button" id="contact_tweet" class="btn btn-info" onclick="post_contact_tweet('{{screen_name}}')"><i class="fa fa-fw fa-twitter"></i> Tweet it</button>
               <button type="button" class="btn btn-success" onclick="send_email('{{email}}')"><i class="fa fa-envelope fa-fw"></i> Email it</button>
+              {% endif %}
             </div>
           </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->

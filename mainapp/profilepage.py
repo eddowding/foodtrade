@@ -1118,6 +1118,7 @@ def search_orgs_business(request, type_user):
                 fake_profile = gplaces_api.search_google_places(profile_user_obj['useruid'], query)
             else:
                 fake_profile = gplaces_api.search_google_places(request.user.id, query)
+                fake_profile = fake_profile[0:5]
                         
             if len(fake_profile) == 0:
                 final_organisation.append({'id': 'search', 'name': 'Sorry! There are no results!!', 'screen_name': '', 'profile_image_url_https':'', 'show_hide':'hidden'})
@@ -1130,11 +1131,11 @@ def search_orgs_business(request, type_user):
                 and each.get('business_org_name')!='' else each['name']
             else:
                 myname = each['name']                                            
-            if each['address'].lower() == 'antartica':
+            if each['address'].lower() == 'antartica' and each['address'].lower() == 'antarctica':
                 final_organisation.append({'id': each['useruid'], 'name':myname, 'screen_name':each['screen_name'], 'profile_image_url_https':each['profile_img'], 'powered_by_on':'hidden','powered_by_off':''})
             else:
                 final_organisation.append({'id': each['useruid'], 'name':myname,'address':each['address'], 'screen_name':each['screen_name'], 'profile_image_url_https':each['profile_img'], 'powered_by_on':'hidden','powered_by_off':''})
-        final_organisation = final_organisation[0:3]
+        
         final_organisation.append({'id':'', 'name':'', 'screen_name': '', 'name':'','address':'','powered_by_image':'http://maps.gstatic.com/mapfiles/api-3/images/powered-by-google-on-white2.png', 'profile_image_url_https':'', 'powered_by_on':'','powered_by_off':'hidden'})
         return HttpResponse(json.dumps(final_organisation))
     else:

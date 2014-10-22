@@ -485,11 +485,13 @@ class AjaxHandle(AjaxSearch):
 
             # if any party is unclaimed user, change it into business
             if pro_obj['sign_up_as'] == 'unclaimed':
-                user_pro.update_profile_fields({'useruid': int(pro_obj['useruid'])}, {'sign_up_as': 'Business',
-                    'recently_updated_by_super_user': 'true'})
+                user_pro = UserProfile()
+                user_pro.update_profile_fields({'useruid': int(pro_obj['useruid'])}, {'sign_up_as': 'Business','recently_updated_by_super_user': 'true'})
             elif buss_obj['sign_up_as'] == 'unclaimed':
-                user_pro.update_profile_fields({'useruid': int(buss_obj['useruid'])}, {'sign_up_as': 'Business',
-                    'recently_updated_by_super_user': 'true'})
+                print buss_obj
+                user_pro = UserProfile()
+                user_pro.update_profile_fields({'useruid': int(buss_obj['useruid'])}, {'sign_up_as': 'Business','recently_updated_by_super_user': 'true'})
+                print "Shandar momo buys_from"
             else:
                 pass
                 #print 'no unclaimed user in new link'
@@ -529,9 +531,13 @@ class AjaxHandle(AjaxSearch):
              }
              
             try:
-                each['profile_linked_to_twitter'] = usr_pr['profile_linked_to_twitter'],
+                each['profile_linked_to_twitter'] = usr_pr['profile_linked_to_twitter']
             except:
                 pass
+            # try:
+            each['gPlacesProfile'] = usr_pr['gPlacesProfile']
+            # except:
+            #     each['gPlacesProfile'] = False
 
             parameters['connections'], parameters['conn'] = get_connections(int(pro_obj['useruid']), request.user.id)
             parameters['profile_id'], parameters['user_id'] = int(pro_obj['useruid']), request.user.id

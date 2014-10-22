@@ -273,7 +273,7 @@ function stockists_ajax(data){
             $('#suppliersTable').trigger('footable_initialize');
             $('#suppliersTable').trigger('footable_resize');
 
-            if(data['user_added']['username'].indexOf('_gp_')>-1 && data['user_added']['profile_linked_to_twitter'][0] == false){
+            if(data['user_added']['gPlacesProfile'] == true && data['user_added']['profile_linked_to_twitter'] == false){
 				$('#trigger_modal_twitter_user_check').click();
 				$('#idUserNameStockistOrSupplier').val(data['user_added']['username']);            	
             }
@@ -315,7 +315,7 @@ function suppliers_ajax(data){
           	$('#stockistsTable').trigger('footable_initialize');
           	$('#stockistsTable').trigger('footable_resize');
           	
-          	if(data['user_added']['username'].indexOf('_gp_')>-1 && data['user_added']['profile_linked_to_twitter'][0] == false){
+          	if(data['user_added']['gPlacesProfile'] == true && data['user_added']['profile_linked_to_twitter'] == false){
 				$('#trigger_modal_twitter_user_check').click();
 				$('#idUserNameStockistOrSupplier').val(data['user_added']['username']);            	
             }
