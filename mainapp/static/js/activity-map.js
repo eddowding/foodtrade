@@ -125,7 +125,7 @@ function show_connections()
             continue;
           }
             console.log(user_lat1, user_lat2, user_lng1, parseFloat(user_lng2));
-            var opacity = 0.3;
+            var opacity = 0.15;
             if(ids.indexOf(current_user1)<0)
             {
             var con_dot1 = L.circleMarker([parseFloat(user_lat1),parseFloat(user_lng1)], {
