@@ -408,7 +408,7 @@
 </div><!-- row --> 
 
 <!-- Nav tabs -->
-<ul class="nav nav-tabs text-center" role="tablist">
+<ul class="nav nav-tabs text-center" role="tablist" id="singleTabs">
   <li class="active"><a href="#produce" role="tab" data-toggle="tab">Produce</a></li>
   <li><a href="#tradeswith" role="tab" data-toggle="tab">Stockists &amp; suppliers</a></li> 
   <li><a href="#about" role="tab" data-toggle="tab">About</a></li>
@@ -426,13 +426,13 @@
   
     {% if profile_id == user_id %}
       <div class="panel panel-info">
-        <div class="panel-heading">
+        <div class="panel-heading" style="border:0;">
           <div class="panel-title">
-            Tips for your profile
+            <strong>Tips for your profile</strong>
           </div>
         </div>
-        <div class="panel-body small">
-          <ol class="margin0 lead" style="padding-left: 10px;">
+        <div class="panel-body">
+          <ul class=" " style="padding-left: 10px;">
             {% if show_foods != "false"%}  
                <li><a href="#" rel="tooltip" title="You can add photos, description, quantity, seasonality... If you don't want to list anything here, edit your profile and turn off the foods option."><strong>Add produce you sell</strong></a></li>   
             {% endif %}
@@ -442,21 +442,21 @@
              <li><a href="/editprofile/me" rel="tooltip" title="A 15 second video on instagram (or youtube, vine, etc) literally adds character"><strong>Make a video</strong></a> </li>
             {% endif %}
 
-             <li><a href="#" rel="tooltip" title="Find the 'Buys from' panel and click 'add one' to get going"><strong>Add suppliers</strong></a> - you currently have {{b_conn_no}} suppliers listed.  </li>
+             <li><a href="/editprofile/me" rel="tooltip" title="Find the 'Buys from' panel and click 'add one' to get going"><strong>Add suppliers</strong></a> - you currently have {{b_conn_no}} suppliers listed.  </li>
              
-             <li><a href="#" rel="tooltip" title="Find the 'Sells to' panel and click 'add one' to get going"><strong>Add stockists</strong></a> - you currently have {{c_conn_no}} stockists listed.  </li>
+             <li><a href="/editprofile/me" rel="tooltip" title="Find the 'Sells to' panel and click 'add one' to get going"><strong>Add stockists</strong></a> - you currently have {{c_conn_no}} stockists listed.  </li>
              
              {% if all_buying_foods|length != 0 %}
-             <li><a href="#" rel="tooltip" title="If there's things you need, add 'em here and let the good(s) come to you.."><strong>What's on your shopping list?</strong></a> </li>
+             <li><a href="/editprofile/me" rel="tooltip" title="If there's things you need, add 'em here and let the good(s) come to you.."><strong>What's on your shopping list?</strong></a> </li>
              {% endif %}
 
-             <li><a href="#" rel="tooltip" title="Be sure to add any organisations or certifiers you work with. People uses them as filters to narrow the selection."><strong>Check your memberships </strong></a></li>
+             <li><a href="#about" role="tab" data-toggle="tab"><strong>Are you member of any organisations? </strong></a> Be sure to add any organisations or certifiers you work with. People uses them as filters to narrow the selection.</li>
 
-             <li><a href="#" rel="tooltip" title="Make sure this is up to date to help new customers trust you."><strong>Keep your company information updated</strong></a> </li>
+             <li><a href="/editprofile/me" rel="tooltip" title="Make sure this is up to date to help new customers trust you."><strong>Company information</strong></a> - keep this up to date to build trust.</li>
 
-             <li><a href="#" rel="tooltip" title="Individual users will see an 'I'm a customer' link on this page. Clicking it starts building up a map of your where they live, allowing you to better plan deliveries and expansion."><strong>Engage your customers</strong></a> - you currently have {{customers|length}}.  </li>
+      <!--        <li><a href="#" rel="tooltip" title="Individual users will see an 'I'm a customer' link on this page. Clicking it starts building up a map of your where they live, allowing you to better plan deliveries and expansion."><strong>Engage your customers</strong></a> - you currently have {{customers|length}}.  </li> -->
           
-          </ol>
+          </ul>
         </div>         
       </div> 
       {% endif %}
@@ -594,55 +594,7 @@
     <!-- PHOTO --> 
 
 
-    <!-- ad --> 
-
-    {% ifequal loggedin_signupas "Individual" %}  
-    <div class="panel panel-default">
-      <div class="widget text-center margin0">
-        <div class="innerAll text-white" style="background: #8BD1ED;">
-            <div class="innerB">
-              <img src="/static/images/farmdrop.png" style="max-height: 100px;" />
-            </div>
-            <p class="lead"> Join FarmDrop to get delicious, local &amp; seasonal food whilst supporting independent producers in your community.</p>
-            <a href="https://www.farmdrop.co.uk" target="_blank" class="btn btn-default btn-stroke text-white">Find out more <i class="fa fa-fw fa-play-circle  text-white"></i>
-            </a> 
-        </div>
-        <!-- Ribbon -->
-        <div class="ribbon-wrapper">
-            <div class="ribbon primary">Buy local!</div>
-        </div>
-      </div>
-    </div>
-    {% endifequal %}
-
-
-
-    {% ifequal loggedin_signupas "Business" %}  
-    <div class="panel panel-default">
-      <div class="widget text-center bg-secondary margin0">
-        <div class="innerAll text-white">
-            <div class="innerB"><i class=" icon-rocket fa fa-4x text-faded"></i>
-            </div>
-            <h2 class="strong margin-none text-white">Better, together</h2>
-            <p class="lead">from &pound;20 / year</p>
-            <p> 
-
-            We don't sell your data or show adverts because you're our customer, not our product. And because we're working for YOU, we charge a small fee for premium features</p>
-            <p>Use the coupon code: LOVESUMMER</p>
-            <a href="/payments/" class="btn btn-primary btn-stroke">Upgrade today <i class="fa fa-fw fa-play-circle"></i>
-            </a> 
-        </div>
-        <!-- Ribbon -->
-        <div class="ribbon-wrapper">
-            <div class="ribbon primary">Special</div>
-        </div>
-      </div>
-    </div>
-    {% endifequal %}
- 
-
- 
-
+  
 
     <!-- SHOPPING LIST --> 
     {% if we_buy %}
@@ -750,7 +702,52 @@
     {% endif %}
     <!-- end we_buy -->
 
+   <!-- ad --> 
 
+    {% ifequal loggedin_signupas "Individual" %}  
+    <div class="panel panel-default">
+      <div class="widget text-center margin0">
+        <div class="innerAll text-white" style="background: #8BD1ED;">
+            <div class="innerB">
+              <img src="/static/images/farmdrop.png" style="max-height: 100px;" />
+            </div>
+            <p class="lead"> Join FarmDrop to get delicious, local &amp; seasonal food whilst supporting independent producers in your community.</p>
+            <a href="https://www.farmdrop.co.uk" target="_blank" class="btn btn-default btn-stroke text-white">Find out more <i class="fa fa-fw fa-play-circle  text-white"></i>
+            </a> 
+        </div>
+        <!-- Ribbon -->
+        <div class="ribbon-wrapper">
+            <div class="ribbon primary">Buy local!</div>
+        </div>
+      </div>
+    </div>
+    {% endifequal %}
+
+
+
+    {% ifequal loggedin_signupas "Business" %}  
+    <div class="panel panel-default">
+      <div class="widget text-center bg-secondary margin0">
+        <div class="innerAll text-white">
+            <div class="innerB"><i class=" icon-rocket fa fa-4x text-faded"></i>
+            </div>
+            <h2 class="strong margin-none text-white">Better, together</h2>
+            <p class="lead">from &pound;20 / year</p>
+            <p> 
+
+            We don't sell your data or show adverts because you're our customer, not our product. And because we're working for YOU, we charge a small fee for premium features</p>
+            <p>Use the coupon code: LOVESUMMER</p>
+            <a href="/payments/" class="btn btn-primary btn-stroke">Upgrade today <i class="fa fa-fw fa-play-circle"></i>
+            </a> 
+        </div>
+        <!-- Ribbon -->
+        <div class="ribbon-wrapper">
+            <div class="ribbon primary">Special</div>
+        </div>
+      </div>
+    </div>
+    {% endifequal %}
+ 
  
 
   </div><!--produce-->
@@ -1806,9 +1803,9 @@ function find_user_in_twitter(){
     get_twitter_user_suggestions(u_name);    
 }
 
-$('#tradeswith').tabs({
+$('#singleTabs').tabs({
   activate: function( event, ui ) {
-      $('.footable').data('footable').redraw();
+     $('.footable').data('footable').redraw();
   }
 });
 
