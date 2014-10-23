@@ -186,12 +186,12 @@ var ticker_lon = {{userinfo.lon}};
     <!--[if lt IE 9]><link rel="stylesheet" href="{% static "assets/components/library/bootstrap/css/bootstrap.min.css" %}" /><![endif]-->
     <script>
       less = {
-        env: "development", 
-        poll: 6000
+        env: "production", 
+        poll: 600000
       };
     </script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/less.js/1.7.1/less.min.js"></script>  
-    <script>less.watch();</script>
+    <!-- <script>less.watch();</script> -->
 <script type="text/javascript">
   
   // IE function.bind polyfill
