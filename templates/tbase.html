@@ -186,12 +186,12 @@ var ticker_lon = {{userinfo.lon}};
     <!--[if lt IE 9]><link rel="stylesheet" href="{% static "assets/components/library/bootstrap/css/bootstrap.min.css" %}" /><![endif]-->
     <script>
       less = {
-        env: "production", 
-        poll: 5000
+        env: "development", 
+        poll: 6000
       };
     </script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/less.js/1.7.1/less.min.js"></script>  
-    <!-- <script>less.watch();</script> -->
+    <script>less.watch();</script>
 <script type="text/javascript">
   
   // IE function.bind polyfill
@@ -260,7 +260,7 @@ if (!Function.prototype.bind) {
           <a href="https://plus.google.com/+Foodtrade" target="_blank"><i class="fa  fa-lg fa-google-plus-square"></i></a></li>
           <li><a href="https://foodtrade.uservoice.com" data-uv-trigger="contact" id="support">Contact</a>﻿﻿﻿</li>
           {% if not request.user.is_authenticated %} 
-          <li><a data-toggle="modal" data-target="#modal_signup">Sign up</a>
+          <li><a data-toggle="modal" data-target="#modal_emaillogin">Sign up</a>
           <li>
             <a class="dropdown-toggle label label-primary text-white" data-toggle="dropdown" href="#">Login
             </a> 
