@@ -585,14 +585,6 @@
         {% endif %}
 
 
-    <!-- PHOTO --> 
-    {% ifnotequal banner_url '' %}
-      <div class="panel panel-default">
-        <img src="{{banner_url}}" class="img-responsive">
-      </div>
-    {% endifnotequal %} 
-    <!-- PHOTO --> 
-
 
   
 
@@ -702,6 +694,14 @@
     {% endif %}
     <!-- end we_buy -->
 
+
+    <!-- PHOTO --> 
+    {% ifnotequal banner_url '' %}
+      <div class="panel panel-default">
+        <img src="{{banner_url}}" class="img-responsive">
+      </div>
+    {% endifnotequal %} 
+    <!-- PHOTO --> 
    <!-- ad --> 
 
     {% ifequal loggedin_signupas "Individual" %}  
