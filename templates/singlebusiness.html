@@ -110,7 +110,7 @@
     <div class="map-biz" id="map"></div> 
     <div id="biz-info" class="text-center innerAll"> 
       <div class="media" >
-        <img src="{{pic_url}}"  alt="{{name}} logo" class="  avatar">
+        <img src="{{pic_url}}"  alt="{{name}} logo" class="hidden-xs hidden-sm  avatar">
         <div class="media-body"> 
           {% if request.user.is_authenticated %}
             <div id="shortcuts" class=" pull-right">
@@ -165,7 +165,7 @@
 
       <div class="clearfix" id="bizactions">
         <!-- SHARE -->
-        <div class="btn-group pull-left" >
+        <div class="btn-group pull-left  hidden-xs hidden-sm" >
           <button type="button"  class="btn btn-default dropdown-toggle normal btn-stroke text-white" data-toggle="dropdown"  ><i class="fa fa-fw fa-share-alt  text-white "></i> share</button>
             <ul class="dropdown-menu text-left">
              <li><a href="/{{username}}"><i class="fa fa-fw fa-lg fa-link"></i> foodtrade.com/{{username}}</a></li>
@@ -204,7 +204,7 @@
           </div>
 
           {% if request.user.is_authenticated %}
-          <div class="btn-group pull-right" data-toggle="buttons">
+          <div class="btn-group pull-right hidden-xs hidden-sm" data-toggle="buttons">
             <label class="btn btn-default btn-stroke btn-sm {% if fav_profile %} active {% else %}{% endif %}">
               <input type="checkbox" id="favourite_btn" {% if fav_profile %} checked="checked" {% endif %} onchange="save_favourites('{{profile_id}}', '{{user_id}}'); return null;"> <i class="fa fa-star-o fa-fw  text-white"></i> 
               <span class="fav text-white">Favourite</span>
@@ -281,7 +281,7 @@
           <!-- if logged in users = business --> 
           {% ifequal loggedin_signupas "Business" %} 
             <div class="btn-group btn-block " data-toggle="buttons">
-              <button class="btn btn-default btn-sm " style="background: url('{{userinfo.profileimg}}'); background-size: cover;width:10%;">&nbsp;</button>
+              <button class="btn btn-default btn-sm  " style="background: url('{{userinfo.profileimg}}'); background-size: cover;width:10%;">&nbsp;</button>
               {% if logged_conn == "seller"  or logged_conn == "both" %}
                 <label class="btn btn-default active btn-sm" rel="tooltip" style="width:40%;" title="{{userinfo.full_name}} buys from {{name}}"> 
                 <input type="checkbox" checked id="buy_from" onchange="conn_handler('buy_from', {{profile_id}})">buys from
@@ -409,9 +409,9 @@
 
 <!-- Nav tabs -->
 <ul class="nav nav-tabs text-center" role="tablist" id="singleTabs">
-  <li class="active"><a href="#produce" role="tab" data-toggle="tab">Produce</a></li>
-  <li><a href="#tradeswith" role="tab" data-toggle="tab">Stockists &amp; suppliers</a></li> 
-  <li><a href="#about" role="tab" data-toggle="tab">About</a></li>
+  <li class="active"><a href="#produce" role="tab" data-toggle="tab">Food</a></li>
+  <li><a href="#tradeswith" role="tab" data-toggle="tab">Connections</a></li> 
+  <li><a href="#about" role="tab" data-toggle="tab">About</a></li> 
   <li><a href="#trade" role="tab" data-toggle="tab">Trade</a></li> 
 </ul>
 
@@ -1004,6 +1004,34 @@
   </div>
 </div>
 
+
+
+
+
+{% if user.is_authenticated %}
+        {% for eachUpdate in updates %} 
+        <div class="update clearfix">
+          <div class="">
+            <a href="" class="text-inverse"> {{eachUpdate.status|recognise_name|safe}}</a>
+          </div>
+          <small class="pull-left">
+            <a href="/{{username}}/post/{{eachUpdate.tweetuid}}/">  {{eachUpdate.replies_count}} replies</a>
+          </small>  
+          <small class="pull-right">
+            <a href="/{{username}}/post/{{eachUpdate.tweetuid}}/">  {{eachUpdate.time_elapsed}} ago</a>
+          </small>  
+        </div>
+        {% endfor %}  
+        {% else %}
+          <div class="well well-sm text-center">
+          <i class="fa fa-lock fa-lg"></i>
+          <strong><a href="{% provider_login_url "twitter" process="login" %}" class="">Login</a> or <a href="{% provider_login_url "twitter" process="login" %}" class="">sign up free</a> to see updates and activity. </strong></div>
+        {% endif %} 
+           
+
+
+
+
     
     <!-- COMPANY INFORMATION --> 
     <div class="panel panel-default" id="panelCompany">
@@ -1037,7 +1065,7 @@
     <!-- /COMPANY INFORMATION --> 
   </div><!-- about -->
   <div class="tab-pane fade" id="trade">
-     <div class="panel panel-default" id="panelUpdates">
+     <div class="panel panel-default" id="panelUpdates" style="break-after: column; -webkit-break-after: column">
       <div class="panel-heading">
         <div class="panel-title">
           <i class="fa fa-bullhorn"></i> <strong>{% if updates_count != 0 %}{{updates_count}}{% endif %} Marketplace</strong> updates
@@ -1078,7 +1106,9 @@
         </div>
         {% endfor %}  
         {% else %}
-          <p class=""><a href="{% provider_login_url "twitter" process="login" %}" class="">Login</a> or <a href="{% provider_login_url "twitter" process="login" %}" class="">sign up free</a> to see updates and activity. </p>
+          <div class="well well-sm text-center">
+          <i class="fa fa-lock fa-lg"></i>
+          <strong><a href="{% provider_login_url "twitter" process="login" %}" class="">Login</a> or <a href="{% provider_login_url "twitter" process="login" %}" class="">sign up free</a> to see updates and activity. </strong></div>
         {% endif %} 
            
       </div> 
@@ -1804,8 +1834,13 @@ function find_user_in_twitter(){
 }
 
 
-$('#tradeswith').on( 'shown.bs.tab', function () {
-    $('.footable').trigger('footable_initialize');
+// $('#tradeswith').on( 'shown.bs.tab', function () {
+//     $('.footable').trigger('footable_redraw') 
+   
+// });
+
+$('#singleTabs').on( 'shown.bs.tab', function () {
+    $('.footable').trigger('footable_redraw');
    
 });
 
