@@ -113,7 +113,12 @@
         <li class="col-sm-4">
           <div class="thumbnail" style="padding: 0">  
             <div class="modal-header text-center">            
-              <button type="button" class="btn btn-lg btn-primary" {% if request.user.is_authenticated %} onclick="change_sign_up('Business','{{userprof.username}}')" {% else %} disabled="disabled" {% endif %}>It's a business</button>
+            {% if request.user.is_authenticated %}
+              <button type="button" class="btn btn-lg btn-primary" onclick="change_sign_up('Business','{{userprof.username}}')">It's a business</button>
+            {% else %} 
+              <a data-toggle="modal" data-target="#modal_emaillogin" class="btn btn-lg btn-primary">It's a business</a>
+            {% endif %} 
+
             </div>
             <div class="caption bg-gray"> 
               <p class="lead">Any business or organisation which buys an sells food for a living. From farm to fork, small holder to supermarket.</p>
@@ -125,8 +130,13 @@
 
         <li class="col-sm-4">
           <div class="thumbnail" style="padding: 0">  
-            <div class="modal-header text-center ">            
-              <button type="button" class="btn btn-lg btn-primary"  {% if request.user.is_authenticated %} onclick="change_sign_up('Organisation','{{userprof.username}}')" {% else%} disabled="disabled" {% endif %}>It's an organisation</button>
+            <div class="modal-header text-center ">     
+
+              {% if request.user.is_authenticated %}
+                <button type="button" class="btn btn-lg btn-primary" onclick="change_sign_up('Organisation','{{userprof.username}}')">It's a organisation</button>
+              {% else %} 
+                <a data-toggle="modal" data-target="#modal_emaillogin" class="btn btn-lg btn-primary">It's a organisation</a>
+              {% endif %} 
             </div>
             <div class="caption bg-gray"> 
               <p class="lead">Any membership group with an a strong interest in food, agriculture, or nutrition.</p>
@@ -139,7 +149,13 @@
         <li class="col-sm-4">
           <div class="thumbnail" style="padding: 0">  
             <div class="modal-header text-center">
-              <button type="button" class="btn btn-lg btn-primary" {% if request.user.is_authenticated %} onclick="change_sign_up('Individual','{{userprof.username}}')" {% else %} disabled="disabled" {% endif %}>It's an individual</button>
+            
+              {% if request.user.is_authenticated %}
+                <button type="button" class="btn btn-lg btn-primary" onclick="change_sign_up('Individual','{{userprof.username}}')">It's a individual</button>
+              {% else %} 
+                <a data-toggle="modal" data-target="#modal_emaillogin" class="btn btn-lg btn-primary">It's a individual</a>
+              {% endif %} 
+
             </div>
             <div class="caption bg-gray"> 
               <p class="lead">Did you know that the food system employs just over 400,000 workers in the UK?</p>
