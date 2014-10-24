@@ -1806,11 +1806,17 @@ function find_user_in_twitter(){
     get_twitter_user_suggestions(u_name);    
 }
 
-$('#tradeswith').tabs({
-  activate: function( event, ui ) {
-      $('.footable').data('footable').redraw();
-  }
+$('#tradeswith').on( 'shown.bs.tab', function () {
+    $('.footable').trigger('footable_initialize');
+   
 });
+
+/*$('#tradeswith').tabs({
+  activate: function( event, ui ) {
+      $('#stockistsTable').data('footable').redraw();
+      $('#suppliersTable').data('footable').redraw();
+  }
+});*/
 
 </script>
 {% endblock %}

@@ -268,7 +268,7 @@ function stockists_ajax(data){
 			new_html =  data['html'] + current_html;
 			$("#supplier_connections").html(new_html);
 			
-		 	$('#suppliersTable').trigger('footable_initialize');
+		 	$('#stockistsTable').trigger('footable_initialize');
             $('#stockistsTable').trigger('footable_resize');
             $('#suppliersTable').trigger('footable_initialize');
             $('#suppliersTable').trigger('footable_resize');
