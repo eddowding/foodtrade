@@ -70,11 +70,7 @@ class AjaxHandle(AjaxSearch):
 
         # try:
         if registered_user == None or len(registered_user) == 0:
-            if tweeter_or_friend == 'gplaces':
-                from mainapp.classes.gplaces import GPlaces
-                pass
-
-            elif tweeter_or_friend == 'showuser':
+            if tweeter_or_friend == 'showuser':
                 from mainapp.classes.MySQLConnect import MySQLConnect
                 mc = MySQLConnect()
                 try:
