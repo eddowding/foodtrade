@@ -1804,10 +1804,11 @@ function find_user_in_twitter(){
 }
 
 
-$('#tradeswith').on( 'shown.bs.tab', function () {
-    $('.footable').trigger('footable_initialize');
-   
-});
 
+$('#tradeswith').on( 'shown.bs.tab', function () {
+      $('.footable').trigger('footable_initialize');      
+      $('.footable').trigger('footable_initialize'); 
+});
+   
 </script>
 {% endblock %}

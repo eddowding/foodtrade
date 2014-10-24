@@ -141,7 +141,7 @@ class UserInfo():
         # self.full_name = userprof.get('business_org_name') if (userprof['sign_up_as'] == 'Business' or userprof['sign_up_as'] == 'Organisation') \
         # and  userprof.get('business_org_name')!='' else userprof['name']
 
-        self.username = userprof['screen_name']
+        self.username = userprof['username']
         self.description = userprof['description']        
         self.profileimg = userprof['profile_img']
         b_conn_len, c_conn_len = user_connection.get_trade_connection_no()

@@ -54,10 +54,10 @@ def profile_url_resolve(request, username):
             user_id = request.user.id
             tweet_feed_obj = TweetFeed()
             result = tweet_feed_obj.search_tweeter_users(user_id, username, 1)
-            ajax_handle = AjaxHandle()
+            ajax_handle = AjaxHandle()        
             ajax_handle.create_fake_profile(result[0]['screen_name'], result[0]['screen_name'], 'twitter','unclaimed')
             userprof = usr_profile.get_profile_by_username(str(result[0]['screen_name']))            
-            return HttpResponseRedirect('/' + str(result[0]['screen_name']))
+            return HttpResponseRedirect('/' + str(result[0]['screen_name']) + '/')
         except:
             raise Http404
             
@@ -78,7 +78,7 @@ def resolve_profile(request, username):
             ajax_handle = AjaxHandle()
             ajax_handle.create_fake_profile(result[0]['screen_name'], result[0]['screen_name'], 'twitter','unclaimed')
             userprof = usr_profile.get_profile_by_username(str(result[0]['screen_name']))            
-            return HttpResponseRedirect('/' + str(result[0]['screen_name']))
+            return HttpResponseRedirect('/' + str(result[0]['screen_name']) + '/')
         except:
             raise Http404
 
@@ -115,6 +115,7 @@ def display_profile(request, username):
         a = userprof['sign_up_as']
     except:
         raise Http404
+
     '''Code to get the banner_url, followers_count, friends_count'''
     try:
         parameters['followers_count'] = userprof['followers_count']
@@ -138,6 +139,7 @@ def display_profile(request, username):
 
     parameters['prof_subscribed'] = uinfo.subscribed
     parameters['userprof'] = uinfo
+
     try:
         parameters['show_foods'] = userprof['show_foods']
     except:
@@ -351,6 +353,7 @@ def display_profile(request, username):
         return render_to_response('individual.html', parameters, context_instance=RequestContext(request))
         
     elif parameters['sign_up_as']=='unclaimed':
+        # parameters['userprof'] = userprof
         return render_to_response('single-unknown.html', parameters, context_instance=RequestContext(request))
         
 
