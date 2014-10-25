@@ -77,7 +77,7 @@
 
 
 
-<div class="row row-merge bizSummary  ">
+<div class="row row-merge bizSummary hidden">
 <div class="col-xs-12">
 
 <div class="row row-merge border-bottom border-right">
@@ -560,16 +560,14 @@
 
 
          <address>
-                    
+
           <a href="mailto:{{email}}" class="dotdotdot" target="_blank"><i class="fa fa-envelope text-muted fa-fw"></i> {{email}} </a><br />
           <a href="http://twitter.com/{{screen_name}}"  target="_blank"><i class="fa fa-twitter text-muted fa-fw"></i> {{screen_name}}</a><br />
           {% if phone_number %}
           <a href="callto:{{phone_number}}"><i class="fa fa-phone text-muted fa-fw"></i> {{phone_number}}</a>
           {% endif %}
-                  </address>
 
-     
-            {% if loc.lat == -82.8627519 and loc.lon == -135.0 %}
+           {% if loc.lat == -82.8627519 and loc.lon == -135.0 %}
               <i class="fa fa-map-marker"></i> <a > NA</a>
               <i class="fa fa-location-arrow"></i> NA
             {% else %}
@@ -581,6 +579,12 @@
             {% endif %}
             <!--  // if logged in or you've allows html5 browser location -->
   
+                  </address>
+
+     
+         <button class="btn btn-primary normal" data-toggle="modal" data-target="#modal_contact"><i class="fa fa-envelope-o fa-fw"></i> Contact</button>
+                    
+       
         
 
 
@@ -614,9 +618,10 @@
 
 
       </div>
-      <div class="panel-body groupsGrid" id="people">
-        {% ifequal loggedin_signupas "Individual" %} 
-          <div class="btn-group btn-block" data-toggle="buttons">
+
+      <hr />
+       {% ifequal loggedin_signupas "Individual" %} 
+          <div class="btn-group btn-block clearfix text-center innerAll" data-toggle="buttons">
           {% if logged_team %}
               <label class="fa fa-check btn btn-default btn-block active">
               <input type="checkbox" checked="checked" id="team-chkbx" onchange="add_team({{profile_id}}, {{user_id}})">I work here
@@ -627,7 +632,9 @@
               </label>
           </div>
         {% endifequal %}
-          
+      <div class="panel-body groupsGrid" id="people">
+
+ 
         <div class="clearfix">
           {% for each in teams %}    
             <div class="groupItem clearfix">
