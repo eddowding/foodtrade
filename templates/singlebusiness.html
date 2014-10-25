@@ -110,7 +110,7 @@
     <div class="map-biz" id="map"></div> 
     <div id="biz-info" class="text-center innerAll"> 
       <div class="media" >
-        <img src="{{pic_url}}"  alt="{{name}} logo" class="hidden-xs hidden-sm  avatar">
+        <img src="{{pic_url}}"  alt="{{name}} logo" class="avatar">
         <div class="media-body"> 
           {% if request.user.is_authenticated %}
             <div id="shortcuts" class=" pull-right">
@@ -540,41 +540,8 @@
           {% endif %}
      
           <div class="mCustomScrollbar scroll300">
-            <table class="table table-hover table-condensed footable toggle-circle" id="produceTable" data-filter="#filterFoods" data-filter-text-only="true"> 
-            <thead class="hidden">
-                <tr> 
-                  <th data-hide="" data-toggle="true">
-                    more arrow
-                  </th> 
-                  <th data-hide=""  >
-                    Produce
-                  </th>
-                  <th data-hide=" " >
-                    Tags
-                  </th>
-                  <th data-hide="all" >
-                    Description
-                  </th>
-                  <th data-hide="all">
-                     
-                  </th>
-                  <th data-hide="">
-                    Vouch
-                  </th>
-                  <th data-hide="all">
-                    Season
-                  </th>
-                  <th data-hide="all">
-                    Quantity
-                  </th>
-                  <th data-hide=" ">
-                    Vouchers
-                  </th>
-                  <th data-hide="all">
-                    Actions
-                  </th>
-                </tr>
-              </thead>
+            <table class="table table-hover table-condensed" id="produceTable" data-filter="#filterFoods" data-filter-text-only="true"> 
+           
               <tbody id="ajax_food_tr">
                 {% include 'ajax_food_tr.html' %}
               </tbody>
@@ -652,35 +619,8 @@
       </div>
 
       <div class="mCustomScrollbar scroll300">
-        <table class="table table-hover table-condensed footable toggle-circle" id="shoppinglistTable" data-filter="#filterShopping" data-filter-text-only="true"> 
-        <thead class="hidden">
-            <tr> 
-              <th data-hide="" data-toggle="true">
-                more arrow
-              </th> 
-              <th data-hide=""  >
-                Produce
-              </th>
-              <th data-hide=" " >
-                Tags
-              </th>
-              <th data-hide="all" >
-                Description
-              </th> 
-              <th data-hide="all">
-                Season
-              </th>
-              <th data-hide="">
-                Quantity
-              </th> 
-              <th data-hide="">
-                Search
-              </th>
-              <th data-hide="all">
-                Actions
-              </th>
-            </tr>
-          </thead>
+        <table class="table table-hover table-condensed" id="shoppinglistTable" data-filter="#filterShopping" data-filter-text-only="true"> 
+       
           <tbody id="webuy_foods">
            
             {% include "webuy_foods.html" %}
@@ -806,32 +746,8 @@
           {% endif %}
   
       <div  class="mCustomScrollbar scroll300">
-        <table class="table table-hover table-condensed footable toggle-circle" id="suppliersTable" data-filter="#filterSuppliers" data-filter-text-only="true"> 
-        <thead class="hidden">
-            <tr> 
-              <th data-hide="" data-toggle="true" data-class="vcenter">
-                popover
-              </th> 
-              <th data-hide=""  >
-                Image
-              </th>
-              <th data-hide=" " data-class="vcenter">
-                name
-              </th>
-              <th data-hide="all" >
-                desciption
-              </th>
-              <th data-hide="" data-class="vcenter">
-                tags
-              </th> 
-              <th data-hide="all">
-                banner
-              </th> 
-              <th data-hide="all">
-                vouches
-              </th> 
-            </tr>
-          </thead>
+        <table class="table table-hover table-condensed" id="suppliersTable" data-filter="#filterSuppliers" data-filter-text-only="true"> 
+     
 
           <tbody id="supplier_connections">
         {% for each in connections %}
@@ -903,33 +819,8 @@
         
 
        <div class="mCustomScrollbar scroll300">
-        <table class="table table-hover table-condensed footable toggle-circle" id="stockistsTable" data-filter="#filterStockists" data-filter-text-only="true"> 
-        <thead class="hidden">
-            <tr> 
-              <th data-hide="" data-toggle="true" data-class="vcenter">
-                popover
-              </th> 
-              <th data-hide=""  >
-                Image
-              </th>
-              <th data-hide=" " data-class="vcenter">
-                name
-              </th>
-              <th data-hide="all" >
-                desciption
-              </th>
-              <th data-hide="" data-class="vcenter">
-                tags
-              </th> 
-              <th data-hide="all">
-                banner
-              </th> 
-              <th data-hide="all">
-                vouches
-              </th> 
-            </tr>
-          </thead>
-
+        <table class="table table-hover table-condensed " id="stockistsTable" data-filter="#filterStockists" data-filter-text-only="true"> 
+    
           <tbody id="stockist_connections">
         {% for each in connections %}
         {% if each.relation == "seller" or each.relation == "both" %}
@@ -1793,40 +1684,7 @@ customers = {{customers_str | safe}};
         });
       {% endif %}
 
-var footable_row = '';     
-var myfootable = '' ;
-control_dict = control_dict;
-lines_dic = lines_dic;
-$('#suppliersTable').footable().on('click', '.close', function(e) {
-        e.preventDefault();
-        //get the footable object
-        myfootable = $('#suppliersTable').data('footable');
-
-        //get the row we are wanting to delete
-        footable_row = $(this).parents('tr:first');
-        var content = this.attributes['data-content'].value;
-        var content_split = content.split(',');
-        var rel_1 = content_split[0];
-        var rel_2 = content_split[1];
-        conn_handler('close_buy_from', rel_1,rel_2);
-
-});
-
-$('#stockistsTable').footable().on('click', '.close', function(e) {
-        e.preventDefault();
-        //get the footable object
-        myfootable = $('#stockistsTable').data('footable');
-
-        //get the row we are wanting to delete
-        footable_row = $(this).parents('tr:first');
-        var content = this.attributes['data-content'].value;
-        var content_split = content.split(',');
-        var rel_1 = content_split[0];
-        var rel_2 = content_split[1];
-        conn_handler('close_sell_to', rel_1, rel_2);
-});
-      /*conn_handler('close_buy_from', */
-
+ 
 
 function find_user_in_twitter(){
     u_name = $('#idUserNameStockistOrSupplier').val();
@@ -1834,14 +1692,9 @@ function find_user_in_twitter(){
 }
 
 
-// $('#tradeswith').on( 'shown.bs.tab', function () {
-//     $('.footable').trigger('footable_redraw') 
-   
-// });
-
-$('#singleTabs').on( 'shown.bs.tab', function () {
-    $('.footable').trigger('footable_redraw');
-   
+ 
+$('.accordion-toggle').on('show hide', function (n) {
+    $(n.target).parent('.accordion-toggle').find('.act i').toggleClass('fa-chevron-up fa-chevron-down');
 });
 
 </script>

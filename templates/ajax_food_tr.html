@@ -1,41 +1,26 @@
- 
 {% for eachfood in all_foods %}
 
-<tr 
-    class="{{eachfood.parent_food|slugify}}">
-
-
-<td></td>
-   
+<tr data-toggle="collapse" data-target="#{{eachfood.food_name|slugify}}" class="accordion-toggle"> 
 
   <td class="ellipsis"> 
+    <a class="act" data-toggle="collapse"  data-target="#{{eachfood.food_name|slugify}}">
+        <i class="fa fa-caret-down"></i>
+    </a>
     <strong>{{eachfood.food_name|safe}}</strong>  
   </td>
 
-   <td>
-    {% if eachfood.food_tags %} 
-      <div class='clearfix innerAll half'>
-        <i class='text-primary fa fa-tags fa-fw'></i>
-        {{eachfood.food_tags}}
-      </div>
+  <td  class="text-right">
+    {% if request.user.is_superuser or profile_id == user_id %}
+
+     <a href='javascript:void(0)' class='btn btn-xs btn-info' data-container='body' onClick="show_upload(); get_food_detail({{profile_id}}, '{{eachfood.food_name|safe|escapejs}}', '{{eachfood.description|escapejs }}', '{{eachfood.food_tags|escapejs }}', '{{eachfood.photo_url|escapejs }}', '{{eachfood.recomm_tags|safe|escapejs }}', '{{eachfood.how_much|escapejs }}', '{{eachfood.how_often|escapejs }}', '{{eachfood.month_list|escapejs }}');"><i class="fa fa-edit"></i></a>
+     
+     <a class='text-danger small' onClick="delete_food({{profile_id}}, '{{eachfood.food_name}}', this)"><i class="fa fa-trash-o"></i></a>
+
+    {% else %}
+
+     <a class='btn btn-primary btn-stroke btn-xs' data-toggle="modal" data-target="#modal_contact"><i class='fa fa-envelope-o' title='Contact'></i> Enquire</a>
     {% endif %}
-    </td>
-      
-
-
-  <td> 
-    {% if eachfood.description %}    
-        {{eachfood.description}}  
-    {% endif %}  
   </td>
-
-
-  <td class="foodimage">
-  {% if eachfood.photo_url %}
-    <img src="{{eachfood.photo_url}}" title="{{eachdet.food_name}}" rel="tooltip" class="img-responsive" >
-  {% endif %}  
-  </td>  
-
 
   <td class="text-right vouch"> 
 
@@ -55,42 +40,57 @@
   </td> 
 
 
+</tr>
+<tr>
+
+<td colspan="3" class="hiddenRow">
+  <div class="accordian-body collapse innerAll" id="{{eachfood.food_name|slugify}}">
 
 
+  {% if eachfood.description %}    
+      {{eachfood.description}}  
+  {% endif %}  
 
-    
-        <td class='innerTB half'>
-        {% if 1 in eachfood.month_list %}
-          <table class='availability'> 
-          <tbody><tr>
-          <td class='winter {% if eachfood.month_list.0 == 1 %} yes {% endif %}'>J</td>
-          <td class='winter {% if eachfood.month_list.1 == 1 %} yes {% endif %}'>F</td>
-          <td class='spring {% if eachfood.month_list.2 == 1 %} yes {% endif %}'>M</td>
-          <td class='spring {% if eachfood.month_list.3 == 1 %} yes {% endif %}'>A</td>
-          <td class='spring {% if eachfood.month_list.4 == 1 %} yes {% endif %}'>M</td>
-          <td class='summer {% if eachfood.month_list.5 == 1 %} yes {% endif %}'>J</td>
-          <td class='summer {% if eachfood.month_list.6 == 1 %} yes {% endif %}'>J</td>
-          <td class='summer {% if eachfood.month_list.7 == 1 %} yes {% endif %}'>A</td>  
-          <td class='autumn {% if eachfood.month_list.8 == 1 %} yes {% endif %}'>S</td>
-          <td class='autumn {% if eachfood.month_list.9 == 1 %} yes {% endif %}'>O</td>
-          <td class='autumn {% if eachfood.month_list.10 == 1 %} yes {% endif %}'>N</td>
-          <td class='winter {% if eachfood.month_list.11 == 1 %} yes {% endif %}'>D</td>
-          </tr></tbody></table>   
-          {% endif %}  
-        </td>  
+  {% if eachfood.food_tags %} 
+    <div class='clearfix innerAll half'>
+      <i class='text-primary fa fa-tags fa-fw'></i>
+      {{eachfood.food_tags}}
+    </div>
+  {% endif %}
   
+ 
+  {% if eachfood.photo_url %}
+    <img src="{{eachfood.photo_url}}" title="{{eachdet.food_name}}" rel="tooltip" class="img-responsive" >
+  {% endif %}   
+ 
+  {% if 1 in eachfood.month_list %}
+    <table class='availability'> 
+    <tbody><tr>
+    <td class='winter {% if eachfood.month_list.0 == 1 %} yes {% endif %}'>J</td>
+    <td class='winter {% if eachfood.month_list.1 == 1 %} yes {% endif %}'>F</td>
+    <td class='spring {% if eachfood.month_list.2 == 1 %} yes {% endif %}'>M</td>
+    <td class='spring {% if eachfood.month_list.3 == 1 %} yes {% endif %}'>A</td>
+    <td class='spring {% if eachfood.month_list.4 == 1 %} yes {% endif %}'>M</td>
+    <td class='summer {% if eachfood.month_list.5 == 1 %} yes {% endif %}'>J</td>
+    <td class='summer {% if eachfood.month_list.6 == 1 %} yes {% endif %}'>J</td>
+    <td class='summer {% if eachfood.month_list.7 == 1 %} yes {% endif %}'>A</td>  
+    <td class='autumn {% if eachfood.month_list.8 == 1 %} yes {% endif %}'>S</td>
+    <td class='autumn {% if eachfood.month_list.9 == 1 %} yes {% endif %}'>O</td>
+    <td class='autumn {% if eachfood.month_list.10 == 1 %} yes {% endif %}'>N</td>
+    <td class='winter {% if eachfood.month_list.11 == 1 %} yes {% endif %}'>D</td>
+    </tr></tbody></table>   
+  {% endif %}   
      
-    <td>
+  
     {% if eachfood.how_much %}   
       <div class='clearfix innerAll half'>
         <i class='text-primary fa-lg icon-scale-1'></i>
         {{eachfood.how_much}} {{eachfood.how_often}}
       </div>
     {% endif %} 
-    </td>
-
+  
  
-    <td>  
+ 
     {% ifnotequal eachfood.vouch_count 0 %}
     <div class=' '> 
     {% for eachdet in eachfood.recomm_details %}
@@ -98,29 +98,12 @@
     {% endfor %}
     </div>
     {% endifnotequal %}
-    </td>
- 
-
   
-  <td class='innerAll text-center border-top border-bottom'>
-  {% if request.user.is_superuser or profile_id == user_id %}
-
-   <a href='javascript:void(0)' class='btn btn-xs btn-info' data-container='body' onClick="show_upload(); get_food_detail({{profile_id}}, '{{eachfood.food_name|safe|escapejs}}', '{{eachfood.description|escapejs }}', '{{eachfood.food_tags|escapejs }}', '{{eachfood.photo_url|escapejs }}', '{{eachfood.recomm_tags|safe|escapejs }}', '{{eachfood.how_much|escapejs }}', '{{eachfood.how_often|escapejs }}', '{{eachfood.month_list|escapejs }}');">Edit</a>
-   
-   <a class='text-danger small' onClick="delete_food({{profile_id}}, '{{eachfood.food_name}}', this)">Delete</a>
-
-  {% else %}
-
-   <a class='btn btn-primary btn-stroke btn-xs' data-toggle="modal" data-target="#modal_contact"><i class='fa fa-envelope-o' title='Contact'></i> Enquire</a>
-  {% endif %}
+  </div>
+ 
   </td>
-
-
-
-
-
-
-
+ 
+ 
 </tr>
 {% endfor %}
 
