@@ -272,14 +272,9 @@ td.footable-visible.footable-first-column {
 }
 
 #panelContainer {
-  .columns(50%, 2, 20px, #eee , 0, solid); 
+  // .columns(50%, 2, 20px, #eee , 0, solid); 
   padding-top: 20px;
-
- // -moz-column-width: 35em;
- // -webkit-column-width: 35em;
- // padding: 1.5em 0em;
- // -moz-column-gap: 1em;
- // -webkit-column-gap: 1em;  
+ 
  @media (max-width: 1023px) {
    padding: 1em;
    -moz-column-gap: 1em;
@@ -288,10 +283,14 @@ td.footable-visible.footable-first-column {
 
  .panel {
    display: inline-block;
-   margin:  .5em;
+   margin:  10px;
    padding:  0; 
-   width:98%;
+   float: left;
+   width:46%;
    margin-bottom: 30px;
+   @media (max-width: 768px) {
+      width: 98%;
+    }
   }
 
   .vcenter {
