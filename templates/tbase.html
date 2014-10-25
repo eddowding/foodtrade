@@ -116,7 +116,7 @@
     <link href="{% static "css/dynamic.css" %}" rel="stylesheet"> 
 
 
-    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places"></script>
     
     
     {% block contact %}
@@ -190,9 +190,11 @@ var ticker_lon = {{userinfo.lon}};
         poll: 5000
       };
     </script>
+
     <script src="//cdnjs.cloudflare.com/ajax/libs/less.js/1.7.1/less.min.js"></script>  
     <!-- <script>less.watch();</script> -->
 <script type="text/javascript">
+
   
   // IE function.bind polyfill
 if (!Function.prototype.bind) {
@@ -648,7 +650,7 @@ if (!Function.prototype.bind) {
 
 
             {% if request.user.is_authenticated %} 
-
+foodtrade.js
                 <button type="button" class="btn btn-primary btn-sm hidden-xs" data-toggle="collapse" data-target="#newtwitterpost" style="font-weight: normal; margin-top:14px;" onclick="window.scrollTo(0,0);">
                   <i class="fa fa-bullhorn  fa-fw"></i>
                   Post a trade
@@ -950,7 +952,7 @@ var that = this;
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
      <script src="{% static "js/bootstrap.min.js" %}"></script>
-    <script src="{% static "js/foodtrade.js" %}"></script>
+    
     <script src="{% static "js/ajax-handle.js" %}"></script> 
     <script src="{% static "js/intro.min.js" %}"></script>
     <script src="{% static "js/jquery.geocomplete.js" %}"></script>
