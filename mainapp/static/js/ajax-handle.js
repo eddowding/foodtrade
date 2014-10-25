@@ -499,7 +499,18 @@ function add_member(org_id, mem_id, action){
 }
 
 function member_ajax(data){
-	$('#member_ajax').html(data);
+	data = jQuery.parseJSON(data);
+	if (data['status']=='ok'){
+		if (data['action']=='addmember'){
+			$('#membersTable > tbody').prepend(data['row_html']);
+			$('#membersTable').trigger('footable_initialize');			
+		}
+		else{
+			$('#trMember'+data['useruid']).remove();
+			$('#membersTable').trigger('footable_initialize');	
+		}
+		
+	}
 }
 
 function add_team(org_id, team_id){

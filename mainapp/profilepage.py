@@ -833,53 +833,55 @@ def get_members(user_id, logged_in_id = None):
     logged_member = False
     for each in members:
         try:
-            # account = SocialAccount.objects.get(user__id = each['memberuid'])
-            usr_pr = userprof.get_profile_by_id(str(each['memberuid']))
-            # user_info = UserInfo(each['memberuid'])
-            from mainapp.classes.DataConnector import UserConnections
-            user_connection =  UserConnections(each['memberuid'])
-            
-            b_conn_len, c_conn_len = user_connection.get_trade_connection_no()
-            trade_connections_no = b_conn_len + c_conn_len
-            food_no = user_connection.get_food_connection_no()
-            organisation_connection_no = user_connection.get_organisation_connection_no()
-
-            if logged_in_id!=None and each['memberuid'] == logged_in_id:
-                    logged_member = True
-            if usr_pr.get('business_org_name')!=None:
-                myname = usr_pr.get('business_org_name') if (usr_pr['sign_up_as'] == 'Business' or usr_pr['sign_up_as'] == 'Organisation') \
-                and usr_pr.get('business_org_name')!='' else usr_pr['name']
-            else:
-                myname = usr_pr['name']                    
-
-            rec_food_obj = RecommendFood()
-            total_vouches = rec_food_obj.get_recommend_count(each['memberuid'])                            
-
-            data = {'id': each['memberuid'],
-             # 'name': account.extra_data['name'],
-             'name': myname,
-             'description': usr_pr['description'],
-             'total_vouches':total_vouches, 
-             'b_conn_no':b_conn_len,
-             'c_conn_no':c_conn_len,
-             'photo': usr_pr['profile_img'],
-             'username' : usr_pr['username'],
-             'type': usr_pr['type_user'],
-             'trade_conn_no': trade_connections_no,
-             'food_no': food_no,
-             'org_conn_no': organisation_connection_no,
-             'latitude': usr_pr['latlng']['coordinates'][1],
-             'longitude': usr_pr['latlng']['coordinates'][0]
-             }
-            try:
-                data['banner_url'] = '' if usr_pr['profile_banner_url'] ==None or usr_pr['profile_banner_url'] ==''  else usr_pr['profile_banner_url'] + '/web_retina'
-            except:
-                data['banner_url'] = ''
-
+            data = get_each_member_details(each, logged_in_id)
             final_members.append(data)
         except:
             pass
     return final_members, logged_member
+
+def get_each_member_details(each={}, logged_in_id=None):
+    userprof = UserProfile()
+    usr_pr = userprof.get_profile_by_id(str(each['memberuid']))
+    from mainapp.classes.DataConnector import UserConnections
+    user_connection =  UserConnections(each['memberuid'])
+    
+    b_conn_len, c_conn_len = user_connection.get_trade_connection_no()
+    trade_connections_no = b_conn_len + c_conn_len
+    food_no = user_connection.get_food_connection_no()
+    organisation_connection_no = user_connection.get_organisation_connection_no()
+
+    if logged_in_id!=None and each['memberuid'] == logged_in_id:
+            logged_member = True
+    if usr_pr.get('business_org_name')!=None:
+        myname = usr_pr.get('business_org_name') if (usr_pr['sign_up_as'] == 'Business' or usr_pr['sign_up_as'] == 'Organisation') \
+        and usr_pr.get('business_org_name')!='' else usr_pr['name']
+    else:
+        myname = usr_pr['name']                    
+
+    rec_food_obj = RecommendFood()
+    total_vouches = rec_food_obj.get_recommend_count(each['memberuid'])                            
+
+    data = {'id': each['memberuid'],
+     'name': myname,
+     'description': usr_pr['description'],
+     'total_vouches':total_vouches, 
+     'b_conn_no':b_conn_len,
+     'c_conn_no':c_conn_len,
+     'photo': usr_pr['profile_img'],
+     'username' : usr_pr['username'],
+     'type': usr_pr['type_user'],
+     'trade_conn_no': trade_connections_no,
+     'food_no': food_no,
+     'org_conn_no': organisation_connection_no,
+     'latitude': usr_pr['latlng']['coordinates'][1],
+     'longitude': usr_pr['latlng']['coordinates'][0]
+     }
+    try:
+        data['banner_url'] = '' if usr_pr['profile_banner_url'] ==None or usr_pr['profile_banner_url'] ==''  else usr_pr['profile_banner_url'] + '/web_retina'
+    except:
+        data['banner_url'] = ''
+    return data
+
 
 def get_organisations(user_id):
     userprof = UserProfile()

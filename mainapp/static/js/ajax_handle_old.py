@@ -610,7 +610,8 @@ class AjaxHandle(AjaxSearch):
             parameters['members'], parameters['logged_member'] = get_members(data['orguid'], request.user.id)
 
             parameters['profile_id'], parameters['user_id'] = int(data['orguid']), request.user.id
-            return render_to_response('ajax_member.html', parameters, context_instance=RequestContext(request))
+            row_html = render_to_response('ajax_member.html', parameters, context_instance=RequestContext(request))
+            return HttpResponse(json.dumps({'status':'ok', 'action':'addmember', 'html':row_html}))
 
         else:
             return HttpResponse("{'status':0}")
@@ -621,11 +622,7 @@ class AjaxHandle(AjaxSearch):
         print 'data', data
         if data !=None and data !="":
             org.delete_member(orguid = data['orguid'], member_id = data['memberuid'])
-            parameters = {}
-            parameters['members'], parameters['logged_member'] = get_members(data['orguid'], request.user.id)
-
-            parameters['profile_id'], parameters['user_id'] = int(data['orguid']), request.user.id
-            return render_to_response('ajax_member.html', parameters, context_instance=RequestContext(request))
+            return HttpResponse(json.dumps{'status':'ok','action':'delete','message':'successfully deleted member', 'useruid':data['memberuid']})
         else:
             return HttpResponse("{'status':0}")    
 
