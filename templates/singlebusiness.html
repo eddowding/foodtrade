@@ -540,7 +540,7 @@
           {% endif %}
      
           <div class="mCustomScrollbar scroll300">
-            <table class="table table-hover table-condensed" id="produceTable" data-filter="#filterFoods" data-filter-text-only="true"> 
+            <table class="table table-hover table-condensed footable" id="produceTable" data-filter="#filterFoods" data-filter-text-only="true"> 
            
               <tbody id="ajax_food_tr">
                 {% include 'ajax_food_tr.html' %}
@@ -619,7 +619,7 @@
       </div>
 
       <div class="mCustomScrollbar scroll300">
-        <table class="table table-hover table-condensed" id="shoppinglistTable" data-filter="#filterShopping" data-filter-text-only="true"> 
+        <table class="table table-hover table-condensed footable" id="shoppinglistTable" data-filter="#filterShopping" data-filter-text-only="true"> 
        
           <tbody id="webuy_foods">
            
@@ -746,7 +746,7 @@
           {% endif %}
   
       <div  class="mCustomScrollbar scroll300">
-        <table class="table table-hover table-condensed" id="suppliersTable" data-filter="#filterSuppliers" data-filter-text-only="true"> 
+        <table class="table table-hover table-condensed footable" id="suppliersTable" data-filter="#filterSuppliers" data-filter-text-only="true"> 
      
 
           <tbody id="supplier_connections">
@@ -819,7 +819,7 @@
         
 
        <div class="mCustomScrollbar scroll300">
-        <table class="table table-hover table-condensed " id="stockistsTable" data-filter="#filterStockists" data-filter-text-only="true"> 
+        <table class="table table-hover table-condensed footable" id="stockistsTable" data-filter="#filterStockists" data-filter-text-only="true"> 
     
           <tbody id="stockist_connections">
         {% for each in connections %}
@@ -897,30 +897,7 @@
 
 
 
-
-
-{% if user.is_authenticated %}
-        {% for eachUpdate in updates %} 
-        <div class="update clearfix">
-          <div class="">
-            <a href="" class="text-inverse"> {{eachUpdate.status|recognise_name|safe}}</a>
-          </div>
-          <small class="pull-left">
-            <a href="/{{username}}/post/{{eachUpdate.tweetuid}}/">  {{eachUpdate.replies_count}} replies</a>
-          </small>  
-          <small class="pull-right">
-            <a href="/{{username}}/post/{{eachUpdate.tweetuid}}/">  {{eachUpdate.time_elapsed}} ago</a>
-          </small>  
-        </div>
-        {% endfor %}  
-        {% else %}
-          <div class="well well-sm text-center">
-          <i class="fa fa-lock fa-lg"></i>
-          <strong><a href="{% provider_login_url "twitter" process="login" %}" class="">Login</a> or <a href="{% provider_login_url "twitter" process="login" %}" class="">sign up free</a> to see updates and activity. </strong></div>
-        {% endif %} 
-           
-
-
+ 
 
 
     

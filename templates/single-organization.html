@@ -77,7 +77,7 @@
 
 
 
-<div class="row row-merge bizSummary">
+<div class="row row-merge bizSummary  ">
 <div class="col-xs-12">
 
 <div class="row row-merge border-bottom border-right">
@@ -236,16 +236,55 @@
 
 
 
+<!-- Nav tabs -->
+<ul class="nav nav-tabs text-center" role="tablist" id="singleTabs">
+  <li class="active"><a href="#produce" role="tab" data-toggle="tab">Members &amp; produce</a></li>
+  <li><a href="#tradeswith" role="tab" data-toggle="tab">Marketplace</a></li> 
+  <li><a href="#about" role="tab" data-toggle="tab">About</a></li>  
+</ul>
 
 
+<div class="row innerLR ">
+  <div class="container" id="panelContainer">
 
 
- 
-   
+<!-- Tab panes -->
+<div class="tab-content">
+  <div class="tab-pane fade in active" id="produce">
 
-<div class="row  ">
-  <div class="  " id="panelContainer">
+  <div class="text-center">
+    <!-- CONNECT AS BUSINESS OR CUSTOMER --> 
+      {% ifnotequal profile_id user_id %}
+        {% if user.is_authenticated %}      
 
+         <!-- are you a member -->
+          <div class="btn-group btn-block" data-toggle="buttons">
+            {% if logged_member %}
+              <label class="fa fa-smile-o btn btn-default active" style="width:100%; padding: 8px 12px;" title="{{userinfo.full_name}} is member of {{name}}" >
+              <input type="checkbox" checked="checked" class="member-chkbx" onchange="add_member({{profile_id}}, {{user_id}}, 'self')">
+              <span class="fav">I'm a member!</span>
+              </label>
+            {% else %}
+              <label class="fa fa-smile-o fa-fw btn btn-default " style="width:100%;" title="{{userinfo.full_name}} is member of {{name}}" >
+              <input type="checkbox" class="member-chkbx" onchange="add_member({{profile_id}}, {{user_id}}, 'self')">
+              <span class="fav">I'm a member!</span>
+              </label>
+            {% endif %}
+          </div> 
+          <!-- /are you a member -->
+
+        {% else %}
+
+          <!-- if not logged in show login prompt -->
+          <a href="{% provider_login_url "twitter" process="login" %}" class="btn btn-primary btn-icon-stacked btn-block text-center"><i class="fa fa-2x fa-twitter"></i> <span>Login free <br><span class="normal">for more details</span>
+          </a>
+
+        {% endif %}
+
+      {% endifnotequal %}
+      <!-- / CONNECT AS BUSINESS OR CUSTOMER --> 
+
+  </div>
 
     <!-- MEMBERS --> 
     <div class="panel panel-default" id="panelMembers">
@@ -267,56 +306,46 @@
       <input class="typeahead form-control" id="new_member_typeahead" {% if not user.is_authenticated %} rel="tooltip" title="Please login to use this feature" {% endif %} style="width:310px;" type="text" placeholder="add a member"></div>                  
       {% endif %}   
 
-      <div class="collapse well-sm well" id="searchMembers">
+      <div class="collapse-in well-sm well" id="searchMembers">
         <input type="text" class="form-control" id="filterMembers" placeholder="Find a member" />
       </div>
 
-       <div class="mCustomScrollbar scroll300">
-        <table class="table table-hover table-condensed footable toggle-arrow-circle-filled" id="membersTable" data-filter="#filterMembers" data-filter-text-only="true"> 
-        <thead class="hidden">
-            <tr> 
-              <th data-hide=""  >
-                Image
-              </th>
-              <th data-hide=" " data-class="vcenter">
-                name
-              </th>
-              <th data-hide="all" >
-                desciption
-              </th>
-              <th data-hide="" data-class="vcenter">
-                tags
-              </th> 
-              <th data-hide="all">
-                banner
-              </th> 
-              <th data-hide="all">
-                vouches
-              </th> 
-              <th data-hide="" data-toggle="true" data-class="vcenter">
-                popover
-              </th> 
-            </tr>
-          </thead>
+       <div class="mCustomScrollbar scroll600">
+        <table class="table table-hover table-condensed footable" id="membersTable" data-filter="#filterMembers" data-filter-text-only="true"> 
+        
           <tbody>
-          {% for each_mem in members %} 
-            <tr id="trMember{{each_mem.id}}">
-            <td width="40">
-              <a href="/profile/{{each_mem.username}}">
-                <img src="{{each_mem.photo}}" alt="{{each_mem.name}}" class="img-responsive" style="width:40px" />
-              </a>
-            </td>
-            <td > 
-              {% if user.is_superuser or userinfo.name == screen_name %}
-                <button type="button" class="close" aria-hidden="true" onclick="add_member({{profile_id}}, {{each_mem.id}}, 'third_delete')">&times;</button>
-                {% endif %}  
+          {% for each_mem in members %}  
 
-              <a href="/profile/{{each_mem.username}}" class="black"><strong>{{each_mem.name}}</strong></a> 
-            </td>
-            <td>
+            <tr data-toggle="collapse" data-target="#trMember{{each_mem.id}}" class="accordion-toggle">
+              <td width="15">
+                <a class="act" data-toggle="collapse"  data-target="#trMember{{each_mem.id}}">
+                    <i class="fa fa-caret-down"></i>
+                </a>
+              </td>
+
+              <td width="40">
+                <a href="/profile/{{each_mem.username}}">
+                  <img src="{{each_mem.photo}}" alt="{{each_mem.name}}" class="img-responsive" style="width:40px" />
+                </a>
+              </td>
+              <td class=" "> 
+
+                <a href="/profile/{{each_mem.username}}" class="black"><strong>{{each_mem.name}}</strong></a> 
+
+                {% if user.is_superuser or userinfo.name == screen_name %}
+                  <button type="button" class="close pull-right" aria-hidden="true" onclick="add_member({{profile_id}}, {{each_mem.id}}, 'third_delete')">
+                    <i class="fa fa-trash-o"></i>
+                  </button>
+                {% endif %}  
+              </td>
+            </tr>
+            <tr>
+            <td colspan="3" class="hiddenRow">
+              <div class="accordian-body collapse innerAll" id="trMember{{each_mem.id}}">
+
+ 
               <p class="">{{each_mem.description}}</p>
-            </td>
-            <td>
+          
 
               {% if each_mem.type|length == 0 or each_mem.type|first == '' %}
                 {% else %} 
@@ -326,17 +355,11 @@
                  {% endfor %} 
                  </p>
                {% endif %} 
-            
-            </td>
-            
-            <td>
+           
             {% if each_mem.banner_url %}
               <img src='{{each_mem.banner_url}}' title='{{each_mem.username}}' class='img-responsive'>
             {% endif %}  
-            </td>
-
-
-            <td>
+           
               <div class='row row-merge border-top'>
                 <!-- number of foods sold -->
                 <div class="{% if show_foods %}col-xs-3{% else %}col-xs-6{% endif %}">
@@ -358,8 +381,7 @@
                   <a href="/profile/{{each_mem.username}}"  rel="tooltip" title="Member of {{each_mem.org_conn_no}} groups or organisations"  class="innerAll half text-center display-block "><i class="fa fa-fw fa-group"></i> {{each_mem.org_conn_no}}</a>
                 </div> 
               </div>  
-            </td>
-            <td>
+            </div>
             </td>
 
           </tr>
@@ -386,7 +408,7 @@
           {% if food_count != 0 %}<span class="badge pull-right">{{food_count}}</span>{% endif %}
         </div>
       </div> 
-      <div class="collapse well-sm well" id="searchFoods">
+      <div class="collapse-in well-sm well" id="searchFoods">
         <input type="text" class="form-control" id="filterFoods" placeholder="Find a food" />
       </div>
       <div class="mCustomScrollbar scroll600">
@@ -431,66 +453,40 @@
     </div>
     <!-- FOODS -->
 
-    
-    <!-- PHOTO --> 
-    {% ifnotequal banner_url '' %}
-      <div class="panel panel-default">
-        <img src="{{banner_url}}" class="img-responsive" style="height:100%;">
-      </div>
-    {% endifnotequal %} 
-    <!-- PHOTO --> 
-
- 
-    <!-- ACTIVITY -->
-    <div class="panel panel-default" id="panelMarketplace">
+  </div><!-- produce and members -->
+  <div class="tab-pane fade" id="tradeswith">
+     <!-- ACTIVITY -->
+    <div class="panel panel-default" id="panelMarketplace" style="width: 100% !important;">
       <div class="panel-heading">
         <div class="panel-title">
           <i class="fa fa-bullhorn"></i> <strong>Marketplace</strong>
-          <span data-target="#searchMarket" data-toggle="collapse" class="border-left innerL pull-right">
-            <i class="glyphicon glyphicon-search"></i>
-          </span>
+        
           {% if updates_count != 0 %}<span class="badge pull-right">{{updates_count}}</span>{% endif %}
         </div>   
       </div> 
 
-      <div class="collapse well-sm well" id="searchMarket">
-        <input type="text" class="form-control" id="filterMarket" placeholder="Find a food" />
+      <div class="collapse-in well-sm well" id="searchMarket">
+        <input type="text" class="form-control" id="filterMarket" placeholder="Find a trade" />
       </div>
 
-      <div class="mCustomScrollbar scroll300">
-        <table class="table table-hover table-condensed footable toggle-arrow-circle-filled" id="foodTable" data-filter="#filterMarket" data-filter-text-only="true"> 
-        <thead class="hidden">
-            <tr> 
-              <th data-hide="" data-class="vcenter" >
-                image
-              </th>
-              <th data-hide="" data-class="vcenter" >
-                verified
-              </th> 
-              <th data-hide=" " data-class="vcenter">
-                update
-              </th> 
-              <th data-hide="" data-class="vcenter" >
-                time
-              </th> 
-              <th data-toggle="true" ></th>
-              <th data-hide="all" data-class="vcenter" >
-                action
-              </th> 
-              <th data-hide="all">
-                name
-              </th> 
-              <th data-hide="all">
-                address
-              </th> 
-            </tr>
-          </thead>
+      <div class="mCustomScrollbar scroll600">
+        <table class="table table-hover footable table-condensed" id="foodTable" data-filter="#filterMarket" data-filter-text-only="true"> 
+       
           <tbody>   
           {% for eachUpdate in updates %}
-              <tr class="{{eachUpdate.eachUpdate_class}} {% if eachUpdate.subscribed %} verified {% endif %}" data-id="{% if eachUpdate_type == "status" %}{{eachUpdate.tweetuid}} {% else %}{{username}}{% endif %}"> 
-                <td>
+ 
+              <tr data-toggle="collapse" 
+                  class="accordion-toggle {{eachUpdate.eachUpdate_class}} {% if eachUpdate.subscribed %} verified {% endif %}" 
+                  data-id="{% if eachUpdate_type == "status" %}{{eachUpdate.tweetuid}} {% else %}{{username}}{% endif %}"
+                  data-target="#{{eachUpdate.tweetuid}}"> 
+                <td width="15">
+                  <a class="act" data-toggle="collapse"  data-target="#{{eachUpdate.tweetuid}}">
+                      <i class="fa fa-caret-down"></i>
+                  </a>
+                </td>
+                <td width="30">
                   <a href="/profile/{{eachUpdate.user.name}}/"> 
-                    <img src="{{eachUpdate.user.profile_img}}" alt="{{eachUpdate.user.name}}" class="img-responsive" style="width:20px;" />
+                    <img src="{{eachUpdate.user.profile_img}}" alt="{{eachUpdate.user.name}}" class="img-responsive" />
                   </a>
                 </td>
                 <td> 
@@ -505,9 +501,14 @@
                   <a href="/{{username}}/post/{{eachUpdate.tweetuid}}" class="pull-right text-muted">
                     <i class="fa fa-clock-o text-muted"></i> {{eachUpdate.time_elapsed}}</a>
                 </td>
-                <td class="unfold"></td>
 
-                <td> 
+              </tr>
+              <tr>
+
+                <td colspan="5" class="hiddenRow">
+                <div class="accordian-body collapse innerAll" id="{{eachUpdate.tweetuid}}">
+
+            
                   <a href="/profile/{{eachUpdate.user.name}}" class="bold">
                   {% if eachUpdate.user.business_org_name != None %}
                       {% if eachUpdate.sign_up_as == "Business" and eachUpdate.user.business_org_name != '' or eachUpdate.sign_up_as == "Organisation" and eachUpdate.user.business_org_name != '' %}
@@ -518,17 +519,16 @@
                   {% else %}
                       {{eachUpdate.user.name}}
                   {% endif %}
-                </a> 
-                </td>
-                <td>
+                  </a>
+             
                   <span class="truncate100 address" > 
                     {{eachUpdate.user.address}}
                   </span> 
-                </td>
-                <td>
+                
                   <a type="button" class="btn btn-primary btn-xs" href="/{{eachUpdate.user.username}}/post/{{eachUpdate.tweetuid}}/">
                     View update 
                   </a> 
+                </div>
                 </td>
               </tr>  
           {% endfor %}
@@ -540,22 +540,88 @@
     <!-- ACTIVITY -->
 
 
-    <!-- TEAM -->
+
+  </div><!-- marketplace --> 
+  <div class="tab-pane fade" id="about">
+ 
+    
+       
+
+    <!-- contact etc -->
     <div class="panel panel-default" id="panelTeam">
       <div class="panel-heading">
         <div class="panel-title">
-          <i class="fa fa-truck"></i> <strong>Team</strong>
-          {% if teams|length != 0 %}<span class="badge pull-right">{{teams|length}}</span>{% endif %}
+          <i class="fa fa-comment"></i> <strong>About us</strong> 
         </div>
       </div> 
+      <div class="panel-body" id="">
+
+      <p class="">{{description}}</p>  
+
+
+         <address>
+                    
+          <a href="mailto:{{email}}" class="dotdotdot" target="_blank"><i class="fa fa-envelope text-muted fa-fw"></i> {{email}} </a><br />
+          <a href="http://twitter.com/{{screen_name}}"  target="_blank"><i class="fa fa-twitter text-muted fa-fw"></i> {{screen_name}}</a><br />
+          {% if phone_number %}
+          <a href="callto:{{phone_number}}"><i class="fa fa-phone text-muted fa-fw"></i> {{phone_number}}</a>
+          {% endif %}
+                  </address>
+
+     
+            {% if loc.lat == -82.8627519 and loc.lon == -135.0 %}
+              <i class="fa fa-map-marker"></i> <a > NA</a>
+              <i class="fa fa-location-arrow"></i> NA
+            {% else %}
+            <i class="fa fa-map-marker fa-fw"></i> <a href="http://maps.google.com/maps?saddr={{loggedin_coord.lat}},{{loggedin_coord.lon}}&daddr={{loc.lat}},{{loc.lon}}" target="_blank" data-placement="top" data-toggle="tooltip" title="Get directions">
+              {{address}}
+          </a>      <br />
+            <!-- if logged in or you've allows html5 browser location -->
+            <i class="fa fa-location-arrow fa-fw"></i> {{distance}} miles  
+            {% endif %}
+            <!--  // if logged in or you've allows html5 browser location -->
+  
+        
+
+
+
+      {% if user.is_superuser %}
+        <a href="/editprofile/{{username}}/" class="btn btn-info btn-xs">Edit</a>
+      {% endif %}
+
+
+      
+      {% ifequal profile_id user_id %}
+        <a href="/editprofile/{{userinfo.username}}" class="btn btn-info btn-block btn-sm ">
+           Edit
+        </a>       
+      {% endifequal %}
+      
+
+
+    
+
+
+      <!-- VERIFIED PROFILE -->
+      {% if prof_subscribed %}
+      <button class="btn btn-primary btn-block btn-sm btn-stroke">
+        <i class="fa fa-check"></i>
+        <span>Verified</span>
+      </button> 
+      {% endif %}  
+      <!-- VERIFIED PROFILE -->
+
+
+
+      </div>
       <div class="panel-body groupsGrid" id="people">
         {% ifequal loggedin_signupas "Individual" %} 
           <div class="btn-group btn-block" data-toggle="buttons">
           {% if logged_team %}
-              <label class="fa fa-check btn btn-default btn-block active" style="width:30%;">
+              <label class="fa fa-check btn btn-default btn-block active">
               <input type="checkbox" checked="checked" id="team-chkbx" onchange="add_team({{profile_id}}, {{user_id}})">I work here
               {% else %}
-              <label class="btn btn-default btn-block" style="width:30%;" >
+              <label class="btn btn-default btn-block">
               <input type="checkbox" id="team-chkbx" onchange="add_team({{profile_id}}, {{user_id}})">I work here
           {% endif %}
               </label>
@@ -580,13 +646,25 @@
         </div>
       </div>  
     </div>
-    <!-- TEAM -->
+    <!-- contact etc --> 
 
+
+
+    <!-- PHOTO --> 
+    {% ifnotequal banner_url '' %}
+      <div class="panel panel-default">
+        <img src="{{banner_url}}" class="img-responsive" style="height:100%;">
+      </div>
+    {% endifnotequal %} 
+    <!-- PHOTO --> 
+
+  </div><!-- about --> 
+
+</div>
+ 
 
   </div>
-
-
-   
+ 
 </div> 
  
 
