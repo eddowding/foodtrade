@@ -25,11 +25,11 @@
     </form>
 
      <div id="homeText"> 
-        <form id="proof" action="/activity" onsubmit="return get_address('profile');" role="search" data-step="1" data-intro="Search for anything, anywhere" class="form-horizontal innerLR" style="margin: 7px 0px 0 0;">
+        <form id="proof" action="/activity" onsubmit="return search_address();" role="search" data-step="1" data-intro="Search for anything, anywhere" class="form-horizontal innerLR" style="margin: 7px 0px 0 0;">
           <div class="form-group" id="locationgroup" style="margin: 0;"> 
              
               <div class="input-group input-group-lg"> 
-                <input type="text" name="location" id="pac_input_profile" class="pac-input form-control   " placeholder="Where are you?">
+                <input type="text" name="location" id="location_search" class="pac-input form-control   " placeholder="Where are you?">
                 <div class="input-group-btn">
                   <button class="btn btn-primary" type="submit" id="fsearch"><i class="glyphicon glyphicon-search"></i></button>
                 </div>
@@ -39,6 +39,56 @@
         </form>
 
       </div>
+      <script type="text/javascript">
+
+function initialize1() {
+
+  // Create the search box and link it to the UI element.
+  // var input = /** @type {HTMLInputElement} */(      document.getElementById('pac_input_market'));
+  var input_loc = (document.getElementById('location_search'));
+
+  // var searchBox = new google.maps.places.SearchBox(    /** @type {HTMLInputElement} */(input));
+
+  // var profile_address = new google.maps.places.SearchBox((input_profile));
+  var _address = new google.maps.places.Autocomplete(input_loc);
+
+  google.maps.event.addListener(_profile, 'places_changed', function() {
+    loading_latlng = true;
+  var places = searchBox.getPlaces();
+    var formatted_address = places[0].geometry.location;
+    var lat = places[0].geometry.location.lat();
+      var lng = places[0].geometry.location.lng();
+     redirect_search(formatted_address,lat,lng);
+  });
+
+}
+google.maps.event.addDomListener(window, 'load', initialize1);
+function search_address()
+{
+  var input = document.getElementById('location_search');
+  geocoder = new google.maps.Geocoder();
+  geocoder.geocode({'address': input.value}, function(results, status) {
+    if (status == google.maps.GeocoderStatus.OK) {
+      if (results[0]) {
+        var formatted_address = results[0].formatted_address;
+        input.value = formatted_address;
+        var lat = results[0].geometry.location.lat();
+        var lng = results[0].geometry.location.lng();
+        redirect_search(formatted_address,lat,lng);
+      }
+    }
+  });
+}
+
+function redirect_search(formatted_address,lat,lng)
+{
+  var en_lat = encodeURIComponent(lat);
+  var en_lng = encodeURIComponent(lng);
+  window.location = "/activity?location="+encodeURIComponent(this.keyword)+"&mlat="+en_lng+"&mlng="+en_lng+"&plat="+en_lat+"&plng="+en_lng;
+
+}
+
+      </script>
 
       <div class="text-center" id="joinButton">
  
