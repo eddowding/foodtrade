@@ -8,6 +8,9 @@
 5.   NEW UDPATE
 6.   ORGANISATION
 7.   ACTIVITY 
+8.   SOCIAL ICONS
+9.   LEAFLET 
+10.  TAGIT
 */ 
 
 
@@ -39,6 +42,10 @@
 
 .well {
   margin-bottom: 0;
+}
+
+.modal-open .fade { 
+    background: rgba(255,255,255,0.7);
 }
 
 .modal-dialog { 
@@ -709,3 +716,610 @@ i.pinterest,span.pinterest{ color: #cb2027 !important; }
   }
 
 } 
+
+
+
+/* ------------------------------------
+/*  8.   SOCIAL ICONS
+/* ------------------------------------
+*/
+
+
+
+
+/* -------------------------------------------------
+----------------------------------------------------
+  MATTBOLDT.COM
+  Copyright (c) 2013 Matt Boldt
+----------------------------------------------------
+----------------------------------------------------
+  CODE IS AVAILABLE FOR USE FREE OF CHARGE
+  UNDER THE MIT LICENSE
+  http://opensource.org/licenses/MIT
+----------------------------------------------------
+----------------------------------------------------
+  If you'd like to credit me, or even donate
+  a few bucks that'd be very much appreciated!
+  Visit http://www.mattboldt.com/demos/social-buttons/
+  for more info.
+----------------------------------------------------
+-------------------------------------------------- */
+.sc-btn {
+  display: inline-block;
+  position: relative;
+  margin: 0 .25em .5em 0;
+  padding: 0;
+  color: #fff !important;
+  font-family: "Helvetica Neue", "Helvetica", sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1em;
+  text-decoration: none;
+  text-shadow: rgba(0, 0, 0, 0.3) 0px -0.1em 0px;
+  border: 0;
+  border-radius: 0.4em;
+  -webkit-border-radius: 0.4em;
+  -moz-border-radius: 0.4em;
+  -ms-border-radius: 0.4em;
+  -o-border-radius: 0.4em;
+  background-color: #1a1a1a;
+  background-image: -webkit-linear-gradient(top, #595959, #1a1a1a 100%);
+  background-image: -moz-linear-gradient(top, #595959, #1a1a1a);
+  background-image: -ms-linear-gradient(top, #595959, #1a1a1a);
+  background-image: -o-linear-gradient(top, #595959, #1a1a1a);
+  background-image: linear-gradient(top, #595959, #1a1a1a);
+  box-shadow: inset rgba(0, 0, 0, 0.1) 0px -0.15em 0px, inset rgba(255, 255, 255, 0.2) 0px 0.15em 0px, rgba(0, 0, 0, 0.3) 0px 0.1em 0.3em;
+  text-align: center;
+  background-repeat: no-repeat;
+  -webkit-transition: background-position .1s ease-in-out;
+  -webkit-appearance: none;
+  cursor: pointer;
+  overflow: hidden; }
+  .sc-btn:hover {
+    color: #fff; }
+  .sc-btn:active {
+    box-shadow: rgba(255, 255, 255, 0.2) 0 0.1em 0, inset rgba(0, 0, 0, 0.3) 0px 0.25em 1em; }
+
+.sc-icon, .sc-text {
+  display: block;
+  float: left; }
+
+.sc-icon {
+  margin: 0 -.4em 0 0;
+  padding: 0.6em .8em .5em;
+  border-right: rgba(255, 255, 255, 0.1) 0.1em solid;
+  box-shadow: inset rgba(0, 0, 0, 0.1) -0.1em 0px 0px; }
+
+.sc-text {
+  padding: .95em 1em .85em 1em;
+  font-size: 1.15em;
+  text-align: center; }
+
+svg {
+  width: 1.8em;
+  height: 1.8em;
+  fill: #fff; }
+
+.sc-block {
+  display: block; }
+
+.sc--big {
+  font-size: 24px; }
+
+.sc--small {
+  font-size: 12px; }
+
+.sc--tiny {
+  font-size: 9px; }
+  .sc--tiny .sc-text {
+    padding: .85em .75em .5em .75em;
+    text-shadow: rgba(0, 0, 0, 0.3) 0px -1px 0px; }
+  .sc--tiny .sc-icon {
+    padding: .5em .75em .5em .75em;
+    border-right: rgba(255, 255, 255, 0.1) 1px solid;
+    box-shadow: inset rgba(0, 0, 0, 0.1) -1px 0px 0px; }
+
+.sc--short .sc-icon {
+  padding: 0.4em .9em .35em; }
+.sc--short .sc-text {
+  padding: .75em 1em .75em 1em; }
+
+.sc--tall {
+  font-size: 1.15em; }
+  .sc--tall .sc-icon {
+    padding: 1em .9em .85em; }
+  .sc--tall .sc-text {
+    padding: 1.25em 1em 1em 1em; }
+
+.sc--round {
+  border-radius: 5em;
+  -webkit-border-radius: 5em;
+  -moz-border-radius: 5em;
+  -ms-border-radius: 5em;
+  -o-border-radius: 5em; }
+  .sc--round .sc-icon {
+    padding: 0.7em .8em .5em 1em; }
+
+.sc--flat {
+  box-shadow: none;
+  background-image: none !important; }
+  .sc--flat .sc-icon {
+    border-color: transparent; }
+  .sc--flat:active {
+    box-shadow: inset rgba(0, 0, 0, 0.3) 0px 0.15em 0.25em; }
+
+.sc--shine {
+  box-shadow: inset rgba(0, 0, 0, 0.1) 0px -0.15em 0px, inset rgba(255, 255, 255, 0.1) 0px 0.15em 0px, rgba(0, 0, 0, 0.3) 0px 0.1em 0.3em, inset rgba(255, 255, 255, 0.15) 0px 2.5em 0px -1em; }
+  .sc--shine:active {
+    box-shadow: rgba(255, 255, 255, 0.2) 0 0.1em 0, inset rgba(0, 0, 0, 0.3) 0px 0.25em 1em, inset rgba(255, 255, 255, 0.1) 0px 2.5em 0px -1em; }
+  .sc--shine:before, .sc--shine:after {
+    content: "";
+    display: block;
+    position: absolute;
+    width: 100%;
+    height: 0.1em; }
+  .sc--shine:before {
+    top: 0;
+    background-image: -webkit-linear-gradient(left, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.3) 20%, rgba(255, 255, 255, 0) 100%);
+    background-image: -moz-linear-gradient(left, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.3) 20%, rgba(255, 255, 255, 0) 100%);
+    background-image: -o-linear-gradient(left, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.3) 20%, rgba(255, 255, 255, 0) 100%);
+    background-image: -ms-linear-gradient(left, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.3) 20%, rgba(255, 255, 255, 0) 100%);
+    background-image: linear-gradient(left, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.3) 20%, rgba(255, 255, 255, 0) 100%); }
+  .sc--shine:after {
+    bottom: .05em;
+    background-image: -webkit-linear-gradient(left, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.1) 80%, rgba(255, 255, 255, 0) 100%);
+    background-image: -moz-linear-gradient(left, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.1) 80%, rgba(255, 255, 255, 0) 100%);
+    background-image: -o-linear-gradient(left, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.1) 80%, rgba(255, 255, 255, 0) 100%);
+    background-image: -ms-linear-gradient(left, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.1) 80%, rgba(255, 255, 255, 0) 100%);
+    background-image: linear-gradient(left, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.1) 80%, rgba(255, 255, 255, 0) 100%); }
+  .sc--shine:active:before, .sc--shine:active:after {
+    opacity: 0.5; }
+
+.sc--default {
+  color: #222;
+  text-shadow: rgba(255, 255, 255, 0.4) 0 0.1em 0;
+  background-color: #ebebeb;
+  background-image: -webkit-linear-gradient(top, white, #ebebeb 100%);
+  background-image: -moz-linear-gradient(top, white, #ebebeb);
+  background-image: -ms-linear-gradient(top, white, #ebebeb);
+  background-image: -o-linear-gradient(top, white, #ebebeb);
+  background-image: linear-gradient(top, white, #ebebeb); }
+  .sc--default svg {
+    fill: #222; }
+  .sc--default:hover {
+    color: #222;
+    background-color: #d2d2d2;
+    background-image: -webkit-linear-gradient(top, white, #d2d2d2 90%);
+    background-image: -moz-linear-gradient(top, white, #d2d2d2);
+    background-image: -ms-linear-gradient(top, white, #d2d2d2);
+    background-image: -o-linear-gradient(top, white, #d2d2d2);
+    background-image: linear-gradient(top, white, #d2d2d2);
+    background-color: #fdfdfd; }
+  .sc--default:active {
+    background-color: #dfdfdf;
+    background-image: -webkit-linear-gradient(top, white, #dfdfdf 100%);
+    background-image: -moz-linear-gradient(top, white, #dfdfdf);
+    background-image: -ms-linear-gradient(top, white, #dfdfdf);
+    background-image: -o-linear-gradient(top, white, #dfdfdf);
+    background-image: linear-gradient(top, white, #dfdfdf); }
+
+.sc--facebook {
+  background-color: #33477a;
+  background-image: -webkit-linear-gradient(top, #5975ba, #33477a 100%);
+  background-image: -moz-linear-gradient(top, #5975ba, #33477a);
+  background-image: -ms-linear-gradient(top, #5975ba, #33477a);
+  background-image: -o-linear-gradient(top, #5975ba, #33477a);
+  background-image: linear-gradient(top, #5975ba, #33477a); }
+  .sc--facebook:hover {
+    background-color: #304373;
+    background-image: -webkit-linear-gradient(top, #6b84c1, #304373 90%);
+    background-image: -moz-linear-gradient(top, #6b84c1, #304373);
+    background-image: -ms-linear-gradient(top, #6b84c1, #304373);
+    background-image: -o-linear-gradient(top, #6b84c1, #304373);
+    background-image: linear-gradient(top, #6b84c1, #304373);
+    background-color: #4560a5; }
+  .sc--facebook:active {
+    background-color: #33477a;
+    background-image: -webkit-linear-gradient(top, #4a66b0, #33477a 100%);
+    background-image: -moz-linear-gradient(top, #4a66b0, #33477a);
+    background-image: -ms-linear-gradient(top, #4a66b0, #33477a);
+    background-image: -o-linear-gradient(top, #4a66b0, #33477a);
+    background-image: linear-gradient(top, #4a66b0, #33477a); }
+
+.sc--twitter {
+  background-color: #108ac1;
+  background-image: -webkit-linear-gradient(top, #47bbf0, #108ac1 100%);
+  background-image: -moz-linear-gradient(top, #47bbf0, #108ac1);
+  background-image: -ms-linear-gradient(top, #47bbf0, #108ac1);
+  background-image: -o-linear-gradient(top, #47bbf0, #108ac1);
+  background-image: linear-gradient(top, #47bbf0, #108ac1); }
+  .sc--twitter:hover {
+    background-color: #0f83b8;
+    background-image: -webkit-linear-gradient(top, #76cdf4, #0f83b8 90%);
+    background-image: -moz-linear-gradient(top, #76cdf4, #0f83b8);
+    background-image: -ms-linear-gradient(top, #76cdf4, #0f83b8);
+    background-image: -o-linear-gradient(top, #76cdf4, #0f83b8);
+    background-image: linear-gradient(top, #76cdf4, #0f83b8);
+    background-color: #21aded; }
+  .sc--twitter:active {
+    background-color: #108ac1;
+    background-image: -webkit-linear-gradient(top, #30b3ee, #108ac1 100%);
+    background-image: -moz-linear-gradient(top, #30b3ee, #108ac1);
+    background-image: -ms-linear-gradient(top, #30b3ee, #108ac1);
+    background-image: -o-linear-gradient(top, #30b3ee, #108ac1);
+    background-image: linear-gradient(top, #30b3ee, #108ac1); }
+
+.sc--tumblr {
+  background-color: #243649;
+  background-image: -webkit-linear-gradient(top, #46688d, #243649 100%);
+  background-image: -moz-linear-gradient(top, #46688d, #243649);
+  background-image: -ms-linear-gradient(top, #46688d, #243649);
+  background-image: -o-linear-gradient(top, #46688d, #243649);
+  background-image: linear-gradient(top, #46688d, #243649); }
+  .sc--tumblr:hover {
+    background-color: #213142;
+    background-image: -webkit-linear-gradient(top, #4e759e, #213142 90%);
+    background-image: -moz-linear-gradient(top, #4e759e, #213142);
+    background-image: -ms-linear-gradient(top, #4e759e, #213142);
+    background-image: -o-linear-gradient(top, #4e759e, #213142);
+    background-image: linear-gradient(top, #4e759e, #213142);
+    background-color: #385472; }
+  .sc--tumblr:active {
+    background-color: #243649;
+    background-image: -webkit-linear-gradient(top, #3d5c7c, #243649 100%);
+    background-image: -moz-linear-gradient(top, #3d5c7c, #243649);
+    background-image: -ms-linear-gradient(top, #3d5c7c, #243649);
+    background-image: -o-linear-gradient(top, #3d5c7c, #243649);
+    background-image: linear-gradient(top, #3d5c7c, #243649); }
+
+.sc--instagram {
+  background-color: #2c4d6e;
+  background-image: -webkit-linear-gradient(top, #4a81b6, #2c4d6e 100%);
+  background-image: -moz-linear-gradient(top, #4a81b6, #2c4d6e);
+  background-image: -ms-linear-gradient(top, #4a81b6, #2c4d6e);
+  background-image: -o-linear-gradient(top, #4a81b6, #2c4d6e);
+  background-image: linear-gradient(top, #4a81b6, #2c4d6e); }
+  .sc--instagram:hover {
+    background-color: #294866;
+    background-image: -webkit-linear-gradient(top, #5c8dbd, #294866 90%);
+    background-image: -moz-linear-gradient(top, #5c8dbd, #294866);
+    background-image: -ms-linear-gradient(top, #5c8dbd, #294866);
+    background-image: -o-linear-gradient(top, #5c8dbd, #294866);
+    background-image: linear-gradient(top, #5c8dbd, #294866);
+    background-color: #3e6c99; }
+  .sc--instagram:active {
+    background-color: #2c4d6e;
+    background-image: -webkit-linear-gradient(top, #4274a4, #2c4d6e 100%);
+    background-image: -moz-linear-gradient(top, #4274a4, #2c4d6e);
+    background-image: -ms-linear-gradient(top, #4274a4, #2c4d6e);
+    background-image: -o-linear-gradient(top, #4274a4, #2c4d6e);
+    background-image: linear-gradient(top, #4274a4, #2c4d6e); }
+ 
+
+.sc--google-plus {
+  background-color: #b92d25;
+  background-image: -webkit-linear-gradient(top, #e06b64, #b92d25 100%);
+  background-image: -moz-linear-gradient(top, #e06b64, #b92d25);
+  background-image: -ms-linear-gradient(top, #e06b64, #b92d25);
+  background-image: -o-linear-gradient(top, #e06b64, #b92d25);
+  background-image: linear-gradient(top, #e06b64, #b92d25); }
+  .sc--google-plus:hover {
+    background-color: #b12b23;
+    background-image: -webkit-linear-gradient(top, #e57f79, #b12b23 90%);
+    background-image: -moz-linear-gradient(top, #e57f79, #b12b23);
+    background-image: -ms-linear-gradient(top, #e57f79, #b12b23);
+    background-image: -o-linear-gradient(top, #e57f79, #b12b23);
+    background-image: linear-gradient(top, #e57f79, #b12b23);
+    background-color: #da4a42; }
+  .sc--google-plus:active {
+    background-color: #b92d25;
+    background-image: -webkit-linear-gradient(top, #dc564e, #b92d25 100%);
+    background-image: -moz-linear-gradient(top, #dc564e, #b92d25);
+    background-image: -ms-linear-gradient(top, #dc564e, #b92d25);
+    background-image: -o-linear-gradient(top, #dc564e, #b92d25);
+    background-image: linear-gradient(top, #dc564e, #b92d25); }
+ 
+.sc--rss {
+  background-color: #c96213;
+  background-image: -webkit-linear-gradient(top, #ee9754, #c96213 100%);
+  background-image: -moz-linear-gradient(top, #ee9754, #c96213);
+  background-image: -ms-linear-gradient(top, #ee9754, #c96213);
+  background-image: -o-linear-gradient(top, #ee9754, #c96213);
+  background-image: linear-gradient(top, #ee9754, #c96213); }
+  .sc--rss:hover {
+    background-color: #bf5e12;
+    background-image: -webkit-linear-gradient(top, #f1a56b, #bf5e12 90%);
+    background-image: -moz-linear-gradient(top, #f1a56b, #bf5e12);
+    background-image: -ms-linear-gradient(top, #f1a56b, #bf5e12);
+    background-image: -o-linear-gradient(top, #f1a56b, #bf5e12);
+    background-image: linear-gradient(top, #f1a56b, #bf5e12);
+    background-color: #eb812e; }
+  .sc--rss:active {
+    background-color: #c96213;
+    background-image: -webkit-linear-gradient(top, #ec893c, #c96213 100%);
+    background-image: -moz-linear-gradient(top, #ec893c, #c96213);
+    background-image: -ms-linear-gradient(top, #ec893c, #c96213);
+    background-image: -o-linear-gradient(top, #ec893c, #c96213);
+    background-image: linear-gradient(top, #ec893c, #c96213); }
+
+.sc--pinterest {
+  background-color: #95031e;
+  background-image: -webkit-linear-gradient(top, #f90532, #95031e 100%);
+  background-image: -moz-linear-gradient(top, #f90532, #95031e);
+  background-image: -ms-linear-gradient(top, #f90532, #95031e);
+  background-image: -o-linear-gradient(top, #f90532, #95031e);
+  background-image: linear-gradient(top, #f90532, #95031e); }
+  .sc--pinterest:hover {
+    background-color: #8b031c;
+    background-image: -webkit-linear-gradient(top, #fa1d46, #8b031c 90%);
+    background-image: -moz-linear-gradient(top, #fa1d46, #8b031c);
+    background-image: -ms-linear-gradient(top, #fa1d46, #8b031c);
+    background-image: -o-linear-gradient(top, #fa1d46, #8b031c);
+    background-image: linear-gradient(top, #fa1d46, #8b031c);
+    background-color: #d1042a; }
+  .sc--pinterest:active {
+    background-color: #95031e;
+    background-image: -webkit-linear-gradient(top, #e0052d, #95031e 100%);
+    background-image: -moz-linear-gradient(top, #e0052d, #95031e);
+    background-image: -ms-linear-gradient(top, #e0052d, #95031e);
+    background-image: -o-linear-gradient(top, #e0052d, #95031e);
+    background-image: linear-gradient(top, #e0052d, #95031e); }
+
+
+.sc--instagram {
+  background-color: #2c4d6e;
+  background-image: -webkit-linear-gradient(top, #4a81b6, #2c4d6e 100%);
+  background-image: -moz-linear-gradient(top, #4a81b6, #2c4d6e);
+  background-image: -ms-linear-gradient(top, #4a81b6, #2c4d6e);
+  background-image: -o-linear-gradient(top, #4a81b6, #2c4d6e);
+  background-image: linear-gradient(top, #4a81b6, #2c4d6e); }
+  .sc--instagram:hover {
+    background-color: #294866;
+    background-image: -webkit-linear-gradient(top, #5c8dbd, #294866 90%);
+    background-image: -moz-linear-gradient(top, #5c8dbd, #294866);
+    background-image: -ms-linear-gradient(top, #5c8dbd, #294866);
+    background-image: -o-linear-gradient(top, #5c8dbd, #294866);
+    background-image: linear-gradient(top, #5c8dbd, #294866);
+    background-color: #3e6c99; }
+  .sc--instagram:active {
+    background-color: #2c4d6e;
+    background-image: -webkit-linear-gradient(top, #4274a4, #2c4d6e 100%);
+    background-image: -moz-linear-gradient(top, #4274a4, #2c4d6e);
+    background-image: -ms-linear-gradient(top, #4274a4, #2c4d6e);
+    background-image: -o-linear-gradient(top, #4274a4, #2c4d6e);
+    background-image: linear-gradient(top, #4274a4, #2c4d6e); }
+
+    
+
+
+/* ------------------------------------
+/*  9.   LEAFTLET
+/* ------------------------------------
+*/
+.leaflet-label {
+  background: rgb(235, 235, 235);
+  background: rgba(235, 235, 235, 0.81);
+  background-clip: padding-box;
+  border-color: #777;
+  border-color: rgba(0,0,0,0.25);
+  border-radius: 4px;
+  border-style: solid;
+  border-width: 4px;
+  color: #111;
+  display: block;
+  font: 12px/20px "Helvetica Neue", Arial, Helvetica, sans-serif;
+  font-weight: bold;
+  padding: 1px 6px;
+  position: absolute;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+  white-space: nowrap;
+  z-index: 6;
+}
+
+.leaflet-label.leaflet-clickable {
+  cursor: pointer;
+}
+
+.leaflet-label:before,
+.leaflet-label:after {
+  border-top: 6px solid transparent;
+  border-bottom: 6px solid transparent;
+  content: none;
+  position: absolute;
+  top: 5px;
+}
+
+.leaflet-label:before {
+  border-right: 6px solid black;
+  border-right-color: inherit;
+  left: -10px;
+}
+
+.leaflet-label:after {
+  border-left: 6px solid black;
+  border-left-color: inherit;
+  right: -10px;
+}
+
+.leaflet-label-right:before,
+.leaflet-label-left:after {
+  content: "";
+}
+
+
+
+/* ------------------------------------
+/*  10.   TAGIT
+/* ------------------------------------
+*/
+
+ul.tagit {
+    padding: 1px 5px;
+    overflow: auto;
+    margin-left: inherit; /* usually we don't want the regular ul margins. */
+    margin-right: inherit;
+}
+ul.tagit li {
+    display: block;
+    float: left;
+    margin: 2px 5px 2px 0;
+}
+ul.tagit li.tagit-choice {    
+    position: relative;
+    line-height: inherit;
+}
+input.tagit-hidden-field {
+    display: none;
+}
+ul.tagit li.tagit-choice-read-only { 
+    padding: .2em .5em .2em .5em; 
+} 
+
+ul.tagit li.tagit-choice-editable { 
+    padding: .2em 18px .2em .5em; 
+} 
+
+ul.tagit li.tagit-new {
+    padding: .25em 4px .25em 0;
+}
+
+ul.tagit li.tagit-choice a.tagit-label {
+    cursor: pointer;
+    text-decoration: none;
+}
+ul.tagit li.tagit-choice .tagit-close {
+    cursor: pointer;
+    position: absolute;
+    right: .1em;
+    top: 50%;
+    margin-top: -8px;
+    line-height: 17px;
+}
+
+/* used for some custom themes that don't need image icons */
+ul.tagit li.tagit-choice .tagit-close .text-icon {
+    display: none;
+}
+
+ul.tagit li.tagit-choice input {
+    display: block;
+    float: left;
+    margin: 2px 5px 2px 0;
+}
+ul.tagit input[type="text"] {
+    -moz-box-sizing:    border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing:         border-box;
+
+    -moz-box-shadow: none;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+
+    border: none;
+    margin: 0;
+    padding: 0;
+    width: inherit;
+    background-color: inherit;
+    outline: none;
+}
+
+/* Optional scoped theme for tag-it which mimics the zendesk widget. */
+
+
+ul.tagit {
+    border-style: solid;
+    border-width: 1px;
+    border-color: #C6C6C6;
+    background: inherit;
+}
+ul.tagit li.tagit-choice {
+    -moz-border-radius: 6px;
+    border-radius: 6px;
+    -webkit-border-radius: 6px;
+    border: 1px solid #CAD8F3;
+
+    background: none;
+    background-color: #DEE7F8;
+
+    font-weight: normal;
+}
+ul.tagit li.tagit-choice .tagit-label:not(a) {
+    color: #555;
+}
+ul.tagit li.tagit-choice a.tagit-close {
+    text-decoration: none;
+}
+ul.tagit li.tagit-choice .tagit-close {
+    right: .4em;
+}
+ul.tagit li.tagit-choice .ui-icon {
+    display: none;
+}
+ul.tagit li.tagit-choice .tagit-close .text-icon {
+    display: inline;
+    font-family: arial, sans-serif;
+    font-size: 16px;
+    line-height: 16px;
+    color: #777;
+}
+ul.tagit li.tagit-choice:hover, ul.tagit li.tagit-choice.remove {
+    background-color: #bbcef1;
+    border-color: #6d95e0;
+}
+ul.tagit li.tagit-choice a.tagLabel:hover,
+ul.tagit li.tagit-choice a.tagit-close .text-icon:hover {
+    color: #222;
+}
+ul.tagit input[type="text"] {
+    color: #333333;
+    background: none;
+}
+.ui-widget {
+    font-size: 1.1em;
+}
+
+/* Forked from a jQuery UI theme, so that we don't require the jQuery UI CSS as a dependency. */
+.tagit-autocomplete.ui-autocomplete { position: absolute; cursor: default; }
+* html .tagit-autocomplete.ui-autocomplete { width:1px; } /* without this, the menu expands to 100% in IE6 */
+.tagit-autocomplete.ui-menu {
+    list-style:none;
+    padding: 2px;
+    margin: 0;
+    display:block;
+    float: left;
+}
+.tagit-autocomplete.ui-menu .ui-menu {
+    margin-top: -3px;
+}
+.tagit-autocomplete.ui-menu .ui-menu-item {
+    margin:0;
+    padding: 0;
+    zoom: 1;
+    float: left;
+    clear: left;
+    width: 100%;
+}
+.tagit-autocomplete.ui-menu .ui-menu-item a {
+    text-decoration:none;
+    display:block;
+    padding:.2em .4em;
+    line-height:1.5;
+    zoom:1;
+}
+.tagit-autocomplete .ui-menu .ui-menu-item a.ui-state-hover,
+.tagit-autocomplete .ui-menu .ui-menu-item a.ui-state-active {
+    font-weight: normal;
+    margin: -1px;
+}
+.tagit-autocomplete.ui-widget-content { border: 1px solid #aaaaaa; background: #ffffff 50% 50% repeat-x; color: #222222; }
+.tagit-autocomplete.ui-corner-all, .tagit-autocomplete .ui-corner-all { -moz-border-radius: 4px; -webkit-border-radius: 4px; -khtml-border-radius: 4px; border-radius: 4px; }
+.tagit-autocomplete .ui-state-hover, .tagit-autocomplete .ui-state-focus { border: 1px solid #999999; background: #dadada; font-weight: normal; color: #212121; }
+.tagit-autocomplete .ui-state-active  { border: 1px solid #aaaaaa; }
+
+.tagit-autocomplete .ui-widget-content { border: 1px solid #aaaaaa; }
+.tagit .ui-helper-hidden-accessible { position: absolute !important; clip: rect(1px,1px,1px,1px); }
+
+
