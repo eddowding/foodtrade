@@ -1,64 +1,71 @@
- {% for eachfood in all_buying_foods %}
+{% for eachfood in all_buying_foods %}
+
+<tr data-toggle="collapse" data-target="#{{eachfood.food_name|slugify}}" class="accordion-toggle">
+
+
+  <td>
+    <a class="act" data-toggle="collapse"  data-target="#{{eachfood.food_name|slugify}}">
+        <i class="fa fa-caret-down"></i>
+    </a>
+    <strong>
+      {{eachfood.food_name|safe}}
+    </strong> 
+  </td>
+  <td>
+    {% if eachfood.food_tags %} 
+      {{eachfood.food_tags}} 
+    {% endif %}
+  </td> 
+  <td class="text-right">
+   {% if request.user.is_superuser or profile_id == user_id %}
+       <a href="" data-toggle="modal" class="  " data-target="#modal_food_detail"  data-container="body" onClick="hide_upload(); get_food_detail({{profile_id}}, '{{eachfood.food_name|safe}}', '{{eachfood.description}}', '{{eachfood.food_tags}}', '{{eachfood.photo_url}}', '{{eachfood.recomm_tags|safe}}', '{{eachfood.how_much}}', '{{eachfood.how_often}}', '{{eachfood.month_list}}');">
+       <i class="fa fa-edit"></i>  </a>
+       
+       <a class="text-danger" title="Delete" rel="tooltip" onClick="delete_food({{profile_id}}, '{{eachfood.food_name}}', this, 'we_buy')"> 
+      <i class="fa fa-trash-o"></i> </a>
+    {% endif %}
+    <a href="/activity/?q={{eachfood.food_name}}" rel="tooltip" title="Search for {{eachfood.food_name|safe}}" class="small"> 
+      <i class="fa fa-search"></i> 
+    </a> 
+    </td>
+</tr>
 <tr>
 
-              <!-- left blank for arrow -->
-              <td></td>
-              <td>
-                <strong>
-                  {{eachfood.food_name|safe}}
-                </strong> 
-              </td>
-              <td>
-                {% if eachfood.food_tags %} 
-                  {{eachfood.food_tags}} 
-                {% endif %}
-              </td>
-              <td> 
-                {% if eachfood.description %}   
-                  <p class=" "> 
-                    {{eachfood.description}} 
-                  </p>
-                {% endif %} 
-              </td>
-              <td>
-                {% if 1 in eachfood.month_list %} 
-                  <table class="availability" width="100%"> 
-                  <tbody><tr>
-                  <td class="winter {% if eachfood.month_list.0 == 1 %} yes {% endif %}">J</td>
-                  <td class="winter {% if eachfood.month_list.1 == 1 %} yes {% endif %}">F</td>
-                  <td class="spring {% if eachfood.month_list.2 == 1 %} yes {% endif %}">M</td>
-                  <td class="spring {% if eachfood.month_list.3 == 1 %} yes {% endif %}">A</td>
-                  <td class="spring {% if eachfood.month_list.4 == 1 %} yes {% endif %}">M</td>
-                  <td class="summer {% if eachfood.month_list.5 == 1 %} yes {% endif %}">J</td>
-                  <td class="summer {% if eachfood.month_list.6 == 1 %} yes {% endif %}">J</td>
-                  <td class="summer {% if eachfood.month_list.7 == 1 %} yes {% endif %}">A</td>  
-                  <td class="autumn {% if eachfood.month_list.8 == 1 %} yes {% endif %}">S</td>
-                  <td class="autumn {% if eachfood.month_list.9 == 1 %} yes {% endif %}">O</td>
-                  <td class="autumn {% if eachfood.month_list.10 == 1 %} yes {% endif %}">N</td>
-                  <td class="winter {% if eachfood.month_list.11 == 1 %} yes {% endif %}">D</td>
-                  </tr></tbody></table>   
-                {% endif %} 
-              </td>
-              <td>
-              {% if eachfood.how_much %} 
-                {{eachfood.how_much}} {{eachfood.how_often}}
-              {% endif %} 
-              </td>
-              <td>
-                <div class="clearfix">
-                <a href="/activity/?q={{eachfood.food_name}}" rel="tooltip" title="Search for {{eachfood.food_name|safe}}" class="small"> 
-                  <i class="fa fa-search"></i> 
-                </a> 
-                </div>
-              </td>
-              <td> 
-                {% if request.user.is_superuser or profile_id == user_id %}
-                   <a href="" data-toggle="modal" class="btn btn-xs btn-info" data-target="#modal_food_detail"  data-container="body" onClick="hide_upload(); get_food_detail({{profile_id}}, '{{eachfood.food_name|safe}}', '{{eachfood.description}}', '{{eachfood.food_tags}}', '{{eachfood.photo_url}}', '{{eachfood.recomm_tags|safe}}', '{{eachfood.how_much}}', '{{eachfood.how_often}}', '{{eachfood.month_list}}');">
-                   Edit </a>
-                   
-                   <a class="small text-danger" title="Delete" rel="tooltip" onClick="delete_food({{profile_id}}, '{{eachfood.food_name}}', this, 'we_buy')">Delete</a>
-                {% endif %}
-              </td>
-            </tr>
+<td colspan="3" class="hiddenRow">
+  <div class="accordian-body collapse innerAll" id="{{eachfood.food_name|slugify}}">
 
-            {% endfor %}
+    {% if eachfood.description %}   
+      <p class=" "> 
+        {{eachfood.description}} 
+      </p>
+    {% endif %} 
+
+  {% if eachfood.how_much %} 
+    <p>{{eachfood.how_much}} {{eachfood.how_often}}</p>
+  {% endif %} 
+   
+ 
+    {% if 1 in eachfood.month_list %} 
+      <table class="availability" width="100%"> 
+      <tbody><tr>
+      <td class="winter {% if eachfood.month_list.0 == 1 %} yes {% endif %}">J</td>
+      <td class="winter {% if eachfood.month_list.1 == 1 %} yes {% endif %}">F</td>
+      <td class="spring {% if eachfood.month_list.2 == 1 %} yes {% endif %}">M</td>
+      <td class="spring {% if eachfood.month_list.3 == 1 %} yes {% endif %}">A</td>
+      <td class="spring {% if eachfood.month_list.4 == 1 %} yes {% endif %}">M</td>
+      <td class="summer {% if eachfood.month_list.5 == 1 %} yes {% endif %}">J</td>
+      <td class="summer {% if eachfood.month_list.6 == 1 %} yes {% endif %}">J</td>
+      <td class="summer {% if eachfood.month_list.7 == 1 %} yes {% endif %}">A</td>  
+      <td class="autumn {% if eachfood.month_list.8 == 1 %} yes {% endif %}">S</td>
+      <td class="autumn {% if eachfood.month_list.9 == 1 %} yes {% endif %}">O</td>
+      <td class="autumn {% if eachfood.month_list.10 == 1 %} yes {% endif %}">N</td>
+      <td class="winter {% if eachfood.month_list.11 == 1 %} yes {% endif %}">D</td>
+      </tr></tbody></table>   
+    {% endif %} 
+   
+ 
+    
+  </div>
+</tr>
+
+{% endfor %}
