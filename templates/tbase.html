@@ -7,17 +7,12 @@
 <!DOCTYPE html>
 <html lang="en" class="js flexbox flexboxlegacy no-touch rgba hsla multiplebgs backgroundsize borderimage borderradius boxshadow textshadow opacity cssanimations csscolumns cssgradients   csstransforms csstransforms3d csstransitions fontface generatedcontent">
   <head>
-    <meta charset="utf-8">
-<!-- 
-    <meta http-equiv="refresh" content="1000"> -->
-
+    <meta charset="utf-8"> 
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <meta name="author" content="FoodTrade">
     <meta name="title" content="{% block metatitle %}Home{% endblock %} - FoodTrade" />
     <meta name="description" content="{% block metadescription %} FoodTrade is the tool foodies, artisans, and real food businesses have been waiting for. It helps you find your nearest producers and stockists, connect with collaborators, map your local food web, share knowledge about provenance, and trade in real-time. {% endblock %}" />
-
     <meta property="og:site_name" content="FoodTrade" />
     <meta property="og:description" content="{% block description %} FoodTrade is the tool foodies, artisans, and real food businesses have been waiting for. It helps you find your nearest producers and stockists, connect with collaborators, map your local food web, share knowledge about provenance, and trade in real-time. {% endblock %}" />
     <meta property="og:type" content="{% block ogtype %}website{% endblock %}" />
@@ -30,8 +25,6 @@
     <meta property="og:longitude" content="{% block fblon %}{{userinfo.lon}}{% endblock %}" />
     <meta property="og:postal-code" content="{% block fbzipcode %}{{userinfo.zip_code}}{% endblock %}" />
     <meta property="og:country-name" content="{% block fbcountry %}{{userinfo.country}}{% endblock %}" />
-    
-
     <link rel="shortcut icon" href="/static/images/favicon.ico">
     <title>
 
@@ -102,22 +95,15 @@
           Privacy policies
         {% endif %}
       {% endblock %}{% if request.path != '/' %} - FoodTrade{% endif %}
-      
 
     </title>
     <!-- CSS -->
     <link href="{% static "css/bootstrap.css" %}" rel="stylesheet"> 
-
     <link rel="stylesheet" href="{% static "css/docsupport/prism.css" %}">
     <link rel="stylesheet" href="{% static "css/chosen.min.css" %}"> 
-
     <link rel="stylesheet" href="http://malihu.github.io/custom-scrollbar/jquery.mCustomScrollbar.min.css" />
-
     <link href="{% static "css/dynamic.css" %}" rel="stylesheet"> 
-
-
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places"></script>
-    
     
     {% block contact %}
       
@@ -127,19 +113,15 @@
 
 <link rel="stylesheet" href="{% static "css/leaflet.css" %}" /> 
 <link rel="stylesheet" href="{% static "css/label-leaflet.css" %}" /> 
-
 <script src="//cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.js"></script>
- 
- 
 <script src="{% static "js/label-leaflet.js" %}"></script> 
 
-
 <script type="text/javascript">
-{% if request.user.is_authenticated %}
-var ticker_lat = {{userinfo.lat}};
-var ticker_lon = {{userinfo.lon}}; 
-{% endif %}
-   var RedIcon = L.Icon.Default.extend({
+        {% if request.user.is_authenticated %}
+          var ticker_lat = {{userinfo.lat}};
+          var ticker_lon = {{userinfo.lon}}; 
+        {% endif %}
+         var RedIcon = L.Icon.Default.extend({
             options: {
                   iconUrl:'/static/images/map_marker.png',
                   iconRetinaUrl:'/static/images/map_marker.png',
@@ -155,9 +137,7 @@ var ticker_lon = {{userinfo.lon}};
          var redIcon = new RedIcon();
          var def_lon = -135.1;
          var def_lat = -82.8627519;
-         
 </script>
-
  
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -170,15 +150,8 @@ var ticker_lon = {{userinfo.lon}};
     <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>    
     <script src="//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js" charset="utf-8"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-migrate/1.2.1/jquery-migrate.min.js"></script>
-  
-
-
-
     <link rel="stylesheet" href="{% static "assets/less/admin/module.admin.stylesheet-complete.css" %}" /> 
-
- 
     <link href="{% static "css/foodtrade.less" %}" rel="stylesheet/less">
-  
     <!--[if lt IE 9]><link rel="stylesheet" href="{% static "assets/components/library/bootstrap/css/bootstrap.min.css" %}" /><![endif]-->
     <script src="//cdnjs.cloudflare.com/ajax/libs/less.js/1.7.5/less.min.js"></script>  
     <script>
@@ -917,13 +890,10 @@ foodtrade.js
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
-
 {% include "email_login_form.html" %}
 
-
-
 <script type="text/javascript">
-  function correct_image_load_errors()
+function correct_image_load_errors()
 {
 
     $('img').bind('error', function() {
@@ -937,10 +907,7 @@ var that = this;
 
     });
 }
-
- correct_image_load_errors();
-
-
+correct_image_load_errors();
 </script>
  
 
@@ -948,27 +915,23 @@ var that = this;
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-     <script src="{% static "js/bootstrap.min.js" %}"></script>
-    
+    <script src="{% static "js/bootstrap.min.js" %}"></script>
     <script src="{% static "js/ajax-handle.js" %}"></script> 
     <script src="{% static "js/intro.min.js" %}"></script>
     <script src="{% static "js/jquery.geocomplete.js" %}"></script>
-     <script src="http://twitter.github.io/typeahead.js/js/handlebars.js"></script>
-
+    <script src="http://twitter.github.io/typeahead.js/js/handlebars.js"></script>
     <script src="{% static "js/tag-it.js" %}"></script>
     <script src="{% static "js/twitter-typeahead.js" %}"></script>
     
     <!-- social net --> 
     {% if request.user.is_authenticated %}
-   <script type="text/javascript">
-$(document).ready(function(){
-                
-                poll_latest_updates();
-                ajax_request("get_latest_updates", 'update_latest_updates',{time:latest_timestamp});
-              });
+    <script type="text/javascript">
+      $(document).ready(function(){
+        poll_latest_updates();
+        ajax_request("get_latest_updates", 'update_latest_updates',{time:latest_timestamp});
+      });
     </script>
-{% endif %}
- 
+    {% endif %}
 
     <script data-id="App.Config">
     var App = {};
@@ -989,23 +952,13 @@ $(document).ready(function(){
     <script src="http://malihu.github.io/custom-scrollbar/jquery.mCustomScrollbar.concat.min.js"></script> 
     <script src="{% static "assets/components/plugins/preload/pace/pace.min.js" %}"></script> 
     <script src="{% static "assets/components/common/forms/elements/bootstrap-select/assets/lib/js/bootstrap-select.js" %}"></script>
-
-
-
     <script src="{% static "assets/components/core/js/core.init.js" %}"></script>
     <script src='//api.tiles.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v0.0.2/Leaflet.fullscreen.min.js'></script>
-    <link href='//api.tiles.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v0.0.2/leaflet.fullscreen.css' rel='stylesheet' /> 
-
-
-<script src='//api.tiles.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v0.4.0/leaflet.markercluster.js'></script>
+    <link href='//api.tiles.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v0.0.2/leaflet.fullscreen.css' rel='stylesheet' />  
+<!-- <script src='//api.tiles.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v0.4.0/leaflet.markercluster.js'></script>
 <link href='//api.tiles.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v0.4.0/MarkerCluster.css' rel='stylesheet' />
-<link href='//api.tiles.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v0.4.0/MarkerCluster.Default.css' rel='stylesheet' />
-
-
-
-
-   
-     <script src="https://cdnjs.cloudflare.com/ajax/libs/proj4js/2.2.1/proj4.js"></script><!-- proj4js -->
+<link href='//api.tiles.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v0.4.0/MarkerCluster.Default.css' rel='stylesheet' /> -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/proj4js/2.2.1/proj4.js"></script><!-- proj4js -->
   <script src="{% static "js/proj4leaflet.js" %}"></script><!-- proj4leaflet -->
   <script src="https://rawgithub.com/rob-murray/os-leaflet/master/src/osopenspace.js"></script><!-- OS OpenSpace layer -->
 
@@ -1079,27 +1032,21 @@ var default_csr = L.CRS.EPSG3857;
 </script>
 
 <script type="text/javascript">
-  
-
-  (function($)
-{
+(function($)
+  {
   $(window).on('load', function(){
     // custom select for Boostrap using dropdowns
     if ($('.selectpicker').length) 
       $('.selectpicker').selectpicker();
   })
-
 })(jQuery);
 </script>
-
-
 
 <script src="{% static "js/footable.js" %}" type="text/javascript"></script>     
 <script src="{% static "js/footable.filter.js" %}" type="text/javascript"></script>     
 <script type="text/javascript">
   $(function () {
     $('.footable').footable(); 
-    // $('.footable').trigger('footable_expand_first_row');
   });
 </script>
  
@@ -1111,8 +1058,6 @@ var default_csr = L.CRS.EPSG3857;
  {% endblock %}
 
  <script type="text/javascript">
-
-
  function logout()
   {
     window.location = '/accounts/logout';
