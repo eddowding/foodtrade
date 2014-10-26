@@ -535,7 +535,7 @@
           {% if user.is_authenticated %}
           {% else %}
           <div class="panel-body">
-            <p class=""><a href="{% provider_login_url "twitter" process="login" %}" class="">Login</a> or <a href="{% provider_login_url "twitter" process="login" %}" class="">sign up free</a> to see a complete list of produce available here. It's free, don't worry, we just want you to be part of it so you can share and contribute easily.</p>
+            <p class="well well-sm"><a href="{% provider_login_url "twitter" process="login" %}" class="">Login or sign up free</a> to see a complete produce list.</p>
           </div>
           {% endif %}
      

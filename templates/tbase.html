@@ -101,6 +101,7 @@
     <link href="{% static "css/bootstrap.css" %}" rel="stylesheet"> 
     <link rel="stylesheet" href="{% static "css/docsupport/prism.css" %}">
     <link rel="stylesheet" href="{% static "css/chosen.min.css" %}"> 
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css"> 
     <link rel="stylesheet" href="http://malihu.github.io/custom-scrollbar/jquery.mCustomScrollbar.min.css" />
     <link href="{% static "css/dynamic.css" %}" rel="stylesheet"> 
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places"></script>
@@ -223,6 +224,9 @@ if (!Function.prototype.bind) {
   </div> 
   
       <ul class="list-unstyled list-inline navbar-right" id="sociallinks">
+        <li>
+          <a class="label label-primary text-white animated pulse" id="demo" data-toggle="modal" data-target="#myModal" data-local="#myCarousel">Tour</a>
+        </li>
         <li>
           <a href="http://www.facebook.com/foodtradeHQ" target="_blank"><i class="fa  fa-lg fa-facebook-square "></i></a></li><li> 
           <a href="http://www.twitter.com/foodtradeHQ" target="_blank"><i class="fa  fa-lg fa-twitter-square"></i></a></li><li>
@@ -618,10 +622,9 @@ if (!Function.prototype.bind) {
 
 
             {% if request.user.is_authenticated %} 
-foodtrade.js
                 <button type="button" class="btn btn-primary btn-sm hidden-xs" data-toggle="collapse" data-target="#newtwitterpost" style="font-weight: normal; margin-top:14px;" onclick="window.scrollTo(0,0);">
                   <i class="fa fa-bullhorn  fa-fw"></i>
-                  Post a trade
+                  Post an update
                 </button>
 
                 <a class="hidden-sm hidden-md hidden-lg " data-toggle="collapse" data-target="#newtwitterpost" style="font-weight: normal; position: relative; top: 2px;">
@@ -842,6 +845,126 @@ foodtrade.js
    {% endif %} -->
 
 
+ 
+
+
+
+
+<div class="modal fade modal-fullscreen force-fullscreen" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header" style="background: #000; border: 0;">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="color: #fff; text-shadow: none;">&times;</button>
+        <h4 class="modal-title">FoodTrade Tour</h4>
+      </div>
+      <div class="ftstrip"></div>
+      <div class="modal-body">
+
+
+<div id="myCarousel" class="carousel slide " data-ride="carousel" data-interval="false">
+ 
+  <!-- Wrapper for slides -->
+  <div class="carousel-inner">
+    <div class="item active lead"> 
+ 
+        <h3>Welcome to FoodTrade.</h3> 
+
+        <p>We provide food business and their customers with the tools we all need to find, sell, and buy good food.</p>
+
+        <p>Because we believe that together we can create a better, fairer food system.</p>
+
+        <p>We’d like to show you 4 ways to get the most from FoodTrade. </p>
+         
+               
+    </div>
+    <div class="item lead">  
+        <h3>How to search</h3>
+        <p>The search box shows on every page. From here you can search for produce or profiles (companies or organisations). </p>
+        <div class="text-center innerAll">
+          <img src="{% static 'images/tour_search.png' %}" />
+        </div> 
+
+        <p>You can filter results by company type (restaurant, farm etc), by organisation (eg Soil Association organic, FairTrade); and if you’ve searched for a food you can show only those who ‘buy’ or ‘sell’. </p>
+
+        <div class="text-center innerAll">
+          <img src="{% static 'images/tour_filter.png' %}" />
+        </div>
+
+        <p>Results are shown on the map, by distance from you. Drag the map and the results will update. </p>
+ 
+    </div>
+    <div class="item lead"> 
+        <h3>Company profile - View, and share what you know</h3>
+
+        <p>Each company has a profile showing what we know about what they buy and sell, who they trade with, what organisations they’re a part of, and so on. </p>
+
+        <p><strong>This page is open to your contributions!</strong> If you’re looking at the menu and it says they sell mozzarella from Laverstocke Farm, you can add them as a stockist, and add ‘mozzarella’ to their shopping list. </p>
+
+        <p>Or if it’s your business and you want to add all your stockists, do so. It’s super easy. </p>
+
+        <div class="text-center innerAll">
+          <img src="{% static 'images/tour_profile.jpg' %}" />
+        </div> 
+
+    </div>
+    <div class="item lead"> 
+        <h3>How to use the marketplace</h3>
+
+        <p>This is where anyone can buy, sell, find collaborators, or find a home for surplus produce. Like a real-world market, anyone can talk to anyone, and transactions happen between you so you arrange your own payments - eg cash on delivery. <strong>We don’t take a cut of any transaction</strong>.</p>
+
+        <p>On the Activity page (the home page when you’re logged in) Click on the ‘marketplace’ tab to see everything near you. </p>
+
+        <div class="text-center innerAll">
+          <img src="{% static 'images/tour_market.png' %}" />
+        </div> 
+
+        <p>To post an update, click on ‘Post an update’ button in the top left of the page. A form will slide open. </p>
+
+        <div class="text-center innerAll">
+          <img src="{% static 'images/tour_trade.png' %}" />
+        </div> 
+
+        <p>Enter the details about what you’re looking for - eg Buy, Apples, 10 boxes, next Friday - and click ‘Post this’. It will show up immediately and be sent by email to local subscribers. </p>
+    </div>
+    <div class="item lead"> 
+        <h3>Thanks for taking our tour.</h3>
+
+        <p>The food system is complex and confusing, so we’re trying to make it simpler through transparency and open data. </p>
+
+        <p>We know we’re not quite there yet, but we’re continually developing FoodTrade to make it more useful and better for everyone. </p>
+
+        <p>FoodTrade is your food network, so please email <a href="mailto:hello@foodtrade.com">hello@foodtrade.com</a> with any suggestions or questions. </p>
+ 
+    </div>
+    </div>
+  </div>
+  
+ 
+</div>
+      </div>
+      <div class="ftstrip"></div>
+      <div class="modal-footer" style="margin:0;">
+        <a class="btn btn-default " href="#myCarousel" data-slide="prev">
+          &laquo; Prev
+        </a>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        
+        <a class="btn btn-primary " href="#myCarousel" data-slide="next">
+          Next &raquo;
+        </a>
+        
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
+
+
+
+
+
+
 <!-- FOOTER --> 
 
 <div class="container-responsive clearfix" id="footer" >    
@@ -875,6 +998,8 @@ foodtrade.js
 <!-- Button trigger modal -->
 <button id="btn_must_be_logged" style="display:none" data-toggle="modal" data-target="#myModal_must_be_logged">
 </button>
+
+
 
 <!-- Modal -->
 <div class="modal fade" id="myModal_must_be_logged" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -915,13 +1040,13 @@ correct_image_load_errors();
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script src="{% static "js/bootstrap.min.js" %}"></script>
-    <script src="{% static "js/ajax-handle.js" %}"></script> 
-    <script src="{% static "js/intro.min.js" %}"></script>
-    <script src="{% static "js/jquery.geocomplete.js" %}"></script>
-    <script src="http://twitter.github.io/typeahead.js/js/handlebars.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script src="{% static "js/foodtrade.js" %}"></script>
+    <script src="{% static "js/ajax-handle.js" %}"></script>  
+    <script src="//cdnjs.cloudflare.com/ajax/libs/geocomplete/1.4/jquery.geocomplete.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/handlebars.js/2.0.0/handlebars.min.js"></script>
     <script src="{% static "js/tag-it.js" %}"></script>
-    <script src="{% static "js/twitter-typeahead.js" %}"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/typeahead.js/0.10.4/typeahead.bundle.min.js"></script>
     
     <!-- social net --> 
     {% if request.user.is_authenticated %}
@@ -951,14 +1076,14 @@ correct_image_load_errors();
 
     <script src="http://malihu.github.io/custom-scrollbar/jquery.mCustomScrollbar.concat.min.js"></script> 
     <script src="{% static "assets/components/plugins/preload/pace/pace.min.js" %}"></script> 
-    <script src="{% static "assets/components/common/forms/elements/bootstrap-select/assets/lib/js/bootstrap-select.js" %}"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.3/js/bootstrap-select.min.js"></script>
     <script src="{% static "assets/components/core/js/core.init.js" %}"></script>
     <script src='//api.tiles.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v0.0.2/Leaflet.fullscreen.min.js'></script>
     <link href='//api.tiles.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v0.0.2/leaflet.fullscreen.css' rel='stylesheet' />  
 <!-- <script src='//api.tiles.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v0.4.0/leaflet.markercluster.js'></script>
 <link href='//api.tiles.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v0.4.0/MarkerCluster.css' rel='stylesheet' />
 <link href='//api.tiles.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v0.4.0/MarkerCluster.Default.css' rel='stylesheet' /> -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/proj4js/2.2.1/proj4.js"></script><!-- proj4js -->
+  <script src="//cdnjs.cloudflare.com/ajax/libs/proj4js/2.3.3/proj4.js"></script><!-- proj4js -->
   <script src="{% static "js/proj4leaflet.js" %}"></script><!-- proj4leaflet -->
   <script src="https://rawgithub.com/rob-murray/os-leaflet/master/src/osopenspace.js"></script><!-- OS OpenSpace layer -->
 
@@ -1352,20 +1477,7 @@ $(function() {
     </script>
 
 
-
-
-<!-- TOUR SCRIPT --> 
-{% if request.user.is_authenticated %}
-<script type="text/javascript">
-  // document.getElementById('help').onclick = function() {
-  //   introJs().setOption('doneLabel', 'Next page').start().oncomplete(function() {
-  //     window.location.href = '/activity?multipage=true';
-  //   });
-  // };
-</script>
-{% endif %}
-<!-- // TOUR SCRIPT --> 
-
+ 
    <script>
    $(document).ready(function(){
 
@@ -1643,7 +1755,7 @@ function show_full_structure()
 
 function show_small_structure()
 { 
-  switch_text_area
+  switch_text_area5
   $("#update-big").hide();
   $("#structured_postupdate").show();
   $("#structured_hidden_block").removeClass("hidden");
