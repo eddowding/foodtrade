@@ -272,7 +272,7 @@
       </div>
 
        <div class="mCustomScrollbar scroll300">
-        <table class="table table-hover table-condensed footable toggle-arrow-circle-filled" id="suppliersTable" data-filter="#filterMembers" data-filter-text-only="true"> 
+        <table class="table table-hover table-condensed footable toggle-arrow-circle-filled" id="membersTable" data-filter="#filterMembers" data-filter-text-only="true"> 
         <thead class="hidden">
             <tr> 
               <th data-hide=""  >
@@ -300,7 +300,7 @@
           </thead>
           <tbody>
           {% for each_mem in members %} 
-            <tr>
+            <tr id="trMember{{each_mem.id}}">
             <td width="40">
               <a href="/profile/{{each_mem.username}}">
                 <img src="{{each_mem.photo}}" alt="{{each_mem.name}}" class="img-responsive" style="width:40px" />
@@ -757,7 +757,7 @@
      <script src="{% static "js/contact.js" %}"></script>
         <script type="text/javascript">
 
-$('#members').on('click', '.tt-suggestion', function(){
+$('#member_remote').on('click', '.tt-suggestion', function(){
   var member_id = this.getElementsByClassName('result-name')[0];
   var member_var = $(member_id).attr('data-id');
   if(member_var == 'search'){

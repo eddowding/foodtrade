@@ -1,5 +1,6 @@
 #home {
 
+
   
   #nav2 {
     margin:28px 0 0 0; 
@@ -55,6 +56,36 @@
     strong {
       font-weight: 400;
     }
+  }
+
+  #proof .input-group {
+    .box-shadow(0 0 20px #444);
+    border: 2px solid #fff;
+    padding-left: 0px;
+    .rounded(8px);
+  }
+
+  .showcase {
+    h2 {
+      font-weight: 600;
+      font-size: 30px;
+      border-bottom: 2px solid #222;
+      text-transform: uppercase;
+    }
+    ul {
+
+    }
+    li { 
+      color: #222;
+    }
+    .btn {
+      font-size: 1.1em;
+      font-weight: bold;
+    }
+  }
+
+  #notLoggedIn {
+    display: none;
   }
 
   #content {
@@ -113,24 +144,27 @@
 
 
     a {
-      font-size: 20px; 
-      text-shadow: 1px 1px 0px #000 !important; 
+      font-size: 23px; 
+      // text-shadow: 1px 1px 0px #000 !important; 
       .box-shadow(1px 1px 1px #444) !important; 
       background: @ftgreen;
       line-height: 0.7; 
-      padding: 10px 20px; 
+      padding: 15px 20px; 
       border: 1px solid rgba(255,255,255,0.7); 
       text-align: center; 
       margin-bottom: 20px;
-      font-weight: 300 !important;
+      letter-spacing: 1px;
+      font-weight: 200 !important;
       margin-right: 10px;
       @media (max-width: 768px) {
         margin-right: 2px;
       }
 
       small {
-        font-size: 12px;
+        font-size: 13px;
         font-weight: normal;
+        margin-top: 10px;
+        display: inline-block;
         color: rgba(255,255,255,0.7);
         text-shadow: none;
       }

@@ -13,7 +13,7 @@ from Foods import AdminFoods
 from mainapp.classes.TweetFeed import TradeConnection, UserProfile, Food, Customer, Organisation, Team, RecommendFood, Notification, Friends, Spam, InviteId, Invites, UnapprovedFood, ApprovedFoodTags, TweeterUser
 from AjaxSearch import AjaxSearch
 from pygeocoder import Geocoder
-from mainapp.profilepage import get_connections, get_all_foods, get_organisations, get_members, get_banner_url, get_all_buying_foods
+from mainapp.profilepage import get_connections, get_all_foods, get_organisations, get_members, get_banner_url, get_all_buying_foods, get_each_member_details
 from mainapp.views import get_twitter_obj
 import datetime, time
 from bson.objectid import ObjectId
@@ -70,11 +70,7 @@ class AjaxHandle(AjaxSearch):
 
         # try:
         if registered_user == None or len(registered_user) == 0:
-            if tweeter_or_friend == 'gplaces':
-                from mainapp.classes.gplaces import GPlaces
-                pass
-
-            elif tweeter_or_friend == 'showuser':
+            if tweeter_or_friend == 'showuser':
                 from mainapp.classes.MySQLConnect import MySQLConnect
                 mc = MySQLConnect()
                 try:
@@ -534,10 +530,10 @@ class AjaxHandle(AjaxSearch):
                 each['profile_linked_to_twitter'] = usr_pr['profile_linked_to_twitter']
             except:
                 pass
-            # try:
-            each['gPlacesProfile'] = usr_pr['gPlacesProfile']
-            # except:
-            #     each['gPlacesProfile'] = False
+            try:
+                each['gPlacesProfile'] = usr_pr['gPlacesProfile']
+            except:
+                each['gPlacesProfile'] = False
 
             parameters['connections'], parameters['conn'] = get_connections(int(pro_obj['useruid']), request.user.id)
             parameters['profile_id'], parameters['user_id'] = int(pro_obj['useruid']), request.user.id
@@ -812,26 +808,26 @@ class AjaxHandle(AjaxSearch):
                     pass
             except:
                 pass
-            parameters = {}
-            parameters['members'], parameters['logged_member'] = get_members(data['orguid'], request.user.id)
 
+
+            parameters = {}
+
+            each = {'memberuid':data['memberuid']}        
+            parameters['member_added'] = get_each_member_details(each)
             parameters['profile_id'], parameters['user_id'] = int(data['orguid']), request.user.id
-            return render_to_response('ajax_member.html', parameters, context_instance=RequestContext(request))
+            row_html = str(render_to_response('ajax_member.html', parameters, context_instance=RequestContext(request)))
+            row_html = row_html.replace('Content-Type: text/html; charset=utf-8', '')
+            return HttpResponse(json.dumps({'status':'ok', 'action':'addmember', 'row_html':row_html}))
 
         else:
             return HttpResponse("{'status':0}")
 
     def deletemember(self, request):
         org = Organisation()
-        data = eval(request.POST.get('data'))
-        print 'data', data
+        data = eval(request.POST.get('data'))        
         if data !=None and data !="":
             org.delete_member(orguid = data['orguid'], member_id = data['memberuid'])
-            parameters = {}
-            parameters['members'], parameters['logged_member'] = get_members(data['orguid'], request.user.id)
-
-            parameters['profile_id'], parameters['user_id'] = int(data['orguid']), request.user.id
-            return render_to_response('ajax_member.html', parameters, context_instance=RequestContext(request))
+            return HttpResponse(json.dumps({'status':'ok','action':'delete','message':'successfully deleted member','useruid':data['memberuid']}))
         else:
             return HttpResponse("{'status':0}")    
 

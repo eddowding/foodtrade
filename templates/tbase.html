@@ -128,11 +128,8 @@
 <link rel="stylesheet" href="{% static "css/leaflet.css" %}" /> 
 <link rel="stylesheet" href="{% static "css/label-leaflet.css" %}" /> 
 
-<script src="http://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.2/leaflet.js"></script>
-    <!-- // <script src='http://api.tiles.mapbox.com/mapbox.js/v1.0.0/mapbox.js'></script> -->
-    <!-- <link href='http://api.tiles.mapbox.com/mapbox.js/v1.0.0/mapbox.css' rel='stylesheet' /> -->
-
-    
+<script src="//cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.js"></script>
+ 
  
 <script src="{% static "js/label-leaflet.js" %}"></script> 
 
@@ -169,29 +166,32 @@ var ticker_lon = {{userinfo.lon}};
     <![endif]-->
   
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
-    <script src="{% static "assets/components/library/modernizr/modernizr.js" %}"></script>
-    <script type="text/javascript" src="http://code.jquery.com/jquery-2.1.1.min.js"></script>    
-    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js" type="text/javascript" charset="utf-8"></script>
-    <script src="{% static "assets/components/library/jquery/jquery-migrate.min.js" %}"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>    
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js" charset="utf-8"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-migrate/1.2.1/jquery-migrate.min.js"></script>
   
 
 
 
     <link rel="stylesheet" href="{% static "assets/less/admin/module.admin.stylesheet-complete.css" %}" /> 
 
-    <!-- <link rel="stylesheet" href="/assets/css/foodtrade.css" />  -->
-    <!-- <link href="{% static "assets/less/admin/compiledstyle.css" %}" rel="stylesheet"> -->
+ 
     <link href="{% static "css/foodtrade.less" %}" rel="stylesheet/less">
   
     <!--[if lt IE 9]><link rel="stylesheet" href="{% static "assets/components/library/bootstrap/css/bootstrap.min.css" %}" /><![endif]-->
     <script>
       less = {
         env: "production", 
-        poll: 5000
+        poll: 6000
       };
     </script>
+<<<<<<< HEAD
 
     <script src="//cdnjs.cloudflare.com/ajax/libs/less.js/1.7.1/less.min.js"></script>  
+=======
+    <script src="//cdnjs.cloudflare.com/ajax/libs/less.js/1.7.5/less.min.js"></script>  
+>>>>>>> 578dade99095031d44b877b0ca93c6961a2224f3
     <!-- <script>less.watch();</script> -->
 <script type="text/javascript">
 
@@ -262,7 +262,7 @@ if (!Function.prototype.bind) {
           <a href="https://plus.google.com/+Foodtrade" target="_blank"><i class="fa  fa-lg fa-google-plus-square"></i></a></li>
           <li><a href="https://foodtrade.uservoice.com" data-uv-trigger="contact" id="support">Contact</a>﻿﻿﻿</li>
           {% if not request.user.is_authenticated %} 
-          <li><a data-toggle="modal" data-target="#modal_signup">Sign up</a>
+          <li><a data-toggle="modal" data-target="#modal_emaillogin">Sign up</a>
           <li>
             <a class="dropdown-toggle label label-primary text-white" data-toggle="dropdown" href="#">Login
             </a> 
@@ -922,6 +922,8 @@ foodtrade.js
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
+
+{% include "email_login_form.html" %}
 
 
 

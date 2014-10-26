@@ -33,6 +33,44 @@
   }
 }
 
+.nav-tabs > li > a {
+  color: #444;
+  font-size: 16px;
+  padding: 10px 20px;
+  border: 0;
+}
+
+.nav-tabs > li, .nav-pills > li {
+    float:none;
+    display:inline-block;
+    *display:inline; /* ie7 fix */
+     zoom:1; /* hasLayout ie7 trigger */
+    background: none;
+    a {
+    }
+}
+
+.nav-tabs>li>a:hover,
+.nav-tabs>li.active>a, .nav-tabs>li.active>a:hover, .nav-tabs>li.active>a:focus {
+    .rounded(0px);
+    background: #F6F6F6;
+    background: #fff;
+    border: 0;
+    border-bottom: 4px solid @ftgreen;
+}
+
+.nav-tabs>li>a:hover {
+    border-bottom: 4px solid @ftorange; 
+    padding: 10px 20px;
+}
+
+
+
+.nav-tabs, .nav-pills {
+    text-align:center;
+    background: #fff;
+}
+
 
 .bizSummary {
    
@@ -127,9 +165,9 @@
 }
 
 .panel-heading {
-  border-bottom: 3px solid;
-  border-top: 0;
-  padding: 15px 10px !important;
+  border-bottom: 4px solid;
+  border-top: 1px solid;
+  padding: 10px 10px !important;
 }
 
 .panel-body {
@@ -140,30 +178,39 @@
 
 #panelOrganisations .panel-heading  {
   border-bottom-color: @organisation;
+  border-top-color: @organisation;
 }
 #panelCustomers .panel-heading  {
   border-bottom-color: @customers;
+  border-top-color: @customers;
 }
 #panelProduce .panel-heading {
   border-bottom-color: @produce;
+  border-top-color: @produce;
 }
 #panelShoppingList .panel-heading {
   border-bottom-color: @shoppingList;
+  border-top-color: @shoppingList;
 }
 #panelSuppliers .panel-heading  {
   border-bottom-color: @suppliers;
+  border-top-color: @suppliers;
 }
 #panelStockists .panel-heading  {
   border-bottom-color: @stockists;
+  border-top-color: @stockists;
 }
 #panelUpdates .panel-heading  {
   border-bottom-color: @marketplace;
+  border-top-color: @marketplace;
 }
 #panelDeliveries .panel-heading {
   border-bottom-color: @deliveries;
+  border-top-color: @deliveries;
 }
 #panelCompany .panel-heading  {
   border-bottom-color: @information;
+  border-top-color: @information;
 }
 
 /************************************************

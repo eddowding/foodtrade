@@ -268,7 +268,7 @@ function stockists_ajax(data){
 			new_html =  data['html'] + current_html;
 			$("#supplier_connections").html(new_html);
 			
-		 	$('#suppliersTable').trigger('footable_initialize');
+		 	$('#stockistsTable').trigger('footable_initialize');
             $('#stockistsTable').trigger('footable_resize');
             $('#suppliersTable').trigger('footable_initialize');
             $('#suppliersTable').trigger('footable_resize');
@@ -499,7 +499,18 @@ function add_member(org_id, mem_id, action){
 }
 
 function member_ajax(data){
-	$('#member_ajax').html(data);
+	data = jQuery.parseJSON(data);
+	if (data['status']=='ok'){
+		if (data['action']=='addmember'){
+			$('#membersTable > tbody').prepend(data['row_html']);
+			$('#membersTable').trigger('footable_initialize');			
+		}
+		else{
+			$('#trMember'+data['useruid']).remove();
+			$('#membersTable').trigger('footable_initialize');	
+		}
+		
+	}
 }
 
 function add_team(org_id, team_id){

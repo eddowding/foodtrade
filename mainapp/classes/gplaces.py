@@ -180,28 +180,40 @@ class GPlaces():
         logged_user = user_profile_obj.get_profile_by_id(user_id)        
         location = str(logged_user['latlng']['coordinates'][1]) + ',' + str(logged_user['latlng']['coordinates'][0])
 
-        get_url = 'https://maps.googleapis.com/maps/api/place/nearbysearch/json'
+        get_url = 'https://maps.googleapis.com/maps/api/place/autocomplete/json'
         payload = {
             'key':KEY,
-            'keyword':q.lower(),
+            'radius':'20000000',
+            'input':q.lower(),
             'location':location,
             'rankby':'distance'
         }
 
         r = requests.get(get_url,params=payload)
         json_response = json.loads(r.text)
-        search_results =  json_response['results'][0:6]
+        search_results =  json_response['predictions'][0:5]
         
         return_results = []
         # print json_response
 
         for eachResult in search_results:
             data = {
-                'name' : eachResult['name']
+                'name' : eachResult['description']
             }
 
+
+            get_url = 'https://maps.googleapis.com/maps/api/place/details/json'
+            payload = {
+            'placeid':eachResult['place_id'],
+            'key':KEY
+            }
+            r = requests.get(get_url,params=payload)
+
+            json_response = json.loads(r.text)
+        
+
             try:
-                data['profile_img'] = 'https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&key=' + KEY + '&photoreference='+eachResult['photos'][0]['photo_reference']
+                data['profile_img'] = 'https://maps.googleapis.com/maps/api/place/photo?key=' + KEY + '&maxwidth=400&photoreference='+json_response['result']['photos'][0]['photo_reference']
             except:
                 data['profile_img'] = 'https://maps.googleapis.com/maps/api/place/photo?key=' + KEY + '&photoreference='+eachResult['reference']
             try:
@@ -211,12 +223,6 @@ class GPlaces():
             except:
                 pass
 
-                
-            try:                
-                data['address'] = str(eachResult['vicinity'])
-            except:
-                data['address'] = str('Antartica')
-                data['address_default_on_error'] = 'true'
-            
+            data['address'] = ''                    
             return_results.append(data)                        
         return return_results

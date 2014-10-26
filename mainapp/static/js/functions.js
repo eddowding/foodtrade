@@ -159,7 +159,7 @@ function get_box_profile(user)
 	content += '...</span>';
 	content += '</a> ';
 	content += '<a href="http://maps.google.com/maps?saddr='+Search.filters.profile.lat+','+Search.filters.profile.lng+'&amp;daddr='+user.latlng.coordinates[1]+','+user.latlng.coordinates[0]+'" target="_blank" data-placement="top" data-toggle="tooltip"   rel="tooltip" title="" data-original-title="Get directions"> ';
-	content += '<i class="fa fa-location-arrow fa-fw"></i>'+user.distance+' miles  ';
+	content += '<i class="fa fa-location-arrow fa-fw"></i>'+user.distance+' miles from you ';
 	content += '</a>';
 	content += '</div>  ';
 	content += '<div class="innerAll border-top bg-gray  r eply" style="display: none;"> ';
