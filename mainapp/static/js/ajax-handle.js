@@ -230,8 +230,9 @@ function plot_connection_layers_on_map(connection){
 
 	card_str += '<p>'+description+'</p></div>';
 	card_str += '<a href="/profile/'+username+'" class="btn btn-primary btn-sm">View profile &raquo;</a></div> </div>';    
-
-	var ctrl = L.marker([parseFloat(current_lat), parseFloat(current_lon)], {icon: redIcon}).addTo(map).bindPopup(card_str);			
+	var rIcon = new RedIcon();
+     rIcon.options.iconUrl = photo;
+	var ctrl = L.marker([parseFloat(current_lat), parseFloat(current_lon)], {icon: rIcon}).addTo(map).bindPopup(card_str);			
 	control_dict[username] = ctrl;
 	/*map_controls.push(ctrl);*/
 }

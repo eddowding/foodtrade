@@ -409,17 +409,22 @@ var card_str = '<div class="card-box"><div class="text-center"><div class=""><a 
 
 if(parseInt(current_lon) != parseInt(def_lon) || parseInt(def_lat) != parseInt(current_lat))
 { 
-			var dot = L.circleMarker([parseFloat(latitude), parseFloat(longitude)],  {
-			userid: connections[i].id,
-			color: '#000',
-			opacity:0.7,
-			weight:1,
-			fill:1,
-			radius: 6,
-			fillColor: "#cc0000",
-			fillOpacity: 1,
 
-		}).addTo(map).bindPopup(card_str);
+     var rIcon = new RedIcon();
+      rIcon.options.iconUrl = photo;
+            var dot = L.marker([parseFloat(latitude), parseFloat(longitude)], {icon: rIcon}).addTo(map).bindPopup(card_str);
+          
+		// 	var dot = L.circleMarker([parseFloat(latitude), parseFloat(longitude)],  {
+		// 	userid: connections[i].id,
+		// 	color: '#000',
+		// 	opacity:0.7,
+		// 	weight:1,
+		// 	fill:1,
+		// 	radius: 6,
+		// 	fillColor: "#cc0000",
+		// 	fillOpacity: 1,
+
+		// }).addTo(map).bindPopup(card_str);
 			map_controls.push(dot);
 			dot.on('mouseover', function (e) {
             var user_id = this.options.userid;
