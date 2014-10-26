@@ -116,6 +116,23 @@ def display_profile(request, username):
     except:
         raise Http404
 
+    try:
+        site_urls = []
+        site1 = userprof.get('site_url1',"")
+        if site_url1!="":
+            site_urls.append(site1)
+        site2 = userprof.get('site_url3',"")
+        if site3!="":
+            site_urls.append(site3)
+        site3 = userprof.get('site_url3',"")
+        if site3!="":
+            site_urls.append(site3)
+        parameters['site_links'] = site_urls
+    except:
+        parameters['site_links'] = []
+
+
+
     '''Code to get the banner_url, followers_count, friends_count'''
     try:
         parameters['followers_count'] = userprof['followers_count']
