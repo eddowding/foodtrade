@@ -1,31 +1,11 @@
 /* Desktop wide */
 @import '../../../assets/components/common/forms/elements/bootstrap-select/assets/lib/css/bootstrap-select.css';
-
-@import '../../../assets/components/common/tables/datatables/assets/lib/extras/TableTools/media/css/TableTools.css';
-
+/*@import '../../../assets/components/common/tables/datatables/assets/lib/extras/TableTools/media/css/TableTools.css';*/
 @import '../../../assets/components/library/bootstrap/css/bootstrap.min.css';
-
 @import '../../../assets/components/library/icons/glyphicons/assets/css/glyphicons_regular.css';
-
-@import '//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.1.0/css/font-awesome.min.css';
-
+@import '//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.2.0/css/font-awesome.min.css';
 @import '../../../assets/components/library/jquery-ui/css/jquery-ui.min.css';
 
-@import '../../../assets/components/modules/admin/page-tour/assets/css/pageguide.css';
-
-@import '../../../assets/components/library/animate/animate.min.css';
-/* --- LOADING [css.bootstrap-datepicker] from assets/components/common/forms/elements/bootstrap-datepicker/assets/lib/css/bootstrap-datepicker.css */
-/* --- LOADING [css.bootstrap-select] from assets/components/common/forms/elements/bootstrap-select/assets/lib/css/bootstrap-select.css */
-/* --- LOADING [css.multi-select] from assets/components/common/forms/elements/multiselect/assets/lib/css/multi-select.css */
-/* --- LOADING [css.TableTools] from assets/components/common/tables/datatables/assets/lib/extras/TableTools/media/css/TableTools.css */
-/* --- LOADING [css.bootstrap.min] from assets/components/library/bootstrap/css/bootstrap.min.css */
-/* --- LOADING [css.glyphicons_regular] from assets/components/library/icons/glyphicons/assets/css/glyphicons_regular.css */
-/* --- LOADING [css.jquery-ui.min] from assets/components/library/jquery-ui/css/jquery-ui.min.css */
-/* --- LOADING [css.pageguide] from assets/components/modules/admin/page-tour/assets/css/pageguide.css */
-/* --- LOADING [css.animate.min] from assets/components/library/animate/animate.min.css */
-/* --- LOADING [less.variables] from assets/components/core/less/variables.less */
-/* --- LOADING [less.mixins] from assets/components/core/less/mixins.less */
-/* --- LOADING [less.scaffolding] from assets/components/core/less/scaffolding.less */
 html {
   -webkit-font-smoothing: antialiased !important;
   height: 100%;
