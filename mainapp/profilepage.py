@@ -60,6 +60,8 @@ def profile_url_resolve(request, username):
             return HttpResponseRedirect('/' + str(result[0]['screen_name']) + '/')
         except:
             raise Http404
+def resolve_profile_display(request, username):
+    return HttpResponseRedirect('/'+username)
             
 def resolve_profile(request, username):
     if username == 'me':
