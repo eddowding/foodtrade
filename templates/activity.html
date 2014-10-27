@@ -269,9 +269,13 @@
 
 <!-- resizes the map -->
 <script type="text/javascript">
-var mapmargin = 140;
+var mapmargin = 155;
+var resultsmargin = 207;
+ 
 
-$('#activity_switcher').css("height", ($(window).height() - mapmargin));
+// $('#activity_switcher').css("height", ($(window).height() - resultsmargin));
+$('#profile_results').css("height", ($(window).height() - resultsmargin));
+$('#mkt_results').css("height", ($(window).height() - resultsmargin));
 
 $('#map').css("height", ($(window).height() - mapmargin));
 $(window).on("resize", resize);
