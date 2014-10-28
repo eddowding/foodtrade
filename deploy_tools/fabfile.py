@@ -3,7 +3,7 @@ from fabric.api import local, run, env
 import random
 
 # for real
-REPO_URL = 'git@bitbucket.org:sujitmah/foodtrade.git'
+REPO_URL = 'git@bitbucket.org:eddowding/foodtrade.git'
 SITES_FOLDER = '/srv/www/live/foodtrade-env'
 PROJECT_NAME = 'foodtrade'
 
