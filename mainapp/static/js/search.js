@@ -217,8 +217,7 @@ var Search = {
         if(profiles.length==0)
         {
             html_content = "<div class='innerAll'><p><b>Sorry! There are no results for this search.</b></p>  <p>Things to try:</p><ul><li>check the spelling</li><li> removing filters</li><li>broadening your search term  (e.g. instead of 'truffles' search 'confectionary')</li><li>zooming out to cover a larger area</li></ul><p>We're getting bigger and better everyday, but it might be that no one has added this to the food web yet. </p><div class='innerTB text-center'><button type='button' class='btn btn-primary' data-toggle='collapse' data-target='#newtwitterpost' style='font-weight: normal;' onclick='window.scrollTo(0,0);'><i class='fa fa-bullhorn fa-lg fa-fw'></i>Post a request in the marketplace</button></div></div>";
-        }
-        else        
+        }       
             show_connections_on_map();
         
          for(var i=0;i<profiles.length;i++)
