@@ -428,7 +428,8 @@ var Search = {
 
 function start_search()
 {
-
+    initial_flag = true;
+    console.log("nepal");
     Search.search_start();
 
     return false;
