@@ -13,9 +13,9 @@ HQ_ACCESS_TOKEN = '384361932-BdKtwhhRDILj4YeHU1G3UN1QtvlrD8LfsqsK6lDF'
 HQ_ACCESS_TOKEN_SECRET = 'xGB1Wl4kHnBdxZIDufXTKDQNZPPxbj3PWjMTqH4X802mr'
 
 #..................Server Settings............................
-REMOTE_SERVER_LITE = 'foodtradelite.cloudapp.net' 
-LOCAL_SERVER = 'localhost' 
-REMOTE_SERVER_STAGING = 'ftstaging.cloudapp.net' 
+REMOTE_SERVER_LITE = 'foodtradelite.cloudapp.net'
+LOCAL_SERVER = 'localhost'
+REMOTE_SERVER_STAGING = 'ftstaging.cloudapp.net'
 REMOTE_MONGO_DBNAME = 'foodtrade'
 REMOTE_MONGO_USERNAME = 'ftroot'
 REMOTE_MONGO_PASSWORD = 'ftroot'
@@ -78,3 +78,8 @@ ACCOUNT_LOGOUT_ON_GET = True
 # ACCOUNT_SIGNUP_FORM_CLASS = "djstripe.forms.StripeSubscriptionSignupForm"
 DEFAULT_FROM_EMAIL = 'FoodTrade <noreply@foodtrade.com>'
 REMOVE_WWW = False
+
+
+#elastic search settings for utils
+ES_URLS = ['http://localhost:9200']
+ES_INDEX = 'foodtrade'
