@@ -2,6 +2,24 @@ from elasticutils import get_es
 from django.conf import settings
 
 
+ES_MAPPING = {
+    'mappings': {
+        'userprofile': {
+            'properties': {
+                'useruid': {'type': 'integer', 'store': True, 'index': 'not_analyzed'},
+                'username': {'type': 'string', 'store': True, 'index': 'no'},
+                'name': {'type': 'string', 'store': True, 'index': 'analyzed'},
+                'description': {'type': 'string', 'store': True, 'index': 'analyzed'},
+                'sign_up_as': {'type': 'string', 'store': True, 'index': 'not_analyzed'},
+                'address': {'type': 'string', 'store': True, 'index': 'analyzed'},
+                'profile_img': {'type': 'string', 'store': True, 'index': 'no'},
+                'profile_banner_url': {'type': 'string', 'store': True, 'index': 'no'},
+                'latlng': {'type': 'geo_point', 'store': True, 'index': 'analyzed'}
+            }
+        }
+    }
+}
+
 class ESConnection(object):
 """
 Elastic search CRUD operations.
@@ -13,7 +31,10 @@ Elastic search CRUD operations.
         """
         self.conn = get_es(urls=settings.ES_URLS)
         if not self.conn.indices.exists(index=settings.ES_INDEX):
-            self.conn.indices.create(index=settings.ES_INDEX)
+            self.conn.indices.create(index=settings.ES_INDEX, body=ES_MAPPING)
+
+    def mapping_exists(self, doc_type):
+        return doc_type in ES_MAPPING['mappings']
 
     def _mongo_obj_to_es(self, mongo_obj):
         """
