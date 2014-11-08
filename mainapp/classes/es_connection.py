@@ -20,10 +20,16 @@ ES_MAPPING = {
     }
 }
 
+ES_MONGO_MAPPING = {
+    'userprofile': {
+        'latlng': ['latlng', 'coordinates']
+    }
+}
+
 class ESConnection(object):
-"""
-Elastic search CRUD operations.
-"""
+    """
+    Elastic search CRUD operations.
+    """
 
     def __init__(self):
         """
@@ -36,21 +42,31 @@ Elastic search CRUD operations.
     def mapping_exists(self, doc_type):
         return doc_type in ES_MAPPING['mappings']
 
-    def _mongo_obj_to_es(self, mongo_obj):
+    def _mongo_obj_to_es(self, doc_type, mongo_obj):
         """
         Structure the mongo document for indexing into ES.
         """
-        doc = mongo_obj
-        id = str(doc._id)
-        del doc['_id']
-        doc['id'] = id
+        doc = {}
+        doc['id'] = str(mongo_obj['_id'])
+        for key in ES_MAPPING['mappings'][doc_type]['properties'].keys():
+            if key in ES_MONGO_MAPPING[doc_type]:
+                depth = ES_MONGO_MAPPING[doc_type][key]
+                value = None
+                for d in depth:
+                    if not value:
+                        value = mongo_obj[d]
+                    else:
+                        value = value[d]
+                doc[key] = value
+            else:
+                doc[key] = mongo_obj[key]
         return doc
 
     def create(self, doc_type, mongo_obj):
         """
         Create document in ES index.
         """
-        doc = self._mongo_obj_to_es(mongo_obj)
+        doc = self._mongo_obj_to_es(doc_type, mongo_obj)
         return self.conn.index(index=settings.ES_INDEX, doc_type=doc_type, body=doc, id=doc['id'])
 
     def update(self, id, doc_type, document):
