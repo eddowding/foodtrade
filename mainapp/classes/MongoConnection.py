@@ -7,6 +7,7 @@ from pymongo import Connection
 import json
 from bson import BSON
 from bson import json_util
+from mainapp.classes.es_connection import ESConnection
 
 
 class MongoConnection():
@@ -20,8 +21,9 @@ class MongoConnection():
         # self.conn = None
         # self.db = None
         self.conn = Connection(self.host, self.port)
+        self.es_conn = ESConnection()
         self.db = self.conn[self.db_name]
-        self.db.authenticate(self.username, self.password)  
+        self.db.authenticate(self.username, self.password)
 
     def create_connection(self):
         self.conn = Connection(self.host, self.port)
@@ -38,7 +40,7 @@ class MongoConnection():
         # self.create_connection()
         self.db[table_name].ensure_index([(index,pymongo.GEOSPHERE)])
         # self.close_connection()
-    
+
     def create_table(self, table_name, index=None):
         # self.create_connection()
         self.db[table_name].create_index([(index, pymongo.DESCENDING)])
@@ -54,7 +56,7 @@ class MongoConnection():
         single_doc = self.db[table_name].find_one(conditions)
         json_doc = json.dumps(single_doc,default=json_util.default)
         json_doc = json_doc.replace("$oid", "id")
-        json_doc = json_doc.replace("_id", "uid")        
+        json_doc = json_doc.replace("_id", "uid")
         # self.close_connection()
         return json.loads(json_doc)
 
@@ -87,7 +89,9 @@ class MongoConnection():
 
     def insert_one(self, table_name, value):
         # self.create_connection()
-        self.db[table_name].insert(value)
+        id = self.db[table_name].insert(value)
+        value['_id'] = id
+        self.es_conn.create(table_name, value)
         # self.close_connection()
 
     def update_push(self, table_name, where, what):
@@ -108,7 +112,7 @@ class MongoConnection():
 
     def update_upsert(self, table_name, where, what):
         # self.create_connection()
-        self.db[table_name].update(where,{"$set":what},upsert=True)        
+        self.db[table_name].update(where,{"$set":what},upsert=True)
         # self.close_connection()
 
     def map_reduce(self, table_name, mapper, reducer, query, result_table_name):
@@ -139,7 +143,7 @@ class MongoConnection():
         json_doc = json_doc.replace("_id", "uid")
         # self.close_connection()
         return json.loads(str(json_doc))
-        
+
     def group(self,table_name,key, condition, initial, reducer):
         # self.create_connection()
         all_doc = self.db[table_name].group(key=key, condition=condition, initial=initial, reduce=reducer)
@@ -152,13 +156,13 @@ class MongoConnection():
     def get_distinct(self,table_name, distinct_val, query):
         # self.create_connection()
         all_doc = self.db[table_name].find(query).distinct(distinct_val)
-        count = len(all_doc)        
+        count = len(all_doc)
         parameter = {}
         parameter['count'] = count
         parameter['results'] = all_doc
         # self.close_connection()
         return parameter
-        
+
     def get_all_vals(self,table_name,conditions={}, sort_index ='_id'):
         # self.create_connection()
         all_doc = self.db[table_name].find(conditions).sort(sort_index, pymongo.DESCENDING)
@@ -175,7 +179,7 @@ class MongoConnection():
         json_doc = json_doc.replace("$oid", "id")
         json_doc = json_doc.replace("_id", "uid")
         # self.close_connection()
-        return json.loads(json_doc)        
+        return json.loads(json_doc)
 
     def get_count(self, table_name,conditions={}, sort_index='_id'):
         # self.create_connection()

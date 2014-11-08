@@ -73,7 +73,14 @@ class ESConnection(object):
         """
         Update document by ID and document type.
         """
-        pass
+        doc = {}
+        for k, v in document.items():
+            if k in ES_MAPPING['mappings'][doc_type]['properties']:
+                doc[k] = v
+        if not len(doc.keys()):
+            return None
+        else:
+            return self.conn.update(index=settings.ES_INDEX, doc_type=doc_type, id=id, body=doc)
 
     def read(self, id, doc_type):
         """
