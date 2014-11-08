@@ -54,12 +54,12 @@ class ESConnection(object):
                 value = None
                 for d in depth:
                     if not value:
-                        value = mongo_obj[d]
+                        value = mongo_obj.get(d)
                     else:
                         value = value[d]
                 doc[key] = value
             else:
-                doc[key] = mongo_obj[key]
+                doc[key] = mongo_obj.get(key)
         return doc
 
     def create(self, doc_type, mongo_obj):
