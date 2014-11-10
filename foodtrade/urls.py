@@ -23,15 +23,15 @@ urlpatterns = patterns('',
     url(r'^(?i)unclaimed/(?P<username>[-\w]+)/$', 'mainapp.profilepage.resolve_profile_display', name='profile'),
     # url(r'^foodtrade/', include('foodtrade.foo.urls')),
 
-    
+
     # (r'^accounts/password/reset/done/$', 'django.contrib.auth.views.password_reset_done'),
     # (r'^accounts/password/reset/(?P<uidb36>[0-9A-Za-z]+)-(?P<token>.+)/$', 'django.contrib.auth.views.password_reset_confirm',
     #  {'post_reset_redirect' : '/accounts/password/done/'}),
     # (r'^accounts/password/done/$', 'django.contrib.auth.views.password_reset_complete'),
 
-#     url(r'^accounts/password/reset/confirm/$', 
+#     url(r'^accounts/password/reset/confirm/$',
 #              'django.contrib.auth.views.password_reset_confirm', name="auth_password_reset_confirm"),
-#     url(r'^accounts/password/reset/complete/$', 
+#     url(r'^accounts/password/reset/complete/$',
 #              'django.contrib.auth.views.password_reset_complete'),
     # url(r'^accounts/password/change/$', 'mainapp.views.my_password_change ', name='my_password_change '),
 
@@ -39,7 +39,7 @@ urlpatterns = patterns('',
     url(r'^accounts/social/signup/', 'mainapp.signup_views.signup_view', name = 'account_signup'),
     url(r'^accounts/', include('allauth.urls')),
     # url(r'^accounts/signup/', 'mainapp.signup_views.signup_view_new'),
-    
+
     # Uncomment the admin/doc line below to enable admin documentation:
     url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
     url(r'^(?i)editprofile/(?P<username>[-\w]+)/$','mainapp.profilepage.edit_profile'),
@@ -67,11 +67,11 @@ urlpatterns = patterns('',
     # Temporary urls
     url(r'^merge-data/$', 'mainapp.merge_data.merge'),
     url(r'^update-image/$', 'mainapp.merge_data.update_image'),
-    url(r'^visitors/$', 'mainapp.profilepage.get_views_count'),    
+    url(r'^visitors/$', 'mainapp.profilepage.get_views_count'),
     # url(r'^activity/(?P<request_type>\w{1,40})$', 'mainapp.activity.activity_suppliers'),
     url(r'^myprofile/favourites/$', 'mainapp.favpage.display_favourites'),
-    ## any user    
-       
+    ## any search views
+    url(r'^search/', include('search.urls')) 
 )
 urlpatterns += patterns('',
         (r'^media/(?P<path>.*)$', 'django.views.static.serve', {
