@@ -1,6 +1,6 @@
 from django.core.management.base import BaseCommand, CommandError
 from pymongo import Connection
-from mainapp.classes.es_connection import ESConnection
+from search.es_connection import ESConnection
 
 
 class Command(BaseCommand):

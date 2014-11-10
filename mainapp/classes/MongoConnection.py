@@ -7,7 +7,7 @@ from pymongo import Connection
 import json
 from bson import BSON
 from bson import json_util
-from mainapp.classes.es_connection import ESConnection
+from search.es_connection import ESConnection
 
 
 class MongoConnection():
