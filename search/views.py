@@ -1,5 +1,6 @@
 from django.shortcuts import render
-from django.http import HttpResponse
-# Create your views here.
+from django.shortcuts import render
+
+
 def search(request):
-    return HttpResponse('search view')
+    return render(request, 'search.html')
