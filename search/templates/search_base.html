@@ -1,0 +1,1864 @@
+{% load staticfiles %}
+{% load socialaccount %}
+{% load url from future %}
+{% load i18n %}
+{% include "socialaccount/snippets/login_extra.html" %}
+{% load account %}
+<!DOCTYPE html>
+<html lang="en" class="js flexbox flexboxlegacy no-touch rgba hsla multiplebgs backgroundsize borderimage borderradius boxshadow textshadow opacity cssanimations csscolumns cssgradients   csstransforms csstransforms3d csstransitions fontface generatedcontent">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="FoodTrade">
+    <meta name="title" content="{% block metatitle %}Home{% endblock %} - FoodTrade" />
+    <meta name="description" content="{% block metadescription %} FoodTrade is the tool foodies, artisans, and real food businesses have been waiting for. It helps you find your nearest producers and stockists, connect with collaborators, map your local food web, share knowledge about provenance, and trade in real-time. {% endblock %}" />
+    <meta property="og:site_name" content="FoodTrade" />
+    <meta property="og:description" content="{% block description %} FoodTrade is the tool foodies, artisans, and real food businesses have been waiting for. It helps you find your nearest producers and stockists, connect with collaborators, map your local food web, share knowledge about provenance, and trade in real-time. {% endblock %}" />
+    <meta property="og:type" content="{% block ogtype %}website{% endblock %}" />
+    <meta property="fb:admins" content="732525050" />
+    <meta property="fb:app_id" content="1400801613504478" />
+    <meta property="og:url" content="http://{{request.META.HTTP_HOST}}{{request.path}}" />
+    <meta property="og:image" content="{% block ogimg %}http://{{request.META.HTTP_HOST}}/static/images/foodtrade_og_default.gif{% endblock %}" />
+    <meta property="og:title" content="{% block titlecontent %}Home{% endblock %} - FoodTrade" />
+    <meta property="og:latitude" content="{% block fblat %}{{userinfo.lat}}{% endblock %}" />
+    <meta property="og:longitude" content="{% block fblon %}{{userinfo.lon}}{% endblock %}" />
+    <meta property="og:postal-code" content="{% block fbzipcode %}{{userinfo.zip_code}}{% endblock %}" />
+    <meta property="og:country-name" content="{% block fbcountry %}{{userinfo.country}}{% endblock %}" />
+    <link rel="shortcut icon" href="/static/images/favicon.ico">
+    <title>
+
+      {% block titlemain %}
+        {% if 'accounts/password/change/' in request.path %}
+          Change Password
+        {% endif %}
+        {% if 'accounts/password/set/' in request.path %}
+          Set Password
+        {% endif %}
+        {% if 'accounts/password/reset/' in request.path %}
+          Reset Password
+        {% endif %}
+        {% if 'accounts/login' in request.path %}
+          Login
+        {% endif %}
+        {% ifequal request.path '/' %}
+          Welcome to FoodTrade - Login, Signup, become the part of Food revolution
+        {% endifequal %}
+
+        {% if '/accounts/password/set' in request.path %}
+          Set Password
+        {% endif %}
+
+        {% if 'payments' in request.path %}
+          Subscription
+        {% endif %}
+        {% if 'inbox' in request.path %}
+          Inbox
+        {% endif %}
+        {% if 'invite' in request.path %}
+          Invite
+        {% endif %}
+        {% if 'unclaimed-profiles' in request.path %}
+          Unclaimed Profiles
+        {% endif %}
+        {% if 'pricing' in request.path %}
+          Pricing
+        {% endif %}
+        {% if 'activity' in request.path %}
+          Home
+        {% endif %}
+        {% if 'about' in request.path %}
+          About
+        {% endif %}
+        {% if 'individuals' in request.path %}
+          Individuals
+        {% endif %}
+        {% if 'organisation' in request.path %}
+          Organisation
+        {% endif %}
+        {% if 'business' in request.path %}
+          Business
+        {% endif %}
+        {% if 'foodwaste' in request.path %}
+          Foodwaste
+        {% endif %}
+        {% if 'editprofile' in request.path %}
+          Editprofile
+        {% endif %}
+        {% if 'kpi' in request.path %}
+          KPI
+        {% endif %}
+        {% if 'terms' in request.path %}
+          Terms of service
+        {% endif %}
+        {% if 'privacy' in request.path %}
+          Privacy policies
+        {% endif %}
+      {% endblock %}{% if request.path != '/' %} - FoodTrade{% endif %}
+
+    </title>
+    <!-- CSS -->
+    <link href="{% static "css/bootstrap.css" %}" rel="stylesheet">
+    <link rel="stylesheet" href="{% static "css/docsupport/prism.css" %}">
+    <link rel="stylesheet" href="{% static "css/chosen.min.css" %}">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css">
+    <link rel="stylesheet" href="http://malihu.github.io/custom-scrollbar/jquery.mCustomScrollbar.min.css" />
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places"></script>
+
+    {% block contact %}
+
+    {% endblock %}
+ {% block head %}
+{% endblock %}
+
+<link rel="stylesheet" href="{% static "css/leaflet.css" %}" />
+<!-- <link rel="stylesheet" href="{% static "css/label-leaflet.css" %}" />  -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.js"></script>
+<script src="{% static "js/label-leaflet.js" %}"></script>
+
+<script type="text/javascript">
+        {% if request.user.is_authenticated %}
+          var ticker_lat = {{userinfo.lat}};
+          var ticker_lon = {{userinfo.lon}};
+        {% endif %}
+         var RedIcon = L.Icon.Default.extend({
+            options: {
+                  iconUrl:'/static/images/map_marker.png',
+                  iconRetinaUrl:'/static/images/map_marker.png',
+                  iconSize:[32, 32],
+                  iconAnchor:[16, 32],
+                  popupAnchor:[0, -32],
+                  shadowURL: '/static/images/shadow-map_marker.png',
+                  shadowRetinaUrl: '/static/images/shadow-map_marker.png',
+                  shadowSize:[28, 18],
+                  shadowAnchor: [16,32],
+            }
+         });
+         var redIcon = new RedIcon();
+         var def_lon = -135.1;
+         var def_lat = -82.8627519;
+</script>
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js" charset="utf-8"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-migrate/1.2.1/jquery-migrate.min.js"></script>
+    <link rel="stylesheet" href="{% static "assets/less/admin/module.admin.stylesheet-complete.css" %}" />
+
+    <!--[if lt IE 9]><link rel="stylesheet" href="{% static "assets/components/library/bootstrap/css/bootstrap.min.css" %}" /><![endif]-->
+
+    <link rel="stylesheet" href="{% static "css/foodtrade.css" %}" />
+<!--     <link href="{% static "css/foodtrade.less" %}" rel="stylesheet/less">
+    <script>less = {env: "development", poll: 600};</script>
+    <script>less.watch();</script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/less.js/1.7.5/less.min.js"></script>   -->
+<script type="text/javascript">
+
+
+  // IE function.bind polyfill
+if (!Function.prototype.bind) {
+        Function.prototype.bind = function (oThis) {
+                if (typeof this !== "function") {
+                        // closest thing possible to the ECMAScript 5 internal IsCallable function
+                        throw new TypeError("Function.prototype.bind - what is trying to be bound is not callable");
+                }
+
+                var aArgs = Array.prototype.slice.call(arguments, 1),
+                        fToBind = this,
+                        fNOP = function () {},
+                        fBound = function () {
+                                return fToBind.apply(this instanceof fNOP && oThis ? this : oThis,
+                        aArgs.concat(Array.prototype.slice.call(arguments)));
+                };
+
+                fNOP.prototype = this.prototype;
+                fBound.prototype = new fNOP();
+
+                return fBound;
+        };
+}
+</script>
+
+    <script>
+    if ( /*@cc_on!@*/ false && document.documentMode === 10)
+    {
+        document.documentElement.className += ' ie ie10';
+    }
+    </script>
+
+
+  </head>
+<body {% ifequal request.path '/' %} id="home" {% endifequal %}>
+
+
+
+
+
+
+<div class="container-responsive menu-hidden" id="wrapper">
+
+
+
+
+<div id="content">
+<div class="navbar hidden-print navbar-default navbar-fixed-top box main  hidden-sm hidden-xs" role="navigation" id="topnav" >
+
+
+
+
+
+  <div class="pull-left" style="margin-right: 10px;">
+      <a href="/" class="">
+      <img src="{% static 'images/logo_28.png' %}" alt="FoodTrade logo" class="visible-md visible-lg" />
+      </a>
+  </div>
+
+      <ul class="list-unstyled list-inline navbar-right" id="sociallinks">
+        <li>
+          <a class="label label-info text-white animated pulse" id="demo" data-toggle="modal" data-target="#myModal" data-local="#myCarousel">Tour</a>
+        </li>
+        <li>
+          <a href="http://www.facebook.com/foodtradeHQ" target="_blank"><i class="fa  fa-lg fa-facebook-square "></i></a></li><li>
+          <a href="http://www.twitter.com/foodtradeHQ" target="_blank"><i class="fa  fa-lg fa-twitter-square"></i></a></li><li>
+          <a href="http://www.instagram.com/foodtradeHQ" target="_blank"><i class="fa fa-lg fa-instagram "></i></a></li><li>
+          <a href="https://plus.google.com/+Foodtrade" target="_blank"><i class="fa  fa-lg fa-google-plus-square"></i></a></li>
+          <li><a href="https://foodtrade.uservoice.com" data-uv-trigger="contact" id="support">Contact</a>﻿﻿﻿</li>
+          {% if not request.user.is_authenticated %}
+          <li><a data-toggle="modal" data-target="#modal_emaillogin">Sign up</a>
+          <li>
+            <a class="dropdown-toggle label label-primary text-white" data-toggle="dropdown" href="#">Login
+            </a>
+             <ul class="dropdown-menu pull-right" id="login" style="padding: 15px;min-width: 250px;">
+                <li>
+                   <a href="{% provider_login_url "twitter" process="login" %}"><button class="btn btn-primary btn-block" style="background: #5398D8; border-color: #4B80B5;" id="sign-in-twitter" value="Sign In with Twitter">Sign In with Twitter</button></a>
+                </li>
+                <li class="divider"></li>
+                <li>
+                   <div class="row">
+                      <div class="col-md-12">
+                         <form class="form" role="form" method="post" action="/accounts/login/" accept-charset="UTF-8" id="login-nav">{% csrf_token %}
+                            <div class="form-group">
+                               <label class="sr-only" for="exampleInputEmail2">Email address</label>
+                               <input type="email" class="form-control" id="exampleInputEmail2" name="login" placeholder="Email address" required>
+                            </div>
+                            <div class="form-group">
+                               <label class="sr-only" for="exampleInputPassword2">Password</label>
+                               <input type="password" class="form-control" id="exampleInputPassword2" name="password" placeholder="Password" required>
+                            </div>
+                            <div class="checkbox">
+                               <label>
+                               <input type="checkbox" name="remember"> Remember me
+                               </label>
+                            </div>
+                            <a class="help-block" href="/accounts/password/reset/"/>Forgot Password?</a>
+                            <div class="form-group">
+                               <button type="submit" class="btn btn-success btn-block">Sign in</button>
+                            </div>
+                          </form>
+                      </div>
+                   </div>
+                </li>
+             </ul>
+          </li>
+          {% endif %}
+      </ul>
+
+
+      <ul class="nav navbar-nav navbar-left">
+        <li class="dropdown"><a href="/" class="dropdown-toggle">Near me</a></li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Produce <span class="caret"></span></a>
+          <ul class="dropdown-menu" role="menu">
+            <li><a href="/activity/?q=sausages">Sausages</a></li>
+            <li><a href="/activity/?q=chicken">Chicken</a></li>
+            <li><a href="/activity/?q=bread">Bread</a></li>
+            <li><a href="/activity/?q=brownie">Brownies</a></li>
+            <li><a href="/activity/?q=salad">Salad</a></li>
+            <li><hr /></li>
+            <li><a href="/activity/?q=cider">Cider</a></li>
+            <li><a href="/activity/?q=beer">Beer</a></li>
+            <li><a href="/activity/?q=juice">Juice</a></li>
+            <li><a href="/activity/?q=porter">Porter</a></li>
+          </ul>
+        </li>
+
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Types <span class="caret"></span></a>
+          <ul class="dropdown-menu" role="menu">
+            <li><a href="/activity/?b=Livestock%20Farm">Livestock farm</a></li>
+            <li><a href="/activity/?q=Baker">Baker</a></li>
+            <li><a href="/activity/?q=Food%20Stall">Food Stall</a></li>
+            <li><a href="/activity/?q=Box%20Scheme">Box Scheme</a></li>
+            <li><a href="/activity/?q=Food%20Manufacturer">Manufacturer</a></li>
+            <li><a href="/activity/?q=Grower">Grower</a></li>
+          </ul>
+        </li>
+
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Cities <span class="caret"></span></a>
+          <ul class="dropdown-menu" role="menu">
+            <li><a href="/activity?tab=profile&stype=produce&pwant=all&plng=-2.6174926757812496&plat=51.45529052633677&put=all&porg=[]&pbiz=[]&mwant=all&mlng=-2.6241509&mlat=51.4530491&mut=all&morg=[]&mbiz=[]">Bristol</a></li>
+            <li><a href="/activity?tab=profile&stype=produce&pwant=all&plng=-0.12908935546875&plat=51.47796179607124&put=all&porg=[]&pbiz=[]&mwant=all&mlng=-2.6241509&mlat=51.4530491&mut=all&morg=[]&mbiz=[]">London</a></li>
+            <li><a href="/activity?tab=profile&stype=produce&pwant=all&plng=-3.188266999999996&plat=55.953252&put=all&porg=[]&pbiz=[]&mwant=all&mlng=-2.6241509&mlat=51.4530491&mut=all&morg=[]&mbiz=[]">Edinburgh</a></li>
+          </ul>
+        </li>
+
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Organisations <span class="caret"></span></a>
+          <ul class="dropdown-menu" role="menu">
+            <li><a href="/slowfooduk">
+            <span class="result-container" style="white-space: nowrap;">
+            <span class="result-img"><img height="22px" width="22px" src="http://pbs.twimg.com/profile_images/1690823879/Screen_shot_2011-12-13_at_12.21.20_bigger.png"></span>
+            <span>Slow Food UK</span>
+            </span></a></li>
+        <!--     <li><a href="/soilassociation">
+            <span class="result-container" style="white-space: nowrap;">
+            <span class="result-img"><img height="22px" width="22px" src="http://pbs.twimg.com/profile_images/478576050532655105/5nrVkyw9_bigger.jpeg"></span>
+            <span>Soil Association</span>
+
+            </span>
+            </a>
+            </li> -->
+            <li><a href="/RBSTrarebreeds">
+            <span class="result-container" style="white-space: nowrap;">
+            <span class="result-img"><img height="22px" width="22px" src="http://pbs.twimg.com/profile_images/425306987270664193/Xy6t5Spk_bigger.jpeg"></span>
+            <span>Rare Breeds Survival Trust</span>
+            </span></a></li>
+
+
+            <li><a href="/FairtradeUK">
+            <span class="result-container" style="white-space: nowrap;">
+            <span class="result-img"><img height="22px" width="22px" src="http://pbs.twimg.com/profile_images/490164578051833856/7m-a0uuW_bigger.jpeg"></span>
+            <span>Fairtrade Foundation</span>
+            </span></a></li>
+
+            <li><a href="/farmdrop">
+            <span class="result-container" style="white-space: nowrap;">
+            <span class="result-img"><img height="22px" width="22px" src="http://pbs.twimg.com/profile_images/446219768450650112/ELiLvM6E_bigger.jpeg"></span>
+            <span>FarmDrop</span>
+            </span></a></li>
+
+            <li><a href="/slowfoodlondon">
+            <span class="result-container" style="white-space: nowrap;">
+            <span class="result-img"><img height="22px" width="22px" src="http://pbs.twimg.com/profile_images/3376104397/9edf0480e8b1a610b54a62e50e619156_bigger.png"></span>
+            <span>Slow Food London</span>
+            </span></a></li>
+          </ul>
+        </li>
+      </ul>
+
+
+<!--   <div class="input-group pull-left border0  visible-md visible-lg" id="socialShare">
+
+<a href="https://twitter.com/foodtradeHQ" class="btn btn-info btn-xs btn-stroke"><i class="fa fa-twitter fa-fw fa-lg twitter"></i></a>
+<a href="https://facebook.com/foodtradeHQ" class="btn btn-info facebook btn-xs btn-stroke"><i class="fa fa-facebook fa-fw fa-lg "></i></a>
+
+    <a href="https://twitter.com/foodtradeHQ" class="twitter-follow-button " data-show-count="false"> @foodtradeHQ</a>
+    <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+
+    <iframe src="//www.facebook.com/plugins/like.php?href=http%3A%2F%2Ffacebook.com%2FfoodtradeHQ&amp;width=80&amp;layout=button&amp;action=like&amp;show_faces=true&amp;share=false&amp;height=21&amp;appId=1400801613504478" scrolling="no" frameborder="0" style="border:none; overflow:hidden; height:21px;width:80px" allowTransparency="true"></iframe>
+
+  </div>
+ -->
+
+</div>
+
+
+
+<!-- *************** -->
+<!-- NEW POST FORM   -->
+<!-- *************** -->
+
+
+<div class="collapse clearfix" id="newtwitterpost" tabindex="-1" role="dialog" aria-labelledby="newtwitterpost" aria-hidden="true">
+  <div class="innerAll
+  col-md-6 col-md-offset-3
+  col-sm-12
+  col-xs-12
+   ">
+
+    <div id="structured_postu pdate" class="">
+
+      <form action="r" method="post" id="structured_input_form" accept-charset="utf-8" onsubmit="generate_update(); $('#newtwitterpost').addClass('collapse')" class="form" role="form">
+
+
+      <div class="row" style="margin-bottom:0;">
+
+        <div class="col-xs-12">   <!-- unclosed -->
+
+          <div class="btn-group" id="post_for"  >
+            <button type="button"  disabled="disabled" class="btn btn-default btn-sm text-black normal hidden-xs" style="background: #fff; color: #222; "> I'd like to</button>
+            <button type="button" onclick="show_small_structure();$('#price').show();"  class="btn btn-default btn-sm" value="buy" ><i class="fa fa-sign-in fa-fw"></i> buy</button>
+            <button type="button" onclick="show_small_structure();$('#price').show();" class="btn btn-default  btn-sm" value="sell" ><i class="fa fa-sign-out fa-fw"></i> sell</button>
+            <button type="button" onclick="show_small_structure();$('#price').hide();"   class="btn btn-default   btn-sm" value="offer surplus"  ><i class="fa fa-random fa-fw"></i> offer surplus</button>
+            <button type="button" onclick="switch_update_form()"   class="btn btn-default btn-sm" value="offer surplus"  ><i class="fa fa-rocket fa-fw"></i> go freestyle</button>
+          </div>
+
+
+          <div class=" " id="structured_hidden_block">
+              <div class="row" style="margin-top: 10px;">
+                <div class="col-xs-6">
+                  <input type="text" name="produce" value="" class="form-control" placeholder="What?"  />
+                  <p class="help-block">eg 'apples', 'veg curry'</p>
+                </div>
+                <div class="col-xs-6">
+                  <div class="row">
+                    <div class="col-xs-7" style="padding-right:0;">
+                      <input type="text" name="qty" value="" class="form-control" placeholder="Qty"  />
+                    </div>
+                    <div class="col-xs-5" style="padding-left: 0;">
+                      <select id="qtyUnit" class="form-control btn-sm selectpicker">
+                        <option value="">Select unit</option>
+                        <option value="Pieces">Pieces</option>
+                        <option value="20' Container">20' Container</option>
+                        <option value="40' Container">40' Container</option>
+                        <option value="Acre/Acres">Acre(s)</option>
+                        <option value="Bags">Bags</option>
+                        <option value="Barrel/Barrels">Barrel(s)</option>
+                        <option value="Boxes">Boxes</option>
+                        <option value="Bushel/Bushels">Bushel(s)</option>
+                        <option value="Case/Cases">Case(s)</option>
+                        <option value="Centimeter/Centimeters">Centimeter(s)</option>
+                        <option value="Cubic Meter/Cubic Meters">Cubic Meter(s)</option>
+                        <option value="cubic yards">Cubic Yard(s)</option>
+                        <option value="doz">Dozen</option>
+                        <option value="gall">Gallon(s)</option>
+                        <option value="ha">Hectare(s)</option>
+                        <option selected="selected" value="Kg">kg(s)</option>
+                        <option value="l">Litre(s)</option>
+                        <option value="m">Meter(s)</option>
+                        <option value="pallet(s)">Pallet(s)</option>
+                        <option value="pint(s)">Pint(s)</option>
+                        <option value="pound(s)">Pound(s)</option>
+                        <option value="roll(s)">Roll(s)</option>
+                        <option value="sets">Sets</option>
+                        <option value="sheet(s)">Sheet(s)</option>
+                        <option value="stone">Stone(s)</option>
+                        <option value="ton(s)">Ton(s)</option>
+                        <option value="tray(s)">Tray(s)</option>
+                        <option value="unit(s)">Unit(s)</option>
+                        <option value="yard(s)">Yard(s)</option>
+                      </select>
+                    </div>
+                  </div>
+
+                      <p class="help-block">Weight / vol / size</p>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-xs-6" id="price">
+                  <input type="text" name="Price" value="" class="form-control" placeholder="Price"  />
+                  <p class="help-block">Total, or per unit. Inc &pound;/$/&euro;</p>
+                </div>
+                <div class="col-xs-6">
+                  <input type="text" class="form-control" name="date_val" id="expire_on" placeholder="When?">
+                  <p class="help-block" id="date_help">try 'next Friday', '8 sept 17'</p>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-xs-12">
+                  <textarea class="form-control" onkeyup="check_limit1()" id="update_description" rows="3" placeholder="Add detail (optional)  "></textarea>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-xs-7">
+                  <p class="help-block">eg. quality, variety, grade, packaging...</p>
+                </div>
+                <div class="col-xs-5 text-right">
+                  <span class="small text-muted counted" id="charsRem1">
+                    120 characters remaining
+                  </span>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-xs-7">
+              {% if userinfo.email_registration == 0 %}
+                  <ul class="list-inline small" style="margin-bottom:0;">
+                    <li class="">Also post this to my twitter  </li>
+                    <li>
+                      <label>
+                        <input type="checkbox" id="structured_post_to_twitter" name="post_to_twitter" value="1" checked="checked"> <i class="fa fa-twitter-square fa-lg tw"></i>
+                      </label>
+                    </li>
+                  </ul>
+                {% endif %}
+                </div>
+
+                <div class="col-xs-5 text-right">
+                  {% if not user.is_authenticated %}
+                    <a href="/payments" class="btn btn-success pull-right"  rel="tooltip" title="Join free to post an upate">LOGIN TO POST
+                    <br />
+                    <span class="small">Get started free</span></a>
+                  {% else %}
+                    <button type="button" id="btn_update_activity" class="btn btn-sm btn-success pull-right" rel="tooltip"  {% if not user.is_authenticated %}  title="Please login to use this feature." {% endif %} onclick="generate_update();"><i class="fa fa-bullhorn fa-lg"></i> Post this</button>
+                  {% endif %}
+                </div>
+              </div>
+      </form>
+
+
+          </div><!--structured_hidden_block-->
+
+
+              <div id="update-big" class="clearfix hidden">
+                <form class="form-horizontal">
+                  <div class="row" style="margin-top:10px;">
+                    <div class="col-xs-12">
+                      <textarea class="form-control col-xs-12 counted" onkeyup="check_limit()" rows="3" name="q" id="newstatus" {% if not user.is_authenticated %}  onfocus="login_redirect()" title="Please login to use this feature." {% endif %} placeholder="What would you like? Eg '300kg #surplus conference #pears for #sale or #surplus' or 'I want to  #buy organic #honey for my farm shop.' "></textarea>
+                    </div>
+                  </div>
+
+                <div class="row">
+                  <div class="col-xs-7">
+                    <ul class="list-inline small" style="margin-bottom:0;">
+                      <li class="">Also post this to my twitter   </li>
+                      <li>
+                        <label>
+                          <input type="checkbox" id="structured_post_to_twitter" name="post_to_twitter" value="1" checked="checked"> <i class="fa fa-twitter-square fa-lg tw"></i>
+                        </label>
+                      </li>
+                    </ul>
+                  </div>
+
+                  <div class="col-xs-5 text-right">
+                    <span class="small text-muted counted" id="charsRem">
+                      120 characters remaining
+                    </span>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-sm-12">
+                    {% if not user.is_authenticated %}
+                      <a href="/payments" class="btn btn-success pull-right"  rel="tooltip" title="Join free to post an upate">LOGIN TO POST
+                      <br />
+                      <span class="small">Get started free</span></a>
+                    {% else %}
+                      <button type="button" id="btn_update_activity" class="btn btn-sm btn-success pull-right" {% if not user.is_authenticated %}  title="Please login to use this feature." {% endif %} onclick="post_new_status();"> <i class="fa fa-bullhorn fa-lg"></i> Post this</button></button>
+                    {% endif %}
+                  </div>
+                </div>
+              </form>
+              </div>
+
+    </div>
+
+
+
+
+</div>
+</div>
+</div>
+</div>
+
+<!-- *************** -->
+<!-- / NEW POST FORM -->
+<!-- *************** -->
+
+
+
+
+<nav class="navbar   navbar-default" role="navigation" id="nav2">
+  <div class="container-responsive">
+
+    <div class="pull-left" style="margin-right: 10px;">
+      <a href="/" class="">
+      <img src="{% static 'images/logo_sm.png' %}" alt="FoodTrade logo" class="visible-xs visible-sm" />
+      </a>
+    </div>
+
+    <div class="" id="">
+    <form action="/activity" onsubmit="return start_search()" class="navbar-form navbar-left col-sm-6" id="searchform">
+      <div class="input-group border0">
+        <input type="hidden" name="stype" value="produce" id="search_stype">
+        <input type="text" class="form-control pull-left" name="q" id="search_query" placeholder="eg 'apples'">
+        <div class="input-group-btn border0" id="searchGroup">
+          <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" id="searchSelect">
+          <span id="search_type">
+              <div class="hidden-xs">
+                in Produce
+                <i class='fa fa-caret-down'></i>
+              </div>
+              <div class="hidden-sm hidden-md hidden-lg">
+                <i class='fa fa-cutlery fa-lg'></i>
+                <i class='fa fa-caret-down'></i>
+              </div>
+          </span>
+          </button>
+          <ul class="dropdown-menu">
+            <li><a href="#" id="search_type_option"> in Profiles </a></li>
+          </ul>
+        </div>
+
+        <div class="input-group-btn">
+          <button type="submit" class="btn btn-default" id="searchSubmit">
+            <span class="glyphicon glyphicon-search"></span>
+          </button>
+        </div>
+      </div>
+    </form>
+    </div>
+<!--     <ul class="nav navbar-nav navbar-left">
+      <li><a href="/activity/#profiles"><i class="fa fa-map-marker"></i> Near me</a></li>
+      <li><a href="/activity/#mktplace"><i class="fa fa-bullhorn"></i> Marketplace</a></li>
+    </ul> -->
+    <ul class="nav navbar-nav navbar-right pull-right">
+
+    <li class="">
+
+
+            {% if request.user.is_authenticated %}
+                <button type="button" class="btn btn-primary btn-sm hidden-xs" data-toggle="collapse" data-target="#newtwitterpost" style="font-weight: normal; margin-top:14px;" onclick="window.scrollTo(0,0);">
+                  <i class="fa fa-bullhorn  fa-fw"></i>
+                  Post an update
+                </button>
+
+                <a class="hidden-sm hidden-md hidden-lg " data-toggle="collapse" data-target="#newtwitterpost" style="font-weight: normal; position: relative; top: 2px;">
+                  <i class="fa fa-edit fa-lg text-primary "></i>
+                </a>
+            {% endif %}
+    </li>
+
+       {% if request.user.is_authenticated %}
+       <li id="notifications">
+          <a href="/inbox/"><i class="notif-block fa fa-envelope-o fa-lg fa-fw"></i>{% if userinfo.notification_count != 0 %}
+            <span id="spanInbox" class="pull-number label label-success">{{userinfo.notification_count}}</span>
+            {% endif %}
+            </a>
+      </li>
+
+  {% endif %}
+
+      {% if request.user.is_authenticated %}
+        <li class="dropdown username pull-left">
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                <span class="media margin-none">
+                    <span class="pull-left">
+                        <img src="{{userinfo.profileimg}}" alt="{{userinfo.full_name}}"
+                        class="img-rounded" id="avatar">
+                    </span>
+                    <span class="media-body">
+                        <span class="caret"></span>
+                    </span>
+                </span>
+            </a>
+            <ul class="dropdown-menu pull-right">
+                <li><a href="/visitors">My visitors</a></li>
+                <li><a href="/editprofile/me">Edit my profile</a></li>
+                <li><a href="/me">View my profile</a></li>
+                <li><a href="/payments">Account &amp; billing</a></li>
+                <li><a href="/accounts/password/change/">Change Password</a></li>
+                <li><a href="/accounts/logout">Logout</a>
+                </li>
+            </ul>
+          </li>
+      {% endif %}
+
+    </ul>
+  </div>
+</nav>
+
+
+
+
+<span id="reload_warning" class="hidden"> </span>
+
+{% if not request.user.is_authenticated %}
+<div class="row" id="notLoggedIn">
+  <div class="col-md-12">
+    <div class=" ">
+    <p>
+    <a href="{% provider_login_url "twitter" process="login" %}">Sign in</a> to see richer profiles, save favourites, contact people, and more.</p>
+    </p>
+    </div>
+  </div>
+</div>
+{% endif %}
+
+<div class="row row-merge"  style="height: 100%;">
+  <!-- <div class="{% if not request.user.is_authenticated %} col-xs-12 {% else %} col-md-10  {% endif %}"> -->
+  <div class=" col-xs-12  ">
+        <div class="container-fluid menu-hidden" id="main_page" style="padding-bottom: 0;">
+              <div class="row row-merge">
+                    <div class="col-md-12">
+                     {% block content %}
+
+                     {% endblock %}
+                    </div><!-- 12 -->
+              </div><!-- row -->
+        </div><!-- container -->
+  </div><!-- col 10 -->
+  <!-- <div class="  {% if not request.user.is_authenticated %} hidden {% else %} col-md-2  {% endif %} hidden-sm hidden-xs" id="updatesContainer"> -->
+  <div class="hidden" id="updatesContainer">
+  <div class="fixed">
+
+  <h4><i class="fa fa-bullhorn"></i> Marketplace updates</h4>
+
+    <div class="mCustomScrollbar" id="updateScroller">
+      <div id="updates" class="">
+      </div><!-- updates -->
+    </div>
+
+
+    <div id="didyouknow" class="carousel slide">
+        <!-- Items -->
+        <div class="carousel-inner">
+            <!-- Item -->
+            <div class="item active">
+
+                <span class="pull-left media-object innerLR half">
+                    <i class="fa fa-fw fa-question-circle"></i>
+                </span>
+                <div class="media-body text-left">
+                    If you would like to find or offer surplus or gluts, just use as <a href="/activity/?q=surplus">#surplus</a> to your message.  <a href="/activity/?q=surplus" class="text-white">Check it out</a>
+                </div>
+            </div>
+            <!-- // Item END -->
+            <!-- Item -->
+            <div class="item">
+
+                <span class="pull-left media-object innerLR half">
+                    <i class="fa fa-fw fa-question-circle"></i>
+                </span>
+                <div class="media-body text-left">
+                  You can  post updates from anywhere! Just tweet your message to @foodtradeHQ and we'll push your message to local businesses!
+                </div>
+            </div>
+            <div class="item">
+
+                <span class="pull-left media-object innerLR half">
+                    <i class="fa fa-fw fa-question-circle"></i>
+                </span>
+                <div class="media-body text-left">
+                  See who's checking you out by clicking on your account icon at the top of the page and selecting "Who's visited my profile"
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+  </div>
+  </div>
+
+</div>
+
+
+ </div>
+        <!-- // Content END -->
+        <div class="clearfix"></div>
+        <!-- // Sidebar menu & content wrapper END -->
+        </div>
+        </div>
+
+
+<div class="modal fade" id="modal_signup" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+              <h4 class="modal-title" id="myModalLabel">Sign up to FoodTrade</h4>
+            </div>
+            <div class="modal-body">
+            <div class="row">
+
+              <div class="col-sm-6">
+                <div class="innerAll">
+                <p><strong>Twitter is about to ask you to give FoodTrade some permissions</strong></p>
+
+
+
+                <p><strong style="color: #85B963;">We want to assure you that</strong>:</p>
+                <ul class="fa-ul">
+
+                  <li>
+                      <span class="fa fa-li fa fa-check"  style="color: #85B963;"></span>We take your security seriously</li>
+                  <li>
+                      <span class="fa fa-li fa fa-check" style="color: #85B963;"></span>We are registered with the Data Protection Agency</li>
+
+                  <li>
+                      <span class="fa fa-li fa fa-check" style="color: #85B963;"></span>This network depends on trust and transparency </li>
+
+                  <li>
+                      <span class="fa fa-li fa fa-check" style="color: #85B963;"></span>We work for you: You're our customer, not our product.</li>
+                </ul>
+                <p>If you're not happy with these assurances, you can also <a href="/accounts/signup">register with an email and password</a>, but you will not be able to take full advantage of all the great features.</p>
+                </div>
+
+              </div>
+
+
+
+              <div class="col-sm-6 border-left ">
+
+              <div class="innerAll">
+
+              <div class="text-center innerB">
+                <img alt="" class="app-icon" src="https://pbs.twimg.com/client_application_images/1239729/9x9.png" title="FoodTrade Everywhere by FoodTrade ">
+              </div>
+
+              <div class="permissions allow">
+                <p><strong style="color: #85B963;">We will</strong>:</p>
+                <ul>
+                  <li>See who you follow, and help you follow new people.</li>
+                  <li>Post Tweets for you, when you say so</li>
+                </ul>
+              </div>
+              <div class="permissions deny">
+                <p><strong style="color: #F1370A;">We will not</strong>:</p>
+                <ul>
+                  <li>Access your direct messages.</li>
+                  <li>See your Twitter password.</li>
+                </ul>
+              </div>
+              </div>
+              </div>
+   </div>
+            </div>
+            <div class="modal-footer">
+              <a class="btn btn-primary btn-stroke text-black normal pull-left" href="/accounts/signup"><i class="fa fa-envelope text-black"></i> I'd rather sign up by email</a>
+
+              <a href="{% provider_login_url "twitter" process="login" %}"><button type="button" class="btn btn-primary"><i class="fa fa-twitter"></i> Sign up with Twitter</button></a>
+
+            </div>
+          </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<!--    {% if user.is_authenticated %}
+    <div id="beta">
+     You're currently on a free account.  <a href="/payments">Annual membership us just &pound;45</a> and helps us continue working for you. We're stronger when we're connected.
+    </div>
+   {% endif %} -->
+
+
+
+
+
+
+
+<div class="modal fade modal-fullscreen force-fullscreen" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header" style="background: #000; border: 0;">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="color: #fff; text-shadow: none;">&times;</button>
+        <h4 class="modal-title">FoodTrade Tour</h4>
+      </div>
+      <div class="ftstrip"></div>
+      <div class="modal-body">
+
+
+<div id="myCarousel" class="carousel slide " data-ride="carousel" data-interval="false">
+
+  <!-- Wrapper for slides -->
+  <div class="carousel-inner">
+    <div class="item active lead">
+
+        <h3>Welcome to FoodTrade.</h3>
+
+        <p>We provide food business and their customers with the tools we all need to find, sell, and buy good food.</p>
+
+        <p>Why? Because we believe that together we can create a better, fairer food system.</p>
+
+        <p>We’d like to show you 3 ways to get the most from FoodTrade. </p>
+
+
+    </div>
+    <div class="item lead">
+        <h3>Finding the best of what's around</h3>
+        <p>There's a search box on every page. From here you can search for produce or profiles (companies or organisations). </p>
+        <div class="text-center innerAll">
+          <img src="{% static 'images/tour_search.png' %}" />
+        </div>
+
+        <p>You can filter results by company type (restaurant, farm etc), by organisation (eg Soil Association organic, FairTrade); and if you’ve searched for a food you can show only those who ‘buy’ or ‘sell’. </p>
+
+        <div class="text-center innerAll">
+          <img src="{% static 'images/tour_filter.png' %}" />
+        </div>
+
+        <p>Results are shown on the map, by distance from you. Drag the map and the results will update. </p>
+
+    </div>
+    <div class="item lead">
+        <h3>Company profiles - wikipedia style!</h3>
+
+        <p>Each company has a profile showing what we know about what they buy and sell, who they trade with, what organisations they’re a part of, and so on. </p>
+
+        <div class="text-center innerAll">
+          <img src="{% static 'images/tour_profile.jpg' %}" height="200" />
+        </div>
+
+        <p>If the menu says they sell mozzarella from Laverstocke Farm, you can add them as a stockist and add ‘mozzarella’ to their shopping list.  <strong>Anyone can share what they know, so everyone can benefit.</strong>  </p>
+
+        <p>If it’s your business and you want to add all your stockists or suppliers, do so! <strong>It’s super easy. </strong></p>
+        <p>Oh, and whilst you're there why not <strong>vouch for produce</strong> by clicking the <i class="fa fa-thumbs-o-up"></i> next to a food or drink. It will give others confidence to buy it.</p>
+
+
+    </div>
+    <div class="item lead">
+        <h3>A marketplace, online</h3>
+
+        <p>This is where anyone can buy, sell, find collaborators, or find a home for surplus produce. Like a real-world market, anyone can talk to anyone, and transactions happen between you. <strong>We don’t take a cut of any transaction</strong>.</p>
+
+        <p>On the Activity page (the home page when you’re logged in) Click on the ‘marketplace’ tab to see everything near you. </p>
+
+        <div class="text-center innerAll">
+          <img src="{% static 'images/tour_market.png' %}" />
+        </div>
+
+        <p>To post an update, click on ‘Post an update’ button in the top left of the page. A form will slide open. </p>
+
+        <div class="text-center innerAll">
+          <img src="{% static 'images/tour_trade.png' %}" />
+        </div>
+
+        <p>Whatever you post will show up immediately and be sent by email to local subscribers. </p>
+        <p>Paid subscribers can simply tweet updates. Easy peas.</p>
+    </div>
+    <div class="item lead">
+        <h3>Thanks for taking our tour.</h3>
+
+        <p>The food system is complex and confusing, so we’re trying to make it simpler through transparency and open data. </p>
+
+        <p>We know we’re not quite there yet, but we’re continually developing FoodTrade to make it more useful and better for everyone. </p>
+
+        <p>FoodTrade is your food network, so please email <a href="mailto:hello@foodtrade.com">hello@foodtrade.com</a> with any suggestions or questions. </p>
+
+        <hr />
+
+        <div class="text-center">
+        <h3> Please share this. Together we're better.</h3>
+
+        <!-- FACEBOOK -->
+<a target="_blank" href="http://www.facebook.com/sharer.php?u=http://www.foodtrade.com/&t=FoodTrade. Rewiring the food system." class="sc-btn sc--facebook">
+  <span class="sc-icon">
+      <svg viewBox="0 0 33 33" width="25" height="25" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><g><path d="M 17.996,32L 12,32 L 12,16 l-4,0 l0-5.514 l 4-0.002l-0.006-3.248C 11.993,2.737, 13.213,0, 18.512,0l 4.412,0 l0,5.515 l-2.757,0 c-2.063,0-2.163,0.77-2.163,2.209l-0.008,2.76l 4.959,0 l-0.585,5.514L 18,16L 17.996,32z"></path></g></svg>
+  </span>
+  <span class="sc-text">
+      Share on Facebook
+  </span>
+</a>
+<!-- TWITTER -->
+<a target="_blank" href="http://twitter.com/home?status=I've%20just%20found%20@foodtradeHQ.%20It's%20awesome!%20http://www.foodtrade.com/" class="sc-btn sc--twitter">
+  <span class="sc-icon">
+      <svg viewBox="0 0 33 33" width="25" height="25" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><g><path d="M 32,6.076c-1.177,0.522-2.443,0.875-3.771,1.034c 1.355-0.813, 2.396-2.099, 2.887-3.632 c-1.269,0.752-2.674,1.299-4.169,1.593c-1.198-1.276-2.904-2.073-4.792-2.073c-3.626,0-6.565,2.939-6.565,6.565 c0,0.515, 0.058,1.016, 0.17,1.496c-5.456-0.274-10.294-2.888-13.532-6.86c-0.565,0.97-0.889,2.097-0.889,3.301 c0,2.278, 1.159,4.287, 2.921,5.465c-1.076-0.034-2.088-0.329-2.974-0.821c-0.001,0.027-0.001,0.055-0.001,0.083 c0,3.181, 2.263,5.834, 5.266,6.438c-0.551,0.15-1.131,0.23-1.73,0.23c-0.423,0-0.834-0.041-1.235-0.118 c 0.836,2.608, 3.26,4.506, 6.133,4.559c-2.247,1.761-5.078,2.81-8.154,2.81c-0.53,0-1.052-0.031-1.566-0.092 c 2.905,1.863, 6.356,2.95, 10.064,2.95c 12.076,0, 18.679-10.004, 18.679-18.68c0-0.285-0.006-0.568-0.019-0.849 C 30.007,8.548, 31.12,7.392, 32,6.076z"></path></g></svg>
+  </span>
+  <span class="sc-text">
+      Share on Twitter
+  </span>
+</a>
+
+<!-- GOOGLE PLUS -->
+<a target="_blank" href="https://plus.google.com/share?url=http://www.foodtrade.com/" class="sc-btn sc--google-plus">
+  <span class="sc-icon">
+      <svg viewBox="0 0 33 33" width="25" height="25" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><g><path d="M 17.471,2c0,0-6.28,0-8.373,0C 5.344,2, 1.811,4.844, 1.811,8.138c0,3.366, 2.559,6.083, 6.378,6.083 c 0.266,0, 0.524-0.005, 0.776-0.024c-0.248,0.475-0.425,1.009-0.425,1.564c0,0.936, 0.503,1.694, 1.14,2.313 c-0.481,0-0.945,0.014-1.452,0.014C 3.579,18.089,0,21.050,0,24.121c0,3.024, 3.923,4.916, 8.573,4.916 c 5.301,0, 8.228-3.008, 8.228-6.032c0-2.425-0.716-3.877-2.928-5.442c-0.757-0.536-2.204-1.839-2.204-2.604 c0-0.897, 0.256-1.34, 1.607-2.395c 1.385-1.082, 2.365-2.603, 2.365-4.372c0-2.106-0.938-4.159-2.699-4.837l 2.655,0 L 17.471,2z M 14.546,22.483c 0.066,0.28, 0.103,0.569, 0.103,0.863c0,2.444-1.575,4.353-6.093,4.353 c-3.214,0-5.535-2.034-5.535-4.478c0-2.395, 2.879-4.389, 6.093-4.354c 0.75,0.008, 1.449,0.129, 2.083,0.334 C 12.942,20.415, 14.193,21.101, 14.546,22.483z M 9.401,13.368c-2.157-0.065-4.207-2.413-4.58-5.246 c-0.372-2.833, 1.074-5.001, 3.231-4.937c 2.157,0.065, 4.207,2.338, 4.58,5.171 C 13.004,11.189, 11.557,13.433, 9.401,13.368zM 26,8L 26,2L 24,2L 24,8L 18,8L 18,10L 24,10L 24,16L 26,16L 26,10L 32,10L 32,8 z"></path></g></svg>
+  </span>
+  <span class="sc-text">
+      Share on Google+
+  </span>
+</a>
+
+
+<!-- PINTEREST -->
+<a target="_blank" href="https://pinterest.com/pin/create/button/?url=http://www.foodtrade.com/&media=http://www.foodtrade.com/static/images/map_home.jpg&description=I've%20just%20found%20@foodtradeHQ.%20It's%20awesome!%20" class="sc-btn sc--pinterest">
+  <span class="sc-icon">
+      <svg viewBox="0 0 33 33" width="25" height="25" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><g><path d="M 16.5,0C 7.387,0,0,7.387,0,16.5s 7.387,16.5, 16.5,16.5c 9.113,0, 16.5-7.387, 16.5-16.5S 25.613,0, 16.5,0z M 18.1,22.047 c-1.499-0.116-2.128-0.859-3.303-1.573C 14.15,23.863, 13.36,27.113, 11.021,28.81 c-0.722-5.123, 1.060-8.971, 1.888-13.055c-1.411-2.375, 0.17-7.155, 3.146-5.977 c 3.662,1.449-3.171,8.83, 1.416,9.752c 4.79,0.963, 6.745-8.31, 3.775-11.325 c-4.291-4.354-12.491-0.099-11.483,6.135c 0.245,1.524, 1.82,1.986, 0.629,4.090c-2.746-0.609-3.566-2.775-3.46-5.663 c 0.17-4.727, 4.247-8.036, 8.337-8.494c 5.172-0.579, 10.026,1.898, 10.696,6.764 C 26.719,16.527, 23.63,22.474, 18.1,22.047z"></path></g></svg>
+  </span>
+  <span class="sc-text">
+      Share on Pinterest
+  </span>
+</a>
+</div>
+
+    </div>
+    </div>
+  </div>
+
+
+</div>
+      </div>
+      <div class="ftstrip"></div>
+      <div class="modal-footer" style="margin:0;">
+        <a class="btn btn-default " href="#myCarousel" data-slide="prev">
+          &laquo; Prev
+        </a>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+
+        <a class="btn btn-primary " href="#myCarousel" data-slide="next">
+          Next &raquo;
+        </a>
+
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
+
+
+
+
+
+
+<!-- FOOTER -->
+
+<div class="container-responsive clearfix" id="footer" >
+  <div class="row"  id="footer_container">
+
+      <div class="col-sm-12">
+        <ul class="list-unstyled list-inline pull-left" style="display: inline;">
+
+          <li class="hidesmall"><a href="/pages/individuals">Individuals</a></li>
+          <li class="hidesmall"><a href="/pages/business">Business</a></li>
+          <li class="hidesmall"><a href="/pages/organisations">Organisations</a></li>
+          <li class="hidesmall"><a href="/pages/foodwaste">Surplus &amp; waste</a></li>
+
+          <li><a href="/pages/pricing">Pricing</a></li>
+          <li><a href="http://digest.foodtrade.com" target="blank">Blog</a></li>
+        </ul>
+
+        <ul class="list-unstyled list-inline pull-right" style="display: inline;">
+          <li><a href="/pages/terms">Terms</a></li>
+          <li><a href="/pages/privacy">Privacy</a></li>
+          <li class="hidesmall">&copy; 2012 - {% now "Y" %} Sustaination Ltd. <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Data is CCBY4 licenced</a></li>
+        </ul>
+
+
+      </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Button trigger modal -->
+<button id="btn_must_be_logged" style="display:none" data-toggle="modal" data-target="#myModal_must_be_logged">
+</button>
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="myModal_must_be_logged" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-body">
+        <h4 class="modal-title" id="myModalLabel">You must be <a href="/accounts/twitter/login/?process=login">logged</a> in to use this feature</h4>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+{% include "email_login_form.html" %}
+
+<script type="text/javascript">
+function correct_image_load_errors()
+{
+
+    $('img').bind('error', function() {
+        var img_src = $(this).attr("src");
+var that = this;
+ $.post( "/update-image/", { img: img_src }, function(data)
+    {
+        if(data.status == "ok")
+        $(that).attr("src", data.src);
+    }, "json");
+
+    });
+}
+correct_image_load_errors();
+</script>
+
+
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script src="{% static "js/foodtrade.js" %}"></script>
+    <script src="{% static "js/ajax-handle.js" %}"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/geocomplete/1.4/jquery.geocomplete.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/handlebars.js/2.0.0/handlebars.min.js"></script>
+    <script src="{% static "js/tag-it.js" %}"></script>
+    <script src="{% static "js/twitter-typeahead.js" %}"></script>
+
+    <!-- social net -->
+    {% if request.user.is_authenticated %}
+    <script type="text/javascript">
+      $(document).ready(function(){
+        poll_latest_updates();
+        ajax_request("get_latest_updates", 'update_latest_updates',{time:latest_timestamp});
+      });
+    </script>
+    {% endif %}
+
+    <script data-id="App.Config">
+    var App = {};
+    var basePath = '',
+        commonPath = '../assets/',
+        rootPath = '../',
+        DEV = false,
+        componentsPath = '../assets/components/';
+    var primaryColor = '#25ad9f',
+        dangerColor = '#b55151',
+        successColor = '#609450',
+        infoColor = '#4a8bc2',
+        warningColor = '#F5C995',
+        inverseColor = '#45484d';
+    var themerPrimaryColor = primaryColor;
+    </script>
+
+    <script src="http://malihu.github.io/custom-scrollbar/jquery.mCustomScrollbar.concat.min.js"></script>
+    <script src="{% static "assets/components/plugins/preload/pace/pace.min.js" %}"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.3/js/bootstrap-select.min.js"></script>
+    <script src="{% static "assets/components/core/js/core.init.js" %}"></script>
+    <script src='//api.tiles.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v0.0.2/Leaflet.fullscreen.min.js'></script>
+    <link href='//api.tiles.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v0.0.2/leaflet.fullscreen.css' rel='stylesheet' />
+<!-- <script src='//api.tiles.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v0.4.0/leaflet.markercluster.js'></script>
+<link href='//api.tiles.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v0.4.0/MarkerCluster.css' rel='stylesheet' />
+<link href='//api.tiles.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v0.4.0/MarkerCluster.Default.css' rel='stylesheet' /> -->
+  <script src="//cdnjs.cloudflare.com/ajax/libs/proj4js/2.3.3/proj4.js"></script><!-- proj4js -->
+  <script src="{% static "js/proj4leaflet.js" %}"></script><!-- proj4leaflet -->
+  <script src="https://rawgithub.com/rob-murray/os-leaflet/master/src/osopenspace.js"></script><!-- OS OpenSpace layer -->
+
+<script type="text/javascript">
+
+
+var base_layer = L.tileLayer('https://{s}.tiles.mapbox.com/v3/foodtrade.i26pc0n5/{z}/{x}/{y}.png', {
+maxZoom: 18,
+attribution: 'Data &copy; <a href="http://openstreetmap.org">OSM</a> contribs <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a> | Img &copy; <a href="http://mapbox.com">Mapbox</a>'
+});
+var openspaceLayer = L.tileLayer.osopenspace("F481BBF739A5038DE0430B6CA40AB6D2", {debug: false});
+      var show_os_map = true;
+var default_csr = L.CRS.EPSG3857;
+  var current_base_layer = base_layer;
+  var default_zoom = 11;
+  var min_zoom_level = 1;
+
+
+  $("#map").on('dblclick keyup mousedown mousewheel mousemove', function() {
+
+      var current_center = map.getCenter();
+      var cent_lon = current_center.lng;
+      var cent_lat = current_center.lat;
+      var current_zoom_level = map.getZoom();
+
+      var is_current_base = (map.options.crs == L.CRS.EPSG3857);
+      var switching_zoom_level = 7;
+// Check if the view is set to UK
+  if(cent_lat>49.89193 && cent_lat<61.08466 && cent_lon>-9.38053 && cent_lon<2.07316&&show_os_map)
+    {
+      // Check if it is showing non OS map
+      if(is_current_base)
+      {
+
+        if(current_zoom_level > 17)
+        {
+          map.options.crs=L.OSOpenSpace.getCRS();
+          map.removeLayer(base_layer)
+          map.addLayer(openspaceLayer);
+        map.setView([cent_lat,cent_lon],9);
+        map._layersMinZoom= min_zoom_level;
+
+        }
+        var over_zoom = current_zoom_level-5;
+      }
+       else
+      {
+
+        if(current_zoom_level<9)
+        {
+          map.options.crs=L.CRS.EPSG3857;
+          map.removeLayer(openspaceLayer)
+          map.addLayer(base_layer);
+          map.setView([cent_lat,cent_lon],18+current_zoom_level-9);
+        }
+      }
+    }
+    else
+    {
+
+      if((!is_current_base))
+      {
+        map.options.crs=L.CRS.EPSG3857;
+        map.removeLayer(openspaceLayer)
+        map.addLayer(base_layer);
+      map.setView([cent_lat,cent_lon],9);
+      }
+    }
+});
+
+</script>
+
+<script type="text/javascript">
+(function($)
+  {
+  $(window).on('load', function(){
+    // custom select for Boostrap using dropdowns
+    if ($('.selectpicker').length)
+      $('.selectpicker').selectpicker();
+  })
+})(jQuery);
+</script>
+
+<script src="{% static "js/footable.js" %}" type="text/javascript"></script>
+<script src="{% static "js/footable.filter.js" %}" type="text/javascript"></script>
+<script type="text/javascript">
+  $(function () {
+    $('.footable').footable();
+  });
+</script>
+
+
+ {% block footer %}
+ {% endblock %}
+
+ {% block javascript %}
+ {% endblock %}
+
+ <script type="text/javascript">
+ function logout()
+  {
+    window.location = '/accounts/logout';
+  }
+
+
+
+  var invite_id = String('{{invite_id|safe}}');
+  var tweet = String('{{invite_tweet|safe}}');
+  var input_val;
+  $(document).ready(function(){
+    // $('#select-invite').chosen({skip_no_results: true});
+    $('#invite_tweeter_user_text').html(tweet);
+    // $('#select-invite').chosen().ready(function(){
+    //     $('.search-field input').attr('style', 'width:192px;height:30px;');
+    //   });
+  });
+
+// $('#select-invite').on('chosen:ready', function(evt, params) {
+  /*$('#select_invite_chosen ul li input').attr('onkeyup', 'search_tweeter_users()');*/
+    // $('.default').attr('onkeyup', 'search_tweeter_users()');
+    // $('#select_invite_chosen ul li input').attr('id', 'tUserSearch');
+  // });
+function search_tweeter_users(){
+  q = $('#tUserSearch').val();
+  /*if (q.length>=3){*/
+  ajax_request('search_users', 'search_users_success', {'q':q});
+  /*}*/
+
+}
+
+function search_users_success(data){
+  data = jQuery.parseJSON(data);
+  results = data['results'];
+  // str = $('#select-invite').html();
+  // $('#select-invite').html('');
+  var str = "";
+  // $('#select-invite').trigger('chosen:updated');
+
+
+  for (var i=0;i<results.length;i++){
+    str = str + '<option value="' + String(results[i].screen_name) + '">' + String(results[i].screen_name) + '</option>';
+  }
+  $('#select-invite').html(str);
+
+ // $('#select-invite').trigger('chosen:updated');
+  $('#tUserSearch').val(input_val);
+  $('#tUserSearch').focus();
+  document.getElementById("tUserSearch").focus();
+  var input_width = (input_val.length * 11) +"px";
+
+  $('#tUserSearch').css( "width", input_width );
+
+
+var keyEvent = jQuery.Event("keydown");
+keyEvent.keyCode = 18;
+$('#tUserSearch').trigger(keyEvent);
+}
+
+
+function add_user(username){
+    var text = $('#invite_tweeter_user_text').val();
+    var new_text = text +" "+ username;
+    if (new_text.length < 140){
+      $('#invite_tweeter_user_text').val(new_text);
+      $('#invite_tweeter_user').val("");
+    }
+}
+
+$('#select-invite').on('chosen:no_results', function(evt, params) {
+    input_val = $('#tUserSearch').val();
+    ajax_request('search_users', 'search_users_success', {'q':input_val});
+});
+
+function invite_tweeter_user(sign_up_as){
+  text = $('#invite_tweeter_user_text').val();
+  var invite_users = [];
+  text_content = text.split(' ');
+  for (var i =0; i<text_content.length; i++){
+      if (text_content[i].indexOf('@')!=-1){
+        invite_users.push(text_content[i]);
+      }
+    }
+  if (invite_users.length >0){
+    ajax_request(
+      'post_tweet','success_tweeter_user_invite',
+      {'message':text, 'invite':'true', 'friend_invite':'false',
+      'to':String(invite_users), 'invite_id':invite_id,'noappend':'noappend', 'sign_up_as':sign_up_as}
+      );
+  }
+  else{
+    alert('Please search and select someone to invite !!');
+  }
+}
+
+
+var profile_page = false;
+function success_tweeter_user_invite(data){
+  $('#invite_tweeter_user').val("");
+  data = jQuery.parseJSON(data);
+  if (data['status'] == "1"){
+    tweet = data['new_invite_tweet'];
+    invite_id = data['new_invite_id'];
+    $('#invite_tweeter_user_text').val(data['new_invite_tweet']);
+    $('#invite_tweeter_user').val('');
+    $('#btnClose').click();
+  }
+  var url = document.URL;
+  if (url.indexOf("invite") != -1){
+    $('#tweetMessage1').val(tweet);
+  }
+  if(profile_page)
+  {
+    var html_content = '<div class="alert alert-success alert-dismissable text-center" style="border-bottom: 1px solid #444;"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><strong>Thanks for sharing!</strong> Reload the page to connect to your invitees - or just keep inviting more people! (NB we are making this part smoother!)</div>';
+    $("#reload_warning").html(html_content);
+  }
+}
+</script>
+<script type="text/javascript">
+$(document).ready(function() {
+
+   $('.mCustomScrollbar').mCustomScrollbar({
+        theme:"dark-3"
+    });
+
+
+    var activeSystemClass = $('.list-group-item.active');
+    //something is entered in search form
+    $('.system-search').keyup( function() {
+       var that = this;
+        // affect all table rows on in systems table
+        var tableBody = $('.table-list-search tbody');
+        var tableRowsClass = $('.table-list-search tbody tr');
+        $('.search-sf').remove();
+        tableRowsClass.each( function(i, val) {
+
+            //Lower text for case insensitive
+            var rowText = $(val).text().toLowerCase();
+            var inputText = $(that).val().toLowerCase();
+            if(inputText != '')
+            {
+                $('.search-query-sf').remove();
+                tableBody.prepend('<tr class="search-query-sf"><td colspan="6"><strong>Searching for: "'
+                    + $(that).val()
+                    + '"</strong></td></tr>');
+            }
+            else
+            {
+                $('.search-query-sf').remove();
+            }
+            if( rowText.indexOf( inputText ) == -1 )
+            {
+                //hide rows
+                tableRowsClass.eq(i).hide();
+
+            }
+            else
+            {
+                $('.search-sf').remove();
+                tableRowsClass.eq(i).show();
+            }
+        });
+        //all tr elements are hidden
+        if(tableRowsClass.children(':visible').length == 0)
+        {
+            tableBody.append('<tr class="search-sf"><td class="text-muted" colspan="6">No entries found.</td></tr>');
+        }
+    });
+});
+    </script>
+
+
+    <script type="text/javascript">
+      $('.tip').tooltip();
+      $('[rel=tooltip]').tooltip({container: 'body'});
+
+      $('.acronym').tooltip();
+
+      $('[data-toggle=offcanvas]').click(function() {
+        $('.row-offcanvas').toggleClass('active');
+      });
+
+       $('#media').carousel({
+          interval: 7000,
+        });
+
+
+$('.reply').hide();
+
+$("#activity_switcher").on('click', '.messagebtn', function() {
+    $(this).parent().parent().next(".reply").slideToggle();
+});
+
+
+
+
+      /**
+ *
+ * jquery.charcounter.js version 1.2
+ * requires jQuery version 1.2 or higher
+ * Copyright (c) 2007 Tom Deater (http://www.tomdeater.com)
+ * Licensed under the MIT License:
+ * http://www.opensource.org/licenses/mit-license.php
+ *
+ */
+
+(function($) {
+    /**
+   * attaches a character counter to each textarea element in the jQuery object
+   * usage: $("#myTextArea").charCounter(max, settings);
+   */
+
+  $.fn.charCounter = function (max, settings) {
+    max = max || 100;
+    settings = $.extend({
+      container: "<span></span>",
+      classname: "charcounter",
+      format: "(%1 characters remaining)",
+      pulse: true,
+      delay: 0
+    }, settings);
+    var p, timeout;
+
+    function count(el, container) {
+      el = $(el);
+      if (el.val().length > max) {
+          el.val(el.val().substring(0, max));
+          if (settings.pulse && !p) {
+            pulse(container, true);
+          };
+      };
+      if (settings.delay > 0) {
+        if (timeout) {
+          window.clearTimeout(timeout);
+        }
+        timeout = window.setTimeout(function () {
+          container.html(settings.format.replace(/%1/, (max - el.val().length)));
+        }, settings.delay);
+      } else {
+        container.html(settings.format.replace(/%1/, (max - el.val().length)));
+      }
+    };
+
+    function pulse(el, again) {
+      if (p) {
+        window.clearTimeout(p);
+        p = null;
+      };
+      el.animate({ opacity: 0.1 }, 100, function () {
+        $(this).animate({ opacity: 1.0 }, 100);
+      });
+      if (again) {
+        p = window.setTimeout(function () { pulse(el) }, 200);
+      };
+    };
+
+    return this.each(function () {
+      var container;
+      if (!settings.container.match(/^<.+>$/)) {
+        // use existing element to hold counter message
+        container = $(settings.container);
+      } else {
+        // append element to hold counter message (clean up old element first)
+        $(this).next("." + settings.classname).remove();
+        container = $(settings.container)
+                .insertAfter(this)
+                .addClass(settings.classname);
+      }
+      $(this)
+        .unbind(".charCounter")
+        .bind("keydown.charCounter", function () { count(this, container); })
+        .bind("keypress.charCounter", function () { count(this, container); })
+        .bind("keyup.charCounter", function () { count(this, container); })
+        .bind("focus.charCounter", function () { count(this, container); })
+        .bind("mouseover.charCounter", function () { count(this, container); })
+        .bind("mouseout.charCounter", function () { count(this, container); })
+        .bind("paste.charCounter", function () {
+          var me = this;
+          setTimeout(function () { count(me, container); }, 10);
+        });
+      if (this.addEventListener) {
+        this.addEventListener('input', function () { count(this, container); }, false);
+      };
+      count(this, container);
+    });
+  };
+})(jQuery);
+$(function() {
+    $(".counted").charCounter(120,{container: "#counter"});
+    $(".counted-invite").charCounter(140,{container: "#counter"});
+});
+    </script>
+
+
+
+   <script>
+   $(document).ready(function(){
+
+
+//Include the UserVoice JavaScript SDK (only needed once on a page)
+UserVoice=window.UserVoice||[];(function(){var uv=document.createElement('script');uv.type='text/javascript';uv.async=true;uv.src='//widget.uservoice.com/HloB2aRxdk7fbhWMOI5AlQ.js';var s=document.getElementsByTagName('script')[0];s.parentNode.insertBefore(uv,s)})();
+
+
+//UserVoice Javascript SDK developer documentation:
+//https://www.uservoice.com/o/javascript-sdk
+
+
+//Set colors
+UserVoice.push(['set', {
+  accent_color: '#6aba2e',
+  trigger_color: 'white',
+  trigger_background_color: '#6aba2e'
+}]);
+
+//Add default trigger to the bottom-right corner of the window:
+// UserVoice.push(['addTrigger', { mode: 'contact', trigger_position: 'top-right' }]);
+
+//Or, use your own custom trigger:
+UserVoice.push(['addTrigger', '#support', { mode: 'contact' }]);
+
+//Autoprompt for Satisfaction and SmartVote (only displayed under certain conditions)
+UserVoice.push(['autoprompt', {}]);
+
+});
+</script>
+
+
+
+
+<script type="text/javascript">
+// This example adds a search box to a map, using the Google Place Autocomplete
+// feature. People can enter geographical searches. The search box will return a
+// pick list containing a mix of places and predicted search terms.
+
+{% if user.is_authenticated %}
+  window.setInterval(function(){
+    show_notifications();
+  }, 1500000);
+{% endif %}
+function  show_notifications(){
+  ajax_request('get_notification_counts', 'update_inbox');
+}
+
+function update_inbox(data){
+  data = jQuery.parseJSON(data);
+  $('#spanInbox').html('');
+  $('#spanInbox').html(data['unread']);
+}
+
+function validate_login(){
+  {% if user.is_authenticated %}
+    return {'status':'1'}
+  {% endif %}
+  {% if not user.is_authenticated %}
+    return {'status':'0'}
+  {% endif %}
+  /*
+  ajax_request('validate_logged_in', 'ajax_success_validate_logged_in','');*/
+}
+
+
+
+
+
+</script>
+
+<script type="text/javascript">
+
+   $(function() {
+    var hash = window.location.hash;
+
+    // do some validation on the hash here
+
+    hash && $('ul.nav a[href="' + hash + '"]').tab('show');
+});
+
+
+
+</script>
+
+
+<!-- post new update modal -->
+<script src="{% static "js/date.js" %}"></script>
+
+     <script type="text/javascript">
+     $("#expire_on").keyup(function(){
+       var expire_on = Date.parse($("#expire_on").val());
+       if(expire_on!=null)
+       {
+        var expire_date = expire_on.getDate()+"/"+(parseInt(expire_on.getMonth())+1)+"/"+expire_on.getFullYear();
+        $("#date_help").html(expire_date);
+       }
+      });
+
+
+      var post_for = "";
+      $('#post_for').children(".btn").click(function(){
+          var value = $(this).val();
+          var childrens = $('#post_for').children();
+          for(var i=0;i<childrens.length;i++)
+          {
+            $(childrens[i]).removeClass("active");
+          }
+          $(this).addClass("active");
+          post_for = value;
+      });
+
+      function generate_update()
+      {
+        if(post_for=="")
+        {
+          alert("Select one of buy / sell / surplus");
+          return;
+        }
+        var input_produces = $("input[name=produce]").val();
+        if(input_produces.trim()=="")
+        {
+          alert("You can't leave produce empty");
+          return;
+        }
+        var produces_name = input_produces.trim().replace("'", "").replace('"','').split(",");
+        var quantity = $("input[name=qty]").val().trim();
+        var quantity_unit = $("#qtyUnit").val();
+        var quantity_text = "";
+        if(quantity!="" && quantity_unit!="")
+        {
+          quantity_text =  " "+quantity+" "+quantity_unit+".";
+        }
+
+        var expire_on = Date.parse($("#expire_on").val());
+        var expire_text = "";
+        if(expire_on!=null)
+        {
+          var expire_date = expire_on.getDate()+"-"+(parseInt(expire_on.getMonth())+1)+"-"+expire_on.getFullYear();
+          expire_text = " By "+expire_date+".";
+        }
+        var description = $("#update_description").val().trim();
+        var description_text = "";
+        if(description!="")
+        {
+          description_text = " ("+description+")";
+        }
+
+
+        var produces_hash = "";
+        for(var i = 0;i<produces_name.length;i++)
+        {
+          if(produces_name[i].trim() == "")
+          {
+            continue;
+          }
+          produces_hash += "#" + produces_name[i].trim();
+
+          if((i+1) != produces_name.length)
+          {
+              produces_hash += ", ";
+          }
+        }
+        var update_text = "I'd like to "+post_for+" "+produces_hash+description_text+"."+quantity_text+expire_text;
+
+        activity_status_update(update_text);
+        return false;
+      }
+   </script>
+
+
+
+<script type="text/javascript">
+  var $mcGoal = {'settings':{'uuid':'79e1467c02512dbd83bddab5f','dc':'us2'}};
+  (function() {
+     var sp = document.createElement('script'); sp.type = 'text/javascript'; sp.async = true; sp.defer = true;
+    sp.src = ('https:' == document.location.protocol ? 'https://s3.amazonaws.com/downloads.mailchimp.com' : 'http://downloads.mailchimp.com') + '/js/goal.min.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(sp, s);
+  })();
+</script>
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-3315919-37', 'auto');
+  ga('require', 'linkid', 'linkid.js');
+  ga('require', 'displayfeatures');
+  ga('send', 'pageview');
+</script>
+
+<script type="text/javascript">
+function post_new_status(){
+      message = $('#newstatus').val();
+      if(message==""){
+        alert("You can't post empty status.");
+        return;
+      }
+
+      if($('#post_to_twitter').prop('checked')){
+          var foodtrade_only = "false";
+      }
+      else{
+        var foodtrade_only = "true";
+      }
+      if(validate_login()['status'] == '1'){
+        ajax_request("post_tweet", 'clear_input', {message: message,foodtrade_only:foodtrade_only});
+      }
+      else{
+          /*$('#btn_must_be_logged').click();*/
+          /*$('#btn_update_activity').tooltip('show');*/
+          window.location('/accounts/twitter/login/?process=?login');
+      }
+}
+
+
+function activity_status_update(message){
+    if($('#structured_post_to_twitter').prop('checked')){
+      var foodtrade_only = "false";
+    }
+    else{
+      var foodtrade_only = "true";
+    }
+    if(validate_login()['status'] == '1'){
+      ajax_request("post_tweet", 'clear_structured_input', {message: message,foodtrade_only:foodtrade_only});
+    }
+    else{
+      /*$('#btn_must_be_logged').click();*/
+      /*$('#btn_update_activity').tooltip('show');*/
+      window.location('/accounts/twitter/login/?process=?login');
+    }
+}
+
+function clear_structured_input(data){
+        $('#structured_input_form').trigger("reset");
+        $('#newstatus').val('');
+        $('#btn_update_close').click();
+        $('#newtwitterpost').hide();
+        make_search();
+}
+
+$('#newstatus').bind('keypress', function(e) {
+    var code = e.keyCode || e.which;
+     if(code == 13) {
+        post_new_status();
+     }
+});
+
+function clear_input(data){
+        $('#newstatus').val('');
+        $('#btnClose').click();
+        $('#btn_update_close').click();
+        $('#newtwitterpost').hide();
+        make_search();
+}
+
+
+function switch_update_form()
+{
+  switch_text_area();
+  $("#structured_hidden_block").toggleClass('hidden');
+  $("#update-big").show();
+}
+
+function switch_text_area(){
+  $('#update-big').attr('class', ' ');
+}
+function show_full_structure()
+{
+  $("#structured_hidden_block").removeClass("hidden");
+}
+
+function show_small_structure()
+{
+  switch_text_area
+  $("#update-big").hide();
+  $("#structured_postupdate").show();
+  $("#structured_hidden_block").removeClass("hidden");
+}
+
+function check_limit(){
+  tweet = $('#newstatus').val();
+  if(tweet.length > 120){
+    $('#charsRem').html( 'Max of 120 characters exceeded.');
+  }
+  else{
+    $('#charsRem').html(String(120-tweet.length) + ' characters remaining.');
+  }
+}
+function check_limit1(){
+  tweet = $('#update_description').val();
+  if(tweet.length > 120){
+    $('#charsRem1').html( 'Max of 120 characters exceeded.');
+  }
+  else{
+    $('#charsRem1').html(String(120-tweet.length) + ' characters remaining.');
+  }
+}
+
+$(function() {
+    $('#scrollInfo').slideUp('fast');
+    $(window).scroll(function() {
+        if($(window).scrollTop() >= 155) {
+            $('#scrollInfo').slideDown('slow');
+        }else{
+            $('#scrollInfo').slideUp('fast');
+        }
+    });
+});
+
+$(function () {
+var activeTab = $('[href=' + location.hash + ']');
+activeTab && activeTab.tab('show');
+});
+
+$("#search_type_option").click(function(){
+  var current_search = $("#search_stype").val();
+    if(current_search=="produce")
+    {
+      $("#search_stype").val("profile");
+        $("#search_type").html("in Profiles <i class='fa fa-caret-down'></i>");
+        $("#search_type_option").html("in Produce");
+
+    }
+    else if(current_search=="profile")
+    {
+      $("#search_stype").val("produce");
+        $("#search_type").html("in Produce <i class='fa fa-caret-down'></i>");
+        $("#search_type_option").html("in Profiles");
+    }
+});
+
+</script>
+</body>
+</html>
