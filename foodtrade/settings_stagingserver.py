@@ -69,7 +69,7 @@ STATIC_URL = '/static/'
 
 # Additional locations of static files
 STATICFILES_DIRS = (
-    
+
     # Put strings here, like "/home/html/static" or "C:/www/django/static".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
@@ -145,6 +145,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'mainapp',
+    'search',
     'twython',
     'allauth',
     'allauth.account',
@@ -157,7 +158,7 @@ INSTALLED_APPS = (
     "djstripe",
     "floppyforms",
     "bootstrapform",
-    
+
 )
 
 # A sample logging configuration. The only tangible logging
