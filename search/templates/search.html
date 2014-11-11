@@ -1,2 +1,902 @@
 {% extends 'search_base.html' %}
+{% load staticfiles %}
+{% load activity_tags %}
+
 {% block title %}Search{% endblock title %}
+
+{% block search_section_content %}
+<div class="container-responsive block-center" id="activity">
+  <div class="row">
+    <div class="col-md-6">
+      <div class="innerAll mCustomScrollbar _mCS_1 mCS_no_scrollbar" id="profile_results" style="height: 394px;">
+        <div data-userid="-17452" data-username="CoOwnRushFarm" class="box-generic Business">
+          <div class="timeline-top-info   clearfix">
+            <div style="margin-left: 5px;" class="pull-right"><span class="dropdown hidden"><a data-toggle="dropdown" class="dropdown-toggle" type="button"><i class="fa fa-fw fa-cog text-muted"></i><span class="sr-only">Toggle Dropdown</span>
+              </a>
+              <ul role="menu" class="dropdown-menu">
+                <li><a target="_blank" href="http://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A8000"><i class="fa fa-facebook fa-fw facebook"></i> Share on Facebook</a>
+                </li>
+                <li><a target="_blank" href="http://twitter.com/home?status=%40CoOwnRushFarm%20on%20%40foodtradeHQ%20http%3A%2F%2Flocalhost%3A8000"><i class="fa fa-twitter fa-fw twitter "></i> Share on Twitter</a>
+                </li>
+                <li><a href="/CoOwnRushFarm/" type="button"><i class="fa fa-info-circle fa-lg fa-fw"></i> View profile</a>
+                </li>
+                <li><a onclick="click_activity('follow','CoOwnRushFarm')" href="#"><i class="fa fa-star-o fa-fw"></i>  Follow on Twitter</a>
+                </li>
+                <li><a class=" " onclick="click_activity('spam','CoOwnRushFarm')" href="#"><i class="fa fa-flag-o flag fa-fw"></i> Report</a>
+                </li>
+              </ul>
+              </span> <a href="/CoOwnRushFarm" class="btn btn-primary btn-xs hidden" type="button"><i style="color:#fff;" class="fa fa-arrow-right fa-lg"></i> </a>
+            </div>
+            <div style="background: url(https://pbs.twimg.com/profile_banners/80858343/1398095917); background-size: cover;" class="text-center innerAll">
+              <a href="/profile/CoOwnRushFarm"><img style="width:73px; margin-right: 0px;" class="img-rounded img-thumbnail" alt="CoOwnRushFarm" src="http://pbs.twimg.com/profile_images/466721271/Cow-Picture_normal.jpg">
+              </a>
+            </div>
+            <div class="text-center innerAll">
+              <h4 class="margin0"><a class="text-inverse" href="/CoOwnRushFarm">CoOwnRushFarm</a></h4> </div>
+          </div>
+          <div class="media margin-none status">
+            <div class="content">
+              <div class="text innerAll">
+                <p class="">Come co-own Rush Farm with us - biodynamic, organic farm in the heart of England. Also home to original Archers farm, @thelivhouse &amp; @lovehauschka</p>
+              </div>
+              <div class="innerAll border-top border-bottom"> <span class="label label-default"><i class="fa fa-sign-out fa-fw"></i>SELLS</span> <b>Apples</b> &amp; 6 more
+                <br>
+              </div>
+            </div>
+          </div>
+          <div class="timeline-bottom innerAll small clearfix">
+            <a data-original-title="Get directions" title="" rel="tooltip" data-toggle="tooltip" data-placement="top" target="_blank" href="http://maps.google.com/maps?saddr=53.526235749086936,-1.0116869500000325&amp;daddr=52.22501949999999,-2.0001997">
+            <span class="hidden-sm hidden-xs truncate100 address"><i class="fa fa-map-marker fa-fw"></i>Stock Wood, Inkberrow, Re...</span>
+            </a>
+            <a data-original-title="Get directions" title="" rel="tooltip" data-toggle="tooltip" data-placement="top" target="_blank" href="http://maps.google.com/maps?saddr=53.526235749086936,-1.0116869500000325&amp;daddr=52.22501949999999,-2.0001997">
+            <i class="fa fa-location-arrow fa-fw"></i>4731.4 miles from you </a>
+          </div>
+          <div style="display: none;" class="innerAll border-top bg-gray  r eply">
+            <input type="text" data-mentions="CoOwnRushFarm" placeholder="Reply to @CoOwnRushFarm" data-main="main" class="form-control input-sm enterhandler reply_input"> </div>
+        </div>
+        <div data-userid="-42019" data-username="HenneysCider" class="box-generic Business">
+          <div class="timeline-top-info   clearfix">
+            <div style="margin-left: 5px;" class="pull-right"><span class="dropdown hidden"><a data-toggle="dropdown" class="dropdown-toggle" type="button"><i class="fa fa-fw fa-cog text-muted"></i><span class="sr-only">Toggle Dropdown</span>
+              </a>
+              <ul role="menu" class="dropdown-menu">
+                <li><a target="_blank" href="http://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A8000"><i class="fa fa-facebook fa-fw facebook"></i> Share on Facebook</a>
+                </li>
+                <li><a target="_blank" href="http://twitter.com/home?status=%40HenneysCider%20on%20%40foodtradeHQ%20http%3A%2F%2Flocalhost%3A8000"><i class="fa fa-twitter fa-fw twitter "></i> Share on Twitter</a>
+                </li>
+                <li><a href="/HenneysCider/" type="button"><i class="fa fa-info-circle fa-lg fa-fw"></i> View profile</a>
+                </li>
+                <li><a onclick="click_activity('follow','HenneysCider')" href="#"><i class="fa fa-star-o fa-fw"></i>  Follow on Twitter</a>
+                </li>
+                <li><a class=" " onclick="click_activity('spam','HenneysCider')" href="#"><i class="fa fa-flag-o flag fa-fw"></i> Report</a>
+                </li>
+              </ul>
+              </span> <a href="/HenneysCider" class="btn btn-primary btn-xs hidden" type="button"><i style="color:#fff;" class="fa fa-arrow-right fa-lg"></i> </a>
+            </div>
+            <div style="background: url(https://pbs.twimg.com/profile_banners/90907102/1357666687); background-size: cover;" class="text-center innerAll">
+              <a href="/profile/HenneysCider"><img style="width:73px; margin-right: 0px;" class="img-rounded img-thumbnail" alt="Mike &amp; Charlotte" src="http://pbs.twimg.com/profile_images/3082936650/a19e3f278f06688ca78d388bc152facb_normal.jpeg">
+              </a>
+            </div>
+            <div class="text-center innerAll">
+              <h4 class="margin0"><a class="text-inverse" href="/HenneysCider">Mike &amp; Charlotte</a></h4> </div>
+          </div>
+          <div class="media margin-none status">
+            <div class="content">
+              <div class="text innerAll">
+                <p class="">Henney's Cider Company - Making and selling top quality Herefordshire Cider.</p>
+              </div>
+              <div class="innerAll border-top border-bottom"> <span class="label label-default"><i class="fa fa-sign-in fa-fw"></i>BUYS</span> <b>Apples</b>
+              </div>
+            </div>
+          </div>
+          <div class="timeline-bottom innerAll small clearfix">
+            <a data-original-title="Get directions" title="" rel="tooltip" data-toggle="tooltip" data-placement="top" target="_blank" href="http://maps.google.com/maps?saddr=53.526235749086936,-1.0116869500000325&amp;daddr=52.0765164,-2.6544182"> <span class="hidden-sm hidden-xs truncate100 address"><i class="fa fa-map-marker fa-fw"></i>Herefordshire, UK...</span>
+            </a>
+            <a data-original-title="Get directions" title="" rel="tooltip" data-toggle="tooltip" data-placement="top" target="_blank" href="http://maps.google.com/maps?saddr=53.526235749086936,-1.0116869500000325&amp;daddr=52.0765164,-2.6544182"> <i class="fa fa-location-arrow fa-fw"></i>4760.1 miles from you </a>
+          </div>
+          <div style="display: none;" class="innerAll border-top bg-gray  r eply">
+            <input type="text" data-mentions="HenneysCider" placeholder="Reply to @HenneysCider" data-main="main" class="form-control input-sm enterhandler reply_input"> </div>
+        </div>
+        <div data-userid="66" data-username="CultivateOxford" class="box-generic Business">
+          <div class="timeline-top-info   clearfix">
+            <div style="margin-left: 5px;" class="pull-right"><span class="dropdown hidden"><a data-toggle="dropdown" class="dropdown-toggle" type="button"><i class="fa fa-fw fa-cog text-muted"></i><span class="sr-only">Toggle Dropdown</span>
+              </a>
+              <ul role="menu" class="dropdown-menu">
+                <li><a target="_blank" href="http://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A8000"><i class="fa fa-facebook fa-fw facebook"></i> Share on Facebook</a>
+                </li>
+                <li><a target="_blank" href="http://twitter.com/home?status=%40CultivateOxford%20on%20%40foodtradeHQ%20http%3A%2F%2Flocalhost%3A8000"><i class="fa fa-twitter fa-fw twitter "></i> Share on Twitter</a>
+                </li>
+                <li><a href="/CultivateOxford/" type="button"><i class="fa fa-info-circle fa-lg fa-fw"></i> View profile</a>
+                </li>
+                <li><a onclick="click_activity('follow','CultivateOxford')" href="#"><i class="fa fa-star-o fa-fw"></i>  Follow on Twitter</a>
+                </li>
+                <li><a class=" " onclick="click_activity('spam','CultivateOxford')" href="#"><i class="fa fa-flag-o flag fa-fw"></i> Report</a>
+                </li>
+              </ul>
+              </span> <a href="/CultivateOxford" class="btn btn-primary btn-xs hidden" type="button"><i style="color:#fff;" class="fa fa-arrow-right fa-lg"></i> </a>
+            </div>
+            <div style="background: url(https://pbs.twimg.com/profile_banners/409925660/1399289443); background-size: cover;" class="text-center innerAll">
+              <a href="/profile/CultivateOxford"><img style="width:73px; margin-right: 0px;" class="img-rounded img-thumbnail" alt="CultivateOxford" src="http://pbs.twimg.com/profile_images/1704069575/droplet_normal.jpg">
+              </a>
+            </div>
+            <div class="text-center innerAll">
+              <h4 class="margin0"><a class="text-inverse" href="/CultivateOxford">CultivateOxford</a></h4> <a class="tag small" href="/activity/?q=Community%20Supported%20Agriculture%20(CSA)&amp;tab=profile&amp;stype=profile&amp;pwant=all&amp;put=Companies">Community Supported Agriculture (CSA)</a> <a class="tag small" href="/activity/?q=Grower&amp;tab=profile&amp;stype=profile&amp;pwant=all&amp;put=Companies">Grower</a>              <a class="tag small" href="/activity/?q=Greengrocer&amp;tab=profile&amp;stype=profile&amp;pwant=all&amp;put=Companies">Greengrocer</a> </div>
+          </div>
+          <div class="media margin-none status">
+            <div class="content">
+              <div class="text innerAll">
+                <p class="">People-Powered Food for Oxford. A co-op bringing fresh, local, ecologically-grown food direct from farmers to the city in the VegVan mobile greengroce</p>
+              </div>
+              <div class="innerAll border-top border-bottom"> <span class="label label-default"><i class="fa fa-sign-out fa-fw"></i>SELLS</span> <b>Apple juice, Apples</b> &amp; 17 more
+                <br>
+              </div>
+            </div>
+          </div>
+          <div class="timeline-bottom innerAll small clearfix">
+            <a data-original-title="Get directions" title="" rel="tooltip" data-toggle="tooltip" data-placement="top" target="_blank" href="http://maps.google.com/maps?saddr=53.526235749086936,-1.0116869500000325&amp;daddr=51.74290329999999,-1.2335213000000067">
+            <span class="hidden-sm hidden-xs truncate100 address"><i class="fa fa-map-marker fa-fw"></i>Oxford, Oxfordshire OX4 1...</span>
+            </a>
+            <a data-original-title="Get directions" title="" rel="tooltip" data-toggle="tooltip" data-placement="top" target="_blank" href="http://maps.google.com/maps?saddr=53.526235749086936,-1.0116869500000325&amp;daddr=51.74290329999999,-1.2335213000000067">
+            <i class="fa fa-location-arrow fa-fw"></i>4702.4 miles from you </a>
+          </div>
+          <div style="display: none;" class="innerAll border-top bg-gray  r eply">
+            <input type="text" data-mentions="CultivateOxford" placeholder="Reply to @CultivateOxford" data-main="main" class="form-control input-sm enterhandler reply_input"> </div>
+        </div>
+        <div data-userid="629" data-username="sincuru" class="box-generic Business">
+          <div class="timeline-top-info   clearfix">
+            <div style="margin-left: 5px;" class="pull-right"><span class="dropdown hidden"><a data-toggle="dropdown" class="dropdown-toggle" type="button"><i class="fa fa-fw fa-cog text-muted"></i><span class="sr-only">Toggle Dropdown</span>
+              </a>
+              <ul role="menu" class="dropdown-menu">
+                <li><a target="_blank" href="http://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A8000"><i class="fa fa-facebook fa-fw facebook"></i> Share on Facebook</a>
+                </li>
+                <li><a target="_blank" href="http://twitter.com/home?status=%40sincuru%20on%20%40foodtradeHQ%20http%3A%2F%2Flocalhost%3A8000"><i class="fa fa-twitter fa-fw twitter "></i> Share on Twitter</a>
+                </li>
+                <li><a href="/sincuru/" type="button"><i class="fa fa-info-circle fa-lg fa-fw"></i> View profile</a>
+                </li>
+                <li><a onclick="click_activity('follow','sincuru')" href="#"><i class="fa fa-star-o fa-fw"></i>  Follow on Twitter</a>
+                </li>
+                <li><a class=" " onclick="click_activity('spam','sincuru')" href="#"><i class="fa fa-flag-o flag fa-fw"></i> Report</a>
+                </li>
+              </ul>
+              </span> <a href="/sincuru" class="btn btn-primary btn-xs hidden" type="button"><i style="color:#fff;" class="fa fa-arrow-right fa-lg"></i> </a>
+            </div>
+            <div style="background: url(https://pbs.twimg.com/profile_banners/1344196430/1406890650); background-size: cover;" class="text-center innerAll">
+              <a href="/profile/sincuru"><img style="width:73px; margin-right: 0px;" class="img-rounded img-thumbnail" alt="Sincuru" src="http://pbs.twimg.com/profile_images/494452340033081346/NW6AyeUX_normal.jpeg">
+              </a>
+            </div>
+            <div class="text-center innerAll">
+              <h4 class="margin0"><a class="text-inverse" href="/sincuru">Sincuru</a></h4> <a class="tag small" href="/activity/?q=Food%20Stall&amp;tab=profile&amp;stype=profile&amp;pwant=all&amp;put=Companies">Food Stall</a> <a class="tag small" href="/activity/?q=Farm%20Shop&amp;tab=profile&amp;stype=profile&amp;pwant=all&amp;put=Companies">Farm Shop</a>              <a class="tag small" href="/activity/?q=Health%20food&amp;tab=profile&amp;stype=profile&amp;pwant=all&amp;put=Companies">Health food</a> </div>
+          </div>
+          <div class="media margin-none status">
+            <div class="content">
+              <div class="text innerAll">
+                <p class="">Fresh farm produce, recovered and delivered to you.</p>
+              </div>
+              <div class="innerAll border-top border-bottom"> <span class="label label-default"><i class="fa fa-sign-in fa-fw"></i>BUYS</span> <b>Apples</b> &amp; 1 more
+                <br>
+              </div>
+            </div>
+          </div>
+          <div class="timeline-bottom innerAll small clearfix">
+            <a data-original-title="Get directions" title="" rel="tooltip" data-toggle="tooltip" data-placement="top" target="_blank" href="http://maps.google.com/maps?saddr=53.526235749086936,-1.0116869500000325&amp;daddr=51.511433,-0.11751300000003084">
+            <span class="hidden-sm hidden-xs truncate100 address"><i class="fa fa-map-marker fa-fw"></i>Somerset House, Strand, L...</span>
+            </a>
+            <a data-original-title="Get directions" title="" rel="tooltip" data-toggle="tooltip" data-placement="top" target="_blank" href="http://maps.google.com/maps?saddr=53.526235749086936,-1.0116869500000325&amp;daddr=51.511433,-0.11751300000003084">
+            <i class="fa fa-location-arrow fa-fw"></i>4656.1 miles from you </a>
+          </div>
+          <div style="display: none;" class="innerAll border-top bg-gray  r eply">
+            <input type="text" data-mentions="sincuru" placeholder="Reply to @sincuru" data-main="main" class="form-control input-sm enterhandler reply_input"> </div>
+        </div>
+        <div data-userid="38" data-username="Morefood888" class="box-generic Business">
+          <div class="timeline-top-info   clearfix">
+            <div style="margin-left: 5px;" class="pull-right"><span class="dropdown hidden"><a data-toggle="dropdown" class="dropdown-toggle" type="button"><i class="fa fa-fw fa-cog text-muted"></i><span class="sr-only">Toggle Dropdown</span>
+              </a>
+              <ul role="menu" class="dropdown-menu">
+                <li><a target="_blank" href="http://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A8000"><i class="fa fa-facebook fa-fw facebook"></i> Share on Facebook</a>
+                </li>
+                <li><a target="_blank" href="http://twitter.com/home?status=%40Morefood888%20on%20%40foodtradeHQ%20http%3A%2F%2Flocalhost%3A8000"><i class="fa fa-twitter fa-fw twitter "></i> Share on Twitter</a>
+                </li>
+                <li><a href="/Morefood888/" type="button"><i class="fa fa-info-circle fa-lg fa-fw"></i> View profile</a>
+                </li>
+                <li><a onclick="click_activity('follow','Morefood888')" href="#"><i class="fa fa-star-o fa-fw"></i>  Follow on Twitter</a>
+                </li>
+                <li><a class=" " onclick="click_activity('spam','Morefood888')" href="#"><i class="fa fa-flag-o flag fa-fw"></i> Report</a>
+                </li>
+              </ul>
+              </span> <a href="/Morefood888" class="btn btn-primary btn-xs hidden" type="button"><i style="color:#fff;" class="fa fa-arrow-right fa-lg"></i> </a>
+            </div>
+            <div style="background: url(); background-size: cover;" class="text-center innerAll">
+              <a href="/profile/Morefood888"><img style="width:73px; margin-right: 0px;" class="img-rounded img-thumbnail" alt="Pete Thompson" src="http://abs.twimg.com/sticky/default_profile_images/default_profile_4_normal.png">
+              </a>
+            </div>
+            <div class="text-center innerAll">
+              <h4 class="margin0"><a class="text-inverse" href="/Morefood888">Pete Thompson</a></h4> <a class="tag small" href="/activity/?q=Market%20garden&amp;tab=profile&amp;stype=profile&amp;pwant=all&amp;put=Companies">Market garden</a> <a class="tag small" href="/activity/?q=Orchard&amp;tab=profile&amp;stype=profile&amp;pwant=all&amp;put=Companies">Orchard</a>              <a class="tag small" href="/activity/?q=Drinks%20manufacturer&amp;tab=profile&amp;stype=profile&amp;pwant=all&amp;put=Companies">Drinks manufacturer</a> </div>
+          </div>
+          <div class="media margin-none status">
+            <div class="content">
+              <div class="text innerAll">
+                <p class=""></p>
+              </div>
+            </div>
+          </div>
+          <div class="timeline-bottom innerAll small clearfix">
+            <a data-original-title="Get directions" title="" rel="tooltip" data-toggle="tooltip" data-placement="top" target="_blank" href="http://maps.google.com/maps?saddr=53.526235749086936,-1.0116869500000325&amp;daddr=51.8995804,1.1762579999999616">
+            <span class="hidden-sm hidden-xs truncate100 address"><i class="fa fa-map-marker fa-fw"></i>Great Oakley, Essex CO12 ...</span>
+            </a>
+            <a data-original-title="Get directions" title="" rel="tooltip" data-toggle="tooltip" data-placement="top" target="_blank" href="http://maps.google.com/maps?saddr=53.526235749086936,-1.0116869500000325&amp;daddr=51.8995804,1.1762579999999616">
+            <i class="fa fa-location-arrow fa-fw"></i>4598.8 miles from you </a>
+          </div>
+          <div style="display: none;" class="innerAll border-top bg-gray  r eply">
+            <input type="text" data-mentions="Morefood888" placeholder="Reply to @Morefood888" data-main="main" class="form-control input-sm enterhandler reply_input"> </div>
+        </div>
+        <div data-userid="117" data-username="SnactNow" class="box-generic Business">
+          <div class="timeline-top-info   clearfix">
+            <div style="margin-left: 5px;" class="pull-right"><span class="dropdown hidden"><a data-toggle="dropdown" class="dropdown-toggle" type="button"><i class="fa fa-fw fa-cog text-muted"></i><span class="sr-only">Toggle Dropdown</span>
+              </a>
+              <ul role="menu" class="dropdown-menu">
+                <li><a target="_blank" href="http://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A8000"><i class="fa fa-facebook fa-fw facebook"></i> Share on Facebook</a>
+                </li>
+                <li><a target="_blank" href="http://twitter.com/home?status=%40SnactNow%20on%20%40foodtradeHQ%20http%3A%2F%2Flocalhost%3A8000"><i class="fa fa-twitter fa-fw twitter "></i> Share on Twitter</a>
+                </li>
+                <li><a href="/SnactNow/" type="button"><i class="fa fa-info-circle fa-lg fa-fw"></i> View profile</a>
+                </li>
+                <li><a onclick="click_activity('follow','SnactNow')" href="#"><i class="fa fa-star-o fa-fw"></i>  Follow on Twitter</a>
+                </li>
+                <li><a class=" " onclick="click_activity('spam','SnactNow')" href="#"><i class="fa fa-flag-o flag fa-fw"></i> Report</a>
+                </li>
+              </ul>
+              </span> <a href="/SnactNow" class="btn btn-primary btn-xs hidden" type="button"><i style="color:#fff;" class="fa fa-arrow-right fa-lg"></i> </a>
+            </div>
+            <div style="background: url(https://pbs.twimg.com/profile_banners/1920068322/1398293743); background-size: cover;" class="text-center innerAll">
+              <a href="/profile/SnactNow"><img style="width:73px; margin-right: 0px;" class="img-rounded img-thumbnail" alt="Snact" src="http://pbs.twimg.com/profile_images/378800000823886303/2c4e96c27722b8c47ce4fbe97cafcfc0_normal.png">
+              </a>
+            </div>
+            <div class="text-center innerAll">
+              <h4 class="margin0"><a class="text-inverse" href="/SnactNow">Snact</a></h4> <a class="tag small" href="/activity/?q=Food%20manufacturer&amp;tab=profile&amp;stype=profile&amp;pwant=all&amp;put=Companies">Food manufacturer</a> </div>
+          </div>
+          <div class="media margin-none status">
+            <div class="content">
+              <div class="text innerAll">
+                <p class="">Making healthy snacks from surplus food. Our fruit jerky snacks are 100% fruit with no additives or preservatives. We currently stock 2 flavours: a</p>
+              </div>
+              <div class="innerAll border-top border-bottom"> <span class="label label-default"><i class="fa fa-sign-in fa-fw"></i>BUYS</span> <b>Apples</b> &amp; 3 more
+                <br>
+              </div>
+            </div>
+          </div>
+          <div class="timeline-bottom innerAll small clearfix">
+            <a data-original-title="Get directions" title="" rel="tooltip" data-toggle="tooltip" data-placement="top" target="_blank" href="http://maps.google.com/maps?saddr=53.526235749086936,-1.0116869500000325&amp;daddr=51.4693714,-0.12284550000003946">
+            <span class="hidden-sm hidden-xs truncate100 address"><i class="fa fa-map-marker fa-fw"></i>London SW9 9HF, UK...</span>
+            </a>
+            <a data-original-title="Get directions" title="" rel="tooltip" data-toggle="tooltip" data-placement="top" target="_blank" href="http://maps.google.com/maps?saddr=53.526235749086936,-1.0116869500000325&amp;daddr=51.4693714,-0.12284550000003946">
+            <i class="fa fa-location-arrow fa-fw"></i>4656.6 miles from you </a>
+          </div>
+          <div style="display: none;" class="innerAll border-top bg-gray  r eply">
+            <input type="text" data-mentions="SnactNow" placeholder="Reply to @SnactNow" data-main="main" class="form-control input-sm enterhandler reply_input"> </div>
+        </div>
+        <div data-userid="-32752" data-username="bakersandco" class="box-generic Business">
+          <div class="timeline-top-info   clearfix">
+            <div style="margin-left: 5px;" class="pull-right"><span class="dropdown hidden"><a data-toggle="dropdown" class="dropdown-toggle" type="button"><i class="fa fa-fw fa-cog text-muted"></i><span class="sr-only">Toggle Dropdown</span>
+              </a>
+              <ul role="menu" class="dropdown-menu">
+                <li><a target="_blank" href="http://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A8000"><i class="fa fa-facebook fa-fw facebook"></i> Share on Facebook</a>
+                </li>
+                <li><a target="_blank" href="http://twitter.com/home?status=%40bakersandco%20on%20%40foodtradeHQ%20http%3A%2F%2Flocalhost%3A8000"><i class="fa fa-twitter fa-fw twitter "></i> Share on Twitter</a>
+                </li>
+                <li><a href="/bakersandco/" type="button"><i class="fa fa-info-circle fa-lg fa-fw"></i> View profile</a>
+                </li>
+                <li><a onclick="click_activity('follow','bakersandco')" href="#"><i class="fa fa-star-o fa-fw"></i>  Follow on Twitter</a>
+                </li>
+                <li><a class=" " onclick="click_activity('spam','bakersandco')" href="#"><i class="fa fa-flag-o flag fa-fw"></i> Report</a>
+                </li>
+              </ul>
+              </span> <a href="/bakersandco" class="btn btn-primary btn-xs hidden" type="button"><i style="color:#fff;" class="fa fa-arrow-right fa-lg"></i> </a>
+            </div>
+            <div style="background: url(https://pbs.twimg.com/profile_banners/1919908669/1398755238); background-size: cover;" class="text-center innerAll">
+              <a href="/profile/bakersandco"><img style="width:73px; margin-right: 0px;" class="img-rounded img-thumbnail" alt="Team Bakers &amp; Co" src="http://pbs.twimg.com/profile_images/461038687053447168/ZPLuHx-1_normal.jpeg">
+              </a>
+            </div>
+            <div class="text-center innerAll">
+              <h4 class="margin0"><a class="text-inverse" href="/bakersandco">Team Bakers &amp; Co</a></h4> </div>
+          </div>
+          <div class="media margin-none status">
+            <div class="content">
+              <div class="text innerAll">
+                <p class="">Californian inspired brunch and coffee venue. Tuesday - Saturday 9am - 6pm, Sunday 10am - 4pm. No reservations.</p>
+              </div>
+              <div class="innerAll border-top border-bottom"> <span class="label label-default"><i class="fa fa-sign-in fa-fw"></i>BUYS</span> <b>Apple juice</b> &amp; 10 more
+                <br>
+              </div>
+            </div>
+          </div>
+          <div class="timeline-bottom innerAll small clearfix">
+            <a data-original-title="Get directions" title="" rel="tooltip" data-toggle="tooltip" data-placement="top" target="_blank" href="http://maps.google.com/maps?saddr=53.526235749086936,-1.0116869500000325&amp;daddr=51.5595273,-2.5601263"> <span class="hidden-sm hidden-xs truncate100 address"><i class="fa fa-map-marker fa-fw"></i>Gloucester Road, Bristol,...</span>
+            </a>
+            <a data-original-title="Get directions" title="" rel="tooltip" data-toggle="tooltip" data-placement="top" target="_blank" href="http://maps.google.com/maps?saddr=53.526235749086936,-1.0116869500000325&amp;daddr=51.5595273,-2.5601263"> <i class="fa fa-location-arrow fa-fw"></i>4760.3 miles from you </a>
+          </div>
+          <div style="display: none;" class="innerAll border-top bg-gray  r eply">
+            <input type="text" data-mentions="bakersandco" placeholder="Reply to @bakersandco" data-main="main" class="form-control input-sm enterhandler reply_input"> </div>
+        </div>
+        <div data-userid="-25989" data-username="kensingtonarms" class="box-generic Business">
+          <div class="timeline-top-info   clearfix">
+            <div style="margin-left: 5px;" class="pull-right"><span class="dropdown hidden"><a data-toggle="dropdown" class="dropdown-toggle" type="button"><i class="fa fa-fw fa-cog text-muted"></i><span class="sr-only">Toggle Dropdown</span>
+              </a>
+              <ul role="menu" class="dropdown-menu">
+                <li><a target="_blank" href="http://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A8000"><i class="fa fa-facebook fa-fw facebook"></i> Share on Facebook</a>
+                </li>
+                <li><a target="_blank" href="http://twitter.com/home?status=%40kensingtonarms%20on%20%40foodtradeHQ%20http%3A%2F%2Flocalhost%3A8000"><i class="fa fa-twitter fa-fw twitter "></i> Share on Twitter</a>
+                </li>
+                <li><a href="/kensingtonarms/" type="button"><i class="fa fa-info-circle fa-lg fa-fw"></i> View profile</a>
+                </li>
+                <li><a onclick="click_activity('follow','kensingtonarms')" href="#"><i class="fa fa-star-o fa-fw"></i>  Follow on Twitter</a>
+                </li>
+                <li><a class=" " onclick="click_activity('spam','kensingtonarms')" href="#"><i class="fa fa-flag-o flag fa-fw"></i> Report</a>
+                </li>
+              </ul>
+              </span> <a href="/kensingtonarms" class="btn btn-primary btn-xs hidden" type="button"><i style="color:#fff;" class="fa fa-arrow-right fa-lg"></i> </a>
+            </div>
+            <div style="background: url(https://pbs.twimg.com/profile_banners/256681870/1375739011); background-size: cover;" class="text-center innerAll">
+              <a href="/profile/kensingtonarms"><img style="width:73px; margin-right: 0px;" class="img-rounded img-thumbnail" alt="The Kensington Arms" src="http://pbs.twimg.com/profile_images/1399874323/Kenny_Logo_normal.png">
+              </a>
+            </div>
+            <div class="text-center innerAll">
+              <h4 class="margin0"><a class="text-inverse" href="/kensingtonarms">The Kensington Arms</a></h4> <a class="tag small" href="/activity/?q=Restaurant%20%2F%20Pub%20%2F%20Bar&amp;tab=profile&amp;stype=profile&amp;pwant=all&amp;put=Companies">Restaurant / Pub / Bar</a> </div>
+          </div>
+          <div class="media margin-none status">
+            <div class="content">
+              <div class="text innerAll">
+                <p class="">The Kensington Arms is an independently owned pub &amp; Kitchen hidden in the heart of Redland. Bristol good food award winners 'Best pub food' 2012 &amp;</p>
+              </div>
+              <div class="innerAll border-top border-bottom"> <span class="label label-default"><i class="fa fa-sign-in fa-fw"></i>BUYS</span> <b>Apple juice, Apples</b> &amp; 28 more
+                <br>
+              </div>
+            </div>
+          </div>
+          <div class="timeline-bottom innerAll small clearfix">
+            <a data-original-title="Get directions" title="" rel="tooltip" data-toggle="tooltip" data-placement="top" target="_blank" href="http://maps.google.com/maps?saddr=53.526235749086936,-1.0116869500000325&amp;daddr=51.473568,-2.6054679999999735">
+            <span class="hidden-sm hidden-xs truncate100 address"><i class="fa fa-map-marker fa-fw"></i>Redland, Bristol, City of...</span>
+            </a>
+            <a data-original-title="Get directions" title="" rel="tooltip" data-toggle="tooltip" data-placement="top" target="_blank" href="http://maps.google.com/maps?saddr=53.526235749086936,-1.0116869500000325&amp;daddr=51.473568,-2.6054679999999735">
+            <i class="fa fa-location-arrow fa-fw"></i>4763.0 miles from you </a>
+          </div>
+          <div style="display: none;" class="innerAll border-top bg-gray  r eply">
+            <input type="text" data-mentions="kensingtonarms" placeholder="Reply to @kensingtonarms" data-main="main" class="form-control input-sm enterhandler reply_input"> </div>
+        </div>
+        <div data-userid="645" data-username="SamsJamsUK" class="box-generic Business">
+          <div class="timeline-top-info   clearfix">
+            <div style="margin-left: 5px;" class="pull-right"><span class="dropdown hidden"><a data-toggle="dropdown" class="dropdown-toggle" type="button"><i class="fa fa-fw fa-cog text-muted"></i><span class="sr-only">Toggle Dropdown</span>
+              </a>
+              <ul role="menu" class="dropdown-menu">
+                <li><a target="_blank" href="http://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A8000"><i class="fa fa-facebook fa-fw facebook"></i> Share on Facebook</a>
+                </li>
+                <li><a target="_blank" href="http://twitter.com/home?status=%40SamsJamsUK%20on%20%40foodtradeHQ%20http%3A%2F%2Flocalhost%3A8000"><i class="fa fa-twitter fa-fw twitter "></i> Share on Twitter</a>
+                </li>
+                <li><a href="/SamsJamsUK/" type="button"><i class="fa fa-info-circle fa-lg fa-fw"></i> View profile</a>
+                </li>
+                <li><a onclick="click_activity('follow','SamsJamsUK')" href="#"><i class="fa fa-star-o fa-fw"></i>  Follow on Twitter</a>
+                </li>
+                <li><a class=" " onclick="click_activity('spam','SamsJamsUK')" href="#"><i class="fa fa-flag-o flag fa-fw"></i> Report</a>
+                </li>
+              </ul>
+              </span> <a href="/SamsJamsUK" class="btn btn-primary btn-xs hidden" type="button"><i style="color:#fff;" class="fa fa-arrow-right fa-lg"></i> </a>
+            </div>
+            <div style="background: url(https://pbs.twimg.com/profile_banners/872337912/1409348194); background-size: cover;" class="text-center innerAll">
+              <a href="/profile/SamsJamsUK"><img style="width:73px; margin-right: 0px;" class="img-rounded img-thumbnail" alt="Sam's Jams" src="http://pbs.twimg.com/profile_images/433261554050424832/Mh_OSAjx_normal.png">
+              </a>
+            </div>
+            <div class="text-center innerAll">
+              <h4 class="margin0"><a class="text-inverse" href="/SamsJamsUK">Sam's Jams</a></h4> <a class="tag small" href="/activity/?q=Food%20Stall&amp;tab=profile&amp;stype=profile&amp;pwant=all&amp;put=Companies">Food Stall</a> </div>
+          </div>
+          <div class="media margin-none status">
+            <div class="content">
+              <div class="text innerAll">
+                <p class="">Sam's Jams Homemade Jam, Marmalade &amp; Chutney. We can supply for weddings, cafes, deli's - email contact@SamsJams.co.uk</p>
+              </div>
+              <div class="innerAll border-top border-bottom"> <span class="label label-default"><i class="fa fa-sign-out fa-fw"></i>SELLS</span> <b>Apple &amp; Ginger Jam, Pineapple &amp; Ginger Jam</b> &amp; 9 more
+                <br>
+              </div>
+            </div>
+          </div>
+          <div class="timeline-bottom innerAll small clearfix">
+            <a data-original-title="Get directions" title="" rel="tooltip" data-toggle="tooltip" data-placement="top" target="_blank" href="http://maps.google.com/maps?saddr=53.526235749086936,-1.0116869500000325&amp;daddr=51.454513,-2.5879099999999653">
+            <span class="hidden-sm hidden-xs truncate100 address"><i class="fa fa-map-marker fa-fw"></i>Bristol, City of Bristol,...</span>
+            </a>
+            <a data-original-title="Get directions" title="" rel="tooltip" data-toggle="tooltip" data-placement="top" target="_blank" href="http://maps.google.com/maps?saddr=53.526235749086936,-1.0116869500000325&amp;daddr=51.454513,-2.5879099999999653">
+            <i class="fa fa-location-arrow fa-fw"></i>4762.4 miles from you </a>
+          </div>
+          <div style="display: none;" class="innerAll border-top bg-gray  r eply">
+            <input type="text" data-mentions="SamsJamsUK" placeholder="Reply to @SamsJamsUK" data-main="main" class="form-control input-sm enterhandler reply_input"> </div>
+        </div>
+        <div data-userid="-20704" data-username="FGW" class="box-generic Business">
+          <div class="timeline-top-info   clearfix">
+            <div style="margin-left: 5px;" class="pull-right"><span class="dropdown hidden"><a data-toggle="dropdown" class="dropdown-toggle" type="button"><i class="fa fa-fw fa-cog text-muted"></i><span class="sr-only">Toggle Dropdown</span>
+              </a>
+              <ul role="menu" class="dropdown-menu">
+                <li><a target="_blank" href="http://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A8000"><i class="fa fa-facebook fa-fw facebook"></i> Share on Facebook</a>
+                </li>
+                <li><a target="_blank" href="http://twitter.com/home?status=%40FGW%20on%20%40foodtradeHQ%20http%3A%2F%2Flocalhost%3A8000"><i class="fa fa-twitter fa-fw twitter "></i> Share on Twitter</a>
+                </li>
+                <li><a href="/FGW/" type="button"><i class="fa fa-info-circle fa-lg fa-fw"></i> View profile</a>
+                </li>
+                <li><a onclick="click_activity('follow','FGW')" href="#"><i class="fa fa-star-o fa-fw"></i>  Follow on Twitter</a>
+                </li>
+                <li><a class=" " onclick="click_activity('spam','FGW')" href="#"><i class="fa fa-flag-o flag fa-fw"></i> Report</a>
+                </li>
+              </ul>
+              </span> <a href="/FGW" class="btn btn-primary btn-xs hidden" type="button"><i style="color:#fff;" class="fa fa-arrow-right fa-lg"></i> </a>
+            </div>
+            <div style="background: url(https://pbs.twimg.com/profile_background_images/507438907282034688/hjMxjn3i.png); background-size: cover;" class="text-center innerAll">
+              <a href="/profile/FGW"><img style="width:73px; margin-right: 0px;" class="img-rounded img-thumbnail" alt="First Great Western" src="http://pbs.twimg.com/profile_images/1346744281/FGW_Stack_normal.jpg">
+              </a>
+            </div>
+            <div class="text-center innerAll">
+              <h4 class="margin0"><a class="text-inverse" href="/FGW">First Great Western</a></h4> <a class="tag small" href="/activity/?q=Chef%20%2F%20Catering&amp;tab=profile&amp;stype=profile&amp;pwant=all&amp;put=Companies">Chef / Catering</a> </div>
+          </div>
+          <div class="media margin-none status">
+            <div class="content">
+              <div class="text innerAll">
+                <p class="">We're here 24/7 to provide service updates. We'll try to answer your questions too.</p>
+              </div>
+              <div class="innerAll border-top border-bottom"> <span class="label label-default"><i class="fa fa-sign-in fa-fw"></i>BUYS</span> <b>Apples</b> &amp; 6 more
+                <br><span class="label label-default"><i class="fa fa-sign-out fa-fw"></i>SELLS</span> <b>Apples</b> &amp; 10 more
+                <br>
+              </div>
+            </div>
+          </div>
+          <div class="timeline-bottom innerAll small clearfix">
+            <a data-original-title="Get directions" title="" rel="tooltip" data-toggle="tooltip" data-placement="top" target="_blank" href="http://maps.google.com/maps?saddr=53.526235749086936,-1.0116869500000325&amp;daddr=51.454513,-2.5879099999999653">
+            <span class="hidden-sm hidden-xs truncate100 address"><i class="fa fa-map-marker fa-fw"></i>Bristol, City of Bristol,...</span>
+            </a>
+            <a data-original-title="Get directions" title="" rel="tooltip" data-toggle="tooltip" data-placement="top" target="_blank" href="http://maps.google.com/maps?saddr=53.526235749086936,-1.0116869500000325&amp;daddr=51.454513,-2.5879099999999653">
+            <i class="fa fa-location-arrow fa-fw"></i>4762.4 miles from you </a>
+          </div>
+          <div style="display: none;" class="innerAll border-top bg-gray  r eply">
+            <input type="text" data-mentions="FGW" placeholder="Reply to @FGW" data-main="main" class="form-control input-sm enterhandler reply_input"> </div>
+        </div>
+        <div data-userid="-15102" data-username="NatBevFruitHit" class="box-generic Business">
+          <div class="timeline-top-info   clearfix">
+            <div style="margin-left: 5px;" class="pull-right"><span class="dropdown hidden"><a data-toggle="dropdown" class="dropdown-toggle" type="button"><i class="fa fa-fw fa-cog text-muted"></i><span class="sr-only">Toggle Dropdown</span>
+              </a>
+              <ul role="menu" class="dropdown-menu">
+                <li><a target="_blank" href="http://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A8000"><i class="fa fa-facebook fa-fw facebook"></i> Share on Facebook</a>
+                </li>
+                <li><a target="_blank" href="http://twitter.com/home?status=%40NatBevFruitHit%20on%20%40foodtradeHQ%20http%3A%2F%2Flocalhost%3A8000"><i class="fa fa-twitter fa-fw twitter "></i> Share on Twitter</a>
+                </li>
+                <li><a href="/NatBevFruitHit/" type="button"><i class="fa fa-info-circle fa-lg fa-fw"></i> View profile</a>
+                </li>
+                <li><a onclick="click_activity('follow','NatBevFruitHit')" href="#"><i class="fa fa-star-o fa-fw"></i>  Follow on Twitter</a>
+                </li>
+                <li><a class=" " onclick="click_activity('spam','NatBevFruitHit')" href="#"><i class="fa fa-flag-o flag fa-fw"></i> Report</a>
+                </li>
+              </ul>
+              </span> <a href="/NatBevFruitHit" class="btn btn-primary btn-xs hidden" type="button"><i style="color:#fff;" class="fa fa-arrow-right fa-lg"></i> </a>
+            </div>
+            <div style="background: url(https://pbs.twimg.com/profile_banners/570851584/1354898718); background-size: cover;" class="text-center innerAll">
+              <a href="/profile/NatBevFruitHit"><img style="width:73px; margin-right: 0px;" class="img-rounded img-thumbnail" alt="Fairtrade Fruit Hit" src="http://pbs.twimg.com/profile_images/423120442103459840/R5DMqOhy_normal.png">
+              </a>
+            </div>
+            <div class="text-center innerAll">
+              <h4 class="margin0"><a class="text-inverse" href="/NatBevFruitHit">Fairtrade Fruit Hit</a></h4> <a class="tag small" href="/activity/?q=Drinks%20manufacturer&amp;tab=profile&amp;stype=profile&amp;pwant=all&amp;put=Companies">Drinks manufacturer</a> </div>
+          </div>
+          <div class="media margin-none status">
+            <div class="content">
+              <div class="text innerAll">
+                <p class="">We make Fairtrade Fruit Juices, Smoothies &amp; Ubuntu Fairtrade Cola. Tweets coming to you from central Bristol.</p>
+              </div>
+              <div class="innerAll border-top border-bottom"> <span class="label label-default"><i class="fa fa-sign-out fa-fw"></i>SELLS</span> <b>Apple juice</b> &amp; 3 more
+                <br>
+              </div>
+            </div>
+          </div>
+          <div class="timeline-bottom innerAll small clearfix">
+            <a data-original-title="Get directions" title="" rel="tooltip" data-toggle="tooltip" data-placement="top" target="_blank" href="http://maps.google.com/maps?saddr=53.526235749086936,-1.0116869500000325&amp;daddr=51.4531822,-2.589771199999973">
+            <span class="hidden-sm hidden-xs truncate100 address"><i class="fa fa-map-marker fa-fw"></i>Bristol, Bristol, City of...</span>
+            </a>
+            <a data-original-title="Get directions" title="" rel="tooltip" data-toggle="tooltip" data-placement="top" target="_blank" href="http://maps.google.com/maps?saddr=53.526235749086936,-1.0116869500000325&amp;daddr=51.4531822,-2.589771199999973">
+            <i class="fa fa-location-arrow fa-fw"></i>4762.5 miles from you </a>
+          </div>
+          <div style="display: none;" class="innerAll border-top bg-gray  r eply">
+            <input type="text" data-mentions="NatBevFruitHit" placeholder="Reply to @NatBevFruitHit" data-main="main" class="form-control input-sm enterhandler reply_input"> </div>
+        </div>
+        <div data-userid="-33680" data-username="total_produce" class="box-generic Business">
+          <div class="timeline-top-info   clearfix">
+            <div style="margin-left: 5px;" class="pull-right"><span class="dropdown hidden"><a data-toggle="dropdown" class="dropdown-toggle" type="button"><i class="fa fa-fw fa-cog text-muted"></i><span class="sr-only">Toggle Dropdown</span>
+              </a>
+              <ul role="menu" class="dropdown-menu">
+                <li><a target="_blank" href="http://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A8000"><i class="fa fa-facebook fa-fw facebook"></i> Share on Facebook</a>
+                </li>
+                <li><a target="_blank" href="http://twitter.com/home?status=%40total_produce%20on%20%40foodtradeHQ%20http%3A%2F%2Flocalhost%3A8000"><i class="fa fa-twitter fa-fw twitter "></i> Share on Twitter</a>
+                </li>
+                <li><a href="/total_produce/" type="button"><i class="fa fa-info-circle fa-lg fa-fw"></i> View profile</a>
+                </li>
+                <li><a onclick="click_activity('follow','total_produce')" href="#"><i class="fa fa-star-o fa-fw"></i>  Follow on Twitter</a>
+                </li>
+                <li><a class=" " onclick="click_activity('spam','total_produce')" href="#"><i class="fa fa-flag-o flag fa-fw"></i> Report</a>
+                </li>
+              </ul>
+              </span> <a href="/total_produce" class="btn btn-primary btn-xs hidden" type="button"><i style="color:#fff;" class="fa fa-arrow-right fa-lg"></i> </a>
+            </div>
+            <div style="background: url(); background-size: cover;" class="text-center innerAll">
+              <a href="/profile/total_produce"><img style="width:73px; margin-right: 0px;" class="img-rounded img-thumbnail" alt="Total Produce" src="http://pbs.twimg.com/profile_images/524804251487576064/GpoV52hj_normal.jpeg">
+              </a>
+            </div>
+            <div class="text-center innerAll">
+              <h4 class="margin0"><a class="text-inverse" href="/total_produce">Total Produce</a></h4> </div>
+          </div>
+          <div class="media margin-none status">
+            <div class="content">
+              <div class="text innerAll">
+                <p class="">Aiming to reduce the distance between farm and fork, Total Produce is the South West’s largest fresh produce supplier.</p>
+              </div>
+              <div class="innerAll border-top border-bottom"> <span class="label label-default"><i class="fa fa-sign-out fa-fw"></i>SELLS</span> <b>Apples</b> &amp; 6 more
+                <br>
+              </div>
+            </div>
+          </div>
+          <div class="timeline-bottom innerAll small clearfix">
+            <a data-original-title="Get directions" title="" rel="tooltip" data-toggle="tooltip" data-placement="top" target="_blank" href="http://maps.google.com/maps?saddr=53.526235749086936,-1.0116869500000325&amp;daddr=51.4449106,-2.5696351"> <span class="hidden-sm hidden-xs truncate100 address"><i class="fa fa-map-marker fa-fw"></i>Wholesale Fruit Centre, A...</span>
+            </a>
+            <a data-original-title="Get directions" title="" rel="tooltip" data-toggle="tooltip" data-placement="top" target="_blank" href="http://maps.google.com/maps?saddr=53.526235749086936,-1.0116869500000325&amp;daddr=51.4449106,-2.5696351"> <i class="fa fa-location-arrow fa-fw"></i>4761.7 miles from you </a>
+          </div>
+          <div style="display: none;" class="innerAll border-top bg-gray  r eply">
+            <input type="text" data-mentions="total_produce" placeholder="Reply to @total_produce" data-main="main" class="form-control input-sm enterhandler reply_input"> </div>
+        </div>
+        <div data-userid="29" data-username="TCFarm" class="box-generic Business">
+          <div class="timeline-top-info   clearfix">
+            <div style="margin-left: 5px;" class="pull-right"><span class="dropdown hidden"><a data-toggle="dropdown" class="dropdown-toggle" type="button"><i class="fa fa-fw fa-cog text-muted"></i><span class="sr-only">Toggle Dropdown</span>
+              </a>
+              <ul role="menu" class="dropdown-menu">
+                <li><a target="_blank" href="http://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A8000"><i class="fa fa-facebook fa-fw facebook"></i> Share on Facebook</a>
+                </li>
+                <li><a target="_blank" href="http://twitter.com/home?status=%40TCFarm%20on%20%40foodtradeHQ%20http%3A%2F%2Flocalhost%3A8000"><i class="fa fa-twitter fa-fw twitter "></i> Share on Twitter</a>
+                </li>
+                <li><a href="/TCFarm/" type="button"><i class="fa fa-info-circle fa-lg fa-fw"></i> View profile</a>
+                </li>
+                <li><a onclick="click_activity('follow','TCFarm')" href="#"><i class="fa fa-star-o fa-fw"></i>  Follow on Twitter</a>
+                </li>
+                <li><a class=" " onclick="click_activity('spam','TCFarm')" href="#"><i class="fa fa-flag-o flag fa-fw"></i> Report</a>
+                </li>
+              </ul>
+              </span> <a href="/TCFarm" class="btn btn-primary btn-xs hidden" type="button"><i style="color:#fff;" class="fa fa-arrow-right fa-lg"></i> </a>
+            </div>
+            <div style="background: url(https://pbs.twimg.com/profile_background_images/377683285/website_background.jpg); background-size: cover;" class="text-center innerAll">
+              <a href="/profile/TCFarm"><img style="width:73px; margin-right: 0px;" class="img-rounded img-thumbnail" alt="The Community Farm" src="http://pbs.twimg.com/profile_images/522027545030443008/u1vmlVAu_normal.jpeg">
+              </a>
+            </div>
+            <div class="text-center innerAll">
+              <h4 class="margin0"><a class="text-inverse" href="/TCFarm">The Community Farm</a></h4> <a class="tag small" href="/activity/?q=Community%20Supported%20Agriculture%20(CSA)&amp;tab=profile&amp;stype=profile&amp;pwant=all&amp;put=Companies">Community Supported Agriculture (CSA)</a> <a class="tag small" href="/activity/?q=Box%20Scheme&amp;tab=profile&amp;stype=profile&amp;pwant=all&amp;put=Companies">Box Scheme</a>              </div>
+          </div>
+          <div class="media margin-none status">
+            <div class="content">
+              <div class="text innerAll">
+                <p class="">A model for future farming, we sell organic food, provide learning experiences and involve the local community in food production.</p>
+              </div>
+              <div class="innerAll border-top border-bottom"> <span class="label label-default"><i class="fa fa-sign-out fa-fw"></i>SELLS</span> <b>Apples</b> &amp; 18 more
+                <br>
+              </div>
+            </div>
+          </div>
+          <div class="timeline-bottom innerAll small clearfix">
+            <a data-original-title="Get directions" title="" rel="tooltip" data-toggle="tooltip" data-placement="top" target="_blank" href="http://maps.google.com/maps?saddr=53.526235749086936,-1.0116869500000325&amp;daddr=51.3558576,-2.612201499999969">
+            <span class="hidden-sm hidden-xs truncate100 address"><i class="fa fa-map-marker fa-fw"></i>Chew Magna, Bristol, Bath...</span>
+            </a>
+            <a data-original-title="Get directions" title="" rel="tooltip" data-toggle="tooltip" data-placement="top" target="_blank" href="http://maps.google.com/maps?saddr=53.526235749086936,-1.0116869500000325&amp;daddr=51.3558576,-2.612201499999969">
+            <i class="fa fa-location-arrow fa-fw"></i>4764.3 miles from you </a>
+          </div>
+          <div style="display: none;" class="innerAll border-top bg-gray  r eply">
+            <input type="text" data-mentions="TCFarm" placeholder="Reply to @TCFarm" data-main="main" class="form-control input-sm enterhandler reply_input"> </div>
+        </div>
+        <div data-userid="-5263" data-username="GardenerCox" class="box-generic Business">
+          <div class="timeline-top-info   clearfix">
+            <div style="margin-left: 5px;" class="pull-right"><span class="dropdown hidden"><a data-toggle="dropdown" class="dropdown-toggle" type="button"><i class="fa fa-fw fa-cog text-muted"></i><span class="sr-only">Toggle Dropdown</span>
+              </a>
+              <ul role="menu" class="dropdown-menu">
+                <li><a target="_blank" href="http://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A8000"><i class="fa fa-facebook fa-fw facebook"></i> Share on Facebook</a>
+                </li>
+                <li><a target="_blank" href="http://twitter.com/home?status=%40GardenerCox%20on%20%40foodtradeHQ%20http%3A%2F%2Flocalhost%3A8000"><i class="fa fa-twitter fa-fw twitter "></i> Share on Twitter</a>
+                </li>
+                <li><a href="/GardenerCox/" type="button"><i class="fa fa-info-circle fa-lg fa-fw"></i> View profile</a>
+                </li>
+                <li><a onclick="click_activity('follow','GardenerCox')" href="#"><i class="fa fa-star-o fa-fw"></i>  Follow on Twitter</a>
+                </li>
+                <li><a class=" " onclick="click_activity('spam','GardenerCox')" href="#"><i class="fa fa-flag-o flag fa-fw"></i> Report</a>
+                </li>
+              </ul>
+              </span> <a href="/GardenerCox" class="btn btn-primary btn-xs hidden" type="button"><i style="color:#fff;" class="fa fa-arrow-right fa-lg"></i> </a>
+            </div>
+            <div style="background: url(); background-size: cover;" class="text-center innerAll">
+              <a href="/profile/GardenerCox"><img style="width:73px; margin-right: 0px;" class="img-rounded img-thumbnail" alt="BarleyWoodVegetables" src="http://pbs.twimg.com/profile_images/1611990686/logo2_1__normal.jpg">
+              </a>
+            </div>
+            <div class="text-center innerAll">
+              <h4 class="margin0"><a class="text-inverse" href="/GardenerCox">BarleyWoodVegetables</a></h4> </div>
+          </div>
+          <div class="media margin-none status">
+            <div class="content">
+              <div class="text innerAll">
+                <p class="">I Grow the finest organic veg in the U.K.Located in a Victorian Walled garden selling onsite/farmers markets and veg boxes</p>
+              </div>
+              <div class="innerAll border-top border-bottom"> <span class="label label-default"><i class="fa fa-sign-out fa-fw"></i>SELLS</span> <b>Apples</b> &amp; 17 more
+                <br>
+              </div>
+            </div>
+          </div>
+          <div class="timeline-bottom innerAll small clearfix">
+            <a data-original-title="Get directions" title="" rel="tooltip" data-toggle="tooltip" data-placement="top" target="_blank" href="http://maps.google.com/maps?saddr=53.526235749086936,-1.0116869500000325&amp;daddr=51.364344,-2.7652"> <span class="hidden-sm hidden-xs truncate100 address"><i class="fa fa-map-marker fa-fw"></i>Wrington, Bristol, North ...</span>
+            </a>
+            <a data-original-title="Get directions" title="" rel="tooltip" data-toggle="tooltip" data-placement="top" target="_blank" href="http://maps.google.com/maps?saddr=53.526235749086936,-1.0116869500000325&amp;daddr=51.364344,-2.7652"> <i class="fa fa-location-arrow fa-fw"></i>4770.7 miles from you </a>
+          </div>
+          <div style="display: none;" class="innerAll border-top bg-gray  r eply">
+            <input type="text" data-mentions="GardenerCox" placeholder="Reply to @GardenerCox" data-main="main" class="form-control input-sm enterhandler reply_input"> </div>
+        </div>
+        <div data-userid="-165689" data-username="juiceexecutive" class="box-generic Business">
+          <div class="timeline-top-info   clearfix">
+            <div style="margin-left: 5px;" class="pull-right"><span class="dropdown hidden"><a data-toggle="dropdown" class="dropdown-toggle" type="button"><i class="fa fa-fw fa-cog text-muted"></i><span class="sr-only">Toggle Dropdown</span>
+              </a>
+              <ul role="menu" class="dropdown-menu">
+                <li><a target="_blank" href="http://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A8000"><i class="fa fa-facebook fa-fw facebook"></i> Share on Facebook</a>
+                </li>
+                <li><a target="_blank" href="http://twitter.com/home?status=%40juiceexecutive%20on%20%40foodtradeHQ%20http%3A%2F%2Flocalhost%3A8000"><i class="fa fa-twitter fa-fw twitter "></i> Share on Twitter</a>
+                </li>
+                <li><a href="/juiceexecutive/" type="button"><i class="fa fa-info-circle fa-lg fa-fw"></i> View profile</a>
+                </li>
+                <li><a onclick="click_activity('follow','juiceexecutive')" href="#"><i class="fa fa-star-o fa-fw"></i>  Follow on Twitter</a>
+                </li>
+                <li><a class=" " onclick="click_activity('spam','juiceexecutive')" href="#"><i class="fa fa-flag-o flag fa-fw"></i> Report</a>
+                </li>
+              </ul>
+              </span> <a href="/juiceexecutive" class="btn btn-primary btn-xs hidden" type="button"><i style="color:#fff;" class="fa fa-arrow-right fa-lg"></i> </a>
+            </div>
+            <div style="background: url(https://pbs.twimg.com/profile_banners/2548018963/1410203419); background-size: cover;" class="text-center innerAll">
+              <a href="/profile/juiceexecutive"><img style="width:73px; margin-right: 0px;" class="img-rounded img-thumbnail" alt="the juice executive" src="http://pbs.twimg.com/profile_images/494200980393963520/-BfoELW0_normal.jpeg">
+              </a>
+            </div>
+            <div class="text-center innerAll">
+              <h4 class="margin0"><a class="text-inverse" href="/juiceexecutive">the juice executive</a></h4> </div>
+          </div>
+          <div class="media margin-none status">
+            <div class="content">
+              <div class="text innerAll">
+                <p class="">provider of raw, cold pressed juice to executive businesses. founded and based in kent by @auger_alex</p>
+              </div>
+              <div class="innerAll border-top border-bottom"> <span class="label label-default"><i class="fa fa-sign-in fa-fw"></i>BUYS</span> <b>Apple mint, Apples</b> &amp; 5 more
+                <br>
+              </div>
+            </div>
+          </div>
+          <div class="timeline-bottom innerAll small clearfix">
+            <a data-original-title="Get directions" title="" rel="tooltip" data-toggle="tooltip" data-placement="top" target="_blank" href="http://maps.google.com/maps?saddr=53.526235749086936,-1.0116869500000325&amp;daddr=51.2787075,0.5217254000000001">
+            <span class="hidden-sm hidden-xs truncate100 address"><i class="fa fa-map-marker fa-fw"></i>Kent, UK...</span>
+            </a>
+            <a data-original-title="Get directions" title="" rel="tooltip" data-toggle="tooltip" data-placement="top" target="_blank" href="http://maps.google.com/maps?saddr=53.526235749086936,-1.0116869500000325&amp;daddr=51.2787075,0.5217254000000001">
+            <i class="fa fa-location-arrow fa-fw"></i>4630.0 miles from you </a>
+          </div>
+          <div style="display: none;" class="innerAll border-top bg-gray  r eply">
+            <input type="text" data-mentions="juiceexecutive" placeholder="Reply to @juiceexecutive" data-main="main" class="form-control input-sm enterhandler reply_input"> </div>
+        </div>
+        <div data-userid="146" data-username="TytherleyStores" class="box-generic Business">
+          <div class="timeline-top-info   clearfix">
+            <div style="margin-left: 5px;" class="pull-right"><span class="dropdown hidden"><a data-toggle="dropdown" class="dropdown-toggle" type="button"><i class="fa fa-fw fa-cog text-muted"></i><span class="sr-only">Toggle Dropdown</span>
+              </a>
+              <ul role="menu" class="dropdown-menu">
+                <li><a target="_blank" href="http://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A8000"><i class="fa fa-facebook fa-fw facebook"></i> Share on Facebook</a>
+                </li>
+                <li><a target="_blank" href="http://twitter.com/home?status=%40TytherleyStores%20on%20%40foodtradeHQ%20http%3A%2F%2Flocalhost%3A8000"><i class="fa fa-twitter fa-fw twitter "></i> Share on Twitter</a>
+                </li>
+                <li><a href="/TytherleyStores/" type="button"><i class="fa fa-info-circle fa-lg fa-fw"></i> View profile</a>
+                </li>
+                <li><a onclick="click_activity('follow','TytherleyStores')" href="#"><i class="fa fa-star-o fa-fw"></i>  Follow on Twitter</a>
+                </li>
+                <li><a class=" " onclick="click_activity('spam','TytherleyStores')" href="#"><i class="fa fa-flag-o flag fa-fw"></i> Report</a>
+                </li>
+              </ul>
+              </span> <a href="/TytherleyStores" class="btn btn-primary btn-xs hidden" type="button"><i style="color:#fff;" class="fa fa-arrow-right fa-lg"></i> </a>
+            </div>
+            <div style="background: url(); background-size: cover;" class="text-center innerAll">
+              <a href="/profile/TytherleyStores"><img style="width:73px; margin-right: 0px;" class="img-rounded img-thumbnail" alt="WT Committee" src="http://pbs.twimg.com/profile_images/438981213403897857/HygcN5-s_normal.jpeg">
+              </a>
+            </div>
+            <div class="text-center innerAll">
+              <h4 class="margin0"><a class="text-inverse" href="/TytherleyStores">WT Committee</a></h4> <a class="tag small" href="/activity/?q=Convenience%20store%20%2F%20newsagent&amp;tab=profile&amp;stype=profile&amp;pwant=all&amp;put=Companies">Convenience store / newsagent</a> </div>
+          </div>
+          <div class="media margin-none status">
+            <div class="content">
+              <div class="text innerAll">
+                <p class="">One of the UK's oldest community owned shops serving local people with local produce</p>
+              </div>
+              <div class="innerAll border-top border-bottom"> <span class="label label-default"><i class="fa fa-sign-out fa-fw"></i>SELLS</span> <b>Apples</b> &amp; 7 more
+                <br>
+              </div>
+            </div>
+          </div>
+          <div class="timeline-bottom innerAll small clearfix">
+            <a data-original-title="Get directions" title="" rel="tooltip" data-toggle="tooltip" data-placement="top" target="_blank" href="http://maps.google.com/maps?saddr=53.526235749086936,-1.0116869500000325&amp;daddr=51.0711474,-1.6080372000000125">
+            <span class="hidden-sm hidden-xs truncate100 address"><i class="fa fa-map-marker fa-fw"></i>2 North Lane, West Tyther...</span>
+            </a>
+            <a data-original-title="Get directions" title="" rel="tooltip" data-toggle="tooltip" data-placement="top" target="_blank" href="http://maps.google.com/maps?saddr=53.526235749086936,-1.0116869500000325&amp;daddr=51.0711474,-1.6080372000000125">
+            <i class="fa fa-location-arrow fa-fw"></i>4723.3 miles from you </a>
+          </div>
+          <div style="display: none;" class="innerAll border-top bg-gray  r eply">
+            <input type="text" data-mentions="TytherleyStores" placeholder="Reply to @TytherleyStores" data-main="main" class="form-control input-sm enterhandler reply_input"> </div>
+        </div>
+        <div data-userid="-5694" data-username="Pythouse" class="box-generic Business">
+          <div class="timeline-top-info   clearfix">
+            <div style="margin-left: 5px;" class="pull-right"><span class="dropdown hidden"><a data-toggle="dropdown" class="dropdown-toggle" type="button"><i class="fa fa-fw fa-cog text-muted"></i><span class="sr-only">Toggle Dropdown</span>
+              </a>
+              <ul role="menu" class="dropdown-menu">
+                <li><a target="_blank" href="http://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A8000"><i class="fa fa-facebook fa-fw facebook"></i> Share on Facebook</a>
+                </li>
+                <li><a target="_blank" href="http://twitter.com/home?status=%40Pythouse%20on%20%40foodtradeHQ%20http%3A%2F%2Flocalhost%3A8000"><i class="fa fa-twitter fa-fw twitter "></i> Share on Twitter</a>
+                </li>
+                <li><a href="/Pythouse/" type="button"><i class="fa fa-info-circle fa-lg fa-fw"></i> View profile</a>
+                </li>
+                <li><a onclick="click_activity('follow','Pythouse')" href="#"><i class="fa fa-star-o fa-fw"></i>  Follow on Twitter</a>
+                </li>
+                <li><a class=" " onclick="click_activity('spam','Pythouse')" href="#"><i class="fa fa-flag-o flag fa-fw"></i> Report</a>
+                </li>
+              </ul>
+              </span> <a href="/Pythouse" class="btn btn-primary btn-xs hidden" type="button"><i style="color:#fff;" class="fa fa-arrow-right fa-lg"></i> </a>
+            </div>
+            <div style="background: url(); background-size: cover;" class="text-center innerAll">
+              <a href="/profile/Pythouse"><img style="width:73px; margin-right: 0px;" class="img-rounded img-thumbnail" alt="PythouseWalledGarden" src="http://pbs.twimg.com/profile_images/1801899869/Garden_normal.jpg">
+              </a>
+            </div>
+            <div class="text-center innerAll">
+              <h4 class="margin0"><a class="text-inverse" href="/Pythouse">PythouseWalledGarden</a></h4> <a class="tag small" href="/activity/?q=Mixed%20farm&amp;tab=profile&amp;stype=profile&amp;pwant=all&amp;put=Companies">Mixed farm</a> </div>
+          </div>
+          <div class="media margin-none status">
+            <div class="content">
+              <div class="text innerAll">
+                <p class="">A stunning Walled Garden with a restaurant and shop. Find us in the Good Food Guide 2014 and Michelin Guide.</p>
+              </div>
+              <div class="innerAll border-top border-bottom"> <span class="label label-default"><i class="fa fa-sign-out fa-fw"></i>SELLS</span> <b>Apple juice</b> &amp; 9 more
+                <br>
+              </div>
+            </div>
+          </div>
+          <div class="timeline-bottom innerAll small clearfix">
+            <a data-original-title="Get directions" title="" rel="tooltip" data-toggle="tooltip" data-placement="top" target="_blank" href="http://maps.google.com/maps?saddr=53.526235749086936,-1.0116869500000325&amp;daddr=51.063138,-2.079702999999995">
+            <span class="hidden-sm hidden-xs truncate100 address"><i class="fa fa-map-marker fa-fw"></i>Tisbury, Wiltshire, UK...</span>
+            </a>
+            <a data-original-title="Get directions" title="" rel="tooltip" data-toggle="tooltip" data-placement="top" target="_blank" href="http://maps.google.com/maps?saddr=53.526235749086936,-1.0116869500000325&amp;daddr=51.063138,-2.079702999999995">
+            <i class="fa fa-location-arrow fa-fw"></i>4743.7 miles from you </a>
+          </div>
+          <div style="display: none;" class="innerAll border-top bg-gray  r eply">
+            <input type="text" data-mentions="Pythouse" placeholder="Reply to @Pythouse" data-main="main" class="form-control input-sm enterhandler reply_input"> </div>
+        </div>
+        <div data-userid="-20848" data-username="DiginVeg" class="box-generic Business">
+          <div class="timeline-top-info   clearfix">
+            <div style="margin-left: 5px;" class="pull-right"><span class="dropdown hidden"><a data-toggle="dropdown" class="dropdown-toggle" type="button"><i class="fa fa-fw fa-cog text-muted"></i><span class="sr-only">Toggle Dropdown</span>
+              </a>
+              <ul role="menu" class="dropdown-menu">
+                <li><a target="_blank" href="http://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A8000"><i class="fa fa-facebook fa-fw facebook"></i> Share on Facebook</a>
+                </li>
+                <li><a target="_blank" href="http://twitter.com/home?status=%40DiginVeg%20on%20%40foodtradeHQ%20http%3A%2F%2Flocalhost%3A8000"><i class="fa fa-twitter fa-fw twitter "></i> Share on Twitter</a>
+                </li>
+                <li><a href="/DiginVeg/" type="button"><i class="fa fa-info-circle fa-lg fa-fw"></i> View profile</a>
+                </li>
+                <li><a onclick="click_activity('follow','DiginVeg')" href="#"><i class="fa fa-star-o fa-fw"></i>  Follow on Twitter</a>
+                </li>
+                <li><a class=" " onclick="click_activity('spam','DiginVeg')" href="#"><i class="fa fa-flag-o flag fa-fw"></i> Report</a>
+                </li>
+              </ul>
+              </span> <a href="/DiginVeg" class="btn btn-primary btn-xs hidden" type="button"><i style="color:#fff;" class="fa fa-arrow-right fa-lg"></i> </a>
+            </div>
+            <div style="background: url(https://pbs.twimg.com/profile_banners/1329195024/1378987985); background-size: cover;" class="text-center innerAll">
+              <a href="/profile/DiginVeg"><img style="width:73px; margin-right: 0px;" class="img-rounded img-thumbnail" alt="Dig-in Bruntsfield" src="http://pbs.twimg.com/profile_images/378800000446854900/0517349c1b8ea1fd3d9627bdd60e11d6_normal.png">
+              </a>
+            </div>
+            <div class="text-center innerAll">
+              <h4 class="margin0"><a class="text-inverse" href="/DiginVeg">Dig-in Bruntsfield</a></h4> </div>
+          </div>
+          <div class="media margin-none status">
+            <div class="content">
+              <div class="text innerAll">
+                <p class="">We are a community-owned and supported, not-for-profit greengrocer in Edinburgh who supply locally-sourced produce and foster community spirit.</p>
+              </div>
+              <div class="innerAll border-top border-bottom"> <span class="label label-default"><i class="fa fa-sign-in fa-fw"></i>BUYS</span> <b>Apples</b> &amp; 9 more
+                <br>
+              </div>
+            </div>
+          </div>
+          <div class="timeline-bottom innerAll small clearfix">
+            <a data-original-title="Get directions" title="" rel="tooltip" data-toggle="tooltip" data-placement="top" target="_blank" href="http://maps.google.com/maps?saddr=53.526235749086936,-1.0116869500000325&amp;daddr=55.9376366,-3.1996319"> <span class="hidden-sm hidden-xs truncate100 address"><i class="fa fa-map-marker fa-fw"></i>Bruntsfield, Edinburgh, C...</span>
+            </a>
+            <a data-original-title="Get directions" title="" rel="tooltip" data-toggle="tooltip" data-placement="top" target="_blank" href="http://maps.google.com/maps?saddr=53.526235749086936,-1.0116869500000325&amp;daddr=55.9376366,-3.1996319"> <i class="fa fa-location-arrow fa-fw"></i>4753.6 miles from you </a>
+          </div>
+          <div style="display: none;" class="innerAll border-top bg-gray  r eply">
+            <input type="text" data-mentions="DiginVeg" placeholder="Reply to @DiginVeg" data-main="main" class="form-control input-sm enterhandler reply_input"> </div>
+        </div>
+        <div data-userid="-16587" data-username="stream_farm" class="box-generic Business">
+          <div class="timeline-top-info   clearfix">
+            <div style="margin-left: 5px;" class="pull-right"><span class="dropdown hidden"><a data-toggle="dropdown" class="dropdown-toggle" type="button"><i class="fa fa-fw fa-cog text-muted"></i><span class="sr-only">Toggle Dropdown</span>
+              </a>
+              <ul role="menu" class="dropdown-menu">
+                <li><a target="_blank" href="http://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A8000"><i class="fa fa-facebook fa-fw facebook"></i> Share on Facebook</a>
+                </li>
+                <li><a target="_blank" href="http://twitter.com/home?status=%40stream_farm%20on%20%40foodtradeHQ%20http%3A%2F%2Flocalhost%3A8000"><i class="fa fa-twitter fa-fw twitter "></i> Share on Twitter</a>
+                </li>
+                <li><a href="/stream_farm/" type="button"><i class="fa fa-info-circle fa-lg fa-fw"></i> View profile</a>
+                </li>
+                <li><a onclick="click_activity('follow','stream_farm')" href="#"><i class="fa fa-star-o fa-fw"></i>  Follow on Twitter</a>
+                </li>
+                <li><a class=" " onclick="click_activity('spam','stream_farm')" href="#"><i class="fa fa-flag-o flag fa-fw"></i> Report</a>
+                </li>
+              </ul>
+              </span> <a href="/stream_farm" class="btn btn-primary btn-xs hidden" type="button"><i style="color:#fff;" class="fa fa-arrow-right fa-lg"></i> </a>
+            </div>
+            <div style="background: url(https://pbs.twimg.com/profile_banners/363131364/1353096249); background-size: cover;" class="text-center innerAll">
+              <a href="/profile/stream_farm"><img style="width:73px; margin-right: 0px;" class="img-rounded img-thumbnail" alt="Stream Farm" src="http://pbs.twimg.com/profile_images/2633218816/345fd9a94132b75661d819fc90ba47c3_normal.jpeg">
+              </a>
+            </div>
+            <div class="text-center innerAll">
+              <h4 class="margin0"><a class="text-inverse" href="/stream_farm">Stream Farm</a></h4> <a class="tag small" href="/activity/?q=Livestock%20Farm&amp;tab=profile&amp;stype=profile&amp;pwant=all&amp;put=Companies">Livestock Farm</a> </div>
+          </div>
+          <div class="media margin-none status">
+            <div class="content">
+              <div class="text innerAll">
+                <p class="">An award-winning organic farm in Somerset. We produce Dexter Beef, Hampshire Down Lamb, Devonshire Gold Chicken, Apple Juice, Spring Water and Rainbow</p>
+              </div>
+              <div class="innerAll border-top border-bottom"> <span class="label label-default"><i class="fa fa-sign-out fa-fw"></i>SELLS</span> <b>Apple juice</b> &amp; 3 more
+                <br>
+              </div>
+            </div>
+          </div>
+          <div class="timeline-bottom innerAll small clearfix">
+            <a data-original-title="Get directions" title="" rel="tooltip" data-toggle="tooltip" data-placement="top" target="_blank" href="http://maps.google.com/maps?saddr=53.526235749086936,-1.0116869500000325&amp;daddr=51.0587013,-2.949906599999963">
+            <span class="hidden-sm hidden-xs truncate100 address"><i class="fa fa-map-marker fa-fw"></i>Somerset, UK...</span>
+            </a>
+            <a data-original-title="Get directions" title="" rel="tooltip" data-toggle="tooltip" data-placement="top" target="_blank" href="http://maps.google.com/maps?saddr=53.526235749086936,-1.0116869500000325&amp;daddr=51.0587013,-2.949906599999963">
+            <i class="fa fa-location-arrow fa-fw"></i>4781.3 miles from you </a>
+          </div>
+          <div style="display: none;" class="innerAll border-top bg-gray  r eply">
+            <input type="text" data-mentions="stream_farm" placeholder="Reply to @stream_farm" data-main="main" class="form-control input-sm enterhandler reply_input"> </div>
+        </div>
+        <div data-userid="119" data-username="olliecampbell" class="box-generic Business">
+          <div class="timeline-top-info   clearfix">
+            <div style="margin-left: 5px;" class="pull-right"><span class="dropdown hidden"><a data-toggle="dropdown" class="dropdown-toggle" type="button"><i class="fa fa-fw fa-cog text-muted"></i><span class="sr-only">Toggle Dropdown</span>
+              </a>
+              <ul role="menu" class="dropdown-menu">
+                <li><a target="_blank" href="http://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A8000"><i class="fa fa-facebook fa-fw facebook"></i> Share on Facebook</a>
+                </li>
+                <li><a target="_blank" href="http://twitter.com/home?status=%40olliecampbell%20on%20%40foodtradeHQ%20http%3A%2F%2Flocalhost%3A8000"><i class="fa fa-twitter fa-fw twitter "></i> Share on Twitter</a>
+                </li>
+                <li><a href="/olliecampbell/" type="button"><i class="fa fa-info-circle fa-lg fa-fw"></i> View profile</a>
+                </li>
+                <li><a onclick="click_activity('follow','olliecampbell')" href="#"><i class="fa fa-star-o fa-fw"></i>  Follow on Twitter</a>
+                </li>
+                <li><a class=" " onclick="click_activity('spam','olliecampbell')" href="#"><i class="fa fa-flag-o flag fa-fw"></i> Report</a>
+                </li>
+              </ul>
+              </span> <a href="/olliecampbell" class="btn btn-primary btn-xs hidden" type="button"><i style="color:#fff;" class="fa fa-arrow-right fa-lg"></i> </a>
+            </div>
+            <div style="background: url(); background-size: cover;" class="text-center innerAll">
+              <a href="/profile/olliecampbell"><img style="width:73px; margin-right: 0px;" class="img-rounded img-thumbnail" alt="Oliver Campbell" src="http://pbs.twimg.com/profile_images/68376020/olliebefore_normal.jpg">
+              </a>
+            </div>
+            <div class="text-center innerAll">
+              <h4 class="margin0"><a class="text-inverse" href="/olliecampbell">Oliver Campbell</a></h4> <a class="tag small" href="/activity/?q=Orchard&amp;tab=profile&amp;stype=profile&amp;pwant=all&amp;put=Companies">Orchard</a> </div>
+          </div>
+          <div class="media margin-none status">
+            <div class="content">
+              <div class="text innerAll">
+                <p class="">Hawthorn Hill Orchard is a small (20 acre) cider apple orchard. We grow a 50-50 mix of Ashton Bitters and Majors. They are used in Magners cider. We u</p>
+              </div>
+            </div>
+          </div>
+          <div class="timeline-bottom innerAll small clearfix">
+            <a data-original-title="Get directions" title="" rel="tooltip" data-toggle="tooltip" data-placement="top" target="_blank" href="http://maps.google.com/maps?saddr=53.526235749086936,-1.0116869500000325&amp;daddr=50.9692863,-2.8050332000000253">
+            <span class="hidden-sm hidden-xs truncate100 address"><i class="fa fa-map-marker fa-fw"></i>East Lambrook, Somerset T...</span>
+            </a>
+            <a data-original-title="Get directions" title="" rel="tooltip" data-toggle="tooltip" data-placement="top" target="_blank" href="http://maps.google.com/maps?saddr=53.526235749086936,-1.0116869500000325&amp;daddr=50.9692863,-2.8050332000000253">
+            <i class="fa fa-location-arrow fa-fw"></i>4775.8 miles from you </a>
+          </div>
+          <div style="display: none;" class="innerAll border-top bg-gray  r eply">
+            <input type="text" data-mentions="olliecampbell" placeholder="Reply to @olliecampbell" data-main="main" class="form-control input-sm enterhandler reply_input"> </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">map section</div>
+  </div>
+</div>
+
+{% endblock search_section_content %}

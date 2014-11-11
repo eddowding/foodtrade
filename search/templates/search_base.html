@@ -36,12 +36,7 @@
 <link rel="shortcut icon" href="/static/images/favicon.ico">
 
 {% block css %}
-<link href="{% static "css/bootstrap.css" %}" rel="stylesheet">
-<link rel="stylesheet" href="{% static "css/docsupport/prism.css" %}">
-<link rel="stylesheet" href="{% static "css/chosen.min.css" %}">
-<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css">
-<link rel="stylesheet" href="http://malihu.github.io/custom-scrollbar/jquery.mCustomScrollbar.min.css" />
-<link rel="stylesheet" href="{% static "css/leaflet.css" %}" />
+<link href="{% static "css/bootstrap.css" %}" rel="stylesheet" />
 <link rel="stylesheet" href="{% static "css/foodtrade.css" %}" />
 <link rel="stylesheet" href="{% static "assets/less/admin/module.admin.stylesheet-complete.css" %}" />
 {% block extra_css %}
@@ -49,13 +44,6 @@
 {% endblock css %}
 
 {% block js %}
-<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.js"></script>
-<script src="{% static "js/label-leaflet.js" %}"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
-<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js" charset="utf-8"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/jquery-migrate/1.2.1/jquery-migrate.min.js"></script>
 {% block extra_js %}
 {% endblock extra_js %}
 {% endblock js %}
@@ -429,24 +417,6 @@
             <div class="input-group border0">
               <input type="hidden" name="stype" value="produce" id="search_stype">
               <input type="text" class="form-control pull-left" name="q" id="search_query" placeholder="eg 'apples'">
-              <div class="input-group-btn border0" id="searchGroup">
-                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" id="searchSelect">
-                <span id="search_type">
-                    <div class="hidden-xs">
-                      in Produce
-                      <i class='fa fa-caret-down'></i>
-                    </div>
-                    <div class="hidden-sm hidden-md hidden-lg">
-                      <i class='fa fa-cutlery fa-lg'></i>
-                      <i class='fa fa-caret-down'></i>
-                    </div>
-                </span>
-                </button>
-                <ul class="dropdown-menu">
-                  <li><a href="#" id="search_type_option"> in Profiles </a></li>
-                </ul>
-              </div>
-
               <div class="input-group-btn">
                 <button type="submit" class="btn btn-default" id="searchSubmit">
                   <span class="glyphicon glyphicon-search"></span>
@@ -515,6 +485,90 @@
         </div>
       </nav>
       {% endblock search_nav %}
+
+      {% block search_section %}
+      <span id="reload_warning" class="hidden"> </span>
+
+      {% if not request.user.is_authenticated %}
+      <div class="row" id="notLoggedIn">
+        <div class="col-md-12">
+          <div class=" ">
+          <p>
+          <a href="{% provider_login_url "twitter" process="login" %}">Sign in</a> to see richer profiles, save favourites, contact people, and more.</p>
+          </p>
+          </div>
+        </div>
+      </div>
+      {% endif %}
+
+      <div class="row row-merge"  style="height: 100%;">
+        <!-- <div class="{% if not request.user.is_authenticated %} col-xs-12 {% else %} col-md-10  {% endif %}"> -->
+        <div class=" col-xs-12  ">
+              <div class="container-fluid menu-hidden" id="main_page" style="padding-bottom: 0;">
+                    <div class="row row-merge">
+                          <div class="col-md-12">
+                           {% block search_section_content %}
+
+                           {% endblock search_section_content %}
+                          </div><!-- 12 -->
+                    </div><!-- row -->
+              </div><!-- container -->
+        </div><!-- col 10 -->
+        <!-- <div class="  {% if not request.user.is_authenticated %} hidden {% else %} col-md-2  {% endif %} hidden-sm hidden-xs" id="updatesContainer"> -->
+        <div class="hidden" id="updatesContainer">
+        <div class="fixed">
+
+        <h4><i class="fa fa-bullhorn"></i> Marketplace updates</h4>
+
+          <div class="mCustomScrollbar" id="updateScroller">
+            <div id="updates" class="">
+            </div><!-- updates -->
+          </div>
+
+
+          <div id="didyouknow" class="carousel slide">
+              <!-- Items -->
+              <div class="carousel-inner">
+                  <!-- Item -->
+                  <div class="item active">
+
+                      <span class="pull-left media-object innerLR half">
+                          <i class="fa fa-fw fa-question-circle"></i>
+                      </span>
+                      <div class="media-body text-left">
+                          If you would like to find or offer surplus or gluts, just use as <a href="/activity/?q=surplus">#surplus</a> to your message.  <a href="/activity/?q=surplus" class="text-white">Check it out</a>
+                      </div>
+                  </div>
+                  <!-- // Item END -->
+                  <!-- Item -->
+                  <div class="item">
+
+                      <span class="pull-left media-object innerLR half">
+                          <i class="fa fa-fw fa-question-circle"></i>
+                      </span>
+                      <div class="media-body text-left">
+                        You can  post updates from anywhere! Just tweet your message to @foodtradeHQ and we'll push your message to local businesses!
+                      </div>
+                  </div>
+                  <div class="item">
+
+                      <span class="pull-left media-object innerLR half">
+                          <i class="fa fa-fw fa-question-circle"></i>
+                      </span>
+                      <div class="media-body text-left">
+                        See who's checking you out by clicking on your account icon at the top of the page and selecting "Who's visited my profile"
+                      </div>
+                  </div>
+
+              </div>
+          </div>
+
+        </div>
+        </div>
+
+      </div>
+
+      {% endblock search_section %}
     </div>
   </div>
 </body>
