@@ -91,7 +91,8 @@ class MongoConnection():
         # self.create_connection()
         id = self.db[table_name].insert(value)
         value['_id'] = id
-        self.es_conn.create(table_name, value)
+        if self.es_conn.mapping_exists(table_name):
+            self.es_conn.create(table_name, value)
         # self.close_connection()
 
     def update_push(self, table_name, where, what):
