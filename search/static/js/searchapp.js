@@ -12,6 +12,7 @@ $(document).ready(function() {
         url: '/search/result',
         method: 'get',
         dataType: 'json',
+        data: {query: query},
         success: function (data) {
           $('#search_results').html(data.html);
         }
