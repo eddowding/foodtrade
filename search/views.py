@@ -1,4 +1,6 @@
 import json
+from elasticutils import S
+from django.conf import settings
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.template.loader import render_to_string
@@ -14,5 +16,7 @@ def search(request):
     return render(request, 'search.html')
 
 def search_result(request):
-    html = render_to_string('_partials/search_result.html', {}, context_instance=RequestContext(request))
+    query = request.GET.get('query')
+    sqs = S().indexes(settings.ES_INDEX).query(_all__fuzzy=query)
+    html = render_to_string('_partials/search_result.html', {'sqs': sqs}, context_instance=RequestContext(request))
     return HttpResponse(json.dumps({'html': html}))
