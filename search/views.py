@@ -15,7 +15,7 @@ def search(request):
         print user_profile
     return render(request, 'search.html')
 
-def search_result(request):
+def search_result(request): #TODO: change result div name, change hard coded url.
     query = request.GET.get('query')
     sqs = S().indexes(settings.ES_INDEX).query(_all__fuzzy=query)
     html = render_to_string('_partials/search_result.html', {'sqs': sqs}, context_instance=RequestContext(request))

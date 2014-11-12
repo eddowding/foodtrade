@@ -14,7 +14,7 @@ $(document).ready(function() {
         dataType: 'json',
         data: {query: query},
         success: function (data) {
-          $('#search_results').html(data.html);
+          $('#profile_results').html(data.html);
         }
       });
     }
