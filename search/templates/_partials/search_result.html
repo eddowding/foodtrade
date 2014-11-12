@@ -1,3 +1,4 @@
+{% if sqs.count %}
 {% for r in sqs %}
 <div data-userid="-17452" data-username="CoOwnRushFarm" class="box-generic Business">
   <div class="timeline-top-info   clearfix">
@@ -45,3 +46,6 @@
     <input type="text" data-mentions="CoOwnRushFarm" placeholder="Reply to @CoOwnRushFarm" data-main="main" class="form-control input-sm enterhandler reply_input"> </div>
 </div>
 {% endfor %}
+{% else %}
+<h4>As you type search results will start showing here !</h4>
+{% endif %}
