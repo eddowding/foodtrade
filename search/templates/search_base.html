@@ -39,11 +39,16 @@
 <link href="{% static "css/bootstrap.css" %}" rel="stylesheet" />
 <link rel="stylesheet" href="{% static "css/foodtrade.css" %}" />
 <link rel="stylesheet" href="{% static "assets/less/admin/module.admin.stylesheet-complete.css" %}" />
+<link rel="stylesheet" href="{% static "css/leaflet.css" %}" />
+<link rel="stylesheet" href="{% static "css/searchapp.css" %}" />
 {% block extra_css %}
 {% endblock extra_css %}
 {% endblock css %}
 
 {% block js %}
+<script type="text/javascript" src="{% static "js/leaflet.js" %}"></script>
+<script type="text/javascript" src="{% static "js/jquery-1.11.0.js" %}"></script>
+<script type="text/javascript" src="{% static "js/searchapp.js" %}"></script>
 {% block extra_js %}
 {% endblock extra_js %}
 {% endblock js %}
@@ -413,12 +418,12 @@
           </div>
 
           <div class="" id="">
-          <form action="/activity" onsubmit="return start_search()" class="navbar-form navbar-left col-sm-6" id="searchform">
+          <form class="navbar-form navbar-left col-sm-6" id="searchform">
             <div class="input-group border0">
               <input type="hidden" name="stype" value="produce" id="search_stype">
               <input type="text" class="form-control pull-left" name="q" id="search_query" placeholder="eg 'apples'">
               <div class="input-group-btn">
-                <button type="submit" class="btn btn-default" id="searchSubmit">
+                <button type="button" class="btn btn-default" id="searchSubmit">
                   <span class="glyphicon glyphicon-search"></span>
                 </button>
               </div>
