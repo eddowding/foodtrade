@@ -43,8 +43,9 @@ class MarketSearch(GeneralSearch):
             query_string.append({"organisations":{"$all":self.org_filters}})
 
 
-        query_string.append({"$nor":[{"$exists": False},{"updates": { "$size": 0 }}]})
-        time_stamp = int(time.time()) - 300*24*3600
+        query_string.append({"$nor":[{"updates":{"$exists": False}},{"updates": { "$size": 0 }}]})
+        time_stamp = int(time.time()) - 3000*24*3600
+        
         # query_string.append({'updates':{"$elemMatch":{'time_stamp':{"$gt":int(time_stamp)},"deleted":0}}})
 
 
@@ -74,7 +75,7 @@ class MarketSearch(GeneralSearch):
                       }
 
 
-        # pipeline.append(geo_near)
+        pipeline.append(geo_near)
  
         pipeline.append({"$project":{"username":1, "description":1,"type_user":1, "address":1,"sign_up_as":1,"latlng":1,"name":1,"updates":1,"profile_img":1,"_id":0,"profile_banner_url":1}})
         pipeline.append({"$unwind":"$updates"})
