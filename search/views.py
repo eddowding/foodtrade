@@ -13,8 +13,8 @@ def search(request):
 
 def search_result(request): #TODO: change result div name, change hard coded url.
     query = request.GET.get('query')
-    lat = request.GET.get('lat')
-    lng = request.GET.get('lng')
+    lat = float(request.GET.get('lat')) if request.GET.get('lat') else None
+    lng = float(request.GET.get('lng')) if request.GET.get('lng') else None
     distance = request.GET.get('distance')
     if request.user.is_authenticated():
         user_profile_obj = UserProfile()
@@ -27,5 +27,5 @@ def search_result(request): #TODO: change result div name, change hard coded url
     if lat and lng:
         sqs = sqs.filter(latlng__distance=(distance, lat, lng))
     html = render_to_string('_partials/search_result.html', {'sqs': sqs}, context_instance=RequestContext(request))
-    objs = list(sqs.values_dict('id', 'name', 'profile_image', 'description', 'latlng'))
+    objs = list(sqs.values_dict('id', 'name', 'profile_img', 'description', 'latlng'))
     return HttpResponse(json.dumps({'html': html, 'objs': objs}))
