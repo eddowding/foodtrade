@@ -9,12 +9,12 @@ $(document).ready(function() {
       var icon = L.icon({iconUrl: value.profile_img[0], iconSize: [32, 32]});
       var latlng = value.latlng[0].split(',');
       latlng = new L.LatLng(parseFloat(latlng[0]), parseFloat(latlng[1]));
-      var marker = L.marker(latlng, {icon: icon, clickable: true, draggable: false}).addTo(map);
+      var marker = L.marker(latlng, {icon: icon, clickable: true, draggable: false, riseOnHover: true}).addTo(map);
       markerList.push(marker);
     });
   };
 
-  var map = L.map('map').setView([51.505, -0.09], 13);
+  var map = L.map('map').setView([51.505, -0.09], 6);
   L.tileLayer('https://{s}.tiles.mapbox.com/v3/foodtrade.i26pc0n5/{z}/{x}/{y}.png', {
     attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
     maxZoom: 18
