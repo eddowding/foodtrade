@@ -9,6 +9,7 @@ $(document).ready(function() {
       var icon = L.icon({iconUrl: value.profile_img[0], iconSize: [32, 32]});
       var latlng = value.latlng[0].split(',');
       latlng = new L.LatLng(parseFloat(latlng[0]), parseFloat(latlng[1]));
+      map.panTo(latlng);
       var marker = L.marker(latlng, {icon: icon, clickable: true, draggable: false, riseOnHover: true}).addTo(map);
       markerList.push(marker);
     });
