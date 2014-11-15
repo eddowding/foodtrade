@@ -1,4 +1,4 @@
-$(document).ready(function() {
+$(document).ready(function() {//TODO: move templating logic to seperate file using a templating engine
   var markerDict = {};
   var markerSetupFn = function(map, objs) {
     for (var key in markerDict) {
@@ -13,12 +13,16 @@ $(document).ready(function() {
       var latlng = value.latlng[0].split(',');
       latlng = new L.LatLng(parseFloat(latlng[0]), parseFloat(latlng[1]));
       map.panTo(latlng);
+      var card_str = '<div class="card-box"><div class="content text-center"><div class=""><a href="/profile/'+value.username[0]+'"><img src="'+value.profile_img[0]+'" alt="'+value.name[0]+'" class="img-circle img-thumbnail img-responsive" style="width:73px;" /></a>';
+          card_str += '</div><div class="text"><h3><a href="/profile/'+value.username[0]+'">'+value.name[0]+'</a></h3>';
+          card_str += '<p>'+$.trim(value.description[0]).substring(0, 50)+'...</p></div>';
+          card_str += '<a href="/profile/'+value.username[0]+'" class="btn btn-primary btn-sm">View profile &raquo;</a></div> </div>';
       var marker = L.marker(latlng, {
         icon: icon,
         clickable: true,
         draggable: false,
         riseOnHover: true
-      }).addTo(map);
+      }).bindPopup(card_str).addTo(map);
       markerDict[value.id] = marker;
     });
   };
