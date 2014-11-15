@@ -27,5 +27,5 @@ def search_result(request): #TODO: change result div name, change hard coded url
     if lat and lng:
         sqs = sqs.filter(latlng__distance=(distance, lat, lng))
     html = render_to_string('_partials/search_result.html', {'sqs': sqs}, context_instance=RequestContext(request))
-    objs = list(sqs.values_dict('id', 'name', 'profile_img', 'description', 'latlng'))
+    objs = list(sqs.values_dict('id', 'name', 'profile_img', 'description', 'latlng', 'username'))
     return HttpResponse(json.dumps({'html': html, 'objs': objs}))
