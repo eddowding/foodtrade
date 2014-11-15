@@ -23,9 +23,12 @@ def search_result(request): #TODO: change result div name, change hard coded url
             lat = user_profile.get('latlng').get('coordinates')[1]
             lng = user_profile.get('latlng').get('coordinates')[0]
             distance = '20km'
-    sqs = S().indexes(settings.ES_INDEX).query(_all__fuzzy=query)
+    sqs = S().indexes(settings.ES_INDEX).query(_all__fuzzy=query).facet('sign_up_as')
     if lat and lng:
         sqs = sqs.filter(latlng__distance=(distance, lat, lng))
     html = render_to_string('_partials/search_result.html', {'sqs': sqs}, context_instance=RequestContext(request))
     objs = list(sqs.values_dict('id', 'name', 'profile_img', 'description', 'latlng', 'username'))
-    return HttpResponse(json.dumps({'html': html, 'objs': objs}))
+    facets = {}#TODO: check why this iteration is required
+    for k, v in sqs.facet_counts().items():
+        facets[k] = {'total': v['total'], 'terms': v['terms']}
+    return HttpResponse(json.dumps({'html': html, 'objs': objs, 'facets': facets}))
