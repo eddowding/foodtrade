@@ -46,6 +46,14 @@ $(document).ready(function() {//TODO: move templating logic to seperate file usi
         success: function(data) {
           $('#profile_results').html(data.html);
           markerSetupFn(map, data.objs);
+          $('#profile-type-label').text('Profile Types (' + data.facets.sign_up_as.total + ')');
+          var options = '';
+          data.facets.sign_up_as.terms.forEach(function (value, index) {
+            options += '<option value="' + value.term + '">' + value.term + ' (' + value.count + ')</option>';
+          });
+          $('#profile-type-select').html(options);
+          $('#profile-type-label').show();
+          $('#profile-type-select').show();
         }
       });
     }
