@@ -50,4 +50,16 @@ $(document).ready(function() {//TODO: move templating logic to seperate file usi
       });
     }
   });
+
+  $('#profile_results').delegate('.tile-hover', 'mouseover', function () {
+    var id = $(this).attr('data-id');
+    var marker = markerDict[id];
+    marker.openPopup();
+  });
+
+  $('#profile_results').delegate('.tile-hover', 'mouseout', function () {
+    var id = $(this).attr('data-id');
+    var marker = markerDict[id];
+    marker.closePopup();
+  });
 });
