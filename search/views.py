@@ -29,6 +29,7 @@ def search_result(request): #TODO: change result div name, change hard coded url
         sqs = sqs.filter(latlng__distance=(distance, lat, lng))
     if profile_type_filter:
         sqs = sqs.filter(sign_up_as=profile_type_filter)
+    sqs = sqs[:50]
     html = render_to_string('_partials/search_result.html', {'sqs': sqs}, context_instance=RequestContext(request))
     objs = list(sqs.values_dict('id', 'name', 'profile_img', 'description', 'latlng', 'username'))
     facets = {}#TODO: check why this iteration is required
