@@ -28,19 +28,20 @@ $(document).ready(function() { //TODO: move templating logic to seperate file us
   };
 
   var searchFn = function() {
-    var query = $('#search_query').val();
+    var data = {query: $('#search_query').val()};
+    if ($('#profile-type-select').val()) {
+      data.profile_type_filter = $('#profile-type-select').val();
+    }
     $.ajax({
       url: '/search/result',
       method: 'get',
       dataType: 'json',
-      data: {
-        query: query
-      },
+      data: data,
       success: function(data) {
         $('#profile_results').html(data.html);
         markerSetupFn(map, data.objs);
         $('#profile-type-label').text('Profile Types (' + data.facets.sign_up_as.total + ')');
-        var options = '';
+        var options = '<option value="">Choose Type</option>';
         data.facets.sign_up_as.terms.forEach(function(value, index) {
           options += '<option value="' + value.term + '">' + value.term + ' (' + value.count + ')</option>';
         });
@@ -79,5 +80,11 @@ $(document).ready(function() { //TODO: move templating logic to seperate file us
     var id = $(this).attr('data-id');
     var marker = markerDict[id];
     marker.closePopup();
+  });
+
+  $('#profile-type-select').change(function () {
+    if ($(this).val()) {
+      searchFn();
+    }
   });
 });
