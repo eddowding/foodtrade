@@ -13,6 +13,7 @@ def search(request):
 
 def search_result(request): #TODO: change result div name, change hard coded url.
     query = request.GET.get('query')
+    profile_type_filter = request.GET.get('profile_type_filter')
     lat = float(request.GET.get('lat')) if request.GET.get('lat') else None
     lng = float(request.GET.get('lng')) if request.GET.get('lng') else None
     distance = request.GET.get('distance')
@@ -26,6 +27,8 @@ def search_result(request): #TODO: change result div name, change hard coded url
     sqs = S().indexes(settings.ES_INDEX).query(_all__fuzzy=query).facet('sign_up_as')
     if lat and lng:
         sqs = sqs.filter(latlng__distance=(distance, lat, lng))
+    if profile_type_filter:
+        sqs = sqs.filter(sign_up_as=profile_type_filter)
     html = render_to_string('_partials/search_result.html', {'sqs': sqs}, context_instance=RequestContext(request))
     objs = list(sqs.values_dict('id', 'name', 'profile_img', 'description', 'latlng', 'username'))
     facets = {}#TODO: check why this iteration is required
