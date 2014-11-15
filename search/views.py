@@ -23,7 +23,7 @@ def search_result(request): #TODO: change result div name, change hard coded url
         if user_profile.get('latlng') and user_profile.get('latlng').get('coordinates'):
             lat = user_profile.get('latlng').get('coordinates')[1]
             lng = user_profile.get('latlng').get('coordinates')[0]
-            distance = '20km'
+            distance = '500km'
     sqs = S().indexes(settings.ES_INDEX).query(_all__fuzzy=query).facet('sign_up_as')
     if lat and lng:
         sqs = sqs.filter(latlng__distance=(distance, lat, lng))
