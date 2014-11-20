@@ -24,7 +24,6 @@ def location_tool_operation(request):
         db.authenticate(settings.MONGO_USER, settings.MONGO_PASS)
     collection = db.userprofile
     id = request.GET.get('id')
-    print id
     operation = request.GET.get('operation')
     coordinates = [float(request.GET.get('lat')), float(request.GET.get('lng'))]
     document = {'$set': {'verified': True}}
