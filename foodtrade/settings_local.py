@@ -83,3 +83,9 @@ REMOVE_WWW = False
 #elastic search settings for utils
 ES_URLS = ['http://localhost:9200']
 ES_INDEX = 'foodtrade'
+
+MONGO_HOST = 'localhost'
+MONGO_PORT = 27017
+MONGO_DB = 'foodtrade'
+MONGO_USER = None
+MONGO_PASS = None
