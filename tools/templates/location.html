@@ -1,37 +1,48 @@
 {% load staticfiles %}
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Location Tool</title>
-    <meta charset="UTF-8">
-    <style type="text/css" media="screen">
-      .map_canvas { float: left; }
-      form { width: 300px; float: left; }
-      fieldset { width: 320px; margin-top: 20px}
-      fieldset label { display: block; margin: 0.5em 0 0em; }
-      fieldset input { width: 95%; }
-    </style>
-    <script src="http://maps.googleapis.com/maps/api/js?sensor=false&amp;libraries=places"></script>
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-    <script src="{% static "js/jquery.geocomplete.js" %}"></script>
-    <script src="{% static "js/location.js" %}"></script>
-  </head>
-  <body>
-    <form>
-      <input id="geocomplete" type="text" placeholder="Type in an address" />
 
-      <fieldset>
-        <h3>Address-Details</h3>
+<head>
+  <title>Location Tool</title>
+  <meta charset="UTF-8">
+  <link href="{% static 'css/bootstrap.css' %}" rel="stylesheet">
+  <script src="http://maps.googleapis.com/maps/api/js?sensor=false&amp;libraries=places"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+  <script src="{% static 'js/jquery.geocomplete.js' %}"></script>
+  <script src="{% static 'js/location.js' %}"></script>
+</head>
 
-        <label>Name</label>
-        <input name="name" type="text" value="">
+<body>
+  <div class="container">
+  {% for obj in objs %}
+  <div class="row">
+  <input id="geocomplete_{{obj.id}}" type="text" placeholder="Type in an address" />
+  <form id="form_{{obj.id}}">
+    <fieldset>
+      <h3>{{obj.name}}</h3>
+      <label>Location Name</label>
+      <input name="name" type="text" readonly>
 
-        <label>Latitude</label>
-        <input name="lat" type="text" value="">
+      <label>Latitude</label>
+      <input name="lat" type="text" value="{{obj.lat}}" readonly>
 
-        <label>Longitude</label>
-        <input name="lng" type="text" value="">
-      </fieldset>
-    </form>
-  </body>
+      <label>Longitude</label>
+      <input name="lng" type="text" value="{{obj.lng}}" readonly>
+    </fieldset>
+  </form>
+  <button data-id="{{obj.id}}" class="save-btn">Save</button>
+  <button data-id="{{obj.id}}" class="ignore-btn">Ignore</button>
+  <hr/>
+  </div>
+  {% endfor %}
+</div>
+</body>
+<script>
+{% for obj in objs %}
+$("#geocomplete_" + '{{obj.id}}').geocomplete({
+  details: "#form_" + '{{obj.id}}',
+  types: ["geocode"],
+});
+{% endfor %}
+</script>
 </html>
