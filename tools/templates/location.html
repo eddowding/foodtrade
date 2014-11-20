@@ -15,7 +15,7 @@
 <body>
   <div class="container">
   {% for obj in objs %}
-  <div class="row">
+  <div class="row" id="row_{{obj.id}}">
   <input id="geocomplete_{{obj.id}}" type="text" placeholder="Type in an address" />
   <form id="form_{{obj.id}}">
     <fieldset>
