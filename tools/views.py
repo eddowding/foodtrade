@@ -5,7 +5,6 @@ from django.shortcuts import render
 from django.http import HttpResponse
 
 
-
 def location_tool(request):
     conn = Connection() #TODO: might have to change
     collection = conn.foodtrade.userprofile
