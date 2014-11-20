@@ -146,6 +146,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'mainapp',
     'search',
+    'tools',
     'twython',
     'allauth',
     'allauth.account',
