@@ -16,12 +16,12 @@
   <div class="container">
   {% for obj in objs %}
   <div class="row" id="row_{{obj.id}}">
-  <input id="geocomplete_{{obj.id}}" type="text" placeholder="Type in an address" />
   <form id="form_{{obj.id}}">
     <fieldset>
-      <h3>{{obj.name}}</h3>
-      <label>Location Name</label>
-      <input name="name" type="text" readonly>
+      <h4 style="font-weight: bold; border-bottom: 1px solid #ccc; border-top: 3px solid #000;">{{obj.name}}</h5>
+    
+      <label>Current</label>
+      <input name="name" type="text" value="" readonly>
 
       <label>Latitude</label>
       <input name="lat" type="text" value="{{obj.lat}}" readonly>
@@ -30,6 +30,8 @@
       <input name="lng" type="text" value="{{obj.lng}}" readonly>
     </fieldset>
   </form>
+
+  <input id="geocomplete_{{obj.id}}" type="text" placeholder="New address" />
   <button data-id="{{obj.id}}" class="save-btn">Save</button>
   <button data-id="{{obj.id}}" class="ignore-btn">Ignore</button>
   <hr/>
