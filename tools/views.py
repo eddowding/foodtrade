@@ -13,8 +13,8 @@ def location_tool(request):
         db.authenticate(settings.MONGO_USER, settings.MONGO_PASS)
     collection = db.userprofile
     objs = []
-    for obj in collection.find(spec={'verified': {'$exists': False}, 'name': {'$exists': True}, 'latlng': {'$exists': True}}, fields=['latlng.coordinates', 'name'], limit=10):
-        objs.append({'id': str(obj['_id']), 'name': obj.get('name'), 'lat': obj['latlng']['coordinates'][0], 'lng': obj['latlng']['coordinates'][1]})
+    for obj in collection.find(spec={'verified': {'$exists': False}, 'name': {'$exists': True}, 'latlng': {'$exists': True}}, fields=['latlng.coordinates', 'name', 'address'], limit=10):
+        objs.append({'id': str(obj['_id']), 'name': obj.get('name'), 'lat': obj['latlng']['coordinates'][0], 'lng': obj['latlng']['coordinates'][1], 'address': obj.get('address')})
     return render(request, 'location.html', {'objs': objs})
 
 def location_tool_operation(request):
@@ -25,9 +25,11 @@ def location_tool_operation(request):
     collection = db.userprofile
     id = request.GET.get('id')
     operation = request.GET.get('operation')
+    address = request.GET.get('address')
     coordinates = [float(request.GET.get('lat')), float(request.GET.get('lng'))]
     document = {'$set': {'verified': True}}
     if operation == 'save':
         document['$set']['latlng.coordinates'] = coordinates
+        document['$set']['address'] = address
     collection.update(spec={'_id': ObjectId(id)}, document=document, upsert=False, multi=False)
     return HttpResponse(json.dumps({'status': True}))
