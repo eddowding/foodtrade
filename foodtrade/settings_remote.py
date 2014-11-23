@@ -69,7 +69,7 @@ STATIC_URL = '/static/'
 
 # Additional locations of static files
 STATICFILES_DIRS = (
-    
+
     # Put strings here, like "/home/html/static" or "C:/www/django/static".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
@@ -100,7 +100,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     "allauth.account.context_processors.account",
     "allauth.socialaccount.context_processors.socialaccount",
     'djstripe.context_processors.djstripe_settings',
-    'mainapp.classes.context_processors.user_info',    
+    'mainapp.classes.context_processors.user_info',
 )
 
 # List of callables that know how to import templates from various sources.
@@ -144,6 +144,8 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'mainapp',
+    'search',
+    'tools',
     'twython',
     'allauth',
     'allauth.account',
