@@ -1,6 +1,23 @@
 .box .todo-list li {
-  background: #eee;
-  position: relative;
+  background: #ECE5CE;
+  position: relative; 
+  padding: 5px 5px 5px 0;
+}
+
+.box .todo-list li  a {
+  font-weight: bold;
+}
+
+.box .todo-list li li  a {
+  font-weight: normal;
+  padding-left: 3px;
+}
+
+.box .todo-list li .handle i {
+  color: rgba(0,0,0,0.4);
+}
+.box .todo-list li li .handle i {
+  color: rgba(0,0,0,0.2);
 }
 
 .box .todo-list li p {
@@ -17,8 +34,8 @@ margin: 10px 0;
 }
 
 .box .todo-list ul li {
-margin: 2px 0;
-padding: 3px 3px 3px 20px;
+margin: 2px 0 0 20px;
+padding: 3px 3px 3px 0px;
 font-weight: normal !important;
 list-style: none;
 clear: both;
@@ -39,33 +56,14 @@ margin: 5px 0;
 }
 
 .box .todo-list ul ul li {
-margin: 2px 0;
-padding: 3px 3px 3px 20px;
+margin: 2px 0 0 20px;
+padding: 3px 3px 3px 3px;
 font-weight: normal !important;
 list-style: none;
 clear: both;
 background: rgba(255,255,255,0.9);
 }
 
-.box .todo-list li {
-  padding: 5px;
-}
-
-.box .todo-list li  a {
-  font-weight: bold;
-}
-
-.box .todo-list li li  a {
-  font-weight: normal;
-  padding-left: 3px;
-}
-
-.box .todo-list li .handle i {
-  color: #999;
-}
-.box .todo-list li li .handle i {
-  color: #ccc;
-}
 
 
 h3 i {
