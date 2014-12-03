@@ -3,7 +3,7 @@ Embedly==0.5.0
 MySQL-python==1.2.5
 Pillow==2.3.0
 PyYAML==3.10
-dj-stripe==0.3.2
+dj-stripe==0.3.5
 django-allauth==0.15.0
 django-bootstrap-form==3.1
 django-braces==1.4.0
@@ -17,12 +17,13 @@ httplib2==0.9
 ipython==2.3.0
 mailchimp==2.0.7
 mandrill==1.0.53
+mongoengine==0.8.7
 oauthlib==0.7.1
 pydns==2.3.6
 pygeocoder==1.2.1.1
 pymongo==2.6.3
 python-openid==2.2.5
-requests==2.1.0
+requests==2.4.3
 requests-oauthlib==0.4.2
 six==1.8.0
 stripe==1.19.1
