@@ -72,7 +72,8 @@ urlpatterns = patterns('',
     url(r'^myprofile/favourites/$', 'mainapp.favpage.display_favourites'),
     ## any search views
     url(r'^search/', include('search.urls')),
-    url(r'^tools/', include('tools.urls'))  
+    url(r'^tools/', include('tools.urls')),
+    url(r'^menu/', include('menu.urls'))
 )
 urlpatterns += patterns('',
         (r'^media/(?P<path>.*)$', 'django.views.static.serve', {
