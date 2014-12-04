@@ -30,11 +30,12 @@ class FSAAPI(object):
         data = requests.get(url=url, headers=API_HEADER).json()
         insert_list = []
         for obj in data.get(entity_type):
-            obj['fsa_id'] = obj['id']
-            del obj['id']
+            if 'id' in obj:
+                obj['fsa_id'] = obj['id']
+                del obj['id']
             obj['added_on'] = datetime.now()
             insert_list.append(model_class(**obj))
-        return Region.objects.insert(insert_list, load_bulk=True)
+        return model_class.objects.insert(insert_list, load_bulk=True)
 
     def process(self, entity_type):
         for url in self._get_page_urls(entity_type):
