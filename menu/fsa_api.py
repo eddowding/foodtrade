@@ -2,7 +2,7 @@ import requests
 from datetime import datetime
 from multiprocessing import Process
 from math import ceil
-from menu.mongo_models import Region
+from menu.mongo_models import *
 
 
 API_BASE = 'http://api.ratings.food.gov.uk'
@@ -12,7 +12,7 @@ API_CALL_POOL_SIZE = 4
 
 ENTITY_API_MAPPING = {
     'regions': {'part': 'Regions', 'page': False, 'model': Region},
-    'authorities': {'parts': ['Authorities'], 'page': False}
+    'authorities': {'part': 'Authorities', 'page': False, 'model': Authority}
 }
 
 class FSAAPI(object):
