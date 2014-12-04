@@ -36,7 +36,7 @@ class FSAAPI(object):
         data = requests.get(url=url, headers=API_HEADER).json()
         insert_list = []
         for obj in data.get(entity_type):
-            if entity_type == 'establishments':
+            if entity_type == 'establishments': #TODO: fix this
                 obj = requests.get(url='%s/Establishments/%d' % (API_BASE, obj['FHRSID']), headers=API_HEADER).json()
             if 'id' in obj:
                 obj['fsa_id'] = obj['id']
