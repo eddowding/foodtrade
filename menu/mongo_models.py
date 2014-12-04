@@ -66,7 +66,7 @@ class Establishment(Document):
     LocalAuthorityEmailAddress = StringField(max_length=255, required=True)
     scores = EmbeddedDocumentField(Score)
     SchemeType = StringField(max_length=255, required=True)
-    geocode = PointField(required=True)
+    geocode = PointField(required=False)
     RightToReply = StringField(max_length=255, required=True)
     Distance = FloatField(required=True)
     added_on = DateTimeField(required=True)
