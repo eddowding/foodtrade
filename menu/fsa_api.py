@@ -11,8 +11,9 @@ API_LIMIT = 10
 API_CALL_POOL_SIZE = 4
 
 ENTITY_API_MAPPING = {
-    'regions': {'part': 'Regions', 'page': False, 'model': Region},
-    'authorities': {'part': 'Authorities', 'page': False, 'model': Authority}
+    'regions': {'part': 'Regions', 'model': Region},
+    'authorities': {'part': 'Authorities', 'model': Authority},
+    'businessTypes': {'part': 'BusinessTypes', 'model': BusinessType}
 }
 
 class FSAAPI(object):

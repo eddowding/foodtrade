@@ -28,3 +28,7 @@ class Authority(Document):
     added_on = DateTimeField(required=True)
     modified_on = DateTimeField(default=datetime.now)
 
+class BusinessType(Document):
+    BusinessTypeId = IntField(required=True)
+    BusinessTypeName = StringField(max_length=255, required=True)
+
