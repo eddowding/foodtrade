@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 # EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 # app credentials
+from mongoengine import connect
+
 CONSUMER_KEY = 'waBmigQf9LIqYXkhMNeMdQ'
 CONSUMER_SECRET = 'KVVf35OAJQVUGrVQsrQnF7fmB2JLz6XAW3IAmqFB8'
 
@@ -89,3 +91,6 @@ MONGO_PORT = 27017
 MONGO_DB = 'foodtrade'
 MONGO_USER = None
 MONGO_PASS = None
+
+connect(db=MONGO_DB, host=MONGO_HOST, port=MONGO_PORT, username=MONGO_USER, password=MONGO_PASS)
+

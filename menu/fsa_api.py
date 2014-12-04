@@ -5,7 +5,8 @@ API_BASE = 'http://api.ratings.food.gov.uk'
 API_HEADER = {'x-api-version': 2}
 
 ENTITY_API_MAPPING = {
-    'regions': {'parts': ['Regions'], 'page': False}
+    'regions': {'parts': ['Regions'], 'page': False},
+    'authorities': {'parts': ['Authorities'], 'page': False}
 }
 
 class FSAAPI(object):
