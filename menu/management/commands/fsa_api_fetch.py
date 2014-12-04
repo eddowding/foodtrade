@@ -9,4 +9,4 @@ class Command(BaseCommand):
         fsa_obj = FSAAPI()
         if not len(args):
             raise CommandError('Entity type not provided.')
-        print fsa_obj._get_json(args[0])['regions']
+        fsa_obj.process(args[0])
