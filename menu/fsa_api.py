@@ -1,5 +1,6 @@
 import requests
 from datetime import datetime
+from multiprocessing import Process
 from math import ceil
 from menu.mongo_models import Region
 
@@ -7,6 +8,7 @@ from menu.mongo_models import Region
 API_BASE = 'http://api.ratings.food.gov.uk'
 API_HEADER = {'x-api-version': 2}
 API_LIMIT = 10
+API_CALL_POOL_SIZE = 4
 
 ENTITY_API_MAPPING = {
     'regions': {'part': 'Regions', 'page': False, 'model': Region},
@@ -25,6 +27,7 @@ class FSAAPI(object):
         return urls
 
     def _fetch_and_store(self, entity_type, url):
+        print 'Processing url: %s started.......' % url
         entity = ENTITY_API_MAPPING.get(entity_type)
         model_class = entity.get('model')
         data = requests.get(url=url, headers=API_HEADER).json()
@@ -35,8 +38,11 @@ class FSAAPI(object):
                 del obj['id']
             obj['added_on'] = datetime.now()
             insert_list.append(model_class(**obj))
-        return model_class.objects.insert(insert_list, load_bulk=True)
+        model_class.objects.insert(insert_list)
+        print '....Done processing url: %s' % url
 
     def process(self, entity_type):
         for url in self._get_page_urls(entity_type):
-            self._fetch_and_store(entity_type, url)
+            p = Process(target=self._fetch_and_store, args=(entity_type, url))
+            p.start()
+            p.join()
