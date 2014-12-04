@@ -14,7 +14,8 @@ ENTITY_API_MAPPING = {
     'regions': {'part': 'Regions', 'model': Region},
     'authorities': {'part': 'Authorities', 'model': Authority},
     'businessTypes': {'part': 'BusinessTypes', 'model': BusinessType},
-    'countries': {'part': 'Countries', 'model': Country}
+    'countries': {'part': 'Countries', 'model': Country},
+    'establishments': {'part': 'Establishments/basic', 'model': Establishment}
 }
 
 class FSAAPI(object):
