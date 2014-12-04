@@ -147,6 +147,7 @@ INSTALLED_APPS = (
     'mainapp',
     'search',
     'tools',
+    'menu',
     'twython',
     'allauth',
     'allauth.account',
