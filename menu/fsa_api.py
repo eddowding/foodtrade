@@ -14,7 +14,8 @@ ENTITY_API_MAPPING = {
     'regions': {'part': 'Regions', 'model': Region},
     'authorities': {'part': 'Authorities', 'model': Authority},
     'businessTypes': {'part': 'BusinessTypes', 'model': BusinessType},
-    'countries': {'part': 'Countries', 'model': Country}
+    'countries': {'part': 'Countries', 'model': Country},
+    'establishments': {'part': 'Establishments/basic', 'model': Establishment}
 }
 
 class FSAAPI(object):
@@ -35,9 +36,15 @@ class FSAAPI(object):
         data = requests.get(url=url, headers=API_HEADER).json()
         insert_list = []
         for obj in data.get(entity_type):
+            if entity_type == 'establishments': #TODO: fix this
+                obj = requests.get(url='%s/Establishments/%d' % (API_BASE, obj['FHRSID']), headers=API_HEADER).json()
             if 'id' in obj:
                 obj['fsa_id'] = obj['id']
                 del obj['id']
+            if obj.get('geocode') and obj.get('geocode').get('latitude') and obj.get('geocode').get('longitude'):
+                obj['geocode'] =[float(obj.get('geocode').get('longitude')), float(obj.get('geocode').get('latitude'))]
+            else:
+                del obj['geocode']
             obj['added_on'] = datetime.now()
             insert_list.append(model_class(**obj))
         model_class.objects.insert(insert_list)
