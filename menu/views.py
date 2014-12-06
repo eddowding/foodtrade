@@ -1,19 +1,22 @@
 import json
 from django.shortcuts import render
+from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect, HttpResponse
 from mongoengine.django.auth import User
 
 
 def menu(request):
-    ''' Get list of menus '''    
+    ''' Get list of menus '''
     return render(request, 'menu/menus.html', {'title' : 'menu'})
 
 
 def register(request):
     ''' User Registration in menu '''
-    
     if request.method == 'POST':
-        #TODO: add user create logic
+        user = User.create_user(username=request.POST.get('username'), password=request.POST.get('password'))
+        user.first_name = request.POST.get('first_name')
+        user.last_name = request.POST.get('last_name')
+        user.save()
         return HttpResponseRedirect(reverse('menu'))
     else:
         return render(request, 'menu/register.html')

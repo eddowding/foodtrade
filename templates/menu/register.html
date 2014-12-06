@@ -13,13 +13,16 @@
 {% block main_content %}
     <div class="form-box" id="login-box">
             <div class="header">Register New Membership</div>
-            <form action="#" method="post">
+            <form action="{% url 'menu_register' %}" method="post">{% csrf_token %}
                 <div class="body bg-gray">
                     <div class="form-group">
-                        <input type="text" name="name" class="form-control" placeholder="Full name"/>
+                        <input type="text" name="first_name" class="form-control" placeholder="First name"/>
                     </div>
                     <div class="form-group">
-                        <input type="text" name="userid" class="form-control" placeholder="User ID"/>
+                        <input type="text" name="last_name" class="form-control" placeholder="Last name"/>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" name="username" class="form-control" placeholder="User ID"/>
                     </div>
                     <div class="form-group">
                         <input type="password" name="password" class="form-control" placeholder="Password"/>
@@ -35,7 +38,7 @@
                     <a href="{% url 'menu-login' %}" class="text-center">I already have a membership</a>
                 </div>
             </form>
-    
+            {% comment %}
             <div class="margin text-center">
                 <span>Register using social networks</span>
                 <br/>
@@ -44,5 +47,6 @@
                 <button class="btn bg-red btn-circle"><i class="fa fa-google-plus"></i></button>
     
             </div>
+            {% endcomment %}
     </div>
 {% endblock %}
