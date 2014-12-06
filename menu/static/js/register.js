@@ -2,7 +2,7 @@ var registerFormFn = function() {
     if ($('input[name="password"]').val() === $('input[name="password2"]').val()) {
         $('form').submit();
     } else {
-        $('.register-msg').html('Password compare failed.').show();
+        $('.register-msg').html('Password compare failed.').removeClass('hidden');
     }
 };
 
@@ -18,7 +18,7 @@ $(document).ready(function() {
             dataType: 'JSON',
             success: function(data) {
                 if (data.count > 0) {
-                    $('.register-msg').html('Username exists.').show();
+                    $('.register-msg').html('Username exists.').removeClass('hidden');
                 }
             }
         });
