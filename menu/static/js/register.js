@@ -15,8 +15,9 @@ $(document).ready(function() {
                 username: username
             },
             type: 'GET',
+            dataType: 'JSON',
             success: function(data) {
-                if (data.count) {
+                if (data.count > 0) {
                     $('.register-msg').html('Username exists.').show();
                 }
             }
