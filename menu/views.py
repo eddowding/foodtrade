@@ -1,16 +1,16 @@
-
-# django import
-from django.http import HttpResponse
-from django.shortcuts import render , render_to_response
-from django.template import RequestContext
-
-#app import
+from django.shortcuts import render
+from django.http import HttpResponseRedirect
 
 
 # Create your views here.
 
 def menu(request):
-    template_name = 'menu/menus.html'
-    var = {'title' : 'menu'}
-    contextt = RequestContext(request , var);
-    return render_to_response(template_name , contextt)
+    return render(request, 'menu/menus.html', {'title' : 'menu'})
+
+
+def register(request):
+    if request.method == 'POST':
+        #TODO: add user create logic
+        return HttpResponseRedirect(reverse('menu'))
+    else:
+        return render(request, 'register.html')
