@@ -4,7 +4,7 @@
 {% load i18n %}
 
 <!DOCTYPE html>
-<html>
+<html class="{% block html_class %}{% endblock %}">
 <head>
     <meta charset="UTF-8">
     <title>{% block title %}FoodTrade menu {% block extra_title %}{% endblock %}{% endblock %}</title>
@@ -39,6 +39,7 @@
 
 <body class="{% block body_class %}skin-blue{% endblock %}">
     <!-- header logo: style can be found in header.less -->
+    {% block header %}
     <header class="header">
        {% block logo %}
             <a href="/menu" class="logo">
@@ -294,7 +295,9 @@
         
     </header>
     
+    {% endblock %}
     
+    {% block main_content %}
     <div class="wrapper row-offcanvas row-offcanvas-left">
         <!-- Left side column. contains the logo and sidebar -->
       {% block left_sidebar %}
@@ -726,6 +729,9 @@
       {% endblock %}
         <!-- /.right-side -->
     </div>
+    
+    {% endblock %}
+    
     <!-- ./wrapper -->
 
     <!-- add new calendar event modal -->
