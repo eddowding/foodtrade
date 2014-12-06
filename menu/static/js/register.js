@@ -7,5 +7,19 @@ var registerFormFn = function() {
 };
 
 $(document).ready(function() {
-
+    $('input[name="username"]').focusout(function(ev) {
+        var username = $(this).val();
+        $.ajax({
+            url: '/menu/user/lookup/count',
+            data: {
+                username: username
+            },
+            type: 'GET',
+            success: function(data) {
+                if (data.count) {
+                    $('.register-msg').html('Username exists.').show();
+                }
+            }
+        });
+    });
 });

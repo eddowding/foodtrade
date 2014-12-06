@@ -9,7 +9,9 @@
 {% block title %}AdminLTE | Registration Page {% endblock %}
 {% block body_class %}bg-black{% endblock %}
 {% block header %} {% endblock %}
-
+{% block extra_js %}
+<script src="{% static 'js/register.js' %}"></script>
+{% endblock extra_js %}
 {% block main_content %}
     <div class="form-box" id="login-box">
             <div class="header">Register New Membership</div>

@@ -2,7 +2,7 @@ import json
 from django.shortcuts import render
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect, HttpResponse
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login as auth_login, logout
 from mongoengine.django.auth import User
 
 
