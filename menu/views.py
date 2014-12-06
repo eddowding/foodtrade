@@ -1,8 +1,8 @@
+import json
 from django.shortcuts import render
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
+from mongoengine.django.auth import User
 
-
-# Create your views here.
 
 def menu(request):
     ''' Get list of menus '''    
@@ -26,3 +26,12 @@ def login(request):
         return HttpResponseRedirect(reverse('menu'))
     else:
         return render(request, 'menu/login.html')
+
+
+
+def user_lookup_count(request):
+    query = {}
+    for k, v in request.GET.items():
+        query[k] = v
+    return HttpResponse(json.dumps({'count': User.objects.filter(**query).count()}))
+
