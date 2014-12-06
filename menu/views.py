@@ -21,7 +21,7 @@ def register(request):
         user = authenticate(username=request.POST.get('username'), password=request.POST.get('password'))
         if user is not None:
             if user.is_active:
-                login(request, user)
+                auth_login(request, user)
         return HttpResponseRedirect(reverse('menu'))
     else:
         return render(request, 'menu/register.html')
@@ -30,7 +30,10 @@ def register(request):
 def login(request):
     ''' User login in menu '''
     if request.method == 'POST':
-        #TODO: add user login logic
+        user = authenticate(username=request.POST.get('username'), password=request.POST.get('password'))
+        if user is not None:
+            if user.is_active:
+                auth_login(request, user)
         return HttpResponseRedirect(reverse('menu'))
     else:
         return render(request, 'menu/login.html')
