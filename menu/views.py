@@ -2,6 +2,7 @@ import json
 from django.shortcuts import render
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect, HttpResponse
+from django.contrib.auth import authenticate, login
 from mongoengine.django.auth import User
 
 
@@ -17,6 +18,10 @@ def register(request):
         user.first_name = request.POST.get('first_name')
         user.last_name = request.POST.get('last_name')
         user.save()
+        user = authenticate(username=request.POST.get('username'), password=request.POST.get('password'))
+        if user is not None:
+            if user.is_active:
+                login(request, user)
         return HttpResponseRedirect(reverse('menu'))
     else:
         return render(request, 'menu/register.html')
