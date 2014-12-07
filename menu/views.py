@@ -1,5 +1,6 @@
 import json
 from datetime import datetime
+from copy import deepcopy
 from bson.objectid import ObjectId, InvalidId
 from django.shortcuts import render
 from django.core.urlresolvers import reverse_lazy
@@ -7,7 +8,7 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
 from django.contrib.auth.decorators import login_required
 from mongoengine.django.auth import User
-from menu.mongo_models import Establishment, Menu
+from menu.mongo_models import Establishment, Menu, MenuSection, Dish
 
 
 @login_required(login_url=reverse_lazy('menu-login'))
@@ -74,5 +75,23 @@ def create_menu(request):
     except InvalidId:
         establishment = Establishment.objects.create(BusinessName=establishment, added_on=datetime.now())
         Menu.objects.create(establishment=establishment.pk, name=name, added_on=datetime.now())
-    return HttpResponse({'status': True})
+    return HttpResponse(json.dumps({'status': True}))
+
+
+@login_required(login_url=reverse_lazy('menu-login'))
+def create_menu_section(request):
+    insert_dict = deepcopy(request.POST)
+    insert_dict['menu'] = ObjectId(insert_dict['menu'])
+    insert_dict['added_on'] = datetime.now()
+    MenuSection.objects.create(**insert_dict)
+    return HttpResponse(json.dumps({'status': True}))
+
+
+@login_required(login_url=reverse_lazy('menu-login'))
+def create_dish(request):
+    insert_dict = deepcopy(request.POST)
+    insert_dict['menu_section'] = ObjectId(insert_dict['menu_section'])
+    insert_dict['added_on'] = datetime.now()
+    Dish.objects.create(**insert_dict)
+    return HttpResponse(json.dumps({'status': True}))
 

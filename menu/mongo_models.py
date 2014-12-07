@@ -113,7 +113,7 @@ class Dish(Document):
     name = StringField(required=True)
     description = StringField(required=True)
     price = FloatField(required=True)
-    ingredients = ListField(EmbeddedDocumentField(Ingredient))
+    ingredients = ListField(EmbeddedDocumentField(Ingredient), required=False)
     is_active = BooleanField(required=True, default=True)
     added_on = DateTimeField(required=True)
     modified_on = DateTimeField(default=datetime.now)
