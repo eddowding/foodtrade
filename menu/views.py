@@ -54,7 +54,7 @@ def logout(request):
     return HttpResponseRedirect(reverse_lazy('menu-login'))
 
 def establishment_lookup_name(request):
-    query = {'BusinessName__istartswith': request.GET.get('q')}
+    query = {'BusinessName__icontains': request.GET.get('q')}
     ret_list = []
     for obj in Establishment.objects.filter(**query):
         ret_list.append({'name': obj.BusinessName, 'value': str(obj.pk)})
