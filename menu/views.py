@@ -95,3 +95,21 @@ def create_dish(request):
     Dish.objects.create(**insert_dict)
     return HttpResponse(json.dumps({'status': True}))
 
+
+@login_required(login_url=reverse_lazy('menu-login'))
+def create_ingredient(request):
+    dish = request.POST.get('dish')
+    insert_dict = deepcopy(request.POST)
+    del insert_dict['dish']
+    Dish.objects.filter(pk=ObjectId(dish)).update(push__ingredients=insert_dict)
+    return HttpResponse(json.dumps({'status': True}))
+
+
+@login_required(login_url=reverse_lazy('menu-login'))
+def update_ingredient(request):
+    dish = request.POST.get('dish')
+    insert_dict = deepcopy(request.POST)
+    del insert_dict['dish']
+    Dish.objects.filter(pk=ObjectId(dish), ingredients__name=insert_dict['name']) \
+                                                    .update(push__ingredients__S=insert_dict)
+    return HttpResponse(json.dumps({'status': True}))

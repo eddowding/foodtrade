@@ -9,5 +9,7 @@ urlpatterns = patterns('menu.views',
     url(r'^establishment/lookup/name/$', 'establishment_lookup_name', name='menu_establishment_lookup_name'),
     url(r'^create/menu/$', 'create_menu', name='menu_create_menu'),
     url(r'^create/menu/section/$', 'create_menu_section', name='menu_create_menu_section'),
-    url(r'^create/dish/$', 'create_dish', name='menu_create_dish')
+    url(r'^create/dish/$', 'create_dish', name='menu_create_dish'),
+    url(r'^create/ingredient/$', 'create_ingredient', name='menu_create_ingredient'),
+    url(r'^update/ingredient/$', 'update_ingredient', name='menu_update_ingredient')
 )
