@@ -1,11 +1,13 @@
 import json
+from datetime import datetime
+from bson.objectid import ObjectId, InvalidId
 from django.shortcuts import render
 from django.core.urlresolvers import reverse_lazy
 from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
 from django.contrib.auth.decorators import login_required
 from mongoengine.django.auth import User
-from menu.mongo_models import Establishment
+from menu.mongo_models import Establishment, Menu
 
 
 @login_required(login_url=reverse_lazy('menu-login'))
@@ -46,17 +48,31 @@ def user_lookup_count(request):
     query = {}
     for k, v in request.GET.items():
         query[k] = v
-    return HttpResponse(json.dumps({'count': User.objects.filter(**query).count()}))
+        return HttpResponse(json.dumps({'status': True, 'count': User.objects.filter(**query).count()}))
 
 
 def logout(request):
     auth_logout(request)
     return HttpResponseRedirect(reverse_lazy('menu-login'))
 
+
+@login_required(login_url=reverse_lazy('menu-login'))
 def establishment_lookup_name(request):
     query = {'BusinessName__icontains': request.GET.get('q')}
     ret_list = []
     for obj in Establishment.objects.filter(**query):
         ret_list.append({'name': obj.BusinessName, 'value': str(obj.pk)})
-    return HttpResponse(json.dumps(ret_list))
+        return HttpResponse(json.dumps({'status': True, 'objs': ret_list}))
+
+
+@login_required(login_url=reverse_lazy('menu-login'))
+def create_menu(request):
+    establishment = request.POST.get('establishment')
+    name = request.POST.get('name')
+    try:
+        Menu.objects.create(establishment=ObjectId(establishment), name=name, added_on=datetime.now())
+    except InvalidId:
+        establishment = Establishment.objects.create(BusinessName=establishment, added_on=datetime.now())
+        Menu.objects.create(establishment=establishment.pk, name=name, added_on=datetime.now())
+    return HttpResponse({'status': True})
 

@@ -87,6 +87,7 @@ class Establishment(Document):
 
 class Menu(Document):
     establishment = ReferenceField(Establishment)
+    name = StringField(required=True)
     is_active = BooleanField(required=True, default=True)
     added_on = DateTimeField(required=True)
     modified_on = DateTimeField(default=datetime.now)
