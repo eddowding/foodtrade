@@ -153,6 +153,7 @@ INSTALLED_APPS = (
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.twitter',
+    'mongonaut',
     # Uncomment the next line to enable the admin:
     'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:

@@ -21,7 +21,6 @@ def user_info(request):
 
 
         subscribed = True
-        print request.use
         customer, created = Customer.get_or_create(request.user)
         if created:
             subscribed = False

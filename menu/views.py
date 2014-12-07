@@ -8,7 +8,7 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
 from django.contrib.auth.decorators import login_required
 from mongoengine.django.auth import User
-from menu.mongo_models import Establishment, Menu, MenuSection, Dish, Allergen, Meat, Gluten
+from menu.models import Establishment, Menu, MenuSection, Dish, Allergen, Meat, Gluten
 
 
 @login_required(login_url=reverse_lazy('menu-login'))
