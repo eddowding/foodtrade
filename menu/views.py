@@ -1,11 +1,13 @@
 import json
 from django.shortcuts import render
-from django.core.urlresolvers import reverse
+from django.core.urlresolvers import reverse_lazy
 from django.http import HttpResponseRedirect, HttpResponse
-from django.contrib.auth import authenticate, login as auth_login, logout
+from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
+from django.contrib.auth.decorators import login_required
 from mongoengine.django.auth import User
 
 
+@login_required(login_url=reverse_lazy('menu-login'))
 def menu(request):
     ''' Get list of menus '''
     return render(request, 'menu/menus.html', {'title' : 'menu'})
@@ -22,7 +24,7 @@ def register(request):
         if user is not None:
             if user.is_active:
                 auth_login(request, user)
-        return HttpResponseRedirect(reverse('menu'))
+        return HttpResponseRedirect(reverse_lazy('menu'))
     else:
         return render(request, 'menu/register.html')
 
@@ -34,10 +36,9 @@ def login(request):
         if user is not None:
             if user.is_active:
                 auth_login(request, user)
-        return HttpResponseRedirect(reverse('menu'))
+        return HttpResponseRedirect(reverse_lazy('menu'))
     else:
         return render(request, 'menu/login.html')
-
 
 
 def user_lookup_count(request):
@@ -46,3 +47,7 @@ def user_lookup_count(request):
         query[k] = v
     return HttpResponse(json.dumps({'count': User.objects.filter(**query).count()}))
 
+
+def logout(request):
+    auth_logout(request)
+    return HttpResponseRedirect(reverse_lazy('menu-login'))
