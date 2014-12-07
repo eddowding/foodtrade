@@ -5,6 +5,7 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
 from django.contrib.auth.decorators import login_required
 from mongoengine.django.auth import User
+from menu.mongo_models import Establishment
 
 
 @login_required(login_url=reverse_lazy('menu-login'))
@@ -51,3 +52,11 @@ def user_lookup_count(request):
 def logout(request):
     auth_logout(request)
     return HttpResponseRedirect(reverse_lazy('menu-login'))
+
+def establishment_lookup_name(request):
+    query = {'BusinessName__istartswith': request.GET.get('q')}
+    ret_list = []
+    for obj in Establishment.objects.filter(**query):
+        ret_list.append({'name': obj.BusinessName, 'value': str(obj.pk)})
+    return HttpResponse(json.dumps(ret_list))
+
