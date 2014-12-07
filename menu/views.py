@@ -8,7 +8,7 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
 from django.contrib.auth.decorators import login_required
 from mongoengine.django.auth import User
-from menu.mongo_models import Establishment, Menu, MenuSection, Dish
+from menu.mongo_models import Establishment, Menu, MenuSection, Dish, Allergen, Meat, Gluten
 
 
 @login_required(login_url=reverse_lazy('menu-login'))
@@ -101,7 +101,12 @@ def create_ingredient(request):
     dish = request.POST.get('dish')
     insert_dict = deepcopy(request.POST)
     del insert_dict['dish']
-    Dish.objects.filter(pk=ObjectId(dish)).update(push__ingredients=insert_dict)
+    #TODO: cache this to save query
+    insert_dict['is_allergen'] = True if Allergen.objects.filter(name=insert_dict['name']).count() else False
+    insert_dict['is_meat'] = True if Meat.objects.filter(name=insert_dict['name']).count() else False
+    insert_dict['is_gluten'] = True if Gluten.objects.filter(name=insert_dict['name']).count() else False
+    Dish.objects.filter(pk=ObjectId(dish)).update(is_allergen=insert_dict['is_allergen'], is_meat=insert_dict['is_meat'],
+                                                  is_gluten=insert_dict['is_gluten'], push__ingredients=insert_dict)
     return HttpResponse(json.dumps({'status': True}))
 
 
@@ -110,6 +115,11 @@ def update_ingredient(request):
     dish = request.POST.get('dish')
     insert_dict = deepcopy(request.POST)
     del insert_dict['dish']
+    #TODO: cache this to save query
+    insert_dict['is_allergen'] = True if Allergen.objects.filter(name=insert_dict['name']).count() else False
+    insert_dict['is_meat'] = True if Meat.objects.filter(name=insert_dict['name']).count() else False
+    insert_dict['is_gluten'] = True if Gluten.objects.filter(name=insert_dict['name']).count() else False
     Dish.objects.filter(pk=ObjectId(dish), ingredients__name=insert_dict['name']) \
-                                                    .update(push__ingredients__S=insert_dict)
+                                                    .update(is_allergen=insert_dict['is_allergen'], is_meat=insert_dict['is_meat'],
+                                                            is_gluten=insert_dict['is_gluten'], push__ingredients__S=insert_dict)
     return HttpResponse(json.dumps({'status': True}))

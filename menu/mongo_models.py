@@ -105,9 +105,9 @@ class Ingredient(EmbeddedDocument):
     name = StringField(required=True)
     parent = ReferenceField('self')
     order = IntField(required=True)
-    allergen = BooleanField(required=True, default=False)
-    meat = BooleanField(required=True, default=False)
-    gluten = BooleanField(required=True, default=False)
+    is_allergen = BooleanField(required=True, default=False)
+    is_meat = BooleanField(required=True, default=False)
+    is_gluten = BooleanField(required=True, default=False)
 
 
 class Dish(Document):
@@ -116,9 +116,9 @@ class Dish(Document):
     description = StringField(required=True)
     price = FloatField(required=True)
     ingredients = ListField(EmbeddedDocumentField(Ingredient), required=False)
-    allergen = BooleanField(required=True, default=False)
-    meat = BooleanField(required=True, default=False)
-    gluten = BooleanField(required=True, default=False)
+    is_allergen = BooleanField(required=True, default=False)
+    is_meat = BooleanField(required=True, default=False)
+    is_gluten = BooleanField(required=True, default=False)
     is_active = BooleanField(required=True, default=True)
     added_on = DateTimeField(required=True)
     modified_on = DateTimeField(default=datetime.now)
