@@ -7,11 +7,19 @@ Region.mongoadmin = MongoAdmin()
 Authority.mongoadmin = MongoAdmin()
 BusinessType.mongoadmin = MongoAdmin()
 Country.mongoadmin = MongoAdmin()
-Establishment.mongoadmin = MongoAdmin()
+
+class EstablishmentAdmin(MongoAdmin):
+    search_fields = ('FHRSID', 'BusinessName')
+    list_fields = ('FHRSID', 'BusinessName', 'is_active')
+Establishment.mongoadmin = EstablishmentAdmin()
 Menu.mongoadmin = MongoAdmin()
 MenuSection.mongoadmin = MongoAdmin()
 Dish.mongoadmin = MongoAdmin()
-Allergen.mongoadmin = MongoAdmin()
-Meat.mongoadmin = MongoAdmin()
-Gluten.mongoadmin = MongoAdmin()
+
+class GenericAdmin(MongoAdmin):
+    search_fields = ('name',)
+    list_fields = ('name', 'is_active')
+Allergen.mongoadmin = GenericAdmin()
+Meat.mongoadmin = GenericAdmin()
+Gluten.mongoadmin = GenericAdmin()
 
