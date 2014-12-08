@@ -40,9 +40,13 @@ def login(request):
         if user is not None:
             if user.is_active:
                 auth_login(request, user)
-        return HttpResponseRedirect(reverse_lazy('menu'))
+                return HttpResponseRedirect(reverse_lazy('menu'))
+            else:
+                return render(request, 'menu/login.html', {'failure': True})
+        else:
+            return render(request, 'menu/login.html', {'failure': True})
     else:
-        return render(request, 'menu/login.html')
+        return render(request, 'menu/login.html', {'failure': False})
 
 
 def user_lookup_count(request):
