@@ -42,8 +42,14 @@ $(document).ready(function() {
 
     $('.signup').click(function() {
         var formHasError = $('.form-group').hasClass('has-error');
-        if (($('.form-group').hasClass('has-error') == false) && ($('input[name="password"]').val() === $('input[name="password2"]').val())) {
+        var passwordMatch = ($('input[name="password"]').val() === $('input[name="password2"]').val());
+        if (formHasError === false && passwordMatch === true) {
             $('form').submit();
+        } else if (passwordMatch === false) {
+            var parentDiv = $('input[name="password2"]').parent();
+            var helpTextDiv = parentDiv.find('.help-text');
+            parentDiv.addClass('has-error');
+            helpTextDiv.html('Password miss match.');
         }
     });
 });
