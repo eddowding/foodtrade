@@ -71,9 +71,10 @@ def create_menu(request):
     establishment = request.POST.get('establishment')
     name = request.POST.get('name')
     try:
+        Establishment.objects.filter(pk=ObjectId(establishment)).update(set__user=request.user)
         Menu.objects.create(establishment=ObjectId(establishment), name=name, added_on=datetime.now())
     except InvalidId:
-        establishment = Establishment.objects.create(BusinessName=establishment, added_on=datetime.now())
+        establishment = Establishment.objects.create(user=request.user, BusinessName=establishment, added_on=datetime.now())
         Menu.objects.create(establishment=establishment.pk, name=name, added_on=datetime.now())
     return HttpResponse(json.dumps({'status': True}))
 
@@ -105,8 +106,8 @@ def create_ingredient(request):
     insert_dict['is_allergen'] = True if Allergen.objects.filter(name=insert_dict['name']).count() else False
     insert_dict['is_meat'] = True if Meat.objects.filter(name=insert_dict['name']).count() else False
     insert_dict['is_gluten'] = True if Gluten.objects.filter(name=insert_dict['name']).count() else False
-    Dish.objects.filter(pk=ObjectId(dish)).update(is_allergen=insert_dict['is_allergen'], is_meat=insert_dict['is_meat'],
-                                                  is_gluten=insert_dict['is_gluten'], push__ingredients=insert_dict)
+    Dish.objects.filter(pk=ObjectId(dish)).update(set__is_allergen=insert_dict['is_allergen'], set__is_meat=insert_dict['is_meat'],
+                                                  set__is_gluten=insert_dict['is_gluten'], push__ingredients=insert_dict)
     return HttpResponse(json.dumps({'status': True}))
 
 
@@ -120,6 +121,6 @@ def update_ingredient(request):
     insert_dict['is_meat'] = True if Meat.objects.filter(name=insert_dict['name']).count() else False
     insert_dict['is_gluten'] = True if Gluten.objects.filter(name=insert_dict['name']).count() else False
     Dish.objects.filter(pk=ObjectId(dish), ingredients__name=insert_dict['name']) \
-                                                    .update(is_allergen=insert_dict['is_allergen'], is_meat=insert_dict['is_meat'],
-                                                            is_gluten=insert_dict['is_gluten'], push__ingredients__S=insert_dict)
+                                                    .update(set__is_allergen=insert_dict['is_allergen'], set__is_meat=insert_dict['is_meat'],
+                                                            set__is_gluten=insert_dict['is_gluten'], push__ingredients__S=insert_dict)
     return HttpResponse(json.dumps({'status': True}))
