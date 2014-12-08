@@ -1,11 +1,3 @@
-var registerFormFn = function() {
-    if ($('input[name="password"]').val() === $('input[name="password2"]').val()) {
-        $('form').submit();
-    } else {
-        $('.register-msg').html('Password compare failed.').removeClass('hidden');
-    }
-};
-
 $(document).ready(function() {
     $('input[name="username"]').focusout(function(ev) {
         var username = $(this).val();
@@ -22,5 +14,13 @@ $(document).ready(function() {
                 }
             }
         });
+    });
+
+    $('.signup').click(function() {
+        if ($('input[name="password"]').val() === $('input[name="password2"]').val()) {
+            $('form').submit();
+        } else {
+            $('.register-msg').html('Password compare failed.').removeClass('hidden');
+        }
     });
 });
