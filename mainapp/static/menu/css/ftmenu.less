@@ -1,0 +1,185 @@
+.box .todo-list li {
+  background: #ECE5CE;
+  position: relative; 
+  padding: 5px 5px 5px 0;
+}
+
+.box .todo-list li  a {
+  font-weight: bold;
+}
+
+.box .todo-list li li  a {
+  font-weight: normal;
+  padding-left: 3px;
+}
+
+.box .todo-list li .handle i {
+  color: rgba(0,0,0,0.4);
+}
+.box .todo-list li li .handle i {
+  color: rgba(0,0,0,0.2);
+}
+
+.box .todo-list li p {
+  margin-left: 21px;
+}
+
+
+.box .todo-list ul {
+margin: 0;
+padding: 0;
+list-style: none;
+display: block;
+margin: 10px 0;
+}
+
+.box .todo-list ul li {
+margin: 2px 0 0 20px;
+padding: 3px 3px 3px 0px;
+font-weight: normal !important;
+list-style: none;
+clear: both;
+background: rgba(255,255,255,0.4);
+border: 2px solid #fff;
+}
+
+.box .todo-list .tools i {
+  color: #3878B3;
+}
+
+
+.box .todo-list ul ul {
+padding: 0;
+list-style: none;
+display: block;
+margin: 5px 0;
+}
+
+.box .todo-list ul ul li {
+margin: 2px 0 0 20px;
+padding: 3px 3px 3px 3px;
+font-weight: normal !important;
+list-style: none;
+clear: both;
+background: rgba(255,255,255,0.9);
+}
+
+
+
+h3 i {
+  font-size: 80%;
+  color: #ccc;
+}
+
+.box  h3 {
+  margin: 0 0 5px 0; 
+  float: left;
+}
+
+.section_head {
+  margin-bottom: 10px;
+  margin-top: 30px;
+  border-bottom: 3px solid #444;
+}
+
+.editable-click, a.editable-click {
+  text-decoration: none;
+  color: #444;
+  border-bottom: 0 !important;
+}
+
+a.editable-click:hover {
+  text-decoration: underline !important;
+  border-bottom: 0;
+}
+
+.flagged {
+  border: 1px solid;
+  width: 10px;
+  border-radius: 20px;
+  padding: 0 4px;
+  margin-left: 5px;
+  opacity: 0.6;
+}
+li:hover  .flagged {
+  opacity: 1;
+}
+
+.meat {
+  border-color: #A30012;
+  color: #A30012;
+}
+
+.allergen {
+  border-color: #4CAC48;
+  color: #4CAC48;
+}
+
+.gluten {
+  border-color: #ED482A;
+  color: #ED482A;
+} 
+
+#output * {
+  font-family: Georgia;
+  text-align: center;
+}
+
+#output p {
+  font-size: 1.5em;
+}
+
+#output h2 {
+  border-bottom: 2px solid;
+  padding: 0.5em;
+}
+#output h3 {
+  border-bottom: 1px solid;
+  padding: 1em 0 0.3em 0;
+  width: 60%; 
+  margin: 0 auto;
+}
+
+.allergen_detail {
+  font-size: 12px;
+  clear: both;
+  display: block;
+}
+
+.supplier {
+  font-weight: bold;
+}
+
+.produce {
+  font-style: italic;
+}
+
+#connectionsList h4 {
+  font-weight: bold;
+  border-bottom: 1px solid;
+}
+#connectionsList ul {
+  padding: 0;
+  list-style: none;
+}
+
+li.divider { 
+  background: #666;
+  height: 2px;
+}
+
+
+
+
+.produce_tags {
+  a {
+
+    &:after {
+      content: ",";
+    }
+    &:hover { 
+      text-decoration: underline;
+      color: #444;
+    }
+  }
+}
