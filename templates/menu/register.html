@@ -19,22 +19,26 @@
                 <div class="body bg-gray">
                     <div class="form-group">
                         <input type="text" name="first_name" class="form-control" placeholder="First name"/>
+                        <span class="help-text"></span>
                     </div>
                     <div class="form-group">
                         <input type="text" name="last_name" class="form-control" placeholder="Last name"/>
+                        <span class="help-text"></span>
                     </div>
                     <div class="form-group">
                         <input type="text" name="username" class="form-control" placeholder="User ID"/>
+                        <span class="help-text"></span>
                     </div>
                     <div class="form-group">
                         <input type="password" name="password" class="form-control" placeholder="Password"/>
+                        <span class="help-text"></span>
                     </div>
                     <div class="form-group">
                         <input type="password" name="password2" class="form-control" placeholder="Retype password"/>
+                        <span class="help-text"></span>
                     </div>
                 </div>
                 <div class="footer">                    
-                    <div class="warning hidden register-msg"></div>
                     <button type="button" class="btn bg-olive btn-block signup">Sign me up</button>
     
                     <a href="{% url 'menu-login' %}" class="text-center">I already have a membership</a>
