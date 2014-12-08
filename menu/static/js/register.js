@@ -11,7 +11,7 @@ $(document).ready(function() {
         } else {
             parentDiv.removeClass('has-error');
             helpTextDiv.html('');
-            $('.signup').addRemove('disabled');
+            $('.signup').removeClass('disabled');
         }
     });
 
@@ -34,17 +34,16 @@ $(document).ready(function() {
                 } else {
                     parentDiv.removeClass('has-error');
                     helpTextDiv.html('');
-                    $('.signup').addRemove('disabled');
+                    $('.signup').removeClass('disabled');
                 }
             }
         });
     });
 
     $('.signup').click(function() {
-        if ($('input[name="password"]').val() === $('input[name="password2"]').val()) {
+        var formHasError = $('.form-group').hasClass('has-error');
+        if (($('.form-group').hasClass('has-error') == false) && ($('input[name="password"]').val() === $('input[name="password2"]').val())) {
             $('form').submit();
-        } else {
-            $('.register-msg').html('Password compare failed.').removeClass('hidden');
         }
     });
 });
