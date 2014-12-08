@@ -2,7 +2,7 @@ import requests
 from datetime import datetime
 from multiprocessing import Process
 from math import ceil
-from menu.mongo_models import *
+from menu.models import *
 
 
 API_BASE = 'http://api.ratings.food.gov.uk'

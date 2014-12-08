@@ -93,4 +93,5 @@ MONGO_USER = None
 MONGO_PASS = None
 
 connect(db=MONGO_DB, host=MONGO_HOST, port=MONGO_PORT, username=MONGO_USER, password=MONGO_PASS)
+SESSION_SERIALIZER = 'mongoengine.django.sessions.BSONSerializer'
 
