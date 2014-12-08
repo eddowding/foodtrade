@@ -81,7 +81,7 @@ def create_menu(request):
 
 @login_required(login_url=reverse_lazy('menu-login'))
 def create_menu_section(request):
-    insert_dict = deepcopy(request.POST)
+    insert_dict = deepcopy(request.POST.dict())
     insert_dict['menu'] = ObjectId(insert_dict['menu'])
     insert_dict['added_on'] = datetime.now()
     MenuSection.objects.create(**insert_dict)
@@ -90,7 +90,7 @@ def create_menu_section(request):
 
 @login_required(login_url=reverse_lazy('menu-login'))
 def create_dish(request):
-    insert_dict = deepcopy(request.POST)
+    insert_dict = deepcopy(request.POST.dict())
     insert_dict['menu_section'] = ObjectId(insert_dict['menu_section'])
     insert_dict['added_on'] = datetime.now()
     Dish.objects.create(**insert_dict)
@@ -100,7 +100,7 @@ def create_dish(request):
 @login_required(login_url=reverse_lazy('menu-login'))
 def create_ingredient(request):
     dish = request.POST.get('dish')
-    insert_dict = deepcopy(request.POST)
+    insert_dict = deepcopy(request.POST.dict())
     del insert_dict['dish']
     #TODO: cache this to save query
     insert_dict['is_allergen'] = True if Allergen.objects.filter(name=insert_dict['name']).count() else False
@@ -114,7 +114,7 @@ def create_ingredient(request):
 @login_required(login_url=reverse_lazy('menu-login'))
 def update_ingredient(request):
     dish = request.POST.get('dish')
-    insert_dict = deepcopy(request.POST)
+    insert_dict = deepcopy(request.POST.dict())
     del insert_dict['dish']
     #TODO: cache this to save query
     insert_dict['is_allergen'] = True if Allergen.objects.filter(name=insert_dict['name']).count() else False
