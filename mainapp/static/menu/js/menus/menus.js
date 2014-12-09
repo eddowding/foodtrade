@@ -9,10 +9,12 @@
         $(".tooltip").tooltip();
         
         // Menu tree sortable
-        $("ul.todo-list").sortable(
+        /*$("ul.todo-list").sortable(
             
-        );
-        
+        );*/
+
+
+        $("ul.my-tree").sortable();
          
     });
     
