@@ -14,7 +14,8 @@ from menu.models import Establishment, Menu, MenuSection, Dish, Allergen, Meat, 
 @login_required(login_url=reverse_lazy('menu-login'))
 def menu(request):
     ''' Get list of menus '''
-    return render(request, 'menu/menus.html', {'title' : 'menu'})
+
+    return render(request, 'menu/menus.html', {'menus' : menus})
 
 
 def register(request):
