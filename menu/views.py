@@ -17,7 +17,8 @@ Common views.
 @login_required(login_url=reverse_lazy('menu-login'))
 def menu(request):
     ''' Get list of menus '''
-
+    establishments = Establishment.objects.filter(user=request.user)
+    menus = Menu.objects.filter(establishment__in=establishments)
     return render(request, 'menu/menus.html', {'menus' : menus})
 
 
