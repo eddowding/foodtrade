@@ -1,4 +1,11 @@
 {% extends 'menu_base.html' %}
+{% load staticfiles %}
+
+
+{% block extra_js %}
+<script src="{% static 'typeahead.js/dist/typeahead.bundle.min.js' %}"></script>
+<script src="{% static 'js/connection.js' %}"></script>
+{% endblock extra_js %}
 
 {% block body_class %}skin-black{% endblock %}
 
@@ -134,8 +141,7 @@
                             <div class="form-group">
                                 <label for="" class="control-label col-sm-3">Business name</label>
                                 <div class="col-sm-9">
-                                    <input type="text" class="form-control" id="" placeholder="Start typing...">
-                                    <code>@JD - autocomplete, searching against the FSA data</code>
+                                    <input class="form-control typeahead" type="text" placeholder="Start typing...">
                                 </div>
                             </div>
 
