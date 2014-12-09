@@ -93,6 +93,20 @@ def create_menu_section(request):
 
 
 @login_required(login_url=reverse_lazy('menu-login'))
+def dish_lookup_name(request):
+    query = {'name__icontains': request.GET.get('q')}
+    ret_list = []
+    for dish in Dish.objects.filter(**query):
+        tmp_dict = {'name': dish.name}
+        tmp_list = []
+        for ingredient in dish.ingredients:
+            tmp_list.append(json.loads(ingredient.to_json()))
+        tmp_dict['ingredients'] = tmp_list
+        ret_list.append(tmp_dict)
+    return HttpResponse(json.dumps({'status': True, 'objs': ret_list}))
+
+
+@login_required(login_url=reverse_lazy('menu-login'))
 def create_dish(request):
     insert_dict = deepcopy(request.POST.dict())
     insert_dict['menu_section'] = ObjectId(insert_dict['menu_section'])
