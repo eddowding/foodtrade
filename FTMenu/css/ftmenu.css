@@ -138,6 +138,9 @@ li.divider {
   background: #666;
   height: 2px;
 }
+.new {
+  background: #ffc;
+}
 .produce_tags a:after {
   content: ",";
 }
