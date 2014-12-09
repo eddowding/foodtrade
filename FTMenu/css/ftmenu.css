@@ -1,7 +1,7 @@
 .box .todo-list li {
   background: #ECE5CE;
   position: relative;
-  padding: 5px 5px 5px 0;
+  padding: 5px 0px 5px 0;
 }
 .box .todo-list li a {
   font-weight: bold;
@@ -28,12 +28,13 @@
 }
 .box .todo-list ul li {
   margin: 2px 0 0 20px;
-  padding: 3px 3px 3px 0px;
+  padding: 3px 0px 3px 0px;
   font-weight: normal !important;
   list-style: none;
   clear: both;
   background: rgba(255, 255, 255, 0.4);
   border: 2px solid #fff;
+  border-right: 0;
 }
 .box .todo-list .tools i {
   color: #3878B3;
@@ -46,7 +47,7 @@
 }
 .box .todo-list ul ul li {
   margin: 2px 0 0 20px;
-  padding: 3px 3px 3px 3px;
+  padding: 3px 0px 3px 3px;
   font-weight: normal !important;
   list-style: none;
   clear: both;
@@ -78,7 +79,7 @@ a.editable-click:hover {
 .flagged {
   border: 1px solid;
   padding: 0 3px;
-  margin-left: 2px;
+  margin-right: 3px;
   opacity: 0.3;
 }
 .flagged.active {
@@ -107,6 +108,16 @@ a.editable-click:hover {
 .gluten {
   border-color: #ED482A;
   color: #ED482A;
+}
+.action {
+  background: #eee;
+  padding: 5px;
+  border: 1px solid #aaa;
+}
+#output {
+  background: #fff;
+  padding: 0.5em 2em 2em 2em;
+  box-shadow: 0 0 10px #444 inset;
 }
 #output * {
   font-family: Georgia;
