@@ -70,7 +70,8 @@ ul.todo-list li.placeholder:before {
                     </h3>
                     <div class="pull-right">
                         <button class="btn btn-xs btn-default"><i class="fa fa-th fa-fw"></i> Add Section</button>
-                        <button class="btn btn-xs btn-default"><i class="fa fa-list-ul fa-fw"></i> Add Menu item</button>
+                        <a data-toggle="modal" href="#menuModal" class="btn btn-xs btn-default"><i class="fa fa-list-ul fa-fw"></i>Add Menu item</a>
+                        {% include 'menu/partials/_add_menu_modal.html' %}
                     </div>
                 </div>
                 <p id="item" class="editable" data-type="textarea" data-pk="1" data-url="/post" data-title="Edit item">Choose from our amazing selection of super delicious, locally sourced, fresh, season menu during lunch hours. </p>
