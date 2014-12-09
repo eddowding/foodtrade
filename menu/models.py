@@ -104,7 +104,7 @@ class MenuSection(Document):
 
 class Ingredient(EmbeddedDocument):
     name = StringField(required=True)
-    parent = ReferenceField('self')
+    parent = StringField(required=False)
     order = IntField(required=True)
     is_allergen = BooleanField(required=True, default=False)
     is_meat = BooleanField(required=True, default=False)

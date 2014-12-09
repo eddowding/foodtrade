@@ -40,9 +40,13 @@ def login(request):
         if user is not None:
             if user.is_active:
                 auth_login(request, user)
-        return HttpResponseRedirect(reverse_lazy('menu'))
+                return HttpResponseRedirect(reverse_lazy('menu'))
+            else:
+                return render(request, 'menu/login.html', {'failure': True})
+        else:
+            return render(request, 'menu/login.html', {'failure': True})
     else:
-        return render(request, 'menu/login.html')
+        return render(request, 'menu/login.html', {'failure': False})
 
 
 def user_lookup_count(request):
@@ -121,6 +125,12 @@ def update_ingredient(request):
     insert_dict['is_meat'] = True if Meat.objects.filter(name=insert_dict['name']).count() else False
     insert_dict['is_gluten'] = True if Gluten.objects.filter(name=insert_dict['name']).count() else False
     Dish.objects.filter(pk=ObjectId(dish), ingredients__name=insert_dict['name']) \
-                                                    .update(set__is_allergen=insert_dict['is_allergen'], set__is_meat=insert_dict['is_meat'],
-                                                            set__is_gluten=insert_dict['is_gluten'], push__ingredients__S=insert_dict)
+                                                    .update(set__is_allergen=insert_dict['is_allergen'],
+                                                            set__is_meat=insert_dict['is_meat'],
+                                                            set__is_gluten=insert_dict['is_gluten'],
+                                                            set__ingredients__S__parent=insert_dict['parent'],
+                                                            set__ingredients__S__order=insert_dict['order'],
+                                                            set__ingredients__S__is_allergen=insert_dict['is_allergen'],
+                                                            set__ingredients__S__is_meat=insert_dict['is_meat'],
+                                                            set__ingredients__S__is_gluten=insert_dict['is_gluten'])
     return HttpResponse(json.dumps({'status': True}))
