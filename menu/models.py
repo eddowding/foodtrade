@@ -145,3 +145,12 @@ class Gluten(Document):
     added_on = DateTimeField(required=True)
     modified_on = DateTimeField(default=datetime.now)
 
+
+class Connection(Document):
+    user = ReferenceField(User)
+    connection = GenericReferenceField()
+    connection_type = IntField(choices=((1, 'We sell to them'), (2, 'We buy from them')))
+    is_active = BooleanField(required=True, default=True)
+    added_on = DateTimeField(required=True)
+    modified_on = DateTimeField(default=datetime.now)
+
