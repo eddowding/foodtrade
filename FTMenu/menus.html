@@ -20,6 +20,7 @@
     <!-- Theme style -->
     <link href="css/AdminLTE.css" rel="stylesheet" type="text/css" />
     <link href="css/ftmenu.css" rel="stylesheet" type="text/css" />
+    <link href="css/iCheck/all.css" rel="stylesheet" type="text/css" /> 
 
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -492,9 +493,10 @@
                                                         <a href="#" id="item" class="editable" data-type="text" data-pk="1" data-url="/post" data-title="Edit item">Wheat cous-cous</a>
                                                         <span class="small"><em>Wheat</em></span>
 
-                                                        <div class="pull-right">
-                                                            <span class="allergen flagged" data-toggle="tooltip" title="tss" data-original-title="Milk">A</span>
-                                                            <span class="gluten flagged" data-toggle="tooltip" title="Gluten">G</span>
+                                                        <div class="pull-right"> 
+                                                            <label class="allergen"><input type="checkbox" title="Milk" class="allergenx" /> <acronym title="Allergen">A</acronym></label>
+                                                            <label class="meat"><input type="checkbox" title="Mean" class="meatx" /> <acronym title="Meat">M</acronym></label>
+                                                            <label class="gluten"><input type="checkbox" title="Gluten" class="glutenx" /> <acronym title="Gluten">Gl</acronym></label>
                                                         </div>
 
                                                         <div class="tools">
@@ -737,6 +739,25 @@
         //Activate tooltips
         $("[data-toggle='tooltip']").tooltip();
         $(".tooltip").tooltip();
+        
+
+             //iCheck for checkbox and radio inputs 
+                //Flat red color scheme for iCheck
+                $('input[type="checkbox"].meatx').iCheck({
+                    checkboxClass: 'icheckbox_flat-red',
+                    radioClass: 'iradio_flat-red'
+                });
+
+                $('input[type="checkbox"].allergenx').iCheck({
+                    checkboxClass: 'icheckbox_flat-green',
+                    radioClass: 'iradio_flat-green'
+                });
+
+                $('input[type="checkbox"].glutenx').iCheck({
+                    checkboxClass: 'icheckbox_flat-orange',
+                    radioClass: 'iradio_flat-orange'
+                });
+
     });
     </script>
 
