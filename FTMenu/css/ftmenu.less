@@ -95,15 +95,27 @@ a.editable-click:hover {
 
 .flagged {
   border: 1px solid;
-  width: 10px;
-  border-radius: 20px;
-  padding: 0 4px;
-  margin-left: 5px;
-  opacity: 0.6;
-}
-li:hover  .flagged {
+  padding: 0 3px;
+  margin-left: 2px;
+  opacity: 0.3;
+  
+  &.active {
   opacity: 1;
-}
+  background: inherit;
+  color: #fff;
+  font-weight: bolder;
+  &.meat {
+    background: #A30012;
+  }
+  &.allergen {
+    background: #4CAC48;
+  }
+  &.gluten {
+    background: #ED482A;
+  }
+
+  }
+} 
 
 .meat {
   border-color: #A30012;
