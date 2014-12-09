@@ -73,7 +73,7 @@ def establishment_lookup_name(request):
     ret_list = []
     for obj in Establishment.objects.filter(**query):
         ret_list.append({'name': obj.BusinessName, 'value': str(obj.pk)})
-        return HttpResponse(json.dumps({'status': True, 'objs': ret_list}))
+    return HttpResponse(json.dumps({'status': True, 'objs': ret_list}))
 
 
 @login_required(login_url=reverse_lazy('menu-login'))
