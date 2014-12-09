@@ -11,6 +11,9 @@ from mongoengine.django.auth import User
 from menu.models import Establishment, Menu, MenuSection, Dish, Allergen, Meat, Gluten
 
 
+"""
+Common views.
+"""
 @login_required(login_url=reverse_lazy('menu-login'))
 def menu(request):
     ''' Get list of menus '''
@@ -62,13 +65,16 @@ def logout(request):
     return HttpResponseRedirect(reverse_lazy('menu-login'))
 
 
+"""
+Menu views.
+"""
 @login_required(login_url=reverse_lazy('menu-login'))
 def establishment_lookup_name(request):
     query = {'BusinessName__icontains': request.GET.get('q')}
     ret_list = []
     for obj in Establishment.objects.filter(**query):
         ret_list.append({'name': obj.BusinessName, 'value': str(obj.pk)})
-        return HttpResponse(json.dumps({'status': True, 'objs': ret_list}))
+    return HttpResponse(json.dumps({'status': True, 'objs': ret_list}))
 
 
 @login_required(login_url=reverse_lazy('menu-login'))
@@ -94,6 +100,20 @@ def create_menu_section(request):
 
 
 @login_required(login_url=reverse_lazy('menu-login'))
+def dish_lookup_name(request):
+    query = {'name__icontains': request.GET.get('q')}
+    ret_list = []
+    for dish in Dish.objects.filter(**query):
+        tmp_dict = {'name': dish.name}
+        tmp_list = []
+        for ingredient in dish.ingredients:
+            tmp_list.append(json.loads(ingredient.to_json()))
+        tmp_dict['ingredients'] = tmp_list
+        ret_list.append(tmp_dict)
+    return HttpResponse(json.dumps({'status': True, 'objs': ret_list}))
+
+
+@login_required(login_url=reverse_lazy('menu-login'))
 def create_dish(request):
     insert_dict = deepcopy(request.POST.dict())
     insert_dict['menu_section'] = ObjectId(insert_dict['menu_section'])
@@ -113,7 +133,7 @@ def create_ingredient(request):
     insert_dict['is_gluten'] = True if Gluten.objects.filter(name=insert_dict['name']).count() else False
     Dish.objects.filter(pk=ObjectId(dish)).update(set__is_allergen=insert_dict['is_allergen'], set__is_meat=insert_dict['is_meat'],
                                                   set__is_gluten=insert_dict['is_gluten'], push__ingredients=insert_dict)
-    return HttpResponse(json.dumps({'status': True}))
+    return HttpResponse(json.dumps({'status': True, 'obj': insert_dict}))
 
 
 @login_required(login_url=reverse_lazy('menu-login'))
@@ -134,4 +154,11 @@ def update_ingredient(request):
                                                             set__ingredients__S__is_allergen=insert_dict['is_allergen'],
                                                             set__ingredients__S__is_meat=insert_dict['is_meat'],
                                                             set__ingredients__S__is_gluten=insert_dict['is_gluten'])
-    return HttpResponse(json.dumps({'status': True}))
+    return HttpResponse(json.dumps({'status': True, 'obj': insert_dict}))
+
+
+"""
+Connection views.
+"""
+def connection(request):
+    return render(request, 'connection.html')

@@ -335,12 +335,12 @@
                         <a href="#">
                             <i class="fa fa-envelope"></i> <span>Contact us</span>
                         </a>
-                    </li> 
+                    </li>
                     <li class="">
                         <a href="#">
                             <i class="fa fa-bullhorn"></i> <span>Feedback</span>
                         </a>
-                    </li> 
+                    </li>
                     <li class="divider"></li>
                     <li class="divider"></li>
                 </ul>
@@ -381,11 +381,13 @@
                                 <h3 class="box-title">Poco Menu</h3>
                                 <div class="box-tools pull-right">
                                     <ul class="pagination pagination-sm inline">
-                                    <li><a href="#"><i class="fa fa-fw fa-print"></i> Print preview</a>
+                                        <li><a href="#"><i class="fa fa-fw fa-save"></i> Save</a>
                                         </li>
-                                        <li data-toggle="tooltip" title="cat" data-original-title="monkey"><a href="#"><i class="fa  fa-fw fa-download"></i> Generate PDF</a>
+                                        <li><a data-toggle="modal" data-target="#confirm" href="#"><i class="fa fa-fw fa-print"></i> Print preview</a>
                                         </li>
-                                        <li><a href="#"><i class="fa fa-fw fa-code"></i> Use on my website</a>
+                                        <li><a data-toggle="modal" data-target="#confirm"><i class="fa  fa-fw fa-download"></i> Generate PDF</a>
+                                        </li>
+                                        <li><a data-toggle="modal" data-target="#confirm"><i class="fa fa-fw fa-code"></i> Use on my website</a>
                                         </li>
                                     </ul>
                                 </div>
@@ -418,8 +420,9 @@
 
 
                                         <div class="pull-right">
-                                            <span class="allergen flagged" data-toggle="tooltip" title="tss" data-original-title="Milk">A</span>
-                                            <span class="meat flagged" data-toggle="tooltip" title="Chicken">M</span>
+                                            <span class="allergen flagged active" data-toggle="tooltip" title="tss" data-original-title="Milk">A</span>
+                                            <span class="meat flagged active" data-toggle="tooltip" title="Chicken">M</span>
+                                            <span class="gluten flagged active" data-toggle="tooltip" title="Gluten">G</span>
                                         </div>
                                         <div class="tools" style="position: absolute; right:0;">
                                             <a class="btn btn-xs btn-default"><i class="fa fa-cutlery fa-fw"></i>  Add ingredient</a>
@@ -440,11 +443,12 @@
 
                                                 <div class="pull-right">
                                                     <span class="allergen flagged" data-toggle="tooltip" title="tss" data-original-title="Milk">A</span>
+                                                    <span class="meat flagged active" data-toggle="tooltip" title="Chicken">M</span>
+                                                    <span class="gluten flagged" data-toggle="tooltip" title="Gluten">G</span>
                                                 </div>
 
                                                 <div class="tools">
                                                     <i class="fa fa-cutlery"></i>
-
                                                     <i class="fa fa-trash-o"></i>
                                                 </div>
                                             </li>
@@ -458,7 +462,8 @@
                                                 <a href="#" id="item" class="editable" data-type="text" data-pk="1" data-url="/post" data-title="Edit item">Spiced cous-cous</a>
 
                                                 <div class="pull-right">
-                                                    <span class="allergen flagged" data-toggle="tooltip" title="tss" data-original-title="Milk">A</span>
+                                                    <span class="allergen flagged active" data-toggle="tooltip" title="tss" data-original-title="Milk">A</span>
+                                                    <span class="meat flagged active" data-toggle="tooltip" title="Chicken">M</span>
                                                     <span class="gluten flagged" data-toggle="tooltip" title="Gluten">G</span>
                                                 </div>
 
@@ -477,9 +482,14 @@
 
                                                         <a href="#" id="item" class="editable" data-type="text" data-pk="1" data-url="/post" data-title="Edit item">Paprika</a>
 
+                                                        <div class="pull-right">
+                                                            <span class="allergen flagged" data-toggle="tooltip" title="tss" data-original-title="Milk">A</span>
+                                                            <span class="meat flagged active" data-toggle="tooltip" title="Chicken">M</span>
+                                                            <span class="gluten flagged" data-toggle="tooltip" title="Gluten">G</span>
+                                                        </div>
+
                                                         <div class="tools">
                                                             <i class="fa fa-cutlery"></i>
-
                                                             <i class="fa fa-trash-o"></i>
                                                         </div>
                                                     </li>
@@ -494,12 +504,12 @@
 
                                                         <div class="pull-right">
                                                             <span class="allergen flagged" data-toggle="tooltip" title="tss" data-original-title="Milk">A</span>
+                                                            <span class="meat flagged active" data-toggle="tooltip" title="Chicken">M</span>
                                                             <span class="gluten flagged" data-toggle="tooltip" title="Gluten">G</span>
                                                         </div>
 
                                                         <div class="tools">
                                                             <i class="fa fa-cutlery"></i>
-
                                                             <i class="fa fa-trash-o"></i>
                                                         </div>
                                                     </li>
@@ -513,11 +523,12 @@
 
                                                         <div class="pull-right">
                                                             <span class="allergen flagged" data-toggle="tooltip" title="tss" data-original-title="Milk">A</span>
+                                                            <span class="meat flagged active" data-toggle="tooltip" title="Chicken">M</span>
+                                                            <span class="gluten flagged" data-toggle="tooltip" title="Gluten">G</span>
                                                         </div>
 
                                                         <div class="tools">
                                                             <i class="fa fa-cutlery"></i>
-
                                                             <i class="fa fa-trash-o"></i>
                                                         </div>
                                                     </li>
@@ -533,6 +544,7 @@
 
                                                 <div class="pull-right">
                                                     <span class="allergen flagged" data-toggle="tooltip" title="tss" data-original-title="Milk">A</span>
+                                                    <span class="meat flagged active" data-toggle="tooltip" title="Chicken">M</span>
                                                     <span class="gluten flagged" data-toggle="tooltip" title="Gluten">G</span>
                                                 </div>
 
@@ -552,41 +564,8 @@
 
                                                 <div class="pull-right">
                                                     <span class="allergen flagged" data-toggle="tooltip" title="tss" data-original-title="Milk">A</span>
-                                                </div>
-
-                                                <div class="tools">
-                                                    <i class="fa fa-cutlery"></i>
-
-                                                    <i class="fa fa-trash-o"></i>
-                                                </div>
-                                            </li>
-                                            <li>
-                                                <span class="handle">
-                                                <i class="fa fa-ellipsis-v"></i>
-                                                <i class="fa fa-ellipsis-v"></i>
-                                                </span>
-
-                                                <a href="#" id="item" class="editable" data-type="text" data-pk="1" data-url="/post" data-title="Edit item">Olives</a>
-
-                                                <div class="pull-right">
-                                                </div>
-
-                                                <div class="tools">
-                                                    <i class="fa fa-cutlery"></i>
-
-                                                    <i class="fa fa-trash-o"></i>
-                                                </div>
-                                            </li>
-                                            <li>
-                                                <span class="handle">
-                                                <i class="fa fa-ellipsis-v"></i>
-                                                <i class="fa fa-ellipsis-v"></i>
-                                                </span>
-
-                                                <a href="#" id="item" class="editable" data-type="text" data-pk="1" data-url="/post" data-title="Edit item">Salsa</a>
-
-                                                <div class="pull-right">
-                                                    <span class="allergen flagged" data-toggle="tooltip" title="tss" data-original-title="Milk">A</span>
+                                                    <span class="meat flagged " data-toggle="tooltip" title="Chicken">M</span>
+                                                    <span class="gluten flagged active" data-toggle="tooltip" title="Gluten">G</span>
                                                 </div>
 
                                                 <div class="tools">
@@ -622,6 +601,8 @@
                                     </li>
                                 </ul>
 
+
+
                                 <div class="clearfix section_head">
                                     <h3>
                                         <span class="handle">
@@ -644,12 +625,14 @@
                                             </span>
 
 
-                                        <a href="#" id="item" class="editable" data-type="text" data-pk="1" data-url="/post" data-title="Edit item">Vegetarian Platter</a> &pound;12.5
+                                        <a href="#" id="item" class="editable" data-type="text" data-pk="1" data-url="/post" data-title="Edit item">Vegetarian Platter</a>
 
 
                                         <div class="pull-right">
-                                            <span class="allergen flagged" data-toggle="tooltip" title="tss" data-original-title="Milk">A</span>
-                                            <span class="meat flagged" data-toggle="tooltip" title="Chicken">M</span>
+
+                                            <span class="allergen flagged active" data-toggle="tooltip" title="tss" data-original-title="Milk">A</span>
+                                            <span class="meat flagged active" data-toggle="tooltip" title="Chicken">M</span>
+                                            <span class="gluten flagged active" data-toggle="tooltip" title="Gluten">G</span>
                                         </div>
                                         <div class="tools" style="position: absolute; right:0;">
                                             <a class="btn btn-xs btn-default"><i class="fa fa-cutlery fa-fw"></i>  Add ingredient</a>
@@ -685,7 +668,55 @@
     </div>
     <!-- ./wrapper -->
 
-    <!-- add new calendar event modal -->
+
+
+    <!-- COMPOSE MESSAGE MODAL -->
+    <div class="modal fade" id="confirm" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title"><i class="fa fa-check"></i> Confirm, Print &amp; Share</h4>
+                </div>
+                <form action="#" method="post">
+                    <div class="modal-body">
+
+
+                        <div class="form-group" style="margin:0;">
+                            <label>
+                                <input type="checkbox"> I confirm that these details are correct and assume responsibility for any errors.
+                            </label>
+                        </div>
+                        <div class="form-group" style="margin:0;">
+                            <label>
+                                <input type="checkbox"> I confirm we have insurance.
+                            </label>
+                        </div>
+
+
+                    </div>
+                    <div class="modal-footer clearfix">
+                    <div class="text-center center-block">
+                        <button class="btn btn-primary " disabled=""><i class="fa fa-fw fa-print"></i> Print preview</button>
+                        <button class="btn btn-primary " disabled=""><i class="fa fa-fw fa-download"></i> Generate PDF</button>
+                        <button class="btn btn-primary " disabled=""><i class="fa fa-fw fa-code"></i> Embed on my site</button>
+                    </div>
+                    </div>
+                </form>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <!-- /.modal -->
+
+
+
+
+
+
+
+
 
 
     <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
@@ -700,8 +731,7 @@
     <script src="js/plugins/daterangepicker/daterangepicker.js" type="text/javascript"></script>
     <!-- datepicker -->
     <script src="js/plugins/datepicker/bootstrap-datepicker.js" type="text/javascript"></script>
-    <!-- iCheck -->
-    <script src="js/plugins/iCheck/icheck.min.js" type="text/javascript"></script>
+
 
     <!-- AdminLTE App -->
     <script src="js/AdminLTE/app.js" type="text/javascript"></script>
@@ -719,6 +749,7 @@
         //Activate tooltips
         $("[data-toggle='tooltip']").tooltip();
         $(".tooltip").tooltip();
+
     });
     </script>
 
