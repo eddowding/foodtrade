@@ -11,6 +11,9 @@ from mongoengine.django.auth import User
 from menu.models import Establishment, Menu, MenuSection, Dish, Allergen, Meat, Gluten
 
 
+"""
+Common views.
+"""
 @login_required(login_url=reverse_lazy('menu-login'))
 def menu(request):
     ''' Get list of menus '''
@@ -61,6 +64,9 @@ def logout(request):
     return HttpResponseRedirect(reverse_lazy('menu-login'))
 
 
+"""
+Menu views.
+"""
 @login_required(login_url=reverse_lazy('menu-login'))
 def establishment_lookup_name(request):
     query = {'BusinessName__icontains': request.GET.get('q')}
@@ -148,3 +154,10 @@ def update_ingredient(request):
                                                             set__ingredients__S__is_meat=insert_dict['is_meat'],
                                                             set__ingredients__S__is_gluten=insert_dict['is_gluten'])
     return HttpResponse(json.dumps({'status': True, 'obj': insert_dict}))
+
+
+"""
+Connection views.
+"""
+def connection(request):
+    return render(request, 'connection.html')

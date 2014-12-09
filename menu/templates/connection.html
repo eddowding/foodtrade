@@ -1,0 +1,184 @@
+{% extends 'menu_base.html' %}
+
+{% block body_class %}skin-black{% endblock %}
+
+{% block content %}
+<!-- Main row -->
+<div class="row">
+    <!-- Left col -->
+    <section class="col-sm-12">
+
+
+
+        <div class="nav-tabs-custom ">
+            <ul class="nav nav-tabs lead">
+                <li class="active"><a href="#tab_1" data-toggle="tab"><i class="fa fa-sign-in"></i> My suppliers</a>
+                </li>
+                <li><a href="#tab_2" data-toggle="tab"><i class="fa fa-sign-out"></i> My stockists</a>
+                </li>
+                <li class="pull-right bg-success "><a href="#tab_3" data-toggle="tab" class="text-success "><i class="fa fa-plus-circle fa-lg"></i> Add a connection</a>
+                </li>
+            </ul>
+            <div class="tab-content">
+                <div class="tab-pane active" id="tab_1">
+
+
+                    <table id="" class="table table-bordered table-striped dtable">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Business type</th>
+                                <th>Produce traded</th>
+                                <th>Contact</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><a href="/profile/trill_farm"><strong>Trill Farm</strong></a>
+                                </td>
+                                <td>Farm</td>
+                                <td class="produce_tags">
+                                    <a href="#">Salad</a>
+                                    <a href="#">Lolorosso</a>
+                                    <a href="#">Radish</a>
+                                    <a href="#">Kale</a>
+                                    <a href="#">Parnsip</a>
+                                    <a href="#">Carrots</a>
+                                </td>
+                                <td>
+                                    <a href="mailto:me@eddowding.com" class="pull-right"><i class="fa fa-envelope"></i>
+                                    </a> <i class="fa fa-phone text-muted"></i> 0207
+                                    193 2999</td>
+                            </tr>
+                            <tr>
+                                <td><a href="/profile/trill_farm"><strong>John the Fish</strong></a>
+                                </td>
+                                <td>Fishmonger</td>
+                                <td class="produce_tags">
+                                    <a href="#">Carp</a>
+                                    <a href="#">Cod</a>
+                                </td>
+                                <td>
+                                    <a href="mailto:me@eddowding.com" class="pull-right"><i class="fa fa-envelope"></i>
+                                    </a> <i class="fa fa-phone text-muted"></i> 0118
+                                    726 3456</td>
+                            </tr>
+                            <tr>
+                                <td><a href="/profile/trill_farm"><strong>Emma's Farm</strong></a>
+                                </td>
+                                <td>Farm</td>
+                                <td class="produce_tags">
+                                    <a href="#">Raspberries</a>
+                                    <a href="#">Strawberries</a>
+                                </td>
+                                <td>
+                                    <a href="mailto:me@eddowding.com" class="pull-right"><i class="fa fa-envelope"></i>
+                                    </a> <i class="fa fa-phone text-muted"></i> 07775791814</td>
+                            </tr>
+                            <tr>
+                                <td><a href="/profile/trill_farm"><strong>Hobbs House Bakery</strong></a>
+                                </td>
+                                <td>Baker</td>
+                                <td class="produce_tags">
+                                    <a href="#">Sourdough Bread</a>
+                                </td>
+                                <td>
+                                    <a href="mailto:me@eddowding.com" class="pull-right"><i class="fa fa-envelope"></i>
+                                    </a> <i class="fa fa-phone text-muted"></i> 0207
+                                    193 2999</td>
+                            </tr>
+                            <tr>
+                                <td><a href="/profile/trill_farm"><strong>James Butcher</strong></a>
+                                </td>
+                                <td>Butcher</td>
+                                <td class="produce_tags">
+                                    <a href="#">Meat</a>
+                                </td>
+                                <td>
+                                    <a href="mailto:me@eddowding.com" class="pull-right"><i class="fa fa-envelope"></i>
+                                    </a> <i class="fa fa-phone text-muted"></i> 0207
+                                    193 2999</td>
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th>Name</th>
+                                <th>Business type</th>
+                                <th>Produce traded</th>
+                                <th>Contact</th>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+                <!-- /.tab-pane -->
+                <div class="tab-pane" id="tab_2">
+                    <code>@JD - Same as tab1, but for stockists
+                                    - be sure to include empty view on all pages</code>
+
+                    <div class="well text-center">
+                        <h3>You don't have any stockists yet!</h3>
+
+                        <a href="#" class="btn btn-lg btn-success"><i class="fa fa-lg fa-fw fa-plus-circle"></i> Add a stockist</a>
+
+                    </div>
+
+                </div>
+                <!-- /.tab-pane -->
+
+
+                <div class="tab-pane  clearfix" id="tab_3">
+
+                    <div class="col-sm-10 col-sm-offset-1">
+                        <form action="" method="POST" role="form" class="form-horizontal">
+
+                            <div class="form-group">
+                                <label for="" class="control-label col-sm-3">Business name</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" id="" placeholder="Start typing...">
+                                    <code>@JD - autocomplete, searching against the FSA data</code>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-sm-9 col-sm-offset-3">
+                                    <label>
+                                        <input type="radio" value="">We sell to them
+                                    </label>
+                                    &nbsp;&nbsp;&nbsp;
+                                    <label>
+                                        <input type="radio" value="">We buy from them
+                                    </label>
+                                </div>
+                            </div>
+
+                            <!--              <div class="form-group">
+                                                <label for="" class="control-label col-sm-3">Produce</label>
+                                                <div class="col-sm-9">
+                                                <code>@JD populate this with a list of produce they sell, if applicable - ajax load in</code>
+                                                    <label>
+                                                        <input type="checkbox" value=""> Cheese
+                                                    </label> 
+                                                </div>
+                                            </div> -->
+
+                            <div class="form-group">
+                                <div class="col-sm-9 col-sm-offset-3">
+                                    <button type="submit" class="btn btn-success">Add connection</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <!-- /.tab-pane -->
+
+            </div>
+            <!-- /.tab-content -->
+        </div>
+        <!-- nav-tabs-custom -->
+
+
+    </section>
+    <!-- /.Left col -->
+
+</div>
+{% endblock content %}
