@@ -100,6 +100,6 @@ connect(db=MONGO_DB, host=MONGO_HOST, port=MONGO_PORT, username=MONGO_USER, pass
 SESSION_SERIALIZER = 'mongoengine.django.sessions.BSONSerializer'
 
 #bower settings
-BOWER_COMPONENTS_ROOT = '/PROJECT_ROOT/components/'
-BOWER_COMPONENTS_ROOT = os.path.join(PROJECT_ROOT, 'bower_components')
+BOWER_COMPONENTS_ROOT = PROJECT_ROOT
+BOWER_INSTALLED_APPS = ('typeahead.js#0.10.5', 'jquery#1.11.1')
 
