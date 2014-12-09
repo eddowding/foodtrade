@@ -6,6 +6,7 @@ PyYAML==3.10
 dj-stripe==0.3.5
 django-allauth==0.15.0
 django-bootstrap-form==3.1
+django-bower==5.0.1
 django-braces==1.4.0
 django-floppyforms==1.1.1
 django-jsonfield==0.9.13

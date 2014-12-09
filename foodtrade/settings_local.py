@@ -1,7 +1,11 @@
 # -*- coding: utf-8 -*-
 # EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 # app credentials
+import os
 from mongoengine import connect
+
+
+PROJECT_ROOT = os.path.dirname(os.path.dirname(__file__))
 
 CONSUMER_KEY = 'waBmigQf9LIqYXkhMNeMdQ'
 CONSUMER_SECRET = 'KVVf35OAJQVUGrVQsrQnF7fmB2JLz6XAW3IAmqFB8'
@@ -94,4 +98,8 @@ MONGO_PASS = None
 
 connect(db=MONGO_DB, host=MONGO_HOST, port=MONGO_PORT, username=MONGO_USER, password=MONGO_PASS)
 SESSION_SERIALIZER = 'mongoengine.django.sessions.BSONSerializer'
+
+#bower settings
+BOWER_COMPONENTS_ROOT = '/PROJECT_ROOT/components/'
+BOWER_COMPONENTS_ROOT = os.path.join(PROJECT_ROOT, 'bower_components')
 
