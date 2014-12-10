@@ -103,6 +103,9 @@ class MenuSection(Document):
     added_on = DateTimeField(required=True)
     modified_on = DateTimeField(default=datetime.now)
 
+    def get_section_dishes(self):
+        return Dish.objects.filter(menu_section=self.pk)
+
 
 class Ingredient(EmbeddedDocument):
     name = StringField(required=True)
