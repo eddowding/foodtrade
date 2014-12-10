@@ -52,6 +52,7 @@ ul.todo-list li.placeholder:before {
 {% block body_class %}skin-black{% endblock %}
 {% block content %}
 <!-- Main row -->
+{% for menu in menus %}
 <div class="row">
     <!-- Left col -->
     <section class="col-sm-12">
@@ -59,7 +60,7 @@ ul.todo-list li.placeholder:before {
         <div class="box box-primary">
             <div class="box-header">
                 <i class="ion ion-clipboard"></i>
-                <h3 class="box-title">Poco Menu</h3>
+                <h3 class="box-title">{{menu.name}}</h3>
                 <div class="box-tools pull-right">
                     <ul class="pagination pagination-sm inline">
                     <li><a href="#"><i class="fa fa-fw fa-print"></i> Print preview</a>
@@ -410,5 +411,5 @@ ul.todo-list li.placeholder:before {
     </section>
     <!-- /.Left col -->
 </div>    
-
+{% endfor %}
 {% endblock %}

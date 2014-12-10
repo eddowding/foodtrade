@@ -93,6 +93,8 @@ class Menu(Document):
     added_on = DateTimeField(required=True)
     modified_on = DateTimeField(default=datetime.now)
 
+    def get_menu_sections(self):
+        return MenuSection.objects.filter(menu=self.pk)
 
 class MenuSection(Document):
     menu = ReferenceField(Menu)
