@@ -18,5 +18,6 @@ urlpatterns = patterns('menu.views',
     url(r'^update/ingredient/$', 'update_ingredient', name='menu_update_ingredient'),
 
     #connection
-    url(r'^connection/$', 'connection', name='menu_connection')
+    url(r'^connection/$', 'connection', name='menu_connection'),
+    url(r'^create/connection/$', 'create_connection', name='menu_create_connection')
 )

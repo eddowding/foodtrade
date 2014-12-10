@@ -8,7 +8,7 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
 from django.contrib.auth.decorators import login_required
 from mongoengine.django.auth import User
-from menu.models import Establishment, Menu, MenuSection, Dish, Allergen, Meat, Gluten
+from menu.models import Establishment, Menu, MenuSection, Dish, Allergen, Meat, Gluten, Connection
 
 
 """
@@ -76,7 +76,7 @@ def establishment_lookup_name(request):
     establishments = Establishment.objects.filter(**query)
     if establishments:
         for obj in establishments:
-            ret_list.append({'name': obj.BusinessName, 'value': str(obj.pk)})
+            ret_list.append({'name': obj.BusinessName, 'value': str(obj.pk), 'type': 1})
     return HttpResponse(json.dumps({'status': True, 'objs': ret_list}))
 
 
@@ -169,3 +169,14 @@ Connection views.
 """
 def connection(request):
     return render(request, 'connection.html')
+
+def create_connection(request):
+    klass_lookup = {1: Establishment}
+    klass = klass_lookup.get(int(request.POST.get('object_type')))
+    insert_dict = {}
+    insert_dict['user'] = request.user
+    insert_dict['connection'] = klass.objects.get(pk=ObjectId(request.POST.get('connection_id')))
+    insert_dict['connection_type'] = int(request.POST.get('connection_type'))
+    insert_dict['added_on'] = datetime.now()
+    Connection.objects.create(**insert_dict)
+    return HttpResponse(json.dumps({'success': True}))
