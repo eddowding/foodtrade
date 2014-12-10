@@ -73,22 +73,25 @@ Menu views.
 def establishment_lookup_name(request):
     query = {'BusinessName__icontains': request.GET.get('q')}
     ret_list = []
-    for obj in Establishment.objects.filter(**query):
-        ret_list.append({'name': obj.BusinessName, 'value': str(obj.pk)})
+    establishments = Establishment.objects.filter(**query)
+    if establishments:
+        for obj in establishments:
+            ret_list.append({'name': obj.BusinessName, 'value': str(obj.pk)})
     return HttpResponse(json.dumps({'status': True, 'objs': ret_list}))
 
 
 @login_required(login_url=reverse_lazy('menu-login'))
 def create_menu(request):
-    establishment = request.POST.get('establishment')
-    name = request.POST.get('name')
-    try:
-        Establishment.objects.filter(pk=ObjectId(establishment)).update(set__user=request.user)
-        Menu.objects.create(establishment=ObjectId(establishment), name=name, added_on=datetime.now())
-    except InvalidId:
-        establishment = Establishment.objects.create(user=request.user, BusinessName=establishment, added_on=datetime.now())
-        Menu.objects.create(establishment=establishment.pk, name=name, added_on=datetime.now())
-    return HttpResponse(json.dumps({'status': True}))
+    if request.method == 'POST':
+        establishment = request.POST.get('establishment')
+        name = request.POST.get('name')
+        try:
+            Establishment.objects.filter(pk=ObjectId(establishment)).update(set__user=request.user)
+            Menu.objects.create(establishment=ObjectId(establishment), name=name, added_on=datetime.now())
+        except InvalidId:
+            establishment = Establishment.objects.create(user=request.user, BusinessName=establishment, added_on=datetime.now())
+            Menu.objects.create(establishment=establishment.pk, name=name, added_on=datetime.now())
+        return HttpResponse(json.dumps({'status': True}))
 
 
 @login_required(login_url=reverse_lazy('menu-login'))
@@ -96,6 +99,7 @@ def create_menu_section(request):
     insert_dict = deepcopy(request.POST.dict())
     insert_dict['menu'] = ObjectId(insert_dict['menu'])
     insert_dict['added_on'] = datetime.now()
+    print insert_dict
     MenuSection.objects.create(**insert_dict)
     return HttpResponse(json.dumps({'status': True}))
 
@@ -103,14 +107,16 @@ def create_menu_section(request):
 @login_required(login_url=reverse_lazy('menu-login'))
 def dish_lookup_name(request):
     query = {'name__icontains': request.GET.get('q')}
+    dishes = Dish.objects.filter(**query)
     ret_list = []
-    for dish in Dish.objects.filter(**query):
-        tmp_dict = {'name': dish.name}
-        tmp_list = []
-        for ingredient in dish.ingredients:
-            tmp_list.append(json.loads(ingredient.to_json()))
-        tmp_dict['ingredients'] = tmp_list
-        ret_list.append(tmp_dict)
+    if dishes:
+        for dish in Dish.objects.filter(**query):
+            tmp_dict = {'name': dish.name}
+            tmp_list = []
+            for ingredient in dish.ingredients:
+                tmp_list.append(json.loads(ingredient.to_json()))
+            tmp_dict['ingredients'] = tmp_list
+            ret_list.append(tmp_dict)
     return HttpResponse(json.dumps({'status': True, 'objs': ret_list}))
 
 
