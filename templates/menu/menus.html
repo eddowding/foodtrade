@@ -62,11 +62,18 @@ ul.todo-list li.placeholder:before {
                 <h3 class="box-title">Poco Menu</h3>
                 <div class="box-tools pull-right">
                     <ul class="pagination pagination-sm inline">
-                    <li><a href="#"><i class="fa fa-fw fa-print"></i> Print preview</a>
+                        <li>
+                         <a data-toggle="modal" href="#menuModal" class="btn btn-xs btn-default"><i class="fa fa-list-ul fa-fw"></i>Add Menu item</a>
+                            {% include 'menu/partials/_add_menu_modal.html' %}
                         </li>
-                        <li data-toggle="tooltip" title="cat" data-original-title="monkey"><a href="#"><i class="fa  fa-fw fa-download"></i> Generate PDF</a>
+                        <li>
+                            <a href="#"><i class="fa fa-fw fa-print"></i> Print preview</a>
                         </li>
-                        <li><a href="#"><i class="fa fa-fw fa-code"></i> Use on my website</a>
+                        <li data-toggle="tooltip" title="cat" data-original-title="monkey">
+                            <a href="#"><i class="fa  fa-fw fa-download"></i> Generate PDF</a>
+                        </li>
+                        <li>
+                            <a href="#"><i class="fa fa-fw fa-code"></i> Use on my website</a>
                         </li>
                     </ul>
                 </div>
@@ -84,11 +91,12 @@ ul.todo-list li.placeholder:before {
                         </span>
                         <a href="#" id="item" class="editable" data-type="text" data-pk="1" data-url="/post" data-title="Edit item">Lunch</a>
                     </h3>
-                    <div class="pull-right">
+                    <div class="pull-right" id="sectionDish">
                         <a data-toggle="modal" href="#sectionModal" class="btn btn-xs btn-default"><i class="fa fa-list-ul fa-fw"></i>Add Section</a>
                         {% include 'menu/partials/_add_section_modal.html' %}
-                        <a data-toggle="modal" href="#menuModal" class="btn btn-xs btn-default"><i class="fa fa-list-ul fa-fw"></i>Add Menu item</a>
-                        {% include 'menu/partials/_add_menu_modal.html' %}
+                        <a href="#" id="item" class="editable btn btn-xs btn-default" data-type="text" data-pk="1" data-url="{% url 'menu_create_dish' %}" data-title="Edit item">
+                            <i class="fa fa-list-ul fa-fw"></i>Add Dish
+                        </a>
                     </div>
                 </div>
                 <p id="item" class="editable" data-type="textarea" data-pk="1" data-url="/post" data-title="Edit item">Choose from our amazing selection of super delicious, locally sourced, fresh, season menu during lunch hours. </p>
