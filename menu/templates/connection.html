@@ -5,6 +5,9 @@
 {% block extra_js %}
 <script src="{% static 'typeahead.js/dist/typeahead.bundle.min.js' %}"></script>
 <script src="{% static 'js/connection.js' %}"></script>
+<script>
+    var createConnectionUrl = '{% url "menu_create_connection" %}';
+</script>
 {% endblock extra_js %}
 
 {% block body_class %}skin-black{% endblock %}
