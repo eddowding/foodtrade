@@ -38,13 +38,23 @@ $(document).ready(function() {
             connection_type: connectionType,
             object_type: objectType
         };
+
+        $('.nav-tabs > li.active').removeClass('active');
+        $("#tab_1").addClass('active');
+        $('#tab_1-tab').parent().addClass('active');
+
         $.ajax({
             url: createConnectionUrl,
             data: data,
             type: 'POST',
             dataType: 'JSON',
             success: function(data) {
-                console.log(data);
+                $('#tab_1').html(data.obj.sellers);
+                $('#tab_2').html(data.obj.buyers);
+                $('.nav-tabs > li.active').removeClass('active');
+                $("#tab_" + $('input[name="connection-type"]:checked').val()).addClass('active');
+                $('#tab_' + $('input[name="connection-type"]:checked').val() + '-tab').parent().addClass('active');
+
             }
         });
     });

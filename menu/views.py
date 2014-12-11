@@ -7,6 +7,7 @@ from django.core.urlresolvers import reverse_lazy
 from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
 from django.contrib.auth.decorators import login_required
+from django.template.loader import render_to_string
 from mongoengine.django.auth import User
 from menu.models import Establishment, Menu, MenuSection, Dish, Allergen, Meat, Gluten, Connection
 
@@ -170,7 +171,9 @@ def update_ingredient(request):
 Connection views.
 """
 def connection(request):
-    return render(request, 'connection.html')
+    buyers = Connection.objects.filter(user=request.user, connection_type=2)
+    sellers = Connection.objects.filter(user=request.user, connection_type=1)
+    return render(request, 'connection.html', {'buyers': buyers, 'sellers': sellers})
 
 def create_connection(request):
     klass_lookup = {1: Establishment}
@@ -181,4 +184,8 @@ def create_connection(request):
     insert_dict['connection_type'] = int(request.POST.get('connection_type'))
     insert_dict['added_on'] = datetime.now()
     Connection.objects.create(**insert_dict)
-    return HttpResponse(json.dumps({'success': True}))
+    buyers = Connection.objects.filter(user=request.user, connection_type=2)
+    sellers = Connection.objects.filter(user=request.user, connection_type=1)
+    html = {'buyers': render_to_string('includes/_connection_table_buyer.html', {'buyers': buyers}),
+            'sellers': render_to_string('includes/_connection_table_seller.html', {'sellers': sellers})}
+    return HttpResponse(json.dumps({'success': True, 'obj': html}))

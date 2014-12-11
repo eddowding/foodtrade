@@ -1,0 +1,35 @@
+{% if sellers %}
+<table id="" class="table table-bordered table-striped dtable">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Business type</th>
+            <th>Contact</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for seller in sellers %}
+        <tr>
+            <td><strong>{{seller.connection.BusinessName}}</strong>
+            </td>
+            <td>{{seller.connection.BusinessType}}</td>
+            <td>{{seller.connection.Phone}}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+    <tfoot>
+        <tr>
+            <th>Name</th>
+            <th>Business type</th>
+            <th>Contact</th>
+        </tr>
+    </tfoot>
+</table>
+{% else %}
+<div class="well text-center">
+    <h3>You don't have any supplier yet!</h3>
+
+    <a role='tab' href="tab_3" class="btn btn-lg btn-success" data-toggle='tab'><i class="fa fa-lg fa-fw fa-plus-circle"></i> Add a Supplier</a>
+
+</div>
+{% endif %}
