@@ -168,7 +168,9 @@ def update_ingredient(request):
 Connection views.
 """
 def connection(request):
-    return render(request, 'connection.html')
+    buyers = Connection.objects.filter(user=request.user, connection_type=1)
+    sellers = Connection.objects.filter(user=request.user, connection_type=2)
+    return render(request, 'connection.html', {'buyers': buyers, 'sellers': sellers})
 
 def create_connection(request):
     klass_lookup = {1: Establishment}
