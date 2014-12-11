@@ -52,7 +52,11 @@ ul.todo-list li.placeholder:before {
 {% block body_class %}skin-black{% endblock %}
 {% block content %}
 <!-- Main row -->
+<div class="form-group has-success">
+    <label class="control-label"><i class="fa fa-check"></i></label>
+</div>
 {% for menu in menus %}
+
 <div class="row">
     <!-- Left col -->
     <section class="col-sm-12">
@@ -63,20 +67,23 @@ ul.todo-list li.placeholder:before {
                 <h3 class="box-title">{{menu.name}}</h3>
                 <div class="box-tools pull-right">
                     <ul class="pagination pagination-sm inline">
-                    <li><a href="#"><i class="fa fa-fw fa-print"></i> Print preview</a>
+                        <li>
+                         <a data-toggle="modal" href="#menuModal" class="btn btn-xs btn-default"><i class="fa fa-list-ul fa-fw"></i>Add Menu item</a>
                         </li>
-                        <li data-toggle="tooltip" title="cat" data-original-title="monkey"><a href="#"><i class="fa  fa-fw fa-download"></i> Generate PDF</a>
+                        <li>
+                            <a href="#"><i class="fa fa-fw fa-print"></i> Print preview</a>
                         </li>
-                        <li><a href="#"><i class="fa fa-fw fa-code"></i> Use on my website</a>
+                        <li data-toggle="tooltip" title="cat" data-original-title="monkey">
+                            <a href="#"><i class="fa  fa-fw fa-download"></i> Generate PDF</a>
+                        </li>
+                        <li>
+                            <a href="#"><i class="fa fa-fw fa-code"></i> Use on my website</a>
                         </li>
                     </ul>
                 </div>
             </div>
             <!-- /.box-header -->
             <div class="box-body">
-                <div class="form-group has-success">
-                    <label class="control-label"><i class="fa fa-check"></i></label>
-                </div>
                 {% for section in menu.get_menu_sections %}
                 <div>
                 <div class="clearfix section_head">
@@ -87,9 +94,11 @@ ul.todo-list li.placeholder:before {
                         </span>
                         <a href="#" id="item" class="editable" data-type="text" data-pk="1" data-url="/post" data-title="Edit item">{{section.name}}</a>
                     </h3>
-                    <div class="pull-right">
-                        <a data-toggle="modal" href="#sectionModal" class="btn btn-xs btn-default"><i class="fa fa-list-ul fa-fw"></i>Add Section</a>
-                        <a data-toggle="modal" href="#menuModal" class="btn btn-xs btn-default"><i class="fa fa-list-ul fa-fw"></i>Add Menu item</a>
+                    <div class="pull-right" id="sectionDish">
+                        <a data-toggle="modal" data-menu-id = {{ menu.id }} href="#sectionModal" class="btn btn-xs btn-default add-section"><i class="fa fa-list-ul fa-fw"></i>Add Section</a>
+                        <a href="#" id="item" data-lookup-url = {% url 'menu_dish_lookup_name' %} data-menu-section={{ section.id }} class="editable btn btn-xs btn-default add-dish" data-type="text" data-pk="1" data-url="{% url 'menu_create_dish' %}" data-title="Edit item">
+                            <i class="fa fa-list-ul fa-fw"></i>Add Dish
+                        </a>
                     </div>
                 </div>
                 <p id="item" class="editable" data-type="textarea" data-pk="1" data-url="/post" data-title="Edit item">Choose from our amazing selection of super delicious, locally sourced, fresh, season menu during lunch hours. </p>
@@ -350,14 +359,15 @@ ul.todo-list li.placeholder:before {
                 </div>
             <!-- /.box-body -->
             <div class="box-footer clearfix no-border">
-                <button data-toggle="modal" href="#sectionModal" class="btn btn-default"><i class="fa fa-th fa-fw"></i> Add Section</button>
+                <button data-toggle="modal" data-menu-id = {{ menu.id }} href="#sectionModal" class="btn btn-default add-section"><i class="fa fa-th fa-fw"></i> Add Section</button>
                 <button data-toggle="modal" href="#menuModal" class="btn btn-default"><i class="fa fa-list-ul fa-fw"></i> Add Menu item</button>
             </div>
         </div>
         <!-- /.box -->
     </section>
     <!-- /.Left col -->
-</div>    
+</div>
+
 {% endfor %}
 {% include 'menu/partials/_add_section_modal.html' %}
 {% include 'menu/partials/_add_menu_modal.html' %}
