@@ -106,13 +106,11 @@ def create_menu_section(request):
 @login_required(login_url=reverse_lazy('menu-login'))
 def dish_lookup_name(request):
     query = {'name__icontains': request.GET.get('q')}
-    dishes = Dish.objects.filter(**query)
     ret_list = []
-    if dishes:
-        for dish in Dish.objects.filter(**query):
-            tmp_dict = {'name': dish.name}
-            tmp_dict['ingredients'] = dish.get_ingredient_tree()
-            ret_list.append(tmp_dict)
+    for dish in Dish.objects.filter(**query):
+        tmp_dict = {'name': dish.name}
+        tmp_dict['ingredients'] = dish.get_ingredient_tree()
+        ret_list.append(tmp_dict)
     return HttpResponse(json.dumps({'status': True, 'objs': ret_list}))
 
 
