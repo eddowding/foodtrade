@@ -89,31 +89,35 @@
 
         // Add menu Establishment Autocomplete
 
-        $( "input#menuEstablishment" ).autocomplete({
-          source: function( request, response ) {
-            $.ajax({
-                dataType: "json",
-                type : 'Get',
-                url: $("input#menuEstablishment").data('lookup-url') +'?q='+ $( "input#menuEstablishment" ).val() ,
-                success: function(data) {
-                  $('input#menuEstablishment').removeClass('ui-autocomplete-loading');
-                  response( $.map( data.objs, function( item ) {
-                    //console.log(data.name);
-                    return {
-                        label: item.name,
-                        value: item.name,
-                    }
-                    }));
+        $(document).on("keydown.autocomplete",'input#menuEstablishment',function(e){
+            $(this).autocomplete({
+            //$( "input#menuEstablishment" ).autocomplete({
+              source: function( request, response ) {
+                $.ajax({
+                    dataType: "json",
+                    type : 'Get',
+                    url: $("input#menuEstablishment").data('lookup-url') +'?q='+ $( "input#menuEstablishment" ).val() ,
+                    success: function(data) {
+                      $('input#menuEstablishment').removeClass('ui-autocomplete-loading');
+                      response( $.map( data.objs, function( item ) {
+                        //console.log(data.name);
+                        return {
+                            label: item.name,
+                            value: item.name,
+                        }
+                        }));
+                  },
+                  error: function(jqXhr, textStatus, errorThrown) {
+                      console.log(errorThrown)
+                      $('input#menuEstablishment').removeClass('ui-autocomplete-loading');  // hide loading image
+                  }
+                });
               },
-              error: function(jqXhr, textStatus, errorThrown) {
-                  console.log(errorThrown)
-                  $('input#menuEstablishment').removeClass('ui-autocomplete-loading');  // hide loading image
-              }
-            });
-          },
-         minLength: 3,
-         appendTo : '#show-suggestions',
+             minLength: 3,
+             appendTo : '#show-suggestions',
 
+
+            });
 
         });
 
@@ -174,7 +178,7 @@
             })
 
 
-         })
+         });
 
 
 

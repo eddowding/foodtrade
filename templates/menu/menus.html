@@ -167,6 +167,7 @@ ul.todo-list li.placeholder:before {
                         </div>
                         <p href="#" id="item" class="editable" data-type="textarea" data-pk="1" data-url="/post" data-title="Edit item">The vegetarian platter is great to share, and one of our most consistently popular items. It's super, stuff, seasonally adapted, and all 100% locally fresh!</p>
 
+                        {% for children in dish.get_ingredient_tree %}
                         <ul>
                             <li>
                                 <span class="handle">
@@ -187,6 +188,7 @@ ul.todo-list li.placeholder:before {
                                 </div>
                             </li>
                         </ul>
+                        {% endfor %}
 
                     </li>
 
