@@ -19,7 +19,7 @@ Common views.
 def menu(request):
     ''' Get list of menus '''
     establishments = Establishment.objects.filter(user=request.user)
-    menus = Menu.objects.filter(establishment__in=establishments)
+    menus = Menu.objects.filter(establishment__in=establishments).order_by('-added_on')
     return render(request, 'menu/menus.html', {'menus' : menus})
 
 

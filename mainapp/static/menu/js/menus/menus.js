@@ -58,6 +58,13 @@
             $("#add_dish_form #menuSectionId").attr('value', $(this).data('menu-section-id'));
         });
 
+
+        // dynamically set the dish id to the hidden dish input in add ingredients form
+
+        $(".add-ingredients").on('click' , function(){
+            $("#add_ingredients_form #dishId").attr('value', $(this).data('dish-id'));
+        });
+
         // Add Section form submit
 
         var section_frm = $('#add_section_form');
@@ -136,8 +143,6 @@
 
         });
 
-
-
              //Autocomplete dish input
 
          $(document).on("keydown.autocomplete",'#dishName',function(e){
@@ -172,10 +177,32 @@
          })
 
 
-        $(document).on('mouseup' , '.editable-container',function (e){
 
-                $(this).off('mouseup.editable-container');
-        })
+
+        // Submit add ingredients form
+
+        $(document).on("submit","#add_ingredients_form",function (e) {
+            e.preventDefault();
+            $.ajax({
+                type: $(this).attr('method'),
+                url: $(this).attr('action'),
+                data: $(this).serialize(),
+                dataType: 'json',
+                success: function( data, textStatus, jQxhr ){
+                    if (data.status == true ){
+                        $('.modal-header .close').trigger('click');
+                       // document.location = document.location;
+                        $('.has-success label').text('Ingredients successfully added');
+                        $('.has-success').show();
+                    }
+
+                },
+                 error: function( jqXhr, textStatus, errorThrown ){
+                    console.log( errorThrown );
+                }
+            });
+
+        });
 
 
          

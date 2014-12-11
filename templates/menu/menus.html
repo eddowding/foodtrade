@@ -148,7 +148,54 @@ ul.todo-list li.placeholder:before {
 
 
                 <ul class="my-tree">
+                    {% for dish in section.get_section_dishes %}
                     <li>
+                        <span class="handle">
+                            <i class="fa fa-ellipsis-v"></i>
+                            <i class="fa fa-ellipsis-v"></i>
+                        </span>
+                        <a href="#" id="item" class="editable" data-type="text" data-pk="1" data-url="/post" data-title="Edit item">{{ dish.name }}</a> &pound;{{ dish.price }}
+
+                        <!--
+                        <div class="pull-right">
+                            <span class="meat flagged" data-toggle="tooltip" title="Chicken">M</span>
+                        </div>-->
+
+                        <div class="tools" style="position: absolute; right:0;">
+                            <a data-toggle="modal" href="#ingredientsModal" data-dish-id = {{ dish.id }} class="btn btn-xs btn-default add-ingredients"><i class="fa fa-cutlery fa-fw"></i>  Add ingredient</a>
+                            <a class="btn btn-xs btn-default"><i class="fa fa-trash-o fa-fw"></i> Delete</a>
+                        </div>
+                        <p href="#" id="item" class="editable" data-type="textarea" data-pk="1" data-url="/post" data-title="Edit item">The vegetarian platter is great to share, and one of our most consistently popular items. It's super, stuff, seasonally adapted, and all 100% locally fresh!</p>
+
+                        <ul>
+                            <li>
+                                <span class="handle">
+                                <i class="fa fa-ellipsis-v"></i>
+                                <i class="fa fa-ellipsis-v"></i>
+                                </span>
+
+                                <a href="#" id="item" class="editable" data-type="text" data-pk="1" data-url="/post" data-title="Edit item">Grilled Halloumi</a>
+
+                                <div class="pull-right">
+                                    <span class="allergen flagged" data-toggle="tooltip" title="tss" data-original-title="Milk">A</span>
+                                </div>
+
+                                <div class="tools">
+                                    <i class="fa fa-cutlery"></i>
+
+                                    <i class="fa fa-trash-o"></i>
+                                </div>
+                            </li>
+                        </ul>
+
+                    </li>
+
+                    {% endfor %}
+
+
+
+
+                    <!--<li>
                         <span class="handle">
                                 <i class="fa fa-ellipsis-v"></i>
                                 <i class="fa fa-ellipsis-v"></i>
@@ -336,29 +383,8 @@ ul.todo-list li.placeholder:before {
                             </li>
 
                         </ul>
-                    </li>
-                    <li>
-                        <span class="handle">
-                                <i class="fa fa-ellipsis-v"></i>
-                                <i class="fa fa-ellipsis-v"></i>
-                            </span>
+                    </li>-->
 
-
-                        <a href="#" id="item" class="editable" data-type="text" data-pk="1" data-url="/post" data-title="Edit item">Carnivore Platter</a> &pound;16.5
-
-
-                        <div class="pull-right">
-                            <span class="meat flagged" data-toggle="tooltip" title="Chicken">M</span>
-                        </div>
-                        <div class="tools" style="position: absolute; right:0;">
-                            <a class="btn btn-xs btn-default"><i class="fa fa-cutlery fa-fw"></i>  Add ingredient</a>
-                            <a class="btn btn-xs btn-default"><i class="fa fa-trash-o fa-fw"></i> Delete</a>
-                        </div>
-
-                        <p href="#" id="item" class="editable" data-type="textarea" data-pk="1" data-url="/post" data-title="Edit item">The vegetarian platter is great to share, and one of our most consistently popular items. It's super, stuff, seasonally adapted, and all 100% locally fresh!</p>
-
-
-                    </li>
                 </ul>
                 </div>
                 {% endfor %}
@@ -378,4 +404,5 @@ ul.todo-list li.placeholder:before {
 {% include 'menu/partials/_add_dish_modal.html' %}
 {% include 'menu/partials/_add_section_modal.html' %}
 {% include 'menu/partials/_add_menu_modal.html' %}
+{% include 'menu/partials/_add_ingredients_modal.html' %}
 {% endblock %}
