@@ -129,6 +129,21 @@ class Dish(Document):
     added_on = DateTimeField(required=True)
     modified_on = DateTimeField(default=datetime.now)
 
+    def get_ingredient_tree(self): #TODO: change to support multilevel
+        ingredients = self.ingredients
+        ret_list = []
+        for parent in ingredients:
+            if not parent.parent:
+                tmp_dict = dict(parent.to_mongo())
+                tmp_dict['children'] = []
+                for child in ingredients:
+                    if child.parent not in [None, '']:
+                        if child.parent == tmp_dict['name']:
+                            tmp_dict['children'].append(dict(child.to_mongo()))
+                ret_list.append(tmp_dict)
+        return ret_list
+
+
 
 class Allergen(Document):
     name = StringField(required=True)
