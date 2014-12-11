@@ -2,6 +2,7 @@ import json
 from datetime import datetime
 from copy import deepcopy
 from bson.objectid import ObjectId, InvalidId
+from bson import json_util
 from django.shortcuts import render
 from django.core.urlresolvers import reverse_lazy
 from django.http import HttpResponseRedirect, HttpResponse
@@ -75,9 +76,8 @@ def establishment_lookup_name(request):
     query = {'BusinessName__icontains': request.GET.get('q')}
     ret_list = []
     establishments = Establishment.objects.filter(**query)
-    if establishments:
-        for obj in establishments:
-            ret_list.append({'name': obj.BusinessName, 'value': str(obj.pk), 'type': 1})
+    for obj in establishments:
+        ret_list.append({'name': obj.BusinessName, 'value': str(obj.pk), 'type': 1})
     return HttpResponse(json.dumps({'status': True, 'objs': ret_list}))
 
 
@@ -91,7 +91,7 @@ def create_menu(request):
     except InvalidId:
         establishment = Establishment.objects.create(user=request.user, BusinessName=establishment, added_on=datetime.now())
         menu = Menu.objects.create(establishment=establishment.pk, name=name, added_on=datetime.now())
-    return HttpResponse(json.dumps({'status': True, 'obj': dict(menu.to_mongo())}))
+    return HttpResponse(json.dumps({'status': True, 'obj': menu.to_mongo()}, default=json_util.default))
 
 
 @login_required(login_url=reverse_lazy('menu-login'))
@@ -100,7 +100,7 @@ def create_menu_section(request):
     insert_dict['menu'] = ObjectId(insert_dict['menu'])
     insert_dict['added_on'] = datetime.now()
     menu_section = MenuSection.objects.create(**insert_dict)
-    return HttpResponse(json.dumps({'status': True, 'obj': dict(menu_section.to_mongo())}))
+    return HttpResponse(json.dumps({'status': True, 'obj': menu_section.to_mongo()}, default=json_util.default))
 
 
 @login_required(login_url=reverse_lazy('menu-login'))
@@ -120,7 +120,7 @@ def create_dish(request):
     insert_dict['menu_section'] = ObjectId(insert_dict['menu_section'])
     insert_dict['added_on'] = datetime.now()
     dish = Dish.objects.create(**insert_dict)
-    return HttpResponse(json.dumps({'status': True, 'obj': dict(dish.to_mongo())}))
+    return HttpResponse(json.dumps({'status': True, 'obj': dish.to_mongo()}, default=json_util.default))
 
 
 @login_required(login_url=reverse_lazy('menu-login'))
