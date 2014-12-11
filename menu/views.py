@@ -113,10 +113,7 @@ def dish_lookup_name(request):
     if dishes:
         for dish in Dish.objects.filter(**query):
             tmp_dict = {'name': dish.name}
-            tmp_list = []
-            for ingredient in dish.ingredients:
-                tmp_list.append(json.loads(ingredient.to_json()))
-            tmp_dict['ingredients'] = tmp_list
+            tmp_dict['ingredients'] = dish.get_ingredient_tree()
             ret_list.append(tmp_dict)
     return HttpResponse(json.dumps({'status': True, 'objs': ret_list}))
 
