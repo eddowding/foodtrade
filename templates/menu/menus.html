@@ -96,9 +96,15 @@ ul.todo-list li.placeholder:before {
                     </h3>
                     <div class="pull-right" id="sectionDish">
                         <a data-toggle="modal" data-menu-id = {{ menu.id }} href="#sectionModal" class="btn btn-xs btn-default add-section"><i class="fa fa-list-ul fa-fw"></i>Add Section</a>
-                        <a href="#" id="item" data-lookup-url = {% url 'menu_dish_lookup_name' %} data-menu-section={{ section.id }} class="editable btn btn-xs btn-default add-dish" data-type="text" data-pk="1" data-url="{% url 'menu_create_dish' %}" data-title="Edit item">
+
+                        <!-- Add dish -->
+
+                        <a data-toggle="modal" href="#dishModal" data-lookup-url = {% url 'menu_dish_lookup_name' %} data-menu-section-id ={{ section.id }} class="btn btn-xs btn-default add-dish" data-type="text" data-pk="1" data-url="{% url 'menu_create_dish' %}" >
                             <i class="fa fa-list-ul fa-fw"></i>Add Dish
                         </a>
+                        <!--<a href="#" id="item" data-lookup-url = {% url 'menu_dish_lookup_name' %} data-menu-section={{ section.id }} class="editable btn btn-xs btn-default add-dish" data-type="text" data-pk="1" data-url="{% url 'menu_create_dish' %}" data-title="Edit item">
+                            <i class="fa fa-list-ul fa-fw"></i>Add Dish
+                        </a>-->
                     </div>
                 </div>
                 <p id="item" class="editable" data-type="textarea" data-pk="1" data-url="/post" data-title="Edit item">Choose from our amazing selection of super delicious, locally sourced, fresh, season menu during lunch hours. </p>
@@ -369,6 +375,7 @@ ul.todo-list li.placeholder:before {
 </div>
 
 {% endfor %}
+{% include 'menu/partials/_add_dish_modal.html' %}
 {% include 'menu/partials/_add_section_modal.html' %}
 {% include 'menu/partials/_add_menu_modal.html' %}
 {% endblock %}

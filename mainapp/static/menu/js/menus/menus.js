@@ -33,14 +33,14 @@
             return false;
         });
 
-        // dynamically add attribute to the inline form and its elements
+       /* // dynamically add attribute to the inline form and its elements
 
          $(".add-dish").on('click' , function(){
             $("#sectionDish form").attr('id', 'addDishForm');
             $("#sectionDish form input").attr('name', 'name');
             $("#sectionDish form button.editable-submit").attr('type', 'button');
             $("#sectionDish form").attr('data-menu-section', $(this).data('menu-section'));
-        });
+        });*/
 
 
 
@@ -48,6 +48,14 @@
 
         $(".add-section").on('click' , function(){
             $("#add_section_form #menuId").attr('value', $(this).data('menu-id'));
+        });
+
+
+
+         // dynamically set the menu section id to the hidden menu-section input in add dish form
+
+        $(".add-dish").on('click' , function(){
+            $("#add_dish_form #menuSectionId").attr('value', $(this).data('menu-section-id'));
         });
 
         // Add Section form submit
@@ -104,38 +112,43 @@
 
         //submit dish add form
 
-        var dish_frm = $('#sectionDish form .editableform');
-        $(document).on('click', '#sectionDish .editable-submit', function(){
-                data = {'name' : $('#sectionDish form input').val() , 'menu_section' : $(this).parents('form').data('menu-section')};
-                $.ajax({
-                    type: 'post',
-                    url: $('#sectionDish #item').data('url'),
-                    data: data,
-                    success: function( data, textStatus, jQxhr ){
-                       alert('Dish successfully added !')
-                       $('#sectionDish .editable-cancel').trigger('click');
-
-                    },
-                     error: function( jqXhr, textStatus, errorThrown ){
-                        console.log( errorThrown );
+        var dish_frm = $('#add_dish_form');
+        $(document).on("submit","#add_dish_form",function (e) {
+            e.preventDefault();
+            $.ajax({
+                type: $(this).attr('method'),
+                url: $(this).attr('action'),
+                data: $(this).serialize(),
+                dataType: 'json',
+                success: function( data, textStatus, jQxhr ){
+                    if (data.status == true ){
+                        $('.modal-header .close').trigger('click');
+                       // document.location = document.location;
+                        $('.has-success label').text('Dish successfully added');
+                        $('.has-success').show();
                     }
-                });
-                return false;
 
-         });
+                },
+                 error: function( jqXhr, textStatus, errorThrown ){
+                    console.log( errorThrown );
+                }
+            });
+
+        });
 
 
-         //Autocomplete dish input
 
-         $(document).on("keydown.autocomplete",'#sectionDish input[name="name"]',function(e){
+             //Autocomplete dish input
+
+         $(document).on("keydown.autocomplete",'#dishName',function(e){
             $(this).autocomplete({
                 source: function( request, response ) {
                     $.ajax({
                         dataType: "json",
                         type : 'Get',
-                        url: $("#sectionDish #item").data('lookup-url') +'?q='+ $( "#sectionDish input" ).val() ,
+                        url: $("#dishName").data('lookup-url') +'?q='+ $( "#dishName" ).val() ,
                         success: function(data) {
-                          $('input#menuEstablishment').removeClass('ui-autocomplete-loading');
+                          $('input#dishName').removeClass('ui-autocomplete-loading');
                           response( $.map( data.objs, function( item ) {
                             //console.log(data.name);
                             return {
@@ -151,7 +164,7 @@
                     });
                   },
                  minLength: 3,
-                 appendTo : '#sectionDish',
+                 appendTo : '#show-suggestions',
 
             })
 

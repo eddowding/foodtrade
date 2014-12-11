@@ -1,0 +1,37 @@
+<div id="dishModal" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h2 class="modal-title">Add Dish</h2>
+            </div>
+            <div class="modal-body">
+                <form method="post" role="form" id="add_dish_form" action="{% url 'menu_create_dish' %}">
+                    {% csrf_token %}
+                    <div class="box-body">
+                        <div class="form-group" id="show-suggestions">
+                            <label for="dishName">Name</label>
+                            <input name="name"  data-lookup-url="{% url 'menu_dish_lookup_name' %}" class="form-control" id="dishName" placeholder="Enter Dish Name" type="text">
+                        </div>
+                        <div class="form-group">
+                            <label for="dishPrice">Price</label>
+                            <input name="price"  class="form-control" id="dishPrice" placeholder="Enter Dish Price" type="text">
+                        </div>
+                        <div class="form-group">
+                            <label for="dishDescription">Description</label>
+                            <input name="description"  class="form-control" id="dishDescription" placeholder="Enter Dish Description" type="text">
+                        </div>
+                        <div class="form-group" style="display:none">
+                            <label for="menuSectionName">Menu Section</label>
+                            <input name="menu_section" class="form-control" id="menuSectionId" placeholder="Enter menu section Id" type="text" value="">
+                        </div>
+                    </div><!-- /.box-body -->
+
+                    <div class="box-footer">
+                        <button type="submit" class="btn btn-primary btn-submit-menu">Submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
