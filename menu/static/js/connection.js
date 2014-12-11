@@ -49,6 +49,8 @@ $(document).ready(function() {
             type: 'POST',
             dataType: 'JSON',
             success: function(data) {
+                $('#tab_1').html(data.obj.sellers);
+                $('#tab_2').html(data.obj.buyers);
                 $('.nav-tabs > li.active').removeClass('active');
                 $("#tab_" + $('input[name="connection-type"]:checked').val()).addClass('active');
                 $('#tab_' + $('input[name="connection-type"]:checked').val() + '-tab').parent().addClass('active');
