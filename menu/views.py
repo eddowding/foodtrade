@@ -83,16 +83,15 @@ def establishment_lookup_name(request):
 
 @login_required(login_url=reverse_lazy('menu-login'))
 def create_menu(request):
-    if request.method == 'POST':
-        establishment = request.POST.get('establishment')
-        name = request.POST.get('name')
-        try:
-            Establishment.objects.filter(pk=ObjectId(establishment)).update(set__user=request.user)
-            Menu.objects.create(establishment=ObjectId(establishment), name=name, added_on=datetime.now())
-        except InvalidId:
-            establishment = Establishment.objects.create(user=request.user, BusinessName=establishment, added_on=datetime.now())
-            Menu.objects.create(establishment=establishment.pk, name=name, added_on=datetime.now())
-        return HttpResponse(json.dumps({'status': True}))
+    establishment = request.POST.get('establishment')
+    name = request.POST.get('name')
+    try:
+        Establishment.objects.filter(pk=ObjectId(establishment)).update(set__user=request.user)
+        menu = Menu.objects.create(establishment=ObjectId(establishment), name=name, added_on=datetime.now())
+    except InvalidId:
+        establishment = Establishment.objects.create(user=request.user, BusinessName=establishment, added_on=datetime.now())
+        menu = Menu.objects.create(establishment=establishment.pk, name=name, added_on=datetime.now())
+    return HttpResponse(json.dumps({'status': True, 'obj': dict(menu.to_mongo())}))
 
 
 @login_required(login_url=reverse_lazy('menu-login'))
@@ -100,9 +99,8 @@ def create_menu_section(request):
     insert_dict = deepcopy(request.POST.dict())
     insert_dict['menu'] = ObjectId(insert_dict['menu'])
     insert_dict['added_on'] = datetime.now()
-    print insert_dict
-    MenuSection.objects.create(**insert_dict)
-    return HttpResponse(json.dumps({'status': True}))
+    menu_section = MenuSection.objects.create(**insert_dict)
+    return HttpResponse(json.dumps({'status': True, 'obj': dict(menu_section.to_mongo())}))
 
 
 @login_required(login_url=reverse_lazy('menu-login'))
@@ -123,8 +121,8 @@ def create_dish(request):
     insert_dict = deepcopy(request.POST.dict())
     insert_dict['menu_section'] = ObjectId(insert_dict['menu_section'])
     insert_dict['added_on'] = datetime.now()
-    Dish.objects.create(**insert_dict)
-    return HttpResponse(json.dumps({'status': True}))
+    dish = Dish.objects.create(**insert_dict)
+    return HttpResponse(json.dumps({'status': True, 'obj': dict(dish.to_mongo())}))
 
 
 @login_required(login_url=reverse_lazy('menu-login'))
