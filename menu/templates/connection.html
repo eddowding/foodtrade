@@ -1,6 +1,9 @@
 {% extends 'menu_base.html' %}
 {% load staticfiles %}
 
+{% block extra_style %}
+<link href="{% static "css/connection.css" %}" rel="stylesheet" type="text/css" />
+{% endblock extra_style %}
 
 {% block extra_js %}
 <script src="{% static 'typeahead.js/dist/typeahead.bundle.min.js' %}"></script>
