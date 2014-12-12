@@ -6,12 +6,14 @@
                 <h2 class="modal-title">Add Dish</h2>
             </div>
             <div class="modal-body">
-                <form method="post" role="form" id="add_dish_form" action="{% url 'menu_create_dish' %}">
-                    {% csrf_token %}
+                <form>
                     <div class="box-body">
-                        <div class="form-group" id="show-suggestions">
-                            <label for="dishName">Name</label>
-                            <input name="name"  data-lookup-url="{% url 'menu_dish_lookup_name' %}" class="form-control" id="dishName" placeholder="Enter Dish Name" type="text">
+                        <div class="form-group">
+                            <label>Name</label>
+                            <input id="name" placeholder="Enter Dish Name" type="text" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <input name="name" type="hidden">
                         </div>
                         <div class="form-group">
                             <label for="dishPrice">Price</label>
@@ -21,14 +23,13 @@
                             <label for="dishDescription">Description</label>
                             <input name="description"  class="form-control" id="dishDescription" placeholder="Enter Dish Description" type="text">
                         </div>
-                        <div class="form-group" style="display:none">
-                            <label for="menuSectionName">Menu Section</label>
-                            <input name="menu_section" class="form-control" id="menuSectionId" placeholder="Enter menu section Id" type="text" value="">
+                        <div class="form-group">
+                            <input name="menu_section" class="form-control" type="hidden" value="">
                         </div>
                     </div><!-- /.box-body -->
 
                     <div class="box-footer">
-                        <button type="submit" class="btn btn-primary btn-submit-menu">Submit</button>
+                        <button type="button" class="btn btn-primary btn-submit-menu" data-dismiss="modal">Submit</button>
                     </div>
                 </form>
             </div>

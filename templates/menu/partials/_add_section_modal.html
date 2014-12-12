@@ -6,21 +6,20 @@
                 <h2 class="modal-title">Add section</h2>
             </div>
             <div class="modal-body">
-                <form method="post" role="form" id="add_section_form" action="{% url 'menu_create_menu_section' %}">
+                <form>
                     {% csrf_token %}
                     <div class="box-body">
                         <div class="form-group">
-                            <label for="sectionName">Name</label>
-                            <input name="name"  class="form-control" id="sectionName" placeholder="Enter Section Name" type="text">
+                            <label>Name</label>
+                            <input name="name"  class="form-control" placeholder="Enter Section Name" type="text">
                         </div>
-                        <div class="form-group" style="display:none">
-                            <label for="menuName">Menu</label>
-                            <input name="menu" class="form-control" id="menuId" placeholder="Enter menu Id" type="text" value="">
+                        <div class="form-group">
+                            <input name="menu" class="form-control" type="hidden" value="">
                         </div>
                     </div><!-- /.box-body -->
 
                     <div class="box-footer">
-                        <button type="submit" class="btn btn-primary btn-submit-menu">Submit</button>
+                        <button type="button" class="btn btn-primary btn-submit-menu" data-dismiss="modal">Submit</button>
                     </div>
                 </form>
             </div>

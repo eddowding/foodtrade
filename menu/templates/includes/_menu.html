@@ -42,7 +42,7 @@
                     <div class="pull-right" id="sectionDish">
                         <!-- Add dish -->
 
-                        <a data-toggle="modal" href="#dishModal" data-lookup-url = {% url 'menu_dish_lookup_name' %} data-menu-section-id ={{ section.id }} class="btn btn-xs btn-default add-dish" data-type="text" data-pk="1" data-url="{% url 'menu_create_dish' %}" >
+                        <a data-toggle="modal" href="#dishModal" data-menu-section-id ={{ section.id }} class="btn btn-xs btn-default add-dish" data-type="text">
                             <i class="fa fa-list-ul fa-fw"></i>Add Dish
                         </a>
                         <!--<a href="#" id="item" data-lookup-url = {% url 'menu_dish_lookup_name' %} data-menu-section={{ section.id }} class="editable btn btn-xs btn-default add-dish" data-type="text" data-pk="1" data-url="{% url 'menu_create_dish' %}" data-title="Edit item">
@@ -50,286 +50,77 @@
                         </a>-->
                     </div>
                 </div>
-                <p id="item" class="editable" data-type="textarea" data-pk="1" data-url="/post" data-title="Edit item">Choose from our amazing selection of super delicious, locally sourced, fresh, season menu during lunch hours. </p>
-
-
-
-            <!--    <ul class="example-ol">
-              <li>
-                First
-                <ul></ul>
-              </li>
-              <li>
-                Second
-                <ul><li class="">First</li></ul>
-              </li>
-              <li>
-                Third
-                <ul>
-
-                  <li class="">First</li><li>Second</li>
-                  <li>
-                    Third
-                    <ul>
-
-                      <li>Second</li>
-                    </ul>
-                    <ul>
-                      <li>First</li>
-                      <li>Second</li>
-                    </ul>
-                  </li>
-                </ul>
-              </li>
-              <li>Fourth</li>
-              <li>Fifth</li>
-              <li>Sixth</li>
-            </ul>
--->
-
-
-
-
-                <ul class="my-tree">
-                    {% for dish in section.get_section_dishes %}
-                    <li>
+                {% for dish in section.get_section_dishes %}
                         <span class="handle">
                             <i class="fa fa-ellipsis-v"></i>
                             <i class="fa fa-ellipsis-v"></i>
                         </span>
-                        <a href="#" id="item" class="editable" data-type="text" data-pk="1" data-url="/post" data-title="Edit item">{{ dish.name }}</a> &pound;{{ dish.price }}
+                        <span>{{ dish.name }}&nbsp;&pound;{{ dish.price }}</span>
 
-                        <!--
                         <div class="pull-right">
-                            <span class="meat flagged" data-toggle="tooltip" title="Chicken">M</span>
-                        </div>-->
+                            {% if dish.is_allergen %}
+                            <span class="allergen flagged" data-toggle="tooltip" title="tss" data-original-title="Milk">A</span>
+                            {% endif %}
+                            {% if dish.is_meat %}
+                                <span class="meat flagged active" data-toggle="tooltip" title="Chicken">M</span>
+                            {% endif %}
+                            {% if dish.is_gluten %}
+                                <span class="gluten flagged" data-toggle="tooltip" title="Gluten">G</span>
+                            {% endif %}
+                        </div>
 
                         <div class="tools" style="position: absolute; right:0;">
                             <a data-toggle="modal" href="#ingredientsModal" data-dish-id = {{ dish.id }} class="btn btn-xs btn-default add-ingredients"><i class="fa fa-cutlery fa-fw"></i>  Add ingredient</a>
                         </div>
-                        <p href="#" id="item" class="editable" data-type="textarea" data-pk="1" data-url="/post" data-title="Edit item">The vegetarian platter is great to share, and one of our most consistently popular items. It's super, stuff, seasonally adapted, and all 100% locally fresh!</p>
-
-                        {% for children in dish.get_ingredient_tree %}
-                        <ul>
-                            <li>
+                        <p href="#" id="item" class="editable" data-type="textarea" data-pk="1" data-url="/post" data-title="Edit item">{{dish.description}}</p>
+                    <ul class="ingredient-tree">
+                        {% for parent in dish.get_ingredient_tree %}
+                        <li data-dish-id="{{dish.pk}}" data-ingredient-name="{{parent.name}}">
                                 <span class="handle">
-                                <i class="fa fa-ellipsis-v"></i>
-                                <i class="fa fa-ellipsis-v"></i>
+                                    <i class="fa fa-ellipsis-v"></i>
+                                    <i class="fa fa-ellipsis-v"></i>
                                 </span>
-
-                                <a href="#" id="item" class="editable" data-type="text" data-pk="1" data-url="/post" data-title="Edit item">Grilled Halloumi</a>
+                                <span>{{ parent.name }}</span>
 
                                 <div class="pull-right">
+                                    {% if parent.is_allergen %}
                                     <span class="allergen flagged" data-toggle="tooltip" title="tss" data-original-title="Milk">A</span>
+                                    {% endif %}
+                                    {% if parent.is_meat %}
+                                        <span class="meat flagged active" data-toggle="tooltip" title="Chicken">M</span>
+                                    {% endif %}
+                                    {% if parent.is_gluten %}
+                                        <span class="gluten flagged" data-toggle="tooltip" title="Gluten">G</span>
+                                    {% endif %}
                                 </div>
-
-                                <div class="tools">
-                                    <i class="fa fa-cutlery"></i>
-
-                                    <i class="fa fa-trash-o"></i>
-                                </div>
-                            </li>
-                        </ul>
-                        {% endfor %}
-
-                    </li>
-
-                    {% endfor %}
-
-
-
-
-                    <!--<li>
-                        <span class="handle">
-                                <i class="fa fa-ellipsis-v"></i>
-                                <i class="fa fa-ellipsis-v"></i>
-                            </span>
-
-                        <a href="#" id="item" class="editable" data-type="text" data-pk="1" data-url="/post" data-title="Edit item">Vegetarian Platter</a> &pound;12.5
-
-                        <div class="pull-right">
-                            <span class="allergen flagged" data-toggle="tooltip" title="tss" data-original-title="Milk">A</span>
-                            <span class="meat flagged" data-toggle="tooltip" title="Chicken">M</span>
-                        </div>
-                        <div class="tools" style="position: absolute; right:0;">
-                            <a class="btn btn-xs btn-default"><i class="fa fa-cutlery fa-fw"></i>  Add ingredient</a>
-                            <a class="btn btn-xs btn-default"><i class="fa fa-trash-o fa-fw"></i> Delete</a>
-                        </div>
-
-                        <p href="#" id="item" class="editable" data-type="textarea" data-pk="1" data-url="/post" data-title="Edit item">The vegetarian platter is great to share, and one of our most consistently popular items. It's super, stuff, seasonally adapted, and all 100% locally fresh!</p>
-
-
-                        <ul>
-                            <li>
-                                <span class="handle">
-                                <i class="fa fa-ellipsis-v"></i>
-                                <i class="fa fa-ellipsis-v"></i>
-                                </span>
-
-                                <a href="#" id="item" class="editable" data-type="text" data-pk="1" data-url="/post" data-title="Edit item">Grilled Halloumi</a>
-
-                                <div class="pull-right">
-                                    <span class="allergen flagged" data-toggle="tooltip" title="tss" data-original-title="Milk">A</span>
-                                </div>
-
-                                <div class="tools">
-                                    <i class="fa fa-cutlery"></i>
-
-                                    <i class="fa fa-trash-o"></i>
-                                </div>
-                            </li>
-
-                            <li>
-                                <span class="handle">
-                                <i class="fa fa-ellipsis-v"></i>
-                                <i class="fa fa-ellipsis-v"></i>
-                                </span>
-
-                                <a href="#" id="item" class="editable" data-type="text" data-pk="1" data-url="/post" data-title="Edit item">Spiced cous-cous</a>
-
-                                <div class="pull-right">
-                                    <span class="allergen flagged" data-toggle="tooltip" title="tss" data-original-title="Milk">A</span>
-                                    <span class="gluten flagged" data-toggle="tooltip" title="Gluten">G</span>
-                                </div>
-
-                                <div class="tools">
-                                    <i class="fa fa-cutlery"></i>
-
-                                    <i class="fa fa-trash-o"></i>
-                                </div>
-
                                 <ul>
-                                    <li>
+                                    {% for child in parent.children %}
+                                    <li data-dish-id="{{dish.pk}}" data-ingredient-name="{{child.name}}">
                                         <span class="handle">
-                                        <i class="fa fa-ellipsis-v"></i>
-                                        <i class="fa fa-ellipsis-v"></i>
+                                            <i class="fa fa-ellipsis-v"></i>
+                                            <i class="fa fa-ellipsis-v"></i>
                                         </span>
-
-                                        <a href="#" id="item" class="editable" data-type="text" data-pk="1" data-url="/post" data-title="Edit item">Paprika</a>
-
-                                        <div class="tools">
-                                            <i class="fa fa-cutlery"></i>
-
-                                            <i class="fa fa-trash-o"></i>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <span class="handle">
-                                        <i class="fa fa-ellipsis-v"></i>
-                                        <i class="fa fa-ellipsis-v"></i>
-                                        </span>
-
-                                        <a href="#" id="item" class="editable" data-type="text" data-pk="1" data-url="/post" data-title="Edit item">Wheat cous-cous</a>
-                                        <span class="small"><em>Wheat</em></span>
+                                        <span>{{ child.name }}</span>
 
                                         <div class="pull-right">
+                                            {% if child.is_allergen %}
                                             <span class="allergen flagged" data-toggle="tooltip" title="tss" data-original-title="Milk">A</span>
-                                            <span class="gluten flagged" data-toggle="tooltip" title="Gluten">G</span>
-                                        </div>
-
-                                        <div class="tools">
-                                            <i class="fa fa-cutlery"></i>
-
-                                            <i class="fa fa-trash-o"></i>
+                                            {% endif %}
+                                            {% if child.is_meat %}
+                                                <span class="meat flagged active" data-toggle="tooltip" title="Chicken">M</span>
+                                            {% endif %}
+                                            {% if child.is_gluten %}
+                                                <span class="gluten flagged" data-toggle="tooltip" title="Gluten">G</span>
+                                            {% endif %}
                                         </div>
                                     </li>
-                                    <li>
-                                        <span class="handle">
-                                        <i class="fa fa-ellipsis-v"></i>
-                                        <i class="fa fa-ellipsis-v"></i>
-                                        </span>
-
-                                        <a href="#" id="item" class="editable" data-type="text" data-pk="1" data-url="/post" data-title="Edit item">All-spice</a>
-
-                                        <div class="pull-right">
-                                            <span class="allergen flagged" data-toggle="tooltip" title="tss" data-original-title="Milk">A</span>
-                                        </div>
-
-                                        <div class="tools">
-                                            <i class="fa fa-cutlery"></i>
-
-                                            <i class="fa fa-trash-o"></i>
-                                        </div>
-                                    </li>
+                                    {% endfor %}
                                 </ul>
                             </li>
-                            <li>
-                                <span class="handle">
-                                <i class="fa fa-ellipsis-v"></i>
-                                <i class="fa fa-ellipsis-v"></i>
-                                </span>
+                        {% endfor %}
+                    </ul>
+                {% endfor %}
 
-                                <a href="#" id="item" class="editable" data-type="text" data-pk="1" data-url="/post" data-title="Edit item">Falafels</a>
-
-                                <div class="pull-right">
-                                    <span class="allergen flagged" data-toggle="tooltip" title="tss" data-original-title="Milk">A</span>
-                                    <span class="gluten flagged" data-toggle="tooltip" title="Gluten">G</span>
-                                </div>
-
-                                <div class="tools">
-                                    <i class="fa fa-cutlery"></i>
-
-                                    <i class="fa fa-trash-o"></i>
-                                </div>
-                            </li>
-                            <li>
-                                <span class="handle">
-                                <i class="fa fa-ellipsis-v"></i>
-                                <i class="fa fa-ellipsis-v"></i>
-                                </span>
-
-                                <a href="#" id="item" class="editable" data-type="text" data-pk="1" data-url="/post" data-title="Edit item">Marinated Feta</a>
-
-                                <div class="pull-right">
-                                    <span class="allergen flagged" data-toggle="tooltip" title="tss" data-original-title="Milk">A</span>
-                                </div>
-
-                                <div class="tools">
-                                    <i class="fa fa-cutlery"></i>
-
-                                    <i class="fa fa-trash-o"></i>
-                                </div>
-                            </li>
-                            <li>
-                                <span class="handle">
-                                <i class="fa fa-ellipsis-v"></i>
-                                <i class="fa fa-ellipsis-v"></i>
-                                </span>
-
-                                <a href="#" id="item" class="editable" data-type="text" data-pk="1" data-url="/post" data-title="Edit item">Olives</a>
-
-                                <div class="pull-right">
-                                </div>
-
-                                <div class="tools">
-                                    <i class="fa fa-cutlery"></i>
-
-                                    <i class="fa fa-trash-o"></i>
-                                </div>
-                            </li>
-                            <li>
-                                <span class="handle">
-                                <i class="fa fa-ellipsis-v"></i>
-                                <i class="fa fa-ellipsis-v"></i>
-                                </span>
-
-                                <a href="#" id="item" class="editable" data-type="text" data-pk="1" data-url="/post" data-title="Edit item">Salsa</a>
-
-                                <div class="pull-right">
-                                    <span class="allergen flagged" data-toggle="tooltip" title="tss" data-original-title="Milk">A</span>
-                                </div>
-
-                                <div class="tools">
-                                    <i class="fa fa-cutlery"></i>
-
-                                    <i class="fa fa-trash-o"></i>
-                                </div>
-                            </li>
-
-                        </ul>
-                    </li>-->
-
-                </ul>
                 </div>
                 {% endfor %}
                 </div>
