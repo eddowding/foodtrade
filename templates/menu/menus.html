@@ -52,6 +52,7 @@ ul.todo-list li.placeholder:before {
     <script>
         var establishmentLookupNameUrl = '{% url "menu_establishment_lookup_name" %}';
         var createMenuUrl = '{% url "menu_create_menu" %}';
+        var createSectionUrl = "{% url 'menu_create_menu_section' %}";
     </script>
 {% endblock %}
 {% block body_class %}skin-black{% endblock %}

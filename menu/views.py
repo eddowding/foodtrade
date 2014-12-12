@@ -106,7 +106,7 @@ def create_menu_section(request):
     insert_dict['menu'] = ObjectId(insert_dict['menu'])
     insert_dict['added_on'] = datetime.now()
     menu_section = MenuSection.objects.create(**insert_dict)
-    return HttpResponse(json.dumps({'status': True, 'obj': menu_section.to_mongo()}, default=json_util.default))
+    return HttpResponse(json.dumps({'status': True, 'html': menu_render(request.user)}, default=json_util.default))
 
 
 @login_required(login_url=reverse_lazy('menu-login'))
