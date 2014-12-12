@@ -162,42 +162,44 @@ $(document).ready(function() {
             dataType: 'JSON',
             success: function(data) {
                 $('.menus').html(data.html);
-                $('.ingredient-tree').sortable();
+                sortableFn();
                 $('#ingredientsModal input[name="name"]').val('');
                 $('#ingredientsModal input[name="dish"]').val('');
             }
         });
     });
 
-    $('.ingredient-tree').sortable({
-        onDrop: function($item, container, _super, event) {
-            var data = {
-                dish: $item.attr('data-dish-id'),
-                name: $item.attr('data-ingredient-name'),
-                parent: null,
-                order: $item.prevAll().length + 1
-            };
-            if ($item.parents('li').attr('data-ingredient-name') !== undefined) {
-                data.parent = $item.parents('li').attr('data-ingredient-name');
-            }
-            $.ajax({
-                url: updateIngredientUrl,
-                data: data,
-                type: 'POST',
-                dataType: 'JSON',
-                success: function(data) {
-                    $('.menus').html(data.html);
+    var sortableFn = function() {
+        $('.ingredient-tree').sortable({
+            onDrop: function($item, container, _super, event) {
+                var data = {
+                    dish: $item.attr('data-dish-id'),
+                    name: $item.attr('data-ingredient-name'),
+                    parent: null,
+                    order: $item.prevAll().length + 1
+                };
+                if ($item.parents('li').attr('data-ingredient-name') !== undefined) {
+                    data.parent = $item.parents('li').attr('data-ingredient-name');
                 }
-            });
+                $.ajax({
+                    url: updateIngredientUrl,
+                    data: data,
+                    type: 'POST',
+                    dataType: 'JSON',
+                    success: function(data) {}
+                });
 
-            _super($item, container);
-        },
-        isValidTarget: function($item, container) {
-            if ($item.is('.child-li')) {
-                return false;
-            } else {
-                return true;
+                _super($item, container);
+            },
+            isValidTarget: function($item, container) {
+                if ($item.is('.child-li')) {
+                    return false;
+                } else {
+                    return true;
+                }
             }
-        }
-    });
+        });
+    };
+
+    sortableFn();
 });
