@@ -77,4 +77,70 @@ $(document).ready(function() {
             }
         });
     });
+
+
+    //dish section
+    var dishes = new Bloodhound({
+        remote: {
+            url: dishLookupNameUrl + '?q=%QUERY',
+            filter: function(dishes) {
+                return dishes.objs;
+            }
+
+        },
+        datumTokenizer: function(dish) {
+            return Bloodhound.tokenizers.whitespace(dish.name);
+        },
+        queryTokenizer: Bloodhound.tokenizers.whitespace
+    });
+
+    dishes.initialize();
+
+    $('#dishModal input#name').typeahead(null, {
+        displayKey: 'name',
+        name: 'dish',
+        source: dishes.ttAdapter()
+    });
+
+    var dishSelected = false;
+
+    $('#dishModal input#name').on('typeahead:selected', function(ev, dish) {
+        $('#dishModal input[name="name"]').val(dish.value);
+        dishSelected = true;
+    });
+
+    $(document).delegate('.add-dish', 'click', function(ev) {
+        $('#dishModal input[name="menu_section"]').val($(this).attr('data-menu-section-id'));
+    });
+
+    $('#dishModal button.btn').click(function(ev) {
+        var data = {
+            menu_section: $('#dishModal input[name="menu_section"]').val(),
+            price: $('#dishModal input[name="price"]').val(),
+            description: $('#dishModal input[name="description"]').val()
+        };
+
+        if (dishSelected) {
+            data.name = $('#dishModal input[name="name"]').val('');
+        } else {
+            data.name = $('#dishModal input#name').val('');
+        }
+
+        $.ajax({
+            url: createDishUrl,
+            data: data,
+            type: 'POST',
+            dataType: 'JSON',
+            success: function(data) {
+                $('.menus').html(data.html);
+                $('#dishModal input[name="menu_section"]').val('');
+                $('#dishModal input[name="price"]').val('');
+                $('#dishModal input[name="description"]').val('');
+                $('#dishModal input[name="name"]').val('');
+                $('#dishModal input#name').val('');
+                dishSelected = false;
+            }
+        });
+    });
+
 });

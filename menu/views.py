@@ -114,7 +114,7 @@ def dish_lookup_name(request):
     query = {'name__icontains': request.GET.get('q')}
     ret_list = []
     for dish in Dish.objects.filter(**query):
-        tmp_dict = {'name': dish.name}
+        tmp_dict = {'name': dish.name, 'value': str(dish.pk)}
         tmp_dict['ingredients'] = dish.get_ingredient_tree()
         ret_list.append(tmp_dict)
     return HttpResponse(json.dumps({'status': True, 'objs': ret_list}))
@@ -125,8 +125,8 @@ def create_dish(request):
     insert_dict = deepcopy(request.POST.dict())
     insert_dict['menu_section'] = ObjectId(insert_dict['menu_section'])
     insert_dict['added_on'] = datetime.now()
-    dish = Dish.objects.create(**insert_dict)
-    return HttpResponse(json.dumps({'status': True, 'obj': dish.to_mongo()}, default=json_util.default))
+    Dish.objects.create(**insert_dict)
+    return HttpResponse(json.dumps({'status': True, 'html': menu_render(request.user)}, default=json_util.default))
 
 
 @login_required(login_url=reverse_lazy('menu-login'))
