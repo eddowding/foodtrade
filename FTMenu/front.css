@@ -133,8 +133,8 @@ a:focus {
   padding: 0px;
 }
 #new_theme h2 {
-  font-size: 80px;
-  line-height: 70px;
+  font-size: 50px;
+  line-height: 50px;
   font-weight: 800;
   text-transform: uppercase;
   margin: -10px 0 25px;
@@ -229,6 +229,29 @@ a:focus {
 }
 .benefit_image i {
   font-size: 56px;
+}
+.benefit_image .inline {
+  width: 100px;
+  height: 100px;
+  line-height: auto;
+}
+.benefit_image .inline i {
+  font-size: 2px;
+}
+.benefits_list h3 {
+  font-weight: bold;
+  text-shadow: 0 0 6px #000;
+}
+.benefits_list p {
+  margin: 0;
+  padding: 0;
+  font-weight: 400;
+  text-shadow: 0 0 6px #000;
+}
+.benefits_list i {
+  position: relative;
+  top: 5px;
+  text-shadow: 0 0 10px #fff;
 }
 /*=============================== BENEFITS END ================================*/
 /*=============================== TEXT BEGIN ================================*/
