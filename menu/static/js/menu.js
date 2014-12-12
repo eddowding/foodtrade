@@ -121,9 +121,9 @@ $(document).ready(function() {
         };
 
         if (dishSelected) {
-            data.name = $('#dishModal input[name="name"]').val('');
+            data.name = $('#dishModal input[name="name"]').val();
         } else {
-            data.name = $('#dishModal input#name').val('');
+            data.name = $('#dishModal input#name').val();
         }
 
         $.ajax({

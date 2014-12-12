@@ -125,6 +125,12 @@ def create_dish(request):
     insert_dict = deepcopy(request.POST.dict())
     insert_dict['menu_section'] = ObjectId(insert_dict['menu_section'])
     insert_dict['added_on'] = datetime.now()
+    try:
+        dish = Dish.objects.get(pk=ObjectId(insert_dict['name']))
+        insert_dict['name'] = dish.name
+        insert_dict['ingredients'] = dish.ingredients
+    except InvalidId:
+        pass
     Dish.objects.create(**insert_dict)
     return HttpResponse(json.dumps({'status': True, 'html': menu_render(request.user)}, default=json_util.default))
 
