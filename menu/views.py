@@ -2,6 +2,7 @@ import json
 from datetime import datetime
 from copy import deepcopy
 from bson.objectid import ObjectId, InvalidId
+from bson import json_util
 from django.shortcuts import render
 from django.core.urlresolvers import reverse_lazy
 from django.http import HttpResponseRedirect, HttpResponse
@@ -19,7 +20,7 @@ Common views.
 def menu(request):
     ''' Get list of menus '''
     establishments = Establishment.objects.filter(user=request.user)
-    menus = Menu.objects.filter(establishment__in=establishments)
+    menus = Menu.objects.filter(establishment__in=establishments).order_by('-added_on')
     return render(request, 'menu/menus.html', {'menus' : menus})
 
 
@@ -75,24 +76,28 @@ def establishment_lookup_name(request):
     query = {'BusinessName__icontains': request.GET.get('q')}
     ret_list = []
     establishments = Establishment.objects.filter(**query)
-    if establishments:
-        for obj in establishments:
-            ret_list.append({'name': obj.BusinessName, 'value': str(obj.pk), 'type': 1})
+    for obj in establishments:
+        ret_list.append({'name': obj.BusinessName, 'value': str(obj.pk), 'type': 1})
     return HttpResponse(json.dumps({'status': True, 'objs': ret_list}))
+
+
+def menu_render(user):
+    establishments = Establishment.objects.filter(user=user)
+    menus = Menu.objects.filter(establishment__in=establishments).order_by('-added_on')
+    return render_to_string('includes/_menu.html', {'menus': menus})
 
 
 @login_required(login_url=reverse_lazy('menu-login'))
 def create_menu(request):
-    if request.method == 'POST':
-        establishment = request.POST.get('establishment')
-        name = request.POST.get('name')
-        try:
-            Establishment.objects.filter(pk=ObjectId(establishment)).update(set__user=request.user)
-            Menu.objects.create(establishment=ObjectId(establishment), name=name, added_on=datetime.now())
-        except InvalidId:
-            establishment = Establishment.objects.create(user=request.user, BusinessName=establishment, added_on=datetime.now())
-            Menu.objects.create(establishment=establishment.pk, name=name, added_on=datetime.now())
-        return HttpResponse(json.dumps({'status': True}))
+    establishment = request.POST.get('establishment')
+    name = request.POST.get('name')
+    try:
+        Establishment.objects.filter(pk=ObjectId(establishment)).update(set__user=request.user)
+        Menu.objects.create(establishment=ObjectId(establishment), name=name, added_on=datetime.now())
+    except InvalidId:
+        establishment = Establishment.objects.create(user=request.user, BusinessName=establishment, added_on=datetime.now())
+        Menu.objects.create(establishment=establishment.pk, name=name, added_on=datetime.now())
+    return HttpResponse(json.dumps({'status': True, 'html': menu_render(request.user)}, default=json_util.default))
 
 
 @login_required(login_url=reverse_lazy('menu-login'))
@@ -100,24 +105,18 @@ def create_menu_section(request):
     insert_dict = deepcopy(request.POST.dict())
     insert_dict['menu'] = ObjectId(insert_dict['menu'])
     insert_dict['added_on'] = datetime.now()
-    print insert_dict
-    MenuSection.objects.create(**insert_dict)
-    return HttpResponse(json.dumps({'status': True}))
+    menu_section = MenuSection.objects.create(**insert_dict)
+    return HttpResponse(json.dumps({'status': True, 'obj': menu_section.to_mongo()}, default=json_util.default))
 
 
 @login_required(login_url=reverse_lazy('menu-login'))
 def dish_lookup_name(request):
     query = {'name__icontains': request.GET.get('q')}
-    dishes = Dish.objects.filter(**query)
     ret_list = []
-    if dishes:
-        for dish in Dish.objects.filter(**query):
-            tmp_dict = {'name': dish.name}
-            tmp_list = []
-            for ingredient in dish.ingredients:
-                tmp_list.append(json.loads(ingredient.to_json()))
-            tmp_dict['ingredients'] = tmp_list
-            ret_list.append(tmp_dict)
+    for dish in Dish.objects.filter(**query):
+        tmp_dict = {'name': dish.name}
+        tmp_dict['ingredients'] = dish.get_ingredient_tree()
+        ret_list.append(tmp_dict)
     return HttpResponse(json.dumps({'status': True, 'objs': ret_list}))
 
 
@@ -126,10 +125,8 @@ def create_dish(request):
     insert_dict = deepcopy(request.POST.dict())
     insert_dict['menu_section'] = ObjectId(insert_dict['menu_section'])
     insert_dict['added_on'] = datetime.now()
-    insert_dict['price'] = 0.0
-    insert_dict['description'] = ''
-    Dish.objects.create(**insert_dict)
-    return HttpResponse(json.dumps({'status': True}))
+    dish = Dish.objects.create(**insert_dict)
+    return HttpResponse(json.dumps({'status': True, 'obj': dish.to_mongo()}, default=json_util.default))
 
 
 @login_required(login_url=reverse_lazy('menu-login'))
