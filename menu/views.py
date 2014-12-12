@@ -146,7 +146,7 @@ def create_ingredient(request):
     insert_dict['is_gluten'] = True if Gluten.objects.filter(name=insert_dict['name']).count() else False
     Dish.objects.filter(pk=ObjectId(dish)).update(set__is_allergen=insert_dict['is_allergen'], set__is_meat=insert_dict['is_meat'],
                                                   set__is_gluten=insert_dict['is_gluten'], push__ingredients=insert_dict)
-    return HttpResponse(json.dumps({'status': True, 'obj': insert_dict}))
+    return HttpResponse(json.dumps({'status': True, 'html': menu_render(request.user)}, default=json_util.default))
 
 
 @login_required(login_url=reverse_lazy('menu-login'))
@@ -167,7 +167,7 @@ def update_ingredient(request):
                                                             set__ingredients__S__is_allergen=insert_dict['is_allergen'],
                                                             set__ingredients__S__is_meat=insert_dict['is_meat'],
                                                             set__ingredients__S__is_gluten=insert_dict['is_gluten'])
-    return HttpResponse(json.dumps({'status': True, 'obj': insert_dict}))
+    return HttpResponse(json.dumps({'status': True, 'html': menu_render(request.user)}, default=json_util.default))
 
 
 """
