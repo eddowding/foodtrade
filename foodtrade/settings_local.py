@@ -101,5 +101,5 @@ SESSION_SERIALIZER = 'mongoengine.django.sessions.BSONSerializer'
 
 #bower settings
 BOWER_COMPONENTS_ROOT = PROJECT_ROOT
-BOWER_INSTALLED_APPS = ('typeahead.js#0.10.5', 'jquery#1.11.1')
+BOWER_INSTALLED_APPS = ('typeahead.js#0.10.5', 'jquery-sortable#0.9.12', 'jquery#1.11.1')
 
