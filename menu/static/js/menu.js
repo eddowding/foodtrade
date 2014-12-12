@@ -144,5 +144,27 @@ $(document).ready(function() {
     });
 
     //ingredient section
+    $(document).delegate('.add-ingredients', 'click', function(ev) {
+        $('#ingredientsModal input[name="dish"]').val($(this).attr('data-dish-id'));
+    });
 
+    $('#ingredientsModal button.btn').click(function(ev) {
+        var data = {
+            name: $('#ingredientsModal input[name="name"]').val(),
+            dish: $('#ingredientsModal input[name="dish"]').val(),
+            parent: null,
+            order: 1
+        };
+        $.ajax({
+            url: createIngredientUrl,
+            data: data,
+            type: 'POST',
+            dataType: 'JSON',
+            success: function(data) {
+                $('.menus').html(data.html);
+                $('#ingredientsModal input[name="name"]').val('');
+                $('#ingredientsModal input[name="dish"]').val('');
+            }
+        });
+    });
 });

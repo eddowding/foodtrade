@@ -73,7 +73,7 @@
                             <a data-toggle="modal" href="#ingredientsModal" data-dish-id = {{ dish.id }} class="btn btn-xs btn-default add-ingredients"><i class="fa fa-cutlery fa-fw"></i>  Add ingredient</a>
                         </div>
                         <p href="#" id="item" class="editable" data-type="textarea" data-pk="1" data-url="/post" data-title="Edit item">{{dish.description}}</p>
-
+                    {{dish.get_ingredient_tree}}
                 {% endfor %}
 
                 </div>
