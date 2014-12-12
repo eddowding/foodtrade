@@ -162,9 +162,35 @@ $(document).ready(function() {
             dataType: 'JSON',
             success: function(data) {
                 $('.menus').html(data.html);
+                $('.ingredient-tree').sortable();
                 $('#ingredientsModal input[name="name"]').val('');
                 $('#ingredientsModal input[name="dish"]').val('');
             }
         });
+    });
+
+    $('.ingredient-tree').sortable({
+        onDrop: function($item, container, _super, event) {
+            console.log('I am', $item.text().trim());
+            var data = {
+                dish: $item.attr('data-dish-id'),
+                name: $item.attr('data-ingredient-name'),
+                parent: null,
+                order: $item.prevAll().length + 1
+            };
+            if ($item.parents('li').attr('data-ingredient-name') !== undefined) {
+                data.parent = $item.parents('li').attr('data-ingredient-name');
+            }
+
+            console.log(data);
+            _super($item, container);
+        },
+        isValidTarget: function($item, container) {
+            if ($item.is('.child-li')) {
+                return false;
+            } else {
+                return true;
+            }
+        }
     });
 });
