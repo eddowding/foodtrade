@@ -58,9 +58,15 @@
                         <a href="#" id="item" class="editable" data-type="text" data-pk="1" data-url="/post" data-title="Edit item">{{ dish.name }}</a> &pound;{{ dish.price }}
 
                         <div class="pull-right">
+                            {% if dish.is_allergen %}
                             <span class="allergen flagged" data-toggle="tooltip" title="tss" data-original-title="Milk">A</span>
-                            <span class="meat flagged active" data-toggle="tooltip" title="Chicken">M</span>
-                            <span class="gluten flagged" data-toggle="tooltip" title="Gluten">G</span>
+                            {% endif %}
+                            {% if dish.is_meat %}
+                                <span class="meat flagged active" data-toggle="tooltip" title="Chicken">M</span>
+                            {% endif %}
+                            {% if dish.is_gluten %}
+                                <span class="gluten flagged" data-toggle="tooltip" title="Gluten">G</span>
+                            {% endif %}
                         </div>
 
                         <div class="tools" style="position: absolute; right:0;">
