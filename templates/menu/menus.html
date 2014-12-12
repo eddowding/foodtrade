@@ -67,9 +67,11 @@ ul.todo-list li.placeholder:before {
                 <h3 class="box-title">{{menu.name}}</h3>
                 <div class="box-tools pull-right">
                     <ul class="pagination pagination-sm inline">
+                        {%comment %}
                         <li>
                          <a data-toggle="modal" href="#menuModal" class="btn btn-xs btn-default"><i class="fa fa-list-ul fa-fw"></i>Add Menu item</a>
                         </li>
+                        {% endcomment %}
                         <li>
                             <a href="#"><i class="fa fa-fw fa-print"></i> Print preview</a>
                         </li>
@@ -95,8 +97,6 @@ ul.todo-list li.placeholder:before {
                         <a href="#" id="item" class="editable" data-type="text" data-pk="1" data-url="/post" data-title="Edit item">{{section.name}}</a>
                     </h3>
                     <div class="pull-right" id="sectionDish">
-                        <a data-toggle="modal" data-menu-id = {{ menu.id }} href="#sectionModal" class="btn btn-xs btn-default add-section"><i class="fa fa-list-ul fa-fw"></i>Add Section</a>
-
                         <!-- Add dish -->
 
                         <a data-toggle="modal" href="#dishModal" data-lookup-url = {% url 'menu_dish_lookup_name' %} data-menu-section-id ={{ section.id }} class="btn btn-xs btn-default add-dish" data-type="text" data-pk="1" data-url="{% url 'menu_create_dish' %}" >
@@ -163,7 +163,6 @@ ul.todo-list li.placeholder:before {
 
                         <div class="tools" style="position: absolute; right:0;">
                             <a data-toggle="modal" href="#ingredientsModal" data-dish-id = {{ dish.id }} class="btn btn-xs btn-default add-ingredients"><i class="fa fa-cutlery fa-fw"></i>  Add ingredient</a>
-                            <a class="btn btn-xs btn-default"><i class="fa fa-trash-o fa-fw"></i> Delete</a>
                         </div>
                         <p href="#" id="item" class="editable" data-type="textarea" data-pk="1" data-url="/post" data-title="Edit item">The vegetarian platter is great to share, and one of our most consistently popular items. It's super, stuff, seasonally adapted, and all 100% locally fresh!</p>
 
@@ -394,7 +393,6 @@ ul.todo-list li.placeholder:before {
             <!-- /.box-body -->
             <div class="box-footer clearfix no-border">
                 <button data-toggle="modal" data-menu-id = {{ menu.id }} href="#sectionModal" class="btn btn-default add-section"><i class="fa fa-th fa-fw"></i> Add Section</button>
-                <button data-toggle="modal" href="#menuModal" class="btn btn-default"><i class="fa fa-list-ul fa-fw"></i> Add Menu item</button>
             </div>
         </div>
         <!-- /.box -->
