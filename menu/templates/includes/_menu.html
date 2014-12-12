@@ -73,7 +73,52 @@
                             <a data-toggle="modal" href="#ingredientsModal" data-dish-id = {{ dish.id }} class="btn btn-xs btn-default add-ingredients"><i class="fa fa-cutlery fa-fw"></i>  Add ingredient</a>
                         </div>
                         <p href="#" id="item" class="editable" data-type="textarea" data-pk="1" data-url="/post" data-title="Edit item">{{dish.description}}</p>
-                    {{dish.get_ingredient_tree}}
+                    <ul class="ingredient-tree">
+                        {% for parent in dish.get_ingredient_tree %}
+                            <li>
+                                <span class="handle">
+                                    <i class="fa fa-ellipsis-v"></i>
+                                    <i class="fa fa-ellipsis-v"></i>
+                                </span>
+                                <span>{{ parent.name }}</span>
+
+                                <div class="pull-right">
+                                    {% if parent.is_allergen %}
+                                    <span class="allergen flagged" data-toggle="tooltip" title="tss" data-original-title="Milk">A</span>
+                                    {% endif %}
+                                    {% if parent.is_meat %}
+                                        <span class="meat flagged active" data-toggle="tooltip" title="Chicken">M</span>
+                                    {% endif %}
+                                    {% if parent.is_gluten %}
+                                        <span class="gluten flagged" data-toggle="tooltip" title="Gluten">G</span>
+                                    {% endif %}
+                                </div>
+                                <ul>
+                                    {% for child in parent.children %}
+                                    <li>
+                                        <span class="handle">
+                                            <i class="fa fa-ellipsis-v"></i>
+                                            <i class="fa fa-ellipsis-v"></i>
+                                        </span>
+                                        <span>{{ child.name }}</span>
+
+                                        <div class="pull-right">
+                                            {% if child.is_allergen %}
+                                            <span class="allergen flagged" data-toggle="tooltip" title="tss" data-original-title="Milk">A</span>
+                                            {% endif %}
+                                            {% if child.is_meat %}
+                                                <span class="meat flagged active" data-toggle="tooltip" title="Chicken">M</span>
+                                            {% endif %}
+                                            {% if child.is_gluten %}
+                                                <span class="gluten flagged" data-toggle="tooltip" title="Gluten">G</span>
+                                            {% endif %}
+                                        </div>
+                                    </li>
+                                    {% endfor %}
+                                </ul>
+                            </li>
+                        {% endfor %}
+                    </ul>
                 {% endfor %}
 
                 </div>
