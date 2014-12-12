@@ -81,17 +81,23 @@ def establishment_lookup_name(request):
     return HttpResponse(json.dumps({'status': True, 'objs': ret_list}))
 
 
+def menu_render(user):
+    establishments = Establishment.objects.filter(user=user)
+    menus = Menu.objects.filter(establishment__in=establishments).order_by('-added_on')
+    return render_to_string('includes/_menu.html', {'menus': menus})
+
+
 @login_required(login_url=reverse_lazy('menu-login'))
 def create_menu(request):
     establishment = request.POST.get('establishment')
     name = request.POST.get('name')
     try:
         Establishment.objects.filter(pk=ObjectId(establishment)).update(set__user=request.user)
-        menu = Menu.objects.create(establishment=ObjectId(establishment), name=name, added_on=datetime.now())
+        Menu.objects.create(establishment=ObjectId(establishment), name=name, added_on=datetime.now())
     except InvalidId:
         establishment = Establishment.objects.create(user=request.user, BusinessName=establishment, added_on=datetime.now())
-        menu = Menu.objects.create(establishment=establishment.pk, name=name, added_on=datetime.now())
-    return HttpResponse(json.dumps({'status': True, 'obj': menu.to_mongo()}, default=json_util.default))
+        Menu.objects.create(establishment=establishment.pk, name=name, added_on=datetime.now())
+    return HttpResponse(json.dumps({'status': True, 'html': menu_render(request.user)}, default=json_util.default))
 
 
 @login_required(login_url=reverse_lazy('menu-login'))

@@ -9,18 +9,24 @@
                 <form method="post" role="form" id="add_menu_form" action="{% url 'menu_create_menu' %}">
                     {% csrf_token %}
                     <div class="box-body">
-                        <div class="form-group" id="show-suggestions">
+                        <div class="form-group">
                             <label for="menuEstablishment">Establishment</label>
-                            <input name="establishment" data-lookup-url="{% url 'menu_establishment_lookup_name' %}" class="form-control" id="menuEstablishment" placeholder="Enter Establishment" type="text">
+                            <input class="form-control" id="establishment" placeholder="Enter Establishment"
+                            type="text">
+                        </div>
+                        <div class="form-group">
+                            <input name="establishment" class="form-control" type="hidden">
                         </div>
                         <div class="form-group">
                             <label for="menuName">Name</label>
-                            <input name="name" class="form-control" id="menuName" placeholder="Enter menu name" type="text">
+                            <input name="name" class="form-control" id="menuName" placeholder="Enter menu name"
+                            type="text">
                         </div>
-                    </div><!-- /.box-body -->
+                    </div>
+                    <!-- /.box-body -->
 
                     <div class="box-footer">
-                        <button type="submit" class="btn btn-primary btn-submit-menu">Submit</button>
+                        <button type="button" class="btn btn-primary btn-submit-menu" data-dismiss="modal">Submit</button>
                     </div>
                 </form>
             </div>
