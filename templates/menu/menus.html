@@ -47,8 +47,8 @@ ul.todo-list li.placeholder:before {
 
 {% block extra_js %}
     <script src="{% static 'typeahead.js/dist/typeahead.bundle.min.js' %}"></script>
-    <script src="{% static "jquery-sortable/source/js/jquery-sortable-min.js" %}" type="text/javascript"></script>
-    <script src="{% static "js/menu.js" %}" type="text/javascript"></script>        
+    <script src="{% static 'jquery-sortable/source/js/jquery-sortable-min.js' %}" type="text/javascript"></script>
+    <script src="{% static 'js/menu.js' %}" type="text/javascript"></script>        
     <script>
         var establishmentLookupNameUrl = '{% url "menu_establishment_lookup_name" %}';
         var createMenuUrl = '{% url "menu_create_menu" %}';
@@ -63,7 +63,7 @@ ul.todo-list li.placeholder:before {
 {% block content %}
 <!-- Main row -->
 <div class="form-group has-success">
-    <label class="control-label"><i class="fa fa-check"></i></label>
+    <label class="control-label"><i class="fa fa-check"></i> Saved OK!</label>
 </div>
 <div class="menus">
     {% include 'includes/_menu.html' %}

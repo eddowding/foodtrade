@@ -51,28 +51,32 @@
                     </div>
                 </div>
                 {% for dish in section.get_section_dishes %}
-                        <span class="handle">
-                            <i class="fa fa-ellipsis-v"></i>
-                            <i class="fa fa-ellipsis-v"></i>
-                        </span>
-                        <span>{{ dish.name }}&nbsp;&pound;{{ dish.price }}</span>
+                    <div class="menuitem">
+                        <div class="menutitle">
+                            <span class="handle">
+                                <i class="fa fa-ellipsis-v"></i>
+                                <i class="fa fa-ellipsis-v"></i>
+                            </span>
+                            <span>{{ dish.name }}&nbsp;&pound;{{ dish.price }}</span>
 
-                        <div class="pull-right">
-                            {% if dish.is_allergen %}
-                            <span class="allergen flagged" data-toggle="tooltip" title="tss" data-original-title="Milk">A</span>
-                            {% endif %}
-                            {% if dish.is_meat %}
-                                <span class="meat flagged active" data-toggle="tooltip" title="Chicken">M</span>
-                            {% endif %}
-                            {% if dish.is_gluten %}
-                                <span class="gluten flagged" data-toggle="tooltip" title="Gluten">G</span>
-                            {% endif %}
-                        </div>
+                            <div class="pull-right">
+                                {% if dish.is_allergen %}
+                                <span class="allergen flagged" data-toggle="tooltip" title="tss" data-original-title="Milk">A</span>
+                                {% endif %}
+                                {% if dish.is_meat %}
+                                    <span class="meat flagged active" data-toggle="tooltip" title="Chicken">M</span>
+                                {% endif %}
+                                {% if dish.is_gluten %}
+                                    <span class="gluten flagged" data-toggle="tooltip" title="Gluten">G</span>
+                                {% endif %}
+                            </div>
 
-                        <div class="tools" style="position: absolute; right:0;">
-                            <a data-toggle="modal" href="#ingredientsModal" data-dish-id = {{ dish.id }} class="btn btn-xs btn-default add-ingredients"><i class="fa fa-cutlery fa-fw"></i>  Add ingredient</a>
+                            <div class="tools" style="position: absolute; right:0;">
+                                <a data-toggle="modal" href="#ingredientsModal" data-dish-id = {{ dish.id }} class="btn btn-xs btn-default add-ingredients"><i class="fa fa-cutlery fa-fw"></i>  Add ingredient</a>
+                            </div>
+                            <p href="#" id="item" class="editable" data-type="textarea" data-pk="1" data-url="/post" data-title="Edit item">{{dish.description}}</p>
                         </div>
-                        <p href="#" id="item" class="editable" data-type="textarea" data-pk="1" data-url="/post" data-title="Edit item">{{dish.description}}</p>
+                    
                     <ul class="ingredient-tree">
                         {% for parent in dish.get_ingredient_tree %}
                         <li data-dish-id="{{dish.pk}}" data-ingredient-name="{{parent.name}}">
@@ -119,7 +123,7 @@
                             </li>
                         {% endfor %}
                     </ul>
-                {% endfor %}
+                {% endfor %} 
 
                 </div>
                 {% endfor %}

@@ -1,32 +1,50 @@
-.box .todo-list li {
+.box .ingredient-tree {
+  margin: 0;
+  padding: 0px 0px;
+  list-style: none;
+}
+.box .ingredient-tree > li {
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px;
+  padding: 10px;
+  background: #f3f4f5;
+  margin-bottom: 2px;
+  border-left: 2px solid #e6e7e8;
+  color: #444;
+}
+.box .ingredient-tree > li:last-of-type {
+  margin-bottom: 0;
+}
+.box .ingredient-tree li {
   background: #ECE5CE;
   position: relative;
-  padding: 5px 0px 5px 0;
+  padding: 5px;
 }
-.box .todo-list li a {
+.box .ingredient-tree li a {
   font-weight: bold;
 }
-.box .todo-list li li a {
+.box .ingredient-tree li li a {
   font-weight: normal;
   padding-left: 3px;
 }
-.box .todo-list li .handle i {
+.box .ingredient-tree li .handle i {
   color: rgba(0, 0, 0, 0.4);
 }
-.box .todo-list li li .handle i {
+.box .ingredient-tree li li .handle i {
   color: rgba(0, 0, 0, 0.2);
 }
-.box .todo-list li p {
+.box .ingredient-tree li p {
   margin-left: 21px;
 }
-.box .todo-list ul {
+.box .ingredient-tree ul {
   margin: 0;
   padding: 0;
   list-style: none;
   display: block;
   margin: 10px 0;
 }
-.box .todo-list ul li {
+.box .ingredient-tree ul li {
   margin: 2px 0 0 20px;
   padding: 3px 0px 3px 0px;
   font-weight: normal !important;
@@ -36,16 +54,16 @@
   border: 2px solid #fff;
   border-right: 0;
 }
-.box .todo-list .tools i {
+.box .ingredient-tree .tools i {
   color: #3878B3;
 }
-.box .todo-list ul ul {
+.box .ingredient-tree ul ul {
   padding: 0;
   list-style: none;
   display: block;
   margin: 5px 0;
 }
-.box .todo-list ul ul li {
+.box .ingredient-tree ul ul li {
   margin: 2px 0 0 20px;
   padding: 3px 0px 3px 3px;
   font-weight: normal !important;

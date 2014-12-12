@@ -1,80 +1,72 @@
-{% load staticfiles %}  
-{% load socialaccount %}
-{% load url from future %}
-{% load i18n %}
+{% load staticfiles %} {% load socialaccount %} {% load url from future %} {% load i18n %}
 
 <!DOCTYPE html>
 <html class="{% block html_class %}{% endblock %}">
+
 <head>
     <meta charset="UTF-8">
     <title>{% block title %}FoodTrade menu {% block extra_title %}{% endblock %}{% endblock %}</title>
-    <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
-      {% block base_style %}
-            <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-            <link href="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/css/bootstrap-editable.css" rel="stylesheet" />
-            <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
-            <!-- Ionicons -->
-            <link href="//code.ionicframework.com/ionicons/1.5.2/css/ionicons.min.css" rel="stylesheet" type="text/css" />
-            <!-- Morris chart -->
-            <!-- <link href="{% static "menu/css/morris/morris.css" %}" rel="stylesheet" type="text/css" />  -->
-            <!-- Date Picker -->
-            <link href="{% static "menu/css/datepicker/datepicker3.css" %}" rel="stylesheet" type="text/css" />
-            <!-- Daterange picker -->
-            <link href="{% static "menu/css/daterangepicker/daterangepicker-bs3.css" %}" rel="stylesheet" type="text/css" />
-            <!-- Theme style -->
-            <link href="{% static "menu/css/AdminLTE.css" %}" rel="stylesheet" type="text/css" />
-            <link href="{% static "menu/css/ftmenu.css" %}" rel="stylesheet" type="text/css" />
-            {% block extra_style %}{% endblock %}
-      {% endblock %}
-
-      {% block js %}     
-            <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-            <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js" type="text/javascript"></script>
-            <script src="//code.jquery.com/ui/1.11.1/jquery-ui.min.js" type="text/javascript"></script>
-            <!-- Morris.js charts -->
-            <script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
-            <!-- <script src="{% static "menu/js/plugins/morris/morris.min.js" %}" type="text/javascript"></script>
+    <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'> {% block base_style %}
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/css/bootstrap-editable.css" rel="stylesheet" />
+    <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+    <!-- Ionicons -->
+    <link href="//code.ionicframework.com/ionicons/1.5.2/css/ionicons.min.css" rel="stylesheet" type="text/css" />
+    <!-- Morris chart -->
+    <!-- <link href="{% static "menu/css/morris/morris.css" %}" rel="stylesheet" type="text/css" />  -->
+    <!-- Date Picker -->
+    <!-- <link href="{% static "menu/css/datepicker/datepicker3.css" %}" rel="stylesheet" type="text/css" /> -->
+    <!-- Daterange picker -->
+    <!-- <link href="{% static "menu/css/daterangepicker/daterangepicker-bs3.css" %}" rel="stylesheet" type="text/css" /> -->
+    <!-- Theme style -->
+    <link href="{% static "menu/css/AdminLTE.css" %}" rel="stylesheet" type="text/css" />
+    <link href="{% static "menu/css/ftmenu.css" %}" rel="stylesheet" type="text/css" /> {% block extra_style %}{% endblock %} {% endblock %} {% block js %}
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js" type="text/javascript"></script>
+    <script src="//code.jquery.com/ui/1.11.1/jquery-ui.min.js" type="text/javascript"></script>
+    <!-- Morris.js charts -->
+    <script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
+    <!-- <script src="{% static "menu/js/plugins/morris/morris.min.js" %}" type="text/javascript"></script>
             <!-- Sparkline -->
-            <!-- <script src="{% static "menu/js/plugins/sparkline/jquery.sparkline.min.js" %}" type="text/javascript"></script> -->
-            <!-- daterangepicker -->
-            <script src="{% static "menu/js/plugins/daterangepicker/daterangepicker.js" %}" type="text/javascript"></script>
-            <!-- datepicker -->
-            <script src="{% static "menu/js/plugins/datepicker/bootstrap-datepicker.js" %}" type="text/javascript"></script>
-            <!-- iCheck -->
-            <script src="{% static "menu/js/plugins/iCheck/icheck.min.js" %}" type="text/javascript"></script>
-           
-            <!-- AdminLTE App -->
-            <script src="{% static "menu/js/AdminLTE/app.js" %}" type="text/javascript"></script>    
-            <script src="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/js/bootstrap-editable.min.js"></script>
-            <script src="{% static 'js/csrf.js' %}" type="text/javascript"></script>
-             <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-            <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-            <!--[if lt IE 9]>
+    <!-- <script src="{% static "menu/js/plugins/sparkline/jquery.sparkline.min.js" %}" type="text/javascript"></script> -->
+    <!-- daterangepicker -->
+    <script src="{% static "menu/js/plugins/daterangepicker/daterangepicker.js" %}" type="text/javascript"></script>
+    <!-- datepicker -->
+    <script src="{% static "menu/js/plugins/datepicker/bootstrap-datepicker.js" %}" type="text/javascript"></script>
+    <!-- iCheck -->
+    <script src="{% static "menu/js/plugins/iCheck/icheck.min.js" %}" type="text/javascript"></script>
+
+    <!-- AdminLTE App -->
+    <script src="{% static "menu/js/AdminLTE/app.js" %}" type="text/javascript"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/js/bootstrap-editable.min.js"></script>
+    <script src="{% static 'js/csrf.js' %}" type="text/javascript"></script>
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
                   <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
                   <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
 
             <![endif]-->
-            {% block extra_js %}{% endblock %}
-      {% endblock %}
+    {% block extra_js %}{% endblock %} {% endblock %}
 
 
-   
+
 </head>
 
 <body class="{% block body_class %}skin-blue{% endblock %}">
     <!-- header logo: style can be found in header.less -->
     {% block header %}
     <header class="header">
-       {% block logo %}
-            <a href="/menu" class="logo">
+        {% block logo %}
+        <a href="/menu" class="logo">
             <!-- Add the class icon to your logo image or logo icon to add the margining -->
-               FoodTrade Menu
-            </a>
-       {% endblock %}
-        
+            FoodTrade Menu
+        </a>
+        {% endblock %}
+
         <!-- Header Navbar: style can be found in header.less -->
-        
-       {% block nav %}
+
+        {% block nav %}
         <nav class="navbar navbar-static-top" role="navigation">
             <!-- Sidebar toggle button-->
             <a href="#" class="navbar-btn sidebar-toggle" data-toggle="offcanvas" role="button">
@@ -86,7 +78,7 @@
             <div class="navbar-right">
                 <ul class="nav navbar-nav">
                     <!-- Messages: style can be found in dropdown.less-->
-                  {% block nav-messages %}
+                    {% block nav-messages %}
                     <li class="dropdown messages-menu">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                             <i class="fa fa-envelope"></i>
@@ -101,7 +93,7 @@
                                         <!-- start message -->
                                         <a href="#">
                                             <div class="pull-left">
-                                                <img src="img/avatar3.png" class="img-circle" alt="User Image" />
+                                                <img src="{% static 'menu/img/avatar3.png' %}" class="img-circle" alt="User Image" />
                                             </div>
                                             <h4>
                                                     Knorr - Tomato Paste
@@ -109,12 +101,12 @@
                                                 </h4>
                                             <p>Feature coming soon! </p>
                                         </a>
-                                    </li> 
+                                    </li>
                                     <li>
                                         <!-- start message -->
                                         <a href="#">
                                             <div class="pull-left">
-                                                <img src="img/avatar3.png" class="img-circle" alt="User Image" />
+                                                <img src="{% static 'menu/img/avatar3.png' %}" class="img-circle" alt="User Image" />
                                             </div>
                                             <h4>
                                                     Knorr - Stock cubes
@@ -122,18 +114,18 @@
                                                 </h4>
                                             <p>Be alerted to produce changes</p>
                                         </a>
-                                    </li> 
+                                    </li>
                                 </ul>
                             </li>
                             <li class="footer"><a href="#">See All Messages</a>
                             </li>
                         </ul>
                     </li>
-                    
+
                     {% endblock %}
                     <!-- Notifications: style can be found in dropdown.less -->
-                    
-                  {% block nav-notifications %}
+
+                    {% block nav-notifications %}
                     <li class="dropdown notifications-menu hidden">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                             <i class="fa fa-warning"></i>
@@ -176,38 +168,45 @@
                             </li>
                         </ul>
                     </li>
-                    
+
                     {% endblock %}
                     <!-- Tasks: style can be found in dropdown.less -->
-                    
-                  {% block nav-task %}
-                    
+
+                    {% block nav-task %}
+
                     <li class="dropdown tasks-menu">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                             <i class="fa fa-tasks"></i>
                             <span class="label label-danger">3</span>
                         </a>
                         <ul class="dropdown-menu">
-                            <li class="header">You have 3 tasks <span class="label label-warning"> Feature coming soon</span></li>
+                            <li class="header">You have 3 tasks <span class="label label-warning"> Feature coming soon</span>
+                            </li>
 
-                           
+
                             <li>
                                 <!-- inner menu: contains the actual data -->
                                 <ul class="menu">
-                                <li><a href="#">
-                                        <label>
-                                        <input type="checkbox"> Add your suppliers
-                                        </label></a>
-                                    </li>  
-                                <li><a href="#">
-                                        <label>
-                                        <input type="checkbox"> Add your stockists
-                                        </label></a>
+                                    <li>
+                                        <a href="#">
+                                            <label>
+                                                <input type="checkbox"> Add your suppliers
+                                            </label>
+                                        </a>
                                     </li>
-                                <li><a href="#">
-                                        <label>
-                                        <input type="checkbox"> Add availability to your produce
-                                        </label></a>
+                                    <li>
+                                        <a href="#">
+                                            <label>
+                                                <input type="checkbox"> Add your stockists
+                                            </label>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <label>
+                                                <input type="checkbox"> Add availability to your produce
+                                            </label>
+                                        </a>
                                     </li>
                                     <!-- end task item -->
                                 </ul>
@@ -217,10 +216,10 @@
                             </li>
                         </ul>
                     </li>
-                    
-                  {% endblock %}
+
+                    {% endblock %}
                     <!-- User Account: style can be found in dropdown.less -->
-                  {% block nav-user %}
+                    {% block nav-user %}
                     <li class="dropdown user user-menu">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                             <i class="glyphicon glyphicon-user"></i>
@@ -229,7 +228,7 @@
                         <ul class="dropdown-menu">
                             <!-- User image -->
                             <li class="user-header bg-light-blue">
-                                <img src="img/avatar3.png" class="img-circle" alt="User Image" />
+                                <img src="{% static 'menu/img/avatar3.png' %}" class="img-circle" alt="User Image" />
                                 <p>
                                     {{user.first_name}}&nbsp;{{user.last_name}}
                                     <small>Member since {{user.date_joined}}</small>
@@ -246,143 +245,205 @@
                             </li>
                         </ul>
                     </li>
-                  {% endblock %}
+                    {% endblock %}
                 </ul>
             </div>
         </nav>
         {% endblock %}
-        
+
     </header>
-    
-    {% endblock %}
-    
-    {% block main_content %}
+
+    {% endblock %} {% block main_content %}
     <div class="wrapper row-offcanvas row-offcanvas-left">
         <!-- Left side column. contains the logo and sidebar -->
-      {% block left_sidebar %}
+        {% block left_sidebar %}
         <aside class="left-side sidebar-offcanvas">
             <!-- sidebar: style can be found in sidebar.less -->
-            
+
             <section class="sidebar">
                 <!-- Sidebar user panel -->
                 {% block left_sidebar_user_panel %}
-                  <div class="user-panel">
-                      <div class="pull-left image">
-                          <img src="img/avatar3.png" class="img-circle" alt="User Image" />
-                      </div>
-                      <div class="pull-left info">
-                          <p>Hello, {{user.first_name}}</p>
-                      </div>
-                  </div>
+                <div class="user-panel">
+                    <div class="pull-left image">
+                        <img src="{% static 'menu/img/avatar3.png' %}" class="img-circle" alt="User Image" />
+                    </div>
+                    <div class="pull-left info">
+                        <p>Hello, {{user.first_name}}</p>
+                    </div>
+                </div>
                 {% endblock %}
                 <!-- search form -->
                 {% block left_sidebar_search %}
-                  <form action="#" method="get" class="sidebar-form">
-                      <div class="input-group">
-                          <input type="text" name="q" class="form-control" placeholder="Search..." />
-                          <span class="input-group-btn">
+                <form action="#" method="get" class="sidebar-form">
+                    <div class="input-group">
+                        <input type="text" name="q" class="form-control" placeholder="Search..." />
+                        <span class="input-group-btn">
                                   <button type='submit' name='search' id='search-btn' class="btn btn-flat"><i class="fa fa-search"></i></button>
                               </span>
-                      </div>
-                  </form>
+                    </div>
+                </form>
                 {% endblock %}
                 <!-- /.search form -->
                 <!-- sidebar menu: : style can be found in sidebar.less -->
-                
+
                 {% block left_sidebar_menu %}
-                
-                  <ul class="sidebar-menu">
-                      <li><a href="menus.html"><i class="ion ion-clipboard" style="font-size: 1.4em;"></i> My Menus <small class="badge pull-right bg-green">1</small></a>
-                      </li>
-                      <li class="treeview"><a href="produce.html"><i class="fa fa-cutlery"></i> My produce <small class="badge pull-right bg-red">3</small>
+
+                <ul class="sidebar-menu">
+                    <li><a href="menus.html"><i class="ion ion-clipboard" style="font-size: 1.4em;"></i> My Menus <small class="badge pull-right bg-green">1</small></a>
+                    </li>
+                    <li class="treeview"><a href="produce.html"><i class="fa fa-cutlery"></i> My produce <small class="badge pull-right bg-red">3</small>
                                   <i class="fa fa-angle-left pull-right"></i></a>
-                          <ul class="treeview-menu">
-                              <li><a href="produce_unconfirmed.html"><i class="fa fa-sign-out"></i> Suggested<small class="badge pull-right bg-red">3</small></a>
-                              </li>
-                              <li><a href="produce.html"><i class="fa fa-sign-out"></i> Add an item <small class="badge pull-right bg-green">23</small></a>
-                              </li>
-                              <li><a href="produce.html"><i class="fa fa-sign-out"></i> All produce<small class="badge pull-right bg-green">23</small></a>
-                              </li>
-                          </ul>
-                      </li>
-                      <li><a href="suppliers.html"><i class="fa fa-sign-in"></i> My suppliers<small class="badge pull-right bg-green">8</small></a>
-                      </li>
-                      <li><a href="stockists.html"><i class="fa fa-sign-out"></i> My stockists<small class="badge pull-right bg-green">23</small></a>
-                      </li>
-  
-                      <li class="divider"></li>
-                      <li class="">
-                          <a href="offers.html">
-                              <i class="fa fa-shopping-cart"></i> <span>Offers</span>
-                          </a>
-                      </li>
-                      <li class="">
-                          <a href="shopping_list.html">
-                              <i class="fa fa-list-ul"></i> <span>My shopping list</span>
-                          </a>
-                      </li>
-                      <li class="">
-                          <a href="compare.html">
-                              <i class="fa fa-sliders"></i> <span>How I compare</span>
-                          </a>
-                      </li>
-                      <li class="">
-                          <a href="#">
-                              <i class="fa fa-cogs"></i> <span>Settings</span>
-                          </a>
-                      </li>
-                      <li class="divider"></li>
-                      <li class="">
-                          <a href="#">
-                              <i class="fa fa-envelope"></i> <span>Contact us</span>
-                          </a>
-                      </li> 
-                      <li class="">
-                          <a href="#">
-                              <i class="fa fa-bullhorn"></i> <span>Feedback</span>
-                          </a>
-                      </li> 
-                      <li class="divider"></li>
-                      <li class="divider"></li>
-                  </ul>
+                        <ul class="treeview-menu">
+                            <li><a href="produce_unconfirmed.html"><i class="fa fa-sign-out"></i> Suggested<small class="badge pull-right bg-red">3</small></a>
+                            </li>
+                            <li><a href="produce.html"><i class="fa fa-sign-out"></i> Add an item <small class="badge pull-right bg-green">23</small></a>
+                            </li>
+                            <li><a href="produce.html"><i class="fa fa-sign-out"></i> All produce<small class="badge pull-right bg-green">23</small></a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li><a href="suppliers.html"><i class="fa fa-sign-in"></i> My suppliers<small class="badge pull-right bg-green">8</small></a>
+                    </li>
+                    <li><a href="stockists.html"><i class="fa fa-sign-out"></i> My stockists<small class="badge pull-right bg-green">23</small></a>
+                    </li>
+
+                    <li class="divider"></li>
+                    <li class="">
+                        <a href="#" data-toggle="modal" data-target="#comingsoon">
+                            <i class="fa fa-shopping-cart"></i> <span>Offers</span>
+                        </a>
+                    </li>
+                    <li class="">
+                        <a href="#" data-toggle="modal" data-target="#comingsoon">
+                            <i class="fa fa-list-ul"></i> <span>My shopping list</span>
+                        </a>
+                    </li>
+                    <li class="">
+                        <a href="#" data-toggle="modal" data-target="#comingsoon">
+                            <i class="fa fa-sliders"></i> <span>How I compare</span>
+                        </a>
+                    </li>
+                    <li class="">
+                        <a href="#" data-toggle="modal" data-target="#comingsoon">
+                            <i class="fa fa-cogs"></i> <span>Settings</span>
+                        </a>
+                    </li>
+                    <li class="divider"></li>
+                    <li class="">
+                        <a href="https://foodtrade.uservoice.com" data-uv-trigger="contact" id="support">
+                            <i class="fa fa-envelope"></i> <span>Contact us</span>
+                        </a>
+                    </li>
+                    <li class="">
+                        <a href="https://foodtrade.uservoice.com" data-uv-trigger="contact" id="support">
+                            <i class="fa fa-bullhorn"></i> <span>Feedback</span>
+                        </a>
+                    </li>
+                    <li class="divider"></li>
+                    <li class="divider"></li>
+                </ul>
                 {% endblock %}
             </section>
             <!-- /.sidebar -->
         </aside>
-      {% endblock %}
+        {% endblock %}
 
         <!-- Right side column. Contains the navbar and content of the page -->
-      {% block right_panel %}
+        {% block right_panel %}
         <aside class="right-side">
-            <!-- Content Header (Page header) -->            
+            <!-- Content Header (Page header) -->
             {% block right_panel_header %}
-                  <section class="content-header">
-                      <h1>
+            <section class="content-header">
+                <h1>
                               Menu&nbsp;<button data-toggle="modal" href="#menuModal" class="btn btn-default"><i class="fa fa-list-ul fa-fw"></i> Add Menu</button>
                               {% comment %}
                               <small>Edit Menu</small>
                               {% endcomment %}
                           </h1>
-                      <ol class="breadcrumb">
-                          <li><a href="#"><i class="fa fa-dashboard"></i> Home</a>
-                          </li>
-                          <li class="active">Menus</li>
-                      </ol>
-                  </section>
+                <ol class="breadcrumb">
+                    <li><a href="#"><i class="fa fa-dashboard"></i> Home</a>
+                    </li>
+                    <li class="active">Menus</li>
+                </ol>
+            </section>
             {% endblock %}
 
             <section class="content">
-               {% block content %}                
-               {% endblock %}               
+                {% block content %} {% endblock %}
             </section>
             <!-- /.content -->
         </aside>
-        
-      {% endblock %}
+
+        {% endblock %}
         <!-- /.right-side -->
-    </div>    
-    {% endblock %}    
+    </div>
+    {% endblock %}
     <!-- ./wrapper -->
+
+
+    {% include 'menu/partials/_comingsoon.html' %}
+
+
+    <script>
+    (function(i, s, o, g, r, a, m) {
+        i['GoogleAnalyticsObject'] = r;
+        i[r] = i[r] || function() {
+            (i[r].q = i[r].q || []).push(arguments)
+        }, i[r].l = 1 * new Date();
+        a = s.createElement(o),
+            m = s.getElementsByTagName(o)[0];
+        a.async = 1;
+        a.src = g;
+        m.parentNode.insertBefore(a, m)
+    })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+
+    ga('create', 'UA-3315919-37', 'auto');
+    ga('require', 'linkid', 'linkid.js');
+    ga('require', 'displayfeatures');
+    ga('send', 'pageview');
+    </script>
+
+    <script>
+    $(document).ready(function() {
+
+        //Include the UserVoice JavaScript SDK (only needed once on a page)
+        UserVoice = window.UserVoice || [];
+        (function() {
+            var uv = document.createElement('script');
+            uv.type = 'text/javascript';
+            uv.async = true;
+            uv.src = '//widget.uservoice.com/HloB2aRxdk7fbhWMOI5AlQ.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(uv, s)
+        })();
+
+
+        //UserVoice Javascript SDK developer documentation:
+        //https://www.uservoice.com/o/javascript-sdk
+
+
+        //Set colors
+        UserVoice.push(['set', {
+            accent_color: '#6aba2e',
+            trigger_color: 'white',
+            trigger_background_color: '#6aba2e'
+        }]);
+
+        //Add default trigger to the bottom-right corner of the window:
+        // UserVoice.push(['addTrigger', { mode: 'contact', trigger_position: 'top-right' }]);
+
+        //Or, use your own custom trigger:
+        UserVoice.push(['addTrigger', '#support', {
+            mode: 'contact'
+        }]);
+
+        //Autoprompt for Satisfaction and SmartVote (only displayed under certain conditions)
+        UserVoice.push(['autoprompt', {}]);
+
+    });
+    </script>
+
+
 </body>
 
 </html>
