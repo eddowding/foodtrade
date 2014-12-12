@@ -171,7 +171,6 @@ $(document).ready(function() {
 
     $('.ingredient-tree').sortable({
         onDrop: function($item, container, _super, event) {
-            console.log('I am', $item.text().trim());
             var data = {
                 dish: $item.attr('data-dish-id'),
                 name: $item.attr('data-ingredient-name'),
@@ -181,8 +180,16 @@ $(document).ready(function() {
             if ($item.parents('li').attr('data-ingredient-name') !== undefined) {
                 data.parent = $item.parents('li').attr('data-ingredient-name');
             }
+            $.ajax({
+                url: updateIngredientUrl,
+                data: data,
+                type: 'POST',
+                dataType: 'JSON',
+                success: function(data) {
+                    $('.menus').html(data.html);
+                }
+            });
 
-            console.log(data);
             _super($item, container);
         },
         isValidTarget: function($item, container) {
