@@ -16,9 +16,28 @@
 }
 .quote p {
   font-weight: 400;
+  font-style: italic;
+  font-family: Georgia;
+  margin: 30px 0;
+  color: #444;
+  line-height: 1.7;
 }
 .quote img {
   padding: 10px;
+}
+#getstarted {
+  margin: 30px 0;
+  font-size: 1.1em;
+  border-radius: 12px;
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  box-shadow: 0 0 5px #fff;
+  text-shadow: 0 0 3px rgba(0, 0, 0, 0.5);
+}
+#getstarted small {
+  font-size: 14px;
+  margin-top: 5px;
+  color: rgba(255, 255, 255, 0.8);
+  display: block;
 }
 .ribbon {
   background: #521336;

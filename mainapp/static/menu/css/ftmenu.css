@@ -199,3 +199,16 @@ li.divider {
   text-decoration: underline;
   color: #444;
 }
+table th {
+  text-transform: uppercase;
+  background: #3878B3;
+  color: #fff;
+}
+body > .header .logo {
+  font-family: 'Source Sans Pro', cursive;
+  font-weight: 900;
+  background: #61AE32;
+}
+a.text-muted {
+  color: #666 !important;
+}

@@ -16,6 +16,16 @@
 {% block body_class %}skin-black{% endblock %}
 
 {% block content %}
+
+<h2>
+    Connections&nbsp;
+
+    <a href="#add" data-toggle="tab" class="btn btn-default " id="tab_3-tab">
+    <i class="fa fa-plus-circle fa-fw"></i> Add a connection</a>
+  
+</h2>
+
+
 <!-- Main row -->
 <div class="row">
     <!-- Left col -->
@@ -25,25 +35,25 @@
 
         <div class="nav-tabs-custom ">
             <ul class="nav nav-tabs lead">
-                <li class="active"><a href="#tab_1" data-toggle="tab" id="tab_1-tab"><i class="fa fa-sign-in"></i> My suppliers</a>
+                <li class="active"><a href="#suppliers" data-toggle="tab" id="tab_1-tab"><i class="fa fa-sign-in"></i> My suppliers</a>
                 </li>
-                <li><a href="#tab_2" data-toggle="tab" id="tab_2-tab"><i class="fa fa-sign-out"></i> My stockists</a>
+                <li><a href="#stockists" data-toggle="tab" id="tab_2-tab"><i class="fa fa-sign-out"></i> My stockists</a>
                 </li>
-                <li class="pull-right bg-success "><a href="#tab_3" data-toggle="tab" class="text-success " id="tab_3-tab"><i class="fa fa-plus-circle fa-lg"></i> Add a connection</a>
+                <li class="pull-right   "><a href="#add" data-toggle="tab" class="text-success " id="tab_3-tab"><i class="fa fa-plus-circle fa-lg"></i> Add a connection</a>
                 </li>
             </ul>
             <div class="tab-content">
-                <div class="tab-pane active" id="tab_1">
+                <div class="tab-pane active" id="suppliers">
                     {% include 'includes/_connection_table_seller.html'%}
                 </div>
                 <!-- /.tab-pane -->
-                <div class="tab-pane" id="tab_2">
+                <div class="tab-pane" id="stockists">
                     {% include 'includes/_connection_table_buyer.html'%}
                 </div>
                 <!-- /.tab-pane -->
 
 
-                <div class="tab-pane  clearfix" id="tab_3">
+                <div class="tab-pane  clearfix" id="add">
 
                     <div class="col-sm-10 col-sm-offset-1">
                         <form action="" method="POST" role="form" class="form-horizontal">
@@ -51,18 +61,18 @@
                             <div class="form-group">
                                 <label for="" class="control-label col-sm-3">Business name</label>
                                 <div class="col-sm-9">
-                                    <input class="form-control connection" type="text" placeholder="Start typing...">
+                                    <input class="form-control connection" type="text" placeholder="Start typing..." style="width: 300px;">
                                 </div>
                             </div>
 
                             <div class="form-group">
                                 <div class="col-sm-9 col-sm-offset-3">
                                     <label>
-                                        <input type="radio" value="1" name="connection-type" checked>We buy from them
+                                        <input type="radio" value="1" name="connection-type" checked> We buy from them
                                     </label>
                                     &nbsp;&nbsp;&nbsp;
                                     <label>
-                                        <input type="radio" value="2" name="connection-type">We sell to them
+                                        <input type="radio" value="2" name="connection-type"> We sell to them
                                     </label>
                                 </div>
                             </div>
