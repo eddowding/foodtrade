@@ -1,38 +1,42 @@
 <div id="dishModal" class="modal fade">
     <div class="modal-dialog">
         <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h2 class="modal-title">Add Dish</h2>
-            </div>
-            <div class="modal-body">
-                <form>
-                    <div class="box-body">
-                        <div class="form-group">
-                            <label>Name</label>
-                            <input id="name" placeholder="Enter Dish Name" type="text" class="form-control">
+            <form class="form-horizontal">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h2 class="modal-title">Add Dish</h2>
+                </div>
+                <div class="modal-body">
+                <div class="row">
+                    <div class="col-sm-10 col-offset-sm-1">
+                        <div class="box-body">
+                            <div class="form-group">
+                                <label class="control-label">Name</label>
+                                <input id="name" placeholder="Enter Dish Name" type="text" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <input name="name" type="hidden">
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label" for="dishPrice">Price</label>
+                                <input name="price" class="form-control" id="dishPrice" placeholder="Enter Dish Price" type="text">
+                            </div>
+                            <div class="form-group">
+                                <label  class="control-label" for="dishDescription">Description</label>
+                                <input name="description" class="form-control" id="dishDescription" placeholder="Enter Dish Description" type="text">
+                            </div>
+                            <div class="form-group">
+                                <input name="menu_section" class="form-control" type="hidden" value="">
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <input name="name" type="hidden">
-                        </div>
-                        <div class="form-group">
-                            <label for="dishPrice">Price</label>
-                            <input name="price"  class="form-control" id="dishPrice" placeholder="Enter Dish Price" type="text">
-                        </div>
-                        <div class="form-group">
-                            <label for="dishDescription">Description</label>
-                            <input name="description"  class="form-control" id="dishDescription" placeholder="Enter Dish Description" type="text">
-                        </div>
-                        <div class="form-group">
-                            <input name="menu_section" class="form-control" type="hidden" value="">
-                        </div>
-                    </div><!-- /.box-body -->
-
-                    <div class="box-footer">
-                        <button type="button" class="btn btn-primary btn-submit-menu" data-dismiss="modal">Submit</button>
+                        <!-- /.box-body -->
                     </div>
-                </form>
-            </div>
+                </div>
+                </div>
+                <div class="modal-footer">
+                <button type="button" class="btn btn-primary btn-submit-menu" data-dismiss="modal"><i class="fa fa-save"></i> Add new dish</button>
+                </div>
+            </form>
         </div>
     </div>
-</div>
+</div> 
