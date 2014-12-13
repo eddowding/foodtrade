@@ -144,17 +144,56 @@ $(document).ready(function() {
     });
 
     //ingredient section
+
+     // Ingredients autocomplete
+
+    var ingredients = new Bloodhound({
+        remote: {
+            url: ingredientLookupNameUrl + '?q=%QUERY',
+            filter: function(ingredients) {
+                return ingredients.objs;
+            }
+
+        },
+        datumTokenizer: function(ingredient) {
+            return Bloodhound.tokenizers.whitespace(ingredient.name);
+        },
+        queryTokenizer: Bloodhound.tokenizers.whitespace
+    });
+
+    ingredients.initialize();
+
+    $('#ingredientsModal input#name').typeahead(null, {
+        displayKey: 'name',
+        name: 'ingredients',
+        source: ingredients.ttAdapter(),
+    });
+
+    var ingredientSelected = false;
+
+    $('#ingredientsModal input#name').on('typeahead:selected', function(ev, ingredient) {
+        $('#ingredientsModal input[name="name"]').val(ingredient.value);
+        ingredientSelected = true;
+    });
+
+
     $(document).delegate('.add-ingredients', 'click', function(ev) {
         $('#ingredientsModal input[name="dish"]').val($(this).attr('data-dish-id'));
     });
 
     $('#ingredientsModal button.btn').click(function(ev) {
         var data = {
-            name: $('#ingredientsModal input[name="name"]').val(),
             dish: $('#ingredientsModal input[name="dish"]').val(),
             parent: null,
             order: 1
         };
+
+         if (ingredientSelected) {
+            data.name = $('#ingredientsModal input[name="name"]').val();
+        } else {
+            data.name = $('#ingredientsModal input#name').val();
+        }
+
         $.ajax({
             url: createIngredientUrl,
             data: data,
@@ -165,9 +204,15 @@ $(document).ready(function() {
                 sortableFn();
                 $('#ingredientsModal input[name="name"]').val('');
                 $('#ingredientsModal input[name="dish"]').val('');
+                ingredientSelected= false;
             }
         });
     });
+
+
+
+  /* Menu tree */
+
 
     var sortableFn = function() {
         $('.ingredient-tree').sortable({

@@ -10,7 +10,7 @@ from django.contrib.auth import authenticate, login as auth_login, logout as aut
 from django.contrib.auth.decorators import login_required
 from django.template.loader import render_to_string
 from mongoengine.django.auth import User
-from menu.models import Establishment, Menu, MenuSection, Dish, Allergen, Meat, Gluten, Connection
+from menu.models import Establishment, Menu, MenuSection, Dish, Ingredient , Allergen, Meat, Gluten, Connection
 
 
 """
@@ -168,6 +168,22 @@ def update_ingredient(request):
                                                             set__ingredients__S__is_meat=insert_dict['is_meat'],
                                                             set__ingredients__S__is_gluten=insert_dict['is_gluten'])
     return HttpResponse(json.dumps({'status': True, 'html': menu_render(request.user)}, default=json_util.default))
+
+
+
+@login_required(login_url=reverse_lazy('menu-login'))
+def ingredient_lookup_name(request):
+    ''' Lookup ingredient with nme of ingredients '''
+
+    query = {'ingredients__name__icontains': request.GET.get('q')}
+    ret_list = []
+    for dish in Dish.objects.filter(**query):
+        for ingredient in dish.ingredients:
+            tmp_dict = {'name': ingredient.name}
+            ret_list.append(tmp_dict)
+
+    return HttpResponse(json.dumps({'status': True, 'objs': ret_list}))
+
 
 
 """
