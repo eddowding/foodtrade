@@ -2,7 +2,8 @@ from django.conf.urls import patterns, url, include
 
 urlpatterns = patterns('menu.views',
     #common
-    url(r'^$', 'menu', name='menu'),
+    url(r'^$', 'dashboard', name='menu_dashboard'),
+    url(r'^menu/$', 'menu', name='menu'),
     url(r'^login/$', 'login', name='menu-login'),
     url(r'register/$', 'register', name='menu_register'),
     url(r'user/lookup/count/$', 'user_lookup_count', name='menu_user_lookup_count'),

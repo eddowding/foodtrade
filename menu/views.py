@@ -17,6 +17,11 @@ from menu.models import Establishment, Menu, MenuSection, Dish, Ingredient , All
 Common views.
 """
 @login_required(login_url=reverse_lazy('menu-login'))
+def dashboard(request):
+    return render(request, 'dashboard.html')
+
+
+@login_required(login_url=reverse_lazy('menu-login'))
 def menu(request):
     ''' Get list of menus '''
     establishments = Establishment.objects.filter(user=request.user)
