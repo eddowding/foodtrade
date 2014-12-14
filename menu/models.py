@@ -119,8 +119,8 @@ class Ingredient(EmbeddedDocument):
 class Dish(Document):
     menu_section = ReferenceField(MenuSection)
     name = StringField(required=True)
-    description = StringField(required=True)
-    price = FloatField(required=True)
+    description = StringField()
+    price = FloatField()
     ingredients = ListField(EmbeddedDocumentField(Ingredient), required=False)
     is_allergen = BooleanField(required=True, default=False)
     is_meat = BooleanField(required=True, default=False)

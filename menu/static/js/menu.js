@@ -114,9 +114,15 @@ $(document).ready(function() {
     });
 
     $('#dishModal button.btn').click(function(ev) {
+        var price = parseFloat(0.0)
+
+        if( $('#dishModal input[name="price"]').val() ) {
+            price = $('#dishModal input[name="price"]').val();
+        }
+
         var data = {
             menu_section: $('#dishModal input[name="menu_section"]').val(),
-            price: $('#dishModal input[name="price"]').val(),
+            price: price,
             description: $('#dishModal input[name="description"]').val()
         };
 

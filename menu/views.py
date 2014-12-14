@@ -131,6 +131,7 @@ def create_dish(request):
         insert_dict['ingredients'] = dish.ingredients
     except InvalidId:
         pass
+
     Dish.objects.create(**insert_dict)
     return HttpResponse(json.dumps({'status': True, 'html': menu_render(request.user)}, default=json_util.default))
 
