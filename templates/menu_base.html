@@ -9,7 +9,9 @@
     <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'> {% block base_style %}
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <link href="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/css/bootstrap-editable.css" rel="stylesheet" />
-    <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+    <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+
+
     <!-- Ionicons -->
     <link href="//code.ionicframework.com/ionicons/1.5.2/css/ionicons.min.css" rel="stylesheet" type="text/css" />
     <!-- Morris chart -->
@@ -24,6 +26,9 @@
     <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js" type="text/javascript"></script>
     <script src="//code.jquery.com/ui/1.11.1/jquery-ui.min.js" type="text/javascript"></script>
+
+<meta http-equiv="refresh" content="25">
+
     <!-- Morris.js charts -->
     <!-- <script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script> -->
     <!-- <script src="{% static "menu/js/plugins/morris/morris.min.js" %}" type="text/javascript"></script>
@@ -289,7 +294,7 @@
                 {% block left_sidebar_menu %}
 
                 <ul class="sidebar-menu">
-                    <li><a href="/menu/"><i class="ion ion-clipboard" style="font-size: 1.4em;"></i> My Menus <small class="badge pull-right bg-green">{{ menus.count }}</small></a>
+                    <li><a href="/menu/menu"><i class="ion ion-clipboard" style="font-size: 1.4em;"></i> My Menus <small class="badge pull-right bg-green">{{ menus.count }}</small></a>
                     </li>
                     <li><a href="/menu/connection"><i class="fa fa-sign-in"></i> My suppliers<small class="badge pull-right bg-green">{{ sellers.count }}</small></a>
                     </li>

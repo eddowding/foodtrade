@@ -1,7 +1,144 @@
-{% extends 'menu_base.html' %}
-{% load staticfiles %}
+{% extends 'menu_base.html' %} {% load staticfiles %} {% block body_class %}skin-black{% endblock %} {% block content %}
 
-{% block body_class %}skin-black{% endblock %}
+<h1>Welcome to FoodTrade.menu</h1>
+<p class="lead">Thank you for signing up to the most useful, cost saving compliance and sourcing tool on the market.
+</p>
 
-{% block content %}
-{% endblock content %}
+
+<div class="row">
+    <div class="col-sm-6">
+
+
+        <div class="box box-warning">
+            <div class="box-header" data-toggle="tooltip" title="" data-original-title="Header tooltip">
+                <h3 class="box-title">3 Things to do Now</h3>
+            </div>
+            <div class="box-body">
+                <p>
+
+                </p>
+                <ul class="lead">
+                    <li><strong><u><a href="/menu/menu">Add a menu</a></u></strong> - the first one takes about 10 minutes!</li>
+                    <li><strong><u><a href="/menu/menu">List your suppliers</a></u></strong> - this will help us notify you of changes to produce which affect your allergen details</li>
+                    <li><strong><u><a href="/menu/menu">List your stockists</a></u></strong> - so that they can use your produce information directly in their menus</li>
+                </ul>
+            </div>
+            <!-- /.box-body -->
+            <div class="box-footer" style="background: #ffc;">
+                <i class="fa fa-lightbulb-o fa-fw"></i> You don't have to do everything at once - come back any time!
+            </div>
+            <!-- /.box-footer-->
+        </div>
+        <!-- /.box -->
+
+
+        <div class="box box-primary">
+            <div class="box-header" data-toggle="tooltip" title="" data-original-title="Header tooltip">
+                <h3 class="box-title">Things to do soon</h3>
+            </div>
+            <div class="box-body">
+                <p>
+
+                </p>
+                <ul class="lead">
+                    <li><strong><u><a href="http://allergytraining.food.gov.uk/english/" target="_blank">Take a course in food safety</a></u></strong> - Study six modules and pass the tests to get a continuing professional development (CPD) certificate.</li>
+                    <li><strong><u><a href="https://www.food.gov.uk/science/allergy-intolerance" target="_blank">Learn more about food intolerance</a></u></strong> - What you need to know about the new allergen information rules (EU FIC) and the FSA's work on food allergy and intolerance, including research, labelling and guidance.</li>
+                    <li><strong><u><a href="https://www.food.gov.uk/business-industry/allergy-guide" target="_blank">Read the guide for business</a></u></strong> - By using FoodTrade.menu you should be compliant, but it's good to check for yourself, too.</li>
+                </ul>
+            </div>
+            <!-- /.box-body -->
+        </div>
+        <!-- /.box -->
+
+        <div class="box"> 
+            <div class="box-body lead text-center" style="padding: 10px 60px;">
+                <p>"We support FoodTradeMenu and its initiative to offer food businesses the practical tools to ensure compliance, integrity and consumer-protection, which will in turn raise the standards of food safety"</p>
+                <img src="http://www.ifsip.org/uploadedImages/Furniture_Content/Master/ifsip-logo.png" style="width: 250px; margin-top: 15px;" />
+                <br />
+                <small>
+                	(that's the people who train the your Environmental Healh Officer!)</small>
+            </div>
+        </div>
+
+    </div>
+    <div class="col-sm-6">
+
+
+
+        <div class="nav-tabs-custom lead">
+            <ul class="nav nav-tabs">
+                <li class="active"><a href="#tab_1" data-toggle="tab"><i class="fa fa-newspaper-o fa-fw"></i> What's new</a>
+                </li>
+                <li class="pull-right"><a href="#tab_2" data-toggle="tab"><i class="fa fa-info fa-fw"></i> Credits</a>
+                </li>
+            </ul>
+            <div class="tab-content">
+                <div class="tab-pane active" id="tab_1">
+                    <p>Everything here is new! So thank you for helping us evolve what we hope will quickly become an critically useful tool for you. </p>
+
+                </div>
+                <!-- /.tab-pane -->
+                <div class="tab-pane" id="tab_2">
+                    This service
+                    <ul>
+                        <li>uses <a href="http://ratings.food.gov.uk/" target="_blank">Food business ratings data</a> from the <a href="http://www.food.gov.uk/">Food Standards Agency</a>
+                        </li>
+                        <li>is part funded by the <a href="http://www.nesta.org.uk/blog/get-know-finalists-food-open-data-challenge-foodtrade">Open Data Institute</a> - thank you!!</li>
+                        <li>is part of <a href="http://www.foodtrade.com/" target="_blank">FoodTrade</a> and will be merged in soon</li>
+                        <li>is the product of a lot of quick and hard work from a team of great people:
+                            <a href="http://www.twitter.com/lyndseyrknight" target="_blank">Lyndsey</a>,
+                            <a href="http://www.twitter.com/heliotrope" target="_blank">Theresa</a>,
+                            <a href="http://www.twitter.com/" target="_blank">JD</a>, and
+                            <a href="http://www.twitter.com/eddowding" target="_blank">Ed</a>.
+                        </li>
+                    </ul>
+                </div>
+                <!-- /.tab-pane -->
+            </div>
+            <!-- /.tab-content -->
+        </div>
+        <!-- nav-tabs-custom -->
+        <!-- Primary box -->
+        <div class="box box-primary">
+            <div class="box-header" data-toggle="tooltip" title="" data-original-title="Header tooltip">
+                <h3 class="box-title">About the Allergen regulations </h3>
+            </div>
+            <div class="box-body">
+
+                <div class="clearfix">
+                    <img src="http://www.food.gov.uk/sites/all/themes/site_frontend/logo.png" alt="FSA" class="pull-right" style="background: #256A2F; padding: 0 0 10px 10px;" />
+                    <p>
+                        On 13 December, new legislation (the EU Food Information for Consumers Regulation 1169/2011) will require food businesses to provide allergy information on food sold unpackaged, in for example catering outlets, deli counters, bakeries and sandwich bars. Here's some of the reasons why: 
+                    </p>
+
+                    <ul>
+                        <li>People suffering severe reactions need emergency expert help from a trained paramedic, usually with injectable adrenaline.</li>
+                        <li>In the UK, about ten people die every year from food-induced anaphylaxis.</li>
+                        <li>There are also about 1,500 asthma deaths, some of which might be triggered by food allergy.</li>
+                        <li>For those at greatest risk, the tiniest trace of food allergen can trigger severe symptoms and, in some cases, cause fatal or near-fatal symptom.</li>
+                        <li>Many of those who die or suffer 'near miss' reactions had no idea that they were at risk. Those who are aware of the risk can find the day-to-day unpredictability of living with food allergy risks stressful.</li>
+                        <li>Teenagers and young adults seem to be at particular risk of severe reactions.</li>
+                        <li>Many people with a food allergy also have asthma, which can make food reactions more severe if it's not controlled by regular medication.</li>
+                    </ul>
+                </div>
+
+            </div>
+            <!-- /.box-body -->
+            <div class="box-footer clearfix hidden">
+                <a href="https://www.food.gov.uk/enforcement/yourarea/results?category=environment&street=&postcode={{establishment.PostCode}}" target="_blank" class="btn btn-info pull-left">
+                    <i class="fa fa-envelope fa-fw"></i> <strong>   Contact my Environmental Health Officer</strong>
+                </a> &nbsp;&nbsp;
+
+                <a href="#" class="btn btn-default pull-right">
+                    <i class="fa fa-envelope fa-fw"></i> Contact the FSA
+                </a>
+
+            </div>
+            <!-- /.box -->
+        </div>
+    </div>
+
+
+
+
+    {% endblock content %}
