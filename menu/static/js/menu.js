@@ -169,11 +169,10 @@ $(document).ready(function() {
         source: ingredients.ttAdapter(),
     });
 
-    var ingredientSelected = false;
 
     $('#ingredientsModal input#name').on('typeahead:selected', function(ev, ingredient) {
-        $('#ingredientsModal input[name="name"]').val(ingredient.value);
-        ingredientSelected = true;
+        $('#ingredientsModal input[name="name"]').val(ingredient.name);
+        $('#ingredientsModal button.btn').trigger('click');
     });
 
 
@@ -184,15 +183,10 @@ $(document).ready(function() {
     $('#ingredientsModal button.btn').click(function(ev) {
         var data = {
             dish: $('#ingredientsModal input[name="dish"]').val(),
+            name: $('#ingredientsModal input[name="name"]').val(),
             parent: null,
             order: 1
         };
-
-         if (ingredientSelected) {
-            data.name = $('#ingredientsModal input[name="name"]').val();
-        } else {
-            data.name = $('#ingredientsModal input#name').val();
-        }
 
         $.ajax({
             url: createIngredientUrl,
@@ -204,7 +198,6 @@ $(document).ready(function() {
                 sortableFn();
                 $('#ingredientsModal input[name="name"]').val('');
                 $('#ingredientsModal input[name="dish"]').val('');
-                ingredientSelected= false;
             }
         });
     });
