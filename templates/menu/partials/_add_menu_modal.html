@@ -1,35 +1,33 @@
 <div id="menuModal" class="modal fade">
     <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h2 class="modal-title">Add Menu item</h2>
-            </div>
-            <div class="modal-body">
-                <form method="post" role="form" id="add_menu_form" action="{% url 'menu_create_menu' %}">
+        <form method="post" role="form" id="add_menu_form" class="form-horizontal" action="{% url 'menu_create_menu' %}">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h2 class="modal-title">Add Menu item</h2>
+                </div>
+                <div class="modal-body">
                     {% csrf_token %}
-                    <div class="box-body">
-                        <div class="form-group">
-                            <label for="menuEstablishment">Establishment</label>
-                            <input class="form-control" id="establishment" placeholder="Enter Establishment"
-                            type="text">
-                        </div>
-                        <div class="form-group">
-                            <input name="establishment" class="form-control" type="hidden">
-                        </div>
-                        <div class="form-group">
-                            <label for="menuName">Name</label>
-                            <input name="name" class="form-control" id="menuName" placeholder="Enter menu name"
-                            type="text">
+                    <div class="form-group">
+                        <label for="menuEstablishment" class="control-label col-sm-3">Business name</label>
+                        <div class="col-sm-9">
+                            <input class="form-control" id="establishment" placeholder="What's your business called?" type="text" style="width: 300px;">
                         </div>
                     </div>
-                    <!-- /.box-body -->
-
-                    <div class="box-footer">
-                        <button type="button" class="btn btn-primary btn-submit-menu" data-dismiss="modal">Submit</button>
+                    <div class="form-group">
+                        <input name="establishment" class="form-control" type="hidden">
                     </div>
-                </form>
+                    <div class="form-group">
+                        <label for="menuName" class="control-label col-sm-3">Menu name</label>
+                        <div class="col-sm-9">
+                            <input name="name" class="form-control" id="menuName" placeholder="Eg 'dinner' or 'summer'" type="text">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary btn-submit-menu" data-dismiss="modal">Submit</button>
+                </div>
             </div>
-        </div>
+        </form>
     </div>
 </div>
