@@ -66,7 +66,8 @@
                                 <i class="fa fa-ellipsis-v"></i>
                                 <i class="fa fa-ellipsis-v"></i>
                             </span>
-                            <span>{{ dish.name }}&nbsp;&pound;{{ dish.price }}</span>
+                            <span>{{ dish.name }} &mdash; &pound;{{ dish.price }} 
+                            </span>
 
                             <div class="pull-right">
                                 
@@ -78,10 +79,9 @@
 
                             </div>
 
-                            <div class="tools" style="position: absolute; right:0;">
-                                <a data-toggle="modal" href="#ingredientsModal" data-dish-id = {{ dish.id }} class="btn btn-xs btn-default add-ingredients"><i class="fa fa-cutlery fa-fw"></i>  Add ingredient</a>
-                            </div>
-                            <p href="#" id="item" class="editable" data-type="textarea" data-pk="1" data-url="/post" data-title="Edit item">{{dish.description}}</p>
+                            
+                            <p href="#" class="editable menuitem-description" data-type="textarea" data-pk="1" data-url="/post" data-title="Edit item">{{dish.description}}</p>
+
                         </div>
                     
                         <ul class="ingredient-tree">
@@ -132,6 +132,8 @@
                                 </li>
                             {% endfor %}
                         </ul>
+
+                            <a data-toggle="modal" href="#ingredientsModal" data-dish-id = {{ dish.id }} class="add-ingredients btn btn-default btn-sm"><i class="fa fa-plus-circle fa-fw"></i>  Add an ingredient</a>
                         </div>
                 {% endfor %} 
 

@@ -5,6 +5,15 @@
   margin: 2px 0;
   border-radius: 2px;
 }
+.menuitem-description {
+  font-style: italic;
+  margin: 0px 23px 20px 23px;
+}
+.add-ingredients {
+  margin-left: 18px;
+  margin-top: 5px;
+  color: #61AE32; 
+}
 .box .ingredient-tree {
   margin: 0;
   padding: 0;
@@ -34,6 +43,9 @@
 .box .ingredient-tree li li a {
   font-weight: normal;
   padding-left: 3px;
+}
+.box .handle {
+  padding: 0 10px 0 0px;
 }
 .box .ingredient-tree li .handle {
   padding: 0 5px;
