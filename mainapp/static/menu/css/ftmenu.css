@@ -185,6 +185,9 @@ a.editable-click:hover {
 .produce {
     font-style: italic;
 }
+#connections .tab-pane {
+  min-height: 300px;
+}
 #connectionsList h4 {
     font-weight: bold;
     border-bottom: 1px solid;
@@ -269,6 +272,7 @@ a.text-muted {
     display: block;
     padding: 3px 20px;
     font-size: 1em !important;
+    text-transform: capitalize;
     border-bottom: 1px solid #eee !important;
 }
 .tt-suggestion.tt-is-under-cursor {
