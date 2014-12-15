@@ -52,11 +52,15 @@ ul.todo-list li.placeholder:before {
     <script>
         var establishmentLookupNameUrl = '{% url "menu_establishment_lookup_name" %}';
         var createMenuUrl = '{% url "menu_create_menu" %}';
+        var deletMenuUrl= '{% url "menu_delete_menu" %}';
         var createSectionUrl = "{% url 'menu_create_menu_section' %}";
+        var deleteSectionUrl = "{% url 'menu_delete_menu_section' %}";
         var dishLookupNameUrl = "{% url 'menu_dish_lookup_name' %}";
         var createDishUrl = "{% url 'menu_create_dish' %}";
+        var deleteDishUrl = "{% url 'menu_delete_dish' %}";
         var createIngredientUrl = "{% url 'menu_create_ingredient' %}";
         var updateIngredientUrl = "{% url 'menu_update_ingredient' %}";
+        var deleteIngredientUrl = "{% url 'menu_delete_ingredient' %}";
         var ingredientLookupNameUrl = "{% url 'menu_ingredient_lookup_name' %}";
     </script>
 {% endblock %}
