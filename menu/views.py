@@ -183,15 +183,16 @@ def ingredient_lookup_name(request):
 
     query1 = {'ingredients__name__icontains': request.GET.get('q')}
     query2 = {'name__icontains': request.GET.get('q')}
-    ret_list = []
+    tmp_list = []
     klass_list = [Gluten, Allergen, Meat]
     for dish in Dish.objects.filter(**query1):
         for ingredient in dish.ingredients:
-            ret_list.append({'name': ingredient.name})
+            tmp_list.append(ingredient.name)
     for klass in klass_list:
         for obj in klass.objects.filter(**query2):
-            ret_list.append({'name': obj.name})
-    return HttpResponse(json.dumps({'status': True, 'objs': ret_list}))
+            tmp_list.append(obj.name)
+    tmp_list = list(set(tmp_list))
+    return HttpResponse(json.dumps({'status': True, 'objs': [{'name': n} for n in tmp_list]}))
 
 
 
