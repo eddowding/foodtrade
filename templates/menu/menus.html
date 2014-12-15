@@ -10,7 +10,7 @@
 
 <link rel="stylesheet" href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
 <link href="{% static "css/connection.css" %}" rel="stylesheet" type="text/css" />
-    
+
 <style>
     body.dragging, body.dragging * {
         cursor: move !important;
@@ -42,13 +42,13 @@ ul.todo-list li.placeholder:before {
 
 
 </style>
-    
+
 {% endblock %}
 
 {% block extra_js %}
     <script src="{% static 'typeahead.js/dist/typeahead.bundle.min.js' %}"></script>
     <script src="{% static 'jquery-sortable/source/js/jquery-sortable-min.js' %}" type="text/javascript"></script>
-    <script src="{% static 'js/menu.js' %}" type="text/javascript"></script>        
+    <script src="{% static 'js/menu.js' %}" type="text/javascript"></script>
     <script>
         var establishmentLookupNameUrl = '{% url "menu_establishment_lookup_name" %}';
         var createMenuUrl = '{% url "menu_create_menu" %}';

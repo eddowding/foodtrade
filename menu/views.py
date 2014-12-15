@@ -196,6 +196,14 @@ def ingredient_lookup_name(request):
 
 
 
+@login_required(login_url=reverse_lazy('menu-login'))
+def print_preview_menu(request , id):
+    '''Print Preview for menu'''
+    menu = Menu.objects.get(pk=ObjectId(id))
+    return render(request, 'menu/menu-print-preview.html', {'menu' : menu})
+
+
+
 """
 Connection views.
 """

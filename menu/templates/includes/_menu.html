@@ -25,7 +25,7 @@
                         </li>
                         {% endcomment %}
                         <li>
-                            <a href="#"><i class="fa fa-fw fa-print"></i> Print preview</a>
+                             <a href="{% url 'menu_print_preview_menu' menu.id %}"><i class="fa fa-fw fa-print"></i> Print preview</a>
                         </li>
                         <li data-toggle="tooltip" title="cat" data-original-title="monkey">
                             <a href="#"><i class="fa  fa-fw fa-download"></i> Generate PDF</a>
