@@ -289,3 +289,15 @@ a.text-muted {
 OL { counter-reset: item }
 LI { display: block }
 LI:before { content: counters(item, ".") " "; counter-increment: item }*/
+
+.del {
+  display: inline-block;
+  margin-left: 10px;
+}
+.delete-btn {
+  color: red;
+}
+.delete-btn:hover {
+  background-color: red;
+  color: #fff;
+}
