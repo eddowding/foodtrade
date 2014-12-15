@@ -31,7 +31,7 @@
                                         <span class="gluten flagged  {% if dish.is_gluten %}active{% endif %}" data-toggle="tooltip" title="Glutenous">G</span>
                                         <span class="allergen_detail">
                                         {% for parent in dish.get_ingredient_tree %}
-                                                {% if parent.is_meat %}meat
+                                                {% if parent.is_meat %}
                                                     <span title="Chicken" data-toggle="tooltip" class="meat  flagged">M</span>
                                                 {% endif %}
                                                 {% if parent.is_allergen %}
