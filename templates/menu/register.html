@@ -7,14 +7,16 @@
 
 {% block html_class %}bg-black{% endblock %}
 {% block title %}AdminLTE | Registration Page {% endblock %}
-{% block body_class %}bg-black{% endblock %}
-{% block header %} {% endblock %}
+{% block body_class %}bg-black lockscreen{% endblock %}
+{% block header %} 
+ 
+{% endblock %}
 {% block extra_js %}
 <script src="{% static 'js/register.js' %}"></script>
 {% endblock extra_js %}
 {% block main_content %}
     <div class="form-box" id="login-box">
-            <div class="header">Register New Membership</div>
+            <div class="header">Create a new account</div>
             <form action="{% url 'menu_register' %}" method="post">{% csrf_token %}
                 <div class="body bg-gray">
                     <div class="form-group">
@@ -26,7 +28,7 @@
                         <span class="help-text"></span>
                     </div>
                     <div class="form-group">
-                        <input type="text" name="username" class="form-control" placeholder="User ID"/>
+                        <input type="text" name="username" class="form-control" placeholder="Username"/>
                         <span class="help-text"></span>
                     </div>
                     <div class="form-group">
@@ -41,7 +43,7 @@
                 <div class="footer">                    
                     <button type="button" class="btn bg-olive btn-block signup">Sign me up</button>
     
-                    <a href="{% url 'menu-login' %}" class="text-center">I already have a membership</a>
+                    <a href="/" class="text-center">I'm already a member</a>
                 </div>
             </form>
             {% comment %}

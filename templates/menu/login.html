@@ -6,12 +6,405 @@
 {% load account %}
 
 {% block html_class %}bg-black{% endblock %}
-{% block title %}AdminLTE | Log in{% endblock %}
+{% block title %}FoodTrade Menu - Quick, easy allergen compliance{% endblock %}
 {% block body_class %}bg-black{% endblock %}
-{% block header %} {% endblock %}
+{% block header %}
+
+
+{% block extra_js %}
+<script src="{% static 'js/register.js' %}"></script>
+{% endblock extra_js %}
+
+    <link href="{% static "menu/css/front.css" %}" rel="stylesheet" type="text/css" />
+ {% endblock %}
 
 {% block main_content %}
-   <div class="form-box" id="login-box">
+   
+
+    <div id="wrap">
+
+
+        <header style="background: #fff;">
+            <div class="container-responsive">
+                <a href="/"><img src="{% static "img/logo.png" %}" alt="" width="100%" style="max-height: 150px;">
+                </a>
+            </div>
+        </header>
+
+
+        <section id="new_theme">
+            <div class="container-responsive">
+                <div class="row lockscreen">
+                    <div class="col-sm-5 text-center">
+                        <div class="theme_image"><img src="{% static "img/product.gif" %}" alt="">
+                        </div>
+                    </div>
+                    <div class="col-sm-6 benefits_list lead text-white" style="padding-right: 0px;">
+
+                        <h2 class="main_slogan">Don't let compliance be a headache. </h2>
+
+                        <h3 class="sub_slogan">
+                            <i class="fa fa-check pull-left"></i>
+                         QUICK, EASY, COMPLIANT MENUS</h3>
+                        <p>Getting allergen compliance wrong costs £5,000. Our allergen menu tool costs a lot less</p>
+
+                        <h3 class="sub_slogan">
+                        <i class="fa fa-check pull-left"></i> SHOW-OFF YOUR MENU TO 1000s</h3>
+                        <p>Find your perfect suppliers and connect with customers who love your offer</p>
+
+                        <h3 class="sub_slogan">
+                        <i class="fa fa-check pull-left"></i> GET AHEAD OF THE GAME</h3>
+                        <p>Two more rounds of EU food law changes are coming.With us, you’ll be prepared</p>
+
+<a href="#" data-toggle="modal" data-target="#loginModal" class="btn btn-info btn-lg" id="getstarted">Start creating your menu
+    <small>Free until March '15, then from &pound;10 / year</small> </a>
+
+                        <code class="text-black hidden">
+screenshot
+quote 
+features
+beneffits demo 6/6
+Coming soon - the roadmap
+testimonials
+partners
+</code>
+
+
+                        <form action="//sustaination.us2.list-manage.com/subscribe/post?u=79e1467c02512dbd83bddab5f&amp;id=da1305635a" method="post" name="mc-embedded-subscribe-form" class="validate hidden" target="_blank" novalidate id="subscribe_form">
+                            <div class="input-group">
+                                <input type="email" value="" name="EMAIL" class="form-control required email" id="mce-EMAIL" placeholder="Enter your email to be first to know">
+                                <div class="input-group-btn">
+                                    <button class="btn btn-default" type="submit" id="subscribe_submit"><i class="fa fa-envelope-o"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div id="mce-responses" class="clear">
+                                <div class="response" id="mce-error-response" style="display:none"></div>
+                                <div class="response" id="mce-success-response" style="display:none"></div>
+                            </div>
+                            <div style="position: absolute; left: -5000px;">
+                                <input type="text" name="b_79e1467c02512dbd83bddab5f_da1305635a" tabindex="-1" value="">
+                            </div>
+                        </form>
+
+
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- NEW THEME SECTION END -->
+        <!-- BENEFITS SECTION BEGIN -->
+
+
+        <section class="benefits_section">
+            <div class="container-responsive">
+                <div class="row">
+                    <div class="col-sm-4">
+                        <div class="benefit_image"><i class="fa fa-check"></i>
+                        </div>
+                        <h2>Hassle-free compliance</h2>
+                        <p>A simple menu offers 10,000s of potential allergen entries. With the automatic allergen labeller, you can have a printed compliant menu in minutes, leaving you to concentrate on what you do best. And if your supplier changes something? We'll notify you immediately.
+                        </p>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="benefit_image"><i class="fa fa-cutlery"></i>
+                        </div>
+                        <h2>Better food, more customers</h2>
+                        <p>We’ll connect you with your suppliers, and you can find the best ingredients from what’s around you. You can even showcase your sustainability with local supplier lists and provenance maps. This means more customers walking through your doors. </p>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="benefit_image"><i class="fa fa-rocket"></i>
+                        </div>
+                        <h2>Future-proof, forever</h2>
+                        <p>There are more regulations coming next year - nutritional information and food origin! But you won't have to worry – we’ll always keep you compliant and up-to-date. </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="quote">
+            <div class="row">
+                <div class="col-xs-12 col-sm-10 col-sm-offset-1 lead"> 
+                <h3 class="ribbon text-left"><i class="fa fa-check fa-fw"></i> Endorsed by the people who train the EHOs</h3>
+                    <p>“The Institute of Food Safety, Integrity &amp; Protection supports FoodTrade Menu and its initiative to offer food businesses the practical tools to ensure compliance, integrity and consumer-protection, which will in turn raise the standards of food safety”</p>
+                    <img src="http://www.ifsip.org/uploadedImages/Furniture_Content/Master/ifsip-logo.png" />
+                </div>
+            </div>
+        </section>
+ 
+ 
+
+        <section class="clearfix bgwhite">
+            <div class="container features ">
+                <div class="col-sm-12  ">
+                    <div class="">
+                        <div class="row wpb_row section row-fluid" style=" text-align:left;">
+                            <div class=" full_section_inner clearfix">
+                                <div class="col-sm-4  ">
+                                    <div class="">
+                                        <div class="">
+                                            <div><i class="fa fa-terminal fa-2x" style="color: #c0c0c0;"></i> 
+                                            </div>
+                                            <div class="icon_text_holder" style="">
+                                                <div class="icon_text_inner" style="">
+                                                    <h5 class="icon_title" style="">Save time with suggestions</h5>
+                                                    <p>Save time and reduce errors as it suggests ingredients and even whole recipes</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="separator  transparent center  " style="margin-top: 26px;margin-bottom: 0px;"></div>
+
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-4  ">
+                                    <div class="">
+                                        <div class="">
+                                            <div><i class="fa fa-print fa-2x" style="color: #c0c0c0;"></i> 
+                                            </div>
+                                            <div class="icon_text_holder" style="">
+                                                <div class="icon_text_inner" style="">
+                                                    <h5 class="icon_title" style="">Print compliant menus</h5>
+                                                    <p>Choose from a variety of formats, upload your logo, include sourcing maps, and more</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="separator  transparent center  " style="margin-top: 26px;margin-bottom: 0px;"></div>
+
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-4  ">
+                                    <div class="">
+                                        <div class="">
+                                            <div><i class="fa fa-list fa-2x" style="color: #c0c0c0;"></i> 
+                                            </div>
+                                            <div class="icon_text_holder" style="">
+                                                <div class="icon_text_inner" style="">
+                                                    
+<h5 class="icon_title" style="">Unlimited menus &amp; ingredients</h5>
+<p>And each can have descriptions, prices, meal types.. it's as useful as you need it to be</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="separator  transparent center  " style="margin-top: 26px;margin-bottom: 0px;"></div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row wpb_row section row-fluid" style=" text-align:left;">
+                            <div class=" full_section_inner clearfix">
+                                <div class="col-sm-4  ">
+                                    <div class="">
+                                        <div class="">
+                                            <div><i class="fa fa-bell-o fa-2x" style="color: #c0c0c0;"></i> 
+                                            </div>
+                                            <div class="icon_text_holder" style="">
+                                                <div class="icon_text_inner" style="">
+                                                    <h5 class="icon_title" style="">
+<span class="cs">Coming soon</span> Product alerts</h5>
+<p>If a supplier changes one of their ingredients we'll alert you to the change so you can reprint. </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="separator  transparent center  " style="margin-top: 26px;margin-bottom: 0px;"></div>
+
+                                    </div>
+                                </div>
+                                <div class="col-sm-4  ">
+                                    <div class="">
+                                        <div class="">
+                                            <div><i class="fa fa-code fa-2x" style="color: #c0c0c0;"></i> 
+                                            </div>
+                                            <div class="icon_text_holder" style="">
+                                                <div class="icon_text_inner" style="">
+                                                    <h5 class="icon_title" style="">
+                                                    <span class="cs">Coming soon</span>
+                                                    Use on your website</h5>
+
+<p>Add a few lines of code to your website and your menu will always be searchable, detailed, and up to date. </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="separator  transparent center  " style="margin-top: 26px;margin-bottom: 0px;"></div>
+
+                                    </div>
+                                </div>
+
+
+                                <div class="col-sm-4  ">
+                                    <div class="">
+                                        <div class="">
+                                            <div><i class="fa fa-bullhorn fa-2x" style="color: #c0c0c0;"></i> 
+                                            </div>
+                                            <div class="icon_text_holder" style="">
+                                                <div class="icon_text_inner" style="">
+                                                    <h5 class="icon_title" style="">
+Showcase your suppliers</h5>
+<p>Everyone loves local food from great suppliers - we'll help you show them on your menu </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="separator  transparent center  " style="margin-top: 26px;margin-bottom: 0px;"></div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row wpb_row section row-fluid" style=" text-align:left;">
+                            <div class=" full_section_inner clearfix">
+                                <div class="col-sm-4  ">
+                                    <div class="">
+                                        <div class="">
+                                            <div><i class="fa fa-search fa-2x" style="color: #c0c0c0;"></i> 
+                                            </div>
+                                            <div class="icon_text_holder" style="">
+                                                <div class="icon_text_inner" style="">
+                                                    <h5 class="icon_title" style="">
+                                                    <span class="cs">Coming soon</span> Share it anywhere &amp; everywhere</h5>
+<p>Simply click a button and your information will be everywhere it needs to be, from booking services to discovery apps</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="separator  transparent center  " style="margin-top: 26px;margin-bottom: 0px;"></div>
+
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-4  ">
+                                    <div class="">
+                                        <div class="">
+                                            <div><i class="fa fa-shopping-cart fa-2x" style="color: #c0c0c0;"></i> 
+                                            </div>
+                                            <div class="icon_text_holder" style="">
+                                                <div class="icon_text_inner" style="">
+                                                    <h5 class="icon_title" style="">
+<span class="cs">Coming soon</span> Get offers</h5>
+<p>Your menu is a shopping list - if you like, we'll help find you offers from great local suppliers. </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="separator  transparent center  " style="margin-top: 26px;margin-bottom: 0px;"></div>
+
+                                    </div>
+
+                                    <div class="">
+                                        <div class="">
+                                            <div><i class="fa fa-bar-chart-o fa-2x" style="color: #c0c0c0;"></i> 
+                                            </div>
+                                            <div class="icon_text_holder" style="">
+                                                <div class="icon_text_inner" style="">
+                                                    <h5 class="icon_title" style=""><span class="cs">Coming soon</span> See how you compare</h5>
+<p>Because we have hundreds of food businesses using FoodTrade we can show you how you match up</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="separator  transparent center  " style="margin-top: 26px;margin-bottom: 0px;"></div>
+
+                                    </div>
+
+
+
+
+
+
+                                </div>
+
+                                <div class="col-sm-4  ">
+                                    <div class="">
+                                        <div class="">
+                                            <div><i class="fa fa-rocket fa-2x" style="color: #c0c0c0;"></i> 
+                                            </div>
+                                            <div class="icon_text_holder" style="">
+                                                <div class="icon_text_inner" style="">
+                                                   <h5 class="icon_title" style="">Futureproof</h5>
+<p>Two more rounds of EU food law changes are coming.With us, you’ll be prepared</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="separator  transparent center  " style="margin-top: 26px;margin-bottom: 11px;"></div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+
+        <section class="subscribe_section">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6 text-left">
+                        <h2>Subscribe to updates</h2>
+                        <p class="text-white">To stay up to date with release news, allergen updates, news from regulators, product recalls and more, join our FIC compliance mailing list.</p>
+                    </div>
+                    <div class="col-md-6">
+
+                        <form action="//sustaination.us2.list-manage.com/subscribe/post?u=79e1467c02512dbd83bddab5f&amp;id=da1305635a" method="post" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate id="subscribe_form">
+                            <div class="input-group">
+                                <input type="email" value="" name="EMAIL" class="form-control required email" id="mce-EMAIL" placeholder="Enter your email to be first to know">
+                                <div class="input-group-btn">
+                                    <button class="btn btn-default" type="submit" id="subscribe_submit"><i class="fa fa-envelope-o"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div id="mce-responses" class="clear">
+                                <div class="response" id="mce-error-response" style="display:none"></div>
+                                <div class="response" id="mce-success-response" style="display:none"></div>
+                            </div>
+                            <div style="position: absolute; left: -5000px;">
+                                <input type="text" name="b_79e1467c02512dbd83bddab5f_da1305635a" tabindex="-1" value="">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!--class="subscribe"-->
+
+
+
+        <!-- SUBSCRIBE SECTION END -->
+        <!-- FOOTER BEGIN -->
+
+
+        <footer id="footer">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="copyright">
+                            <p>
+                                <a href="dashboard.html">&copy;</a> Copyright 2014 FoodTrade / Sustaination Ltd</p>
+                            <p>All rights reserved.</p>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <ul class="soc_nav">
+                            <li><a href="http://twitter.com/foodtradeHQ/"><i class="fa fa-twitter"></i></a>
+                            </li>
+                            <li><a href="http://facebook.com/foodtradeHQ/"><i class="fa fa-facebook"></i></a>
+                            </li>
+                            <li><a href="http://instagram.com/foodtradeHQ/"><i class="fa fa-instagram"></i></a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </footer>
+
+
+        <!-- FOOTER END -->
+
+
+
+ 
+   <div id="loginModal" class="form-box modal fade"  >
             <div class="header">Sign In</div>
             <form action="{% url 'menu-login' %}" method="post"> {% csrf_token %}
                 <div class="body bg-gray">
@@ -39,8 +432,8 @@
                     {% comment %}
                     <p><a href="#">I forgot my password</a></p>
                     
-                    {% endcomment %}
-                    <a href="{% url 'menu_register' %}" class="text-center">Register a new membership</a>
+                    {% endcomment %} 
+                    <a href="{% url 'menu_register' %}" class="text-center">Create a new account</a>
                 </div>
             </form>
             {% comment %}
@@ -54,6 +447,8 @@
             </div>
             {% endcomment %}
     </div>
+ 
+ 
 
 {% endblock %}
 
