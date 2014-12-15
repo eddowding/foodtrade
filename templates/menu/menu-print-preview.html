@@ -34,11 +34,11 @@
                                                 {% if parent.is_meat %}
                                                     <span title="Chicken" data-toggle="tooltip" class="meat  flagged">M</span>
                                                 {% endif %}
-                                                {% if parent.is_allergen %}
-                                                    <span title="Chicken" data-toggle="tooltip" class="allergens  flagged">A</span>
-                                                {% endif %}
                                                 {% if parent.is_gluten %}
                                                     <span title="Chicken" data-toggle="tooltip" class="gluten flagged">
+                                                {% endif %}
+                                                {% if parent.is_allergen %}
+                                                    <span title="Chicken" data-toggle="tooltip" class="allergens  flagged">A</span>
                                                 {% endif %}
                                                         {{ parent.name }}
 
@@ -47,11 +47,11 @@
                                                          {% if child.is_meat %}
                                                             <span title="Chicken" data-toggle="tooltip" class="meat  flagged">M</span>
                                                         {% endif %}
-                                                        {% if child.is_allergen %}
-                                                            <span title="Chicken" data-toggle="tooltip" class="allergens  flagged">A</span>
-                                                        {% endif %}
                                                         {% if child.is_gluten %}
                                                             <span title="Chicken" data-toggle="tooltip" class="gluten flagged">
+                                                        {% endif %}
+                                                        {% if child.is_allergen %}
+                                                            <span title="Chicken" data-toggle="tooltip" class="allergens  flagged">A</span>
                                                         {% endif %}
                                                                 {{ child.name }}
                                                     {% endfor %}
