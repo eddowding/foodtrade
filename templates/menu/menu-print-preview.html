@@ -1,0 +1,78 @@
+{% extends 'menu_base.html' %}
+{% load staticfiles %} 
+{% load socialaccount %}
+{% load url from future %}
+{% load i18n %}
+{% load account %}
+
+{% block body_class %}skin-black  pace-done{% endblock %}
+{% block header %}{% endblock %}
+{% block main_content %}
+<div class="wrapper " style="min-height: 673px;">
+        <!-- Left side column. contains the logo and sidebar -->
+        <!-- Right side column. Contains the navbar and content of the page -->
+        <aside class="">
+            <!-- Content Header (Page header) -->
+            <!-- Main content -->
+            <section class="cont ent">
+                <!-- Main row -->
+                <div class="row">
+                    <!-- Left col -->
+                    <section class="col-sm-10 col-sm-offset-1">
+                        <div id="output">
+                            <h2>{{ menu.name }}</h2>
+                            {% for section in menu.get_menu_sections %}
+                                <p>
+                                    {{ section.name }}
+                                    {% for dish in section.get_section_dishes %}
+                                        {{ dish.name }} &mdash; &pound;{{ dish.price }}
+                                        <span class="allergen flagged {% if dish.is_allergen %}active{% endif %}" data-toggle="tooltip" title="Allergen" data-original-title="Allergen">A</span>
+                                        <span class="meat flagged  {% if dish.is_meat %}active{% endif %}" data-toggle="tooltip" title="Meat">M</span>
+                                        <span class="gluten flagged  {% if dish.is_gluten %}active{% endif %}" data-toggle="tooltip" title="Glutenous">G</span>
+                                        <span class="allergen_detail">
+                                        {% for parent in dish.get_ingredient_tree %}
+                                                {% if parent.is_meat %}meat
+                                                    <span title="Chicken" data-toggle="tooltip" class="meat  flagged">M</span>
+                                                {% endif %}
+                                                {% if parent.is_allergen %}
+                                                    <span title="Chicken" data-toggle="tooltip" class="allergens  flagged">A</span>
+                                                {% endif %}
+                                                {% if parent.is_gluten %}
+                                                    <span title="Chicken" data-toggle="tooltip" class="gluten flagged">
+                                                {% endif %}
+                                                        {{ parent.name }}
+
+                                                <!--<span class=" {% if parent.is_meat %}meat {% endif %}{% if parent.is_allergen %}allergen {% endif %}{% if parent.is_gluten %}gluten {% endif %}"  >{{ parent.name }}</span>,-->
+                                                {% if parent.children %}
+                                                    {% for child in parent.children %}
+                                                        <!--<span class=" {% if child.is_meat %}meat {% endif %}{% if child.is_allergen %}allergen {% endif %}{% if child.is_gluten %}gluten {% endif %}"  >{{ child.name }}</span>,-->
+                                                         {% if parent.is_meat %}
+                                                            <span title="Chicken" data-toggle="tooltip" class="meat  flagged">M</span>
+                                                        {% endif %}
+                                                        {% if parent.is_allergen %}
+                                                            <span title="Chicken" data-toggle="tooltip" class="allergens  flagged">A</span>
+                                                        {% endif %}
+                                                        {% if parent.is_gluten %}
+                                                            <span title="Chicken" data-toggle="tooltip" class="gluten flagged">
+                                                        {% endif %}
+                                                                {{ child.name }}
+                                                    {% endfor %}
+                                                {% endif %}
+                                        {% endfor %}
+                                        </span>
+                                    {% endfor %}
+                                </p>
+                            {% endfor %}
+                        </div>
+                    </section>
+                    <!-- /.Left col -->
+
+                    </div>
+                    <!-- /.row (main row) -->
+
+            </section>
+            <!-- /.content -->
+        </aside>
+        <!-- /.right-side -->
+        </div>
+{% endblock %}
