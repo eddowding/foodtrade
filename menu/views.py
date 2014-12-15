@@ -10,7 +10,7 @@ from django.contrib.auth import authenticate, login as auth_login, logout as aut
 from django.contrib.auth.decorators import login_required
 from django.template.loader import render_to_string
 from mongoengine.django.auth import User
-from menu.models import Establishment, Menu, MenuSection, Dish, Ingredient , Allergen, Meat, Gluten, Connection
+from menu.models import Establishment, Menu, MenuSection, Dish, Allergen, Meat, Gluten, Connection
 
 
 """
@@ -106,11 +106,23 @@ def create_menu(request):
 
 
 @login_required(login_url=reverse_lazy('menu-login'))
+def delete_menu(request):
+    Menu.objects.filter(pk=ObjectId(request.POST.get('id'))).delete()
+    return HttpResponse(json.dumps({'status': True, 'html': menu_render(request.user)}, default=json_util.default))
+
+
+@login_required(login_url=reverse_lazy('menu-login'))
 def create_menu_section(request):
     insert_dict = deepcopy(request.POST.dict())
     insert_dict['menu'] = ObjectId(insert_dict['menu'])
     insert_dict['added_on'] = datetime.now()
-    menu_section = MenuSection.objects.create(**insert_dict)
+    MenuSection.objects.create(**insert_dict)
+    return HttpResponse(json.dumps({'status': True, 'html': menu_render(request.user)}, default=json_util.default))
+
+
+@login_required(login_url=reverse_lazy('menu-login'))
+def delete_menu_section(request):
+    MenuSection.objects.filter(pk=ObjectId(request.POST.get('id'))).delete()
     return HttpResponse(json.dumps({'status': True, 'html': menu_render(request.user)}, default=json_util.default))
 
 
@@ -139,6 +151,13 @@ def create_dish(request):
 
     Dish.objects.create(**insert_dict)
     return HttpResponse(json.dumps({'status': True, 'html': menu_render(request.user)}, default=json_util.default))
+
+
+@login_required(login_url=reverse_lazy('menu-login'))
+def delete_dish(request):
+    Dish.objects.filter(pk=ObjectId(request.POST.get('id'))).delete()
+    return HttpResponse(json.dumps({'status': True, 'html': menu_render(request.user)}, default=json_util.default))
+
 
 
 @login_required(login_url=reverse_lazy('menu-login'))
@@ -176,11 +195,16 @@ def update_ingredient(request):
     return HttpResponse(json.dumps({'status': True, 'html': menu_render(request.user)}, default=json_util.default))
 
 
+@login_required(login_url=reverse_lazy('menu-login'))
+def delete_ingredient(request):
+    Dish.objects.filter(pk=ObjectId(request.POST.get('id'))) \
+                                    .update(pull__ingredients__name=request.POST.get('name'))
+    return HttpResponse(json.dumps({'status': True, 'html': menu_render(request.user)}, default=json_util.default))
+
 
 @login_required(login_url=reverse_lazy('menu-login'))
 def ingredient_lookup_name(request):
     ''' Lookup ingredient with nme of ingredients '''
-
     query1 = {'ingredients__name__icontains': request.GET.get('q')}
     query2 = {'name__icontains': request.GET.get('q')}
     tmp_list = []

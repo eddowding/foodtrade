@@ -12,11 +12,15 @@ urlpatterns = patterns('menu.views',
     #menu
     url(r'^establishment/lookup/name/$', 'establishment_lookup_name', name='menu_establishment_lookup_name'),
     url(r'^create/menu/$', 'create_menu', name='menu_create_menu'),
+    url(r'^delete/menu/$', 'delete_menu', name='menu_delete_menu'),
     url(r'^create/menu/section/$', 'create_menu_section', name='menu_create_menu_section'),
+    url(r'^delete/menu/section/$', 'delete_menu_section', name='menu_delete_menu_section'),
     url(r'^dish/lookup/name/$', 'dish_lookup_name', name='menu_dish_lookup_name'),
     url(r'^create/dish/$', 'create_dish', name='menu_create_dish'),
+    url(r'^delete/dish/$', 'delete_dish', name='menu_delete_dish'),
     url(r'^create/ingredient/$', 'create_ingredient', name='menu_create_ingredient'),
     url(r'^update/ingredient/$', 'update_ingredient', name='menu_update_ingredient'),
+    url(r'^delete/ingredient/$', 'delete_ingredient', name='menu_delete_ingredient'),
     url(r'^ingredient/lookup/name/$', 'ingredient_lookup_name', name='menu_ingredient_lookup_name'),
 
     #print

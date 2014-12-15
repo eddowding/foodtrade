@@ -15,9 +15,16 @@
 <script src="{% static 'js/register.js' %}"></script>
 {% endblock extra_js %}
 {% block main_content %}
+
+        <header style="background: #fff;">
+            <div class="container-responsive">
+                <a href="/"><img src="{% static "img/logo.png" %}" alt="" width="100%" style="max-height: 150px;">
+                </a>
+            </div>
+        </header>
     <div class="form-box" id="login-box">
             <div class="header">Create a new account</div>
-            <form action="{% url 'menu_register' %}" method="post">{% csrf_token %}
+            <form id="registration-form" action="{% url 'menu_register' %}" method="post">{% csrf_token %}
                 <div class="body bg-gray">
                     <div class="form-group">
                         <input type="text" name="first_name" class="form-control" placeholder="First name"/>
@@ -125,115 +132,101 @@ Serving food is a risky business and can have very severe - even fatal - effects
             <li>use the Service for illegal activities</li>
             <li>behave fraudulently</li>
         </ol>
-    </li>
-    <li>Intellectual Property
-        <ol>
-            <li>The User acknowledges that:
-                <ol>
-                    <li>all intellectual property rights in the Service belong to the FoodTrade</li>
-                    <li>they have no rights in the Service</li>
-                    <li>they have no right to have access to the Service in source code form</li>
-                </ol>
-            </li>
-            <li>FoodTrade will be responsible for the investigation, defence, or settlement of any intellectual property infringement claim.  
-            </li>
-        </ol>
-    </li>
-    <li>No warranty
-    <br>    
-        The User agrees that use of the Service is at the User's sole risk, and that the entire responsibility for accuracy ends with the User. 
-        To the maximum extent permitted by applicable law, the Services are provided without warranty of any kind, and FoodTrade hereby disclaims all warranties and conditions with respect to the Services - either express, implied or statutory - including, but not limited to, the implied warranties and/ or conditions of merchantability, of satisfactory quality, of fitness for a particular purpose, of accuracy, and non-infringement of third party rights.  FoodTrade does not warrant that the Service will meet the requirements of the User, that the operation of the Service will be uninterrupted, nor free from errors, nor that defects in the Service will be corrected. No information given by the FoodTrade or its authorised representatives will create a warranty. 
+    </li><li>
+    Intellectual Property
+    <ol>
+        <li>The User acknowledges that:
+            <ol>
+                <li>all intellectual property rights in the Service belong to the FoodTrade</li>
+                <li>they have no rights in the Service</li>
+                <li>they have no right to have access to the Service in source code form</li>
+            </ol>
+        </li>
+        <li>FoodTrade will be responsible for the investigation, defence, or settlement of any intellectual property infringement claim.
+        </li>
+    </ol>
+</li>
+<li>No warranty
+    <br> The User agrees that use of the Service is at the User's sole risk, and that the entire responsibility for accuracy ends with the User. To the maximum extent permitted by applicable law, the Services are provided without warranty of any kind, and FoodTrade hereby disclaims all warranties and conditions with respect to the Services - either express, implied or statutory - including, but not limited to, the implied warranties and/ or conditions of merchantability, of satisfactory quality, of fitness for a particular purpose, of accuracy, and non-infringement of third party rights. FoodTrade does not warrant that the Service will meet the requirements of the User, that the operation of the Service will be uninterrupted, nor free from errors, nor that defects in the Service will be corrected. No information given by the FoodTrade or its authorised representatives will create a warranty.
 </li>
 <li>
-Limitation of liability
-<br>
-The User acknowledges that it is their responsibility to ensure that the outputs and functions of the Service meet their requirements. 
-</p>
-<p>
-6.2 The FoodTrade is not in any way responsible for the use made by the User of the Service. The User understands that certain risks are inherent in the identification of food allergens, and the User assumes sole responsibility for any data entry or amendments made to existing data held against the User’s account, relating to food allergens.
-</p>
-<p>
-6.3 To the extent not prohibited by law, in no event shall the FoodTrade be liable for personal injury, or any incidental, special, indirect, consequential or punitive damages whatsoever, including, without limitation:
-</p>
-<p>
-(a) loss of profit.
-<br>
-(b) loss of business,
-<br>
-(c) business interruption,
-<br>
-(d) loss of business opportunity,
-<br>
-(e) loss of data or
-<br>
-(f) any other commercial damages or losses
-<br>
-arising out of or related to the User's use or inability to use the Service, however caused, whether in contract, tort or otherwise and even if the FoodTrade has been advised of the possibility of such damages.
-</p>
-<p>
-6.4 In no event shall the FoodTrade's total liability to the User for all damages exceed the amount of fifty euros (50.00).
-</p>
-<p>
-6.5 The FoodTrade is responsible for addressing any claims of the User or any third party relating to the Service or the User's possession and/ or use of the Service, including, but not limited to: (a) product liability claims, (b) any claim that the Service fails to conform to any applicable legal or regulatory requirement and (c) claims arising under consumer protection or similar legislation.
+    Limitation of liability
+    <ol>
+        <li>
+            The User acknowledges that it is their responsibility to ensure that the outputs and functions of the Service meet their requirements. </li>
+        <li>FoodTrade is not in any way responsible for the way the User uses the Service. The User understands that risks are inherent in identifying food allergens, and the User assumes sole responsibility for the materials they create using the Service.
+        </li>
+        <li>
+            To the extent allowed under the law, FoodTrade shall not be liable for personal injury, or any incidental, special, indirect, consequential or punitive damages whatsoever, including, without limitation
+            <ul>
+                <li>loss of profit.</li>
+                <li>
+                    loss of business,
+                </li>
+                <li> business interruption,
+                </li>
+                <li> loss of business opportunity,
+                </li>
+                <li>loss of data or
+                </li>
+                <li>any other commercial damages or losses arising out of or related to the User's use or inability to use the Service - even if FoodTrade has been advised of the chance of such damages.
+        </li><li>
+        FoodTrade's total liability to the User for all damages shall not exceed &pound;100.
+    </li><li>
+FoodTrade is responsible for addressing any claims including, but not limited to:  product liability, any claim that the Service fails to conform regulatory requirements, and claims arising under consumer protection or similar legislation.
+</li>
+</ol>
+</li>
+
+<li>
+Conditions of use
+<br />
+The User represents and warrants that they are over 18, legally competent, and isn't wanted or opposed by the UK Government as a 'terrorist supporting' country.
 </li>
 <li>
-7. Conditions precedent
+Termination
 <br>
-7.1 The User represents and warrants that he or she:
-</p>
-<p>
-(a) is legally competent;
-<br>
-(b) if legally incompetent, has obtained a verifiable consent from his or her legal guardian(s), as required under applicable law to accept the terms and conditions of these Terms of Use;
-<br>
-(c) is not located in a country that is subject to a UK. Government embargo or that has been designated by the UK. Government as a 'terrorist supporting' country; and
-<br>
-(d) is not listed on any UK. Government list of prohibited or restricted parties.
+<ol>
+<li>
+The Service will run until terminated by the User or FoodTrade. 
+</li><li>
+The User's rights under the Service will end without notice if the User fails to comply with any of the Terms of Use.
+</li><li> 
+If the User has paid for use of the Service and it is terminated by FoodTrade, FoodTrade shall compensate the User pro rata for their loss.
+</li>
+</ol>
 </li>
 <li>
-8. Termination
-<br>
-8.1 The Service is effective until terminated by the User or the FoodTrade. The User's rights under the Service shall terminate automatically without notice from the FoodTrade if the User fails to comply with any term or condition of these Terms of Use.
-</p>
-<p>
-8.2 If any Service fees have been paid by the User for use of the Service, termination shall take effect 30 days after the notice of termination was sent to the other party in writing. Otherwise the termination shall take effect immediately.
-</p>
-<p>
-8.3 Upon termination of the Service, the User shall cease all use of the Service and destroy all copies, full or partial, of the Service in the User's possession.
-</p>
-<p>
-8.4 If any fees have been paid by the User for use of the Service and the Service is terminated by the FoodTrade, the FoodTrade shall recompense the User pro rata for his or her loss.
+Other terms
+<ol>
+<li>
+FoodTrade may transfer its rights and obligations under these Terms of Use to another person.  Each User must agree these Terms of Use individually.
+</li><li>
+Each of the conditions of these Terms of Use operates separately. If any court or competent authority decided that any of them are unlawful or unenforceable, the remaining conditions will remain in effect.
+</li><li>
+To the extent permissisable by applicable law, the courts of England shall have jurisdiction.
+</li></ol>
+</li>
+
+<li>
+Variations
+<ol>
+<li>
+FoodTrade is entitled to revise these Terms of Use at any time.  
+</li><li>
+If the User does not agree to the revised Terms of Use, he or she will not be bound by them if the User stops using the Service.
+</li>
+</ol>
 </li>
 <li>
-9. Other terms
+Disclaimer
 <br>
-9.1 The FoodTrade may transfer its rights and obligations under these Terms of Use to another person. The User may not transfer his or her rights or obligations under these Terms of Use to another person.
-</p>
-<p>
-9.2 Each of the conditions of these Terms of Use operates separately. If any court or competent authority decided that any of them are unlawful or unenforceable, the remaining conditions will remain in full force and effect.
-</p>
-<p>
-9.3 The laws of England, govern these Terms of Use and the User's use of the Service. The User's use of the Service may also be subject to other local, state, national or international laws. To the extent not prohibited by applicable law, the courts of England shall have jurisdiction.
-</p>
+The Service takes no responsibility or liability for the content captured, stored and maintained by the Service. It is the responsibility of the User to ensure the accuracy of the allergen data distributed.
 </li>
 <li>
-10. Variations
+Developer name and address
 <br>
-10.1 The FoodTrade is entitled to revise these Terms of Use at any time. The FoodTrade shall notify the User of any revisions with reasonable notice, at the FoodTrade's sole discretion, through the Service, but email, via an online service or otherwise, or using any combination of the foregoing.
-</p>
-<p>
-10.2 If the User does not agree to the revised Terms of Use, he or she will not be bound by them If the User ceases all use of the Service and destroys all copies, full or partial, of the Service in the User's possession prior to the revision's becoming effective. The fourth paragraph of Section 8.4 shall apply to the refund of Service fees.
-</p>
-</li>
-<li>
-11. Disclaimer
-<br>
-vitalCustomer provides through its service the provision to store food/ menu lists with the associated food allergen profile of the food item. Sustaination Ltd through its provision of the vitalCustomer service takes no responsibility or liability for the allergen profile content captured, stored and maintained in the vitalCustomer system. It is the responsibility of the User to ensure the accuracy of the allergen data held.
-</li>
-<li>
-12. Developer name and address
-<br>
-The FoodTrade is solely responsible for the Service and its content. Any questions, complaints or claims with respect to the Service should be directed to:
+FoodTrade is solely responsible for the Service and its content. Any questions, complaints or claims with respect to the Service should be directed to:
 </li>
 <p>
     Sustaination Ltd, Farthing Corner, West Tytherley, Salisbury, Wilts, SP5 1NR </p>
@@ -241,11 +234,6 @@ The FoodTrade is solely responsible for the Service and its content. Any questio
 E-mail:
 <a href="mailto:ed@foodtrade.com">ed@foodtrade.com</a>
 </p> 
-
-
-
-
-
 
 
       </div>
