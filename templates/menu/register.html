@@ -24,7 +24,7 @@
         </header>
     <div class="form-box" id="login-box">
             <div class="header">Create a new account</div>
-            <form action="{% url 'menu_register' %}" method="post">{% csrf_token %}
+            <form id="registration-form" action="{% url 'menu_register' %}" method="post">{% csrf_token %}
                 <div class="body bg-gray">
                     <div class="form-group">
                         <input type="text" name="first_name" class="form-control" placeholder="First name"/>
