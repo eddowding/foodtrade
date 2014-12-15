@@ -44,7 +44,7 @@ $(document).ready(function() {
         var formHasError = $('.form-group').hasClass('has-error');
         var passwordMatch = ($('input[name="password"]').val() === $('input[name="password2"]').val());
         if (formHasError === false && passwordMatch === true) {
-            $('form').submit();
+            $('#registration-form').submit();
         } else if (passwordMatch === false) {
             var parentDiv = $('input[name="password2"]').parent();
             var helpTextDiv = parentDiv.find('.help-text');
