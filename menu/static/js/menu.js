@@ -116,7 +116,7 @@ $(document).ready(function() {
     $('#dishModal button.btn').click(function(ev) {
         var price = parseFloat(0.0)
 
-        if( $('#dishModal input[name="price"]').val() ) {
+        if ($('#dishModal input[name="price"]').val()) {
             price = $('#dishModal input[name="price"]').val();
         }
 
@@ -151,7 +151,7 @@ $(document).ready(function() {
 
     //ingredient section
 
-     // Ingredients autocomplete
+    // Ingredients autocomplete
 
     var ingredients = new Bloodhound({
         remote: {
@@ -210,7 +210,7 @@ $(document).ready(function() {
 
 
 
-  /* Menu tree */
+    /* Menu tree */
 
 
     var sortableFn = function() {
@@ -246,4 +246,35 @@ $(document).ready(function() {
     };
 
     sortableFn();
+
+    // delete functionality
+
+    var deleteUrl = null;
+    var deleteId = null;
+    var deleteName = null;
+
+    $(document).delegate('.delete-btn', 'click', function(ev) {
+        deleteUrl = $(this).attr('data-url');
+        deleteId = $(this).attr('data-id');
+        deleteName = $(this).attr('data-name');
+        $('#confirmationModal').modal('show');
+    });
+
+    $('.delete-confirm-btn').click(function(ev) {
+        var data = {
+            id: deleteId,
+            name: deleteName
+        };
+
+        $.ajax({
+            url: deleteUrl,
+            data: data,
+            type: 'POST',
+            dataType: 'JSON',
+            success: function(data) {
+                $('.menus').html(data.html);
+                sortableFn();
+            }
+        });
+    });
 });
