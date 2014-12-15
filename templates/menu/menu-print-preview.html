@@ -42,17 +42,15 @@
                                                 {% endif %}
                                                         {{ parent.name }}
 
-                                                <!--<span class=" {% if parent.is_meat %}meat {% endif %}{% if parent.is_allergen %}allergen {% endif %}{% if parent.is_gluten %}gluten {% endif %}"  >{{ parent.name }}</span>,-->
                                                 {% if parent.children %}
                                                     {% for child in parent.children %}
-                                                        <!--<span class=" {% if child.is_meat %}meat {% endif %}{% if child.is_allergen %}allergen {% endif %}{% if child.is_gluten %}gluten {% endif %}"  >{{ child.name }}</span>,-->
-                                                         {% if parent.is_meat %}
+                                                         {% if child.is_meat %}
                                                             <span title="Chicken" data-toggle="tooltip" class="meat  flagged">M</span>
                                                         {% endif %}
-                                                        {% if parent.is_allergen %}
+                                                        {% if child.is_allergen %}
                                                             <span title="Chicken" data-toggle="tooltip" class="allergens  flagged">A</span>
                                                         {% endif %}
-                                                        {% if parent.is_gluten %}
+                                                        {% if child.is_gluten %}
                                                             <span title="Chicken" data-toggle="tooltip" class="gluten flagged">
                                                         {% endif %}
                                                                 {{ child.name }}
@@ -66,13 +64,11 @@
                         </div>
                     </section>
                     <!-- /.Left col -->
-
                     </div>
                     <!-- /.row (main row) -->
-
             </section>
             <!-- /.content -->
         </aside>
         <!-- /.right-side -->
-        </div>
+</div>
 {% endblock %}
