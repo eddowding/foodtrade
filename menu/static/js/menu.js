@@ -277,4 +277,12 @@ $(document).ready(function() {
             }
         });
     });
+
+    $(document).delegate('.ingredient-item', 'mouseover', function(ev) {
+        $(this).children('.pull-right').children('.tools').removeClass('hidden');
+    });
+
+    $(document).delegate('.ingredient-item', 'mouseout', function(ev) {
+        $(this).children('.pull-right').children('.tools').addClass('hidden');
+    });
 });
