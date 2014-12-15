@@ -101,7 +101,6 @@
                                     
                                         <span class="gluten flagged {% if parent.is_gluten %}active{% endif %}" data-toggle="tooltip" title="Gluten">G</span>
                                     </div>
-                                    {% if parent.children %}
                                     <ul>
                                         {% for child in parent.children %}
                                         <li data-dish-id="{{dish.pk}}" data-ingredient-name="{{child.name}}" class="ingredient-item">
@@ -125,7 +124,6 @@
                                         </li>
                                         {% endfor %}
                                     </ul>
-                                    {% endif %}
                                 </li>
                             {% endfor %}
                         </ul>
