@@ -93,17 +93,13 @@
 
                                     <div class="pull-right">
                                         <div class="tools hidden">
-                                            <a data-id={{dish.pk}} data-url={% url 'menu_delete_ingredient' %} data-name='{{parent.name}}' class="btn btn-xs btn-default delete-btn"><i class="fa fa-list-ul fa-fw"></i>Delete Ingredient</a>
+                                            <a data-id={{dish.pk}} data-url={% url 'menu_delete_ingredient' %} data-name='{{parent.name}}' class=" delete-btn"><i class="fa fa-list-ul fa-fw"></i>Delete Ingredient</a>
                                         </div>
-                                        {% if parent.is_allergen %}
-                                        <span class="allergen flagged" data-toggle="tooltip" title="tss" data-original-title="Milk">A</span>
-                                        {% endif %}
-                                        {% if parent.is_meat %}
-                                            <span class="meat flagged active" data-toggle="tooltip" title="Chicken">M</span>
-                                        {% endif %}
-                                        {% if parent.is_gluten %}
-                                            <span class="gluten flagged" data-toggle="tooltip" title="Gluten">G</span>
-                                        {% endif %}
+                                         <span class="allergen flagged {% if parent.is_allergen %}active{% endif %}" data-toggle="tooltip" title="tss" data-original-title="Allergen">A</span>
+                                            
+                                        <span class="meat flagged {% if parent.is_meat %}active{% endif %}" data-toggle="tooltip" title="Meat">M</span>
+                                    
+                                        <span class="gluten flagged {% if parent.is_gluten %}active{% endif %}" data-toggle="tooltip" title="Gluten">G</span>
                                     </div>
                                     {% if parent.children %}
                                     <ul>
@@ -120,15 +116,11 @@
                                                     <a data-id={{dish.pk}} data-url={% url 'menu_delete_ingredient' %} data-name='{{child.name}}' class="btn btn-xs btn-default delete-btn"><i class="fa fa-list-ul fa-fw"></i>Delete Ingredient</a>
                                                 </div>
 
-                                                {% if child.is_allergen %}
-                                                <span class="allergen flagged" data-toggle="tooltip" title="tss" data-original-title="Milk">A</span>
-                                                {% endif %}
-                                                {% if child.is_meat %}
-                                                    <span class="meat flagged active" data-toggle="tooltip" title="Chicken">M</span>
-                                                {% endif %}
-                                                {% if child.is_gluten %}
-                                                    <span class="gluten flagged" data-toggle="tooltip" title="Gluten">G</span>
-                                                {% endif %}
+                                                <span class="allergen flagged {% if child.is_allergen %}active{% endif %}" data-toggle="tooltip" title="tss" data-original-title="Allergen">A</span>
+                                            
+                                                <span class="meat flagged {% if child.is_meat %}active{% endif %}" data-toggle="tooltip" title="Meat">M</span>
+                                            
+                                                <span class="gluten flagged {% if child.is_gluten %}active{% endif %}" data-toggle="tooltip" title="Gluten">G</span>
                                             </div>
                                         </li>
                                         {% endfor %}
