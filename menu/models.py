@@ -1,5 +1,6 @@
 from datetime import datetime
 from mongoengine import *
+from mongoengine import signals
 from mongoengine.django.auth import User
 
 
@@ -96,6 +97,13 @@ class Menu(Document):
     def get_menu_sections(self):
         return MenuSection.objects.filter(menu=self.pk)
 
+    @classmethod
+    def post_delete(cls, sender, document, **kwargs):
+        MenuSection.objects.filter(menu=document).delete()
+
+signals.post_delete.connect(Menu.post_delete, sender=Menu)
+
+
 class MenuSection(Document):
     menu = ReferenceField(Menu)
     name = StringField(required=True)
@@ -105,6 +113,12 @@ class MenuSection(Document):
 
     def get_section_dishes(self):
         return Dish.objects.filter(menu_section=self.pk)
+
+    @classmethod
+    def post_delete(cls, sender, document, **kwargs):
+        Dish.objects.filter(menu_section=document).delete()
+
+signals.post_delete.connect(MenuSection.post_delete, sender=MenuSection)
 
 
 class Ingredient(EmbeddedDocument):
