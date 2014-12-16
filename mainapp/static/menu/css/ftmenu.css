@@ -157,8 +157,18 @@ a.editable-click:hover {
     padding: 0.5em 2em 2em 2em;
     box-shadow: 0 0 10px #444 inset;
 }
+.dish_wrapper {
+  margin: 1em 0; 
+}
+.dish_name {
+  font-size: 20px;
+}
+#printed #output {
+  box-shadow: 0 0 0 #fff;
+}
+
 #output * {
-    font-family: Georgia;
+    font-family: Georgia; 
     text-align: center;
 }
 #output p {
@@ -171,14 +181,47 @@ a.editable-click:hover {
 #output h3 {
     border-bottom: 1px solid;
     padding: 1em 0 0.3em 0;
-    width: 60%;
+    width: 100%;
     margin: 0 auto;
 }
+
 .allergen_detail {
-    font-size: 12px;
+    font-size: 18px;
     clear: both;
     display: block;
 }
+.ingredient_parent {
+  color: red;
+}
+.ingredient_child {
+  color: blue;
+} 
+.has_items, 
+.has_children {
+  display: inline-block;
+}
+
+.ingredient_parent:after {
+  content: ", ";
+}
+.ingredient_parent:last-of-type:after {
+    content: "";
+}
+
+.has_children:before {
+   content: "(";
+}
+.has_children:after {
+   content: ")";
+}
+.ingredient_child:after {
+  content: ", ";
+}
+.ingredient_child:last-of-type:after {
+    content: "";
+}
+
+
 .supplier {
     font-weight: bold;
 }

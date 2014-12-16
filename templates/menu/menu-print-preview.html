@@ -8,67 +8,79 @@
 {% block body_class %}skin-black  pace-done{% endblock %}
 {% block header %}{% endblock %}
 {% block main_content %}
-<div class="wrapper " style="min-height: 673px;">
-        <!-- Left side column. contains the logo and sidebar -->
-        <!-- Right side column. Contains the navbar and content of the page -->
-        <aside class="">
-            <!-- Content Header (Page header) -->
+<div id="printed">
+         
             <!-- Main content -->
-            <section class="cont ent">
+            <section class="content">
                 <!-- Main row -->
                 <div class="row">
                     <!-- Left col -->
-                    <section class="col-sm-10 col-sm-offset-1">
+                    <section class="col-sm-12">
                         <div id="output">
                             <h2>{{ menu.name }}</h2>
                             {% for section in menu.get_menu_sections %}
-                                <p>
-                                    {{ section.name }}
-                                    {% for dish in section.get_section_dishes %}
-                                        {{ dish.name }} &mdash; &pound;{{ dish.price }}
-                                        <span class="allergen flagged {% if dish.is_allergen %}active{% endif %}" data-toggle="tooltip" title="Allergen" data-original-title="Allergen">A</span>
-                                        <span class="meat flagged  {% if dish.is_meat %}active{% endif %}" data-toggle="tooltip" title="Meat">M</span>
-                                        <span class="gluten flagged  {% if dish.is_gluten %}active{% endif %}" data-toggle="tooltip" title="Glutenous">G</span>
+                            <h3>{{ section.name }}</h3>
+                                     
+                                {% for dish in section.get_section_dishes %}
+                                    <div class="dish_wrapper">
+                                        
+                                        <span class="dish_name">{{ dish.name }}</span> 
+                                        &mdash; 
+                                        <span class="dish_price">
+                                            &pound;
+                                            {{ dish.price }}
+                                        </span>
+
+                                        <!-- <div class="pu ll-right"> -->
+                                            <span class="allergen flagged {% if dish.is_allergen %}active{% endif %}" title="Allergen" data-original-title="Allergen">A</span>
+                                            <span class="meat flagged  {% if dish.is_meat %}active{% endif %}" title="Meat">M</span>
+                                            <span class="gluten flagged  {% if dish.is_gluten %}active{% endif %}" title="Glutenous">G</span>
+                                        <!-- </div> -->
+
+
                                         <span class="allergen_detail">
                                         {% for parent in dish.get_ingredient_tree %}
+                                            <div class="has_items">
                                                 {% if parent.is_meat %}
-                                                    <span title="Chicken" data-toggle="tooltip" class="meat  flagged">M</span>
+                                                    <span  class="meat  flagged">M</span>
                                                 {% endif %}
                                                 {% if parent.is_gluten %}
-                                                    <span title="Chicken" data-toggle="tooltip" class="gluten flagged"></span>
+                                                    <span  class="gluten flagged">G</span>
                                                 {% endif %}
                                                 {% if parent.is_allergen %}
-                                                    <span title="Chicken" data-toggle="tooltip" class="allergens  flagged">A</span>
+                                                    <span  class="allergens  flagged">A</span>
                                                 {% endif %}
-                                                        {{ parent.name }}
+                                                        
+                                                       <span class="ingredient_parent">{{ parent.name }}</span>
+                                            </div>
 
                                                 {% if parent.children %}
+                                                    <div class="has_children">
                                                     {% for child in parent.children %}
                                                          {% if child.is_meat %}
-                                                            <span title="Chicken" data-toggle="tooltip" class="meat  flagged">M</span>
+                                                            <span  class="meat  flagged">M</span>
                                                         {% endif %}
                                                         {% if child.is_gluten %}
-                                                            <span title="Chicken" data-toggle="tooltip" class="gluten flagged"></span>
+                                                            <span  class="gluten flagged">G</span>
                                                         {% endif %}
                                                         {% if child.is_allergen %}
-                                                            <span title="Chicken" data-toggle="tooltip" class="allergens  flagged">A</span>
+                                                            <span  class="allergens  flagged">A</span>
                                                         {% endif %}
-                                                                {{ child.name }}
+
+                                                        <span class="ingredient_child">{{ child.name }}</span>
                                                     {% endfor %}
+                                                    </div>
                                                 {% endif %}
                                         {% endfor %}
                                         </span>
-                                    {% endfor %}
-                                </p>
+                                    </div>
+                                {% endfor %}
                             {% endfor %}
                         </div>
                     </section>
                     <!-- /.Left col -->
                     </div>
                     <!-- /.row (main row) -->
-            </section>
-            <!-- /.content -->
-        </aside>
-        <!-- /.right-side -->
+            </section> 
 </div>
 {% endblock %}
