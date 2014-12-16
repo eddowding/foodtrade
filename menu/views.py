@@ -190,6 +190,23 @@ def create_ingredient(request):
                                                   set__is_meat=dish_is_meat,
                                                   set__is_gluten=dish_is_gluten,
                                                   push__ingredients=insert_dict)
+
+
+    dish_obj = Dish.objects.get(pk=ObjectId(dish))
+    parent = insert_dict.get('parent')
+    parent_update_dict = {}
+    if insert_dict['is_allergen']:
+        parent_update_dict['set__ingredients__S__is_allergen'] = insert_dict['is_allergen']
+    if insert_dict['is_meat']:
+        parent_update_dict['set__ingredients__S__is_meat'] = insert_dict['is_meat']
+    if insert_dict['is_gluten']:
+        parent_update_dict['set__ingredients__S__is_gluten'] = insert_dict['is_gluten']
+    while parent:
+        for ingredient in dish_obj.ingredients:
+            if parent == ingredient.name:
+                Dish.objects.filter(pk=ObjectId(dish), ingredients__name=parent).update(**parent_update_dict)
+                dish_obj = Dish.objects.get(pk=ObjectId(dish))
+                parent = ingredient.parent
     return HttpResponse(json.dumps({'status': True, 'html': menu_render(request.user)}, default=json_util.default))
 
 
@@ -218,7 +235,7 @@ def update_ingredient(request):
         dish_is_meat = insert_dict['is_meat']
     if insert_dict['is_gluten']:
         dish_is_gluten = insert_dict['is_gluten']
-    Dish.objects.filter(pk=ObjectId(dish), ingredients__name=insert_dict['name']) \
+    dish_obj = Dish.objects.filter(pk=ObjectId(dish), ingredients__name=insert_dict['name']) \
                                                     .update(set__is_allergen=dish_is_allergen,
                                                             set__is_meat=dish_is_meat,
                                                             set__is_gluten=dish_is_gluten,
@@ -227,6 +244,22 @@ def update_ingredient(request):
                                                             set__ingredients__S__is_allergen=insert_dict['is_allergen'],
                                                             set__ingredients__S__is_meat=insert_dict['is_meat'],
                                                             set__ingredients__S__is_gluten=insert_dict['is_gluten'])
+
+    dish_obj = Dish.objects.get(pk=ObjectId(dish))
+    parent = insert_dict.get('parent')
+    parent_update_dict = {}
+    if insert_dict['is_allergen']:
+        parent_update_dict['set__ingredients__S__is_allergen'] = insert_dict['is_allergen']
+    if insert_dict['is_meat']:
+        parent_update_dict['set__ingredients__S__is_meat'] = insert_dict['is_meat']
+    if insert_dict['is_gluten']:
+        parent_update_dict['set__ingredients__S__is_gluten'] = insert_dict['is_gluten']
+    while parent:
+        for ingredient in dish_obj.ingredients:
+            if parent == ingredient.name:
+                Dish.objects.filter(pk=ObjectId(dish), ingredients__name=parent).update(**parent_update_dict)
+                dish_obj = Dish.objects.get(pk=ObjectId(dish))
+                parent = ingredient.parent
     return HttpResponse(json.dumps({'status': True, 'html': menu_render(request.user)}, default=json_util.default))
 
 
