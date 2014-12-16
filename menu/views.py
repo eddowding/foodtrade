@@ -234,6 +234,20 @@ def update_ingredient(request):
 def delete_ingredient(request):
     Dish.objects.filter(pk=ObjectId(request.POST.get('id'))) \
                                     .update(pull__ingredients__name=request.POST.get('name'))
+    dish_is_allergen = False
+    dish_is_meat = False
+    dish_is_gluten = False
+    for ingredient in Dish.objects.get(pk=ObjectId(request.POST.get('id'))).ingredients:
+        if ingredient.is_allergen:
+            dish_is_allergen = True
+        if ingredient.is_meat:
+            dish_is_meat = True
+        if ingredient.is_gluten:
+            dish_is_gluten = True
+    Dish.objects.filter(pk=ObjectId(request.POST.get('id'))) \
+                                    .update(set__is_allergen=dish_is_allergen,
+                                            set__is_meat=dish_is_meat,
+                                            set__is_gluten=dish_is_gluten)
     return HttpResponse(json.dumps({'status': True, 'html': menu_render(request.user)}, default=json_util.default))
 
 
