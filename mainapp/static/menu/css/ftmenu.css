@@ -335,10 +335,11 @@ LI:before { content: counters(item, ".") " "; counter-increment: item }*/
 
 .del {
   display: inline-block;
-  margin-left: 10px;
+  
 }
 .delete-btn {
   color: red;
+  margin: 0 10px;
 }
 .delete-btn:hover {
   background-color: red;

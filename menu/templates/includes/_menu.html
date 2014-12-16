@@ -20,7 +20,7 @@
                 <div class="box-tools pull-right">
                     <ul class="pagination pagination-sm inline">
                         <li>
-                            <a data-id={{menu.pk}} data-url={% url 'menu_delete_menu' %} class="btn btn-xs btn-default delete-btn"><i class="fa fa-list-ul fa-fw"></i>Delete Menu</a>
+                            <a data-id={{menu.pk}} data-url={% url 'menu_delete_menu' %} class="btn btn-xs btn-default delete-btn"><i class="fa fa-trash-o fa-fw"></i>Delete Menu</a>
                         </li>
                         <li>
                              <a href="{% url 'menu_print_preview_menu' menu.id %}"><i class="fa fa-fw fa-print"></i> Print preview</a>
@@ -48,7 +48,7 @@
                     </h3>
                     <div class="pull-right" id="sectionDish">
                         <!-- Add dish -->
-                        <a data-id={{section.pk}} data-url={% url 'menu_delete_menu_section' %} class="btn btn-xs btn-default delete-btn"><i class="fa fa-list-ul fa-fw"></i>Delete Menu Section</a>
+                        <a data-id={{section.pk}} data-url={% url 'menu_delete_menu_section' %} class="delete-btn"> Delete this section</a>
                         <a data-toggle="modal" href="#dishModal" data-menu-section-id ={{ section.id }} class="btn btn-xs btn-default add-dish" data-type="text">
                             <i class="fa fa-list-ul fa-fw"></i>Add Dish
                         </a>
@@ -66,7 +66,7 @@
                             </span>
                             <span>{{ dish.name }} &mdash; &pound;{{ dish.price }} 
                             </span>
-                            <a data-id={{dish.pk}} data-url={% url 'menu_delete_dish' %} class="btn btn-xs btn-default delete-btn"><i class="fa fa-list-ul fa-fw"></i>Delete Menu Dish</a>
+                            <a data-id={{dish.pk}} data-url={% url 'menu_delete_dish' %} class="delete-btn">Delete</a>
                             <div class="pull-right">
                                 
                                 <span class="allergen flagged {% if dish.is_allergen %}active{% endif %}" data-toggle="tooltip" title="Allergen" data-original-title="Allergen">A</span>
