@@ -89,7 +89,7 @@
                                         <i class="fa fa-ellipsis-v"></i>
                                         <i class="fa fa-ellipsis-v"></i>
                                     </span>
-                                    <span>{{ parent.name }}</span>
+                                    <span class="ingredient parent">{{ parent.name }}</span>
                                     <div class="del"> 
                                         <div class="tools hidden">
                                             <a data-id={{dish.pk}} data-url={% url 'menu_delete_ingredient' %} data-name='{{parent.name}}' class="delete-btn">Delete</a>
@@ -110,7 +110,7 @@
                                                 <i class="fa fa-ellipsis-v"></i>
                                                 <i class="fa fa-ellipsis-v"></i>
                                             </span>
-                                            <span>{{ child.name }}</span>
+                                            <span class="ingredient child">{{ child.name }}</span>
                                             <div class="del">
                                                 <div class="tools hidden">
                                                     <a data-id={{dish.pk}} data-url={% url 'menu_delete_ingredient' %} data-name='{{child.name}}' class="delete-btn">Delete</a>

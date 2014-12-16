@@ -40,24 +40,22 @@
 
                                         <span class="allergen_detail">
                                         {% for parent in dish.get_ingredient_tree %}
-                                            <div class="has_items">
-                                                {% if parent.is_meat %}
+                                             
+                                           <!--      {% if parent.is_meat %}
                                                     <span  class="meat  flagged">M</span>
                                                 {% endif %}
                                                 {% if parent.is_gluten %}
                                                     <span  class="gluten flagged">G</span>
-                                                {% endif %}
-                                                {% if parent.is_allergen %}
-                                                    <span  class="allergens  flagged">A</span>
-                                                {% endif %}
+                                                {% endif %} -->
+                                                
                                                         
-                                                       <span class="ingredient_parent">{{ parent.name }}</span>
-                                            </div>
+                                                       <span class="ingredient_parent ingredient {% if parent.is_allergen %} strong {% endif %}">{{ parent.name }}</span>
+                                     
 
                                                 {% if parent.children %}
                                                     <div class="has_children">
                                                     {% for child in parent.children %}
-                                                         {% if child.is_meat %}
+                                                    <!--      {% if child.is_meat %}
                                                             <span  class="meat  flagged">M</span>
                                                         {% endif %}
                                                         {% if child.is_gluten %}
@@ -66,13 +64,15 @@
                                                         {% if child.is_allergen %}
                                                             <span  class="allergens  flagged">A</span>
                                                         {% endif %}
-
-                                                        <span class="ingredient_child">{{ child.name }}</span>
+ -->
+                                                        <span class="ingredient_child ingredient {% if parent.is_allergen %} strong {% endif %}">{{ child.name }}</span>
                                                     {% endfor %}
                                                     </div>
                                                 {% endif %}
                                         {% endfor %}
                                         </span>
+
+                                       
                                     </div>
                                 {% endfor %}
                             {% endfor %}

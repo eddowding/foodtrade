@@ -1,3 +1,7 @@
+.strong {
+  font-weight: bold;
+}
+
 .menuitem {
     background: #ECE5CE;
     border-left: 2px solid #e6e7e8;
@@ -152,6 +156,11 @@ a.editable-click:hover {
     padding: 5px;
     border: 1px solid #aaa;
 }
+
+.ingredient {
+  text-transform: capitalize;
+}
+
 #output {
     background: #fff;
     padding: 0.5em 2em 2em 2em;
@@ -162,11 +171,13 @@ a.editable-click:hover {
 }
 .dish_name {
   font-size: 20px;
+  font-weight: bold;
+  margin: 5px;
+  line-height: 2;
 }
 #printed #output {
   box-shadow: 0 0 0 #fff;
 }
-
 #output * {
     font-family: Georgia; 
     text-align: center;
@@ -181,30 +192,33 @@ a.editable-click:hover {
 #output h3 {
     border-bottom: 1px solid;
     padding: 1em 0 0.3em 0;
-    width: 100%;
+    width: 70%;
     margin: 0 auto;
 }
 
 .allergen_detail {
-    font-size: 18px;
+    font-size: 16px;
     clear: both;
+    margin: 0 auto;
+    width: 60%;
     display: block;
 }
 .ingredient_parent {
-  color: red;
+  
 }
 .ingredient_child {
-  color: blue;
+  font-style: italic;
+  font-size: 16px;
 } 
-.has_items, 
+ 
 .has_children {
   display: inline-block;
 }
 
-.ingredient_parent:after {
+.ingredient_parent:before {
   content: ", ";
 }
-.ingredient_parent:last-of-type:after {
+.ingredient_parent:first-of-type:before {
     content: "";
 }
 
