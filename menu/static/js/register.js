@@ -43,8 +43,14 @@ $(document).ready(function() {
     $('.signup').click(function() {
         var formHasError = $('.form-group').hasClass('has-error');
         var passwordMatch = ($('input[name="password"]').val() === $('input[name="password2"]').val());
+        var termAccepted = $('.form-group').find('.checkbox').find('input[name="terms"]').is(':checked');
         if (formHasError === false && passwordMatch === true) {
-            $('#registration-form').submit();
+            if (termAccepted) {
+                $('#registration-form').submit();
+            } else {
+                $('.form-group').find('.checkbox').parent().find('.help-text').html('You need to accept terms');
+            }
+
         } else if (passwordMatch === false) {
             var parentDiv = $('input[name="password2"]').parent();
             var helpTextDiv = parentDiv.find('.help-text');
