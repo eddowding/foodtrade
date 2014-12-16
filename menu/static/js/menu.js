@@ -230,7 +230,10 @@ $(document).ready(function() {
                     data: data,
                     type: 'POST',
                     dataType: 'JSON',
-                    success: function(data) {}
+                    success: function(data) {
+                        $('.menus').html(data.html);
+                        sortableFn();
+                    }
                 });
 
                 _super($item, container);
