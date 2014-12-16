@@ -183,10 +183,20 @@ def update_ingredient(request):
     insert_dict['is_allergen'] = True if Allergen.objects.filter(name=insert_dict['name']).count() else False
     insert_dict['is_meat'] = True if Meat.objects.filter(name=insert_dict['name']).count() else False
     insert_dict['is_gluten'] = True if Gluten.objects.filter(name=insert_dict['name']).count() else False
+    dish_is_allergen = False
+    dish_is_meat = False
+    dish_is_gluten = False
+    for ingredient in Dish.objects.get(pk=ObjectId(dish)).ingredients:
+        if ingredient.is_allergen:
+            dish_is_allergen = True
+        if ingredient.is_meat:
+            dish_is_meat = True
+        if ingredient.is_gluten:
+            dish_is_gluten = True
     Dish.objects.filter(pk=ObjectId(dish), ingredients__name=insert_dict['name']) \
-                                                    .update(set__is_allergen=insert_dict['is_allergen'],
-                                                            set__is_meat=insert_dict['is_meat'],
-                                                            set__is_gluten=insert_dict['is_gluten'],
+                                                    .update(set__is_allergen=dish_is_allergen,
+                                                            set__is_meat=dish_is_meat,
+                                                            set__is_gluten=dish_is_gluten,
                                                             set__ingredients__S__parent=insert_dict['parent'],
                                                             set__ingredients__S__order=insert_dict['order'],
                                                             set__ingredients__S__is_allergen=insert_dict['is_allergen'],
