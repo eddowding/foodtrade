@@ -166,11 +166,30 @@ def create_ingredient(request):
     insert_dict = deepcopy(request.POST.dict())
     del insert_dict['dish']
     #TODO: cache this to save query
+    dish_is_allergen = False
+    dish_is_meat = False
+    dish_is_gluten = False
+    dish_obj = Dish.objects.get(pk=ObjectId(dish))
+    for ingredient in dish_obj.ingredients:
+        if ingredient.is_allergen:
+            dish_is_allergen = True
+        if ingredient.is_meat:
+            dish_is_meat = True
+        if ingredient.is_gluten:
+            dish_is_gluten = True
     insert_dict['is_allergen'] = True if Allergen.objects.filter(name=insert_dict['name']).count() else False
     insert_dict['is_meat'] = True if Meat.objects.filter(name=insert_dict['name']).count() else False
     insert_dict['is_gluten'] = True if Gluten.objects.filter(name=insert_dict['name']).count() else False
-    Dish.objects.filter(pk=ObjectId(dish)).update(set__is_allergen=insert_dict['is_allergen'], set__is_meat=insert_dict['is_meat'],
-                                                  set__is_gluten=insert_dict['is_gluten'], push__ingredients=insert_dict)
+    if insert_dict['is_allergen']:
+        dish_is_allergen = insert_dict['is_allergen']
+    if insert_dict['is_meat']:
+        dish_is_meat = insert_dict['is_meat']
+    if insert_dict['is_gluten']:
+        dish_is_gluten = insert_dict['is_gluten']
+    Dish.objects.filter(pk=ObjectId(dish)).update(set__is_allergen=dish_is_allergen,
+                                                  set__is_meat=dish_is_meat,
+                                                  set__is_gluten=dish_is_gluten,
+                                                  push__ingredients=insert_dict)
     return HttpResponse(json.dumps({'status': True, 'html': menu_render(request.user)}, default=json_util.default))
 
 
@@ -193,6 +212,12 @@ def update_ingredient(request):
             dish_is_meat = True
         if ingredient.is_gluten:
             dish_is_gluten = True
+    if insert_dict['is_allergen']:
+        dish_is_allergen = insert_dict['is_allergen']
+    if insert_dict['is_meat']:
+        dish_is_meat = insert_dict['is_meat']
+    if insert_dict['is_gluten']:
+        dish_is_gluten = insert_dict['is_gluten']
     Dish.objects.filter(pk=ObjectId(dish), ingredients__name=insert_dict['name']) \
                                                     .update(set__is_allergen=dish_is_allergen,
                                                             set__is_meat=dish_is_meat,
