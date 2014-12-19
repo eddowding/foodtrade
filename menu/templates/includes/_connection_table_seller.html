@@ -25,11 +25,28 @@
         </tr>
     </tfoot>
 </table>
+
+<form action="" method="POST" role="form" class="form-horizontal well well-sm">
+
+    <div class="form-group">
+        <label for="" class="control-label sr-only">Business name</label>
+        <div class="col-sm-5">
+            <input class="form-control connection" type="text" placeholder="Add another suppplier..." style="width: 300px;">
+            <input type="hidden" value="1" checked="checked" name="connection-type"> 
+        </div>
+  
+                
+   
+        <div class="col-sm-3">
+            <button type="button" class="btn btn-success add-connection disabled">Add</button>
+        </div>
+    </div>
+</form>
 {% else %}
 <div class="well text-center">
-    <h3>You don't have any supplier yet!</h3>
+    <h3>You don't have any suppliers yet!</h3>
 
-    <a role='tab' href="tab_3" class="btn btn-lg btn-success" data-toggle='tab'><i class="fa fa-lg fa-fw fa-plus-circle"></i> Add a Supplier</a>
+    <a role='tab' href="#add" class="btn btn-lg btn-success" data-toggle='tab'><i class="fa fa-lg fa-fw fa-plus-circle"></i> Add a Supplier</a>
 
 </div>
 {% endif %}

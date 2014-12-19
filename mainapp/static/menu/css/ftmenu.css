@@ -1,7 +1,6 @@
 .strong {
-  font-weight: bold;
+    font-weight: bold;
 }
-
 .menuitem {
     background: #ECE5CE;
     border-left: 2px solid #e6e7e8;
@@ -156,30 +155,28 @@ a.editable-click:hover {
     padding: 5px;
     border: 1px solid #aaa;
 }
-
 .ingredient {
-  text-transform: capitalize;
+    text-transform: capitalize;
 }
-
 #output {
     background: #fff;
     padding: 0.5em 2em 2em 2em;
     box-shadow: 0 0 10px #444 inset;
 }
 .dish_wrapper {
-  margin: 1em 0; 
+    margin: 1em 0;
 }
 .dish_name {
-  font-size: 20px;
-  font-weight: bold;
-  margin: 5px;
-  line-height: 2;
+    font-size: 20px;
+    font-weight: bold;
+    margin: 5px;
+    line-height: 2;
 }
 #printed #output {
-  box-shadow: 0 0 0 #fff;
+    box-shadow: 0 0 0 #fff;
 }
 #output * {
-    font-family: Georgia; 
+    font-family: Georgia;
     text-align: center;
 }
 #output p {
@@ -195,7 +192,6 @@ a.editable-click:hover {
     width: 70%;
     margin: 0 auto;
 }
-
 .allergen_detail {
     font-size: 16px;
     clear: both;
@@ -203,39 +199,31 @@ a.editable-click:hover {
     width: 60%;
     display: block;
 }
-.ingredient_parent {
-  
+.ingredient_parent {} .ingredient_child {
+    font-style: italic;
+    font-size: 16px;
 }
-.ingredient_child {
-  font-style: italic;
-  font-size: 16px;
-} 
- 
 .has_children {
-  display: inline-block;
+    display: inline-block;
 }
-
 .ingredient_parent:before {
-  content: ", ";
+    content: ", ";
 }
 .ingredient_parent:first-of-type:before {
     content: "";
 }
-
 .has_children:before {
-   content: "(";
+    content: "(";
 }
 .has_children:after {
-   content: ")";
+    content: ")";
 }
 .ingredient_child:after {
-  content: ", ";
+    content: ", ";
 }
 .ingredient_child:last-of-type:after {
     content: "";
 }
-
-
 .supplier {
     font-weight: bold;
 }
@@ -243,7 +231,7 @@ a.editable-click:hover {
     font-style: italic;
 }
 #connections .tab-pane {
-  min-height: 300px;
+    min-height: 300px;
 }
 #connectionsList h4 {
     font-weight: bold;
@@ -272,8 +260,9 @@ li.divider {
 }
 table th {
     text-transform: uppercase;
-    background: #3878B3;
+    background: #999;
     color: #fff;
+    border: 0;
 }
 body > .header .logo {
     font-family: 'Source Sans Pro', cursive;
@@ -348,14 +337,39 @@ LI { display: block }
 LI:before { content: counters(item, ".") " "; counter-increment: item }*/
 
 .del {
-  display: inline-block;
-  
+    display: inline-block;
 }
 .delete-btn {
-  color: red;
-  margin: 0 10px;
+    color: red;
+    margin: 0 10px;
 }
 .delete-btn:hover {
-  background-color: red;
-  color: #fff;
+    background-color: red;
+    color: #fff;
+}
+#printPage {
+    display: block;
+    background: #fff;
+    border-bottom: 2px solid #000;
+    padding: 10px;
+    font-size: 16px;
+    text-align: center;
+}
+@media print {
+    #printPage {
+        display: none;
+    }
+    @page {
+        size: auto;
+        /* auto is the current printer page size */
+        
+        margin: 0mm;
+        /* this affects the margin in the printer settings */
+    }
+    body {
+        background-color: #FFFFFF;
+        border: solid 1px black;
+        margin: 0px;
+        /* the margin on the content before printing */
+    }
 }
