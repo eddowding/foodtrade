@@ -82,12 +82,12 @@ STATICFILES_FINDERS = (
 SECRET_KEY = 'e#eicg@_*vw&ubp4)39!%w1u5cq&trcc+atxc5pd$=x!quj1mz'
 
 AUTHENTICATION_BACKENDS = (
+    'mongoengine.django.auth.MongoEngineBackend'
     # Needed to login by username in Django admin, regardless of `allauth`
-    "django.contrib.auth.backends.ModelBackend",
+    #"django.contrib.auth.backends.ModelBackend",
 
     # `allauth` specific authentication methods, such as login by e-mail
     "allauth.account.auth_backends.AuthenticationBackend",
-    'mongoengine.django.auth.MongoEngineBackend'
 )
 
 TEMPLATE_CONTEXT_PROCESSORS = (
