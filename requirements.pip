@@ -25,6 +25,7 @@ oauthlib==0.7.1
 pydns==2.3.6
 pygeocoder==1.2.1.1
 pymongo==2.6.3
+python-memcached==1.53
 python-openid==2.2.5
 requests==2.4.3
 requests-oauthlib==0.4.2
