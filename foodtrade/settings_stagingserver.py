@@ -8,19 +8,13 @@ ADMINS = (
 )
 
 MANAGERS = ADMINS
-APP_ROOT = os.path.realpath('.')
+APP_ROOT = os.path.dirname(os.path.dirname(__file__))
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': 'foodtrade',                      # Or path to database file if using sqlite3.
-        # The following settings are not used with sqlite3:
-        'USER': 'root',
-        'PASSWORD': 'root',
-        'HOST': '',                      # Empty for localhost through domain sockets or '127.0.0.1' for localhost through TCP.
-        'PORT': '',                      # Set to empty string for default.
+        'ENGINE': 'django.db.backends.dummy'
     }
 }
-
 # Hosts/domain names that are valid for this site; required if DEBUG is False
 # See https://docs.djangoproject.com/en/1.5/ref/settings/#allowed-hosts
 ALLOWED_HOSTS = ["*"]
@@ -50,7 +44,7 @@ USE_TZ = True
 
 # Absolute filesystem path to the directory that will hold user-uploaded files.
 # Example: "/var/www/example.com/media/"
-MEDIA_ROOT = '/srv/www/live/foodtrade-env/media'
+MEDIA_ROOT = os.path.join(APP_ROOT, 'media')
 
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash.
@@ -61,7 +55,7 @@ MEDIA_URL = '/media/'
 # Don't put anything in this directory yourself; store your static files
 # in apps' "static/" subdirectories and in STATICFILES_DIRS.
 # Example: "/var/www/example.com/static/"
-STATIC_ROOT = '/srv/www/live/foodtrade-env/static'
+STATIC_ROOT = os.path.join(APP_ROOT, 'static')
 
 # URL prefix for static files.
 # Example: "http://example.com/static/", "http://static.example.com/"
@@ -131,8 +125,8 @@ WSGI_APPLICATION = 'foodtrade.wsgi.application'
 
 TEMPLATE_DIRS = (
     'templates',
-    APP_ROOT+'/templates/account',
-    APP_ROOT+'/templates/registration',
+    os.path.join(APP_ROOT, 'templates', 'account'),
+    os.path.join(APP_ROOT, 'templates', 'registration')
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
@@ -199,5 +193,6 @@ from settings_local import *
 # django.contrib.sites is also necessary
 
 
-REMOVE_WWW = False
+REMOVE_WWW = True
 PREPEND_WWW = False
+
