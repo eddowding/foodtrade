@@ -124,7 +124,7 @@ ROOT_URLCONF = 'foodtrade.urls'
 WSGI_APPLICATION = 'foodtrade.wsgi.application'
 
 TEMPLATE_DIRS = (
-    'templates',
+    os.path.join(APP_ROOT, 'templates'),
     os.path.join(APP_ROOT, 'templates', 'account'),
     os.path.join(APP_ROOT, 'templates', 'registration')
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
