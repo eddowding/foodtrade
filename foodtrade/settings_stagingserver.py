@@ -12,7 +12,8 @@ APP_ROOT = os.path.dirname(os.path.dirname(__file__))
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.dummy'
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(APP_ROOT, 'foodtrade.db')
     }
 }
 # Hosts/domain names that are valid for this site; required if DEBUG is False
