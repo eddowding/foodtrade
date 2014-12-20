@@ -87,7 +87,7 @@ AUTHENTICATION_BACKENDS = (
     #"django.contrib.auth.backends.ModelBackend",
 
     # `allauth` specific authentication methods, such as login by e-mail
-    "allauth.account.auth_backends.AuthenticationBackend",
+    #"allauth.account.auth_backends.AuthenticationBackend",
 )
 
 TEMPLATE_CONTEXT_PROCESSORS = (
