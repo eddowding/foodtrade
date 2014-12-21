@@ -6,6 +6,7 @@ def staging():
 
 def deploy():
     sudo('cd /var/www; git pull')
+    sudo('cd /var/www; pip install -r requirements.pip')
     sudo('cd /var/www; chown -R foodtrade:foodtrade bower_components')
     run('cd /var/www; ./manage.py bower install')
     sudo('cd /var/www; chown -R root:root bower_components')
