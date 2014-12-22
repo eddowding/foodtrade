@@ -131,8 +131,12 @@ def delete_menu_section(request):
 def dish_lookup_name(request):
     query = {'name__icontains': request.GET.get('q')}
     ret_list = []
+    ingredients_list = []
     for dish in Dish.objects.filter(**query):
-        tmp_dict = {'name': dish.name, 'value': str(dish.pk)}
+        for ingredient in dish.ingredients:
+            ingredients_list.append(str(ingredient.name))
+        name = '%s (%s)' % (dish.name, ", ".join(ingredients_list))
+        tmp_dict = {'name': name, 'value': str(dish.pk)}
         tmp_dict['ingredients'] = dish.get_ingredient_tree()
         ret_list.append(tmp_dict)
     return HttpResponse(json.dumps({'status': True, 'objs': ret_list}))
