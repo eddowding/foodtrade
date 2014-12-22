@@ -83,7 +83,10 @@ def establishment_lookup_name(request):
     ret_list = []
     establishments = Establishment.objects.filter(**query)
     for obj in establishments:
-        ret_list.append({'name': obj.BusinessName, 'value': str(obj.pk), 'type': 1})
+        return_dict = {'name':obj.BusinessName,
+                       'business_type':obj.BusinessType,
+                       'address':obj.full_address()}
+        ret_list.append({'name': str(return_dict), 'value': str(obj.pk), 'type': 1})
     return HttpResponse(json.dumps({'status': True, 'objs': ret_list}))
 
 

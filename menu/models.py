@@ -87,6 +87,16 @@ class Establishment(Document):
     is_active = BooleanField(required=True, default=True)
 
 
+    def full_address(self):
+        field_list = ['AddressLine1', 'AddressLine2', 'AddressLine3', 'AddressLine4']
+        address = ''
+        for field in field_list:
+            value = getattr(self, field)
+            if value:
+                address += str(value.encode('ascii', 'ignore')) + ' '
+        return address
+
+
 class Menu(Document):
     establishment = ReferenceField(Establishment)
     name = StringField(required=True)
