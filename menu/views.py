@@ -53,7 +53,7 @@ def login(request):
         if user is not None:
             if user.is_active:
                 auth_login(request, user)
-                return HttpResponseRedirect(reverse_lazy('menu'))
+                return HttpResponseRedirect(reverse_lazy('menu_dashboard'))
             else:
                 return render(request, 'menu/login.html', {'failure': True})
         else:
