@@ -11,5 +11,6 @@ def deploy():
     run('cd /var/www; ./manage.py bower install')
     sudo('cd /var/www; chown -R root:root bower_components')
     sudo('cd /var/www; ./manage.py collectstatic -l --noinput')
+    sudo('chown www-data:www-data -R /var/www')
     sudo('service uwsgi restart')
     sudo('service nginx restart')
