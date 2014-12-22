@@ -2,6 +2,7 @@ import json
 from datetime import datetime
 from copy import deepcopy
 from bson.objectid import ObjectId, InvalidId
+from models import Q
 from bson import json_util
 from django.shortcuts import render
 from django.core.urlresolvers import reverse_lazy
@@ -165,6 +166,7 @@ def create_ingredient(request):
     dish = request.POST.get('dish')
     insert_dict = deepcopy(request.POST.dict())
     del insert_dict['dish']
+    insert_dict['name'] = insert_dict['name'].split('(')[0]
     #TODO: cache this to save query
     dish_is_allergen = False
     dish_is_meat = False
@@ -333,16 +335,30 @@ def delete_ingredient(request):
 @login_required(login_url=reverse_lazy('menu-login'))
 def ingredient_lookup_name(request):
     ''' Lookup ingredient with nme of ingredients '''
-    query1 = {'ingredients__name__icontains': request.GET.get('q')}
-    query2 = {'name__icontains': request.GET.get('q')}
+    keyword = request.GET.get('q')
+    query1 = ( Q(ingredients__name__icontains = keyword) |\
+               Q(ingredients__parent__icontains = keyword), )
+    query2 = {'name__icontains': keyword}
+    tmp_dict = {}
     tmp_list = []
     klass_list = [Gluten, Allergen, Meat]
-    for dish in Dish.objects.filter(**query1):
+    for dish in Dish.objects.filter(*query1):
         for ingredient in dish.ingredients:
-            tmp_list.append(ingredient.name)
+            if keyword in ingredient.parent:
+                if not tmp_dict.has_key(ingredient.parent):
+                    tmp_dict[ingredient.parent] = []
+                tmp_dict[ingredient.parent].append(ingredient.name)
+            if keyword in ingredient.name:
+                if not tmp_dict.has_key(ingredient.name):
+                    tmp_dict[ingredient.name] = []
+    for suggestion, children in tmp_dict.items():
+        if len(children) > 0:
+            suggestion = '%s (%s)' % (suggestion, ", ".join(children))
+        tmp_list.append(suggestion)
     for klass in klass_list:
         for obj in klass.objects.filter(**query2):
-            tmp_list.append(obj.name)
+            if keyword in obj.name:
+                tmp_list.append(obj.name)
     tmp_list = list(set(tmp_list))
     return HttpResponse(json.dumps({'status': True, 'objs': [{'name': n} for n in tmp_list]}))
 
