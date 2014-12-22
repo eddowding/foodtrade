@@ -2,7 +2,7 @@ $(document).ready(function() {
     //menu section
     var establishments = new Bloodhound({
         remote: {
-            url: establishmentLookupNameUrl + '?q=%QUERY',
+            url: establishmentLookupNameUrl + '?q=%QUERY&_tmp='+(new Date).getTime(),
             filter: function(establishments) {
                 return establishments.objs;
             }
@@ -40,7 +40,7 @@ $(document).ready(function() {
         }
 
         $.ajax({
-            url: createMenuUrl,
+            url: createMenuUrl + '?_tmp='+(new Date).getTime(),
             data: data,
             type: 'POST',
             dataType: 'JSON',
@@ -66,7 +66,7 @@ $(document).ready(function() {
         };
 
         $.ajax({
-            url: createSectionUrl,
+            url: createSectionUrl + '?_tmp='+(new Date).getTime(),
             data: data,
             type: 'POST',
             dataType: 'JSON',
@@ -82,7 +82,7 @@ $(document).ready(function() {
     //dish section
     var dishes = new Bloodhound({
         remote: {
-            url: dishLookupNameUrl + '?q=%QUERY',
+            url: dishLookupNameUrl + '?q=%QUERY' + '&_tmp='+(new Date).getTime(),
             filter: function(dishes) {
                 return dishes.objs;
             }
@@ -133,7 +133,7 @@ $(document).ready(function() {
         }
 
         $.ajax({
-            url: createDishUrl,
+            url: createDishUrl + '?_tmp='+(new Date).getTime(),
             data: data,
             type: 'POST',
             dataType: 'JSON',
@@ -155,7 +155,7 @@ $(document).ready(function() {
 
     var ingredients = new Bloodhound({
         remote: {
-            url: ingredientLookupNameUrl + '?q=%QUERY',
+            url: ingredientLookupNameUrl + '?q=%QUERY' + '&_tmp='+(new Date).getTime(),
             filter: function(ingredients) {
                 return ingredients.objs;
             }
@@ -195,7 +195,7 @@ $(document).ready(function() {
         };
 
         $.ajax({
-            url: createIngredientUrl,
+            url: createIngredientUrl + '?_tmp='+(new Date).getTime(),
             data: data,
             type: 'POST',
             dataType: 'JSON',
@@ -226,7 +226,7 @@ $(document).ready(function() {
                     data.parent = $item.parents('li').attr('data-ingredient-name');
                 }
                 $.ajax({
-                    url: updateIngredientUrl,
+                    url: updateIngredientUrl + '?_tmp='+(new Date).getTime(),
                     data: data,
                     type: 'POST',
                     dataType: 'JSON',
@@ -270,7 +270,7 @@ $(document).ready(function() {
         };
 
         $.ajax({
-            url: deleteUrl,
+            url: deleteUrl + '?_tmp='+(new Date).getTime(),
             data: data,
             type: 'POST',
             dataType: 'JSON',
