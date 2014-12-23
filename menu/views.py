@@ -2,7 +2,7 @@ import json
 from datetime import datetime
 from copy import deepcopy
 from bson.objectid import ObjectId, InvalidId
-from models import Q
+from mongoengine.queryset import Q
 from bson import json_util
 from django.shortcuts import render
 from django.core.urlresolvers import reverse_lazy
@@ -83,10 +83,8 @@ def establishment_lookup_name(request):
     ret_list = []
     establishments = Establishment.objects.filter(**query)
     for obj in establishments:
-        return_dict = {'name':obj.BusinessName,
-                       'business_type':obj.BusinessType,
-                       'address':obj.full_address()}
-        ret_list.append({'name': str(return_dict), 'value': str(obj.pk), 'type': 1})
+        name = '%s | %s | %s' % (obj.BusinessName, obj.BusinessType, obj.full_address())
+        ret_list.append({'name': name, 'value': str(obj.pk), 'type': 1})
     return HttpResponse(json.dumps({'status': True, 'objs': ret_list}))
 
 
