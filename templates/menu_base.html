@@ -64,7 +64,7 @@
     {% block header %}
     <header class="header">
         {% block logo %}
-        <a href="/menu" class="logo">
+        <a href="{% url 'menu_dashboard' %}" class="logo">
             <!-- Add the class icon to your logo image or logo icon to add the margining -->
             FoodTrade Menu
         </a>
@@ -295,11 +295,11 @@
                 {% block left_sidebar_menu %}
 
                 <ul class="sidebar-menu">
-                    <li><a href="/menu/menu"><i class="ion ion-clipboard" style="font-size: 1.4em;"></i> My Menus <small class="badge pull-right bg-green">{{ menus.count }}</small></a>
+                    <li><a href="{% url 'menu' %}"><i class="ion ion-clipboard" style="font-size: 1.4em;"></i> My Menus <small class="badge pull-right bg-green">{{ menus.count }}</small></a>
                     </li>
-                    <li><a href="/menu/connection"><i class="fa fa-sign-in"></i> My suppliers<small class="badge pull-right bg-green">{{ sellers.count }}</small></a>
+                    <li><a href="{% url 'menu_connection' %}"><i class="fa fa-sign-in"></i> My suppliers<small class="badge pull-right bg-green">{{ sellers.count }}</small></a>
                     </li>
-                    <li><a href="/menu/connection"><i class="fa fa-sign-out"></i> My stockists<small class="badge pull-right bg-green">{{ buyers.count }}</small></a>
+                    <li><a href="{% url 'menu_connection' %}"><i class="fa fa-sign-out"></i> My stockists<small class="badge pull-right bg-green">{{ buyers.count }}</small></a>
                     </li>
                     
                     <li class="treeview">
