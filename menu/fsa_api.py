@@ -7,7 +7,7 @@ from menu.models import *
 
 API_BASE = 'http://api.ratings.food.gov.uk'
 API_HEADER = {'x-api-version': 2}
-API_LIMIT = 10
+API_LIMIT = 10000
 API_CALL_POOL_SIZE = 4
 
 ENTITY_API_MAPPING = {
