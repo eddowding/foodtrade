@@ -157,11 +157,7 @@ $(document).ready(function() {
         remote: {
             url: ingredientLookupNameUrl + '?q=%QUERY' + '&_tmp='+(new Date).getTime(),
             filter: function(ingredients) {
-                $.map(ingredients.objs, function(value, key){
-                                            if(value != ''){
-                                               key  = key + '(' + value + ')';
-                                            }
-                                        return {name:key};});
+                return ingredients.objs;
             }
 
         },

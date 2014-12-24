@@ -351,17 +351,21 @@ def ingredient_lookup_name(request):
         for ingredient in dish.ingredients:
             if keyword in ingredient.parent:
                 if not tmp_dict.has_key(ingredient.parent):
-                    tmp_dict[ingredient.parent] = ''
-                tmp_dict[ingredient.parent] += ingredient.name + ', '
+                    tmp_dict[ingredient.parent] = []
+                tmp_dict[ingredient.parent].append(ingredient.name)
             if keyword in ingredient.name:
                 if not tmp_dict.has_key(ingredient.name):
-                    tmp_dict[ingredient.name] = ''
+                    tmp_dict[ingredient.name] = []
+    for suggestion, children in tmp_dict.items():
+        if len(children) > 0:
+            suggestion = '%s (%s)' % (suggestion, ", ".join(children))
+        tmp_list.append(suggestion)
     for klass in klass_list:
         for obj in klass.objects.filter(**query2):
             if keyword in obj.name:
-                if not tmp_dict.has_key(obj.name):
-                    tmp_dict[obj.name] = ''
-    return HttpResponse(json.dumps({'status': True, 'objs': tmp_dict}))
+                tmp_list.append(obj.name)
+    tmp_list = list(set(tmp_list))
+    return HttpResponse(json.dumps({'status': True, 'objs': [{'name': n} for n in tmp_list]}))
 
 
 
