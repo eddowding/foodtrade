@@ -168,10 +168,19 @@ def delete_dish(request):
 
 @login_required(login_url=reverse_lazy('menu-login'))
 def create_ingredient(request):
+    ingredient_list = []
     dish = request.POST.get('dish')
     insert_dict = deepcopy(request.POST.dict())
     del insert_dict['dish']
-    insert_dict['name'] = insert_dict['name'].split('(')[0]
+    ingredient_input = insert_dict['name'].split('(')
+    insert_dict['name'] = ingredient_input[0]
+    ingredient_list.append(insert_dict)
+    if len(ingredient_input)>1:
+        child_ingredient = ingredient_input[1].replace(')','')
+        child_ingredient = child_ingredient.split(',')
+        for child in child_ingredient:  
+            child_name = child
+            ingredient_list.append({'name':child_name, 'parent':ingredient_input[0]})
     #TODO: cache this to save query
     dish_is_allergen = False
     dish_is_meat = False
@@ -184,19 +193,20 @@ def create_ingredient(request):
             dish_is_meat = True
         if ingredient.is_gluten:
             dish_is_gluten = True
-    insert_dict['is_allergen'] = True if Allergen.objects.filter(name=insert_dict['name']).count() else False
-    insert_dict['is_meat'] = True if Meat.objects.filter(name=insert_dict['name']).count() else False
-    insert_dict['is_gluten'] = True if Gluten.objects.filter(name=insert_dict['name']).count() else False
-    if insert_dict['is_allergen']:
-        dish_is_allergen = True
-    if insert_dict['is_meat']:
-        dish_is_meat = True
-    if insert_dict['is_gluten']:
-        dish_is_gluten = True
-    Dish.objects.filter(pk=ObjectId(dish)).update(set__is_allergen=dish_is_allergen,
-                                                  set__is_meat=dish_is_meat,
-                                                  set__is_gluten=dish_is_gluten,
-                                                  push__ingredients=insert_dict)
+    for data_to_insert in ingredient_list:
+        data_to_insert['is_allergen'] = True if Allergen.objects.filter(name=insert_dict['name']).count() else False
+        data_to_insert['is_meat'] = True if Meat.objects.filter(name=insert_dict['name']).count() else False
+        data_to_insert['is_gluten'] = True if Gluten.objects.filter(name=insert_dict['name']).count() else False
+        if data_to_insert['is_allergen']:
+            dish_is_allergen = True
+        if data_to_insert['is_meat']:
+            dish_is_meat = True
+        if data_to_insert['is_gluten']:
+            dish_is_gluten = True
+        Dish.objects.filter(pk=ObjectId(dish)).update(set__is_allergen=dish_is_allergen,
+                                                      set__is_meat=dish_is_meat,
+                                                      set__is_gluten=dish_is_gluten,
+                                                      push__ingredients=data_to_insert)
 
 
     dish_obj = Dish.objects.get(pk=ObjectId(dish))
