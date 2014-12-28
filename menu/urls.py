@@ -20,6 +20,7 @@ urlpatterns = patterns('menu.views',
     url(r'^delete/dish/$', 'delete_dish', name='menu_delete_dish'),
     url(r'^create/ingredient/$', 'create_ingredient', name='menu_create_ingredient'),
     url(r'^update/ingredient/$', 'update_ingredient', name='menu_update_ingredient'),
+    url(r'^update/ingredient/name/$', 'update_ingredient_name', name='menu_update_ingredient_name'),
     url(r'^delete/ingredient/$', 'delete_ingredient', name='menu_delete_ingredient'),
     url(r'^ingredient/lookup/name/$', 'ingredient_lookup_name', name='menu_ingredient_lookup_name'),
 

@@ -178,7 +178,7 @@ def create_ingredient(request):
     if len(ingredient_input)>1:
         child_ingredient = ingredient_input[1].replace(')','')
         child_ingredient = child_ingredient.split(',')
-        for child in child_ingredient:  
+        for child in child_ingredient:
             child_name = child
             ingredient_list.append({'name':child_name, 'parent':ingredient_input[0]})
     #TODO: cache this to save query
@@ -299,6 +299,11 @@ def update_ingredient(request):
         Dish.objects.filter(pk=ObjectId(dish), ingredients__name=prev_parent).update(**prev_parent_update_dict)
         prev_parent = tmp_parent
 
+    return HttpResponse(json.dumps({'status': True, 'html': menu_render(request.user)}, default=json_util.default))
+
+
+@login_required(login_url=reverse_lazy('menu-login'))
+def update_ingredient_name(request):
     return HttpResponse(json.dumps({'status': True, 'html': menu_render(request.user)}, default=json_util.default))
 
 
