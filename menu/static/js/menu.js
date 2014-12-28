@@ -46,7 +46,6 @@ $(document).ready(function() {
             dataType: 'JSON',
             success: function(data) {
                 $('.menus').html(data.html);
-                $('.ingredient-item-name').trigger('item-loaded');
                 $('#menuModal input[name="establishment"]').val('');
                 $('#menuModal input#establishment').val('');
                 $('#menuModal input[name="name"]').val('');
@@ -73,7 +72,6 @@ $(document).ready(function() {
             dataType: 'JSON',
             success: function(data) {
                 $('.menus').html(data.html);
-                $('.ingredient-item-name').trigger('item-loaded');
                 $('#sectionModal input[name="menu"]').val('');
                 $('#sectionModal input[name="name"]').val('');
             }
@@ -141,7 +139,6 @@ $(document).ready(function() {
             dataType: 'JSON',
             success: function(data) {
                 $('.menus').html(data.html);
-                $('.ingredient-item-name').trigger('item-loaded');
                 $('#dishModal input[name="menu_section"]').val('');
                 $('#dishModal input[name="price"]').val('');
                 $('#dishModal input[name="description"]').val('');
@@ -204,8 +201,8 @@ $(document).ready(function() {
             dataType: 'JSON',
             success: function(data) {
                 $('.menus').html(data.html);
-                $('.ingredient-item-name').trigger('item-loaded');
                 sortableFn();
+                editableFn();
                 $('#ingredientsModal input[name="name"]').val('');
                 $('#ingredientsModal input[name="dish"]').val('');
             }
@@ -236,8 +233,8 @@ $(document).ready(function() {
                     dataType: 'JSON',
                     success: function(data) {
                         $('.menus').html(data.html);
-                        $('.ingredient-item-name').trigger('item-loaded');
                         sortableFn();
+                        editableFn();
                     }
                 });
 
@@ -281,8 +278,8 @@ $(document).ready(function() {
             dataType: 'JSON',
             success: function(data) {
                 $('.menus').html(data.html);
-                $('.ingredient-item-name').trigger('item-loaded');
                 sortableFn();
+                editableFn();
             }
         });
     });
@@ -297,9 +294,14 @@ $(document).ready(function() {
 
 
     //editable
-    $(document).delegate('.ingredient-item-name', 'item-loaded', function(ev) {
-        console.log('item ready');
-    });
+    var editableFn = function() {
+        $('.ingredient-item-name').editable({
+            type: 'text',
+            url: updateIngredientNameUrl,
+            name: 'name',
+            title: 'Enter name'
+        });
+    };
 
-    $('.ingredient-item-name').trigger('item-loaded');
+    editableFn();
 });
