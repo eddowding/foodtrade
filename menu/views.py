@@ -304,8 +304,12 @@ def update_ingredient(request):
 
 @login_required(login_url=reverse_lazy('menu-login'))
 def update_ingredient_name(request):
-    Dish.objects.filter(pk=ObjectId(request.POST.get('pk')), ingredients__name=request.POST.get('name')) \
-                                                            .update(set__ingredients__S__name=request.POST.get('value'))
+    insert_dict = {}
+    insert_dict['set__ingredients__S__name'] = request.POST.get('value')
+    insert_dict['set__ingredients__S__is_allergen'] = True if Allergen.objects.filter(name=request.POST.get('value')).count() else False
+    insert_dict['set__ingredients__S__is_meat'] = True if Meat.objects.filter(name=request.POST.get('value')).count() else False
+    insert_dict['set__ingredients__S__is_gluten'] = True if Gluten.objects.filter(name=request.POST.get('value')).count() else False
+    Dish.objects.filter(pk=ObjectId(request.POST.get('pk')), ingredients__name=request.POST.get('name')).update(**insert_dict)
     return HttpResponse(json.dumps({'status': True, 'html': menu_render(request.user)}, default=json_util.default), content_type="application/json")
 
 

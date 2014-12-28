@@ -296,21 +296,22 @@ $(document).ready(function() {
     //editable
     var editableFn = function() {
         $('.ingredient-item-name').editable({
-            type: 'typeaheadjs',
+            type: 'text',
             url: updateIngredientNameUrl + '?_tmp='+(new Date).getTime(),
             inputclass: 'ingredient-editable',
             success: function(response, newValue) {
                 $(this).editable('option', 'name', newValue);
-            },
-            typeahead: {
-                displayKey: 'name',
-                name: 'ingredients',
-                source: ingredients.ttAdapter()
             }
         });
 
         $('.ingredient-item-name:contains("Type Ingredient Here")').editable('toggle');
         $('.ingredient-editable:contains("")').select();
+
+        $('.ingredient-editable').typeahead(null, {
+            displayKey: 'name',
+            name: 'ingredients',
+            source: ingredients.ttAdapter()
+        });
     };
 
     $(document).delegate('.ingredient-editable', 'keydown', function(ev) {
