@@ -302,16 +302,11 @@ $(document).ready(function() {
             success: function(response, newValue) {
                 $(this).editable('option', 'name', newValue);
             },
-            typeahead: [{
-                minLength: 1,
-                highlight: true,
-                hint: true
-            },
-            {
+            typeahead: {
                 displayKey: 'name',
                 name: 'ingredients',
                 source: ingredients.ttAdapter()
-            }]
+            }
         });
 
         $('.ingredient-item-name:contains("Type Ingredient Here")').editable('toggle');
