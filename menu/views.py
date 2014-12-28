@@ -304,7 +304,9 @@ def update_ingredient(request):
 
 @login_required(login_url=reverse_lazy('menu-login'))
 def update_ingredient_name(request):
-    return HttpResponse(json.dumps({'status': True, 'html': menu_render(request.user)}, default=json_util.default), mimetype="application/json")
+    Dish.objects.filter(pk=ObjectId(request.POST.get('pk')), ingredients__name=request.POST.get('name')) \
+                                                            .update(set__ingredients__S__name=request.POST.get('value'))
+    return HttpResponse(json.dumps({'status': True, 'html': menu_render(request.user)}, default=json_util.default), content_type="application/json")
 
 
 @login_required(login_url=reverse_lazy('menu-login'))
