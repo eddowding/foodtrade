@@ -57,6 +57,13 @@
                         </a>-->
                     </div>
                 </div>
+                {% if not section.get_section_dishes|length %}
+                <div class="alert alert-warning lead text-center">
+
+                    <h2 style="margin-bottom: 1em;">You don't have anything in this section yet. <i class="fa fa-frown-o fa-lg"></i></h2>
+                    <a data-toggle="modal" href="#dishModal" data-menu-section-id ={{ section.id }} class="btn btn-success btn-lg add-dish" data-type="text"><i class="fa fa-list-ul fa-fw"></i> Add a new dish</a>
+                </div>
+                {% endif %}
                 {% for dish in section.get_section_dishes %}
                     <div class="menuitem">
                         <div class="menutitle">
