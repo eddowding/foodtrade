@@ -305,6 +305,29 @@ $(document).ready(function() {
         });
     };
 
+    $(document).delegate('.ingredient-editable', 'keydown', function(ev) {
+        if (ev.keyCode == 13) {
+            var data = {
+                dish: $(this).parents('span.ingredient').find('a').attr('data-pk'),
+                name: 'Type Ingredient Here',
+                parent: null,
+                order: null
+            };
+
+            $.ajax({
+                url: createIngredientUrl + '?_tmp='+(new Date).getTime(),
+                data: data,
+                type: 'POST',
+                dataType: 'JSON',
+                success: function(data) {
+                    $('.menus').html(data.html);
+                    sortableFn();
+                    editableFn();
+                }
+            });
+        }
+    });
+
     $.fn.editable.defaults.mode = 'inline';
     editableFn();
 });
