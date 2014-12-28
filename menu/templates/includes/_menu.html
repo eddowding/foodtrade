@@ -5,7 +5,7 @@
     <small>Edit Menu</small>
     {% endcomment %}
 </h2>
-  
+
 
 {% for menu in menus %}
 
@@ -64,24 +64,24 @@
                                 <i class="fa fa-ellipsis-v"></i>
                                 <i class="fa fa-ellipsis-v"></i>
                             </span>
-                            <span>{{ dish.name }} &mdash; &pound;{{ dish.price }} 
+                            <span>{{ dish.name }} &mdash; &pound;{{ dish.price }}
                             </span>
                             <a data-id={{dish.pk}} data-url={% url 'menu_delete_dish' %} class="delete-btn">Delete</a>
                             <div class="pull-right">
-                                
+
                                 <span class="allergen flagged {% if dish.is_allergen %}active{% endif %}" data-toggle="tooltip" title="Allergen" data-original-title="Allergen">A</span>
-                               
+
                                 <span class="meat flagged  {% if dish.is_meat %}active{% endif %}" data-toggle="tooltip" title="Meat">M</span>
-                           
-                                <span class="gluten flagged  {% if dish.is_gluten %}active{% endif %}" data-toggle="tooltip" title="Glutenous">G</span> 
+
+                                <span class="gluten flagged  {% if dish.is_gluten %}active{% endif %}" data-toggle="tooltip" title="Glutenous">G</span>
 
                             </div>
 
-                            
+
                             <p href="#" class="editable menuitem-description" data-type="textarea" data-pk="1" data-url="/post" data-title="Edit item">{{dish.description}}</p>
 
                         </div>
-                    
+
                         <ul class="ingredient-tree">
                             {% for parent in dish.get_ingredient_tree %}
                             <li data-dish-id="{{dish.pk}}" data-ingredient-name="{{parent.name}}" class="ingredient-item">
@@ -89,8 +89,8 @@
                                         <i class="fa fa-ellipsis-v"></i>
                                         <i class="fa fa-ellipsis-v"></i>
                                     </span>
-                                    <span class="ingredient parent">{{ parent.name }}</span>
-                                    <div class="del"> 
+                                    <span class="ingredient parent"><a class="ingredient-item-name">{{ parent.name }}</a></span>
+                                    <div class="del">
                                         <div class="tools hidden">
                                             <a data-id={{dish.pk}} data-url={% url 'menu_delete_ingredient' %} data-name='{{parent.name}}' class="delete-btn">Delete</a>
                                         </div>
@@ -98,9 +98,9 @@
 
                                     <div class="pull-right">
                                          <span class="allergen flagged {% if parent.is_allergen %}active{% endif %}" data-toggle="tooltip" title="Allergen" data-original-title="Allergen">A</span>
-                                            
+
                                         <span class="meat flagged {% if parent.is_meat %}active{% endif %}" data-toggle="tooltip" title="Meat">M</span>
-                                    
+
                                         <span class="gluten flagged {% if parent.is_gluten %}active{% endif %}" data-toggle="tooltip" title="Gluten">G</span>
                                     </div>
                                     <ul>
@@ -110,7 +110,7 @@
                                                 <i class="fa fa-ellipsis-v"></i>
                                                 <i class="fa fa-ellipsis-v"></i>
                                             </span>
-                                            <span class="ingredient child">{{ child.name }}</span>
+                                            <span class="ingredient child"><a class="ingredient-item-name">{{ child.name }}</a></span>
                                             <div class="del">
                                                 <div class="tools hidden">
                                                     <a data-id={{dish.pk}} data-url={% url 'menu_delete_ingredient' %} data-name='{{child.name}}' class="delete-btn">Delete</a>
@@ -120,9 +120,9 @@
                                             <div class="pull-right">
 
                                                 <span class="allergen flagged {% if child.is_allergen %}active{% endif %}" data-toggle="tooltip" title="Allergen" data-original-title="Allergen">A</span>
-                                            
+
                                                 <span class="meat flagged {% if child.is_meat %}active{% endif %}" data-toggle="tooltip" title="Meat">M</span>
-                                            
+
                                                 <span class="gluten flagged {% if child.is_gluten %}active{% endif %}" data-toggle="tooltip" title="Gluten">G</span>
                                             </div>
                                         </li>
@@ -134,7 +134,7 @@
 
                             <a data-toggle="modal" href="#ingredientsModal" data-dish-id = {{ dish.id }} class="add-ingredients btn btn-default btn-sm"><i class="fa fa-plus-circle fa-fw"></i>  Add an ingredient</a>
                         </div>
-                {% endfor %} 
+                {% endfor %}
 
 
                 </div>
