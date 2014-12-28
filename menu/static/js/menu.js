@@ -297,7 +297,7 @@ $(document).ready(function() {
     var editableFn = function() {
         $('.ingredient-item-name').editable({
             type: 'text',
-            url: updateIngredientNameUrl,
+            url: updateIngredientNameUrl + '?_tmp='+(new Date).getTime(),
             inputclass: 'ingredient-editable',
             success: function(response, newValue) {
                 $(this).editable('option', 'name', newValue);
