@@ -296,11 +296,16 @@ $(document).ready(function() {
     //editable
     var editableFn = function() {
         $('.ingredient-item-name').editable({
-            type: 'text',
+            type: 'typeaheadjs',
             url: updateIngredientNameUrl + '?_tmp='+(new Date).getTime(),
             inputclass: 'ingredient-editable',
             success: function(response, newValue) {
                 $(this).editable('option', 'name', newValue);
+            },
+            typeahead: {
+                displayKey: 'name',
+                name: 'ingredients',
+                source: ingredients.ttAdapter()
             }
         });
 
