@@ -300,9 +300,7 @@ $(document).ready(function() {
             url: updateIngredientNameUrl,
             inputclass: 'ingredient-editable',
             success: function(response, newValue) {
-                $('.menus').html(response.html);
-                sortableFn();
-                editableFn();
+                $(this).editable('option', 'name', newValue);
             }
         });
     };
