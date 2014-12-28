@@ -298,6 +298,7 @@ $(document).ready(function() {
         $('.ingredient-item-name').editable({
             type: 'text',
             url: updateIngredientNameUrl,
+            inputclass: 'ingredient-editable',
             success: function(response, newValue) {
                 $('.menus').html(response.html);
                 sortableFn();
