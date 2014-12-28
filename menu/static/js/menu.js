@@ -303,6 +303,9 @@ $(document).ready(function() {
                 $(this).editable('option', 'name', newValue);
             }
         });
+
+        $('.ingredient-item-name:contains("Type Ingredient Here")').editable('toggle');
+        $('.ingredient-editable:contains("")').select();
     };
 
     $(document).delegate('.ingredient-editable', 'keydown', function(ev) {
@@ -311,7 +314,7 @@ $(document).ready(function() {
                 dish: $(this).parents('span.ingredient').find('a').attr('data-pk'),
                 name: 'Type Ingredient Here',
                 parent: null,
-                order: null
+                order: 1
             };
 
             $.ajax({
