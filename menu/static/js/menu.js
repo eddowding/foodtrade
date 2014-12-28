@@ -298,10 +298,14 @@ $(document).ready(function() {
         $('.ingredient-item-name').editable({
             type: 'text',
             url: updateIngredientNameUrl,
-            name: 'name',
-            title: 'Enter name'
+            success: function(response, newValue) {
+                $('.menus').html(response.html);
+                sortableFn();
+                editableFn();
+            }
         });
     };
 
+    $.fn.editable.defaults.mode = 'inline';
     editableFn();
 });
