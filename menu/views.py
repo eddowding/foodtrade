@@ -83,7 +83,7 @@ def establishment_lookup_name(request):
     ret_list = []
     establishments = Establishment.objects.filter(**query)
     for obj in establishments:
-        name = '%s | %s | %s' % (obj.BusinessName, obj.BusinessType, obj.full_address())
+        name = '<strong>%s</strong> <span class="est_type">%s</span> <span class="est_addr">%s</span>' % (obj.BusinessName, obj.BusinessType, obj.full_address())
         ret_list.append({'name': name, 'value': str(obj.pk), 'type': 1})
     return HttpResponse(json.dumps({'status': True, 'objs': ret_list}))
 

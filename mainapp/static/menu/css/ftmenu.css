@@ -282,6 +282,14 @@ a.text-muted {
 .bg-olive {
     background-color: #61AE32 !important;
 }
+.est_type {
+    color: #999;
+    float: right;
+}
+.est_addr {
+    display:block; 
+    font-size: 11px;
+}
 .twitter-typeahead .tt-query, .twitter-typeahead .tt-hint {
     margin-bottom: 0;
 }
@@ -321,11 +329,12 @@ a.text-muted {
     text-transform: capitalize;
     border-bottom: 1px solid #eee !important;
 }
-.tt-suggestion.tt-is-under-cursor {
+.tt-suggestion.tt-cursor{
     color: #fff;
     background-color: #61AE32 !important;
 }
-.tt-suggestion.tt-is-under-cursor a {
+.tt-suggestion.tt-cursor a,
+.tt-suggestion.tt-cursor span {
     color: #fff;
 }
 .tt-suggestion p {
