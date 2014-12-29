@@ -306,16 +306,10 @@ $(document).ready(function() {
 
         $('.ingredient-item-name:contains("Type Ingredient Here")').editable('toggle');
         $('.ingredient-editable:contains("")').select();
-
-        $('.ingredient-editable').typeahead(null, {
-            displayKey: 'name',
-            name: 'ingredients',
-            source: ingredients.ttAdapter()
-        });
     };
 
     $(document).delegate('.ingredient-editable', 'keydown', function(ev) {
-        if (ev.keyCode == 13) {
+        if (ev.ctrlKey && ev.keyCode == 13) {
             var data = {
                 dish: $(this).parents('span.ingredient').find('a').attr('data-pk'),
                 name: 'Type Ingredient Here',
@@ -336,6 +330,16 @@ $(document).ready(function() {
             });
         }
     });
+
+    $('.ingredient-item-name').on('shown', function(e, editable) {
+        $('.ingredient-editable').typeahead(null, {
+            displayKey: 'name',
+            name: 'ingredients',
+            source: ingredients.ttAdapter()
+        });
+    });
+
+
 
     $.fn.editable.defaults.mode = 'inline';
     editableFn();
