@@ -183,7 +183,24 @@ $(document).ready(function() {
 
 
     $(document).delegate('.add-ingredients', 'click', function(ev) {
-        $('#ingredientsModal input[name="dish"]').val($(this).attr('data-dish-id'));
+        var data = {
+            dish: $(this).attr('data-dish-id'),
+            name: 'Type Ingredient Here',
+            parent: null,
+            order: 1
+        };
+
+        $.ajax({
+            url: createIngredientUrl + '?_tmp='+(new Date).getTime(),
+            data: data,
+            type: 'POST',
+            dataType: 'JSON',
+            success: function(data) {
+                $('.menus').html(data.html);
+                sortableFn();
+                editableFn();
+            }
+        });
     });
 
     $('#ingredientsModal button.btn').click(function(ev) {
