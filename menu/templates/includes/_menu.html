@@ -97,6 +97,7 @@
                                         <i class="fa fa-ellipsis-v"></i>
                                     </span>
                                     <span class="ingredient parent"><a class="ingredient-item-name" data-pk={{dish.pk}} data-name="{{ parent.name }}">{{ parent.name }}</a></span>
+                                    <span><a data-dish-id={{dish.pk}} data-parent-name="{{ parent.name }}" class="add-sub-ingredients btn btn-default btn-xs"><i class="fa fa-plus-circle fa-fw"></i>  Add sub-ingredient</a></span>
                                     <div class="del">
                                         <div class="tools hidden">
                                             <a data-id={{dish.pk}} data-url={% url 'menu_delete_ingredient' %} data-name='{{parent.name}}' class="delete-btn">Delete</a>
