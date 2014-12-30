@@ -322,6 +322,13 @@ $(document).ready(function() {
         });
 
         $('.ingredient-item-name:contains("Type Ingredient Here")').editable('toggle');
+        
+        $('.ingredient-editable').typeahead(null, {
+            displayKey: 'name',
+            name: 'ingredients',
+            source: ingredients.ttAdapter()
+        });
+
         $('.ingredient-editable:contains("")').select();
     };
 
