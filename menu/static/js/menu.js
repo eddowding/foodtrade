@@ -340,6 +340,7 @@ $(document).ready(function() {
             success: function(response, newValue) {
                 var class_name = response.type;
                 $(this).parents('li').find('div.pull-right').find('span.' + class_name).addClass('active');
+                $(this).parents('div.menuitem').find('div.menutitle').find('div.pull-right').find('span.' + class_name).addClass('active');
                 $(this).editable('option', 'name', newValue);
             }
         });
