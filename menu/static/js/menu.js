@@ -338,6 +338,8 @@ $(document).ready(function() {
             url: updateIngredientNameUrl + '?_tmp='+(new Date).getTime(),
             inputclass: 'ingredient-editable',
             success: function(response, newValue) {
+                var class_name = response.type;
+                $(this).parents('li').find('div.pull-right').find('span.' + class_name).addClass('active');
                 $(this).editable('option', 'name', newValue);
             }
         });

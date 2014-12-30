@@ -306,12 +306,19 @@ def update_ingredient(request):
 @login_required(login_url=reverse_lazy('menu-login'))
 def update_ingredient_name(request):
     insert_dict = {}
+    type_res = None
     insert_dict['set__ingredients__S__name'] = request.POST.get('value')
     insert_dict['set__ingredients__S__is_allergen'] = True if Allergen.objects.filter(name=request.POST.get('value')).count() else False
+    if insert_dict['set__ingredients__S__is_allergen']:
+        type_res = 'allergen'
     insert_dict['set__ingredients__S__is_meat'] = True if Meat.objects.filter(name=request.POST.get('value')).count() else False
+    if insert_dict['set__ingredients__S__is_meat']:
+        type_res = 'meat'
     insert_dict['set__ingredients__S__is_gluten'] = True if Gluten.objects.filter(name=request.POST.get('value')).count() else False
+    if insert_dict['set__ingredients__S__is_gluten']:
+        type_res = 'gluten'
     Dish.objects.filter(pk=ObjectId(request.POST.get('pk')), ingredients__name=request.POST.get('name')).update(**insert_dict)
-    return HttpResponse(json.dumps({'status': True, 'html': menu_render(request.user)}, default=json_util.default), content_type="application/json")
+    return HttpResponse(json.dumps({'status': True, 'html': menu_render(request.user), 'type': type_res}, default=json_util.default), content_type="application/json")
 
 
 @login_required(login_url=reverse_lazy('menu-login'))
