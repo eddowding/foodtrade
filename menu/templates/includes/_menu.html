@@ -97,9 +97,10 @@
                                         <i class="fa fa-ellipsis-v"></i>
                                     </span>
                                     <span class="ingredient parent"><a class="ingredient-item-name" data-pk={{dish.pk}} data-name="{{ parent.name }}">{{ parent.name }}</a></span>
-                                    <span><a data-dish-id={{dish.pk}} data-parent-name="{{ parent.name }}" class="add-sub-ingredients btn btn-default btn-xs"><i class="fa fa-plus-circle fa-fw"></i>  Add sub-ingredient</a></span>
+                                    
                                     <div class="del">
                                         <div class="tools hidden">
+                                        <span><a data-dish-id={{dish.pk}} data-parent-name="{{ parent.name }}" class="add-sub-ingredients">Add sub-ingredient</a></span>
                                             <a data-id={{dish.pk}} data-url={% url 'menu_delete_ingredient' %} data-name='{{parent.name}}' class="delete-btn">Delete</a>
                                         </div>
                                     </div>
@@ -140,7 +141,8 @@
                             {% endfor %}
                         </ul>
 
-                            <a data-dish-id = {{ dish.id }} class="add-ingredients btn btn-default btn-sm"><i class="fa fa-plus-circle fa-fw"></i>  Add an ingredient</a>
+                        <a data-dish-id = {{ dish.id }} class="add-ingredients btn btn-success btn-sm"><i class="fa fa-plus-circle fa-fw"></i>  Add an ingredient</a> 
+                        <p class="help-block" style="margin-left: 1.5em;">Tip: Press 'Ctrl + Enter' to add a new row after selecting an item.</p>
                         </div>
                 {% endfor %}
 

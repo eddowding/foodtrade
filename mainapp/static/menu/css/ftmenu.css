@@ -14,8 +14,8 @@
 }
 .add-ingredients {
     margin-left: 18px;
-    margin-top: 5px;
-    color: #61AE32;
+    margin-top: 5px; 
+    background: #61AE32 !important;
 }
 .box .ingredient-tree {
     margin: 0;
@@ -343,6 +343,15 @@ a.text-muted {
 }
 .tt-suggestion p {
     margin: 0;
+}
+
+.add-sub-ingredients {
+    font-weight: normal !important;
+    color: green;
+    margin-left: 1em;
+}
+.add-sub-ingredients:hover {
+    color: #576D30;
 }
 /*
 OL { counter-reset: item }
