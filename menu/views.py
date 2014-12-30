@@ -311,12 +311,15 @@ def update_ingredient_name(request):
     insert_dict['set__ingredients__S__is_allergen'] = True if Allergen.objects.filter(name=request.POST.get('value')).count() else False
     if insert_dict['set__ingredients__S__is_allergen']:
         type_res = 'allergen'
+        insert_dict['set__is_allergen'] = True
     insert_dict['set__ingredients__S__is_meat'] = True if Meat.objects.filter(name=request.POST.get('value')).count() else False
     if insert_dict['set__ingredients__S__is_meat']:
         type_res = 'meat'
+        insert_dict['set__is_meat'] = True
     insert_dict['set__ingredients__S__is_gluten'] = True if Gluten.objects.filter(name=request.POST.get('value')).count() else False
     if insert_dict['set__ingredients__S__is_gluten']:
         type_res = 'gluten'
+        insert_dict['set__is_gluten'] = True
     Dish.objects.filter(pk=ObjectId(request.POST.get('pk')), ingredients__name=request.POST.get('name')).update(**insert_dict)
     return HttpResponse(json.dumps({'status': True, 'html': menu_render(request.user), 'type': type_res}, default=json_util.default), content_type="application/json")
 
