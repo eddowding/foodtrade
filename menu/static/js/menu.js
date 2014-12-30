@@ -203,6 +203,27 @@ $(document).ready(function() {
         });
     });
 
+    $(document).delegate('.add-sub-ingredients', 'click', function(ev) {
+        var data = {
+            dish: $(this).attr('data-dish-id'),
+            name: 'Type Ingredient Here',
+            parent: $(this).attr('data-parent-name'),
+            order: 1
+        };
+
+        $.ajax({
+            url: createIngredientUrl + '?_tmp='+(new Date).getTime(),
+            data: data,
+            type: 'POST',
+            dataType: 'JSON',
+            success: function(data) {
+                $('.menus').html(data.html);
+                sortableFn();
+                editableFn();
+            }
+        });
+    });
+
     $('#ingredientsModal button.btn').click(function(ev) {
         var data = {
             dish: $('#ingredientsModal input[name="dish"]').val(),
@@ -322,7 +343,7 @@ $(document).ready(function() {
         });
 
         $('.ingredient-item-name:contains("Type Ingredient Here")').editable('toggle');
-        
+
         $('.ingredient-editable').typeahead(null, {
             displayKey: 'name',
             name: 'ingredients',

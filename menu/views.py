@@ -221,7 +221,8 @@ def create_ingredient(request):
     while parent:
         for ingredient in dish_obj.ingredients:
             if parent == ingredient.name:
-                Dish.objects.filter(pk=ObjectId(dish), ingredients__name=parent).update(**parent_update_dict)
+                if len(parent_update_dict.keys()):
+                    Dish.objects.filter(pk=ObjectId(dish), ingredients__name=parent).update(**parent_update_dict)
                 dish_obj = Dish.objects.get(pk=ObjectId(dish))
                 parent = ingredient.parent
     return HttpResponse(json.dumps({'status': True, 'html': menu_render(request.user)}, default=json_util.default))
