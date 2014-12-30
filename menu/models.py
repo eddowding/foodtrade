@@ -86,6 +86,11 @@ class Establishment(Document):
     modified_on = DateTimeField(default=datetime.now)
     is_active = BooleanField(required=True, default=True)
 
+    meta = {
+        'indexes': [
+            'BusinessName'
+        ]
+    }
 
     def full_address(self):
         field_list = ['AddressLine1', 'AddressLine2', 'AddressLine3', 'AddressLine4']
@@ -153,6 +158,13 @@ class Dish(Document):
     added_on = DateTimeField(required=True)
     modified_on = DateTimeField(default=datetime.now)
 
+    meta = {
+        'indexes': [
+            'name',
+            ('ingredients.name', 'ingredients.parent')
+        ]
+    }
+
     def get_ingredient_tree(self): #TODO: change to support multilevel
         ingredients = self.ingredients
         ret_list = []
@@ -175,6 +187,12 @@ class Allergen(Document):
     added_on = DateTimeField(required=True)
     modified_on = DateTimeField(default=datetime.now)
 
+    meta = {
+        'indexes': [
+            'name'
+        ]
+    }
+
 
 class Meat(Document):
     name = StringField(required=True)
@@ -182,12 +200,24 @@ class Meat(Document):
     added_on = DateTimeField(required=True)
     modified_on = DateTimeField(default=datetime.now)
 
+    meta = {
+        'indexes': [
+            'name'
+        ]
+    }
+
 
 class Gluten(Document):
     name = StringField(required=True)
     is_active = BooleanField(required=True, default=True)
     added_on = DateTimeField(required=True)
     modified_on = DateTimeField(default=datetime.now)
+
+    meta = {
+        'indexes': [
+            'name'
+        ]
+    }
 
 
 class Connection(Document):
@@ -197,4 +227,3 @@ class Connection(Document):
     is_active = BooleanField(required=True, default=True)
     added_on = DateTimeField(required=True)
     modified_on = DateTimeField(default=datetime.now)
-
