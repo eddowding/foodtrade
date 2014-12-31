@@ -164,7 +164,8 @@ class Dish(Document):
             'name',
             'ingredients.name',
             'ingredients.parent',
-            ('ingredients.name', 'ingredients.parent')
+            ('ingredients.name', 'ingredients.parent'),
+            ('_id', 'ingredients.name')
         ]
     }
 
