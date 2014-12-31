@@ -161,6 +161,7 @@ class Dish(Document):
     meta = {
         'indexes': [
             'name',
+            'ingredients.name',
             ('ingredients.name', 'ingredients.parent')
         ]
     }
