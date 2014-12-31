@@ -88,7 +88,8 @@ class Establishment(Document):
 
     meta = {
         'indexes': [
-            'BusinessName'
+            'BusinessName',
+            'user'
         ]
     }
 
@@ -229,3 +230,9 @@ class Connection(Document):
     is_active = BooleanField(required=True, default=True)
     added_on = DateTimeField(required=True)
     modified_on = DateTimeField(default=datetime.now)
+
+    meta = {
+        'indexes': [
+            'user'
+        ]
+    }
