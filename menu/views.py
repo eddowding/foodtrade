@@ -81,7 +81,7 @@ Menu views.
 def establishment_lookup_name(request):
     query = {'BusinessName__icontains': request.GET.get('q')}
     ret_list = []
-    establishments = Establishment.objects.filter(**query)
+    establishments = Establishment.objects.filter(**query)[:10]
     for obj in establishments:
         name = '<strong>%s</strong> <span class="est_type">%s</span> <span class="est_addr">%s</span>' % (obj.BusinessName, obj.BusinessType, obj.full_address())
         ret_list.append({'name': name, 'value': str(obj.pk), 'type': 1})
