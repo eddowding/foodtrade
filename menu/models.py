@@ -162,6 +162,7 @@ class Dish(Document):
         'indexes': [
             'name',
             'ingredients.name',
+            'ingredients.parent',
             ('ingredients.name', 'ingredients.parent')
         ]
     }
