@@ -345,6 +345,8 @@ $(document).ready(function() {
                 var class_name = response.type;
                 $(this).parents('li').find('div.pull-right').find('span.' + class_name).addClass('active');
                 $(this).parents('div.menuitem').find('div.menutitle').find('div.pull-right').find('span.' + class_name).addClass('active');
+                $(this).attr('data-name', newValue);
+                $('a.add-sub-ingredients[data-dish-id="' + $(this).attr('data-pk') + '"]').attr('data-parent-name', newValue);
                 $(this).editable('option', 'name', newValue);
             }
         });
