@@ -211,17 +211,19 @@ $(document).ready(function() {
             order: 1
         };
 
-        $.ajax({
-            url: createIngredientUrl + '?_tmp='+(new Date).getTime(),
-            data: data,
-            type: 'POST',
-            dataType: 'JSON',
-            success: function(data) {
-                $('.menus').html(data.html);
-                sortableFn();
-                editableFn();
-            }
-        });
+        if (data.name !== data.parent) {
+            $.ajax({
+                url: createIngredientUrl + '?_tmp='+(new Date).getTime(),
+                data: data,
+                type: 'POST',
+                dataType: 'JSON',
+                success: function(data) {
+                    $('.menus').html(data.html);
+                    sortableFn();
+                    editableFn();
+                }
+            });
+        }
     });
 
     $('#ingredientsModal button.btn').click(function(ev) {
@@ -264,17 +266,19 @@ $(document).ready(function() {
                 if ($item.parents('li').attr('data-ingredient-name') !== undefined) {
                     data.parent = $item.parents('li').attr('data-ingredient-name');
                 }
-                $.ajax({
-                    url: updateIngredientUrl + '?_tmp='+(new Date).getTime(),
-                    data: data,
-                    type: 'POST',
-                    dataType: 'JSON',
-                    success: function(data) {
-                        $('.menus').html(data.html);
-                        sortableFn();
-                        editableFn();
-                    }
-                });
+                if (data.name !== data.parent) {
+                    $.ajax({
+                        url: updateIngredientUrl + '?_tmp='+(new Date).getTime(),
+                        data: data,
+                        type: 'POST',
+                        dataType: 'JSON',
+                        success: function(data) {
+                            $('.menus').html(data.html);
+                            sortableFn();
+                            editableFn();
+                        }
+                    });
+                }
 
                 _super($item, container);
             },
