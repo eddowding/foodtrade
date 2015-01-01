@@ -135,6 +135,8 @@ def dish_lookup_name(request):
     ingredients_list = []
     for dish in Dish.objects.filter(**query):
         for ingredient in dish.ingredients:
+            if ingredient.name == 'Type Ingredient Here':
+                continue
             ingredients_list.append(str(ingredient.name))
         name = '%s (%s)' % (dish.name, ", ".join(ingredients_list))
         tmp_dict = {'name': name, 'value': str(dish.pk)}
@@ -187,6 +189,8 @@ def create_ingredient(request):
     dish_is_gluten = False
     dish_obj = Dish.objects.get(pk=ObjectId(dish))
     for ingredient in dish_obj.ingredients:
+        if ingredient.name == 'Type Ingredient Here':
+            continue
         if ingredient.is_allergen:
             dish_is_allergen = True
         if ingredient.is_meat:
@@ -220,6 +224,8 @@ def create_ingredient(request):
         parent_update_dict['set__ingredients__S__is_gluten'] = True
     while parent:
         for ingredient in dish_obj.ingredients:
+            if ingredient.name == 'Type Ingredient Here':
+                continue
             if parent == ingredient.name:
                 if len(parent_update_dict.keys()):
                     Dish.objects.filter(pk=ObjectId(dish), ingredients__name=parent).update(**parent_update_dict)
@@ -242,6 +248,8 @@ def update_ingredient(request):
     dish_is_gluten = False
     prev_parent = None
     for ingredient in Dish.objects.get(pk=ObjectId(dish)).ingredients:
+        if ingredient.name == 'Type Ingredient Here':
+            continue
         if not insert_dict.get('parent'):
             if insert_dict['name'] == ingredient.name:
                 prev_parent = ingredient.parent
@@ -278,6 +286,8 @@ def update_ingredient(request):
         parent_update_dict['set__ingredients__S__is_gluten'] = True
     while parent:
         for ingredient in dish_obj.ingredients:
+            if ingredient.name == 'Type Ingredient Here':
+                continue
             if parent == ingredient.name:
                 Dish.objects.filter(pk=ObjectId(dish), ingredients__name=parent).update(**parent_update_dict)
                 dish_obj = Dish.objects.get(pk=ObjectId(dish))
@@ -288,6 +298,8 @@ def update_ingredient(request):
                                    'set__ingredients__S__is_meat': False,
                                    'set__ingredients__S__is_gluten': False}
         for ingredient in dish_obj.ingredients:
+            if ingredient.name == 'Type Ingredient Here':
+                continue
             if prev_parent == ingredient.name:
                 tmp_parent = ingredient.parent
             if prev_parent == ingredient.parent:
@@ -328,6 +340,8 @@ def update_ingredient_name(request):
 def delete_ingredient(request):
     prev_parent = None
     for ingredient in Dish.objects.get(pk=ObjectId(request.POST.get('id'))).ingredients:
+        if ingredient.name == 'Type Ingredient Here':
+            continue
         if request.POST.get('name') == ingredient.name:
             prev_parent = ingredient.parent
 
@@ -337,6 +351,8 @@ def delete_ingredient(request):
     dish_is_meat = False
     dish_is_gluten = False
     for ingredient in Dish.objects.get(pk=ObjectId(request.POST.get('id'))).ingredients:
+        if ingredient.name == 'Type Ingredient Here':
+            continue
         if ingredient.is_allergen:
             dish_is_allergen = True
         if ingredient.is_meat:
@@ -354,6 +370,8 @@ def delete_ingredient(request):
                                    'set__ingredients__S__is_meat': False,
                                    'set__ingredients__S__is_gluten': False}
         for ingredient in dish_obj.ingredients:
+            if ingredient.name == 'Type Ingredient Here':
+                continue
             if prev_parent == ingredient.name:
                 tmp_parent = ingredient.parent
             if prev_parent == ingredient.parent:
@@ -381,6 +399,8 @@ def ingredient_lookup_name(request):
     klass_list = [Gluten, Allergen, Meat]
     for dish in Dish.objects.filter(*query1):
         for ingredient in dish.ingredients:
+            if ingredient.name == 'Type Ingredient Here':
+                continue
             if keyword in ingredient.parent:
                 if not tmp_dict.has_key(ingredient.parent):
                     tmp_dict[ingredient.parent] = []
