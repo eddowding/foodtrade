@@ -247,6 +247,7 @@ class Connection(Document):
 
     meta = {
         'indexes': [
-            'user'
+            'user',
+            ('user', 'connection_type')
         ]
     }
