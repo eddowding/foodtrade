@@ -110,6 +110,12 @@ class Menu(Document):
     added_on = DateTimeField(required=True)
     modified_on = DateTimeField(default=datetime.now)
 
+    meta = {
+        'indexes': [
+            'establishment'
+        ]
+    }
+
     def get_menu_sections(self):
         return MenuSection.objects.filter(menu=self.pk)
 
@@ -126,6 +132,12 @@ class MenuSection(Document):
     is_active = BooleanField(required=True, default=True)
     added_on = DateTimeField(required=True)
     modified_on = DateTimeField(default=datetime.now)
+
+    meta = {
+        'indexes': [
+            'menu'
+        ]
+    }
 
     def get_section_dishes(self):
         return Dish.objects.filter(menu_section=self.pk)
@@ -161,6 +173,7 @@ class Dish(Document):
 
     meta = {
         'indexes': [
+            'menu_section',
             'name',
             'ingredients.name',
             'ingredients.parent',
