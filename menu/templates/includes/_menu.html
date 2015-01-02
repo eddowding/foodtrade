@@ -88,12 +88,14 @@
                             <p href="#" class="editable menuitem-description" data-type="textarea" data-pk="1" data-url="/post" data-title="Edit item">{{dish.description}}</p>
 
                         </div>
-
-                        {% spaceless %}
                         <ul class="ingredient-tree" data-dish-id={{dish.pk}}>
-                            {{dish.html|safe}}
+                            {% comment %}
+                            {% include 'includes/_menu_tree.html' %}
+                            {% endcomment %}
+                            {% spaceless %}
+                                {{dish.html|safe}}
+                            {% endspaceless %}
                         </ul>
-                        {% endspaceless %}
 
                         <a data-dish-id = {{ dish.id }} class="add-ingredients btn btn-success btn-sm"><i class="fa fa-plus-circle fa-fw"></i>  Add an ingredient</a>
                         <p class="help-block" style="margin-left: 1.5em;">Tip: Press 'Ctrl + Enter' to add a new row after selecting an item.</p>

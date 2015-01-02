@@ -164,7 +164,7 @@ def create_dish(request):
 @login_required(login_url=reverse_lazy('menu-login'))
 def update_dish(request):
     pk = ObjectId(request.POST.get('pk'))
-    html = str(request.POST.get('html').strip())
+    html = request.POST.get('html')
     serialized = json.loads(request.POST.get('serialized'))
     Dish.objects.filter(pk=pk).update(set__html=html)
     return HttpResponse(json.dumps({'status': True}))
