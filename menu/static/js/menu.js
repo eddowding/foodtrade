@@ -255,6 +255,8 @@ $(document).ready(function() {
 
 
     var sortableFn = function() {
+        $('.ingredient-item').removeAttr('style');
+        $('.ingredient-item').removeClass('dragged');
         $('.ingredient-tree').sortable({
             onDrop: function($item, container, _super, event) {
                 // var data = {
@@ -283,7 +285,7 @@ $(document).ready(function() {
 
                 var data = {
                     pk: $item.parents('.ingredient-tree').data('dishId'),
-                    html: $item.parents('.ingredient-tree').html(),
+                    html: $item.parents('.ingredient-tree').parents('div.tree').html(),
                     serialized: JSON.stringify($item.parents('.ingredient-tree').sortable("serialize").get())
                 };
 
@@ -293,7 +295,6 @@ $(document).ready(function() {
                     type: 'POST',
                     dataType: 'JSON',
                     success: function(data) {
-                        console.log(data);
                     }
                 });
 
