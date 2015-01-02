@@ -90,11 +90,11 @@ REMOVE_WWW = False
 ES_URLS = ['http://localhost:9200']
 ES_INDEX = 'foodtrade'
 
-MONGO_HOST = 'ftmenuvm.cloudapp.net'
+MONGO_HOST = 'localhost'
 MONGO_PORT = 27017
 MONGO_DB = 'foodtrade'
-MONGO_USER = 'ftroot'
-MONGO_PASS = 'ftroot'
+MONGO_USER = None
+MONGO_PASS = None
 
 connect(db=MONGO_DB, host=MONGO_HOST, port=MONGO_PORT, username=MONGO_USER, password=MONGO_PASS)
 SESSION_ENGINE = 'django.contrib.sessions.backends.cache'

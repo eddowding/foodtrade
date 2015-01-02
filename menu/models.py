@@ -149,13 +149,6 @@ class MenuSection(Document):
 signals.post_delete.connect(MenuSection.post_delete, sender=MenuSection)
 
 
-class Ingredient(EmbeddedDocument):
-    name = StringField(required=True)
-    parent = StringField(required=False)
-    order = IntField(required=True)
-    is_allergen = BooleanField(required=True, default=False)
-    is_meat = BooleanField(required=True, default=False)
-    is_gluten = BooleanField(required=True, default=False)
 
 
 class Dish(Document):
@@ -163,40 +156,38 @@ class Dish(Document):
     name = StringField(required=True)
     description = StringField()
     price = FloatField()
-    ingredients = ListField(EmbeddedDocumentField(Ingredient), required=False)
     is_allergen = BooleanField(required=True, default=False)
     is_meat = BooleanField(required=True, default=False)
     is_gluten = BooleanField(required=True, default=False)
     is_active = BooleanField(required=True, default=True)
+    html = StringField(required=True, default='')
     added_on = DateTimeField(required=True)
     modified_on = DateTimeField(default=datetime.now)
 
     meta = {
         'indexes': [
             'menu_section',
-            'name',
-            'ingredients.name',
-            'ingredients.parent',
-            ('ingredients.name', 'ingredients.parent'),
-            ('_id', 'ingredients.name')
+            'name'
         ]
     }
 
-    def get_ingredient_tree(self): #TODO: change to support multilevel
-        ingredients = self.ingredients
-        ret_list = []
-        for parent in ingredients:
-            if not parent.parent:
-                tmp_dict = dict(parent.to_mongo())
-                tmp_dict['children'] = []
-                for child in ingredients:
-                    if child.parent not in [None, '']:
-                        if child.parent == tmp_dict['name']:
-                            tmp_dict['children'].append(dict(child.to_mongo()))
-                ret_list.append(tmp_dict)
-        return ret_list
 
+class Ingredient(EmbeddedDocument):
+    dish = ReferenceField(Dish)
+    name = StringField(required=True)
+    parent = ReferenceField('self', required=False)
+    order = IntField(required=True)
+    is_allergen = BooleanField(required=True, default=False)
+    is_meat = BooleanField(required=True, default=False)
+    is_gluten = BooleanField(required=True, default=False)
 
+    meta = {
+        'indexes': [
+            'dish',
+            'name',
+            'parent'
+        ]
+    }
 
 class Allergen(Document):
     name = StringField(required=True)
