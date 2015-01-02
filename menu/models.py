@@ -174,6 +174,7 @@ class Dish(Document):
     def get_all_parent_ingredients(self):
         return Ingredient.objects.filter(dish=self, parent=None)
 
+
 class Ingredient(Document):
     dish = ReferenceField(Dish)
     name = StringField(required=True)

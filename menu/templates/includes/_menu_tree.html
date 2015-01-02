@@ -1,0 +1,49 @@
+{% for parent in dish.get_all_parent_ingredients %}
+<li data-dish-id="{{dish.pk}}" data-ingredient-name="{{parent.name}}" class="ingredient-item">
+    <span class="handle">
+        <i class="fa fa-ellipsis-v"></i>
+        <i class="fa fa-ellipsis-v"></i>
+    </span>
+    <span class="ingredient parent"><a class="ingredient-item-name" data-pk={{dish.pk}} data-name="{{ parent.name }}">{{ parent.name }}</a></span>
+
+    <div class="del">
+        <div class="tools hidden">
+            <span><a data-dish-id={{dish.pk}} data-parent-name="{{ parent.name }}" class="add-sub-ingredients">Add sub-ingredient</a></span>
+            <a data-id={{dish.pk}} data-url={% url 'menu_delete_ingredient' %} data-name='{{parent.name}}' class="delete-btn">Delete</a>
+        </div>
+    </div>
+
+    <div class="pull-right">
+        <span class="allergen flagged {% if parent.is_allergen %}active{% endif %}" data-toggle="tooltip" title="Allergen" data-original-title="Allergen">A</span>
+
+        <span class="meat flagged {% if parent.is_meat %}active{% endif %}" data-toggle="tooltip" title="Meat">M</span>
+
+        <span class="gluten flagged {% if parent.is_gluten %}active{% endif %}" data-toggle="tooltip" title="Gluten">G</span>
+    </div>
+    <ul>
+        {% for child in parent.get_children %}
+        <li data-dish-id="{{dish.pk}}" data-ingredient-name="{{child.name}}" class="ingredient-item">
+            <span class="handle">
+                <i class="fa fa-ellipsis-v"></i>
+                <i class="fa fa-ellipsis-v"></i>
+            </span>
+            <span class="ingredient child"><a class="ingredient-item-name" data-pk={{dish.pk}} data-name="{{ child.name }}">{{ child.name }}</a></span>
+            <div class="del">
+                <div class="tools hidden">
+                    <a data-id={{dish.pk}} data-url={% url 'menu_delete_ingredient' %} data-name='{{child.name}}' class="delete-btn">Delete</a>
+                </div>
+            </div>
+
+            <div class="pull-right">
+
+                <span class="allergen flagged {% if child.is_allergen %}active{% endif %}" data-toggle="tooltip" title="Allergen" data-original-title="Allergen">A</span>
+
+                <span class="meat flagged {% if child.is_meat %}active{% endif %}" data-toggle="tooltip" title="Meat">M</span>
+
+                <span class="gluten flagged {% if child.is_gluten %}active{% endif %}" data-toggle="tooltip" title="Gluten">G</span>
+            </div>
+        </li>
+        {% endfor %}
+    </ul>
+</li>
+{% endfor %}

@@ -280,7 +280,22 @@ $(document).ready(function() {
                 //     });
                 // }
 
-                console.log($item);
+
+                var data = {
+                    pk: $item.parents('.ingredient-tree').data('dishId'),
+                    html: $item.parents('.ingredient-tree').html(),
+                    serialized: JSON.stringify($item.parents('.ingredient-tree').sortable("serialize").get())
+                };
+
+                $.ajax({
+                    url: updateDishUrl + '?_tmp='+(new Date).getTime(),
+                    data: data,
+                    type: 'POST',
+                    dataType: 'JSON',
+                    success: function(data) {
+                        console.log(data);
+                    }
+                });
 
                 _super($item, container);
             }

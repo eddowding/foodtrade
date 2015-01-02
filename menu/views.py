@@ -11,7 +11,7 @@ from django.contrib.auth import authenticate, login as auth_login, logout as aut
 from django.contrib.auth.decorators import login_required
 from django.template.loader import render_to_string
 from mongoengine.django.auth import User
-from menu.models import Establishment, Menu, MenuSection, Dish, Allergen, Meat, Gluten, Connection
+from menu.models import Establishment, Menu, MenuSection, Dish, Allergen, Meat, Gluten, Connection, Ingredient
 
 
 """
@@ -159,6 +159,15 @@ def create_dish(request):
 
     Dish.objects.create(**insert_dict)
     return HttpResponse(json.dumps({'status': True, 'html': menu_render(request.user)}, default=json_util.default))
+
+
+@login_required(login_url=reverse_lazy('menu-login'))
+def update_dish(request):
+    pk = ObjectId(request.POST.get('pk'))
+    html = str(request.POST.get('html').strip())
+    serialized = json.loads(request.POST.get('serialized'))
+    Dish.objects.filter(pk=pk).update(set__html=html)
+    return HttpResponse(json.dumps({'status': True}))
 
 
 @login_required(login_url=reverse_lazy('menu-login'))
