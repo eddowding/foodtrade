@@ -183,24 +183,19 @@ $(document).ready(function() {
 
 
     $(document).delegate('.add-ingredients', 'click', function(ev) {
-        var data = {
-            dish: $(this).attr('data-dish-id'),
-            name: 'Type Ingredient Here',
-            parent: null,
-            order: 1
-        };
+        var dish = $(this).attr('data-dish-id');
+        var first_li = $('.ingredient-tree[data-dish-id="' + dish + '"]').find('li').first().clone();
+        $('.ingredient-tree[data-dish-id="' + dish + '"]').find('li').first().before(first_li).find('ul').remove();
 
-        $.ajax({
-            url: createIngredientUrl + '?_tmp='+(new Date).getTime(),
-            data: data,
-            type: 'POST',
-            dataType: 'JSON',
-            success: function(data) {
-                $('.menus').html(data.html);
-                sortableFn();
-                editableFn();
-            }
-        });
+        // editableFn();
+        //
+        // $('.ingredient-item-name').last().editable('toggle');
+        //
+        // $('.ingredient-editable').typeahead(null, {
+        //     displayKey: 'name',
+        //     name: 'ingredients',
+        //     source: ingredients.ttAdapter()
+        // });
     });
 
     $(document).delegate('.add-sub-ingredients', 'click', function(ev) {
@@ -259,30 +254,6 @@ $(document).ready(function() {
         $('.ingredient-item').removeClass('dragged');
         $('.ingredient-tree').sortable({
             onDrop: function($item, container, _super, event) {
-                // var data = {
-                //     dish: $item.attr('data-dish-id'),
-                //     name: $item.attr('data-ingredient-name'),
-                //     parent: null,
-                //     order: $item.prevAll().length + 1
-                // };
-                // if ($item.parents('li').attr('data-ingredient-name') !== undefined) {
-                //     data.parent = $item.parents('li').attr('data-ingredient-name');
-                // }
-                // if (data.name !== data.parent) {
-                //     $.ajax({
-                //         url: updateIngredientUrl + '?_tmp='+(new Date).getTime(),
-                //         data: data,
-                //         type: 'POST',
-                //         dataType: 'JSON',
-                //         success: function(data) {
-                //             $('.menus').html(data.html);
-                //             sortableFn();
-                //             editableFn();
-                //         }
-                //     });
-                // }
-
-
                 var data = {
                     pk: $item.parents('.ingredient-tree').data('dishId'),
                     html: $item.parents('.ingredient-tree').parents('div.tree').html(),
