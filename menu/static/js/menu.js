@@ -257,37 +257,32 @@ $(document).ready(function() {
     var sortableFn = function() {
         $('.ingredient-tree').sortable({
             onDrop: function($item, container, _super, event) {
-                var data = {
-                    dish: $item.attr('data-dish-id'),
-                    name: $item.attr('data-ingredient-name'),
-                    parent: null,
-                    order: $item.prevAll().length + 1
-                };
-                if ($item.parents('li').attr('data-ingredient-name') !== undefined) {
-                    data.parent = $item.parents('li').attr('data-ingredient-name');
-                }
-                if (data.name !== data.parent) {
-                    $.ajax({
-                        url: updateIngredientUrl + '?_tmp='+(new Date).getTime(),
-                        data: data,
-                        type: 'POST',
-                        dataType: 'JSON',
-                        success: function(data) {
-                            $('.menus').html(data.html);
-                            sortableFn();
-                            editableFn();
-                        }
-                    });
-                }
+                // var data = {
+                //     dish: $item.attr('data-dish-id'),
+                //     name: $item.attr('data-ingredient-name'),
+                //     parent: null,
+                //     order: $item.prevAll().length + 1
+                // };
+                // if ($item.parents('li').attr('data-ingredient-name') !== undefined) {
+                //     data.parent = $item.parents('li').attr('data-ingredient-name');
+                // }
+                // if (data.name !== data.parent) {
+                //     $.ajax({
+                //         url: updateIngredientUrl + '?_tmp='+(new Date).getTime(),
+                //         data: data,
+                //         type: 'POST',
+                //         dataType: 'JSON',
+                //         success: function(data) {
+                //             $('.menus').html(data.html);
+                //             sortableFn();
+                //             editableFn();
+                //         }
+                //     });
+                // }
+
+                console.log($item);
 
                 _super($item, container);
-            },
-            isValidTarget: function($item, container) {
-                if ($item.is('.child-li')) {
-                    return false;
-                } else {
-                    return true;
-                }
             }
         });
     };

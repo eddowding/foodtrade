@@ -171,8 +171,10 @@ class Dish(Document):
         ]
     }
 
+    def get_all_parent_ingredients(self):
+        return Ingredient.objects.filter(dish=self, parent=None)
 
-class Ingredient(EmbeddedDocument):
+class Ingredient(Document):
     dish = ReferenceField(Dish)
     name = StringField(required=True)
     parent = ReferenceField('self', required=False)
@@ -188,6 +190,9 @@ class Ingredient(EmbeddedDocument):
             'parent'
         ]
     }
+
+    def get_children(self):
+        return Ingredient.objects.filter(parent=self)
 
 class Allergen(Document):
     name = StringField(required=True)

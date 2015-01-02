@@ -90,14 +90,14 @@
                         </div>
 
                         <ul class="ingredient-tree">
-                            {% for parent in dish.get_ingredient_tree %}
+                            {% for parent in dish.get_all_parent_ingredients %}
                             <li data-dish-id="{{dish.pk}}" data-ingredient-name="{{parent.name}}" class="ingredient-item">
                                     <span class="handle">
                                         <i class="fa fa-ellipsis-v"></i>
                                         <i class="fa fa-ellipsis-v"></i>
                                     </span>
                                     <span class="ingredient parent"><a class="ingredient-item-name" data-pk={{dish.pk}} data-name="{{ parent.name }}">{{ parent.name }}</a></span>
-                                    
+
                                     <div class="del">
                                         <div class="tools hidden">
                                         <span><a data-dish-id={{dish.pk}} data-parent-name="{{ parent.name }}" class="add-sub-ingredients">Add sub-ingredient</a></span>
@@ -113,7 +113,7 @@
                                         <span class="gluten flagged {% if parent.is_gluten %}active{% endif %}" data-toggle="tooltip" title="Gluten">G</span>
                                     </div>
                                     <ul>
-                                        {% for child in parent.children %}
+                                        {% for child in parent.get_children %}
                                         <li data-dish-id="{{dish.pk}}" data-ingredient-name="{{child.name}}" class="ingredient-item">
                                             <span class="handle">
                                                 <i class="fa fa-ellipsis-v"></i>
@@ -141,7 +141,7 @@
                             {% endfor %}
                         </ul>
 
-                        <a data-dish-id = {{ dish.id }} class="add-ingredients btn btn-success btn-sm"><i class="fa fa-plus-circle fa-fw"></i>  Add an ingredient</a> 
+                        <a data-dish-id = {{ dish.id }} class="add-ingredients btn btn-success btn-sm"><i class="fa fa-plus-circle fa-fw"></i>  Add an ingredient</a>
                         <p class="help-block" style="margin-left: 1.5em;">Tip: Press 'Ctrl + Enter' to add a new row after selecting an item.</p>
                         </div>
                 {% endfor %}
