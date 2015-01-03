@@ -182,9 +182,11 @@ def create_ingredient(request):
     insert_dict['is_allergen'] = True if Allergen.objects.filter(name=insert_dict['name']).count() else False
     insert_dict['is_meat'] = True if Meat.objects.filter(name=insert_dict['name']).count() else False
     insert_dict['is_gluten'] = True if Gluten.objects.filter(name=insert_dict['name']).count() else False
-    insert_dict['added_on'] = datetime.now()
-    Ingredient.objects.create(**insert_dict)
-    return HttpResponse(json.dumps({'status': True}, default=json_util.default))
+    ingredient, status = Ingredient.objects.get_or_create(**insert_dict)
+    if status:
+        ingredient.added_on = datetime.now()
+        ingredient.save()
+    return HttpResponse(json.dumps({'status': True, obj: ingredient}, default=json_util.default))
 
 
 @login_required(login_url=reverse_lazy('menu-login'))
@@ -271,72 +273,18 @@ def update_ingredient(request):
 @login_required(login_url=reverse_lazy('menu-login'))
 def update_ingredient_name(request):
     insert_dict = {}
-    type_res = None
-    insert_dict['set__ingredients__S__name'] = request.POST.get('value')
-    insert_dict['set__ingredients__S__is_allergen'] = True if Allergen.objects.filter(name=request.POST.get('value')).count() else False
-    if insert_dict['set__ingredients__S__is_allergen']:
-        type_res = 'allergen'
-        insert_dict['set__is_allergen'] = True
-    insert_dict['set__ingredients__S__is_meat'] = True if Meat.objects.filter(name=request.POST.get('value')).count() else False
-    if insert_dict['set__ingredients__S__is_meat']:
-        type_res = 'meat'
-        insert_dict['set__is_meat'] = True
-    insert_dict['set__ingredients__S__is_gluten'] = True if Gluten.objects.filter(name=request.POST.get('value')).count() else False
-    if insert_dict['set__ingredients__S__is_gluten']:
-        type_res = 'gluten'
-        insert_dict['set__is_gluten'] = True
-    Dish.objects.filter(pk=ObjectId(request.POST.get('pk')), ingredients__name=request.POST.get('name')).update(**insert_dict)
-    return HttpResponse(json.dumps({'status': True, 'html': menu_render(request.user), 'type': type_res}, default=json_util.default), content_type="application/json")
+    insert_dict['set__name'] = request.POST.get('value')
+    insert_dict['set__is_allergen'] = True if Allergen.objects.filter(name=request.POST.get('value')).count() else False
+    insert_dict['set__is_meat'] = True if Meat.objects.filter(name=request.POST.get('value')).count() else False
+    insert_dict['set__is_gluten'] = True if Gluten.objects.filter(name=request.POST.get('value')).count() else False
+    Ingredient.objects.filter(pk=ObjectId(request.POST.get('pk'))).update(**insert_dict)
+    ingredient = Ingredient.objects.get(pk=ObjectId(request.POST.get('pk')))
+    return HttpResponse(json.dumps({'status': True, obj: Ingredient}, default=json_util.default), content_type="application/json")
 
 
 @login_required(login_url=reverse_lazy('menu-login'))
 def delete_ingredient(request):
-    prev_parent = None
-    for ingredient in Dish.objects.get(pk=ObjectId(request.POST.get('id'))).ingredients:
-        if ingredient.name == 'Type Ingredient Here':
-            continue
-        if request.POST.get('name') == ingredient.name:
-            prev_parent = ingredient.parent
-
-    Dish.objects.filter(pk=ObjectId(request.POST.get('id'))) \
-                                    .update(pull__ingredients__name=request.POST.get('name'))
-    dish_is_allergen = False
-    dish_is_meat = False
-    dish_is_gluten = False
-    for ingredient in Dish.objects.get(pk=ObjectId(request.POST.get('id'))).ingredients:
-        if ingredient.name == 'Type Ingredient Here':
-            continue
-        if ingredient.is_allergen:
-            dish_is_allergen = True
-        if ingredient.is_meat:
-            dish_is_meat = True
-        if ingredient.is_gluten:
-            dish_is_gluten = True
-    Dish.objects.filter(pk=ObjectId(request.POST.get('id'))) \
-                                    .update(set__is_allergen=dish_is_allergen,
-                                            set__is_meat=dish_is_meat,
-                                            set__is_gluten=dish_is_gluten)
-
-    dish_obj = Dish.objects.get(pk=ObjectId(request.POST.get('id')))
-    while prev_parent:
-        prev_parent_update_dict = {'set__ingredients__S__is_allergen': False,
-                                   'set__ingredients__S__is_meat': False,
-                                   'set__ingredients__S__is_gluten': False}
-        for ingredient in dish_obj.ingredients:
-            if ingredient.name == 'Type Ingredient Here':
-                continue
-            if prev_parent == ingredient.name:
-                tmp_parent = ingredient.parent
-            if prev_parent == ingredient.parent:
-                if ingredient.is_allergen:
-                    prev_parent_update_dict['set__ingredients__S__is_allergen'] = True
-                if ingredient.is_meat:
-                    prev_parent_update_dict['set__ingredients__S__is_meat'] = True
-                if ingredient.is_gluten:
-                    prev_parent_update_dict['set__ingredients__S__is_gluten'] = True
-        Dish.objects.filter(pk=ObjectId(request.POST.get('id')), ingredients__name=prev_parent).update(**prev_parent_update_dict)
-        prev_parent = tmp_parent
-
+    Ingredient.objects.delete(pk=ObjectId(request.POST.get('pk')))
     return HttpResponse(json.dumps({'status': True, 'html': menu_render(request.user)}, default=json_util.default))
 
 
