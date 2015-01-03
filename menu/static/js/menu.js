@@ -378,13 +378,21 @@ $(document).ready(function() {
     }
   });
 
-  $('.ingredient-item-name').on('shown', function(e, editable) {
-    $('.ingredient-editable').typeahead(null, {
-      displayKey: 'name',
-      name: 'ingredients',
-      source: ingredients.ttAdapter()
-    });
-  });
+//  $('.ingredient-item-name').on('shown', function(e, editable) {
+//    $('.ingredient-editable').typeahead(null, {
+//      displayKey: 'name',
+//      name: 'ingredients',
+//      source: ingredients.ttAdapter()
+//    });
+//  });
+
+  $(document).delegate('.ingredient-item-name', 'click', function(e, editable) {
+       $('.ingredient-editable').typeahead(null, {
+           displayKey: 'name',
+           name: 'ingredients',
+           source: ingredients.ttAdapter()
+        });
+     });     
 
 
 
