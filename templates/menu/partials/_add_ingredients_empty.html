@@ -1,24 +1,23 @@
-<div id="ingredientsModal" style="display:none;">
-    <li class="ingredient-item ingredient-empty ingredient-empty" data-ingredient-name="eggs" data-dish-id="">
-        <span class="handle">
-            <i class="fa fa-ellipsis-v"></i>
-            <i class="fa fa-ellipsis-v"></i>
-        </span>
-        <span class="ingredient parent">
-            <a data-name="" data-pk="" class="ingredient-item-name editable editable-click"></a>
-        </span>
-        <div class="del">
-            <div class="tools hidden">  
-                <span>
-                    <a class="add-sub-ingredients" data-parent-name="eggs" data-dish-id="">Add sub-ingredient</a>
-                </span>
-                <a class="delete-btn" data-name="eggs" data-url="/delete/ingredient/" data-id="">Delete</a>
-            </div>
+<li data-dish-id="" data-ingredient-name="" class="ingredient-item hidden ingredient-item-new">
+    <span class="handle">
+        <i class="fa fa-ellipsis-v"></i>
+        <i class="fa fa-ellipsis-v"></i>
+    </span>
+    <span class="ingredient parent"><a class="ingredient-item-name" data-pk="" data-name="">Add ingredient here</a></span>
+
+    <div class="del">
+        <div class="tools hidden">
+            <span><a data-dish-id="" data-parent-name="" class="add-sub-ingredients">Add sub-ingredient</a></span>
+            <a data-id="" data-url={% url 'menu_delete_ingredient' %} data-name='' class="delete-btn">Delete</a>
         </div>
-        <div class="pull-right">
-            <span class="allergen flagged"></span>
-            <span class="meat flagged "></span>
-            <span class="gluten flagged "></span>
-        </div>  
-    </li>
-</div>
+    </div>
+
+    <div class="pull-right">
+        <span class="allergen flagged" data-toggle="tooltip" title="Allergen" data-original-title="Allergen">A</span>
+
+        <span class="meat flagged" data-toggle="tooltip" title="Meat">M</span>
+
+        <span class="gluten flagged" data-toggle="tooltip" title="Gluten">G</span>
+    </div>
+    <ul></ul>
+</li>
