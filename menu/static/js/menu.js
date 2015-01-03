@@ -288,11 +288,14 @@ $(document).ready(function() {
   var deleteId = null;
   var deleteName = null;
 
+  var deleteElement = null;
+
   $(document).delegate('.delete-btn', 'click', function(ev) {
     deleteUrl = $(this).attr('data-url');
     deleteId = $(this).attr('data-id');
     deleteName = $(this).attr('data-name');
     $('#confirmationModal').modal('show');
+    deleteElement = $(this).parents('.ingredient-item:first');
   });
 
   $('.delete-confirm-btn').click(function(ev) {
@@ -301,17 +304,20 @@ $(document).ready(function() {
       name: deleteName
     };
 
-    $.ajax({
-      url: deleteUrl + '?_tmp=' + (new Date).getTime(),
-      data: data,
-      type: 'POST',
-      dataType: 'JSON',
-      success: function(data) {
-        $('.menus').html(data.html);
-        sortableFn();
-        editableFn();
-      }
-    });
+    deleteElement.remove();
+    if (deleteId) {
+      $.ajax({
+        url: deleteUrl + '?_tmp=' + (new Date).getTime(),
+        data: data,
+        type: 'POST',
+        dataType: 'JSON',
+        success: function(data) {
+          $('.menus').html(data.html);
+          sortableFn();
+          editableFn();
+        }
+      });
+    }
   });
 
   $(document).delegate('.ingredient-item', 'mouseover', function(ev) {
@@ -358,7 +364,7 @@ $(document).ready(function() {
         $(this).parents('.ingredient-item:first').find('.delete-btn').attr('data-name', newValue);
         $(this).parents('.ingredient-item:first').find('.delete-btn').attr('data-id', response.obj._id.$oid);
         $(this).parents('.ingredient-item:first').attr('data-ingredient-id', response.obj._id.$oid);
-        $(this).attr('data-pk',  response.obj._id.$oid);
+        $(this).attr('data-pk', response.obj._id.$oid);
         $(this).attr('data-name', newValue);
 
         var htmlSaveFn = function() {
