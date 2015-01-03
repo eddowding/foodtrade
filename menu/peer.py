@@ -6,3 +6,4 @@ def grouper(iterable, n, fillvalue=None):
     args = [iter(iterable)] * n
     return izip_longest(fillvalue=fillvalue, *args)
 
+test_obj = [[{u'ingredientName': u'eggs', u'dishId': u'54a2faed0eaefa65a4b78c9e', u'children': [[{u'ingredientName': u'chicken', u'dishId': u'54a2faed0eaefa65a4b78c9e', u'children': [[{u'ingredientName': u'eggs', u'dishId': u'54a2faed0eaefa65a4b78c9e'}]]}, {u'ingredientName': u'eggs', u'dishId': u'54a2faed0eaefa65a4b78c9e'}]]}]]

@@ -174,6 +174,9 @@ class Dish(Document):
     def get_all_parent_ingredients(self):
         return Ingredient.objects.filter(dish=self, parent=None)
 
+    def get_ingredient_names(self):
+        return []
+
 
 class Ingredient(Document):
     dish = ReferenceField(Dish)
@@ -183,6 +186,8 @@ class Ingredient(Document):
     is_allergen = BooleanField(required=True, default=False)
     is_meat = BooleanField(required=True, default=False)
     is_gluten = BooleanField(required=True, default=False)
+    added_on = DateTimeField(required=True)
+    modified_on = DateTimeField(default=datetime.now)
 
     meta = {
         'indexes': [
