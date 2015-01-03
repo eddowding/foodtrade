@@ -358,6 +358,8 @@ $(document).ready(function() {
         $(this).parents('.ingredient-item:first').find('.delete-btn').attr('data-name', newValue);
         $(this).parents('.ingredient-item:first').find('.delete-btn').attr('data-id', response.obj._id.$oid);
         $(this).parents('.ingredient-item:first').attr('data-ingredient-id', response.obj._id.$oid);
+        $(this).attr('data-pk',  response.obj._id.$oid);
+        $(this).attr('data-name', newValue);
 
         var htmlSaveFn = function() {
           console.log($('.ingredient-item[data-ingredient-id=' + response.obj._id.$oid + ']'));
