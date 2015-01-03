@@ -184,7 +184,7 @@ def create_ingredient(request):
     insert_dict['is_gluten'] = True if Gluten.objects.filter(name=insert_dict['name']).count() else False
     insert_dict['added_on'] = datetime.now()
     ingredient = Ingredient.objects.create(**insert_dict)
-    return HttpResponse(json.dumps({'status': True, 'obj': ingredient.to_mongo()}, default=json_util.default))
+    return HttpResponse(json.dumps({'status': True, 'obj': ingredient.to_mongo()}, default=json_util.default), content_type="application/json")
 
 
 @login_required(login_url=reverse_lazy('menu-login'))
@@ -282,7 +282,7 @@ def update_ingredient_name(request):
 
 @login_required(login_url=reverse_lazy('menu-login'))
 def delete_ingredient(request):
-    Ingredient.objects.delete(pk=ObjectId(request.POST.get('pk')))
+    Ingredient.objects.filter(pk=ObjectId(request.POST.get('id'))).delete()
     return HttpResponse(json.dumps({'status': True}, default=json_util.default))
 
 

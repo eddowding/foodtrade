@@ -339,20 +339,39 @@ $(document).ready(function() {
       success: function(response, newValue) {
         console.log(response);
         if (response.obj.is_allergen) {
-            $(this).parents('li').find('div.pull-right').find('span.allergen').addClass('active');
-            $(this).parents('div.menuitem').find('div.menutitle').find('div.pull-right').find('span.allergen').addClass('active');
+          $(this).parents('li').find('div.pull-right').find('span.allergen').addClass('active');
+          $(this).parents('div.menuitem').find('div.menutitle').find('div.pull-right').find('span.allergen').addClass('active');
         }
         if (response.obj.is_meat) {
-            $(this).parents('li').find('div.pull-right').find('span.meat').addClass('active');
-            $(this).parents('div.menuitem').find('div.menutitle').find('div.pull-right').find('span.meat').addClass('active');
+          $(this).parents('li').find('div.pull-right').find('span.meat').addClass('active');
+          $(this).parents('div.menuitem').find('div.menutitle').find('div.pull-right').find('span.meat').addClass('active');
         }
         if (response.obj.is_gluten) {
-            $(this).parents('li').find('div.pull-right').find('span.gluten').addClass('active');
-            $(this).parents('div.menuitem').find('div.menutitle').find('div.pull-right').find('span.gluten').addClass('active');
+          $(this).parents('li').find('div.pull-right').find('span.gluten').addClass('active');
+          $(this).parents('div.menuitem').find('div.menutitle').find('div.pull-right').find('span.gluten').addClass('active');
         }
-        $('a.add-sub-ingredients[data-dish-id="' + $(this).attr('data-pk') + '"]').attr('data-parent-name', newValue);
+        if (response.obj.parent !== undefined) {
+            $('a.add-sub-ingredients[data-dish-id="' + $(this).attr('data-pk') + '"]').attr('data-parent-id', response.obj.parent.$oid);
+        }
         $(this).editable('option', 'name', newValue);
         $(this).editable('option', 'url', updateIngredientNameUrl);
+
+        $(this).parents('.ingredient-item:first').find('.delete-btn').attr('data-name', newValue);
+        $(this).parents('.ingredient-item:first').find('.delete-btn').attr('data-id', response.obj._id.$oid);
+
+        var data = {
+          pk: $(this).attr('data-dish-id'),
+          html: $(this).parents('.ingredient-tree').parents('div.tree').html(),
+          serialized: JSON.stringify($(this).parents('.ingredient-tree').sortable("serialize").get())
+        };
+
+        $.ajax({
+          url: updateDishUrl + '?_tmp=' + (new Date).getTime(),
+          data: data,
+          type: 'POST',
+          dataType: 'JSON',
+          success: function(data) {}
+        });
       }
     });
 
@@ -390,21 +409,21 @@ $(document).ready(function() {
     }
   });
 
-//  $('.ingredient-item-name').on('shown', function(e, editable) {
-//    $('.ingredient-editable').typeahead(null, {
-//      displayKey: 'name',
-//      name: 'ingredients',
-//      source: ingredients.ttAdapter()
-//    });
-//  });
+  //  $('.ingredient-item-name').on('shown', function(e, editable) {
+  //    $('.ingredient-editable').typeahead(null, {
+  //      displayKey: 'name',
+  //      name: 'ingredients',
+  //      source: ingredients.ttAdapter()
+  //    });
+  //  });
 
   $(document).delegate('.ingredient-item-name', 'click', function(e, editable) {
-       $('.ingredient-editable').typeahead(null, {
-           displayKey: 'name',
-           name: 'ingredients',
-           source: ingredients.ttAdapter()
-        });
-     });     
+    $('.ingredient-editable').typeahead(null, {
+      displayKey: 'name',
+      name: 'ingredients',
+      source: ingredients.ttAdapter()
+    });
+  });
 
 
 
