@@ -184,18 +184,21 @@ $(document).ready(function() {
 
     $(document).delegate('.add-ingredients', 'click', function(ev) {
         var dish = $(this).attr('data-dish-id');
-        var first_li = $('.ingredient-tree[data-dish-id="' + dish + '"]').find('li').first().clone();
-        $('.ingredient-tree[data-dish-id="' + dish + '"]').find('li').first().before(first_li).find('ul').remove();
+        first_li = $('.ingredient-empty').clone();
+        var prev_element = $(this).prev();
+        prev_element.append('<ul class="ingredient-tree" data-dish-id="'+dish+'"></ul>');
+        $('.ingredient-tree[data-dish-id="' + dish + '"]').append(first_li);    
+        $('.ingredient-tree[data-dish-id="' + dish + '"]').find('li').removeClass('ingredient-empty').first().before(first_li).find('ul').remove();
 
-        // editableFn();
-        //
-        // $('.ingredient-item-name').last().editable('toggle');
-        //
-        // $('.ingredient-editable').typeahead(null, {
-        //     displayKey: 'name',
-        //     name: 'ingredients',
-        //     source: ingredients.ttAdapter()
-        // });
+         editableFn();
+        
+         $('.ingredient-tree[data-dish-id="' + dish + '"]').find($('.ingredient-item-name')).last().editable('toggle');
+        
+         $('.ingredient-editable').typeahead(null, {
+             displayKey: 'name',
+             name: 'ingredients',
+             source: ingredients.ttAdapter()
+         });
     });
 
     $(document).delegate('.add-sub-ingredients', 'click', function(ev) {
