@@ -285,7 +285,7 @@ def update_ingredient_name(request):
 @login_required(login_url=reverse_lazy('menu-login'))
 def delete_ingredient(request):
     Ingredient.objects.delete(pk=ObjectId(request.POST.get('pk')))
-    return HttpResponse(json.dumps({'status': True, 'html': menu_render(request.user)}, default=json_util.default))
+    return HttpResponse(json.dumps({'status': True}, default=json_util.default))
 
 
 @login_required(login_url=reverse_lazy('menu-login'))
