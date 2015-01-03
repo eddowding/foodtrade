@@ -292,27 +292,10 @@ def delete_ingredient(request):
 def ingredient_lookup_name(request):
     ''' Lookup ingredient with nme of ingredients '''
     keyword = request.GET.get('q')
-    query1 = ( Q(ingredients__name__icontains = keyword) |\
-               Q(ingredients__parent__icontains = keyword), )
     query2 = {'name__icontains': keyword}
     tmp_dict = {}
     tmp_list = []
     klass_list = [Gluten, Allergen, Meat]
-    for dish in Dish.objects.filter(*query1):
-        for ingredient in dish.ingredients:
-            if ingredient.name == 'Type Ingredient Here':
-                continue
-            if keyword in ingredient.parent:
-                if not tmp_dict.has_key(ingredient.parent):
-                    tmp_dict[ingredient.parent] = []
-                tmp_dict[ingredient.parent].append(ingredient.name)
-            if keyword in ingredient.name:
-                if not tmp_dict.has_key(ingredient.name):
-                    tmp_dict[ingredient.name] = []
-    for suggestion, children in tmp_dict.items():
-        if len(children) > 0:
-            suggestion = '%s (%s)' % (suggestion, ", ".join(children))
-        tmp_list.append(suggestion)
     for klass in klass_list:
         for obj in klass.objects.filter(**query2):
             if keyword in obj.name:
