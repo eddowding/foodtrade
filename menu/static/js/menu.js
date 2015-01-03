@@ -304,7 +304,24 @@ $(document).ready(function() {
       name: deleteName
     };
 
+    var tree = deleteElement.parents('.ingredient-tree');
+
     deleteElement.remove();
+
+    var dataDish = {
+        pk: tree.attr('data-dish-id'),
+        html: tree.parents('div.tree').html(),
+        serialized: JSON.stringify(tree.sortable("serialize").get())
+    };
+
+    $.ajax({
+        url: updateDishUrl + '?_tmp=' + (new Date).getTime(),
+        data: dataDish,
+        type: 'POST',
+        dataType: 'JSON',
+        success: function(data) {}
+    });
+
     if (deleteId) {
       $.ajax({
         url: deleteUrl + '?_tmp=' + (new Date).getTime(),
@@ -368,7 +385,6 @@ $(document).ready(function() {
         $(this).attr('data-name', newValue);
 
         var htmlSaveFn = function() {
-          var self = this;
           var data = {
             pk: $('.ingredient-item[data-ingredient-id=' + response.obj._id.$oid + ']').attr('data-dish-id'),
             html: $('.ingredient-item[data-ingredient-id=' + response.obj._id.$oid + ']').parents('.ingredient-tree').parents('div.tree').html(),
