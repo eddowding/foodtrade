@@ -362,7 +362,6 @@ $(document).ready(function() {
         $(this).attr('data-name', newValue);
 
         var htmlSaveFn = function() {
-          console.log($('.ingredient-item[data-ingredient-id=' + response.obj._id.$oid + ']'));
           var self = this;
           var data = {
             pk: $('.ingredient-item[data-ingredient-id=' + response.obj._id.$oid + ']').attr('data-dish-id'),
