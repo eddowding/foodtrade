@@ -182,11 +182,9 @@ def create_ingredient(request):
     insert_dict['is_allergen'] = True if Allergen.objects.filter(name=insert_dict['name']).count() else False
     insert_dict['is_meat'] = True if Meat.objects.filter(name=insert_dict['name']).count() else False
     insert_dict['is_gluten'] = True if Gluten.objects.filter(name=insert_dict['name']).count() else False
-    ingredient, status = Ingredient.objects.get_or_create(**insert_dict)
-    if status:
-        ingredient.added_on = datetime.now()
-        ingredient.save()
-    return HttpResponse(json.dumps({'status': True, obj: ingredient}, default=json_util.default))
+    insert_dict['added_on'] = datetime.now()
+    ingredient = Ingredient.objects.create(**insert_dict)
+    return HttpResponse(json.dumps({'status': True, 'obj': ingredient.to_mongo()}, default=json_util.default))
 
 
 @login_required(login_url=reverse_lazy('menu-login'))

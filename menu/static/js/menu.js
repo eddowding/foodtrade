@@ -193,6 +193,7 @@ $(document).ready(function() {
     placeholder_li.removeClass('hidden ingredient-item-new');
     placeholder_li.attr('data-dish-id', dish);
     placeholder_li.find('.add-sub-ingredients').attr('data-dish-id', dish);
+    placeholder_li.find('.ingredient-item-name').attr('data-dish-id', dish);
     $('.ingredient-tree[data-dish-id="' + dish + '"]').append(placeholder_li);
 
     editableFn();
@@ -209,9 +210,12 @@ $(document).ready(function() {
     var dish = $(this).data('dishId');
     var target_ul = $(this).parents('li.ingredient-item:first').find('ul').first();
     var placeholder_li = $('.ingredient-item-new').clone();
+    var parent = $(this).parents('li.ingredient-item:first').find('.ingredient-item-name:first').attr('data-pk');
     placeholder_li.removeClass('hidden ingredient-item-new');
     placeholder_li.attr('data-dish-id', dish);
     placeholder_li.find('.add-sub-ingredients').attr('data-dish-id', dish);
+    placeholder_li.find('.ingredient-item-name').attr('data-dish-id', dish);
+    placeholder_li.find('.ingredient-item-name').attr('data-parent-id', parent);
     target_ul.append(placeholder_li);
 
     editableFn();
@@ -326,19 +330,27 @@ $(document).ready(function() {
       url: createIngredientUrl + '?_tmp=' + (new Date).getTime(),
       inputclass: 'ingredient-editable',
       params: function(params) {
-          params.dish = '';
-          params.name = params.value;
-          params.parent = '';
-          params.order = 1;
-          return params;
+        params.dish = $(this).attr('data-dish-id');
+        params.name = params.value;
+        params.parent = $(this).attr('data-parent-id');
+        params.order = 1;
+        return params;
       },
       success: function(response, newValue) {
-          console.log(response);
-        // var class_name = response.type;
-        // $(this).parents('li').find('div.pull-right').find('span.' + class_name).addClass('active');
-        // $(this).parents('div.menuitem').find('div.menutitle').find('div.pull-right').find('span.' + class_name).addClass('active');
-        // $(this).attr('data-name', newValue);
-        // $('a.add-sub-ingredients[data-dish-id="' + $(this).attr('data-pk') + '"]').attr('data-parent-name', newValue);
+        console.log(response);
+        if (response.obj.is_allergen) {
+            $(this).parents('li').find('div.pull-right').find('span.allergen').addClass('active');
+            $(this).parents('div.menuitem').find('div.menutitle').find('div.pull-right').find('span.allergen').addClass('active');
+        }
+        if (response.obj.is_meat) {
+            $(this).parents('li').find('div.pull-right').find('span.meat').addClass('active');
+            $(this).parents('div.menuitem').find('div.menutitle').find('div.pull-right').find('span.meat').addClass('active');
+        }
+        if (response.obj.is_gluten) {
+            $(this).parents('li').find('div.pull-right').find('span.gluten').addClass('active');
+            $(this).parents('div.menuitem').find('div.menutitle').find('div.pull-right').find('span.gluten').addClass('active');
+        }
+        $('a.add-sub-ingredients[data-dish-id="' + $(this).attr('data-pk') + '"]').attr('data-parent-name', newValue);
         $(this).editable('option', 'name', newValue);
         $(this).editable('option', 'url', updateIngredientNameUrl);
       }
