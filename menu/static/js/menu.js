@@ -356,6 +356,8 @@ $(document).ready(function() {
       type: 'text',
       url: createIngredientUrl + '?_tmp=' + (new Date).getTime(),
       inputclass: 'ingredient-editable',
+      emptytext: '',
+      placeholder: 'Add ingredient here',
       params: function(params) {
         params.dish = $(this).attr('data-dish-id');
         params.name = params.value;
