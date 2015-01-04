@@ -7,7 +7,7 @@ from mainapp.forms import PassworResetForm
 admin.autodiscover()
 # handler404 = 'mainapp.views.my_404_view'
 urlpatterns = patterns('',
-    url(r'^', include('menu.urls'))
+    url(r'^', include('menu.urls')),
     #url(r'^$', 'mainapp.home.home', name='home'),
     #url(r'^kpi/$', 'mainapp.kpi.stats'),
     #url(r'^robots\.txt$', TemplateView.as_view(template_name='robots.txt',content_type='text/plain'), name='robots'),
@@ -46,7 +46,7 @@ urlpatterns = patterns('',
     #url(r'^(?i)editprofile/(?P<username>[-\w]+)/$','mainapp.profilepage.edit_profile'),
     ## Uncomment the next line to enable the admin:
     #url(r'^admin/', include(admin.site.urls)),
-    #url(r'^mongonaut/', include('mongonaut.urls')),
+    url(r'^mongonaut/', include('mongonaut.urls')),
     #url(r'^trends/', 'mainapp.views.trends'),
     #url(r'^pricing/', 'mainapp.pricing.home'),
     #url(r'^pages/(?P<page_name>\w{1,40})$', 'mainapp.pricing.pages'),
