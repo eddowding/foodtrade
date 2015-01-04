@@ -349,6 +349,9 @@ $(document).ready(function() {
     }
   });
 
+  $(document).delegate('.ingredient-item', 'click', function(ev) {
+      $(this).find('.ingredient-item-name:first').editable('toggle');
+  });
 
   //editable
   var editableFn = function() {
