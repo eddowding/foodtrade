@@ -399,9 +399,7 @@ $(document).ready(function() {
             success: function(data) {}
           });
         };
-        setTimeout(function() {
-          htmlSaveFn();
-        }, 1000);
+        setTimeout(htmlSaveFn, 1000);
       }
     });
 
