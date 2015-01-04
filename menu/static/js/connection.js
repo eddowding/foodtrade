@@ -1,7 +1,7 @@
 $(document).ready(function() {
     var establishments = new Bloodhound({
         remote: {
-            url: '/menu/establishment/lookup/name/?q=%QUERY',
+            url: establishmentLookupNameUrl + '?q=%QUERY',
             filter: function(establishments) {
                 return establishments.objs;
             }

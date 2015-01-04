@@ -22,14 +22,14 @@
     <!-- <link href="{% static "menu/css/daterangepicker/daterangepicker-bs3.css" %}" rel="stylesheet" type="text/css" /> -->
     <!-- Theme style -->
     <link href="{% static "menu/css/AdminLTE.css" %}" rel="stylesheet" type="text/css" />
-    <link href="{% static "menu/css/ftmenu.css" %}" rel="stylesheet" type="text/css" /> 
+    <link href="{% static "menu/css/ftmenu.css" %}" rel="stylesheet" type="text/css" />
 
 
     {% block extra_style %}{% endblock %} {% endblock %} {% block js %}
     <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js" type="text/javascript"></script>
     <script src="//code.jquery.com/ui/1.11.1/jquery-ui.min.js" type="text/javascript"></script>
- 
+
     <!-- Morris.js charts -->
     <!-- <script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script> -->
     <!-- <script src="{% static "menu/js/plugins/morris/morris.min.js" %}" type="text/javascript"></script>
@@ -297,14 +297,16 @@
                 <ul class="sidebar-menu">
                     <li><a href="{% url 'menu' %}"><i class="ion ion-clipboard" style="font-size: 1.4em;"></i> My Menus <small class="badge pull-right bg-green">{{ menus.count }}</small></a>
                     </li>
+                    {% comment %}
                     <li><a href="{% url 'menu_connection' %}"><i class="fa fa-sign-in"></i> My suppliers<small class="badge pull-right bg-green">{{ sellers.count }}</small></a>
                     </li>
                     <li><a href="{% url 'menu_connection' %}"><i class="fa fa-sign-out"></i> My stockists<small class="badge pull-right bg-green">{{ buyers.count }}</small></a>
                     </li>
-                    
+                    {% endcomment %}
+
                     <li class="treeview">
                         <a href="#" data-toggle="modal" data-target="#comingsoon" class="text-muted">
-                        <i class="fa fa-cutlery"></i> My produce  
+                        <i class="fa fa-cutlery"></i> My produce
                                   <i class="fa fa-angle-left pull-right"></i></a>
                         <ul class="treeview-menu">
                             <li><a href="#" data-toggle="modal" data-target="#comingsoon" class="text-muted"><i class="fa fa-sign-out"></i> Suggested<small class="badge pull-right bg-red">3</small></a>
@@ -368,7 +370,7 @@
         <aside class="right-side">
             <!-- Content Header (Page header) -->
             {% block right_panel_header %}
-            
+
             {% endblock %}
 
             <section class="content">
@@ -456,10 +458,10 @@
       </div>
       <div class="modal-body text-black">
 
-<h1>For humans</h1>        
+<h1>For humans</h1>
 <ul class="lead">
 <li>
-<strong>Ultimate responsibility lies with you.</strong> We'll do our best to provide a great service, but when it comes down to it, it's your food and your food business so please double check everything. 
+<strong>Ultimate responsibility lies with you.</strong> We'll do our best to provide a great service, but when it comes down to it, it's your food and your food business so please double check everything.
 </li>
 <li>
 <strong>Only run a food business you have insurance cover.</strong>
@@ -561,10 +563,10 @@ Termination
 <br>
 <ol>
 <li>
-The Service will run until terminated by the User or FoodTrade. 
+The Service will run until terminated by the User or FoodTrade.
 </li><li>
 The User's rights under the Service will end without notice if the User fails to comply with any of the Terms of Use.
-</li><li> 
+</li><li>
 If the User has paid for use of the Service and it is terminated by FoodTrade, FoodTrade shall compensate the User pro rata for their loss.
 </li>
 </ol>
@@ -585,7 +587,7 @@ To the extent permissisable by applicable law, the courts of England shall have 
 Variations
 <ol>
 <li>
-FoodTrade is entitled to revise these Terms of Use at any time.  
+FoodTrade is entitled to revise these Terms of Use at any time.
 </li><li>
 If the User does not agree to the revised Terms of Use, he or she will not be bound by them if the User stops using the Service.
 </li>
@@ -606,7 +608,7 @@ FoodTrade is solely responsible for the Service and its content. Any questions, 
     <p>
 E-mail:
 <a href="mailto:ed@foodtrade.com">ed@foodtrade.com</a>
-</p> 
+</p>
 
 
       </div>

@@ -9,6 +9,20 @@
 <script src="{% static 'typeahead.js/dist/typeahead.bundle.min.js' %}"></script>
 <script src="{% static 'js/connection.js' %}"></script>
 <script>
+    var establishmentLookupNameUrl = '{% url "menu_establishment_lookup_name" %}';
+    var createMenuUrl = '{% url "menu_create_menu" %}';
+    var deletMenuUrl= '{% url "menu_delete_menu" %}';
+    var createSectionUrl = "{% url 'menu_create_menu_section' %}";
+    var deleteSectionUrl = "{% url 'menu_delete_menu_section' %}";
+    var dishLookupNameUrl = "{% url 'menu_dish_lookup_name' %}";
+    var createDishUrl = "{% url 'menu_create_dish' %}";
+    var updateDishUrl = "{% url 'menu_update_dish' %}";
+    var deleteDishUrl = "{% url 'menu_delete_dish' %}";
+    var createIngredientUrl = "{% url 'menu_create_ingredient' %}";
+    var updateIngredientUrl = "{% url 'menu_update_ingredient' %}";
+    var deleteIngredientUrl = "{% url 'menu_delete_ingredient' %}";
+    var ingredientLookupNameUrl = "{% url 'menu_ingredient_lookup_name' %}";
+    var updateIngredientNameUrl = "{% url 'menu_update_ingredient_name' %}";
     var createConnectionUrl = '{% url "menu_create_connection" %}';
 </script>
 {% endblock extra_js %}
@@ -79,7 +93,7 @@
                                                 <code>@JD populate this with a list of produce they sell, if applicable - ajax load in</code>
                                                     <label>
                                                         <input type="checkbox" value=""> Cheese
-                                                    </label> 
+                                                    </label>
                                                 </div>
                                             </div> -->
 
