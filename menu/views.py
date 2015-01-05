@@ -179,9 +179,9 @@ def create_ingredient(request):
     insert_dict['name'] = request.POST.get('name')
     insert_dict['parent'] = ObjectId(request.POST.get('parent')) if request.POST.get('parent') else None
     insert_dict['order'] = int(request.POST.get('order')) if request.POST.get('order') else 1
-    insert_dict['is_allergen'] = True if Allergen.objects.filter(name=insert_dict['name']).count() else False
-    insert_dict['is_meat'] = True if Meat.objects.filter(name=insert_dict['name']).count() else False
-    insert_dict['is_gluten'] = True if Gluten.objects.filter(name=insert_dict['name']).count() else False
+    insert_dict['is_allergen'] = True if Allergen.objects.filter(name__iexact=insert_dict['name']).count() else False
+    insert_dict['is_meat'] = True if Meat.objects.filter(name__iexact=insert_dict['name']).count() else False
+    insert_dict['is_gluten'] = True if Gluten.objects.filter(name__iexact=insert_dict['name']).count() else False
     insert_dict['added_on'] = datetime.now()
     ingredient = Ingredient.objects.create(**insert_dict)
     return HttpResponse(json.dumps({'status': True, 'obj': ingredient.to_mongo()}, default=json_util.default), content_type="application/json")
@@ -193,9 +193,9 @@ def update_ingredient(request):
     insert_dict = deepcopy(request.POST.dict())
     del insert_dict['dish']
     #TODO: cache this to save query
-    insert_dict['is_allergen'] = True if Allergen.objects.filter(name=insert_dict['name']).count() else False
-    insert_dict['is_meat'] = True if Meat.objects.filter(name=insert_dict['name']).count() else False
-    insert_dict['is_gluten'] = True if Gluten.objects.filter(name=insert_dict['name']).count() else False
+    insert_dict['is_allergen'] = True if Allergen.objects.filter(name__iexact=insert_dict['name']).count() else False
+    insert_dict['is_meat'] = True if Meat.objects.filter(name__iexact=insert_dict['name']).count() else False
+    insert_dict['is_gluten'] = True if Gluten.objects.filter(name__iexact=insert_dict['name']).count() else False
     dish_is_allergen = False
     dish_is_meat = False
     dish_is_gluten = False
@@ -272,9 +272,9 @@ def update_ingredient(request):
 def update_ingredient_name(request):
     insert_dict = {}
     insert_dict['set__name'] = request.POST.get('value')
-    insert_dict['set__is_allergen'] = True if Allergen.objects.filter(name=request.POST.get('value')).count() else False
-    insert_dict['set__is_meat'] = True if Meat.objects.filter(name=request.POST.get('value')).count() else False
-    insert_dict['set__is_gluten'] = True if Gluten.objects.filter(name=request.POST.get('value')).count() else False
+    insert_dict['set__is_allergen'] = True if Allergen.objects.filter(name__iexact=request.POST.get('value')).count() else False
+    insert_dict['set__is_meat'] = True if Meat.objects.filter(name__iexact=request.POST.get('value')).count() else False
+    insert_dict['set__is_gluten'] = True if Gluten.objects.filter(name__iexact=request.POST.get('value')).count() else False
     Ingredient.objects.filter(pk=ObjectId(request.POST.get('pk'))).update(**insert_dict)
     ingredient = Ingredient.objects.get(pk=ObjectId(request.POST.get('pk')))
     return HttpResponse(json.dumps({'status': True, obj: Ingredient}, default=json_util.default), content_type="application/json")

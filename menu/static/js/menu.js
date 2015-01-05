@@ -309,17 +309,17 @@ $(document).ready(function() {
     deleteElement.remove();
 
     var dataDish = {
-        pk: tree.attr('data-dish-id'),
-        html: tree.parents('div.tree').html(),
-        serialized: JSON.stringify(tree.sortable("serialize").get())
+      pk: tree.attr('data-dish-id'),
+      html: tree.parents('div.tree').html(),
+      serialized: JSON.stringify(tree.sortable("serialize").get())
     };
 
     $.ajax({
-        url: updateDishUrl + '?_tmp=' + (new Date).getTime(),
-        data: dataDish,
-        type: 'POST',
-        dataType: 'JSON',
-        success: function(data) {}
+      url: updateDishUrl + '?_tmp=' + (new Date).getTime(),
+      data: dataDish,
+      type: 'POST',
+      dataType: 'JSON',
+      success: function(data) {}
     });
 
     if (deleteId) {
@@ -338,13 +338,20 @@ $(document).ready(function() {
   });
 
   $(document).delegate('.ingredient-item', 'mouseover', function(ev) {
-    $(this).children('.del').children('.tools').removeClass('hidden');
+    if ($(this).attr('data-ingredient-id')) {
+      $(this).children('.del').children('.tools').removeClass('hidden');
+    }
   });
 
   $(document).delegate('.ingredient-item', 'mouseout', function(ev) {
-    $(this).children('.del').children('.tools').addClass('hidden');
+    if ($(this).attr('data-ingredient-id')) {
+      $(this).children('.del').children('.tools').addClass('hidden');
+    }
   });
 
+  // $(document).delegate('.ingredient-item', 'click', function(ev) {
+  //     $(this).find('.ingredient-item-name:first').editable('toggle');
+  // });
 
   //editable
   var editableFn = function() {
@@ -352,6 +359,8 @@ $(document).ready(function() {
       type: 'text',
       url: createIngredientUrl + '?_tmp=' + (new Date).getTime(),
       inputclass: 'ingredient-editable',
+      emptytext: 'Add ingredient here',
+      placeholder: 'Add ingredient here',
       params: function(params) {
         params.dish = $(this).attr('data-dish-id');
         params.name = params.value;
