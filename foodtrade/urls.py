@@ -2,6 +2,8 @@ from django.conf.urls import patterns, include, url
 from django.views.generic import TemplateView, RedirectView
 # Uncomment the next two lines to enable the admin:
 from django.contrib import admin
+#from django.contrib.staticfiles.urls import staticfiles_urlpatterns
+#from django.conf.urls.static import static
 from django.conf import settings
 from mainapp.forms import PassworResetForm
 admin.autodiscover()
@@ -77,6 +79,9 @@ urlpatterns = patterns('',
     #url(r'^tools/', include('tools.urls')),
     #url(r'^menu/', include('menu.urls'))
 )
+
+# urlpatterns += staticfiles_urlpatterns()
+
 urlpatterns += patterns('',
         (r'^media/(?P<path>.*)$', 'django.views.static.serve', {
         'document_root': settings.MEDIA_ROOT}))
@@ -89,3 +94,11 @@ urlpatterns += patterns('',
 
 urlpatterns += patterns('',
         url(r'^(?P<username>\w{1,40})/$', 'mainapp.profilepage.profile_url_resolve'), )
+
+urlpatterns += patterns('',
+        url(r'^(?P<path>.*)$', 'django.views.static.serve',
+        {'document_root': settings.STATIC_ROOT }))
+
+
+
+

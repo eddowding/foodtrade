@@ -1,5 +1,6 @@
-{% load staticfiles %} {% load socialaccount %} {% load url from future %} {% load i18n %}
-
+{% load django_static %}{% load staticfiles %} {% load socialaccount %} {% load url from future %} {% load i18n %}
+{% load static %}
+{% get_static_prefix as STATIC_PREFIX %}
 <!DOCTYPE html>
 <html class="{% block html_class %}{% endblock %}">
 
@@ -21,8 +22,8 @@
     <!-- Daterange picker -->
     <!-- <link href="{% static "menu/css/daterangepicker/daterangepicker-bs3.css" %}" rel="stylesheet" type="text/css" /> -->
     <!-- Theme style -->
-    <link href="{% static "menu/css/AdminLTE.css" %}" rel="stylesheet" type="text/css" />
-    <link href="{% static "menu/css/ftmenu.css" %}" rel="stylesheet" type="text/css" />
+    <link href="{% staticfile "/menu/css/AdminLTE.css" %}" rel="stylesheet" type="text/css" />
+    <link href="{% staticfile "/menu/css/ftmenu.css" %}" rel="stylesheet" type="text/css" />
 
 
     {% block extra_style %}{% endblock %} {% endblock %} {% block js %}
@@ -40,12 +41,12 @@
     <!-- datepicker -->
     <!-- <script src="{% static "menu/js/plugins/datepicker/bootstrap-datepicker.js" %}" type="text/javascript"></script> -->
     <!-- iCheck -->
-    <script src="{% static "menu/js/plugins/iCheck/icheck.min.js" %}" type="text/javascript"></script>
+    <script src="{% staticfile "/menu/js/plugins/iCheck/icheck.min.js" %}" type="text/javascript"></script>
 
     <!-- AdminLTE App -->
-    <script src="{% static "menu/js/AdminLTE/app.js" %}" type="text/javascript"></script>
+    <script src="{% staticfile "/menu/js/AdminLTE/app.js" %}" type="text/javascript"></script>
     <!-- <script src="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/js/bootstrap-editable.min.js"></script> -->
-    <script src="{% static 'js/csrf.js' %}" type="text/javascript"></script>
+    <script src="{% staticfile '/js/csrf.js' %}" type="text/javascript"></script>
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -99,7 +100,7 @@
                                         <!-- start message -->
                                         <a href="#">
                                             <div class="pull-left">
-                                                <img src="{% static 'menu/img/avatar3.png' %}" class="img-circle" alt="User Image" />
+                                                <img src="{% staticfile '/menu/img/avatar3.png' %}" class="img-circle" alt="User Image" />
                                             </div>
                                             <h4>
                                                     Knorr - Tomato Paste
@@ -112,7 +113,7 @@
                                         <!-- start message -->
                                         <a href="#">
                                             <div class="pull-left">
-                                                <img src="{% static 'menu/img/avatar3.png' %}" class="img-circle" alt="User Image" />
+                                                <img src="{% staticfile '/menu/img/avatar3.png' %}" class="img-circle" alt="User Image" />
                                             </div>
                                             <h4>
                                                     Knorr - Stock cubes
@@ -234,7 +235,7 @@
                         <ul class="dropdown-menu">
                             <!-- User image -->
                             <li class="user-header bg-light-blue">
-                                <img src="{% static 'menu/img/avatar3.png' %}" class="img-circle" alt="User Image" />
+                                <img src="{% staticfile '/menu/img/avatar3.png' %}" class="img-circle" alt="User Image" />
                                 <p>
                                     {{user.first_name}}&nbsp;{{user.last_name}}
                                     <small>Member since {{user.date_joined}}</small>

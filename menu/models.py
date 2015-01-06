@@ -175,7 +175,7 @@ class Dish(Document):
         return Ingredient.objects.filter(dish=self, parent=None)
 
     def get_ingredient_names(self):
-        return []
+        return Ingredient.objects.filter(dish=self)
 
 
 class Ingredient(Document):

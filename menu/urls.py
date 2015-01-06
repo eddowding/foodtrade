@@ -1,4 +1,6 @@
 from django.conf.urls import patterns, url, include
+from django.conf.urls.static import static
+from django.conf import settings
 
 urlpatterns = patterns('menu.views',
     #common
@@ -34,3 +36,6 @@ urlpatterns = patterns('menu.views',
 
 
 )
+# if settings.DEBUG:
+#     urlpatterns += patterns('',
+#     ) + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

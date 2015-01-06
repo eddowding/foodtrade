@@ -64,7 +64,6 @@ STATIC_URL = '/static/'
 
 # Additional locations of static files
 STATICFILES_DIRS = (
-
     # Put strings here, like "/home/html/static" or "C:/www/django/static".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
@@ -75,7 +74,7 @@ STATICFILES_DIRS = (
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-   'django.contrib.staticfiles.finders.DefaultStorageFinder',
+    'django.contrib.staticfiles.finders.DefaultStorageFinder',
     'djangobower.finders.BowerFinder',
 )
 
@@ -139,6 +138,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.sites',
     'django.contrib.messages',
+    'django_static',
     'django.contrib.staticfiles',
     'mainapp',
     'search',
@@ -157,7 +157,7 @@ INSTALLED_APPS = (
     'django.contrib.admindocs',
     "djstripe",
     "floppyforms",
-    "bootstrapform",
+    "bootstrapform"
 
 )
 
@@ -196,4 +196,16 @@ from settings_local import *
 
 REMOVE_WWW = True
 PREPEND_WWW = False
+
+# django_static configurations starts here 
+
+DJANGO_STATIC = True
+# DJANGO_STATIC_SAVE_PREFIX = "/tmp/django-static"  # disable if you want 
+                                                # file's simlink to be created in same directory
+# DJANGO_STATIC_MEDIA_URL = "//localhost:8000"
+DJANGO_STATIC_MEDIA_ROOTS = [STATIC_ROOT]
+
+# django_static configurations ends here
+
+
 
