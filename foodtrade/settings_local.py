@@ -105,7 +105,9 @@ BOWER_COMPONENTS_ROOT = PROJECT_ROOT
 BOWER_INSTALLED_APPS = ('typeahead.js#0.10.5',
  'jquery-sortable#0.9.12',
  'jquery#1.11.1',
+ 'iCheck#1.0.2',
  'x-editable#1.5.1')
+
 
 #cache backend
 CACHES = {
