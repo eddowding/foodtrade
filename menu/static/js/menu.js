@@ -197,8 +197,9 @@ $(document).ready(function() {
     $('.ingredient-tree[data-dish-id="' + dish + '"]').append(placeholder_li);
 
     editableFn();
-    ev.stopPropagation()
+    ev.stopPropagation();
     placeholder_li.find('.ingredient-item-name:last').editable('toggle');
+    $('.ingredient-editable:last').focus().trigger('click');
 
     $('.ingredient-editable').typeahead(null, {
       displayKey: 'name',
@@ -220,7 +221,9 @@ $(document).ready(function() {
     target_ul.append(placeholder_li);
 
     editableFn();
+    ev.stopPropagation();
     placeholder_li.find('.ingredient-item-name:last').editable('toggle');
+    $('.ingredient-editable:last').focus().trigger('click');
 
     $('.ingredient-editable').typeahead(null, {
       displayKey: 'name',
@@ -360,7 +363,7 @@ $(document).ready(function() {
       type: 'text',
       url: createIngredientUrl + '?_tmp=' + (new Date).getTime(),
       inputclass: 'ingredient-editable',
-      emptytext: 'Add ingredient here',
+      emptytext: '',
       placeholder: 'Add ingredient here',
       params: function(params) {
         params.dish = $(this).attr('data-dish-id');
