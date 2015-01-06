@@ -429,24 +429,7 @@ $(document).ready(function() {
 
   $(document).delegate('.ingredient-editable', 'keydown', function(ev) {
     if (ev.ctrlKey && ev.keyCode == 13) {
-      var data = {
-        dish: $(this).parents('span.ingredient').find('a').attr('data-pk'),
-        name: 'Type Ingredient Here',
-        parent: null,
-        order: 1
-      };
-
-      $.ajax({
-        url: createIngredientUrl + '?_tmp=' + (new Date).getTime(),
-        data: data,
-        type: 'POST',
-        dataType: 'JSON',
-        success: function(data) {
-          $('.menus').html(data.html);
-          sortableFn();
-          editableFn();
-        }
-      });
+      console.info('ctrl + return in a editable');
     }
   });
 
