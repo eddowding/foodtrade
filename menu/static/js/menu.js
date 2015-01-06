@@ -429,7 +429,7 @@ $(document).ready(function() {
 
   $(document).delegate('.ingredient-editable', 'keydown', function(ev) {
     if (ev.ctrlKey && ev.keyCode == 13) {
-      console.info('ctrl + return in a editable');
+      $(this).parents('div.menuitem').find('a.add-ingredients').trigger('click');
     }
   });
 
