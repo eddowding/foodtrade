@@ -100,7 +100,7 @@
                                         <!-- start message -->
                                         <a href="#">
                                             <div class="pull-left">
-                                                <img src="{% staticfile '/menu/img/avatar3.png' %}" class="img-circle" alt="User Image" />
+                                                <img src="{% static 'img/avatar3.png' %}" class="img-circle" alt="User Image" />
                                             </div>
                                             <h4>
                                                     Knorr - Tomato Paste
@@ -113,7 +113,7 @@
                                         <!-- start message -->
                                         <a href="#">
                                             <div class="pull-left">
-                                                <img src="{% staticfile '/menu/img/avatar3.png' %}" class="img-circle" alt="User Image" />
+                                                <img src="{% static 'img/avatar3.png' %}" class="img-circle" alt="User Image" />
                                             </div>
                                             <h4>
                                                     Knorr - Stock cubes
@@ -235,7 +235,7 @@
                         <ul class="dropdown-menu">
                             <!-- User image -->
                             <li class="user-header bg-light-blue">
-                                <img src="{% staticfile '/menu/img/avatar3.png' %}" class="img-circle" alt="User Image" />
+                                <img src="{% static 'img/avatar3.png' %}" class="img-circle" alt="User Image" />
                                 <p>
                                     {{user.first_name}}&nbsp;{{user.last_name}}
                                     <small>Member since {{user.date_joined}}</small>
@@ -272,7 +272,7 @@
                 {% block left_sidebar_user_panel %}
                 <div class="user-panel">
                     <div class="pull-left image">
-                        <img src="{% static 'menu/img/avatar3.png' %}" class="img-circle" alt="User Image" />
+                        <img src="{% static 'img/avatar3.png' %}" class="img-circle" alt="User Image" />
                     </div>
                     <div class="pull-left info">
                         <p>Hello, {{user.first_name}}</p>
