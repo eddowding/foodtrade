@@ -420,6 +420,12 @@ $(document).ready(function() {
       }
     });
 
+    $('.ingredient-item-name').on('hidden', function(e, reason) {
+      if ($(this).text().trim() === '') {
+        $(this).parents('li.ingredient-item:first').remove();
+      }
+    });
+
     $('.ingredient-item-name:contains("Type Ingredient Here")').editable('toggle');
 
     $('.ingredient-editable').typeahead(null, {
