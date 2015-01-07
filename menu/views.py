@@ -186,6 +186,8 @@ def delete_dish(request):
 
 @login_required(login_url=reverse_lazy('menu-login'))
 def create_ingredient(request):
+    if request.POST.get('name') == '':
+        return HttpResponse(json.dumps({'status': False}, default=json_util.default), content_type="application/json")
     insert_dict = {}
     insert_dict['dish'] = ObjectId(request.POST.get('dish'))
     insert_dict['name'] = request.POST.get('name')

@@ -374,6 +374,9 @@ $(document).ready(function() {
         return params;
       },
       success: function(response, newValue) {
+        if (response.status === false) {
+          return 'Cannot save empty string';
+        }
         if (response.obj.is_allergen) {
           $(this).parents('li').find('div.pull-right').find('span.allergen').addClass('active');
           $(this).parents('div.menuitem').find('div.menutitle').find('div.pull-right').find('span.allergen').addClass('active');
