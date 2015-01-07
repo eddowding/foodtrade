@@ -196,6 +196,7 @@ $(document).ready(function() {
     placeholder_li.find('.ingredient-item-name').attr('data-dish-id', dish);
     $('.ingredient-tree[data-dish-id="' + dish + '"]').append(placeholder_li);
 
+    sortableFn();
     editableFn();
     ev.stopPropagation();
     placeholder_li.find('.ingredient-item-name:last').editable('toggle');
