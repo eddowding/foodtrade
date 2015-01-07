@@ -1,25 +1,44 @@
+.strong {
+    font-weight: bold;
+}
+.menuitem {
+    background: #ECE5CE;
+    border-left: 2px solid #e6e7e8;
+    padding: 5px 0 10px 5px;
+    margin: 2px 0;
+    border-radius: 2px;
+}
+.menuitem-description {
+    font-style: italic;
+    margin: 0px 23px 20px 23px;
+}
+.add-ingredients {
+    margin-left: 18px;
+    margin-top: 5px; 
+    background: #61AE32 !important;
+}
 .box .ingredient-tree {
     margin: 0;
-    padding: 0px 0px;
+    padding: 0;
     list-style: none;
 }
 .box .ingredient-tree > li {
     -webkit-border-radius: 2px;
     -moz-border-radius: 2px;
     border-radius: 2px;
-    padding: 10px;
-    background: #f3f4f5;
     margin-bottom: 2px;
-    border-left: 2px solid #e6e7e8;
     color: #444;
+    position: relative;
+    margin: 2px 0 0 20px;
+    padding: 3px;
+    font-weight: normal !important;
+    list-style: none;
+    clear: both;
+    background: rgba(255, 255, 255, 0.4);
+    border: 2px solid rgba(255, 255, 255, 0.6);
 }
 .box .ingredient-tree > li:last-of-type {
     margin-bottom: 0;
-}
-.box .ingredient-tree li {
-    background: #ECE5CE;
-    position: relative;
-    padding: 5px;
 }
 .box .ingredient-tree li a {
     font-weight: bold;
@@ -27,6 +46,12 @@
 .box .ingredient-tree li li a {
     font-weight: normal;
     padding-left: 3px;
+}
+.box .handle {
+    padding: 0 10px 0 0px;
+}
+.box .ingredient-tree li .handle {
+    padding: 0 5px;
 }
 .box .ingredient-tree li .handle i {
     color: rgba(0, 0, 0, 0.4);
@@ -38,21 +63,20 @@
     margin-left: 21px;
 }
 .box .ingredient-tree ul {
-    margin: 0;
     padding: 0;
     list-style: none;
     display: block;
-    margin: 10px 0;
+    margin: 5px 0;
 }
 .box .ingredient-tree ul li {
+    border: 2px solid #fff;
+    border-right: 0;
     margin: 2px 0 0 20px;
-    padding: 3px 0px 3px 0px;
+    padding: 3px 0px 3px 3px;
     font-weight: normal !important;
     list-style: none;
     clear: both;
-    background: rgba(255, 255, 255, 0.4);
-    border: 2px solid #fff;
-    border-right: 0;
+    background: rgba(255, 255, 255, 0.9);
 }
 .box .ingredient-tree .tools i {
     color: #3878B3;
@@ -131,10 +155,25 @@ a.editable-click:hover {
     padding: 5px;
     border: 1px solid #aaa;
 }
+.ingredient {
+    text-transform: capitalize;
+}
 #output {
     background: #fff;
     padding: 0.5em 2em 2em 2em;
     box-shadow: 0 0 10px #444 inset;
+}
+.dish_wrapper {
+    margin: 1em 0;
+}
+.dish_name {
+    font-size: 20px;
+    font-weight: bold;
+    margin: 5px;
+    line-height: 2;
+}
+#printed #output {
+    box-shadow: 0 0 0 #fff;
 }
 #output * {
     font-family: Georgia;
@@ -150,19 +189,49 @@ a.editable-click:hover {
 #output h3 {
     border-bottom: 1px solid;
     padding: 1em 0 0.3em 0;
-    width: 60%;
+    width: 70%;
     margin: 0 auto;
 }
 .allergen_detail {
-    font-size: 12px;
+    font-size: 16px;
     clear: both;
+    margin: 0 auto;
+    width: 60%;
     display: block;
+}
+.ingredient_parent {} .ingredient_child {
+    font-style: italic;
+    font-size: 16px;
+}
+.has_children {
+    display: inline-block;
+}
+.ingredient_parent:before {
+    content: ", ";
+}
+.ingredient_parent:first-of-type:before {
+    content: "";
+}
+.has_children:before {
+    content: "(";
+}
+.has_children:after {
+    content: ")";
+}
+.ingredient_child:after {
+    content: ", ";
+}
+.ingredient_child:last-of-type:after {
+    content: "";
 }
 .supplier {
     font-weight: bold;
 }
 .produce {
     font-style: italic;
+}
+#connections .tab-pane {
+    min-height: 300px;
 }
 #connectionsList h4 {
     font-weight: bold;
@@ -189,68 +258,140 @@ li.divider {
     text-decoration: underline;
     color: #444;
 }
- 
-.tt-dropdown-menu span:hover {
+table th {
+    text-transform: uppercase;
+    background: #999;
     color: #fff;
+    border: 0;
+}
+body > .header .logo {
+    font-family: 'Source Sans Pro', cursive;
+    font-weight: 900;
+    background: #61AE32;
+}
+a.text-muted {
+    color: #666 !important;
+}
+.lockscreen {
+    background: url(../img/home.jpg) fixed center top;
+    background-size: cover;
+}
+.form-box .header {
+    background: #61AE32;
+}
+.bg-olive {
+    background-color: #61AE32 !important;
+}
+.est_type {
+    color: #999;
+    float: right;
+}
+.est_addr {
+    display:block; 
+    font-size: 11px;
+}
+.twitter-typeahead .tt-query, .twitter-typeahead .tt-hint {
+    margin-bottom: 0;
+}
+.tt-pad {
+    padding-bottom: 25px;
+}
+.tt-hint {
+    display: block;
+    width: 100%;
+    height: 38px;
+    padding: 8px 12px;
+    font-size: 14px;
+    line-height: 1.428571429;
+    color: #999;
+    vertical-align: middle;
+    background-color: #ffffff;
+    border: 1px solid #cccccc;
+    border-radius: 4px;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+    -webkit-transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+    transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+}
+.tt-dropdown-menu {
+    min-width: 160px;
+    margin-top: 2px;
+    padding: 5px 0;
+    background-color: #ffffff;
+    border: 1px solid #cccccc;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    border-radius: 4px;
+    -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+    background-clip: padding-box;
 }
 .tt-suggestion {
-    background-color: #ccc;
-} 
+    display: block;
+    padding: 3px 20px;
+    font-size: 1em !important;
+    text-transform: capitalize;
+    border-bottom: 1px solid #eee !important;
+    z-index: 1000 !important;
+}
+.tt-suggestion.tt-cursor{
+    color: #fff;
+    background-color: #61AE32 !important;
+}
+.tt-suggestion.tt-cursor a,
+.tt-suggestion.tt-cursor span {
+    color: #fff;
+}
+.tt-suggestion p {
+    margin: 0;
+}
 
+.add-sub-ingredients {
+    font-weight: normal !important;
+    color: green;
+    margin-left: 1em;
+}
+.add-sub-ingredients:hover {
+    color: #576D30;
+}
+/*
+OL { counter-reset: item }
+LI { display: block }
+LI:before { content: counters(item, ".") " "; counter-increment: item }*/
 
-span.twitter-typeahead .tt-dropdown-menu {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  z-index: 1000;
-  display: none;
-  float: left;
-  min-width: 160px;
-  padding: 5px 0;
-  margin: 2px 0 0;
-  list-style: none;
-  font-size: 14px;
-  text-align: left;
-  background-color: #ffffff;
-  border: 1px solid #cccccc;
-  border: 1px solid rgba(0, 0, 0, 0.15);
-  border-radius: 4px;
-  -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
-  background-clip: padding-box;
+.del {
+    display: inline-block;
 }
-span.twitter-typeahead .tt-suggestion > p {
-  display: block;
-  padding: 3px 20px;
-  clear: both;
-  font-weight: normal;
-  line-height: 1.42857143;
-  color: #333333;
-  white-space: nowrap;
+.delete-btn {
+    color: red;
+    margin: 0 10px;
 }
-span.twitter-typeahead .tt-suggestion > p:hover,
-span.twitter-typeahead .tt-suggestion > p:focus {
-  color: #ffffff;
-  text-decoration: none;
-  outline: 0;
-  background-color: #428bca;
+.delete-btn:hover {
+    background-color: red;
+    color: #fff;
 }
-span.twitter-typeahead .tt-suggestion.tt-cursor {
-  color: #ffffff;
-  background-color: #428bca;
+#printPage {
+    display: block;
+    background: #fff;
+    border-bottom: 2px solid #000;
+    padding: 10px;
+    font-size: 16px;
+    text-align: center;
 }
-span.twitter-typeahead {
-  width: 100%;
-}
-.input-group span.twitter-typeahead {
-  display: block !important;
-}
-.input-group span.twitter-typeahead .tt-dropdown-menu {
-  top: 32px !important;
-}
-.input-group.input-group-lg span.twitter-typeahead .tt-dropdown-menu {
-  top: 44px !important;
-}
-.input-group.input-group-sm span.twitter-typeahead .tt-dropdown-menu {
-  top: 28px !important;
+@media print {
+    #printPage {
+        display: none;
+    }
+    @page {
+        size: auto;
+        /* auto is the current printer page size */
+        
+        margin: 0mm;
+        /* this affects the margin in the printer settings */
+    }
+    body {
+        background-color: #FFFFFF;
+        border: solid 1px black;
+        margin: 0px;
+        /* the margin on the content before printing */
+    }
 }
