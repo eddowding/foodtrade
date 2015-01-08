@@ -4,7 +4,7 @@
 {% load url from future %}
 {% load i18n %}
 {% load account %}
-
+{% load django_static %}
 {% block html_class %}bg-black{% endblock %}
 {% block title %}FoodTrade Menu - Quick, easy allergen compliance{% endblock %}
 {% block body_class %}bg-black{% endblock %}
@@ -12,10 +12,10 @@
 
 
 {% block extra_js %}
-<script src="{% static 'js/register.js' %}"></script>
+<script src="{% staticfile '/js/register.js' %}"></script>
 {% endblock extra_js %}
 
-    <link href="{% static "menu/css/front.css" %}" rel="stylesheet" type="text/css" />
+    <link href="{% staticfile "/menu/css/front.css" %}" rel="stylesheet" type="text/css" />
  {% endblock %}
 
 {% block main_content %}
@@ -56,7 +56,7 @@
                         <i class="fa fa-check pull-left"></i> GET AHEAD OF THE GAME</h3>
                         <p>Two more rounds of EU food law changes are coming.With us, you’ll be prepared</p>
 
-<a href="/register" class="btn btn-info btn-lg pull-left" id="getstarted" style="margin-right: 10px;">SIGN UP <small>Free until March, then &pound;8/mo</small>
+<a href="{% url 'menu_register' %}" class="btn btn-info btn-lg pull-left" id="getstarted" style="margin-right: 10px;">SIGN UP <small>Free until March, then &pound;8/mo</small>
     </a>
 
 
@@ -402,7 +402,7 @@ Showcase your suppliers</h5>
             <form action="{% url 'menu-login' %}" method="post"> {% csrf_token %}
                 <div class="body bg-gray">
                     <div class="form-group {% if failure %}has-error{% endif %}">
-                        <input type="text" name="username" class="form-control" placeholder="User ID"/>
+                        <input type="text" name="username" class="form-control" placeholder="Email Address"/>
                         {% if failure %}
                             <span class="help-block">Invalid username.</span>
                         {% endif %}

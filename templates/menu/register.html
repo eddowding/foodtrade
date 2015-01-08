@@ -4,6 +4,7 @@
 {% load url from future %}
 {% load i18n %}
 {% load account %}
+{% load django_static %}
 
 {% block html_class %}bg-black{% endblock %}
 {% block title %}FoodTrade Menu - sign up {% endblock %}
@@ -12,7 +13,7 @@
  
 {% endblock %}
 {% block extra_js %}
-<script src="{% static 'js/register.js' %}"></script>
+<script src="{% staticfile '/js/register.js' %}"></script>
 {% endblock extra_js %}
 {% block main_content %}
 
@@ -35,7 +36,7 @@
                         <span class="help-text"></span>
                     </div>
                     <div class="form-group">
-                        <input type="text" name="username" class="form-control" placeholder="Username"/>
+                        <input type="text" name="username" class="form-control" placeholder="Email Address"/>
                         <span class="help-text"></span>
                     </div>
                     <div class="form-group">

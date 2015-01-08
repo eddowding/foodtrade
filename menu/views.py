@@ -1,4 +1,4 @@
-import json
+import json, re
 from datetime import datetime
 from copy import deepcopy
 from bson.objectid import ObjectId, InvalidId
@@ -37,6 +37,9 @@ def register(request):
         user = User.create_user(username=request.POST.get('username'), password=request.POST.get('password'))
         user.first_name = request.POST.get('first_name')
         user.last_name = request.POST.get('last_name')
+        pattern = r"(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)"
+        if bool(re.match(pattern, request.POST.get('username'))):
+            user.email = request.POST.get('username')
         user.save()
         user = authenticate(username=request.POST.get('username'), password=request.POST.get('password'))
         if user is not None:
@@ -183,6 +186,8 @@ def delete_dish(request):
 
 @login_required(login_url=reverse_lazy('menu-login'))
 def create_ingredient(request):
+    if request.POST.get('name') == '':
+        return HttpResponse(json.dumps({'status': False}, default=json_util.default), content_type="application/json")
     insert_dict = {}
     insert_dict['dish'] = ObjectId(request.POST.get('dish'))
     insert_dict['name'] = request.POST.get('name')
