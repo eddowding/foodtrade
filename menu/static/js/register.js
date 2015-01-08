@@ -45,7 +45,7 @@ $(document).ready(function() {
                     if (wrong_email)
                     	helpTextDiv.html('Enter valid email address.');
                     else
-                    	helpTextDiv.html('Username already exists.');
+                    	helpTextDiv.html('Email Address already exists.');
                     $('.signup').addClass('disabled');
                 } else {
                     parentDiv.removeClass('has-error');

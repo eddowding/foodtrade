@@ -402,7 +402,7 @@ Showcase your suppliers</h5>
             <form action="{% url 'menu-login' %}" method="post"> {% csrf_token %}
                 <div class="body bg-gray">
                     <div class="form-group {% if failure %}has-error{% endif %}">
-                        <input type="text" name="username" class="form-control" placeholder="User ID"/>
+                        <input type="text" name="username" class="form-control" placeholder="Email Address"/>
                         {% if failure %}
                             <span class="help-block">Invalid username.</span>
                         {% endif %}
