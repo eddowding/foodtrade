@@ -49,7 +49,10 @@ $(document).ready(function() {
                     $('.signup').addClass('disabled');
                 } else {
                     parentDiv.removeClass('has-error');
-                    helpTextDiv.html('');
+                    if (wrong_email)
+                    	helpTextDiv.html('Enter valid email address.');
+                    else
+                    	helpTextDiv.html('');
                     $('.signup').removeClass('disabled');
                 }
             }
