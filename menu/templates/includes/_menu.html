@@ -71,7 +71,7 @@
                                 <i class="fa fa-ellipsis-v"></i>
                                 <i class="fa fa-ellipsis-v"></i>
                             </span>
-                            <span>{{ dish.name }} &mdash; &pound;{{ dish.price }}
+                            <span>{{ dish.name }} &mdash; &pound;{{ dish.price|floatformat:2 }}
                             </span>
                             <a data-id={{dish.pk}} data-url={% url 'menu_delete_dish' %} class="delete-btn">Delete</a>
                             <div class="pull-right">
