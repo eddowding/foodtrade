@@ -20,43 +20,52 @@ $(document).ready(function() {
         var parentDiv = $(this).parent();
         var helpTextDiv = parentDiv.find('.help-text');
         var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-     	if (!re.test(username)){
-     		parentDiv.addClass('has-error');
-            helpTextDiv.html('Enter valid email address.');
+     	if (!username) {
+            parentDiv.addClass('has-error');
+            helpTextDiv.html('This is required.');
             $('.signup').addClass('disabled');
-            var wrong_email = true;
-     	}
-     	else{
-     		parentDiv.removeClass('has-error');
+        } else {
+            parentDiv.removeClass('has-error');
             helpTextDiv.html('');
             $('.signup').removeClass('disabled');
-            var wrong_email = false;
-     	}
-        $.ajax({
-            url: '/menu/user/lookup/count/',
-            data: {
-                username: username
-            },
-            type: 'GET',
-            dataType: 'JSON',
-            success: function(data) {
-                if (data.count > 0) {
-                    parentDiv.addClass('has-error');
-                    if (wrong_email)
-                    	helpTextDiv.html('Enter valid email address.');
-                    else
-                    	helpTextDiv.html('Email Address already exists.');
-                    $('.signup').addClass('disabled');
-                } else {
-                    parentDiv.removeClass('has-error');
-                    if (wrong_email)
-                    	helpTextDiv.html('Enter valid email address.');
-                    else
-                    	helpTextDiv.html('');
-                    $('.signup').removeClass('disabled');
-                }
-            }
-        });
+	     	if (!re.test(username)){
+	     		parentDiv.addClass('has-error');
+	            helpTextDiv.html('Enter valid email address.');
+	            $('.signup').addClass('disabled');
+	            var wrong_email = true;
+	     	}
+	     	else{
+	     		parentDiv.removeClass('has-error');
+	            helpTextDiv.html('');
+	            $('.signup').removeClass('disabled');
+	            var wrong_email = false;
+	     	}
+	        $.ajax({
+	            url: '/menu/user/lookup/count/',
+	            data: {
+	                username: username
+	            },
+	            type: 'GET',
+	            dataType: 'JSON',
+	            success: function(data) {
+	                if (data.count > 0) {
+	                    parentDiv.addClass('has-error');
+	                    if (wrong_email)
+	                    	helpTextDiv.html('Enter valid email address.');
+	                    else
+	                    	helpTextDiv.html('Email Address already exists.');
+	                    $('.signup').addClass('disabled');
+	                } else {
+	                    parentDiv.removeClass('has-error');
+	                    if (wrong_email)
+	                    	helpTextDiv.html('Enter valid email address.');
+	                    else
+	                    	helpTextDiv.html('');
+	                    $('.signup').removeClass('disabled');
+	                }
+	            }
+	        });
+		}
     });
 
     $('.signup').click(function() {
