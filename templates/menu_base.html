@@ -25,7 +25,10 @@
     <link href="{% staticfile "/css/AdminLTE.css" %}" rel="stylesheet" type="text/css" />
     <link href="{% staticfile "/css/ftmenu.css" %}" rel="stylesheet" type="text/css" />
 
+    <!-- <link href="{% staticfile "/bootstrap-theme.min.css" %}" type="text/css" /> -->
 
+
+    <link rel="shortcut icon" href="http://www.foodtrade.com/static/images/favicon.ico">
     {% block extra_style %}{% endblock %} {% endblock %} {% block js %}
     <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js" type="text/javascript"></script>
@@ -87,9 +90,10 @@
     {% block header %}
     <header class="header">
         {% block logo %}
-        <a href="{% url 'menu_dashboard' %}" class="logo">
+        <a href="{% url 'menu_dashboard' %}" class="logo" style="background: #333 url('http://www.foodtrade.com/static/images/logo_28.png') no-repeat top center; background-size: contain;">
             <!-- Add the class icon to your logo image or logo icon to add the margining -->
-            FoodTrade Menu
+            
+            <!-- <img src="http://www.foodtrade.com/static/images/logo_28.png" alt="FoodTrade Menu" /> -->
         </a>
         {% endblock %}
 
@@ -266,7 +270,8 @@
                             <!-- Menu Footer-->
                             <li class="user-footer">
                                 <div class="pull-left">
-                                    <a href="#" class="btn btn-default btn-flat">Profile</a>
+                                    <a href="#" class="btn btn-default btn-flat"
+                                     data-toggle="modal" data-target="#comingsoon" >Profile</a>
                                 </div>
                                 <div class="pull-right">
                                     <a href="{% url 'menu_logout' %}" class="btn btn-default btn-flat">Sign out</a>

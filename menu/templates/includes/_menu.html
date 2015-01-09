@@ -49,8 +49,8 @@
                     <div class="pull-right" id="sectionDish">
                         <!-- Add dish -->
                         <a data-id={{section.pk}} data-url={% url 'menu_delete_menu_section' %} class="delete-btn"> Delete this section</a>
-                        <a data-toggle="modal" href="#dishModal" data-menu-section-id ={{ section.id }} class="btn btn-xs btn-default add-dish" data-type="text">
-                            <i class="fa fa-list-ul fa-fw"></i>Add Dish
+                        <a data-toggle="modal" href="#dishModal" data-menu-section-id ={{ section.id }} class="btn btn-sm btn-success add-dish" data-type="text">
+                            <i class="fa fa-cutlery fa-fw"></i> Add Dish
                         </a>
                         <!--<a href="#" id="item" data-lookup-url = {% url 'menu_dish_lookup_name' %} data-menu-section={{ section.id }} class="editable btn btn-xs btn-default add-dish" data-type="text" data-pk="1" data-url="{% url 'menu_create_dish' %}" data-title="Edit item">
                             <i class="fa fa-list-ul fa-fw"></i>Add Dish
@@ -61,7 +61,7 @@
                 <div class="alert alert-warning lead text-center">
 
                     <h2 style="margin-bottom: 1em;">You don't have anything in this section yet. <i class="fa fa-frown-o fa-lg"></i></h2>
-                    <a data-toggle="modal" href="#dishModal" data-menu-section-id ={{ section.id }} class="btn btn-success btn-lg add-dish" data-type="text"><i class="fa fa-list-ul fa-fw"></i> Add a new dish</a>
+                    <a data-toggle="modal" href="#dishModal" data-menu-section-id ={{ section.id }} class="btn btn-success btn-lg add-dish" data-type="text"><i class="fa fa-cutlery fa-fw"></i> Add a new dish</a>
                 </div>
                 {% endif %}
                 {% for dish in section.get_section_dishes %}
@@ -98,13 +98,16 @@
                         <p class="help-block" style="margin-left: 1.5em;">Tip: Press 'Ctrl + Enter' to add a new row after selecting an item.</p>
                         </div>
                 {% endfor %}
+                <a data-toggle="modal" href="#dishModal" data-menu-section-id ={{ section.id }} class="btn btn-sm btn-success add-dish" data-type="text">
+                            <i class="fa fa-cutlery fa-fw"></i> Add a new dish in this section
+                        </a>
 
 
                 </div>
                 {% endfor %}
             </div>
             <!-- /.box-body -->
-            <div class="box-footer clearfix no-border">
+            <div class="box-footer clearfix" style="border-top: 3px solid #000;">
                 <button data-toggle="modal" data-menu-id = {{ menu.id }} href="#sectionModal" class="btn btn-default add-section"><i class="fa fa-th fa-fw"></i> Add Section</button>
             </div>
         </div>
