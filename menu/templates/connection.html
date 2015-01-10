@@ -1,13 +1,13 @@
 {% extends 'menu_base.html' %}
 {% load staticfiles %}
-
+{% load django_static %}
 {% block extra_style %}
-<link href="{% static "css/connection.css" %}" rel="stylesheet" type="text/css" />
+<link href="{% staticfile "/css/connection.css" %}" rel="stylesheet" type="text/css" />
 {% endblock extra_style %}
 
 {% block extra_js %}
-<script src="{% static 'typeahead.js/dist/typeahead.bundle.min.js' %}"></script>
-<script src="{% static 'js/connection.js' %}"></script>
+<script src="{% staticfile '/typeahead.js/dist/typeahead.bundle.min.js' %}"></script>
+<script src="{% staticfile '/js/connection.js' %}"></script>
 <script>
     var establishmentLookupNameUrl = '{% url "menu_establishment_lookup_name" %}';
     var createMenuUrl = '{% url "menu_create_menu" %}';
