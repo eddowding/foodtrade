@@ -253,3 +253,19 @@ class Connection(Document):
             ('user', 'connection_type')
         ]
     }
+
+class ModerationIngredient(Document):
+    user = ReferenceField(User)
+    name = StringField(required=True)
+    is_allergen = BooleanField(required=True, default=False)
+    is_meat = BooleanField(required=True, default=False)
+    is_gluten = BooleanField(required=True, default=False)
+    status = IntField(choices=((1, 'Pending'), (2, 'Accepted'), (3, 'Rejected')), default=1)
+    added_on = DateTimeField(required=True)
+    modified_on = DateTimeField(default=datetime.now)
+
+    meta = {
+        'indexes': [
+            'status'
+        ]
+    }
