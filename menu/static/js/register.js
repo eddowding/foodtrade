@@ -50,18 +50,23 @@ $(document).ready(function() {
 	            success: function(data) {
 	                if (data.count > 0) {
 	                    parentDiv.addClass('has-error');
-	                    if (wrong_email)
+	                    if (wrong_email){
 	                    	helpTextDiv.html('Enter valid email address.');
+	                    	$('.signup').addClass('disabled');
+	                    }
 	                    else
 	                    	helpTextDiv.html('Email Address already exists.');
-	                    $('.signup').addClass('disabled');
+	                    	$('.signup').addClass('disabled');
 	                } else {
 	                    parentDiv.removeClass('has-error');
-	                    if (wrong_email)
+	                    if (wrong_email){
 	                    	helpTextDiv.html('Enter valid email address.');
-	                    else
+	                    	$('.signup').addClass('disabled');
+	                    }
+	                    else{
 	                    	helpTextDiv.html('');
-	                    $('.signup').removeClass('disabled');
+	                    	$('.signup').removeClass('disabled');
+	                    }
 	                }
 	            }
 	        });
