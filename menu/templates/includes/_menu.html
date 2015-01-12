@@ -74,6 +74,7 @@
                             <span>{{ dish.name }} &mdash; &pound;{{ dish.price|floatformat:2 }}
                             </span>
                             <a data-id={{dish.pk}} data-url={% url 'menu_delete_dish' %} class="delete-btn">Delete</a>
+                            <a data-id={{dish.pk}} data-toggle="modal" href="#editDishModal" data-url={% url 'menu_update_dish' %} data-menu-section-id ={{ section.id }} data-description="{{dish.description}}" data-price={{ dish.price|floatformat:2 }} data-name="{{ dish.name }}" class="edit-btn">Edit</a>
                             <div class="pull-right">
 
                                 <span class="allergen flagged {% if dish.is_allergen %}active{% endif %}" data-toggle="tooltip" title="Allergen" data-original-title="Allergen">A</span>

@@ -112,7 +112,7 @@ $(document).ready(function() {
   $(document).delegate('.add-dish', 'click', function(ev) {
     $('#dishModal input[name="menu_section"]').val($(this).attr('data-menu-section-id'));
   });
-
+  
   $('#dishModal button.btn').click(function(ev) {
     var price = parseFloat(0.0)
 
@@ -302,6 +302,59 @@ $(document).ready(function() {
     $('#confirmationModal').modal('show');
     deleteElement = $(this).parents('.ingredient-item:first');
   });
+  
+  //edit dish starts here
+  
+  $(document).delegate('.edit-btn', 'click', function(ev) {
+    editUrl = $(this).attr('data-url');
+    editId = $(this).attr('data-id');
+    editName = $(this).attr('data-name');
+    $('#editDishModal input[name="menu_section"]').val($(this).attr('data-menu-section-id'));
+    $('#editDishModal input[name="name"]').val($(this).attr('data-name'));
+    $('#editDishModal input[name="price"]').val($(this).attr('data-price'));
+    $('#editDishModal input[name="description"]').val($(this).attr('data-description'));
+    dishSelected = true;
+    //$('#confirmationModal').modal('show');
+    //deleteElement = $(this).parents('.ingredient-item:first');
+  });
+
+  $('#editDishModal button.btn').click(function(ev) {
+    var price = parseFloat(0.0);
+
+    if ($('#editDishModal input[name="price"]').val()) {
+      price = $('#editDishModal input[name="price"]').val();
+    }
+
+    var data = {
+      pk: editId,
+      menu_section: $('#editDishModal input[name="menu_section"]').val(),
+      price: price,
+      description: $('#editDishModal input[name="description"]').val()
+    };
+
+    if (dishSelected) {
+      data.name = $('#editDishModal input[name="name"]').val();
+    } else {
+      data.name = $('#editDishModal input#name').val();
+    }
+
+    $.ajax({
+      url: updateDishUrl + '?_tmp=' + (new Date).getTime(),
+      data: data,
+      type: 'POST',
+      dataType: 'JSON',
+      success: function(data) {
+        $('.menus').html(data.html);
+        $('#editDishModal input[name="menu_section"]').val('');
+        $('#editDishModal input[name="price"]').val('');
+        $('#editDishModal input[name="description"]').val('');
+        $('#editDishModal input[name="name"]').val('');
+        $('#editDishModal input#name').val('');
+        dishSelected = false;
+      }
+    });
+  });
+  // edit dish ends here
 
   $('.delete-confirm-btn').click(function(ev) {
     var data = {
