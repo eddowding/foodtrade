@@ -1,409 +1,262 @@
-
-.content a {
-    color: #61AE32;
-}
-.content a.btn {
-    color: #fff;
-}
-.strong {
-    font-weight: bold;
-}
-.menuitem {
-    background: #ECE5CE;
-    border-left: 2px solid #e6e7e8;
-    padding: 5px 0 10px 5px;
-    margin: 2px 0;
-    border-radius: 2px;
-}
-.menuitem-description {
-    font-style: italic;
-    margin: 0px 23px 20px 23px;
-}
-.add-ingredients {
-    margin-left: 18px;
-    margin-top: 5px; 
-}
 .btn-success {
-    background: #61AE32 !important;
+  background: #61AE32 !important;
 }
 .btn-success:hover {
-    background: #5DB92B !important;
-    }
+  background: #5DB92B !important;
+}
+.content a {
+  color: #61AE32;
+}
+.content a.btn {
+  color: #fff;
+}
+.strong {
+  font-weight: bold;
+}
+.menuitem {
+  background: #ECE5CE;
+  border-left: 2px solid #e6e7e8;
+  padding: 5px 0 10px 5px;
+  margin: 2px 0;
+  border-radius: 2px;
+}
 .box .ingredient-tree {
-    margin: 0;
-    padding: 0;
-    list-style: none;
+  margin: 0;
+  padding: 0;
+  list-style: none;
 }
 .box .ingredient-tree > li {
-    -webkit-border-radius: 2px;
-    -moz-border-radius: 2px;
-    border-radius: 2px;
-    margin-bottom: 2px;
-    color: #444;
-    position: relative;
-    margin: 2px 0 0 20px;
-    padding: 3px;
-    font-weight: normal !important;
-    list-style: none;
-    clear: both;
-    background: rgba(255, 255, 255, 0.4);
-    border: 2px solid rgba(255, 255, 255, 0.6);
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px;
+  margin-bottom: 2px;
+  color: #444;
+  position: relative;
+  margin: 2px 0 0 20px;
+  padding: 3px;
+  font-weight: normal !important;
+  list-style: none;
+  clear: both;
+  background: rgba(255, 255, 255, 0.4);
+  border: 2px solid rgba(255, 255, 255, 0.6);
 }
 .box .ingredient-tree > li:last-of-type {
-    margin-bottom: 0;
+  margin-bottom: 0;
 }
 .box .ingredient-tree li a {
-    font-weight: bold;
+  font-weight: bold;
 }
 .box .ingredient-tree li li a {
-    font-weight: normal;
-    padding-left: 3px;
-}
-.box .handle {
-    padding: 0 10px 0 0px;
+  font-weight: normal;
+  padding-left: 3px;
 }
 .box .ingredient-tree li .handle {
-    padding: 0 5px;
+  padding: 0 5px;
 }
 .box .ingredient-tree li .handle i {
-    color: rgba(0, 0, 0, 0.4);
+  color: rgba(0, 0, 0, 0.4);
 }
 .box .ingredient-tree li li .handle i {
-    color: rgba(0, 0, 0, 0.2);
+  color: rgba(0, 0, 0, 0.2);
 }
 .box .ingredient-tree li p {
-    margin-left: 21px;
+  margin-left: 21px;
 }
 .box .ingredient-tree ul {
-    padding: 0;
-    list-style: none;
-    display: block;
-    margin: 5px 0;
+  padding: 0;
+  list-style: none;
+  display: block;
+  margin: 5px 0;
 }
 .box .ingredient-tree ul li {
-    border: 2px solid #fff;
-    border-right: 0;
-    margin: 2px 0 0 20px;
-    padding: 3px 0px 3px 3px;
-    font-weight: normal !important;
-    list-style: none;
-    clear: both;
-    background: rgba(255, 255, 255, 0.9);
+  border: 2px solid #fff;
+  border-right: 0;
+  margin: 2px 0 0 20px;
+  padding: 3px 0px 3px 3px;
+  font-weight: normal !important;
+  list-style: none;
+  clear: both;
+  background: rgba(255, 255, 255, 0.9);
 }
 .box .ingredient-tree .tools i {
-    color: #3878B3;
+  color: #3878B3;
 }
 .box .ingredient-tree ul ul {
-    padding: 0;
-    list-style: none;
-    display: block;
-    margin: 5px 0;
+  padding: 0;
+  list-style: none;
+  display: block;
+  margin: 5px 0;
 }
 .box .ingredient-tree ul ul li {
-    margin: 2px 0 0 20px;
-    padding: 3px 0px 3px 3px;
-    font-weight: normal !important;
-    list-style: none;
-    clear: both;
-    background: rgba(255, 255, 255, 0.9);
+  margin: 2px 0 0 20px;
+  padding: 3px 0px 3px 3px;
+  font-weight: normal !important;
+  list-style: none;
+  clear: both;
+  background: rgba(255, 255, 255, 0.9);
 }
 h3 i {
-    font-size: 80%;
-    color: #ccc;
+  font-size: 80%;
+  color: #ccc;
 }
 .box h3 {
-    margin: 0 0 5px 0;
-    float: left;
+  margin: 0 0 5px 0;
+  float: left;
 }
 .section_head {
-    margin-bottom: 10px;
-    margin-top: 30px;
-    border-bottom: 3px solid #444;
+  margin-bottom: 10px;
+  margin-top: 30px;
+  border-bottom: 3px solid #444;
 }
-.editable-click, a.editable-click {
-    text-decoration: none;
-    color: #444;
-    border-bottom: 0 !important;
+.editable-click,
+a.editable-click {
+  text-decoration: none;
+  color: #444;
+  border-bottom: 0 !important;
 }
 a.editable-click:hover {
-    text-decoration: underline !important;
-    border-bottom: 0;
+  text-decoration: underline !important;
+  border-bottom: 0;
 }
 .flagged {
-    border: 1px solid;
-    padding: 0 3px;
-    margin-right: 3px;
-    opacity: 0.3;
+  border: 1px solid;
+  padding: 0 3px;
+  margin-right: 3px;
+  opacity: 0.3;
 }
 .flagged.active {
-    opacity: 1;
-    background: inherit;
-    color: #fff;
-    font-weight: bolder;
+  opacity: 1;
+  background: inherit;
+  color: #fff;
+  font-weight: bolder;
 }
 .flagged.active.meat {
-    background: #A30012;
+  background: #a30012;
 }
 .flagged.active.allergen {
-    background: #4CAC48;
+  background: #4cac48;
 }
 .flagged.active.gluten {
-    background: #ED482A;
+  background: #ed482a;
 }
 .meat {
-    border-color: #A30012;
-    color: #A30012;
+  border-color: #a30012;
+  color: #a30012;
+  background: rgba(163, 0, 18, 0.3);
 }
 .allergen {
-    border-color: #4CAC48;
-    color: #4CAC48;
+  border-color: #4cac48;
+  color: #4cac48;
+  background: rgba(76, 172, 72, 0.3);
 }
 .gluten {
-    border-color: #ED482A;
-    color: #ED482A;
+  border-color: #ed482a;
+  color: #ed482a;
+  background: rgba(237, 72, 42, 0.3);
+}
+#mag .btn {
+  padding: 3px 6px;
+  color: #fff;
+}
+.btn-allergen {
+  background: rgba(76, 172, 72, 0.25);
+}
+.btn-meat {
+  background: rgba(163, 0, 18, 0.25);
+}
+.btn-gluten {
+  background: rgba(237, 72, 42, 0.25);
+}
+#mag .btn.active,
+#mag .btn:hover {
+  opacity: 1;
+  color: #fff;
+}
+#mag .btn.active.btn-allergen,
+#mag .btn:hover.btn-allergen {
+  background: #4cac48;
+}
+#mag .btn.active.btn-meat,
+#mag .btn:hover.btn-meat {
+  background: #a30012;
+}
+#mag .btn.active.btn-gluten,
+#mag .btn:hover.btn-gluten {
+  background: #ed482a;
 }
 .action {
-    background: #eee;
-    padding: 5px;
-    border: 1px solid #aaa;
-}
-.ingredient {
-    text-transform: capitalize;
+  background: #eee;
+  padding: 5px;
+  border: 1px solid #aaa;
 }
 #output {
-    background: #fff;
-    padding: 0.5em 2em 2em 2em;
-    box-shadow: 0 0 10px #444 inset;
-}
-.dish_wrapper {
-    margin: 1em 0;
-}
-.dish_name {
-    font-size: 20px;
-    font-weight: bold;
-    margin: 5px;
-    line-height: 2;
-}
-#printed #output {
-    box-shadow: 0 0 0 #fff;
+  background: #fff;
+  padding: 0.5em 2em 2em 2em;
+  box-shadow: 0 0 10px #444 inset;
 }
 #output * {
-    font-family: Georgia;
-    text-align: center;
+  font-family: Georgia;
+  text-align: center;
 }
 #output p {
-    font-size: 1.5em;
+  font-size: 1.5em;
 }
 #output h2 {
-    border-bottom: 2px solid;
-    padding: 0.5em;
+  border-bottom: 2px solid;
+  padding: 0.5em;
 }
 #output h3 {
-    border-bottom: 1px solid;
-    padding: 1em 0 0.3em 0;
-    width: 70%;
-    margin: 0 auto;
+  border-bottom: 1px solid;
+  padding: 1em 0 0.3em 0;
+  width: 60%;
+  margin: 0 auto;
 }
 .allergen_detail {
-    font-size: 16px;
-    clear: both;
-    margin: 0 auto;
-    width: 60%;
-    display: block;
-}
-.ingredient_parent {} .ingredient_child {
-    font-style: italic;
-    font-size: 16px;
-}
-.has_children {
-    display: inline-block;
-}
-.ingredient_parent:before {
-    content: ", ";
-}
-.ingredient_parent:first-of-type:before {
-    content: "";
-}
-.has_children:before {
-    content: "(";
-}
-.has_children:after {
-    content: ")";
-}
-.ingredient_child:after {
-    content: ", ";
-}
-.ingredient_child:last-of-type:after {
-    content: "";
+  font-size: 12px;
+  clear: both;
+  display: block;
 }
 .supplier {
-    font-weight: bold;
+  font-weight: bold;
 }
 .produce {
-    font-style: italic;
-}
-#connections .tab-pane {
-    min-height: 300px;
+  font-style: italic;
 }
 #connectionsList h4 {
-    font-weight: bold;
-    border-bottom: 1px solid;
+  font-weight: bold;
+  border-bottom: 1px solid;
 }
 #connectionsList ul {
-    padding: 0;
-    list-style: none;
+  padding: 0;
+  list-style: none;
 }
 li.divider {
-    background: #666;
-    height: 2px;
+  background: #666;
+  height: 2px;
 }
 .pull-right label {
-    margin-left: 10px;
+  margin-left: 10px;
 }
 .new {
-    background: #ffc;
+  background: #ffc;
 }
 .produce_tags a:after {
-    content: ",";
+  content: ",";
 }
 .produce_tags a:hover {
-    text-decoration: underline;
-    color: #444;
+  text-decoration: underline;
+  color: #444;
 }
 table th {
-    text-transform: uppercase;
-    background: #999;
-    color: #fff;
-    border: 0;
+  text-transform: uppercase;
+  background: #3878B3;
+  color: #fff;
 }
 body > .header .logo {
-    font-family: 'Source Sans Pro', cursive;
-    font-weight: 900;
-    background: #61AE32;
+  font-family: 'Source Sans Pro', cursive;
+  font-weight: 900;
+  background: #61AE32;
 }
 a.text-muted {
-    color: #666 !important;
-}
-.lockscreen {
-    background: url(../img/home.jpg) fixed center top;
-    background-size: cover;
-}
-.form-box .header {
-    background: #61AE32;
-}
-.bg-olive {
-    background-color: #61AE32 !important;
-}
-.est_type {
-    color: #999;
-    float: right;
-}
-.est_addr {
-    display:block; 
-    font-size: 11px;
-}
-.twitter-typeahead .tt-query, .twitter-typeahead .tt-hint {
-    margin-bottom: 0;
-}
-.tt-pad {
-    padding-bottom: 25px;
-}
-.tt-hint {
-    display: block;
-    width: 100%;
-    height: 38px;
-    padding: 8px 12px;
-    font-size: 14px;
-    line-height: 1.428571429;
-    color: #999;
-    vertical-align: middle;
-    background-color: #ffffff;
-    border: 1px solid #cccccc;
-    border-radius: 4px;
-    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
-    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
-    -webkit-transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
-    transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
-}
-.tt-dropdown-menu {
-    min-width: 160px;
-    margin-top: 2px;
-    padding: 5px 0;
-    background-color: #ffffff;
-    border: 1px solid #cccccc;
-    border: 1px solid rgba(0, 0, 0, 0.15);
-    border-radius: 4px;
-    -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
-    background-clip: padding-box;
-}
-.tt-suggestion {
-    display: block;
-    padding: 3px 20px;
-    font-size: 1em !important;
-    text-transform: capitalize;
-    border-bottom: 1px solid #eee !important;
-    z-index: 1000 !important;
-}
-.tt-suggestion.tt-cursor{
-    color: #fff;
-    background-color: #61AE32 !important;
-}
-.tt-suggestion.tt-cursor a,
-.tt-suggestion.tt-cursor span {
-    color: #fff;
-}
-.tt-suggestion p {
-    margin: 0;
-}
-
-.add-sub-ingredients {
-    font-weight: normal !important;
-    color: green;
-    margin-left: 1em;
-}
-.add-sub-ingredients:hover {
-    color: #576D30;
-}
-/*
-OL { counter-reset: item }
-LI { display: block }
-LI:before { content: counters(item, ".") " "; counter-increment: item }*/
-
-.del {
-    display: inline-block;
-}
-.delete-btn {
-    color: red !important;
-    margin: 0 10px;
-}
-.delete-btn:hover {
-    background-color: red;
-    color: #fff !important;
-}
-#printPage {
-    display: block;
-    background: #fff;
-    border-bottom: 2px solid #000;
-    padding: 10px;
-    font-size: 16px;
-    text-align: center;
-}
-@media print {
-    #printPage {
-        display: none;
-    }
-    @page {
-        size: auto;
-        /* auto is the current printer page size */
-        
-        margin: 0mm;
-        /* this affects the margin in the printer settings */
-    }
-    body {
-        background-color: #FFFFFF;
-        border: solid 1px black;
-        margin: 0px;
-        /* the margin on the content before printing */
-    }
+  color: #666 !important;
 }
