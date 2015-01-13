@@ -1,7 +1,11 @@
+.form-box .header,
+.bg-olive,
 .btn-primary,
 .btn-success {
   background: #61AE32 !important;
 }
+.form-box .header:hover,
+.bg-olive:hover,
 .btn-primary:hover,
 .btn-success:hover {
   background: #5DB92B !important;
@@ -43,6 +47,9 @@
 }
 .tools a.delete-btn:hover {
   color: red;
+}
+.tools a.nutrition:hover {
+  color: #fda0a2;
 }
 .menuitem-description {
   margin-left: 25px;
