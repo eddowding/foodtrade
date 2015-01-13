@@ -102,11 +102,11 @@ $(document).ready(function() {
     source: dishes.ttAdapter()
   });
 
-  $('#editDishModal input#name').typeahead(null, {
+  /* $('#editDishModal input#name').typeahead(null, {
     displayKey: 'name',
     name: 'dish',
     source: dishes.ttAdapter()
-  });
+  });*/
 
   var dishSelected = false;
 
@@ -150,6 +150,8 @@ $(document).ready(function() {
         $('#dishModal input[name="description"]').val('');
         $('#dishModal input[name="name"]').val('');
         $('#dishModal input#name').val('');
+        //sortableFn();
+        //editableFn();
         dishSelected = false;
       }
     });
