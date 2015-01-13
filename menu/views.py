@@ -160,7 +160,7 @@ def create_dish(request):
     try:
         for ingredient in ingredient_objs:
             ind = Ingredient.objects.create(**ingredient.to_mongo())
-            ind.dish = new_dishm # making sure dish reference is always right
+            ind.dish = new_dish # making sure dish reference is always right
             ind.save()
     except UnboundLocalError:
         pass
@@ -177,10 +177,23 @@ def update_dish(request):
         Dish.objects.filter(pk=pk).update(set__html=html)
         return HttpResponse(json.dumps({'status': True}))
     else:
-        Dish.objects.filter(pk=pk).update(set__name=request.POST.get('name'), 
+        dish = Dish.objects.filter(pk=pk).update(set__name=request.POST.get('name').split(' (')[0], 
                                                  set__description = request.POST.get('description'),
                                                  set__price = request.POST.get('price'),
                                                  set__modified_on = datetime.now())
+#         update ingredients here
+#         ingredients = request.POST.get('name').split(' (')[1][:-1].split(',')
+#         for ing in ingredients:
+#             ing.strip()
+#             insert_dict = {}
+#             insert_dict['dish'] = ObjectId(request.POST.get('dish'))
+#             insert_dict['name'] = request.POST.get('name')
+#             insert_dict['parent'] = ObjectId(request.POST.get('parent')) if request.POST.get('parent') else None
+#             insert_dict['order'] = int(request.POST.get('order')) if request.POST.get('order') else 1
+#             insert_dict['is_allergen'] = True if Allergen.objects.filter(name__iexact=insert_dict['name']).count() else False
+#             insert_dict['is_meat'] = True if Meat.objects.filter(name__iexact=insert_dict['name']).count() else False
+#             insert_dict['is_gluten'] = True if Gluten.objects.filter(name__iexact=insert_dict['name']).count() else False
+#             ingredient = Ingredient.objects.create(**insert_dict)
         return HttpResponse(json.dumps({'status': True, 'html': menu_render(request.user)}, default=json_util.default))
 
 
