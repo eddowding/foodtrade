@@ -20,7 +20,7 @@
                 <div class="box-tools pull-right">
                     <ul class="pagination pagination-sm inline">
                         <li>
-                            <a data-id={{menu.pk}} data-url={% url 'menu_delete_menu' %} class="btn btn-xs btn-default delete-btn"><i class="fa fa-trash-o fa-fw"></i>Delete Menu</a>
+                            <a data-id={{menu.pk}} data-url={% url 'menu_delete_menu' %} class="  delete-btn"><i class="fa fa-trash-o fa-fw"></i>Delete Menu</a>
                         </li>
                         <li>
                              <a href="{% url 'menu_print_preview_menu' menu.id %}"><i class="fa fa-fw fa-print"></i> Print preview</a>
@@ -68,34 +68,20 @@
                     <div class="menuitem">
                         <div class="menutitle">
                             <span class="handle">
-                                <i class="fa fa-ellipsis-v"></i>
-                                <i class="fa fa-ellipsis-v"></i>
+                                <i class="fa fa-navicon"></i> 
                             </span>
                             <span>{{ dish.name }} &mdash; &pound;{{ dish.price|floatformat:2 }}
                             </span>
-                            <a data-id={{dish.pk}} data-url={% url 'menu_delete_dish' %} class="delete-btn">Delete</a>
-                            <a data-id={{dish.pk}} data-toggle="modal" href="#editDishModal" data-url={% url 'menu_update_dish' %} data-menu-section-id ={{ section.id }} data-description="{{dish.description}}" data-price={{ dish.price|floatformat:2 }} data-name="{{ dish.name }}" class="edit-btn">Edit</a>
-                            <div class="pull-right">
-
-                            <div class="btn-group btn-group-sm" id="mag" data-toggle="buttons">
-                              <label class="btn btn-allergen active ">
-                                <input type="checkbox" autocomplete="off" checked> Allergen
-                              </label>
-                              <label class="btn btn-meat">
-                                <input type="checkbox" autocomplete="off"> Meat
-                              </label>
-                              <label class="btn btn-gluten">
-                                <input type="checkbox" autocomplete="off"> Gluten
-                              </label>
-                            </div>
-
-
-<!-- 
+                            <span class="tools">
+                                <a data-id={{dish.pk}} data-url={% url 'menu_delete_dish' %} class="delete-btn"><i class="fa fa-trash-o"></i></a>
+                                <a data-id={{dish.pk}} data-toggle="modal" href="#editDishModal" data-url={% url 'menu_update_dish' %} data-menu-section-id ={{ section.id }} data-description="{{dish.description}}" data-price={{ dish.price|floatformat:2 }} data-name="{{ dish.name }}" class="edit-btn"><i class="fa fa-edit"></i></a>
+                            </span>
+                            <div class="pull-right"> 
                                 <span class="allergen flagged {% if dish.is_allergen %}active{% endif %}" data-toggle="tooltip" title="Allergen" data-original-title="Allergen">A</span>
 
                                 <span class="meat flagged  {% if dish.is_meat %}active{% endif %}" data-toggle="tooltip" title="Meat">M</span>
 
-                                <span class="gluten flagged  {% if dish.is_gluten %}active{% endif %}" data-toggle="tooltip" title="Gluten">G</span> -->
+                                <span class="gluten flagged  {% if dish.is_gluten %}active{% endif %}" data-toggle="tooltip" title="Gluten">G</span>
 
                             </div>
 
@@ -109,8 +95,8 @@
                             </div>
                         {% endspaceless %}
 
-                        <a data-dish-id = {{ dish.id }} class="add-ingredients btn btn-success btn-sm"><i class="fa fa-plus-circle fa-fw"></i>  Add an ingredient</a>
-                        <p class="help-block" style="margin-left: 1.5em;">Tip: Press 'Ctrl + Enter' to add a new row after selecting an item.</p>
+                        <a data-dish-id = {{ dish.id }} class="add-ingredients b tn btn-succ ess bt n-sm"><i class="fa fa-plus-circle fa-fw"></i>  Add an ingredient</a>
+
                         </div>
                 {% endfor %}
                 <a data-toggle="modal" href="#dishModal" data-menu-section-id ={{ section.id }} class="btn btn-sm btn-success add-dish" data-type="text">

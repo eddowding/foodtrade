@@ -1,6 +1,8 @@
+.btn-primary,
 .btn-success {
   background: #61AE32 !important;
 }
+.btn-primary:hover,
 .btn-success:hover {
   background: #5DB92B !important;
 }
@@ -25,6 +27,33 @@
   padding: 0;
   list-style: none;
 }
+.tools {
+  margin-left: 10px;
+}
+.tools a {
+  color: #bbb;
+  margin-left: 3px;
+}
+.tools a.add-sub-ingredients:hover {
+  color: #61AE32;
+}
+.tools a.delete-btn {
+  padding: 3px;
+  border-radius: 2px;
+}
+.tools a.delete-btn:hover {
+  color: red;
+}
+.menuitem-description {
+  margin-left: 25px;
+  color: #666;
+  font-style: italic;
+}
+.add-ingredients {
+  margin-left: 20px;
+  margin-top: 10px;
+  display: block;
+}
 .box .ingredient-tree > li {
   -webkit-border-radius: 2px;
   -moz-border-radius: 2px;
@@ -33,7 +62,7 @@
   color: #444;
   position: relative;
   margin: 2px 0 0 20px;
-  padding: 3px;
+  padding: 6px;
   font-weight: normal !important;
   list-style: none;
   clear: both;
@@ -50,10 +79,13 @@
   font-weight: normal;
   padding-left: 3px;
 }
-.box .ingredient-tree li .handle {
-  padding: 0 5px;
+.handle {
+  padding: 0 10px 0 0;
 }
-.box .ingredient-tree li .handle i {
+.handle:hover {
+  cursor: move !important;
+}
+.handle i {
   color: rgba(0, 0, 0, 0.4);
 }
 .box .ingredient-tree li li .handle i {
@@ -66,20 +98,19 @@
   padding: 0;
   list-style: none;
   display: block;
+}
+.box .ingredient-tree ul:first-child {
   margin: 5px 0;
 }
 .box .ingredient-tree ul li {
   border: 2px solid #fff;
   border-right: 0;
   margin: 2px 0 0 20px;
-  padding: 3px 0px 3px 3px;
+  padding: 3px 5px 3px 3px;
   font-weight: normal !important;
   list-style: none;
   clear: both;
   background: rgba(255, 255, 255, 0.9);
-}
-.box .ingredient-tree .tools i {
-  color: #3878B3;
 }
 .box .ingredient-tree ul ul {
   padding: 0;
@@ -134,7 +165,7 @@ a.editable-click:hover {
   background: #a30012;
 }
 .flagged.active.allergen {
-  background: #4cac48;
+  background: #4b9ed9;
 }
 .flagged.active.gluten {
   background: #ed482a;
@@ -145,9 +176,9 @@ a.editable-click:hover {
   background: rgba(163, 0, 18, 0.3);
 }
 .allergen {
-  border-color: #4cac48;
-  color: #4cac48;
-  background: rgba(76, 172, 72, 0.3);
+  border-color: #4b9ed9;
+  color: #4b9ed9;
+  background: rgba(75, 158, 217, 0.3);
 }
 .gluten {
   border-color: #ed482a;
@@ -159,7 +190,7 @@ a.editable-click:hover {
   color: #fff;
 }
 .btn-allergen {
-  background: rgba(76, 172, 72, 0.25);
+  background: rgba(75, 158, 217, 0.25);
 }
 .btn-meat {
   background: rgba(163, 0, 18, 0.25);
@@ -167,14 +198,18 @@ a.editable-click:hover {
 .btn-gluten {
   background: rgba(237, 72, 42, 0.25);
 }
+#mag .btn {
+  font-weight: bold;
+}
 #mag .btn.active,
 #mag .btn:hover {
   opacity: 1;
+  box-shadow: none;
   color: #fff;
 }
 #mag .btn.active.btn-allergen,
 #mag .btn:hover.btn-allergen {
-  background: #4cac48;
+  background: #4b9ed9;
 }
 #mag .btn.active.btn-meat,
 #mag .btn:hover.btn-meat {
@@ -183,6 +218,9 @@ a.editable-click:hover {
 #mag .btn.active.btn-gluten,
 #mag .btn:hover.btn-gluten {
   background: #ed482a;
+}
+.del {
+  display: inline-block;
 }
 .action {
   background: #eee;
