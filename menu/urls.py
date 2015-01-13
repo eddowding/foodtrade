@@ -5,6 +5,7 @@ from django.conf import settings
 urlpatterns = patterns('menu.views',
     #common
     url(r'^$', 'dashboard', name='menu_dashboard'),
+    url(r'^^success/', 'paymentSuccess', name='payment_success'),
     url(r'^menu/$', 'menu', name='menu'),
     url(r'^login/$', 'login', name='menu-login'),
     url(r'register/$', 'register', name='menu_register'),

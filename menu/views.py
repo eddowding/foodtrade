@@ -24,6 +24,14 @@ def dashboard(request):
 
 
 @login_required(login_url=reverse_lazy('menu-login'))
+def paymentSuccess(request):
+    '''
+    On payment success
+    '''
+    return render(request, 'payment_success.html')
+
+
+@login_required(login_url=reverse_lazy('menu-login'))
 def menu(request):
     ''' Get list of menus '''
     establishments = Establishment.objects.filter(user=request.user)
@@ -368,3 +376,5 @@ def create_connection(request):
     html = {'buyers': render_to_string('includes/_connection_table_buyer.html', {'buyers': buyers}),
             'sellers': render_to_string('includes/_connection_table_seller.html', {'sellers': sellers})}
     return HttpResponse(json.dumps({'success': True, 'obj': html}))
+
+
