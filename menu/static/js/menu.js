@@ -311,8 +311,14 @@ $(document).ready(function() {
     editName = $(this).attr('data-name');
     $('#editDishModal input[name="menu_section"]').val($(this).attr('data-menu-section-id'));
     $('#editDishModal input[name="name"]').val($(this).attr('data-name'));
-    $('#editDishModal input[name="price"]').val($(this).attr('data-price'));
-    $('#editDishModal input[name="description"]').val($(this).attr('data-description'));
+    if ($(this).attr('data-price'))
+    	$('#editDishModal input[name="price"]').val($(this).attr('data-price'));
+    else
+    	$('#editDishModal input[name="price"]').val('');
+    if ($(this).attr('data-description'))
+    	$('#editDishModal input[name="description"]').val($(this).attr('data-description'));
+    else
+    	$('#editDishModal input[name="description"]').val('');
     dishSelected = true;
     //$('#confirmationModal').modal('show');
     //deleteElement = $(this).parents('.ingredient-item:first');

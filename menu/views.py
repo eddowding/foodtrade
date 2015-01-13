@@ -172,13 +172,16 @@ def create_dish(request):
 def update_dish(request):
     pk = ObjectId(request.POST.get('pk'))
     html = request.POST.get('html')
-    # serialized = json.loads(request.POST.get('serialized')) #TODO: update ingredients
-    dish = Dish.objects.filter(pk=pk).update(set__name=request.POST.get('name'), 
-                                             set__description = request.POST.get('description'),
-                                             set__price = request.POST.get('price'),
-                                             set__modified_on = datetime.now())
-    return HttpResponse(json.dumps({'status': True, 'html': menu_render(request.user)}, default=json_util.default))
-    #return HttpResponse(json.dumps({'status': True}))
+    if html:
+        serialized = json.loads(request.POST.get('serialized')) #TODO: update ingredients
+        Dish.objects.filter(pk=pk).update(set__html=html)
+        return HttpResponse(json.dumps({'status': True}))
+    else:
+        Dish.objects.filter(pk=pk).update(set__name=request.POST.get('name'), 
+                                                 set__description = request.POST.get('description'),
+                                                 set__price = request.POST.get('price'),
+                                                 set__modified_on = datetime.now())
+        return HttpResponse(json.dumps({'status': True, 'html': menu_render(request.user)}, default=json_util.default))
 
 
 @login_required(login_url=reverse_lazy('menu-login'))
