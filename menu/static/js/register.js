@@ -1,3 +1,4 @@
+var wrong_email = true;
 $(document).ready(function() {
     $('input[name="first_name"]').focus();
 
@@ -32,13 +33,13 @@ $(document).ready(function() {
 	     		parentDiv.addClass('has-error');
 	            helpTextDiv.html('Enter valid email address.');
 	            $('.signup').addClass('disabled');
-	            var wrong_email = true;
+	            wrong_email = true;
 	     	}
 	     	else{
 	     		parentDiv.removeClass('has-error');
 	            helpTextDiv.html('');
 	            $('.signup').removeClass('disabled');
-	            var wrong_email = false;
+	            wrong_email = false;
 	     	}
 	        $.ajax({
 	            url: '/menu/user/lookup/count/',
@@ -66,6 +67,7 @@ $(document).ready(function() {
 	                    else{
 	                    	helpTextDiv.html('');
 	                    	$('.signup').removeClass('disabled');
+	                    	wrong_email = false;
 	                    }
 	                }
 	            }
@@ -79,12 +81,14 @@ $(document).ready(function() {
         var termAccepted = $('.form-group').find('.checkbox').find('input[name="terms"]').is(':checked');
         if (formHasError === false && passwordMatch === true) {
             if (termAccepted) {
-                $('#registration-form').submit();
-            } else {
+            	if (!wrong_email)
+                	$('#registration-form').submit();
+            }
+            else {
                 $('.form-group').find('.checkbox').parent().find('.help-text').html('You need to accept terms');
             }
-
-        } else if (passwordMatch === false) {
+        }
+        else if (passwordMatch === false) {
             var parentDiv = $('input[name="password2"]').parent();
             var helpTextDiv = parentDiv.find('.help-text');
             parentDiv.addClass('has-error');
