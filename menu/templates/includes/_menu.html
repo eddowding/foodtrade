@@ -77,20 +77,16 @@
                             <a data-id={{dish.pk}} data-toggle="modal" href="#editDishModal" data-url={% url 'menu_update_dish' %} data-menu-section-id ={{ section.id }} data-description="{{dish.description}}" data-price={{ dish.price|floatformat:2 }} data-name="{{ dish.name }}" class="edit-btn">Edit</a>
                             <div class="pull-right">
 
-                            <div class="btn-group btn-group-sm" id="mag" data-toggle="buttons">
-                              <label class="btn btn-allergen active ">
-                                <input type="checkbox" autocomplete="off" checked> Allergen
-                              </label>
-                              <label class="btn btn-meat">
-                                <input type="checkbox" autocomplete="off"> Meat
-                              </label>
-                              <label class="btn btn-gluten">
-                                <input type="checkbox" autocomplete="off"> Gluten
-                              </label>
+                            <div>
+                              <span class="allergen flagged" data-toggle="tooltip" title="Allergen" data-original-title="Allergen">A</span>
+
+                              <span class="meat flagged" data-toggle="tooltip" title="Meat">M</span>
+
+                              <span class="gluten flagged" data-toggle="tooltip" title="Gluten">G</span>
                             </div>
 
 
-<!-- 
+<!--
                                 <span class="allergen flagged {% if dish.is_allergen %}active{% endif %}" data-toggle="tooltip" title="Allergen" data-original-title="Allergen">A</span>
 
                                 <span class="meat flagged  {% if dish.is_meat %}active{% endif %}" data-toggle="tooltip" title="Meat">M</span>
