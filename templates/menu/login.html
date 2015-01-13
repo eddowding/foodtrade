@@ -5,9 +5,9 @@
 {% load i18n %}
 {% load account %}
 {% load django_static %}
-{% block html_class %}bg-black{% endblock %}
+{% block html_class %}bg-black {% endblock %}
 {% block title %}FoodTrade Menu - Quick, easy allergen compliance{% endblock %}
-{% block body_class %}bg-black{% endblock %}
+{% block body_class %}bg-black homex{% endblock %}
 {% block header %}
 
 
@@ -16,6 +16,7 @@
 {% endblock extra_js %}
 
     <link href="{% staticfile "/menu/css/front.css" %}" rel="stylesheet" type="text/css" />
+    <!-- <link href="{% static "menu/css/front.css" %}" rel="stylesheet" type="text/css" /> -->
  {% endblock %}
 
 {% block main_content %}
@@ -56,11 +57,11 @@
                         <i class="fa fa-check pull-left"></i> GET AHEAD OF THE GAME</h3>
                         <p>Two more rounds of EU food law changes are coming.With us, you’ll be prepared</p>
 
-<a href="{% url 'menu_register' %}" class="btn btn-info btn-lg pull-left" id="getstarted" style="margin-right: 10px;">SIGN UP <small>Free until March, then &pound;8/mo</small>
-    </a>
+        <a href="{% url 'menu_register' %}" class="btn btn-info btn-lg pull-left" id="getstarted" style="margin-right: 10px;">SIGN UP <small>Free until March, then &pound;8/mo</small>
+        </a>
 
 
-    <a href="#" data-toggle="modal" data-target="#loginModal" class="btn btn-success btn-lg pull-left" id="getstarted">LOGIN <small>I already have an account</small> </a>
+        <a href="#" data-toggle="modal" data-target="#loginModal" class="btn btn-success btn-lg pull-left" id="getstarted">LOGIN <small>I already have an account</small> </a>
  
 
                         <form action="//sustaination.us2.list-manage.com/subscribe/post?u=79e1467c02512dbd83bddab5f&amp;id=da1305635a" method="post" name="mc-embedded-subscribe-form" class="validate hidden" target="_blank" novalidate id="subscribe_form">
