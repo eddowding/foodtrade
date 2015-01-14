@@ -38,8 +38,14 @@
   color: #bbb;
   margin-left: 3px;
 }
+.tools a.add-sub-ingredients {
+  font-weight: normal !important;
+}
 .tools a.add-sub-ingredients:hover {
   color: #61AE32;
+}
+.tools a.add-sub-ingredients:hover:after {
+  content: "add sub-ingredient";
 }
 .tools a.delete-btn {
   padding: 3px;
