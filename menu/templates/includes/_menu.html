@@ -1,120 +1,120 @@
 <h2>
-    Menu&nbsp;
-    <button data-toggle="modal" href="#menuModal" class="btn btn-default"><i class="fa fa-list-ul fa-fw"></i> Add Menu</button>
-    {% comment %}
-    <small>Edit Menu</small>
-    {% endcomment %}
+  Menu&nbsp;
+  <button data-toggle="modal" href="#menuModal" class="btn btn-default"><i class="fa fa-list-ul fa-fw"></i> Add Menu</button>
+  {% comment %}
+  <small>Edit Menu</small>
+  {% endcomment %}
 </h2>
 
 
 {% for menu in menus %}
 
 <div class="row">
-    <!-- Left col -->
-    <section class="col-sm-12 tt-pad">
-        <!-- TO DO List -->
-        <div class="box box-primary">
-            <div class="box-header">
-                <i class="ion ion-clipboard"></i>
-                <h3 class="box-title">{{menu.name}}</h3>
-                <div class="box-tools pull-right">
-                    <ul class="pagination pagination-sm inline">
-                        <li>
-                            <a data-id={{menu.pk}} data-url={% url 'menu_delete_menu' %} class="delete-btn"><i class="fa fa-trash-o fa-fw"></i>Delete Menu</a>
-                        </li>
-                        <li>
-                             <a href="{% url 'menu_print_preview_menu' menu.id %}"><i class="fa fa-fw fa-print"></i> Print preview</a>
-                        </li>
-                        <li data-toggle="tooltip" title="cat" data-original-title="monkey">
-                            <a href="#"><i class="fa  fa-fw fa-download"></i> Generate PDF</a>
-                        </li>
-                        <li>
-                            <a href="#"><i class="fa fa-fw fa-code"></i> Use on my website</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            <!-- /.box-header -->
-            <div class="box-body">
-                {% for section in menu.get_menu_sections %}
-                <div>
-                <div class="clearfix section_head">
-                    <h3>
-                        <span class="handle">
-                            <i class="fa fa-ellipsis-v"></i>
-                            <i class="fa fa-ellipsis-v"></i>
-                        </span>
-                        <a href="#" id="item" class="editable" data-type="text" data-pk="1" data-url="/post" data-title="Edit item">{{section.name}}</a>
-                    </h3>
-                    <div class="pull-right" id="sectionDish">
-                        <!-- Add dish -->
-                        <a data-id={{section.pk}} data-url={% url 'menu_delete_menu_section' %} class="delete-btn"> Delete this section</a>
-                        <a data-toggle="modal" href="#dishModal" data-menu-section-id ={{ section.id }} class="btn btn-sm btn-success add-dish" data-type="text">
-                            <i class="fa fa-cutlery fa-fw"></i> Add Dish
-                        </a>
-                        <!--<a href="#" id="item" data-lookup-url = {% url 'menu_dish_lookup_name' %} data-menu-section={{ section.id }} class="editable btn btn-xs btn-default add-dish" data-type="text" data-pk="1" data-url="{% url 'menu_create_dish' %}" data-title="Edit item">
-                            <i class="fa fa-list-ul fa-fw"></i>Add Dish
-                        </a>-->
-                    </div>
-                </div>
-                {% if not section.get_section_dishes|length %}
-                <div class="alert alert-warning lead text-center">
-
-                    <h2 style="margin-bottom: 1em;">You don't have anything in this section yet. <i class="fa fa-frown-o fa-lg"></i></h2>
-                    <a data-toggle="modal" href="#dishModal" data-menu-section-id ={{ section.id }} class="btn btn-success btn-lg add-dish" data-type="text"><i class="fa fa-cutlery fa-fw"></i> Add a new dish</a>
-                </div>
-                {% endif %}
-                {% for dish in section.get_section_dishes %}
-                    <div class="menuitem">
-                        <div class="menutitle">
-                            <span class="handle">
-                                <i class="fa fa-navicon"></i> 
-                            </span>
-                            <span>{{ dish.name }} &mdash; &pound;{{ dish.price|floatformat:2 }}
-                            </span>
-                            <span class="tools">
-                                <a data-id={{dish.pk}} data-url={% url 'menu_delete_dish' %} class="delete-btn"><i class="fa fa-trash-o"></i></a>
-                                <a data-id={{dish.pk}} data-toggle="modal" href="#editDishModal" data-url={% url 'menu_update_dish' %} data-menu-section-id ={{ section.id }} data-description="{{dish.description}}" data-price={{ dish.price|floatformat:2 }} data-name="{{ dish.name }}" class="edit-btn"><i class="fa fa-edit"></i></a>
-                            </span>
-                            <div class="pull-right"> 
-                                <span class="allergen flagged {% if dish.is_allergen %}active{% endif %}" data-toggle="tooltip" title="Allergen" data-original-title="Allergen">A</span>
-
-                                <span class="meat flagged  {% if dish.is_meat %}active{% endif %}" data-toggle="tooltip" title="Meat">M</span>
-
-                                <span class="gluten flagged  {% if dish.is_gluten %}active{% endif %}" data-toggle="tooltip" title="Gluten">G</span>
-
-                            </div>
-
-
-                            <p href="#" class="editable menuitem-description" data-type="textarea" data-pk="1" data-url="/post" data-title="Edit item">{{dish.description}}</p>
-
-                        </div>
-                        {% spaceless %}
-                            <div class="tree">
-                                {{dish.html|safe}}
-                            </div>
-                        {% endspaceless %}
-
-                        <a data-dish-id = {{ dish.id }} class="add-ingredients b tn btn-succ ess bt n-sm"><i class="fa fa-plus-circle fa-fw"></i>  Add an ingredient</a>
-
-                        </div>
-                {% endfor %}
-                <a data-toggle="modal" href="#dishModal" data-menu-section-id ={{ section.id }} class="btn btn-sm btn-success add-dish" data-type="text">
-                            <i class="fa fa-cutlery fa-fw"></i> Add a new dish in this section
-                        </a>
-
-
-                </div>
-                {% endfor %}
-            </div>
-            <!-- /.box-body -->
-            <div class="box-footer clearfix" style="border-top: 3px solid #000;">
-                <button data-toggle="modal" data-menu-id = {{ menu.id }} href="#sectionModal" class="btn btn-default add-section"><i class="fa fa-th fa-fw"></i> Add Section</button>
-            </div>
+  <!-- Left col -->
+  <section class="col-sm-12 tt-pad">
+    <!-- TO DO List -->
+    <div class="box box-primary">
+      <div class="box-header">
+        <i class="ion ion-clipboard"></i>
+        <h3 class="box-title">{{menu.name}}</h3>
+        <div class="box-tools pull-right">
+          <ul class="pagination pagination-sm inline">
+            <li>
+              <a data-id={{menu.pk}} data-url={% url 'menu_delete_menu' %} class="delete-btn"><i class="fa fa-trash-o fa-fw"></i>Delete Menu</a>
+            </li>
+            <li>
+              <a href="{% url 'menu_print_preview_menu' menu.id %}"><i class="fa fa-fw fa-print"></i> Print preview</a>
+            </li>
+            <li data-toggle="tooltip" title="cat" data-original-title="monkey">
+              <a href="#"><i class="fa  fa-fw fa-download"></i> Generate PDF</a>
+            </li>
+            <li>
+              <a href="#"><i class="fa fa-fw fa-code"></i> Use on my website</a>
+            </li>
+          </ul>
         </div>
-        <!-- /.box -->
-    </section>
-    <!-- /.Left col -->
+      </div>
+      <!-- /.box-header -->
+      <div class="box-body">
+        {% for section in menu.get_menu_sections %}
+        <div>
+          <div class="clearfix section_head">
+            <h3>
+              <span class="handle">
+                <i class="fa fa-ellipsis-v"></i>
+                <i class="fa fa-ellipsis-v"></i>
+              </span>
+              <a href="#" id="item" class="editable" data-type="text" data-pk="1" data-url="/post" data-title="Edit item">{{section.name}}</a>
+            </h3>
+            <div class="pull-right" id="sectionDish">
+              <!-- Add dish -->
+              <a data-id={{section.pk}} data-url={% url 'menu_delete_menu_section' %} class="delete-btn"> Delete this section</a>
+              <a data-toggle="modal" href="#dishModal" data-menu-section-id ={{ section.id }} class="btn btn-sm btn-success add-dish" data-type="text">
+                <i class="fa fa-cutlery fa-fw"></i> Add Dish
+              </a>
+              <!--<a href="#" id="item" data-lookup-url = {% url 'menu_dish_lookup_name' %} data-menu-section={{ section.id }} class="editable btn btn-xs btn-default add-dish" data-type="text" data-pk="1" data-url="{% url 'menu_create_dish' %}" data-title="Edit item">
+              <i class="fa fa-list-ul fa-fw"></i>Add Dish
+            </a>-->
+          </div>
+        </div>
+        {% if not section.get_section_dishes|length %}
+        <div class="alert alert-warning lead text-center">
+
+          <h2 style="margin-bottom: 1em;">You don't have anything in this section yet. <i class="fa fa-frown-o fa-lg"></i></h2>
+          <a data-toggle="modal" href="#dishModal" data-menu-section-id ={{ section.id }} class="btn btn-success btn-lg add-dish" data-type="text"><i class="fa fa-cutlery fa-fw"></i> Add a new dish</a>
+        </div>
+        {% endif %}
+        {% for dish in section.get_section_dishes %}
+        <div class="menuitem">
+          <div class="menutitle">
+            <span class="handle">
+              <i class="fa fa-navicon"></i>
+            </span>
+            <span>{{ dish.name }} &mdash; &pound;{{ dish.price|floatformat:2 }}
+            </span>
+            <span class="tools">
+              <a data-id={{dish.pk}} data-url={% url 'menu_delete_dish' %} class="delete-btn"><i class="fa fa-trash-o"></i></a>
+              <a data-id={{dish.pk}} data-toggle="modal" href="#editDishModal" data-url={% url 'menu_update_dish' %} data-menu-section-id ={{ section.id }} data-description="{{dish.description}}" data-price={{ dish.price|floatformat:2 }} data-name="{{ dish.name }}" class="edit-btn"><i class="fa fa-edit"></i></a>
+            </span>
+            <div class="pull-right">
+              <span class="allergen flagged {% if dish.is_allergen %}active{% endif %}" data-toggle="tooltip" title="Allergen" data-original-title="Allergen">A</span>
+
+              <span class="meat flagged  {% if dish.is_meat %}active{% endif %}" data-toggle="tooltip" title="Meat">M</span>
+
+              <span class="gluten flagged  {% if dish.is_gluten %}active{% endif %}" data-toggle="tooltip" title="Gluten">G</span>
+
+            </div>
+
+
+            <p href="#" class="editable menuitem-description" data-type="textarea" data-pk="1" data-url="/post" data-title="Edit item">{{dish.description}}</p>
+
+          </div>
+          {% spaceless %}
+          <div class="tree">
+            {{dish.html|safe}}
+          </div>
+          {% endspaceless %}
+
+          <a data-dish-id = {{ dish.id }} class="add-ingredients b tn btn-succ ess bt n-sm"><i class="fa fa-plus-circle fa-fw"></i>  Add an ingredient</a>
+
+        </div>
+        {% endfor %}
+        <a data-toggle="modal" href="#dishModal" data-menu-section-id ={{ section.id }} class="btn btn-sm btn-success add-dish" data-type="text">
+          <i class="fa fa-cutlery fa-fw"></i> Add a new dish in this section
+        </a>
+
+
+      </div>
+      {% endfor %}
+    </div>
+    <!-- /.box-body -->
+    <div class="box-footer clearfix" style="border-top: 3px solid #000;">
+      <button data-toggle="modal" data-menu-id = {{ menu.id }} href="#sectionModal" class="btn btn-default add-section"><i class="fa fa-th fa-fw"></i> Add Section</button>
+    </div>
+  </div>
+  <!-- /.box -->
+</section>
+<!-- /.Left col -->
 </div>
 
 {% endfor %}

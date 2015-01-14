@@ -112,7 +112,7 @@ $(document).ready(function() {
   $(document).delegate('.add-dish', 'click', function(ev) {
     $('#dishModal input[name="menu_section"]').val($(this).attr('data-menu-section-id'));
   });
-  
+
   $('#dishModal button.btn').click(function(ev) {
     var price = parseFloat(0.0)
 
@@ -302,9 +302,9 @@ $(document).ready(function() {
     $('#confirmationModal').modal('show');
     deleteElement = $(this).parents('.ingredient-item:first');
   });
-  
+
   //edit dish starts here
-  
+
   $(document).delegate('.edit-btn', 'click', function(ev) {
     editUrl = $(this).attr('data-url');
     editId = $(this).attr('data-id');
@@ -522,4 +522,8 @@ $(document).ready(function() {
 
   $.fn.editable.defaults.mode = 'inline';
   editableFn();
+
+  $(document).delegate('span.flagged', 'click', function(ev) {
+    $(this).toggleClass('active');
+  });
 });

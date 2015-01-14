@@ -1,42 +1,30 @@
 <li data-dish-id="" data-ingredient-id="" class="ingredient-item hidden ingredient-item-new">
-    <span class="handle">
-        <i class="fa fa-navicon"></i> 
-    </span>
-    <span class="ingredient"><a class="ingredient-item-name" data-pk="" data-name=""></a></span>
-    <span class="tools">
-        <a data-id="" data-url={% url 'menu_delete_ingredient' %} data-name='' class="delete-btn">
-            <i class="fa fa-trash-o"></i>
-        </a> 
-        <a href="#" data-toggle="modal" data-target="#nutrition" class="nutrition">
-            <i class="fa fa-heart"></i>
-        </a> 
-        <a data-dish-id="" data-parent-name="" class="add-sub-ingredients" title="Add sub-ingredient">
-            <i class="fa fa-plus-circle"></i>
-        </a>
-    </span>
+  <span class="handle">
+    <i class="fa fa-ellipsis-v"></i>
+    <i class="fa fa-ellipsis-v"></i>
+  </span>
+  <span class="ingredient">
+    <a class="ingredient-item-name" data-pk="" data-name=""></a>
+  </span>
 
-
-    <div class="pull-right">
-                <span class="allergen flagged" data-toggle="tooltip" title="Allergen" data-original-title="Allergen">A</span>
-
-        <span class="meat flagged" data-toggle="tooltip" title="Meat">M</span>
-
-        <span class
-="gluten flagged" data-toggle="tooltip" title="Gluten">G</span>
-
-
-       <!--  <div class="btn-group btn-group-sm" id="mag" data-toggle="buttons">
-            <label class="btn btn-allergen active ">
-                <input type="checkbox" autocomplete="off" checked> Allergen
-            </label>
-            <label class="btn btn-meat">
-                <input type="checkbox" autocomplete="off"> Meat
-            </label>
-            <label class="btn btn-gluten">
-                <input type="checkbox" autocomplete="off"> Gluten
-            </label>
-        </div> -->
-
+  <div class="del">
+    <div class="tools hidden">
+      <span><a data-dish-id="" data-parent-name="" class="add-sub-ingredients">Add sub-ingredient</a>
+      </span>
+      <a data-id="" data-url={% url 'menu_delete_ingredient' %} data-name='' class="delete-btn">Delete</a>
     </div>
-    <ul></ul>
+  </div>
+
+  <div class="btn-group btn-group-sm pull-right" id="mag" data-toggle="buttons">
+    <label class="btn btn-allergen active ">
+      <input type="checkbox" autocomplete="off" checked> Allergen
+    </label>
+    <label class="btn btn-meat">
+      <input type="checkbox" autocomplete="off"> Meat
+    </label>
+    <label class="btn btn-gluten">
+      <input type="checkbox" autocomplete="off"> Gluten
+    </label>
+  </div>
+  <ul></ul>
 </li>
