@@ -689,7 +689,7 @@ $(document).ready(function() {
       pk: $(this).parents('.ingredient-item:first').attr('data-dish-id'),
       html: $(this).parents('.ingredient-item:first').parents('.ingredient-tree').parents('div.tree').html(),
       serialized: JSON.stringify($(this).parents('.ingredient-item:first').parents('.ingredient-tree').sortable("serialize").get()),
-      ingredient: ingredient
+      ingredient: JSON.stringify(ingredient)
     };
 
     $.ajax({
