@@ -11,7 +11,7 @@ from django.contrib.auth import authenticate, login as auth_login, logout as aut
 from django.contrib.auth.decorators import login_required
 from django.template.loader import render_to_string
 from mongoengine.django.auth import User
-from menu.models import Establishment, Menu, MenuSection, Dish, Allergen, Meat, Gluten, Connection, Ingredient
+from menu.models import Establishment, Menu, MenuSection, Dish, Allergen, Meat, Gluten, Connection, Ingredient, ModerationIngredient
 import menu.peer
 
 
@@ -177,7 +177,7 @@ def update_dish(request):
         Dish.objects.filter(pk=pk).update(set__html=html)
         return HttpResponse(json.dumps({'status': True}))
     else:
-        Dish.objects.filter(pk=pk).update(set__name=request.POST.get('name'), 
+        Dish.objects.filter(pk=pk).update(set__name=request.POST.get('name'),
                                                  set__description = request.POST.get('description'),
                                                  set__price = request.POST.get('price'),
                                                  set__modified_on = datetime.now())
@@ -331,6 +331,16 @@ def print_preview_menu(request , id):
     return render(request, 'menu/menu-print-preview.html', {'menu' : menu})
 
 
+@login_required(login_url=reverse_lazy('menu-login'))
+def save_moderation_ingredient(request):
+    pk = ObjectId(request.POST.get('pk'))
+    html = request.POST.get('html')
+    serialized = json.loads(request.POST.get('serialized')) #TODO: update ingredients
+    # if html:
+    #     Dish.objects.filter(pk=pk).update(set__html=html)
+    #     return HttpResponse(json.dumps({'status': True}))
+    # Dish.objects.filter(pk=pk).update(set__html=html)
+    return HttpResponse(json.dumps({'status': True}, default=json_util.default), content_type="application/json")
 
 """
 Connection views.
