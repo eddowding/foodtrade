@@ -11,7 +11,7 @@ from django.contrib.auth import authenticate, login as auth_login, logout as aut
 from django.contrib.auth.decorators import login_required
 from django.template.loader import render_to_string
 from mongoengine.django.auth import User
-from menu.models import Establishment, Menu, MenuSection, Dish, Allergen, Meat, Gluten, Connection, Ingredient
+from menu.models import Establishment, Menu, MenuSection, Dish, Allergen, Meat, Gluten, Connection, Ingredient, ModerationIngredient
 import menu.peer
 
 
@@ -21,14 +21,6 @@ Common views.
 @login_required(login_url=reverse_lazy('menu-login'))
 def dashboard(request):
     return render(request, 'dashboard.html')
-
-
-@login_required(login_url=reverse_lazy('menu-login'))
-def paymentSuccess(request):
-    '''
-    On payment success
-    '''
-    return render(request, 'payment_success.html')
 
 
 @login_required(login_url=reverse_lazy('menu-login'))
@@ -100,21 +92,6 @@ def establishment_lookup_name(request):
     return HttpResponse(json.dumps({'status': True, 'objs': ret_list}))
 
 
-@login_required(login_url=reverse_lazy('menu-login'))
-def establishment_lookup_search(request):
-    #query = {'$or':[{'BusinessName__icontains': request.GET.get('q')}, {'full_address__icontains': request.GET.get('q')}]}
-    ret_list = []
-    establishments = Establishment.objects(Q(BusinessName__icontains=request.GET.get('q'))\
-                                            | Q(AddressLine1__icontains=request.GET.get('q')) \
-                                            | Q(AddressLine2__icontains=request.GET.get('q'))\
-                                            | Q(AddressLine3__icontains=request.GET.get('q'))\
-                                            | Q(AddressLine4__icontains=request.GET.get('q')))[:10]
-    for obj in establishments:
-        name = '<strong>%s</strong> <span class="est_type">%s</span> <span class="est_addr">( %s )</span>'  % (obj.BusinessName, obj.BusinessType, obj.full_address())
-        ret_list.append({'name': name, 'value': str(obj.pk), 'type': 1})
-    return HttpResponse(json.dumps({'status': True, 'objs': ret_list}))
-
-
 def menu_render(user):
     establishments = Establishment.objects.filter(user=user)
     menus = Menu.objects.filter(establishment__in=establishments).order_by('-added_on')
@@ -168,13 +145,11 @@ def dish_lookup_name(request):
 
 @login_required(login_url=reverse_lazy('menu-login'))
 def create_dish(request):
-    html = ''
     insert_dict = deepcopy(request.POST.dict())
     insert_dict['menu_section'] = ObjectId(insert_dict['menu_section'])
     insert_dict['added_on'] = datetime.now()
     try:
         dish = Dish.objects.get(pk=ObjectId(insert_dict['name']))
-        html = dish.html
         insert_dict['name'] = dish.name
         ingredient_objs = dish.get_ingredient_names()
     except InvalidId:
@@ -185,54 +160,27 @@ def create_dish(request):
     try:
         for ingredient in ingredient_objs:
             ind = Ingredient.objects.create(**ingredient.to_mongo())
-            ind.dish = new_dish # making sure dish reference is always right
+            ind.dish = new_dishm # making sure dish reference is always right
             ind.save()
     except UnboundLocalError:
         pass
-    # create dish.html here and save it
-    # html = render_to_string('includes/_menu_tree.html', {'dish':new_dish})
-    new_dish.html = html
-    new_dish.save()
 
-    return HttpResponse(json.dumps({'status': True, 'html': menu_render(request.user),
-                                    'new_dish_id':str(new_dish.id), 'old_dish_id':str(dish.id) if html else ''}, default=json_util.default))
+    return HttpResponse(json.dumps({'status': True, 'html': menu_render(request.user)}, default=json_util.default))
 
 
 @login_required(login_url=reverse_lazy('menu-login'))
 def update_dish(request):
     pk = ObjectId(request.POST.get('pk'))
     html = request.POST.get('html')
-
     if html:
-        insert_dict = {'set__html': html}
-        if request.POST.get('is_allergen') == 'true':
-            insert_dict['set__is_allergen'] = True
-        if request.POST.get('is_meat') == 'true':
-            insert_dict['set__is_meat'] = True
-        if request.POST.get('is_gluten') == 'true':
-            insert_dict['set__is_gluten'] = True
         serialized = json.loads(request.POST.get('serialized')) #TODO: update ingredients
-        Dish.objects.filter(pk=pk).update(**insert_dict)
+        Dish.objects.filter(pk=pk).update(set__html=html)
         return HttpResponse(json.dumps({'status': True}))
     else:
-        if pk:
-            dish = Dish.objects.filter(pk=pk).update(set__name=request.POST.get('name'), #.split(' (')[0],
+        Dish.objects.filter(pk=pk).update(set__name=request.POST.get('name'),
                                                  set__description = request.POST.get('description'),
                                                  set__price = request.POST.get('price'),
                                                  set__modified_on = datetime.now())
-#             update ingredients here
-#             ingredients = request.POST.get('name').split(' (')[1][:-1].split(',')
-#             for ing in ingredients:
-#                 ing.strip()
-#                 insert_dict = {}
-#                 insert_dict['dish'] = ObjectId(request.POST.get('dish'))
-#                 insert_dict['name'] = request.POST.get('name')
-#                 insert_dict['parent'] = ObjectId(request.POST.get('parent')) if request.POST.get('parent') else None
-#                 insert_dict['order'] = int(request.POST.get('order')) if request.POST.get('order') else 1
-#                 insert_dict['is_allergen'] = True if Allergen.objects.filter(name__iexact=insert_dict['name']).count() else False
-#                 insert_dict['is_meat'] = True if Meat.objects.filter(name__iexact=insert_dict['name']).count() else False
-#                 insert_dict['is_gluten'] = True if Gluten.objects.filter(name__iexact=insert_dict['name']).count() else False
-#                 ingredient = Ingredient.objects.create(**insert_dict)
         return HttpResponse(json.dumps({'status': True, 'html': menu_render(request.user)}, default=json_util.default))
 
 
@@ -241,15 +189,6 @@ def delete_dish(request):
     Dish.objects.filter(pk=ObjectId(request.POST.get('id'))).delete()
     return HttpResponse(json.dumps({'status': True, 'html': menu_render(request.user)}, default=json_util.default))
 
-
-@login_required(login_url=reverse_lazy('menu-login'))
-def change_ingredient_html(request):
-    '''
-    '''
-    dish = Dish.objects.get(pk=ObjectId(request.POST['dish_id']))
-    ingredient = Ingredient.objects.get(pk=ObjectId(request.POST['ingredient_id']))
-    new_ingredient = Ingredient.objects.get(dish=dish, name=ingredient.name)
-    return HttpResponse(json.dumps({'status':True, 'ingredient_id':str(new_ingredient.id)}, default=json_util.default))
 
 
 @login_required(login_url=reverse_lazy('menu-login'))
@@ -375,25 +314,33 @@ def ingredient_lookup_name(request):
     query2 = {'name__icontains': keyword}
     tmp_dict = {}
     tmp_list = []
-    klass_list = [Gluten, Allergen, Meat, Ingredient]
+    klass_list = [Gluten, Allergen, Meat]
     for klass in klass_list:
         for obj in klass.objects.filter(**query2):
-            tmp_list.append(obj.name)
+            if keyword in obj.name:
+                tmp_list.append(obj.name)
     tmp_list = list(set(tmp_list))
     return HttpResponse(json.dumps({'status': True, 'objs': [{'name': n} for n in tmp_list]}))
 
 
 
-#@login_required(login_url=reverse_lazy('menu-login'))
+@login_required(login_url=reverse_lazy('menu-login'))
 def print_preview_menu(request , id):
-    '''
-    Print Preview for menu - 
-    this don not require any login.
-    '''
+    '''Print Preview for menu'''
     menu = Menu.objects.get(pk=ObjectId(id))
     return render(request, 'menu/menu-print-preview.html', {'menu' : menu})
 
 
+@login_required(login_url=reverse_lazy('menu-login'))
+def save_moderation_ingredient(request):
+    pk = ObjectId(request.POST.get('pk'))
+    html = request.POST.get('html')
+    serialized = json.loads(request.POST.get('serialized')) #TODO: update ingredients
+    # if html:
+    #     Dish.objects.filter(pk=pk).update(set__html=html)
+    #     return HttpResponse(json.dumps({'status': True}))
+    # Dish.objects.filter(pk=pk).update(set__html=html)
+    return HttpResponse(json.dumps({'status': True}, default=json_util.default), content_type="application/json")
 
 """
 Connection views.
