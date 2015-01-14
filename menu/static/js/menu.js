@@ -456,13 +456,13 @@ $(document).ready(function() {
     $('#editDishModal input[name="menu_section"]').val($(this).attr('data-menu-section-id'));
     $('#editDishModal input[name="name"]').val($(this).attr('data-name'));
     if ($(this).attr('data-price'))
-    	$('#editDishModal input[name="price"]').val($(this).attr('data-price'));
+      $('#editDishModal input[name="price"]').val($(this).attr('data-price'));
     else
-    	$('#editDishModal input[name="price"]').val('');
+      $('#editDishModal input[name="price"]').val('');
     if ($(this).attr('data-description'))
-    	$('#editDishModal input[name="description"]').val($(this).attr('data-description'));
+      $('#editDishModal input[name="description"]').val($(this).attr('data-description'));
     else
-    	$('#editDishModal input[name="description"]').val('');
+      $('#editDishModal input[name="description"]').val('');
     dishSelected = true;
     //$('#confirmationModal').modal('show');
     //deleteElement = $(this).parents('.ingredient-item:first');
@@ -672,7 +672,10 @@ $(document).ready(function() {
 
   //toggle
   $(document).delegate('div.mag-toggle input[type="checkbox"]', 'change', function(ev) {
-    var ingredient = {name: $(this).parents('.ingredient-item:first').find('.ingredient-item-name:first').attr('data-name')};
+    var oid = $(this).parents('.ingredient-item:first').attr('data-ingredient-id');
+    var ingredient = {
+      name: $(this).parents('.ingredient-item:first').find('.ingredient-item-name:first').attr('data-name')
+    };
     if ($(this).parent().hasClass('btn-allergen')) {
       ingredient.is_allergen = $(this).is(':checked');
     }
@@ -687,19 +690,23 @@ $(document).ready(function() {
 
     var data = {
       pk: $(this).parents('.ingredient-item:first').attr('data-dish-id'),
-      html: $(this).parents('.ingredient-item:first').parents('.ingredient-tree').parents('div.tree').html(),
       serialized: JSON.stringify($(this).parents('.ingredient-item:first').parents('.ingredient-tree').sortable("serialize").get()),
       ingredient: JSON.stringify(ingredient)
     };
+    var htmlSaveFn = function() {
+      data.html = $('.ingredient-item[data-ingredient-id=' + oid + ']').parents('.ingredient-tree').parents('div.tree').html();
 
-    $.ajax({
-      url: saveModerationIngredientUrl,
-      data: data,
-      type: 'POST',
-      dataType: 'JSON',
-      success: function(data) {
-        console.info('Ingredient Toggle', data);
-      }
-    });
+      $.ajax({
+        url: saveModerationIngredientUrl,
+        data: data,
+        type: 'POST',
+        dataType: 'JSON',
+        success: function(data) {
+          console.info('Ingredient Toggle', data);
+        }
+      });
+    };
+
+    setTimeout(htmlSaveFn, 1000);
   });
 });
