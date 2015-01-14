@@ -437,15 +437,18 @@ $(document).ready(function() {
           return 'Cannot save empty string';
         }
         if (response.obj.is_allergen) {
-          $(this).parents('li').find('div.pull-right').find('span.allergen').addClass('active');
+          $(this).parents('li').find('div.mag-toggle').find('.btn-allergen').addClass('active');
+          $(this).parents('li').find('div.mag-toggle').find('.btn-allergen').find('input').attr('checked', 'checked');
           $(this).parents('div.menuitem').find('div.menutitle').find('div.pull-right').find('span.allergen').addClass('active');
         }
         if (response.obj.is_meat) {
-          $(this).parents('li').find('div.pull-right').find('span.meat').addClass('active');
+          $(this).parents('li').find('div.mag-toggle').find('.btn-meat').addClass('active');
+          $(this).parents('li').find('div.mag-toggle').find('.btn-meat').find('input').attr('checked', 'checked');
           $(this).parents('div.menuitem').find('div.menutitle').find('div.pull-right').find('span.meat').addClass('active');
         }
         if (response.obj.is_gluten) {
-          $(this).parents('li').find('div.pull-right').find('span.gluten').addClass('active');
+          $(this).parents('li').find('div.mag-toggle').find('.btn-gluten').addClass('active');
+          $(this).parents('li').find('div.mag-toggle').find('.btn-gluten').find('input').attr('checked', 'checked');
           $(this).parents('div.menuitem').find('div.menutitle').find('div.pull-right').find('span.gluten').addClass('active');
         }
         if (response.obj.parent !== undefined) {
@@ -523,7 +526,4 @@ $(document).ready(function() {
   $.fn.editable.defaults.mode = 'inline';
   editableFn();
 
-  $(document).delegate('span.flagged', 'click', function(ev) {
-    $(this).toggleClass('active');
-  });
 });
