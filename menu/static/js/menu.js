@@ -670,4 +670,36 @@ $(document).ready(function() {
   $.fn.editable.defaults.mode = 'inline';
   editableFn();
 
+  //toggle
+  $(document).delegate('div.mag-toggle input[type="checkbox"]', 'change', function(ev) {
+    var ingredient = {name: $(this).parents('.ingredient-item:first').find('.ingredient-item-name:first').attr('data-name')};
+    if ($(this).parent().hasClass('btn-allergen')) {
+      ingredient.is_allergen = $(this).is(':checked');
+    }
+
+    if ($(this).parent().hasClass('btn-meat')) {
+      ingredient.is_meat = $(this).is(':checked');
+    }
+
+    if ($(this).parent().hasClass('btn-gluten')) {
+      ingredient.is_gluten = $(this).is(':checked');
+    }
+
+    var data = {
+      pk: $(this).parents('.ingredient-item:first').attr('data-dish-id'),
+      html: $(this).parents('.ingredient-item:first').parents('.ingredient-tree').parents('div.tree').html(),
+      serialized: JSON.stringify($(this).parents('.ingredient-item:first').parents('.ingredient-tree').sortable("serialize").get()),
+      ingredient: ingredient
+    };
+
+    $.ajax({
+      url: saveModerationIngredientUrl,
+      data: data,
+      type: 'POST',
+      dataType: 'JSON',
+      success: function(data) {
+        console.info('Ingredient Toggle', data);
+      }
+    });
+  });
 });
