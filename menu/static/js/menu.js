@@ -273,9 +273,8 @@ $(document).ready(function() {
     $('.ingredient-item').removeAttr('style');
     $('.ingredient-item').removeClass('dragged');
     $('.ingredient-tree').sortable({
-      itemSelector: 'li.ingredient-item span.handle',
-      delay: 2,
-      tolerance: -2,
+      itemSelector: 'li.ingredient-item',
+      handle: '.handle',  
       onDrop: function($item, container, _super, event) {
         var data = {
           pk: $item.parents('.ingredient-tree').data('dishId'),
