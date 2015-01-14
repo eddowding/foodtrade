@@ -118,7 +118,7 @@ $(document).ready(function() {
   $(document).delegate('.add-dish', 'click', function(ev) {
     $('#dishModal input[name="menu_section"]').val($(this).attr('data-menu-section-id'));
   });
-  
+
   $('#dishModal button.btn').click(function(ev) {
     var price = parseFloat(0.0)
 
@@ -273,6 +273,9 @@ $(document).ready(function() {
     $('.ingredient-item').removeAttr('style');
     $('.ingredient-item').removeClass('dragged');
     $('.ingredient-tree').sortable({
+      itemSelector: 'li.ingredient-item span.handle',
+      delay: 2,
+      tolerance: -2,
       onDrop: function($item, container, _super, event) {
         var data = {
           pk: $item.parents('.ingredient-tree').data('dishId'),
@@ -310,9 +313,9 @@ $(document).ready(function() {
     $('#confirmationModal').modal('show');
     deleteElement = $(this).parents('.ingredient-item:first');
   });
-  
+
   //edit dish starts here
-  
+
   $(document).delegate('.edit-btn', 'click', function(ev) {
     editUrl = $(this).attr('data-url');
     editId = $(this).attr('data-id');
