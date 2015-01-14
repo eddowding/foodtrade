@@ -336,10 +336,12 @@ def save_moderation_ingredient(request):
     pk = ObjectId(request.POST.get('pk'))
     html = request.POST.get('html')
     serialized = json.loads(request.POST.get('serialized')) #TODO: update ingredients
-    # if html:
-    #     Dish.objects.filter(pk=pk).update(set__html=html)
-    #     return HttpResponse(json.dumps({'status': True}))
-    # Dish.objects.filter(pk=pk).update(set__html=html)
+    ingredient = json.loads(request.POST.get('ingredient'))
+    ingredient['user'] = request.user
+    ingredient['added_on'] = datetime.now()
+
+    Dish.objects.filter(pk=pk).update(set__html=html)
+    ModerationIngredient.objects.create(**ingredient)
     return HttpResponse(json.dumps({'status': True}, default=json_util.default), content_type="application/json")
 
 """
