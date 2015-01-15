@@ -264,8 +264,22 @@ class ModerationIngredient(Document):
     added_on = DateTimeField(required=True)
     modified_on = DateTimeField(default=datetime.now)
 
+    @classmethod
+    def post_save(cls, sender, document, **kwargs):
+        if document.status == 2:
+            klasses = {'is_allergen': Allergen, 'is_meat': Meat, 'is_gluten': Gluten}
+            for k, v in klasses.items():
+                klass = v
+                if getattr(document, k) == True:
+                    if not klass.objects.filter(name__iexact=document.name).count():
+                        klass.objects.create(name=document.name, added_on=datetime.now())
+                else:
+                    klass.objects.filter(name__iexact=document.name).delete()
+
     meta = {
         'indexes': [
             'status'
         ]
     }
+
+signals.post_save.connect(ModerationIngredient.post_save, sender=ModerationIngredient)
