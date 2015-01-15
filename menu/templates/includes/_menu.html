@@ -48,10 +48,18 @@
                             <i class="fa fa-ellipsis-v"></i>
                         </span>
                         <a href="#" id="item" class="editable" data-type="text" data-pk="1" data-url="/post" data-title="Edit item">{{section.name}}</a>
+
                     </h3>
+                    <div class="tools pull-left" style="position:relative; top: 5px;">
+                    <a data-id={{section.pk}} data-url={% url 'menu_delete_menu_section' %} class="delete-btn"> 
+                        <i class="fa fa-trash-o"></i>
+                    Delete </a>
+                    </div>
+                    
                     <div class="pull-right" id="sectionDish">
+                    
                         <!-- Add dish -->
-                        <a data-id={{section.pk}} data-url={% url 'menu_delete_menu_section' %} class="delete-btn"> Delete this section</a>
+                        
                         <a data-toggle="modal" href="#dishModal" data-menu-section-id ={{ section.id }} class="btn btn-sm btn-success add-dish" data-type="text">
                             <i class="fa fa-cutlery fa-fw"></i> Add Dish
                         </a>

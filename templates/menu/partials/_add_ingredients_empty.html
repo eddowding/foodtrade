@@ -4,10 +4,10 @@
     </span>
     <span class="ingredient"><a class="ingredient-item-name" data-pk="" data-name=""></a></span>
     <span class="tools">
-        <a data-id="" data-url={% url 'menu_delete_ingredient' %} data-name='' class="delete-btn">
+        <a data-id="" data-url={% url 'menu_delete_ingredient' %} data-name='' class="delete-btn" data-toggle="tooltip" title="Remove this ingredient">
             <i class="fa fa-trash-o"></i>
         </a> 
-        <a href="#" data-toggle="modal" data-target="#nutrition" class="nutrition">
+        <a href="#" data-toggle="modal" title="Add nutrition info" data-target="#nutrition" class="nutrition">
             <i class="fa fa-heart"></i>
         </a> 
         <a data-dish-id="" data-parent-name="" class="add-sub-ingredients" title="Add sub-ingredient">
