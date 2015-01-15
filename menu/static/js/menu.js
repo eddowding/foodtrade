@@ -79,6 +79,114 @@ $(document).ready(function() {
   });
 
 
+	/* Menu tree */
+
+
+	var sortableFn = function() {
+	    $('.ingredient-item').removeAttr('style');
+	    $('.ingredient-item').removeClass('dragged');
+	    $('.ingredient-tree').sortable({
+	      itemSelector: 'li.ingredient-item',
+	      handle: '.handle',  
+	      onDrop: function($item, container, _super, event) {
+	        var data = {
+	          pk: $item.parents('.ingredient-tree').data('dishId'),
+	          html: $item.parents('.ingredient-tree').parents('div.tree').html(),
+	          serialized: JSON.stringify($item.parents('.ingredient-tree').sortable("serialize").get())
+	        };
+	
+	        $.ajax({
+	          url: updateDishUrl + '?_tmp=' + (new Date).getTime(),
+	          data: data,
+	          type: 'POST',
+	          dataType: 'JSON',
+	          success: function(data) {}
+	        });
+	
+	        _super($item, container);
+	      }
+	    });
+	  };
+	
+	//editable
+  var editableFn = function() {
+    $('.ingredient-item-name').editable({
+      type: 'text',
+      url: createIngredientUrl + '?_tmp=' + (new Date).getTime(),
+      inputclass: 'ingredient-editable',
+      emptytext: '',
+      placeholder: 'Add ingredient here',
+      params: function(params) {
+        params.dish = $(this).attr('data-dish-id');
+        params.name = params.value;
+        params.parent = $(this).attr('data-parent-id');
+        params.order = 1;
+        return params;
+      },
+      success: function(response, newValue) {
+        if (response.status === false) {
+          return 'Cannot save empty string';
+        }
+        if (response.obj.is_allergen) {
+          $(this).parents('li').find('div.pull-right').find('span.allergen').addClass('active');
+          $(this).parents('div.menuitem').find('div.menutitle').find('div.pull-right').find('span.allergen').addClass('active');
+        }
+        if (response.obj.is_meat) {
+          $(this).parents('li').find('div.pull-right').find('span.meat').addClass('active');
+          $(this).parents('div.menuitem').find('div.menutitle').find('div.pull-right').find('span.meat').addClass('active');
+        }
+        if (response.obj.is_gluten) {
+          $(this).parents('li').find('div.pull-right').find('span.gluten').addClass('active');
+          $(this).parents('div.menuitem').find('div.menutitle').find('div.pull-right').find('span.gluten').addClass('active');
+        }
+        if (response.obj.parent !== undefined) {
+          $('a.add-sub-ingredients[data-dish-id="' + $(this).attr('data-pk') + '"]').attr('data-parent-id', response.obj.parent.$oid);
+        }
+        $(this).editable('option', 'name', newValue);
+        $(this).editable('option', 'url', updateIngredientNameUrl);
+
+        $(this).parents('.ingredient-item:first').find('.delete-btn').attr('data-name', newValue);
+        $(this).parents('.ingredient-item:first').find('.delete-btn').attr('data-id', response.obj._id.$oid);
+        $(this).parents('.ingredient-item:first').attr('data-ingredient-id', response.obj._id.$oid);
+        $(this).attr('data-pk', response.obj._id.$oid);
+        $(this).attr('data-name', newValue);
+
+        var htmlSaveFn = function() {
+          var data = {
+            pk: $('.ingredient-item[data-ingredient-id=' + response.obj._id.$oid + ']').attr('data-dish-id'),
+            html: $('.ingredient-item[data-ingredient-id=' + response.obj._id.$oid + ']').parents('.ingredient-tree').parents('div.tree').html(),
+            serialized: JSON.stringify($('.ingredient-item[data-ingredient-id=' + response.obj._id.$oid + ']').parents('.ingredient-tree').sortable("serialize").get())
+          };
+
+          $.ajax({
+            url: updateDishUrl + '?_tmp=' + (new Date).getTime(),
+            data: data,
+            type: 'POST',
+            dataType: 'JSON',
+            success: function(data) {}
+          });
+        };
+        setTimeout(htmlSaveFn, 1000);
+      }
+    });
+
+    $('.ingredient-item-name').on('hidden', function(e, reason) {
+      if ($(this).text().trim() === '') {
+        $(this).parents('li.ingredient-item:first').remove();
+      }
+    });
+
+    $('.ingredient-item-name:contains("Type Ingredient Here")').editable('toggle');
+
+    $('.ingredient-editable').typeahead(null, {
+      displayKey: 'name',
+      name: 'ingredients',
+      source: ingredients.ttAdapter()
+    });
+
+    $('.ingredient-editable:contains("")').select();
+  };
+
   //dish section
   var dishes = new Bloodhound({
     remote: {
@@ -145,13 +253,44 @@ $(document).ready(function() {
       dataType: 'JSON',
       success: function(data) {
         $('.menus').html(data.html);
+	    if (data.old_dish_id){
+	        var ultree = '.tree[data-dish-id='+data.new_dish_id +'] > ul';
+	        $(ultree).attr('data-dish-id', data.new_dish_id);
+	        var litree = '.tree[data-dish-id='+ data.new_dish_id +'] > ul > li';
+	        $(litree).attr('data-dish-id', data.new_dish_id);
+	        var spanlitree = '.tree[data-dish-id='+ data.new_dish_id +'] > ul > li > span';
+	        $(spanlitree).attr('data-dish-id', data.new_dish_id);
+	        var aspanlitree = '.tree[data-dish-id='+ data.new_dish_id +'] > ul > li > span > a';
+	        $(aspanlitree).attr('data-dish-id', data.new_dish_id);
+	        //$(this).attr('data-dish-id', data.dish_id);
+	        $(litree).each(function(index) {
+	  			// update ingredient id
+	  			var newtree = $(litree)[index];
+	  			var dish_id = newtree.attributes['data-dish-id'].value;
+	  			var ingredient_id = newtree.attributes['data-ingredient-id'].value;
+	  			$.ajax({
+	  			  url: '/change_ingredient_html/' + '?_tmp=' + (new Date).getTime(),
+			      data: {
+			      	'dish_id':dish_id,
+			      	'ingredient_id':ingredient_id
+			      },
+			      type: 'POST',
+			      dataType: 'JSON',
+			      success: function(result) {
+			      		var newtree = $(litree)[index];
+			      		newtree.attr('data-ingredient-id', result.ingredient_id);
+			      		// check inside the li > span and li > span > a
+			      }
+	  			});
+			});
+		}
         $('#dishModal input[name="menu_section"]').val('');
         $('#dishModal input[name="price"]').val('');
         $('#dishModal input[name="description"]').val('');
         $('#dishModal input[name="name"]').val('');
         $('#dishModal input#name').val('');
-        //sortableFn();
-        //editableFn();
+        sortableFn();
+        editableFn();
         dishSelected = false;
       }
     });
@@ -264,36 +403,6 @@ $(document).ready(function() {
     });
   });
 
-
-
-  /* Menu tree */
-
-
-  var sortableFn = function() {
-    $('.ingredient-item').removeAttr('style');
-    $('.ingredient-item').removeClass('dragged');
-    $('.ingredient-tree').sortable({
-      itemSelector: 'li.ingredient-item',
-      handle: '.handle',  
-      onDrop: function($item, container, _super, event) {
-        var data = {
-          pk: $item.parents('.ingredient-tree').data('dishId'),
-          html: $item.parents('.ingredient-tree').parents('div.tree').html(),
-          serialized: JSON.stringify($item.parents('.ingredient-tree').sortable("serialize").get())
-        };
-
-        $.ajax({
-          url: updateDishUrl + '?_tmp=' + (new Date).getTime(),
-          data: data,
-          type: 'POST',
-          dataType: 'JSON',
-          success: function(data) {}
-        });
-
-        _super($item, container);
-      }
-    });
-  };
 
   sortableFn();
 
@@ -427,84 +536,7 @@ $(document).ready(function() {
   //     $(this).find('.ingredient-item-name:first').editable('toggle');
   // });
 
-  //editable
-  var editableFn = function() {
-    $('.ingredient-item-name').editable({
-      type: 'text',
-      url: createIngredientUrl + '?_tmp=' + (new Date).getTime(),
-      inputclass: 'ingredient-editable',
-      emptytext: '',
-      placeholder: 'Add ingredient here',
-      params: function(params) {
-        params.dish = $(this).attr('data-dish-id');
-        params.name = params.value;
-        params.parent = $(this).attr('data-parent-id');
-        params.order = 1;
-        return params;
-      },
-      success: function(response, newValue) {
-        if (response.status === false) {
-          return 'Cannot save empty string';
-        }
-        if (response.obj.is_allergen) {
-          $(this).parents('li').find('div.pull-right').find('span.allergen').addClass('active');
-          $(this).parents('div.menuitem').find('div.menutitle').find('div.pull-right').find('span.allergen').addClass('active');
-        }
-        if (response.obj.is_meat) {
-          $(this).parents('li').find('div.pull-right').find('span.meat').addClass('active');
-          $(this).parents('div.menuitem').find('div.menutitle').find('div.pull-right').find('span.meat').addClass('active');
-        }
-        if (response.obj.is_gluten) {
-          $(this).parents('li').find('div.pull-right').find('span.gluten').addClass('active');
-          $(this).parents('div.menuitem').find('div.menutitle').find('div.pull-right').find('span.gluten').addClass('active');
-        }
-        if (response.obj.parent !== undefined) {
-          $('a.add-sub-ingredients[data-dish-id="' + $(this).attr('data-pk') + '"]').attr('data-parent-id', response.obj.parent.$oid);
-        }
-        $(this).editable('option', 'name', newValue);
-        $(this).editable('option', 'url', updateIngredientNameUrl);
-
-        $(this).parents('.ingredient-item:first').find('.delete-btn').attr('data-name', newValue);
-        $(this).parents('.ingredient-item:first').find('.delete-btn').attr('data-id', response.obj._id.$oid);
-        $(this).parents('.ingredient-item:first').attr('data-ingredient-id', response.obj._id.$oid);
-        $(this).attr('data-pk', response.obj._id.$oid);
-        $(this).attr('data-name', newValue);
-
-        var htmlSaveFn = function() {
-          var data = {
-            pk: $('.ingredient-item[data-ingredient-id=' + response.obj._id.$oid + ']').attr('data-dish-id'),
-            html: $('.ingredient-item[data-ingredient-id=' + response.obj._id.$oid + ']').parents('.ingredient-tree').parents('div.tree').html(),
-            serialized: JSON.stringify($('.ingredient-item[data-ingredient-id=' + response.obj._id.$oid + ']').parents('.ingredient-tree').sortable("serialize").get())
-          };
-
-          $.ajax({
-            url: updateDishUrl + '?_tmp=' + (new Date).getTime(),
-            data: data,
-            type: 'POST',
-            dataType: 'JSON',
-            success: function(data) {}
-          });
-        };
-        setTimeout(htmlSaveFn, 1000);
-      }
-    });
-
-    $('.ingredient-item-name').on('hidden', function(e, reason) {
-      if ($(this).text().trim() === '') {
-        $(this).parents('li.ingredient-item:first').remove();
-      }
-    });
-
-    $('.ingredient-item-name:contains("Type Ingredient Here")').editable('toggle');
-
-    $('.ingredient-editable').typeahead(null, {
-      displayKey: 'name',
-      name: 'ingredients',
-      source: ingredients.ttAdapter()
-    });
-
-    $('.ingredient-editable:contains("")').select();
-  };
+  
 
   $(document).delegate('.ingredient-editable', 'keydown', function(ev) {
     if (ev.ctrlKey && ev.keyCode == 13) {

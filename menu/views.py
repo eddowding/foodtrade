@@ -153,11 +153,13 @@ def dish_lookup_name(request):
 
 @login_required(login_url=reverse_lazy('menu-login'))
 def create_dish(request):
+    html = ''
     insert_dict = deepcopy(request.POST.dict())
     insert_dict['menu_section'] = ObjectId(insert_dict['menu_section'])
     insert_dict['added_on'] = datetime.now()
     try:
         dish = Dish.objects.get(pk=ObjectId(insert_dict['name']))
+        html = dish.html
         insert_dict['name'] = dish.name
         ingredient_objs = dish.get_ingredient_names()
     except InvalidId:
@@ -172,8 +174,13 @@ def create_dish(request):
             ind.save()
     except UnboundLocalError:
         pass
+    # create dish.html here and save it
+    # html = render_to_string('includes/_menu_tree.html', {'dish':new_dish})
+    new_dish.html = html
+    new_dish.save()
 
-    return HttpResponse(json.dumps({'status': True, 'html': menu_render(request.user)}, default=json_util.default))
+    return HttpResponse(json.dumps({'status': True, 'html': menu_render(request.user), 
+                                    'new_dish_id':str(new_dish.id), 'old_dish_id':str(dish.id) if html else ''}, default=json_util.default))
 
 
 @login_required(login_url=reverse_lazy('menu-login'))
@@ -211,6 +218,15 @@ def delete_dish(request):
     Dish.objects.filter(pk=ObjectId(request.POST.get('id'))).delete()
     return HttpResponse(json.dumps({'status': True, 'html': menu_render(request.user)}, default=json_util.default))
 
+
+@login_required(login_url=reverse_lazy('menu-login'))
+def change_ingredient_html(request):
+    '''
+    '''
+    dish = Dish.objects.get(pk=ObjectId(request.POST['dish_id']))
+    ingredient = Ingredient.objects.get(pk=ObjectId(request.POST['ingredient_id']))
+    new_ingredient = Ingredient.objects.get(dish=dish, name=ingredient.name)
+    return HttpResponse(json.dumps({'status':True, 'ingredient_id':str(new_ingredient.id)}, default=json_util.default))
 
 
 @login_required(login_url=reverse_lazy('menu-login'))
