@@ -20,16 +20,19 @@
                 <div class="box-tools pull-right">
                     <ul class="pagination pagination-sm inline">
                         <li>
-                            <a data-id={{menu.pk}} data-url={% url 'menu_delete_menu' %} class="delete-btn"><i class="fa fa-trash-o fa-fw"></i>Delete Menu</a>
+                            <a data-id={{menu.pk}} data-url={% url 'menu_delete_menu' %} class="delete-btn" data-toggle="tooltip" title="This will delete the entire menu!"><i class="fa fa-trash-o fa-fw"></i>Delete Menu</a>
                         </li>
                         <li>
-                             <a href="{% url 'menu_print_preview_menu' menu.id %}"><i class="fa fa-fw fa-print"></i> Print preview</a>
-                        </li>
-                        <li data-toggle="tooltip" title="cat" data-original-title="monkey">
-                            <a href="#"><i class="fa  fa-fw fa-download"></i> Generate PDF</a>
+                             <a href="{% url 'menu_print_preview_menu' menu.id %}"  data-toggle="tooltip" title="See a printable version" target="_blank" target="_blank"><i class="fa fa-fw fa-print"></i> Print</a>
                         </li>
                         <li>
-                            <a href="#"><i class="fa fa-fw fa-code"></i> Use on my website</a>
+                            <a href="#" data-toggle="tooltip" title="Coming soon!" class="text-muted"><i class="fa  fa-fw fa-download"></i> Generate PDF</a>
+                        </li>
+                        <li>
+                            <a href="https://twitter.com/home?status=Check out our menu live online at @FoodTradeHQ! http://www.foodtrade.menu{% url 'menu_print_preview_menu' menu.id %}"  data-toggle="tooltip" title="Share a link to your menu on twitter"><i class="fa fa-fw fa-twitter"></i> Tweet</a>
+                        </li>
+                        <li>
+                            <a href="https://www.facebook.com/sharer/sharer.php?u=http://www.foodtrade.menu{% url 'menu_print_preview_menu' menu.id %}"  data-toggle="tooltip" title="Share a link to your menu on facebook"><i class="fa fa-fw fa-facebook"></i> Share</a>
                         </li>
                     </ul>
                 </div>

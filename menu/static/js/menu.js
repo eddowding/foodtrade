@@ -82,31 +82,33 @@ $(document).ready(function() {
 	/* Menu tree */
 
 
-  var sortableFn = function() {
-    $('.ingredient-item').removeAttr('style');
-    $('.ingredient-item').removeClass('dragged');
-    $('.ingredient-tree').sortable({
-      onDrop: function($item, container, _super, event) {
-        var data = {
-          pk: $item.parents('.ingredient-tree').data('dishId'),
-          html: $item.parents('.ingredient-tree').parents('div.tree').html(),
-          serialized: JSON.stringify($item.parents('.ingredient-tree').sortable("serialize").get())
-        };
-
-        $.ajax({
-          url: updateDishUrl + '?_tmp=' + (new Date).getTime(),
-          data: data,
-          type: 'POST',
-          dataType: 'JSON',
-          success: function(data) {}
-        });
-
-        _super($item, container);
-      }
-    });
-  };
-
-//editable
+	var sortableFn = function() {
+	    $('.ingredient-item').removeAttr('style');
+	    $('.ingredient-item').removeClass('dragged');
+	    $('.ingredient-tree').sortable({
+	      itemSelector: 'li.ingredient-item',
+	      handle: '.handle',  
+	      onDrop: function($item, container, _super, event) {
+	        var data = {
+	          pk: $item.parents('.ingredient-tree').data('dishId'),
+	          html: $item.parents('.ingredient-tree').parents('div.tree').html(),
+	          serialized: JSON.stringify($item.parents('.ingredient-tree').sortable("serialize").get())
+	        };
+	
+	        $.ajax({
+	          url: updateDishUrl + '?_tmp=' + (new Date).getTime(),
+	          data: data,
+	          type: 'POST',
+	          dataType: 'JSON',
+	          success: function(data) {}
+	        });
+	
+	        _super($item, container);
+	      }
+	    });
+	  };
+	
+	//editable
   var editableFn = function() {
     $('.ingredient-item-name').editable({
       type: 'text',
@@ -224,7 +226,7 @@ $(document).ready(function() {
   $(document).delegate('.add-dish', 'click', function(ev) {
     $('#dishModal input[name="menu_section"]').val($(this).attr('data-menu-section-id'));
   });
-  
+
   $('#dishModal button.btn').click(function(ev) {
     var price = parseFloat(0.0)
 
@@ -402,8 +404,6 @@ $(document).ready(function() {
   });
 
 
-
-  
   sortableFn();
 
   // delete functionality
@@ -421,9 +421,9 @@ $(document).ready(function() {
     $('#confirmationModal').modal('show');
     deleteElement = $(this).parents('.ingredient-item:first');
   });
-  
+
   //edit dish starts here
-  
+
   $(document).delegate('.edit-btn', 'click', function(ev) {
     editUrl = $(this).attr('data-url');
     editId = $(this).attr('data-id');
