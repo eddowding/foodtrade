@@ -29,10 +29,10 @@
                             <a href="#" data-toggle="tooltip" title="Coming soon!" class="text-muted"><i class="fa  fa-fw fa-download"></i> Generate PDF</a>
                         </li>
                         <li>
-                            <a href="https://twitter.com/home?status=Check out our menu live online at @FoodTradeHQ! http://www.foodtrade.menu{% url 'menu_print_preview_menu' menu.id %}"  data-toggle="tooltip" title="Share a link to your menu on twitter"><i class="fa fa-fw fa-twitter"></i> Tweet</a>
+                            <a href="https://twitter.com/home?status=Check out our menu live online at @FoodTradeHQ! http://www.foodtrade.menu{% url 'menu_print_preview_menu' menu.id %}"  data-toggle="tooltip" title="Share a link to your menu on twitter" target="_blank"><i class="fa fa-fw fa-twitter"></i> Tweet</a>
                         </li>
                         <li>
-                            <a href="https://www.facebook.com/sharer/sharer.php?u=http://www.foodtrade.menu{% url 'menu_print_preview_menu' menu.id %}"  data-toggle="tooltip" title="Share a link to your menu on facebook"><i class="fa fa-fw fa-facebook"></i> Share</a>
+                            <a href="https://www.facebook.com/sharer/sharer.php?u=http://www.foodtrade.menu{% url 'menu_print_preview_menu' menu.id %}"  data-toggle="tooltip" title="Share a link to your menu on facebook" target="_blank"><i class="fa fa-fw fa-facebook"></i> Share</a>
                         </li>
                     </ul>
                 </div>
@@ -63,8 +63,8 @@
                 {% if not section.get_section_dishes|length %}
                 <div class="alert alert-warning lead text-center">
 
-                    <h2 style="margin-bottom: 1em;">You don't have anything in this section yet. <i class="fa fa-frown-o fa-lg"></i></h2>
-                    <a data-toggle="modal" href="#dishModal" data-menu-section-id ={{ section.id }} class="btn btn-success btn-lg add-dish" data-type="text"><i class="fa fa-cutlery fa-fw"></i> Add a new dish</a>
+                    <h2 style="margin-bottom: 1em;">You'll probably want to <a data-toggle="modal" href="#dishModal" data-menu-section-id ={{ section.id }} class="btn btn-success btn-lg add-dish" data-type="text"><i class="fa fa-cutlery fa-fw"></i> Add a dish</a> to this section. </h2>
+                    
                 </div>
                 {% endif %}
                 {% for dish in section.get_section_dishes %}
