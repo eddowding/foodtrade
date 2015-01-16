@@ -87,14 +87,14 @@ $(document).ready(function() {
 	    $('.ingredient-item').removeClass('dragged');
 	    $('.ingredient-tree').sortable({
 	      itemSelector: 'li.ingredient-item',
-	      handle: '.handle',  
+	      handle: '.handle',
 	      onDrop: function($item, container, _super, event) {
 	        var data = {
 	          pk: $item.parents('.ingredient-tree').data('dishId'),
 	          html: $item.parents('.ingredient-tree').parents('div.tree').html(),
 	          serialized: JSON.stringify($item.parents('.ingredient-tree').sortable("serialize").get())
 	        };
-	
+
 	        $.ajax({
 	          url: updateDishUrl + '?_tmp=' + (new Date).getTime(),
 	          data: data,
@@ -102,12 +102,12 @@ $(document).ready(function() {
 	          dataType: 'JSON',
 	          success: function(data) {}
 	        });
-	
+
 	        _super($item, container);
 	      }
 	    });
 	  };
-	
+
 	//editable
   var editableFn = function() {
     $('.ingredient-item-name').editable({
@@ -128,15 +128,18 @@ $(document).ready(function() {
           return 'Cannot save empty string';
         }
         if (response.obj.is_allergen) {
-          $(this).parents('li').find('div.pull-right').find('span.allergen').addClass('active');
+          $(this).parent().parent().find('span.allergen').addClass('active');
+          $(this).parents('ul').prev().find('span.allergen').addClass('active');
           $(this).parents('div.menuitem').find('div.menutitle').find('div.pull-right').find('span.allergen').addClass('active');
         }
         if (response.obj.is_meat) {
-          $(this).parents('li').find('div.pull-right').find('span.meat').addClass('active');
+          $(this).parent().parent().find('span.meat').addClass('active');
+          $(this).parents('ul').prev().find('span.meat').addClass('active');
           $(this).parents('div.menuitem').find('div.menutitle').find('div.pull-right').find('span.meat').addClass('active');
         }
         if (response.obj.is_gluten) {
-          $(this).parents('li').find('div.pull-right').find('span.gluten').addClass('active');
+          $(this).parent().parent().find('span.gluten').addClass('active');
+          $(this).parents('ul').prev().find('span.gluten').addClass('active');
           $(this).parents('div.menuitem').find('div.menutitle').find('div.pull-right').find('span.gluten').addClass('active');
         }
         if (response.obj.parent !== undefined) {
@@ -536,7 +539,7 @@ $(document).ready(function() {
   //     $(this).find('.ingredient-item-name:first').editable('toggle');
   // });
 
-  
+
 
   $(document).delegate('.ingredient-editable', 'keydown', function(ev) {
     if (ev.ctrlKey && ev.keyCode == 13) {
