@@ -20,6 +20,12 @@ $(document).ready(function() {
         name: 'establishment',
         source: establishments.ttAdapter()
     });
+    
+    /*$('.connection_stockists').typeahead(null, {
+        displayKey: 'name',
+        name: 'establishment',
+        source: establishments.ttAdapter()
+    });*/
 
     var connectionId = null;
 
@@ -30,9 +36,23 @@ $(document).ready(function() {
         objectType = establishment.type;
         $('.add-connection').removeClass('disabled');
     });
+    
+    /*$('.connection_stockists').on('typeahead:selected', function(ev, establishment) {
+        connectionId = establishment.value;
+        objectType = establishment.type;
+        $('.add-connection').removeClass('disabled');
+    });*/
+
 
     $('.add-connection').click(function(ev) {
-        var connectionType = $('input[name="connection-type"]:checked').val();
+    	var tabid = $('.nav-tabs > li.active > a').attr('id');
+    	if (tabid == 'tab_1-tab'){
+    		connectionType = '1';
+    	}
+    	else if (tabid == 'tab_2-tab'){
+    		connectionType = '2';
+    	}
+        //var connectionType = $('input[name="connection-type"]:checked').val();
         var data = {
             connection_id: connectionId,
             connection_type: connectionType,
@@ -49,11 +69,20 @@ $(document).ready(function() {
             type: 'POST',
             dataType: 'JSON',
             success: function(data) {
-                $('#tab_1').html(data.obj.sellers);
-                $('#tab_2').html(data.obj.buyers);
+                $('#suppliers').html(data.obj.sellers);
+                $('#stockists').html(data.obj.buyers);
                 $('.nav-tabs > li.active').removeClass('active');
-                $("#tab_" + $('input[name="connection-type"]:checked').val()).addClass('active');
-                $('#tab_' + $('input[name="connection-type"]:checked').val() + '-tab').parent().addClass('active');
+                if (connectionType == '1'){
+                	$("#tab_1-tab").addClass('active');
+                	$("#tab_1-tab").parent().addClass('active');
+                }
+                else if (connectionType == '2'){
+                	$("#tab_2-tab").addClass('active');
+                	$("#tab_2-tab").parent().addClass('active');
+                }
+                //establishments.initialize();
+                //$("#tab_" + $('input[name="connection-type"]:checked').val()).addClass('active');
+                //$('#tab_' + $('input[name="connection-type"]:checked').val() + '-tab').parent().addClass('active');
 
             }
         });
