@@ -30,6 +30,7 @@ urlpatterns = patterns('menu.views',
     url(r'^ingredient/lookup/name/$', 'ingredient_lookup_name', name='menu_ingredient_lookup_name'),
     url(r'^change_ingredient_html/$', 'change_ingredient_html', name='change_ingredient_html'),
     url(r'^ingredient/save/moderation/$', 'save_moderation_ingredient', name='menu_save_moderation_ingredient'),
+    url(r'^ingredient/update/moderation/$', 'update_moderation_ingredient', name='menu_update_moderation_ingredient'),
 
     #print
     url(r'^preview/(?P<id>[\w]+)$', 'print_preview_menu', name='menu_print_preview_menu'),
