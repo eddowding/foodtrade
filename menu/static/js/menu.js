@@ -8,6 +8,7 @@ $(document).ready(function() {
         data.objs.forEach(function(value, index) {
           var ingredientId = value.pk.$oid;
           var li = $('li[data-ingredient-id="' + ingredientId + '"]');
+          dishIds.push(li.attr('data-dish-id'));
           if (value.is_allergen) {
             li.find('div.mag-toggle').find('.btn-allergen').addClass('active');
             li.find('div.mag-toggle').find('.btn-allergen').find('input').attr('checked', 'checked');
@@ -37,6 +38,29 @@ $(document).ready(function() {
             li.find('div.mag-toggle').find('.btn-gluten').find('input').attr('checked', false);
             li.parents('div.menuitem').find('div.menutitle').find('div.pull-right').find('span.gluten').removeClass('active');
           }
+        });
+
+        dishIds = $.unique(dishIds);
+        dishIds.forEach(function(value, index) {
+
+          var data = {
+            pk: value,
+            serialized: JSON.stringify($('.ingredient-tree[data-dish-id="' + value + '"]').sortable("serialize").get())
+          };
+
+          var htmlSaveFn = function() {
+            data.html = $('.ingredient-tree[data-dish-id="' + value + '"]').parents('div.tree').html();
+
+            $.ajax({
+              url: updateDishUrl + '?_tmp=' + (new Date).getTime(),
+              data: data,
+              type: 'POST',
+              dataType: 'JSON',
+              success: function(data) {}
+            });
+          };
+
+          setTimeout(htmlSaveFn, 1000);
         });
       }
     }
