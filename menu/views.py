@@ -358,7 +358,7 @@ def update_moderation_ingredient(request):
     for ingredient in ingredients:
         objs.append({'pk': ingredient.pk, 'is_allergen': ingredient.is_allergen,
                     'is_meat': ingredient.is_meat, 'is_gluten': ingredient.is_gluten})
-    # Ingredient.objects.filter(dish__in=dishes, is_applied=False).update(set__is_applied=True)
+    Ingredient.objects.filter(dish__in=dishes, is_applied=False).update(set__is_applied=True)
     return HttpResponse(json.dumps({'status': True, 'objs': objs}, default=json_util.default), content_type="application/json")
 
 """
