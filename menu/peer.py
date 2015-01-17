@@ -1,4 +1,6 @@
 from itertools import izip_longest
+from bson.objectid import ObjectId
+from menu.models import Ingredient
 
 
 def grouper(iterable, n, fillvalue=None):
@@ -6,4 +8,15 @@ def grouper(iterable, n, fillvalue=None):
     args = [iter(iterable)] * n
     return izip_longest(fillvalue=fillvalue, *args)
 
-test_obj = [[{u'ingredientName': u'eggs', u'dishId': u'54a2faed0eaefa65a4b78c9e', u'children': [[{u'ingredientName': u'chicken', u'dishId': u'54a2faed0eaefa65a4b78c9e', u'children': [[{u'ingredientName': u'eggs', u'dishId': u'54a2faed0eaefa65a4b78c9e'}]]}, {u'ingredientName': u'eggs', u'dishId': u'54a2faed0eaefa65a4b78c9e'}]]}]]
+
+def ingredient_walk(ingredients, parent=None):
+    for ingredient in ingredients:
+        if isinstance(ingredient, list):
+            walk(ingredient, parent)
+        elif isinstance(ingredient, dict) and len(ingredient['children'][0]):
+            Ingredient.objects.filter(dish=ObjectId(ingredient['dishId']), pk=ObjectId(ingredient['ingredientId'])) \
+                                                                                .update(set__parent=ObjectId(parent))
+            walk(ingredient['children'], ingredient['ingredientId'])
+        else:
+            Ingredient.objects.filter(dish=ObjectId(ingredient['dishId']), pk=ObjectId(ingredient['ingredientId'])) \
+                                                                                .update(set__parent=ObjectId(parent))
