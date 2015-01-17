@@ -1,4 +1,47 @@
 $(document).ready(function() {
+  //moderation flow
+  $.ajax({
+    url: updateModerationIngredientUrl,
+    success: function(data) {
+      if (data.objs.length) {
+        var dishIds = [];
+        data.objs.forEach(function(value, index) {
+          var ingredientId = value.pk.$oid;
+          var li = $('li[data-ingredient-id="' + ingredientId + '"]');
+          if (value.is_allergen) {
+            li.find('div.mag-toggle').find('.btn-allergen').addClass('active');
+            li.find('div.mag-toggle').find('.btn-allergen').find('input').attr('checked', 'checked');
+            li.parents('div.menuitem').find('div.menutitle').find('div.pull-right').find('span.allergen').addClass('active');
+          } else {
+            li.find('div.mag-toggle').find('.btn-allergen').removeClass('active');
+            li.find('div.mag-toggle').find('.btn-allergen').find('input').attr('checked', false);
+            li.parents('div.menuitem').find('div.menutitle').find('div.pull-right').find('span.allergen').removeClass('active');
+          }
+
+          if (value.is_meat) {
+            li.find('div.mag-toggle').find('.btn-meat').addClass('active');
+            li.find('div.mag-toggle').find('.btn-meat').find('input').attr('checked', 'checked');
+            li.parents('div.menuitem').find('div.menutitle').find('div.pull-right').find('span.meat').addClass('active');
+          } else {
+            li.find('div.mag-toggle').find('.btn-meat').removeClass('active');
+            li.find('div.mag-toggle').find('.btn-meat').find('input').attr('checked', false);
+            li.parents('div.menuitem').find('div.menutitle').find('div.pull-right').find('span.meat').removeClass('active');
+          }
+
+          if (value.is_gluten) {
+            li.find('div.mag-toggle').find('.btn-gluten').addClass('active');
+            li.find('div.mag-toggle').find('.btn-gluten').find('input').attr('checked', 'checked');
+            li.parents('div.menuitem').find('div.menutitle').find('div.pull-right').find('span.gluten').addClass('active');
+          } else {
+            li.find('div.mag-toggle').find('.btn-gluten').removeClass('active');
+            li.find('div.mag-toggle').find('.btn-gluten').find('input').attr('checked', false);
+            li.parents('div.menuitem').find('div.menutitle').find('div.pull-right').find('span.gluten').removeClass('active');
+          }
+        });
+      }
+    }
+  });
+
   //menu section
   var establishments = new Bloodhound({
     remote: {
