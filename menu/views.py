@@ -349,8 +349,17 @@ def save_moderation_ingredient(request):
 
 @login_required(login_url=reverse_lazy('menu-login'))
 def update_moderation_ingredient(request):
-    
-    return HttpResponse(json.dumps({'status': True}, default=json_util.default), content_type="application/json")
+    establishments = Establishment.objects.filter(user=request.user)
+    menus = Menu.objects.filter(establishment__in=establishments)
+    menu_sections = MenuSection.objects.filter(menu__in=menus)
+    dishes = Dish.objects.filter(menu_section__in= menu_sections)
+    ingredients = Ingredient.objects.filter(dish__in=dishes, is_applied=False)
+    objs = []
+    for ingredient in ingredients:
+        objs.append({'pk': ingredient.pk, 'is_allergen': ingredient.is_allergen,
+                    'is_meat': ingredient.is_meat, 'is_gluten': ingredient.is_gluten})
+    # Ingredient.objects.filter(dish__in=dishes, is_applied=False).update(set__is_applied=True)
+    return HttpResponse(json.dumps({'status': True, 'objs': objs}, default=json_util.default), content_type="application/json")
 
 """
 Connection views.
