@@ -173,7 +173,8 @@ def update_dish(request):
     pk = ObjectId(request.POST.get('pk'))
     html = request.POST.get('html')
     if html:
-        serialized = json.loads(request.POST.get('serialized')) #TODO: update ingredients
+        serialized = json.loads(request.POST.get('serialized'))
+        ingredient_walk(serialized)
         Dish.objects.filter(pk=pk).update(set__html=html)
         return HttpResponse(json.dumps({'status': True}))
     else:
@@ -335,7 +336,8 @@ def print_preview_menu(request , id):
 def save_moderation_ingredient(request):
     pk = ObjectId(request.POST.get('pk'))
     html = request.POST.get('html')
-    serialized = json.loads(request.POST.get('serialized')) #TODO: update ingredients
+    serialized = json.loads(request.POST.get('serialized'))
+    ingredient_walk(serialized)
     ingredient = json.loads(request.POST.get('ingredient'))
     ingredient['user'] = request.user
     ingredient['added_on'] = datetime.now()
