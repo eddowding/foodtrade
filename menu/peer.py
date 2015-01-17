@@ -12,11 +12,11 @@ def grouper(iterable, n, fillvalue=None):
 def ingredient_walk(ingredients, parent=None):
     for ingredient in ingredients:
         if isinstance(ingredient, list):
-            walk(ingredient, parent)
+            ingredient_walk(ingredient, parent)
         elif isinstance(ingredient, dict) and len(ingredient['children'][0]):
             Ingredient.objects.filter(dish=ObjectId(ingredient['dishId']), pk=ObjectId(ingredient['ingredientId'])) \
                                                                                 .update(set__parent=ObjectId(parent))
-            walk(ingredient['children'], ingredient['ingredientId'])
+            ingredient_walk(ingredient['children'], ingredient['ingredientId'])
         else:
             Ingredient.objects.filter(dish=ObjectId(ingredient['dishId']), pk=ObjectId(ingredient['ingredientId'])) \
                                                                                 .update(set__parent=ObjectId(parent))
