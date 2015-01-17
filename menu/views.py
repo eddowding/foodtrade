@@ -346,6 +346,12 @@ def save_moderation_ingredient(request):
     ModerationIngredient.objects.create(**ingredient)
     return HttpResponse(json.dumps({'status': True}, default=json_util.default), content_type="application/json")
 
+
+@login_required(login_url=reverse_lazy('menu-login'))
+def update_moderation_ingredient(request):
+    
+    return HttpResponse(json.dumps({'status': True}, default=json_util.default), content_type="application/json")
+
 """
 Connection views.
 """

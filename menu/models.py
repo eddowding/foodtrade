@@ -186,6 +186,7 @@ class Ingredient(Document):
     is_allergen = BooleanField(required=True, default=False)
     is_meat = BooleanField(required=True, default=False)
     is_gluten = BooleanField(required=True, default=False)
+    is_applied = BooleanField(required=True, default=False)
     added_on = DateTimeField(required=True)
     modified_on = DateTimeField(default=datetime.now)
 
