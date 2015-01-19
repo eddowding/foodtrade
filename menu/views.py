@@ -100,6 +100,21 @@ def establishment_lookup_name(request):
     return HttpResponse(json.dumps({'status': True, 'objs': ret_list}))
 
 
+@login_required(login_url=reverse_lazy('menu-login'))
+def establishment_lookup_search(request):
+    #query = {'$or':[{'BusinessName__icontains': request.GET.get('q')}, {'full_address__icontains': request.GET.get('q')}]}
+    ret_list = []
+    establishments = Establishment.objects(Q(BusinessName__icontains=request.GET.get('q'))\
+                                            | Q(AddressLine1__icontains=request.GET.get('q')) \
+                                            | Q(AddressLine2__icontains=request.GET.get('q'))\
+                                            | Q(AddressLine3__icontains=request.GET.get('q'))\
+                                            | Q(AddressLine4__icontains=request.GET.get('q')))[:10]
+    for obj in establishments:
+        name = '%s (%s)'  % (obj.BusinessName, obj.full_address())
+        ret_list.append({'name': name, 'value': str(obj.pk), 'type': 1})
+    return HttpResponse(json.dumps({'status': True, 'objs': ret_list}))
+
+
 def menu_render(user):
     establishments = Establishment.objects.filter(user=user)
     menus = Menu.objects.filter(establishment__in=establishments).order_by('-added_on')

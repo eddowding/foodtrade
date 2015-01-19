@@ -13,6 +13,7 @@ urlpatterns = patterns('menu.views',
     url(r'^logout/$', 'logout', name='menu_logout'),
 
     #menu
+    url(r'^establishment/lookup/search/$', 'establishment_lookup_search', name='menu_establishment_lookup_search'),
     url(r'^establishment/lookup/name/$', 'establishment_lookup_name', name='menu_establishment_lookup_name'),
     url(r'^create/menu/$', 'create_menu', name='menu_create_menu'),
     url(r'^delete/menu/$', 'delete_menu', name='menu_delete_menu'),

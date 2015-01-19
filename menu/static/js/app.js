@@ -31,6 +31,39 @@ $(function() {
         }
     });
 
+
+	// side bar search starts
+	
+	var establishments = new Bloodhound({
+		remote: {
+			url:  '/establishment/lookup/search/' + '?q=%QUERY&_tmp=' + (new Date).getTime(),
+			filter: function(establishments) {
+		        return establishments.objs;
+	      }
+	
+	    },
+	    datumTokenizer: function(establishment) {
+	    	return Bloodhound.tokenizers.whitespace(establishment.name);
+	    },
+	    queryTokenizer: Bloodhound.tokenizers.whitespace
+	  });
+	
+	establishments.initialize();
+	
+	$('.search-cls-div input#establishment-search').typeahead(null, {
+		displayKey: 'name',
+		name: 'establishment',
+	    source: establishments.ttAdapter()
+	  });
+	  
+	$('.search-cls-div input#establishment-search').on('typeahead:selected', function(ev, establishment) {
+		$('.search-cls-div input[name="q"]').val(establishment.value);
+    	//dishSelected = true;
+    });
+
+	// side bar search ends
+
+
     //Add hover support for touch devices
     $('.btn').bind('touchstart', function() {
         $(this).addClass('hover');
