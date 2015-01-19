@@ -22,7 +22,7 @@ def walk(ingredients, parent=None, parent_li_ul=None):
             if parent_li_ul:
                 print 'Leaf'
                 parent_li = parent_li_ul.add(li(str(parent), data_dish_id=ingredient['dishId'], data_ingredient_id=ingredient['ingredientId'], cls="ingredient-item"))
-                parent_li_ul = parent_li.add(ul())
+                parent_li.add(ul())
             # print {'dishId': ingredient['dishId'], 'parentId': parent, 'ingredientId': ingredient['ingredientId']}
 
 
