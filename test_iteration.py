@@ -24,7 +24,9 @@ def walk(ingredients, parent=None, parent_li_ul=None):
         else:
             if parent:
                 parent_li = parent_li_ul_ref[parent].add(li(str(parent), data_dish_id=ingredient['dishId'], data_ingredient_id=ingredient['ingredientId'], cls="ingredient-item"))
-                parent_li.add(ul())
+            else:
+                parent_li = html.add(li(str(parent), data_dish_id=ingredient['dishId'], data_ingredient_id=ingredient['ingredientId'], cls="ingredient-item"))
+            parent_li.add(ul())
             # print {'dishId': ingredient['dishId'], 'parentId': parent, 'ingredientId': ingredient['ingredientId']}
 
 
