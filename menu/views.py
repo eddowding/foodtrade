@@ -179,7 +179,7 @@ def create_dish(request):
     new_dish.html = html
     new_dish.save()
 
-    return HttpResponse(json.dumps({'status': True, 'html': menu_render(request.user), 
+    return HttpResponse(json.dumps({'status': True, 'html': menu_render(request.user),
                                     'new_dish_id':str(new_dish.id), 'old_dish_id':str(dish.id) if html else ''}, default=json_util.default))
 
 
@@ -193,7 +193,7 @@ def update_dish(request):
         return HttpResponse(json.dumps({'status': True}))
     else:
         if pk:
-            dish = Dish.objects.filter(pk=pk).update(set__name=request.POST.get('name'), #.split(' (')[0], 
+            dish = Dish.objects.filter(pk=pk).update(set__name=request.POST.get('name'), #.split(' (')[0],
                                                  set__description = request.POST.get('description'),
                                                  set__price = request.POST.get('price'),
                                                  set__modified_on = datetime.now())
@@ -355,8 +355,7 @@ def ingredient_lookup_name(request):
     klass_list = [Gluten, Allergen, Meat]
     for klass in klass_list:
         for obj in klass.objects.filter(**query2):
-            if keyword in obj.name:
-                tmp_list.append(obj.name)
+            tmp_list.append(obj.name)
     tmp_list = list(set(tmp_list))
     return HttpResponse(json.dumps({'status': True, 'objs': [{'name': n} for n in tmp_list]}))
 
@@ -392,5 +391,3 @@ def create_connection(request):
     html = {'buyers': render_to_string('includes/_connection_table_buyer.html', {'buyers': buyers}),
             'sellers': render_to_string('includes/_connection_table_seller.html', {'sellers': sellers})}
     return HttpResponse(json.dumps({'success': True, 'obj': html}))
-
-
