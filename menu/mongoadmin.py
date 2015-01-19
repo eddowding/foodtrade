@@ -7,6 +7,7 @@ Region.mongoadmin = MongoAdmin()
 Authority.mongoadmin = MongoAdmin()
 BusinessType.mongoadmin = MongoAdmin()
 Country.mongoadmin = MongoAdmin()
+ModerationIngredient.mongoadmin = MongoAdmin()
 
 class EstablishmentAdmin(MongoAdmin):
     search_fields = ('FHRSID', 'BusinessName')
@@ -22,4 +23,3 @@ class GenericAdmin(MongoAdmin):
 Allergen.mongoadmin = GenericAdmin()
 Meat.mongoadmin = GenericAdmin()
 Gluten.mongoadmin = GenericAdmin()
-
