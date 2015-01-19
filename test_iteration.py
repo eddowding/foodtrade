@@ -11,16 +11,13 @@ def walk(ingredients, parent=None, parent_li_ul=None):
         elif isinstance(ingredient, dict) and len(ingredient['children'][0]):
             # print {'dishId': ingredient['dishId'], 'parentId': parent, 'ingredientId': ingredient['ingredientId']}
             if parent_li_ul:
-                print 'Branch & Leaf'
                 parent_li = parent_li_ul.add(li(str(parent), data_dish_id=ingredient['dishId'], data_ingredient_id=ingredient['ingredientId'], cls="ingredient-item"))
             else:
-                print 'Branch'
                 parent_li = html.add(li(str(parent), data_dish_id=ingredient['dishId'], data_ingredient_id=ingredient['ingredientId'], cls="ingredient-item"))
             parent_li_ul = parent_li.add(ul())
             walk(ingredient['children'], ingredient['ingredientId'], parent_li_ul)
         else:
             if parent_li_ul:
-                print 'Leaf'
                 parent_li = parent_li_ul.add(li(str(parent), data_dish_id=ingredient['dishId'], data_ingredient_id=ingredient['ingredientId'], cls="ingredient-item"))
                 parent_li.add(ul())
             # print {'dishId': ingredient['dishId'], 'parentId': parent, 'ingredientId': ingredient['ingredientId']}
