@@ -175,7 +175,7 @@ def update_dish(request):
     if html:
         serialized = json.loads(request.POST.get('serialized'))
         ingredient_walk(serialized)
-        Dish.objects.filter(pk=pk).update(set__html=html)
+        Dish.objects.filter(pk=pk).update(set__html=html, set__json=request.POST.get('serialized'))
         return HttpResponse(json.dumps({'status': True}))
     else:
         Dish.objects.filter(pk=pk).update(set__name=request.POST.get('name'),
@@ -342,7 +342,7 @@ def save_moderation_ingredient(request):
     ingredient['user'] = request.user
     ingredient['added_on'] = datetime.now()
 
-    Dish.objects.filter(pk=pk).update(set__html=html)
+    Dish.objects.filter(pk=pk).update(set__html=html, set__json=request.POST.get('serialized'))
     ModerationIngredient.objects.create(**ingredient)
     return HttpResponse(json.dumps({'status': True}, default=json_util.default), content_type="application/json")
 
@@ -367,7 +367,7 @@ def update_moderation_ingredient_status(request):
     updates the status of ModerationIngredient
     '''
     if request.method == 'GET':
-        moderation_ingredients_objs = ModerationIngredient.objects.filter(status=1) 
+        moderation_ingredients_objs = ModerationIngredient.objects.filter(status=1)
         return render(request, 'moderation_ingredients.html', {'objs': moderation_ingredients_objs})
     else:
         moderation_obj = ModerationIngredient.objects.filter(pk=ObjectId(request.POST.get('pk'))).update(
