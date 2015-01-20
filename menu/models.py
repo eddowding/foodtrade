@@ -1,3 +1,4 @@
+import json
 from datetime import datetime
 from mongoengine import *
 from mongoengine import signals
@@ -268,6 +269,7 @@ class ModerationIngredient(Document):
     @classmethod
     def post_save(cls, sender, document, **kwargs):
         if document.status == 2:
+            from menu.peer import IngredientWalk
             klasses = {'is_allergen': Allergen, 'is_meat': Meat, 'is_gluten': Gluten}
             for k, v in klasses.items():
                 klass = v
@@ -278,6 +280,17 @@ class ModerationIngredient(Document):
                 else:
                     klass.objects.filter(name__iexact=document.name).delete()
                     Ingredient.objects.filter(name__iexact=document.name).update(**{'set__%s' % k: False})
+
+            dish_list = []
+            for i in Ingredient.objects.filter(name__iexact=document.name):
+                dish_list.append(i.dish)
+            dish_list = list(set(dish_list))
+            for d in Dish.objects.filter(pk__in=dish_list):
+                dish_id = str(d.pk)
+                dish_tree = json.loads(dish.json)
+                iw = IngredientWalk(dish_id, dish_tree)
+                d.html = iw.walk().render()
+                d.save()
 
     meta = {
         'indexes': [
