@@ -1,0 +1,94 @@
+{% extends 'menu_base.html' %}
+{% load staticfiles %}
+{% load django_static %}
+{% load pagination_tags %}
+
+{% block extra_js %}
+<script type="text/javascript">
+		$(document).ready(function(){
+			$(".table-submit").click(function(e){
+                var $el = $(this);
+                var dataObject = {};
+                var currentTd = $el.parent("td");
+                var trEl = $el.closest("tr");
+                
+                trEl.children("td[name]").each(function(i, element){
+                    
+                    var name = $(element).attr("name");
+                    if(name == "status"){
+                        dataObject[name] = $(element).find("select > option:selected").val();
+                        dataObject['pk'] = $(element).attr('data-id');
+                    }
+                    /*else if(name == "subcategory"){
+                        dataObject[name] = $(element).find("select > option:selected").val();
+                    }
+                    else if(name == "product_id"){
+                        dataObject[name] = $(element).html();
+                    }*/
+               });
+                //console.log(dataObject);
+                //returns row data array.
+                //return dataObject;
+                $.ajax({
+                	url:'/ingredient/update/moderation/status/',
+                	data:dataObject,
+                	datatype:'json',
+                	type:'post',
+                	success:function(result){
+                		if(result.status == true)
+                		alert('Updated');
+                		else
+                		alert(result);
+                	}
+                });
+   				});
+		});
+		</script>
+{% endblock extra_js %}
+
+{% block body_class %}skin-black{% endblock %}
+
+{% block content %}
+		<div class="container">
+			<div class="row-fluid">
+				<table class="table-striped table">
+		        <thead>
+		          <tr>
+		          	<th>user</th>
+		          	<th>name</th>
+		          	<th>is_allergen</th>
+		          	<th>is_meat</th>
+		          	<th>is_gluten</th>
+		            <th>status</th>
+		            <th>Action</th>
+		          </tr>
+		        </thead>
+		        <tbody>
+		        {% autopaginate objs 10 %}
+		        {% for pr in objs %}
+		          <tr>
+		            <td>{{ pr.user }}</td>
+		            <td>{{ pr.name }}</td>
+		            <td>{{ pr.is_allergen}}</td>
+		            <td>{{ pr.is_meat}}</td>
+		            <td>{{ pr.is_gluten}}</td>
+		            <td name="status" data-id="{{ pr.id }}">
+		            	<select>
+		            		<option value="{{ 1 }}" {% if pr.status == 1 %} selected=selected{% endif %}>Pending</option>
+		            		<option value="{{ 2 }}" {% if pr.status == 2 %} selected=selected{% endif %}>Accepted</option>
+		            		<option value="{{ 3 }}" {% if pr.status == 3 %} selected=selected{% endif %}>Rejected</option>
+		            	</select>
+		            </td>
+		            <td>
+		            	<button class="btn btn-primary table-submit">Submit</button>
+		            </td>
+		          </tr>
+		       	{% endfor %}
+		       	{% paginate %}
+		        </tbody>
+		      </table>
+			</div>
+		</div>
+
+
+{% endblock content %}
