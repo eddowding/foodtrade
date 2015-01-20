@@ -113,6 +113,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'custom_middleware.XsSharing',
+    'pagination.middleware.PaginationMiddleware'
     # Uncomment the next line for simple clickjacking protection:
     # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
     # 'djstripe.middleware.SubscriptionPaymentMiddleware',
@@ -157,7 +158,8 @@ INSTALLED_APPS = (
     'django.contrib.admindocs',
     "djstripe",
     "floppyforms",
-    "bootstrapform"
+    "bootstrapform",
+    "pagination"
 
 )
 
