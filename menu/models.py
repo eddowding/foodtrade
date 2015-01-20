@@ -284,12 +284,10 @@ class ModerationIngredient(Document):
 
             dish_list = []
             for i in Ingredient.objects.filter(name__iexact=document.name):
-                dish_list.append(i.dish)
-            dish_list = list(set(dish_list))
-            print 'Processing: %d' % len(dish_list)
+                dish_list.append(i.dish.id)
             for d in Dish.objects.filter(pk__in=dish_list):
                 dish_id = str(d.pk)
-                dish_tree = json.loads(dish.json)
+                dish_tree = json.loads(d.json)
                 iw = IngredientWalk(dish_id, dish_tree)
                 d.html = iw.walk().render()
                 print dish_id
