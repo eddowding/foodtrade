@@ -39,7 +39,8 @@ class IngredientWalk(object):
 
     def _generate_li(self, ingredient_id):
         dish_id = self.dish_id
-        ingredient_name = self.ingredients_dict.get(ingredient_id).get('name')
+        ingredient_dict = self.ingredients_dict.get(ingredient_id)
+        ingredient_name = ingredient_dict.get('name')
         ret_li = li(data_dish_id=dish_id, data_ingredient_id=ingredient_id, cls="ingredient-item")
         tmp_span_1 = ret_li.add(span(cls='handle'))
         tmp_span_1.add(i(cls='fa fa-ellipsis-v'))
@@ -52,12 +53,26 @@ class IngredientWalk(object):
         tmp_div_1_1_span_1.add(a('Add sub-ingredient', data_dish_id=dish_id, cls='add-sub-ingredients'))
         tmp_div_1_1.add(a('Delete', data_id=ingredient_id, data_url=reverse_lazy('menu_delete_ingredient'), data_name=ingredient_name, cls='delete-btn'))
         tmp_div_2 = ret_li.add(div(cls='btn-group btn-group-sm pull-right mag-toggle', data_toggle='buttons'))
-        tmp_div_2_label_1 = tmp_div_2.add(label('Allergen', cls='btn btn-allergen'))
-        tmp_div_2_label_1.add(input(type='checkbox', autocomplete='off'))
-        tmp_div_2_label_2 = tmp_div_2.add(label('Meat', cls='btn btn-meat'))
-        tmp_div_2_label_2.add(input(type='checkbox', autocomplete='off'))
-        tmp_div_2_label_3 = tmp_div_2.add(label('Gluten', cls='btn btn-gluten'))
-        tmp_div_2_label_3.add(input(type='checkbox', autocomplete='off'))
+        if ingredient_dict.get('is_allergen'):
+            tmp_div_2_label_1 = tmp_div_2.add(label('Allergen', cls='btn btn-allergen active'))
+            tmp_div_2_label_1.add(input(type='checkbox', autocomplete='off', checked='checked'))
+        else:
+            tmp_div_2_label_1 = tmp_div_2.add(label('Allergen', cls='btn btn-allergen'))
+            tmp_div_2_label_1.add(input(type='checkbox', autocomplete='off'))
+
+        if ingredient_dict.get('is_meat'):
+            tmp_div_2_label_2 = tmp_div_2.add(label('Meat', cls='btn btn-meat active'))
+            tmp_div_2_label_2.add(input(type='checkbox', autocomplete='off', checked='checked'))
+        else:
+            tmp_div_2_label_2 = tmp_div_2.add(label('Meat', cls='btn btn-meat'))
+            tmp_div_2_label_2.add(input(type='checkbox', autocomplete='off'))
+
+        if ingredient_dict.get('is_gluten'):
+            tmp_div_2_label_3 = tmp_div_2.add(label('Gluten', cls='btn btn-gluten active'))
+            tmp_div_2_label_3.add(input(type='checkbox', autocomplete='off', checked='checked'))
+        else:
+            tmp_div_2_label_3 = tmp_div_2.add(label('Gluten', cls='btn btn-gluten'))
+            tmp_div_2_label_3.add(input(type='checkbox', autocomplete='off'))
         return ret_li
 
     def _walk(self, ingredients, parent=None, parent_li_ul=None):
