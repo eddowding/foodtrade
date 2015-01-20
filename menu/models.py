@@ -268,6 +268,7 @@ class ModerationIngredient(Document):
 
     @classmethod
     def post_save(cls, sender, document, **kwargs):
+        print 'Using moderation flow post signal'
         if document.status == 2:
             from menu.peer import IngredientWalk
             klasses = {'is_allergen': Allergen, 'is_meat': Meat, 'is_gluten': Gluten}
@@ -285,11 +286,13 @@ class ModerationIngredient(Document):
             for i in Ingredient.objects.filter(name__iexact=document.name):
                 dish_list.append(i.dish)
             dish_list = list(set(dish_list))
+            print 'Processing: %d' % len(dish_list)
             for d in Dish.objects.filter(pk__in=dish_list):
                 dish_id = str(d.pk)
                 dish_tree = json.loads(dish.json)
                 iw = IngredientWalk(dish_id, dish_tree)
                 d.html = iw.walk().render()
+                print dish_id
                 d.save()
 
     meta = {
