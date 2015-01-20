@@ -17,6 +17,13 @@ def generate_li(dish_id=None, ingredient_id=None, ingredient_name=None):
     tmp_div_1_1_span_1 = tmp_div_1_1.add(span())
     tmp_div_1_1_span_1.add(a('Add sub-ingredient', data_dish_id=dish_id, cls='add-sub-ingredients'))
     tmp_div_1_1.add(a('Delete', data_id=ingredient_id, data_url='/delete/ingredient/', data_name=ingredient_name, cls='delete-btn'))
+    tmp_div_2 = ret_li.add(div(cls='btn-group btn-group-sm pull-right mag-toggle', data_toggle='buttons'))
+    tmp_div_2_label_1 = tmp_div_2.add(label('Allergen', cls='btn btn-allergen'))
+    tmp_div_2_label_1.add(input(type='checkbox', autocomplete='off'))
+    tmp_div_2_label_2 = tmp_div_2.add(label('Meat', cls='btn btn-meat'))
+    tmp_div_2_label_2.add(input(type='checkbox', autocomplete='off'))
+    tmp_div_2_label_3 = tmp_div_2.add(label('Gluten', cls='btn btn-gluten'))
+    tmp_div_2_label_3.add(input(type='checkbox', autocomplete='off'))
     return ret_li
 
 def walk(ingredients, parent=None, parent_li_ul=None):
