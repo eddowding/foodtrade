@@ -158,7 +158,10 @@ $(document).ready(function() {
           var data = {
             pk: $('.ingredient-item[data-ingredient-id=' + response.obj._id.$oid + ']').attr('data-dish-id'),
             html: $('.ingredient-item[data-ingredient-id=' + response.obj._id.$oid + ']').parents('.ingredient-tree').parents('div.tree').html(),
-            serialized: JSON.stringify($('.ingredient-item[data-ingredient-id=' + response.obj._id.$oid + ']').parents('.ingredient-tree').sortable("serialize").get())
+            serialized: JSON.stringify($('.ingredient-item[data-ingredient-id=' + response.obj._id.$oid + ']').parents('.ingredient-tree').sortable("serialize").get()),
+            is_allergen: response.obj.is_allergen,
+            is_meat: response.obj.is_meat,
+            is_gluten: response.obj.is_gluten
           };
 
           $.ajax({

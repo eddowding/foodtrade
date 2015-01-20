@@ -187,9 +187,17 @@ def create_dish(request):
 def update_dish(request):
     pk = ObjectId(request.POST.get('pk'))
     html = request.POST.get('html')
+
     if html:
+        insert_dict = {'set__html': html}
+        if request.POST.get('is_allergen') == 'true':
+            insert_dict['set__is_allergen'] = True
+        if request.POST.get('is_meat') == 'true':
+            insert_dict['set__is_meat'] = True
+        if request.POST.get('is_gluten') == 'true':
+            insert_dict['set__is_gluten'] = True
         serialized = json.loads(request.POST.get('serialized')) #TODO: update ingredients
-        Dish.objects.filter(pk=pk).update(set__html=html)
+        Dish.objects.filter(pk=pk).update(**insert_dict)
         return HttpResponse(json.dumps({'status': True}))
     else:
         if pk:
