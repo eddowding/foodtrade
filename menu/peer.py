@@ -81,9 +81,15 @@ class IngredientWalk(object):
                 self._walk(ingredient, parent, parent_li_ul)
             elif isinstance(ingredient, dict) and len(ingredient['children'][0]):
                 if parent:
-                    parent_li = self.parent_li_ul_ref[parent].add(self._generate_li(ingredient_id=ingredient['ingredientId']))
+                    try:
+                        parent_li = self.parent_li_ul_ref[parent].add(self._generate_li(ingredient_id=ingredient['ingredientId']))
+                    except AttributeError:
+                        continue
                 else:
-                    parent_li = self.html.add(self._generate_li(ingredient_id=ingredient['ingredientId']))
+                    try:
+                        parent_li = self.html.add(self._generate_li(ingredient_id=ingredient['ingredientId']))
+                    except AttributeError:
+                        continue
 
                 parent_li_ul = parent_li.add(ul())
 
@@ -92,9 +98,15 @@ class IngredientWalk(object):
                 self._walk(ingredient['children'], ingredient['ingredientId'], parent_li_ul)
             else:
                 if parent:
-                    parent_li = self.parent_li_ul_ref[parent].add(self._generate_li(ingredient_id=ingredient['ingredientId']))
+                    try:
+                        parent_li = self.parent_li_ul_ref[parent].add(self._generate_li(ingredient_id=ingredient['ingredientId']))
+                    except AttributeError:
+                        continue
                 else:
-                    parent_li = self.html.add(self._generate_li(ingredient_id=ingredient['ingredientId']))
+                    try:
+                        parent_li = self.html.add(self._generate_li(ingredient_id=ingredient['ingredientId']))
+                    except AttributeError:
+                        continue
                 parent_li.add(ul())
 
     def walk(self):
