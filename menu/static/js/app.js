@@ -57,9 +57,10 @@ $(function() {
 	  });
 	  
 	$('.search-cls-div input#establishment-search').on('typeahead:selected', function(ev, establishment) {
-		$('.search-cls-div input[name="q"]').val(establishment.value);
+		$('.search-cls-div input[name="q"]').val(establishment.name);
     	//dishSelected = true;
     });
+    
 
 	// side bar search ends
 

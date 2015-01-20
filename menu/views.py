@@ -384,9 +384,12 @@ def ingredient_lookup_name(request):
 
 
 
-@login_required(login_url=reverse_lazy('menu-login'))
+#@login_required(login_url=reverse_lazy('menu-login'))
 def print_preview_menu(request , id):
-    '''Print Preview for menu'''
+    '''
+    Print Preview for menu - 
+    this don not require any login.
+    '''
     menu = Menu.objects.get(pk=ObjectId(id))
     return render(request, 'menu/menu-print-preview.html', {'menu' : menu})
 
