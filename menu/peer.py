@@ -25,12 +25,17 @@ def ingredient_walk(ingredients, parent=None):
 
 
 class IngredientWalk(object):
-    def __init__(self, dish_id, dish_tree, ingredients_dict):
+    def __init__(self, dish_id, dish_tree):
         self.dish_id = dish_id
         self.dish_tree = dish_tree
         self.html = ul(cls='ingredient-tree', data_dish_id=self.dish_id)
         self.parent_li_ul_ref = {}
-        self.ingredients_dict = ingredients_dict
+        self.ingredients_dict = {}
+
+    def _get_ingredients_dict(self):
+        dish_id = ObjectId(self.dish_id)
+        for i in Ingredient.objects.filter(dish=dish_id):
+            self.ingredients_dict[str(i.pk)] = i.name
 
     def _generate_li(self, ingredient_id):
         dish_id = self.dish_id
@@ -60,21 +65,24 @@ class IngredientWalk(object):
             if isinstance(ingredient, list):
                 self._walk(ingredient, parent, parent_li_ul)
             elif isinstance(ingredient, dict) and len(ingredient['children'][0]):
-                # print {'dishId': ingredient['dishId'], 'parentId': parent, 'ingredientId': ingredient['ingredientId']}
                 if parent:
-                    parent_li = parent_li_ul_ref[parent].add(generate_li(dish_id=ingredient['dishId'], ingredient_id=ingredient['ingredientId']))
+                    parent_li = self.parent_li_ul_ref[parent].add(self._generate_li(ingredient_id=ingredient['ingredientId']))
                 else:
-                    parent_li = html.add(generate_li(dish_id=ingredient['dishId'], ingredient_id=ingredient['ingredientId']))
+                    parent_li = self.html.add(self._generate_li(ingredient_id=ingredient['ingredientId']))
 
                 parent_li_ul = parent_li.add(ul())
 
-                if not ingredient['ingredientId'] in parent_li_ul_ref:
-                    parent_li_ul_ref[ingredient['ingredientId']] = parent_li_ul
+                if not ingredient['ingredientId'] in self.parent_li_ul_ref:
+                    self.parent_li_ul_ref[ingredient['ingredientId']] = parent_li_ul
                 self._walk(ingredient['children'], ingredient['ingredientId'], parent_li_ul)
             else:
                 if parent:
-                    parent_li = parent_li_ul_ref[parent].add(generate_li(dish_id=ingredient['dishId'], ingredient_id=ingredient['ingredientId']))
+                    parent_li = self.parent_li_ul_ref[parent].add(self._generate_li(ingredient_id=ingredient['ingredientId']))
                 else:
-                    parent_li = html.add(generate_li(dish_id=ingredient['dishId'], ingredient_id=ingredient['ingredientId']))
+                    parent_li = html.add(self._generate_li(ingredient_id=ingredient['ingredientId']))
                 parent_li.add(ul())
-                # print {'dishId': ingredient['dishId'], 'parentId': parent, 'ingredientId': ingredient['ingredientId']}
+
+    def walk(self):
+        self._get_ingredients_dict()
+        self._walk(self.dish_tree)
+        return self.html
