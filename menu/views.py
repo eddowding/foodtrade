@@ -370,8 +370,9 @@ def update_moderation_ingredient_status(request):
         moderation_ingredients_objs = ModerationIngredient.objects.filter(status=1)
         return render(request, 'moderation_ingredients.html', {'objs': moderation_ingredients_objs})
     else:
-        moderation_obj = ModerationIngredient.objects.filter(pk=ObjectId(request.POST.get('pk'))).update(
-                                                        set__status=int(request.POST.get('status')))
+        moderation_obj = ModerationIngredient.objects.get(pk=ObjectId(request.POST.get('pk')))
+        moderation_obj.status = int(request.POST.get('status'))
+        moderation_obj.save()
         return HttpResponse(json.dumps({'status':True}, default=json_util.default), content_type="application/json")
 
 """
