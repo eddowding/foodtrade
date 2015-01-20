@@ -187,7 +187,6 @@ class Ingredient(Document):
     is_allergen = BooleanField(required=True, default=False)
     is_meat = BooleanField(required=True, default=False)
     is_gluten = BooleanField(required=True, default=False)
-    is_applied = BooleanField(required=True, default=False)
     added_on = DateTimeField(required=True)
     modified_on = DateTimeField(default=datetime.now)
 
@@ -275,10 +274,10 @@ class ModerationIngredient(Document):
                 if getattr(document, k) == True:
                     if not klass.objects.filter(name__iexact=document.name).count():
                         klass.objects.create(name=document.name, added_on=datetime.now())
-                    Ingredient.objects.filter(name__iexact=document.name).update(**{'set__%s' % k: True, 'is_applied': False})
+                    Ingredient.objects.filter(name__iexact=document.name).update(**{'set__%s' % k: True})
                 else:
                     klass.objects.filter(name__iexact=document.name).delete()
-                    Ingredient.objects.filter(name__iexact=document.name).update(**{'set__%s' % k: False, 'is_applied': False})
+                    Ingredient.objects.filter(name__iexact=document.name).update(**{'set__%s' % k: False})
 
     meta = {
         'indexes': [
