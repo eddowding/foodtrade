@@ -5,13 +5,18 @@ ingredient_tree = '[[{"ingredientId":"54b6d44e0eaefa26f5c88ffd","dishId":"54b4e1
 html = ul(cls='ingredient-tree', data_dish_id='54b4e15d0eaefa5f038d177c')
 parent_li_ul_ref = {}
 
-def generate_li(dish_id, ingredient_id, ingredient_name=None):
+def generate_li(dish_id=None, ingredient_id=None, ingredient_name=None):
     ret_li = li(data_dish_id=dish_id, data_ingredient_id=ingredient_id, cls="ingredient-item")
     tmp_span_1 = ret_li.add(span(cls='handle'))
     tmp_span_1.add(i(cls='fa fa-ellipsis-v'))
     tmp_span_1.add(i(cls='fa fa-ellipsis-v'))
     tmp_span_2 = ret_li.add(span(cls='ingredient'))
     tmp_span_2.add(a(cls='ingredient-item-name', data_pk=ingredient_id, data_name=ingredient_name))
+    tmp_div_1 = ret_li.add(div(cls='del'))
+    tmp_div_1_1 = tmp_div_1.add(div(cls='tools hidden'))
+    tmp_div_1_1_span_1 = tmp_div_1_1.add(span())
+    tmp_div_1_1_span_1.add(a('Add sub-ingredient', data_dish_id=dish_id, cls='add-sub-ingredients'))
+    tmp_div_1_1.add(a('Delete', data_id=ingredient_id, data_url='/delete/ingredient/', data_name=ingredient_name, cls='delete-btn'))
     return ret_li
 
 def walk(ingredients, parent=None, parent_li_ul=None):
