@@ -15,6 +15,7 @@ django-jsonfield==0.9.13
 django-model-utils==2.2
 django-mongonaut==0.2.21
 django-static==1.5.5
+django-pagination==1.0.7
 docopt==0.4.0
 dominate==2.1.12
 ecdsa==0.11
