@@ -45,7 +45,7 @@ class IngredientWalk(object):
         tmp_span_1.add(i(cls='fa fa-ellipsis-v'))
         tmp_span_1.add(i(cls='fa fa-ellipsis-v'))
         tmp_span_2 = ret_li.add(span(cls='ingredient'))
-        tmp_span_2.add(a(cls='ingredient-item-name', data_pk=ingredient_id, data_name=ingredient_name))
+        tmp_span_2.add(a(ingredient_name, cls='ingredient-item-name', data_pk=ingredient_id, data_name=ingredient_name))
         tmp_div_1 = ret_li.add(div(cls='del'))
         tmp_div_1_1 = tmp_div_1.add(div(cls='tools hidden'))
         tmp_div_1_1_span_1 = tmp_div_1_1.add(span())
@@ -79,7 +79,7 @@ class IngredientWalk(object):
                 if parent:
                     parent_li = self.parent_li_ul_ref[parent].add(self._generate_li(ingredient_id=ingredient['ingredientId']))
                 else:
-                    parent_li = html.add(self._generate_li(ingredient_id=ingredient['ingredientId']))
+                    parent_li = self.html.add(self._generate_li(ingredient_id=ingredient['ingredientId']))
                 parent_li.add(ul())
 
     def walk(self):
