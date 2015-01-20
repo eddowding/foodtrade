@@ -67,7 +67,7 @@
                                                             <span  class="allergens  flagged">A</span>
                                                         {% endif %}
  -->
-                                                        <span class="ingredient_child ingredient {% if parent.is_allergen %} strong {% endif %}">{{ child.name }}</span>
+                                                        <span class="ingredient_child ingredient {% if child.is_allergen %} strong {% endif %}">{{ child.name }}</span>
                                                     {% endfor %}
                                                     </div>
                                                 {% endif %}
