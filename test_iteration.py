@@ -5,6 +5,10 @@ ingredient_tree = '[[{"ingredientId":"54b6d44e0eaefa26f5c88ffd","dishId":"54b4e1
 html = ul(cls='ingredient-tree', data_dish_id='54b4e15d0eaefa5f038d177c')
 parent_li_ul_ref = {}
 
+def generate_li(parent, dish_id, ingredient_id):
+    ret_li = li(parent, data_dish_id=dish_id, data_ingredient_id=ingredient_id, cls="ingredient-item")
+    return ret_li
+
 def walk(ingredients, parent=None, parent_li_ul=None):
     for ingredient in ingredients:
         if isinstance(ingredient, list):
@@ -12,9 +16,9 @@ def walk(ingredients, parent=None, parent_li_ul=None):
         elif isinstance(ingredient, dict) and len(ingredient['children'][0]):
             # print {'dishId': ingredient['dishId'], 'parentId': parent, 'ingredientId': ingredient['ingredientId']}
             if parent:
-                parent_li = parent_li_ul_ref[parent].add(li(str(parent), data_dish_id=ingredient['dishId'], data_ingredient_id=ingredient['ingredientId'], cls="ingredient-item"))
+                parent_li = parent_li_ul_ref[parent].add(generate_li(parent=str(parent), dish_id=ingredient['dishId'], ingredient_id=ingredient['ingredientId']))
             else:
-                parent_li = html.add(li(str(parent), data_dish_id=ingredient['dishId'], data_ingredient_id=ingredient['ingredientId'], cls="ingredient-item"))
+                parent_li = html.add(generate_li(parent=str(parent), dish_id=ingredient['dishId'], ingredient_id=ingredient['ingredientId']))
 
             parent_li_ul = parent_li.add(ul())
 
@@ -23,9 +27,9 @@ def walk(ingredients, parent=None, parent_li_ul=None):
             walk(ingredient['children'], ingredient['ingredientId'], parent_li_ul)
         else:
             if parent:
-                parent_li = parent_li_ul_ref[parent].add(li(str(parent), data_dish_id=ingredient['dishId'], data_ingredient_id=ingredient['ingredientId'], cls="ingredient-item"))
+                parent_li = parent_li_ul_ref[parent].add(generate_li(parent=str(parent), dish_id=ingredient['dishId'], ingredient_id=ingredient['ingredientId']))
             else:
-                parent_li = html.add(li(str(parent), data_dish_id=ingredient['dishId'], data_ingredient_id=ingredient['ingredientId'], cls="ingredient-item"))
+                parent_li = html.add(generate_li(parent=str(parent), dish_id=ingredient['dishId'], ingredient_id=ingredient['ingredientId']))
             parent_li.add(ul())
             # print {'dishId': ingredient['dishId'], 'parentId': parent, 'ingredientId': ingredient['ingredientId']}
 
