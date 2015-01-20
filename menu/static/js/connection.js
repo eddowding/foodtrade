@@ -83,14 +83,14 @@ $(document).ready(function() {
                 $('#stockists').html(data.obj.buyers);
                 $('.nav-tabs > li.active').removeClass('active');
                 if (connectionType == '1'){
-                	$("#tab_1-tab").addClass('active');
-                	$("#tab_1-tab").parent().addClass('active');
-                	//$("#tab_1-tab" ).trigger( "click" );
+                	//$("#tab_1-tab").addClass('active');
+                	//$("#tab_1-tab").parent().addClass('active');
+                	$("#tab_1-tab" ).trigger( "click" );
                 }
                 else if (connectionType == '2'){
-                	$("#tab_2-tab").addClass('active');
-                	$("#tab_2-tab").parent().addClass('active');
-                	//$("#tab_2-tab" ).trigger( "click" );
+                	//$("#tab_2-tab").addClass('active');
+                	//$("#tab_2-tab").parent().addClass('active');
+                	$("#tab_2-tab" ).trigger( "click" );
                 }
                 //establishments.initialize();
                 //$("#tab_" + $('input[name="connection-type"]:checked').val()).addClass('active');
