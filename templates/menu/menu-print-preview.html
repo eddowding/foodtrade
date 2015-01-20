@@ -1,5 +1,5 @@
 {% extends 'menu_base.html' %}
-{% load staticfiles %} 
+{% load staticfiles %}
 {% load socialaccount %}
 {% load url from future %}
 {% load i18n %}
@@ -11,7 +11,7 @@
 
 <a href="javascript:window.print()" id="printPage"><i class="fa fa-print fa-fw fa-lg"></i> Print this page</a>
 <div id="printed">
-         
+
             <!-- Main content -->
             <section class="content">
                 <!-- Main row -->
@@ -22,12 +22,12 @@
                             <h2>{{ menu.name }}</h2>
                             {% for section in menu.get_menu_sections %}
                             <h3>{{ section.name }}</h3>
-                                     
+
                                 {% for dish in section.get_section_dishes %}
                                     <div class="dish_wrapper">
-                                        
-                                        <span class="dish_name">{{ dish.name }}</span> 
-                                        &mdash; 
+
+                                        <span class="dish_name">{{ dish.name }}</span>
+                                        &mdash;
                                         <span class="dish_price">
                                             &pound;
                                             {{ dish.price }}
@@ -41,22 +41,22 @@
 
 
                                         <span class="allergen_detail">
-                                        {% for parent in dish.get_ingredient_tree %}
-                                             
+                                        {% for parent in dish.get_all_parent_ingredients %}
+
                                            <!--      {% if parent.is_meat %}
                                                     <span  class="meat  flagged">M</span>
                                                 {% endif %}
                                                 {% if parent.is_gluten %}
                                                     <span  class="gluten flagged">G</span>
                                                 {% endif %} -->
-                                                
-                                                        
-                                                       <span class="ingredient_parent ingredient {% if parent.is_allergen %} strong {% endif %}">{{ parent.name }}</span>
-                                     
 
-                                                {% if parent.children %}
+
+                                                       <span class="ingredient_parent ingredient {% if parent.is_allergen %} strong {% endif %}">{{ parent.name }}</span>
+
+
+                                                {% if parent.get_children %}
                                                     <div class="has_children">
-                                                    {% for child in parent.children %}
+                                                    {% for child in parent.get_children %}
                                                     <!--      {% if child.is_meat %}
                                                             <span  class="meat  flagged">M</span>
                                                         {% endif %}
@@ -67,14 +67,14 @@
                                                             <span  class="allergens  flagged">A</span>
                                                         {% endif %}
  -->
-                                                        <span class="ingredient_child ingredient {% if parent.is_allergen %} strong {% endif %}">{{ child.name }}</span>
+                                                        <span class="ingredient_child ingredient {% if child.is_allergen %} strong {% endif %}">{{ child.name }}</span>
                                                     {% endfor %}
                                                     </div>
                                                 {% endif %}
                                         {% endfor %}
                                         </span>
 
-                                       
+
                                     </div>
                                 {% endfor %}
                             {% endfor %}
@@ -83,6 +83,6 @@
                     <!-- /.Left col -->
                     </div>
                     <!-- /.row (main row) -->
-            </section> 
+            </section>
 </div>
 {% endblock %}
