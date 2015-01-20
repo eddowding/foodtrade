@@ -35,11 +35,11 @@ class IngredientWalk(object):
     def _get_ingredients_dict(self):
         dish_id = ObjectId(self.dish_id)
         for i in Ingredient.objects.filter(dish=dish_id):
-            self.ingredients_dict[str(i.pk)] = i.name
+            self.ingredients_dict[str(i.pk)] = {'name': i.name, 'is_allergen': i.is_allergen, 'is_meat': i.is_meat, 'is_gluten': i.is_gluten}
 
     def _generate_li(self, ingredient_id):
         dish_id = self.dish_id
-        ingredient_name = self.ingredients_dict.get(ingredient_id)
+        ingredient_name = self.ingredients_dict.get(ingredient_id).get('name')
         ret_li = li(data_dish_id=dish_id, data_ingredient_id=ingredient_id, cls="ingredient-item")
         tmp_span_1 = ret_li.add(span(cls='handle'))
         tmp_span_1.add(i(cls='fa fa-ellipsis-v'))
