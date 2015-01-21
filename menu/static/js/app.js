@@ -58,6 +58,9 @@ $(function() {
 	  
 	$('.search-cls-div input#establishment-search').on('typeahead:selected', function(ev, establishment) {
 		$('.search-cls-div input[name="q"]').val(establishment.name);
+		$("#menuAddModal").click();
+		$("#establishment").val(establishment.name);
+		//alert('Where should the result be rendered');
     	//dishSelected = true;
     });
     

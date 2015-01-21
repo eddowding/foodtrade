@@ -29,6 +29,15 @@ $(document).ready(function() {
     establishmentSelected = true;
   });
 
+  $('#menuModal').keypress(function (e) {
+	 var key = e.which;
+	 if(key == 13)  // the enter key code
+	  {
+	    $('#menuModal button.btn').click();
+	    return false;  
+	  }
+	});
+
   $('#menuModal button.btn').click(function(ev) {
     var data = {
       'name': $('#menuModal input[name="name"]').val()
