@@ -53,6 +53,7 @@ $(document).ready(function() {
       }
     });
   });
+  
 
   //section section
   $(document).delegate('.add-section', 'click', function(ev) {
@@ -233,8 +234,17 @@ $(document).ready(function() {
     $('#dishModal input[name="menu_section"]').val($(this).attr('data-menu-section-id'));
   });
 
+  $('#dishModal').keypress(function (e) {
+	 var key = e.which;
+	 if(key == 13)  // the enter key code
+	  {
+	    $('#dishModal button.btn').click();
+	    return false;  
+	  }
+	});
+
   $('#dishModal button.btn').click(function(ev) {
-    var price = parseFloat(0.0)
+    var price = parseFloat(0.0);
 
     if ($('#dishModal input[name="price"]').val()) {
       price = $('#dishModal input[name="price"]').val();
@@ -449,6 +459,15 @@ $(document).ready(function() {
     //deleteElement = $(this).parents('.ingredient-item:first');
   });
 
+  $('#editDishModal').keypress(function (e) {
+	 var key = e.which;
+	 if(key == 13)  // the enter key code
+	  {
+	    $('#editDishModal button.btn').click();
+	    return false;  
+	  }
+	});
+	
   $('#editDishModal button.btn').click(function(ev) {
     var price = parseFloat(0.0);
 
@@ -486,6 +505,8 @@ $(document).ready(function() {
     });
   });
   // edit dish ends here
+
+
 
   $('.delete-confirm-btn').click(function(ev) {
     var data = {
