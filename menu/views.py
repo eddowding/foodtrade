@@ -375,7 +375,7 @@ def ingredient_lookup_name(request):
     query2 = {'name__icontains': keyword}
     tmp_dict = {}
     tmp_list = []
-    klass_list = [Gluten, Allergen, Meat]
+    klass_list = [Gluten, Allergen, Meat, Ingredient]
     for klass in klass_list:
         for obj in klass.objects.filter(**query2):
             tmp_list.append(obj.name)
