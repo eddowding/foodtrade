@@ -199,7 +199,7 @@ def update_dish(request):
         serialized = json.loads(request.POST.get('serialized'))
         ingredient_walk(serialized)
         iwp = IngredientWalkPrint(request.POST.get('pk'), serialized)
-        print_html = iwp.walk()
+        print_html = iwp.walk().render()
         Dish.objects.filter(pk=pk).update(set__html=html, set__json=request.POST.get('serialized'), set__print_html=print_html)
         return HttpResponse(json.dumps({'status': True}))
     else:
@@ -372,7 +372,7 @@ def save_moderation_ingredient(request):
     html = request.POST.get('html')
     serialized = json.loads(request.POST.get('serialized'))
     iwp = IngredientWalkPrint(request.POST.get('pk'), serialized)
-    print_html = iwp.walk()
+    print_html = iwp.walk().render()
     ingredient_walk(serialized)
     ingredient = json.loads(request.POST.get('ingredient'))
     ingredient['user'] = request.user
