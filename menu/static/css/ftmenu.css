@@ -162,45 +162,9 @@ a.editable-click:hover {
   text-decoration: underline !important;
   border-bottom: 0;
 }
-.flagged {
-  border: 1px solid;
-  padding: 0 3px;
-  margin-right: 3px;
-  opacity: 0.3;
-}
-.flagged.active {
-  opacity: 1;
-  background: inherit;
-  color: #fff;
-  font-weight: bolder;
-}
-.flagged.active.meat {
-  background: #a30012;
-}
-.flagged.active.allergen {
-  background: #4b9ed9;
-}
-.flagged.active.gluten {
-  background: #ed482a;
-}
-.meat {
-  border-color: #a30012;
-  color: #a30012;
-  background: rgba(163, 0, 18, 0.3);
-}
-.allergen {
-  border-color: #4b9ed9;
-  color: #4b9ed9;
-  background: rgba(75, 158, 217, 0.3);
-}
-.gluten {
-  border-color: #ed482a;
-  color: #ed482a;
-  background: rgba(237, 72, 42, 0.3);
-}
 #mag .btn {
   padding: 3px 6px;
-  color: #fff;
+  color: rgba(255, 255, 255, 0.7);
 }
 .btn-allergen {
   background: rgba(75, 158, 217, 0.25);
