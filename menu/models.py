@@ -162,6 +162,7 @@ class Dish(Document):
     is_gluten = BooleanField(required=True, default=False)
     is_active = BooleanField(required=True, default=True)
     html = StringField(required=True, default='')
+    print_html = StringField(required=True, default='')
     json = StringField(required=True, default='')
     added_on = DateTimeField(required=True)
     modified_on = DateTimeField(default=datetime.now)
@@ -269,7 +270,7 @@ class ModerationIngredient(Document):
     @classmethod
     def post_save(cls, sender, document, **kwargs):
         if document.status == 2:
-            from menu.peer import IngredientWalk
+            from menu.peer import IngredientWalk, IngredientWalkPrint
             klasses = {'is_allergen': Allergen, 'is_meat': Meat, 'is_gluten': Gluten}
             for k, v in klasses.items():
                 klass = v
@@ -288,7 +289,9 @@ class ModerationIngredient(Document):
                 dish_id = str(d.pk)
                 dish_tree = json.loads(d.json)
                 iw = IngredientWalk(dish_id, dish_tree)
+                iwp = IngredientWalkPrint(dish_id, dish_tree)
                 d.html = iw.walk().render()
+                d.print_html = iwp.walk().render()
                 d.save()
 
     meta = {

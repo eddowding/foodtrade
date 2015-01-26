@@ -113,3 +113,71 @@ class IngredientWalk(object):
         self._get_ingredients_dict()
         self._walk(self.dish_tree)
         return self.html
+
+
+class IngredientWalkPrint(object):
+    def __init__(self, dish_id, dish_tree):
+        self.dish_id = dish_id
+        self.dish_tree = dish_tree
+        self.html = span(cls='allergen_detail')
+        self.parent_span_div_ref = {}
+        self.ingredients_dict = {}
+
+    def _get_ingredients_dict(self):
+        dish_id = ObjectId(self.dish_id)
+        for i in Ingredient.objects.filter(dish=dish_id):
+            self.ingredients_dict[str(i.pk)] = {'name': i.name, 'is_allergen': i.is_allergen, 'is_meat': i.is_meat, 'is_gluten': i.is_gluten}
+
+    def _generate_span(self, ingredient_id, parent=None):
+        dish_id = self.dish_id
+        ingredient_dict = self.ingredients_dict.get(ingredient_id)
+        ingredient_name = ingredient_dict.get('name')
+        cls = ['ingredient']
+        if ingredient_dict.get('is_allergen'):
+            cls.append('strong')
+        if parent:
+            cls.append('ingredient_child')
+        else:
+            cls.append('ingredient_parent')
+        ret_span = span(ingredient_name, cls=' '.join(cls))
+        return ret_span
+
+    def _walk(self, ingredients, parent=None, parent_span_div=None):
+        for ingredient in ingredients:
+            if isinstance(ingredient, list):
+                self._walk(ingredient, parent, parent_span_div)
+            elif isinstance(ingredient, dict) and len(ingredient['children'][0]):
+                if parent:
+                    try:
+                        parent_span = self.parent_span_div_ref[parent].add(self._generate_span(ingredient_id=ingredient['ingredientId'], parent=True))
+                    except AttributeError:
+                        continue
+                else:
+                    try:
+                        parent_span = self.html.add(self._generate_span(ingredient_id=ingredient['ingredientId']))
+                    except AttributeError:
+                        continue
+
+                parent_span_div = parent_span.add(div(cls='has_children'))
+
+                if not ingredient['ingredientId'] in self.parent_span_div_ref:
+                    self.parent_span_div_ref[ingredient['ingredientId']] = parent_span_div
+                self._walk(ingredient['children'], ingredient['ingredientId'], parent_span_div)
+            else:
+                if parent:
+                    try:
+                        parent_span = self.parent_span_div_ref[parent].add(self._generate_span(ingredient_id=ingredient['ingredientId'], parent=True))
+                    except AttributeError:
+                        continue
+                else:
+                    try:
+                        parent_span = self.html.add(self._generate_span(ingredient_id=ingredient['ingredientId']))
+                    except AttributeError:
+                        continue
+                parent_span_div = parent_span.add(div(cls='has_children'))
+
+    def walk(self):
+        self._get_ingredients_dict()
+        self._walk(self.dish_tree)
+        return self.html
+
