@@ -162,6 +162,7 @@ class Dish(Document):
     is_gluten = BooleanField(required=True, default=False)
     is_active = BooleanField(required=True, default=True)
     html = StringField(required=True, default='')
+    print_html = StringField(required=True, default='')
     json = StringField(required=True, default='')
     added_on = DateTimeField(required=True)
     modified_on = DateTimeField(default=datetime.now)

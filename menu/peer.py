@@ -139,7 +139,7 @@ class IngredientWalkPrint(object):
             cls.append('ingredient_child')
         else:
             cls.append('ingredient_parent')
-        ret_span = span(ingredient_name, cls=cls)
+        ret_span = span(ingredient_name, cls=' '.join(cls))
         return ret_span
 
     def _walk(self, ingredients, parent=None, parent_span_div=None):
@@ -149,7 +149,7 @@ class IngredientWalkPrint(object):
             elif isinstance(ingredient, dict) and len(ingredient['children'][0]):
                 if parent:
                     try:
-                        parent_span = self.parent_span_div_ref[parent].add(self._generate_span(ingredient_id=ingredient['ingredientId'], True))
+                        parent_span = self.parent_span_div_ref[parent].add(self._generate_span(ingredient_id=ingredient['ingredientId'], parent=True))
                     except AttributeError:
                         continue
                 else:
@@ -166,7 +166,7 @@ class IngredientWalkPrint(object):
             else:
                 if parent:
                     try:
-                        parent_span = self.parent_span_div_ref[parent].add(self._generate_span(ingredient_id=ingredient['ingredientId'], True))
+                        parent_span = self.parent_span_div_ref[parent].add(self._generate_span(ingredient_id=ingredient['ingredientId'], parent=True))
                     except AttributeError:
                         continue
                 else:
