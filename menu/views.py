@@ -24,6 +24,14 @@ def dashboard(request):
 
 
 @login_required(login_url=reverse_lazy('menu-login'))
+def paymentSuccess(request):
+    '''
+    On payment success
+    '''
+    return render(request, 'payment_success.html')
+
+
+@login_required(login_url=reverse_lazy('menu-login'))
 def menu(request):
     ''' Get list of menus '''
     establishments = Establishment.objects.filter(user=request.user)
@@ -88,6 +96,21 @@ def establishment_lookup_name(request):
     establishments = Establishment.objects.filter(**query)[:10]
     for obj in establishments:
         name = '<strong>%s</strong> <span class="est_type">%s</span> <span class="est_addr">%s</span>' % (obj.BusinessName, obj.BusinessType, obj.full_address())
+        ret_list.append({'name': name, 'value': str(obj.pk), 'type': 1})
+    return HttpResponse(json.dumps({'status': True, 'objs': ret_list}))
+
+
+@login_required(login_url=reverse_lazy('menu-login'))
+def establishment_lookup_search(request):
+    #query = {'$or':[{'BusinessName__icontains': request.GET.get('q')}, {'full_address__icontains': request.GET.get('q')}]}
+    ret_list = []
+    establishments = Establishment.objects(Q(BusinessName__icontains=request.GET.get('q'))\
+                                            | Q(AddressLine1__icontains=request.GET.get('q')) \
+                                            | Q(AddressLine2__icontains=request.GET.get('q'))\
+                                            | Q(AddressLine3__icontains=request.GET.get('q'))\
+                                            | Q(AddressLine4__icontains=request.GET.get('q')))[:10]
+    for obj in establishments:
+        name = '<strong>%s</strong> <span class="est_type">%s</span> <span class="est_addr">( %s )</span>'  % (obj.BusinessName, obj.BusinessType, obj.full_address())
         ret_list.append({'name': name, 'value': str(obj.pk), 'type': 1})
     return HttpResponse(json.dumps({'status': True, 'objs': ret_list}))
 
@@ -190,6 +213,15 @@ def delete_dish(request):
     Dish.objects.filter(pk=ObjectId(request.POST.get('id'))).delete()
     return HttpResponse(json.dumps({'status': True, 'html': menu_render(request.user)}, default=json_util.default))
 
+
+@login_required(login_url=reverse_lazy('menu-login'))
+def change_ingredient_html(request):
+    '''
+    '''
+    dish = Dish.objects.get(pk=ObjectId(request.POST['dish_id']))
+    ingredient = Ingredient.objects.get(pk=ObjectId(request.POST['ingredient_id']))
+    new_ingredient = Ingredient.objects.get(dish=dish, name=ingredient.name)
+    return HttpResponse(json.dumps({'status':True, 'ingredient_id':str(new_ingredient.id)}, default=json_util.default))
 
 
 @login_required(login_url=reverse_lazy('menu-login'))
