@@ -34,7 +34,7 @@ $(document).ready(function() {
 	 if(key == 13)  // the enter key code
 	  {
 	    $('#menuModal button.btn').click();
-	    return false;  
+	    return false;
 	  }
 	});
 
@@ -62,7 +62,7 @@ $(document).ready(function() {
       }
     });
   });
-  
+
 
   //section section
   $(document).delegate('.add-section', 'click', function(ev) {
@@ -248,7 +248,7 @@ $(document).ready(function() {
 	 if(key == 13)  // the enter key code
 	  {
 	    $('#dishModal button.btn').click();
-	    return false;  
+	    return false;
 	  }
 	});
 
@@ -473,10 +473,10 @@ $(document).ready(function() {
 	 if(key == 13)  // the enter key code
 	  {
 	    $('#editDishModal button.btn').click();
-	    return false;  
+	    return false;
 	  }
 	});
-	
+
   $('#editDishModal button.btn').click(function(ev) {
     var price = parseFloat(0.0);
 
@@ -600,4 +600,8 @@ $(document).ready(function() {
 
   $.fn.editable.defaults.mode = 'inline';
   editableFn();
+
+  $(document).delegate('span.flagged', 'click', function(ev) {
+    $(this).toggleClass('active');
+  });
 });
