@@ -4,10 +4,7 @@
     {% comment %}
     <small>Edit Menu</small>
     {% endcomment %}
-</h2>
-
-
-{% for menu in menus %}
+</h2> {% for menu in menus %}
 
 <div class="row">
     <!-- Left col -->
@@ -23,26 +20,61 @@
                             <a data-id={{menu.pk}} data-url={% url 'menu_delete_menu' %} class="delete-btn" data-toggle="tooltip" title="This will delete the entire menu!"><i class="fa fa-trash-o fa-fw"></i>Delete Menu</a>
                         </li>
                         <li>
-                             <a href="{% url 'menu_print_preview_menu' menu.id %}"  data-toggle="tooltip" title="See a printable version" target="_blank" target="_blank"><i class="fa fa-fw fa-print"></i> Print</a>
+                            <a href="#print" data-toggle="modal" title="See a printable version" target="_blank" target="_blank"><i class="fa fa-fw fa-print"></i> Print</a>
                         </li>
-                        <li>
+                        <!--    <li>
                             <a href="#" data-toggle="tooltip" title="Coming soon!" class="text-muted"><i class="fa  fa-fw fa-download"></i> Generate PDF</a>
+                        </li> -->
+                        <li>
+                            <a href="https://twitter.com/home?status=Check out our menu live online at @FoodTradeHQ! http://www.foodtrade.menu{% url 'menu_print_preview_menu' menu.id %}" data-toggle="tooltip" title="Share a link to your menu on twitter" target="_blank"><i class="fa fa-fw fa-twitter"></i> Tweet</a>
                         </li>
                         <li>
-                            <a href="https://twitter.com/home?status=Check out our menu live online at @FoodTradeHQ! http://www.foodtrade.menu{% url 'menu_print_preview_menu' menu.id %}"  data-toggle="tooltip" title="Share a link to your menu on twitter" target="_blank"><i class="fa fa-fw fa-twitter"></i> Tweet</a>
-                        </li>
-                        <li>
-                            <a href="https://www.facebook.com/sharer/sharer.php?u=http://www.foodtrade.menu{% url 'menu_print_preview_menu' menu.id %}"  data-toggle="tooltip" title="Share a link to your menu on facebook" target="_blank"><i class="fa fa-fw fa-facebook"></i> Share</a>
+                            <a href="https://www.facebook.com/sharer/sharer.php?u=http://www.foodtrade.menu{% url 'menu_print_preview_menu' menu.id %}" data-toggle="tooltip" title="Share a link to your menu on facebook" target="_blank"><i class="fa fa-fw fa-facebook"></i> Share</a>
                         </li>
                     </ul>
                 </div>
             </div>
+
+            <div id="print" class="modal fade">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            <h2 class="modal-title"><i class="fa fa-print fa-fw"></i> Before you print... </h2>
+                        </div>
+                        <div class="modal-body">
+                            <form>
+                                <div class="box-body lead">
+                                    <p>
+                                        Without wishing to be <em>too</em> melodramatic, the information you're about to print could kill someone.
+                                    </p>
+                                    <p>
+                                        We're covered by our disclaimers and insurance, but you're not. So before you hand this out, please check it. </p>
+                                      <p>
+                                        By printing this, your businesses takes full responsibility for the information given to customers.
+                                    </p>
+                                </div>
+                                <!-- /.box-body -->
+
+
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+
+                            <button type="button" class="btn btn-default btn-lg pull-left" data-dismiss="modal">I'll just check it first</button>
+
+                            <a href="{% url 'menu_print_preview_menu' menu.id %}" target="_blank" class="btn btn-success btn-lg"><i class="fa fa-print fa-fw fa-lg"></i>  Agree &amp; Print</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <!-- /.box-header -->
             <div class="box-body">
                 {% for section in menu.get_menu_sections %}
                 <div>
-                <div class="clearfix section_head">
-                    <h3>
+                    <div class="clearfix section_head">
+                        <h3>
                         <span class="handle">
                             <i class="fa fa-ellipsis-v"></i>
                             <i class="fa fa-ellipsis-v"></i>
@@ -50,32 +82,30 @@
                         <a href="#" id="item" class="editable" data-type="text" data-pk="1" data-url="/post" data-title="Edit item">{{section.name}}</a>
 
                     </h3>
-                    <div class="tools pull-left" style="position:relative; top: 5px;">
-                    <a data-id={{section.pk}} data-url={% url 'menu_delete_menu_section' %} class="delete-btn"> 
-                        <i class="fa fa-trash-o"></i>
-                    Delete </a>
-                    </div>
-                    
-                    <div class="pull-right" id="sectionDish">
-                    
-                        <!-- Add dish -->
-                        
-                        <a data-toggle="modal" href="#dishModal" data-menu-section-id ={{ section.id }} class="btn btn-sm btn-success add-dish" data-type="text">
-                            <i class="fa fa-cutlery fa-fw"></i> Add Dish
-                        </a>
-                        <!--<a href="#" id="item" data-lookup-url = {% url 'menu_dish_lookup_name' %} data-menu-section={{ section.id }} class="editable btn btn-xs btn-default add-dish" data-type="text" data-pk="1" data-url="{% url 'menu_create_dish' %}" data-title="Edit item">
+                        <div class="tools pull-left" style="position:relative; top: 5px;">
+                            <a data-id={{section.pk}} data-url={% url 'menu_delete_menu_section' %} class="delete-btn">
+                                <i class="fa fa-trash-o"></i> Delete </a>
+                        </div>
+
+                        <div class="pull-right" id="sectionDish">
+
+                            <!-- Add dish -->
+
+                            <a data-toggle="modal" href="#dishModal" data-menu-section-id={{ section.id }} class="btn btn-sm btn-success add-dish" data-type="text">
+                                <i class="fa fa-cutlery fa-fw"></i> Add Dish
+                            </a>
+                            <!--<a href="#" id="item" data-lookup-url = {% url 'menu_dish_lookup_name' %} data-menu-section={{ section.id }} class="editable btn btn-xs btn-default add-dish" data-type="text" data-pk="1" data-url="{% url 'menu_create_dish' %}" data-title="Edit item">
                             <i class="fa fa-list-ul fa-fw"></i>Add Dish
                         </a>-->
+                        </div>
                     </div>
-                </div>
-                {% if not section.get_section_dishes|length %}
-                <div class="alert alert-warning lead text-center">
+                    {% if not section.get_section_dishes|length %}
+                    <div class="alert alert-warning lead text-center" style="padding: 1em 5em; margin-left: 0;">
+                        <h2>Feeling empty?</h2>
+                        <p style="margin-bottom: 1em;"><strong> <br />You probably want to <a data-toggle="modal" href="#dishModal" data-menu-section-id ={{ section.id }} class="btn btn-success  add-dish" data-type="text"><i class="fa fa-cutlery fa-fw"></i> Add a dish</a> to this section.</strong> </p>
 
-                    <h2 style="margin-bottom: 1em;">You'll probably want to <a data-toggle="modal" href="#dishModal" data-menu-section-id ={{ section.id }} class="btn btn-success btn-lg add-dish" data-type="text"><i class="fa fa-cutlery fa-fw"></i> Add a dish</a> to this section. </h2>
-                    
-                </div>
-                {% endif %}
-                {% for dish in section.get_section_dishes %}
+                    </div>
+                    {% endif %} {% for dish in section.get_section_dishes %}
                     <div class="menuitem">
                         <div class="menutitle">
                             <span class="handle">
@@ -87,7 +117,7 @@
                                 <a data-id={{dish.pk}} data-url={% url 'menu_delete_dish' %} class="delete-btn"><i class="fa fa-trash-o"></i></a>
                                 <a data-id={{dish.pk}} data-toggle="modal" href="#editDishModal" data-url={% url 'menu_update_dish' %} data-menu-section-id ={{ section.id }} data-description="{{dish.description}}" data-price={{ dish.price|floatformat:2 }} data-name="{{ dish.name }}" class="edit-btn"><i class="fa fa-edit"></i></a>
                             </span>
-                            <div class="pull-right"> 
+                            <div class="pull-right">
                                 <span class="allergen flagged {% if dish.is_allergen %}active{% endif %}" data-toggle="tooltip" title="Allergen" data-original-title="Allergen">A</span>
 
                                 <span class="meat flagged  {% if dish.is_meat %}active{% endif %}" data-toggle="tooltip" title="Meat">M</span>
@@ -101,27 +131,41 @@
 
                         </div>
                         {% spaceless %}
-                            <div class="tree" data-dish-id={{dish.id}}>
-                                {{dish.html|safe}}
-                            </div>
+                        <div class="tree" data-dish-id={{dish.id}}>
+                            {{dish.html|safe}}
+                        </div>
                         {% endspaceless %}
 
-                        <a data-dish-id = {{ dish.id }} class="add-ingredients b tn btn-succ ess bt n-sm"><i class="fa fa-plus-circle fa-fw"></i>  Add an ingredient</a>
+                        <a data-dish-id={ { dish.id }} class="add-ingredients b tn btn-succ ess bt n-sm"><i class="fa fa-plus-circle fa-fw"></i>  Add an ingredient</a>
 
-                        </div>
-                {% endfor %}
-                <a data-toggle="modal" href="#dishModal" data-menu-section-id ={{ section.id }} class="btn btn-sm btn-success add-dish" data-type="text">
-                            <i class="fa fa-cutlery fa-fw"></i> Add a new dish in this section
-                        </a>
+                    </div>
+                    {% endfor %}
+                    <a data-toggle="modal" href="#dishModal" data-menu-section-id={{ section.id }} class="btn btn-sm btn-success add-dish" data-type="text">
+                        <i class="fa fa-cutlery fa-fw"></i> Add a new dish in this section
+                    </a>
 
 
                 </div>
                 {% endfor %}
+
             </div>
             <!-- /.box-body -->
-            <div class="box-footer clearfix" style="border-top: 3px solid #000;">
-                <button data-toggle="modal" data-menu-id = {{ menu.id }} href="#sectionModal" class="btn btn-default add-section"><i class="fa fa-th fa-fw"></i> Add Section</button>
+
+            {% if not menu.get_menu_sections|length %}
+            <div class="box-footer">
+                <div class="alert alert-warning lead text-center clearfix" style="padding: 1em 5em; margin-left: 0;">
+
+                    <p style="margin-bottom: 1em;"><strong>  Great! Now make a 'section' - this might be '<em>Starters</em>' or '<em>Soups</em>' or '<em>Desserts</em>'.. you get the idea!  </strong>
+                    </p>
+                    <button data-toggle="modal" data-menu-id={ { menu.id }} href="#sectionModal" class="btn btn-primary btn-lg add-section"><i class="fa fa-th fa-fw"></i> Add a Section</button>
+
+                </div>
             </div>
+            {% else %}
+            <div class="box-footer clearfix" style="border-top: 3px solid #000;">
+                <button data-toggle="modal" data-menu-id={ { menu.id }} href="#sectionModal" class="btn btn-default add-section"><i class="fa fa-th fa-fw"></i> Add Section</button>
+            </div>
+            {% endif %}
         </div>
         <!-- /.box -->
     </section>

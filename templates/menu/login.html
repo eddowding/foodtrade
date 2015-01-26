@@ -5,32 +5,347 @@
 {% load i18n %}
 {% load account %}
 {% load django_static %}
-{% block html_class %}bg-black {% endblock %}
+{% block html_class %}{% endblock %}
 {% block title %}FoodTrade Menu - Quick, easy allergen compliance{% endblock %}
-{% block body_class %}bg-black homex{% endblock %}
+{% block body_class %}{% endblock %}
 {% block header %}
 
 
 {% block extra_js %}
 <script src="{% staticfile '/js/register.js' %}"></script>
+<script src="{% static 'menu/js/jquery.onepage-scroll.min.js' %}"></script>
 {% endblock extra_js %}
 
-    <link href="{% staticfile "/menu/css/front.css" %}" rel="stylesheet" type="text/css" />
+    <!-- <link href="{% staticfile "/menu/css/front.css" %}" rel="stylesheet" type="text/css" /> -->
     <!-- <link href="{% static "menu/css/front.css" %}" rel="stylesheet" type="text/css" /> -->
+    <link href="{% static "menu/css/represent.css" %}" rel="stylesheet">
+    <link href="{% static "menu/css/onepage-scroll.css" %}" rel="stylesheet">
  {% endblock %}
 
 {% block main_content %}
    
 
-    <div id="wrap">
 
+ 
 
-        <header style="background: #fff;">
-            <div class="container-responsive">
-                <a href="/"><img src="{% static "img/logo.png" %}" alt="" width="100%" style="max-height: 150px;">
+    <div class="container">
+        <ul id="gn-menu" class="gn-menu-main" style="border-bottom: 1px solid #ccc;">
+            <li class="pull-left" style="border:0;">
+                <a href="/" id="logo" style=" letter-spacing: 0;  "> 
+                <img src="{% static "img/logo.png" %}" alt=""  style="max-height: 30px;">
                 </a>
+            </li>
+            <li class="pull-right">
+                <a class="sign">Sign up <b class="caret"></b></a>
+            </li>
+
+        </ul>
+    </div>
+
+
+
+    <div class="main">
+
+        <section  style=" background:  url('../img/product.gif') top no-repeat; background-size: cover;">>
+            <div class="container">
+                <div class="row">
+                    <div class=" col-xs-8 lead" style="padding-top: 5%;">
+
+                        <h1>Don’t let the new allergen labelling laws be a headache
+                        </h1> 
+
+                        <p>A clever allergen labelling tool for food businesses</p>
+
+                        <button class="btn btn-lg btn-success" class="nextslide">
+                            <i class="fa fa-circle-arrow-down fa-fw"></i>
+                        Tell me more</button>
+
+                    </div>
+                    <div class=" col-xs-4">
+                        <!-- <img src="{% static "img/product.gif" %}" alt=""> -->
+                    </div>
+                </div>
             </div>
-        </header>
+        </section>
+
+        <section style=" background:  url('../img/home.jpg') top no-repeat; background-size: cover;">
+            <div class="panel-body text-center">
+                <div class="row" style="padding: 100px 0;">
+                    <div class="col-xs-12 lead"> 
+                        <h1>Do less, live more</h1>
+                        <p>With our automatic allergen labeller, you can have a printed compliant menu in minutes, leaving you to concentrate on what you do best. </p> 
+                        <pre>kitchn fun - open chefs bar</pre>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+
+        <section style="background:  url('../img/lego.png') no-repeat;" id="lego">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xs-7 lead">
+                        <h1>Better food + transparency = more customers</h1>
+                        <p>We believe food businesses have the power to create positive change – for customers, for community, and for the planet. </p>
+                        <pre>Picking vegetables, outside, nature</pre>
+                    </div>
+
+                    <div class="col-sm-5 col-xs-4 text-center">
+
+                        <!-- <img src="../img/lego.png" class="img-responsive" /> -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section style=" background:  url('../img/app_results1.png') no-repeat center right; background-size: cover;">
+            <div class="container">
+                <div class="row  ">
+                    <div class="col-xs-8 col-sm-6">
+                        <h1>Future proof, forever</h1>
+
+                        <p>There are more regulations coming next year – nutritional information and food origin. But don’t worry – we’ll always keep you compliant and up-to-date.</p>
+                        <pre>IFSIP/ FSA badge / note
+
+                            Picture:    Ingredients lavel nutrition box</pre>
+                    </div>
+                    <div class="col-xs-4 col-sm-6 text-center">
+
+                        <!-- <img src="../img/app_all.png" class="img-responsive" /> -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <section style=" background:  url('../img/app_results1.png') no-repeat center right; background-size: cover;">
+            <div class="container">
+                <div class="row  ">
+                    <div class="col-xs-8 col-sm-6">
+                        <h1>Ready to put your best food forward?</h1>
+
+                        <pre>
+                        FORM
+Input:      Name of business
+Button      Get started 
+Caption No credit card needed
+Button      Discover more features (leads to feature page)
+                        </pre>
+                    </div>
+                    <div class="col-xs-4 col-sm-6 text-center">
+
+                        <!-- <img src="../img/app_all.png" class="img-responsive" /> -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        
+        <section class="clearfix bgwhite">
+            <div class="container features ">
+                <div class="col-sm-12  ">
+                    <div class="">
+                        <div class="row wpb_row section row-fluid" style=" text-align:left;">
+                            <div class=" full_section_inner clearfix">
+                                <div class="col-sm-4  ">
+                                    <div class="">
+                                        <div class="">
+                                            <div><i class="fa fa-terminal fa-2x" style="color: #c0c0c0;"></i> 
+                                            </div>
+                                            <div class="icon_text_holder" style="">
+                                                <div class="icon_text_inner" style="">
+                                                    <h5 class="icon_title" style="">Save time with suggestions</h5>
+                                                    <p>Save time and reduce errors as it suggests ingredients and even whole recipes</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="separator  transparent center  " style="margin-top: 26px;margin-bottom: 0px;"></div>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-4  ">
+                                    <div class="">
+                                        <div class="">
+                                            <div><i class="fa fa-print fa-2x" style="color: #c0c0c0;"></i> 
+                                            </div>
+                                            <div class="icon_text_holder" style="">
+                                                <div class="icon_text_inner" style="">
+                                                    <h5 class="icon_title" style="">Print compliant menus</h5>
+                                                    <p>Choose from a variety of formats, upload your logo, include sourcing maps, and more</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="separator  transparent center  " style="margin-top: 26px;margin-bottom: 0px;"></div>
+
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-4  ">
+                                    <div class="">
+                                        <div class="">
+                                            <div><i class="fa fa-list fa-2x" style="color: #c0c0c0;"></i> 
+                                            </div>
+                                            <div class="icon_text_holder" style="">
+                                                <div class="icon_text_inner" style="">
+                                                    <h5 class="icon_title" style="">Unlimited menus &amp; ingredients</h5>
+                                                    <p>And each can have descriptions, prices, meal types.. it's as useful as you need it to be</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="separator  transparent center  " style="margin-top: 26px;margin-bottom: 0px;"></div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row wpb_row section row-fluid" style=" text-align:left;">
+                            <div class=" full_section_inner clearfix">
+                                <div class="col-sm-4  ">
+                                    <div class="">
+                                        <div class="">
+                                            <div><i class="fa fa-bell-o fa-2x" style="color: #c0c0c0;"></i> 
+                                            </div>
+                                            <div class="icon_text_holder" style="">
+                                                <div class="icon_text_inner" style="">
+                                                    <h5 class="icon_title" style=""><span class="cs">Coming soon</span> Product alerts</h5>
+                                                    <p>If a supplier changes one of their ingredients we'll alert you to the change so you can reprint. </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="separator  transparent center  " style="margin-top: 26px;margin-bottom: 0px;"></div>
+
+                                    </div>
+                                </div>
+                                <div class="col-sm-4  ">
+                                    <div class="">
+                                        <div class="">
+                                            <div><i class="fa fa-code fa-2x" style="color: #c0c0c0;"></i> 
+                                            </div>
+                                            <div class="icon_text_holder" style="">
+                                                <div class="icon_text_inner" style="">
+                                                    <h5 class="icon_title" style="">
+                                                    <span class="cs">Coming soon</span>Use on your website</h5>
+                                                    <p>Add a few lines of code to your website and your menu will always be searchable, detailed, and up to date. </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="separator  transparent center  " style="margin-top: 26px;margin-bottom: 0px;"></div>
+                                    </div>
+                                </div> 
+
+                                <div class="col-sm-4  ">
+                                    <div class="">
+                                        <div class="">
+                                            <div><i class="fa fa-bullhorn fa-2x" style="color: #c0c0c0;"></i> 
+                                            </div>
+                                            <div class="icon_text_holder" style="">
+                                                <div class="icon_text_inner" style="">
+                                                    <h5 class="icon_title" style="">Showcase your suppliers</h5>
+                                                    <p>Everyone loves local food from great suppliers - we'll help you show them on your menu </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="separator  transparent center  " style="margin-top: 26px;margin-bottom: 0px;"></div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row wpb_row section row-fluid" style=" text-align:left;">
+                            <div class=" full_section_inner clearfix">
+                                <div class="col-sm-4  ">
+                                    <div class="">
+                                        <div class="">
+                                            <div><i class="fa fa-search fa-2x" style="color: #c0c0c0;"></i> 
+                                            </div>
+                                            <div class="icon_text_holder" style="">
+                                                <div class="icon_text_inner" style="">
+                                                    <h5 class="icon_title" style="">
+                                                    <span class="cs">Coming soon</span> Share it anywhere &amp; everywhere</h5>
+                                                    <p>Simply click a button and your information will be everywhere it needs to be, from booking services to discovery apps</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="separator  transparent center  " style="margin-top: 26px;margin-bottom: 0px;"></div>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-4  ">
+                                    <div class="">
+                                        <div class="">
+                                            <div><i class="fa fa-shopping-cart fa-2x" style="color: #c0c0c0;"></i> 
+                                            </div>
+                                            <div class="icon_text_holder" style="">
+                                                <div class="icon_text_inner" style="">
+                                                    <h5 class="icon_title" style="">
+                                                    <span class="cs">Coming soon</span> Get offers</h5>
+                                                    <p>Your menu is a shopping list - if you like, we'll help find you offers from great local suppliers. </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="separator  transparent center  " style="margin-top: 26px;margin-bottom: 0px;"></div>
+                                    </div>
+
+                                    <div class="">
+                                        <div class="">
+                                            <div><i class="fa fa-bar-chart-o fa-2x" style="color: #c0c0c0;"></i> 
+                                            </div>
+                                            <div class="icon_text_holder" style="">
+                                                <div class="icon_text_inner" style="">
+                                                    <h5 class="icon_title" style=""><span class="cs">Coming soon</span> See how you compare</h5>
+                                                    <p>Because we have hundreds of food businesses using FoodTrade we can show you how you match up</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="separator  transparent center  " style="margin-top: 26px;margin-bottom: 0px;"></div>
+                                    </div>  
+                                </div>
+
+                                <div class="col-sm-4  ">
+                                    <div class="">
+                                        <div class="">
+                                            <div><i class="fa fa-rocket fa-2x" style="color: #c0c0c0;"></i> 
+                                            </div>
+                                            <div class="icon_text_holder" style="">
+                                                <div class="icon_text_inner" style="">
+                                                   <h5 class="icon_title" style="">Futureproof</h5>
+                                                    <p>Two more rounds of EU food law changes are coming.With us, you’ll be prepared</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="separator  transparent center  " style="margin-top: 26px;margin-bottom: 11px;"></div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <section style=" background:  url('../img/app_results1.png') no-repeat center right; background-size: cover;">
+            <div class="container">
+                <div class="row  ">
+                    <div class="col-xs-12">
+                        <h1>about us page</h1>
+                        <pre>
+                        Mission / manifesto  > 
+sustainability
+smart 
+foodtrade.com
+ted
+etc
+</pre>
+                    </div> 
+                </div>
+            </div>
+        </section>
+  
+
 
 
         <section id="new_theme">
@@ -362,7 +677,113 @@ Showcase your suppliers</h5>
         </section>
         <!--class="subscribe"-->
 
+    </div>
 
+
+    <!-- Large footer -->
+    <footer class="visible-lg visible-md ">
+        <div class="row">
+            <div class="pull-left" style="width: 70%;">
+                <form action="//iagr.us7.list-manage.com/subscribe/post?u=70987cd8178c1edbd0fa92c40&amp;id=b7d7ebcbe1" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+                    <div id="mc_embed_signup_scroll">
+
+                        <div class="form-group" id="signup">
+                            <div class="input-group  input-group-lg">
+                                <input type="email" value="" name="EMAIL" placeholder="your@email.com" class="required email form-control signup" id="mce-EMAIL">
+                                <span class="input-group-btn"> 
+                                <input type="submit" value="Request an invite" name="subscribe" id="mc-embedded-subscribe" class="btn btn-danger">
+                            </span>
+                            </div>
+                        </div>
+                        <div id="mce-responses" class="clear">
+                            <div class="response" id="mce-error-response" style="display:none"></div>
+                            <div class="response" id="mce-success-response" style="display:none"></div>
+                        </div>
+                        <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
+                        <div style="position: absolute; left: -5000px;">
+                            <input type="text" name="b_70987cd8178c1edbd0fa92c40_b7d7ebcbe1" tabindex="-1" value="">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="pull-left text-right" style="width: 30%;">
+                <a class="btn btn-social btn-twitter btn-lg" href="https://twitter.com/home?status=.@representLive%20is%20closing%20the%20gap%20between%20the%20world%20we%20have%20and%20the%20world%20we%20want%20http://www.represent.cc/%20%23democracy" target="_blank">
+                    <i class="fa fa-twitter"></i> Tweet
+                </a>
+                <a class="btn btn-social btn-facebook btn-lg" href="https://www.facebook.com/sharer/sharer.php?u=http://www.represent.cc/" target="_blank">
+                    <i class="fa fa-facebook"></i> Share
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Small footer -->
+    <footer class="visible-sm visible-xs">
+
+        <div class="pull-left" style="width: 70%;">
+            <form action="//iagr.us7.list-manage.com/subscribe/post?u=70987cd8178c1edbd0fa92c40&amp;id=b7d7ebcbe1" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+                <div id="mc_embed_signup_scroll">
+
+                    <div class="form-group" id="signup">
+                        <div class="input-group input-group-sm">
+                            <input type="email" value="" name="EMAIL" placeholder="your@email.com" class="required email form-control signup" id="mce-EMAIL">
+                            <span class="input-group-btn"> 
+                                <input type="submit" value="Sign up" name="subscribe" id="mc-embedded-subscribe" class="btn btn-danger">
+                            </span>
+                        </div>
+                    </div>
+                    <div id="mce-responses" class="clear">
+                        <div class="response" id="mce-error-response" style="display:none"></div>
+                        <div class="response" id="mce-success-response" style="display:none"></div>
+                    </div>
+                    <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
+                    <div style="position: absolute; left: -5000px;">
+                        <input type="text" name="b_70987cd8178c1edbd0fa92c40_b7d7ebcbe1" tabindex="-1" value="">
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="pull-left text-right" style=" width: 30%;">
+            <a class="btn btn-social-icon btn-twitter btn-sm" href="https://twitter.com/home?status=.@representLive%20is%20closing%20the%20gap%20between%20the%20world%20we%20have%20and%20the%20world%20we%20want%20http://www.represent.cc/%20%23democracy" target="_blank">
+                <i class="fa fa-twitter"></i>
+            </a>
+            <a class="btn btn-social-icon btn-facebook btn-sm" href="https://www.facebook.com/sharer/sharer.php?u=http://www.represent.cc/" target="_blank">
+                <i class="fa fa-facebook"></i>
+            </a>
+        </div>
+    </footer>
+ 
+
+    <script type="text/javascript">
+    $(".main").onepage_scroll({
+        sectionContainer: "section", // sectionContainer accepts any kind of selector in case you don't want to use section
+        easing: "ease", // Easing options accepts the CSS3 easing animation such "ease", "linear", "ease-in",
+        // "ease-out", "ease-in-out", or even cubic bezier value such as "cubic-bezier(0.175, 0.885, 0.420, 1.310)"
+        animationTime: 1000, // AnimationTime let you define how long each section takes to animate
+        pagination: true, // You can either show or hide the pagination. Toggle true for show, false for hide.
+        updateURL: true, // Toggle this true if you want the URL to be updated automatically when the user scroll to each page.
+        beforeMove: function(index) {}, // This option accepts a callback function. The function will be called before the page moves.
+        afterMove: function(index) {}, // This option accepts a callback function. The function will be called after the page moves.
+        loop: false, // You can have the page loop back to the top/bottom when the user navigates at up/down on the first/last page.
+        keyboard: true, // You can activate the keyboard controls
+        responsiveFallback: false, // You can fallback to normal page scroll by defining the width of the browser in which
+        // you want the responsive fallback to be triggered. For example, set this to 600 and whenever
+        // the browser's width is less than 600, the fallback will kick in.
+        direction: "vertical" // You can now define the direction of the One Page Scroll animation. Options available are "vertical" and "horizontal". The default value is "vertical".  
+    });
+    $(".nextslide").click(function() {
+        $(".main").moveDown();
+    });
+    $(".sign").click(function() {
+        $(".main").moveTo(7);
+    }); 
+    </script>
+
+
+
+
+
+  
 
         <!-- SUBSCRIBE SECTION END -->
         <!-- FOOTER BEGIN -->

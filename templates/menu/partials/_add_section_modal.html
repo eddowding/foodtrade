@@ -4,13 +4,14 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h2 class="modal-title">Add section</h2>
+                    <h4 class="modal-title"><i class="fa fa-th fa-fw"></i> Add section</h4>
                 </div>
                 <div class="modal-body">
                     {% csrf_token %}
                     <div class="form-group">
                         <label class="sr-only">Name</label>
-                        <input name="name" class="form-control" placeholder="Enter Section Name" type="text">
+                        <input name="name" class="form-control" placeholder="What this section for?" type="text">
+                        <p class="help-block">eg soup, starters, desserts, wraps, mains...
                     </div>
                     <div class="form-group">
                         <input name="menu" class="form-control" type="hidden" value="">
@@ -19,7 +20,7 @@
                 </div>
 
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-success btn-submit-menu" data-dismiss="modal">Submit</button>
+                    <button type="submit" class="btn btn-success btn-submit-menu" data-dismiss="modal">Create section</button>
                 </div>
             </div>
         </form>

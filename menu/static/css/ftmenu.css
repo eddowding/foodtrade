@@ -162,7 +162,7 @@ a.editable-click:hover {
   text-decoration: underline !important;
   border-bottom: 0;
 }
-#mag .btn {
+.mag .btn {
   padding: 3px 6px;
   color: rgba(255, 255, 255, 0.7);
 }
@@ -175,25 +175,25 @@ a.editable-click:hover {
 .btn-gluten {
   background: rgba(237, 72, 42, 0.25);
 }
-#mag .btn {
+.mag .btn {
   font-weight: bold;
 }
-#mag .btn.active,
-#mag .btn:hover {
+.mag .btn.active,
+.mag .btn:hover {
   opacity: 1;
   box-shadow: none;
   color: #fff;
 }
-#mag .btn.active.btn-allergen,
-#mag .btn:hover.btn-allergen {
+.mag .btn.active.btn-allergen,
+.mag .btn:hover.btn-allergen {
   background: #4b9ed9;
 }
-#mag .btn.active.btn-meat,
-#mag .btn:hover.btn-meat {
+.mag .btn.active.btn-meat,
+.mag .btn:hover.btn-meat {
   background: #a30012;
 }
-#mag .btn.active.btn-gluten,
-#mag .btn:hover.btn-gluten {
+.mag .btn.active.btn-gluten,
+.mag .btn:hover.btn-gluten {
   background: #ed482a;
 }
 .del {
@@ -207,24 +207,65 @@ a.editable-click:hover {
 #output {
   background: #fff;
   padding: 0.5em 2em 2em 2em;
-  box-shadow: 0 0 10px #444 inset;
 }
 #output * {
   font-family: Georgia;
-  text-align: center;
 }
 #output p {
-  font-size: 1.5em;
+  font-size: 1.8em;
 }
 #output h2 {
   border-bottom: 2px solid;
-  padding: 0.5em;
+  padding: 0.5em 0 0.5em 0;
 }
 #output h3 {
   border-bottom: 1px solid;
   padding: 1em 0 0.3em 0;
   width: 60%;
   margin: 0 auto;
+}
+#output .dish_wrapper {
+  margin-top: 1em;
+  display: block;
+  width: 60%;
+  margin: 1em auto;
+}
+#output .dish_name {
+  float: left;
+}
+#output .dish_price {
+  float: right;
+}
+#output .dish_mag {
+  text-align: center;
+}
+#output .dish_description {
+  display: block;
+  font-style: italic;
+}
+#output .dish_ingredients {
+  text-transform: capitalize;
+}
+#output .has_children {
+  display: inline-block;
+}
+#output .ingredient_parent:before {
+  content: ", ";
+}
+#output .ingredient_parent:first-of-type:before {
+  content: none;
+}
+#output .has_children:not(:empty):before {
+  content: "(";
+}
+#output .has_children:not(:empty):after {
+  content: ")";
+}
+#output .ingredient_child:after {
+  content: ", ";
+}
+#output .ingredient_child:last-of-type:after {
+  content: "";
 }
 .allergen_detail {
   font-size: 12px;

@@ -93,14 +93,14 @@ ul.todo-list li.placeholder:before {
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-        <h4 class="modal-title" id="myModalLabel">Confirm</h4>
+        <h4 class="modal-title text-danger" id="myModalLabel"><i class="fa fa-trash-o"></i> Confirm delete</h4>
       </div>
       <div class="modal-body">
         Are you sure?
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
-        <button type="button" class="btn btn-success delete-confirm-btn" data-dismiss="modal">Yes</button>
+        <button type="submit" class="btn btn-danger delete-confirm-btn" data-dismiss="modal"><i class="fa fa-trash-o"></i> Yes, delete it</button>
       </div>
     </div>
   </div>

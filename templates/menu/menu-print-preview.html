@@ -1,52 +1,58 @@
-{% extends 'menu_base.html' %}
-{% load staticfiles %}
-{% load socialaccount %}
-{% load url from future %}
-{% load i18n %}
-{% load account %}
+{% extends 'menu_base.html' %} {% load staticfiles %} {% load socialaccount %} {% load url from future %} {% load i18n %} {% load account %} {% block body_class %}skin-black pace-done{% endblock %} {% block header %}{% endblock %} {% block main_content %}
 
-{% block body_class %}skin-black  pace-done{% endblock %}
-{% block header %}{% endblock %}
-{% block main_content %}
-
-<a href="javascript:window.print()" id="printPage"><i class="fa fa-print fa-fw fa-lg"></i> Print this page</a>
+<!-- <a href="javascript:window.print()" id="printPage"><i class="fa fa-print fa-fw fa-lg"></i> Print this page</a> -->
 <div id="printed">
 
-            <!-- Main content -->
-            <section class="content">
-                <!-- Main row -->
-                <div class="row">
-                    <!-- Left col -->
-                    <section class="col-sm-12">
-                        <div id="output">
-                            <h2>{{ menu.name }}</h2>
-                            {% for section in menu.get_menu_sections %}
-                            <h3>{{ section.name }}</h3>
+    <!-- Main content -->
+    <section class="content">
+        <!-- Main row -->
+        <div class="row">
+            <!-- Left col -->
+            <section class="col-sm-12">
+                <div id="output">
+                    <h2>{{ menu.name }}</h2> {% for section in menu.get_menu_sections %}
+                    <h3>{{ section.name }}</h3> {% for dish in section.get_section_dishes %}
+                    <div class="dish_wrapper">
 
-                                {% for dish in section.get_section_dishes %}
-                                    <div class="dish_wrapper">
+                        <div class="clearfix">
+                            <span class="dish_name">{{ dish.name }}</span>
 
-                                        <span class="dish_name">{{ dish.name }}</span>
-                                        &mdash;
-                                        <span class="dish_price">
-                                            &pound;
-                                            {{ dish.price }}
-                                        </span>
-
-                                        <!-- <div class="pu ll-right"> -->
-                                            <span class="allergen flagged {% if dish.is_allergen %}active{% endif %}" title="Allergen" data-original-title="Allergen">A</span>
-                                            <span class="meat flagged  {% if dish.is_meat %}active{% endif %}" title="Meat">M</span>
-                                            <span class="gluten flagged  {% if dish.is_gluten %}active{% endif %}" title="Gluten">G</span>
-                                        <!-- </div> -->
-                                            {{dish.print_html|safe}}
-                                    </div>
-                                {% endfor %}
-                            {% endfor %}
+                            <span class="dish_price">
+                                &pound;
+                                {{ dish.price }}
+                            </span>
                         </div>
-                    </section>
-                    <!-- /.Left col -->
+                        <!-- 
+                                        <div class="dish_mag">
+ 
+                                            <span class="allergen flagged {% if dish.is_allergen %}active{% endif %}" title="Allergen" data-original-title="Allergen">Allergens</span>
+                                            <span class="meat flagged  {% if dish.is_meat %}active{% endif %}" title="Meat">Meat</span>
+                                            <span class="gluten flagged  {% if dish.is_gluten %}active{% endif %}" title="Gluten">Gluten</span>
+
+                                        </div>
+                                         -->
+                        <span class="dish_description">{{dish.description}}</span>
+
+                        <span class="dish_ingredients">{{dish.print_html|safe}}</span>
+
                     </div>
-                    <!-- /.row (main row) -->
+                    {% endfor %} {% endfor %}
+                </div>
             </section>
+            <!-- /.Left col -->
+        </div>
+        <!-- /.row (main row) -->
+        <div style="position: fixed; bottom: 0;">
+            <p class="small" style="font-family: georgia; font-style: italic;">Created with FoodTrade.menu
+                <br />
+                <img src="http://www.foodtrade.com/static/images/logo_28.png" alt="Created with FoodTrade.menu" />
+            </p>
+        </div>
+    </section>
 </div>
+<script type="text/javascript">
+window.onload = function() {
+    self.print();
+}
+</script>
 {% endblock %}
