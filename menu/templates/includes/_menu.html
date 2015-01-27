@@ -136,7 +136,7 @@
                         </div>
                         {% endspaceless %}
 
-                        <a data-dish-id={ { dish.id }} class="add-ingredients b tn btn-succ ess bt n-sm"><i class="fa fa-plus-circle fa-fw"></i>  Add an ingredient</a>
+                        <a data-dish-id={{ dish.id }} class="add-ingredients b tn btn-succ ess bt n-sm"><i class="fa fa-plus-circle fa-fw"></i>  Add an ingredient</a>
 
                     </div>
                     {% endfor %}
@@ -157,13 +157,13 @@
 
                     <p style="margin-bottom: 1em;"><strong>  Great! Now make a 'section' - this might be '<em>Starters</em>' or '<em>Soups</em>' or '<em>Desserts</em>'.. you get the idea!  </strong>
                     </p>
-                    <button data-toggle="modal" data-menu-id={ { menu.id }} href="#sectionModal" class="btn btn-primary btn-lg add-section"><i class="fa fa-th fa-fw"></i> Add a Section</button>
+                    <button data-toggle="modal" data-menu-id={{ menu.id }} href="#sectionModal" class="btn btn-primary btn-lg add-section"><i class="fa fa-th fa-fw"></i> Add a Section</button>
 
                 </div>
             </div>
             {% else %}
             <div class="box-footer clearfix" style="border-top: 3px solid #000;">
-                <button data-toggle="modal" data-menu-id={ { menu.id }} href="#sectionModal" class="btn btn-default add-section"><i class="fa fa-th fa-fw"></i> Add Section</button>
+                <button data-toggle="modal" data-menu-id={{ menu.id }} href="#sectionModal" class="btn btn-default add-section"><i class="fa fa-th fa-fw"></i> Add Section</button>
             </div>
             {% endif %}
         </div>
