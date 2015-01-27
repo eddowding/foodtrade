@@ -116,13 +116,11 @@
   margin: 5px 0;
 }
 .box .ingredient-tree ul li {
-  border: 2px solid #fff;
   border-right: 0;
-  margin: 2px 0 0 20px;
-  padding: 3px 5px 3px 3px;
+  margin: 10px -5px 0 20px;
+  padding: 5px 5px 6px 3px;
   font-weight: normal !important;
   list-style: none;
-  clear: both;
   background: rgba(255, 255, 255, 0.9);
 }
 .box .ingredient-tree ul ul {
