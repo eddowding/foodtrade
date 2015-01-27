@@ -12,7 +12,7 @@ from django.contrib.auth.decorators import login_required
 from django.template.loader import render_to_string
 from mongoengine.django.auth import User
 from menu.models import Establishment, Menu, MenuSection, Dish, Allergen, Meat, Gluten, Connection, Ingredient, ModerationIngredient
-from menu.peer import ingredient_walk, IngredientWalkPrint, IngredientDBWalk
+from menu.peer import ingredient_walk, IngredientWalkPrint, CloneDishWalk
 
 
 """
@@ -189,9 +189,8 @@ def create_dish(request):
     except UnboundLocalError:
         pass
 
-    idbw = IngredientDBWalk(new_dish.pk, new_dish.get_ingredient_names())
-    html = idbw.walk().render()
-    new_dish.html = html
+    cdw = CloneDishWalk(str(new_dish.pk), json.loads(dish.json))
+    new_dish.html = cdw.walk().render()
     new_dish.save()
 
     return HttpResponse(json.dumps({'status': True, 'html': menu_render(request.user)}, default=json_util.default))
@@ -383,10 +382,10 @@ def save_moderation_ingredient(request):
     ingredient = json.loads(request.POST.get('ingredient'))
     ingredient['user'] = request.user
     ingredient['added_on'] = datetime.now()
-    
+
     Dish.objects.filter(pk=pk).update(set__html=html, set__json=request.POST.get('serialized'), set__print_html=print_html)
     ModerationIngredient.objects.create(**ingredient)
-    
+
     #ing  = Ingredient.objects.filter(name__iexact=ingredient['name'])
     #updt_dish = {}
     #for i in ing:
@@ -398,7 +397,7 @@ def save_moderation_ingredient(request):
         Dish.objects.filter(pk=pk).update(set__is_gluten=True)
     #Dish.objects.filter(pk=pk).update(updt_dish)
     #return HttpResponse(json.dumps({'status': True}, default=json_util.default), content_type="application/json")
-    return HttpResponse(json.dumps({'status': True, 'html': menu_render(request.user)}, default=json_util.default), 
+    return HttpResponse(json.dumps({'status': True, 'html': menu_render(request.user)}, default=json_util.default),
                         content_type="application/json")
 
 
