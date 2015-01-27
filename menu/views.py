@@ -188,10 +188,12 @@ def create_dish(request):
             ind.save()
     except UnboundLocalError:
         pass
-
-    cdw = CloneDishWalk(str(new_dish.pk), json.loads(dish.json))
-    new_dish.html = cdw.walk().render()
-    new_dish.save()
+    try:
+        cdw = CloneDishWalk(str(new_dish.pk), json.loads(dish.json))
+        new_dish.html = cdw.walk().render()
+        new_dish.save()
+    except UnboundLocalError:
+        pass
 
     return HttpResponse(json.dumps({'status': True, 'html': menu_render(request.user)}, default=json_util.default))
 

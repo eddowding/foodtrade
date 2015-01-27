@@ -182,6 +182,53 @@ class IngredientWalkPrint(object):
 
 
 class CloneDishWalk(IngredientWalk):
-    pass
+    def _get_ingredients_mapping(self):
+        self.ingredient_mapping = {}
+        dish_id = ObjectId(self.dish_id)
+        original_dish_id = ObjectId(self.dish_tree[0][0]['dishId'])
+        tmp_dict = {}
+        for i in Ingredient.objects.filter(dish=dish_id):
+            tmp_dict[i.name] = str(i.pk)
+        for i in Ingredient.objects.filter(dish=original_dish_id):
+            self.ingredient_mapping[str(i.pk)] = tmp_dict[i.name]
+
+    def _walk(self, ingredients, parent=None, parent_li_ul=None):
+        for ingredient in ingredients:
+            if isinstance(ingredient, list):
+                self._walk(ingredient, parent, parent_li_ul)
+            elif isinstance(ingredient, dict) and len(ingredient['children'][0]):
+                if parent:
+                    try:
+                        parent_li = self.parent_li_ul_ref[parent].add(self._generate_li(ingredient_id=self.ingredient_mapping[ingredient['ingredientId']]))
+                    except AttributeError:
+                        continue
+                else:
+                    try:
+                        parent_li = self.html.add(self._generate_li(ingredient_id=self.ingredient_mapping[ingredient['ingredientId']]))
+                    except AttributeError:
+                        continue
+
+                parent_li_ul = parent_li.add(ul())
+
+                if not ingredient['ingredientId'] in self.parent_li_ul_ref:
+                    self.parent_li_ul_ref[ingredient['ingredientId']] = parent_li_ul
+                self._walk(ingredient['children'], ingredient['ingredientId'], parent_li_ul)
+            else:
+                if parent:
+                    try:
+                        parent_li = self.parent_li_ul_ref[parent].add(self._generate_li(ingredient_id=self.ingredient_mapping[ingredient['ingredientId']]))
+                    except AttributeError:
+                        continue
+                else:
+                    try:
+                        parent_li = self.html.add(self._generate_li(ingredient_id=self.ingredient_mapping[ingredient['ingredientId']]))
+                    except AttributeError:
+                        continue
+                parent_li.add(ul())
+
+    def walk(self):
+        self._get_ingredients_mapping()
+        return super(CloneDishWalk, self).walk()
+
 
 
