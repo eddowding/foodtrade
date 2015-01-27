@@ -256,6 +256,7 @@ a.editable-click:hover {
 }
 #output .dish_name {
   float: left;
+  font-size: 20px;
 }
 #output .dish_price {
   float: right;
@@ -269,9 +270,7 @@ a.editable-click:hover {
 }
 #output .dish_ingredients {
   text-transform: capitalize;
-}
-#output .has_children {
-  display: inline-block;
+  font-size: 14px;
 }
 #output .ingredient_parent:before {
   content: ", ";
@@ -289,7 +288,7 @@ a.editable-click:hover {
   content: ", ";
 }
 #output .ingredient_child:last-of-type:after {
-  content: "";
+  content: none;
 }
 .allergen_detail {
   font-size: 12px;

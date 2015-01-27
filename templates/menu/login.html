@@ -14,6 +14,7 @@
 {% block extra_js %}
 <script src="{% staticfile '/js/register.js' %}"></script>
 <script src="{% static 'menu/js/jquery.onepage-scroll.min.js' %}"></script>
+<script src="{% staticfile '/js/register.js' %}"></script>
 {% endblock extra_js %}
 
     <!-- <link href="{% staticfile "/menu/css/front.css" %}" rel="stylesheet" type="text/css" /> -->
@@ -35,8 +36,11 @@
                 <img src="{% static "img/logo.png" %}" alt=""  style="max-height: 30px;">
                 </a>
             </li>
+            <li class="pull-right"> 
+                <a href="#" data-toggle="modal" data-target="#loginModal" class="pull-right" id="getstarted">Login</small> </a>
+            </li> 
             <li class="pull-right">
-                <a class="sign">Sign up <b class="caret"></b></a>
+                <a  href="#register" data-toggle="modal">Sign up </a> 
             </li>
 
         </ul>
@@ -68,12 +72,12 @@
 
         <section style=" background:  url('../img/wbk_all.jpg') top no-repeat; background-size: cover;"> 
                 <div class="row" style="padding: 70px 0; margin: 0;">
-                    <div class="col-xs-7 lead text-white"> 
+                    <div class="col-xs-12 col-sm-7 lead"> 
                         <div  style="color: #fff; background: rgba(0,0,0,0.7); padding: 0.5em 1em 2em 1em;">
                         <h1 style="color: #fff; margin: 0.5em 0;" >Don't let allergen laws be a headache</h1>
                         <p style="color: #fafafa; font-size: 120%; font-weight: 500; text-shadow: 0 0 5px #000; margin-bottom: 1em;">With our automatic allergen labeller, you can have a printed compliant menu in minutes, leaving you to concentrate on what you do best. </p>  
 
-                        <button class="btn btn-lg btn-success">
+                        <button class="btn btn-lg btn-success" style="margin: 0.2em 0;" href="#register" data-toggle="modal">
                             <i class="fa fa-check fa-fw"></i>
                         <strong>SIGN UP and be compliant in minutes</strong></button>
 
@@ -81,21 +85,70 @@
                         <button class="btn btn-lg btn-default nextslide">
                             <i class="fa fa-arrow-circle-down fa-fw"></i>
                         Tell me more</button>
-                        <p class="small" style="color: #ccc; font-weight: 500;">90 day free trial, then from &pound;8/month</p>
+                        <p class="small" style="color: #ccc; font-weight: 500;">90 day free trial, then from &pound;8/month. No credit card needed.</p>
                         </div>
                     </div>
                 </div> 
         </section>
 
+<section class="benefits_section" style="background: #fff;">
+<div class="container">
+    <div class="row">
+        <div class="col-xs-12 text-center">
+            <img src="../img/123steps.gif" alt="it's this easy." class="img-responsive img-thumbnail" />
+
+            <h1>It couldn't be easier. Just type, and print.</h1>
+   
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-4">
+            <div class="benefit_image"><i class="fa fa-check"></i>
+            </div>
+            <h2>Hassle-free compliance</h2>
+            <p>A simple menu offers 10,000s of potential allergen entries. With the automatic allergen labeller, you can have a printed compliant menu in minutes, leaving you to concentrate on what you do best. And if your supplier changes something? We'll notify you immediately.
+            </p>
+        </div>
+        <div class="col-xs-4">
+            <div class="benefit_image"><i class="fa fa-cutlery"></i>
+            </div>
+            <h2>Better food, more customers</h2>
+            <p>We’ll connect you with your suppliers, and you can find the best ingredients from what’s around you. You can even showcase your sustainability with local supplier lists and provenance maps. This means more customers walking through your doors. </p>
+        </div>
+        <div class="col-xs-4">
+            <div class="benefit_image"><i class="fa fa-rocket"></i>
+            </div>
+            <h2>Future-proof, forever</h2>
+            <p>There are more regulations coming next year - nutritional information and food origin! But you won't have to worry – we’ll always keep you compliant and up-to-date. </p>
+        </div>
+    </div>
+</div>
+</section>
+
+
+
 
 
         <section style="background:  url('../img/apples.jpg') no-repeat; background-size: cover;">
-            <div class="container">
-                <div class="row">
-                    <div class="col-xs-7 lead">
-                        <h1>Better food + transparency = more customers</h1>
-                        <p>We believe food businesses have the power to create positive change – for customers, for community, and for the planet. </p>
-                        <pre>Picking vegetables, outside, nature</pre>
+             
+                <div class="row" style="padding: 70px 0; margin: 0;">
+                    <div class="col-xs-7 lead"> 
+                        <div  style="color: #fff; background: rgba(0,0,0,0.7); padding: 0.5em 1em 2em 1em;">
+                        <h1 style="color: #fff; margin: 0.5em 0;" >BETTER FOOD
+                        <br /> <span style="color:rgba(255,255,255,0.5); font-weight: 500;">plus</span> <br />  TRANSPARENCY <br /><span style="color:rgba(255,255,255,0.5); font-weight: 500;">equals</span><br /> MORE, HAPPIER CUSTOMERS</h1>
+                        <p style="color: #fafafa; font-size: 120%; font-weight: 500; text-shadow: 0 0 5px #000; margin-bottom: 1em;">We believe food businesses have the power to create positive change – for customers, for community, and for the planet. </p>
+                        <a href="#" class="nextslide btn btn-lg"  style="border: 2px solid;
+margin: 2em 0;
+display: inline-block;
+color: #ccc;"><i class="fa fa-arrow-circle-down fa-fw"></i><strong>Learn about the great features</strong></a>
+
+<!-- 
+                                               Mission / manifesto  > 
+sustainability
+smart 
+foodtrade.com
+ted
+etc -->
                     </div>
 
                     <div class="col-sm-5 col-xs-4 text-center">
@@ -103,9 +156,9 @@
                         <!-- <img src="../img/lego.png" class="img-responsive" /> -->
                     </div>
                 </div>
-            </div>
+             
         </section>
-
+<!-- 
         <section style=" background:  url('../img/app_results1.png') no-repeat center right; background-size: cover;">
             <div class="container">
                 <div class="row  ">
@@ -119,40 +172,22 @@
                     </div>
                     <div class="col-xs-4 col-sm-6 text-center">
 
-                        <!-- <img src="../img/app_all.png" class="img-responsive" /> -->
+                         <img src="../img/app_all.png" class="img-responsive" />
                     </div>
                 </div>
             </div>
         </section>
 
-
-        <section style=" background:  url('../img/app_results1.png') no-repeat center right; background-size: cover;">
-            <div class="container">
-                <div class="row  ">
-                    <div class="col-xs-8 col-sm-6">
-                        <h1>Ready to put your best food forward?</h1>
-
-                        <pre>
-                        FORM
-Input:      Name of business
-Button      Get started 
-Caption No credit card needed
-Button      Discover more features (leads to feature page)
-                        </pre>
-                    </div>
-                    <div class="col-xs-4 col-sm-6 text-center">
-
-                        <!-- <img src="../img/app_all.png" class="img-responsive" /> -->
-                    </div>
-                </div>
-            </div>
-        </section>
+   -->
 
 
         
-        <section class="clearfix bgwhite">
+        <section class="clearfix"  style=" background:  url('../img/pot.jpg') no-repeat center center; background-size: cover;">
             <div class="container features ">
-                <div class="col-sm-12  ">
+
+                        
+                <div class="col-sm-12" style="background:rgba(0,0,0,0.7); color: #fff; margin: 5% auto;">
+                <h1 class="text-center">What's inside?</h1>
                     <div class="">
                         <div class="row wpb_row section row-fluid" style=" text-align:left;">
                             <div class=" full_section_inner clearfix">
@@ -163,7 +198,7 @@ Button      Discover more features (leads to feature page)
                                             </div>
                                             <div class="icon_text_holder" style="">
                                                 <div class="icon_text_inner" style="">
-                                                    <h5 class="icon_title" style="">Save time with suggestions</h5>
+                                                    <h3 class="icon_title" style="">Save time with suggestions</h3>
                                                     <p>Save time and reduce errors as it suggests ingredients and even whole recipes</p>
                                                 </div>
                                             </div>
@@ -179,7 +214,7 @@ Button      Discover more features (leads to feature page)
                                             </div>
                                             <div class="icon_text_holder" style="">
                                                 <div class="icon_text_inner" style="">
-                                                    <h5 class="icon_title" style="">Print compliant menus</h5>
+                                                    <h3 class="icon_title" style="">Print compliant menus</h3>
                                                     <p>Choose from a variety of formats, upload your logo, include sourcing maps, and more</p>
                                                 </div>
                                             </div>
@@ -196,7 +231,7 @@ Button      Discover more features (leads to feature page)
                                             </div>
                                             <div class="icon_text_holder" style="">
                                                 <div class="icon_text_inner" style="">
-                                                    <h5 class="icon_title" style="">Unlimited menus &amp; ingredients</h5>
+                                                    <h3 class="icon_title" style="">Unlimited menus &amp; ingredients</h3>
                                                     <p>And each can have descriptions, prices, meal types.. it's as useful as you need it to be</p>
                                                 </div>
                                             </div>
@@ -216,7 +251,7 @@ Button      Discover more features (leads to feature page)
                                             </div>
                                             <div class="icon_text_holder" style="">
                                                 <div class="icon_text_inner" style="">
-                                                    <h5 class="icon_title" style=""><span class="cs">Coming soon</span> Product alerts</h5>
+                                                    <h3 class="icon_title" style=""><span class="cs">Coming soon</span> Product alerts</h3>
                                                     <p>If a supplier changes one of their ingredients we'll alert you to the change so you can reprint. </p>
                                                 </div>
                                             </div>
@@ -232,8 +267,8 @@ Button      Discover more features (leads to feature page)
                                             </div>
                                             <div class="icon_text_holder" style="">
                                                 <div class="icon_text_inner" style="">
-                                                    <h5 class="icon_title" style="">
-                                                    <span class="cs">Coming soon</span>Use on your website</h5>
+                                                    <h3 class="icon_title" style="">
+                                                    <span class="cs">Coming soon</span>Use on your website</h3>
                                                     <p>Add a few lines of code to your website and your menu will always be searchable, detailed, and up to date. </p>
                                                 </div>
                                             </div>
@@ -249,7 +284,7 @@ Button      Discover more features (leads to feature page)
                                             </div>
                                             <div class="icon_text_holder" style="">
                                                 <div class="icon_text_inner" style="">
-                                                    <h5 class="icon_title" style="">Showcase your suppliers</h5>
+                                                    <h3 class="icon_title" style="">Showcase your suppliers</h3>
                                                     <p>Everyone loves local food from great suppliers - we'll help you show them on your menu </p>
                                                 </div>
                                             </div>
@@ -269,8 +304,8 @@ Button      Discover more features (leads to feature page)
                                             </div>
                                             <div class="icon_text_holder" style="">
                                                 <div class="icon_text_inner" style="">
-                                                    <h5 class="icon_title" style="">
-                                                    <span class="cs">Coming soon</span> Share it anywhere &amp; everywhere</h5>
+                                                    <h3 class="icon_title" style="">
+                                                    <span class="cs">Coming soon</span> Share it anywhere &amp; everywhere</h3>
                                                     <p>Simply click a button and your information will be everywhere it needs to be, from booking services to discovery apps</p>
                                                 </div>
                                             </div>
@@ -286,8 +321,8 @@ Button      Discover more features (leads to feature page)
                                             </div>
                                             <div class="icon_text_holder" style="">
                                                 <div class="icon_text_inner" style="">
-                                                    <h5 class="icon_title" style="">
-                                                    <span class="cs">Coming soon</span> Get offers</h5>
+                                                    <h3 class="icon_title" style="">
+                                                    <span class="cs">Coming soon</span> Get offers</h3>
                                                     <p>Your menu is a shopping list - if you like, we'll help find you offers from great local suppliers. </p>
                                                 </div>
                                             </div>
@@ -301,7 +336,7 @@ Button      Discover more features (leads to feature page)
                                             </div>
                                             <div class="icon_text_holder" style="">
                                                 <div class="icon_text_inner" style="">
-                                                    <h5 class="icon_title" style=""><span class="cs">Coming soon</span> See how you compare</h5>
+                                                    <h3 class="icon_title" style=""><span class="cs">Coming soon</span> See how you compare</h3>
                                                     <p>Because we have hundreds of food businesses using FoodTrade we can show you how you match up</p>
                                                 </div>
                                             </div>
@@ -317,7 +352,7 @@ Button      Discover more features (leads to feature page)
                                             </div>
                                             <div class="icon_text_holder" style="">
                                                 <div class="icon_text_inner" style="">
-                                                   <h5 class="icon_title" style="">Futureproof</h5>
+                                                   <h3 class="icon_title" style="">Futureproof</h3>
                                                     <p>Two more rounds of EU food law changes are coming.With us, you’ll be prepared</p>
                                                 </div>
                                             </div>
@@ -334,35 +369,18 @@ Button      Discover more features (leads to feature page)
         </section>
 
 
-        <section style=" background:  url('../img/app_results1.png') no-repeat center right; background-size: cover;">
-            <div class="container">
-                <div class="row  ">
-                    <div class="col-xs-12">
-                        <h1>about us page</h1>
-                        <pre>
-                        Mission / manifesto  > 
-sustainability
-smart 
-foodtrade.com
-ted
-etc
-</pre>
-                    </div> 
-                </div>
-            </div>
-        </section>
-  
 
 
 
-        <section id="new_theme">
+
+      <!--   <section id="new_theme">
             <div class="container-responsive">
                 <div class="row lockscreen">
                     <div class="col-sm-5 text-center">
                         <div class="theme_image"><img src="{% static "img/product.gif" %}" alt="">
                         </div>
                     </div>
-                    <div class="col-sm-6 benefits_list lead text-white" style="padding-right: 0px;">
+                    <div class="col-sm-6 col-xs-12 benefits_list lead text-white" style="padding-right: 0px;">
 
                         <h2 class="main_slogan">Don't let compliance be a headache. </h2>
 
@@ -379,7 +397,7 @@ etc
                         <i class="fa fa-check pull-left"></i> GET AHEAD OF THE GAME</h3>
                         <p>Two more rounds of EU food law changes are coming.With us, you’ll be prepared</p>
 
-        <a href="{% url 'menu_register' %}" class="btn btn-info btn-lg pull-left" id="getstarted" style="margin-right: 10px;">SIGN UP <small>Free until March, then &pound;8/mo</small>
+        <a href="#register" data-toggle="modal" class="btn btn-info btn-lg pull-left" id="getstarted" style="margin-right: 10px;">SIGN UP <small>Free until March, then &pound;8/mo</small>
         </a>
 
 
@@ -407,84 +425,297 @@ etc
                     </div>
                 </div>
             </div>
-        </section>
+        </section> -->
 
         <!-- NEW THEME SECTION END -->
         <!-- BENEFITS SECTION BEGIN -->
 
 
-        <section class="benefits_section">
-            <div class="container-responsive">
-                <div class="row">
-                    <div class="col-sm-4">
-                        <div class="benefit_image"><i class="fa fa-check"></i>
-                        </div>
-                        <h2>Hassle-free compliance</h2>
-                        <p>A simple menu offers 10,000s of potential allergen entries. With the automatic allergen labeller, you can have a printed compliant menu in minutes, leaving you to concentrate on what you do best. And if your supplier changes something? We'll notify you immediately.
-                        </p>
-                    </div>
-                    <div class="col-sm-4">
-                        <div class="benefit_image"><i class="fa fa-cutlery"></i>
-                        </div>
-                        <h2>Better food, more customers</h2>
-                        <p>We’ll connect you with your suppliers, and you can find the best ingredients from what’s around you. You can even showcase your sustainability with local supplier lists and provenance maps. This means more customers walking through your doors. </p>
-                    </div>
-                    <div class="col-sm-4">
-                        <div class="benefit_image"><i class="fa fa-rocket"></i>
-                        </div>
-                        <h2>Future-proof, forever</h2>
-                        <p>There are more regulations coming next year - nutritional information and food origin! But you won't have to worry – we’ll always keep you compliant and up-to-date. </p>
-                    </div>
-                </div>
-            </div>
-        </section>
+        
 
-        <section class="quote">
-            <div class="row">
-                <div class="col-xs-12 col-sm-10 col-sm-offset-1 lead"> 
-                <h3 class="ribbon text-left"><i class="fa fa-check fa-fw"></i> Endorsed by the people who train the EHOs</h3>
-                    <p>“The Institute of Food Safety, Integrity &amp; Protection supports FoodTrade Menu and its initiative to offer food businesses the practical tools to ensure compliance, integrity and consumer-protection, which will in turn raise the standards of food safety”</p>
-                    <img src="http://www.ifsip.org/uploadedImages/Furniture_Content/Master/ifsip-logo.png" />
-                </div>
-            </div>
-        </section>
- 
-  
+<section class="quote">
+    <div class="row">
+        <div class="col-xs-12 col-sm-10 col-sm-offset-1 lead">
+            <h3 class="ribbon text-left"><i class="fa fa-check fa-fw"></i> Endorsed by the people who train the EHOs</h3>
+            <p>“The Institute of Food Safety, Integrity &amp; Protection supports FoodTrade Menu and its initiative to offer food businesses the practical tools to ensure compliance, integrity and consumer-protection, which will in turn raise the standards of food safety”</p>
+            <img src="http://www.ifsip.org/uploadedImages/Furniture_Content/Master/ifsip-logo.png" />
+        </div>
+    </div>
 
+    <div class="row">
+        <div class="col-md-6 text-left">
+            <h2>Subscribe to updates</h2>
+            <p class="text-white">To stay up to date with release news, allergen updates, news from regulators, product recalls and more, join our FIC compliance mailing list.</p>
+        </div>
+        <div class="col-md-6">
 
-
-        <section class="subscribe_section">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-6 text-left">
-                        <h2>Subscribe to updates</h2>
-                        <p class="text-white">To stay up to date with release news, allergen updates, news from regulators, product recalls and more, join our FIC compliance mailing list.</p>
-                    </div>
-                    <div class="col-md-6">
-
-                        <form action="//sustaination.us2.list-manage.com/subscribe/post?u=79e1467c02512dbd83bddab5f&amp;id=da1305635a" method="post" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate id="subscribe_form">
-                            <div class="input-group">
-                                <input type="email" value="" name="EMAIL" class="form-control required email" id="mce-EMAIL" placeholder="Enter your email to be first to know">
-                                <div class="input-group-btn">
-                                    <button class="btn btn-default" type="submit" id="subscribe_submit"><i class="fa fa-envelope-o"></i>
-                                    </button>
-                                </div>
-                            </div>
-                            <div id="mce-responses" class="clear">
-                                <div class="response" id="mce-error-response" style="display:none"></div>
-                                <div class="response" id="mce-success-response" style="display:none"></div>
-                            </div>
-                            <div style="position: absolute; left: -5000px;">
-                                <input type="text" name="b_79e1467c02512dbd83bddab5f_da1305635a" tabindex="-1" value="">
-                            </div>
-                        </form>
+            <form action="//sustaination.us2.list-manage.com/subscribe/post?u=79e1467c02512dbd83bddab5f&amp;id=da1305635a" method="post" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate id="subscribe_form">
+                <div class="input-group">
+                    <input type="email" value="" name="EMAIL" class="form-control required email" id="mce-EMAIL" placeholder="Enter your email to be first to know">
+                    <div class="input-group-btn">
+                        <button class="btn btn-default" type="submit" id="subscribe_submit"><i class="fa fa-envelope-o"></i>
+                        </button>
                     </div>
                 </div>
-            </div>
-        </section>
+                <div id="mce-responses" class="clear">
+                    <div class="response" id="mce-error-response" style="display:none"></div>
+                    <div class="response" id="mce-success-response" style="display:none"></div>
+                </div>
+                <div style="position: absolute; left: -5000px;">
+                    <input type="text" name="b_79e1467c02512dbd83bddab5f_da1305635a" tabindex="-1" value="">
+                </div>
+            </form>
+        </div>
+    </div>
+    </div>
+</section>
+
         <!--class="subscribe"-->
 
     </div>
+
+
+<div class="modal fade" id="register">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+                </button>
+                <h4 class="modal-title text-black">Create a new account</h4>
+            </div>
+            <div class="modal-body text-black">
+                <form id="registration-form" action="{% url 'menu_register' %}" method="post">{% csrf_token %}
+                    <div class="body bg-gr ay">
+                        <div class="form-group">
+                            <label>First name</label>
+                            <input type="text" name="first_name" class="form-control" placeholder="First name" />
+                            <span class="help-text"></span>
+                        </div>
+                        <div class="form-group">
+                            <label>Last name</label>
+                            <input type="text" name="last_name" class="form-control" placeholder="Last name" />
+                            <span class="help-text"></span>
+                        </div>
+                        <div class="form-group">
+                            <label>Your email</label>
+                            <input type="text" name="username" class="form-control" placeholder="Email Address" />
+                            <span class="help-text"></span>
+                        </div>
+                        <div class="form-group">
+                            <label>Make up a password</label>
+                            <input type="password" name="password" class="form-control" placeholder="Password" />
+                            <span class="help-text">Tip: typing happy passwords makes you happier, and they're easier to remember</span>
+                        </div>
+                        <div class="form-group">
+                            <label>Type that password again</label>
+                            <input type="password" name="password2" class="form-control" placeholder="Retype password" />
+                            <span class="help-text">Just to be sure we've both got it right</span>
+                        </div>
+                        <div class="form-group">
+                            <div class="checkbox">
+                                <label for="terms">
+                                    <input type="checkbox" name="terms" /> I accept the
+                                    <a href="#" data-toggle="modal" data-target="#terms">
+                                        terms &amp; conditions of use</a>
+                                </label>
+                            </div>
+                            <span class="help-text"></span>
+                        </div>
+                    </div>
+                    <div class="footer">
+                        <button type="button" class="btn bg-olive btn-block btn-lg signup">
+                            <i class="fa fa-check"></i>
+                        Sign me up</button>
+
+                        <a href="/" class="text-center">I'm already a member</a>
+                        <a href="/" class="pull-right">Cancel</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+ 
+
+
+<div class="modal fade" id="terms">
+    <div class="modal-dialog">
+        <div class="modal-content" >
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+                </button>
+                <h4 class="modal-title text-black">Terms &amp; conditions</h4>
+            </div>
+            <div class="modal-body text-black">
+
+                <h1>For humans</h1>
+                <ul class="lead">
+                    <li>
+                        <strong>Ultimate responsibility lies with you.</strong> We'll do our best to provide a great service, but when it comes down to it, it's your food and your food business so please double check everything.
+                    </li>
+                    <li>
+                        <strong>Only run a food business you have insurance cover.</strong> Serving food is a risky business and can have very severe - even fatal - effects if you get it wrong. Because of this you should have good insurance cover already. If you don't, please get it, for your sake even if not ours. If you use this service you are declaring that you have adequate public liabilty cover for allergen errors.
+                    </li>
+                </ul>
+
+
+                <h1>For lawyers</h1>
+
+                <p>
+                    These terms of use ('Terms of Use') are a legal agreement concluded between you ('User') and Sustaination Ltd of Farthing Corner, West Tytherley, Salisbury, Wilts, SP5 1NR ('FoodTrade') for the online service, FoodTrade Menu ('Service'). Users may make use of the Service subject to agreeing to be bound by these Terms of Use.
+                </p>
+                <p>
+                    Given the critically important nature of the Service, please pay special attention to the disclaimer (Section 5) and limitation of liability (Section 6).
+                </p>
+                <p>
+                    If the User does not agree to the Terms of Use, don't use the Service.
+                </p>
+                <ol type="">
+                    <li>Scope
+                        <ol>
+                            <li>
+                                FoodTrade grants to the User rights to use the Service on these Terms of Use for the duration of payment of fees, unless otherwise terminated.
+                            </li>
+                            <li>
+                                The User may register and use the Service for the User's business purposes.
+                            </li>
+                            <li>
+                                FoodTrade reserves the right to change, suspend, remove, or disable access to the Service at any time without notice. In no event will FoodTrade be liable for loss of Service. Service fees may be refunded pro-rata at our discretion.
+                            </li>
+                        </ol>
+                    </li>
+                    <li>Consent to use and processing of data
+                        <br> The User agrees that the FoodTrade may handle personal information in accordance with the Privacy Policy which forms part of these Terms of Use.
+                    </li>
+                    <li>Restrictions
+                        <br> The User shall not:
+                        <ol>
+                            <li> duplicate the Service</li>
+                            <li> sell, re-sell, rent, lease, lend, redistribute or financially exploit the Service</li>
+                            <li> permit the Service to be combined with or incorporated into any other service or program, unless with prior written consent</li>
+                            <li>use the Service for illegal activities</li>
+                            <li>behave fraudulently</li>
+                        </ol>
+                    </li>
+                    <li>
+                        Intellectual Property
+                        <ol>
+                            <li>The User acknowledges that:
+                                <ol>
+                                    <li>all intellectual property rights in the Service belong to the FoodTrade</li>
+                                    <li>they have no rights in the Service</li>
+                                    <li>they have no right to have access to the Service in source code form</li>
+                                </ol>
+                            </li>
+                            <li>FoodTrade will be responsible for the investigation, defence, or settlement of any intellectual property infringement claim.
+                            </li>
+                        </ol>
+                    </li>
+                    <li>No warranty
+                        <br> The User agrees that use of the Service is at the User's sole risk, and that the entire responsibility for accuracy ends with the User. To the maximum extent permitted by applicable law, the Services are provided without warranty of any kind, and FoodTrade hereby disclaims all warranties and conditions with respect to the Services - either express, implied or statutory - including, but not limited to, the implied warranties and/ or conditions of merchantability, of satisfactory quality, of fitness for a particular purpose, of accuracy, and non-infringement of third party rights. FoodTrade does not warrant that the Service will meet the requirements of the User, that the operation of the Service will be uninterrupted, nor free from errors, nor that defects in the Service will be corrected. No information given by the FoodTrade or its authorised representatives will create a warranty.
+                    </li>
+                    <li>
+                        Limitation of liability
+                        <ol>
+                            <li>
+                                The User acknowledges that it is their responsibility to ensure that the outputs and functions of the Service meet their requirements. </li>
+                            <li>FoodTrade is not in any way responsible for the way the User uses the Service. The User understands that risks are inherent in identifying food allergens, and the User assumes sole responsibility for the materials they create using the Service.
+                            </li>
+                            <li>
+                                To the extent allowed under the law, FoodTrade shall not be liable for personal injury, or any incidental, special, indirect, consequential or punitive damages whatsoever, including, without limitation
+                                <ul>
+                                    <li>loss of profit.</li>
+                                    <li>
+                                        loss of business,
+                                    </li>
+                                    <li> business interruption,
+                                    </li>
+                                    <li> loss of business opportunity,
+                                    </li>
+                                    <li>loss of data or
+                                    </li>
+                                    <li>any other commercial damages or losses arising out of or related to the User's use or inability to use the Service - even if FoodTrade has been advised of the chance of such damages.
+                                    </li>
+                                    <li>
+                                        FoodTrade's total liability to the User for all damages shall not exceed &pound;100.
+                                    </li>
+                                    <li>
+                                        FoodTrade is responsible for addressing any claims including, but not limited to: product liability, any claim that the Service fails to conform regulatory requirements, and claims arising under consumer protection or similar legislation.
+                                    </li>
+                        </ol>
+                        </li>
+
+                        <li>
+                            Conditions of use
+                            <br /> The User represents and warrants that they are over 18, legally competent, and isn't wanted or opposed by the UK Government as a 'terrorist supporting' country.
+                        </li>
+                        <li>
+                            Termination
+                            <br>
+                            <ol>
+                                <li>
+                                    The Service will run until terminated by the User or FoodTrade.
+                                </li>
+                                <li>
+                                    The User's rights under the Service will end without notice if the User fails to comply with any of the Terms of Use.
+                                </li>
+                                <li>
+                                    If the User has paid for use of the Service and it is terminated by FoodTrade, FoodTrade shall compensate the User pro rata for their loss.
+                                </li>
+                            </ol>
+                        </li>
+                        <li>
+                            Other terms
+                            <ol>
+                                <li>
+                                    FoodTrade may transfer its rights and obligations under these Terms of Use to another person. Each User must agree these Terms of Use individually.
+                                </li>
+                                <li>
+                                    Each of the conditions of these Terms of Use operates separately. If any court or competent authority decided that any of them are unlawful or unenforceable, the remaining conditions will remain in effect.
+                                </li>
+                                <li>
+                                    To the extent permissisable by applicable law, the courts of England shall have jurisdiction.
+                                </li>
+                            </ol>
+                        </li>
+
+                        <li>
+                            Variations
+                            <ol>
+                                <li>
+                                    FoodTrade is entitled to revise these Terms of Use at any time.
+                                </li>
+                                <li>
+                                    If the User does not agree to the revised Terms of Use, he or she will not be bound by them if the User stops using the Service.
+                                </li>
+                            </ol>
+                        </li>
+                        <li>
+                            Disclaimer
+                            <br> The Service takes no responsibility or liability for the content captured, stored and maintained by the Service. It is the responsibility of the User to ensure the accuracy of the allergen data distributed.
+                        </li>
+                        <li>
+                            Developer name and address
+                            <br> FoodTrade is solely responsible for the Service and its content. Any questions, complaints or claims with respect to the Service should be directed to:
+                        </li>
+                        <p>
+                            Sustaination Ltd, Farthing Corner, West Tytherley, Salisbury, Wilts, SP5 1NR </p>
+                        <p>
+                            E-mail:
+                            <a href="mailto:ed@foodtrade.com">ed@foodtrade.com</a>
+                        </p>
+
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div> 
+</div> 
+
 
 
     <!-- Large footer -->
@@ -627,7 +858,7 @@ etc
 
  
    <div id="loginModal" class="form-box modal fade"  >
-            <div class="header">Sign In</div>
+            <div class="header">Log in to my account</div>
             <form action="{% url 'menu-login' %}" method="post"> {% csrf_token %}
                 <div class="body bg-gray">
                     <div class="form-group {% if failure %}has-error{% endif %}">
@@ -649,7 +880,9 @@ etc
                     {% endcomment %}
                 </div>
                 <div class="footer">                                                               
-                    <button type="submit" class="btn bg-olive btn-block">Sign me in</button>  
+                    <button type="submit" class="btn bg-olive btn-lg btn-block">
+                        <i class="fa fa-check"></i>
+                    Let's do it</button>  
                     
                     {% comment %}
                     <p><a href="#">I forgot my password</a></p>
