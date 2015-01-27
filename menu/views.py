@@ -12,7 +12,7 @@ from django.contrib.auth.decorators import login_required
 from django.template.loader import render_to_string
 from mongoengine.django.auth import User
 from menu.models import Establishment, Menu, MenuSection, Dish, Allergen, Meat, Gluten, Connection, Ingredient, ModerationIngredient
-from menu.peer import ingredient_walk, IngredientWalkPrint
+from menu.peer import ingredient_walk, IngredientWalkPrint, IngredientDBWalk
 
 
 """
@@ -168,6 +168,7 @@ def dish_lookup_name(request):
 
 @login_required(login_url=reverse_lazy('menu-login'))
 def create_dish(request):
+    html = ''
     insert_dict = deepcopy(request.POST.dict())
     insert_dict['menu_section'] = ObjectId(insert_dict['menu_section'])
     insert_dict['added_on'] = datetime.now()
@@ -175,7 +176,7 @@ def create_dish(request):
         dish = Dish.objects.get(pk=ObjectId(insert_dict['name']))
         insert_dict['name'] = dish.name
         ingredient_objs = dish.get_ingredient_names()
-    except InvalidId:
+    except InvalidId, DoesNotExist:
         pass
 
     new_dish = Dish.objects.create(**insert_dict)
@@ -183,10 +184,15 @@ def create_dish(request):
     try:
         for ingredient in ingredient_objs:
             ind = Ingredient.objects.create(**ingredient.to_mongo())
-            ind.dish = new_dishm # making sure dish reference is always right
+            ind.dish = new_dish # making sure dish reference is always right
             ind.save()
     except UnboundLocalError:
         pass
+
+    idbw = IngredientDBWalk(new_dish.pk, new_dish.get_ingredient_names())
+    html = idbw.walk().render()
+    new_dish.html = html
+    new_dish.save()
 
     return HttpResponse(json.dumps({'status': True, 'html': menu_render(request.user)}, default=json_util.default))
 
