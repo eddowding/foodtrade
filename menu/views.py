@@ -383,10 +383,23 @@ def save_moderation_ingredient(request):
     ingredient = json.loads(request.POST.get('ingredient'))
     ingredient['user'] = request.user
     ingredient['added_on'] = datetime.now()
-
+    
     Dish.objects.filter(pk=pk).update(set__html=html, set__json=request.POST.get('serialized'), set__print_html=print_html)
     ModerationIngredient.objects.create(**ingredient)
-    return HttpResponse(json.dumps({'status': True}, default=json_util.default), content_type="application/json")
+    
+    #ing  = Ingredient.objects.filter(name__iexact=ingredient['name'])
+    #updt_dish = {}
+    #for i in ing:
+    if ingredient.get('is_meat'):
+        Dish.objects.filter(pk=pk).update(set__is_meat=True)
+    elif ingredient.get('is_allergen'):
+        Dish.objects.filter(pk=pk).update(set__is_allergen=True)
+    elif ingredient.get('is_gluten'):
+        Dish.objects.filter(pk=pk).update(set__is_gluten=True)
+    #Dish.objects.filter(pk=pk).update(updt_dish)
+    #return HttpResponse(json.dumps({'status': True}, default=json_util.default), content_type="application/json")
+    return HttpResponse(json.dumps({'status': True, 'html': menu_render(request.user)}, default=json_util.default), 
+                        content_type="application/json")
 
 
 @login_required(login_url=reverse_lazy('menu-login'))

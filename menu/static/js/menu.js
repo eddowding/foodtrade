@@ -635,7 +635,11 @@ $(document).ready(function() {
         type: 'POST',
         dataType: 'JSON',
         success: function(data) {
-          console.info('Ingredient Toggle', data);
+          //console.info('Ingredient Toggle', data);
+          $('.menus').html(data.html);
+          sortableFn();
+          editableFn();
+          
         }
       });
     };
