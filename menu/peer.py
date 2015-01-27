@@ -46,7 +46,7 @@ class IngredientWalk(object):
         tmp_span_1.add(i(cls='fa fa-navicon'))
         tmp_span_2 = ret_li.add(span(cls='ingredient'))
         tmp_span_2.add(a(ingredient_name, cls='ingredient-item-name', data_pk=ingredient_id, data_name=ingredient_name))
-        tmp_div_1_1 = ret_li.add(div(cls='tools'))
+        tmp_div_1_1 = ret_li.add(span(cls='tools'))
         tmp_div_1_1_a_1 = tmp_div_1_1.add(a(data_id=ingredient_id, data_url=reverse_lazy('menu_delete_ingredient'), data_name=ingredient_name, cls='delete-btn', data_toggle='tooltip', title='Remove this ingredient'))
         tmp_div_1_1_a_1.add(i(cls='fa fa-trash-o'))
         tmp_div_1_1_a_2 = tmp_div_1_1.add(a(title='Add nutrition info', data_toggle='modal', data_target='#nutrition', cls='nutrition'))
