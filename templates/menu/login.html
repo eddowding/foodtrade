@@ -95,7 +95,7 @@
 <div class="container">
     <div class="row">
         <div class="col-xs-12 text-center">
-            <img src="../img/123steps.gif" alt="it's this easy." class="img-responsive img-thumbnail" />
+            <img src="../img/123steps.gif" alt="it's this easy." class="img-responsive img-thumbnail" style="max-height:40vh;" />
 
             <h1>It couldn't be easier. Just type, and print.</h1>
    
@@ -106,6 +106,7 @@
             <div class="benefit_image"><i class="fa fa-check"></i>
             </div>
             <h2>Hassle-free compliance</h2>
+            <div class="clearfix"></div>
             <p>A simple menu offers 10,000s of potential allergen entries. With the automatic allergen labeller, you can have a printed compliant menu in minutes, leaving you to concentrate on what you do best. And if your supplier changes something? We'll notify you immediately.
             </p>
         </div>
@@ -432,19 +433,38 @@ etc -->
 
 
         
+<section class="quote" style=" background:  url('../img/training.jpg')  left top no-repeat; background-size: cover;">
+    <div class="row" style="padding: 0px 0; margin: 30% 0 0 0;">
+        <div class="col-xs-12 col-sm-7 lead">
+            <div style="color: #000; background: rgba(255,255,255,0.7); padding: 0.5em 1em 2em 1em;">
+                <!-- <h1 style="color: #fff; margin: 0.5em 0;" > -->
 
-<section class="quote">
-    <div class="row">
-        <div class="col-xs-12 col-sm-10 col-sm-offset-1 lead">
-            <h3 class="ribbon text-left"><i class="fa fa-check fa-fw"></i> Endorsed by the people who train the EHOs</h3>
-            <p>“The Institute of Food Safety, Integrity &amp; Protection supports FoodTrade Menu and its initiative to offer food businesses the practical tools to ensure compliance, integrity and consumer-protection, which will in turn raise the standards of food safety”</p>
-            <img src="http://www.ifsip.org/uploadedImages/Furniture_Content/Master/ifsip-logo.png" />
+                <!-- <div class="col-xs-12 col-sm-10 col-sm-offset-1 lead"> -->
+                <h3 class="ribbon text-left"><i class="fa fa-check fa-fw"></i> Endorsed by the people who train the EHOs</h3>
+                <p>“The Institute of Food Safety, Integrity &amp; Protection supports FoodTrade Menu and its initiative to offer food businesses the practical tools to ensure compliance, integrity and consumer-protection, which will in turn raise the standards of food safety”</p>
+                <img src="http://www.ifsip.org/uploadedImages/Furniture_Content/Master/ifsip-logo.png" />
+
+                <div style="display: block; margin: 0.6em 0;">
+                    <button class="btn btn-lg btn-success" style="margin: 0.6em 0;" href="#register" data-toggle="modal">
+                        <i class="fa fa-check fa-fw"></i>
+                        <strong>Okay, I'm convinced. Sign me up!</strong>
+                    </button>
+                    <a href="mailto:therese@foodtrade.com" class="btn btn-lg btn-default">
+                        <i class="fa fa-envelope-o fa-fw"></i> I still have a question
+                    </a>
+                </div>
+            </div>
         </div>
+</section>
+
+
+        <!--class="subscribe"-->
+
     </div>
 
-    <div class="row">
-        <div class="col-md-6 text-left">
-            <h2>Subscribe to updates</h2>
+<footer style="position: fixed; bottom: 0; background: #000; margin:0; padding: 5px; color: #ccc;">
+      <div class="row">
+        <div class="col-md-6 text-left"> 
             <p class="text-white">To stay up to date with release news, allergen updates, news from regulators, product recalls and more, join our FIC compliance mailing list.</p>
         </div>
         <div class="col-md-6">
@@ -467,12 +487,7 @@ etc -->
             </form>
         </div>
     </div>
-    </div>
-</section>
-
-        <!--class="subscribe"-->
-
-    </div>
+</footer>
 
 
 <div class="modal fade" id="register">
