@@ -53,7 +53,7 @@ class IngredientWalk(object):
         tmp_div_1_1_a_2.add(i(cls='fa fa-heart'))
         tmp_div_1_1_a_3 = tmp_div_1_1.add(a(data_dish_id=dish_id, cls='add-sub-ingredients', title='Add sub-ingredient'))
         tmp_div_1_1_a_3.add(i(cls='fa fa-plus-circle'))
-        tmp_div_2 = ret_li.add(div(cls='btn-group btn-group-sm pull-right mag-toggle', data_toggle='buttons'))
+        tmp_div_2 = ret_li.add(div(cls='mag btn-group btn-group-sm pull-right mag-toggle', data_toggle='buttons'))
         if ingredient_dict.get('is_allergen'):
             tmp_div_2_label_1 = tmp_div_2.add(label('Allergen', cls='btn btn-allergen active'))
             tmp_div_2_label_1.add(input(type='checkbox', autocomplete='off', checked='checked'))
