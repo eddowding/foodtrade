@@ -199,6 +199,30 @@ a.editable-click:hover {
 .del {
   display: inline-block;
 }
+.flagged {
+  border: 1px solid;
+  padding: 0 3px;
+  margin-right: 3px;
+  opacity: 0.3;
+}
+.flagged.active {
+  opacity: 1;
+  background: inherit;
+  color: #fff;
+  font-weight: bolder;
+}
+.flagged.active.meat {
+  background: #a30012;
+  border-color: #a30012;
+}
+.flagged.active.allergen {
+  background: #4b9ed9;
+  border-color: #4b9ed9;
+}
+.flagged.active.gluten {
+  background: #ed482a;
+  border-color: #ed482a;
+}
 .action {
   background: #eee;
   padding: 5px;

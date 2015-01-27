@@ -43,7 +43,7 @@ class IngredientWalk(object):
         ingredient_name = ingredient_dict.get('name')
         ret_li = li(data_dish_id=dish_id, data_ingredient_id=ingredient_id, cls="ingredient-item")
         tmp_span_1 = ret_li.add(span(cls='handle'))
-        tmp_span_1.add(i(cls='fa fa-navicon')) 
+        tmp_span_1.add(i(cls='fa fa-navicon'))
         tmp_span_2 = ret_li.add(span(cls='ingredient'))
         tmp_span_2.add(a(ingredient_name, cls='ingredient-item-name', data_pk=ingredient_id, data_name=ingredient_name))
         tmp_div_1 = ret_li.add(div(cls='del'))
@@ -157,7 +157,7 @@ class IngredientWalkPrint(object):
                     except AttributeError:
                         continue
 
-                parent_span_div = parent_span.add(div(cls='has_children'))
+                parent_span_div = parent_span.add(span(cls='has_children'))
 
                 if not ingredient['ingredientId'] in self.parent_span_div_ref:
                     self.parent_span_div_ref[ingredient['ingredientId']] = parent_span_div
@@ -173,7 +173,7 @@ class IngredientWalkPrint(object):
                         parent_span = self.html.add(self._generate_span(ingredient_id=ingredient['ingredientId']))
                     except AttributeError:
                         continue
-                parent_span_div = parent_span.add(div(cls='has_children'))
+                parent_span_div = parent_span.add(span(cls='has_children'))
 
     def walk(self):
         self._get_ingredients_dict()
