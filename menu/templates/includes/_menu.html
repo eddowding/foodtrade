@@ -20,7 +20,7 @@
                             <a data-id={{menu.pk}} data-url={% url 'menu_delete_menu' %} class="delete-btn" data-toggle="tooltip" title="This will delete the entire menu!"><i class="fa fa-trash-o fa-fw"></i>Delete Menu</a>
                         </li>
                         <li>
-                            <a href="#print" data-toggle="modal" title="See a printable version" target="_blank" target="_blank"><i class="fa fa-fw fa-print"></i> Print</a>
+                            <a href="{% url 'menu_print_preview_menu' menu.id %}"  title="See a printable version" target="_blank" target="_blank"><i class="fa fa-fw fa-print"></i> Print</a>
                         </li>
                         <!--    <li>
                             <a href="#" data-toggle="tooltip" title="Coming soon!" class="text-muted"><i class="fa  fa-fw fa-download"></i> Generate PDF</a>
