@@ -175,6 +175,9 @@ def create_dish(request):
     try:
         dish = Dish.objects.get(pk=ObjectId(insert_dict['name']))
         insert_dict['name'] = dish.name
+        #insert_dict.update({'is_allergen':dish.is_allergen,
+        #                    'is_meat':dish.is_meat,
+        #                    'is_gluten':dish.is_gluten})
         ingredient_objs = dish.get_ingredient_names()
     except InvalidId, DoesNotExist:
         pass
@@ -194,8 +197,11 @@ def create_dish(request):
         new_dish.save()
     except UnboundLocalError:
         pass
+    except ValueError:
+        pass
 
-    return HttpResponse(json.dumps({'status': True, 'html': menu_render(request.user)}, default=json_util.default))
+    return HttpResponse(json.dumps({'status': True, 'html': menu_render(request.user), 'dish_id':str(new_dish.pk) if new_dish.html else ''
+                                    }, default=json_util.default))
 
 
 @login_required(login_url=reverse_lazy('menu-login'))
@@ -203,7 +209,10 @@ def update_dish(request):
     pk = ObjectId(request.POST.get('pk'))
     html = request.POST.get('html')
     if html:
-        serialized = json.loads(request.POST.get('serialized'))
+        serialized = json.loads(request.POST.get('serialized')) if request.POST.get('serialized') else ''
+        if not serialized:
+            dish = Dish.objects.get(pk=ObjectId(pk))
+            serialized = dish.json
         ingredient_walk(serialized)
         iwp = IngredientWalkPrint(request.POST.get('pk'), serialized)
         print_html = iwp.walk().render()

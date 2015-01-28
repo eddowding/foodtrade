@@ -110,7 +110,9 @@ $(document).ready(function() {
 	          data: data,
 	          type: 'POST',
 	          dataType: 'JSON',
-	          success: function(data) {}
+	          success: function(data) {
+	          	console.log(data);
+	          }
 	        });
 
 	        _super($item, container);
@@ -281,7 +283,7 @@ $(document).ready(function() {
       dataType: 'JSON',
       success: function(data) {
         $('.menus').html(data.html);
-	    if (data.old_dish_id){
+	    /*if (data.old_dish_id){
 	        var ultree = '.tree[data-dish-id='+data.new_dish_id +'] > ul';
 	        $(ultree).attr('data-dish-id', data.new_dish_id);
 	        var litree = '.tree[data-dish-id='+ data.new_dish_id +'] > ul > li';
@@ -311,13 +313,30 @@ $(document).ready(function() {
 			      }
 	  			});
 			});
-		}
+		}*/
         $('#dishModal input[name="menu_section"]').val('');
         $('#dishModal input[name="price"]').val('');
         $('#dishModal input[name="description"]').val('');
         $('#dishModal input[name="name"]').val('');
         $('#dishModal input#name').val('');
-        sortableFn();
+        if(data.dish_id){
+	        var ultree = ".tree[data-dish-id='" + data.dish_id +"'] > ul";
+	        var update_data = {
+		          pk: data.dish_id,
+		          html: $(ultree).parents('div.tree').html(),
+		          serialized: '[]'
+		     };
+	
+	        $.ajax({
+	          url: updateDishUrl + '?_tmp=' + (new Date).getTime(),
+	          data: update_data,
+	          type: 'POST',
+	          dataType: 'JSON',
+	          success: function(result) {
+	          	//console.log(result);
+	          }
+	        });
+        }
         editableFn();
         dishSelected = false;
       }
