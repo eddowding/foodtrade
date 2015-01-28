@@ -35,9 +35,8 @@
     <script src="//code.jquery.com/ui/1.11.1/jquery-ui.min.js" type="text/javascript"></script>
 	<script src="{% staticfile '/typeahead.js/dist/typeahead.bundle.min.js' %}"></script>
 	
-       <meta itemprop="name" content="FoodTrade Menu - don't let compliance be a headache." />
-    <meta itemprop="description" content="Getting allergen compliance wrong costs £5,000. Our allergen menu tool costs a lot less" />
-    <a href="https://plus.google.com/+foodtradeHQ" rel="publisher"></a>
+    <meta itemprop="name" content="FoodTrade Menu - don't let compliance be a headache." />
+    <meta itemprop="description" content="Getting allergen compliance wrong costs £5,000. Our allergen menu tool costs a lot less" /> 
     <!-- Google info -->
     <meta property="business:contact_data:website" content="http://www.foodtrade.menu" />
     <!-- Twitter info -->
@@ -326,13 +325,12 @@
 
                 <ul class="sidebar-menu">
                     <li><a href="{% url 'menu' %}"><i class="ion ion-clipboard" style="font-size: 1.4em;"></i> My Menus <small class="badge pull-right bg-green">{{ menus.count }}</small></a>
-                    </li>
-                    {% comment %}
+                    </li> 
                     <li><a href="{% url 'menu_connection' %}"><i class="fa fa-sign-in"></i> My suppliers<small class="badge pull-right bg-green">{{ sellers.count }}</small></a>
                     </li>
                     <li><a href="{% url 'menu_connection' %}"><i class="fa fa-sign-out"></i> My stockists<small class="badge pull-right bg-green">{{ buyers.count }}</small></a>
                     </li>
-                    {% endcomment %}
+                     
 
                     <li class="treeview">
                         <a href="#" data-toggle="modal" data-target="#comingsoon" class="text-muted">
