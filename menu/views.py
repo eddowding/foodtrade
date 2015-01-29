@@ -256,6 +256,16 @@ def create_ingredient(request):
     insert_dict['is_gluten'] = True if Gluten.objects.filter(name__iexact=insert_dict['name']).count() else False
     insert_dict['added_on'] = datetime.now()
     ingredient = Ingredient.objects.create(**insert_dict)
+    
+    # update dish as it is now allergen, meat or gluten
+    dish = Dish.objects.get(pk=ObjectId(request.POST.get('dish')))
+    if insert_dict['is_allergen']:
+        dish.is_allergen = True
+    if insert_dict['is_meat']:
+        dish.is_meat = True
+    if insert_dict['is_gluten']:
+        dish.is_gluten = True
+    dish.save()
     return HttpResponse(json.dumps({'status': True, 'obj': ingredient.to_mongo()}, default=json_util.default), content_type="application/json")
 
 
