@@ -1,0 +1,1 @@
+/Users/eddowding/Sites/FTweetNepal/static/menu/js/plugins/iCheck/icheck.min.js

@@ -1,0 +1,224 @@
+.content a {
+  color: #61AE32;
+  color: red !important;
+}
+.content a.btn {
+  color: #fff;
+}
+.strong {
+  font-weight: bold;
+}
+.menuitem {
+  background: #ECE5CE;
+  border-left: 2px solid #e6e7e8;
+  padding: 5px 0 10px 5px;
+  margin: 2px 0;
+  border-radius: 2px;
+}
+.box .ingredient-tree {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.box .ingredient-tree > li {
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px;
+  margin-bottom: 2px;
+  color: #444;
+  position: relative;
+  margin: 2px 0 0 20px;
+  padding: 3px;
+  font-weight: normal !important;
+  list-style: none;
+  clear: both;
+  background: rgba(255, 255, 255, 0.4);
+  border: 2px solid rgba(255, 255, 255, 0.6);
+}
+.box .ingredient-tree > li:last-of-type {
+  margin-bottom: 0;
+}
+.box .ingredient-tree li a {
+  font-weight: bold;
+}
+.box .ingredient-tree li li a {
+  font-weight: normal;
+  padding-left: 3px;
+}
+.box .ingredient-tree li .handle {
+  padding: 0 5px;
+}
+.box .ingredient-tree li .handle i {
+  color: rgba(0, 0, 0, 0.4);
+}
+.box .ingredient-tree li li .handle i {
+  color: rgba(0, 0, 0, 0.2);
+}
+.box .ingredient-tree li p {
+  margin-left: 21px;
+}
+.box .ingredient-tree ul {
+  padding: 0;
+  list-style: none;
+  display: block;
+  margin: 5px 0;
+}
+.box .ingredient-tree ul li {
+  border: 2px solid #fff;
+  border-right: 0;
+  margin: 2px 0 0 20px;
+  padding: 3px 0px 3px 3px;
+  font-weight: normal !important;
+  list-style: none;
+  clear: both;
+  background: rgba(255, 255, 255, 0.9);
+}
+.box .ingredient-tree .tools i {
+  color: #3878B3;
+}
+.box .ingredient-tree ul ul {
+  padding: 0;
+  list-style: none;
+  display: block;
+  margin: 5px 0;
+}
+.box .ingredient-tree ul ul li {
+  margin: 2px 0 0 20px;
+  padding: 3px 0px 3px 3px;
+  font-weight: normal !important;
+  list-style: none;
+  clear: both;
+  background: rgba(255, 255, 255, 0.9);
+}
+h3 i {
+  font-size: 80%;
+  color: #ccc;
+}
+.box h3 {
+  margin: 0 0 5px 0;
+  float: left;
+}
+.section_head {
+  margin-bottom: 10px;
+  margin-top: 30px;
+  border-bottom: 3px solid #444;
+}
+.editable-click,
+a.editable-click {
+  text-decoration: none;
+  color: #444;
+  border-bottom: 0 !important;
+}
+a.editable-click:hover {
+  text-decoration: underline !important;
+  border-bottom: 0;
+}
+.flagged {
+  border: 1px solid;
+  padding: 0 3px;
+  margin-right: 3px;
+  opacity: 0.3;
+}
+.flagged.active {
+  opacity: 1;
+  background: inherit;
+  color: #fff;
+  font-weight: bolder;
+}
+.flagged.active.meat {
+  background: #A30012;
+}
+.flagged.active.allergen {
+  background: #4CAC48;
+}
+.flagged.active.gluten {
+  background: #ED482A;
+}
+.meat {
+  border-color: #A30012;
+  color: #A30012;
+}
+.allergen {
+  border-color: #4CAC48;
+  color: #4CAC48;
+}
+.gluten {
+  border-color: #ED482A;
+  color: #ED482A;
+}
+.action {
+  background: #eee;
+  padding: 5px;
+  border: 1px solid #aaa;
+}
+#output {
+  background: #fff;
+  padding: 0.5em 2em 2em 2em;
+  box-shadow: 0 0 10px #444 inset;
+}
+#output * {
+  font-family: Georgia;
+  text-align: center;
+}
+#output p {
+  font-size: 1.5em;
+}
+#output h2 {
+  border-bottom: 2px solid;
+  padding: 0.5em;
+}
+#output h3 {
+  border-bottom: 1px solid;
+  padding: 1em 0 0.3em 0;
+  width: 60%;
+  margin: 0 auto;
+}
+.allergen_detail {
+  font-size: 12px;
+  clear: both;
+  display: block;
+}
+.supplier {
+  font-weight: bold;
+}
+.produce {
+  font-style: italic;
+}
+#connectionsList h4 {
+  font-weight: bold;
+  border-bottom: 1px solid;
+}
+#connectionsList ul {
+  padding: 0;
+  list-style: none;
+}
+li.divider {
+  background: #666;
+  height: 2px;
+}
+.pull-right label {
+  margin-left: 10px;
+}
+.new {
+  background: #ffc;
+}
+.produce_tags a:after {
+  content: ",";
+}
+.produce_tags a:hover {
+  text-decoration: underline;
+  color: #444;
+}
+table th {
+  text-transform: uppercase;
+  background: #3878B3;
+  color: #fff;
+}
+body > .header .logo {
+  font-family: 'Source Sans Pro', cursive;
+  font-weight: 900;
+  background: #61AE32;
+}
+a.text-muted {
+  color: #666 !important;
+}

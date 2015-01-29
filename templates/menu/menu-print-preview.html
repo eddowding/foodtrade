@@ -1,6 +1,33 @@
 {% extends 'menu_base.html' %} {% load staticfiles %} {% load socialaccount %} {% load url from future %} {% load i18n %} {% load account %} {% block body_class %}skin-black pace-done{% endblock %} {% block header %}{% endblock %} {% block main_content %}
 
 <!-- <a href="javascript:window.print()" id="printPage"><i class="fa fa-print fa-fw fa-lg"></i> Print this page</a> -->
+<style type="text/css">
+    @media print {
+            .noprint {
+            display: none;
+            }
+        }
+    body, html {
+        background: #fff;
+        padding: 0;
+    }
+    .content {
+        background: #fff;
+    }
+    .noprint {
+        margin: 2em;
+    }
+</style>
+<div class="noprint alert alert-warning lead">
+ <h1>Before you print...</h1>
+ <p>Without wishing to be <em>too</em> melodramatic, the information you're about to print could kill someone.</p><p>
+We're covered by our disclaimers and insurance, but you're not! So before you hand this out, please check it.</p>
+<p>By printing this, your businesses takes full responsibility for the information given to customers.
+</p>
+<p><a href="#" onClick="window.print();return false" class="btn btn-success btn-lg" style="margin-top: 1em;"><i class="fa fa-print fa-fw fa-lg"></i>  Agree &amp; Print</a></p>
+<p><strong>PS. It's okay, this message will not show up when you print!</strong></p>
+
+</div>
 <div id="printed">
 
     <!-- Main content -->
@@ -19,7 +46,7 @@
 
                             <span class="dish_price">
                                 &pound;
-                                {{ dish.price }}
+                                {{ dish.price|floatformat:2 }}
                             </span>
                         </div>
                         <!-- 
@@ -50,9 +77,9 @@
         </div>
     </section>
 </div>
-<script type="text/javascript">
+<!-- <script type="text/javascript">
 window.onload = function() {
     self.print();
 }
-</script>
+</script> -->
 {% endblock %}

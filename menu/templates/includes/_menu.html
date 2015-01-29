@@ -20,7 +20,7 @@
                             <a data-id={{menu.pk}} data-url={% url 'menu_delete_menu' %} class="delete-btn" data-toggle="tooltip" title="This will delete the entire menu!"><i class="fa fa-trash-o fa-fw"></i>Delete Menu</a>
                         </li>
                         <li>
-                            <a href="#print" data-toggle="modal" title="See a printable version" target="_blank" target="_blank"><i class="fa fa-fw fa-print"></i> Print</a>
+                            <a href="{% url 'menu_print_preview_menu' menu.id %}"  title="See a printable version" target="_blank" target="_blank"><i class="fa fa-fw fa-print"></i> Print</a>
                         </li>
                         <!--    <li>
                             <a href="#" data-toggle="tooltip" title="Coming soon!" class="text-muted"><i class="fa  fa-fw fa-download"></i> Generate PDF</a>
@@ -117,7 +117,7 @@
                                 <a data-id={{dish.pk}} data-url={% url 'menu_delete_dish' %} class="delete-btn"><i class="fa fa-trash-o"></i></a>
                                 <a data-id={{dish.pk}} data-toggle="modal" href="#editDishModal" data-url={% url 'menu_update_dish' %} data-menu-section-id ={{ section.id }} data-description="{{dish.description}}" data-price={{ dish.price|floatformat:2 }} data-name="{{ dish.name }}" class="edit-btn"><i class="fa fa-edit"></i></a>
                             </span>
-                            <div class="pull-right">
+                            <div class="pull-right hidden">
                                 <span class="allergen flagged {% if dish.is_allergen %}active{% endif %}" data-toggle="tooltip" title="Allergen" data-original-title="Allergen">A</span>
 
                                 <span class="meat flagged  {% if dish.is_meat %}active{% endif %}" data-toggle="tooltip" title="Meat">M</span>

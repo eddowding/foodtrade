@@ -1,0 +1,758 @@
+@import url(http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800&subset=latin,cyrillic-ext,latin-ext,cyrillic);
+
+body, * {
+  color: #444;
+}
+
+.text-white, 
+.text-white * {
+  color: #fff !important;
+}
+
+.cs {
+  float: right;
+  color: #fff;
+  background: purple;
+  padding: 2px 5px;
+  border-radius: 5px;
+  font-size: 11px;
+  text-transform: uppercase;
+  font-weight: bold;
+}
+
+.text-black {
+  color: #444;
+}
+
+.icon_title {
+  text-transform: uppercase;
+}
+
+.lockscreen {
+  background: url(../img/home.jpg) fixed center top;
+  background-size: cover;
+}
+.quote {
+  border: 10px solid #521336;
+  border-width: 10px 0;
+  text-align: center;
+  color: #222;
+  background: #D1EFEF;
+  padding: 50px !important;
+}
+.quote p {
+  font-weight: 400;
+  font-style: italic;
+  font-family: Georgia;
+  margin: 30px 0;
+  color: #444;
+  line-height: 1.7;
+}
+.quote img {
+  padding: 10px;
+}
+#getstarted {
+  margin: 30px 0;
+  font-weight: bold;
+  font-size: 1.1em; 
+  /*padding: 15px 30px;*/
+  border-radius: 5px;
+  /*border: 1px solid rgba(0, 0, 0, 0.3);*/
+  box-shadow: 0 0 15px #fff;
+  text-shadow: 0 0 3px rgba(0, 0, 0, 0.5);
+}
+#getstarted small {
+  font-size: 14px;
+  margin-top: 5px;
+  font-weight: normal;
+  color: rgba(255, 255, 255, 0.95) !important;
+  display: block;
+}
+.ribbon {
+  background: #521336;
+  padding: 10px 10px;
+  color: #fff;
+  border-radius: 10px;
+  display: inline-block;
+  margin-bottom: 10px;
+}
+.features h5 {
+  font-weight: bold;
+}
+.features i {
+  float: left;
+}
+.features .icon_text_holder {
+  margin-left: 50px;
+}
+/*=============================== COLOR SETTINGS BEGIN ================================*/
+h2,
+a,
+.soc_nav li a,
+#subscribe_form .btn {
+  color: #576d30;
+  /*  Fonts Color 1*/
+}
+.benefit_image,
+.owl-pagination .owl-page span,
+.gallery_pics:hover {
+  background: #576d30;
+  /*  Backgrounds Color 1  */
+}
+#wrap {
+  background: rgba(87, 109, 48, 0.9);
+  /*  Backgrounds Color 1 RGBA (converter http://hex.colorrrs.com)  */
+}
+.subscribe_section {
+  background: rgba(87, 109, 48, 0.4);
+  /*  Backgrounds Color 1 RGBA (converter http://hex.colorrrs.com)  */
+}
+.soc_nav li a {
+  border-color: rgba(87, 109, 48, 0.2);
+  /*  Backgrounds Color 1 RGBA  */
+}
+body {
+  color: #4f4f4f;
+}
+#new_theme,
+#new_theme h2,
+.countdown > li > div,
+.benefit_image i,
+.subscribe_section h2,
+.subscribe_section,
+#subscribe_form .input-group .form-control:focus,
+#subscribe_form .input-group .form-control,
+#subscribe_form .error,
+.owl-carousel .owl-item div > p {
+  color: #ffffff;
+  /*  Fonts Color 2*/
+}
+.benefits_section,
+#footer,
+#subscribe_form .btn {
+  background: #ffffff;
+  /*  Backgrounds Color 2  */
+}
+.countdown > li > div,
+.sub_slogan {
+  border-color: rgba(255, 255, 255, 0.3);
+  /*  Borders Color 2 RGBA */
+}
+.countdown > li .dot,
+.percent {
+  background: rgba(255, 255, 255, 0.3);
+  /*  Backgrounds Color 2 RGBA */
+}
+.carousel_section {
+  background: rgba(255, 255, 255, 0.9);
+  /*  Backgrounds Color 2 RGBA  */
+}
+.text_section {
+  background: rgba(255, 255, 255, 0.95);
+  /*  Backgrounds Color 2 RGBA  */
+}
+.owl-carousel .owl-item div > p {
+  background: rgba(87, 109, 48, 0.7);
+  /*  Backgrounds Color 2 RGBA */
+}
+#subscribe_form .input-group .form-control::-moz-placeholder {
+  color: rgba(255, 255, 255, 0.5);
+}
+#subscribe_form .input-group .form-control::-webkit-input-placeholder {
+  color: rgba(255, 255, 255, 0.5);
+}
+#subscribe_form .input-group {
+  border-color: #ffffff;
+  /*  Borders Color 2 */
+}
+/*=============================== COLOR SETTINGS END ================================*/
+/*=============================== COMMON BEGIN ================================*/
+* {
+  margin: 0;
+  padding: 0;
+}
+body {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 16px;
+  font-weight: 300;
+  line-height: 1.5;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 300;
+}
+h2 {
+  font-size: 35px;
+  margin-bottom: 20px;
+}
+h3 {
+  font-size: 28px;
+  margin-bottom: 20px;
+}
+a:focus {
+  outline: 0;
+}
+#wrap {
+  min-height: 10%;
+}
+#wrap > section {
+  padding: 50px 0;
+}
+/*=============================== COMMON END ================================*/
+/*=============================== HEADER BEGIN ================================*/
+#header {
+  padding: 50px 0 55px;
+  position: relative;
+}
+.main_slogan {
+  padding-top: 50px;
+}
+#wrap #new_theme {
+  padding: 0px;
+}
+.bgwhite {
+  background: #fff;
+}
+#new_theme h2 {
+  font-size: 50px;
+  line-height: 50px;
+  font-weight: 800;
+  text-transform: uppercase;
+  margin: -10px 0 25px;
+}
+.theme_image {
+  margin: 10px 0 0 0px;
+}
+.sub_slogan {
+  font-size: 25px;
+  font-weight: 500;
+  line-height: 32px;
+  text-transform: uppercase;
+  border-top-width: 1px;
+  border-top-style: solid;
+  display: inline-block;
+  padding-top: 15px;
+  margin-bottom: 10px;
+}
+.subsub {
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 1.2;
+  margin-bottom: 20px;
+}
+.countdown {
+  margin-left: -30px;
+}
+.countdown > li {
+  padding-left: 30px;
+  list-style: none;
+  display: inline-block;
+  position: relative;
+}
+.countdown > li:first-child .dot {
+  background: none;
+}
+.countdown > li > div {
+  width: 110px;
+  height: 140px;
+  text-align: center;
+  border-width: 2px;
+  border-style: solid;
+  border-radius: 8px;
+  position: relative;
+  overflow: hidden;
+}
+.countdown > li > div > div {
+  border-radius: 0 0 5px 5px;
+}
+.countdown > li p span {
+  font-size: 40px;
+  margin: 15px 0;
+  display: block;
+}
+.countdown > li p em {
+  font-size: 18px;
+  font-style: normal;
+  text-transform: uppercase;
+}
+.countdown > li .dot {
+  width: 6px;
+  height: 6px;
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  margin-top: -3px;
+  border-radius: 3px;
+}
+.percent {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+}
+/*=============================== HEADER END ================================*/
+/*=============================== BENEFITS BEGIN ================================*/
+.benefits_section > div {
+  text-align: center;
+  margin-bottom: 30px;
+}
+.benefits_section .row > div {
+  padding: 0 45px;
+}
+.benefit_image {
+  width: 150px;
+  height: 150px;
+  line-height: 175px;
+  text-align: center;
+  margin: 30px auto 0;
+  border-radius: 75px;
+}
+.benefit_image i {
+  font-size: 56px;
+}
+.benefit_image .inline {
+  width: 100px;
+  height: 100px;
+  line-height: auto;
+}
+.benefit_image .inline i {
+  font-size: 2px;
+}
+.benefits_list h3 {
+  font-weight: bold;
+  text-shadow: 0 0 6px #000;
+}
+.benefits_list p {
+  margin: 0;
+  padding: 0;
+  font-weight: 400;
+  text-shadow: 0 0 6px #000;
+}
+.benefits_list i {
+  position: relative;
+  top: 5px;
+  text-shadow: 0 0 10px #fff;
+}
+/*=============================== BENEFITS END ================================*/
+/*=============================== TEXT BEGIN ================================*/
+#wrap .text_section {
+  padding-bottom: 120px;
+}
+.text_section .row > div {
+  margin-top: 50px;
+}
+.text_section .row:first-child > div {
+  margin-top: 0px;
+}
+.text_section img {
+  max-width: 100%;
+  height: auto;
+}
+.text_section ul {
+  margin-top: 25px;
+}
+.text_section li {
+  margin: 0 0 20px 20px;
+  padding-left: 10px;
+}
+/*=============================== TEXT END ================================*/
+/*=============================== GALLERY BEGIN ================================*/
+.owl-carousel .owl-wrapper-outer {
+  overflow: hidden;
+  padding: 0 1px;
+  position: relative;
+  width: 100%;
+}
+.owl-carousel .owl-item {
+  float: left;
+}
+.owl-carousel .owl-item div {
+  margin: 0 22px;
+  position: relative;
+}
+.owl-carousel .owl-item div > p {
+  width: 100%;
+  padding: 15px 0;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  text-align: center;
+  margin-bottom: 0;
+  border-radius: 0 0 4px 4px;
+}
+.owl-pagination {
+  text-align: center;
+  margin-top: 60px;
+}
+.owl-pagination .owl-page {
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
+  display: inline-block;
+  margin-left: 20px;
+  cursor: pointer;
+}
+.owl-pagination .owl-page span {
+  width: 40px;
+  height: 2px;
+  display: inline-block;
+  opacity: 0.25;
+}
+.owl-pagination .owl-page.active span {
+  opacity: 1;
+}
+.owl-pagination .owl-page:first-child {
+  margin-left: 0;
+}
+.gallery_pics {
+  display: block;
+  border-radius: 5px;
+  overflow: hidden;
+}
+.gallery_pics img {
+  width: 100%;
+  height: auto;
+  transition: all 0.1s ease-in-out;
+  border-radius: 5px;
+}
+.gallery_pics:hover img {
+  opacity: 0.4;
+}
+.gallery_pics:hover .zoom {
+  opacity: 1;
+  border-radius: 5px;
+}
+.zoom {
+  background: url(../images/zoom.png) no-repeat center center;
+  display: block;
+  position: absolute;
+  height: 70px;
+  width: 70px;
+  top: 50%;
+  left: 50%;
+  margin: -55px 0 0 -35px;
+  opacity: 0;
+  transition: all 0.2s ease-in-out;
+}
+/*=============================== GALLERY END ================================*/
+/*=============================== SUBSCRIBE BEGIN ================================*/
+#subscribe_form {
+  width: 470px;
+  margin: 0 0 20px 0;
+}
+#subscribe_form .input-group {
+  border-width: 2px;
+  border-style: solid;
+  border-radius: 8px;
+  position: relative;
+}
+#subscribe_form .input-group .form-control {
+  height: 56px;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 18px;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+}
+#subscribe_form .btn {
+  height: 56px;
+  border: none;
+  padding: 0 25px;
+  font-size: 28px;
+}
+#subscribe_form .error {
+  font-weight: normal;
+  margin-top: 10px;
+}
+#subscribe_form .error:before {
+  content: "\f06a";
+  font-family: 'FontAwesome';
+  font-size: 18px;
+  margin-right: 10px;
+}
+#subscribe_form .valid:before {
+  content: "\f004";
+}
+/*=============================== SUBSCRIBE END ================================*/
+/*=============================== FOOTER BEGIN ================================*/
+#footer {
+  padding: 50px 0;
+  overflow: hidden;
+}
+.copyright {
+  padding-top: 15px;
+  float: left;
+}
+.copyright p {
+  margin-bottom: 0;
+}
+.soc_nav {
+  float: right;
+  margin-bottom: 0;
+}
+.soc_nav li {
+  margin-left: 30px;
+  list-style: none;
+  display: inline-block;
+}
+.soc_nav li:first-child {
+  margin-left: 0;
+}
+.soc_nav li a {
+  font-size: 28px;
+  display: block;
+  width: 70px;
+  height: 70px;
+  line-height: 70px;
+  text-align: center;
+  border-width: 1px;
+  border-style: solid;
+  border-radius: 35px;
+  opacity: 0.5;
+  transition: all 0.2s ease-in-out;
+}
+.soc_nav li a:hover {
+  opacity: 1;
+}
+/*=============================== FOOTER END ================================*/
+/*=============================== RESPONSIVE STYLES BEGIN ================================*/
+@media (max-width: 1220px) {
+  .countdown {
+    margin-left: 0;
+  }
+  .countdown > li {
+    padding-left: 0;
+  }
+  .countdown > li .dot {
+    background: none;
+  }
+  .subscribe_section {
+    text-align: center;
+  }
+  #subscribe_form {
+    margin: 10px 0;
+  }
+}
+@media (max-width: 980px) {
+  #header {
+    text-align: center;
+  }
+  .countdown {
+    margin-left: -30px;
+  }
+  .countdown > li {
+    padding-left: 30px;
+  }
+  #new_theme h2 {
+    padding-top: 15px;
+  }
+  .sub_slogan {
+    margin-bottom: 10px;
+  }
+  #wrap .text_section {
+    text-align: center;
+  }
+  .benefits_section .row > div:first-child .benefit_image {
+    margin: 0 auto;
+  }
+  .benefit_image {
+    margin: 80px auto 0;
+  }
+  .text_section li {
+    margin: 0 0 10px 0;
+    padding: 0px;
+    list-style: none;
+  }
+}
+@media (max-width: 670px) {
+  #wrap > section {
+    padding: 50px 0;
+  }
+  #wrap #new_theme {
+    padding: 0 0 50px 0;
+  }
+  #wrap .text_section {
+    padding-bottom: 50px;
+  }
+  #wrap .subscribe_section {
+    padding-bottom: 80px;
+  }
+  .countdown > li {
+    background: none;
+    margin-bottom: 10px;
+  }
+  .copyright {
+    text-align: center;
+    padding-bottom: 20px;
+    float: none;
+  }
+  .soc_nav {
+    float: none;
+    text-align: center;
+  }
+  .soc_nav li {
+    margin: 0 0 10px 10px;
+  }
+  .soc_nav li:first-child {
+    margin-left: 10px;
+  }
+  #subscribe_form {
+    width: auto;
+  }
+}
+@media (max-width: 500px) {
+  .theme_image img {
+    width: 100%;
+    height: auto;
+  }
+  #new_theme h2 {
+    font-size: 54px;
+    line-height: 60px;
+  }
+  .owl-pagination {
+    margin-top: 30px;
+  }
+}
+@media (max-width: 350px) {
+  #prev,
+  #next {
+    width: 50px;
+    height: 50px;
+    line-height: 46px;
+  }
+  .soc_nav li a {
+    width: 50px;
+    height: 50px;
+    line-height: 46px;
+    font-size: 14px;
+  }
+}
+/*=============================== RESPONSIVE STYLES END ================================*/
+/* ======================================= RETINA BEGIN ======================================= */
+@media only screen and (-webkit-min-device-pixel-ratio: 2) {
+  #header img {
+    content: url("../images/logo2x.png");
+  }
+  .zoom {
+    background: url(../images/zoom2x.png) no-repeat center center / 70px 70px;
+  }
+  /* Product and description images for retina
+	.theme_image img{
+		content:url("../images/product2x.png");
+	}
+	.text_section img{
+		content:url("../images/img2x.png");
+	}
+	*/
+}
+/* ======================================= RETINA END ================================*/
+/*=============================== SETTINGS BEGIN ================================*/
+#settings {
+  position: fixed;
+  top: 160px;
+  left: 0;
+  z-index: 200;
+}
+.settings_link {
+  background: #fff;
+  color: #444;
+  width: 50px;
+  height: 50px;
+  line-height: 56px;
+  display: block;
+  float: left;
+  border-radius: 0 5px 5px 0;
+  text-align: center;
+}
+.settings_link .fa {
+  font-size: 28px;
+}
+.settings_link:hover,
+.settings_link:focus {
+  color: #444;
+}
+.colors {
+  border: 10px solid #fff;
+  width: 140px;
+  float: left;
+  margin-left: -140px;
+  border-radius: 0 0 5px 0;
+}
+.colors ul {
+  width: 120px;
+  margin-bottom: 0;
+}
+.colors ul li {
+  list-style: none;
+  float: left;
+}
+.colors ul li a {
+  display: block;
+  width: 60px;
+  height: 60px;
+  line-height: 66px;
+  color: #fff;
+  text-align: center;
+}
+.colors ul li a.color1 {
+  background-color: #553762;
+}
+.colors ul li a.color1 i {
+  color: #fff;
+}
+.colors ul li a.color2 {
+  background-color: #c4e8ff;
+}
+.colors ul li a.color2 i {
+  color: #664b2e;
+}
+.colors ul li a.color3 {
+  background-color: #ffdf30;
+}
+.colors ul li a.color3 i {
+  color: #333;
+}
+.colors ul li a.color4 {
+  background-color: #b7244c;
+}
+.colors ul li a.color4 i {
+  color: #fffbed;
+}
+.colors ul li a.color6 {
+  background-color: #1b926c;
+}
+.colors ul li a.color6 i {
+  color: #fff;
+}
+.colors ul li a.color5 {
+  background-color: #4b3118;
+}
+.colors ul li a.color5 i {
+  color: #fffeef;
+}
+.colors ul li a.color8 {
+  background-color: #333;
+}
+.colors ul li a.color8 i {
+  color: #eee;
+}
+.colors ul li a.color7 {
+  background-color: #ffeded;
+}
+.colors ul li a.color7 i {
+  color: #444;
+}
+.colors ul li a .fa {
+  display: none;
+  font-size: 28px;
+}
+.colors ul li a.selected .fa {
+  display: inline-block;
+}
+/*=============================== SETTINGS END ================================*/
