@@ -175,9 +175,9 @@ def create_dish(request):
     try:
         dish = Dish.objects.get(pk=ObjectId(insert_dict['name']))
         insert_dict['name'] = dish.name
-        #insert_dict.update({'is_allergen':dish.is_allergen,
-        #                    'is_meat':dish.is_meat,
-        #                    'is_gluten':dish.is_gluten})
+        insert_dict.update({'is_allergen':dish.is_allergen,
+                            'is_meat':dish.is_meat,
+                            'is_gluten':dish.is_gluten})
         ingredient_objs = dish.get_ingredient_names()
     except InvalidId, DoesNotExist:
         pass
