@@ -726,6 +726,7 @@
  .benefits_section h2 {
      margin: 0 0px 5px 60px
  }
+
  .benefit_image {
      line-height: 60px;
      float: left;
@@ -739,6 +740,7 @@
      width: 50px;
      height: 50px;
  }
+ 
  .benefit_image i {
      font-size: 30px;
  }
