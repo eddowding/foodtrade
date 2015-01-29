@@ -53,7 +53,10 @@ def register(request):
         if user is not None:
             if user.is_active:
                 auth_login(request, user)
-        return HttpResponseRedirect(reverse_lazy('menu'))
+        '''
+        after register , the user will be redirected to the dashboard not to menu page
+        '''
+        return HttpResponseRedirect(reverse_lazy('menu_dashboard')) 
     else:
         return render(request, 'menu/register.html')
 
