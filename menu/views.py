@@ -209,14 +209,27 @@ def update_dish(request):
     pk = ObjectId(request.POST.get('pk'))
     html = request.POST.get('html')
     if html:
+        update_dict = {'set__html': html}
         serialized = json.loads(request.POST.get('serialized')) if request.POST.get('serialized') else ''
         if not serialized:
             dish = Dish.objects.get(pk=ObjectId(pk))
-            serialized = dish.json
-        ingredient_walk(serialized)
-        iwp = IngredientWalkPrint(request.POST.get('pk'), serialized)
-        print_html = iwp.walk().render()
-        Dish.objects.filter(pk=pk).update(set__html=html, set__json=request.POST.get('serialized'), set__print_html=print_html)
+            serialized = json.loads(dish.json)
+        else:
+            update_dict['set__json'] = request.POST.get('serialized')
+
+        try:
+            ingredient_walk(serialized)
+        except Exception as exc:
+            pass
+
+        try:
+            iwp = IngredientWalkPrint(request.POST.get('pk'), serialized)
+            print_html = iwp.walk().render()
+            update_dict['set__print_html'] = print_html
+        except Exception as exc:
+            pass
+
+        Dish.objects.filter(pk=pk).update(**update_dict)
         return HttpResponse(json.dumps({'status': True}))
     else:
         Dish.objects.filter(pk=pk).update(set__name=request.POST.get('name'),
@@ -256,7 +269,7 @@ def create_ingredient(request):
     insert_dict['is_gluten'] = True if Gluten.objects.filter(name__iexact=insert_dict['name']).count() else False
     insert_dict['added_on'] = datetime.now()
     ingredient = Ingredient.objects.create(**insert_dict)
-    
+
     # update dish as it is now allergen, meat or gluten
     dish = Dish.objects.get(pk=ObjectId(request.POST.get('dish')))
     if insert_dict['is_allergen']:
