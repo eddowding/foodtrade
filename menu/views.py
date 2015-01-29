@@ -220,6 +220,7 @@ def update_dish(request):
         try:
             ingredient_walk(serialized)
         except Exception as exc:
+            print exc
             pass
 
         try:
@@ -227,6 +228,7 @@ def update_dish(request):
             print_html = iwp.walk().render()
             update_dict['set__print_html'] = print_html
         except Exception as exc:
+            print exc
             pass
 
         Dish.objects.filter(pk=pk).update(**update_dict)
