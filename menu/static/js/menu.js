@@ -1,5 +1,7 @@
+jQuery.ajaxSetup({async:false});
+
 $(document).ready(function() {
-  //menu section
+      //menu section
   var establishments = new Bloodhound({
     remote: {
       url: establishmentLookupNameUrl + '?q=%QUERY&_tmp=' + (new Date).getTime(),
@@ -326,7 +328,7 @@ $(document).ready(function() {
 		          html: $(ultree).parents('div.tree').html(),
 		          serialized: '[]'
 		     };
-	
+
 	        $.ajax({
 	          url: updateDishUrl + '?_tmp=' + (new Date).getTime(),
 	          data: update_data,
@@ -658,7 +660,7 @@ $(document).ready(function() {
           $('.menus').html(data.html);
           sortableFn();
           editableFn();
-          
+
         }
       });
     };
