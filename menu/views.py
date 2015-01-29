@@ -378,7 +378,7 @@ def ingredient_lookup_name(request):
     klass_list = [Gluten, Allergen, Meat]
     for klass in klass_list:
         for obj in klass.objects.filter(**query2):
-            if keyword in obj.name:
+            if keyword.lower() in obj.name.lower():
                 tmp_list.append(obj.name)
     tmp_list = list(set(tmp_list))
     return HttpResponse(json.dumps({'status': True, 'objs': [{'name': n} for n in tmp_list]}))
@@ -410,12 +410,12 @@ def save_moderation_ingredient(request):
     #ing  = Ingredient.objects.filter(name__iexact=ingredient['name'])
     #updt_dish = {}
     #for i in ing:
-    if ingredient.get('is_meat'):
-        Dish.objects.filter(pk=pk).update(set__is_meat=True)
-    elif ingredient.get('is_allergen'):
-        Dish.objects.filter(pk=pk).update(set__is_allergen=True)
-    elif ingredient.get('is_gluten'):
-        Dish.objects.filter(pk=pk).update(set__is_gluten=True)
+    #if ingredient.get('is_meat'):
+    #    Dish.objects.filter(pk=pk).update(set__is_meat=True)
+    #elif ingredient.get('is_allergen'):
+    #    Dish.objects.filter(pk=pk).update(set__is_allergen=True)
+    #elif ingredient.get('is_gluten'):
+    #    Dish.objects.filter(pk=pk).update(set__is_gluten=True)
     #Dish.objects.filter(pk=pk).update(updt_dish)
     #return HttpResponse(json.dumps({'status': True}, default=json_util.default), content_type="application/json")
     return HttpResponse(json.dumps({'status': True, 'html': menu_render(request.user)}, default=json_util.default),
