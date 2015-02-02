@@ -1,8 +1,12 @@
 from fabric.api import env, run, sudo
 
-def staging():
+def prod():
     env.user = 'foodtrade'
     env.hosts = ['ftmenuvm.cloudapp.net']
+
+def staging():
+    env.user = 'foodtrade'
+    env.hosts = ['ftm-staging.cloudapp.net']
 
 def deploy():
     sudo('cd /var/www; git pull')
