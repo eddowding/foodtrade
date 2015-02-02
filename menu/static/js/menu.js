@@ -1,4 +1,4 @@
-jQuery.ajaxSetup({async:false});
+//jQuery.ajaxSetup({async:false});
 
 $(document).ready(function() {
       //menu section
