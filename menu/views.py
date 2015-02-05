@@ -144,6 +144,20 @@ def delete_menu(request):
 
 
 @login_required(login_url=reverse_lazy('menu-login'))
+def edit_menu(request):
+    establishment = request.POST.get('establishment')
+    name = request.POST.get('name')
+    menu_id = request.POST.get('id')
+    try:
+        Establishment.objects.filter(pk=ObjectId(establishment)).update(set__user=request.user)
+        Menu.objects.filter(pk=ObjectId(menu_id), establishment=ObjectId(establishment)).update(set__name=name)
+    except InvalidId:
+        establishment = Establishment.objects.create(user=request.user, BusinessName=establishment, added_on=datetime.now())
+        Menu.objects.filter(pk=ObjectId(menu_id)).update(set__establishment=establishment.pk, set__name=name)
+    return HttpResponse(json.dumps({'status': True, 'html': menu_render(request.user)}, default=json_util.default))
+    
+
+@login_required(login_url=reverse_lazy('menu-login'))
 def create_menu_section(request):
     insert_dict = deepcopy(request.POST.dict())
     insert_dict['menu'] = ObjectId(insert_dict['menu'])
@@ -157,6 +171,10 @@ def delete_menu_section(request):
     MenuSection.objects.filter(pk=ObjectId(request.POST.get('id'))).delete()
     return HttpResponse(json.dumps({'status': True, 'html': menu_render(request.user)}, default=json_util.default))
 
+@login_required(login_url=reverse_lazy('menu-login'))
+def edit_menu_section(request):
+    MenuSection.objects.filter(pk=ObjectId(request.POST.get('id'))).update(set__name=request.POST.get('name'))
+    return HttpResponse(json.dumps({'status': True, 'html': menu_render(request.user)}, default=json_util.default))
 
 @login_required(login_url=reverse_lazy('menu-login'))
 def dish_lookup_name(request):

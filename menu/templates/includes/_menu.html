@@ -17,6 +17,9 @@
                 <div class="box-tools pull-right">
                     <ul class="pagination pagination-sm inline">
                         <li>
+                            <a data-id={{menu.pk}} data-menu-name="{{menu.name}}" data-business-id={{menu.establishment.id}} data-business="{{ menu.establishment.BusinessName }}" data-url={% url 'menu_edit_menu' %} class="menu-edit-btn" data-toggle="tooltip" title="This will edit the menu!"><i class="fa fa-edit fa-fw"></i>Edit Menu</a>
+                        </li>
+                        <li>
                             <a data-id={{menu.pk}} data-url={% url 'menu_delete_menu' %} class="delete-btn" data-toggle="tooltip" title="This will delete the entire menu!"><i class="fa fa-trash-o fa-fw"></i>Delete Menu</a>
                         </li>
                         <li>
@@ -85,6 +88,10 @@
                         <div class="tools pull-left" style="position:relative; top: 5px;">
                             <a data-id={{section.pk}} data-url={% url 'menu_delete_menu_section' %} class="delete-btn">
                                 <i class="fa fa-trash-o"></i> Delete </a>
+                        </div>
+                        <div class="tools pull-left" style="position:relative; top: 5px;">
+                            <a data-id={{section.pk}} data-section-menu-id={{menu.pk}} data-url={% url 'menu_edit_menu_section' %} data-name="{{section.name}}" class="section-edit-btn">
+                                <i class="fa fa-edit"></i> Edit </a>
                         </div>
 
                         <div class="pull-right" id="sectionDish">

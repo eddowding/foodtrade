@@ -65,6 +65,77 @@ $(document).ready(function() {
     });
   });
 
+  // edit menu starts here
+  editMenuId = null;
+  editMenuBusinessId = null;
+  editMenuBusinessName = null;
+  
+  $('#editMenuModal input#establishment').typeahead(null, {
+    displayKey: 'name',
+    name: 'establishment',
+    source: establishments.ttAdapter()
+  });
+  
+  $('#editMenuModal input#establishment').on('typeahead:selected', function(ev, establishment) {
+    $('#editMenuModal input[name="establishment"]').val(establishment.value);
+    establishmentSelected = true;
+  });
+
+  $(document).delegate('.menu-edit-btn', 'click', function(ev) {
+    $('#editMenuModal input[name="name"]').val($(this).attr('data-menu-name'));
+    $('#editMenuModal input[id="establishment"]').val($(this).attr('data-business'));
+    editMenuBusinessName = $(this).attr('data-business');
+    editMenuId = $(this).attr('data-id');
+    editMenuBusinessId = $(this).attr('data-business-id');
+    $('#editMenuModal').modal('show');
+  });
+
+  $('#editMenuModal').keypress(function (e) {
+	 var key = e.which;
+	 if(key == 13)  // the enter key code
+	  {
+	    $('#editMenuModal button.btn').click();
+	    return false;
+	  }
+	});
+
+  $('#editMenuModal button.btn').click(function(ev) {
+    var data = {
+      'name': $('#editMenuModal input[name="name"]').val(),
+      'id':editMenuId
+    };
+    if (establishmentSelected) {
+      data.establishment = $('#editMenuModal input[name="establishment"]').val();
+    } else {
+    	if ($('#editMenuModal input[id="establishment"]').val()==editMenuBusinessName)
+    		{
+    			data.establishment = editMenuBusinessId;
+    		}
+      	else{
+      		data.establishment = $('#editMenuModal input#establishment').val();
+      }
+      //data.establishment = $('#editMenuModal input#establishment').val();
+    }
+
+    $.ajax({
+      url: '/edit/menu/' + '?_tmp=' + (new Date).getTime(),
+      data: data,
+      type: 'POST',
+      dataType: 'JSON',
+      success: function(data) {
+        $('.menus').html(data.html);
+        $('#editMenuModal input[name="establishment"]').val('');
+        $('#editMenuModal input#establishment').val('');
+        $('#editMenuModal input[name="name"]').val('');
+        establishmentSelected = false;
+        editMenuId = null;
+  		editMenuBusinessId = null;
+  		editMenuBusinessName = null;
+      }
+    });
+  });
+  
+  // edit menu ends here
 
   //section section
   $(document).delegate('.add-section', 'click', function(ev) {
@@ -470,6 +541,56 @@ $(document).ready(function() {
     $('#confirmationModal').modal('show');
     deleteElement = $(this).parents('.ingredient-item:first');
   });
+  
+  // edit section starts here
+  editId = null;
+  editName = null;
+  editUrl = null;
+  
+  $(document).delegate('.section-edit-btn', 'click', function(ev) {
+    editId = $(this).attr('data-id');
+    editName = $(this).attr('data-name');
+    editUrl = $(this).attr('data-url');
+    $('#editSectionModal input[name="menu"]').val($(this).attr('data-section-menu-id'));
+    $('#editSectionModal input[name="name"]').val(editName);
+    $('#editSectionModal').modal('show');
+    //$('#sectionModal button.btn').click();
+    //deleteElement = $(this).parents('.ingredient-item:first');
+  });
+  
+  $('#editSectionModal').keypress(function (e) {
+	 var key = e.which;
+	 if(key == 13)  // the enter key code
+	  {
+	    $('#editSectionModal button.btn').click();
+	    return false;
+	  }
+	});
+  
+  $('#editSectionModal button.btn').click(function(ev) {
+    var data = {
+      menu: $('#editSectionModal input[name="menu"]').val(),
+      name: $('#editSectionModal input[name="name"]').val(),
+      id : editId
+    };
+
+    $.ajax({
+      url: '/edit/menu/section/' + '?_tmp=' + (new Date).getTime(),
+      data: data,
+      type: 'POST',
+      dataType: 'JSON',
+      success: function(data) {
+        $('.menus').html(data.html);
+        $('#editSectionModal input[name="menu"]').val('');
+        $('#editSectionModal input[name="name"]').val('');
+        editId = null;
+  		editName = null;
+  		editUrl = null;
+      }
+    });
+  });
+  
+  // edit section ends here
 
   //edit dish starts here
 
