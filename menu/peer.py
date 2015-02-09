@@ -2,6 +2,8 @@ from itertools import izip_longest
 from bson.objectid import ObjectId
 from dominate.tags import *
 from django.core.urlresolvers import reverse_lazy
+from django.conf import settings
+from mailchimp import Mailchimp, ListAlreadySubscribedError
 from menu.models import Ingredient
 
 
@@ -233,4 +235,11 @@ class CloneDishWalk(IngredientWalk):
         return super(CloneDishWalk, self).walk()
 
 
+def mail_chimp_subscribe_email(email):
+    api = Mailchimp(settings.MAIL_CHIMP_API_KEY)
+    try:
+        api.lists.subscribe(settings.MAIL_CHIMP_SIGNUP_LIST, {'email': email})
+    except ListAlreadySubscribedError:
+        pass
+    return True
 

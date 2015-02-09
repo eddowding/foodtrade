@@ -122,3 +122,9 @@ CACHES = {
         'LOCATION': '127.0.0.1:11211',
     }
 }
+
+
+#mailchimp API
+MAIL_CHIMP_API_KEY = 'e4eded21689a15b89cb0db956ad03fd4-us2'
+MAIL_CHIMP_SIGNUP_LIST = 'da1305635a'
+
