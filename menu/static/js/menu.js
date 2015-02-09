@@ -1,7 +1,7 @@
 //jQuery.ajaxSetup({async:false});
 
 $(document).ready(function() {
-      //menu section
+  //menu section
   var establishments = new Bloodhound({
     remote: {
       url: establishmentLookupNameUrl + '?q=%QUERY&_tmp=' + (new Date).getTime(),
@@ -32,13 +32,13 @@ $(document).ready(function() {
   });
 
   $('#menuModal').keypress(function (e) {
-	 var key = e.which;
-	 if(key == 13)  // the enter key code
-	  {
-	    $('#menuModal button.btn').click();
-	    return false;
-	  }
-	});
+    var key = e.which;
+    if(key == 13)  // the enter key code
+      {
+        $('#menuModal button.btn').click();
+        return false;
+      }
+  });
 
   $('#menuModal button.btn').click(function(ev) {
     var data = {
@@ -91,13 +91,13 @@ $(document).ready(function() {
   });
 
   $('#editMenuModal').keypress(function (e) {
-	 var key = e.which;
-	 if(key == 13)  // the enter key code
-	  {
-	    $('#editMenuModal button.btn').click();
-	    return false;
-	  }
-	});
+    var key = e.which;
+    if(key == 13)  // the enter key code
+      {
+        $('#editMenuModal button.btn').click();
+        return false;
+      }
+  });
 
   $('#editMenuModal button.btn').click(function(ev) {
     var data = {
@@ -107,14 +107,14 @@ $(document).ready(function() {
     if (establishmentSelected) {
       data.establishment = $('#editMenuModal input[name="establishment"]').val();
     } else {
-    	if ($('#editMenuModal input[id="establishment"]').val()==editMenuBusinessName)
-    		{
-    			data.establishment = editMenuBusinessId;
-    		}
-      	else{
-      		data.establishment = $('#editMenuModal input#establishment').val();
-      }
-      //data.establishment = $('#editMenuModal input#establishment').val();
+      if ($('#editMenuModal input[id="establishment"]').val()==editMenuBusinessName)
+        {
+          data.establishment = editMenuBusinessId;
+        }
+        else{
+          data.establishment = $('#editMenuModal input#establishment').val();
+        }
+        //data.establishment = $('#editMenuModal input#establishment').val();
     }
 
     $.ajax({
@@ -129,8 +129,8 @@ $(document).ready(function() {
         $('#editMenuModal input[name="name"]').val('');
         establishmentSelected = false;
         editMenuId = null;
-  		editMenuBusinessId = null;
-  		editMenuBusinessName = null;
+        editMenuBusinessId = null;
+        editMenuBusinessName = null;
       }
     });
   });
@@ -162,38 +162,38 @@ $(document).ready(function() {
   });
 
 
-	/* Menu tree */
+  /* Menu tree */
 
 
-	var sortableFn = function() {
-	    $('.ingredient-item').removeAttr('style');
-	    $('.ingredient-item').removeClass('dragged');
-	    $('.ingredient-tree').sortable({
-	      itemSelector: 'li.ingredient-item',
-	      handle: '.handle',
-	      onDrop: function($item, container, _super, event) {
-	        var data = {
-	          pk: $item.parents('.ingredient-tree').data('dishId'),
-	          html: $item.parents('.ingredient-tree').parents('div.tree').html(),
-	          serialized: JSON.stringify($item.parents('.ingredient-tree').sortable("serialize").get())
-	        };
+  var sortableFn = function() {
+    $('.ingredient-item').removeAttr('style');
+    $('.ingredient-item').removeClass('dragged');
+    $('.ingredient-tree').sortable({
+      itemSelector: 'li.ingredient-item',
+      handle: '.handle',
+      onDrop: function($item, container, _super, event) {
+        var data = {
+          pk: $item.parents('.ingredient-tree').data('dishId'),
+          html: $item.parents('.ingredient-tree').parents('div.tree').html(),
+          serialized: JSON.stringify($item.parents('.ingredient-tree').sortable("serialize").get())
+        };
 
-	        $.ajax({
-	          url: updateDishUrl + '?_tmp=' + (new Date).getTime(),
-	          data: data,
-	          type: 'POST',
-	          dataType: 'JSON',
-	          success: function(data) {
-	          	console.log(data);
-	          }
-	        });
+        $.ajax({
+          url: updateDishUrl + '?_tmp=' + (new Date).getTime(),
+          data: data,
+          type: 'POST',
+          dataType: 'JSON',
+          success: function(data) {
+            console.log(data);
+          }
+        });
 
-	        _super($item, container);
-	      }
-	    });
-	  };
+        _super($item, container);
+      }
+    });
+  };
 
-	//editable
+  //editable
   var editableFn = function() {
     $('.ingredient-item-name').editable({
       type: 'text',
@@ -227,9 +227,23 @@ $(document).ready(function() {
           $(this).parents('li:first').find('div.mag-toggle').find('.btn-gluten').find('input').attr('checked', 'checked');
           $(this).parents('div.menuitem').find('div.menutitle').find('div.pull-right').find('span.gluten').addClass('active');
         }
+
         if (response.obj.parent !== undefined) {
           $('a.add-sub-ingredients[data-dish-id="' + $(this).attr('data-pk') + '"]').attr('data-parent-id', response.obj.parent.$oid);
+          if (response.obj.is_allergen) {
+            $('.ingredient-item-name[data-pk="' + response.obj.parent.$oid + '"]').parents('li:first').find('div.mag-toggle:first').find('.btn-allergen').addClass('active');
+            $('.ingredient-item-name[data-pk="' + response.obj.parent.$oid + '"]').parents('li:first').find('div.mag-toggle:first').find('.btn-allergen').find('input').attr('checked', 'checked');
+          }
+          if (response.obj.is_meat) {
+            $('.ingredient-item-name[data-pk="' + response.obj.parent.$oid + '"]').parents('li:first').find('div.mag-toggle:first').find('.btn-meat').addClass('active');
+            $('.ingredient-item-name[data-pk="' + response.obj.parent.$oid + '"]').parents('li:first').find('div.mag-toggle:first').find('.btn-meat').find('input').attr('checked', 'checked');
+          }
+          if (response.obj.is_gluten) {
+            $('.ingredient-item-name[data-pk="' + response.obj.parent.$oid + '"]').parents('li:first').find('div.mag-toggle:first').find('.btn-gluten').addClass('active');
+            $('.ingredient-item-name[data-pk="' + response.obj.parent.$oid + '"]').parents('li:first').find('div.mag-toggle:first').find('.btn-gluten').find('input').attr('checked', 'checked');
+          }
         }
+
         $(this).editable('option', 'name', newValue);
         $(this).editable('option', 'url', updateIngredientNameUrl);
 
@@ -302,12 +316,12 @@ $(document).ready(function() {
   });
 
   /* $('#editDishModal input#name').typeahead(null, {
-    displayKey: 'name',
-    name: 'dish',
-    source: dishes.ttAdapter()
-  });*/
+displayKey: 'name',
+name: 'dish',
+source: dishes.ttAdapter()
+});*/
 
-  var dishSelected = false;
+var dishSelected = false;
 
   $('#dishModal input#name').on('typeahead:selected', function(ev, dish) {
     $('#dishModal input[name="name"]').val(dish.value);
@@ -319,13 +333,13 @@ $(document).ready(function() {
   });
 
   $('#dishModal').keypress(function (e) {
-	 var key = e.which;
-	 if(key == 13)  // the enter key code
-	  {
-	    $('#dishModal button.btn').click();
-	    return false;
-	  }
-	});
+    var key = e.which;
+    if(key == 13)  // the enter key code
+      {
+        $('#dishModal button.btn').click();
+        return false;
+      }
+  });
 
   $('#dishModal button.btn').click(function(ev) {
     var price = parseFloat(0.0);
@@ -353,59 +367,59 @@ $(document).ready(function() {
       dataType: 'JSON',
       success: function(data) {
         $('.menus').html(data.html);
-	    /*if (data.old_dish_id){
-	        var ultree = '.tree[data-dish-id='+data.new_dish_id +'] > ul';
-	        $(ultree).attr('data-dish-id', data.new_dish_id);
-	        var litree = '.tree[data-dish-id='+ data.new_dish_id +'] > ul > li';
-	        $(litree).attr('data-dish-id', data.new_dish_id);
-	        var spanlitree = '.tree[data-dish-id='+ data.new_dish_id +'] > ul > li > span';
-	        $(spanlitree).attr('data-dish-id', data.new_dish_id);
-	        var aspanlitree = '.tree[data-dish-id='+ data.new_dish_id +'] > ul > li > span > a';
-	        $(aspanlitree).attr('data-dish-id', data.new_dish_id);
-	        //$(this).attr('data-dish-id', data.dish_id);
-	        $(litree).each(function(index) {
-	  			// update ingredient id
-	  			var newtree = $(litree)[index];
-	  			var dish_id = newtree.attributes['data-dish-id'].value;
-	  			var ingredient_id = newtree.attributes['data-ingredient-id'].value;
-	  			$.ajax({
-	  			  url: '/change_ingredient_html/' + '?_tmp=' + (new Date).getTime(),
-			      data: {
-			      	'dish_id':dish_id,
-			      	'ingredient_id':ingredient_id
-			      },
-			      type: 'POST',
-			      dataType: 'JSON',
-			      success: function(result) {
-			      		var newtree = $(litree)[index];
-			      		newtree.attr('data-ingredient-id', result.ingredient_id);
-			      		// check inside the li > span and li > span > a
-			      }
-	  			});
-			});
-		}*/
+        /*if (data.old_dish_id){
+          var ultree = '.tree[data-dish-id='+data.new_dish_id +'] > ul';
+          $(ultree).attr('data-dish-id', data.new_dish_id);
+          var litree = '.tree[data-dish-id='+ data.new_dish_id +'] > ul > li';
+          $(litree).attr('data-dish-id', data.new_dish_id);
+          var spanlitree = '.tree[data-dish-id='+ data.new_dish_id +'] > ul > li > span';
+          $(spanlitree).attr('data-dish-id', data.new_dish_id);
+          var aspanlitree = '.tree[data-dish-id='+ data.new_dish_id +'] > ul > li > span > a';
+          $(aspanlitree).attr('data-dish-id', data.new_dish_id);
+        //$(this).attr('data-dish-id', data.dish_id);
+        $(litree).each(function(index) {
+        // update ingredient id
+        var newtree = $(litree)[index];
+        var dish_id = newtree.attributes['data-dish-id'].value;
+        var ingredient_id = newtree.attributes['data-ingredient-id'].value;
+        $.ajax({
+url: '/change_ingredient_html/' + '?_tmp=' + (new Date).getTime(),
+data: {
+'dish_id':dish_id,
+'ingredient_id':ingredient_id
+},
+type: 'POST',
+dataType: 'JSON',
+success: function(result) {
+var newtree = $(litree)[index];
+newtree.attr('data-ingredient-id', result.ingredient_id);
+        // check inside the li > span and li > span > a
+        }
+        });
+        });
+        }*/
         $('#dishModal input[name="menu_section"]').val('');
         $('#dishModal input[name="price"]').val('');
         $('#dishModal input[name="description"]').val('');
         $('#dishModal input[name="name"]').val('');
         $('#dishModal input#name').val('');
         if(data.dish_id){
-	        var ultree = ".tree[data-dish-id='" + data.dish_id +"'] > ul";
-	        var update_data = {
-		          pk: data.dish_id,
-		          html: $(ultree).parents('div.tree').html(),
-		          serialized: '[]'
-		     };
+          var ultree = ".tree[data-dish-id='" + data.dish_id +"'] > ul";
+          var update_data = {
+            pk: data.dish_id,
+            html: $(ultree).parents('div.tree').html(),
+            serialized: '[]'
+          };
 
-	        $.ajax({
-	          url: updateDishUrl + '?_tmp=' + (new Date).getTime(),
-	          data: update_data,
-	          type: 'POST',
-	          dataType: 'JSON',
-	          success: function(result) {
-	          	//console.log(result);
-	          }
-	        });
+          $.ajax({
+            url: updateDishUrl + '?_tmp=' + (new Date).getTime(),
+            data: update_data,
+            type: 'POST',
+            dataType: 'JSON',
+            success: function(result) {
+              //console.log(result);
+            }
+          });
         }
         editableFn();
         dishSelected = false;
@@ -556,13 +570,13 @@ $(document).ready(function() {
   });
 
   $('#editSectionModal').keypress(function (e) {
-	 var key = e.which;
-	 if(key == 13)  // the enter key code
-	  {
-	    $('#editSectionModal button.btn').click();
-	    return false;
-	  }
-	});
+    var key = e.which;
+    if(key == 13)  // the enter key code
+      {
+        $('#editSectionModal button.btn').click();
+        return false;
+      }
+  });
 
   $('#editSectionModal button.btn').click(function(ev) {
     var data = {
@@ -581,8 +595,8 @@ $(document).ready(function() {
         $('#editSectionModal input[name="menu"]').val('');
         $('#editSectionModal input[name="name"]').val('');
         editId = null;
-  		editName = null;
-  		editUrl = null;
+        editName = null;
+        editUrl = null;
       }
     });
   });
@@ -611,13 +625,13 @@ $(document).ready(function() {
   });
 
   $('#editDishModal').keypress(function (e) {
-	 var key = e.which;
-	 if(key == 13)  // the enter key code
-	  {
-	    $('#editDishModal button.btn').click();
-	    return false;
-	  }
-	});
+    var key = e.which;
+    if(key == 13)  // the enter key code
+      {
+        $('#editDishModal button.btn').click();
+        return false;
+      }
+  });
 
   $('#editDishModal button.btn').click(function(ev) {
     var price = parseFloat(0.0);
