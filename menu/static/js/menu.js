@@ -69,13 +69,13 @@ $(document).ready(function() {
   editMenuId = null;
   editMenuBusinessId = null;
   editMenuBusinessName = null;
-  
+
   $('#editMenuModal input#establishment').typeahead(null, {
     displayKey: 'name',
     name: 'establishment',
     source: establishments.ttAdapter()
   });
-  
+
   $('#editMenuModal input#establishment').on('typeahead:selected', function(ev, establishment) {
     $('#editMenuModal input[name="establishment"]').val(establishment.value);
     establishmentSelected = true;
@@ -134,7 +134,7 @@ $(document).ready(function() {
       }
     });
   });
-  
+
   // edit menu ends here
 
   //section section
@@ -213,21 +213,18 @@ $(document).ready(function() {
           return 'Cannot save empty string';
         }
         if (response.obj.is_allergen) {
-          $(this).parents('li').find('div.mag-toggle').find('.btn-allergen').addClass('active');
-          $(this).parents('li').find('div.mag-toggle').find('.btn-allergen').find('input').attr('checked', 'checked');
-          $(this).parents('ul').prev().find('span.allergen').addClass('active');
+          $(this).parents('li:first').find('div.mag-toggle').find('.btn-allergen').addClass('active');
+          $(this).parents('li:first').find('div.mag-toggle').find('.btn-allergen').find('input').attr('checked', 'checked');
           $(this).parents('div.menuitem').find('div.menutitle').find('div.pull-right').find('span.allergen').addClass('active');
         }
         if (response.obj.is_meat) {
-          $(this).parents('li').find('div.mag-toggle').find('.btn-meat').addClass('active');
-          $(this).parents('li').find('div.mag-toggle').find('.btn-meat').find('input').attr('checked', 'checked');
-          $(this).parents('ul').prev().find('span.meat').addClass('active');
+          $(this).parents('li:first').find('div.mag-toggle').find('.btn-meat').addClass('active');
+          $(this).parents('li:first').find('div.mag-toggle').find('.btn-meat').find('input').attr('checked', 'checked');
           $(this).parents('div.menuitem').find('div.menutitle').find('div.pull-right').find('span.meat').addClass('active');
         }
         if (response.obj.is_gluten) {
-          $(this).parents('li').find('div.mag-toggle').find('.btn-gluten').addClass('active');
-          $(this).parents('li').find('div.mag-toggle').find('.btn-gluten').find('input').attr('checked', 'checked');
-          $(this).parents('ul').prev().find('span.gluten').addClass('active');
+          $(this).parents('li:first').find('div.mag-toggle').find('.btn-gluten').addClass('active');
+          $(this).parents('li:first').find('div.mag-toggle').find('.btn-gluten').find('input').attr('checked', 'checked');
           $(this).parents('div.menuitem').find('div.menutitle').find('div.pull-right').find('span.gluten').addClass('active');
         }
         if (response.obj.parent !== undefined) {
@@ -541,12 +538,12 @@ $(document).ready(function() {
     $('#confirmationModal').modal('show');
     deleteElement = $(this).parents('.ingredient-item:first');
   });
-  
+
   // edit section starts here
   editId = null;
   editName = null;
   editUrl = null;
-  
+
   $(document).delegate('.section-edit-btn', 'click', function(ev) {
     editId = $(this).attr('data-id');
     editName = $(this).attr('data-name');
@@ -557,7 +554,7 @@ $(document).ready(function() {
     //$('#sectionModal button.btn').click();
     //deleteElement = $(this).parents('.ingredient-item:first');
   });
-  
+
   $('#editSectionModal').keypress(function (e) {
 	 var key = e.which;
 	 if(key == 13)  // the enter key code
@@ -566,7 +563,7 @@ $(document).ready(function() {
 	    return false;
 	  }
 	});
-  
+
   $('#editSectionModal button.btn').click(function(ev) {
     var data = {
       menu: $('#editSectionModal input[name="menu"]').val(),
@@ -589,7 +586,7 @@ $(document).ready(function() {
       }
     });
   });
-  
+
   // edit section ends here
 
   //edit dish starts here
