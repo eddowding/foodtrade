@@ -90,17 +90,17 @@ REMOVE_WWW = False
 ES_URLS = ['http://localhost:9200']
 ES_INDEX = 'foodtrade'
 
-#MONGO_HOST = 'ftmenuvm.cloudapp.net'
-#MONGO_PORT = 27017
-#MONGO_DB = 'foodtrade'
-#MONGO_USER = 'ftroot'
-#MONGO_PASS = 'ftroot'
-
-MONGO_HOST = 'localhost'
+MONGO_HOST = 'ftmenuvm.cloudapp.net'
 MONGO_PORT = 27017
 MONGO_DB = 'foodtrade'
-MONGO_USER = None
-MONGO_PASS = None
+MONGO_USER = 'ftroot'
+MONGO_PASS = 'ftroot'
+
+#MONGO_HOST = 'localhost'
+#MONGO_PORT = 27017
+#MONGO_DB = 'foodtrade'
+#MONGO_USER = None
+#MONGO_PASS = None
 
 connect(db=MONGO_DB, host=MONGO_HOST, port=MONGO_PORT, username=MONGO_USER, password=MONGO_PASS)
 SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
@@ -122,3 +122,9 @@ CACHES = {
         'LOCATION': '127.0.0.1:11211',
     }
 }
+
+
+#mailchimp API
+MAIL_CHIMP_API_KEY = 'e4eded21689a15b89cb0db956ad03fd4-us2'
+MAIL_CHIMP_SIGNUP_LIST = 'da1305635a'
+

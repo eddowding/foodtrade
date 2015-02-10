@@ -12,7 +12,7 @@ from django.contrib.auth.decorators import login_required
 from django.template.loader import render_to_string
 from mongoengine.django.auth import User
 from menu.models import Establishment, Menu, MenuSection, Dish, Allergen, Meat, Gluten, Connection, Ingredient, ModerationIngredient
-from menu.peer import ingredient_walk, IngredientWalkPrint, CloneDishWalk
+from menu.peer import ingredient_walk, IngredientWalkPrint, CloneDishWalk, mail_chimp_subscribe_email
 
 
 """
@@ -49,6 +49,7 @@ def register(request):
         if bool(re.match(pattern, request.POST.get('username'))):
             user.email = request.POST.get('username')
         user.save()
+        mail_chimp_subscribe_email(user.email)
         user = authenticate(username=request.POST.get('username'), password=request.POST.get('password'))
         if user is not None:
             if user.is_active:
@@ -56,7 +57,7 @@ def register(request):
         '''
         after register , the user will be redirected to the dashboard not to menu page
         '''
-        return HttpResponseRedirect(reverse_lazy('menu_dashboard')) 
+        return HttpResponseRedirect(reverse_lazy('menu_dashboard'))
     else:
         return render(request, 'menu/register.html')
 
@@ -155,7 +156,7 @@ def edit_menu(request):
         establishment = Establishment.objects.create(user=request.user, BusinessName=establishment, added_on=datetime.now())
         Menu.objects.filter(pk=ObjectId(menu_id)).update(set__establishment=establishment.pk, set__name=name)
     return HttpResponse(json.dumps({'status': True, 'html': menu_render(request.user)}, default=json_util.default))
-    
+
 
 @login_required(login_url=reverse_lazy('menu-login'))
 def create_menu_section(request):
