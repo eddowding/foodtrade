@@ -1,5 +1,5 @@
 import json, re
-from datetime import datetime
+from datetime import datetime, timedelta
 from copy import deepcopy
 from bson.objectid import ObjectId, InvalidId
 from mongoengine.queryset import Q
@@ -508,3 +508,33 @@ def create_connection(request):
     html = {'buyers': render_to_string('includes/_connection_table_buyer.html', {'buyers': buyers}),
             'sellers': render_to_string('includes/_connection_table_seller.html', {'sellers': sellers})}
     return HttpResponse(json.dumps({'success': True, 'obj': html}))
+
+
+
+"""
+Dashboard Backend
+"""
+
+def backend_dashboard(request):
+    '''
+    '''
+    menus = Menu.objects.count()
+    ingredients = Ingredient.objects.count()
+    if request.GET.get('from_date') and request.GET.get('to_date'):
+        to_dt = datetime.strptime(request.GET.get('to_date'), "%Y-%m-%d") + timedelta(days=1)
+        from_dt = datetime.strptime(request.GET.get('from_date'), "%Y-%m-%d")
+        total_signups_today = User.objects.filter(date_joined__gte=from_dt, 
+                                                  date_joined__lte=to_dt).count()
+        total_logins_today = User.objects.filter(date_joined__gte=from_dt, 
+                                                  date_joined__lte=to_dt).count()
+    else:
+        todaydt = datetime.now() - timedelta(hours=datetime.now().hour, 
+                                             minutes=datetime.now().minute, 
+                                             seconds=datetime.now().second)
+        total_signups_today = User.objects.filter(date_joined__gte=todaydt, ).count()
+        total_logins_today = User.objects.filter(last_login__gte=todaydt).count()
+    
+    number_of_visitors = 0
+    return render(request, 'backend_dashboard.html', locals())
+
+
