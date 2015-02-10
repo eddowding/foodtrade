@@ -141,7 +141,7 @@ class MenuSection(Document):
     }
 
     def get_section_dishes(self):
-        return Dish.objects.filter(menu_section=self.pk)
+        return Dish.objects.filter(menu_section=self.pk).order_by('added_on')
 
     @classmethod
     def post_delete(cls, sender, document, **kwargs):

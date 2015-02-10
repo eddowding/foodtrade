@@ -1,0 +1,27 @@
+{% extends 'menu_base.html' %} {% load staticfiles %} {% block body_class %}skin-black{% endblock %} {% block content %}
+
+<h1>Statistics</h1>
+Number of menus : {{ menus }}
+<br/>
+Number of ingredients in total : {{ ingredients }}
+<br/>
+
+<h1>Daily Statistics: ( Default today )</h1>
+<div>
+	<form action='{% url "backend_dashboard" %}' method="get">
+		From Date : 
+		<input type="text" placeholder="YYYY-MM-DD" id="from_date" name="from_date"/>
+		To Date :
+		<input type="text" placeholder="YYYY-MM-DD" id="to_date" name="to_date"/>
+		<input type="submit" value="Submit"/>
+	</form>
+</div>
+
+
+Total Signups : {{ total_signups_today }}
+<br/>
+Total Logins : {{ total_logins_today }}
+<br/>
+Number of visitors : {{ number_of_visitors }}
+
+{% endblock content %}
