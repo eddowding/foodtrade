@@ -102,7 +102,7 @@ MONGO_PASS = 'ftroot'
 #MONGO_USER = None
 #MONGO_PASS = None
 
-connect(db=MONGO_DB, host=MONGO_HOST, port=MONGO_PORT, username=MONGO_USER, password=MONGO_PASS)
+connect(db=MONGO_DB, host=MONGO_HOST, port=MONGO_PORT, username=MONGO_USER, password=MONGO_PASS, connectTimeoutMS=30000)
 SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
 SESSION_SERIALIZER = 'mongoengine.django.sessions.BSONSerializer'
 
