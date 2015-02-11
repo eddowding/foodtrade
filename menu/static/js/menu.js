@@ -229,6 +229,20 @@ $(document).ready(function() {
         }
 
         if (response.obj.parent !== undefined) {
+          var parentId = '54dba8a30eaefa0e1de721c1';
+
+          (function loop() {
+            if (parentId !== null) {
+              console.log($('.ingredient-item-name[data-pk="' + parentId + '"]'));
+              parentId = $('.ingredient-item-name[data-pk="' + parentId + '"]').attr('data-parent-id');
+              if (parentId === undefined) {
+                parentId = null;
+              }
+              loop();
+            }
+          }());
+
+
           $('a.add-sub-ingredients[data-dish-id="' + $(this).attr('data-pk') + '"]').attr('data-parent-id', response.obj.parent.$oid);
           if (response.obj.is_allergen) {
             $('.ingredient-item-name[data-pk="' + response.obj.parent.$oid + '"]').parents('li:first').find('div.mag-toggle:first').find('.btn-allergen').addClass('active');
