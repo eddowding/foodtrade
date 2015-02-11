@@ -229,11 +229,22 @@ $(document).ready(function() {
         }
 
         if (response.obj.parent !== undefined) {
-          var parentId = '54dba8a30eaefa0e1de721c1';
+          var parentId = response.obj.parent.$oid;
 
           (function loop() {
             if (parentId !== null) {
-              console.log($('.ingredient-item-name[data-pk="' + parentId + '"]'));
+              if (response.obj.is_allergen) {
+                $('.ingredient-item-name[data-pk="' + parentId + '"]').parents('li:first').find('div.mag-toggle:first').find('.btn-allergen').addClass('active');
+                $('.ingredient-item-name[data-pk="' + parentId + '"]').parents('li:first').find('div.mag-toggle:first').find('.btn-allergen').find('input').attr('checked', 'checked');
+              }
+              if (response.obj.is_meat) {
+                $('.ingredient-item-name[data-pk="' + parentId + '"]').parents('li:first').find('div.mag-toggle:first').find('.btn-meat').addClass('active');
+                $('.ingredient-item-name[data-pk="' + parentId + '"]').parents('li:first').find('div.mag-toggle:first').find('.btn-meat').find('input').attr('checked', 'checked');
+              }
+              if (response.obj.is_gluten) {
+                $('.ingredient-item-name[data-pk="' + parentId + '"]').parents('li:first').find('div.mag-toggle:first').find('.btn-gluten').addClass('active');
+                $('.ingredient-item-name[data-pk="' + parentId + '"]').parents('li:first').find('div.mag-toggle:first').find('.btn-gluten').find('input').attr('checked', 'checked');
+              }
               parentId = $('.ingredient-item-name[data-pk="' + parentId + '"]').attr('data-parent-id');
               if (parentId === undefined) {
                 parentId = null;
@@ -242,20 +253,7 @@ $(document).ready(function() {
             }
           }());
 
-
           $('a.add-sub-ingredients[data-dish-id="' + $(this).attr('data-pk') + '"]').attr('data-parent-id', response.obj.parent.$oid);
-          if (response.obj.is_allergen) {
-            $('.ingredient-item-name[data-pk="' + response.obj.parent.$oid + '"]').parents('li:first').find('div.mag-toggle:first').find('.btn-allergen').addClass('active');
-            $('.ingredient-item-name[data-pk="' + response.obj.parent.$oid + '"]').parents('li:first').find('div.mag-toggle:first').find('.btn-allergen').find('input').attr('checked', 'checked');
-          }
-          if (response.obj.is_meat) {
-            $('.ingredient-item-name[data-pk="' + response.obj.parent.$oid + '"]').parents('li:first').find('div.mag-toggle:first').find('.btn-meat').addClass('active');
-            $('.ingredient-item-name[data-pk="' + response.obj.parent.$oid + '"]').parents('li:first').find('div.mag-toggle:first').find('.btn-meat').find('input').attr('checked', 'checked');
-          }
-          if (response.obj.is_gluten) {
-            $('.ingredient-item-name[data-pk="' + response.obj.parent.$oid + '"]').parents('li:first').find('div.mag-toggle:first').find('.btn-gluten').addClass('active');
-            $('.ingredient-item-name[data-pk="' + response.obj.parent.$oid + '"]').parents('li:first').find('div.mag-toggle:first').find('.btn-gluten').find('input').attr('checked', 'checked');
-          }
         }
 
         $(this).editable('option', 'name', newValue);
