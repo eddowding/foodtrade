@@ -90,11 +90,11 @@ REMOVE_WWW = False
 ES_URLS = ['http://localhost:9200']
 ES_INDEX = 'foodtrade'
 
-MONGO_HOST = 'ftmenuvm.cloudapp.net'
+MONGO_HOST = 'localhost'
 MONGO_PORT = 27017
 MONGO_DB = 'foodtrade'
-MONGO_USER = 'ftroot'
-MONGO_PASS = 'ftroot'
+MONGO_USER = None
+MONGO_PASS = None
 
 # MONGO_HOST = 'localhost'
 # MONGO_PORT = 27017
