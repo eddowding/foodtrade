@@ -6,7 +6,7 @@ def prod():
 
 def staging():
     env.user = 'foodtrade'
-    env.hosts = ['ftm-staging.cloudapp.net']
+    env.hosts = ['159.8.171.245']
 
 def deploy():
     sudo('cd /var/www; git pull')
