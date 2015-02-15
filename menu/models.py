@@ -161,8 +161,6 @@ class Dish(Document):
     is_meat = BooleanField(required=True, default=False)
     is_gluten = BooleanField(required=True, default=False)
     is_active = BooleanField(required=True, default=True)
-    html = StringField(required=True, default='')
-    print_html = StringField(required=True, default='')
     json = StringField(required=True, default='')
     added_on = DateTimeField(required=True)
     modified_on = DateTimeField(default=datetime.now)
@@ -281,16 +279,6 @@ class ModerationIngredient(Document):
                 else:
                     klass.objects.filter(name__iexact=document.name).delete()
                     Ingredient.objects.filter(name__iexact=document.name).update(**{'set__%s' % k: False})
-
-            dish_list = []
-            for i in Ingredient.objects.filter(name__iexact=document.name):
-                dish_list.append(i.dish.id)
-            for d in Dish.objects.filter(pk__in=dish_list):
-                dish_id = str(d.pk)
-                dish_tree = json.loads(d.json)
-                iwp = IngredientWalkPrint(dish_id, dish_tree)
-                d.print_html = iwp.walk().render()
-                d.save()
 
     meta = {
         'indexes': [
