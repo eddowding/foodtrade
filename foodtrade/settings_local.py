@@ -90,17 +90,17 @@ REMOVE_WWW = False
 ES_URLS = ['http://localhost:9200']
 ES_INDEX = 'foodtrade'
 
-# MONGO_HOST = 'localhost'
-# MONGO_PORT = 27017
-# MONGO_DB = 'foodtrade'
-# MONGO_USER = None
-# MONGO_PASS = None
-
 MONGO_HOST = 'localhost'
 MONGO_PORT = 27017
-MONGO_DB = 'foodtradedev'
+MONGO_DB = 'foodtrade'
 MONGO_USER = None
 MONGO_PASS = None
+
+# MONGO_HOST = 'localhost'
+# MONGO_PORT = 27017
+# MONGO_DB = 'foodtradedev'
+# MONGO_USER = None
+# MONGO_PASS = None
 
 connect(db=MONGO_DB, host=MONGO_HOST, port=MONGO_PORT, username=MONGO_USER, password=MONGO_PASS, connectTimeoutMS=30000)
 SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
