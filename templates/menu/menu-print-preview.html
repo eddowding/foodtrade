@@ -1,4 +1,5 @@
 {% extends 'menu_base.html' %} {% load staticfiles %} {% load socialaccount %} {% load url from future %} {% load i18n %} {% load account %} {% block body_class %}skin-black pace-done{% endblock %} {% block header %}{% endblock %} {% block main_content %}
+{% load menu_render %}
 
 <!-- <a href="javascript:window.print()" id="printPage"><i class="fa fa-print fa-fw fa-lg"></i> Print this page</a> -->
 <style type="text/css">
@@ -49,9 +50,9 @@ We're covered by our disclaimers and insurance, but you're not! So before you ha
                                 {{ dish.price|floatformat:2 }}
                             </span>
                         </div>
-                        <!-- 
+                        <!--
                                         <div class="dish_mag">
- 
+
                                             <span class="allergen flagged {% if dish.is_allergen %}active{% endif %}" title="Allergen" data-original-title="Allergen">Allergens</span>
                                             <span class="meat flagged  {% if dish.is_meat %}active{% endif %}" title="Meat">Meat</span>
                                             <span class="gluten flagged  {% if dish.is_gluten %}active{% endif %}" title="Gluten">Gluten</span>
@@ -60,7 +61,7 @@ We're covered by our disclaimers and insurance, but you're not! So before you ha
                                          -->
                         <span class="dish_description">{{dish.description}}</span>
 
-                        <span class="dish_ingredients">{{dish.print_html|safe}}</span>
+                        <span class="dish_ingredients">{% render_menu_print dish %}</span>
 
                     </div>
                     {% endfor %} {% endfor %}

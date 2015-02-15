@@ -11,3 +11,9 @@ register = template.Library()
 def render_menu(dish):
     iw = IngredientWalk(str(dish.pk), json.loads(dish.json))
     return iw.walk().render()
+
+
+@register.simple_tag
+def render_menu_print(dish):
+    iwp = IngredientWalkPrint(str(dish.pk), json.loads(dish.json))
+    return iwp.walk().render()
