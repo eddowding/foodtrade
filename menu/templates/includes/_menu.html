@@ -1,3 +1,5 @@
+{% load menu_render %}
+
 <h2>
     Menu&nbsp;
     <button data-toggle="modal" href="#menuModal" id="menuAddModal" class="btn btn-default"><i class="fa fa-list-ul fa-fw"></i> Add Menu</button>
@@ -116,7 +118,7 @@
                     <div class="menuitem">
                         <div class="menutitle">
                             <span class="handle">
-                                <i class="fa fa-navicon"></i> 
+                                <i class="fa fa-navicon"></i>
                             </span>
                             <span>{{ dish.name }} &mdash; &pound;{{ dish.price|floatformat:2 }}
                             </span>
@@ -139,7 +141,7 @@
                         </div>
                         {% spaceless %}
                         <div class="tree" data-dish-id={{dish.id}}>
-                            {{dish.html|safe}}
+                            {% render_menu dish %}
                         </div>
                         {% endspaceless %}
 
