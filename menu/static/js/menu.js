@@ -194,10 +194,16 @@ $(document).ready(function() {
   };
 
   //editable
-  var editableFn = function() {
+  var editableFn = function(existing) {
+    var existing = existing || false;
+    if (existing) {
+      var url = updateIngredientNameUrl;
+    } else {
+      var url = createIngredientUrl;
+    }
     $('.ingredient-item-name').editable({
       type: 'text',
-      url: createIngredientUrl + '?_tmp=' + (new Date).getTime(),
+      url: url + '?_tmp=' + (new Date).getTime(),
       inputclass: 'ingredient-editable',
       emptytext: '',
       placeholder: 'Add ingredient here',
@@ -766,7 +772,7 @@ newtree.attr('data-ingredient-id', result.ingredient_id);
 
 
   $.fn.editable.defaults.mode = 'inline';
-  editableFn();
+  editableFn(true);
 
   //toggle
   $(document).delegate('div.mag-toggle input[type="checkbox"]', 'change', function(ev) {
