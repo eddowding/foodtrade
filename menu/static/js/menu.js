@@ -807,7 +807,7 @@ newtree.attr('data-ingredient-id', result.ingredient_id);
         dataType: 'JSON',
         success: function(data) {
           //console.info('Ingredient Toggle', data);
-          $('.menus').html(data.html);
+          // $('.menus').html(data.html);
           sortableFn();
           editableFn();
 
