@@ -212,6 +212,7 @@ $(document).ready(function() {
         params.name = params.value;
         params.parent = $(this).attr('data-parent-id');
         params.order = 1;
+        params.pk = $(this).attr('data-pk');
         return params;
       },
       success: function(response, newValue) {
