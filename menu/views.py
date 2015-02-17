@@ -396,7 +396,7 @@ def update_ingredient_name(request):
     insert_dict['set__is_gluten'] = True if Gluten.objects.filter(name__iexact=request.POST.get('value')).count() else False
     Ingredient.objects.filter(pk=ObjectId(request.POST.get('pk'))).update(**insert_dict)
     ingredient = Ingredient.objects.get(pk=ObjectId(request.POST.get('pk')))
-    return HttpResponse(json.dumps({'status': True, obj: Ingredient}, default=json_util.default), content_type="application/json")
+    return HttpResponse(json.dumps({'status': True, 'obj': ingredient.to_mongo()}, default=json_util.default), content_type="application/json")
 
 
 @login_required(login_url=reverse_lazy('menu-login'))
@@ -524,18 +524,16 @@ def backend_dashboard(request):
     if request.GET.get('from_date') and request.GET.get('to_date'):
         to_dt = datetime.strptime(request.GET.get('to_date'), "%Y-%m-%d") + timedelta(days=1)
         from_dt = datetime.strptime(request.GET.get('from_date'), "%Y-%m-%d")
-        total_signups_today = User.objects.filter(date_joined__gte=from_dt, 
+        total_signups_today = User.objects.filter(date_joined__gte=from_dt,
                                                   date_joined__lte=to_dt).count()
-        total_logins_today = User.objects.filter(date_joined__gte=from_dt, 
+        total_logins_today = User.objects.filter(date_joined__gte=from_dt,
                                                   date_joined__lte=to_dt).count()
     else:
-        todaydt = datetime.now() - timedelta(hours=datetime.now().hour, 
-                                             minutes=datetime.now().minute, 
+        todaydt = datetime.now() - timedelta(hours=datetime.now().hour,
+                                             minutes=datetime.now().minute,
                                              seconds=datetime.now().second)
         total_signups_today = User.objects.filter(date_joined__gte=todaydt, ).count()
         total_logins_today = User.objects.filter(last_login__gte=todaydt).count()
-    
+
     number_of_visitors = 0
     return render(request, 'backend_dashboard.html', locals())
-
-
