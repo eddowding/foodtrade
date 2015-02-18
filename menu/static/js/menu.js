@@ -328,11 +328,11 @@ $(document).ready(function() {
 
   dishes.initialize();
 
-  $('#dishModal input#name').typeahead(null, {
-    displayKey: 'name',
-    name: 'dish',
-    source: dishes.ttAdapter()
-  });
+  // $('#dishModal input#name').typeahead(null, {
+  //   displayKey: 'name',
+  //   name: 'dish',
+  //   source: dishes.ttAdapter()
+  // });
 
   /* $('#editDishModal input#name').typeahead(null, {
 displayKey: 'name',
