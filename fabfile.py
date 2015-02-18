@@ -2,7 +2,7 @@ from fabric.api import env, run, sudo
 
 def prod():
     env.user = 'foodtrade'
-    env.hosts = ['ftmenuvm.cloudapp.net']
+    env.hosts = ['159.8.171.247']
 
 def staging():
     env.user = 'foodtrade'
