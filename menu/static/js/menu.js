@@ -31,13 +31,13 @@ $(document).ready(function() {
     establishmentSelected = true;
   });
 
-  $('#menuModal').keypress(function (e) {
+  $('#menuModal').keypress(function(e) {
     var key = e.which;
-    if(key == 13)  // the enter key code
-      {
-        $('#menuModal button.btn').click();
-        return false;
-      }
+    if (key == 13) // the enter key code
+    {
+      $('#menuModal button.btn').click();
+      return false;
+    }
   });
 
   $('#menuModal button.btn').click(function(ev) {
@@ -90,31 +90,29 @@ $(document).ready(function() {
     $('#editMenuModal').modal('show');
   });
 
-  $('#editMenuModal').keypress(function (e) {
+  $('#editMenuModal').keypress(function(e) {
     var key = e.which;
-    if(key == 13)  // the enter key code
-      {
-        $('#editMenuModal button.btn').click();
-        return false;
-      }
+    if (key == 13) // the enter key code
+    {
+      $('#editMenuModal button.btn').click();
+      return false;
+    }
   });
 
   $('#editMenuModal button.btn').click(function(ev) {
     var data = {
       'name': $('#editMenuModal input[name="name"]').val(),
-      'id':editMenuId
+      'id': editMenuId
     };
     if (establishmentSelected) {
       data.establishment = $('#editMenuModal input[name="establishment"]').val();
     } else {
-      if ($('#editMenuModal input[id="establishment"]').val()==editMenuBusinessName)
-        {
-          data.establishment = editMenuBusinessId;
-        }
-        else{
-          data.establishment = $('#editMenuModal input#establishment').val();
-        }
-        //data.establishment = $('#editMenuModal input#establishment').val();
+      if ($('#editMenuModal input[id="establishment"]').val() == editMenuBusinessName) {
+        data.establishment = editMenuBusinessId;
+      } else {
+        data.establishment = $('#editMenuModal input#establishment').val();
+      }
+      //data.establishment = $('#editMenuModal input#establishment').val();
     }
 
     $.ajax({
@@ -340,7 +338,7 @@ name: 'dish',
 source: dishes.ttAdapter()
 });*/
 
-var dishSelected = false;
+  var dishSelected = false;
 
   $('#dishModal input#name').on('typeahead:selected', function(ev, dish) {
     $('#dishModal input[name="name"]').val(dish.value);
@@ -351,13 +349,13 @@ var dishSelected = false;
     $('#dishModal input[name="menu_section"]').val($(this).attr('data-menu-section-id'));
   });
 
-  $('#dishModal').keypress(function (e) {
+  $('#dishModal').keypress(function(e) {
     var key = e.which;
-    if(key == 13)  // the enter key code
-      {
-        $('#dishModal button.btn').click();
-        return false;
-      }
+    if (key == 13) // the enter key code
+    {
+      $('#dishModal button.btn').click();
+      return false;
+    }
   });
 
   $('#dishModal button.btn').click(function(ev) {
@@ -422,8 +420,8 @@ newtree.attr('data-ingredient-id', result.ingredient_id);
         $('#dishModal input[name="description"]').val('');
         $('#dishModal input[name="name"]').val('');
         $('#dishModal input#name').val('');
-        if(data.dish_id){
-          var ultree = ".tree[data-dish-id='" + data.dish_id +"'] > ul";
+        if (data.dish_id) {
+          var ultree = ".tree[data-dish-id='" + data.dish_id + "'] > ul";
           var update_data = {
             pk: data.dish_id,
             html: $(ultree).parents('div.tree').html(),
@@ -588,20 +586,20 @@ newtree.attr('data-ingredient-id', result.ingredient_id);
     //deleteElement = $(this).parents('.ingredient-item:first');
   });
 
-  $('#editSectionModal').keypress(function (e) {
+  $('#editSectionModal').keypress(function(e) {
     var key = e.which;
-    if(key == 13)  // the enter key code
-      {
-        $('#editSectionModal button.btn').click();
-        return false;
-      }
+    if (key == 13) // the enter key code
+    {
+      $('#editSectionModal button.btn').click();
+      return false;
+    }
   });
 
   $('#editSectionModal button.btn').click(function(ev) {
     var data = {
       menu: $('#editSectionModal input[name="menu"]').val(),
       name: $('#editSectionModal input[name="name"]').val(),
-      id : editId
+      id: editId
     };
 
     $.ajax({
@@ -643,13 +641,13 @@ newtree.attr('data-ingredient-id', result.ingredient_id);
     //deleteElement = $(this).parents('.ingredient-item:first');
   });
 
-  $('#editDishModal').keypress(function (e) {
+  $('#editDishModal').keypress(function(e) {
     var key = e.which;
-    if(key == 13)  // the enter key code
-      {
-        $('#editDishModal button.btn').click();
-        return false;
-      }
+    if (key == 13) // the enter key code
+    {
+      $('#editDishModal button.btn').click();
+      return false;
+    }
   });
 
   $('#editDishModal button.btn').click(function(ev) {
@@ -707,6 +705,36 @@ newtree.attr('data-ingredient-id', result.ingredient_id);
       html: tree.parents('div.tree').html(),
       serialized: JSON.stringify(tree.sortable("serialize").get())
     };
+
+    if (deleteIngredientUrl == deleteUrl) {
+      var parentId = parentId = $('.ingredient-item-name[data-pk="' + deleteId + '"]').attr('data-parent-id');
+      console.log(parentId);
+      var is_allergen = $('.ingredient-item-name[data-pk="' + deleteId + '"]').parents('li:first').find('div.mag-toggle:first').find('.btn-allergen').hasClass('active');
+      var is_meat = $('.ingredient-item-name[data-pk="' + deleteId + '"]').parents('li:first').find('div.mag-toggle:first').find('.btn-meat').hasClass('active');
+      var is_gluten = $('.ingredient-item-name[data-pk="' + deleteId + '"]').parents('li:first').find('div.mag-toggle:first').find('.btn-gluten').hasClass('active');
+
+      (function loop() {
+        if (parentId !== null) {
+          if (is_allergen) {
+            $('.ingredient-item-name[data-pk="' + parentId + '"]').parents('li:first').find('div.mag-toggle:first').find('.btn-allergen').addClass('active');
+            $('.ingredient-item-name[data-pk="' + parentId + '"]').parents('li:first').find('div.mag-toggle:first').find('.btn-allergen').find('input').attr('checked', 'checked');
+          }
+          if (is_meat) {
+            $('.ingredient-item-name[data-pk="' + parentId + '"]').parents('li:first').find('div.mag-toggle:first').find('.btn-meat').addClass('active');
+            $('.ingredient-item-name[data-pk="' + parentId + '"]').parents('li:first').find('div.mag-toggle:first').find('.btn-meat').find('input').attr('checked', 'checked');
+          }
+          if (is_gluten) {
+            $('.ingredient-item-name[data-pk="' + parentId + '"]').parents('li:first').find('div.mag-toggle:first').find('.btn-gluten').addClass('active');
+            $('.ingredient-item-name[data-pk="' + parentId + '"]').parents('li:first').find('div.mag-toggle:first').find('.btn-gluten').find('input').attr('checked', 'checked');
+          }
+          parentId = $('.ingredient-item-name[data-pk="' + parentId + '"]').attr('data-parent-id');
+          if (parentId === undefined) {
+            parentId = null;
+          }
+          loop();
+        }
+      }());
+    }
 
     $.ajax({
       url: updateDishUrl + '?_tmp=' + (new Date).getTime(),
