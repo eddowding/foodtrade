@@ -729,7 +729,31 @@ newtree.attr('data-ingredient-id', result.ingredient_id);
         success: function(data) {
           // $('.menus').html(data.html);
           if (deleteIngredientUrl == deleteUrl) {
+            data.objs.forEach(function(value, index) {
+              if (value.is_allergen) {
+                $('.ingredient-item-name[data-pk="' + value.id + '"]').parents('li:first').find('div.mag-toggle:first').find('.btn-allergen').addClass('active');
+                $('.ingredient-item-name[data-pk="' + value.id + '"]').parents('li:first').find('div.mag-toggle:first').find('.btn-allergen').find('input').attr('checked', 'checked');
+              } else {
+                $('.ingredient-item-name[data-pk="' + value.id + '"]').parents('li:first').find('div.mag-toggle:first').find('.btn-allergen').removeClass('active');
+                $('.ingredient-item-name[data-pk="' + value.id + '"]').parents('li:first').find('div.mag-toggle:first').find('.btn-allergen').find('input').removeAttr('checked');
+              }
 
+              if (value.is_meat) {
+                $('.ingredient-item-name[data-pk="' + value.id + '"]').parents('li:first').find('div.mag-toggle:first').find('.btn-meat').addClass('active');
+                $('.ingredient-item-name[data-pk="' + value.id + '"]').parents('li:first').find('div.mag-toggle:first').find('.btn-meat').find('input').attr('checked', 'checked');
+              } else {
+                $('.ingredient-item-name[data-pk="' + value.id + '"]').parents('li:first').find('div.mag-toggle:first').find('.btn-meat').removeClass('active');
+                $('.ingredient-item-name[data-pk="' + value.id + '"]').parents('li:first').find('div.mag-toggle:first').find('.btn-meat').find('input').removeAttr('checked');
+              }
+
+              if (value.is_gluten) {
+                $('.ingredient-item-name[data-pk="' + value.id + '"]').parents('li:first').find('div.mag-toggle:first').find('.btn-gluten').addClass('active');
+                $('.ingredient-item-name[data-pk="' + value.id + '"]').parents('li:first').find('div.mag-toggle:first').find('.btn-gluten').find('input').attr('checked', 'checked');
+              } else {
+                $('.ingredient-item-name[data-pk="' + value.id + '"]').parents('li:first').find('div.mag-toggle:first').find('.btn-gluten').removeClass('active');
+                $('.ingredient-item-name[data-pk="' + value.id + '"]').parents('li:first').find('div.mag-toggle:first').find('.btn-gluten').find('input').removeAttr('checked');
+              }
+            });
           }
           sortableFn();
           editableFn();
