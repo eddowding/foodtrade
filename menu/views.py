@@ -3,6 +3,7 @@ import re
 from datetime import datetime, timedelta
 from copy import deepcopy
 from bson.objectid import ObjectId, InvalidId
+from bson.dbref import DBRef
 from mongoengine.queryset import Q
 from bson import json_util
 from django.shortcuts import render
@@ -336,11 +337,39 @@ def update_ingredient_name(request):
 @login_required(login_url=reverse_lazy('menu-login'))
 def delete_ingredient(request):
     ingredient = Ingredient.objects.get(pk=ObjectId(request.POST.get('id')))
-    # print ingredient
+    parent = ingredient.parent
     ingredient.delete()
-    # Ingredient.objects.filter(pk=ObjectId(request.POST.get('id'))).delete()
 
-    return HttpResponse(json.dumps({'status': True}, default=json_util.default))
+    ret_list = []
+    while parent:
+        if isinstance(parent, DBRef):
+            break
+        is_allergen = True if Allergen.objects.filter(name__iexact=parent.name).count() else False
+        is_meat = True if Meat.objects.filter(name__iexact=parent.name).count() else False
+        is_gluten = True if Gluten.objects.filter(name__iexact=parent.name).count() else False
+
+        for i in Ingredient.objects.filter(parent=parent):
+            if i.is_allergen:
+                is_allergen = True
+            if i.is_meat:
+                is_meat = True
+            if i.is_gluten:
+                is_gluten = True
+
+        update_dict = {}
+
+        update_dict['set__is_allergen'] = is_allergen
+        update_dict['set__is_meat'] = is_meat
+        update_dict['set__is_gluten'] = is_gluten
+
+        Ingredient.objects.filter(id=parent.id).update(**update_dict)
+
+        ret_list.append({'id': str(parent.id), 'is_allergen': is_allergen, 'is_meat': is_meat, 'is_gluten': is_gluten})
+
+        parent = parent.parent
+        if isinstance(parent, DBRef):
+            break
+    return HttpResponse(json.dumps({'status': True, 'objs': ret_list}, default=json_util.default))
 
 
 @login_required(login_url=reverse_lazy('menu-login'))
