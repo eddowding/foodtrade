@@ -706,36 +706,6 @@ newtree.attr('data-ingredient-id', result.ingredient_id);
       serialized: JSON.stringify(tree.sortable("serialize").get())
     };
 
-    if (deleteIngredientUrl == deleteUrl) {
-      var parentId = parentId = $('.ingredient-item-name[data-pk="' + deleteId + '"]').attr('data-parent-id');
-      console.log(parentId);
-      var is_allergen = $('.ingredient-item-name[data-pk="' + deleteId + '"]').parents('li:first').find('div.mag-toggle:first').find('.btn-allergen').hasClass('active');
-      var is_meat = $('.ingredient-item-name[data-pk="' + deleteId + '"]').parents('li:first').find('div.mag-toggle:first').find('.btn-meat').hasClass('active');
-      var is_gluten = $('.ingredient-item-name[data-pk="' + deleteId + '"]').parents('li:first').find('div.mag-toggle:first').find('.btn-gluten').hasClass('active');
-
-      (function loop() {
-        if (parentId !== null) {
-          if (is_allergen) {
-            $('.ingredient-item-name[data-pk="' + parentId + '"]').parents('li:first').find('div.mag-toggle:first').find('.btn-allergen').addClass('active');
-            $('.ingredient-item-name[data-pk="' + parentId + '"]').parents('li:first').find('div.mag-toggle:first').find('.btn-allergen').find('input').attr('checked', 'checked');
-          }
-          if (is_meat) {
-            $('.ingredient-item-name[data-pk="' + parentId + '"]').parents('li:first').find('div.mag-toggle:first').find('.btn-meat').addClass('active');
-            $('.ingredient-item-name[data-pk="' + parentId + '"]').parents('li:first').find('div.mag-toggle:first').find('.btn-meat').find('input').attr('checked', 'checked');
-          }
-          if (is_gluten) {
-            $('.ingredient-item-name[data-pk="' + parentId + '"]').parents('li:first').find('div.mag-toggle:first').find('.btn-gluten').addClass('active');
-            $('.ingredient-item-name[data-pk="' + parentId + '"]').parents('li:first').find('div.mag-toggle:first').find('.btn-gluten').find('input').attr('checked', 'checked');
-          }
-          parentId = $('.ingredient-item-name[data-pk="' + parentId + '"]').attr('data-parent-id');
-          if (parentId === undefined) {
-            parentId = null;
-          }
-          loop();
-        }
-      }());
-    }
-
     $.ajax({
       url: updateDishUrl + '?_tmp=' + (new Date).getTime(),
       data: dataDish,
@@ -751,7 +721,10 @@ newtree.attr('data-ingredient-id', result.ingredient_id);
         type: 'POST',
         dataType: 'JSON',
         success: function(data) {
-          $('.menus').html(data.html);
+          // $('.menus').html(data.html);
+          if (deleteIngredientUrl == deleteUrl) {
+            
+          }
           sortableFn();
           editableFn();
         }
