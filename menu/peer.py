@@ -37,7 +37,8 @@ class IngredientWalk(object):
     def _get_ingredients_dict(self):
         dish_id = ObjectId(self.dish_id)
         for i in Ingredient.objects.filter(dish=dish_id):
-            self.ingredients_dict[str(i.pk)] = {'name': i.name, 'is_allergen': i.is_allergen, 'is_meat': i.is_meat, 'is_gluten': i.is_gluten, 'parent': i.parent}
+            self.ingredients_dict[str(i.pk)] = {'name': i.name, 'is_allergen': i.is_allergen, 'is_meat': i.is_meat,
+                                                'is_gluten': i.is_gluten, 'parent': str(i.parent.id) if i.parent else None}
 
     def _generate_li(self, ingredient_id):
         dish_id = self.dish_id
@@ -47,12 +48,11 @@ class IngredientWalk(object):
         tmp_span_1 = ret_li.add(span(cls='handle'))
         tmp_span_1.add(i(cls='fa fa-navicon'))
         tmp_span_2 = ret_li.add(span(cls='ingredient'))
-        if ingredient_dict.get('parent'):
-            tmp_span_2.add(a(ingredient_name, cls='ingredient-item-name', data_pk=ingredient_id, data_name=ingredient_name, data_parent_id=str(ingredient_dict.get('parent'))))
-        else:
-            tmp_span_2.add(a(ingredient_name, cls='ingredient-item-name', data_pk=ingredient_id, data_name=ingredient_name))
+        tmp_span_2.add(a(ingredient_name, cls='ingredient-item-name', data_pk=ingredient_id, data_name=ingredient_name,
+                        data_parent_id=ingredient_dict.get('parent')))
         tmp_div_1_1 = ret_li.add(span(cls='tools'))
-        tmp_div_1_1_a_1 = tmp_div_1_1.add(a(data_id=ingredient_id, data_url=reverse_lazy('menu_delete_ingredient'), data_name=ingredient_name, cls='delete-btn', data_toggle='tooltip', title='Remove this ingredient'))
+        tmp_div_1_1_a_1 = tmp_div_1_1.add(a(data_id=ingredient_id, data_url=reverse_lazy('menu_delete_ingredient'),
+                    data_name=ingredient_name, cls='delete-btn', data_toggle='tooltip', title='Remove this ingredient'))
         tmp_div_1_1_a_1.add(i(cls='fa fa-trash-o'))
         tmp_div_1_1_a_2 = tmp_div_1_1.add(a(title='Add nutrition info', data_toggle='modal', data_target='#nutrition', cls='nutrition'))
         tmp_div_1_1_a_2.add(i(cls='fa fa-heart'))
