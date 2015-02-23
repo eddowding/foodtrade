@@ -29,6 +29,7 @@ def deploy():
         checkout_cmd = 'git checkout menu'
     sudo('cd /var/www; git fetch --tags')
     sudo('cd /var/www; %s' % checkout_cmd)
+    sudo('cd /var/www; git pull')
     sudo('cd /var/www; pip install -r requirements.pip')
     sudo('cd /var/www; chown -R foodtrade:foodtrade bower_components')
     run('cd /var/www; ./manage.py bower install')
