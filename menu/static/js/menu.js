@@ -250,6 +250,12 @@ $(document).ready(function() {
                 $('.ingredient-item-name[data-pk="' + parentId + '"]').parents('li:first').find('div.mag-toggle:first').find('.btn-gluten').addClass('active');
                 $('.ingredient-item-name[data-pk="' + parentId + '"]').parents('li:first').find('div.mag-toggle:first').find('.btn-gluten').find('input').attr('checked', 'checked');
               }
+              $.ajax({
+                url: updateIngredientUrl,
+                data: {id: parentId, is_allergen: response.obj.is_allergen, is_meat: response.obj.is_meat, is_gluten: response.obj.is_gluten},
+                type: 'POST',
+                dataType: 'JSON'
+              });
               parentId = $('.ingredient-item-name[data-pk="' + parentId + '"]').attr('data-parent-id');
               if (parentId === undefined) {
                 parentId = null;
@@ -723,7 +729,7 @@ newtree.attr('data-ingredient-id', result.ingredient_id);
         success: function(data) {
           // $('.menus').html(data.html);
           if (deleteIngredientUrl == deleteUrl) {
-            
+
           }
           sortableFn();
           editableFn();
