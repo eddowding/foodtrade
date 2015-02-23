@@ -192,6 +192,10 @@ class Ingredient(Document):
     added_on = DateTimeField(required=True)
     modified_on = DateTimeField(default=datetime.now)
 
+    @classmethod
+    def post_delete(cls, sender, document, **kwargs):
+        Ingredient.objects.filter(parent=document).delete()
+
     meta = {
         'indexes': [
             'dish',
@@ -202,6 +206,10 @@ class Ingredient(Document):
 
     def get_children(self):
         return Ingredient.objects.filter(parent=self)
+
+
+signals.post_delete.connect(Ingredient.post_delete, sender=Ingredient)
+
 
 class Allergen(Document):
     name = StringField(required=True)

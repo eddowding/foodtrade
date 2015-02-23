@@ -335,7 +335,11 @@ def update_ingredient_name(request):
 
 @login_required(login_url=reverse_lazy('menu-login'))
 def delete_ingredient(request):
-    Ingredient.objects.filter(pk=ObjectId(request.POST.get('id'))).delete()
+    ingredient = Ingredient.objects.get(pk=ObjectId(request.POST.get('id')))
+    # print ingredient
+    ingredient.delete()
+    # Ingredient.objects.filter(pk=ObjectId(request.POST.get('id'))).delete()
+
     return HttpResponse(json.dumps({'status': True}, default=json_util.default))
 
 
