@@ -13,13 +13,13 @@
 
 {% block extra_js %}
 <script src="{% staticfile '/js/register.js' %}"></script>
-<script src="{% static 'menu/js/jquery.onepage-scroll.min.js' %}"></script>
+<!-- <script src="{% static 'menu/js/jquery.onepage-scroll.min.js' %}"></script> -->
 {% endblock extra_js %}
 
     <!-- <link href="{% staticfile "/menu/css/front.css" %}" rel="stylesheet" type="text/css" /> -->
     <!-- <link href="{% static "menu/css/front.css" %}" rel="stylesheet" type="text/css" /> -->
     <link href="{% static "menu/css/represent.css" %}" rel="stylesheet">
-    <link href="{% static "menu/css/onepage-scroll.css" %}" rel="stylesheet">
+    <!-- <link href="{% static "menu/css/onepage-scroll.css" %}" rel="stylesheet"> -->
  {% endblock %}
 
 {% block main_content %}
@@ -50,30 +50,91 @@
 
     <div class="main">
 
- <!--        <section  style=" background:  url('../img/product.gif') top no-repeat; background-size: contain; background-position: bottom right;">
-            <div class="container">
+        <section style="background:url('{% static "img/bg50.png" %}') center center;">
+            <div class="container-responsive">
                 <div class="row">
-                    <div class=" col-xs-8 lead text-left" style="padding-top: 5%;">
+                    <div class="col-sm-5 col-sm-offset-1 col-xs-12">
+                        <div class="innerAll">
 
-                        <h1>Don’t let the new allergen labelling laws be a headache
-                        </h1> 
+                            <h1>Are you allergen compliant?</h1>
+                            <ul class="fa-ul lead" style="margin:0;">
+                                <li><i class="fa fa-li fa-check-square-o"></i> Get compliant in less than 10 minutes</li>
+                                <li><i class="fa fa-li fa-check-square-o"></i> Approved by the <acronym data-toggle="tooltip" title="The people who train the Environmental Health Officers">Chartered Institute of Environmental Health</acronym></li>
+                                <li><i class="fa fa-li fa-check-square-o"></i> sadfasdfs</li>
+                                <li><i class="fa fa-li fa-check-square-o"></i> sadfasdfs</li>
 
-                        <p>A clever allergen labelling tool for food businesses</p>
 
-                        <button class="btn btn-lg btn-success nextslide">
-                            <i class="fa fa-arrow-circle-down fa-fw"></i>
-                        Tell me more</button>
+                            <p>A clever allergen labelling tool for food businesses</p>
+
+                            <button class="btn btn-lg btn-success nextslide">
+                                <i class="fa fa-arrow-circle-down fa-fw"></i> Tell me more</button>
+
+                        </div>
 
                     </div>
-                   
+
+                    <div class="col-xs-12 col-sm-6">
+                        <div class="innerLR">
+                        <div class="text-center">
+                            <h1 style="margin:0;">Start your free trial</h1>
+                            <p>You'll be up and running in 10 seconds!</p>
+                        </div>
+                        <form id="registration-form" action="{% url 'menu_register' %}" method="post">{% csrf_token %}
+                            <div>
+                         <!--        <div class="form-group">
+                                    <label>First name</label>
+                                    <input type="text" name="first_name" class="form-control" placeholder="First name" />
+                                    <span class="help-text"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label>Last name</label>
+                                    <input type="text" name="last_name" class="form-control" placeholder="Last name" />
+                                    <span class="help-text"></span>
+                                </div> -->
+                                <div class="form-group">
+                                    <label>Your email</label>
+                                    <input type="text" name="username" class="form-control" placeholder="Email Address" />
+                                    <span class="help-text"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label>Pick a password</label>
+                                    <input type="password" name="password" class="form-control" placeholder="Password" />
+                                <!--     <span class="help-text">Tip: typing happy passwords makes you happier, and they're easier to remember</span> -->
+                                </div>
+                        <!--         <div class="form-group">
+                                    <label>Type that password again</label>
+                                    <input type="password" name="password2" class="form-control" placeholder="Retype password" />
+                                    <span class="help-text">Just to be sure we've both got it right</span>
+                                </div> -->
+                                <div class="form-group">
+                                    <div class="checkbox">
+                                        <label for="terms">
+                                            <input type="checkbox" name="terms" /> I accept the
+                                            <a href="#" data-toggle="modal" data-target="#terms">
+                                                                terms &amp; conditions of use</a>
+                                        </label>
+                                    </div>
+                                    <span class="help-text"></span>
+                                </div>
+                            </div>
+                            <div class="footer">
+                                <button type="button" class="btn bg-olive btn-block btn-lg signup">
+                                    Start my FREE trial</button>
+
+                                    <span class="text-danger"><i class="fa fa-ban"></i> <strong>No spam, ever. </strong>Unless it's with eggs or hashbrowns.</span>
+                            </div>
+                        </form>
+                    </div>
+                    </div>
                 </div>
             </div>
-        </section> -->
+        </section>
 
-        <section style=" background:  url('../img/wbk_all.jpg') top no-repeat; background-size: cover;"> 
+
+        <section style=" background:  url('../img/wbk_all.jpg') center no-repeat; background-size: cover; height: 300px;"> 
                 <div class="row" style="padding: 70px 0; margin: 0;">
                     <div class="col-xs-12 col-sm-7 lead"> 
-                        <div  style="color: #fff; background: rgba(0,0,0,0.5); padding: 0.5em 1em 2em 1em; border-radius: 3px;">
+                        <div  style="color: #fff; background: rgba(0,0,0,0.5); padding: 0.5em 1em 2em 1em; border-radius: 3px;" class="hidden">
                         <h1 style="color: #fff; margin: 0.5em 0;" >Don't let allergen laws be a headache</h1>
                         <p style="color: #fafafa; font-size: 120%; font-weight: 500; text-shadow: 0 0 5px #000; margin-bottom: 1em;">With our automatic allergen labeller, you can have a printed compliant menu in minutes, leaving you to concentrate on what you do best. </p>  
 
@@ -812,28 +873,28 @@ etc -->
  
 
     <script type="text/javascript">
-    $(".main").onepage_scroll({
-        sectionContainer: "section", // sectionContainer accepts any kind of selector in case you don't want to use section
-        easing: "ease", // Easing options accepts the CSS3 easing animation such "ease", "linear", "ease-in",
-        // "ease-out", "ease-in-out", or even cubic bezier value such as "cubic-bezier(0.175, 0.885, 0.420, 1.310)"
-        animationTime: 1000, // AnimationTime let you define how long each section takes to animate
-        pagination: true, // You can either show or hide the pagination. Toggle true for show, false for hide.
-        updateURL: true, // Toggle this true if you want the URL to be updated automatically when the user scroll to each page.
-        beforeMove: function(index) {}, // This option accepts a callback function. The function will be called before the page moves.
-        afterMove: function(index) {}, // This option accepts a callback function. The function will be called after the page moves.
-        loop: false, // You can have the page loop back to the top/bottom when the user navigates at up/down on the first/last page.
-        keyboard: true, // You can activate the keyboard controls
-        responsiveFallback: false, // You can fallback to normal page scroll by defining the width of the browser in which
-        // you want the responsive fallback to be triggered. For example, set this to 600 and whenever
-        // the browser's width is less than 600, the fallback will kick in.
-        direction: "vertical" // You can now define the direction of the One Page Scroll animation. Options available are "vertical" and "horizontal". The default value is "vertical".  
-    });
-    $(".sign").click(function() {
-        $(".main").moveTo(7);
-    }); 
-    $(".nextslide").click(function() {
-        $(".main").moveDown();
-    });
+    // $(".main").onepage_scroll({
+    //     sectionContainer: "section", // sectionContainer accepts any kind of selector in case you don't want to use section
+    //     easing: "ease", // Easing options accepts the CSS3 easing animation such "ease", "linear", "ease-in",
+    //     // "ease-out", "ease-in-out", or even cubic bezier value such as "cubic-bezier(0.175, 0.885, 0.420, 1.310)"
+    //     animationTime: 1000, // AnimationTime let you define how long each section takes to animate
+    //     pagination: true, // You can either show or hide the pagination. Toggle true for show, false for hide.
+    //     updateURL: true, // Toggle this true if you want the URL to be updated automatically when the user scroll to each page.
+    //     beforeMove: function(index) {}, // This option accepts a callback function. The function will be called before the page moves.
+    //     afterMove: function(index) {}, // This option accepts a callback function. The function will be called after the page moves.
+    //     loop: false, // You can have the page loop back to the top/bottom when the user navigates at up/down on the first/last page.
+    //     keyboard: true, // You can activate the keyboard controls
+    //     responsiveFallback: false, // You can fallback to normal page scroll by defining the width of the browser in which
+    //     // you want the responsive fallback to be triggered. For example, set this to 600 and whenever
+    //     // the browser's width is less than 600, the fallback will kick in.
+    //     direction: "vertical" // You can now define the direction of the One Page Scroll animation. Options available are "vertical" and "horizontal". The default value is "vertical".  
+    // });
+    // $(".sign").click(function() {
+    //     $(".main").moveTo(7);
+    // }); 
+    // $(".nextslide").click(function() {
+    //     $(".main").moveDown();
+    // });
     </script>
 
 
