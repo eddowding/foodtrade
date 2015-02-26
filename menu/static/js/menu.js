@@ -312,6 +312,14 @@ $(document).ready(function() {
       source: ingredients.ttAdapter()
     });
 
+    var handleIngredientSelectFn = function(ingredient) {
+      console.log(ingredient);
+    };
+
+    $('.ingredient-editable').on('typeahead:selected', function(ev, ingredient) {
+      console.log(ingredient);
+    });
+
     $('.ingredient-editable:contains("")').select();
   };
 
@@ -470,16 +478,8 @@ newtree.attr('data-ingredient-id', result.ingredient_id);
 
   ingredients.initialize();
 
-  $('#ingredientsModal input#name').typeahead(null, {
-    displayKey: 'name',
-    name: 'ingredients',
-    source: ingredients.ttAdapter(),
-  });
-
-
-  $('#ingredientsModal input#name').on('typeahead:selected', function(ev, ingredient) {
-    $('#ingredientsModal input[name="name"]').val(ingredient.name);
-    $('#ingredientsModal button.btn').trigger('click');
+  $('.ingredient-editable').on('typeahead:selected', function(ev, ingredient) {
+    console.log(ingredient);
   });
 
 
@@ -508,6 +508,9 @@ newtree.attr('data-ingredient-id', result.ingredient_id);
       name: 'ingredients',
       source: ingredients.ttAdapter()
     });
+    $('.ingredient-editable').on('typeahead:selected', function(ev, ingredient) {
+      console.log(ingredient);
+    });
   });
 
   $(document).delegate('.add-sub-ingredients', 'click', function(ev) {
@@ -531,6 +534,9 @@ newtree.attr('data-ingredient-id', result.ingredient_id);
       displayKey: 'name',
       name: 'ingredients',
       source: ingredients.ttAdapter()
+    });
+    $('.ingredient-editable').on('typeahead:selected', function(ev, ingredient) {
+      console.log(ingredient);
     });
   });
 
@@ -813,6 +819,9 @@ newtree.attr('data-ingredient-id', result.ingredient_id);
       displayKey: 'name',
       name: 'ingredients',
       source: ingredients.ttAdapter()
+    });
+    $('.ingredient-editable').on('typeahead:selected', function(ev, ingredient) {
+      console.log(ingredient);
     });
   });
 

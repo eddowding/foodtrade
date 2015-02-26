@@ -318,7 +318,8 @@ def update_ingredient(request):
         update_dict['set__is_meat'] = True
     if request.POST.get('is_gluten') == 'true':
         update_dict['set__is_gluten'] = True
-    Ingredient.objects.filter(pk=id).update(**update_dict)
+    if len(update_dict.keys()):
+        Ingredient.objects.filter(pk=id).update(**update_dict)
     return HttpResponse(json.dumps({'status': True}, default=json_util.default))
 
 
@@ -398,10 +399,10 @@ def ingredient_lookup_name(request):
     klass_list = [Gluten, Allergen, Meat]
     for klass in klass_list:
         for obj in klass.objects.filter(**query2):
-            if keyword.lower() in obj.name.lower():
-                tmp_list.append(obj.name)
-    tmp_list = list(set(tmp_list))
-    return HttpResponse(json.dumps({'status': True, 'objs': [{'name': n} for n in tmp_list]}))
+            tmp_list.append({'class': str(klass.__name__), 'id': str(obj.id), 'name': obj.name})
+    for i in Ingredient.objects.filter(parent=None, name__icontains=keyword)[0:10]:
+        tmp_list.append({'class': str(Ingredient.__name__), 'id': str(i.id), 'name': i.name})
+    return HttpResponse(json.dumps({'status': True, 'objs': tmp_list[0:10]}))
 
 
 
