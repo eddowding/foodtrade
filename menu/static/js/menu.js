@@ -313,11 +313,11 @@ $(document).ready(function() {
     });
 
     var handleIngredientSelectFn = function(ingredient) {
-      console.log(ingredient);
+      $(this).parents('span.ingredient:first').find('a.ingredient-item-name:first').attr('data-auto-class', ingredient.class).attr('data-auto-id', ingredient.id);
     };
 
     $('.ingredient-editable').on('typeahead:selected', function(ev, ingredient) {
-      console.log(ingredient);
+      $(this).parents('span.ingredient:first').find('a.ingredient-item-name:first').attr('data-auto-class', ingredient.class).attr('data-auto-id', ingredient.id);
     });
 
     $('.ingredient-editable:contains("")').select();
@@ -479,7 +479,7 @@ newtree.attr('data-ingredient-id', result.ingredient_id);
   ingredients.initialize();
 
   $('.ingredient-editable').on('typeahead:selected', function(ev, ingredient) {
-    console.log(ingredient);
+    $(this).parents('span.ingredient:first').find('a.ingredient-item-name:first').attr('data-auto-class', ingredient.class).attr('data-auto-id', ingredient.id);
   });
 
 
@@ -509,7 +509,7 @@ newtree.attr('data-ingredient-id', result.ingredient_id);
       source: ingredients.ttAdapter()
     });
     $('.ingredient-editable').on('typeahead:selected', function(ev, ingredient) {
-      console.log(ingredient);
+      $(this).parents('span.ingredient:first').find('a.ingredient-item-name:first').attr('data-auto-class', ingredient.class).attr('data-auto-id', ingredient.id);
     });
   });
 
@@ -536,7 +536,7 @@ newtree.attr('data-ingredient-id', result.ingredient_id);
       source: ingredients.ttAdapter()
     });
     $('.ingredient-editable').on('typeahead:selected', function(ev, ingredient) {
-      console.log(ingredient);
+      $(this).parents('span.ingredient:first').find('a.ingredient-item-name:first').attr('data-auto-class', ingredient.class).attr('data-auto-id', ingredient.id);
     });
   });
 
@@ -821,7 +821,7 @@ newtree.attr('data-ingredient-id', result.ingredient_id);
       source: ingredients.ttAdapter()
     });
     $('.ingredient-editable').on('typeahead:selected', function(ev, ingredient) {
-      console.log(ingredient);
+      $(this).parents('span.ingredient:first').find('a.ingredient-item-name:first').attr('data-auto-class', ingredient.class).attr('data-auto-id', ingredient.id);
     });
   });
 
