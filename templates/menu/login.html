@@ -76,10 +76,10 @@
                     <div class="col-xs-12 col-sm-6">
                         <div class="innerLR">
                         <div class="text-center">
-                            <h1 style="margin:0;">Start your free trial</h1>
+                            <h1 style="margin:1.5em 0 0 0;">Start your free trial</h1>
                             <p>You'll be up and running in 10 seconds!</p>
                         </div>
-                        <form id="registration-form" action="{% url 'menu_register' %}" method="post">{% csrf_token %}
+                        <form id="registration-form" action="{% url 'menu_register' %}" method="post" style="margin: 30px 50px 100px !important;">{% csrf_token %}
                             <div>
                          <!--        <div class="form-group">
                                     <label>First name</label>
@@ -93,12 +93,12 @@
                                 </div> -->
                                 <div class="form-group">
                                     <label>Your email</label>
-                                    <input type="text" name="username" class="form-control" placeholder="Email Address" />
+                                    <input type="text" name="username" class="form-control input-lg" placeholder="Email Address" />
                                     <span class="help-text"></span>
                                 </div>
                                 <div class="form-group">
                                     <label>Pick a password</label>
-                                    <input type="password" name="password" class="form-control" placeholder="Password" />
+                                    <input type="password" name="password" class="form-control input-lg" placeholder="Password" />
                                 <!--     <span class="help-text">Tip: typing happy passwords makes you happier, and they're easier to remember</span> -->
                                 </div>
                         <!--         <div class="form-group">
@@ -119,7 +119,7 @@
                             </div>
                             <div class="footer">
                                 <button type="button" class="btn bg-olive btn-block btn-lg signup">
-                                    Start my FREE trial</button>
+                                    <strong>Start my FREE trial</strong></button>
 
                                     <span class="text-danger"><i class="fa fa-ban"></i> <strong>No spam, ever. </strong>Unless it's with eggs or hashbrowns.</span>
                             </div>

@@ -337,6 +337,7 @@ def update_ingredient_name(request):
 @login_required(login_url=reverse_lazy('menu-login'))
 def delete_ingredient(request):
     ingredient = Ingredient.objects.get(pk=ObjectId(request.POST.get('id')))
+    dish = ingredient.dish
     parent = ingredient.parent
     ingredient.delete()
 
@@ -369,7 +370,22 @@ def delete_ingredient(request):
         parent = parent.parent
         if isinstance(parent, DBRef):
             break
-    return HttpResponse(json.dumps({'status': True, 'objs': ret_list}, default=json_util.default))
+
+    is_allergen = False
+    is_meat = False
+    is_gluten = False
+    dish_update_dict = {'set__is_allergen': False, 'set__is_meat': False, 'set__is_gluten': False}
+    for i in Ingredient.objects.filter(dish=dish):
+        if i.is_allergen:
+            dish_update_dict['set__is_allergen'] = True
+        if i.is_meat:
+            dish_update_dict['set__is_meat'] = True
+        if i.is_gluten:
+            dish_update_dict['set__is_gluten'] = True
+    Dish.objects.filter(id=dish.id).update(**dish_update_dict)
+    ret_dict = {'id': str(dish.id), 'is_allergen': dish_update_dict['set__is_allergen'],
+                'is_meat': dish_update_dict['set__is_meat'], 'is_gluten': dish_update_dict['set__is_gluten']}
+    return HttpResponse(json.dumps({'status': True, 'objs': ret_list, 'dish': ret_dict}, default=json_util.default))
 
 
 @login_required(login_url=reverse_lazy('menu-login'))

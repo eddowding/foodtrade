@@ -729,6 +729,21 @@ newtree.attr('data-ingredient-id', result.ingredient_id);
         success: function(data) {
           // $('.menus').html(data.html);
           if (deleteIngredientUrl == deleteUrl) {
+            if (data.dish.is_allergen) {
+              $('div.menuitem[data-pk="' + data.dish.id + '"]').find('div.menutitle').find('div.pull-right').find('span.allergen').addClass('active');
+            } else {
+              $('div.menuitem[data-pk="' + data.dish.id + '"]').find('div.menutitle').find('div.pull-right').find('span.allergen').removeClass('active');
+            }
+            if (data.dish.is_meat) {
+              $('div.menuitem[data-pk="' + data.dish.id + '"]').find('div.menutitle').find('div.pull-right').find('span.meat').addClass('active');
+            } else {
+              $('div.menuitem[data-pk="' + data.dish.id + '"]').find('div.menutitle').find('div.pull-right').find('span.meat').removeClass('active');
+            }
+            if (data.dish.is_gluten) {
+              $('div.menuitem[data-pk="' + data.dish.id + '"]').find('div.menutitle').find('div.pull-right').find('span.gluten').addClass('active');
+            } else {
+              $('div.menuitem[data-pk="' + data.dish.id + '"]').find('div.menutitle').find('div.pull-right').find('span.gluten').removeClass('active');
+            }
             data.objs.forEach(function(value, index) {
               if (value.is_allergen) {
                 $('.ingredient-item-name[data-pk="' + value.id + '"]').parents('li:first').find('div.mag-toggle:first').find('.btn-allergen').addClass('active');
