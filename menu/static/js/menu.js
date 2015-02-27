@@ -277,6 +277,8 @@ $(document).ready(function() {
         $(this).parents('.ingredient-item:first').attr('data-ingredient-id', response.obj._id.$oid);
         if (response.html) {
           $(this).parents('.ingredient-item:first').find('ul:first').replaceWith(response.html);
+          sortableFn();
+          editableFn(true);
         }
         $(this).attr('data-pk', response.obj._id.$oid);
         $(this).attr('data-name', newValue);
