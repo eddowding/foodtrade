@@ -211,6 +211,8 @@ $(document).ready(function() {
         params.parent = $(this).attr('data-parent-id');
         params.order = 1;
         params.pk = $(this).attr('data-pk');
+        params.autoClass = $(this).attr('data-auto-class');
+        params.autoId = $(this).attr('data-auto-id');
         return params;
       },
       success: function(response, newValue) {
