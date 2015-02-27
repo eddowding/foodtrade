@@ -198,7 +198,10 @@ class CloneDishWalk(IngredientWalk):
         for i in Ingredient.objects.filter(dish=dish_id):
             tmp_dict[i.name] = str(i.pk)
         for i in Ingredient.objects.filter(dish=original_dish_id):
-            self.ingredient_mapping[str(i.pk)] = tmp_dict[i.name]
+            try:
+                self.ingredient_mapping[str(i.pk)] = tmp_dict[i.name]
+            except KeyError:
+                continue
 
     def _walk(self, ingredients, parent=None, parent_li_ul=None):
         for ingredient in ingredients:

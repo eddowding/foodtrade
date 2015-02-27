@@ -14,7 +14,7 @@ from django.contrib.auth.decorators import login_required
 from django.template.loader import render_to_string
 from mongoengine.django.auth import User
 from menu.models import Establishment, Menu, MenuSection, Dish, Allergen, Meat, Gluten, Connection, Ingredient, ModerationIngredient
-from menu.peer import ingredient_walk, IngredientWalkPrint, CloneDishWalk, mail_chimp_subscribe_email
+from menu.peer import ingredient_walk, IngredientWalkPrint, CloneDishWalk, mail_chimp_subscribe_email, CloneIngredientWalk
 
 
 """
@@ -305,7 +305,13 @@ def create_ingredient(request):
     if insert_dict['is_gluten']:
         dish.is_gluten = True
     dish.save()
-    return HttpResponse(json.dumps({'status': True, 'obj': ingredient.to_mongo()}, default=json_util.default), content_type="application/json")
+    if request.POST.get('autoClass') == 'Ingredient':
+        clone_dish = Ingredient.objects.get(id=ObjectId(request.POST.get('autoId'))).dish
+        clone_ingredients = json.loads(clone_dish.json)
+        for i in clone_ingredients[0]:
+            if i['ingredientId'] == request.POST.get('autoId'):
+                ciw = CloneIngredientWalk(request.POST.get('dish'), [[i]])
+    return HttpResponse(json.dumps({'status': True, 'obj': ingredient.to_mongo(), 'html': ciw.walk().render()}, default=json_util.default), content_type="application/json")
 
 
 @login_required(login_url=reverse_lazy('menu-login'))
@@ -400,7 +406,7 @@ def ingredient_lookup_name(request):
     for klass in klass_list:
         for obj in klass.objects.filter(**query2):
             tmp_list.append({'class': str(klass.__name__), 'id': str(obj.id), 'name': obj.name})
-    for i in Ingredient.objects.filter(parent=None, name__icontains=keyword)[0:10]:
+    for i in Ingredient.objects.filter(name__icontains=keyword)[0:10]:
         tmp_list.append({'class': str(Ingredient.__name__), 'id': str(i.id), 'name': i.name})
     return HttpResponse(json.dumps({'status': True, 'objs': tmp_list[0:10]}))
 
