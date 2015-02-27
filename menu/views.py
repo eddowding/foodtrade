@@ -310,9 +310,10 @@ def create_ingredient(request):
         clone_dish = Ingredient.objects.get(id=ObjectId(request.POST.get('autoId'))).dish
         clone_ingredients = json.loads(clone_dish.json)
         for i in clone_ingredients[0]:
-            if i['ingredientId'] == request.POST.get('autoId'):
+            if i['ingredientId'] == request.POST.get('autoId') and len(i['children']):
+
+                ciw = CloneIngredientWalk(request.POST.get('dish'), i['children'])
                 found_clone_match = True
-                ciw = CloneIngredientWalk(request.POST.get('dish'), [[i]])
     return HttpResponse(json.dumps({'status': True, 'obj': ingredient.to_mongo(), 'html': ciw.walk().render() if found_clone_match else None}, default=json_util.default), content_type="application/json")
 
 
