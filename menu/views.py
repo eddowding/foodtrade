@@ -305,13 +305,15 @@ def create_ingredient(request):
     if insert_dict['is_gluten']:
         dish.is_gluten = True
     dish.save()
+    found_clone_match = False
     if request.POST.get('autoClass') == 'Ingredient':
         clone_dish = Ingredient.objects.get(id=ObjectId(request.POST.get('autoId'))).dish
         clone_ingredients = json.loads(clone_dish.json)
         for i in clone_ingredients[0]:
             if i['ingredientId'] == request.POST.get('autoId'):
+                found_clone_match = True
                 ciw = CloneIngredientWalk(request.POST.get('dish'), [[i]])
-    return HttpResponse(json.dumps({'status': True, 'obj': ingredient.to_mongo(), 'html': ciw.walk().render()}, default=json_util.default), content_type="application/json")
+    return HttpResponse(json.dumps({'status': True, 'obj': ingredient.to_mongo(), 'html': ciw.walk().render() if found_clone_match else None}, default=json_util.default), content_type="application/json")
 
 
 @login_required(login_url=reverse_lazy('menu-login'))

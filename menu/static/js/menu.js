@@ -275,6 +275,9 @@ $(document).ready(function() {
         $(this).parents('.ingredient-item:first').find('.delete-btn').attr('data-name', newValue);
         $(this).parents('.ingredient-item:first').find('.delete-btn').attr('data-id', response.obj._id.$oid);
         $(this).parents('.ingredient-item:first').attr('data-ingredient-id', response.obj._id.$oid);
+        if (response.html) {
+          $(this).parents('.ingredient-item:first').find('ul:first').replaceWith(response.html);
+        }
         $(this).attr('data-pk', response.obj._id.$oid);
         $(this).attr('data-name', newValue);
 
