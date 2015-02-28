@@ -15,6 +15,11 @@
  /* ============================
 --- Menu
 ============================= */
+
+.smalled small {
+     clear: both;
+     font-size: 12px;
+}
  
  @font-face {
      font-weight: normal;
