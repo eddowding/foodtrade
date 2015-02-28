@@ -211,6 +211,8 @@ $(document).ready(function() {
         params.parent = $(this).attr('data-parent-id');
         params.order = 1;
         params.pk = $(this).attr('data-pk');
+        params.autoClass = $(this).attr('data-auto-class');
+        params.autoId = $(this).attr('data-auto-id');
         return params;
       },
       success: function(response, newValue) {
@@ -273,6 +275,11 @@ $(document).ready(function() {
         $(this).parents('.ingredient-item:first').find('.delete-btn').attr('data-name', newValue);
         $(this).parents('.ingredient-item:first').find('.delete-btn').attr('data-id', response.obj._id.$oid);
         $(this).parents('.ingredient-item:first').attr('data-ingredient-id', response.obj._id.$oid);
+        if (response.html) {
+          $(this).parents('.ingredient-item:first').find('ul:first').replaceWith(response.html);
+          sortableFn();
+          editableFn(true);
+        }
         $(this).attr('data-pk', response.obj._id.$oid);
         $(this).attr('data-name', newValue);
 
@@ -310,6 +317,14 @@ $(document).ready(function() {
       displayKey: 'name',
       name: 'ingredients',
       source: ingredients.ttAdapter()
+    });
+
+    var handleIngredientSelectFn = function(ingredient) {
+      $(this).parents('span.ingredient:first').find('a.ingredient-item-name:first').attr('data-auto-class', ingredient.class).attr('data-auto-id', ingredient.id);
+    };
+
+    $('.ingredient-editable').on('typeahead:selected', function(ev, ingredient) {
+      $(this).parents('span.ingredient:first').find('a.ingredient-item-name:first').attr('data-auto-class', ingredient.class).attr('data-auto-id', ingredient.id);
     });
 
     $('.ingredient-editable:contains("")').select();
@@ -470,16 +485,8 @@ newtree.attr('data-ingredient-id', result.ingredient_id);
 
   ingredients.initialize();
 
-  $('#ingredientsModal input#name').typeahead(null, {
-    displayKey: 'name',
-    name: 'ingredients',
-    source: ingredients.ttAdapter(),
-  });
-
-
-  $('#ingredientsModal input#name').on('typeahead:selected', function(ev, ingredient) {
-    $('#ingredientsModal input[name="name"]').val(ingredient.name);
-    $('#ingredientsModal button.btn').trigger('click');
+  $('.ingredient-editable').on('typeahead:selected', function(ev, ingredient) {
+    $(this).parents('span.ingredient:first').find('a.ingredient-item-name:first').attr('data-auto-class', ingredient.class).attr('data-auto-id', ingredient.id);
   });
 
 
@@ -508,6 +515,9 @@ newtree.attr('data-ingredient-id', result.ingredient_id);
       name: 'ingredients',
       source: ingredients.ttAdapter()
     });
+    $('.ingredient-editable').on('typeahead:selected', function(ev, ingredient) {
+      $(this).parents('span.ingredient:first').find('a.ingredient-item-name:first').attr('data-auto-class', ingredient.class).attr('data-auto-id', ingredient.id);
+    });
   });
 
   $(document).delegate('.add-sub-ingredients', 'click', function(ev) {
@@ -531,6 +541,9 @@ newtree.attr('data-ingredient-id', result.ingredient_id);
       displayKey: 'name',
       name: 'ingredients',
       source: ingredients.ttAdapter()
+    });
+    $('.ingredient-editable').on('typeahead:selected', function(ev, ingredient) {
+      $(this).parents('span.ingredient:first').find('a.ingredient-item-name:first').attr('data-auto-class', ingredient.class).attr('data-auto-id', ingredient.id);
     });
   });
 
@@ -813,6 +826,9 @@ newtree.attr('data-ingredient-id', result.ingredient_id);
       displayKey: 'name',
       name: 'ingredients',
       source: ingredients.ttAdapter()
+    });
+    $('.ingredient-editable').on('typeahead:selected', function(ev, ingredient) {
+      $(this).parents('span.ingredient:first').find('a.ingredient-item-name:first').attr('data-auto-class', ingredient.class).attr('data-auto-id', ingredient.id);
     });
   });
 

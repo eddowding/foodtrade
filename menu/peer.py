@@ -1,4 +1,5 @@
 from itertools import izip_longest
+from datetime import datetime
 from bson.objectid import ObjectId
 from dominate.tags import *
 from django.core.urlresolvers import reverse_lazy
@@ -197,7 +198,10 @@ class CloneDishWalk(IngredientWalk):
         for i in Ingredient.objects.filter(dish=dish_id):
             tmp_dict[i.name] = str(i.pk)
         for i in Ingredient.objects.filter(dish=original_dish_id):
-            self.ingredient_mapping[str(i.pk)] = tmp_dict[i.name]
+            try:
+                self.ingredient_mapping[str(i.pk)] = tmp_dict[i.name]
+            except KeyError:
+                continue
 
     def _walk(self, ingredients, parent=None, parent_li_ul=None):
         for ingredient in ingredients:
@@ -245,3 +249,42 @@ def mail_chimp_subscribe_email(email):
     except ListAlreadySubscribedError:
         pass
     return True
+
+
+class CloneIngredientWalk(CloneDishWalk):
+    def __init__(self, dish_id, dish_tree):
+        self.dish_id = dish_id
+        self.dish_tree = dish_tree
+        self.html = ul()
+        self.parent_li_ul_ref = {}
+        self.ingredients_dict = {}
+
+    def _save_ingredients(self, ingredients, parent=None):
+        for ingredient in ingredients:
+            if isinstance(ingredient, list):
+                self._save_ingredients(ingredient, parent)
+            elif isinstance(ingredient, dict) and len(ingredient['children'][0]):
+                original = Ingredient.objects.get(dish=ObjectId(ingredient['dishId']), pk=ObjectId(ingredient['ingredientId']))
+                clone = Ingredient.objects.create(dish=ObjectId(self.dish_id),
+                                                  name=original.name,
+                                                  parent=ObjectId(parent) if parent else None,
+                                                  order=original.order,
+                                                  is_allergen=original.is_allergen,
+                                                  is_meat=original.is_meat,
+                                                  is_gluten=original.is_gluten,
+                                                  added_on=datetime.now())
+                self._save_ingredients(ingredient['children'], str(clone.id))
+            else:
+                original = Ingredient.objects.get(dish=ObjectId(ingredient['dishId']), pk=ObjectId(ingredient['ingredientId']))
+                clone = Ingredient.objects.create(dish=ObjectId(self.dish_id),
+                                                  name=original.name,
+                                                  parent=ObjectId(parent) if parent else None,
+                                                  order=original.order,
+                                                  is_allergen=original.is_allergen,
+                                                  is_meat=original.is_meat,
+                                                  is_gluten=original.is_gluten,
+                                                  added_on=datetime.now())
+
+    def walk(self):
+        self._save_ingredients(self.dish_tree, parent=None)
+        return super(CloneIngredientWalk, self).walk()

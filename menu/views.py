@@ -14,7 +14,7 @@ from django.contrib.auth.decorators import login_required
 from django.template.loader import render_to_string
 from mongoengine.django.auth import User
 from menu.models import Establishment, Menu, MenuSection, Dish, Allergen, Meat, Gluten, Connection, Ingredient, ModerationIngredient
-from menu.peer import ingredient_walk, IngredientWalkPrint, CloneDishWalk, mail_chimp_subscribe_email
+from menu.peer import ingredient_walk, IngredientWalkPrint, CloneDishWalk, mail_chimp_subscribe_email, CloneIngredientWalk
 
 
 """
@@ -305,7 +305,16 @@ def create_ingredient(request):
     if insert_dict['is_gluten']:
         dish.is_gluten = True
     dish.save()
-    return HttpResponse(json.dumps({'status': True, 'obj': ingredient.to_mongo()}, default=json_util.default), content_type="application/json")
+    found_clone_match = False
+    if request.POST.get('autoClass') == 'Ingredient':
+        clone_dish = Ingredient.objects.get(id=ObjectId(request.POST.get('autoId'))).dish
+        clone_ingredients = json.loads(clone_dish.json)
+        for i in clone_ingredients[0]:
+            if i['ingredientId'] == request.POST.get('autoId') and len(i['children']):
+
+                ciw = CloneIngredientWalk(request.POST.get('dish'), i['children'])
+                found_clone_match = True
+    return HttpResponse(json.dumps({'status': True, 'obj': ingredient.to_mongo(), 'html': ciw.walk().render() if found_clone_match else None}, default=json_util.default), content_type="application/json")
 
 
 @login_required(login_url=reverse_lazy('menu-login'))
@@ -318,7 +327,8 @@ def update_ingredient(request):
         update_dict['set__is_meat'] = True
     if request.POST.get('is_gluten') == 'true':
         update_dict['set__is_gluten'] = True
-    Ingredient.objects.filter(pk=id).update(**update_dict)
+    if len(update_dict.keys()):
+        Ingredient.objects.filter(pk=id).update(**update_dict)
     return HttpResponse(json.dumps({'status': True}, default=json_util.default))
 
 
@@ -398,10 +408,10 @@ def ingredient_lookup_name(request):
     klass_list = [Gluten, Allergen, Meat]
     for klass in klass_list:
         for obj in klass.objects.filter(**query2):
-            if keyword.lower() in obj.name.lower():
-                tmp_list.append(obj.name)
-    tmp_list = list(set(tmp_list))
-    return HttpResponse(json.dumps({'status': True, 'objs': [{'name': n} for n in tmp_list]}))
+            tmp_list.append({'class': str(klass.__name__), 'id': str(obj.id), 'name': obj.name})
+    for i in Ingredient.objects.filter(name__icontains=keyword)[0:10]:
+        tmp_list.append({'class': str(Ingredient.__name__), 'id': str(i.id), 'name': i.name})
+    return HttpResponse(json.dumps({'status': True, 'objs': tmp_list[0:10]}))
 
 
 
