@@ -19,12 +19,21 @@ def ingredient_walk(ingredients, parent=None):
         if isinstance(ingredient, list):
             ingredient_walk(ingredient, parent)
         elif isinstance(ingredient, dict) and len(ingredient['children'][0]):
-            Ingredient.objects.filter(dish=ObjectId(ingredient['dishId']), pk=ObjectId(ingredient['ingredientId'])) \
-                                                                                .update(set__parent=ObjectId(parent))
+            if parent:
+                Ingredient.objects.filter(dish=ObjectId(ingredient['dishId']), pk=ObjectId(ingredient['ingredientId'])) \
+                                                                                    .update(set__parent=ObjectId(parent))
+            else:
+                Ingredient.objects.filter(dish=ObjectId(ingredient['dishId']), pk=ObjectId(ingredient['ingredientId'])) \
+                                                                                    .update(set__parent=None)
+
             ingredient_walk(ingredient['children'], ingredient['ingredientId'])
         else:
-            Ingredient.objects.filter(dish=ObjectId(ingredient['dishId']), pk=ObjectId(ingredient['ingredientId'])) \
-                                                                                .update(set__parent=ObjectId(parent))
+            if parent:
+                Ingredient.objects.filter(dish=ObjectId(ingredient['dishId']), pk=ObjectId(ingredient['ingredientId'])) \
+                                                                                    .update(set__parent=ObjectId(parent))
+            else:
+                Ingredient.objects.filter(dish=ObjectId(ingredient['dishId']), pk=ObjectId(ingredient['ingredientId'])) \
+                                                                                    .update(set__parent=None)
 
 
 class IngredientWalk(object):
