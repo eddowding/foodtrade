@@ -409,7 +409,7 @@ def ingredient_lookup_name(request):
     for klass in klass_list:
         for obj in klass.objects.filter(**query2):
             tmp_list.append({'class': str(klass.__name__), 'id': str(obj.id), 'name': obj.name})
-    for i in Ingredient.objects.filter(name__icontains=keyword)[0:10]:
+    for i in Ingredient.objects.filter(name__icontains=keyword, parent=None)[0:10]:
         tmp_list.append({'class': str(Ingredient.__name__), 'id': str(i.id), 'name': i.name})
     return HttpResponse(json.dumps({'status': True, 'objs': tmp_list[0:10]}))
 
