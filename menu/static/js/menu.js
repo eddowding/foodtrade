@@ -740,7 +740,7 @@ newtree.attr('data-ingredient-id', result.ingredient_id);
         type: 'POST',
         dataType: 'JSON',
         success: function(data) {
-          // $('.menus').html(data.html);
+          $('.menus').html(data.html);
           if (deleteIngredientUrl == deleteUrl) {
             if (data.dish.is_allergen) {
               $('div.menuitem[data-pk="' + data.dish.id + '"]').find('div.menutitle').find('div.pull-right').find('span.allergen').addClass('active');
