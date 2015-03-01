@@ -1,0 +1,438 @@
+.form-box .header,
+.bg-olive,
+.btn-primary,
+.btn-success {
+  background: #61AE32 !important;
+}
+.form-box .header:hover,
+.bg-olive:hover,
+.btn-primary:hover,
+.btn-success:hover {
+  background: #5DB92B !important;
+}
+.content a {
+  color: #61AE32;
+}
+.content a.btn {
+  color: #fff;
+}
+.strong {
+  font-weight: bold;
+}
+.menuitem {
+  background: #ECE5CE;
+  border-left: 2px solid #e6e7e8;
+  padding: 5px 0 10px 5px;
+  margin: 2px 0;
+  border-radius: 2px;
+}
+.box .ingredient-tree {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.tools {
+  margin-left: 10px;
+}
+.tools a {
+  color: #bbb;
+  margin-left: 3px;
+}
+.tools a.add-sub-ingredients {
+  font-weight: normal !important;
+}
+.tools a.add-sub-ingredients:hover {
+  color: #61AE32;
+}
+.tools a.add-sub-ingredients:hover:after {
+  content: "add sub-ingredient";
+}
+.tools a.delete-btn {
+  padding: 3px;
+  border-radius: 2px;
+}
+.tools a.delete-btn:hover {
+  color: red;
+}
+.tools a.nutrition:hover {
+  color: #fda0a2;
+}
+.menuitem-description {
+  margin-left: 25px;
+  color: #666;
+  font-style: italic;
+}
+.add-ingredients {
+  margin-left: 20px;
+  margin-top: 10px;
+  display: block;
+}
+.box .ingredient-tree > li {
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px;
+  margin-bottom: 2px;
+  color: #444;
+  position: relative;
+  margin: 2px 0 0 20px;
+  padding: 6px;
+  font-weight: normal !important;
+  list-style: none;
+  clear: both;
+  background: rgba(255, 255, 255, 0.4);
+  border: 2px solid rgba(255, 255, 255, 0.6);
+}
+.box .ingredient-tree > li:last-of-type {
+  margin-bottom: 0;
+}
+.box .ingredient-tree li a {
+  font-weight: bold;
+}
+.box .ingredient-tree li li a {
+  font-weight: normal;
+  padding-left: 3px;
+}
+.handle {
+  padding: 0 10px 0 0;
+}
+.handle:hover {
+  cursor: move !important;
+}
+.handle i {
+  color: rgba(0, 0, 0, 0.4);
+}
+.box .ingredient-tree li li .handle i {
+  color: rgba(0, 0, 0, 0.2);
+}
+.box .ingredient-tree li p {
+  margin-left: 21px;
+}
+.box .ingredient-tree ul {
+  padding: 0;
+  list-style: none;
+  display: block;
+}
+.box .ingredient-tree ul:first-child {
+  margin: 5px 0;
+}
+.box .ingredient-tree ul li {
+  border-right: 0;
+  margin: 10px -5px 0 20px;
+  padding: 5px 5px 6px 3px;
+  font-weight: normal !important;
+  list-style: none;
+  background: rgba(255, 255, 255, 0.9);
+}
+.box .ingredient-tree ul ul {
+  padding: 0;
+  list-style: none;
+  display: block;
+  margin: 5px 0;
+}
+.box .ingredient-tree ul ul li {
+  margin: 2px 0 0 20px;
+  padding: 3px 0px 3px 3px;
+  font-weight: normal !important;
+  list-style: none;
+  clear: both;
+  background: rgba(255, 255, 255, 0.9);
+}
+h3 i {
+  font-size: 80%;
+  color: #ccc;
+}
+.box h3 {
+  margin: 0 0 5px 0;
+  float: left;
+}
+.section_head {
+  margin-bottom: 10px;
+  margin-top: 30px;
+  border-bottom: 3px solid #444;
+}
+.editable-click,
+a.editable-click {
+  text-decoration: none;
+  color: #444;
+  border-bottom: 0 !important;
+}
+a.editable-click:hover {
+  text-decoration: underline !important;
+  border-bottom: 0;
+}
+.mag .btn {
+  padding: 3px 6px;
+  color: rgba(255, 255, 255, 0.7);
+}
+.btn-allergen {
+  background: rgba(75, 158, 217, 0.25);
+}
+.btn-meat {
+  background: rgba(163, 0, 18, 0.25);
+}
+.btn-gluten {
+  background: rgba(237, 72, 42, 0.25);
+}
+.mag .btn {
+  font-weight: bold;
+}
+.mag .btn.active,
+.mag .btn:hover {
+  opacity: 1;
+  box-shadow: none;
+  color: #fff;
+}
+.mag .btn.active.btn-allergen,
+.mag .btn:hover.btn-allergen {
+  background: #4b9ed9;
+}
+.mag .btn.active.btn-meat,
+.mag .btn:hover.btn-meat {
+  background: #a30012;
+}
+.mag .btn.active.btn-gluten,
+.mag .btn:hover.btn-gluten {
+  background: #ed482a;
+}
+.del {
+  display: inline-block;
+}
+.flagged {
+  border: 1px solid;
+  padding: 0 3px;
+  margin-right: 3px;
+  opacity: 0.3;
+}
+.flagged.active {
+  opacity: 1;
+  background: inherit;
+  color: #fff;
+  font-weight: bolder;
+}
+.flagged.active.meat {
+  background: #a30012;
+  border-color: #a30012;
+}
+.flagged.active.allergen {
+  background: #4b9ed9;
+  border-color: #4b9ed9;
+}
+.flagged.active.gluten {
+  background: #ed482a;
+  border-color: #ed482a;
+}
+.action {
+  background: #eee;
+  padding: 5px;
+  border: 1px solid #aaa;
+}
+#output {
+  background: #fff;
+  padding: 0.5em 2em 2em 2em;
+}
+#output * {
+  font-family: Georgia;
+}
+#output p {
+  font-size: 1.8em;
+}
+#output h2 {
+  border-bottom: 2px solid;
+  padding: 0.5em 0 0.5em 0;
+}
+#output h3 {
+  border-bottom: 1px solid;
+  padding: 1em 0 0.3em 0;
+  width: 60%;
+  margin: 0 auto;
+}
+#output .dish_wrapper {
+  margin-top: 1em;
+  display: block;
+  width: 60%;
+  margin: 1em auto;
+}
+#output .dish_name {
+  float: left;
+  font-size: 20px;
+}
+#output .dish_price {
+  float: right;
+}
+#output .dish_mag {
+  text-align: center;
+}
+#output .dish_description {
+  display: block;
+  font-style: italic;
+}
+#output .dish_ingredients {
+  text-transform: capitalize;
+  font-size: 14px;
+}
+#output .ingredient_parent:before {
+  content: ", ";
+}
+#output .ingredient_parent:first-of-type:before {
+  content: none;
+}
+#output .has_children:not(:empty):before {
+  content: "(";
+}
+#output .has_children:not(:empty):after {
+  content: ")";
+}
+#output .ingredient_child:after {
+  content: ", ";
+}
+#output .ingredient_child:last-of-type:after {
+  content: none;
+}
+.allergen_detail {
+  font-size: 12px;
+  clear: both;
+  display: block;
+}
+.supplier {
+  font-weight: bold;
+}
+.produce {
+  font-style: italic;
+}
+#connectionsList h4 {
+  font-weight: bold;
+  border-bottom: 1px solid;
+}
+#connectionsList ul {
+  padding: 0;
+  list-style: none;
+}
+li.divider {
+  background: #666;
+  height: 2px;
+}
+.pull-right label {
+  margin-left: 10px;
+}
+.new {
+  background: #ffc;
+}
+.produce_tags a:after {
+  content: ",";
+}
+.produce_tags a:hover {
+  text-decoration: underline;
+  color: #444;
+}
+table th {
+  text-transform: uppercase;
+  background: #3878B3;
+  color: #fff;
+}
+body > .header .logo {
+  font-family: 'Source Sans Pro', cursive;
+  font-weight: 900;
+  background: #61AE32;
+}
+a.text-muted {
+  color: #666 !important;
+}
+.ui-tooltip {
+  position: absolute;
+  z-index: 1999;
+  display: block;
+  visibility: visible;
+  font-size: 12px;
+  font-weight: normal;
+  line-height: 1.4;
+  opacity: 1;
+  max-width: 200;
+  padding: 3px 8px;
+  color: #fff;
+  text-align: center;
+  text-decoration: none;
+  background-color: rgba(0, 0, 0, 0.8) !important;
+  border-radius: 4px;
+}
+.ui-tooltip.in {
+  opacity: 1;
+}
+.ui-tooltip.top {
+  margin-top: -3px;
+  padding: 5 0;
+}
+.ui-tooltip.right {
+  margin-left: 3px;
+  padding: 0 5;
+}
+.ui-tooltip.bottom {
+  margin-top: 3px;
+  padding: 5 0;
+}
+.ui-tooltip.left {
+  margin-left: -3px;
+  padding: 0 5;
+}
+.tooltip-arrow {
+  position: absolute;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+}
+.ui-tooltip.top .tooltip-arrow {
+  bottom: 0;
+  left: 50%;
+  margin-left: -5;
+  border-width: 5 5 0;
+  border-top-color: rgba(0, 0, 0, 0.8);
+}
+.ui-tooltip.top-left .tooltip-arrow {
+  bottom: 0;
+  right: 5;
+  margin-bottom: -5;
+  border-width: 5 5 0;
+  border-top-color: rgba(0, 0, 0, 0.8);
+}
+.ui-tooltip.top-right .tooltip-arrow {
+  bottom: 0;
+  left: 5;
+  margin-bottom: -5;
+  border-width: 5 5 0;
+  border-top-color: rgba(0, 0, 0, 0.8);
+}
+.ui-tooltip.right .tooltip-arrow {
+  top: 50%;
+  left: 0;
+  margin-top: -5;
+  border-width: 5 5 5 0;
+  border-right-color: rgba(0, 0, 0, 0.8);
+}
+.ui-tooltip.left .tooltip-arrow {
+  top: 50%;
+  right: 0;
+  margin-top: -5;
+  border-width: 5 0 5 5;
+  border-left-color: rgba(0, 0, 0, 0.8);
+}
+.ui-tooltip.bottom .tooltip-arrow {
+  top: 0;
+  left: 50%;
+  margin-left: -5;
+  border-width: 0 5 5;
+  border-bottom-color: rgba(0, 0, 0, 0.8);
+}
+.ui-tooltip.bottom-left .tooltip-arrow {
+  top: 0;
+  right: 5;
+  margin-top: -5;
+  border-width: 0 5 5;
+  border-bottom-color: rgba(0, 0, 0, 0.8);
+}
+.ui-tooltip.bottom-right .tooltip-arrow {
+  top: 0;
+  left: 5;
+  margin-top: -5;
+  border-width: 0 5 5;
+  border-bottom-color: rgba(0, 0, 0, 0.8);
+}
