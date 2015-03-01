@@ -33,15 +33,7 @@ EMBEDLY_KEY = 'dda65dba82724765b3b82e79525286cc'
 # CONSUMER_KEY = 'seqGJEiDVNPxde7jmrk6dQ'
 # CONSUMER_SECRET = 'sI2BsZHPk86SYB7nRtKy0nQpZX3NP5j5dLfcNiP14'
 
-import os
-# Test stripe account from sujit
-# STRIPE_PUBLIC_KEY = os.environ.get("STRIPE_PUBLIC_KEY", "pk_test_cIjJbOYUbVYnvnSn1QyeMD7r")
-# STRIPE_SECRET_KEY = os.environ.get("STRIPE_SECRET_KEY", "sk_test_dj0ArFwwcCljH8n1aioJ6jtV")
-
-
-# # Test stripe account from Ed
-# STRIPE_PUBLIC_KEY = os.environ.get("STRIPE_PUBLIC_KEY", "pk_test_oSOpaxq2GleFxB6MBelA5S3o")
-# STRIPE_SECRET_KEY = os.environ.get("STRIPE_SECRET_KEY", "sk_test_hmGuDVayPPKB81MKCPKnyfK1")
+import os 
 
 # live stripe account from Ed
 STRIPE_PUBLIC_KEY = os.environ.get("STRIPE_PUBLIC_KEY", "pk_live_9BlCZzoxIYjEPaIdwBWLjRjR")
@@ -82,7 +74,7 @@ ACCOUNT_LOGOUT_ON_GET = True
 
 
 # ACCOUNT_SIGNUP_FORM_CLASS = "djstripe.forms.StripeSubscriptionSignupForm"
-DEFAULT_FROM_EMAIL = 'FoodTrade <noreply@foodtrade.com>'
+DEFAULT_FROM_EMAIL = 'FoodTrade <hello@foodtrade.com>'
 REMOVE_WWW = False
 
 

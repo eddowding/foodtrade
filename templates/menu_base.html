@@ -1,4 +1,8 @@
-{% load django_static %}{% load staticfiles %} {% load socialaccount %} {% load url from future %} {% load i18n %}
+{% load django_static %}
+{% load staticfiles %}
+{% load socialaccount %} 
+{% load url from future %} 
+{% load i18n %}
 {% load static %}
 {% get_static_prefix as STATIC_PREFIX %}
 <!DOCTYPE html>
@@ -23,7 +27,7 @@
     <!-- <link href="{% static "menu/css/daterangepicker/daterangepicker-bs3.css" %}" rel="stylesheet" type="text/css" /> -->
     <!-- Theme style -->
     <link href="{% staticfile "/css/AdminLTE.css" %}" rel="stylesheet" type="text/css" />
-    <link href="{% staticfile "/css/ftmenu.css" %}" rel="stylesheet" type="text/css" />
+    <link href="{% static "/css/ftmenu.css" %}" rel="stylesheet" type="text/css" />
 
     <!-- <link href="{% staticfile "/bootstrap-theme.min.css" %}" type="text/css" /> -->
 
@@ -67,12 +71,12 @@
     <!-- <script src="{% static "menu/js/plugins/datepicker/bootstrap-datepicker.js" %}" type="text/javascript"></script> -->
     <!-- iCheck -->
     <script src="{% staticfile '/typeahead.js/dist/typeahead.bundle.min.js' %}"></script>
-    <script src="{% staticfile "/menu/js/plugins/iCheck/icheck.min.js" %}" type="text/javascript"></script>
+    <script src="{% staticfile '/menu/js/plugins/iCheck/icheck.min.js' %}" type="text/javascript"></script>
 
     <!-- AdminLTE App -->
     <script src="{% staticfile "/js/app.js" %}" type="text/javascript"></script>
     <!-- <script src="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/js/bootstrap-editable.min.js"></script> -->
-    <script src="{% staticfile '/js/csrf.js' %}" type="text/javascript"></script>
+    <script src="{% staticfile "/js/csrf.js" %}" type="text/javascript"></script>
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -653,6 +657,8 @@ E-mail:
 </div><!-- /.modal -->
 <!--Start of Tawk.to Script-->
 <script type="text/javascript">
+ 
+
 var $_Tawk_API={},$_Tawk_LoadStart=new Date();
 (function(){
 var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
