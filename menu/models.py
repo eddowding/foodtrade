@@ -150,8 +150,6 @@ class MenuSection(Document):
 signals.post_delete.connect(MenuSection.post_delete, sender=MenuSection)
 
 
-
-
 class Dish(Document):
     menu_section = ReferenceField(MenuSection)
     name = StringField(required=True)
@@ -167,6 +165,10 @@ class Dish(Document):
     added_on = DateTimeField(required=True)
     modified_on = DateTimeField(default=datetime.now)
 
+    @classmethod
+    def post_delete(cls, sender, document, **kwargs):
+        Ingredient.objects.filter(dish=document).delete()
+
     meta = {
         'indexes': [
             'menu_section',
@@ -179,6 +181,8 @@ class Dish(Document):
 
     def get_ingredient_names(self):
         return Ingredient.objects.filter(dish=self)
+
+signals.post_delete.connect(Dish.post_delete, sender=Dish)
 
 
 class Ingredient(Document):
