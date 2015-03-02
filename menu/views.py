@@ -306,6 +306,9 @@ def create_ingredient(request):
         dish.is_gluten = True
     dish.save()
     found_clone_match = False
+    dish_is_allergen = False
+    dish_is_meat = False
+    dish_is_gluten = False
     if request.POST.get('autoClass') == 'Ingredient':
         clone_dish = Ingredient.objects.get(id=ObjectId(request.POST.get('autoId'))).dish
         if hasattr(clone_dish, 'json'):
@@ -314,7 +317,26 @@ def create_ingredient(request):
                 if i['ingredientId'] == request.POST.get('autoId') and len(i['children']):
                     ciw = CloneIngredientWalk(request.POST.get('dish'), i['children'])
                     found_clone_match = True
-    return HttpResponse(json.dumps({'status': True, 'obj': ingredient.to_mongo(), 'html': ciw.walk().render() if found_clone_match else None}, default=json_util.default), content_type="application/json")
+
+            if found_clone_match:
+                dish = Dish.objects.get(id=ObjectId(request.POST.get('dish')))
+                for i in Ingredient.objects.filter(dish=dish):
+                    if i.is_allergen:
+                        dish_is_allergen = True
+                    if i.is_meat:
+                        dish_is_meat = True
+                    if i.is_gluten:
+                        dish_is_gluten = True
+                Dish.objects.filter(id=ObjectId(request.POST.get('dish'))).update(set__is_allergen=dish_is_allergen,
+                                                                                  set__is_meat=dish_is_meat,
+                                                                                  set__is_gluten=dish_is_gluten)
+    return HttpResponse(json.dumps({'status': True, 'obj': ingredient.to_mongo(),
+                                    'html': ciw.walk().render() if found_clone_match else None,
+                                    'dish': {'id': request.POST.get('dish'),
+                                             'is_allergen': dish_is_allergen,
+                                             'is_meat': dish_is_meat,
+                                             'is_gluten': dish_is_gluten}},
+                                    default=json_util.default), content_type="application/json")
 
 
 @login_required(login_url=reverse_lazy('menu-login'))
