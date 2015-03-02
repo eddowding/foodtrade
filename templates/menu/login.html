@@ -1,5 +1,5 @@
 {% extends 'menu_base.html' %}
-{% load staticfiles %} 
+{% load staticfiles %}
 {% load socialaccount %}
 {% load url from future %}
 {% load i18n %}
@@ -18,13 +18,13 @@
 
     <!-- <link href="{% staticfile "/menu/css/front.css" %}" rel="stylesheet" type="text/css" /> -->
     <!-- <link href="{% static "menu/css/front.css" %}" rel="stylesheet" type="text/css" /> -->
-    
+
     <link href="{% static "menu/css/represent.css" %}" rel="stylesheet">
     <!-- <link href="{% static "menu/css/onepage-scroll.css" %}" rel="stylesheet"> -->
  {% endblock %}
 
 {% block main_content %}
-   
+
 
 <div class="container">
     <ul id="gn-menu" class="gn-menu-main" style="border-bottom: 1px solid #ccc;">
@@ -137,8 +137,8 @@
 
                                 <span class="text-danger">
                                     <i class="fa fa-fw fa-credit-card"></i> <strong>No credit card required.</strong> <br />
-                                    <i class="fa fa-fw fa-ban"></i> <strong>No spam, ever. </strong>Unless it's with eggs or hashbrowns. 
-                                    
+                                    <i class="fa fa-fw fa-ban"></i> <strong>No spam, ever. </strong>Unless it's with eggs or hashbrowns.
+
                                     </span>
 
                             </div>
@@ -150,13 +150,13 @@
     </section>
 
     <section id="offer" class="text-white" style=" background: linear-gradient(rgba(0,0,0,0), rgba(0,0,0,1)), url('http://upload.wikimedia.org/wikipedia/commons/a/a7/ColorfulFireworks.png') no-repeat; background-attachment: fixed; background-size: cover;">
-    
+
     <svg xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="svg9635" x="0px" y="0px" width="100.318px" height="150px" viewBox="19.2569 -10.0 68.318 135.0" enable-background="new 15.841 0 68.318 100" xml:space="preserve">
 <path d="M84.159,31.193l-5.305-4.745l2.233-6.769l-6.629-2.582L74.25,9.979L67.132,9.77L64.48,3.14l-6.77,2.233L52.965,0  l-5.582,4.466l-6.28-3.419l-3.699,6.072l-7.118-1.047l-1.396,6.978l-6.979,1.466l1.046,7.048l-6.141,3.768l3.419,6.28l-4.396,5.583  l5.373,4.676l-2.303,6.769l6.63,2.652l0.209,7.117l7.118,0.21l2.582,6.63l6.769-2.233l4.745,5.373l5.653-4.536l6.28,3.42  l3.699-6.071l7.047,1.047l1.396-6.979l7.048-1.396l-1.046-7.048l6.07-3.768l-3.419-6.281L84.159,31.193z M62.247,50.594H37.543  v-2.303c0.599-0.041,1.483-0.118,2.792-0.279c1.308-0.161,2.242-0.329,2.722-0.489c0.599-0.199,1.056-0.498,1.396-0.977  c0.339-0.479,0.559-1.185,0.559-2.023V25.541h-7.607V22.68h1.605c1.738,0,3.268-0.178,4.536-0.558  c1.269-0.38,2.301-0.856,3.14-1.396c0.859-0.559,1.614-1.076,2.163-1.675c0.55-0.599,0.937-1.145,1.256-1.605h5.234  c-0.06,1.298-0.08,2.799-0.141,4.536c-0.059,1.738-0.068,3.297-0.068,4.675v17.516c0,0.719,0.108,1.354,0.418,1.884  s0.816,0.977,1.396,1.256c0.52,0.239,1.364,0.428,2.582,0.628c1.219,0.199,2.142,0.309,2.722,0.349V50.594z"/>
 <polygon points="63.782,64.062 59.665,70.83 52.688,67.062 46.476,71.947 41.242,66.016 33.706,68.598 30.774,61.131 27.495,61.062   27.495,61.061 16.26,90.3 32.868,87.509 41.521,100 48.57,81.856 54.222,98.047 63.293,85.834 79.832,89.045 71.389,65.178 "/>
  </svg>
     <h1><span class="launch">Help us celebrate!</span></h1>
- 
+
 
     <p class="lead strong">We just won a <a href="http://www.nesta.org.uk/blog/being-food-open-data-prosumer-foodtrade-menu-winner-food-open-data-challenge" class="text-white" target="_blank">prize for our work</a>, so to celebrate we're giving an 80% discount to the next <strike>250</strike> 237 businesses to register!</p>
                                      <p>The regular price is £100 per year, which is still only 5 pence per day!</p>
@@ -196,10 +196,9 @@
         <div class="container">
             <div class="row">
                 <div class="col-xs-12 text-center">
-<!-- 
+<!--
                     <h1 style="font-size: 50px;">Simple. Powerful.</h1> -->
-
-                    <img src="../img/mockup.png" alt="it's this easy." class="" style="margin: 30px 0 80px 0;" />
+                    <img src="{% staticfile '/img/mockup.png' %}" alt="it's this easy." class="" style="margin: 30px 0 80px 0;" />
 
                     <!-- <h1>It couldn't be easier. Just type, and print.</h1> -->
 
@@ -214,7 +213,7 @@
                     <p class="hidden-xs">A simple menu offers
                     </p>
                 </div> -->
-                <div class="col-sm-10 col-sm-offset-1"> 
+                <div class="col-sm-10 col-sm-offset-1">
                 <p><i class="fa fa-lock"></i> <strong>Your data is safe -  and stays yours.</strong> With us, your secret sauce stays secret! Your recipes are not shared with anyone. Ask us and we'll export your data any time, without charge, to use it in any other application.</p>
                 <br />
                 </div>
@@ -385,7 +384,7 @@
                                     </div>
                                     <div class="separator  transparent center  " style="margin-top: 26px;margin-bottom: 0px;"></div>
                                 </div>
- 
+
                             </div>
 
                             <div class="col-sm-4  ">
@@ -445,7 +444,7 @@
 
 
         <a href="#" data-toggle="modal" data-target="#loginModal" class="btn btn-success btn-lg pull-left" id="getstarted">LOGIN <small>I already have an account</small> </a>
- 
+
 
                         <form action="//sustaination.us2.list-manage.com/subscribe/post?u=79e1467c02512dbd83bddab5f&amp;id=da1305635a" method="post" name="mc-embedded-subscribe-form" class="validate hidden" target="_blank" novalidate id="subscribe_form">
                             <div class="input-group">
@@ -783,7 +782,7 @@
                     <div class="form-group" id="signup">
                         <div class="input-group  input-group-lg">
                             <input type="email" value="" name="EMAIL" placeholder="your@email.com" class="required email form-control signup" id="mce-EMAIL">
-                            <span class="input-group-btn"> 
+                            <span class="input-group-btn">
                                 <input type="submit" value="Request an invite" name="subscribe" id="mc-embedded-subscribe" class="btn btn-danger">
                             </span>
                         </div>
@@ -820,7 +819,7 @@
                 <div class="form-group" id="signup">
                     <div class="input-group input-group-sm">
                         <input type="email" value="" name="EMAIL" placeholder="your@email.com" class="required email form-control signup" id="mce-EMAIL">
-                        <span class="input-group-btn"> 
+                        <span class="input-group-btn">
                                 <input type="submit" value="Sign up" name="subscribe" id="mc-embedded-subscribe" class="btn btn-danger">
                             </span>
                     </div>
@@ -862,11 +861,11 @@
 //     responsiveFallback: false, // You can fallback to normal page scroll by defining the width of the browser in which
 //     // you want the responsive fallback to be triggered. For example, set this to 600 and whenever
 //     // the browser's width is less than 600, the fallback will kick in.
-//     direction: "vertical" // You can now define the direction of the One Page Scroll animation. Options available are "vertical" and "horizontal". The default value is "vertical".  
+//     direction: "vertical" // You can now define the direction of the One Page Scroll animation. Options available are "vertical" and "horizontal". The default value is "vertical".
 // });
 // $(".sign").click(function() {
 //     $(".main").moveTo(7);
-// }); 
+// });
 // $(".nextslide").click(function() {
 //     $(".main").moveDown();
 // });
@@ -876,7 +875,7 @@
 
 
 
- 
+
 
 <footer id=" " style="background: #000; color:#fff;">
     <div class="container-repsonsive">
@@ -890,7 +889,7 @@
     </div>
 </footer>
 
- 
+
 
 
 
@@ -937,7 +936,7 @@
 
     </div>
     {% endcomment %}
-</div> 
+</div>
 
 
 {% endblock %}
