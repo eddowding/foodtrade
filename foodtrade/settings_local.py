@@ -33,7 +33,7 @@ EMBEDLY_KEY = 'dda65dba82724765b3b82e79525286cc'
 # CONSUMER_KEY = 'seqGJEiDVNPxde7jmrk6dQ'
 # CONSUMER_SECRET = 'sI2BsZHPk86SYB7nRtKy0nQpZX3NP5j5dLfcNiP14'
 
-import os 
+import os
 
 # live stripe account from Ed
 STRIPE_PUBLIC_KEY = os.environ.get("STRIPE_PUBLIC_KEY", "pk_live_9BlCZzoxIYjEPaIdwBWLjRjR")
@@ -88,11 +88,11 @@ MONGO_DB = 'foodtrade'
 MONGO_USER = None
 MONGO_PASS = None
 
-MONGO_HOST = 'localhost'
-MONGO_PORT = 27017
-MONGO_DB = 'foodtradedev'
-MONGO_USER = None
-MONGO_PASS = None
+# MONGO_HOST = 'localhost'
+# MONGO_PORT = 27017
+# MONGO_DB = 'foodtradedev'
+# MONGO_USER = None
+# MONGO_PASS = None
 
 connect(db=MONGO_DB, host=MONGO_HOST, port=MONGO_PORT, username=MONGO_USER, password=MONGO_PASS, connectTimeoutMS=30000)
 SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
