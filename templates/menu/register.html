@@ -1,5 +1,5 @@
 {% extends 'menu_base.html' %}
-{% load staticfiles %} 
+{% load staticfiles %}
 {% load socialaccount %}
 {% load url from future %}
 {% load i18n %}
@@ -9,10 +9,16 @@
 {% block html_class %}bg-black{% endblock %}
 {% block title %}FoodTrade Menu - sign up {% endblock %}
 {% block body_class %}bg-black lockscreen{% endblock %}
-{% block header %} 
- 
+{% block header %}
+
 {% endblock %}
 {% block extra_js %}
+<script type="text/javascript">
+  !function(){var analytics=window.analytics=window.analytics||[];if(!analytics.initialize)if(analytics.invoked)window.console&&console.error&&console.error("Segment snippet included twice.");else{analytics.invoked=!0;analytics.methods=["trackSubmit","trackClick","trackLink","trackForm","pageview","identify","group","track","ready","alias","page","once","off","on"];analytics.factory=function(t){return function(){var e=Array.prototype.slice.call(arguments);e.unshift(t);analytics.push(e);return analytics}};for(var t=0;t<analytics.methods.length;t++){var e=analytics.methods[t];analytics[e]=analytics.factory(e)}analytics.load=function(t){var e=document.createElement("script");e.type="text/javascript";e.async=!0;e.src=("https:"===document.location.protocol?"https://":"http://")+"cdn.segment.com/analytics.js/v1/"+t+"/analytics.min.js";var n=document.getElementsByTagName("script")[0];n.parentNode.insertBefore(e,n)};analytics.SNIPPET_VERSION="3.0.1";
+  analytics.load("FVQBpRqubj7q6USVKrGrPeLG08SmADaC");
+  analytics.page()
+  }}();
+</script>
 <script src="{% staticfile '/js/register.js' %}"></script>
 {% endblock extra_js %}
 {% block main_content %}
@@ -55,7 +61,7 @@
                     <div class="form-group">
                         <div class="checkbox">
                             <label for="terms">
-                            <input type="checkbox" name="terms" /> I accept the 
+                            <input type="checkbox" name="terms" /> I accept the
                             <a href="#" data-toggle="modal" data-target="#terms">
                             terms &amp; conditions of use</a>
                             </label>
@@ -63,9 +69,9 @@
                         <span class="help-text"></span>
                     </div>
                 </div>
-                <div class="footer">                    
+                <div class="footer">
                     <button type="button" class="btn bg-olive btn-block signup">Sign me up</button>
-    
+
                     <a href="/" class="text-center">I'm already a member</a>
                     <a href="/" class="pull-right">Cancel</a>
                 </div>
@@ -77,7 +83,7 @@
                 <button class="btn bg-light-blue btn-circle"><i class="fa fa-facebook"></i></button>
                 <button class="btn bg-aqua btn-circle"><i class="fa fa-twitter"></i></button>
                 <button class="btn bg-red btn-circle"><i class="fa fa-google-plus"></i></button>
-    
+
             </div>
             {% endcomment %}
     </div>
@@ -93,10 +99,10 @@
       </div>
       <div class="modal-body text-black">
 
-<h1>For humans</h1>        
+<h1>For humans</h1>
 <ul class="lead">
 <li>
-<strong>Ultimate responsibility lies with you.</strong> We'll do our best to provide a great service, but when it comes down to it, it's your food and your food business so please double check everything. 
+<strong>Ultimate responsibility lies with you.</strong> We'll do our best to provide a great service, but when it comes down to it, it's your food and your food business so please double check everything.
 </li>
 <li>
 <strong>Only run a food business you have insurance cover.</strong>
@@ -198,10 +204,10 @@ Termination
 <br>
 <ol>
 <li>
-The Service will run until terminated by the User or FoodTrade. 
+The Service will run until terminated by the User or FoodTrade.
 </li><li>
 The User's rights under the Service will end without notice if the User fails to comply with any of the Terms of Use.
-</li><li> 
+</li><li>
 If the User has paid for use of the Service and it is terminated by FoodTrade, FoodTrade shall compensate the User pro rata for their loss.
 </li>
 </ol>
@@ -222,7 +228,7 @@ To the extent permissisable by applicable law, the courts of England shall have 
 Variations
 <ol>
 <li>
-FoodTrade is entitled to revise these Terms of Use at any time.  
+FoodTrade is entitled to revise these Terms of Use at any time.
 </li><li>
 If the User does not agree to the revised Terms of Use, he or she will not be bound by them if the User stops using the Service.
 </li>
@@ -243,7 +249,7 @@ FoodTrade is solely responsible for the Service and its content. Any questions, 
     <p>
 E-mail:
 <a href="mailto:ed@foodtrade.com">ed@foodtrade.com</a>
-</p> 
+</p>
 
 
       </div>
