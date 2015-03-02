@@ -1,5 +1,6 @@
 import json
 import re
+import analytics
 from datetime import datetime, timedelta
 from copy import deepcopy
 from bson.objectid import ObjectId, InvalidId
@@ -15,6 +16,8 @@ from django.template.loader import render_to_string
 from mongoengine.django.auth import User
 from menu.models import Establishment, Menu, MenuSection, Dish, Allergen, Meat, Gluten, Connection, Ingredient, ModerationIngredient
 from menu.peer import ingredient_walk, IngredientWalkPrint, CloneDishWalk, mail_chimp_subscribe_email, CloneIngredientWalk
+
+analytics.write_key = 'FVQBpRqubj7q6USVKrGrPeLG08SmADaC'
 
 
 """
@@ -137,6 +140,9 @@ def create_menu(request):
     except InvalidId:
         establishment = Establishment.objects.create(user=request.user, BusinessName=establishment, added_on=datetime.now())
         Menu.objects.create(establishment=establishment.pk, name=name, added_on=datetime.now())
+    analytics.track(request.user.email, 'Menu Created', {
+        'name': name
+    })
     return HttpResponse(json.dumps({'status': True, 'html': menu_render(request.user)}, default=json_util.default))
 
 
