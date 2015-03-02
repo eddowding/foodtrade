@@ -880,4 +880,11 @@ newtree.attr('data-ingredient-id', result.ingredient_id);
 
     setTimeout(htmlSaveFn, 1000);
   });
+
 });
+//analytics
+var shareAnalyticsFn = function(url) {
+  analytics.track('Social Share', {
+    url: url
+  });
+};
