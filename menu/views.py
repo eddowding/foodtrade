@@ -436,7 +436,7 @@ def ingredient_lookup_name(request):
     klass_list = [Gluten, Allergen, Meat]
     for klass in klass_list:
         for obj in klass.objects.filter(**query2):
-            tmp_list.append({'class': str(klass.__name__), 'id': str(obj.id), 'name': obj.name, 'label': name})
+            tmp_list.append({'class': str(klass.__name__), 'id': str(obj.id), 'name': obj.name, 'label': obj.name})
     for i in Ingredient.objects.filter(name__icontains=keyword, parent=None)[0:10]:
         name = i.name
         c_list = []
