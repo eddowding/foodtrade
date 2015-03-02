@@ -33,7 +33,7 @@ EMBEDLY_KEY = 'dda65dba82724765b3b82e79525286cc'
 # CONSUMER_KEY = 'seqGJEiDVNPxde7jmrk6dQ'
 # CONSUMER_SECRET = 'sI2BsZHPk86SYB7nRtKy0nQpZX3NP5j5dLfcNiP14'
 
-import os 
+import os
 
 # live stripe account from Ed
 STRIPE_PUBLIC_KEY = os.environ.get("STRIPE_PUBLIC_KEY", "pk_live_9BlCZzoxIYjEPaIdwBWLjRjR")
