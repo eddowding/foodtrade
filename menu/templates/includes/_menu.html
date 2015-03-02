@@ -1,7 +1,7 @@
 {% load menu_render %}
 
 <h2>
-    Menu&nbsp;
+    Menus&nbsp;
     <button data-toggle="modal" href="#menuModal" id="menuAddModal" class="btn btn-default"><i class="ion ion-clipboard"></i> Add Menu</button>
     {% comment %}
     <small>Edit Menu</small>
@@ -14,8 +14,8 @@
         <!-- TO DO List -->
         <div class="box box-primary">
             <div class="box-header">
-                <i class="ion ion-clipboard"></i>
-                <h3 class="box-title">{{menu.name}}</h3>
+                
+                <h3 class="box-title" style="font-size: 25px;"><i class="ion ion-clipboard"></i> Menu: {{menu.name}}</h3>
                 <div class="box-tools pull-right">
                     <ul class="pagination pagination-sm inline">
                         <li>
