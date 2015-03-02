@@ -478,7 +478,7 @@ newtree.attr('data-ingredient-id', result.ingredient_id);
 
     },
     datumTokenizer: function(ingredient) {
-      return Bloodhound.tokenizers.whitespace(ingredient.name);
+      return Bloodhound.tokenizers.whitespace(ingredient.label);
     },
     queryTokenizer: Bloodhound.tokenizers.whitespace
   });

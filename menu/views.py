@@ -438,7 +438,7 @@ def ingredient_lookup_name(request):
             c_list.append(c.name)
         if len(c_list):
             name = '%s (%s)' % (name, ', '.join(c_list))
-        tmp_list.append({'class': str(Ingredient.__name__), 'id': str(i.id), 'name': name})
+        tmp_list.append({'class': str(Ingredient.__name__), 'id': str(i.id), 'name': i.name, 'label': name})
     return HttpResponse(json.dumps({'status': True, 'objs': tmp_list[0:10]}))
 
 
