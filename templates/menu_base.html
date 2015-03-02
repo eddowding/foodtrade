@@ -304,10 +304,7 @@
             <section class="sidebar">
                 <!-- Sidebar user panel -->
                 {% block left_sidebar_user_panel %}
-                <div class="user-panel">
-                    <div class="pull-left image">
-                        <img src="{% static 'img/avatar3.png' %}" class="img-circle" alt="User Image" />
-                    </div>
+                <div class="user-panel"> 
                     <div class="pull-left info">
                         <p>Hello, {{user.first_name}}</p>
                     </div>
@@ -315,7 +312,7 @@
                 {% endblock %}
                 <!-- search form -->
                 {% block left_sidebar_search %}
-                <form action="#" method="get" class="sidebar-form" name="search-form">
+                <form action="#" method="get" class="sidebar-form hidden" name="search-form">
                     <div class="input-group search-cls-div">
                         <input type="text" id="establishment-search" name="q" class="form-control" placeholder="Search..." />
                         <span class="input-group-btn">
@@ -330,11 +327,11 @@
                 {% block left_sidebar_menu %}
 
                 <ul class="sidebar-menu">
-                    <li><a href="{% url 'menu' %}"><i class="ion ion-clipboard" style="font-size: 1.4em;"></i> My Menus <small class="badge pull-right bg-green">{{ menus.count }}</small></a>
+                    <li><a href="{% url 'menu' %}"><i class="ion ion-clipboard" style="font-size: 1.4em;"></i> My Menus <small class="badge pull-right bg-green hidden">{{ menus.count }}</small></a>
                     </li> 
-                    <li><a href="{% url 'menu_connection' %}"><i class="fa fa-sign-in"></i> My suppliers<small class="badge pull-right bg-green">{{ sellers.count }}</small></a>
+                    <li><a href="{% url 'menu_connection' %}"><i class="fa fa-sign-in"></i> My suppliers<small class="badge pull-right bg-green hidden">{{ sellers.count }}</small></a>
                     </li>
-                    <li><a href="{% url 'menu_connection' %}"><i class="fa fa-sign-out"></i> My stockists<small class="badge pull-right bg-green">{{ buyers.count }}</small></a>
+                    <li><a href="{% url 'menu_connection' %}"><i class="fa fa-sign-out"></i> My stockists<small class="badge pull-right bg-green hidden">{{ buyers.count }}</small></a>
                     </li>
                      
 
