@@ -511,7 +511,7 @@ newtree.attr('data-ingredient-id', result.ingredient_id);
     $('.ingredient-editable:last').focus().trigger('click');
 
     $('.ingredient-editable').typeahead(null, {
-      displayKey: 'name',
+      displayKey: 'label',
       name: 'ingredients',
       source: ingredients.ttAdapter()
     });
