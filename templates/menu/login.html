@@ -37,10 +37,7 @@
         </li>
         <li class="pull-right">
             <a href="#" data-toggle="modal" data-target="#loginModal" class="pull-right" id="getstarted">Login</small> </a>
-        </li>
-        <li class="pull-right">
-            <a href="#register" data-toggle="modal">Sign up </a>
-        </li>
+        </li> 
         <li class="pull-right">
             <a href="tel:+44203 290 8650">
                 <i class="fa fa-phone"></i> 0203 290 8650</a>
@@ -84,7 +81,7 @@
 
                 <div class="col-xs-12 col-sm-6">
                     <div class="innerLR">
-                        <div class="text-center">
+                        <div class="text-center" id="signupbox">
                             <h1 style="margin:1.5em 0 0 0;">Start your free trial</h1>
                             <p>You'll be up and running in 10 seconds!</p>
                         </div>
@@ -493,13 +490,13 @@
         <div class="row">
             <div class="col-xs-12 text-center">
                 <div style=" margin:1em 0;">
-                    <button class="btn btn-lg btn-success" style="margin: 0.6em 0;" href="#register" data-toggle="modal">
+                    <a class="btn btn-lg btn-success" style="margin: 0.6em 0;" href="#signupbox">
                         <i class="fa fa-check fa-fw"></i>
                         <strong>Okay, I'm convinced. Sign me up!</strong>
-                    </button>
-                    <a href="mailto:therese@foodtrade.com" style="text-decoration: none; margin-left: 15px;" class="btn btn-lg btn-default">
-                        <i class="fa fa-envelope-o fa-fw"></i> I still have a question
                     </a>
+                    <a href="#" data-toggle="modal" data-target="#contact" style="text-decoration: none; margin-left: 15px;" class="btn btn-lg btn-default">
+                        <i class="fa fa-envelope-o fa-fw"></i> I still have a question
+                    </a> 
                 </div>
             </div>
         </div>
