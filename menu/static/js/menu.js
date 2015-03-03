@@ -265,7 +265,7 @@ $(document).ready(function() {
               }
               $.ajax({
                 url: updateIngredientUrl,
-                data: {id: parentId, is_allergen: response.obj.is_allergen, is_meat: response.obj.is_meat, is_gluten: response.obj.is_gluten},
+                data: {id: $('.ingredient-item-name[data-pk="' + parentId + '"]').parents('li:first').attr('data-ingredient-id'), is_allergen: response.obj.is_allergen, is_meat: response.obj.is_meat, is_gluten: response.obj.is_gluten},
                 type: 'POST',
                 dataType: 'JSON'
               });
