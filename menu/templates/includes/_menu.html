@@ -1,19 +1,38 @@
 {% load menu_render %}
 
+
+{% if menu|length %}
 <h2>
     Menus&nbsp;
     <button data-toggle="modal" href="#menuModal" id="menuAddModal" class="btn btn-default"><i class="ion ion-clipboard"></i> Add Menu</button>
-    {% comment %}
-    <small>Edit Menu</small>
-    {% endcomment %}
-</h2> {% for menu in menus %}
+</h2> 
+{% endif %}  
 
-<div class="row">
-    <!-- Left col -->
+{% if not menus|length %}
+<div class="row"> 
+    <section class="col-sm-12 text-center" style="margin-top: 15%;">
+        <h1 style="margin: 20px;">You're about to make your first menu. Are you excited?!</h1>
+        <button data-toggle="modal" href="#menuModal" id="menuAddModal" class="btn btn-lg btn-primary">
+            <i class="ion ion-clipboard fa-fw"></i> YES! I'm pumped! MAKE ME A MENU!
+        </button>
+    </section>
+</div>
+{% endif %}  
+
+{% for menu in menus %}
+
+<div class="row"> 
     <section class="col-sm-12 tt-pad">
-        <!-- TO DO List -->
+    
         <div class="box box-primary">
             <div class="box-header">
+
+
+            <div class="well well-sm">
+            <p><strong>Tip:</strong> 
+            Use the <i class="fa fa-plus-circle"></i> after an ingredient to add sub-ingredients to it. Eg 'Mayonnaise' had sub-ingredients of 'eggs', 'oil', 'vinegar' etc.
+            </p>
+            </div>
                 
                 <h3 class="box-title" style="font-size: 25px;"><i class="ion ion-clipboard"></i> Menu: {{menu.name}}</h3>
                 <div class="box-tools pull-right">
@@ -25,7 +44,7 @@
                             <a data-id={{menu.pk}} data-url={% url 'menu_delete_menu' %} class="delete-btn" data-toggle="tooltip" title="This will delete the entire menu!"><i class="fa fa-trash-o fa-fw"></i>Delete Menu</a>
                         </li>
                         <li>
-                            <a href="{% url 'menu_print_preview_menu' menu.id %}"  title="See a printable version" target="_blank" target="_blank"><i class="fa fa-fw fa-print"></i> Print</a>
+                            <a href="{% url 'menu_print_preview_menu' menu.id %}"  title="See a printable version" target="_blank" target="_blank"><i class="fa fa-fw fa-print"></i> Print preview</a>
                         </li>
                         <!--    <li>
                             <a href="#" data-toggle="tooltip" title="Coming soon!" class="text-muted"><i class="fa  fa-fw fa-download"></i> Generate PDF</a>
@@ -174,11 +193,16 @@
             <div class="box-footer clearfix" style="border-top: 3px solid #000;">
                 <button data-toggle="modal" data-menu-id={{ menu.id }} href="#sectionModal" class="btn btn-default add-section"><i class="fa fa-th fa-fw"></i> Add Section</button>
             </div>
+
+            <div class="alert">
+            <p><strong>Tip:</strong> 
+            Use the <i class="fa fa-plus-circle"></i> after an ingredient to add sub-ingredients to it. Eg 'Mayonnaise' had sub-ingredients of 'eggs', 'oil', 'vinegar' etc.
+            </p>
+            </div>
             {% endif %}
         </div>
         <!-- /.box -->
-    </section>
-    <!-- /.Left col -->
+    </section> 
 </div>
 
 {% endfor %}
