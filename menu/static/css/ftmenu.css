@@ -3,6 +3,7 @@
 .btn-primary,
 .btn-success {
   background: #61AE32 !important;
+  border: #355f1b;
 }
 .form-box .header:hover,
 .bg-olive:hover,
