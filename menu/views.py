@@ -436,7 +436,7 @@ def ingredient_lookup_name(request):
     klass_list = [Gluten, Allergen, Meat]
     for klass in klass_list:
         for obj in klass.objects.filter(**query2):
-            tmp_list.append({'class': str(klass.__name__), 'id': str(obj.id), 'name': obj.name})
+            tmp_list.append({'class': str(klass.__name__), 'id': str(obj.id), 'name': obj.name, 'label': obj.name})
     for i in Ingredient.objects.filter(name__icontains=keyword, parent=None)[0:10]:
         name = i.name
         c_list = []
@@ -471,17 +471,15 @@ def save_moderation_ingredient(request):
     Dish.objects.filter(pk=pk).update(set__html=html, set__json=request.POST.get('serialized'), set__print_html=print_html)
     ModerationIngredient.objects.create(**ingredient)
 
-    #ing  = Ingredient.objects.filter(name__iexact=ingredient['name'])
-    #updt_dish = {}
-    #for i in ing:
-    #if ingredient.get('is_meat'):
-    #    Dish.objects.filter(pk=pk).update(set__is_meat=True)
-    #elif ingredient.get('is_allergen'):
-    #    Dish.objects.filter(pk=pk).update(set__is_allergen=True)
-    #elif ingredient.get('is_gluten'):
-    #    Dish.objects.filter(pk=pk).update(set__is_gluten=True)
-    #Dish.objects.filter(pk=pk).update(updt_dish)
-    #return HttpResponse(json.dumps({'status': True}, default=json_util.default), content_type="application/json")
+    update_dict = {}
+    if ingredient.get('is_allergen'):
+        update_dict['set__is_allergen'] = True
+    if ingredient.get('is_meat'):
+        update_dict['set__is_meat'] = True
+    if ingredient.get('is_gluten'):
+        update_dict['set__is_gluten'] = True
+    if len(update_dict.keys()):
+        Ingredient.objects.filter(pk=ObjectId(request.POST.get('ingredientId'))).update(**update_dict)
     return HttpResponse(json.dumps({'status': True, 'html': menu_render(request.user)}, default=json_util.default),
                         content_type="application/json")
 

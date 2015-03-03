@@ -235,6 +235,17 @@ $(document).ready(function() {
           $(this).parents('div.menuitem').find('div.menutitle').find('div.pull-right').find('span.gluten').addClass('active');
         }
 
+        //final dish update
+        if (response.dish && response.dish.is_allergen) {
+          $(this).parents('div.menuitem').find('div.menutitle').find('div.pull-right').find('span.allergen').addClass('active');
+        }
+        if (response.dish && response.dish.is_meat) {
+          $(this).parents('div.menuitem').find('div.menutitle').find('div.pull-right').find('span.meat').addClass('active');
+        }
+        if (response.dish && response.dish.is_gluten) {
+          $(this).parents('div.menuitem').find('div.menutitle').find('div.pull-right').find('span.gluten').addClass('active');
+        }
+
         if (response.obj.parent !== undefined) {
           var parentId = response.obj.parent.$oid;
 
@@ -511,7 +522,7 @@ newtree.attr('data-ingredient-id', result.ingredient_id);
     $('.ingredient-editable:last').focus().trigger('click');
 
     $('.ingredient-editable').typeahead(null, {
-      displayKey: 'name',
+      displayKey: 'label',
       name: 'ingredients',
       source: ingredients.ttAdapter()
     });
@@ -857,6 +868,7 @@ newtree.attr('data-ingredient-id', result.ingredient_id);
 
     var data = {
       pk: $(this).parents('.ingredient-item:first').attr('data-dish-id'),
+      ingredientId: $(this).parents('.ingredient-item:first').attr('data-ingredient-id'),
       serialized: JSON.stringify($(this).parents('.ingredient-item:first').parents('.ingredient-tree').sortable("serialize").get()),
       ingredient: JSON.stringify(ingredient)
     };
