@@ -316,7 +316,8 @@ def create_ingredient(request):
     dish_is_meat = False
     dish_is_gluten = False
     if request.POST.get('autoClass') == 'Ingredient':
-        clone_dish = Ingredient.objects.get(id=ObjectId(request.POST.get('autoId'))).dish
+        clone_ingredient = Ingredient.objects.get(id=ObjectId(request.POST.get('autoId')))
+        clone_dish = clone_ingredient.dish
         if hasattr(clone_dish, 'json'):
             clone_ingredients = json.loads(clone_dish.json)
             for i in clone_ingredients[0]:
@@ -326,13 +327,12 @@ def create_ingredient(request):
 
             if found_clone_match:
                 dish = Dish.objects.get(id=ObjectId(request.POST.get('dish')))
-                for i in Ingredient.objects.filter(dish=dish):
-                    if i.is_allergen:
-                        dish_is_allergen = True
-                    if i.is_meat:
-                        dish_is_meat = True
-                    if i.is_gluten:
-                        dish_is_gluten = True
+                if clone_ingredient.is_allergen:
+                    dish_is_allergen = True
+                if clone_ingredient.is_meat:
+                    dish_is_meat = True
+                if clone_ingredient.is_gluten:
+                    dish_is_gluten = True
                 Dish.objects.filter(id=ObjectId(request.POST.get('dish'))).update(set__is_allergen=dish_is_allergen,
                                                                                   set__is_meat=dish_is_meat,
                                                                                   set__is_gluten=dish_is_gluten)
