@@ -235,6 +235,17 @@ $(document).ready(function() {
           $(this).parents('div.menuitem').find('div.menutitle').find('div.pull-right').find('span.gluten').addClass('active');
         }
 
+        //final dish update
+        if (response.dish && response.dish.is_allergen) {
+          $(this).parents('div.menuitem').find('div.menutitle').find('div.pull-right').find('span.allergen').addClass('active');
+        }
+        if (response.dish && response.dish.is_meat) {
+          $(this).parents('div.menuitem').find('div.menutitle').find('div.pull-right').find('span.meat').addClass('active');
+        }
+        if (response.dish && response.dish.is_gluten) {
+          $(this).parents('div.menuitem').find('div.menutitle').find('div.pull-right').find('span.gluten').addClass('active');
+        }
+
         if (response.obj.parent !== undefined) {
           var parentId = response.obj.parent.$oid;
 
