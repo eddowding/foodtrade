@@ -296,9 +296,10 @@ def create_ingredient(request):
     insert_dict['name'] = request.POST.get('name')
     insert_dict['parent'] = ObjectId(request.POST.get('parent')) if request.POST.get('parent') else None
     insert_dict['order'] = int(request.POST.get('order')) if request.POST.get('order') else 1
-    insert_dict['is_allergen'] = True if Allergen.objects.filter(name__iexact=insert_dict['name']).count() else False
-    insert_dict['is_meat'] = True if Meat.objects.filter(name__iexact=insert_dict['name']).count() else False
-    insert_dict['is_gluten'] = True if Gluten.objects.filter(name__iexact=insert_dict['name']).count() else False
+    clone_ingredient = Ingredient.objects.get(id=ObjectId(request.POST.get('autoId')))
+    insert_dict['is_allergen'] = True if Allergen.objects.filter(name__iexact=insert_dict['name']).count() else clone_ingredient.is_allergen
+    insert_dict['is_meat'] = True if Meat.objects.filter(name__iexact=insert_dict['name']).count() else clone_ingredient.is_meat
+    insert_dict['is_gluten'] = True if Gluten.objects.filter(name__iexact=insert_dict['name']).count() else clone_ingredient.is_gluten
     insert_dict['added_on'] = datetime.now()
     ingredient = Ingredient.objects.create(**insert_dict)
 
@@ -316,7 +317,6 @@ def create_ingredient(request):
     dish_is_meat = False
     dish_is_gluten = False
     if request.POST.get('autoClass') == 'Ingredient':
-        clone_ingredient = Ingredient.objects.get(id=ObjectId(request.POST.get('autoId')))
         clone_dish = clone_ingredient.dish
         if hasattr(clone_dish, 'json'):
             clone_ingredients = json.loads(clone_dish.json)
