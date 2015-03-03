@@ -283,11 +283,18 @@ a.editable-click:hover {
 #output .has_children:not(:empty):after {
   content: ")";
 }
+#output .ingredient_child {
+  font-weight: normal;
+}
 #output .ingredient_child:after {
   content: ", ";
 }
 #output .ingredient_child:last-of-type:after {
   content: none;
+}
+#output .strong,
+#output strong {
+  font-weight: bold !important;
 }
 .allergen_detail {
   font-size: 12px;
