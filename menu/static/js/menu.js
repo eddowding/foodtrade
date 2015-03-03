@@ -857,6 +857,7 @@ newtree.attr('data-ingredient-id', result.ingredient_id);
 
     var data = {
       pk: $(this).parents('.ingredient-item:first').attr('data-dish-id'),
+      ingredientId: $(this).parents('.ingredient-item:first').attr('data-ingredient-id'),
       serialized: JSON.stringify($(this).parents('.ingredient-item:first').parents('.ingredient-tree').sortable("serialize").get()),
       ingredient: JSON.stringify(ingredient)
     };
