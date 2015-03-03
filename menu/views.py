@@ -444,11 +444,11 @@ def ingredient_lookup_name(request):
             tmp_list.append({'class': str(klass.__name__), 'id': str(obj.id), 'name': obj.name, 'label': obj.name})
     for i in Ingredient.objects.filter(name__icontains=keyword, parent=None)[0:10]:
         name = i.name
-        c_list = []
-        for c in i.get_children()[0:3]:
-            c_list.append(c.name)
-        if len(c_list):
-            name = '%s (%s)' % (name, ', '.join(c_list))
+        # c_list = []
+        # for c in i.get_children()[0:3]:
+        #     c_list.append(c.name)
+        # if len(c_list):
+        #     name = '%s (%s)' % (name, ', '.join(c_list))
         tmp_list.append({'class': str(Ingredient.__name__), 'id': str(i.id), 'name': i.name, 'label': name})
     return HttpResponse(json.dumps({'status': True, 'objs': tmp_list[0:10]}))
 
