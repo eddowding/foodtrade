@@ -12,6 +12,12 @@
 
 
 {% block extra_js %}
+<script type="text/javascript">
+  !function(){var analytics=window.analytics=window.analytics||[];if(!analytics.initialize)if(analytics.invoked)window.console&&console.error&&console.error("Segment snippet included twice.");else{analytics.invoked=!0;analytics.methods=["trackSubmit","trackClick","trackLink","trackForm","pageview","identify","group","track","ready","alias","page","once","off","on"];analytics.factory=function(t){return function(){var e=Array.prototype.slice.call(arguments);e.unshift(t);analytics.push(e);return analytics}};for(var t=0;t<analytics.methods.length;t++){var e=analytics.methods[t];analytics[e]=analytics.factory(e)}analytics.load=function(t){var e=document.createElement("script");e.type="text/javascript";e.async=!0;e.src=("https:"===document.location.protocol?"https://":"http://")+"cdn.segment.com/analytics.js/v1/"+t+"/analytics.min.js";var n=document.getElementsByTagName("script")[0];n.parentNode.insertBefore(e,n)};analytics.SNIPPET_VERSION="3.0.1";
+  analytics.load("YOUR_WRITE_KEY");
+  analytics.page()
+  }}();
+</script>
 <script src="{% staticfile '/js/register.js' %}"></script>
 <!-- <script src="{% static 'menu/js/jquery.onepage-scroll.min.js' %}"></script> -->
 {% endblock extra_js %}
@@ -37,7 +43,7 @@
         </li>
         <li class="pull-right">
             <a href="#" data-toggle="modal" data-target="#loginModal" class="pull-right" id="getstarted">Login</small> </a>
-        </li> 
+        </li>
         <li class="pull-right">
             <a href="tel:+44203 290 8650">
                 <i class="fa fa-phone"></i> 0203 290 8650</a>
@@ -480,9 +486,9 @@
 
                     <p>“<strong>The Institute of Food Safety, Integrity &amp; Protection</strong> supports FoodTrade Menu and its initiative to offer food businesses the practical tools to ensure compliance, integrity and consumer-protection, which will in turn raise the standards of food safety”</p>
                     <img src="http://www.ifsip.org/uploadedImages/Furniture_Content/Master/ifsip-logo.png" style="height:40px;margin-top: 15px;" />
-                    <hr / >  
+                    <hr / >
                     <p>We are pleased to see innovative products and tools being developed to help businesses comply with the allergen rules. Providing the right allergen advice to consumers can, in some instances, be lifesaving.</p>
-                    
+
                     <img style="background: green;padding: 4px;" src="http://www.food.gov.uk/sites/all/themes/site_frontend/logo.png" style="height:40px;margin-top: 15px;" />
                 </div>
             </div>
@@ -496,7 +502,7 @@
                     </a>
                     <a href="#" data-toggle="modal" data-target="#contact" style="text-decoration: none; margin-left: 15px;" class="btn btn-lg btn-default">
                         <i class="fa fa-envelope-o fa-fw"></i> I still have a question
-                    </a> 
+                    </a>
                 </div>
             </div>
         </div>
