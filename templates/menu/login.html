@@ -24,7 +24,9 @@
 
     <!-- <link href="{% staticfile "/menu/css/front.css" %}" rel="stylesheet" type="text/css" /> -->
     <!-- <link href="{% static "menu/css/front.css" %}" rel="stylesheet" type="text/css" /> -->
-
+<style type="text/css">
+    .ftstrip{position:relative;height:.5em;background-color:#e75239;background:-webkit-gradient(linear,0% 50%,100% 50%,color-stop(0%, #e75239),color-stop(12.5%, #e75239),color-stop(12.5%, #ff961c),color-stop(25%, #ff961c),color-stop(25%, #ffcc27),color-stop(37.5%, #ffcc27),color-stop(37.5%, #fce62f),color-stop(50%, #fce62f),color-stop(50%, #cde35b),color-stop(62.5%, #cde35b),color-stop(62.5%, #82cc33),color-stop(75%, #82cc33),color-stop(75%, #ff961c),color-stop(87.5%, #ff961c),color-stop(87.5%, #e75239),color-stop(100%, #e75239));background:-webkit-linear-gradient(left, #e75239 0, #e75239 12.5%, #ff961c 12.5%, #ff961c 25%, #ffcc27 25%, #ffcc27 37.5%, #fce62f 37.5%, #fce62f 50%, #cde35b 50%, #cde35b 62.5%, #82cc33 62.5%, #82cc33 75%, #ff961c 75%, #ff961c 87.5%, #e75239 87.5%, #e75239 100%);background:-moz-linear-gradient(left, #e75239 0, #e75239 12.5%, #ff961c 12.5%, #ff961c 25%, #ffcc27 25%, #ffcc27 37.5%, #fce62f 37.5%, #fce62f 50%, #cde35b 50%, #cde35b 62.5%, #82cc33 62.5%, #82cc33 75%, #ff961c 75%, #ff961c 87.5%, #e75239 87.5%, #e75239 100%);background:-o-linear-gradient(left, #e75239 0, #e75239 12.5%, #ff961c 12.5%, #ff961c 25%, #ffcc27 25%, #ffcc27 37.5%, #fce62f 37.5%, #fce62f 50%, #cde35b 50%, #cde35b 62.5%, #82cc33 62.5%, #82cc33 75%, #ff961c 75%, #ff961c 87.5%, #e75239 87.5%, #e75239 100%);-pie-background:linear-gradient(left, #e75239 0, #e75239 12.5%, #ff961c 12.5%, #ff961c 25%, #ffcc27 25%, #ffcc27 37.5%, #fce62f 37.5%, #fce62f 50%, #cde35b 50%, #cde35b 62.5%, #82cc33 62.5%, #82cc33 75%, #ff961c 75%, #ff961c 87.5%, #e75239 87.5%, #e75239 100%);background:linear-gradient(left, #e75239 0, #e75239 12.5%, #ff961c 12.5%, #ff961c 25%, #ffcc27 25%, #ffcc27 37.5%, #fce62f 37.5%, #fce62f 50%, #cde35b 50%, #cde35b 62.5%, #82cc33 62.5%, #82cc33 75%, #ff961c 75%, #ff961c 87.5%, #e75239 87.5%, #e75239 100%);background-position:50% 0;-webkit-box-shadow:0 1px 2px rgba(0,0,0,.25) inset;-moz-box-shadow:0 1px 2px rgba(0,0,0,.25) inset;box-shadow:0 1px 2px rgba(0,0,0,.25) inset}
+</style>
     <link href="{% static "menu/css/represent.css" %}" rel="stylesheet">
     <!-- <link href="{% static "menu/css/onepage-scroll.css" %}" rel="stylesheet"> -->
  {% endblock %}
@@ -32,7 +34,7 @@
 {% block main_content %}
 
 
-<div class="container">
+<div class="container" id="signupbox">
     <ul id="gn-menu" class="gn-menu-main" style="border-bottom: 1px solid #ccc;">
         <li class="pull-left" style="border:0;">
             <a href="/" id="logo" style=" letter-spacing: 0;  ">
@@ -56,7 +58,7 @@
 
 <div class="main">
 
-    <section id="signup" style="background:url('{% static "img/bg50.png" %}') center center;">
+    <section id="signup" style="background:url(/static/img/bg50.png) center center;">
         <div class="container-responsive">
             <div class="row">
                 <div class="col-sm-6 col-xs-12">
@@ -87,7 +89,7 @@
 
                 <div class="col-xs-12 col-sm-6">
                     <div class="innerLR">
-                        <div class="text-center" id="signupbox">
+                        <div class="text-center">
                             <h1 style="margin:1.5em 0 0 0;">Start your free trial</h1>
                             <p>You'll be up and running in 10 seconds!</p>
                         </div>
@@ -161,8 +163,8 @@
     <h1><span class="launch">Help us celebrate!</span></h1>
 
 
-    <p class="lead strong">We just won a <a href="http://www.nesta.org.uk/blog/being-food-open-data-prosumer-foodtrade-menu-winner-food-open-data-challenge" class="text-white" target="_blank">prize for our work</a>, so to celebrate we're giving an 80% discount to the next <strike>250</strike> 237 businesses to register!</p>
-                                     <p>The regular price is £100 per year, which is still only 5 pence per day!</p>
+    <p class="lead strong">We just won a <a href="http://www.nesta.org.uk/blog/being-food-open-data-prosumer-foodtrade-menu-winner-food-open-data-challenge" class="text-white" target="_blank">prize for our work</a> using data to create positive impact in the food stystem!</p>
+                                      
     </section>
 
     <section style=" background:  url('../img/wbk_all.jpg') bottom no-repeat; background-attachment: fixed; background-size: cover; padding: 40px; display: none;">
@@ -416,6 +418,14 @@
     </section>
 
 
+    <section style="border:0; background: #fff; margin: 0 0 50px 0;" class="text-center">
+ 
+<div class="ftstrip"></div>
+    <h1 style="background: none; margin:30px 0 10px 0;">All this for less than &pound;2 / week!</h1>
+    <p class="lead">Oh, and did we mention we're approved by the people who trained your EHO?</p>
+    
+    <div class="ftstrip"></div>
+    </section>
 
 
 
@@ -496,7 +506,7 @@
         <div class="row">
             <div class="col-xs-12 text-center">
                 <div style=" margin:1em 0;">
-                    <a class="btn btn-lg btn-success" style="margin: 0.6em 0;" href="#signupbox">
+                    <a class="btn btn-lg btn-success" style="margin: 0.6em 0; text-decoration: none;" href="#signupbox">
                         <i class="fa fa-check fa-fw"></i>
                         <strong>Okay, I'm convinced. Sign me up!</strong>
                     </a>

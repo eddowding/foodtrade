@@ -1,0 +1,460 @@
+@meat: rgb(163, 0, 18);
+@allergen: #4B9ED9;
+@gluten: rgb(237, 72, 42);
+@nutrition: #FDA0A2;
+.form-box .header, .bg-olive, .btn-primary, .btn-success {
+    background: #61AE32 !important;
+    border: darken(#61AE32,20%);
+    &:hover {
+        background: #5DB92B !important;
+    }
+}
+.content a {
+    color: #61AE32;
+}
+.content a.btn {
+    color: #fff;
+}
+.strong {
+    font-weight: bold;
+}
+.menuitem {
+    background: #ECE5CE;
+    border-left: 2px solid #e6e7e8;
+    padding: 5px 0 10px 5px;
+    margin: 2px 0;
+    border-radius: 2px;
+}
+.menutitle {} .box .ingredient-tree {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+.tools {
+    margin-left: 10px;
+    a {
+        color: #bbb;
+        margin-left: 3px;
+    }
+    a.add-sub-ingredients {
+        font-weight: normal !important;
+        &:hover {
+            color: #61AE32;
+            &:after {
+                content: "add sub-ingredient";
+            }
+        }
+    }
+    a.delete-btn {
+        padding: 3px;
+        border-radius: 2px;
+        &:hover {
+            color: red;
+        }
+    }
+    a.nutrition {
+        &:hover {
+            color: @nutrition;
+        }
+    }
+}
+.menuitem-description {
+    margin-left: 25px;
+    color: #666;
+    font-style: italic;
+}
+.add-ingredients {
+    margin-left: 20px;
+    margin-top: 10px;
+    display: block;
+}
+.box .ingredient-tree > li {
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius: 2px;
+    margin-bottom: 2px;
+    color: #444;
+    position: relative;
+    margin: 2px 0 0 20px;
+    padding: 6px;
+    font-weight: normal !important;
+    list-style: none;
+    clear: both;
+    background: rgba(255, 255, 255, 0.4);
+    border: 2px solid rgba(255, 255, 255, 0.6);
+}
+.box .ingredient-tree > li:last-of-type {
+    margin-bottom: 0;
+}
+.box .ingredient-tree li a {
+    font-weight: bold;
+}
+.box .ingredient-tree li li a {
+    font-weight: normal;
+    padding-left: 3px;
+}
+.handle {
+    padding: 0 10px 0 0;
+    &:hover {
+        cursor: move !important;
+    }
+}
+.handle i {
+    color: rgba(0, 0, 0, 0.4);
+}
+.box .ingredient-tree li li .handle i {
+    color: rgba(0, 0, 0, 0.2);
+}
+.box .ingredient-tree li p {
+    margin-left: 21px;
+}
+.box .ingredient-tree ul {
+    padding: 0;
+    list-style: none;
+    display: block;
+    &:first-child {
+        margin: 5px 0;
+    }
+}
+.box .ingredient-tree ul li {
+    border-right: 0;
+    margin: 10px -5px 0 20px;
+    padding: 5px 5px 6px 3px;
+    font-weight: normal !important;
+    list-style: none;
+    background: rgba(255, 255, 255, 0.9);
+}
+.box .ingredient-tree ul ul {
+    padding: 0;
+    list-style: none;
+    display: block;
+    margin: 5px 0;
+}
+.box .ingredient-tree ul ul li {
+    margin: 2px 0 0 20px;
+    padding: 3px 0px 3px 3px;
+    font-weight: normal !important;
+    list-style: none;
+    clear: both;
+    background: rgba(255, 255, 255, 0.9);
+}
+h3 i {
+    font-size: 80%;
+    color: #ccc;
+}
+.box h3 {
+    margin: 0 0 5px 0;
+    float: left;
+}
+.section_head {
+    margin-bottom: 10px;
+    margin-top: 30px;
+    border-bottom: 3px solid #444;
+}
+.editable-click, a.editable-click {
+    text-decoration: none;
+    color: #444;
+    border-bottom: 0 !important;
+}
+a.editable-click:hover {
+    text-decoration: underline !important;
+    border-bottom: 0;
+}
+.mag {
+    .btn {
+        padding: 3px 6px;
+        color: rgba(255, 255, 255, 0.7);
+    }
+}
+.btn-allergen {
+    background: fade(@allergen, 25%);
+}
+.btn-meat {
+    background: fade(@meat, 25%);
+}
+.btn-gluten {
+    background: fade(@gluten, 25%);
+}
+.mag {
+    .btn {
+        font-weight: bold;
+        &.active, &:hover, {
+            opacity: 1;
+            box-shadow: none;
+            color: #fff;
+            &.btn-allergen {
+                background: @allergen;
+            }
+            &.btn-meat {
+                background: @meat;
+            }
+            &.btn-gluten {
+                background: @gluten;
+            }
+        }
+    }
+}
+.del {
+    display: inline-block;
+}
+.flagged {
+  border: 1px solid;
+  padding: 0 3px;
+  margin-right: 3px;
+  opacity: 0.3;
+}
+.flagged.active {
+  opacity: 1;
+  background: inherit;
+  color: #fff;
+  font-weight: bolder;
+}
+.flagged.active.meat {
+  background: @meat;
+  border-color: @meat;
+}
+.flagged.active.allergen {
+  background: @allergen;
+  border-color: @allergen;
+}
+.flagged.active.gluten {
+  background: @gluten;
+  border-color: @gluten;
+}
+.action {
+    background: #eee;
+    padding: 5px;
+    border: 1px solid #aaa;
+}
+#output {
+    background: #fff;
+    padding: 0.5em 2em 2em 2em;
+    // box-shadow: 0 0 10px #444 inset;
+    * {
+        font-family: Georgia;
+    }
+    p {
+        font-size: 1.8em;
+    }
+    h2 {
+        border-bottom: 2px solid;
+        padding: 0.5em 0 0.5em 0;
+    }
+    h3 {
+        border-bottom: 1px solid;
+        padding: 1em 0 0.3em 0;
+        width: 60%;
+        margin: 0 auto;
+    }
+    .dish_wrapper {
+        margin-top: 1em;
+        display: block;
+        width: 60%;
+        margin: 1em auto;
+    }
+    .dish_name {
+        float: left;
+        font-size: 20px;
+    }
+    .dish_price {
+        float: right;
+    }
+    .dish_mag {
+        text-align: center;
+    }
+    .dish_description {
+        display: block;
+        font-style: italic;
+    }
+    .dish_ingredients {
+        text-transform: capitalize;
+        font-size: 14px;
+    }
+    .has_children {
+        // display: inline-block;
+    }
+
+    .ingredient_parent:before {
+        content: ", ";
+    }
+    .ingredient_parent:first-of-type:before {
+        content: none;
+    }
+    .has_children:not(:empty) {
+        &:before {
+            content: "(";
+        }
+        &:after {
+            content: ")";
+        }
+    }
+    .ingredient_child {
+        font-weight: normal;
+    }
+    .ingredient_child:after {
+        content: ", ";
+    }
+    .ingredient_child:last-of-type:after {
+        content: none; 
+    }
+    .strong,
+    strong { 
+        font-weight: bold !important;
+    }
+}
+.allergen_detail {
+    font-size: 12px;
+    clear: both;
+    display: block;
+}
+.supplier {
+    font-weight: bold;
+}
+.produce {
+    font-style: italic;
+}
+#connectionsList h4 {
+    font-weight: bold;
+    border-bottom: 1px solid;
+}
+#connectionsList ul {
+    padding: 0;
+    list-style: none;
+}
+li.divider {
+    background: #666;
+    height: 2px;
+}
+.pull-right label {
+    margin-left: 10px;
+}
+.new {
+    background: #ffc;
+}
+.produce_tags {
+    a {
+        &:after {
+            content: ",";
+        }
+        &:hover {
+            text-decoration: underline;
+            color: #444;
+        }
+    }
+}
+table th {
+    text-transform: uppercase;
+    background: #3878B3;
+    color: #fff;
+}
+body > .header .logo {
+    font-family: 'Source Sans Pro', cursive;
+    font-weight: 900;
+    background: #61AE32;
+}
+a.text-muted {
+    color: #666 !important;
+}
+
+ 
+//
+// Tooltips
+// --------------------------------------------------
+
+
+// Base class
+.ui-tooltip {
+  position: absolute;
+  z-index: 1999;
+  display: block;
+  visibility: visible;
+  // Reset font and text properties given new insertion method 
+  font-size: 12px;
+  font-weight: normal;
+  line-height: 1.4;
+  opacity:1;
+
+  max-width: 200;
+  padding: 3px 8px;
+  color: #fff;
+  text-align: center;
+  text-decoration: none;
+  background-color: rgba(0,0,0,0.8) !important;
+  border-radius: 4px;
+
+  &.in     { opacity: 1; }
+  &.top    { margin-top:  -3px; padding: 5 0; }
+  &.right  { margin-left:  3px; padding: 0 5; }
+  &.bottom { margin-top:   3px; padding: 5 0; }
+  &.left   { margin-left: -3px; padding: 0 5; }
+}
+
+// Wrapper for the tooltip content
+ 
+// Arrows
+.tooltip-arrow {
+  position: absolute;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+}
+// Note: Deprecated .top-left, .top-right, .bottom-left, and .bottom-right as of v3.3.1
+.ui-tooltip {
+  &.top .tooltip-arrow {
+    bottom: 0;
+    left: 50%;
+    margin-left: -5;
+    border-width: 5 5 0;
+    border-top-color: rgba(0,0,0,0.8);
+  }
+  &.top-left .tooltip-arrow {
+    bottom: 0;
+    right: 5;
+    margin-bottom: -5;
+    border-width: 5 5 0;
+    border-top-color: rgba(0,0,0,0.8);
+  }
+  &.top-right .tooltip-arrow {
+    bottom: 0;
+    left: 5;
+    margin-bottom: -5;
+    border-width: 5 5 0;
+    border-top-color: rgba(0,0,0,0.8);
+  }
+  &.right .tooltip-arrow {
+    top: 50%;
+    left: 0;
+    margin-top: -5;
+    border-width: 5 5 5 0;
+    border-right-color: rgba(0,0,0,0.8);
+  }
+  &.left .tooltip-arrow {
+    top: 50%;
+    right: 0;
+    margin-top: -5;
+    border-width: 5 0 5 5;
+    border-left-color: rgba(0,0,0,0.8);
+  }
+  &.bottom .tooltip-arrow {
+    top: 0;
+    left: 50%;
+    margin-left: -5;
+    border-width: 0 5 5;
+    border-bottom-color: rgba(0,0,0,0.8);
+  }
+  &.bottom-left .tooltip-arrow {
+    top: 0;
+    right: 5;
+    margin-top: -5;
+    border-width: 0 5 5;
+    border-bottom-color: rgba(0,0,0,0.8);
+  }
+  &.bottom-right .tooltip-arrow {
+    top: 0;
+    left: 5;
+    margin-top: -5;
+    border-width: 0 5 5;
+    border-bottom-color: rgba(0,0,0,0.8);
+  }
+} 
