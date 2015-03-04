@@ -1,4 +1,4 @@
 *.pyc
 foodtrade/settings.py
 bower_components/
-static/
+/static/
