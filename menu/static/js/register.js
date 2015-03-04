@@ -74,7 +74,8 @@ $(document).ready(function() {
 
   $('.signup').click(function() {
     var formHasError = $('.form-group').hasClass('has-error');
-    var passwordMatch = ($('input[name="password"]').val() === $('input[name="password2"]').val());
+    // var passwordMatch = ($('input[name="password"]').val() === $('input[name="password2"]').val());
+    var passwordMatch = true;
     var termAccepted = $('.form-group').find('.checkbox').find('input[name="terms"]').is(':checked');
     if (formHasError === false && passwordMatch === true) {
       if (termAccepted) {
