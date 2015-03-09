@@ -13,6 +13,7 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
 from django.contrib.auth.decorators import login_required
 from django.template.loader import render_to_string
+from django.conf import settings
 from mongoengine.django.auth import User
 from menu.models import Establishment, Menu, MenuSection, Dish, Allergen, Meat, Gluten, Connection, Ingredient, ModerationIngredient
 from menu.peer import ingredient_walk, IngredientWalkPrint, CloneDishWalk, mail_chimp_subscribe_email, CloneIngredientWalk
@@ -41,7 +42,7 @@ def menu(request):
     ''' Get list of menus '''
     establishments = Establishment.objects.filter(user=request.user)
     menus = Menu.objects.filter(establishment__in=establishments).order_by('-added_on')
-    return render(request, 'menu/menus.html', {'menus' : menus})
+    return render(request, 'menu/menus.html', {'menus': menus, 'settings': settings})
 
 
 def register(request):
