@@ -5,11 +5,11 @@
 <h2>
     Menus&nbsp;
     <button data-toggle="modal" href="#menuModal" id="menuAddModal" class="btn btn-default"><i class="ion ion-clipboard"></i> Add Menu</button>
-</h2> 
-{% endif %}  
+</h2>
+{% endif %}
 
 {% if not menus|length %}
-<div class="row"> 
+<div class="row">
     <section class="col-sm-12 text-center" style="margin-top: 15%;">
         <h1 style="margin: 20px;">You're about to make your first menu. Are you excited?!</h1>
         <button data-toggle="modal" href="#menuModal" id="menuAddModal" class="btn btn-lg btn-primary">
@@ -17,23 +17,23 @@
         </button>
     </section>
 </div>
-{% endif %}  
+{% endif %}
 
 {% for menu in menus %}
 
-<div class="row"> 
+<div class="row">
     <section class="col-sm-12 tt-pad">
-    
+
         <div class="box box-primary">
             <div class="box-header">
 
 
             <div class="well well-sm">
-            <p><strong>Tip:</strong> 
+            <p><strong>Tip:</strong>
             Use the <i class="fa fa-plus-circle"></i> after an ingredient to add sub-ingredients to it. Eg 'Mayonnaise' had sub-ingredients of 'eggs', 'oil', 'vinegar' etc.
             </p>
             </div>
-                
+
                 <h3 class="box-title" style="font-size: 25px;"><i class="ion ion-clipboard"></i> Menu: {{menu.name}}</h3>
                 <div class="box-tools pull-right">
                     <ul class="pagination pagination-sm inline">
@@ -44,16 +44,28 @@
                             <a data-id={{menu.pk}} data-url={% url 'menu_delete_menu' %} class="delete-btn" data-toggle="tooltip" title="This will delete the entire menu!"><i class="fa fa-trash-o fa-fw"></i>Delete Menu</a>
                         </li>
                         <li>
-                            <a href="{% url 'menu_print_preview_menu' menu.id %}"  title="See a printable version" target="_blank" target="_blank"><i class="fa fa-fw fa-print"></i> Print preview</a>
+                            {% if has_payment %}
+                              <a href="{% url 'menu_print_preview_menu' menu.id %}"  title="See a printable version" target="_blank" target="_blank"><i class="fa fa-fw fa-print"></i> Print preview</a>
+                            {% else %}
+                              <a data-toggle="modal" href="#paymentModal" id="paymentAddModal" title="See a printable version" target="_blank" target="_blank"><i class="fa fa-fw fa-print"></i> Print preview</a>
+                            {% endif %}
                         </li>
                         <!--    <li>
                             <a href="#" data-toggle="tooltip" title="Coming soon!" class="text-muted"><i class="fa  fa-fw fa-download"></i> Generate PDF</a>
                         </li> -->
                         <li>
+                          {% if has_payment %}
                             <a href="https://twitter.com/home?status=Check out our menu live online at @FoodTradeHQ! http://www.foodtrade.menu{% url 'menu_print_preview_menu' menu.id %}" data-toggle="tooltip" title="Share a link to your menu on twitter" target="_blank" onclick="shareAnalyticsFn('https://twitter.com/home?status=Check out our menu live online at @FoodTradeHQ! http://www.foodtrade.menu{% url "menu_print_preview_menu" menu.id %}')"><i class="fa fa-fw fa-twitter"></i> Tweet</a>
+                          {% else %}
+                            <a data-toggle="modal" href="#paymentModal" id="paymentAddModal" title="Share a link to your menu on twitter" target="_blank"><i class="fa fa-fw fa-twitter"></i> Tweet</a>
+                          {% endif %}
                         </li>
                         <li>
+                          {% if has_payment %}
                             <a href="https://www.facebook.com/sharer/sharer.php?u=http://www.foodtrade.menu{% url 'menu_print_preview_menu' menu.id %}" data-toggle="tooltip" title="Share a link to your menu on facebook" target="_blank" onclick="shareAnalyticsFn('https://www.facebook.com/sharer/sharer.php?u=http://www.foodtrade.menu{% url "menu_print_preview_menu" menu.id %}')"><i class="fa fa-fw fa-facebook"></i> Share</a>
+                          {% else %}
+                            <a data-toggle="modal" href="#paymentModal" id="paymentAddModal" title="Share a link to your menu on facebook" target="_blank"><i class="fa fa-fw fa-facebook"></i> Share</a>
+                          {% endif %}
                         </li>
                     </ul>
                 </div>
@@ -192,11 +204,11 @@
             {% else %}
             <div class="box-footer clearfix" style="border-top: 3px solid #000;">
                 <button data-toggle="modal" data-menu-id={{ menu.id }} href="#sectionModal" class="btn btn-default add-section"><i class="fa fa-th fa-fw"></i> Add Section</button>
-            </div> 
+            </div>
             {% endif %}
         </div>
         <!-- /.box -->
-    </section> 
+    </section>
 </div>
 
 {% endfor %}

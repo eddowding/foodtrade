@@ -129,7 +129,8 @@ def establishment_lookup_search(request):
 def menu_render(user):
     establishments = Establishment.objects.filter(user=user)
     menus = Menu.objects.filter(establishment__in=establishments).order_by('-added_on')
-    return render_to_string('includes/_menu.html', {'menus': menus})
+    has_payment = True if Payment.objects.filter(user=request.user).count() else False
+    return render_to_string('includes/_menu.html', {'menus': menus, 'has_payment': has_payment})
 
 
 @login_required(login_url=reverse_lazy('menu-login'))
