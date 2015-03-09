@@ -1,3 +1,3 @@
 $(document).ready(function() {
-  console.log(stripePublicKey);
+  console.log(stripePublicKey, stripePlan, hasPayment);
 });

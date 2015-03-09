@@ -301,3 +301,15 @@ class ModerationIngredient(Document):
     }
 
 signals.post_save.connect(ModerationIngredient.post_save, sender=ModerationIngredient)
+
+
+class Payment(Document):
+    user = ReferenceField(User)
+    token = StringField(required=True)
+    plan = StringField(required=False)
+    added_on = DateTimeField(required=True)
+    modified_on = DateTimeField(default=datetime.now)
+
+    meta = {
+        'indexes': ['user']
+    }

@@ -15,7 +15,7 @@ from django.contrib.auth.decorators import login_required
 from django.template.loader import render_to_string
 from django.conf import settings
 from mongoengine.django.auth import User
-from menu.models import Establishment, Menu, MenuSection, Dish, Allergen, Meat, Gluten, Connection, Ingredient, ModerationIngredient
+from menu.models import Establishment, Menu, MenuSection, Dish, Allergen, Meat, Gluten, Connection, Ingredient, ModerationIngredient, Payment
 from menu.peer import ingredient_walk, IngredientWalkPrint, CloneDishWalk, mail_chimp_subscribe_email, CloneIngredientWalk
 
 analytics.write_key = 'FVQBpRqubj7q6USVKrGrPeLG08SmADaC'
@@ -42,7 +42,8 @@ def menu(request):
     ''' Get list of menus '''
     establishments = Establishment.objects.filter(user=request.user)
     menus = Menu.objects.filter(establishment__in=establishments).order_by('-added_on')
-    return render(request, 'menu/menus.html', {'menus': menus, 'settings': settings})
+    has_payment = True if Payment.objects.filter(user=request.user).count() else False
+    return render(request, 'menu/menus.html', {'menus': menus, 'settings': settings, 'has_payment': has_payment})
 
 
 def register(request):
