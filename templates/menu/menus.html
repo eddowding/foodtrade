@@ -61,6 +61,8 @@ ul.todo-list li.placeholder:before {
     <script src="{% staticfile '/js/menu.js' %}" type="text/javascript"></script>
     <script src="{% staticfile '/js/menu.payment.js' %}" type="text/javascript"></script>
     <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
+    <script src="{% staticfile '/jquery-validation/dist/jquery.validate.min.js' %}" type="text/javascript"></script>
+    <script src="{% staticfile '/jquery-validation/dist/additional-methods.min.js' %}" type="text/javascript"></script>
     <script>
         var establishmentLookupNameUrl = '{% url "menu_establishment_lookup_name" %}';
         var createMenuUrl = '{% url "menu_create_menu" %}';
@@ -117,6 +119,68 @@ ul.todo-list li.placeholder:before {
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
         <button type="submit" class="btn btn-danger delete-confirm-btn" data-dismiss="modal"><i class="fa fa-trash-o"></i> Yes, delete it</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="paymentModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h4 class="modal-title text-danger" id="myModalLabel"><i class="fa fa-gbp"></i> Make Payment <img class="pull-right" src="http://i76.imgup.net/accepted_c22e0.png"></h4>
+      </div>
+      <div class="modal-body">
+        <form role="form" id="payment-form" novalidate="novalidate">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="form-group">
+                        <label for="cardNumber">CARD NUMBER</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control success" name="cardNumber" placeholder="Valid Card Number" required="" autofocus="" data-stripe="number" aria-required="true" aria-invalid="false">
+                            <span class="input-group-addon"><i class="fa fa-credit-card"></i></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-7 col-md-7">
+                    <div class="form-group">
+                        <label for="expMonth">EXPIRATION DATE</label>
+                        <div class="col-xs-6 col-lg-6 pl-ziro">
+                            <input type="text" class="form-control" name="expMonth" placeholder="MM" required="" data-stripe="exp_month" aria-required="true">
+                        </div>
+                        <div class="col-xs-6 col-lg-6 pl-ziro">
+                            <input type="text" class="form-control" name="expYear" placeholder="YY" required="" data-stripe="exp_year" aria-required="true">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-5 col-md-5 pull-right">
+                    <div class="form-group">
+                        <label for="cvCode">CV CODE</label>
+                        <input type="password" class="form-control" name="cvCode" placeholder="CV" required="" data-stripe="cvc" aria-required="true">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="form-group">
+                        <label for="couponCode">COUPON CODE</label>
+                        <input type="text" class="form-control" name="couponCode">
+                    </div>
+                </div>
+            </div>
+            <div class="row" style="display:none;">
+                <div class="col-xs-12">
+                    <p class="payment-errors"></p>
+                </div>
+            </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn" data-dismiss="modal">No</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-gbp"></i> Start Subscription</button>
       </div>
     </div>
   </div>

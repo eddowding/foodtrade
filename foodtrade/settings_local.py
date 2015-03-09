@@ -40,7 +40,6 @@ STRIPE_PUBLIC_KEY = os.environ.get("STRIPE_PUBLIC_KEY", "pk_live_9BlCZzoxIYjEPaI
 STRIPE_SECRET_KEY = os.environ.get("STRIPE_SECRET_KEY", "sk_live_nobdUwMzfapMBkwn3CKcD0Eg")
 
 DJSTRIPE_PLANS = {
-
     "yearly": {
         "stripe_plan_id": "business-yearly",
         "name": "Basic (£45 / yr)",
@@ -48,9 +47,18 @@ DJSTRIPE_PLANS = {
         "price": 4500,  # £19900
         "currency": "gbp",
         "interval": "year"
+    },
+    "ftm-yearly": {
+        "stripe_plan_id": "ftm-annual",
+        "name": "Basic (£96 / yr)",
+        "description": "Annual subscription to FoodTradeMenu",
+        "price": 9600,  # £19900
+        "currency": "gbp",
+        "interval": "year"
     }
 }
 
+FTM_STRIPE_PLAN_DEFAULT = 'ftm-annual'
 
 
 
@@ -100,11 +108,12 @@ SESSION_SERIALIZER = 'mongoengine.django.sessions.BSONSerializer'
 
 #bower settings
 BOWER_COMPONENTS_ROOT = PROJECT_ROOT
-BOWER_INSTALLED_APPS = ('typeahead.js#0.10.5',
- 'jquery-sortable#0.9.12',
- 'jquery#1.11.1',
+BOWER_INSTALLED_APPS = ('jquery-sortable#0.9.12',
  'iCheck#1.0.2',
- 'x-editable#1.5.1')
+ 'jquery#1.11.1',
+ 'x-editable#1.5.1',
+ 'typeahead.js#0.10.5',
+ 'jquery-validation#1.13.1')
 
 
 #cache backend
