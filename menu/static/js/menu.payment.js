@@ -28,6 +28,9 @@ $(document).ready(function() {
         var token = response.id;
         console.log(token);
         // AJAX
+        if ($form.find('[name=couponCode]').val()) {
+          response.coupon = $form.find('[name=couponCode]').val();
+        }
         $.post(stripeCardTokenUrl, response)
           // Assign handlers immediately after making the request,
           .done(function(data, textStatus, jqXHR) {

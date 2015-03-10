@@ -582,8 +582,10 @@ stripe.api_key = settings.STRIPE_SECRET_KEY
 
 def stripe_card_token(request):
     stripe_token = request.POST.get('id')
+    stripe_coupon = request.POST.get('coupon')
     stripe_customer = stripe.Customer.create(description="Customer for %s" % request.user.email, source=stripe_token)
-    stripe_customer.subscriptions.create(plan=settings.FTM_STRIPE_PLAN_DEFAULT)
+    stripe_customer.subscriptions.create(plan=settings.FTM_STRIPE_PLAN_DEFAULT, coupon=stripe_coupon)
     Payment.objects.create(user=request.user, cust_id=stripe_customer.id,
-                            token=stripe_token, added_on=datetime.now(), plan=settings.FTM_STRIPE_PLAN_DEFAULT)
+                            token=stripe_token, added_on=datetime.now(),
+                            plan=settings.FTM_STRIPE_PLAN_DEFAULT, coupon=stripe_coupon)
     return HttpResponse(json.dumps({'success': True}))
