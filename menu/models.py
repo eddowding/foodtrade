@@ -305,6 +305,7 @@ signals.post_save.connect(ModerationIngredient.post_save, sender=ModerationIngre
 
 class Payment(Document):
     user = ReferenceField(User)
+    cust_id = StringField(required=True)
     token = StringField(required=True)
     plan = StringField(required=False)
     added_on = DateTimeField(required=True)

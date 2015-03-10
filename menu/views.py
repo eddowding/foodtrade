@@ -1,6 +1,7 @@
 import json
 import re
 import analytics
+import stripe
 from datetime import datetime, timedelta
 from copy import deepcopy
 from bson.objectid import ObjectId, InvalidId
@@ -570,3 +571,19 @@ def backend_dashboard(request):
 
     number_of_visitors = 0
     return render(request, 'backend_dashboard.html', locals())
+
+
+"""
+Stripe
+"""
+
+stripe.api_key = settings.STRIPE_SECRET_KEY
+
+
+def stripe_card_token(request):
+    stripe_token = request.POST.get('id')
+    stripe_customer = stripe.Customer.create(description="Customer for %s" % request.user.email, source=stripe_token)
+    stripe_customer.subscriptions.create(plan=settings.FTM_STRIPE_PLAN_DEFAULT)
+    Payment.objects.create(user=request.user, cust_id=stripe_customer.id,
+                            token=stripe_token, added_on=datetime.now(), plan=settings.FTM_STRIPE_PLAN_DEFAULT)
+    return HttpResponse(json.dumps({'success': True}))

@@ -80,6 +80,7 @@ ul.todo-list li.placeholder:before {
         var updateIngredientNameUrl = "{% url 'menu_update_ingredient_name' %}";
         var saveModerationIngredientUrl = "{% url 'menu_save_moderation_ingredient' %}";
         var updateModerationIngredientUrl = "{% url 'menu_update_moderation_ingredient' %}";
+        var stripeCardTokenUrl = "{% url 'menu_stripe_card_token' %}";
         var stripePublicKey = '{{settings.STRIPE_PUBLIC_KEY}}';
         var stripePlan = '{{settings.FTM_STRIPE_PLAN_DEFAULT}}';
         Stripe.setPublishableKey(stripePublicKey);

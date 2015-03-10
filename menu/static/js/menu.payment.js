@@ -28,12 +28,11 @@ $(document).ready(function() {
         var token = response.id;
         console.log(token);
         // AJAX
-        $.post('/account/stripe_card_token', {
-            token: token
-          })
+        $.post(stripeCardTokenUrl, response)
           // Assign handlers immediately after making the request,
           .done(function(data, textStatus, jqXHR) {
             $('#paymentModal button.payment-add-btn').html('Payment successful <i class="fa fa-check"></i>').prop('disabled', true);
+            window.location.reload();
           })
           .fail(function(jqXHR, textStatus, errorThrown) {
             $('#paymentModal button.payment-add-btn').html('There was a problem').removeClass('success').addClass('error');

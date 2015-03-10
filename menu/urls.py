@@ -35,6 +35,7 @@ urlpatterns = patterns('menu.views',
     url(r'^ingredient/save/moderation/$', 'save_moderation_ingredient', name='menu_save_moderation_ingredient'),
     url(r'^ingredient/update/moderation/$', 'update_moderation_ingredient', name='menu_update_moderation_ingredient'),
     url(r'^ingredient/update/moderation/status/$', 'update_moderation_ingredient_status', name='menu_update_moderation_ingredient_status'),
+    url(r'^stripe/card/token/$', 'stripe_card_token', name='menu_stripe_card_token'),
 
     #print
     url(r'^preview/(?P<id>[\w]+)$', 'print_preview_menu', name='menu_print_preview_menu'),
