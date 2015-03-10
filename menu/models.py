@@ -309,6 +309,7 @@ class Payment(Document):
     token = StringField(required=True)
     plan = StringField(required=False)
     coupon = StringField(required=False)
+    expiry = DateTimeField(required=False)
     added_on = DateTimeField(required=True)
     modified_on = DateTimeField(default=datetime.now)
 

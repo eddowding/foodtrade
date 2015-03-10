@@ -27,7 +27,8 @@ Common views.
 """
 @login_required(login_url=reverse_lazy('menu-login'))
 def dashboard(request):
-    return render(request, 'dashboard.html')
+    payments = Payment.objects.filter(user=request.user)
+    return render(request, 'dashboard.html', {'payments': payments})
 
 
 @login_required(login_url=reverse_lazy('menu-login'))
@@ -584,8 +585,9 @@ def stripe_card_token(request):
     stripe_token = request.POST.get('id')
     stripe_coupon = request.POST.get('coupon')
     stripe_customer = stripe.Customer.create(description="Customer for %s" % request.user.email, source=stripe_token)
-    stripe_customer.subscriptions.create(plan=settings.FTM_STRIPE_PLAN_DEFAULT, coupon=stripe_coupon)
+    stripe_subscription = stripe_customer.subscriptions.create(plan=settings.FTM_STRIPE_PLAN_DEFAULT, coupon=stripe_coupon)
     Payment.objects.create(user=request.user, cust_id=stripe_customer.id,
                             token=stripe_token, added_on=datetime.now(),
-                            plan=settings.FTM_STRIPE_PLAN_DEFAULT, coupon=stripe_coupon)
+                            plan=settings.FTM_STRIPE_PLAN_DEFAULT, coupon=stripe_coupon,
+                            expiry=datetime.fromtimestamp(stripe_subscription.current_period_end))
     return HttpResponse(json.dumps({'success': True}))

@@ -20,14 +20,14 @@
                             <p class="strong">1. Add your menu</p>
                         </a>
                     </div>
-                    <div class="col-sm-4"> 
+                    <div class="col-sm-4">
                             <i class="fa fa-print fa-4x"></i>
-                            <p class="strong">2. Print it</p> 
+                            <p class="strong">2. Print it</p>
                     </div>
-                    <div class="col-sm-4"> 
+                    <div class="col-sm-4">
                             <i class="fa fa-user fa-4x"></i>
                             <p class="strong">3. Show it to your <acronym title="Environmental health officer">EHO</acronym></p>
-             
+
                     </div>
                 </div>
             </div>
@@ -105,9 +105,11 @@
   <div class="media-left">
             <i class="fa fa-check-square-o fa-3x pull-left"></i>
   </div>
-  <div class="media-body"> 
-            <p>Your account is all paid up! You are due for renewal in <strong>362 days</strong>.</p>
+  {% if payments|length %}
+  <div class="media-body">
+            <p>Your account is all paid up! You are due for renewal on <strong>{{payments.0.expiry}}</strong></p>
   </div>
+  {% endif %}
 </div>
         </div>
 
@@ -152,7 +154,7 @@
         </div>
         <!-- nav-tabs-custom -->
 
-<!-- 
+<!--
         <div class="box box-primary">
             <div class="box-header" data-toggle="tooltip" title="" data-original-title="Header tooltip">
                 <h3 class="box-title">Make a payment</h3>
