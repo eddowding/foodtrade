@@ -2,3 +2,4 @@
 foodtrade/settings.py
 /bower_components/
 /static/
+foodtrade.db

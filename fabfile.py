@@ -17,7 +17,7 @@ def deploy():
     local('git fetch --tags')
 
     if env.name == 'staging':
-        deploy_tag = None
+        deploy_tag = 'menu'
     elif env.name == 'prod':
         local('git tag | sort -V | tail -5')
         deploy_tag = prompt('Choose tag to deploy: ')
@@ -29,7 +29,9 @@ def deploy():
         checkout_cmd = 'git checkout menu'
     sudo('cd /var/www; git fetch --tags')
     sudo('cd /var/www; %s' % checkout_cmd)
+    sudo('cd /var/www; git stash')
     sudo('cd /var/www; git pull origin %s' % deploy_tag)
+    sudo('cd /var/www; git stash pop')
     sudo('cd /var/www; pip install -r requirements.pip')
     sudo('cd /var/www; chown -R foodtrade:foodtrade bower_components')
     run('cd /var/www; ./manage.py bower install')
