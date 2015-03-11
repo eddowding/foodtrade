@@ -10,7 +10,7 @@ from mongoengine.queryset import Q
 from bson import json_util
 from django.shortcuts import render
 from django.core.urlresolvers import reverse_lazy
-from django.http import HttpResponseRedirect, HttpResponse
+from django.http import HttpResponseRedirect, HttpResponse, Http404
 from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
 from django.contrib.auth.decorators import login_required
 from django.template.loader import render_to_string
@@ -458,12 +458,13 @@ def ingredient_lookup_name(request):
     return HttpResponse(json.dumps({'status': True, 'objs': tmp_list[0:10]}))
 
 
-
-@login_required(login_url=reverse_lazy('menu-login'))
-def print_preview_menu(request , id):
+def print_preview_menu(request, id):
     '''Print Preview for menu'''
     menu = Menu.objects.get(pk=ObjectId(id))
-    return render(request, 'menu/menu-print-preview.html', {'menu' : menu})
+    if Payment.objects.filter(user=menu.establishment.user).count():
+        return render(request, 'menu/menu-print-preview.html', {'menu': menu})
+    else:
+        raise Http404
 
 
 @login_required(login_url=reverse_lazy('menu-login'))

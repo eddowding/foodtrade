@@ -17,7 +17,7 @@ def deploy():
     local('git fetch --tags')
 
     if env.name == 'staging':
-        deploy_tag = None
+        deploy_tag = 'menu'
     elif env.name == 'prod':
         local('git tag | sort -V | tail -5')
         deploy_tag = prompt('Choose tag to deploy: ')
