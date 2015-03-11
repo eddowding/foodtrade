@@ -10,6 +10,7 @@ admin.autodiscover()
 # handler404 = 'mainapp.views.my_404_view'
 urlpatterns = patterns('',
     url(r'^', include('menu.urls')),
+    url(r'^menu/admin/', include('menu_admin.urls')),
     #url(r'^$', 'mainapp.home.home', name='home'),
     #url(r'^kpi/$', 'mainapp.kpi.stats'),
     #url(r'^robots\.txt$', TemplateView.as_view(template_name='robots.txt',content_type='text/plain'), name='robots'),
@@ -98,7 +99,3 @@ urlpatterns += patterns('',
 urlpatterns += patterns('',
         url(r'^(?P<path>.*)$', 'django.views.static.serve',
         {'document_root': settings.STATIC_ROOT }))
-
-
-
-

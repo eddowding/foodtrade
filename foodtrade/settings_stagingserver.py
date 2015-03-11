@@ -145,6 +145,7 @@ INSTALLED_APPS = (
     'search',
     'tools',
     'menu',
+    'menu_admin',
     'twython',
     'allauth',
     'allauth.account',
@@ -199,15 +200,12 @@ from settings_local import *
 REMOVE_WWW = True
 PREPEND_WWW = False
 
-# django_static configurations starts here 
+# django_static configurations starts here
 
 DJANGO_STATIC = True
-# DJANGO_STATIC_SAVE_PREFIX = "/tmp/django-static"  # disable if you want 
+# DJANGO_STATIC_SAVE_PREFIX = "/tmp/django-static"  # disable if you want
                                                 # file's simlink to be created in same directory
 # DJANGO_STATIC_MEDIA_URL = "//localhost:8000"
 DJANGO_STATIC_MEDIA_ROOTS = [STATIC_ROOT]
 
 # django_static configurations ends here
-
-
-
