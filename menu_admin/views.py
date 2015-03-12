@@ -11,8 +11,8 @@ from menu.models import Payment
 
 @login_required(login_url=reverse_lazy('menu-login'))
 def admin_user(request):
-    if not request.user.is_superuser:
-        raise Http404
+    # if not request.user.is_superuser:
+    #     raise Http404
     users = User.objects.all()
     paginator = Paginator(users, 10)
 
@@ -29,8 +29,8 @@ def admin_user(request):
 
 @login_required(login_url=reverse_lazy('menu-login'))
 def admin_user_detail(request, id):
-    if not request.user.is_superuser:
-        raise Http404
+    # if not request.user.is_superuser:
+    #     raise Http404
     user = User.objects.get(pk=ObjectId(id))
     try:
         payment = Payment.objects.get(user=user)
