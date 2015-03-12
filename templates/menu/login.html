@@ -58,27 +58,30 @@
 
 <div class="main">
 
-    <section id="signup" style="background:url(/static/img/bg50.png) center center;">
+    <section id="signup" style="background:url(/static/img/bg 50.png) center center;">
         <div class="container-responsive">
             <div class="row">
                 <div class="col-sm-6 col-xs-12">
                     <div class="innerAll">
 
-                        <h1 style="font-size: 50px; margin: 30px 0 25px 0;" class="">Sick of allergen compliance laws?</h1>
+                        <h1 style="font-size: 50px; margin: 5px 0 25px 0;" class="">Are allergen laws giving you a headache? </h1>
                         <ul class="fa-ul lead smalled innerLR" style="font-weight:400;">
 
-                            <li><i class="fa fa-li fa-check-square-o"></i> Quick, effortless compliance
-                                <small>Just 30 seconds per recipe thanks to recipe suggestions and ingredients lists </small>
+                            <li><i class="fa fa-li fa-check-square-o" style="color: #596E31; top: 0.35em;"></i> Less than &pound;2/day
+                                <small>We're priced for every business at just &pound;100/yr - <strong>only pay when you print or share</strong></small>
+                            </li>
+                            <li><i class="fa fa-li fa-check-square-o" style="color: #596E31; top: 0.35em;"></i> Quick, effortless compliance
+                                <small>Just 30 seconds per recipe thanks to recipe suggestions and autocompleting ingredients </small>
                             </li>
 
-                            <li><i class="fa fa-li fa-check-square-o"></i> Publish menus online
-                                <small>Be found online, on mobile, and on your website - and always up to date </small>
+                            <li><i class="fa fa-li fa-check-square-o" style="color: #596E31; top: 0.35em;"></i> Find new customers 
+                                <small>Your menus can be found online, on mobile, and on your website - and always up to date </small>
                             </li>
-                            <li><i class="fa fa-li fa-check-square-o"></i> Discounts &amp; offers from local suppliers
+                            <li><i class="fa fa-li fa-check-square-o" style="color: #596E31; top: 0.35em;"></i> Discounts &amp; offers from local suppliers
                                 <small>Integrates with <a href="http://www.foodtrade.com/" target="_blank">FoodTrade</a> to bring you the best of what's around. <span class="cs" style="float: none; width: auto; text-transform: none; padding: 0 2px;">Coming soon</span></small>
                             </li>
-                            <li><i class="fa fa-li fa-check-square-o"></i> Make your EHO happy
-                                <small>Endorsed by the Chartered Institute of Environmental Health - the people who train the EHOs - to help you avoid the &pound;5,000 fine!</small>
+                            <li><i class="fa fa-li fa-check-square-o" style="color: #596E31; top: 0.35em;"></i> Stay legal &amp; insured
+                                <small>Your insurance will only cover you if you're compliant. We're the only company endorsed by the Chartered Institute of Environmental Health - the people who train the EHOs - to help you avoid the &pound;5,000 fine</small>
                             </li>
                         </ul>
 
@@ -89,65 +92,67 @@
 
                 <div class="col-xs-12 col-sm-6">
                     <div class="innerLR">
-                        <div class="text-center">
-                            <h1 style="margin:1.5em 0 0 0;">Start your free trial</h1>
-                            <p>You'll be up and running in 10 seconds!</p>
-                        </div>
-                        <form id="registration-form" action="{% url 'menu_register' %}" method="post" style="margin: 30px 50px 100px !important;">{% csrf_token %}
-                            <div>
-                                <!--        <div class="form-group">
-                                    <label>First name</label>
-                                    <input type="text" name="first_name" class="form-control" placeholder="First name" />
-                                    <span class="help-text"></span>
-                                </div>
-                                <div class="form-group">
-                                    <label>Last name</label>
-                                    <input type="text" name="last_name" class="form-control" placeholder="Last name" />
-                                    <span class="help-text"></span>
-                                </div> -->
-                                <div class="form-group">
-                                    <label>Your email</label>
-                                    <input type="text" name="username" class="form-control input-lg" placeholder="Email Address" />
-                                    <span class="help-text"></span>
-                                </div>
-                                <div class="form-group">
-                                    <label>Pick a password</label>
-                                    <input type="password" name="password" class="form-control input-lg" placeholder="Password" />
-                                    <!--     <span class="help-text">Tip: typing happy passwords makes you happier, and they're easier to remember</span> -->
-                                </div>
-                                <!--         <div class="form-group">
-                                    <label>Type that password again</label>
-                                    <input type="password" name="password2" class="form-control" placeholder="Retype password" />
-                                    <span class="help-text">Just to be sure we've both got it right</span>
-                                </div> -->
-                                <div class="form-group">
-                                    <div class="checkbox">
-                                        <label for="terms">
-                                            <input type="checkbox" name="terms" /> I accept the
-                                            <a href="#" data-toggle="modal" data-target="#terms">
-                                                                terms &amp; conditions of use</a>
-                                        </label>
+                        <div  style="border: 7px double #F08119; background: #fff; margin: 40px;">
+                            <div class="text-center">
+                                <h1 style="margin:30px 0 0 0;">Start your free trial</h1>
+                                <p>You'll be up and running in 10 seconds!</p>
+                            </div>
+                            <form id="registration-form" action="{% url 'menu_register' %}" method="post" style="margin: 30px 30px 30px !important;">{% csrf_token %}
+                                <div>
+                                    <!--        <div class="form-group">
+                                        <label>First name</label>
+                                        <input type="text" name="first_name" class="form-control" placeholder="First name" />
+                                        <span class="help-text"></span>
                                     </div>
-                                    <span class="help-text"></span>
+                                    <div class="form-group">
+                                        <label>Last name</label>
+                                        <input type="text" name="last_name" class="form-control" placeholder="Last name" />
+                                        <span class="help-text"></span>
+                                    </div> -->
+                                    <div class="form-group">
+                                        <label>Your email</label>
+                                        <input type="text" name="username" class="form-control input-lg" placeholder="Email Address" />
+                                        <span class="help-text"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Pick a password</label>
+                                        <input type="password" name="password" class="form-control input-lg" placeholder="Password" />
+                                        <!--     <span class="help-text">Tip: typing happy passwords makes you happier, and they're easier to remember</span> -->
+                                    </div>
+                                    <!--         <div class="form-group">
+                                        <label>Type that password again</label>
+                                        <input type="password" name="password2" class="form-control" placeholder="Retype password" />
+                                        <span class="help-text">Just to be sure we've both got it right</span>
+                                    </div> -->
+                                    <div class="form-group">
+                                        <div class="checkbox">
+                                            <label for="terms">
+                                                <input type="checkbox" name="terms" /> I accept the
+                                                <a href="#" data-toggle="modal" data-target="#terms">
+                                                                    terms &amp; conditions of use</a>
+                                            </label>
+                                        </div>
+                                        <span class="help-text"></span>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="footer">
-                                <button type="button" class="btn bg-olive btn-block btn-lg signup">
-                                    <strong>Start my FREE trial</strong>
-                                </button>
-                     <!--             <span class="text-success">
-                                    <i class="fa fa-fw fa-check"></i> <strong>30 day money back guarantee</strong>  <br />
-                                    </span> -->
+                                <div class="footer">
+                                    <button type="button" class="btn bg-olive btn-block btn-lg signup">
+                                        <strong>Start my FREE trial</strong>
+                                    </button>
+                                <!--    <span class="text-success">
+                                        <i class="fa fa-fw fa-check"></i> <strong>30 day money back guarantee</strong>  <br />
+                                        </span> -->
 
 
-                                <span class="text-danger">
-                                    <i class="fa fa-fw fa-credit-card"></i> <strong>No credit card required.</strong> <br />
-                                    <i class="fa fa-fw fa-ban"></i> <strong>No spam, ever. </strong>Unless it's with eggs or hashbrowns.
+                                    <span class="text-danger">
+                                        <i class="fa fa-fw fa-credit-card"></i> <strong>No credit card required.</strong> <br />
+                                        <i class="fa fa-fw fa-ban"></i> <strong>No spam, ever. </strong>Unless it's with eggs or hashbrowns.
 
-                                    </span>
+                                        </span>
 
-                            </div>
-                        </form>
+                                </div>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
