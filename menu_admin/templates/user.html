@@ -1,32 +1,6 @@
 {% extends 'menu_base.html' %}
 {% load staticfiles %}
 {% load django_static %}
-{% block extra_style %}
-<link href="{% staticfile "/css/connection.css" %}" rel="stylesheet" type="text/css" />
-{% endblock extra_style %}
-
-{% block extra_js %}
-<script src="{% staticfile '/typeahead.js/dist/typeahead.bundle.min.js' %}"></script>
-<script src="{% staticfile '/js/connection.js' %}"></script>
-<script>
-    var establishmentLookupNameUrl = '{% url "menu_establishment_lookup_name" %}';
-    var createMenuUrl = '{% url "menu_create_menu" %}';
-    var deletMenuUrl= '{% url "menu_delete_menu" %}';
-    var createSectionUrl = "{% url 'menu_create_menu_section' %}";
-    var deleteSectionUrl = "{% url 'menu_delete_menu_section' %}";
-    var dishLookupNameUrl = "{% url 'menu_dish_lookup_name' %}";
-    var createDishUrl = "{% url 'menu_create_dish' %}";
-    var updateDishUrl = "{% url 'menu_update_dish' %}";
-    var deleteDishUrl = "{% url 'menu_delete_dish' %}";
-    var createIngredientUrl = "{% url 'menu_create_ingredient' %}";
-    var updateIngredientUrl = "{% url 'menu_update_ingredient' %}";
-    var deleteIngredientUrl = "{% url 'menu_delete_ingredient' %}";
-    var ingredientLookupNameUrl = "{% url 'menu_ingredient_lookup_name' %}";
-    var updateIngredientNameUrl = "{% url 'menu_update_ingredient_name' %}";
-    var createConnectionUrl = '{% url "menu_create_connection" %}';
-</script>
-{% endblock extra_js %}
-
 {% block body_class %}skin-black{% endblock %}
 
 {% block content %}
@@ -40,11 +14,30 @@
 <div class="row">
     <!-- Left col -->
     <section class="col-sm-12">
-      <ul>
-      {% for user in users %}
-        <li>{{ user.username }}({{user.email}})</li>
-      {% endfor %}
-     </ul>
+      <table class="table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>First Name</th>
+          <th>Last Name</th>
+          <th>Username</th>
+          <th>Is Super User</th>
+          <th>Edit</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for user in users %}
+        <tr>
+          <th scope="row">{{forloop.counter}}</th>
+          <td>{{user.first_name}}</td>
+          <td>{{user.last_name}}</td>
+          <td>{{user.username}}</td>
+          <td>{{user.is_superuser}}</td>
+          <td><a href="{% url 'menu_admin_user_detail' user.id %}">edit</a></td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
 
 <div class="pagination">
     <span class="step-links">

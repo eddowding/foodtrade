@@ -1,0 +1,53 @@
+{% extends 'menu_base.html' %}
+{% load staticfiles %}
+{% load django_static %}
+{% block extra_style %}
+<link href="{% staticfile '/x-editable/dist/bootstrap3-editable/css/bootstrap-editable.css' %}" rel="stylesheet" type="text/css" />
+{% endblock extra_style %}
+
+{% block extra_js %}
+<script src="{% staticfile '/x-editable/dist/bootstrap3-editable/js/bootstrap-editable.min.js' %}" type="text/javascript"></script>
+<script src="{% staticfile '/js/menu.admin.js' %}"></script>
+<script>
+    var userAdminUpdateUrl = "{% url 'menu_admin_user_detail_update' user.id %}";
+</script>
+{% endblock extra_js %}
+
+{% block body_class %}skin-black{% endblock %}
+
+{% block content %}
+
+<h2>
+    {{user.first_name}} {{user.last_name}}
+</h2>
+
+
+<!-- Main row -->
+<div class="row">
+    <!-- Left col -->
+    <section class="col-sm-12">
+      <table class="table">
+      <tbody>
+        <tr>
+          <th>subscribed</th>
+          <td>{% if payment %}Yes{% else %}No{% endif %}</td>
+        </tr>
+        <tr>
+          <th>coupon code used</th>
+          <td>{% if payment %}{{payment.coupon}}{% else %}NA{% endif %}</td>
+        </tr>
+        <tr>
+          <th>email</th>
+          <td><a id="email" data-type="text" data-pk="{{user.id}}" data-url="{% url 'menu_admin_user_detail_update' user.id %}" data-title="Enter new email">{{user.email}}</a></td>
+        </tr>
+        <tr>
+          <th>is superuser</th>
+          <td><input type="checkbox" id="superuser" {% if user.is_superuser %}checked{% endif %}/></td>
+        </tr>
+      </tbody>
+    </table>
+    </section>
+    <!-- /.Left col -->
+
+</div>
+{% endblock content %}
