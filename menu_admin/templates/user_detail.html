@@ -2,28 +2,14 @@
 {% load staticfiles %}
 {% load django_static %}
 {% block extra_style %}
-<link href="{% staticfile "/css/connection.css" %}" rel="stylesheet" type="text/css" />
+<link href="{% staticfile '/x-editable/dist/bootstrap3-editable/css/bootstrap-editable.css' %}" rel="stylesheet" type="text/css" />
 {% endblock extra_style %}
 
 {% block extra_js %}
-<script src="{% staticfile '/typeahead.js/dist/typeahead.bundle.min.js' %}"></script>
-<script src="{% staticfile '/js/connection.js' %}"></script>
+<script src="{% staticfile '/x-editable/dist/bootstrap3-editable/js/bootstrap-editable.min.js' %}" type="text/javascript"></script>
+<script src="{% staticfile '/js/menu.admin.js' %}"></script>
 <script>
     var establishmentLookupNameUrl = '{% url "menu_establishment_lookup_name" %}';
-    var createMenuUrl = '{% url "menu_create_menu" %}';
-    var deletMenuUrl= '{% url "menu_delete_menu" %}';
-    var createSectionUrl = "{% url 'menu_create_menu_section' %}";
-    var deleteSectionUrl = "{% url 'menu_delete_menu_section' %}";
-    var dishLookupNameUrl = "{% url 'menu_dish_lookup_name' %}";
-    var createDishUrl = "{% url 'menu_create_dish' %}";
-    var updateDishUrl = "{% url 'menu_update_dish' %}";
-    var deleteDishUrl = "{% url 'menu_delete_dish' %}";
-    var createIngredientUrl = "{% url 'menu_create_ingredient' %}";
-    var updateIngredientUrl = "{% url 'menu_update_ingredient' %}";
-    var deleteIngredientUrl = "{% url 'menu_delete_ingredient' %}";
-    var ingredientLookupNameUrl = "{% url 'menu_ingredient_lookup_name' %}";
-    var updateIngredientNameUrl = "{% url 'menu_update_ingredient_name' %}";
-    var createConnectionUrl = '{% url "menu_create_connection" %}';
 </script>
 {% endblock extra_js %}
 
@@ -32,7 +18,7 @@
 {% block content %}
 
 <h2>
-    User Admin
+    {{user.first_name}} {{user.last_name}}
 </h2>
 
 
@@ -40,7 +26,22 @@
 <div class="row">
     <!-- Left col -->
     <section class="col-sm-12">
-      {{user}}
+      <table class="table">
+      <tbody>
+        <tr>
+          <th>email</th>
+          <td><a id="email" data-type="text" data-pk="{{user.id}}" data-url="{% url 'menu_admin_user_detail_update' user.id %}" data-title="Enter new email">{{user.email}}</a></td>
+        </tr>
+        <tr>
+          <th>subscribed</th>
+          <td>{% if payment %}Yes{% else %}No{% endif %}</td>
+        </tr>
+        <tr>
+          <th>coupon code used</th>
+          <td>{% if payment %}{{payment.coupon}}{% else %}NA{% endif %}</td>
+        </tr>
+      </tbody>
+    </table>
     </section>
     <!-- /.Left col -->
 
