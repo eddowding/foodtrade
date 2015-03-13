@@ -19,8 +19,9 @@
         <tr>
           <th>#</th>
           <th>Name</th>
-          <th>Email / username</th> 
-          <th>Admin?</th> 
+          <th>Email / username</th>
+          <th>Admin?</th>
+          <th>Created On</th>
         </tr>
       </thead>
       <tbody>
@@ -28,8 +29,9 @@
         <tr>
           <th scope="row">{{forloop.counter}}</th>
           <td><a href="{% url 'menu_admin_user_detail' user.id %}"><strong>{{user.last_name|upper}}</strong>, {{user.first_name}}</a></td>
-          <td>{{user.username}}<br />{{user.email}}</td> 
+          <td>{{user.username}}<br />{{user.email}}</td>
           <td>{{user.is_superuser}}</td>
+          <td>{{user.date_joined}}</td>
         </tr>
         {% endfor %}
       </tbody>

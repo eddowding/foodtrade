@@ -37,6 +37,10 @@
           <td>{% if payment %}{{payment.coupon}}{% else %}NA{% endif %}</td>
         </tr>
         <tr>
+          <th>number of menus</th>
+          <td>{{menu_count}}</td>
+        </tr>
+        <tr>
           <th>email</th>
           <td><a id="email" data-type="text" data-pk="{{user.id}}" data-url="{% url 'menu_admin_user_detail_update' user.id %}" data-title="Enter new email">{{user.email}}</a></td>
         </tr>
