@@ -18,22 +18,20 @@
       <thead>
         <tr>
           <th>#</th>
-          <th>First Name</th>
-          <th>Last Name</th>
-          <th>Username</th>
-          <th>Is Super User</th>
-          <th>Edit</th>
+          <th>Name</th>
+          <th>Email / username</th>
+          <th>Coupon</th>
+          <th>Admin?</th> 
         </tr>
       </thead>
       <tbody>
         {% for user in users %}
         <tr>
           <th scope="row">{{forloop.counter}}</th>
-          <td>{{user.first_name}}</td>
-          <td>{{user.last_name}}</td>
+          <td><a href="{% url 'menu_admin_user_detail' user.id %}"><strong>{{user.last_name|upper}}</strong>, {{user.first_name}}</a></td>
           <td>{{user.username}}</td>
+          <td>{% if payment %}{{payment.coupon}}{% else %}NA{% endif %}</td>
           <td>{{user.is_superuser}}</td>
-          <td><a href="{% url 'menu_admin_user_detail' user.id %}">edit</a></td>
         </tr>
         {% endfor %}
       </tbody>

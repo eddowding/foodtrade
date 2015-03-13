@@ -327,15 +327,27 @@
                 {% block left_sidebar_menu %}
 
                 <ul class="sidebar-menu">
-                    <li><a href="{% url 'menu' %}"><i class="ion ion-clipboard" style="font-size: 1.4em;"></i> My Menus <small class="badge pull-right bg-green hidden">{{ menus.count }}</small></a>
+                    <li class="tree view"><a href="{% url 'menu' %}"><i class="ion ion-clipboard" style="font-size: 1.4em;"></i> My Menus <small class="badge pull-right bg-green hidden">{{ menus.count }}</small></a>
+
+                        <ul class="tree view-menu">
+                        {% for menu in menus %}
+                            <li><a>{{menu.name}}</a></li>
+                        {% endfor %}
+                        </ul>
+                            
                     </li> 
-                    <li><a href="{% url 'menu_connection' %}"><i class="fa fa-sign-in"></i> My suppliers<small class="badge pull-right bg-green hidden">{{ sellers.count }}</small></a>
+
+                    
+
+                    <li><a href="{% url 'menu_connection' %}"><i class="fa fa-sign-out"></i> My connections<small class="badge pull-right bg-green hidden">{{ buyers.count }}</small></a>
+                    </li>
+                   <!--  <li><a href="{% url 'menu_connection' %}"><i class="fa fa-sign-in"></i> My suppliers<small class="badge pull-right bg-green hidden">{{ sellers.count }}</small></a>
                     </li>
                     <li><a href="{% url 'menu_connection' %}"><i class="fa fa-sign-out"></i> My stockists<small class="badge pull-right bg-green hidden">{{ buyers.count }}</small></a>
-                    </li>
+                    </li> -->
                      
 
-                    <li class="treeview">
+ <!--                    <li class="treeview">
                         <a href="#" data-toggle="modal" data-target="#comingsoon" class="text-muted">
                         <i class="fa fa-cutlery"></i> My produce
                                   <i class="fa fa-angle-left pull-right"></i></a>
@@ -347,9 +359,9 @@
                             <li><a href="#" data-toggle="modal" data-target="#comingsoon" class="text-muted"><i class="fa fa-sign-out"></i> All produce<small class="badge pull-right bg-green">23</small></a>
                             </li>
                         </ul>
-                    </li>
+                    </li> -->
 
-                    <li class="divider"></li>
+                 <!--    <li class="divider"></li>
                     <li class="">
                         <a href="#" data-toggle="modal" data-target="#comingsoon" class="text-muted">
                             <i class="fa fa-shopping-cart"></i> <span>Offers</span>
@@ -364,12 +376,12 @@
                         <a href="#" data-toggle="modal" data-target="#comingsoon" class="text-muted">
                             <i class="fa fa-sliders"></i> <span>How I compare</span>
                         </a>
-                    </li>
+                    </li> 
                     <li class="">
                         <a href="#" data-toggle="modal" data-target="#comingsoon" class="text-muted">
                             <i class="fa fa-cogs"></i> <span>Settings</span>
                         </a>
-                    </li>
+                    </li>-->
                     <li class="divider"></li>
                     <li class="">
                         <a href="https://foodtrade.uservoice.com" data-uv-trigger="contact" id="support">
@@ -388,7 +400,30 @@
                         </a>
                     </li>
                     <li class="divider"></li>
+                    <li class="divider"></li> 
+                    {% if user.is_superuser %}
+                    <li class="">
+                        <a href="/menu/admin/user/">
+                            <i class="fa fa-users"></i>Users</span>
+                        </a>
+                    </li>
+                    <li class="">
+                        <a href="/menu/admin/user/">
+                            <i class="fa fa-users"></i>Establishments</span>
+                        </a>
+                    </li>
+                    <li class="">
+                        <a href="/menu/admin/user/">
+                            <i class="fa fa-users"></i>Dishes</span>
+                        </a>
+                    </li>
+                    <li class="">
+                        <a href="/menu/admin/user/">
+                            <i class="fa fa-users"></i>Ingredients</span>
+                        </a>
+                    </li>
                     <li class="divider"></li>
+                    {% endif %} 
                 </ul>
                 {% endblock %}
             </section>
