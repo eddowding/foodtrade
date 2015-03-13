@@ -45,9 +45,9 @@
                         </li>
                         <li>
                             {% if has_payment %}
-                              <a href="{% url 'menu_print_preview_menu' menu.id %}"  title="See a printable version" target="_blank" target="_blank"><i class="fa fa-fw fa-print"></i> Print preview</a>
+                              <a href="{% url 'menu_print_preview_menu' menu.id %}"  title="See a printable version" target="_blank" target="_blank"><i class="fa fa-fw fa-print" style="color: green;"></i> Print preview</a>
                             {% else %}
-                              <a data-toggle="modal" href="#paymentModal" id="paymentAddModal" title="See a printable version" target="_blank" target="_blank"><i class="fa fa-fw fa-print"></i> Print preview</a>
+                              <a data-toggle="modal" href="#paymentModal" id="paymentAddModal" title="See a printable version" target="_blank" target="_blank"><i class="fa fa-fw fa-credit-card"  style="color:  ;"></i> Print preview</a>
                             {% endif %}
                         </li>
                         <!--    <li>
@@ -55,16 +55,16 @@
                         </li> -->
                         <li>
                           {% if has_payment %}
-                            <a href="https://twitter.com/home?status=Check out our menu live online at @FoodTradeHQ! http://www.foodtrade.menu{% url 'menu_print_preview_menu' menu.id %}" data-toggle="tooltip" title="Share a link to your menu on twitter" target="_blank" onclick="shareAnalyticsFn('https://twitter.com/home?status=Check out our menu live online at @FoodTradeHQ! http://www.foodtrade.menu{% url "menu_print_preview_menu" menu.id %}')"><i class="fa fa-fw fa-twitter"></i> Tweet</a>
+                            <a href="https://twitter.com/home?status=Check out our menu live online at @FoodTradeHQ! http://www.foodtrade.menu{% url 'menu_print_preview_menu' menu.id %}" data-toggle="tooltip" title="Share a link to your menu on twitter" target="_blank" onclick="shareAnalyticsFn('https://twitter.com/home?status=Check out our menu live online at @FoodTradeHQ! http://www.foodtrade.menu{% url "menu_print_preview_menu" menu.id %}')"><i class="fa fa-fw fa-twitter" style="color: #2C9CEB;"></i> Tweet</a>
                           {% else %}
-                            <a data-toggle="modal" href="#paymentModal" id="paymentAddModal" title="Share a link to your menu on twitter" target="_blank"><i class="fa fa-fw fa-twitter"></i> Tweet</a>
+                            <a data-toggle="modal" href="#paymentModal" id="paymentAddModal" title="Share a link to your menu on twitter" target="_blank"><i class="fa fa-fw fa-credit-card"  style="color:   ;"></i> Tweet</a>
                           {% endif %}
                         </li>
                         <li>
                           {% if has_payment %}
-                            <a href="https://www.facebook.com/sharer/sharer.php?u=http://www.foodtrade.menu{% url 'menu_print_preview_menu' menu.id %}" data-toggle="tooltip" title="Share a link to your menu on facebook" target="_blank" onclick="shareAnalyticsFn('https://www.facebook.com/sharer/sharer.php?u=http://www.foodtrade.menu{% url "menu_print_preview_menu" menu.id %}')"><i class="fa fa-fw fa-facebook"></i> Share</a>
+                            <a href="https://www.facebook.com/sharer/sharer.php?u=http://www.foodtrade.menu{% url 'menu_print_preview_menu' menu.id %}" data-toggle="tooltip" title="Share a link to your menu on facebook" target="_blank" onclick="shareAnalyticsFn('https://www.facebook.com/sharer/sharer.php?u=http://www.foodtrade.menu{% url "menu_print_preview_menu" menu.id %}')"><i class="fa fa-fw fa-facebook" style="color: #3b5998;"></i> Share</a>
                           {% else %}
-                            <a data-toggle="modal" href="#paymentModal" id="paymentAddModal" title="Share a link to your menu on facebook" target="_blank"><i class="fa fa-fw fa-facebook"></i> Share</a>
+                            <a data-toggle="modal" href="#paymentModal" id="paymentAddModal" title="Share a link to your menu on facebook" target="_blank"><i class="fa fa-fw fa-credit-card"  style="color:  ;"></i> Share</a>
                           {% endif %}
                         </li>
                     </ul>

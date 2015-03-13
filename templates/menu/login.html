@@ -25,7 +25,23 @@
     <!-- <link href="{% staticfile "/menu/css/front.css" %}" rel="stylesheet" type="text/css" /> -->
     <!-- <link href="{% static "menu/css/front.css" %}" rel="stylesheet" type="text/css" /> -->
 <style type="text/css">
-    .ftstrip{position:relative;height:.5em;background-color:#e75239;background:-webkit-gradient(linear,0% 50%,100% 50%,color-stop(0%, #e75239),color-stop(12.5%, #e75239),color-stop(12.5%, #ff961c),color-stop(25%, #ff961c),color-stop(25%, #ffcc27),color-stop(37.5%, #ffcc27),color-stop(37.5%, #fce62f),color-stop(50%, #fce62f),color-stop(50%, #cde35b),color-stop(62.5%, #cde35b),color-stop(62.5%, #82cc33),color-stop(75%, #82cc33),color-stop(75%, #ff961c),color-stop(87.5%, #ff961c),color-stop(87.5%, #e75239),color-stop(100%, #e75239));background:-webkit-linear-gradient(left, #e75239 0, #e75239 12.5%, #ff961c 12.5%, #ff961c 25%, #ffcc27 25%, #ffcc27 37.5%, #fce62f 37.5%, #fce62f 50%, #cde35b 50%, #cde35b 62.5%, #82cc33 62.5%, #82cc33 75%, #ff961c 75%, #ff961c 87.5%, #e75239 87.5%, #e75239 100%);background:-moz-linear-gradient(left, #e75239 0, #e75239 12.5%, #ff961c 12.5%, #ff961c 25%, #ffcc27 25%, #ffcc27 37.5%, #fce62f 37.5%, #fce62f 50%, #cde35b 50%, #cde35b 62.5%, #82cc33 62.5%, #82cc33 75%, #ff961c 75%, #ff961c 87.5%, #e75239 87.5%, #e75239 100%);background:-o-linear-gradient(left, #e75239 0, #e75239 12.5%, #ff961c 12.5%, #ff961c 25%, #ffcc27 25%, #ffcc27 37.5%, #fce62f 37.5%, #fce62f 50%, #cde35b 50%, #cde35b 62.5%, #82cc33 62.5%, #82cc33 75%, #ff961c 75%, #ff961c 87.5%, #e75239 87.5%, #e75239 100%);-pie-background:linear-gradient(left, #e75239 0, #e75239 12.5%, #ff961c 12.5%, #ff961c 25%, #ffcc27 25%, #ffcc27 37.5%, #fce62f 37.5%, #fce62f 50%, #cde35b 50%, #cde35b 62.5%, #82cc33 62.5%, #82cc33 75%, #ff961c 75%, #ff961c 87.5%, #e75239 87.5%, #e75239 100%);background:linear-gradient(left, #e75239 0, #e75239 12.5%, #ff961c 12.5%, #ff961c 25%, #ffcc27 25%, #ffcc27 37.5%, #fce62f 37.5%, #fce62f 50%, #cde35b 50%, #cde35b 62.5%, #82cc33 62.5%, #82cc33 75%, #ff961c 75%, #ff961c 87.5%, #e75239 87.5%, #e75239 100%);background-position:50% 0;-webkit-box-shadow:0 1px 2px rgba(0,0,0,.25) inset;-moz-box-shadow:0 1px 2px rgba(0,0,0,.25) inset;box-shadow:0 1px 2px rgba(0,0,0,.25) inset}
+    #topList li {
+        color: #eee !important;
+        font-weight: 700;
+        font-size: 24px;
+    }
+    #topList li a {
+        color: #fff !important;
+    }
+    #topList i {
+        color: #fff !important;
+    }
+    #topList li small {
+        color: #fff !important;
+        font-weight: 600;
+    }
+    .ftstrip{position:relative;height:.5em;background-color:#e75239;background:-webkit-gradient(linear,0% 50%,100% 50%,color-stop(0%, #e75239),color-stop(12.5%, #e75239),color-stop(12.5%, #ff961c),color-stop(25%, #ff961c),color-stop(25%, #ffcc27),color-stop(37.5%, #ffcc27),color-stop(37.5%, #fce62f),color-stop(50%, #fce62f),color-stop(50%, #cde35b),color-stop(62.5%, #cde35b),color-stop(62.5%, #82cc33),color-stop(75%, #82cc33),color-stop(75%, #ff961c),color-stop(87.5%, #ff961c),color-stop(87.5%, #e75239),color-stop(100%, #e75239));background:-webkit-linear-gradient(left, #e75239 0, #e75239 12.5%, #ff961c 12.5%, #ff961c 25%, #ffcc27 25%, #ffcc27 37.5%, #fce62f 37.5%, #fce62f 50%, #cde35b 50%, #cde35b 62.5%, #82cc33 62.5%, #82cc33 75%, #ff961c 75%, #ff961c 87.5%, #e75239 87.5%, #e75239 100%);background:-moz-linear-gradient(left, #e75239 0, #e75239 12.5%, #ff961c 12.5%, #ff961c 25%, #ffcc27 25%, #ffcc27 37.5%, #fce62f 37.5%, #fce62f 50%, #cde35b 50%, #cde35b 62.5%, #82cc33 62.5%, #82cc33 75%, #ff961c 75%, #ff961c 87.5%, #e75239 87.5%, #e75239 100%);background:-o-linear-gradient(left, #e75239 0, #e75239 12.5%, #ff961c 12.5%, #ff961c 25%, #ffcc27 25%, #ffcc27 37.5%, #fce62f 37.5%, #fce62f 50%, #cde35b 50%, #cde35b 62.5%, #82cc33 62.5%, #82cc33 75%, #ff961c 75%, #ff961c 87.5%, #e75239 87.5%, #e75239 100%);-pie-background:linear-gradient(left, #e75239 0, #e75239 12.5%, #ff961c 12.5%, #ff961c 25%, #ffcc27 25%, #ffcc27 37.5%, #fce62f 37.5%, #fce62f 50%, #cde35b 50%, #cde35b 62.5%, #82cc33 62.5%, #82cc33 75%, #ff961c 75%, #ff961c 87.5%, #e75239 87.5%, #e75239 100%);background:linear-gradient(left, #e75239 0, #e75239 12.5%, #ff961c 12.5%, #ff961c 25%, #ffcc27 25%, #ffcc27 37.5%, #fce62f 37.5%, #fce62f 50%, #cde35b 50%, #cde35b 62.5%, #82cc33 62.5%, #82cc33 75%, #ff961c 75%, #ff961c 87.5%, #e75239 87.5%, #e75239 100%);background-position:50% 0;-webkit-box-shadow:0 1px 2px rgba(0,0,0,.25) inset;-moz-box-shadow:0 1px 2px rgba(0,0,0,.25) inset;box-shadow:0 1px 2px rgba(0,0,0,.25) inset};
+
 </style>
     <link href="{% static "menu/css/represent.css" %}" rel="stylesheet">
     <!-- <link href="{% static "menu/css/onepage-scroll.css" %}" rel="stylesheet"> -->
@@ -58,14 +74,14 @@
 
 <div class="main">
 
-    <section id="signup" style="background:url(/static/img/bg 50.png) center center;">
+    <section id="signup" style="background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url(/static/img/wbk_all.jpg) center; background-size: cover; ">
         <div class="container-responsive">
             <div class="row">
                 <div class="col-sm-6 col-xs-12">
                     <div class="innerAll">
 
-                        <h1 style="font-size: 50px; margin: 5px 0 25px 0;" class="">Are allergen laws giving you a headache? </h1>
-                        <ul class="fa-ul lead smalled innerLR" style="font-weight:400;">
+                        <h1 style="font-size: 45px; margin: 22px 0 25px 32px; color: #586D30; color: #fff;" class="">Are allergen laws giving you a headache? </h1>
+                        <ul class="fa-ul lead smalled innerLR" style="font-weight:400;" id="topList">
 
                             <li><i class="fa fa-li fa-check-square-o" style="color: #596E31; top: 0.35em;"></i> Less than &pound;2/day
                                 <small>We're priced for every business at just &pound;100/yr - <strong>only pay when you print or share</strong></small>
@@ -92,10 +108,10 @@
 
                 <div class="col-xs-12 col-sm-6">
                     <div class="innerLR">
-                        <div  style="border: 7px double #F08119; background: #fff; margin: 40px;">
+                        <div  style="border: 0; padding: 20px; background: rgba(255,255,255,0.95); margin: 40px;">
                             <div class="text-center">
-                                <h1 style="margin:30px 0 0 0;">Start your free trial</h1>
-                                <p>You'll be up and running in 10 seconds!</p>
+                                <h1 style="margin:30px 0 0 0;">Try it free now!</h1>
+                                <p>Try for as long as you like, then only &pound;100/yr for complete peace of mind </p>
                             </div>
                             <form id="registration-form" action="{% url 'menu_register' %}" method="post" style="margin: 30px 30px 30px !important;">{% csrf_token %}
                                 <div>
@@ -126,7 +142,7 @@
                                     </div> -->
                                     <div class="form-group">
                                         <div class="checkbox">
-                                            <label for="terms">
+                                            <label for="terms" class="text-black">
                                                 <input type="checkbox" name="terms" /> I accept the
                                                 <a href="#" data-toggle="modal" data-target="#terms">
                                                                     terms &amp; conditions of use</a>
@@ -136,15 +152,15 @@
                                     </div>
                                 </div>
                                 <div class="footer">
-                                    <button type="button" class="btn bg-olive btn-block btn-lg signup">
-                                        <strong>Start my FREE trial</strong>
+                                    <button type="button" class="text-center center-block btn bg-olive btn-lg signup">
+                                        <strong>GET STARTED</strong>
                                     </button>
                                 <!--    <span class="text-success">
                                         <i class="fa fa-fw fa-check"></i> <strong>30 day money back guarantee</strong>  <br />
                                         </span> -->
 
 
-                                    <span class="text-danger">
+                                    <span class="text-danger" style="padding-top: 15px; display: block;">
                                         <i class="fa fa-fw fa-credit-card"></i> <strong>No credit card required.</strong> <br />
                                         <i class="fa fa-fw fa-ban"></i> <strong>No spam, ever. </strong>Unless it's with eggs or hashbrowns.
 
@@ -159,20 +175,8 @@
         </div>
     </section>
 
-    <section id="offer" class="text-white" style=" background: linear-gradient(rgba(0,0,0,0), rgba(0,0,0,1)), url('/static/img/fireworks.jpg') no-repeat; background-attachment: fixed; background-size: cover;">
 
-    <svg xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="svg9635" x="0px" y="0px" width="100.318px" height="150px" viewBox="19.2569 -10.0 68.318 135.0" enable-background="new 15.841 0 68.318 100" xml:space="preserve">
-<path d="M84.159,31.193l-5.305-4.745l2.233-6.769l-6.629-2.582L74.25,9.979L67.132,9.77L64.48,3.14l-6.77,2.233L52.965,0  l-5.582,4.466l-6.28-3.419l-3.699,6.072l-7.118-1.047l-1.396,6.978l-6.979,1.466l1.046,7.048l-6.141,3.768l3.419,6.28l-4.396,5.583  l5.373,4.676l-2.303,6.769l6.63,2.652l0.209,7.117l7.118,0.21l2.582,6.63l6.769-2.233l4.745,5.373l5.653-4.536l6.28,3.42  l3.699-6.071l7.047,1.047l1.396-6.979l7.048-1.396l-1.046-7.048l6.07-3.768l-3.419-6.281L84.159,31.193z M62.247,50.594H37.543  v-2.303c0.599-0.041,1.483-0.118,2.792-0.279c1.308-0.161,2.242-0.329,2.722-0.489c0.599-0.199,1.056-0.498,1.396-0.977  c0.339-0.479,0.559-1.185,0.559-2.023V25.541h-7.607V22.68h1.605c1.738,0,3.268-0.178,4.536-0.558  c1.269-0.38,2.301-0.856,3.14-1.396c0.859-0.559,1.614-1.076,2.163-1.675c0.55-0.599,0.937-1.145,1.256-1.605h5.234  c-0.06,1.298-0.08,2.799-0.141,4.536c-0.059,1.738-0.068,3.297-0.068,4.675v17.516c0,0.719,0.108,1.354,0.418,1.884  s0.816,0.977,1.396,1.256c0.52,0.239,1.364,0.428,2.582,0.628c1.219,0.199,2.142,0.309,2.722,0.349V50.594z"/>
-<polygon points="63.782,64.062 59.665,70.83 52.688,67.062 46.476,71.947 41.242,66.016 33.706,68.598 30.774,61.131 27.495,61.062   27.495,61.061 16.26,90.3 32.868,87.509 41.521,100 48.57,81.856 54.222,98.047 63.293,85.834 79.832,89.045 71.389,65.178 "/>
- </svg>
-    <h1><span class="launch">Help us celebrate!</span></h1>
-
-
-    <p class="lead strong">We just won a <a href="http://www.nesta.org.uk/blog/being-food-open-data-prosumer-foodtrade-menu-winner-food-open-data-challenge" class="text-white" target="_blank">prize for our work</a> using data to create positive impact in the food stystem!</p>
-                                      
-    </section>
-
-    <section style=" background:  url('../img/wbk_all.jpg') bottom no-repeat; background-attachment: fixed; background-size: cover; padding: 40px; display: none;">
+<!--     <section style=" background:  url('../img/wbk_all.jpg') bottom no-repeat; background-attachment: fixed; background-size: cover; padding: 40px; display: none;">
 
 
         <h1 class="text-white text-center hidden" style="font-size: 60px;">We're committed to good food for everyone, for ever.</h1>
@@ -200,7 +204,7 @@
                 </div>
             </div>
         </div>
-    </section>
+    </section> -->
 
 
 
@@ -208,7 +212,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-xs-12 text-center">
-<!--
+            <!--
                     <h1 style="font-size: 50px;">Simple. Powerful.</h1> -->
                     <img src="{% staticfile '/img/mockup.png' %}" alt="It's this easy." class="" style="margin: 30px 0 80px 0;" />
 
@@ -233,20 +237,19 @@
         </div>
     </section>
 
+    <section id="offer" class="text-white" style=" background: linear-gradient(rgba(0,0,0,0), rgba(0,0,0,1)), url('/static/img/fireworks.jpg') no-repeat; background-attachment: fixed; background-size: cover;">
+
+    <svg xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="svg9635" x="0px" y="0px" width="100.318px" height="150px" viewBox="19.2569 -10.0 68.318 135.0" enable-background="new 15.841 0 68.318 100" xml:space="preserve">
+        <path d="M84.159,31.193l-5.305-4.745l2.233-6.769l-6.629-2.582L74.25,9.979L67.132,9.77L64.48,3.14l-6.77,2.233L52.965,0  l-5.582,4.466l-6.28-3.419l-3.699,6.072l-7.118-1.047l-1.396,6.978l-6.979,1.466l1.046,7.048l-6.141,3.768l3.419,6.28l-4.396,5.583  l5.373,4.676l-2.303,6.769l6.63,2.652l0.209,7.117l7.118,0.21l2.582,6.63l6.769-2.233l4.745,5.373l5.653-4.536l6.28,3.42  l3.699-6.071l7.047,1.047l1.396-6.979l7.048-1.396l-1.046-7.048l6.07-3.768l-3.419-6.281L84.159,31.193z M62.247,50.594H37.543  v-2.303c0.599-0.041,1.483-0.118,2.792-0.279c1.308-0.161,2.242-0.329,2.722-0.489c0.599-0.199,1.056-0.498,1.396-0.977  c0.339-0.479,0.559-1.185,0.559-2.023V25.541h-7.607V22.68h1.605c1.738,0,3.268-0.178,4.536-0.558  c1.269-0.38,2.301-0.856,3.14-1.396c0.859-0.559,1.614-1.076,2.163-1.675c0.55-0.599,0.937-1.145,1.256-1.605h5.234  c-0.06,1.298-0.08,2.799-0.141,4.536c-0.059,1.738-0.068,3.297-0.068,4.675v17.516c0,0.719,0.108,1.354,0.418,1.884  s0.816,0.977,1.396,1.256c0.52,0.239,1.364,0.428,2.582,0.628c1.219,0.199,2.142,0.309,2.722,0.349V50.594z"/>
+        <polygon points="63.782,64.062 59.665,70.83 52.688,67.062 46.476,71.947 41.242,66.016 33.706,68.598 30.774,61.131 27.495,61.062   27.495,61.061 16.26,90.3 32.868,87.509 41.521,100 48.57,81.856 54.222,98.047 63.293,85.834 79.832,89.045 71.389,65.178 "/>
+         </svg>
+    <h1><span class="launch">Help us celebrate!</span></h1>
 
 
-    <section style=" background: linear-gradient(rgba(97,174,50,0), rgba(89,110,49,1)), url('../img/apples.jpg') no-repeat; background-attachment: fixed; background-size: cover;">
-
-        <div class="row text-white text-center" style="padding: 20px 60px; margin: 0;">
-        <div style="max-width: 500px; margin: 0 auto;">
-
-            <h1 class="">We're committed to good food for everyone, for ever.</h1>
-            <p class="lead"><strong>We are an award-winning social enterprise who use technology to help smaller, independent food businesses prosper.</strong></p>
-        </div>
-
-        </div>
-
+    <p class="lead strong">We just won a <a href="http://www.nesta.org.uk/blog/being-food-open-data-prosumer-foodtrade-menu-winner-food-open-data-challenge" class="text-white" target="_blank">prize for our work</a> using data to create positive impact in the food stystem!</p>
+                                      
     </section>
+
 
 
     <section class="clearfix">
@@ -521,6 +524,20 @@
                 </div>
             </div>
         </div>
+    </section>
+
+
+    <section style=" background: linear-gradient(rgba(97,174,50,0), rgba(89,110,49,1)), url('../img/apples.jpg') no-repeat; background-attachment: fixed; background-size: cover;">
+
+        <div class="row text-white text-center" style="padding: 20px 60px; margin: 0;">
+        <div style="max-width: 500px; margin: 0 auto;">
+
+            <h1 class="">We're committed to good food for everyone, for ever.</h1>
+            <p class="lead"><strong>We are an award-winning social enterprise who use technology to help smaller, independent food businesses prosper.</strong></p>
+        </div>
+
+        </div>
+
     </section>
 
 

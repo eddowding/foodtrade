@@ -19,8 +19,7 @@
         <tr>
           <th>#</th>
           <th>Name</th>
-          <th>Email / username</th>
-          <th>Coupon</th>
+          <th>Email / username</th> 
           <th>Admin?</th> 
         </tr>
       </thead>
@@ -29,8 +28,7 @@
         <tr>
           <th scope="row">{{forloop.counter}}</th>
           <td><a href="{% url 'menu_admin_user_detail' user.id %}"><strong>{{user.last_name|upper}}</strong>, {{user.first_name}}</a></td>
-          <td>{{user.username}}</td>
-          <td>{% if payment %}{{payment.coupon}}{% else %}NA{% endif %}</td>
+          <td>{{user.username}}<br />{{user.email}}</td> 
           <td>{{user.is_superuser}}</td>
         </tr>
         {% endfor %}
