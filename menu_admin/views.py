@@ -6,7 +6,7 @@ from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse_lazy
 from bson.objectid import ObjectId
 from mongoengine.django.auth import User
-from menu.models import Payment, Establishment, Menu, Dish
+from menu.models import Payment, Establishment, Menu, Dish, Ingredient
 
 # user admin views
 
@@ -90,4 +90,41 @@ def admin_dish_detail_update(request, id):
         update_dict['set__is_public'] = True if request.POST.get('value') == 'true' else False
     if len(update_dict.keys()):
         Dish.objects.filter(pk=ObjectId(id)).update(**update_dict)
+    return HttpResponse(json.dumps({'status': True}))
+
+
+# ingredient admin views
+@login_required(login_url=reverse_lazy('menu-login'))
+def admin_ingredient(request):
+    # if not request.user.is_superuser:
+    #     raise Http404
+    ingredients = Ingredient.objects.all()
+    paginator = Paginator(ingredients, 10)
+
+    page = request.GET.get('page')
+    try:
+        ingredients = paginator.page(page)
+    except PageNotAnInteger:
+        ingredients = paginator.page(1)
+    except EmptyPage:
+        ingredients = paginator.page(paginator.num_pages)
+
+    return render(request, 'ingredient.html', {'ingredients': ingredients})
+
+
+@login_required(login_url=reverse_lazy('menu-login'))
+def admin_ingredient_detail(request, id):
+    # if not request.user.is_superuser:
+    #     raise Http404
+    ingredient = Ingredient.objects.get(pk=ObjectId(id))
+    return render(request, 'ingredient_detail.html', {'ingredient': ingredient})
+
+
+@login_required(login_url=reverse_lazy('menu-login'))
+def admin_ingredient_detail_update(request, id):
+    update_dict = {}
+    if request.POST.get('name') == 'ingredient_name':
+        update_dict['set__name'] = request.POST.get('value')
+    if len(update_dict.keys()):
+        Ingredient.objects.filter(pk=ObjectId(id)).update(**update_dict)
     return HttpResponse(json.dumps({'status': True}))

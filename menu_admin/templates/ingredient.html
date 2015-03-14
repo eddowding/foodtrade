@@ -1,0 +1,53 @@
+{% extends 'menu_base.html' %}
+{% load staticfiles %}
+{% load django_static %}
+{% block body_class %}skin-black{% endblock %}
+
+{% block content %}
+
+<h2>
+    User Admin
+</h2>
+
+
+<!-- Main row -->
+<div class="row">
+    <!-- Left col -->
+    <section class="col-sm-12">
+      <table class="table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>name</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for ingredient in ingredients %}
+        <tr>
+          <th scope="row">{{forloop.counter}}</th>
+          <td><a href="{% url 'menu_admin_ingredient_detail' ingredient.id %}"><strong>{{ingredient.name}}</strong></a></td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
+<div class="pagination">
+    <span class="step-links">
+        {% if ingredients.has_previous %}
+            <a href="?page={{ ingredients.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ ingredients.number }} of {{ ingredients.paginator.num_pages }}.
+        </span>
+
+        {% if ingredients.has_next %}
+            <a href="?page={{ ingredients.next_page_number }}">next</a>
+        {% endif %}
+    </span>
+</div>
+    </section>
+    <!-- /.Left col -->
+
+</div>
+{% endblock content %}

@@ -18,4 +18,6 @@ $(document).ready(function() {
       data: {name: 'public', pk: '', value: $(this).is(':checked')}
     });
   });
+
+  $('#ingredient_name').editable();
 });
