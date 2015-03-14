@@ -48,6 +48,16 @@
           <th>is public</th>
           <td><input type="checkbox" id="public" {% if dish.is_public %}checked{% endif %}/></td>
         </tr>
+        <tr>
+          <th>ingredients</th>
+          <td>
+            <ul>
+              {% for i in dish.get_ingredient_names %}
+              <li><a href="{% url 'menu_admin_ingredient_detail' i.id %}">{{i.name}}</a></li>
+              {% endfor %}
+          </ul>
+          </td>
+        </tr>
       </tbody>
     </table>
     </section>
