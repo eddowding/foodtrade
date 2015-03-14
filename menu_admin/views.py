@@ -1,6 +1,6 @@
 import json
 from django.shortcuts import render
-from django.http import Http404, HttpResponse
+from django.http import Http404, HttpResponse,HttpResponseRedirect
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse_lazy
@@ -128,3 +128,9 @@ def admin_ingredient_detail_update(request, id):
     if len(update_dict.keys()):
         Ingredient.objects.filter(pk=ObjectId(id)).update(**update_dict)
     return HttpResponse(json.dumps({'status': True}))
+
+
+@login_required(login_url=reverse_lazy('menu-login'))
+def admin_ingredient_detail_delete(request, id):
+    Ingredient.objects.filter(pk=ObjectId(id)).delete()
+    return HttpResponseRedirect(reverse_lazy('menu_admin_ingredient'))

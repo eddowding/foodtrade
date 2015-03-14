@@ -12,4 +12,5 @@ urlpatterns = patterns('menu_admin.views',
     url(r'^ingredient/$', 'admin_ingredient', name='menu_admin_ingredient'),
     url(r'^ingredient/(?P<id>[\w]+)/$', 'admin_ingredient_detail', name='menu_admin_ingredient_detail'),
     url(r'^ingredient/(?P<id>[\w]+)/update/$', 'admin_ingredient_detail_update', name='menu_admin_ingredient_detail_update'),
+    url(r'^ingredient/(?P<id>[\w]+)/delete/$', 'admin_ingredient_detail_delete', name='menu_admin_ingredient_detail_delete'),
 )
