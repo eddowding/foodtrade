@@ -6,7 +6,7 @@ from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse_lazy
 from bson.objectid import ObjectId
 from mongoengine.django.auth import User
-from menu.models import Payment
+from menu.models import Payment, Establishment, Menu
 
 
 @login_required(login_url=reverse_lazy('menu-login'))
@@ -36,7 +36,8 @@ def admin_user_detail(request, id):
         payment = Payment.objects.get(user=user)
     except Payment.DoesNotExist:
         payment = None
-    return render(request, 'user_detail.html', {'user': user, 'payment': payment})
+    menu_count = Menu.objects.filter(establishment__in=Establishment.objects.filter(user=request.user)).count()
+    return render(request, 'user_detail.html', {'user': user, 'payment': payment, 'menu_count': menu_count})
 
 
 @login_required(login_url=reverse_lazy('menu-login'))
