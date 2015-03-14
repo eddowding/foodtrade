@@ -11,9 +11,12 @@ from menu.models import Payment, Establishment, Menu, Dish, Ingredient
 # user admin views
 @login_required(login_url=reverse_lazy('menu-login'))
 def admin_user(request):
-    # if not request.user.is_superuser:
-    #     raise Http404
-    users = User.objects.all()
+    if not request.user.is_superuser:
+        raise Http404
+    if request.GET.get('query'):
+        users = User.objects.filter(username__icontains=request.GET.get('query'))
+    else:
+        users = User.objects.all()
     paginator = Paginator(users, 10)
 
     page = request.GET.get('page')
@@ -29,8 +32,8 @@ def admin_user(request):
 
 @login_required(login_url=reverse_lazy('menu-login'))
 def admin_user_detail(request, id):
-    # if not request.user.is_superuser:
-    #     raise Http404
+    if not request.user.is_superuser:
+        raise Http404
     user = User.objects.get(pk=ObjectId(id))
     try:
         payment = Payment.objects.get(user=user)
@@ -42,8 +45,8 @@ def admin_user_detail(request, id):
 
 @login_required(login_url=reverse_lazy('menu-login'))
 def admin_user_detail_update(request, id):
-    # if not request.user.is_superuser:
-    #     raise Http404
+    if not request.user.is_superuser:
+        raise Http404
     update_dict = {}
     if request.POST.get('name') == 'email':
         update_dict['set__email'] = request.POST.get('value')
