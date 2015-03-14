@@ -9,8 +9,6 @@ from mongoengine.django.auth import User
 from menu.models import Payment, Establishment, Menu, Dish, Ingredient
 
 # user admin views
-
-
 @login_required(login_url=reverse_lazy('menu-login'))
 def admin_user(request):
     # if not request.user.is_superuser:
@@ -44,6 +42,8 @@ def admin_user_detail(request, id):
 
 @login_required(login_url=reverse_lazy('menu-login'))
 def admin_user_detail_update(request, id):
+    # if not request.user.is_superuser:
+    #     raise Http404
     update_dict = {}
     if request.POST.get('name') == 'email':
         update_dict['set__email'] = request.POST.get('value')
@@ -57,8 +57,8 @@ def admin_user_detail_update(request, id):
 # dish admin views
 @login_required(login_url=reverse_lazy('menu-login'))
 def admin_dish(request):
-    # if not request.user.is_superuser:
-    #     raise Http404
+    if not request.user.is_superuser:
+        raise Http404
     dishes = Dish.objects.all()
     paginator = Paginator(dishes, 10)
 
@@ -75,14 +75,16 @@ def admin_dish(request):
 
 @login_required(login_url=reverse_lazy('menu-login'))
 def admin_dish_detail(request, id):
-    # if not request.user.is_superuser:
-    #     raise Http404
+    if not request.user.is_superuser:
+        raise Http404
     dish = Dish.objects.get(pk=ObjectId(id))
     return render(request, 'dish_detail.html', {'dish': dish})
 
 
 @login_required(login_url=reverse_lazy('menu-login'))
 def admin_dish_detail_update(request, id):
+    if not request.user.is_superuser:
+        raise Http404
     update_dict = {}
     if request.POST.get('name') == 'name':
         update_dict['set__name'] = request.POST.get('value')
@@ -96,8 +98,8 @@ def admin_dish_detail_update(request, id):
 # ingredient admin views
 @login_required(login_url=reverse_lazy('menu-login'))
 def admin_ingredient(request):
-    # if not request.user.is_superuser:
-    #     raise Http404
+    if not request.user.is_superuser:
+        raise Http404
     ingredients = Ingredient.objects.all()
     paginator = Paginator(ingredients, 10)
 
@@ -114,14 +116,16 @@ def admin_ingredient(request):
 
 @login_required(login_url=reverse_lazy('menu-login'))
 def admin_ingredient_detail(request, id):
-    # if not request.user.is_superuser:
-    #     raise Http404
+    if not request.user.is_superuser:
+        raise Http404
     ingredient = Ingredient.objects.get(pk=ObjectId(id))
     return render(request, 'ingredient_detail.html', {'ingredient': ingredient})
 
 
 @login_required(login_url=reverse_lazy('menu-login'))
 def admin_ingredient_detail_update(request, id):
+    if not request.user.is_superuser:
+        raise Http404
     update_dict = {}
     if request.POST.get('name') == 'ingredient_name':
         update_dict['set__name'] = request.POST.get('value')
@@ -132,5 +136,7 @@ def admin_ingredient_detail_update(request, id):
 
 @login_required(login_url=reverse_lazy('menu-login'))
 def admin_ingredient_detail_delete(request, id):
+    if not request.user.is_superuser:
+        raise Http404
     Ingredient.objects.filter(pk=ObjectId(id)).delete()
     return HttpResponseRedirect(reverse_lazy('menu_admin_ingredient'))
