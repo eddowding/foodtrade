@@ -155,6 +155,7 @@ class Dish(Document):
     name = StringField(required=True)
     description = StringField()
     price = FloatField()
+    is_public = BooleanField(required=True, default=False)
     is_allergen = BooleanField(required=True, default=False)
     is_meat = BooleanField(required=True, default=False)
     is_gluten = BooleanField(required=True, default=False)
@@ -181,6 +182,9 @@ class Dish(Document):
 
     def get_ingredient_names(self):
         return Ingredient.objects.filter(dish=self)
+
+    def get_ingredient_count(self):
+        return Ingredient.objects.filter(dish=self).count()
 
 signals.post_delete.connect(Dish.post_delete, sender=Dish)
 

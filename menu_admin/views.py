@@ -6,7 +6,9 @@ from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse_lazy
 from bson.objectid import ObjectId
 from mongoengine.django.auth import User
-from menu.models import Payment, Establishment, Menu
+from menu.models import Payment, Establishment, Menu, Dish
+
+# user admin views
 
 
 @login_required(login_url=reverse_lazy('menu-login'))
@@ -49,4 +51,43 @@ def admin_user_detail_update(request, id):
         update_dict['set__is_superuser'] = True if request.POST.get('value') == 'true' else False
     if len(update_dict.keys()):
         User.objects.filter(pk=ObjectId(id)).update(**update_dict)
+    return HttpResponse(json.dumps({'status': True}))
+
+
+# dish admin views
+@login_required(login_url=reverse_lazy('menu-login'))
+def admin_dish(request):
+    # if not request.user.is_superuser:
+    #     raise Http404
+    dishes = Dish.objects.all()
+    paginator = Paginator(dishes, 10)
+
+    page = request.GET.get('page')
+    try:
+        dishes = paginator.page(page)
+    except PageNotAnInteger:
+        dishes = paginator.page(1)
+    except EmptyPage:
+        dishes = paginator.page(paginator.num_pages)
+
+    return render(request, 'dish.html', {'dishes': dishes})
+
+
+@login_required(login_url=reverse_lazy('menu-login'))
+def admin_dish_detail(request, id):
+    # if not request.user.is_superuser:
+    #     raise Http404
+    dish = Dish.objects.get(pk=ObjectId(id))
+    return render(request, 'dish_detail.html', {'dish': dish})
+
+
+@login_required(login_url=reverse_lazy('menu-login'))
+def admin_dish_detail_update(request, id):
+    update_dict = {}
+    if request.POST.get('name') == 'name':
+        update_dict['set__name'] = request.POST.get('value')
+    if request.POST.get('name') == 'public':
+        update_dict['set__is_public'] = True if request.POST.get('value') == 'true' else False
+    if len(update_dict.keys()):
+        Dish.objects.filter(pk=ObjectId(id)).update(**update_dict)
     return HttpResponse(json.dumps({'status': True}))

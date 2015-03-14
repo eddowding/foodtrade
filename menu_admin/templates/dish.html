@@ -1,0 +1,59 @@
+{% extends 'menu_base.html' %}
+{% load staticfiles %}
+{% load django_static %}
+{% block body_class %}skin-black{% endblock %}
+
+{% block content %}
+
+<h2>
+    User Admin
+</h2>
+
+
+<!-- Main row -->
+<div class="row">
+    <!-- Left col -->
+    <section class="col-sm-12">
+      <table class="table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Title</th>
+          <th>Number of Ingredients</th>
+          <th>Created By</th>
+          <th>Created On</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for dish in dishes %}
+        <tr>
+          <th scope="row">{{forloop.counter}}</th>
+          <td><a href="{% url 'menu_admin_dish_detail' dish.id %}"><strong>{{dish.name}}</strong></a></td>
+          <td>{{dish.get_ingredient_count}}</td>
+          <td>{{dish.menu_section.menu.establishment.user}}</td>
+          <td>{{dish.added_on}}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
+<div class="pagination">
+    <span class="step-links">
+        {% if dishes.has_previous %}
+            <a href="?page={{ dishes.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ dishes.number }} of {{ dishes.paginator.num_pages }}.
+        </span>
+
+        {% if dishes.has_next %}
+            <a href="?page={{ dishes.next_page_number }}">next</a>
+        {% endif %}
+    </span>
+</div>
+    </section>
+    <!-- /.Left col -->
+
+</div>
+{% endblock content %}
