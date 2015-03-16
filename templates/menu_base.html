@@ -1,7 +1,7 @@
 {% load django_static %}
 {% load staticfiles %}
-{% load socialaccount %} 
-{% load url from future %} 
+{% load socialaccount %}
+{% load url from future %}
 {% load i18n %}
 {% load static %}
 {% get_static_prefix as STATIC_PREFIX %}
@@ -38,9 +38,9 @@
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js" type="text/javascript"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js" type="text/javascript"></script>
 	<script src="{% staticfile '/typeahead.js/dist/typeahead.bundle.min.js' %}"></script>
-	
+
     <meta itemprop="name" content="FoodTrade Menu - don't let compliance be a headache." />
-    <meta itemprop="description" content="Getting allergen compliance wrong costs £5,000. Our allergen menu tool costs a lot less" /> 
+    <meta itemprop="description" content="Getting allergen compliance wrong costs £5,000. Our allergen menu tool costs a lot less" />
     <!-- Google info -->
     <meta property="business:contact_data:website" content="http://www.foodtrade.menu" />
     <!-- Twitter info -->
@@ -57,7 +57,7 @@
     <meta property="og:type" content="website" />
     <meta property="og:url" content="http://www.foodtrade.menu" />
     <meta property="og:image" content="http://www.foodtrade.menu/static/img/og.png">
-    <meta property="og:site_name" content="foodtradeHQ" /> 
+    <meta property="og:site_name" content="foodtradeHQ" />
     <meta property="fb:admins" content="eddowding" />
 
     <!-- Morris.js charts -->
@@ -97,7 +97,7 @@
         {% block logo %}
         <a href="{% url 'menu_dashboard' %}" class="logo" style="background: #333 url('http://www.foodtrade.com/static/images/logo_28.png') no-repeat top center; background-size: contain;">
             <!-- Add the class icon to your logo image or logo icon to add the margining -->
-            
+
             <!-- <img src="http://www.foodtrade.com/static/images/logo_28.png" alt="FoodTrade Menu" /> -->
         </a>
         {% endblock %}
@@ -304,7 +304,7 @@
             <section class="sidebar">
                 <!-- Sidebar user panel -->
                 {% block left_sidebar_user_panel %}
-   <!--              <div class="user-panel"> 
+   <!--              <div class="user-panel">
                     <div class="pull-left info">
                         <p>Hello, {{user.first_name}}</p>
                     </div>
@@ -334,10 +334,10 @@
                             <li><a>{{menu.name}}</a></li>
                         {% endfor %}
                         </ul>
-                            
-                    </li> 
 
-                    
+                    </li>
+
+
 
                     <li><a href="{% url 'menu_connection' %}"><i class="fa fa-sign-out"></i> My suppliers<small class="badge pull-right bg-green hidden">{{ buyers.count }}</small></a>
                     </li>
@@ -345,7 +345,7 @@
                     </li>
                     <li><a href="{% url 'menu_connection' %}"><i class="fa fa-sign-out"></i> My stockists<small class="badge pull-right bg-green hidden">{{ buyers.count }}</small></a>
                     </li> -->
-                     
+
 
  <!--                    <li class="treeview">
                         <a href="#" data-toggle="modal" data-target="#comingsoon" class="text-muted">
@@ -376,7 +376,7 @@
                         <a href="#" data-toggle="modal" data-target="#comingsoon" class="text-muted">
                             <i class="fa fa-sliders"></i> <span>How I compare</span>
                         </a>
-                    </li> 
+                    </li>
                     <li class="">
                         <a href="#" data-toggle="modal" data-target="#comingsoon" class="text-muted">
                             <i class="fa fa-cogs"></i> <span>Settings</span>
@@ -400,30 +400,30 @@
                         </a>
                     </li>
                     <li class="divider"></li>
-                    <li class="divider"></li> 
+                    <li class="divider"></li>
                     {% if user.is_superuser %}
                     <li class="">
-                        <a href="/menu/admin/user/">
+                        <a href="{% url 'menu_admin_user' %}">
                             <i class="fa fa-users"></i>Users</span>
                         </a>
                     </li>
                     <li class="">
-                        <a href="/menu/admin/user/">
+                        <a href="{% url 'menu_admin_establishment' %}">
                             <i class="fa fa-building"></i>Establishments</span>
                         </a>
                     </li>
                     <li class="">
-                        <a href="/menu/admin/user/">
+                        <a href="{% url 'menu_admin_dish' %}">
                             <i class="fa fa-cutlery"></i>Dishes</span>
                         </a>
                     </li>
                     <li class="">
-                        <a href="/menu/admin/user/">
+                        <a href="{% url 'menu_admin_ingredient' %}">
                             <i class="fa fa-cube"></i>Ingredients</span>
                         </a>
                     </li>
                     <li class="divider"></li>
-                    {% endif %} 
+                    {% endif %}
                 </ul>
                 {% endblock %}
             </section>
@@ -456,7 +456,7 @@
     {% include 'menu/partials/_nutrition.html' %}
     {% include 'menu/partials/_contact.html' %}
 
-    
+
     <script>
     (function(i, s, o, g, r, a, m) {
         i['GoogleAnalyticsObject'] = r;
@@ -479,7 +479,7 @@
     <script>
     $(document).ready(function() {
 
-        $('[data-toggle="tooltip"]').tooltip(); 
+        $('[data-toggle="tooltip"]').tooltip();
 
         //Include the UserVoice JavaScript SDK (only needed once on a page)
         UserVoice = window.UserVoice || [];
@@ -690,7 +690,7 @@ E-mail:
 </div><!-- /.modal -->
 <!--Start of Tawk.to Script-->
 <script type="text/javascript">
- 
+
 
 var $_Tawk_API={},$_Tawk_LoadStart=new Date();
 (function(){
