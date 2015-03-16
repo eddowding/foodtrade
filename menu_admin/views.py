@@ -9,6 +9,8 @@ from mongoengine.django.auth import User
 from menu.models import Payment, Establishment, Menu, Dish, Ingredient
 
 # user admin views
+
+
 @login_required(login_url=reverse_lazy('menu-login'))
 def admin_user(request):
     if not request.user.is_superuser:
@@ -143,3 +145,46 @@ def admin_ingredient_detail_delete(request, id):
         raise Http404
     Ingredient.objects.filter(pk=ObjectId(id)).delete()
     return HttpResponseRedirect(reverse_lazy('menu_admin_ingredient'))
+
+# establishment admin views
+
+
+@login_required(login_url=reverse_lazy('menu-login'))
+def admin_establishment(request):
+    if not request.user.is_superuser:
+        raise Http404
+    if request.GET.get('query'):
+        establishments = Establishment.objects.filter(BusinessName__icontains=request.GET.get('query'))
+    else:
+        establishments = Establishment.objects.all()
+    paginator = Paginator(establishments, 10)
+
+    page = request.GET.get('page')
+    try:
+        establishments = paginator.page(page)
+    except PageNotAnInteger:
+        establishments = paginator.page(1)
+    except EmptyPage:
+        establishments = paginator.page(paginator.num_pages)
+
+    return render(request, 'establishment.html', {'establishments': establishments})
+
+
+@login_required(login_url=reverse_lazy('menu-login'))
+def admin_establishment_detail(request, id):
+    if not request.user.is_superuser:
+        raise Http404
+    ingredient = Ingredient.objects.get(pk=ObjectId(id))
+    return render(request, 'ingredient_detail.html', {'ingredient': ingredient})
+
+
+@login_required(login_url=reverse_lazy('menu-login'))
+def admin_establishment_detail_update(request, id):
+    if not request.user.is_superuser:
+        raise Http404
+    update_dict = {}
+    if request.POST.get('name') == 'ingredient_name':
+        update_dict['set__name'] = request.POST.get('value')
+    if len(update_dict.keys()):
+        Ingredient.objects.filter(pk=ObjectId(id)).update(**update_dict)
+    return HttpResponse(json.dumps({'status': True}))

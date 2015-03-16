@@ -1,0 +1,65 @@
+{% extends 'menu_base.html' %}
+{% load staticfiles %}
+{% load django_static %}
+{% block body_class %}skin-black{% endblock %}
+
+{% block content %}
+
+<h2>
+    User Admin
+</h2>
+
+
+<!-- Main row -->
+<div class="row">
+    <!-- Left col -->
+    <section class="col-sm-12">
+      <div class='row'>
+        <form method='GET'>
+          <input type='text' name='query'/>
+          <input type='submit' value='search'/>
+        </form>
+      </div>
+      <div class='row'>
+      <table class="table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Name</th>
+          <th>Owner</th>
+          <th>Number of Menus</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for establishment in establishments %}
+        <tr>
+          <th scope="row">{{forloop.counter}}</th>
+          <td><a href="{% url 'menu_admin_establishment_detail' establishment.id %}"><strong>{{establishment.BusinessName}}</strong></a></td>
+          <td>{{establishment.user.username}}</td>
+          <td>{{establishment.get_menu_count}}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+<div class="pagination">
+    <span class="step-links">
+        {% if establishments.has_previous %}
+            <a href="?page={{ establishments.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ establishments.number }} of {{ establishments.paginator.num_pages }}.
+        </span>
+
+        {% if establishments.has_next %}
+            <a href="?page={{ establishments.next_page_number }}">next</a>
+        {% endif %}
+    </span>
+</div>
+    </section>
+    <!-- /.Left col -->
+
+</div>
+{% endblock content %}

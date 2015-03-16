@@ -103,6 +103,9 @@ class Establishment(Document):
                 address += str(value.encode('ascii', 'ignore')) + ' '
         return address
 
+    def get_menu_count(self):
+        return Menu.objects.filter(establishment=self).count()
+
 
 class Menu(Document):
     establishment = ReferenceField(Establishment)
