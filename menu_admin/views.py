@@ -64,7 +64,10 @@ def admin_user_detail_update(request, id):
 def admin_dish(request):
     if not request.user.is_superuser:
         raise Http404
-    dishes = Dish.objects.all()
+    if request.GET.get('query'):
+        dishes = Dish.objects.filter(name__icontains=request.GET.get('query'))
+    else:
+        dishes = Dish.objects.all()
     paginator = Paginator(dishes, 10)
 
     page = request.GET.get('page')
@@ -105,7 +108,10 @@ def admin_dish_detail_update(request, id):
 def admin_ingredient(request):
     if not request.user.is_superuser:
         raise Http404
-    ingredients = Ingredient.objects.all()
+    if request.GET.get('query'):
+        ingredients = Ingredient.objects.filter(name__icontains=request.GET.get('query'))
+    else:
+        ingredients = Ingredient.objects.all()
     paginator = Paginator(ingredients, 10)
 
     page = request.GET.get('page')

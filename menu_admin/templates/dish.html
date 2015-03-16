@@ -14,29 +14,36 @@
 <div class="row">
     <!-- Left col -->
     <section class="col-sm-12">
-      <table class="table">
-      <thead>
-        <tr>
-          <th>#</th>
-          <th>Title</th>
-          <th>Number of Ingredients</th>
-          <th>Created By</th>
-          <th>Created On</th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for dish in dishes %}
-        <tr>
-          <th scope="row">{{forloop.counter}}</th>
-          <td><a href="{% url 'menu_admin_dish_detail' dish.id %}"><strong>{{dish.name}}</strong></a></td>
-          <td>{{dish.get_ingredient_count}}</td>
-          <td>{{dish.menu_section.menu.establishment.user}}</td>
-          <td>{{dish.added_on}}</td>
-        </tr>
-        {% endfor %}
-      </tbody>
-    </table>
-
+      <div class='row'>
+        <form method='GET'>
+          <input type='text' name='query'/>
+          <input type='submit' value='search'/>
+        </form>
+      </div>
+      <div class='row'>
+        <table class="table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Title</th>
+            <th>Number of Ingredients</th>
+            <th>Created By</th>
+            <th>Created On</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for dish in dishes %}
+          <tr>
+            <th scope="row">{{forloop.counter}}</th>
+            <td><a href="{% url 'menu_admin_dish_detail' dish.id %}"><strong>{{dish.name}}</strong></a></td>
+            <td>{{dish.get_ingredient_count}}</td>
+            <td>{{dish.menu_section.menu.establishment.user}}</td>
+            <td>{{dish.added_on}}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
 <div class="pagination">
     <span class="step-links">
         {% if dishes.has_previous %}

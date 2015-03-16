@@ -14,23 +14,30 @@
 <div class="row">
     <!-- Left col -->
     <section class="col-sm-12">
-      <table class="table">
-      <thead>
-        <tr>
-          <th>#</th>
-          <th>name</th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for ingredient in ingredients %}
-        <tr>
-          <th scope="row">{{forloop.counter}}</th>
-          <td><a href="{% url 'menu_admin_ingredient_detail' ingredient.id %}"><strong>{{ingredient.name}}</strong></a></td>
-        </tr>
-        {% endfor %}
-      </tbody>
-    </table>
-
+      <div class='row'>
+        <form method='GET'>
+          <input type='text' name='query'/>
+          <input type='submit' value='search'/>
+        </form>
+      </div>
+      <div class='row'>
+        <table class="table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>name</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for ingredient in ingredients %}
+          <tr>
+            <th scope="row">{{forloop.counter}}</th>
+            <td><a href="{% url 'menu_admin_ingredient_detail' ingredient.id %}"><strong>{{ingredient.name}}</strong></a></td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
 <div class="pagination">
     <span class="step-links">
         {% if ingredients.has_previous %}
