@@ -174,8 +174,9 @@ def admin_establishment(request):
 def admin_establishment_detail(request, id):
     if not request.user.is_superuser:
         raise Http404
-    ingredient = Ingredient.objects.get(pk=ObjectId(id))
-    return render(request, 'ingredient_detail.html', {'ingredient': ingredient})
+    establishment = Establishment.objects.get(pk=ObjectId(id))
+    users = User.objects.all()
+    return render(request, 'establishment_detail.html', {'establishment': establishment, 'users': users})
 
 
 @login_required(login_url=reverse_lazy('menu-login'))
@@ -183,8 +184,8 @@ def admin_establishment_detail_update(request, id):
     if not request.user.is_superuser:
         raise Http404
     update_dict = {}
-    if request.POST.get('name') == 'ingredient_name':
-        update_dict['set__name'] = request.POST.get('value')
+    if request.POST.get('name') == 'user':
+        update_dict['set__user'] = ObjectId(request.POST.get('value'))
     if len(update_dict.keys()):
-        Ingredient.objects.filter(pk=ObjectId(id)).update(**update_dict)
+        Establishment.objects.filter(pk=ObjectId(id)).update(**update_dict)
     return HttpResponse(json.dumps({'status': True}))

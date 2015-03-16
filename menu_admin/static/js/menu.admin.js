@@ -20,4 +20,12 @@ $(document).ready(function() {
   });
 
   $('#ingredient_name').editable();
+
+  $('#user').change(function() {
+    $.ajax({
+      url: establishmentAdminUpdateUrl,
+      type: 'POST',
+      data: {name: 'user', pk: '', value: $(this).val()}
+    });
+  });
 });
