@@ -20,6 +20,13 @@ $(document).ready(function() {
   });
 
   $('#ingredient_name').editable();
+  $('#is_in_ac').click(function() {
+    $.ajax({
+      url: ingredientAdminUpdateUrl,
+      type: 'POST',
+      data: {name: 'is_in_ac', pk: '', value: $(this).is(':checked')}
+    });
+  });
 
   $('#user').change(function() {
     $.ajax({

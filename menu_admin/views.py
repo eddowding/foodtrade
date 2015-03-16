@@ -140,6 +140,8 @@ def admin_ingredient_detail_update(request, id):
     update_dict = {}
     if request.POST.get('name') == 'ingredient_name':
         update_dict['set__name'] = request.POST.get('value')
+    if request.POST.get('name') == 'is_in_ac':
+        update_dict['set__is_in_ac'] = True if request.POST.get('value') == 'true' else False
     if len(update_dict.keys()):
         Ingredient.objects.filter(pk=ObjectId(id)).update(**update_dict)
     return HttpResponse(json.dumps({'status': True}))
