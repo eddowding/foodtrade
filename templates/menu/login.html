@@ -90,7 +90,7 @@
                                 <small>Just 30 seconds per recipe thanks to recipe suggestions and autocompleting ingredients </small>
                             </li>
 
-                            <li><i class="fa fa-li fa-check-square-o" style="color: #596E31; top: 0.35em;"></i> Find new customers 
+                            <li><i class="fa fa-li fa-check-square-o" style="color: #596E31; top: 0.35em;"></i> Find new customers
                                 <small>Your menus can be found online, on mobile, and on your website - and always up to date </small>
                             </li>
                             <li><i class="fa fa-li fa-check-square-o" style="color: #596E31; top: 0.35em;"></i> Discounts &amp; offers from local suppliers
@@ -247,7 +247,7 @@
 
 
     <p class="lead strong">We just won a <a href="http://www.nesta.org.uk/blog/being-food-open-data-prosumer-foodtrade-menu-winner-food-open-data-challenge" class="text-white" target="_blank">prize for our work</a> using data to create positive impact in the food stystem!</p>
-                                      
+
     </section>
 
 
@@ -427,11 +427,11 @@
 
 
     <section style="border:0; background: #fff; margin: 0 0 50px 0;" class="text-center">
- 
+
 <div class="ftstrip"></div>
     <h1 style="background: none; margin:30px 0 10px 0;">All this for less than &pound;2 / week!</h1>
     <p class="lead">Oh, and did we mention we're approved by the people who trained your EHO?</p>
-    
+
     <div class="ftstrip"></div>
     </section>
 
@@ -957,11 +957,7 @@
             <button type="submit" class="btn bg-olive btn-lg btn-block">
                 <i class="fa fa-check"></i> Let's do it</button>
 
-            {% comment %}
-            <p><a href="#">I forgot my password</a>
-            </p>
-
-            {% endcomment %}
+            <p><a data-toggle="modal" data-dismiss="modal" data-target="#forgotPasswordModal" class="pull-right" id="getstarted">I forgot my password</a></p>
             <a href="{% url 'menu_register' %}" class="text-center">Create a new account</a>
         </div>
     </form>
@@ -978,6 +974,23 @@
 
     </div>
     {% endcomment %}
+</div>
+
+<div id="forgotPasswordModal" class="form-box modal fade">
+    <div class="header">Reset password</div>
+    <form action="{% url 'menu_forgot_password' %}" method="post"> {% csrf_token %}
+        <div class="body bg-gray">
+            <div class="form-group">
+                <input type="text" name="email" class="form-control" placeholder="Email Address" />
+                <div class='forgot-password-status'></div>
+            </div>
+        </div>
+        <div class="footer">
+            <button type="button" class="btn bg-olive btn-lg btn-block forgot-password-submit">
+                <i class="fa fa-check"></i> Submit</button>
+            <button type="button" data-dismiss="modal" class="btn btn-lg btn-block">Cancel</button>
+        </div>
+    </form>
 </div>
 
 

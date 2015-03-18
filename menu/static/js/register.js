@@ -94,4 +94,15 @@ $(document).ready(function() {
       helpTextDiv.html('Password miss match.');
     }
   });
+
+  $('.forgot-password-submit').click(function() {
+    $.ajax({
+      type: 'post',
+      url: $('#forgotPasswordModal form').attr('action'),
+      data: $('#forgotPasswordModal form').serialize(),
+      success: function(data) {
+        $('.forgot-password-status').html(data.message);
+      }
+    });
+  });
 });

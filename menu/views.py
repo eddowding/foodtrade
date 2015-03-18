@@ -87,6 +87,11 @@ def login(request):
         return render(request, 'menu/login.html', {'failure': False})
 
 
+def forgot_password(request):
+    email = request.POST.get('email')
+    return HttpResponse(json.dumps({'status': True, 'message': 'Email sent with reset link.'}), content_type="application/json")
+
+
 def user_lookup_count(request):
     query = {}
     for k, v in request.GET.items():
