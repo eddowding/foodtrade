@@ -110,7 +110,21 @@ def forgot_password(request):
 
 
 def reset_password(request, id):
-    return HttpResponseRedirect(reverse_lazy('menu-login'))
+    token = AutoLoginToken.objects.get(pk=ObjectId(id))
+    if token.is_used:
+        raise Http404
+    message = ''
+    if request.method == 'POST':
+        if request.POST.get('password1').strip() == request.POST.get('password2').strip():
+            user = token.user
+            user.set_password(request.POST.get('password1').strip())
+            user.save()
+            token.is_used = True
+            token.save()
+            return HttpResponseRedirect(reverse_lazy('menu-login'))
+        else:
+            message = 'Password miss match.'
+    return render(request, 'reset_password.html', {'token': token, 'message': message})
 
 
 def user_lookup_count(request):
