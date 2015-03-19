@@ -324,3 +324,10 @@ class Payment(Document):
     meta = {
         'indexes': ['user']
     }
+
+
+class AutoLoginToken(Document):
+    user = ReferenceField(User)
+    is_used = BooleanField(required=True, default=False)
+    added_on = DateTimeField(required=True)
+    modified_on = DateTimeField(default=datetime.now)

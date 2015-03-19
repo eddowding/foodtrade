@@ -9,14 +9,16 @@ from bson.dbref import DBRef
 from mongoengine.queryset import Q
 from bson import json_util
 from django.shortcuts import render
-from django.core.urlresolvers import reverse_lazy
+from django.core.urlresolvers import reverse_lazy, reverse
 from django.http import HttpResponseRedirect, HttpResponse, Http404
 from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
 from django.contrib.auth.decorators import login_required
 from django.template.loader import render_to_string
 from django.conf import settings
+from django.template import RequestContext
+from django.core.mail import EmailMessage
 from mongoengine.django.auth import User
-from menu.models import Establishment, Menu, MenuSection, Dish, Allergen, Meat, Gluten, Connection, Ingredient, ModerationIngredient, Payment
+from menu.models import Establishment, Menu, MenuSection, Dish, Allergen, Meat, Gluten, Connection, Ingredient, ModerationIngredient, Payment, AutoLoginToken
 from menu.peer import ingredient_walk, IngredientWalkPrint, CloneDishWalk, mail_chimp_subscribe_email, CloneIngredientWalk
 
 analytics.write_key = 'FVQBpRqubj7q6USVKrGrPeLG08SmADaC'
@@ -89,7 +91,26 @@ def login(request):
 
 def forgot_password(request):
     email = request.POST.get('email')
-    return HttpResponse(json.dumps({'status': True, 'message': 'Email sent with reset link.'}), content_type="application/json")
+    try:
+        user = User.objects.get(username=email)
+    except User.DoesNotExist:
+        user = None
+    if user:
+        token = AutoLoginToken.objects.create(user=user, added_on=datetime.now())
+        message = 'Email sent with reset link.'
+        html = render_to_string('email/reset_password.html', {'token': token, 'uri': request.build_absolute_uri(reverse('menu_reset_password', args=(token.id, )))}, context_instance=RequestContext(request))
+        msg = EmailMessage('Foodtrade : Reset Password', html, settings.EMAIL_HOST_USER, [email])
+        msg.content_subtype = 'html'
+        msg.send()
+        status = True
+    else:
+        message = 'User not found.'
+        status = False
+    return HttpResponse(json.dumps({'status': status, 'message': message}), content_type="application/json")
+
+
+def reset_password(request, id):
+    return HttpResponseRedirect(reverse_lazy('menu-login'))
 
 
 def user_lookup_count(request):
