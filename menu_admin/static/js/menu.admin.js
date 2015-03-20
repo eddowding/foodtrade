@@ -1,3 +1,10 @@
+var confirmDelete = function(url) {
+  var status = confirm('Are you sure?');
+  
+  if (status) {
+    window.location = url;
+  }
+};
 $(document).ready(function() {
   $.fn.editable.defaults.mode = 'inline';
 
