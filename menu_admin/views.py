@@ -4,6 +4,7 @@ from django.http import Http404, HttpResponse,HttpResponseRedirect
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse_lazy
+from django.conf import settings
 from bson.objectid import ObjectId
 from mongoengine.django.auth import User
 from menu.models import Payment, Establishment, Menu, Dish, Ingredient
@@ -19,7 +20,7 @@ def admin_user(request):
         users = User.objects.filter(username__icontains=request.GET.get('query'))
     else:
         users = User.objects.all()
-    paginator = Paginator(users, 10)
+    paginator = Paginator(users, settings.ADMIN_LISTING_LIMIT)
 
     page = request.GET.get('page')
     try:
@@ -68,7 +69,7 @@ def admin_dish(request):
         dishes = Dish.objects.filter(name__icontains=request.GET.get('query'))
     else:
         dishes = Dish.objects.all()
-    paginator = Paginator(dishes, 10)
+    paginator = Paginator(dishes, settings.ADMIN_LISTING_LIMIT)
 
     page = request.GET.get('page')
     try:
@@ -112,7 +113,7 @@ def admin_ingredient(request):
         ingredients = Ingredient.objects.filter(name__icontains=request.GET.get('query'))
     else:
         ingredients = Ingredient.objects.all()
-    paginator = Paginator(ingredients, 10)
+    paginator = Paginator(ingredients, settings.ADMIN_LISTING_LIMIT)
 
     page = request.GET.get('page')
     try:
@@ -165,7 +166,7 @@ def admin_establishment(request):
         establishments = Establishment.objects.filter(BusinessName__icontains=request.GET.get('query'))
     else:
         establishments = Establishment.objects.all()
-    paginator = Paginator(establishments, 10)
+    paginator = Paginator(establishments, settings.ADMIN_LISTING_LIMIT)
 
     page = request.GET.get('page')
     try:

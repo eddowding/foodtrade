@@ -38,6 +38,8 @@ import os
 # live stripe account from Ed
 STRIPE_PUBLIC_KEY = os.environ.get("STRIPE_PUBLIC_KEY", "pk_live_9BlCZzoxIYjEPaIdwBWLjRjR")
 STRIPE_SECRET_KEY = os.environ.get("STRIPE_SECRET_KEY", "sk_live_nobdUwMzfapMBkwn3CKcD0Eg")
+STRIPE_PUBLIC_KEY = 'pk_test_oSOpaxq2GleFxB6MBelA5S3o'
+STRIPE_SECRET_KEY = 'sk_test_hmGuDVayPPKB81MKCPKnyfK1'
 
 DJSTRIPE_PLANS = {
     "yearly": {
@@ -96,11 +98,11 @@ MONGO_DB = 'foodtrade'
 MONGO_USER = None
 MONGO_PASS = None
 
-# MONGO_HOST = 'localhost'
-# MONGO_PORT = 27017
-# MONGO_DB = 'foodtradedev'
-# MONGO_USER = None
-# MONGO_PASS = None
+MONGO_HOST = 'localhost'
+MONGO_PORT = 27017
+MONGO_DB = 'foodtradedev'
+MONGO_USER = None
+MONGO_PASS = None
 
 connect(db=MONGO_DB, host=MONGO_HOST, port=MONGO_PORT, username=MONGO_USER, password=MONGO_PASS, connectTimeoutMS=30000)
 SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
@@ -128,3 +130,11 @@ CACHES = {
 #mailchimp API
 MAIL_CHIMP_API_KEY = 'e4eded21689a15b89cb0db956ad03fd4-us2'
 MAIL_CHIMP_SIGNUP_LIST = 'da1305635a'
+
+#mandrill smtp setup
+EMAIL_HOST = 'smtp.mandrillapp.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'ed@foodtrade.com'
+EMAIL_HOST_PASSWORD = 'NwotnhPk1Nprc6OX0Wq6vA'
+
+ADMIN_LISTING_LIMIT = 25
