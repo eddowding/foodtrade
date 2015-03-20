@@ -26,6 +26,9 @@
           <tr>
             <th>#</th>
             <th>name</th>
+            <th>is meat</th>
+            <th>is allergen</th>
+            <th>is gluten</th>
           </tr>
         </thead>
         <tbody>
@@ -33,6 +36,9 @@
           <tr>
             <th scope="row">{{forloop.counter}}</th>
             <td><a href="{% url 'menu_admin_ingredient_detail' ingredient.id %}"><strong>{{ingredient.name}}</strong></a></td>
+            <td>{{ingredient.is_meat}}</td>
+            <td>{{ingredient.is_allergen}}</td>
+            <td>{{ingredient.is_gluten}}</td>
           </tr>
           {% endfor %}
         </tbody>
