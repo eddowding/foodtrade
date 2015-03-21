@@ -82,6 +82,7 @@ ul.todo-list li.placeholder:before {
         var saveModerationIngredientUrl = "{% url 'menu_save_moderation_ingredient' %}";
         var updateModerationIngredientUrl = "{% url 'menu_update_moderation_ingredient' %}";
         var stripeCardTokenUrl = "{% url 'menu_stripe_card_token' %}";
+        var stripeCouponValueUrl = "{% url 'menu_stripe_coupon_value' %}";
         var stripePublicKey = '{{settings.STRIPE_PUBLIC_KEY}}';
         var stripePlan = '{{settings.FTM_STRIPE_PLAN_DEFAULT}}';
         Stripe.setPublishableKey(stripePublicKey);
@@ -133,7 +134,7 @@ ul.todo-list li.placeholder:before {
         <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
         <h4 class="modal-title " id="myModalLabel"> Subscribe now</h4>
       </div>
-      <div class="modal-body"> 
+      <div class="modal-body">
         <form role="form" id="payment-form" novalidate="novalidate">
             <div class="callout callout-info">
             <strong>Hi! Please subscribe before you print and share!</strong> Once you have, you'll be able to print your menu, share it on social media, use it on your website, AND you'll also get the other benefits of being a paid supporter of FoodTrade!
@@ -153,12 +154,12 @@ ul.todo-list li.placeholder:before {
             <div class="row">
                 <div class="col-xs-6">
                     <div class="form-group">
-                        
+
                         <div class="row">
-                            <div class="col-xs-6"><label for="expMonth">MONTH</label> 
-                            <input type="text" class="form-control" name="expMonth" placeholder="MM" required="" data-stripe="exp_month" aria-required="true">  
+                            <div class="col-xs-6"><label for="expMonth">MONTH</label>
+                            <input type="text" class="form-control" name="expMonth" placeholder="MM" required="" data-stripe="exp_month" aria-required="true">
                           </div>
-                          <div class="col-xs-6"><label for="expYear">YEAR </label> 
+                          <div class="col-xs-6"><label for="expYear">YEAR </label>
                             <input type="text" class="form-control" name="expYear" placeholder="YY" required="" data-stripe="exp_year" aria-required="true">
                           </div>
                         </div>
@@ -175,14 +176,14 @@ ul.todo-list li.placeholder:before {
                 <div class="col-xs-12">
                     <div class="form-group">
 
-                    
+
                         <div class="row">
                             <div class="col-xs-6" style="padding-top: 20px;">
                               <img src="http://i76.imgup.net/accepted_c22e0.png">
                             </div>
                             <div class="col-xs-6">
                         <label for="couponCode">GOT A COUPON CODE?</label>
-                                <input type="text" class="form-control" name="couponCode" placeholder="Enter the code">
+                                <input type="text" class="form-control" name="couponCode" placeholder="Enter the code"><button class='stripe-coupon-btn'>Apply Coupon</button>
                             </div>
                         </div>
                     </div>
@@ -193,12 +194,12 @@ ul.todo-list li.placeholder:before {
                     <p class="payment-errors" style="background: red; padding: 2px; colour: #fff; font-weight: bold;"></p>
                 </div>
             </div>
-        </form> 
+        </form>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Cancel</button>
         <button type="button" class="btn btn-primary payment-add-btn strong">
-          <i class="fa fa-shopping-cart fa-fw"></i> Subscribe for &pound;100/yr</button>
+          <i class="fa fa-shopping-cart fa-fw"></i> Subscribe for &pound;<span class='stripe-price'>{{stripe_amount}}</span>/yr</button>
       </div>
     </div>
   </div>

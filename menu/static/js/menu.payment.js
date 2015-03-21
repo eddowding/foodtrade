@@ -105,4 +105,14 @@ $(document).ready(function() {
       clearInterval(readyInterval);
     }
   }, 250);
+
+  $('.stripe-coupon-btn').click(function() {
+    $.ajax({
+      url: stripeCouponValueUrl,
+      data: {coupon: $form.find('[name=couponCode]').val()},
+      success: function(data) {
+        console.log(data);
+      }
+    });
+  });
 });

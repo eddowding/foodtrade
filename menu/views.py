@@ -22,11 +22,14 @@ from menu.models import Establishment, Menu, MenuSection, Dish, Allergen, Meat, 
 from menu.peer import ingredient_walk, IngredientWalkPrint, CloneDishWalk, mail_chimp_subscribe_email, CloneIngredientWalk
 
 analytics.write_key = 'FVQBpRqubj7q6USVKrGrPeLG08SmADaC'
+stripe.api_key = settings.STRIPE_SECRET_KEY
 
 
 """
 Common views.
 """
+
+
 @login_required(login_url=reverse_lazy('menu-login'))
 def dashboard(request):
     payments = Payment.objects.filter(user=request.user)
@@ -47,7 +50,8 @@ def menu(request):
     establishments = Establishment.objects.filter(user=request.user)
     menus = Menu.objects.filter(establishment__in=establishments).order_by('-added_on')
     has_payment = True if Payment.objects.filter(user=request.user).count() else False
-    return render(request, 'menu/menus.html', {'menus': menus, 'settings': settings, 'has_payment': has_payment})
+    stripe_plan = stripe.Plan.retrieve(settings.FTM_STRIPE_PLAN_DEFAULT)
+    return render(request, 'menu/menus.html', {'menus': menus, 'settings': settings, 'has_payment': has_payment, 'stripe_amount': stripe_plan.amount/100})
 
 
 def register(request):
@@ -614,7 +618,6 @@ def backend_dashboard(request):
 Stripe
 """
 
-stripe.api_key = settings.STRIPE_SECRET_KEY
 
 
 def stripe_card_token(request):
@@ -627,3 +630,20 @@ def stripe_card_token(request):
                             plan=settings.FTM_STRIPE_PLAN_DEFAULT, coupon=stripe_coupon,
                             expiry=datetime.fromtimestamp(stripe_subscription.current_period_end))
     return HttpResponse(json.dumps({'success': True}))
+
+
+def stripe_coupon_value(request):
+    stripe_plan = stripe.Plan.retrieve(settings.FTM_STRIPE_PLAN_DEFAULT)
+    amount = stripe_plan.amount/100
+    try:
+        stripe_coupon = stripe.Coupon.retrieve(request.GET.get('coupon'))
+        success = True
+    except stripe.InvalidRequestError:
+        success = False
+        stripe_coupon = None
+    if stripe_coupon and stripe_coupon.valid:
+        if stripe_coupon.amount_off:
+            amount -= amount_off/100
+        if stripe_coupon.percent_off:
+            amount -= amount*stripe_coupon.percent_off/100
+    return HttpResponse(json.dumps({'success': success, 'amount': amount}), content_type="application/json")
