@@ -2,7 +2,10 @@
 {% load staticfiles %}
 {% load django_static %}
 {% block body_class %}skin-black{% endblock %}
-
+{% block extra_js %}
+<script src="{% staticfile '/x-editable/dist/bootstrap3-editable/js/bootstrap-editable.min.js' %}" type="text/javascript"></script>
+<script src="{% staticfile '/js/menu.admin.js' %}"></script>
+{% endblock extra_js %}
 {% block content %}
 
 <h2>
@@ -29,6 +32,7 @@
             <th>is meat</th>
             <th>is allergen</th>
             <th>is gluten</th>
+            <th>Delete</th>
           </tr>
         </thead>
         <tbody>
@@ -39,6 +43,7 @@
             <td>{{ingredient.is_meat}}</td>
             <td>{{ingredient.is_allergen}}</td>
             <td>{{ingredient.is_gluten}}</td>
+            <td><button onclick='confirmDelete("{% url 'menu_admin_ingredient_detail_delete' user.id %}")'>Delete</button></td>
           </tr>
           {% endfor %}
         </tbody>
