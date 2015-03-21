@@ -206,3 +206,11 @@ def admin_establishment_detail_update(request, id):
     if len(update_dict.keys()):
         Establishment.objects.filter(pk=ObjectId(id)).update(**update_dict)
     return HttpResponse(json.dumps({'status': True}))
+
+
+@login_required(login_url=reverse_lazy('menu-login'))
+def admin_establishment_delete(request, id):
+    if not request.user.is_superuser:
+        raise Http404
+    Establishment.objects.filter(pk=ObjectId(id)).delete()
+    return HttpResponseRedirect(reverse_lazy('menu_admin_establishment'))
