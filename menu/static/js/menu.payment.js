@@ -111,7 +111,14 @@ $(document).ready(function() {
       url: stripeCouponValueUrl,
       data: {coupon: $form.find('[name=couponCode]').val()},
       success: function(data) {
-        console.log(data);
+        if (data.success) {
+          $form.find('.payment-errors').closest('.row').hide();
+          $('.stripe-price').html(data.amount);
+        } else {
+          $form.find('.payment-errors').text('Invalid coupon code.');
+          $form.find('.payment-errors').closest('.row').show();
+          $('.stripe-price').html(stripePlanAmount);
+        }
       }
     });
   });
