@@ -254,7 +254,7 @@ class CloneDishWalk(IngredientWalk):
 def mail_chimp_subscribe_email(email):
     api = Mailchimp(settings.MAIL_CHIMP_API_KEY)
     try:
-        api.lists.subscribe(settings.MAIL_CHIMP_SIGNUP_LIST, {'email': email})
+        api.lists.subscribe(settings.MAIL_CHIMP_SIGNUP_LIST, {'email': email}, double_optin=True)
     except ListAlreadySubscribedError:
         pass
     return True
