@@ -112,6 +112,14 @@ def admin_dish_detail_update(request, id):
     return HttpResponse(json.dumps({'status': True}))
 
 
+@login_required(login_url=reverse_lazy('menu-login'))
+def admin_dish_delete(request, id):
+    if not request.user.is_superuser:
+        raise Http404
+    Dish.objects.filter(pk=ObjectId(id)).delete()
+    return HttpResponseRedirect(reverse_lazy('menu_admin_dish'))
+
+
 # ingredient admin views
 @login_required(login_url=reverse_lazy('menu-login'))
 def admin_ingredient(request):
