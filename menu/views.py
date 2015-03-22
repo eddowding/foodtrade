@@ -376,8 +376,12 @@ def create_ingredient(request):
             clone_ingredients = json.loads(clone_dish.json)
             for i in clone_ingredients[0]:
                 if i['ingredientId'] == request.POST.get('autoId') and len(i['children']):
-                    ciw = CloneIngredientWalk(request.POST.get('dish'), i['children'])
-                    found_clone_match = True
+                    try:
+                        ciw = CloneIngredientWalk(request.POST.get('dish'), i['children'])
+                        found_clone_match = True
+                    except IndexError:
+                        ciw = None
+                        found_clone_match = False
 
             if found_clone_match:
                 dish = Dish.objects.get(id=ObjectId(request.POST.get('dish')))
