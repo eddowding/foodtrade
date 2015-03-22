@@ -309,7 +309,9 @@ $(document).ready(function() {
             data: data,
             type: 'POST',
             dataType: 'JSON',
-            success: function(data) {}
+            success: function(data) {
+              $('.ingredient-item[data-ingredient-id=' + response.obj._id.$oid + ']').parents('.menuitem:first').find('.add-ingredients:first').trigger('click');
+            }
           });
         };
         setTimeout(htmlSaveFn, 1000);
