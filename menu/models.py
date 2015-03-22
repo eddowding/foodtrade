@@ -205,6 +205,13 @@ class Ingredient(Document):
     modified_on = DateTimeField(default=datetime.now)
 
     @classmethod
+    def pre_save(cls, sender, document, **kwargs):
+        if document.parent == None:
+            document.is_in_ac = True
+        else:
+            document.is_in_ac = False
+
+    @classmethod
     def post_delete(cls, sender, document, **kwargs):
         Ingredient.objects.filter(parent=document).delete()
 
@@ -221,6 +228,7 @@ class Ingredient(Document):
 
 
 signals.post_delete.connect(Ingredient.post_delete, sender=Ingredient)
+signals.pre_save.connect(Ingredient.pre_save, sender=Ingredient)
 
 
 class Allergen(Document):
