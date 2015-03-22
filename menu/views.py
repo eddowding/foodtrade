@@ -236,7 +236,7 @@ def edit_menu_section(request):
 
 @login_required(login_url=reverse_lazy('menu-login'))
 def dish_lookup_name(request):
-    query = {'name__icontains': request.GET.get('q')}
+    query = {'name__icontains': request.GET.get('q'), 'is_public': True}
     ret_list = []
     for dish in Dish.objects.filter(**query):
         name = '%s (%s)' % (dish.name, ", ".join(dish.get_ingredient_names().values_list('name'))[:80])
