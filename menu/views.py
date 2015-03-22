@@ -367,6 +367,7 @@ def create_ingredient(request):
         dish.is_gluten = True
     dish.save()
     found_clone_match = False
+    ingredient_clone_html = None
     dish_is_allergen = False
     dish_is_meat = False
     dish_is_gluten = False
@@ -378,9 +379,11 @@ def create_ingredient(request):
                 if i['ingredientId'] == request.POST.get('autoId') and len(i['children']):
                     try:
                         ciw = CloneIngredientWalk(request.POST.get('dish'), i['children'])
+                        ingredient_clone_html = ciw.walk().render()
                         found_clone_match = True
                     except IndexError:
                         ciw = None
+                        ingredient_clone_html = None
                         found_clone_match = False
 
             if found_clone_match:
@@ -395,7 +398,7 @@ def create_ingredient(request):
                                                                                   set__is_meat=dish_is_meat,
                                                                                   set__is_gluten=dish_is_gluten)
     return HttpResponse(json.dumps({'status': True, 'obj': ingredient.to_mongo(),
-                                    'html': ciw.walk().render() if found_clone_match else None,
+                                    'html': ingredient_clone_html,
                                     'dish': {'id': request.POST.get('dish'),
                                              'is_allergen': dish_is_allergen,
                                              'is_meat': dish_is_meat,
