@@ -38,8 +38,8 @@ import os
 # live stripe account from Ed
 STRIPE_PUBLIC_KEY = os.environ.get("STRIPE_PUBLIC_KEY", "pk_live_9BlCZzoxIYjEPaIdwBWLjRjR")
 STRIPE_SECRET_KEY = os.environ.get("STRIPE_SECRET_KEY", "sk_live_nobdUwMzfapMBkwn3CKcD0Eg")
-STRIPE_PUBLIC_KEY = 'pk_test_oSOpaxq2GleFxB6MBelA5S3o'
-STRIPE_SECRET_KEY = 'sk_test_hmGuDVayPPKB81MKCPKnyfK1'
+# STRIPE_PUBLIC_KEY = 'pk_test_oSOpaxq2GleFxB6MBelA5S3o'
+# STRIPE_SECRET_KEY = 'sk_test_hmGuDVayPPKB81MKCPKnyfK1'
 
 DJSTRIPE_PLANS = {
     "yearly": {
