@@ -272,7 +272,7 @@ a.editable-click:hover {
   font-size: 14px;
 }
 #output .ingredient_parent:before {
-  content: ", ";
+  content: ",";
 }
 #output .ingredient_parent:first-of-type:before {
   content: none;
@@ -287,7 +287,7 @@ a.editable-click:hover {
   font-weight: normal;
 }
 #output .ingredient_child:after {
-  content: ", ";
+  content: ",";
 }
 #output .ingredient_child:last-of-type:after {
   content: none;
