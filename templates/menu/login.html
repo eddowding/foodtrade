@@ -24,25 +24,6 @@
 
     <!-- <link href="{% staticfile "/menu/css/front.css" %}" rel="stylesheet" type="text/css" /> -->
     <!-- <link href="{% static "menu/css/front.css" %}" rel="stylesheet" type="text/css" /> -->
-<style type="text/css">
-    #topList li {
-        color: #eee !important;
-        font-weight: 700;
-        font-size: 24px;
-    }
-    #topList li a {
-        color: #fff !important;
-    }
-    #topList i {
-        color: #fff !important;
-    }
-    #topList li small {
-        color: #fff !important;
-        font-weight: 600;
-    }
-    .ftstrip{position:relative;height:.5em;background-color:#e75239;background:-webkit-gradient(linear,0% 50%,100% 50%,color-stop(0%, #e75239),color-stop(12.5%, #e75239),color-stop(12.5%, #ff961c),color-stop(25%, #ff961c),color-stop(25%, #ffcc27),color-stop(37.5%, #ffcc27),color-stop(37.5%, #fce62f),color-stop(50%, #fce62f),color-stop(50%, #cde35b),color-stop(62.5%, #cde35b),color-stop(62.5%, #82cc33),color-stop(75%, #82cc33),color-stop(75%, #ff961c),color-stop(87.5%, #ff961c),color-stop(87.5%, #e75239),color-stop(100%, #e75239));background:-webkit-linear-gradient(left, #e75239 0, #e75239 12.5%, #ff961c 12.5%, #ff961c 25%, #ffcc27 25%, #ffcc27 37.5%, #fce62f 37.5%, #fce62f 50%, #cde35b 50%, #cde35b 62.5%, #82cc33 62.5%, #82cc33 75%, #ff961c 75%, #ff961c 87.5%, #e75239 87.5%, #e75239 100%);background:-moz-linear-gradient(left, #e75239 0, #e75239 12.5%, #ff961c 12.5%, #ff961c 25%, #ffcc27 25%, #ffcc27 37.5%, #fce62f 37.5%, #fce62f 50%, #cde35b 50%, #cde35b 62.5%, #82cc33 62.5%, #82cc33 75%, #ff961c 75%, #ff961c 87.5%, #e75239 87.5%, #e75239 100%);background:-o-linear-gradient(left, #e75239 0, #e75239 12.5%, #ff961c 12.5%, #ff961c 25%, #ffcc27 25%, #ffcc27 37.5%, #fce62f 37.5%, #fce62f 50%, #cde35b 50%, #cde35b 62.5%, #82cc33 62.5%, #82cc33 75%, #ff961c 75%, #ff961c 87.5%, #e75239 87.5%, #e75239 100%);-pie-background:linear-gradient(left, #e75239 0, #e75239 12.5%, #ff961c 12.5%, #ff961c 25%, #ffcc27 25%, #ffcc27 37.5%, #fce62f 37.5%, #fce62f 50%, #cde35b 50%, #cde35b 62.5%, #82cc33 62.5%, #82cc33 75%, #ff961c 75%, #ff961c 87.5%, #e75239 87.5%, #e75239 100%);background:linear-gradient(left, #e75239 0, #e75239 12.5%, #ff961c 12.5%, #ff961c 25%, #ffcc27 25%, #ffcc27 37.5%, #fce62f 37.5%, #fce62f 50%, #cde35b 50%, #cde35b 62.5%, #82cc33 62.5%, #82cc33 75%, #ff961c 75%, #ff961c 87.5%, #e75239 87.5%, #e75239 100%);background-position:50% 0;-webkit-box-shadow:0 1px 2px rgba(0,0,0,.25) inset;-moz-box-shadow:0 1px 2px rgba(0,0,0,.25) inset;box-shadow:0 1px 2px rgba(0,0,0,.25) inset};
-
-</style>
     <link href="{% static "menu/css/represent.css" %}" rel="stylesheet">
     <!-- <link href="{% static "menu/css/onepage-scroll.css" %}" rel="stylesheet"> -->
  {% endblock %}
@@ -94,7 +75,7 @@
                                 <small>Your menus can be found online, on mobile, and on your website - and always up to date </small>
                             </li>
                             <li><i class="fa fa-li fa-check-square-o" style="color: #596E31; top: 0.35em;"></i> Discounts &amp; offers from local suppliers
-                                <small>Integrates with <a href="http://www.foodtrade.com/" target="_blank">FoodTrade</a> to bring you the best of what's around. <span class="cs" style="float: none; width: auto; text-transform: none; padding: 0 2px;">Coming soon</span></small>
+                                <small>Integrates with <a href="http://www.foodtrade.com/" target="_blank">FoodTrade</a> to bring you the best of what's around. Coming soon.</small>
                             </li>
                             <li><i class="fa fa-li fa-check-square-o" style="color: #596E31; top: 0.35em;"></i> Stay legal &amp; insured
                                 <small>Your insurance will only cover you if you're compliant. We're the only company endorsed by the Chartered Institute of Environmental Health - the people who train the EHOs - to help you avoid the &pound;5,000 fine</small>
@@ -108,7 +89,7 @@
 
                 <div class="col-xs-12 col-sm-6">
                     <div class="innerLR">
-                        <div  style="border: 0; padding: 20px; background: rgba(255,255,255,0.95); margin: 40px;">
+                        <div  style="border: 0; padding: 20px 20px 10px 20px; background: rgba(255,255,255,1); box-shadow: 0 0 15px #000; margin: 40px;">
                             <div class="text-center">
                                 <h1 style="margin:30px 0 0 0;">Try it free now!</h1>
                                 <p>Try for as long as you like, then only &pound;100/yr for complete peace of mind </p>
@@ -154,11 +135,7 @@
                                 <div class="footer">
                                     <button type="button" class="text-center center-block btn bg-olive btn-lg signup">
                                         <strong>GET STARTED</strong>
-                                    </button>
-                                <!--    <span class="text-success">
-                                        <i class="fa fa-fw fa-check"></i> <strong>30 day money back guarantee</strong>  <br />
-                                        </span> -->
-
+                                    </button>  
 
                                     <span class="text-danger" style="padding-top: 15px; display: block;">
                                         <i class="fa fa-fw fa-credit-card"></i> <strong>No credit card required.</strong> <br />
@@ -167,6 +144,9 @@
                                         </span>
 
                                 </div>
+                                <hr />
+                                <div id="signedup">
+                                    <a href="#" data-toggle="modal" data-target="#loginModal" class="text-center center-block signup">I already have an account</a></div>
                             </form>
                         </div>
                     </div>
