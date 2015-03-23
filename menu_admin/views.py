@@ -7,7 +7,7 @@ from django.core.urlresolvers import reverse_lazy
 from django.conf import settings
 from bson.objectid import ObjectId
 from mongoengine.django.auth import User
-from menu.models import Payment, Establishment, Menu, Dish, Ingredient
+from menu.models import Payment, Establishment, Menu, Dish, Ingredient, ModerationIngredient
 
 # user admin views
 
@@ -222,3 +222,18 @@ def admin_establishment_delete(request, id):
         raise Http404
     Establishment.objects.filter(pk=ObjectId(id)).delete()
     return HttpResponseRedirect(reverse_lazy('menu_admin_establishment'))
+
+
+@login_required(login_url=reverse_lazy('menu-login'))
+def admin_bulk_delete(request, type):
+    ids = []
+    type = int(type)
+    for id in request.POST.getlist('ids[]'):
+        ids.append(ObjectId(id))
+    if type == 1:
+        Ingredient.objects.filter(pk__in=ids).delete()
+    if type == 2:
+        Dish.objects.filter(pk__in=ids).delete()
+    if type == 3:
+        ModerationIngredient.objects.filter(pk__in=ids).delete()
+    return HttpResponse(json.dumps({'status': True}))
