@@ -24,25 +24,6 @@
 
     <!-- <link href="{% staticfile "/menu/css/front.css" %}" rel="stylesheet" type="text/css" /> -->
     <!-- <link href="{% static "menu/css/front.css" %}" rel="stylesheet" type="text/css" /> -->
-<style type="text/css">
-    #topList li {
-        color: #eee !important;
-        font-weight: 700;
-        font-size: 24px;
-    }
-    #topList li a {
-        color: #fff !important;
-    }
-    #topList i {
-        color: #fff !important;
-    }
-    #topList li small {
-        color: #fff !important;
-        font-weight: 600;
-    }
-    .ftstrip{position:relative;height:.5em;background-color:#e75239;background:-webkit-gradient(linear,0% 50%,100% 50%,color-stop(0%, #e75239),color-stop(12.5%, #e75239),color-stop(12.5%, #ff961c),color-stop(25%, #ff961c),color-stop(25%, #ffcc27),color-stop(37.5%, #ffcc27),color-stop(37.5%, #fce62f),color-stop(50%, #fce62f),color-stop(50%, #cde35b),color-stop(62.5%, #cde35b),color-stop(62.5%, #82cc33),color-stop(75%, #82cc33),color-stop(75%, #ff961c),color-stop(87.5%, #ff961c),color-stop(87.5%, #e75239),color-stop(100%, #e75239));background:-webkit-linear-gradient(left, #e75239 0, #e75239 12.5%, #ff961c 12.5%, #ff961c 25%, #ffcc27 25%, #ffcc27 37.5%, #fce62f 37.5%, #fce62f 50%, #cde35b 50%, #cde35b 62.5%, #82cc33 62.5%, #82cc33 75%, #ff961c 75%, #ff961c 87.5%, #e75239 87.5%, #e75239 100%);background:-moz-linear-gradient(left, #e75239 0, #e75239 12.5%, #ff961c 12.5%, #ff961c 25%, #ffcc27 25%, #ffcc27 37.5%, #fce62f 37.5%, #fce62f 50%, #cde35b 50%, #cde35b 62.5%, #82cc33 62.5%, #82cc33 75%, #ff961c 75%, #ff961c 87.5%, #e75239 87.5%, #e75239 100%);background:-o-linear-gradient(left, #e75239 0, #e75239 12.5%, #ff961c 12.5%, #ff961c 25%, #ffcc27 25%, #ffcc27 37.5%, #fce62f 37.5%, #fce62f 50%, #cde35b 50%, #cde35b 62.5%, #82cc33 62.5%, #82cc33 75%, #ff961c 75%, #ff961c 87.5%, #e75239 87.5%, #e75239 100%);-pie-background:linear-gradient(left, #e75239 0, #e75239 12.5%, #ff961c 12.5%, #ff961c 25%, #ffcc27 25%, #ffcc27 37.5%, #fce62f 37.5%, #fce62f 50%, #cde35b 50%, #cde35b 62.5%, #82cc33 62.5%, #82cc33 75%, #ff961c 75%, #ff961c 87.5%, #e75239 87.5%, #e75239 100%);background:linear-gradient(left, #e75239 0, #e75239 12.5%, #ff961c 12.5%, #ff961c 25%, #ffcc27 25%, #ffcc27 37.5%, #fce62f 37.5%, #fce62f 50%, #cde35b 50%, #cde35b 62.5%, #82cc33 62.5%, #82cc33 75%, #ff961c 75%, #ff961c 87.5%, #e75239 87.5%, #e75239 100%);background-position:50% 0;-webkit-box-shadow:0 1px 2px rgba(0,0,0,.25) inset;-moz-box-shadow:0 1px 2px rgba(0,0,0,.25) inset;box-shadow:0 1px 2px rgba(0,0,0,.25) inset};
-
-</style>
     <link href="{% static "menu/css/represent.css" %}" rel="stylesheet">
     <!-- <link href="{% static "menu/css/onepage-scroll.css" %}" rel="stylesheet"> -->
  {% endblock %}
@@ -74,7 +55,7 @@
 
 <div class="main">
 
-    <section id="signup" style="background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url(/static/img/wbk_all.jpg) center; background-size: cover; ">
+    <section id="signup" style="background: url('/static/img/wbk_all.jpg') no-repeat; background-attachment: fixed; background-size: cover;">
         <div class="container-responsive">
             <div class="row">
                 <div class="col-sm-6 col-xs-12">
@@ -94,7 +75,7 @@
                                 <small>Your menus can be found online, on mobile, and on your website - and always up to date </small>
                             </li>
                             <li><i class="fa fa-li fa-check-square-o" style="color: #596E31; top: 0.35em;"></i> Discounts &amp; offers from local suppliers
-                                <small>Integrates with <a href="http://www.foodtrade.com/" target="_blank">FoodTrade</a> to bring you the best of what's around. <span class="cs" style="float: none; width: auto; text-transform: none; padding: 0 2px;">Coming soon</span></small>
+                                <small>Integrates with <a href="http://www.foodtrade.com/" target="_blank">FoodTrade</a> to bring you the best of what's around. Coming soon.</small>
                             </li>
                             <li><i class="fa fa-li fa-check-square-o" style="color: #596E31; top: 0.35em;"></i> Stay legal &amp; insured
                                 <small>Your insurance will only cover you if you're compliant. We're the only company endorsed by the Chartered Institute of Environmental Health - the people who train the EHOs - to help you avoid the &pound;5,000 fine</small>
@@ -108,7 +89,7 @@
 
                 <div class="col-xs-12 col-sm-6">
                     <div class="innerLR">
-                        <div  style="border: 0; padding: 20px; background: rgba(255,255,255,0.95); margin: 40px;">
+                        <div  style="border: 0; padding: 20px 20px 10px 20px; background: rgba(255,255,255,1); box-shadow: 0 0 15px #000; margin: 40px;">
                             <div class="text-center">
                                 <h1 style="margin:30px 0 0 0;">Try it free now!</h1>
                                 <p>Try for as long as you like, then only &pound;100/yr for complete peace of mind </p>
@@ -154,11 +135,7 @@
                                 <div class="footer">
                                     <button type="button" class="text-center center-block btn bg-olive btn-lg signup">
                                         <strong>GET STARTED</strong>
-                                    </button>
-                                <!--    <span class="text-success">
-                                        <i class="fa fa-fw fa-check"></i> <strong>30 day money back guarantee</strong>  <br />
-                                        </span> -->
-
+                                    </button>  
 
                                     <span class="text-danger" style="padding-top: 15px; display: block;">
                                         <i class="fa fa-fw fa-credit-card"></i> <strong>No credit card required.</strong> <br />
@@ -167,6 +144,9 @@
                                         </span>
 
                                 </div>
+                                <hr />
+                                <div id="signedup">
+                                    <a href="#" data-toggle="modal" data-target="#loginModal" class="text-center center-block signup">I already have an account</a></div>
                             </form>
                         </div>
                     </div>
@@ -237,7 +217,7 @@
         </div>
     </section>
 
-    <section id="offer" class="text-white" style=" background: linear-gradient(rgba(0,0,0,0), rgba(0,0,0,1)), url('/static/img/fireworks.jpg') no-repeat; background-attachment: fixed; background-size: cover;">
+    <section id="offer" class="text-white" style=" background: url('/static/img/fireworks.jpg') no-repeat; background-attachment: fixed; background-size: cover;">
 
     <svg xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="svg9635" x="0px" y="0px" width="100.318px" height="150px" viewBox="19.2569 -10.0 68.318 135.0" enable-background="new 15.841 0 68.318 100" xml:space="preserve">
         <path d="M84.159,31.193l-5.305-4.745l2.233-6.769l-6.629-2.582L74.25,9.979L67.132,9.77L64.48,3.14l-6.77,2.233L52.965,0  l-5.582,4.466l-6.28-3.419l-3.699,6.072l-7.118-1.047l-1.396,6.978l-6.979,1.466l1.046,7.048l-6.141,3.768l3.419,6.28l-4.396,5.583  l5.373,4.676l-2.303,6.769l6.63,2.652l0.209,7.117l7.118,0.21l2.582,6.63l6.769-2.233l4.745,5.373l5.653-4.536l6.28,3.42  l3.699-6.071l7.047,1.047l1.396-6.979l7.048-1.396l-1.046-7.048l6.07-3.768l-3.419-6.281L84.159,31.193z M62.247,50.594H37.543  v-2.303c0.599-0.041,1.483-0.118,2.792-0.279c1.308-0.161,2.242-0.329,2.722-0.489c0.599-0.199,1.056-0.498,1.396-0.977  c0.339-0.479,0.559-1.185,0.559-2.023V25.541h-7.607V22.68h1.605c1.738,0,3.268-0.178,4.536-0.558  c1.269-0.38,2.301-0.856,3.14-1.396c0.859-0.559,1.614-1.076,2.163-1.675c0.55-0.599,0.937-1.145,1.256-1.605h5.234  c-0.06,1.298-0.08,2.799-0.141,4.536c-0.059,1.738-0.068,3.297-0.068,4.675v17.516c0,0.719,0.108,1.354,0.418,1.884  s0.816,0.977,1.396,1.256c0.52,0.239,1.364,0.428,2.582,0.628c1.219,0.199,2.142,0.309,2.722,0.349V50.594z"/>
@@ -527,7 +507,18 @@
     </section>
 
 
-    <section style=" background: linear-gradient(rgba(97,174,50,0), rgba(89,110,49,1)), url('../img/apples.jpg') no-repeat; background-attachment: fixed; background-size: cover;">
+    <section style=" background-repeat:  no-repeat;
+
+ 
+background-image: url(/static/img/apples.jpg); /* fallback */
+background-image: url(/static/img/apples.jpg), -webkit-gradient(linear, left top, left bottom, from(rgba(97,174,50,0)), to(rgba(89,110,49,1))); /* Saf4+, Chrome */
+background-image: url(/static/img/apples.jpg), -webkit-linear-gradient(top, rgba(97,174,50,0), rgba(89,110,49,1)); /* Chrome 10+, Saf5.1+ */
+background-image: url(/static/img/apples.jpg),    -moz-linear-gradient(top, rgba(97,174,50,0), rgba(89,110,49,1)); /* FF3.6+ */
+background-image: url(/static/img/apples.jpg),     -ms-linear-gradient(top, rgba(97,174,50,0), rgba(89,110,49,1)); /* IE10 */
+background-image: url(/static/img/apples.jpg),      -o-linear-gradient(top, rgba(97,174,50,0), rgba(89,110,49,1)); /* Opera 11.10+ */
+background-image: url(/static/img/apples.jpg),         linear-gradient(top bottom, rgba(97,174,50,0), rgba(89,110,49,1)); /*
+
+     background-attachment: fixed; background-size: cover;">
 
         <div class="row text-white text-center" style="padding: 20px 60px; margin: 0;">
         <div style="max-width: 500px; margin: 0 auto;">
@@ -571,67 +562,7 @@
     </div>
 </footer>
 
-
-<!-- <div class="modal fade" id="register">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
-                </button>
-                <h4 class="modal-title text-black">Create a new account</h4>
-            </div>
-            <div class="modal-body text-black">
-                <form id="registration-form" action="{% url 'menu_register' %}" method="post">{% csrf_token %}
-                    <div class="body bg-gr ay">
-                        <div class="form-group">
-                            <label>First name</label>
-                            <input type="text" name="first_name" class="form-control" placeholder="First name" />
-                            <span class="help-text"></span>
-                        </div>
-                        <div class="form-group">
-                            <label>Last name</label>
-                            <input type="text" name="last_name" class="form-control" placeholder="Last name" />
-                            <span class="help-text"></span>
-                        </div>
-                        <div class="form-group">
-                            <label>Your email</label>
-                            <input type="text" name="username" class="form-control" placeholder="Email Address" />
-                            <span class="help-text"></span>
-                        </div>
-                        <div class="form-group">
-                            <label>Make up a password</label>
-                            <input type="password" name="password" class="form-control" placeholder="Password" />
-                            <span class="help-text">Tip: typing happy passwords makes you happier, and they're easier to remember</span>
-                        </div>
-                        <div class="form-group">
-                            <label>Type that password again</label>
-                            <input type="password" name="password2" class="form-control" placeholder="Retype password" />
-                            <span class="help-text">Just to be sure we've both got it right</span>
-                        </div>
-                        <div class="form-group">
-                            <div class="checkbox">
-                                <label for="terms">
-                                    <input type="checkbox" name="terms" /> I accept the
-                                    <a href="#" data-toggle="modal" data-target="#terms">
-                                        terms &amp; conditions of use</a>
-                                </label>
-                            </div>
-                            <span class="help-text"></span>
-                        </div>
-                    </div>
-                    <div class="footer">
-                        <button type="button" class="btn bg-olive btn-block btn-lg signup">
-                            <i class="fa fa-check"></i> Sign me up</button>
-
-                        <a href="/" class="text-center">I'm already a member</a>
-                        <a href="/" class="pull-right">Cancel</a>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
- -->
+ 
 
 
 
@@ -887,36 +818,7 @@
     </div>
 </footer>
 
-
-<script type="text/javascript">
-// $(".main").onepage_scroll({
-//     sectionContainer: "section", // sectionContainer accepts any kind of selector in case you don't want to use section
-//     easing: "ease", // Easing options accepts the CSS3 easing animation such "ease", "linear", "ease-in",
-//     // "ease-out", "ease-in-out", or even cubic bezier value such as "cubic-bezier(0.175, 0.885, 0.420, 1.310)"
-//     animationTime: 1000, // AnimationTime let you define how long each section takes to animate
-//     pagination: true, // You can either show or hide the pagination. Toggle true for show, false for hide.
-//     updateURL: true, // Toggle this true if you want the URL to be updated automatically when the user scroll to each page.
-//     beforeMove: function(index) {}, // This option accepts a callback function. The function will be called before the page moves.
-//     afterMove: function(index) {}, // This option accepts a callback function. The function will be called after the page moves.
-//     loop: false, // You can have the page loop back to the top/bottom when the user navigates at up/down on the first/last page.
-//     keyboard: true, // You can activate the keyboard controls
-//     responsiveFallback: false, // You can fallback to normal page scroll by defining the width of the browser in which
-//     // you want the responsive fallback to be triggered. For example, set this to 600 and whenever
-//     // the browser's width is less than 600, the fallback will kick in.
-//     direction: "vertical" // You can now define the direction of the One Page Scroll animation. Options available are "vertical" and "horizontal". The default value is "vertical".
-// });
-// $(".sign").click(function() {
-//     $(".main").moveTo(7);
-// });
-// $(".nextslide").click(function() {
-//     $(".main").moveDown();
-// });
-</script>
-
-
-
-
-
+  
 
 
 <footer id=" " style="background: #000; color:#fff;">
@@ -924,7 +826,7 @@
         <div class="row">
             <div class="col-sm-6 col-sm-offset-3">
                 <div class=" ">
-                    &copy; Copyright 2014 FoodTrade / Sustaination Ltd. All rights reserved.
+                    &copy; Copyright 2014-2015 FoodTrade / Sustaination Ltd. All rights reserved.
                 </div>
             </div>
         </div>
