@@ -86,6 +86,8 @@ ul.todo-list li.placeholder:before {
         var stripePublicKey = '{{settings.STRIPE_PUBLIC_KEY}}';
         var stripePlan = '{{settings.FTM_STRIPE_PLAN_DEFAULT}}';
         var stripePlanAmount = {{stripe_amount}};
+        var userEmail = '{{user.email}}';
+        var userId = '{{user.id}}';
         Stripe.setPublishableKey(stripePublicKey);
         {% if has_payment %}
           var hasPayment = true;
@@ -183,15 +185,15 @@ ul.todo-list li.placeholder:before {
                               <img src="http://i76.imgup.net/accepted_c22e0.png">
                             </div>
                             <div class="col-xs-6">
-                        <label for="couponCode">GOT A COUPON CODE?</label> 
+                        <label for="couponCode">GOT A COUPON CODE?</label>
 
                                <div class="input-group">
                                 <input type="text" class="form-control" name="couponCode" placeholder="Enter the code">
                                 <span class="input-group-btn">
                                 <button type='button' class='stripe-coupon-btn btn btn-default'>Apply</button
                                 </span>
-                              </div> 
- 
+                              </div>
+
 
 
                             </div>
