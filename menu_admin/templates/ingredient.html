@@ -7,7 +7,7 @@
 <script src="{% staticfile '/js/menu.admin.js' %}"></script>
 {% endblock extra_js %}
 {% block content %}
- 
+
 
 <!-- Main row -->
 <div class="row">
@@ -34,6 +34,7 @@
             <th>is meat</th>
             <th>is allergen</th>
             <th>is gluten</th>
+            <th>creator</th>
             <th>Delete</th>
           </tr>
         </thead>
@@ -45,6 +46,7 @@
             <td>{{ingredient.is_meat}}</td>
             <td>{{ingredient.is_allergen}}</td>
             <td>{{ingredient.is_gluten}}</td>
+            <td>{% if ingredient.dish.menu_section.menu.establishment.user.email %}{{ingredient.dish.menu_section.menu.establishment.user.email}}{% else %}NA{% endif %}</td>
             <td><button onclick='confirmDelete("{% url 'menu_admin_ingredient_detail_delete' user.id %}")' class="btn btn-xs btn-danger">DELETE</button></td>
           </tr>
           {% endfor %}

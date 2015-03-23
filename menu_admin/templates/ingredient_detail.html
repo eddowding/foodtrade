@@ -36,6 +36,10 @@
           <th>name</th>
           <td><a id="ingredient_name" data-type="text" data-pk="{{ingredient.id}}" data-url="{% url 'menu_admin_ingredient_detail_update' ingredient.id %}" data-title="Enter new name">{{ingredient.name}}</a></td>
         </tr>
+        <tr>
+          <th>creator</th>
+          <td>{% if ingredient.dish.menu_section.menu.establishment.user.email %}{{ingredient.dish.menu_section.menu.establishment.user.email}}{% else %}NA{% endif %}</td>
+        </tr>
         {% if ingredient.parent == None %}
         <tr>
           <th>is in auto complete</th>
