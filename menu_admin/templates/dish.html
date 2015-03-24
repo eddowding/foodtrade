@@ -5,10 +5,13 @@
 {% block extra_js %}
 <script src="{% staticfile '/x-editable/dist/bootstrap3-editable/js/bootstrap-editable.min.js' %}" type="text/javascript"></script>
 <script src="{% staticfile '/js/menu.admin.js' %}"></script>
+<script>
+  var adminBulkDeleteUrl = '{% url "menu_admin_bulk_delete" 2 %}';
+</script>
 {% endblock extra_js %}
 {% block content %}
 
- 
+
 
 <!-- Main row -->
 <div class="row">
@@ -36,6 +39,7 @@
             <th>Created By</th>
             <th>Created On</th>
             <th>Delete</th>
+            <th><button class="btn btn-default bulk-delete-btn" type="button">Bulk Delete (<span class="bulk-delete-count">0</span>)</button></th>
           </tr>
         </thead>
         <tbody>
@@ -47,6 +51,7 @@
             <td>{{dish.menu_section.menu.establishment.user}}</td>
             <td>{{dish.added_on}}</td>
             <td><button onclick='confirmDelete("{% url 'menu_admin_dish_delete' dish.id %}")' class="btn btn-xs btn-danger">DELETE</button></td>
+            <td><input type="checkbox" class="bulk-delete-checkbox" value="{{dish.id}}" autocomplete="off"/></td>
           </tr>
           {% endfor %}
         </tbody>
