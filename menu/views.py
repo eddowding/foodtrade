@@ -84,6 +84,9 @@ def login(request):
         if user is not None:
             if user.is_active:
                 auth_login(request, user)
+                analytics.identify(str(user.id), {
+                    'email': user.email
+                })
                 return HttpResponseRedirect(reverse_lazy('menu_dashboard'))
             else:
                 return render(request, 'menu/login.html', {'failure': True})
@@ -139,6 +142,7 @@ def user_lookup_count(request):
 
 
 def logout(request):
+    analytics.track(str(request.user.id), 'Logged out')
     auth_logout(request)
     return HttpResponseRedirect(reverse_lazy('menu-login'))
 
@@ -189,7 +193,7 @@ def create_menu(request):
     except InvalidId:
         establishment = Establishment.objects.create(user=request.user, BusinessName=establishment, added_on=datetime.now())
         Menu.objects.create(establishment=establishment.pk, name=name, added_on=datetime.now())
-    analytics.track(request.user.email, 'Menu Created', {
+    analytics.track(str(request.user.id), 'Menu Created', {
         'name': name
     })
     return HttpResponse(json.dumps({'status': True, 'html': menu_render(request.user)}, default=json_util.default))
