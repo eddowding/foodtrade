@@ -64,20 +64,25 @@ $(document).ready(function() {
   });
 
   $('.bulk-delete-btn').click(function() {
-    var ids = [];
-    $('.bulk-delete-checkbox:checked').each(function(index, elem) {
-      ids.push($(elem).val());
-    });
-    $.ajax({
-      url: adminBulkDeleteUrl,
-      data: {ids: ids},
-      type: 'POST',
-      dataType: 'json',
-      success: function(data) {
-        if (data.status) {
-          window.location.reload();
+    var status = confirm('Are you sure?');
+    if (status) {
+      var ids = [];
+      $('.bulk-delete-checkbox:checked').each(function(index, elem) {
+        ids.push($(elem).val());
+      });
+      $.ajax({
+        url: adminBulkDeleteUrl,
+        data: {
+          ids: ids
+        },
+        type: 'POST',
+        dataType: 'json',
+        success: function(data) {
+          if (data.status) {
+            window.location.reload();
+          }
         }
-      }
-    });
+      });
+    }
   });
 });
