@@ -467,7 +467,7 @@ newtree.attr('data-ingredient-id', result.ingredient_id);
           var update_data = {
             pk: data.dish_id,
             html: $(ultree).parents('div.tree').html(),
-            serialized: '[]'
+            serialized: JSON.stringify($('.ingredient-tree[data-dish-id="' + data.dish_id + '"]').sortable("serialize").get())
           };
 
           $.ajax({

@@ -9,6 +9,8 @@ register = template.Library()
 
 @register.simple_tag
 def render_menu(dish):
+    if not dish.json:
+        return dish.html
     try:
         iw = IngredientWalk(str(dish.pk), json.loads(dish.json))
     except ValueError:
