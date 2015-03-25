@@ -242,7 +242,7 @@ class CloneDishWalk(IngredientWalk):
                 else:
                     try:
                         parent_li = self.html.add(self._generate_li(ingredient_id=self.ingredient_mapping[ingredient['ingredientId']]))
-                    except AttributeError:
+                    except (AttributeError, KeyError):
                         continue
                 parent_li.add(ul())
 
