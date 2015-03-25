@@ -426,61 +426,34 @@ source: dishes.ttAdapter()
       dataType: 'JSON',
       success: function(data) {
         $('.menus').html(data.html);
-        /*if (data.old_dish_id){
-          var ultree = '.tree[data-dish-id='+data.new_dish_id +'] > ul';
-          $(ultree).attr('data-dish-id', data.new_dish_id);
-          var litree = '.tree[data-dish-id='+ data.new_dish_id +'] > ul > li';
-          $(litree).attr('data-dish-id', data.new_dish_id);
-          var spanlitree = '.tree[data-dish-id='+ data.new_dish_id +'] > ul > li > span';
-          $(spanlitree).attr('data-dish-id', data.new_dish_id);
-          var aspanlitree = '.tree[data-dish-id='+ data.new_dish_id +'] > ul > li > span > a';
-          $(aspanlitree).attr('data-dish-id', data.new_dish_id);
-        //$(this).attr('data-dish-id', data.dish_id);
-        $(litree).each(function(index) {
-        // update ingredient id
-        var newtree = $(litree)[index];
-        var dish_id = newtree.attributes['data-dish-id'].value;
-        var ingredient_id = newtree.attributes['data-ingredient-id'].value;
-        $.ajax({
-url: '/change_ingredient_html/' + '?_tmp=' + (new Date).getTime(),
-data: {
-'dish_id':dish_id,
-'ingredient_id':ingredient_id
-},
-type: 'POST',
-dataType: 'JSON',
-success: function(result) {
-var newtree = $(litree)[index];
-newtree.attr('data-ingredient-id', result.ingredient_id);
-        // check inside the li > span and li > span > a
-        }
-        });
-        });
-        }*/
+        sortableFn();
+        editableFn();
         $('#dishModal input[name="menu_section"]').val('');
         $('#dishModal input[name="price"]').val('');
         $('#dishModal input[name="description"]').val('');
         $('#dishModal input[name="name"]').val('');
         $('#dishModal input#name').val('');
         if (data.dish_id) {
-          var ultree = ".tree[data-dish-id='" + data.dish_id + "'] > ul";
-          var update_data = {
-            pk: data.dish_id,
-            html: $(ultree).parents('div.tree').html(),
-            serialized: JSON.stringify($('.ingredient-tree[data-dish-id="' + data.dish_id + '"]').sortable("serialize").get())
-          };
+          console.log(data.dish_id);
+          var saveHtmlFn = function () {
+            var update_data = {
+              pk: data.dish_id,
+              html: $(".tree[data-dish-id='" + data.dish_id + "'] > ul").parents('div.tree').html(),
+              serialized: JSON.stringify($('.ingredient-tree[data-dish-id="' + data.dish_id + '"]').sortable("serialize").get())
+            };
 
-          $.ajax({
-            url: updateDishUrl + '?_tmp=' + (new Date).getTime(),
-            data: update_data,
-            type: 'POST',
-            dataType: 'JSON',
-            success: function(result) {
-              //console.log(result);
-            }
-          });
+            $.ajax({
+              url: updateDishUrl + '?_tmp=' + (new Date).getTime(),
+              data: update_data,
+              type: 'POST',
+              dataType: 'JSON',
+              success: function(result) {
+                //console.log(result);
+              }
+            });
+          };
+          setTimeout(saveHtmlFn, 1000);
         }
-        editableFn();
         dishSelected = false;
       }
     });
