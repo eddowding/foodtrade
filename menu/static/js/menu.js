@@ -318,7 +318,11 @@ $(document).ready(function() {
             type: 'POST',
             dataType: 'JSON',
             success: function(data) {
-              $('.ingredient-item[data-ingredient-id=' + response.obj._id.$oid + ']').parents('.menuitem:first').find('.add-ingredients:first').trigger('click');
+              if ($('.ingredient-item[data-ingredient-id=' + response.obj._id.$oid + ']').parents('li.ingredient-item').find('a.add-sub-ingredients:first').length) {
+                $('.ingredient-item[data-ingredient-id=' + response.obj._id.$oid + ']').parents('li.ingredient-item').find('a.add-sub-ingredients:first').trigger('click');
+              } else {
+                $('.ingredient-item[data-ingredient-id=' + response.obj._id.$oid + ']').parents('.menuitem:first').find('.add-ingredients:first').trigger('click');
+              }
             }
           });
         };
