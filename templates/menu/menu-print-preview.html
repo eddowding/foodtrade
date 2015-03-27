@@ -54,7 +54,7 @@ We're covered by our disclaimers and insurance, but you're not! So before you ha
             <!-- Left col -->
             <section class="col-sm-12">
                 <div id="output">
-
+                  <img src='{% url "menu_establishment_logo" menu.establishment.id %}' alt='{{menu.establishment.BusinessName}}' height=64 width=128/>
                     <p id="allergenNotice"><strong>Allergens are shown in bold.</strong></p>
                     <h2>{{ menu.name }}</h2> {% for section in menu.get_menu_sections %}
                     <h3>{{ section.name }}</h3> {% for dish in section.get_section_dishes %}
