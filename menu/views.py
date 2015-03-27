@@ -32,8 +32,23 @@ Common views.
 
 @login_required(login_url=reverse_lazy('menu-login'))
 def dashboard(request):
+    if request.method == 'POST':
+        establishment = Establishment.objects.get(pk=ObjectId(request.POST.get('establishment')))
+        if establishment.logo:
+            establishment.logo.replace(request.FILES['logo'])
+        else:
+            establishment.logo.put(request.FILES['logo'])
+        establishment.save()
     payments = Payment.objects.filter(user=request.user)
-    return render(request, 'dashboard.html', {'payments': payments})
+    establishments = Establishment.objects.filter(user=request.user)
+
+    return render(request, 'dashboard.html', {'payments': payments, 'establishments': establishments})
+
+
+@login_required(login_url=reverse_lazy('menu-login'))
+def establishment_logo(request, id):
+    establishment = Establishment.objects.get(pk=ObjectId(id))
+    return HttpResponse(establishment.logo.read(), content_type="image/" + establishment.logo.format)
 
 
 @login_required(login_url=reverse_lazy('menu-login'))

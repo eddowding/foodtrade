@@ -54,13 +54,14 @@ class Country(Document):
 
 
 class Score(EmbeddedDocument):
-    Hygiene = IntField(required=True)
-    Structural = IntField(required=True)
-    ConfidenceInManagement = IntField(required=True)
+    Hygiene = IntField(required=True, default=0)
+    Structural = IntField(required=True, default=0)
+    ConfidenceInManagement = IntField(required=True, default=0)
 
 
 class Establishment(Document):
     user = ReferenceField(User, required=False)
+    logo = ImageField(required=False)
     FHRSID = IntField(required=False)
     LocalAuthorityBusinessID = StringField(required=False)
     BusinessName = StringField(required=True)

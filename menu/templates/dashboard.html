@@ -38,13 +38,48 @@
 <div class="row">
     <div class="col-sm-6">
 
+      <div class="box box-warning">
+<!--             <div class="box-header">
+              <h3 class="box-title">Checklist</h3>
+          </div> -->
+          <div class="callout callout-info">
+            <h4>Logos</h4>
+            {% for e in establishments %}
+              <div class='row'>
+                <div class='col-sm-6'>
+                  {{e.BusinessName}}
+                </div>
+                <div class='col-sm-6'>
+                  {% if e.logo %}
+                    <img src='{% url "menu_establishment_logo" e.id %}' alt='{{e.BusinessName}}' height=64 width=128/>
+                  {% else %}
+                    No Logo
+                  {% endif %}
+                </div>
+              </div>
+            {% endfor %}
+            <div class='row'>
+              <h4>Upload Logo</h4>
+              <form method='POST' enctype="multipart/form-data">{% csrf_token %}
+                <input type='file' name='logo' class='form-control'/>
+                <select name='establishment' class='form-control'>
+                  {% for e in establishments %}
+                    <option value='{{e.id}}'>{{e.BusinessName}}</option>
+                  {% endfor %}
+                  <input type='submit' value='upload' class='form-control'/>
+                </select>
+              </form>
+            </div>
+          </div>
+          <!-- /.box-body -->
+      </div>
 
         <div class="box box-warning">
 <!--             <div class="box-header">
                 <h3 class="box-title">Checklist</h3>
             </div> -->
             <div class="box-body">
-          
+
                 <ul class="lead" style="list-style:square;">
                     <li><strong><u><a data-toggle="tooltip" title="Add a menu" href="/menu/">Add a menu</a></u></strong> - the first one takes about 10 minutes!</li>
                     <li><strong><u>
@@ -54,7 +89,7 @@
                 <!--     <li><strong><u>
                     <a href="/connection/">
                     List your stockists</a></u></strong> - so that they can use your produce information directly in their menus</li> -->
-               
+
                     <li><strong><u><a href="http://allergytraining.food.gov.uk/english/" target="_blank">Take a course in food safety</a></u></strong> - Study six modules and pass the tests to get a continuing professional development (CPD) certificate.</li>
                     <li><strong><u><a href="https://www.food.gov.uk/science/allergy-intolerance" target="_blank">Learn more about food intolerance</a></u></strong> - What you need to know about the new allergen information rules (EU FIC) and the FSA's work on food allergy and intolerance, including research, labelling and guidance.</li>
                     <li><strong><u><a href="https://www.food.gov.uk/business-industry/allergy-guide" target="_blank">Read the guide for business</a></u></strong> - By using FoodTrade.menu you should be compliant, but it's good to check for yourself, too.</li>

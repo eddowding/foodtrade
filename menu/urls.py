@@ -42,6 +42,7 @@ urlpatterns = patterns('menu.views',
 
     #print
     url(r'^preview/(?P<id>[\w]+)$', 'print_preview_menu', name='menu_print_preview_menu'),
+    url(r'^establishment/(?P<id>[\w]+)/logo/$', 'establishment_logo', name='menu_establishment_logo'),
 
     #connection
     url(r'^connection/$', 'connection', name='menu_connection'),
