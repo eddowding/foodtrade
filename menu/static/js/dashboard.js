@@ -1,5 +1,7 @@
 $(document).ready(function() {
-  $('#addEstablishmentModal').modal('show');
+  if (establishmentCount == 0) {
+    $('#addEstablishmentModal').modal('show');
+  }
 
   var establishments = new Bloodhound({
     remote: {
@@ -40,9 +42,7 @@ $(document).ready(function() {
   });
 
   $('#addEstablishmentModal button.btn').click(function(ev) {
-    var data = {
-      name: $('#addEstablishmentModal input[name="name"]').val()
-    };
+    var data = {};
     if (establishmentSelected) {
       data.establishment = $('#addEstablishmentModal input[name="establishment"]').val();
     } else {
@@ -50,16 +50,18 @@ $(document).ready(function() {
     }
 
     $.ajax({
-      url: createMenuUrl + '?_tmp=' + (new Date).getTime(),
+      url: createEstablishmentUrl + '?_tmp=' + (new Date).getTime(),
       data: data,
       type: 'POST',
       dataType: 'JSON',
       success: function(data) {
-        $('.menus').html(data.html);
-        $('#addEstablishmentModal input[name="establishment"]').val('');
-        $('#addEstablishmentModal input#establishment').val('');
-        $('#addEstablishmentModal input[name="name"]').val('');
-        establishmentSelected = false;
+        if (data.status) {
+          $('#addEstablishmentModal input[name="establishment"]').val('');
+          $('#addEstablishmentModal input#establishment').val('');
+          $('#addEstablishmentModal input[name="name"]').val('');
+          establishmentSelected = false;
+          window.location.reload();
+        }
       }
     });
   });

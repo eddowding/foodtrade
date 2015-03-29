@@ -52,6 +52,17 @@ def establishment_logo(request, id):
 
 
 @login_required(login_url=reverse_lazy('menu-login'))
+def create_establishment(request):
+    establishment = request.POST.get('establishment')
+    try:
+        Establishment.objects.filter(pk=ObjectId(establishment)).update(set__user=request.user)
+    except InvalidId:
+        establishment = Establishment.objects.create(user=request.user, BusinessName=establishment, added_on=datetime.now())
+    return HttpResponse(json.dumps({'status': True}, default=json_util.default))
+
+
+
+@login_required(login_url=reverse_lazy('menu-login'))
 def paymentSuccess(request):
     '''
     On payment success
