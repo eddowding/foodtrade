@@ -43,6 +43,15 @@ class BusinessType(Document):
     is_active = BooleanField(required=True, default=True)
 
 
+class Business(Document):
+    user = ReferenceField(User, required=True)
+    name = StringField(required=True)
+    phone = StringField(required=True)
+    added_on = DateTimeField(required=True)
+    modified_on = DateTimeField(default=datetime.now)
+    is_active = BooleanField(required=True, default=True)
+
+
 class Country(Document):
     fsa_id = IntField(required=True)
     name = StringField(required=True)

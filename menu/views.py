@@ -18,7 +18,7 @@ from django.conf import settings
 from django.template import RequestContext
 from django.core.mail import EmailMessage
 from mongoengine.django.auth import User
-from menu.models import Establishment, Menu, MenuSection, Dish, Allergen, Meat, Gluten, Connection, Ingredient, ModerationIngredient, Payment, AutoLoginToken
+from menu.models import Establishment, Menu, MenuSection, Dish, Allergen, Meat, Gluten, Connection, Ingredient, ModerationIngredient, Payment, AutoLoginToken, Business
 from menu.peer import ingredient_walk, IngredientWalkPrint, CloneDishWalk, mail_chimp_subscribe_email, CloneIngredientWalk
 
 analytics.write_key = 'FVQBpRqubj7q6USVKrGrPeLG08SmADaC'
@@ -90,6 +90,11 @@ def register(request):
         if bool(re.match(pattern, request.POST.get('username'))):
             user.email = request.POST.get('username')
         user.save()
+        if request.POST.get('business'):
+            insert_dict = {'name': request.POST.get('business'), 'added_on': datetime.now()}
+            if request.POST.get('phone'):
+                insert_dict['phone'] = request.POST.get('phone')
+            Business.objects.create(**insert_dict)
         mail_chimp_subscribe_email(user.email)
         user = authenticate(username=request.POST.get('username'), password=request.POST.get('password'))
         if user is not None:
