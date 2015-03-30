@@ -7,7 +7,7 @@ $(document).ready(function() {
   //menu section
   var establishments = new Bloodhound({
     remote: {
-      url: establishmentLookupNameUrl + '?q=%QUERY&_tmp=' + (new Date).getTime(),
+      url: establishmentLookupSearchUrl + '?q=%QUERY&_tmp=' + (new Date).getTime(),
       filter: function(establishments) {
         return establishments.objs;
       }
