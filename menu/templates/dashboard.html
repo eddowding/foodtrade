@@ -45,6 +45,7 @@ ul.todo-list li.placeholder:before {
   <script src="{% staticfile '/typeahead.js/dist/typeahead.bundle.min.js' %}"></script>
   <script src="{% staticfile '/js/dashboard.js' %}" type="text/javascript"></script>
   <script>
+    var establishmentLookupSearchUrl = '{% url "menu_establishment_lookup_search" %}';
     var establishmentCount = {{establishments.count}};
     var establishmentLookupNameUrl = '{% url "menu_establishment_lookup_name" %}';
     var createEstablishmentUrl = '{% url "menu_create_establishment" %}';
@@ -303,9 +304,9 @@ ul.todo-list li.placeholder:before {
                 <div class="modal-body">
                     {% csrf_token %}
                     <div class="form-group">
-                        <label for="menuEstablishment" class="control-label col-sm-3">Business name</label>
+                        <label for="menuEstablishment" class="control-label col-sm-3">Establishment name</label>
                         <div class="col-sm-9">
-                            <input class="form-control" id="establishment" placeholder="What's your business called?" type="text" style="width: 300px;">
+                            <input class="form-control" id="establishment" placeholder="What's your establishment called?" type="text" style="width: 300px;">
                         </div>
                     </div>
                     <div class="form-group">

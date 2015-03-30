@@ -65,6 +65,7 @@ ul.todo-list li.placeholder:before {
     <script src="{% staticfile '/jquery-validation/dist/jquery.validate.min.js' %}" type="text/javascript"></script>
     <script src="{% staticfile '/jquery-validation/dist/additional-methods.min.js' %}" type="text/javascript"></script>
     <script>
+        var establishmentLookupSearchUrl = '{% url "menu_establishment_lookup_search" %}';
         var establishmentLookupNameUrl = '{% url "menu_establishment_lookup_name" %}';
         var createMenuUrl = '{% url "menu_create_menu" %}';
         var deletMenuUrl= '{% url "menu_delete_menu" %}';
