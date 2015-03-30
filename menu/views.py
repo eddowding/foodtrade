@@ -91,7 +91,7 @@ def register(request):
             user.email = request.POST.get('username')
         user.save()
         if request.POST.get('business'):
-            insert_dict = {'name': request.POST.get('business'), 'added_on': datetime.now()}
+            insert_dict = {'user': user, 'name': request.POST.get('business'), 'added_on': datetime.now()}
             if request.POST.get('phone'):
                 insert_dict['phone'] = request.POST.get('phone')
             Business.objects.create(**insert_dict)
