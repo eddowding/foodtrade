@@ -1,13 +1,14 @@
 {% extends 'menu_base.html' %}
 {% load staticfiles %}
 {% load django_static %}
+{% load business %}
 {% block body_class %}skin-black{% endblock %}
 {% block extra_js %}
 <script src="{% staticfile '/x-editable/dist/bootstrap3-editable/js/bootstrap-editable.min.js' %}" type="text/javascript"></script>
 <script src="{% staticfile '/js/menu.admin.js' %}"></script>
 {% endblock extra_js %}
 {% block content %}
- 
+
 <!-- Main row -->
 <div class="row">
     <!-- Left col -->
@@ -32,6 +33,8 @@
           <th>Name</th>
           <th>Email / username</th>
           <th>Admin?</th>
+          <th>Business Name</th>
+          <th>Phone</th>
           <th>Created On</th>
           <th>Delete</th>
         </tr>
@@ -43,6 +46,8 @@
           <td><a href="{% url 'menu_admin_user_detail' user.id %}"><strong>{{user.last_name|upper}}</strong>, {{user.first_name}}</a></td>
           <td>{{user.username}}<br />{{user.email}}</td>
           <td>{{user.is_superuser}}</td>
+          <td>{% business_name user %}</td>
+          <td>{% business_phone user %}</td>
           <td>{{user.date_joined}}</td>
           <td><button onclick='confirmDelete("{% url 'menu_admin_user_delete' user.id %}")'>Delete</button></td>
         </tr>
