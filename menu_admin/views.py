@@ -7,7 +7,7 @@ from django.core.urlresolvers import reverse_lazy
 from django.conf import settings
 from bson.objectid import ObjectId
 from mongoengine.django.auth import User
-from menu.models import Payment, Establishment, Menu, Dish, Ingredient, ModerationIngredient
+from menu.models import Payment, Establishment, Menu, Dish, Ingredient, ModerationIngredient, Meat, Allergen, Gluten
 
 # user admin views
 
@@ -224,6 +224,43 @@ def admin_establishment_delete(request, id):
     return HttpResponseRedirect(reverse_lazy('menu_admin_establishment'))
 
 
+# ingredient admin views
+@login_required(login_url=reverse_lazy('menu-login'))
+def admin_meat(request):
+    if not request.user.is_superuser:
+        raise Http404
+    if request.GET.get('query'):
+        meats = Meat.objects.filter(name__icontains=request.GET.get('query'))
+    else:
+        meats = Meat.objects.all()
+    paginator = Paginator(meats, settings.ADMIN_LISTING_LIMIT)
+
+    page = request.GET.get('page')
+    try:
+        meats = paginator.page(page)
+    except PageNotAnInteger:
+        meats = paginator.page(1)
+    except EmptyPage:
+        meats = paginator.page(paginator.num_pages)
+
+    return render(request, 'meat.html', {'meats': meats})
+
+
+@login_required(login_url=reverse_lazy('menu-login'))
+def admin_meat_detail(request, id):
+    if not request.user.is_superuser:
+        raise Http404
+    meat = Meat.objects.get(pk=ObjectId(id))
+    return render(request, 'meat_detail.html', {'meat': meat})
+
+
+@login_required(login_url=reverse_lazy('menu-login'))
+def admin_meat_delete(request, id):
+    if not request.user.is_superuser:
+        raise Http404
+    Meat.objects.filter(pk=ObjectId(id)).delete()
+    return HttpResponseRedirect(reverse_lazy('menu_admin_meat'))
+
 @login_required(login_url=reverse_lazy('menu-login'))
 def admin_bulk_delete(request, type):
     ids = []
@@ -236,4 +273,10 @@ def admin_bulk_delete(request, type):
         Dish.objects.filter(pk__in=ids).delete()
     if type == 3:
         ModerationIngredient.objects.filter(pk__in=ids).delete()
+    if type == 4:
+        Meat.objects.filter(pk__in=ids).delete()
+    if type == 5:
+        Allergen.objects.filter(pk__in=ids).delete()
+    if type == 6:
+        Gluten.objects.filter(pk__in=ids).delete()
     return HttpResponse(json.dumps({'status': True}))

@@ -1,6 +1,5 @@
-from django.conf.urls import patterns, url, include
-from django.conf.urls.static import static
-from django.conf import settings
+from django.conf.urls import patterns, url
+
 
 urlpatterns = patterns('menu_admin.views',
     url(r'^user/$', 'admin_user', name='menu_admin_user'),
@@ -22,6 +21,10 @@ urlpatterns = patterns('menu_admin.views',
     url(r'^establishment/(?P<id>[\w]+)/$', 'admin_establishment_detail', name='menu_admin_establishment_detail'),
     url(r'^establishment/(?P<id>[\w]+)/update/$', 'admin_establishment_detail_update', name='menu_admin_establishment_detail_update'),
     url(r'^establishment/(?P<id>[\w]+)/delete/$', 'admin_establishment_delete', name='menu_admin_establishment_delete'),
+
+    url(r'^meat/$', 'admin_meat', name='menu_admin_meat'),
+    url(r'^meat/(?P<id>[\w]+)/$', 'admin_meat_detail', name='menu_admin_meat_detail'),
+    url(r'^meat/(?P<id>[\w]+)/delete/$', 'admin_meat_delete', name='menu_admin_meat_delete'),
 
     url(r'^bulk/delete/(?P<type>[\d]+)/$', 'admin_bulk_delete', name='menu_admin_bulk_delete')
 )
