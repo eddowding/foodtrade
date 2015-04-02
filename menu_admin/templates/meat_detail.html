@@ -9,7 +9,7 @@
 <script src="{% staticfile '/x-editable/dist/bootstrap3-editable/js/bootstrap-editable.min.js' %}" type="text/javascript"></script>
 <script src="{% staticfile '/js/menu.admin.js' %}"></script>
 <script>
-    var ingredientAdminUpdateUrl = "{% url 'menu_admin_ingredient_detail_update' ingredient.id %}";
+    var meatAdminUpdateUrl = "{% url 'menu_admin_meat_detail_update' meat.id %}";
 </script>
 {% endblock extra_js %}
 
@@ -18,7 +18,7 @@
 {% block content %}
 
 <h2>
-    {{ingredient.name}}
+    {{meat.name}}
 </h2>
 
 
@@ -29,23 +29,9 @@
       <table class="table">
       <tbody>
         <tr>
-          <th>Dish</th>
-          <td>{% if ingredient.dish.name %}{{ingredient.dish.name}}{% else %}Dish Missing{% endif %}</td>
-        </tr>
-        <tr>
           <th>name</th>
-          <td><a id="ingredient_name" data-type="text" data-pk="{{ingredient.id}}" data-url="{% url 'menu_admin_ingredient_detail_update' ingredient.id %}" data-title="Enter new name">{{ingredient.name}}</a></td>
+          <td><a id="name" data-type="text" data-pk="{{meat.id}}" data-url="{% url 'menu_admin_meat_detail_update' meat.id %}" data-title="Enter new name">{{meat.name}}</a></td>
         </tr>
-        <tr>
-          <th>creator</th>
-          <td>{% if ingredient.dish.menu_section.menu.establishment.user.email %}{{ingredient.dish.menu_section.menu.establishment.user.email}}{% else %}NA{% endif %}</td>
-        </tr>
-        {% if ingredient.parent == None %}
-        <tr>
-          <th>is in auto complete</th>
-          <td><input type="checkbox" id="is_in_ac" {% if ingredient.is_in_ac %}checked{% endif %}/></td>
-        </tr>
-        {% endif %}
       </tbody>
     </table>
     </section>
@@ -53,6 +39,6 @@
 
 </div>
 <div class='row'>
-  <a href='{% url "menu_admin_ingredient_detail_delete" ingredient.id %}'>Delete</a>
+  <a href='{% url "menu_admin_meat_delete" meat.id %}'>Delete</a>
 </div>
 {% endblock content %}

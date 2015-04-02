@@ -262,6 +262,18 @@ def admin_meat_delete(request, id):
     return HttpResponseRedirect(reverse_lazy('menu_admin_meat'))
 
 @login_required(login_url=reverse_lazy('menu-login'))
+def admin_meat_detail_update(request, id):
+    if not request.user.is_superuser:
+        raise Http404
+    update_dict = {}
+    if request.POST.get('name') == 'name':
+        update_dict['set__name'] = request.POST.get('value')
+    if len(update_dict.keys()):
+        Meat.objects.filter(pk=ObjectId(id)).update(**update_dict)
+    return HttpResponse(json.dumps({'status': True}))
+
+
+@login_required(login_url=reverse_lazy('menu-login'))
 def admin_bulk_delete(request, type):
     ids = []
     type = int(type)
