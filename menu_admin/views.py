@@ -1,6 +1,6 @@
 import json
 from django.shortcuts import render
-from django.http import Http404, HttpResponse,HttpResponseRedirect
+from django.http import Http404, HttpResponse, HttpResponseRedirect
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse_lazy
@@ -224,7 +224,7 @@ def admin_establishment_delete(request, id):
     return HttpResponseRedirect(reverse_lazy('menu_admin_establishment'))
 
 
-# ingredient admin views
+# meat admin views
 @login_required(login_url=reverse_lazy('menu-login'))
 def admin_meat(request):
     if not request.user.is_superuser:
@@ -261,6 +261,7 @@ def admin_meat_delete(request, id):
     Meat.objects.filter(pk=ObjectId(id)).delete()
     return HttpResponseRedirect(reverse_lazy('menu_admin_meat'))
 
+
 @login_required(login_url=reverse_lazy('menu-login'))
 def admin_meat_detail_update(request, id):
     if not request.user.is_superuser:
@@ -270,6 +271,56 @@ def admin_meat_detail_update(request, id):
         update_dict['set__name'] = request.POST.get('value')
     if len(update_dict.keys()):
         Meat.objects.filter(pk=ObjectId(id)).update(**update_dict)
+    return HttpResponse(json.dumps({'status': True}))
+
+
+# Allergen admin views
+@login_required(login_url=reverse_lazy('menu-login'))
+def admin_allergen(request):
+    if not request.user.is_superuser:
+        raise Http404
+    if request.GET.get('query'):
+        allergens = Allergen.objects.filter(name__icontains=request.GET.get('query'))
+    else:
+        allergens = Allergen.objects.all()
+    paginator = Paginator(allergens, settings.ADMIN_LISTING_LIMIT)
+
+    page = request.GET.get('page')
+    try:
+        allergens = paginator.page(page)
+    except PageNotAnInteger:
+        allergens = paginator.page(1)
+    except EmptyPage:
+        allergens = paginator.page(paginator.num_pages)
+
+    return render(request, 'allergen.html', {'allergens': allergens})
+
+
+@login_required(login_url=reverse_lazy('menu-login'))
+def admin_allergen_detail(request, id):
+    if not request.user.is_superuser:
+        raise Http404
+    allergen = Allergen.objects.get(pk=ObjectId(id))
+    return render(request, 'allergen_detail.html', {'allergen': allergen})
+
+
+@login_required(login_url=reverse_lazy('menu-login'))
+def admin_allergen_delete(request, id):
+    if not request.user.is_superuser:
+        raise Http404
+    Allergen.objects.filter(pk=ObjectId(id)).delete()
+    return HttpResponseRedirect(reverse_lazy('menu_admin_allergen'))
+
+
+@login_required(login_url=reverse_lazy('menu-login'))
+def admin_allergen_detail_update(request, id):
+    if not request.user.is_superuser:
+        raise Http404
+    update_dict = {}
+    if request.POST.get('name') == 'name':
+        update_dict['set__name'] = request.POST.get('value')
+    if len(update_dict.keys()):
+        Allergen.objects.filter(pk=ObjectId(id)).update(**update_dict)
     return HttpResponse(json.dumps({'status': True}))
 
 
