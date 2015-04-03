@@ -324,6 +324,56 @@ def admin_allergen_detail_update(request, id):
     return HttpResponse(json.dumps({'status': True}))
 
 
+# Gluten admin views
+@login_required(login_url=reverse_lazy('menu-login'))
+def admin_gluten(request):
+    if not request.user.is_superuser:
+        raise Http404
+    if request.GET.get('query'):
+        glutens = Gluten.objects.filter(name__icontains=request.GET.get('query'))
+    else:
+        glutens = Gluten.objects.all()
+    paginator = Paginator(glutens, settings.ADMIN_LISTING_LIMIT)
+
+    page = request.GET.get('page')
+    try:
+        glutens = paginator.page(page)
+    except PageNotAnInteger:
+        glutens = paginator.page(1)
+    except EmptyPage:
+        glutens = paginator.page(paginator.num_pages)
+
+    return render(request, 'gluten.html', {'glutens': glutens})
+
+
+@login_required(login_url=reverse_lazy('menu-login'))
+def admin_gluten_detail(request, id):
+    if not request.user.is_superuser:
+        raise Http404
+    gluten = Gluten.objects.get(pk=ObjectId(id))
+    return render(request, 'gluten_detail.html', {'gluten': gluten})
+
+
+@login_required(login_url=reverse_lazy('menu-login'))
+def admin_gluten_delete(request, id):
+    if not request.user.is_superuser:
+        raise Http404
+    Gluten.objects.filter(pk=ObjectId(id)).delete()
+    return HttpResponseRedirect(reverse_lazy('menu_admin_gluten'))
+
+
+@login_required(login_url=reverse_lazy('menu-login'))
+def admin_gluten_detail_update(request, id):
+    if not request.user.is_superuser:
+        raise Http404
+    update_dict = {}
+    if request.POST.get('name') == 'name':
+        update_dict['set__name'] = request.POST.get('value')
+    if len(update_dict.keys()):
+        Gluten.objects.filter(pk=ObjectId(id)).update(**update_dict)
+    return HttpResponse(json.dumps({'status': True}))
+
+
 @login_required(login_url=reverse_lazy('menu-login'))
 def admin_bulk_delete(request, type):
     ids = []

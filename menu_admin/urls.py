@@ -32,5 +32,10 @@ urlpatterns = patterns('menu_admin.views',
     url(r'^allergen/(?P<id>[\w]+)/update/$', 'admin_allergen_detail_update', name='menu_admin_allergen_detail_update'),
     url(r'^allergen/(?P<id>[\w]+)/delete/$', 'admin_allergen_delete', name='menu_admin_allergen_delete'),
 
+    url(r'^gluten/$', 'admin_gluten', name='menu_admin_gluten'),
+    url(r'^gluten/(?P<id>[\w]+)/$', 'admin_gluten_detail', name='menu_admin_gluten_detail'),
+    url(r'^gluten/(?P<id>[\w]+)/update/$', 'admin_gluten_detail_update', name='menu_admin_gluten_detail_update'),
+    url(r'^gluten/(?P<id>[\w]+)/delete/$', 'admin_gluten_delete', name='menu_admin_gluten_delete'),
+
     url(r'^bulk/delete/(?P<type>[\d]+)/$', 'admin_bulk_delete', name='menu_admin_bulk_delete')
 )

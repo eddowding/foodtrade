@@ -1,0 +1,44 @@
+{% extends 'menu_base.html' %}
+{% load staticfiles %}
+{% load django_static %}
+{% block extra_style %}
+<link href="{% staticfile '/x-editable/dist/bootstrap3-editable/css/bootstrap-editable.css' %}" rel="stylesheet" type="text/css" />
+{% endblock extra_style %}
+
+{% block extra_js %}
+<script src="{% staticfile '/x-editable/dist/bootstrap3-editable/js/bootstrap-editable.min.js' %}" type="text/javascript"></script>
+<script src="{% staticfile '/js/menu.admin.js' %}"></script>
+<script>
+    var glutenAdminUpdateUrl = "{% url 'menu_admin_gluten_detail_update' gluten.id %}";
+</script>
+{% endblock extra_js %}
+
+{% block body_class %}skin-black{% endblock %}
+
+{% block content %}
+
+<h2>
+    {{gluten.name}}
+</h2>
+
+
+<!-- Main row -->
+<div class="row">
+    <!-- Left col -->
+    <section class="col-sm-12">
+      <table class="table">
+      <tbody>
+        <tr>
+          <th>name</th>
+          <td><a id="name" data-type="text" data-pk="{{gluten.id}}" data-url="{% url 'menu_admin_gluten_detail_update' gluten.id %}" data-title="Enter new name">{{gluten.name}}</a></td>
+        </tr>
+      </tbody>
+    </table>
+    </section>
+    <!-- /.Left col -->
+
+</div>
+<div class='row'>
+  <a href='{% url "menu_admin_gluten_delete" gluten.id %}'>Delete</a>
+</div>
+{% endblock content %}
