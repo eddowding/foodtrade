@@ -47,9 +47,9 @@ urlpatterns = patterns('menu.views',
 
     #connection
     url(r'^connection/$', 'connection', name='menu_connection'),
-    url(r'^create/connection/$', 'create_connection', name='menu_create_connection')
+    url(r'^create/connection/$', 'create_connection', name='menu_create_connection'),
 
-
+    url(r'^new/index/$', 'new_home', name='menu_new_home')
 )
 # if settings.DEBUG:
 #     urlpatterns += patterns('',

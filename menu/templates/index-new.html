@@ -1,0 +1,131 @@
+{% load django_static %}
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <link rel="shortcut icon" href="http://www.foodtrade.com/static/images/favicon.ico">
+  <title>FTM - Redux</title>
+  <!-- Bootstrap core CSS -->
+  <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+  <!-- Custom styles for this template -->
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  <link href="main.css" rel="stylesheet">
+  <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
+  <!--[if lt IE 9]><script src="bootstrap/assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+  <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+  <!--[if lt IE 9]>
+  <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+  <![endif]-->
+</head>
+
+<body role="document" style="background: #fff !Important;">
+
+  <section>
+    <div class="container-responsive" role="main">
+      <div class="row text-center bg-white">
+        <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 col-xs-12">
+          <div class=" ">
+            <h1 style="font-weight: 700; margin: 40px 0 0 0; font-size: 60px;">Simple allergen compliance </h1>
+            <p class="lead" style="font-weight: 100; margin: 0px; font-size: 50px;">
+              Like paper, but better
+            </p>
+            <img src="{% staticfile "/img/pack.png" %}" class="img-responsive" id="packshot" alt="screenshot of product" style="margin: 40px auto; max-width: 600px;" />
+
+          </div>
+
+          <!-- Begin MailChimp Signup Form -->
+          <div id="mc_embed_signup">
+            <form action="http://sustaination.us2.list-manage.com/subscribe/post?u=79e1467c02512dbd83bddab5f&amp;id=da1305635a" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+              <div id="mc_embed_signup_scroll">
+
+                <div class="mc-field-group">
+                  <label class="lead" for="mce-EMAIL">Enter your email and we'll notify you when we launch </label>
+                  <div class="form-group">
+
+                    <div class="input-group input-group-lg" style="width: 400px; margin: 0 auto;">
+
+                      <input type="email" value="" name="EMAIL" class="required email form-control" id="mce-EMAIL" placeholder="your@email.com">
+                      <span class="input-group-btn">
+                        <input type="submit" value="I'm excited" name="subscribe" id="mc-embedded-subscribe" class="btn btn-success">
+                      </span>
+
+                    </div>
+                  </div>
+                </div>
+                <div id="mce-responses" class="clear">
+                  <div class="response" id="mce-error-response" style="display:none"></div>
+                  <div class="response" id="mce-success-response" style="display:none"></div>
+                </div>
+                <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
+                <div style="position: absolute; left: -5000px;">
+                  <input type="text" name="b_79e1467c02512dbd83bddab5f_da1305635a" tabindex="-1" value="">
+                </div>
+
+              </div>
+            </form>
+          </div>
+
+          <!--End mc_embed_signup-->
+
+          <hr />
+
+          <div class="row text-muted">
+            <div class="col-sm-2 col-sm-offset-1">
+              <i class="fa fa-3x fa-save"></i>
+              <h3>Save</h3>
+            </div>
+            <div class="col-sm-2">
+              <i class="fa fa-3x fa-print"></i>
+              <h3>Print</h3>
+            </div>
+
+            <div class="col-sm-2">
+              <i class="fa fa-3x fa-users"></i>
+              <h3>Collaborate</h3>
+            </div>
+
+            <div class="col-sm-2">
+              <i class="fa fa-3x fa-bullhorn"></i>
+              <h3>Promote</h3>
+            </div>
+
+            <div class="col-sm-2">
+              <i class="fa fa-3x fa-shopping-cart"></i>
+              <h3 style="margin-bottom:0;">Offers</h3>
+            </div>
+          </div>
+
+          <hr />
+          <p class="small innerT text-muted">Powered by</p>
+          <img src="http://www.food.gov.uk/sites/all/themes/site_frontend/logo.png" alt="FSA" style="background: #256A2F; padding: 10px 10px;">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  </div>
+
+  <!-- /container-responsive -->
+  <!-- Bootstrap core JavaScript
+================================================== -->
+  <!-- Placed at the end of the document so the pages load faster -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+  <script src="bootstrap/dist/js/bootstrap.min.js"></script>
+  <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+  <script src="bootstrap/assets/js/ie10-viewport-bug-workaround.js"></script>
+
+  <script type="text/JavaScript">
+    // $(document).ready(function () { // $('#allergygrid th').css('height', $('#allergygrid th').width()); // });
+  </script>
+
+</body>
+
+</html>

@@ -690,3 +690,7 @@ def stripe_coupon_value(request):
         if stripe_coupon.percent_off:
             amount -= amount*stripe_coupon.percent_off/100
     return HttpResponse(json.dumps({'success': success, 'amount': amount}), content_type="application/json")
+
+
+def new_home(request):
+    return render(request, 'index-new.html')
