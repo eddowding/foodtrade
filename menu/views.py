@@ -30,7 +30,7 @@ Common views.
 """
 
 
-@login_required(login_url=reverse_lazy('menu-login'))
+@login_required(login_url=reverse_lazy('menu_new_home'))
 def dashboard(request):
     if request.method == 'POST':
         establishment = Establishment.objects.get(pk=ObjectId(request.POST.get('establishment')))
